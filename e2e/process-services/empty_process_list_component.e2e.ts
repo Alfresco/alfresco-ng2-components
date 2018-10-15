@@ -69,7 +69,7 @@ describe('Empty Process List Test', () => {
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(appA.title).clickProcessButton();
         expect(processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
-        expect(processListPage.checkProcessDetailsMessagee()).toEqual('No process details found');
+        expect(processListPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();
@@ -83,7 +83,7 @@ describe('Empty Process List Test', () => {
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(appB.title).clickProcessButton();
         expect(processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
-        expect(processListPage.checkProcessDetailsMessagee()).toEqual('No process details found');
+        expect(processListPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();

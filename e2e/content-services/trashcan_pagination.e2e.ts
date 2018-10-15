@@ -60,7 +60,7 @@ describe('Trashcan - Pagination', () => {
     beforeAll(async (done) => {
         let uploadActions = new UploadActions();
 
-        let fileNames = Util.generateSeqeunceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
+        let fileNames = Util.generateSequenceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',

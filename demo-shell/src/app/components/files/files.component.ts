@@ -181,7 +181,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
-    currentSiteid = '';
     warnOnMultipleUploads = false;
     thumbnails = false;
     enableCustomPermissionMessage = false;
@@ -473,7 +472,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         return false;
     }
 
-    startProcesAction($event) {
+    startProcessAction($event) {
         this.formValues['file'] = $event.value.entry;
 
         const dialogRef = this.dialog.open(SelectAppsDialogComponent, {

@@ -32,7 +32,7 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 describe('CardView Component - properties', () => {
 
     let METADATA = {
-        DATAFORMAT: 'mmm dd yyyy',
+        DATA_FORMAT: 'mmm dd yyyy',
         TITLE: 'Details',
         COMMENTS_TAB: 'COMMENTS',
         PROPERTY_TAB: 'PROPERTIES',
@@ -99,7 +99,7 @@ describe('CardView Component - properties', () => {
 
         metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.clickMetadatGroup('EXIF');
+        metadataViewPage.clickMetadataGroup('EXIF');
 
         metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
         metadataViewPage.checkPropertyIsNotVisible('properties.exif:model', 'textitem');
@@ -130,25 +130,25 @@ describe('CardView Component - properties', () => {
 
         metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.chekMetadatGroupIsNotExpand('EXIF');
-        metadataViewPage.chekMetadatGroupIsNotExpand('properties');
+        metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
+        metadataViewPage.checkMetadataGroupIsNotExpand('properties');
 
-        metadataViewPage.clickMetadatGroup('properties');
+        metadataViewPage.clickMetadataGroup('properties');
 
-        metadataViewPage.chekMetadatGroupIsNotExpand('EXIF');
-        metadataViewPage.chekMetadatGroupIsExpand('properties');
+        metadataViewPage.checkMetadataGroupIsNotExpand('EXIF');
+        metadataViewPage.checkMetadataGroupIsExpand('properties');
 
-        metadataViewPage.clickMetadatGroup('EXIF');
+        metadataViewPage.clickMetadataGroup('EXIF');
 
-        metadataViewPage.chekMetadatGroupIsExpand('EXIF');
-        metadataViewPage.chekMetadatGroupIsNotExpand('properties');
+        metadataViewPage.checkMetadataGroupIsExpand('EXIF');
+        metadataViewPage.checkMetadataGroupIsNotExpand('properties');
 
         metadataViewPage.enableMulti();
 
-        metadataViewPage.clickMetadatGroup('properties');
+        metadataViewPage.clickMetadataGroup('properties');
 
-        metadataViewPage.chekMetadatGroupIsExpand('EXIF');
-        metadataViewPage.chekMetadatGroupIsExpand('properties');
+        metadataViewPage.checkMetadataGroupIsExpand('EXIF');
+        metadataViewPage.checkMetadataGroupIsExpand('properties');
 
     });
 
@@ -160,14 +160,14 @@ describe('CardView Component - properties', () => {
 
         metadataViewPage.disabledDefaultProperties();
 
-        metadataViewPage.checkkMetadatGroupIsNotPresent('properties');
-        metadataViewPage.checkkMetadatGroupIsPresent('EXIF');
-        metadataViewPage.chekMetadatGroupIsExpand('EXIF');
+        metadataViewPage.checkMetadataGroupIsNotPresent('properties');
+        metadataViewPage.checkMetadataGroupIsPresent('EXIF');
+        metadataViewPage.checkMetadataGroupIsExpand('EXIF');
 
         metadataViewPage.enabledDefaultProperties();
 
-        metadataViewPage.checkkMetadatGroupIsPresent('properties');
-        metadataViewPage.chekMetadatGroupIsExpand('properties');
+        metadataViewPage.checkMetadataGroupIsPresent('properties');
+        metadataViewPage.checkMetadataGroupIsExpand('properties');
     });
 
     it('[C280560] Should show/hide the more properties button when displayDefaultProperties is true/false', () => {

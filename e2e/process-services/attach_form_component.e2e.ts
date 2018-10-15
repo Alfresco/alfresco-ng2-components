@@ -97,7 +97,7 @@ describe('Attach Form Component', () => {
     it('[C280047] Should be able to view the attach-form component after creating a standalone task', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().selectTaskFromTasksList(testNames.taskName);
 
         attachFormPage.checkNoFormMessageIsDisplayed();
@@ -108,7 +108,7 @@ describe('Attach Form Component', () => {
     it('[C280048] Should be able to view the attach-form component after clicking cancel button', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().selectTaskFromTasksList(testNames.taskName);
 
         attachFormPage.clickAttachFormButton();
@@ -128,7 +128,7 @@ describe('Attach Form Component', () => {
     it('[C280017] Should be able to attach a form on a standalone task and complete', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().selectTaskFromTasksList(testNames.taskName);
 
         attachFormPage.clickAttachFormButton();
@@ -139,7 +139,7 @@ describe('Attach Form Component', () => {
         formFields.setFieldValue(by.id, formTextField, testNames.formFieldValue);
         formFields.completeForm();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         taskPage.tasksListPage().selectTaskFromTasksList(testNames.taskName);
 
         expect(formFields.getFieldValue(formTextField)).toEqual(testNames.formFieldValue);

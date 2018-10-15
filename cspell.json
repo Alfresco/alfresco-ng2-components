@@ -119,7 +119,10 @@
     "intitem",
     "DDTHH",
     "MLTEXT",
-    "penta"
+    "penta",
+    "BASESHAREURL",
+    "hardend",
+    "filedata"
   ],
   "dictionaries": [
     "html",
@@ -130,5 +133,8 @@
   "ignorePaths": [
     "lib/{content-services,core,extensions,insights,process-services}/**/*.spec.ts",
     "lib/{content-services,core,extensions,insights,process-services}/**/*.mock.ts"
+  ],
+  "ignoreRegExpList": [
+    "(\"|'|`)((?:\\\\1|(?:(?!\\1).))*)\\1"
   ]
 }

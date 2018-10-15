@@ -64,7 +64,7 @@ describe('Version component permissions', () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG_C.file_location
     });
 
-    let differentCreatoFile = new FileModel({
+    let differentCreatorFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG_D.file_location
     });
@@ -125,14 +125,14 @@ describe('Version component permissions', () => {
 
         await this.alfrescoJsApi.login(fileCreatorUser.id, fileCreatorUser.password);
 
-        await uploadActions.uploadFile(this.alfrescoJsApi, differentCreatoFile.location, differentCreatoFile.name, site.entry.guid);
+        await uploadActions.uploadFile(this.alfrescoJsApi, differentCreatorFile.location, differentCreatorFile.name, site.entry.guid);
 
         done();
     });
 
     describe('Manager', () => {
 
-        let sameCreatoFile = new FileModel({
+        let sameCreatorFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
         });
@@ -142,8 +142,8 @@ describe('Version component permissions', () => {
 
             await this.alfrescoJsApi.login(managerUser.id, managerUser.password);
 
-            let sameCreatoFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatoFile.location, sameCreatoFile.name, site.entry.guid);
-            Object.assign(sameCreatoFile, sameCreatoFileUploaded.entry);
+            let sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
+            Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
             loginPage.loginToContentServicesUsingUserModel(managerUser);
 
@@ -153,12 +153,12 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async (done) => {
-            await this.alfrescoJsApi.nodes.deleteNode(sameCreatoFile.id);
+            await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
             done();
         });
 
         it('[C277200] should a user with Manager permission be able to upload a new version for a file with different creator', () => {
-            contentListPage.versionManagerContent(differentCreatoFile.name);
+            contentListPage.versionManagerContent(differentCreatorFile.name);
 
             versionManagePage.showNewVersionButton.click();
 
@@ -193,7 +193,7 @@ describe('Version component permissions', () => {
         });
 
         it('[C277196] Should a user with Manager permission be able to upload a new version for the created file', () => {
-            contentListPage.versionManagerContent(sameCreatoFile.name);
+            contentListPage.versionManagerContent(sameCreatorFile.name);
 
             versionManagePage.showNewVersionButton.click();
 
@@ -225,7 +225,7 @@ describe('Version component permissions', () => {
         });
 
         it('[C277197] Should a user with Consumer permission not be able to upload a new version for a file with different creator', () => {
-            contentListPage.versionManagerContent(differentCreatoFile.name);
+            contentListPage.versionManagerContent(differentCreatorFile.name);
 
             notificationPage.checkNotifyContains(`You don't have access to do this`);
         });
@@ -239,7 +239,7 @@ describe('Version component permissions', () => {
     });
 
     describe('Contributor', () => {
-        let sameCreatoFile = new FileModel({
+        let sameCreatorFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
         });
@@ -249,8 +249,8 @@ describe('Version component permissions', () => {
 
             await this.alfrescoJsApi.login(contributorUser.id, contributorUser.password);
 
-            let sameCreatoFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatoFile.location, sameCreatoFile.name, site.entry.guid);
-            Object.assign(sameCreatoFile, sameCreatoFileUploaded.entry);
+            let sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
+            Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
             loginPage.loginToContentServicesUsingUserModel(contributorUser);
 
@@ -260,12 +260,12 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async (done) => {
-            await this.alfrescoJsApi.nodes.deleteNode(sameCreatoFile.id);
+            await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
             done();
         });
 
         it('[C277177] Should a user with Contributor permission be able to upload a new version for the created file', () => {
-            contentListPage.versionManagerContent(sameCreatoFile.name);
+            contentListPage.versionManagerContent(sameCreatorFile.name);
 
             versionManagePage.showNewVersionButton.click();
 
@@ -286,7 +286,7 @@ describe('Version component permissions', () => {
         });
 
         it('[C277198] Should a user with Contributor permission not be able to upload a new version for a file with different creator', () => {
-            contentListPage.versionManagerContent(differentCreatoFile.name);
+            contentListPage.versionManagerContent(differentCreatorFile.name);
 
             notificationPage.checkNotifyContains(`You don't have access to do this`);
         });
@@ -299,7 +299,7 @@ describe('Version component permissions', () => {
     });
 
     describe('Collaborator', () => {
-        let sameCreatoFile = new FileModel({
+        let sameCreatorFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
             'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
         });
@@ -309,8 +309,8 @@ describe('Version component permissions', () => {
 
             await this.alfrescoJsApi.login(collaboratorUser.id, collaboratorUser.password);
 
-            let sameCreatoFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatoFile.location, sameCreatoFile.name, site.entry.guid);
-            Object.assign(sameCreatoFile, sameCreatoFileUploaded.entry);
+            let sameCreatorFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
+            Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
             loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
 
@@ -320,12 +320,12 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async (done) => {
-            await this.alfrescoJsApi.nodes.deleteNode(sameCreatoFile.id);
+            await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
             done();
         });
 
         it('[C277195] Should a user with Collaborator permission be able to upload a new version for the created file', () => {
-            contentListPage.versionManagerContent(sameCreatoFile.name);
+            contentListPage.versionManagerContent(sameCreatorFile.name);
 
             versionManagePage.showNewVersionButton.click();
 
@@ -360,7 +360,7 @@ describe('Version component permissions', () => {
         });
 
         it('[C277199] should a user with Collaborator permission be able to upload a new version for a file with different creator', () => {
-            contentListPage.versionManagerContent(differentCreatoFile.name);
+            contentListPage.versionManagerContent(differentCreatorFile.name);
 
             versionManagePage.showNewVersionButton.click();
 

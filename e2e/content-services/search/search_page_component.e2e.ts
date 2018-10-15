@@ -61,8 +61,8 @@ describe('Search component - Search Page', () => {
     let fileNames = [], adminFileNames = [], nrOfFiles = 15, adminNrOfFiles = 5;
 
     beforeAll(async (done) => {
-        fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, search.active.base, search.active.extension);
-        adminFileNames = Util.generateSeqeunceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
+        fileNames = Util.generateSequenceFiles(1, nrOfFiles, search.active.base, search.active.extension);
+        adminFileNames = Util.generateSequenceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
         search.active.firstFile = fileNames[0];
         search.active.secondFile = fileNames[1];
         fileNames.splice(0, 1);

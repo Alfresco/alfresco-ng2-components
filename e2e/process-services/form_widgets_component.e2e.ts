@@ -80,7 +80,7 @@ describe('Form widgets', () => {
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToApp(appModel.name)
             .clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(newTask).addDescription('Description').addForm(app.formName).clickStartButton()
             .then(() => {
                 taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(newTask);
@@ -127,10 +127,10 @@ describe('Form widgets', () => {
 
     it('[C272780] Should display attach file and attach folder in form', () => {
 
-        expect(taskPage.formFields().getFieldLabel(appFields.attachfolder_id))
-            .toEqual(formInstance.getWidgetBy('id', appFields.attachfolder_id).name);
-        expect(taskPage.formFields().getFieldLabel(appFields.attachfile_id))
-            .toEqual(formInstance.getWidgetBy('id', appFields.attachfile_id).name);
+        expect(taskPage.formFields().getFieldLabel(appFields.attachFolder_id))
+            .toEqual(formInstance.getWidgetBy('id', appFields.attachFolder_id).name);
+        expect(taskPage.formFields().getFieldLabel(appFields.attachFile_id))
+            .toEqual(formInstance.getWidgetBy('id', appFields.attachFile_id).name);
     });
 
     it('[C272781] Should display date and date & time in form', () => {
@@ -161,10 +161,10 @@ describe('Form widgets', () => {
 
     it('[C272783] Should display displayText and displayValue in form', () => {
 
-        expect(widget.displayTextWidget().getFieldLabel(appFields.displaytext_id))
-            .toEqual(formInstance.getWidgetBy('id', appFields.displaytext_id).value);
-        expect(widget.displayValueWidget().getFieldLabel(appFields.displayvalue_id))
-            .toEqual(formInstance.getWidgetBy('id', appFields.displayvalue_id).value || 'Unknown type: readonly');
+        expect(widget.displayTextWidget().getFieldLabel(appFields.displayText_id))
+            .toEqual(formInstance.getWidgetBy('id', appFields.displayText_id).value);
+        expect(widget.displayValueWidget().getFieldLabel(appFields.displayValue_id))
+            .toEqual(formInstance.getWidgetBy('id', appFields.displayValue_id).value || 'Unknown type: readonly');
     });
 
     it('[C272784] Should display typeahead and header in form', () => {
@@ -172,10 +172,10 @@ describe('Form widgets', () => {
         expect(widget.headerWidget().getFieldLabel(appFields.header_id))
             .toEqual(formInstance.getWidgetBy('id', appFields.header_id).name);
 
-        expect(taskPage.formFields().getFieldValue(appFields.typeahead_id))
-            .toEqual(formInstance.getWidgetBy('id', appFields.typeahead_id).value || '');
-        expect(taskPage.formFields().getFieldLabel(appFields.typeahead_id))
-            .toEqual(formInstance.getWidgetBy('id', appFields.typeahead_id).name);
+        expect(taskPage.formFields().getFieldValue(appFields.typeAhead_id))
+            .toEqual(formInstance.getWidgetBy('id', appFields.typeAhead_id).value || '');
+        expect(taskPage.formFields().getFieldLabel(appFields.typeAhead_id))
+            .toEqual(formInstance.getWidgetBy('id', appFields.typeAhead_id).name);
     });
 
     it('[C272785] Should display checkbox and radio button in form', () => {
@@ -184,10 +184,10 @@ describe('Form widgets', () => {
         expect(taskPage.formFields().getFieldLabel(appFields.checkbox_id))
             .toContain(formInstance.getWidgetBy('id', appFields.checkbox_id).name);
 
-        expect(taskPage.formFields().getFieldLabel(appFields.radiobuttons_id))
-            .toContain(formInstance.getWidgetBy('id', appFields.radiobuttons_id).name);
-        expect(widget.radioWidget().getSpecificOptionLabel(appFields.radiobuttons_id, radioOption))
-            .toContain(formInstance.getWidgetBy('id', appFields.radiobuttons_id).options[radioOption - 1].name);
+        expect(taskPage.formFields().getFieldLabel(appFields.radioButtons_id))
+            .toContain(formInstance.getWidgetBy('id', appFields.radioButtons_id).name);
+        expect(widget.radioWidget().getSpecificOptionLabel(appFields.radioButtons_id, radioOption))
+            .toContain(formInstance.getWidgetBy('id', appFields.radioButtons_id).options[radioOption - 1].name);
     });
 
     it('[C268149] Should display hyperlink, dropdown and dynamic table in form', () => {
@@ -202,10 +202,10 @@ describe('Form widgets', () => {
         expect(widget.dropdown().getSelectedOptionText(appFields.dropdown_id))
             .toContain(formInstance.getWidgetBy('id', appFields.dropdown_id).value);
 
-        expect(widget.dynamicTable().getFieldLabel(appFields.dynamictable_id))
-            .toContain(formInstance.getWidgetBy('id', appFields.dynamictable_id).name);
-        expect(widget.dynamicTable().getColumnName(appFields.dynamictable_id))
-            .toContain(formInstance.getWidgetBy('id', appFields.dynamictable_id).columnDefinitions[0].name);
+        expect(widget.dynamicTable().getFieldLabel(appFields.dynamicTable_id))
+            .toContain(formInstance.getWidgetBy('id', appFields.dynamicTable_id).name);
+        expect(widget.dynamicTable().getColumnName(appFields.dynamicTable_id))
+            .toContain(formInstance.getWidgetBy('id', appFields.dynamicTable_id).columnDefinitions[0].name);
     });
 
 });

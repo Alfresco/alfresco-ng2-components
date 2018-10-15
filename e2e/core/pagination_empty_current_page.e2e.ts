@@ -62,7 +62,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, files.base, files.extension);
+        fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 

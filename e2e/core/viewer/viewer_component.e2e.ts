@@ -182,13 +182,13 @@ describe('Viewer', () => {
 
     describe('PowerPoint Folder Uploaded', () => {
 
-        let uploadedPpts;
+        let uploadedPpt;
         let pptFolderUploaded;
 
         beforeAll(async (done) => {
             pptFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, pptFolderInfo.name, '-my-');
 
-            uploadedPpts = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, pptFolderInfo.location, pptFolderUploaded.entry.id);
+            uploadedPpt = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, pptFolderInfo.location, pptFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -204,7 +204,7 @@ describe('Viewer', () => {
         it('[C280009] Should be possible to open any PowerPoint file', () => {
             contentServicesPage.navigateToFolder('ppt');
 
-            uploadedPpts.forEach((currentFile) => {
+            uploadedPpt.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     contentServicesPage.doubleClickRow(currentFile.entry.name);
                     viewerPage.checkFileIsLoaded();

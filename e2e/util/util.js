@@ -183,9 +183,9 @@ exports.generateRandomStringToUpperCase = function (length) {
  * @param baseName{string} the base name of all files
  * @param extension{string} the extension of the file
  * @return fileNames
- * @method generateSeqeunceFiles
+ * @method generateSequenceFiles
  */
-exports.generateSeqeunceFiles = function (startIndex, endIndex, baseName, extension) {
+exports.generateSequenceFiles = function (startIndex, endIndex, baseName, extension) {
     var fileNames = [];
     for (var i = startIndex; i <= endIndex; i++) {
         fileNames.push(baseName + i + extension);

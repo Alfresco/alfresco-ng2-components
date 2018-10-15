@@ -109,7 +109,7 @@ describe('Aspect oriented config', () => {
         metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.clickMetadatGroup('IMAGE');
+        metadataViewPage.clickMetadataGroup('IMAGE');
         metadataViewPage.checkPropertyIsVisible('properties.exif:pixelXDimension', 'textitem');
         metadataViewPage.checkPropertyIsVisible('properties.exif:pixelYDimension', 'textitem');
         metadataViewPage.checkPropertyIsNotVisible('properties.exif:isoSpeedRatings', 'textitem');
@@ -142,10 +142,10 @@ describe('Aspect oriented config', () => {
         metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.checkkMetadatGroupIsPresent('EXIF');
-        metadataViewPage.checkkMetadatGroupIsPresent('properties');
-        metadataViewPage.checkkMetadatGroupIsPresent('Versionable');
-        metadataViewPage.checkkMetadatGroupIsNotPresent('exists');
+        metadataViewPage.checkMetadataGroupIsPresent('EXIF');
+        metadataViewPage.checkMetadataGroupIsPresent('properties');
+        metadataViewPage.checkMetadataGroupIsPresent('Versionable');
+        metadataViewPage.checkMetadataGroupIsNotPresent('exists');
     });
 
     it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided' , () => {
@@ -163,13 +163,13 @@ describe('Aspect oriented config', () => {
         metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.checkkMetadatGroupIsPresent('EXIF');
-        metadataViewPage.checkkMetadatGroupIsPresent('properties');
-        metadataViewPage.checkkMetadatGroupIsPresent('Versionable');
-        metadataViewPage.checkkMetadatGroupIsPresent('Titled');
-        metadataViewPage.checkkMetadatGroupIsPresent('Auditable');
-        metadataViewPage.checkkMetadatGroupIsPresent('Author');
-        metadataViewPage.checkkMetadatGroupIsPresent('Content');
+        metadataViewPage.checkMetadataGroupIsPresent('EXIF');
+        metadataViewPage.checkMetadataGroupIsPresent('properties');
+        metadataViewPage.checkMetadataGroupIsPresent('Versionable');
+        metadataViewPage.checkMetadataGroupIsPresent('Titled');
+        metadataViewPage.checkMetadataGroupIsPresent('Auditable');
+        metadataViewPage.checkMetadataGroupIsPresent('Author');
+        metadataViewPage.checkMetadataGroupIsPresent('Content');
     });
 
     it('[C260182] Should show all the aspects if the default configuration contains the * symbol' , () => {
@@ -192,13 +192,13 @@ describe('Aspect oriented config', () => {
         metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.checkkMetadatGroupIsPresent('EXIF');
-        metadataViewPage.checkkMetadatGroupIsPresent('properties');
-        metadataViewPage.checkkMetadatGroupIsPresent('Versionable');
-        metadataViewPage.checkkMetadatGroupIsPresent('Titled');
-        metadataViewPage.checkkMetadatGroupIsPresent('Auditable');
-        metadataViewPage.checkkMetadatGroupIsPresent('Author');
-        metadataViewPage.checkkMetadatGroupIsPresent('Content');
+        metadataViewPage.checkMetadataGroupIsPresent('EXIF');
+        metadataViewPage.checkMetadataGroupIsPresent('properties');
+        metadataViewPage.checkMetadataGroupIsPresent('Versionable');
+        metadataViewPage.checkMetadataGroupIsPresent('Titled');
+        metadataViewPage.checkMetadataGroupIsPresent('Auditable');
+        metadataViewPage.checkMetadataGroupIsPresent('Author');
+        metadataViewPage.checkMetadataGroupIsPresent('Content');
     });
 
     it('[C268899] Should be possible use a Translation key as Title of a metadata group' , () => {
@@ -243,11 +243,11 @@ describe('Aspect oriented config', () => {
         metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.checkkMetadatGroupIsPresent('GROUP-TITLE1-TRANSLATION-KEY');
-        metadataViewPage.checkkMetadatGroupIsPresent('GROUP-TITLE2-TRANSLATION-KEY');
+        metadataViewPage.checkMetadataGroupIsPresent('GROUP-TITLE1-TRANSLATION-KEY');
+        metadataViewPage.checkMetadataGroupIsPresent('GROUP-TITLE2-TRANSLATION-KEY');
 
-        expect(metadataViewPage.getkMetadatGroupTitle('GROUP-TITLE1-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION ONE');
-        expect(metadataViewPage.getkMetadatGroupTitle('GROUP-TITLE2-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION TWO');
+        expect(metadataViewPage.getMetadataGroupTitle('GROUP-TITLE1-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION ONE');
+        expect(metadataViewPage.getMetadataGroupTitle('GROUP-TITLE2-TRANSLATION-KEY')).toBe('CUSTOM TITLE TRANSLATION TWO');
 
     });
 
@@ -278,8 +278,8 @@ describe('Aspect oriented config', () => {
         metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.checkkMetadatGroupIsPresent('properties');
-        metadataViewPage.checkkMetadatGroupIsPresent('EXIF');
-        metadataViewPage.checkkMetadatGroupIsPresent('Versionable');
+        metadataViewPage.checkMetadataGroupIsPresent('properties');
+        metadataViewPage.checkMetadataGroupIsPresent('EXIF');
+        metadataViewPage.checkMetadataGroupIsPresent('Versionable');
     });
 });

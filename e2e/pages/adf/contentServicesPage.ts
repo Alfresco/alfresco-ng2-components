@@ -423,7 +423,7 @@ export class ContentServicesPage {
         Util.waitUntilElementIsVisible(this.createdHeader);
     }
 
-    checkDandDIsDisplayed() {
+    checkDragAndDropDIsDisplayed() {
         Util.waitUntilElementIsVisible(this.dragAndDrop);
     }
 

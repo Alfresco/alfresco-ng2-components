@@ -299,10 +299,6 @@ export class LoginPage {
         this.formControllersPage.enableToggle(this.successRouteSwitch);
     }
 
-    disableLogowitch() {
-        this.formControllersPage.disableToggle(this.logoSwitch);
-    }
-
     enableLogoSwitch() {
         this.formControllersPage.enableToggle(this.logoSwitch);
     }
