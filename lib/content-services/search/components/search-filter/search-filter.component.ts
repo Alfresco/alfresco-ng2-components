@@ -282,7 +282,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                     }
                     return <FacetQuery> {
                         ...query,
-                        label: this.translationService.instant(query.label),
+                        label: query.label,
                         count: queryResult.count
                     };
                 });

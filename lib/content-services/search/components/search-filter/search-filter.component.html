@@ -41,7 +41,7 @@
                         [checked]="query.checked"
                         [attr.data-automation-id]="'checkbox-'+facetQueriesLabel+'-'+query.label"
                         (change)="onToggleFacetQuery($event, query)">
-                        {{ query.label }} ({{ query.count }})
+                        {{ query.label | translate }} ({{ query.count }})
                     </mat-checkbox>
                 </ng-container>
             </div>
