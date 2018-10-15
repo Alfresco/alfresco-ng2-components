@@ -100,4 +100,18 @@ describe('Search Filters', () => {
         searchFiltersPage.clickSizeShowLessButtonUntilIsNotDisplayed();
     });
 
+    it('[C286556] Search categories should preserve their collapsed/expanded state after the search', () => {
+        browser.get(TestConfig.adf.url + '/search;q=*');
+
+        searchFiltersPage.clickFileTypeFilterHeader();
+        searchFiltersPage.checkFileTypeFilterIsCollapsed();
+        searchFiltersPage.clickFileSizeFilterHeader();
+        searchFiltersPage.checkFileSizeFilterIsCollapsed();
+
+        searchFiltersPage.selectCreator('Administrator');
+
+        searchFiltersPage.checkFileTypeFilterIsCollapsed();
+        searchFiltersPage.checkFileSizeFilterIsCollapsed();
+    });
+
 });
