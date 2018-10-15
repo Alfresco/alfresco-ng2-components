@@ -73,14 +73,14 @@ var TaskFiltersPage = function () {
         Util.waitUntilElementIsVisible(queuedTask);
         return queuedTask;
     };
-    
+
     this.clickMyTaskTaskFilter = function() {
         Util.waitUntilElementIsVisible(myTasks);
         return myTasks.click();
     };
 
     this.clickCompletedTaskFilter = function() {
-        Util.waitUntilElementIsVisible(completedTask);
+        Util.waitUntilElementIsClickable(completedTask);
         return completedTask.click();
     };
 

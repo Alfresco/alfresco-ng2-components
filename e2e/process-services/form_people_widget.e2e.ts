@@ -22,6 +22,7 @@ import { Widget } from '../pages/adf/process_services/widgets/widget';
 import StartProcess = require('../pages/adf/process_services/startProcessPage');
 import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
+import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -44,6 +45,7 @@ describe('Form widgets - People', () => {
     let startProcess = new StartProcess();
     let processDetailsPage = new ProcessDetailsPage();
     let taskDetails = new TaskDetailsPage();
+    let appNavigationBar = new AppNavigationBarPage();
 
     beforeAll(async (done) => {
         let users = new UsersActions();
@@ -76,8 +78,7 @@ describe('Form widgets - People', () => {
         done();
     });
 
-    it('[C286577] Should be able to start a process with people widget', async () => {
-
+    beforeEach(() => {
         processServicesPage.goToProcessServices().goToApp(appModel.name)
             .clickProcessButton();
         processFiltersPage.clickCreateProcessButton();
@@ -86,9 +87,35 @@ describe('Form widgets - People', () => {
         widget.peopleWidget().checkPeopleFieldIsDisplayed();
         widget.peopleWidget().fillPeopleField(processUserModel.firstName);
         widget.peopleWidget().selectUserFromDropdown();
+    });
 
-        startProcess.clickStartProcessButton();
+    it('[C286577] Should be able to start a process with people widget', async () => {
+
+        startProcess.clickFormStartProcessButton();
         processDetailsPage.clickOnActiveTask();
+
+        browser.controlFlow().execute(async () => {
+            let taskId = await taskDetails.getId();
+            let taskForm = await alfrescoJsApi.activiti.taskApi.getTaskForm(taskId);
+            let userEmail = taskForm['fields'][0].fields['1'][0].value.email;
+            expect(userEmail).toEqual(processUserModel.email);
+        });
+    });
+
+    it('[C286576] Should be able to see user in completed task', async () => {
+
+        startProcess.enterProcessName(app.processName);
+        startProcess.clickFormStartProcessButton();
+
+        processDetailsPage.clickOnActiveTask();
+        taskDetails.checkCompleteFormButtonIsDisplayed();
+        taskDetails.clickCompleteFormTask();
+
+        appNavigationBar.clickProcessButton();
+        processFiltersPage.clickCompletedFilterButton();
+        processFiltersPage.selectFromProcessList(app.processName);
+
+        processDetailsPage.clickOnCompletedTask();
 
         browser.controlFlow().execute(async () => {
             let taskId = await taskDetails.getId();

@@ -46,6 +46,7 @@ export class TaskDetailsPage {
     taskDetailsSection = element(by.css('div[data-automation-id="adf-tasks-details"]'));
     taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
     completeTask = element(by.css('button[id="adf-no-form-complete-button"]'));
+    completeFormTask = element(by.css('button[id="adf-form-complete"]'));
     taskDetailsTitle = element(by.css('h2[class="activiti-task-details__header"] span'));
     auditLogButton = element(by.css('button[adf-task-audit]'));
     noPeopleInvolved = element(by.id('no-people-label'));
@@ -254,7 +255,6 @@ export class TaskDetailsPage {
 
     checkUserIsSelected(user) {
         let row = element(by.cssContainingText('div[class*="search-list-container"] div[class*="people-full-name"]', user));
-        let selectedRow = this.getRowsUser(user).element(by.css('ancestor::tr[class*="is-selected"]'));
         Util.waitUntilElementIsVisible(row);
         return this;
     }
@@ -381,6 +381,16 @@ export class TaskDetailsPage {
     clickCompleteTask() {
         Util.waitUntilElementIsVisible(this.completeTask);
         return this.completeTask.click();
+    }
+
+    checkCompleteFormButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.completeFormTask);
+        return this.completeFormTask;
+    }
+
+    clickCompleteFormTask() {
+        Util.waitUntilElementIsClickable(this.completeFormTask);
+        return this.completeFormTask.click();
     }
 
 }
