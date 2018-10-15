@@ -109,9 +109,17 @@
     "quicktime",
     "Promise",
     "Examinate",
-    "mymeType",
     "highlightable",
-    "Droppable"
+    "Droppable",
+    "UPDATEPERMISSIONS",
+    "Whitespaces",
+    "keyvaluepairs",
+    "datetimeitem",
+    "floatitem",
+    "intitem",
+    "DDTHH",
+    "MLTEXT",
+    "penta"
   ],
   "dictionaries": [
     "html",

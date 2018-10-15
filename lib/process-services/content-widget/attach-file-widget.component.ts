@@ -213,8 +213,8 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 )
             )
         )
-        .subscribe(([mymeType, res, isExternal]) => {
-            res.mimeType = mymeType;
+        .subscribe(([mimeType, res, isExternal]) => {
+            res.mimeType = mimeType;
             res.isExternal = isExternal;
             filesSaved.push(res);
         },

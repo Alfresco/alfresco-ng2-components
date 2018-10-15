@@ -84,7 +84,7 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
      */
     onFolderEntityDropped(folder: any): void {
         if (!this.disabled && folder.isDirectory) {
-            FileUtils.flattern(folder).then(filesInfo => {
+            FileUtils.flatten(folder).then(filesInfo => {
                 this.uploadFilesInfo(filesInfo);
             });
         }

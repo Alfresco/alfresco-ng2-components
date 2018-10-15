@@ -211,7 +211,7 @@ export class UploadDirective implements OnInit, OnDestroy {
                                     }));
                                 } else if (item.isDirectory) {
                                     iterations.push(new Promise(resolveFolder => {
-                                        FileUtils.flattern(item).then(files => resolveFolder(files));
+                                        FileUtils.flatten(item).then(files => resolveFolder(files));
                                     }));
                                 }
                             }
