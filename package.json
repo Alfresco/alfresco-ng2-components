@@ -93,7 +93,6 @@
     "raphael": "2.2.7",
     "reflect-metadata": "0.1.10",
     "rxjs": "^6.2.2",
-    "rxjs-compat": "^6.1.0",
     "systemjs": "0.19.27",
     "web-animations-js": "2.3.1",
     "zone.js": "~0.8.26"
