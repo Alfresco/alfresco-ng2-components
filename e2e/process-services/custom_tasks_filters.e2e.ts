@@ -25,7 +25,7 @@ import PaginationPage = require('../pages/adf/paginationPage');
 import TasksPage = require('../pages/adf/process_services/tasksPage');
 import AppPublish = require('../models/APS/AppPublish');
 import CONSTANTS = require('../util/constants');
-var moment = require('moment');
+let moment = require('moment');
 
 import Task = require('../models/APS/Task');
 import ProcessModel = require('../models/APS/UpdateProcessModel');
@@ -61,16 +61,16 @@ describe('Start Task - Custom App', () => {
     let secondApp = resources.Files.WIDGETS_SMOKE_TEST;
     let appModel, secondAppModel;
     let completedTasks = [];
-    let paginationTasksName = ["t01", "t02", "t03", "t04", "t05", "t06", "t07", "t08", "t09", "t10", "t11", "t12", "t13", "taskOne", "taskTwo", "taskOne"];
-    let completedTasksName = ["completed01", "completed02", "completed03"];
-    let allTasksName = ["t01", "taskOne", "taskTwo", "taskOne", "t13", "t12", "t11", "t10", "t09", "t08", "t07", "t06", "t05", "t04", "t03", "t02", "User Task", "User Task", "User Task", "User Task"];
-    let invalidAppId = "1234567890", invalidName = "invalidName", invalidTaskId = '0000';
-    let noTasksFoundMessage = "No Tasks Found";
+    let paginationTasksName = ['t01', 't02', 't03', 't04', 't05', 't06', 't07', 't08', 't09', 't10', 't11', 't12', 't13', 'taskOne', 'taskTwo', 'taskOne'];
+    let completedTasksName = ['completed01', 'completed02', 'completed03'];
+    let allTasksName = ['t01', 'taskOne', 'taskTwo', 'taskOne', 't13', 't12', 't11', 't10', 't09', 't08', 't07', 't06', 't05', 't04', 't03', 't02', 'User Task', 'User Task', 'User Task', 'User Task'];
+    let invalidAppId = '1234567890', invalidName = 'invalidName', invalidTaskId = '0000';
+    let noTasksFoundMessage = 'No Tasks Found';
     let nrOfTasks = 20, currentPage = 1, totalNrOfPages = 'of 4';
-    var currentDateStandardFormat=Util.getCrtDateInFormat('YYYY-MM-DDTHH:mm:ss.SSSZ');
-    var currentDate=Util.getCrtDateInFormat('MM/DD/YYYY');
-    var beforeDate=moment().add(-1, 'days').format('MM/DD/YYYY');
-    var afterDate=moment().add(1, 'days').format('MM/DD/YYYY');
+    let currentDateStandardFormat=Util.getCrtDateInFormat('YYYY-MM-DDTHH:mm:ss.SSSZ');
+    let currentDate=Util.getCrtDateInFormat('MM/DD/YYYY');
+    let beforeDate=moment().add(-1, 'days').format('MM/DD/YYYY');
+    let afterDate=moment().add(1, 'days').format('MM/DD/YYYY');
     let taskWithDueDate;
     let processDefinitionId;
 
@@ -609,7 +609,7 @@ describe('Start Task - Custom App', () => {
         });
     });
 
-    it('[C286623] Should be able to see No tasks found when typing an invalid processInstanceId', () => {
+    fit('[C286623] Should be able to see No tasks found when typing an invalid processInstanceId', () => {
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
 

@@ -28,7 +28,7 @@ export class AppsRuntimeActions {
             if (runtimeApps.data[i].name === appName) {
                 desiredApp = runtimeApps.data[i];
             }
-        };
+        }
 
         return desiredApp;
     }
