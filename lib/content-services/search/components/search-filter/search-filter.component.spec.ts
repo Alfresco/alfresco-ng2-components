@@ -40,6 +40,7 @@ describe('SearchFilterComponent', () => {
             dataLoaded: new Subject()
         };
         const translationMock = new TranslationMock();
+        translationMock.instant = (key) => `translated${key}`;
         component = new SearchFilterComponent(queryBuilder, searchMock, translationMock);
         component.ngOnInit();
     });
@@ -291,6 +292,33 @@ describe('SearchFilterComponent', () => {
 
         expect(component.responseFacetFields[0].buckets.items[0].count).toEqual(6);
         expect(component.responseFacetFields[0].buckets.items[1].count).toEqual(0);
+    });
+
+    it('should update correctly the existing bucket values when having translated labels', () => {
+        component.responseFacetFields = null;
+
+        const anyi18nKey = 'SEARCH.BUTTON.TOOLTIP';
+        queryBuilder.config = {
+            categories: [],
+            facetFields: { fields: [{ label: anyi18nKey, field: 'f1' }] },
+            facetQueries: { queries: [] }
+        };
+
+        const firstCallFields: any = [{
+            label: anyi18nKey,
+            buckets: [{ label: anyi18nKey, count: 10 }]
+        }];
+        const firstCallData = { list: { context: { facetsFields: firstCallFields }}};
+        component.onDataLoaded(firstCallData);
+        expect(component.responseFacetFields[0].buckets.items[0].count).toEqual(10);
+
+        const secondCallFields: any = [{
+            label: anyi18nKey,
+            buckets: [{ label: anyi18nKey, count: 6 }]
+        }];
+        const secondCallData = { list: { context: { facetsFields: secondCallFields}}};
+        component.onDataLoaded(secondCallData);
+        expect(component.responseFacetFields[0].buckets.items[0].count).toEqual(6);
     });
 
     it('should fetch facet fields from response payload and show the already checked items', () => {
