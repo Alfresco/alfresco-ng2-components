@@ -96,7 +96,7 @@
                     [checked]="bucket.checked"
                     [attr.data-automation-id]="'checkbox-'+field.label+'-'+(bucket.display || bucket.label)"
                     (change)="onToggleBucket($event, field, bucket)">
-                    {{ bucket.display || bucket.label }} <span *ngIf="bucket.count!==null">(</span>{{ bucket.count }}<span *ngIf="bucket.count!==null">)</span>
+                    {{ bucket.display || bucket.label | translate }} <span *ngIf="bucket.count!==null">(</span>{{ bucket.count }}<span *ngIf="bucket.count!==null">)</span>
                 </mat-checkbox>
             </div>
 

@@ -232,7 +232,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 bucketList.filter = (bucket: FacetFieldBucket): boolean => {
                     if (bucket && bucketList.filterText) {
                         const pattern = (bucketList.filterText || '').toLowerCase();
-                        const label = (bucket.display || bucket.label || '').toLowerCase();
+                        const label = (bucket.display || this.translationService.instant(bucket.label || '')).toLowerCase();
                         return label.startsWith(pattern);
                     }
                     return true;
