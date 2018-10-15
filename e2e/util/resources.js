@@ -123,7 +123,24 @@ exports.Files = {
                 simpleText: "textsimple",
                 textMinMax: "textminmax",
                 textMask: "textmask",
-                textMaskReversed: "textmaskreversed"
+                textMaskReversed: "textmaskreversed",
+                textRegexp: "textregexp",
+                showHiddenText: "showhiddentext",
+                textHidden: "texthidden"
+            }
+        },
+
+        MULTILINE_TEXT: {
+            file_location: "/resources/apps/WidgetApps.zip",
+            formName: "MultiWidgetProcess",
+            title: "MultiWidgetProcess",
+            processName: "MultiWidgetProcess",
+            FIELD: {
+                multiSimple: "multisimple",
+                multiMinMax: "multiminmax",
+                multiRegexp: "multiRegexp",
+                showMultiHidden: "showmultihidden",
+                multiVisible: "multivisible"
             }
         }
     },

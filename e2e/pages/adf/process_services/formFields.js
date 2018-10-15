@@ -39,6 +39,16 @@ var FormFields = function () {
         return this;
     };
 
+    this.checkWidgetIsVisible = function (fieldId) {
+        var fieldElement = element(by.css("adf-form-field div[id='field-"+fieldId+"-container']"));
+        Util.waitUntilElementIsVisible(fieldElement);
+    }
+
+    this.checkWidgetIsHidden = function (fieldId) {
+        var hiddenElement = element(by.css("adf-form-field div[id='field-"+fieldId+"-container'][hidden]"));
+        Util.waitUntilElementIsVisible(hiddenElement);
+    }
+
     this.getWidget = function (fieldId) {
         var widget = element(by.css("adf-form-field div[id='field-" + fieldId + "-container']"));
         Util.waitUntilElementIsVisible(widget);
