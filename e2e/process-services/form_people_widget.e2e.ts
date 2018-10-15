@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*tslint:disable*/
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
@@ -77,7 +76,7 @@ describe('Form widgets - People', () => {
         done();
     });
 
-    it('[C272778] Check text, multiline widgets - label, value and displayed', async () => {
+    it('[C286577] Should be able to start a process with people widget', async () => {
 
         processServicesPage.goToProcessServices().goToApp(appModel.name)
             .clickProcessButton();
@@ -94,7 +93,7 @@ describe('Form widgets - People', () => {
         browser.controlFlow().execute(async () => {
             let taskId = await taskDetails.getId();
             let taskForm = await alfrescoJsApi.activiti.taskApi.getTaskForm(taskId);
-            let userEmail = taskForm["fields"][0].fields["1"][0].value.email;
+            let userEmail = taskForm['fields'][0].fields['1'][0].value.email;
             expect(userEmail).toEqual(processUserModel.email);
         });
     });
