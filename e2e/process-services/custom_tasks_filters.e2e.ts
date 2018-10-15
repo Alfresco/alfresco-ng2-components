@@ -17,8 +17,8 @@
 
 import { by } from 'protractor';
 
-import LoginPage = require('../pages/adf/loginPage');
-import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import TaskListSinglePage = require('../pages/adf/process_services/taskListSinglePage');
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import PaginationPage = require('../pages/adf/paginationPage');
@@ -272,7 +272,7 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.clickResetButton();
 
         taskListSinglePage.typeItemsPerPage('0').clickAppId();
-        expect(taskListSinglePage.getItemsPerPageFieldErrorMessage()).toEqual('No ideea');
+        expect(taskListSinglePage.getItemsPerPageFieldErrorMessage()).toEqual('Value must be greater than or equal to 1');
     });
 
     it('[C286404] Navigate using page field', function () {
@@ -330,7 +330,7 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.clickResetButton();
 
         taskListSinglePage.typePage('0').clickAppId();
-        expect(taskListSinglePage.getPageFieldErrorMessage()).toEqual('No ideea');
+        expect(taskListSinglePage.getPageFieldErrorMessage()).toEqual('Value must be greater than or equal to 1');
 
         taskListSinglePage.clickResetButton();
         taskListSinglePage.typePage('2');
