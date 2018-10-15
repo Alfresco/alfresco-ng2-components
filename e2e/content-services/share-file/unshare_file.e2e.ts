@@ -117,7 +117,7 @@ describe('Unshare file', () => {
             done();
         });
 
-        it('[C286550] Unshare action opens confirmation dialog', () => {
+        it('[C286550] Should display unshare confirmation dialog', () => {
             contentListPage.clickRowToSelect(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
@@ -125,7 +125,7 @@ describe('Unshare file', () => {
             shareDialog.confirmationDialogIsDisplayed();
         });
 
-        it('[C286551] Cancel unshare file action', () => {
+        it('[C286551] Should be able to cancel unshare action', () => {
             contentListPage.clickRowToSelect(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
@@ -135,7 +135,7 @@ describe('Unshare file', () => {
             shareDialog.shareToggleButtonIsChecked();
         });
 
-        it('[C286552] Confirm unshare file action', async () => {
+        it('[C286552] Should be able to confirm unshare action', async () => {
             contentListPage.clickRowToSelect(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
@@ -145,7 +145,7 @@ describe('Unshare file', () => {
             shareDialog.shareToggleButtonIsChecked();
         });
 
-        it('[C280556] Unshared file should show 404 page', async() => {
+        it('[C280556] Should redirect to 404 when trying to access an unshared file', async() => {
             contentListPage.clickRowToSelect(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
@@ -166,7 +166,7 @@ describe('Unshare file', () => {
             done();
         });
 
-        it('[C286555] User without permission cannot remove shared file', () => {
+        it('[C286555] Should NOT be able to unshare file without permission', () => {
             navBar.goToSite(testSite);
             contentListPage.navigateToFolder('documentLibrary');
             contentListPage.clickRowToSelect(nodeBody.name);
