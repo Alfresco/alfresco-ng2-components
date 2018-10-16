@@ -16,15 +16,34 @@
  */
 
 import FormFields = require('../formFields');
+import Util = require('../../../../util/util');
+import { by, element } from 'protractor';
 
 export class Dropdown {
 
     formFields = new FormFields();
 
     selectedOptionLocator = by.css('mat-select[id="dropdown"] span span');
+    dropdown = element(by.id('dropdown'));
 
     getSelectedOptionText(fieldId) {
         return this.formFields.getFieldText(fieldId, this.selectedOptionLocator);
     }
 
+    selectOption(option) {
+        this.openDropdown();
+        let row = element(by.cssContainingText('mat-option span', option));
+        return row.click();
+    }
+
+    openDropdown() {
+        this.checkDropdownIsDisplayed();
+        Util.waitUntilElementIsClickable(this.dropdown);
+        return this.dropdown.click();
+    }
+
+    checkDropdownIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.dropdown);
+        return this.dropdown;
+    }
 }

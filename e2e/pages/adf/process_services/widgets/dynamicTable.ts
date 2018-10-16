@@ -17,6 +17,7 @@
 
 import FormFields = require('../formFields');
 import Util = require('../../../../util/util');
+import { element, by, browser, protractor } from 'protractor';
 
 export class DynamicTable {
     formFields = new FormFields();
@@ -30,7 +31,7 @@ export class DynamicTable {
     calendarContent = element(by.css('div[class="mat-datetimepicker-calendar-content"]'));
     saveButton = element(by.cssContainingText('button span', 'Save'));
     errorMessage = element(by.css('div[class="adf-error-text"]'));
-    dateWidget = element(by.css('button[aria-label="Open calendar"]'));
+    dateWidget = element.all(by.css('button[aria-label="Open calendar"]')).first();
     calendarNumber = element.all(by.css('td div'));
     tableRow = element.all(by.css('tbody tr'));
 
@@ -95,5 +96,11 @@ export class DynamicTable {
 
     waitForCalendarToDisappear() {
         Util.waitUntilElementIsNotVisible(this.calendarNumber);
+    }
+
+    checkItemIsPresent(item) {
+        let row = element(by.cssContainingText('table tbody tr td span', item));
+        let present = Util.waitUntilElementIsVisible(row);
+        expect(present).toBe(true);
     }
 }

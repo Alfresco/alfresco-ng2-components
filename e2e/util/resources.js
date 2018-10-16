@@ -44,6 +44,13 @@ exports.Files = {
         task_name: "Task Test 2"
     },
 
+    APP_DYNAMIC_TABLE_DROPDOWN:{
+        file_location:"/resources/apps/AppDynamicTableDropdown.zip",
+        title: "App3576",
+        description: "Description for app",
+        processName: "Process3576"
+    },
+
     SIMPLE_APP: {
         file_location: "/resources/Simple App.zip",
         title: "Simple App",
