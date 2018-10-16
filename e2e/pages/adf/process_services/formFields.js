@@ -76,8 +76,8 @@ var FormFields = function () {
         return label.getText();
     };
 
-    this.getFieldPlaceHolder = function (fieldId) {
-        let placeHolderLocator = element(by.css(`input#${fieldId}`)).getAttribute('placeholder');
+    this.getFieldPlaceHolder = function (fieldId, locator='input') {
+        let placeHolderLocator = element(by.css(`${locator}#${fieldId}`)).getAttribute('placeholder');
         Util.waitUntilElementIsVisible(placeHolderLocator);
         return placeHolderLocator;
     };

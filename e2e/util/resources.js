@@ -114,8 +114,9 @@ exports.Files = {
 
     WIDGET_CHECK_APP: {
 
+        file_location: "/resources/apps/WidgetApps.zip",
+
         TEXT: {
-            file_location: "/resources/apps/WidgetApps.zip",
             formName: "TextWidgetForm",
             title: "TextWidgetForm",
             processName: "TextWidgetProcess",
@@ -131,14 +132,13 @@ exports.Files = {
         },
 
         MULTILINE_TEXT: {
-            file_location: "/resources/apps/WidgetApps.zip",
             formName: "MultiWidgetProcess",
             title: "MultiWidgetProcess",
             processName: "MultiWidgetProcess",
             FIELD: {
                 multiSimple: "multisimple",
                 multiMinMax: "multiminmax",
-                multiRegexp: "multiRegexp",
+                multiRegexp: "multiregexp",
                 showMultiHidden: "showmultihidden",
                 multiVisible: "multivisible"
             }

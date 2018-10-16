@@ -42,6 +42,8 @@ describe('Form widgets', () => {
     let taskPage = new TasksPage();
     let widget = new Widget();
     let alfrescoJsApi;
+    let appsActions = new AppsActions();
+    let appModel;
 
     beforeAll(async (done) => {
         let users = new UsersActions();
@@ -55,6 +57,15 @@ describe('Form widgets', () => {
 
         processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
+        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, resources.Files.WIDGET_CHECK_APP.file_location);
+
+        done();
+    });
+
+    afterAll(async (done) => {
+        await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
         done();
     });
 
@@ -286,18 +297,20 @@ describe('Form widgets', () => {
 
     describe('Text Widget', () => {
         let app = resources.Files.WIDGET_CHECK_APP.TEXT;
-        let appModel, deployedApp;
-        let appsActions = new AppsActions();
+        let deployedApp, process;
 
         beforeAll(async (done) => {
-            await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-            appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, app.file_location);
             let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => {
                 return currentApp.modelId === appModel.id;
             });
-            await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
+            process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
             loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+            done();
+        });
+
+        afterAll(async (done) => {
+            await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
             done();
         });
 
@@ -308,13 +321,7 @@ describe('Form widgets', () => {
             taskPage.formFields().checkFormIsDisplayed();
         });
 
-        afterAll(async (done) => {
-            await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-            done();
-        });
-
-        it('[C268157] - General Properties', async () => {
+        fit('[C268157] - General Properties', async () => {
             let label = widget.textWidget().getFieldLabel(app.FIELD.simpleText);
             expect(label).toBe('textSimple*');
             expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
@@ -360,20 +367,23 @@ describe('Form widgets', () => {
 
     });
 
-    describe('MultiLine Widget', () => {
+    fdescribe('MultiLine Widget', () => {
         let app = resources.Files.WIDGET_CHECK_APP.MULTILINE_TEXT;
-        let appModel, deployedApp;
-        let appsActions = new AppsActions();
+        let deployedApp, process;
+
 
         beforeAll(async (done) => {
-            await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-            appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, app.file_location);
             let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => {
                 return currentApp.modelId === appModel.id;
             });
-            await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
+            process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
             loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+            done();
+        });
+
+        afterAll(async (done) => {
+            await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
             done();
         });
 
@@ -384,44 +394,38 @@ describe('Form widgets', () => {
             taskPage.formFields().checkFormIsDisplayed();
         });
 
-        afterAll(async (done) => {
-            await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-            done();
-        });
-
-        fit('[C268182] - Multi-line Text Widget - General Properties', async () => {
+        it('[C268182] - Multi-line Text Widget - General Properties', async () => {
             let label = widget.multilineTextWidget().getFieldLabel(app.FIELD.multiSimple);
             expect(label).toBe('multiSimple*');
             expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-            // let placeHolder = widget.multilineTextWidget().getFieldPlaceHolder(app.FIELD.multiSimple);
-            // expect(placeHolder).toBe('Type something...');
-            // widget.multilineTextWidget().setValue(app.FIELD.multiSimple, 'TEST');
-            // expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
-        });
-
-        xit('[C268170] - Min-max length properties', async () => {
-            widget.textWidget().setValue(app.FIELD.textMinMax, 'A');
-            expect(widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toBe('Enter at least 4 characters');
-            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-            widget.textWidget().setValue(app.FIELD.textMinMax, 'AAAAAAAAAAA');
-            expect(widget.textWidget().getErrorMessage(app.FIELD.textMinMax)).toBe('Enter no more than 10 characters');
-            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-        });
-
-        xit('[C268177] - Regex Pattern property', async () => {
-            widget.textWidget().setValue(app.FIELD.simpleText, 'TEST');
-            widget.textWidget().setValue(app.FIELD.textRegexp, 'T');
-            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-            expect(widget.textWidget().getErrorMessage(app.FIELD.textRegexp)).toBe('Enter a different value');
-            widget.textWidget().setValue(app.FIELD.textRegexp, 'TE');
+            let placeHolder = widget.multilineTextWidget().getFieldPlaceHolder(app.FIELD.multiSimple);
+            expect(placeHolder).toBe('Type something...');
+            widget.multilineTextWidget().setValue(app.FIELD.multiSimple, 'TEST');
             expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
         });
 
-        xit('[C274712] - Visibility condition', async () => {
-            widget.textWidget().isWidgetNotVisible(app.FIELD.textHidden);
-            widget.textWidget().setValue(app.FIELD.showHiddenText, '1');
-            widget.textWidget().isWidgetVisible(app.FIELD.textHidden);
+        it('[C268184] - Multi-line Text Widget - Advanced Properties - Min and Max', async () => {
+            widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'A');
+            expect(widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toBe('Enter at least 4 characters');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+            widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAAAAAAAAA');
+            expect(widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toBe('Enter no more than 10 characters');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        });
+
+        it('[C268184] - Multi-line Text Widget - Advanced Properties - Regex Pattern property', async () => {
+            widget.multilineTextWidget().setValue(app.FIELD.multiSimple, 'TEST');
+            widget.multilineTextWidget().setValue(app.FIELD.multiRegexp, '3');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+            expect(widget.multilineTextWidget().getErrorMessage(app.FIELD.multiRegexp)).toBe('Enter a different value');
+            widget.multilineTextWidget().setValue(app.FIELD.multiRegexp, 'TE');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        });
+
+        it('[C268232] - Multi-line Text Widget - Visibility properties', async () => {
+            widget.textWidget().isWidgetNotVisible(app.FIELD.multiVisible);
+            widget.textWidget().setValue(app.FIELD.showMultiHidden, '1');
+            widget.textWidget().isWidgetVisible(app.FIELD.multiVisible);
         });
 
     });

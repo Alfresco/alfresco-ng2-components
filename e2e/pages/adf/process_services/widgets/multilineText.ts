@@ -34,12 +34,15 @@ export class MultilineText {
     }
 
     getFieldPlaceHolder(fieldId) {
-        return this.formFields.getFieldPlaceHolder(fieldId);
+        return this.formFields.getFieldPlaceHolder(fieldId, 'textarea');
     }
 
     setValue(fieldId, value) {
         return this.formFields.setFieldValue(by.id, fieldId, value);
     }
 
+    getErrorMessage(fieldId) {
+        return this.formFields.getFieldErrorMessage(fieldId);
+    }
 
 }
