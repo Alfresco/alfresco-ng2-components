@@ -26,6 +26,11 @@ insights/**/*.js
 insights/**/*.js.map
 insights/**/*.d.ts
 
+process-services-cloud/**/*.js
+!process-services-cloud/karma.conf.js
+process-services-cloud/**/*.js.map
+process-services-cloud/**/*.d.ts
+
 !config/karma-test-shim.js!
 
 *.tgzf
@@ -39,3 +44,4 @@ process-services/_theming.scss
 content-services/_theming.scss
 core/_theming.scss
 insights/_theming.scss
+process-services-cloud/_theming.scss

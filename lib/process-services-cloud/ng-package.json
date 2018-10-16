@@ -1,0 +1,12 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../dist/process-services-cloud",
+  "lib": {
+    "languageLevel": ["dom", "es2017"],
+    "entryFile": "src/public_api.ts",
+    "flatModuleFile": "adf-process-services-cloud",
+    "umdModuleIds": {
+      "alfresco-js-api": "alfresco-js-api"
+    }
+  }
+}
