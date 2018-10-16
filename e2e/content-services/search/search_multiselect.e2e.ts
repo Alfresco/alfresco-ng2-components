@@ -26,7 +26,7 @@ import { browser } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import SearchDialog = require('../../pages/adf/dialog/searchDialog');
-import SearchResultPage = require('../../pages/adf/searchResultsPage');
+import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
@@ -35,7 +35,7 @@ import FileModel = require('../../models/ACS/fileModel');
 describe('Search Component - Multi-Select Facet', () => {
     let loginPage = new LoginPage();
     let searchDialog = new SearchDialog();
-    let searchResultsPage = new SearchResultPage();
+    let searchResultsPage = new SearchResultsPage();
     let uploadActions = new UploadActions();
     let searchFiltersPage = new SearchFiltersPage();
     let site;
