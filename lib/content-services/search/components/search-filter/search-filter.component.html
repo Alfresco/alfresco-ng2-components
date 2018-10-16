@@ -17,7 +17,7 @@
     </mat-expansion-panel>
 
     <ng-container *ngIf="responseFacetQueries">
-        <mat-expansion-panel [expanded]="facetQueriesExpanded" [attr.data-automation-id]="'expansion-panel-'+(facetQueriesLabel | translate)">
+        <mat-expansion-panel [expanded]="facetQueriesExpanded" [attr.data-automation-id]="'expansion-panel-'+facetQueriesLabel">
             <mat-expansion-panel-header>
                 <mat-panel-title>{{ facetQueriesLabel | translate }}</mat-panel-title>
             </mat-expansion-panel-header>
@@ -26,7 +26,7 @@
                     <input
                         matInput
                         placeholder="{{ 'SEARCH.FILTER.ACTIONS.FILTER-CATEGORY' | translate }}"
-                        [attr.data-automation-id]="'facet-result-filter-'+(facetQueriesLabel | translate)"
+                        [attr.data-automation-id]="'facet-result-filter-'+facetQueriesLabel"
                         [(ngModel)]="responseFacetQueries.filterText">
                     <button *ngIf="responseFacetQueries.filterText"
                         mat-button matSuffix mat-icon-button
@@ -39,7 +39,7 @@
                 <ng-container *ngFor="let query of responseFacetQueries">
                     <mat-checkbox
                         [checked]="query.checked"
-                        [attr.data-automation-id]="'checkbox-'+(facetQueriesLabel | translate)+'-'+(query.label | translate)"
+                        [attr.data-automation-id]="'checkbox-'+facetQueriesLabel+'-'+query.label"
                         (change)="onToggleFacetQuery($event, query)">
                         {{ query.label | translate }} ({{ query.count }})
                     </mat-checkbox>
@@ -69,7 +69,7 @@
     </ng-container>
 
     <ng-container *ngIf="responseFacetFields">
-        <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+(field.label | translate)" *ngFor="let field of responseFacetFields"
+        <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+field.label" *ngFor="let field of responseFacetFields"
                              [expanded]="facetFieldsExpanded">
             <mat-expansion-panel-header>
                 <mat-panel-title>{{ field.label | translate }}</mat-panel-title>
@@ -80,7 +80,7 @@
                     <input
                         matInput
                         placeholder="{{ 'SEARCH.FILTER.ACTIONS.FILTER-CATEGORY' | translate }}"
-                        [attr.data-automation-id]="'facet-result-filter-'+(field.label | translate)"
+                        [attr.data-automation-id]="'facet-result-filter-'+field.label"
                         [(ngModel)]="field.buckets.filterText">
                     <button *ngIf="field.buckets.filterText"
                         mat-button matSuffix mat-icon-button
@@ -94,7 +94,7 @@
                 <mat-checkbox
                     *ngFor="let bucket of field.buckets"
                     [checked]="bucket.checked"
-                    [attr.data-automation-id]="'checkbox-'+(field.label | translate)+'-'+(bucket.display || (bucket.label | translate))"
+                    [attr.data-automation-id]="'checkbox-'+field.label+'-'+(bucket.display || bucket.label)"
                     (change)="onToggleBucket($event, field, bucket)">
                     {{ bucket.display || bucket.label | translate }} <span *ngIf="bucket.count!==null">(</span>{{ bucket.count }}<span *ngIf="bucket.count!==null">)</span>
                 </mat-checkbox>
