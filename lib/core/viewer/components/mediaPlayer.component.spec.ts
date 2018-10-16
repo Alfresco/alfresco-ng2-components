@@ -22,7 +22,7 @@ import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
 import { ContentService } from '../../services/content.service';
 
-describe('Test Media player component ', () => {
+xdescribe('Test Media player component ', () => {
 
     let component: MediaPlayerComponent;
     let service: ContentService;
