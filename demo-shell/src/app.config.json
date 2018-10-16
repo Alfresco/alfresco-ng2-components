@@ -75,10 +75,16 @@
           { "key": "content.sizeInBytes", "label": "Size", "type": "FIELD", "field": "content.size", "ascending": true },
           { "key": "description", "label": "Description", "type": "FIELD", "field": "cm:description", "ascending": true },
           { "key": "createdByUser", "label": "Author", "type": "FIELD", "field": "cm:creator", "ascending": true },
-          { "key": "createdAt", "label": "Created", "type": "FIELD", "field": "cm:created", "ascending": true }
+          { "key": "createdAt", "label": "Created", "type": "FIELD", "field": "cm:created", "ascending": true },
+          { "key": "score", "label": "Relevance", "type": "FIELD", "field": "score", "ascending": false}
         ],
         "defaults": [
-          { "key": "name", "type": "FIELD", "field": "cm:name", "ascending": true }
+          {
+            "key": "score",
+            "type": "FIELD",
+            "field": "score",
+            "ascending": false
+          }
         ]
       },
       "filterQueries": [
@@ -101,11 +107,11 @@
         "queries": [
           { "query": "created:2018", "label": "1.Created This Year" },
           { "query": "content.mimetype", "label": "2.Type" },
-          { "query": "content.size:[0 TO 10240]", "label": "3.Size: xtra small"},
+          { "query": "content.size:[0 TO 10240]", "label": "3.Size: Extra small"},
           { "query": "content.size:[10240 TO 102400]", "label": "4.Size: small"},
           { "query": "content.size:[102400 TO 1048576]", "label": "5.Size: medium" },
           { "query": "content.size:[1048576 TO 16777216]", "label": "6.Size: large" },
-          { "query": "content.size:[16777216 TO 134217728]", "label": "7.Size: xtra large" },
+          { "query": "content.size:[16777216 TO 134217728]", "label": "7.Size: Extra large" },
           { "query": "content.size:[134217728 TO MAX]", "label": "8.Size: XX large" }
         ]
       },

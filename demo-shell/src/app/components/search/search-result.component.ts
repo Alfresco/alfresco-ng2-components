@@ -76,7 +76,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
                     this.queryBuilder.update();
                 } else {
                     this.queryBuilder.userQuery = null;
-                    this.queryBuilder.executed.next( {list: { pagination: { totalItems: 0 }, entries: []}} );
+                    this.queryBuilder.executed.next({ list: { pagination: { totalItems: 0 }, entries: [] } });
                 }
             });
         }
@@ -88,7 +88,9 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         }
 
         const suffix = userInput.lastIndexOf('*') >= 0 ? '' : '*';
-        const query = `${userInput}${suffix} OR name:${userInput}${suffix}`;
+        const query = `cm:name:${userInput}${suffix} OR cm:title:${userInput}${suffix} OR cm:description:${userInput}${suffix}
+         OR ia:whatEvent:${userInput}${suffix} OR ia:descriptionEvent:${userInput}${suffix} OR lnk:title:${userInput}${suffix}
+         OR lnk:description:${userInput}${suffix} OR TEXT:${userInput}${suffix} OR TAG:${userInput}${suffix}`;
 
         return query;
     }
@@ -100,7 +102,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
 
     onSearchResultLoaded(nodePaging: NodePaging) {
         this.data = nodePaging;
-        this.pagination = {...nodePaging.list.pagination };
+        this.pagination = { ...nodePaging.list.pagination };
     }
 
     onRefreshPagination(pagination: Pagination) {
