@@ -30,6 +30,12 @@
       "@alfresco/adf-process-services": [
         "../../lib/process-services"
       ],
+      "@alfresco/adf-process-services-cloud": [
+        "../../lib/process-services-cloud"
+      ],
+      "@alfresco/adf-process-services-cloud/*": [
+        "../../lib/process-services-cloud/*"
+      ],
       "@alfresco/adf-insights": [
         "../../lib/insights"
       ]

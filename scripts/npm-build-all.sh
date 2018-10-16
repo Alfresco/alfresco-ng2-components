@@ -19,6 +19,7 @@ eval projects=( "core"
     "content-services"
     "insights"
     "process-services"
+    "process-services-cloud"
     "extensions" )
 
 show_help() {

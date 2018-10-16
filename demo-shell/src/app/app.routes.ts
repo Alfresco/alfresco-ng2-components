@@ -40,6 +40,7 @@ import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { AppComponent } from './app.component';
+import { CloudComponent } from './components/cloud/cloud.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -131,6 +132,14 @@ export const appRoutes: Routes = [
             {
                 path: 'home',
                 component: HomeComponent
+            },
+            {
+                path: 'cloud',
+                component: CloudComponent
+            },
+            {
+                path: 'cloud/:appName',
+                component: CloudComponent
             },
             {
                 path: 'node-selector',

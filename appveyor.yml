@@ -44,6 +44,12 @@ install:
               else
                 (cd scripts && sh npm-build-all.sh -t "core" -vjsapi alpha|| exit 1)
     )
+  - if %COMPONENT_NAME% EQU process-service-cloud (
+              if %APPVEYOR_REPO_BRANCH EQU master
+                (cd scripts && sh npm-build-all.sh -t "process-services-cloud"  || exit 1)
+              else
+                (cd scripts && sh npm-build-all.sh -t "process-services-cloud" -vjsapi alpha|| exit 1)
+    )
 #  - if %COMPONENT_NAME% EQU ng2-demo-shell (
 #              if %APPVEYOR_REPO_BRANCH EQU master
 #                (cd scripts && sh start.sh -t -ss || exit 1)
