@@ -25,7 +25,7 @@ import PaginationPage = require('../pages/adf/paginationPage');
 import TasksPage = require('../pages/adf/process_services/tasksPage');
 import AppPublish = require('../models/APS/AppPublish');
 import CONSTANTS = require('../util/constants');
-let moment = require('moment');
+import moment = require('moment');
 
 import Task = require('../models/APS/Task');
 import ProcessModel = require('../models/APS/UpdateProcessModel');
@@ -63,14 +63,15 @@ describe('Start Task - Custom App', () => {
     let completedTasks = [];
     let paginationTasksName = ['t01', 't02', 't03', 't04', 't05', 't06', 't07', 't08', 't09', 't10', 't11', 't12', 't13', 'taskOne', 'taskTwo', 'taskOne'];
     let completedTasksName = ['completed01', 'completed02', 'completed03'];
-    let allTasksName = ['t01', 'taskOne', 'taskTwo', 'taskOne', 't13', 't12', 't11', 't10', 't09', 't08', 't07', 't06', 't05', 't04', 't03', 't02', 'User Task', 'User Task', 'User Task', 'User Task'];
+    let allTasksName = ['t01', 'taskOne', 'taskTwo', 'taskOne', 't13', 't12', 't11', 't10', 't09', 't08', 't07', 't06', 't05', 't04', 't03', 't02',
+        'User Task', 'User Task', 'User Task', 'User Task'];
     let invalidAppId = '1234567890', invalidName = 'invalidName', invalidTaskId = '0000';
     let noTasksFoundMessage = 'No Tasks Found';
     let nrOfTasks = 20, currentPage = 1, totalNrOfPages = 'of 4';
-    let currentDateStandardFormat=Util.getCrtDateInFormat('YYYY-MM-DDTHH:mm:ss.SSSZ');
-    let currentDate=Util.getCrtDateInFormat('MM/DD/YYYY');
-    let beforeDate=moment().add(-1, 'days').format('MM/DD/YYYY');
-    let afterDate=moment().add(1, 'days').format('MM/DD/YYYY');
+    let currentDateStandardFormat = Util.getCrtDateInFormat('YYYY-MM-DDTHH:mm:ss.SSSZ');
+    let currentDate = Util.getCrtDateInFormat('MM/DD/YYYY');
+    let beforeDate = moment().add(-1, 'days').format('MM/DD/YYYY');
+    let afterDate = moment().add(1, 'days').format('MM/DD/YYYY');
     let taskWithDueDate;
     let processDefinitionId;
 
@@ -119,12 +120,13 @@ describe('Start Task - Custom App', () => {
 
         for (let i = 1; i < paginationTasksName.length; i++) {
             await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': paginationTasksName[i]});
-        };
+        }
 
         for (let i = 0; i < 3; i++) {
-            completedTasks[i] = await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': completedTasksName[i], 'dueDate': Util.getSpecificDateAfterCrtDateInFormat('YYYY-MM-DDTHH:mm:ss.SSSZ', i+2)});
+            completedTasks[i] = await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': completedTasksName[i],
+                'dueDate': Util.getSpecificDateAfterCrtDateInFormat('YYYY-MM-DDTHH:mm:ss.SSSZ', i+2)});
             await this.alfrescoJsApi.activiti.taskActionsApi.completeTask(completedTasks[i].id);
-        };
+        }
 
         taskWithDueDate = await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': paginationTasksName[0], 'dueDate': currentDateStandardFormat});
 
@@ -572,7 +574,8 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C286622] Should be able to see only tasks that are part of a specific process when processDefinitionId is set', () => {
-        let processDefinitionIds = [processDefinitionId.processDefinitionId, processDefinitionId.processDefinitionId, processDefinitionId.processDefinitionId, processDefinitionId.processDefinitionId];
+        let processDefinitionIds = [processDefinitionId.processDefinitionId, processDefinitionId.processDefinitionId,
+            processDefinitionId.processDefinitionId, processDefinitionId.processDefinitionId];
 
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
