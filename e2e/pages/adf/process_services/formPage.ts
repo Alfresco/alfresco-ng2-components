@@ -26,6 +26,10 @@ export class FormPage {
         return Util.waitUntilElementIsVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
     }
 
+    checkErrorMessageForWidgetIsNotDisplayed(errorMessage) {
+        return Util.waitUntilElementIsNotVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
+    }
+
     checkErrorLogMessage(errorMessage) {
         Util.waitUntilElementIsVisible(this.errorLog);
         return Util.waitUntilElementIsVisible(element(by.cssContainingText('div[class*="console"] p', errorMessage)));
