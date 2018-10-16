@@ -81,7 +81,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             txtFileSite = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, site.entry.guid);
 
-            await browser.driver.sleep(10000);
+            await browser.driver.sleep(30000);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -164,7 +164,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             jpgFile = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
 
-            await browser.driver.sleep(10000);
+            await browser.driver.sleep(30000);
 
             loginPage.loginToContentServicesUsingUserModel(userUploadingImg);
 
@@ -217,7 +217,7 @@ describe('Search Component - Multi-Select Facet', () => {
             });
 
             txtFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, '-my-');
-            await browser.driver.sleep(10000);
+            await browser.driver.sleep(30000);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
 
