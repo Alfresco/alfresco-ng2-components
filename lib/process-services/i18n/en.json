@@ -94,7 +94,13 @@
         "NONE": "Nobody involved"
       },
       "CHECKLIST": {
-        "NONE": "No checklist"
+        "NONE": "No checklist",
+        "DIALOG" : {
+          "TITLE": "New Check",
+          "CANCEL-BUTTON": "Cancel",
+          "ADD-BUTTON": "Add Checklist",
+          "PLACEHOLDER": "Name"
+        }
       },
       "ERROR": {
         "TITLE": "Couldn't complete the action",

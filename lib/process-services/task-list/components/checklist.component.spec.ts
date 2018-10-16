@@ -116,13 +116,16 @@ describe('ChecklistComponent', () => {
             showChecklistDialog = <HTMLElement> element.querySelector('#add-checklist');
         });
 
-        it('should show dialog when clicked on add', () => {
+        it('should show dialog when clicked on add', (done) => {
             expect(showChecklistDialog).not.toBeNull();
             showChecklistDialog.click();
-
-            expect(window.document.querySelector('#checklist-dialog')).not.toBeNull();
-            expect(window.document.querySelector('#add-checklist-title')).not.toBeNull();
-            expect(window.document.querySelector('#add-checklist-title').textContent).toContain('New Check');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(window.document.querySelector('#checklist-dialog')).not.toBeNull();
+                expect(window.document.querySelector('#add-checklist-title')).not.toBeNull();
+                expect(window.document.querySelector('#add-checklist-title').textContent).toContain('ADF_TASK_LIST.DETAILS.CHECKLIST.DIALOG.TITLE');
+                done();
+            });
         });
     });
 
