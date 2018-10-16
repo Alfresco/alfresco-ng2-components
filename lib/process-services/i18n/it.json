@@ -91,7 +91,13 @@
         "NONE": "Nessuno coinvolto"
       },
       "CHECKLIST": {
-        "NONE": "Nessun elenco di controllo"
+        "NONE": "Nessun elenco di controllo",
+        "DIALOG" : {
+          "TITLE": "Nuova Checklist",
+          "CANCEL-BUTTON": "Cancella",
+          "ADD-BUTTON": "Aggiungi Checklist",
+          "PLACEHOLDER": "Nome"
+        }
       },
       "ERROR": {
         "TITLE": "Impossibile completare l'azione",

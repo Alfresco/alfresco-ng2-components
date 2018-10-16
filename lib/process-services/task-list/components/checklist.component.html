@@ -28,16 +28,16 @@
 
 <ng-template #dialog>
     <div class="adf-checklist-dialog" id="checklist-dialog">
-        <h4 matDialogTitle id="add-checklist-title">New Check</h4>
+        <h4 matDialogTitle id="add-checklist-title">{{ 'ADF_TASK_LIST.DETAILS.CHECKLIST.DIALOG.TITLE' | translate }}</h4>
         <mat-dialog-content>
             <mat-form-field>
-                <input matInput placeholder="Name" [(ngModel)]="taskName" id="checklist-name"
+                <input matInput placeholder="{{ 'ADF_TASK_LIST.DETAILS.CHECKLIST.DIALOG.PLACEHOLDER' | translate }}" [(ngModel)]="taskName" id="checklist-name"
                        data-automation-id="checklist-name">
             </mat-form-field>
         </mat-dialog-content>
         <mat-dialog-actions class="adf-checklist-dialog-actions">
-            <button mat-button type="button" id="close-check-dialog" (click)="cancel()">Cancel</button>
-            <button mat-button type="button" id="add-check" (click)="add()">Add Checklist</button>
+            <button mat-button type="button" id="close-check-dialog" (click)="cancel()">{{ 'ADF_TASK_LIST.DETAILS.CHECKLIST.DIALOG.CANCEL-BUTTON' | translate }}</button>
+            <button mat-button type="button" id="add-check" (click)="add()">{{ 'ADF_TASK_LIST.DETAILS.CHECKLIST.DIALOG.ADD-BUTTON' | translate }}</button>
         </mat-dialog-actions>
     </div>
 </ng-template>
