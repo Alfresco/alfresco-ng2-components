@@ -1,0 +1,19 @@
+{
+  "name": "@alfresco/adf-process-services-cloud",
+  "description": "Alfresco ADF process services cloud",
+  "version": "1.0.0",
+  "author": "Alfresco Software, Ltd.",
+  "main": "bundles/adf-process-services-cloud.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
+  },
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "alfresco-js-api": "2.6.0"
+  }
+}

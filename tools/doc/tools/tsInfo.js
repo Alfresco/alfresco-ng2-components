@@ -10,7 +10,7 @@ var ejs = require("ejs");
 var typedoc_1 = require("typedoc");
 var mdNav_1 = require("../mdNav");
 var ngHelpers_1 = require("../ngHelpers");
-var libFolders = ["core", "content-services", "process-services", "insights"];
+var libFolders = ["core", "content-services", "process-services", "insights", "process-services-cloud"];
 var templateFolder = path.resolve("tools", "doc", "templates");
 var excludePatterns = [
     "**/*.spec.ts"
@@ -103,24 +103,24 @@ function angNameToClassName(rawName: string) {
         return nameExceptions[rawName];
 
     var name = rawName.replace(/\]|\(|\)/g, '');
-    
+
     var fileNameSections = name.split('.');
     var compNameSections = fileNameSections[0].split('-');
-    
+
     var outCompName = '';
-    
+
     for (var i = 0; i < compNameSections.length; i++) {
         outCompName = outCompName + initialCap(compNameSections[i]);
     }
-    
+
     var itemTypeIndicator = '';
-    
+
     if (fileNameSections.length > 1) {
         itemTypeIndicator = initialCap(fileNameSections[1]);
     }
-    
+
     var finalName = outCompName + itemTypeIndicator;
-    
+
     return finalName;
 }
 */

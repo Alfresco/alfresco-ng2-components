@@ -8,7 +8,8 @@ eval projects=( "adf-core"
     "adf-insights"
     "adf-content-services"
     "adf-extensions"
-    "adf-process-services" )
+    "adf-process-services"
+    "adf-process-services-cloud" )
 
 show_help() {
     echo "Usage: npm-check-bundles.sh"
