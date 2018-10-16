@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 
 export interface AttachFileWidgetDialogComponentData {

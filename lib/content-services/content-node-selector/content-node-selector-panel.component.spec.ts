@@ -85,7 +85,7 @@ describe('ContentNodeSelectorComponent', () => {
             contentNodeSelectorService = TestBed.get(ContentNodeSelectorService);
             cnSearchSpy = spyOn(contentNodeSelectorService, 'search').and.callThrough();
             searchSpy = spyOn(searchService, 'searchByQueryBody').and.callFake(() => {
-                return Observable.create((observer: Observer<NodePaging>) => {
+                return new Observable((observer: Observer<NodePaging>) => {
                     _observer = observer;
                 });
             });

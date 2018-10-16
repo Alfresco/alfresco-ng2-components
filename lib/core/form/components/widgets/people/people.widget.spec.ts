@@ -88,7 +88,7 @@ describe('PeopleWidgetComponent', () => {
         });
 
         spyOn(formService, 'getWorkflowUsers').and.returnValue(
-            Observable.create(observer => {
+            new Observable(observer => {
                 observer.next(null);
                 observer.complete();
             })
@@ -111,7 +111,7 @@ describe('PeopleWidgetComponent', () => {
         widget.field.form.readOnly = true;
 
         spyOn(formService, 'getWorkflowUsers').and.returnValue(
-            Observable.create(observer => {
+            new Observable(observer => {
                 observer.next(null);
                 observer.complete();
             })
@@ -166,7 +166,7 @@ describe('PeopleWidgetComponent', () => {
             { id: 1002, firstName: 'Test02', lastName: 'Test02', email: 'test2' }];
 
         beforeEach(async(() => {
-            spyOn(formService, 'getWorkflowUsers').and.returnValue(Observable.create(observer => {
+            spyOn(formService, 'getWorkflowUsers').and.returnValue(new Observable(observer => {
                 observer.next(fakeUserResult);
                 observer.complete();
             }));

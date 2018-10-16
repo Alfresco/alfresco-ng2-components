@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable:rxjs-no-subject-value */
+
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
     OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation

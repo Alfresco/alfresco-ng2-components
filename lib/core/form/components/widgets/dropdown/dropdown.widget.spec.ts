@@ -89,7 +89,7 @@ describe('DropdownWidgetComponent', () => {
         });
 
         spyOn(formService, 'getRestFieldValues').and.returnValue(
-            Observable.create(observer => {
+            new Observable(observer => {
                 observer.next(null);
                 observer.complete();
             })
@@ -101,7 +101,7 @@ describe('DropdownWidgetComponent', () => {
     it('should preserve empty option when loading fields', () => {
         let restFieldValue: FormFieldOption = <FormFieldOption> { id: '1', name: 'Option1' };
         spyOn(formService, 'getRestFieldValues').and.callFake(() => {
-            return Observable.create(observer => {
+            return new Observable(observer => {
                 observer.next([restFieldValue]);
                 observer.complete();
             });

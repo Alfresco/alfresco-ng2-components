@@ -116,7 +116,7 @@ export class FormService {
      * @returns The new form
      */
     createFormFromANode(formName: string): Observable<any> {
-        return Observable.create(observer => {
+        return new Observable(observer => {
             this.createForm(formName).subscribe(
                 form => {
                     this.ecmModelService.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(

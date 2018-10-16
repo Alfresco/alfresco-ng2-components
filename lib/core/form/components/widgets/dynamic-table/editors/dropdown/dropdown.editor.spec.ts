@@ -98,7 +98,7 @@ describe('DropdownEditorComponent', () => {
         ];
 
         spyOn(formService, 'getRestFieldValuesColumn').and.returnValue(
-            Observable.create(observer => {
+            new Observable(observer => {
                 observer.next(restResults);
                 observer.complete();
             })
@@ -121,7 +121,7 @@ describe('DropdownEditorComponent', () => {
         column.optionType = 'rest';
 
         spyOn(formService, 'getRestFieldValuesColumn').and.returnValue(
-            Observable.create(observer => {
+            new Observable(observer => {
                 observer.next(null);
                 observer.complete();
             })

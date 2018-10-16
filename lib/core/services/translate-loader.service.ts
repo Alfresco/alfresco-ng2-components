@@ -121,7 +121,7 @@ export class TranslateLoaderService implements TranslateLoader {
             })
         ];
 
-        return Observable.create(observer => {
+        return new Observable(observer => {
 
             if (batch.length > 0) {
                 forkJoin(batch).subscribe(

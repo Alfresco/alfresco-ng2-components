@@ -112,7 +112,7 @@ describe('ContentNodeDialogService', () => {
 
     it('should be able to open the dialog using a folder id', fakeAsync(() => {
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNode));
-        service.openFileBrowseDialogByFolderId('fake-folder-id').subscribe();
+        service.openFileBrowseDialogByFolderId('fake-folder-id').subscribe(() => {});
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
@@ -120,7 +120,7 @@ describe('ContentNodeDialogService', () => {
     it('should be able to open the dialog for files using the first user site', fakeAsync(() => {
         spyOn(sitesService, 'getSites').and.returnValue(of(fakeSiteList));
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNode));
-        service.openFileBrowseDialogBySite().subscribe();
+        service.openFileBrowseDialogBySite().subscribe(() => {});
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
@@ -128,7 +128,7 @@ describe('ContentNodeDialogService', () => {
     it('should be able to open the dialog for folder using the first user site', fakeAsync(() => {
         spyOn(sitesService, 'getSites').and.returnValue(of(fakeSiteList));
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNode));
-        service.openFolderBrowseDialogBySite().subscribe();
+        service.openFolderBrowseDialogBySite().subscribe(() => {});
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));

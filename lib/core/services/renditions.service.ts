@@ -34,7 +34,7 @@ export class RenditionsService {
 
     /** @deprecated */
     isRenditionAvailable(nodeId: string, encoding: string): Observable<boolean> {
-        return Observable.create((observer) => {
+        return new Observable((observer) => {
             this.getRendition(nodeId, encoding).subscribe(
                 (res) => {
                     let isAvailable = true;
@@ -54,7 +54,7 @@ export class RenditionsService {
 
     /** @deprecated */
     isConversionPossible(nodeId: string, encoding: string): Observable<boolean> {
-        return Observable.create((observer) => {
+        return new Observable((observer) => {
             this.getRendition(nodeId, encoding).subscribe(
                 () => {
                     observer.next(true);

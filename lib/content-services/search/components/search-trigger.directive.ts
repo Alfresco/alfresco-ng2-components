@@ -81,7 +81,6 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
         this.onDestroy$.complete();
 
         if (this.escapeEventStream) {
-            this.escapeEventStream.unsubscribe();
             this.escapeEventStream = null;
         }
         if ( this.closingActionsSubscription ) {
@@ -127,7 +126,8 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
             filter((event: MouseEvent | TouchEvent) => {
                 const clickTarget = event.target as HTMLElement;
                 return this._panelOpen && clickTarget !== this.element.nativeElement;
-            })
+            }),
+            takeUntil(this.onDestroy$)
         );
     }
 
@@ -191,11 +191,11 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
 
         return merge(firstStable, optionChanges)
             .pipe(
-                takeUntil(this.onDestroy$),
                 switchMap(() => {
                     this.searchPanel.setVisibility();
                     return this.panelClosingActions;
-                })
+                }),
+                takeUntil(this.onDestroy$)
             )
             .subscribe(event => this.setValueAndClose(event));
     }

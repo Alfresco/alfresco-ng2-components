@@ -94,7 +94,7 @@ export class ProcessFilterService {
         let allFilter = this.getAllFilterInstance(appId);
         let allObservable = this.addProcessFilter(allFilter);
 
-        return Observable.create(observer => {
+        return new Observable(observer => {
             forkJoin(
                 runningObservable,
                 completedObservable,
