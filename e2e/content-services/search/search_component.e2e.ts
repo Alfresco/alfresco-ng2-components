@@ -21,7 +21,7 @@ import { LoginPage } from '../../pages/adf/loginPage';
 import SearchDialog = require('../../pages/adf/dialog/searchDialog');
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import filePreviewPage = require('../../pages/adf/filePreviewPage');
-import SearchResultPage = require('../../pages/adf/searchResultsPage');
+import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');
@@ -47,7 +47,7 @@ describe('Search component - Search Bar', () => {
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
     let searchDialog = new SearchDialog();
-    let searchResultPage = new SearchResultPage();
+    let searchResultPage = new SearchResultsPage();
 
     let acsUser = new AcsUserModel();
 
