@@ -294,27 +294,26 @@ describe('SearchFilterComponent', () => {
         expect(component.responseFacetFields[0].buckets.items[1].count).toEqual(0);
     });
 
-    it('should update correctly the existing bucket values when having translated labels', () => {
+    it('should update correctly the existing facetFields bucket values', () => {
         component.responseFacetFields = null;
 
-        const anyi18nKey = 'SEARCH.BUTTON.TOOLTIP';
         queryBuilder.config = {
             categories: [],
-            facetFields: { fields: [{ label: anyi18nKey, field: 'f1' }] },
+            facetFields: { fields: [{ label: 'f1', field: 'f1' }] },
             facetQueries: { queries: [] }
         };
 
         const firstCallFields: any = [{
-            label: anyi18nKey,
-            buckets: [{ label: anyi18nKey, count: 10 }]
+            label: 'f1',
+            buckets: [{ label: 'b1', count: 10 }]
         }];
         const firstCallData = { list: { context: { facetsFields: firstCallFields }}};
         component.onDataLoaded(firstCallData);
         expect(component.responseFacetFields[0].buckets.items[0].count).toEqual(10);
 
         const secondCallFields: any = [{
-            label: anyi18nKey,
-            buckets: [{ label: anyi18nKey, count: 6 }]
+            label: 'f1',
+            buckets: [{ label: 'b1', count: 6 }]
         }];
         const secondCallData = { list: { context: { facetsFields: secondCallFields}}};
         component.onDataLoaded(secondCallData);
