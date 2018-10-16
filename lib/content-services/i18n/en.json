@@ -233,13 +233,6 @@
           "PROCESS_ACTION": "Start Process"
         }
       }
-    },
-    "FACET_FIELDS": {
-      "1_TYPE": "1:Type",
-      "2_SIZE": "2:Size",
-      "3_CREATOR": "3:Creator",
-      "4_MODIFIER": "4:Modifier",
-      "5_CREATED": "5:Created"
     }
   },
   "PERMISSON": {

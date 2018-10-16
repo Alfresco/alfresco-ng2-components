@@ -101,17 +101,17 @@
         ]
       },
       "facetQueries": {
-        "label": "My facet queries",
+        "label": "SEARCH.FACET_QUERIES.MY_FACET_QUERIES",
         "pageSize": 5,
         "queries": [
-          { "query": "created:2018", "label": "1.Created This Year" },
-          { "query": "content.mimetype", "label": "2.Type" },
-          { "query": "content.size:[0 TO 10240]", "label": "3.Size: Extra small"},
-          { "query": "content.size:[10240 TO 102400]", "label": "4.Size: small"},
-          { "query": "content.size:[102400 TO 1048576]", "label": "5.Size: medium" },
-          { "query": "content.size:[1048576 TO 16777216]", "label": "6.Size: large" },
-          { "query": "content.size:[16777216 TO 134217728]", "label": "7.Size: Extra large" },
-          { "query": "content.size:[134217728 TO MAX]", "label": "8.Size: XX large" }
+          { "query": "created:2018", "label": "SEARCH.FACET_QUERIES.CREATED_THIS_YEAR" },
+          { "query": "content.mimetype", "label": "SEARCH.FACET_QUERIES.MIMETYPE" },
+          { "query": "content.size:[0 TO 10240]", "label": "SEARCH.FACET_QUERIES.XTRASMALL"},
+          { "query": "content.size:[10240 TO 102400]", "label": "SEARCH.FACET_QUERIES.SMALL"},
+          { "query": "content.size:[102400 TO 1048576]", "label": "SEARCH.FACET_QUERIES.MEDIUM" },
+          { "query": "content.size:[1048576 TO 16777216]", "label": "SEARCH.FACET_QUERIES.LARGE" },
+          { "query": "content.size:[16777216 TO 134217728]", "label": "SEARCH.FACET_QUERIES.XTRALARGE" },
+          { "query": "content.size:[134217728 TO MAX]", "label": "SEARCH.FACET_QUERIES.XXTRALARGE" }
         ]
       },
       "categories": [
