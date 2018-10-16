@@ -21,7 +21,7 @@ import { LoginPage } from '../../pages/adf/loginPage';
 
 import SearchDialog = require('../../pages/adf/dialog/searchDialog');
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import SearchResultPage = require('../../pages/adf/searchResultsPage');
+import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import filePreviewPage = require('../../pages/adf/filePreviewPage');
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
@@ -40,7 +40,7 @@ describe('Search component - Search Page', () => {
         active: {
             firstFile: null,
             secondFile: null,
-            base: Util.generateRandomString(3),
+            base: Util.generateRandomString(7),
             extension: '.txt'
         },
         no_permission: {
@@ -52,7 +52,7 @@ describe('Search component - Search Page', () => {
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
     let searchDialog = new SearchDialog();
-    let searchResultPage = new SearchResultPage();
+    let searchResultPage = new SearchResultsPage();
 
     let acsUser = new AcsUserModel();
     let emptyFolderModel = new FolderModel({ 'name': Util.generateRandomString() });
@@ -206,6 +206,7 @@ describe('Search component - Search Page', () => {
             .checkSearchIconIsVisible()
             .clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
+
         searchResultPage.checkContentIsDisplayed(search.active.secondFile);
         searchResultPage.sortAndCheckListIsOrderedByName(true).then((result) => {
             expect(result).toEqual(true);
@@ -215,7 +216,8 @@ describe('Search component - Search Page', () => {
     it('[C272804] Should be able to sort results by name (Descending)', () => {
         contentServicesPage.goToDocumentList();
 
-        searchDialog.checkSearchBarIsNotVisible()
+        searchDialog
+            .checkSearchBarIsNotVisible()
             .checkSearchIconIsVisible()
             .clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
@@ -228,8 +230,13 @@ describe('Search component - Search Page', () => {
 
     it('[C272805] Should be able to sort results by author (Ascending)', () => {
         contentServicesPage.goToDocumentList();
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
+
+        searchDialog
+            .checkSearchBarIsNotVisible()
+            .checkSearchIconIsVisible()
+            .clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
+
         searchResultPage.checkContentIsDisplayed(search.active.secondFile);
         searchResultPage.sortAndCheckListIsOrderedByAuthor(true).then((result) => {
             expect(result).toEqual(true);
@@ -238,8 +245,13 @@ describe('Search component - Search Page', () => {
 
     it('[C272806] Should be able to sort results by author (Descending)', () => {
         contentServicesPage.goToDocumentList();
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
+
+        searchDialog
+            .checkSearchBarIsNotVisible()
+            .checkSearchIconIsVisible()
+            .clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
+
         searchResultPage.checkContentIsDisplayed(search.active.secondFile);
         searchResultPage.sortAndCheckListIsOrderedByAuthor(false).then((result) => {
             expect(result).toEqual(true);
@@ -248,8 +260,13 @@ describe('Search component - Search Page', () => {
 
     it('[C272807] Should be able to sort results by date (Ascending)', () => {
         contentServicesPage.goToDocumentList();
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
+
+        searchDialog
+            .checkSearchBarIsNotVisible()
+            .checkSearchIconIsVisible()
+            .clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
+
         searchResultPage.checkContentIsDisplayed(search.active.secondFile);
         searchResultPage.sortAndCheckListIsOrderedByCreated(true).then((result) => {
             expect(result).toEqual(true);
@@ -258,8 +275,13 @@ describe('Search component - Search Page', () => {
 
     it('[C260260] Should be able to sort results by date (Descending)', () => {
         contentServicesPage.goToDocumentList();
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
+
+        searchDialog
+            .checkSearchBarIsNotVisible()
+            .checkSearchIconIsVisible()
+            .clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.base);
+
         searchResultPage.checkContentIsDisplayed(search.active.secondFile);
         searchResultPage.sortAndCheckListIsOrderedByCreated(false).then((result) => {
             expect(result).toEqual(true);

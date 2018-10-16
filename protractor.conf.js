@@ -267,7 +267,11 @@ exports.config = {
 
         }
 
-        rimraf(`${projectRoot}/e2e-output/screenshots/`, function () { console.log('done delete screenshot'); });
+        if (saveScreenshot === 'true') {
+            rimraf(`${projectRoot}/e2e-output/screenshots/`, function () {
+                console.log('done delete screenshot');
+            });
+        }
 
         return retry.afterLaunch(3);
     }
