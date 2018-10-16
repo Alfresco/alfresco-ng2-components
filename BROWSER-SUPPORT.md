@@ -1,6 +1,6 @@
 # Browser Support
 
-Browser support and polyfills guide.
+This page gives a guide to Browser support and polyfills.
 
 Browser compatibility and support depends on targeted browsers and 3rd party libraries. ADF is based on the following libraries and components:
 
@@ -50,4 +50,5 @@ ADF (demo shell) imports by default the following set of recommended polyfills:
 <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
 ```
 
-For a complete code please refer to [demo shell](demo-shell/index.html) example.
+See the [demo shell](demo-shell/index.html) example project for
+further information and source code.
