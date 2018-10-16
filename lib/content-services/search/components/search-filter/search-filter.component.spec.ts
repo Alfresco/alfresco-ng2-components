@@ -30,6 +30,7 @@ describe('SearchFilterComponent', () => {
     let component: SearchFilterComponent;
     let queryBuilder: SearchQueryBuilderService;
     let appConfig: AppConfigService;
+    const translationMock = new TranslationMock();
 
     beforeEach(() => {
         appConfig = new AppConfigService(null);
@@ -39,7 +40,6 @@ describe('SearchFilterComponent', () => {
         const searchMock: any = {
             dataLoaded: new Subject()
         };
-        const translationMock = new TranslationMock();
         translationMock.instant = (key) => `translated${key}`;
         component = new SearchFilterComponent(queryBuilder, searchMock, translationMock);
         component.ngOnInit();
@@ -518,7 +518,7 @@ describe('SearchFilterComponent', () => {
             { label: 'q1', query: 'q1', checked: true, count: 1 },
             { label: 'q2', query: 'q2', checked: false, count: 1 },
             { label: 'q3', query: 'q3', checked: true, count: 1 }
-        ]);
+        ], translationMock);
         component.resetSelectedQueries();
 
         expect(queryBuilder.removeUserFacetQuery).toHaveBeenCalledTimes(3);

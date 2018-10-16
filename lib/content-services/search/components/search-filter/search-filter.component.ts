@@ -292,7 +292,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                     this.responseFacetQueries.items = facetQueries;
 
                 } else {
-                    this.responseFacetQueries = new ResponseFacetQueryList(facetQueries, this.facetQueriesPageSize);
+                    this.responseFacetQueries = new ResponseFacetQueryList(facetQueries, this.translationService, this.facetQueriesPageSize);
                 }
 
             } else {

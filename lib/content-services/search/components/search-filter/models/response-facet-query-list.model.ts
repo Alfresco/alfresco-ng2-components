@@ -19,7 +19,7 @@ import { FacetQuery } from '../../../facet-query.interface';
 import { SearchFilterList } from './search-filter-list.model';
 
 export class ResponseFacetQueryList extends SearchFilterList<FacetQuery> {
-    constructor(items: FacetQuery[] = [], pageSize: number = 5) {
+    constructor(items: FacetQuery[] = [], translationService, pageSize: number = 5) {
         super(
             items
                 .filter(item => {
@@ -31,7 +31,7 @@ export class ResponseFacetQueryList extends SearchFilterList<FacetQuery> {
         this.filter = (query: FacetQuery) => {
             if (this.filterText && query.label) {
                 const pattern = (this.filterText || '').toLowerCase();
-                const label = query.label.toLowerCase();
+                const label = translationService.instant(query.label).toLowerCase();
                 return label.startsWith(pattern);
             }
             return true;
