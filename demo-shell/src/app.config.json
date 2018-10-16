@@ -93,11 +93,11 @@
       "facetFields": {
         "expanded": true,
         "fields": [
-          { "field": "content.mimetype", "mincount": 1, "label": "SEARCH.FACET_FIELDS.1_TYPE" },
-          { "field": "content.size", "mincount": 1, "label": "SEARCH.FACET_FIELDS.2_SIZE" },
-          { "field": "creator", "mincount": 1, "label": "SEARCH.FACET_FIELDS.3_CREATOR" },
-          { "field": "modifier", "mincount": 1, "label": "SEARCH.FACET_FIELDS.4_MODIFIER" },
-          { "field": "created", "mincount": 1, "label": "SEARCH.FACET_FIELDS.5_CREATED" }
+          { "field": "content.mimetype", "mincount": 1, "label": "SEARCH.FACET_FIELDS.TYPE" },
+          { "field": "content.size", "mincount": 1, "label": "SEARCH.FACET_FIELDS.SIZE" },
+          { "field": "creator", "mincount": 1, "label": "SEARCH.FACET_FIELDS.CREATOR" },
+          { "field": "modifier", "mincount": 1, "label": "SEARCH.FACET_FIELDS.MODIFIER" },
+          { "field": "created", "mincount": 1, "label": "SEARCH.FACET_FIELDS.CREATED" }
         ]
       },
       "facetQueries": {
