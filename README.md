@@ -32,7 +32,7 @@ for full details.
 
 ## Components
 
-You can find the sources for all ADF components in the:
+You can find the sources for all ADF components in the
 [`lib`](/lib) folder.
 
 Full documentation for all components is available at the
