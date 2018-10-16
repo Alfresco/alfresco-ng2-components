@@ -103,7 +103,7 @@ export class AnalyticsService {
         } else if (type === 'task' && reportId && processDefinitionId) {
             return this.getTasksByProcessDefinitionId(reportId, processDefinitionId);
         } else {
-            return Observable.create(observer => {
+            return new Observable(observer => {
                 observer.next(null);
                 observer.complete();
             });
@@ -117,7 +117,7 @@ export class AnalyticsService {
         paramOptions.push(new ParameterValueModel({ id: 'Active', name: 'Active' }));
         paramOptions.push(new ParameterValueModel({ id: 'Complete', name: 'Complete' }));
 
-        return Observable.create(observer => {
+        return new Observable(observer => {
             observer.next(paramOptions);
             observer.complete();
         });
@@ -132,7 +132,7 @@ export class AnalyticsService {
         paramOptions.push(new ParameterValueModel({ id: 'byMonth', name: 'By month' }));
         paramOptions.push(new ParameterValueModel({ id: 'byYear', name: 'By year' }));
 
-        return Observable.create(observer => {
+        return new Observable(observer => {
             observer.next(paramOptions);
             observer.complete();
         });
@@ -145,7 +145,7 @@ export class AnalyticsService {
         paramOptions.push(new ParameterValueModel({ id: 'totalTime', name: 'Total time spent in a process step' }));
         paramOptions.push(new ParameterValueModel({ id: 'avgTime', name: 'Average time spent in a process step' }));
 
-        return Observable.create(observer => {
+        return new Observable(observer => {
             observer.next(paramOptions);
             observer.complete();
         });

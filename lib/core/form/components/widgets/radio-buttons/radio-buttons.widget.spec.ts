@@ -59,7 +59,7 @@ describe('RadioButtonsWidgetComponent', () => {
             restUrl: '<url>'
         });
 
-        spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.create(observer => {
+        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable(observer => {
             observer.next(null);
             observer.complete();
         }));
@@ -82,7 +82,7 @@ describe('RadioButtonsWidgetComponent', () => {
         let field = widget.field;
         spyOn(field, 'updateForm').and.stub();
 
-        spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.create(observer => {
+        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable(observer => {
             observer.next(null);
             observer.complete();
         }));
@@ -102,7 +102,7 @@ describe('RadioButtonsWidgetComponent', () => {
             id: fieldId,
             restUrl: '<url>'
         });
-        spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.create(observer => {
+        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable(observer => {
             observer.next(null);
             observer.complete();
         }));

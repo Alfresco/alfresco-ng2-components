@@ -16,6 +16,7 @@
  */
 
 /* tslint:disable:no-input-rename  */
+/* tslint:disable:rxjs-no-subject-value */
 
 import {
     ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter,

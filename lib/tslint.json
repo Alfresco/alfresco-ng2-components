@@ -3,6 +3,9 @@
     "../node_modules/codelyzer",
     "../tools/tslint-rules/"
   ],
+  "extends": [
+    "rxjs-tslint-rules"
+  ],
   "rules": {
     "adf-license-banner": [
       true,
@@ -169,6 +172,50 @@
     "adf-class-name": true,
     "adf-prefix-name": true,
     "no-input-rename": true,
-    "no-output-rename": true
+    "no-output-rename": true,
+    "rxjs-ban-operators": {
+      "severity": "error"
+    },
+    "rxjs-no-unsafe-takeuntil": {
+      "severity": "error"
+    },
+    "rxjs-no-create": {
+      "severity": "error"
+    },
+    "rxjs-no-ignored-subscribe": {
+      "severity": "error"
+    },
+    "rxjs-no-subject-unsubscribe": {
+      "severity": "error"
+    },
+    "rxjs-no-subject-value": {
+      "severity": "error"
+    },
+    "rxjs-no-unsafe-catch": {
+      "options": [
+        {
+          "observable": "action(s|\\$)?"
+        }
+      ],
+      "severity": "error"
+    },
+    "rxjs-no-unsafe-switchmap": {
+      "options": [
+        {
+          "disallow": [
+            "add",
+            "create",
+            "delete",
+            "post",
+            "put",
+            "remove",
+            "set",
+            "update"
+          ],
+          "observable": "action(s|\\$)?"
+        }
+      ],
+      "severity": "error"
+    }
   }
 }

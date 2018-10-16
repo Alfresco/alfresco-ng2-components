@@ -268,7 +268,7 @@ describe('StartTaskComponent', () => {
         let attachFormToATask = spyOn(service, 'attachFormToATask').and.returnValue(of());
         spyOn(service, 'createNewTask').and.callFake(
             function() {
-                return Observable.create(observer => {
+                return new Observable(observer => {
                     observer.next({ id: 'task-id'});
                     observer.complete();
                 });

@@ -148,12 +148,12 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         if (this.focusSubject) {
-            this.focusSubject.unsubscribe();
+            this.focusSubject.complete();
             this.focusSubject = null;
         }
 
         if (this.toggleSearch) {
-            this.toggleSearch.unsubscribe();
+            this.toggleSearch.complete();
             this.toggleSearch = null;
         }
     }

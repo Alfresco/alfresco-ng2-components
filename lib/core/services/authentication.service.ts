@@ -27,7 +27,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
-const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30 ;
+const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
 
 @Injectable()
 export class AuthenticationService {
@@ -50,10 +50,10 @@ export class AuthenticationService {
      * @returns True if logged in, false otherwise
      */
     isLoggedIn(): boolean {
-            if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
-                return false;
-            }
-            return this.alfrescoApi.getInstance().isLoggedIn();
+        if (!this.isOauth() && this.cookie.isEnabled() && !this.isRememberMeSet()) {
+            return false;
+        }
+        return this.alfrescoApi.getInstance().isLoggedIn();
     }
 
     /**
@@ -284,7 +284,7 @@ export class AuthenticationService {
     }
 
     addTokenToHeader(headersArg?: HttpHeaders): Observable<HttpHeaders> {
-        return Observable.create(async (observer: Observer<any>) => {
+        return new Observable((observer: Observer<any>) => {
             let headers = headersArg;
             if (!headers) {
                 headers = new HttpHeaders();

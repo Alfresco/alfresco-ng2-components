@@ -172,7 +172,7 @@ describe('FormComponent', () => {
 
     it('should get process variable if is a process task', () => {
         spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => {
-            return Observable.create(observer => {
+            return new Observable(observer => {
                 observer.next({ taskId: currentTaskId });
                 observer.complete();
             });
@@ -180,7 +180,7 @@ describe('FormComponent', () => {
 
         spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(of({}));
         spyOn(formService, 'getTask').and.callFake((currentTaskId) => {
-            return Observable.create(observer => {
+            return new Observable(observer => {
                 observer.next({ taskId: currentTaskId, processDefinitionId: '10201' });
                 observer.complete();
             });
@@ -195,7 +195,7 @@ describe('FormComponent', () => {
 
     it('should not get process variable if is not a process task', () => {
         spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => {
-            return Observable.create(observer => {
+            return new Observable(observer => {
                 observer.next({ taskId: currentTaskId });
                 observer.complete();
             });
@@ -203,7 +203,7 @@ describe('FormComponent', () => {
 
         spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(of({}));
         spyOn(formService, 'getTask').and.callFake((currentTaskId) => {
-            return Observable.create(observer => {
+            return new Observable(observer => {
                 observer.next({ taskId: currentTaskId, processDefinitionId: 'null' });
                 observer.complete();
             });
@@ -421,7 +421,7 @@ describe('FormComponent', () => {
     it('should fetch and parse form by task id', (done) => {
         spyOn(formService, 'getTask').and.returnValue(of({}));
         spyOn(formService, 'getTaskForm').and.callFake((currentTaskId) => {
-            return Observable.create(observer => {
+            return new Observable(observer => {
                 observer.next({ taskId: currentTaskId });
                 observer.complete();
             });
@@ -457,7 +457,7 @@ describe('FormComponent', () => {
     it('should apply readonly state when getting form by task id', (done) => {
         spyOn(formService, 'getTask').and.returnValue(of({}));
         spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
-            return Observable.create(observer => {
+            return new Observable(observer => {
                 observer.next({ taskId: taskId });
                 observer.complete();
             });
@@ -473,7 +473,7 @@ describe('FormComponent', () => {
 
     it('should fetch and parse form definition by id', () => {
         spyOn(formService, 'getFormDefinitionById').and.callFake((currentFormId) => {
-            return Observable.create(observer => {
+            return new Observable(observer => {
                 observer.next({ id: currentFormId });
                 observer.complete();
             });
@@ -505,14 +505,14 @@ describe('FormComponent', () => {
 
     it('should fetch and parse form definition by form name', () => {
         spyOn(formService, 'getFormDefinitionByName').and.callFake((currentFormName) => {
-            return Observable.create(observer => {
+            return new Observable(observer => {
                 observer.next(currentFormName);
                 observer.complete();
             });
         });
 
         spyOn(formService, 'getFormDefinitionById').and.callFake((currentFormName) => {
-            return Observable.create(observer => {
+            return new Observable(observer => {
                 observer.next({ name: currentFormName });
                 observer.complete();
             });
@@ -533,7 +533,7 @@ describe('FormComponent', () => {
 
     it('should save task form and raise corresponding event', () => {
         spyOn(formService, 'saveTaskForm').and.callFake(() => {
-            return Observable.create(observer => {
+            return new Observable(observer => {
                 observer.next();
                 observer.complete();
             });
@@ -598,7 +598,7 @@ describe('FormComponent', () => {
 
     it('should complete form form and raise corresponding event', () => {
         spyOn(formService, 'completeTaskForm').and.callFake(() => {
-            return Observable.create(observer => {
+            return new Observable(observer => {
                 observer.next();
                 observer.complete();
             });
@@ -703,7 +703,7 @@ describe('FormComponent', () => {
     it('should load form for ecm node', () => {
         let metadata = {};
         spyOn(nodeService, 'getNodeMetadata').and.returnValue(
-            Observable.create(observer => {
+            new Observable(observer => {
                 observer.next({ metadata: metadata });
                 observer.complete();
             })
