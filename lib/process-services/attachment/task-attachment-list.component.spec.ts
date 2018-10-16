@@ -130,15 +130,16 @@ describe('TaskAttachmentList', () => {
         expect(getTaskRelatedContentSpy).not.toHaveBeenCalled();
     });
 
-    it('should display attachments when the task has attachments', async(() => {
+    it('should display attachments when the task has attachments', (done) => {
         let change = new SimpleChange(null, '123', true);
         component.ngOnChanges({ 'taskId': change });
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
             expect(fixture.debugElement.queryAll(By.css('.adf-datatable-body > .adf-datatable-row')).length).toBe(2);
+            done();
         });
-    }));
+    });
 
     it('emit document when a user wants to view the document', () => {
         component.emitDocumentContent(mockAttachment.data[1]);
@@ -271,13 +272,14 @@ describe('TaskAttachmentList', () => {
             });
         }));
 
-        it('should fetch new attachments when taskId changed', async(() => {
+        it('should fetch new attachments when taskId changed', (done) => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 component.ngOnChanges({ 'taskId': change });
                 expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456');
+                done();
             });
-        }));
+        });
 
         it('should NOT fetch new attachments when empty change set made', () => {
             component.ngOnChanges({});

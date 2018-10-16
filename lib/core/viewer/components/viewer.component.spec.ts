@@ -18,7 +18,7 @@
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AlfrescoApiService, RenditionsService } from '../../services';
 
 import { CoreModule } from '../../core.module';
@@ -119,7 +119,7 @@ class ViewerWithCustomOpenWithComponent {
 class ViewerWithCustomMoreActionsComponent {
 }
 
-xdescribe('ViewerComponent', () => {
+describe('ViewerComponent', () => {
 
     let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
@@ -157,10 +157,6 @@ xdescribe('ViewerComponent', () => {
         component = fixture.componentInstance;
 
         alfrescoApiService = TestBed.get(AlfrescoApiService);
-    });
-
-    afterEach(() => {
-        fixture.destroy();
     });
 
     describe('Extension Type Test', () => {
@@ -201,7 +197,7 @@ xdescribe('ViewerComponent', () => {
             });
         });
 
-        it('should extension file mp3 be loaded', (done) => {
+        xit('should extension file mp3 be loaded', (done) => {
             component.urlFile = 'fake-url-file.mp3';
             component.ngOnChanges(null);
             fixture.detectChanges();
@@ -213,7 +209,7 @@ xdescribe('ViewerComponent', () => {
             });
         });
 
-        it('should extension file wav be loaded', (done) => {
+        xit('should extension file wav be loaded', (done) => {
             component.urlFile = 'fake-url-file.wav';
             component.ngOnChanges(null);
             fixture.detectChanges();
@@ -331,7 +327,7 @@ xdescribe('ViewerComponent', () => {
             });
         });
 
-        it('should display the media player if the file identified by mimetype is a media when the filename has no extension', (done) => {
+        xit('should display the media player if the file identified by mimetype is a media when the filename has no extension', (done) => {
             component.urlFile = 'content';
             component.mimeType = 'video/mp4';
             fixture.detectChanges();
@@ -344,7 +340,7 @@ xdescribe('ViewerComponent', () => {
             });
         });
 
-        it('should node without content show unkonwn', async(() => {
+        it('should node without content show unkonwn', (done) => {
             const displayName = 'the-name';
             const nodeDetails = { name: displayName, id: '12' };
             const contentUrl = '/content/url/path';
@@ -362,8 +358,9 @@ xdescribe('ViewerComponent', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('adf-viewer-unknown-format')).toBeDefined();
+                done();
             });
-        }));
+        });
 
     });
 
@@ -393,7 +390,7 @@ xdescribe('ViewerComponent', () => {
         expect(component.fileTitle).toBe('file2');
     }));
 
-    xdescribe('Viewer Example Component Rendering', () => {
+    describe('Viewer Example Component Rendering', () => {
 
         it('should use custom toolbar', (done) => {
             let customFixture = TestBed.createComponent(ViewerWithCustomToolbarComponent);
@@ -566,17 +563,20 @@ xdescribe('ViewerComponent', () => {
                 });
             });
 
-            it('should raise download event with the toolbar button', async(() => {
+            it('should raise download event with the toolbar button', (done) => {
                 component.allowDownload = true;
+                component.downloadUrl  = 'URL';
+                component.fileName = 'fileName';
                 fixture.detectChanges();
 
                 component.download.subscribe(e => {
                     expect(e).not.toBeNull();
+                    done();
                 });
 
                 const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-download"]') as HTMLButtonElement;
                 button.click();
-            }));
+            });
 
             it('should render default print button', (done) => {
                 component.allowPrint = true;
@@ -613,17 +613,18 @@ xdescribe('ViewerComponent', () => {
                 });
             });
 
-            it('should raise the print event with the toolbar button', async(() => {
+            it('should raise the print event with the toolbar button', (done) => {
                 component.allowPrint = true;
                 fixture.detectChanges();
 
                 component.print.subscribe(e => {
                     expect(e).not.toBeNull();
+                    done();
                 });
 
                 const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-print"]') as HTMLButtonElement;
                 button.click();
-            }));
+            });
 
             it('should render default share button', (done) => {
                 component.allowShare = true;
@@ -660,17 +661,18 @@ xdescribe('ViewerComponent', () => {
                 });
             });
 
-            it('should raise share event with the toolbar button', async(() => {
+            it('should raise share event with the toolbar button', (done) => {
                 component.allowShare = true;
                 fixture.detectChanges();
 
                 component.share.subscribe(e => {
                     expect(e).not.toBeNull();
+                    done();
                 });
 
                 const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-share"]') as HTMLButtonElement;
                 button.click();
-            }));
+            });
 
         });
 
@@ -687,14 +689,15 @@ xdescribe('ViewerComponent', () => {
                     expect(element.querySelector('.adf-viewer-toolbar')).not.toBeNull();
                 });
 
-                it('should Name File be present if is overlay mode ', async(() => {
+                it('should Name File be present if is overlay mode ', (done) => {
                     component.ngOnChanges(null);
                     fixture.detectChanges();
                     fixture.whenStable().then(() => {
                         fixture.detectChanges();
                         expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('fake-test-file.pdf');
+                        done();
                     });
-                }));
+                });
 
                 it('should Close button be present if overlay mode', (done) => {
                     fixture.detectChanges();
@@ -843,21 +846,22 @@ xdescribe('ViewerComponent', () => {
 
         describe('Events', () => {
 
-            it('should if the extension change extension Change event be fired ', async(() => {
+            it('should if the extension change extension Change event be fired ', (done) => {
 
                 component.extensionChange.subscribe((fileExtension) => {
                     expect(fileExtension).toEqual('png');
+                    done();
                 });
 
                 component.urlFile = 'fake-url-file.png';
 
                 component.ngOnChanges(null);
-            }));
+            });
         });
 
         describe('display name property override by urlFile', () => {
 
-            it('should displayName override the default name if is present and urlFile is set', async(() => {
+            it('should displayName override the default name if is present and urlFile is set', (done) => {
                 component.urlFile = 'fake-test-file.pdf';
                 component.displayName = 'test name';
                 fixture.detectChanges();
@@ -866,10 +870,11 @@ xdescribe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('test name');
+                    done();
                 });
-            }));
+            });
 
-            it('should use the urlFile name if displayName is NOT set and urlFile is set', async(() => {
+            it('should use the urlFile name if displayName is NOT set and urlFile is set', (done) => {
                 component.urlFile = 'fake-test-file.pdf';
                 component.displayName = null;
                 fixture.detectChanges();
@@ -878,13 +883,14 @@ xdescribe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('fake-test-file.pdf');
+                    done();
                 });
-            }));
+            });
         });
 
         describe('display name property override by blobFile', () => {
 
-            it('should displayName override the name if is present and blobFile is set', async(() => {
+            it('should displayName override the name if is present and blobFile is set', (done) => {
                 component.displayName = 'blob file display name';
                 component.blobFile = new Blob(['This is my blob content'], { type: 'text/plain' });
                 fixture.detectChanges();
@@ -893,10 +899,11 @@ xdescribe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('blob file display name');
+                    done();
                 });
-            }));
+            });
 
-            it('should show uknownn name if displayName is NOT set and blobFile is set', async(() => {
+            it('should show uknownn name if displayName is NOT set and blobFile is set', (done) => {
                 component.displayName = null;
                 component.blobFile = new Blob(['This is my blob content'], { type: 'text/plain' });
                 fixture.detectChanges();
@@ -905,8 +912,9 @@ xdescribe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual('Unknown');
+                    done();
                 });
-            }));
+            });
         });
 
         describe('display name property override by nodeId', () => {
@@ -919,7 +927,7 @@ xdescribe('ViewerComponent', () => {
                 content: { getContentUrl: () => contentUrl }
             };
 
-            it('should use the node name if displayName is NOT set and fileNodeId is set', async(() => {
+            it('should use the node name if displayName is NOT set and fileNodeId is set', (done) => {
                 component.fileNodeId = '12';
                 component.urlFile = null;
                 component.displayName = null;
@@ -929,8 +937,9 @@ xdescribe('ViewerComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('#adf-viewer-display-name').textContent).toEqual(displayName);
+                    done();
                 });
-            }));
+            });
         });
 
     });
