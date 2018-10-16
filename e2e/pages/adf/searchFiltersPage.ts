@@ -118,7 +118,7 @@ export class SearchFiltersPage {
                 this.clickSizeShowMoreButtonUntilIsNotDisplayed();
             }
         }, err => {
-        })
+        });
     }
 
     checkSizeShowMoreButtonIsDisplayed() {
@@ -141,7 +141,7 @@ export class SearchFiltersPage {
                 this.clickSizeShowLessButtonUntilIsNotDisplayed();
             }
         }, err => {
-        })
+        });
     }
 
     checkShowLessButtonIsNotDisplayed() {
