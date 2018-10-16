@@ -16,7 +16,7 @@
  */
 
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdfViewer.component';
@@ -117,7 +117,7 @@ class BlobTestComponent {
 
 }
 
-xdescribe('Test PdfViewer component', () => {
+describe('Test PdfViewer component', () => {
 
     let component: PdfViewerComponent;
     let fixture: ComponentFixture<PdfViewerComponent>;
@@ -158,11 +158,6 @@ xdescribe('Test PdfViewer component', () => {
             done();
         });
     });
-
-    afterEach(() => {
-        fixture.destroy();
-    });
-
     it('should Loader be present', () => {
         expect(element.querySelector('.loader-container')).not.toBeNull();
     });
@@ -203,7 +198,7 @@ xdescribe('Test PdfViewer component', () => {
         });
 
         afterEach(() => {
-            fixtureUrlTestComponent.destroy();
+            document.body.removeChild(elementUrlTestComponent);
         });
 
         it('should Canvas be present', (done) => {
@@ -270,26 +265,28 @@ xdescribe('Test PdfViewer component', () => {
         });
 
         afterEach(() => {
-            fixtureBlobTestComponent.destroy();
+            document.body.removeChild(elementBlobTestComponent);
         });
 
-        it('should Canvas be present', async(() => {
+        it('should Canvas be present', (done) => {
             fixtureBlobTestComponent.detectChanges();
 
             fixtureBlobTestComponent.whenStable().then(() => {
                 expect(elementBlobTestComponent.querySelector('.pdfViewer')).not.toBeNull();
                 expect(elementBlobTestComponent.querySelector('.viewer-pdf-viewer')).not.toBeNull();
+                done();
             });
-        }));
+        });
 
-        it('should Next an Previous Buttons be present', async(() => {
+        it('should Next an Previous Buttons be present', (done) => {
             fixtureBlobTestComponent.detectChanges();
 
             fixtureBlobTestComponent.whenStable().then(() => {
                 expect(elementBlobTestComponent.querySelector('#viewer-previous-page-button')).not.toBeNull();
                 expect(elementBlobTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();
+                done();
             });
-        }));
+        });
 
         it('should Input Page elements be present', (done) => {
             fixtureBlobTestComponent.detectChanges();
@@ -338,7 +335,7 @@ xdescribe('Test PdfViewer component', () => {
         });
 
         afterEach(() => {
-            fixtureUrlTestComponent.destroy();
+            document.body.removeChild(elementUrlTestComponent);
         });
 
         it('should Total number of pages be loaded', (done) => {
@@ -362,7 +359,7 @@ xdescribe('Test PdfViewer component', () => {
             });
         }, 5000);
 
-        xit('should event RIGHT_ARROW keyboard change pages', async(() => {
+        it('should event RIGHT_ARROW keyboard change pages', (done) => {
             EventMock.keyDown(RIGHT_ARROW);
 
             fixtureUrlTestComponent.detectChanges();
@@ -370,10 +367,11 @@ xdescribe('Test PdfViewer component', () => {
             fixtureUrlTestComponent.whenStable().then(() => {
                 fixtureUrlTestComponent.detectChanges();
                 expect(componentUrlTestComponent.pdfViewerComponent.displayPage).toBe(2);
+                done();
             });
-        }), 5000);
+        }, 5000);
 
-        xit('should event LEFT_ARROW keyboard change pages', (done) => {
+        it('should event LEFT_ARROW keyboard change pages', (done) => {
             component.inputPage('2');
 
             fixtureUrlTestComponent.detectChanges();
@@ -563,6 +561,10 @@ xdescribe('Test PdfViewer component', () => {
             componentUrlTestPasswordComponent.pdfViewerComponent.rendered.subscribe(() => {
                 done();
             });
+        });
+
+        afterEach(() => {
+            document.body.removeChild(fixtureUrlTestPasswordComponent.nativeElement);
         });
 
         it('should try to access protected pdf', (done) => {
