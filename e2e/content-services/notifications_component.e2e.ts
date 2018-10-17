@@ -46,7 +46,7 @@ describe('Notifications Component', () => {
 
         notificationPage.goToNotificationsPage();
 
-        notificationPage.enterDurationField(50000);
+        notificationPage.enterDurationField(6000);
 
         done();
     });
@@ -55,7 +55,7 @@ describe('Notifications Component', () => {
         notificationPage.enterDurationField(1);
         notificationPage.clickNotificationButton();
         browser.sleep(100);
-        notificationPage.enterDurationField(50000);
+        notificationPage.enterDurationField(6000);
         done();
     });
 
