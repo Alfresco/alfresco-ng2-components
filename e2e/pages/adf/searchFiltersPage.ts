@@ -74,6 +74,30 @@ export class SearchFiltersPage {
         result.click();
     }
 
+    clickFileSizeFilterHeader() {
+        let fileSizeFilterHeader = this.fileSizeFilter.element(by.css('mat-expansion-panel-header'));
+        Util.waitUntilElementIsClickable(fileSizeFilterHeader);
+        return fileSizeFilterHeader.click();
+    }
+
+    clickFileTypeFilterHeader() {
+        let fileTypeFilterHeader = this.fileTypeFilter.element(by.css('mat-expansion-panel-header'));
+        Util.waitUntilElementIsClickable(fileTypeFilterHeader);
+        return fileTypeFilterHeader.click();
+    }
+
+    checkFileTypeFilterIsCollapsed() {
+        this.fileTypeFilter.getAttribute('class').then((elementClass) => {
+            expect(elementClass).not.toContain('mat-expanded');
+        });
+    }
+
+    checkFileSizeFilterIsCollapsed() {
+        this.fileSizeFilter.getAttribute('class').then((elementClass) => {
+            expect(elementClass).not.toContain('mat-expanded');
+        });
+    }
+
     filterByFileType(fileType) {
         this.checkFileTypeFilterIsDisplayed();
 
