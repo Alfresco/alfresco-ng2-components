@@ -50,7 +50,7 @@ echo "====== COPY new build in node_modules ===== "
 
 rm -rf $DIR/../integration/base_ver_2_app/node_modules/@alfresco
 
-node $DIR/scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER;
+node $DIR/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER;
 
 mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-core/ && \
 cp -R  $DIR/../node_modules/@alfresco/adf-core/*  $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-core/
