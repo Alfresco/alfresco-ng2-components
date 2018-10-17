@@ -4,10 +4,7 @@ var http = require('http');
 
 var fs = require('fs');
 var path = require('path');
-var archiver = require('archiver');
 var unzip = require('unzip-stream');
-
-var exec = require('child_process').exec;
 
 var alfrescoJsApi;
 
@@ -35,7 +32,7 @@ unzipRetry = (url, outputFolder, pacakge, tentativeNumber) => {
 
             }, 10000);
         })
-}
+};
 
 downloadZip = async (url, outputFolder, pacakge, tentativeNumber) => {
     if (!tentativeNumber) {
@@ -46,7 +43,7 @@ downloadZip = async (url, outputFolder, pacakge, tentativeNumber) => {
 
     console.log(`Download ${pacakge} in OutputFolder ${outputFolder}`)
 
-    var file = fs.createWriteStream(`${pacakge}.zip`);
+    let file = fs.createWriteStream(`${pacakge}.zip`);
     return await http.get(`http://${url}`, (response) => {
         response.pipe(file);
         file.on('finish', async () => {
@@ -55,7 +52,7 @@ downloadZip = async (url, outputFolder, pacakge, tentativeNumber) => {
             });
         });
     });
-}
+};
 
 getUrl = async (folder, pacakge) => {
     let zipDemoNode;
@@ -70,7 +67,7 @@ getUrl = async (folder, pacakge) => {
 
 
     return await alfrescoJsApi.content.getContentUrl(zipDemoNode.entry.id, true);
-}
+};
 
 async function main() {
 
@@ -78,7 +75,7 @@ async function main() {
         .version('0.1.0')
         .option('-p, --password [type]', 'password')
         .option('-u, --username  [type]', 'username')
-        .option('-o, --output  [type]', 'oputput folder')
+        .option('-o, --output  [type]', 'output folder')
         .option('--base-href  [type]', '')
         .option('-f, --folder [type]', 'Name of the folder')
         .option('-host, --host [type]', 'URL of the CS')

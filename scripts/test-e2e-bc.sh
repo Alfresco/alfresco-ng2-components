@@ -27,7 +27,7 @@ MATERIAL_VERSION="5.1.1"
 NGX_TRANSLATE_VERSION="10.0.2"
 MOMENT_VERSION="2.20.1"
 RXJS_VERSION="6.0.0"
-TYPESCRIPT_VERSION=2.6.2
+TYPESCRIPT_VERSION="2.9.2"
 
 npm install
 
@@ -50,22 +50,13 @@ echo "====== COPY new build in node_modules ===== "
 
 rm -rf $DIR/../integration/base_ver_2_app/node_modules/@alfresco
 
-node $DIR/download-build-lib-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER;
+cd $DIR/..
 
-mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-core/ && \
-cp -R  $DIR/../node_modules/@alfresco/adf-core/*  $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-core/
-
-mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-content-services/ && \
-cp -R $DIR/../node_modules/@alfresco/adf-content-services/* $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-content-services/
-
-mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-process-services/ && \
-cp -R $DIR/../node_modules/@alfresco/adf-process-services/* $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-process-services/
-
-mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-insights/ && \
-cp -R $DIR/../node_modules/@alfresco/adf-insights/* $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-insights/
-
+node $DIR/download-build-lib-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER -o /integration/base_ver_2_app/node_modules
 
 rm -rf $DIR/../node_modules/@angular
 rm -rf $DIR/../node_modules/@alfresco
+
+cd $DIR/../integration/base_ver_2_app
 
 npm run e2e
