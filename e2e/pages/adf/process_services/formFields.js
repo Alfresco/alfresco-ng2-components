@@ -62,7 +62,9 @@ var FormFields = function () {
     };
 
     this.getFieldLabel = function (fieldId, labelLocatorParam) {
-        return this.getFieldText(fieldId, labelLocatorParam);
+        var label = this.getWidget(fieldId).element(labelLocatorParam || labelLocator);
+        Util.waitUntilElementIsVisible(label);
+        return label.getText();
     };
 
     this.getFieldErrorMessage = function (fieldId) {
@@ -71,7 +73,7 @@ var FormFields = function () {
     }
 
     this.getFieldText = function (fieldId, labelLocatorParam) {
-        var label = this.getWidget(fieldId).all(labelLocatorParam || labelLocator).first();
+        var label = this.getWidget(fieldId).element(labelLocatorParam || labelLocator);
         Util.waitUntilElementIsVisible(label);
         return label.getText();
     };
@@ -152,10 +154,10 @@ var FormFields = function () {
         return completeButton.click();
     };
 
-    this.typeInInputById = function(id, text) {
-        let input = element(by.id(id));
+    this.setValueInInputById = function(fieldId, value) {
+        let input = element(by.id(fieldId));
         Util.waitUntilElementIsVisible(input);
-        input.sendKeys(text);
+        input.sendKeys(value);
         return this;
     }
 

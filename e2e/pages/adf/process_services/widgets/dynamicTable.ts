@@ -17,7 +17,7 @@
 
 import FormFields = require('../formFields');
 import Util = require('../../../../util/util');
-import { element, by, browser, protractor } from 'protractor';
+import { by, element, browser, protractor } from 'protractor';
 
 export class DynamicTable {
     formFields = new FormFields();

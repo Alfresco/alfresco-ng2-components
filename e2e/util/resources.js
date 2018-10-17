@@ -142,6 +142,50 @@ exports.Files = {
                 showMultiHidden: "showmultihidden",
                 multiVisible: "multivisible"
             }
+        },
+
+        CHECKBOX: {
+            formName: "CheckboxVisibilityProcess",
+            title: "CheckboxVisibilityProcess",
+            processName: "CheckboxVisibilityProcess",
+            FIELD: {
+                number_input_id: "label",
+                checkbox_field_id: "label1",
+                checkbox_id: "field-checkbox_input-container",
+                checkbox_input_id: "label1",
+                checkbox_label: "Label1"
+            }
+        },
+
+        DATE: {
+            formName: "DateWidgetProcess",
+            title: "DateWidgetProcess",
+            processName: "DateWidgetProcess",
+            FIELD: {
+                date_input: "date_standard",
+                date_between_input: "betweendate"
+            }
+        },
+
+        DATETIME: {
+            formName: "DateTimeProcess",
+            title: "DateTimeProcess",
+            processName: "DateTimeProcess",
+            FIELD: {
+                date_time_input: "datetimegeneral",
+                date_time_between_input: "dateandtimeadvance"
+            }
+        },
+
+        DROPDOWN: {
+            formName: "DropdownProcess",
+            title: "DropdownProcess",
+            processName: "DropdownProcess",
+            FIELD: {
+                general_dropdown: "dropdown",
+                dropdown_visible: "dropdownvisibility",
+                checkbox_id: "clickcheckbox"
+            }
         }
     },
 

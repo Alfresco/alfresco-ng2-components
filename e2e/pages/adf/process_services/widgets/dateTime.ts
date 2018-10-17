@@ -19,7 +19,7 @@ import FormFields = require('../formFields');
 import { element, by } from 'protractor';
 import Util = require('../../../../util/util');
 
-export class DateWidget {
+export class DateTime {
 
     formFields = new FormFields();
 
@@ -31,7 +31,7 @@ export class DateWidget {
         return this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    getDateLabel(fieldId) {
+    getDateTimeLabel(fieldId) {
         let label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
         Util.waitUntilElementIsVisible(label);
         return label.getText();
@@ -41,7 +41,7 @@ export class DateWidget {
         return this.formFields.setValueInInputById(fieldId, value);
     }
 
-    clearDateInput(fieldId) {
+    clearDateTimeInput(fieldId) {
         let dateInput = element(by.id(fieldId));
         Util.waitUntilElementIsVisible(dateInput);
         return dateInput.clear();

@@ -16,39 +16,31 @@
  */
 
 import FormFields = require('../formFields');
-import { by } from 'protractor';
+import Util = require('../../../../util/util');
+import { by, element } from 'protractor';
 
-export class TextWidget {
+export class Checkbox {
 
     formFields = new FormFields();
+    checkboxField = element(by.css('span[class*="mat-checkbox-label"]'));
+    checkboxLabel = element(by.css('span[class*="mat-checkbox-label"]'));
 
-    labelLocator = by.css("label[class*='adf-label']");
-
-    getFieldLabel(fieldId) {
-        return this.formFields.getFieldLabel(fieldId, this.labelLocator);
+    getCheckboxLabel() {
+        Util.waitUntilElementIsVisible(this.checkboxLabel);
+        return this.checkboxLabel.getText();
     }
 
-    getFieldPlaceHolder(fieldId) {
-        return this.formFields.getFieldPlaceHolder(fieldId);
+    clickCheckboxInput(fieldId) {
+        let checkboxInput = element.all(by.css(`mat-checkbox[id="${fieldId}"] div`)).first();
+        Util.waitUntilElementIsVisible(checkboxInput);
+        return checkboxInput.click();
     }
 
-    setValue(fieldId, value) {
-        return this.formFields.setFieldValue(by.id, fieldId, value);
-    }
-
-    getFieldValue(fieldId) {
-        return this.formFields.getFieldValue(fieldId);
-    }
-
-    getErrorMessage(fieldId) {
-        return this.formFields.getFieldErrorMessage(fieldId);
-    }
-
-    isWidgetVisible(fieldId) {
+    isCheckboxDisplayed(fieldId) {
         return this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    isWidgetNotVisible(fieldId) {
+    isCheckboxHidden(fieldId) {
         return this.formFields.checkWidgetIsHidden(fieldId);
     }
 }

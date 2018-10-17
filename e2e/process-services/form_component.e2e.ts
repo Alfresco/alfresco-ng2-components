@@ -18,7 +18,7 @@
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { FormPage } from '../pages/adf/process_services/formPage';
-import { Date } from '../pages/adf/process_services/widgets/Date';
+import { DateWidget } from '../pages/adf/process_services/widgets/date';
 import { Amount } from '../pages/adf/process_services/widgets/Amount';
 import { NumberWidget } from '../pages/adf/process_services/widgets/Number';
 import TestConfig = require('../test.config');
@@ -31,11 +31,15 @@ describe('Form Component', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const formPage = new FormPage();
-    const dateWidget = new Date();
+    const dateWidget = new DateWidget();
     const amountWidget = new Amount();
     const numberWidget = new NumberWidget();
 
     let tenantId, user;
+
+    let fields = {
+        dateWidgetId: 'label7'
+    };
 
     let message = {
         test: 'Text Test',
@@ -84,8 +88,9 @@ describe('Form Component', () => {
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
         formPage.checkErrorLogMessage(message.errorLogNumber);
 
-        dateWidget.checkLabel7IsDisplayed();
-        dateWidget.addIntoDateWidget(message.test);
+        dateWidget.checkLabelIsVisible(fields.dateWidgetId);
+        dateWidget.setDateInput(fields.dateWidgetId, message.test);
+        dateWidget.clickOutsideWidget(fields.dateWidgetId);
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningDate);
         formPage.checkErrorLogMessage(message.errorLogDate);
 
@@ -97,7 +102,7 @@ describe('Form Component', () => {
         amountWidget.removeFromAmountWidget();
         formPage.checkErrorMessageIsNotDisplayed(message.errorLogAmount);
 
-        dateWidget.removeFromDateWidget();
+        dateWidget.clearDateInput(fields.dateWidgetId);
         numberWidget.removeFromNumberWidget();
         formPage.checkErrorMessageForWidgetIsNotDisplayed(message.warningDate);
         formPage.checkErrorMessageIsNotDisplayed(message.errorLogDate);

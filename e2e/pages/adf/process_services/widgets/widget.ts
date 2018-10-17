@@ -25,6 +25,9 @@ import { Hyperlink } from './hyperlink';
 import { Dropdown } from './dropdown';
 import { DynamicTable } from './dynamicTable';
 import { TextWidget } from './text-widget';
+import { Checkbox } from './checkbox';
+import { DateWidget } from './date';
+import { DateTime } from './dateTime';
 import { People } from './people';
 
 export class Widget {
@@ -67,6 +70,22 @@ export class Widget {
 
     textWidget() {
         return new TextWidget();
+    }
+
+    documentWidget() {
+        return new Document();
+    }
+
+    checkboxWidget() {
+        return new Checkbox();
+    }
+
+    dateWidget() {
+        return new DateWidget();
+    }
+
+    dateTimeWidget() {
+        return new DateTime();
     }
 
     peopleWidget() {

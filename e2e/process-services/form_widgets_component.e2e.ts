@@ -23,7 +23,7 @@ import { Widget } from '../pages/adf/process_services/widgets/widget';
 import CONSTANTS = require('../util/constants');
 
 import FormDefinitionModel = require('../models/APS/FormDefinitionModel');
-import Task = require('../models/APS/Task');
+import { Task } from '../models/APS/Task';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -279,7 +279,7 @@ describe('Form widgets', () => {
                     return formInstance;
                 })
                 .then(() => {
-                    taskPage.formFields().typeInInputById('label', 'value 1').completeForm();
+                    taskPage.formFields().setValueInInputById('label', 'value 1').completeForm();
                     taskPage.taskFilterPage().clickCompletedTaskFilter();
                 })
                 .then(() => {
@@ -321,7 +321,7 @@ describe('Form widgets', () => {
             taskPage.formFields().checkFormIsDisplayed();
         });
 
-        fit('[C268157] - General Properties', async () => {
+        it('[C268157] - General Properties', async () => {
             let label = widget.textWidget().getFieldLabel(app.FIELD.simpleText);
             expect(label).toBe('textSimple*');
             expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
@@ -367,10 +367,9 @@ describe('Form widgets', () => {
 
     });
 
-    fdescribe('MultiLine Widget', () => {
+    describe('MultiLine Widget', () => {
         let app = resources.Files.WIDGET_CHECK_APP.MULTILINE_TEXT;
         let deployedApp, process;
-
 
         beforeAll(async (done) => {
             let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
@@ -428,5 +427,187 @@ describe('Form widgets', () => {
             widget.textWidget().isWidgetVisible(app.FIELD.multiVisible);
         });
 
+    });
+
+    describe('Checkbox Widget', () => {
+        let app = resources.Files.WIDGET_CHECK_APP.CHECKBOX;
+        let deployedApp, process;
+
+        beforeAll(async (done) => {
+            let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            deployedApp = appDefinitions.data.find((currentApp) => {
+                return currentApp.modelId === appModel.id;
+            });
+            process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
+            loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+            done();
+        });
+
+        afterAll(async (done) => {
+            await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
+            done();
+        });
+
+        beforeEach(() => {
+            let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            browser.get(urlToNavigateTo);
+            taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            taskPage.formFields().checkFormIsDisplayed();
+        });
+
+        it('[C268554] Checkbox widget - General settings', () => {
+            taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
+            expect(widget.checkboxWidget().getCheckboxLabel()).toContain(app.FIELD.checkbox_label);
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+            widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_input_id);
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        });
+
+        it('[C272812] Checkbox widget - Visibility settings', () => {
+            widget.checkboxWidget().isCheckboxHidden(app.FIELD.checkbox_field_id);
+            taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
+            widget.checkboxWidget().isCheckboxDisplayed(app.FIELD.checkbox_field_id);
+        });
+    });
+
+    describe('Date Widget', () => {
+        let app = resources.Files.WIDGET_CHECK_APP.DATE;
+        let deployedApp, process;
+
+        beforeAll(async (done) => {
+            let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            deployedApp = appDefinitions.data.find((currentApp) => {
+                return currentApp.modelId === appModel.id;
+            });
+            process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
+            loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+            done();
+        });
+
+        afterAll(async (done) => {
+            await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
+            done();
+        });
+
+        beforeEach(() => {
+            let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            browser.get(urlToNavigateTo);
+            taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            taskPage.formFields().checkFormIsDisplayed();
+        });
+
+        it('[C268814] Date Widget - General Properties', () => {
+            expect(widget.dateWidget().getDateLabel(app.FIELD.date_input)).toContain('Date');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+            widget.dateWidget().setDateInput(app.FIELD.date_input, '20-10-2018');
+            widget.dateWidget().clickOutsideWidget(app.FIELD.date_input);
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        });
+
+        it('[C277234] Date and time widget - Advanced properties', () => {
+            widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2017');
+            widget.dateWidget().clickOutsideWidget(app.FIELD.date_between_input);
+            expect(widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be less than 1-10-2018');
+            widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2019');
+            widget.dateWidget().clickOutsideWidget(app.FIELD.date_between_input);
+            expect(widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be greater than 31-10-2018');
+        });
+    });
+
+    xdescribe('DateTime Widget', () => {
+        let app = resources.Files.WIDGET_CHECK_APP.DATETIME;
+        let deployedApp, process;
+
+        beforeAll(async (done) => {
+            let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            deployedApp = appDefinitions.data.find((currentApp) => {
+                return currentApp.modelId === appModel.id;
+            });
+            process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
+            loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+            done();
+        });
+
+        afterAll(async (done) => {
+            await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
+            done();
+        });
+
+        beforeEach(() => {
+            let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            browser.get(urlToNavigateTo);
+            taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            taskPage.formFields().checkFormIsDisplayed();
+        });
+
+        it('C268818] Date and time widget - General properties', () => {
+            expect(widget.dateTimeWidget().getDateTimeLabel(app.FIELD.date_time_input)).toContain('Date');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+            widget.dateWidget().setDateInput(app.FIELD.date_time_input, '30-10-2018 06:25 AM');
+            widget.dateWidget().clickOutsideWidget(app.FIELD.date_time_input);
+            widget.dateWidget().setDateInput(app.FIELD.date_time_input, '30-10-2018 06:25 AM');
+            // // widget.dateWidget().clickOutsideWidget(app.FIELD.date_time_input);
+            // expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        });
+
+        it('[C277234] Date and time widget - Advanced properties', () => {
+            widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2017');
+            widget.dateWidget().clickOutsideWidget(app.FIELD.date_between_input);
+            expect(widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be less than 1-10-2018');
+            widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2019');
+            widget.dateWidget().clickOutsideWidget(app.FIELD.date_between_input);
+            expect(widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be greater than 31-10-2018');
+        });
+    });
+
+    fdescribe('Dropdown Widget', () => {
+        let app = resources.Files.WIDGET_CHECK_APP.DROPDOWN;
+        let deployedApp, process;
+
+        beforeAll(async (done) => {
+            let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            deployedApp = appDefinitions.data.find((currentApp) => {
+                return currentApp.modelId === appModel.id;
+            });
+            process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
+            loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+            done();
+        });
+
+        afterAll(async (done) => {
+            await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
+            done();
+        });
+
+        beforeEach(() => {
+            let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            browser.get(urlToNavigateTo);
+            taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            taskPage.formFields().checkFormIsDisplayed();
+        });
+
+        it('[C269051] General and Options properties', () => {
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+
+            widget.dropdown().openDropdown(app.FIELD.general_dropdown);
+            widget.dropdown().selectOptionFromDropdown('Happy');
+            expect(widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Happy');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+
+            widget.dropdown().openDropdown(app.FIELD.general_dropdown);
+            widget.dropdown().selectOptionFromDropdown('Choose one');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+
+            widget.dropdown().openDropdown(app.FIELD.general_dropdown);            
+            widget.dropdown().selectOptionFromDropdown('Sad');
+            expect(widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Sad');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        });
+
+        it('[C269052] Dropdown menu - Visibility', () => {
+            expect(widget.dropdown().checkDropdownIsVisible(app.FIELD.dropdown_visible)).toBeFalsy();
+            widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+            expect(widget.dropdown().checkDropdownIsVisible(app.FIELD.dropdown_visible)).toBeTruthy();
+        });
     });
 });
