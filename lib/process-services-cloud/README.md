@@ -1,4 +1,4 @@
-# Alfresco Content services Library
+# Alfresco Process Services Cloud Library
 
 Contains a variety of components, directives and services used throughout ADF
 
@@ -17,7 +17,7 @@ Contains a variety of components, directives and services used throughout ADF
 
 ## Documentation
 
-See the [ADF Content Services](../../docs/README.md#content-services) section of the [docs index](../../docs/README.md)
+See the [ADF Core](../../docs/README.md#adf-process-services-cloud) section of the [docs index](../../docs/README.md)
 for all available documentation on this library.
 
 ## Prerequisites
@@ -30,7 +30,7 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 ## Install
 
 ```sh
-npm install @alfresco/adf-content-services
+npm install @alfresco/adf-process-services-cloud
 ```
 
 ## License

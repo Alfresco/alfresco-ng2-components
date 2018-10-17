@@ -30,7 +30,7 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 ## Install
 
 ```sh
-npm install @alfresco/process-services
+npm install @alfresco/adf-process-services
 ```
 
 ## License
