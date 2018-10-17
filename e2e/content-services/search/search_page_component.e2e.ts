@@ -320,4 +320,11 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkNoResultMessageIsNotDisplayed();
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
     });
+
+    it('[C286675] Should display results when searching for \*', () => {
+        contentServicesPage.goToDocumentList();
+        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
+            .enterTextAndPressEnter('*');
+        searchResultPage.checkNoResultMessageIsNotDisplayed();
+    });
 });
