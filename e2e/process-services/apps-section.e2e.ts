@@ -60,8 +60,6 @@ describe('Modify applications', () => {
         firstApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
         appVersionToBeDeleted = await apps.importPublishDeployApp(this.alfrescoJsApi, appToBeDeleted.file_location);
 
-        model = await this.alfrescoJsApi.activiti.appsApi.getAppDefinition(firstApp.id);
-
         loginPage.loginToProcessServicesUsingUserModel(user);
 
         done();
