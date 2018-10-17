@@ -49,7 +49,21 @@ npm install --save alfresco-js-api@alpha
 echo "====== COPY new build in node_modules ===== "
 
 rm -rf $DIR/../integration/base_ver_2_app/node_modules/@alfresco
-node $DIR/download-build-lib-in-cs.js -u admin  -p admin --host adfdev.envalfresco.com -f ${BUILD_NUMBER} -o integration/base_ver_2_app/node_modules
+
+node $DIR/scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER;
+
+mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-core/ && \
+cp -R  $DIR/../node_modules/@alfresco/adf-core/*  $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-core/
+
+mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-content-services/ && \
+cp -R $DIR/../node_modules/@alfresco/adf-content-services/* $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-content-services/
+
+mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-process-services/ && \
+cp -R $DIR/../node_modules/@alfresco/adf-process-services/* $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-process-services/
+
+mkdir -p $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-insights/ && \
+cp -R $DIR/../node_modules/@alfresco/adf-insights/* $DIR/../integration/base_ver_2_app/node_modules/@alfresco/adf-insights/
+
 
 rm -rf $DIR/../node_modules/@angular
 rm -rf $DIR/../node_modules/@alfresco
