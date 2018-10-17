@@ -60,6 +60,7 @@
     "@alfresco/adf-core": "2.7.0-beta2",
     "@alfresco/adf-insights": "2.7.0-beta2",
     "@alfresco/adf-process-services": "2.7.0-beta2",
+    "@alfresco/adf-process-services-cloud": "^2.7.0-ccc52d40dd455b8bb2cd2ed9ff7bf67cea57f0bf",
     "@angular/animations": "6.1.8",
     "@angular/cdk": "6.4.7",
     "@angular/common": "6.1.8",
