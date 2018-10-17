@@ -24,6 +24,7 @@ export class LockFilePage {
     saveButton = element(by.cssContainingText('button span', 'Save'));
     lockFileCheckboxText = element(by.cssContainingText('mat-checkbox label span', ' Lock file '));
     lockFileCheckbox = element(by.css('mat-checkbox[class*="adf-lock-file-name"]'));
+    allowOwnerCheckbox = element(by.cssContainingText('mat-checkbox[class*="adf-lock-file-name"] span', ' Allow the owner to modify this file '));
 
     checkLockFileCheckboxIsDisplayed() {
         return Util.waitUntilElementIsVisible(this.lockFileCheckboxText);
@@ -50,5 +51,10 @@ export class LockFilePage {
     clickSaveButton() {
         Util.waitUntilElementIsClickable(this.saveButton);
         return this.saveButton.click();
+    }
+
+    clickAllowOwnerCheckbox() {
+        Util.waitUntilElementIsClickable(this.allowOwnerCheckbox);
+        return this.allowOwnerCheckbox.click();
     }
 }
