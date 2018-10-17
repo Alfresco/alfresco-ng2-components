@@ -100,7 +100,8 @@ exports.THEMING = {
 exports.APP_COLOR = {
     BLUE: "rgba(38, 154, 188, 1)",
     GREY: "rgba(105, 108, 103, 1)",
-    ORANGE: "rgba(250, 185, 108, 1)"
+    ORANGE: "rgba(250, 185, 108, 1)",
+    RED: "rgba(199, 78, 62, 1)"
 };
 
 exports.APP_ICON = {

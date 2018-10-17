@@ -41,6 +41,7 @@ describe('Modify applications', () => {
     let apps = new AppsActions();
     let modelActions = new ModelsActions();
     let firstApp, appVersionToBeDeleted;
+    let model;
 
     beforeAll(async (done) => {
         let users = new UsersActions();
@@ -58,6 +59,8 @@ describe('Modify applications', () => {
 
         firstApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
         appVersionToBeDeleted = await apps.importPublishDeployApp(this.alfrescoJsApi, appToBeDeleted.file_location);
+
+        model = await this.alfrescoJsApi.activiti.appsApi.getAppDefinition(firstApp.id);
 
         loginPage.loginToProcessServicesUsingUserModel(user);
 
@@ -154,12 +157,19 @@ describe('Modify applications', () => {
         expect(processServicesPage.getBackgroundColor(appTobeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
         expect(processServicesPage.getDescription(appTobeDeleted.title)).toEqual(appTobeDeleted.description);
 
-        console.log("App id: ", appVersionToBeDeleted.id);
+        let appDefinition = {"appDefinition":{"id":appVersionToBeDeleted.id,"name":appTobeDeleted.title,
+            "description":newDescription,"definition":{"models": [firstApp.definition.models[0]], "theme":"theme-4",
+                "icon":"glyphicon-user"}},  "publish":true};
 
-        //edit
-        await this.alfrescoJsApi.activiti.appsApi.updateAppDefinition(appVersionToBeDeleted.id, {"appDefinition":{"id":appVersionToBeDeleted.id,"name":appTobeDeleted.title,"description":newDescription,"definition":{"icon":"glyphicon-user"}}});
+        browser.controlFlow().execute(async () => {
+            await this.alfrescoJsApi.activiti.appsApi.updateAppDefinition(appVersionToBeDeleted.id, appDefinition);
+        });
+
+        browser.refresh();
 
         expect(processServicesPage.getDescription(appTobeDeleted.title)).toEqual(newDescription);
+        expect(processServicesPage.getBackgroundColor(appTobeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.RED);
+        expect(processServicesPage.getAppIconType(appTobeDeleted.title)).toEqual(CONSTANTS.APP_ICON.USER);
     });
 
 
