@@ -17,6 +17,8 @@
 
 import Util = require('../../util/util');
 
+import { element, by } from 'protractor';
+
 export class TrashcanPage {
 
     rows = by.css('adf-document-list div[class*="adf-datatable-body"] div[class*="adf-datatable-row"]');

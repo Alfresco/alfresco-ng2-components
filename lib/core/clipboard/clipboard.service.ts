@@ -30,10 +30,7 @@ export class ClipboardService {
 
     isTargetValid(target: HTMLInputElement | HTMLTextAreaElement) {
         if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) {
-            if (target.hasAttribute('disabled')) {
-                return false;
-            }
-            return true;
+            return !target.hasAttribute('disabled');
         }
 
         this.logService.error(`${target} should be input or textarea`);

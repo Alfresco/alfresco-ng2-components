@@ -23,6 +23,8 @@ import { NavigationBarPage } from './navigationBarPage';
 
 import path = require('path');
 
+import { element, by, protractor, browser } from 'protractor';
+
 export class ContentServicesPage {
 
     contentList = new ContentList();

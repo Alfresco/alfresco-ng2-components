@@ -16,23 +16,16 @@
  */
 
 import Util = require('../../../util/util');
-import { NavigationBarPage } from '../navigationBarPage';
+
+import { element, by } from 'protractor';
 
 export class ProcessListPage {
 
-    processListIcon = element(by.css('mat-icon[class="adf-empty-content__icon mat-icon material-icons"]'));
     processListTitle = element(by.css('p[class="adf-empty-content__title"]'));
-    processListSubtitle = element(by.css('p[class="adf-empty-content__subtitle"]'));
     processDetailsMessage = element(by.css('adf-process-instance-details div[class="ng-star-inserted"]'));
     openProcessDropdownElement = element(by.id('adf-select-process-dropdown'));
     selectProcessDropdownElement = element.all(by.css('span[class="mat-option-text"]'));
     startProcessButton = element(by.css('button[data-automation-id="btn-start"]'));
-
-    goToProcessList() {
-        let navigationBarPage = new NavigationBarPage();
-        navigationBarPage.clickProcessServicesButton();
-        Util.waitUntilElementIsVisible(pageLoaded);
-    }
 
     checkProcessListTitleIsDisplayed() {
         Util.waitUntilElementIsVisible(this.processListTitle);
@@ -59,13 +52,4 @@ export class ProcessListPage {
         return this.startProcessButton.click();
     }
 
-    checkProcessListIcon() {
-        Util.waitUntilElementIsVisible(this.processListIcon);
-        return this.processListIcon.getText();
-    }
-
-    checkProcessListSubtitle() {
-        Util.waitUntilElementIsVisible(this.processListSubtitle);
-        return this.processListSubtitle.getText();
-    }
 }

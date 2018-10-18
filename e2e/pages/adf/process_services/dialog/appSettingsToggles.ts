@@ -16,6 +16,7 @@
  */
 
 import { FormControllersPage } from '../../material/formControllersPage';
+import { element, by } from 'protractor';
 
 export class AppSettingsToggles {
 

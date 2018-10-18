@@ -18,6 +18,7 @@
 import Util = require('../../util/util');
 import ContentList = require('./dialog/contentList');
 import DatatablePage = require('./dataTablePage');
+import { element, by, protractor } from 'protractor';
 
 export class SearchResultsPage {
 
@@ -86,11 +87,11 @@ export class SearchResultsPage {
         this.sortBy(sortOrder, 'Name');
     }
 
-    sortBy(sortOrder) {
+    sortBy(sortOrder, sortType) {
 
         this.sortingArrow.click();
 
-        let selectedSortingOption = element(by.xpath('//span [contains(text(), \"Name\")]'));
+        let selectedSortingOption = element(by.xpath(`//span [contains(text(), "${sortType}")]`));
 
         selectedSortingOption.click();
 

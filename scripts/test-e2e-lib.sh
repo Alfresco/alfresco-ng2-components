@@ -6,6 +6,7 @@ BROWSER_RUN=false
 DEVELOPMENT=false
 EXECLINT=true
 LITESERVER=false
+EXEC_VERSION_JSAPI=false
 
 show_help() {
     echo "Usage: ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin"
@@ -23,6 +24,7 @@ show_help() {
     echo "-save  save the error screenshot in the remote env"
     echo "-timeout or --timeout override the timeout foe the wait utils"
     echo "-sl --skip-lint skip lint"
+    echo "-vjsapi install different version from npm of JS-API defined in the package.json"
     echo "-h or --help"
 }
 
@@ -81,6 +83,18 @@ lite_server(){
     LITESERVER=true
 }
 
+version_js_api() {
+    JSAPI_VERSION=$1
+
+    if [[ "${JSAPI_VERSION}" == "" ]]
+    then
+      echo "JSAPI version required with -vJSApi"
+      exit 0
+    fi
+
+    EXEC_VERSION_JSAPI=true
+}
+
 while [[ $1 == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
@@ -98,6 +112,7 @@ while [[ $1 == -* ]]; do
       -s|--seleniumServer) set_selenium $2; shift 2;;
       -host|--host)  set_host $2; shift 2;;
       -sl|--skip-lint)  skip_lint; shift;;
+      -vjsapi)  version_js_api $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
 done
@@ -116,6 +131,12 @@ export TIMEOUT=$TIMEOUT
 export FOLDER=$FOLDER'/'
 export SELENIUM_SERVER=$SELENIUM_SERVER
 export NAME_TEST=$NAME_TEST
+
+
+if $EXEC_VERSION_JSAPI == true; then
+  echo "====== Use the alfresco JS-API '$JSAPI_VERSION'====="
+  npm install alfresco-js-api@${JSAPI_VERSION}
+fi
 
 if [[  EXECLINT == "true" ]]; then
     npm run lint-e2e || exit 1

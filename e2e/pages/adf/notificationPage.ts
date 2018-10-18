@@ -16,6 +16,7 @@
  */
 
 import Util = require('../../util/util');
+import { element, by, protractor } from 'protractor';
 
 export class NotificationPage {
 

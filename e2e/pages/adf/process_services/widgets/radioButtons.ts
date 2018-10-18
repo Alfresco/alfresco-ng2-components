@@ -17,6 +17,7 @@
 
 import FormFields = require('../formFields');
 import Util = require('../../../../util/util');
+import { by } from 'protractor';
 
 export class RadioButtons {
 
