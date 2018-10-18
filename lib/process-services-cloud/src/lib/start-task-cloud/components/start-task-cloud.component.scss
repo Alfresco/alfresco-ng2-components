@@ -1,0 +1,159 @@
+@mixin adf-start-task-cloud-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
+    $header-border: 1px solid mat-color($foreground, divider);
+
+    .adf-cloud-start-task-heading {
+        padding: 12px 20px;
+        font-weight: bold;
+        border-bottom: $header-border;
+        font-size: 18px;
+        float: left;
+        text-align: left;
+        width: calc(100% - 40px);
+    }
+
+    .adf-cloud-start-task-form {
+        width: 100%;
+    }
+
+    .adf-cloud-start-task-layout-card {
+        width: 66%;
+        margin: 10px auto;
+
+        &-content {
+            display: flex;
+            flex-flow: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .adf-grid-row {
+                display: flex;
+                flex-flow: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                margin-bottom: 8px;
+            }
+
+            .adf-grid-column {
+                display: flex;
+                flex-flow: column;
+            }
+
+            .adf-grid-full-width {
+                width: 100%;
+            }
+
+            .adf-grid-half-width {
+                width: 49%;
+            }
+        }
+    }
+
+    .adf-cloud-start-task-footer {
+        padding: 4px;
+        font-size: 18px;
+        border-top: 1px solid #eee;
+        float: left;
+        width: calc(100% - 40px);
+        text-align: right;
+    }
+
+    .adf-mat-select {
+        padding-top: 0;
+    }
+
+    #people-widget-content {
+        .mat-form-field {
+            width: 100%;
+        }
+        .adf-label {
+            line-height: 0;
+        }
+        .adf-error-text-container {
+            margin-top: -10px;
+        }
+    }
+
+    adf-cloud-start-task {
+        .adf {
+
+            &-cloud-start-task-footer {
+                .mat-button {
+                    text-transform: uppercase !important;
+                }
+            }
+
+            &-cloud-start-task-input-container .mat-form-field-wrapper {
+                padding-top: 8px;
+            }
+
+            &-error-text-container {
+                position: absolute;
+                height: 20px;
+                margin-top: 12px;
+                width: 100%;
+
+                & > div {
+                    display: flex;
+                    flex-flow: row;
+                    justify-content: flex-start;
+                }
+            }
+
+            &-error-text {
+                padding-right: 8px;
+                height: 16px;
+                font-size: 12px;
+                line-height: 1.33;
+                color: mat-color($warn);
+                width: auto;
+            }
+
+            &-error-icon {
+                font-size: 17px;
+                color: mat-color($warn);
+            }
+
+            &-label {
+                color: rgb(186, 186, 186);;
+            }
+
+            &-invalid {
+
+                .mat-form-field-underline {
+                    background-color: #f44336 !important;
+                }
+
+                .adf-file {
+                    border-color: mat-color($warn);
+                }
+
+                .mat-form-field-prefix {
+                    color: mat-color($warn);
+                }
+
+                .adf-input {
+                    border-color: mat-color($warn);
+                }
+
+                .adf-label {
+                    color: mat-color($warn);
+                    &:after {
+                        background-color: mat-color($warn);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .adf-cloud-start-task-layout-card {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
