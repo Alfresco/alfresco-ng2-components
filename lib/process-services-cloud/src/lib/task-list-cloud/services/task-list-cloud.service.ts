@@ -53,7 +53,7 @@ export class TaskListCloudService {
     }
 
     private buildQueryUrl(requestNode: TaskQueryCloudRequestModel) {
-        return `${this.appConfigService.get('backend')}/${requestNode.appName}-query/v1/tasks`;
+        return `${this.appConfigService.get('bpmHost', '')}/${requestNode.appName}-query/v1/tasks`;
     }
 
     private buildQueryParams(requestNode: TaskQueryCloudRequestModel) {
