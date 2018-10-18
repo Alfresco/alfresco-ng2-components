@@ -21,7 +21,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
-import moment from 'moment-es6';
+import * as moment from 'moment';
 import { Moment } from 'moment';
 import { UserPreferencesService } from '../../../../services/user-preferences.service';
 import { MomentDateAdapter } from '../../../../utils/momentDateAdapter';

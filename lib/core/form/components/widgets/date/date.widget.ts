@@ -22,7 +22,7 @@ import { MomentDateAdapter } from '../../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../../utils/moment-date-formats.model';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import moment from 'moment-es6';
+import * as moment from 'moment';
 import { Moment } from 'moment';
 import { FormService } from './../../../services/form.service';
 import { baseHost, WidgetComponent } from './../widget.component';

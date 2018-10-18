@@ -27,7 +27,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import ErrorPage = require('../../pages/adf/errorPage');
 import FileModel = require('../../models/ACS/fileModel');
-import moment from 'moment-es6';
+import * as moment from 'moment';
 
 describe('Document List Component', () => {
 

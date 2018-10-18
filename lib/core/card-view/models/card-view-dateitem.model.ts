@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import moment from 'moment-es6';
+import * as moment from 'moment';
 import { CardViewItem } from '../interfaces/card-view-item.interface';
 import { DynamicComponentModel } from '../../services/dynamic-component-mapper.service';
 import { CardViewBaseItemModel } from './card-view-baseitem.model';
