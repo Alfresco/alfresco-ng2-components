@@ -16,7 +16,7 @@
  */
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TestBed, fakeAsync } from '@angular/core/testing';
+import { TestBed, fakeAsync, async } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { of } from 'rxjs';
 import {
@@ -96,7 +96,7 @@ describe('ShareDialogComponent', () => {
         expect(fixture.nativeElement.querySelector('.mat-slide-toggle').classList).toContain('mat-checked');
     });
 
-    it(`should not toggle share action when file has 'sharedId' property`, () => {
+    it(`should not toggle share action when file has 'sharedId' property`, async(() => {
         spyOn(sharedLinksApiService, 'createSharedLinks');
 
         node.entry.properties['qshare:sharedId'] = 'sharedId';
@@ -108,12 +108,17 @@ describe('ShareDialogComponent', () => {
 
         fixture.detectChanges();
 
-        expect(sharedLinksApiService.createSharedLinks).not.toHaveBeenCalled();
-        expect(fixture.nativeElement.querySelector('input[formcontrolname="sharedUrl"]').value).toBe('some-url/sharedId');
-        expect(fixture.nativeElement.querySelector('.mat-slide-toggle').classList).toContain('mat-checked');
-    });
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
 
-    it(`should copy shared link and notify on button event`, (done) => {
+            expect(sharedLinksApiService.createSharedLinks).not.toHaveBeenCalled();
+            expect(fixture.nativeElement.querySelector('input[formcontrolname="sharedUrl"]').value).toBe('some-url/sharedId');
+            expect(fixture.nativeElement.querySelector('.mat-slide-toggle').classList).toContain('mat-checked');
+
+        });
+    }));
+
+    it(`should copy shared link and notify on button event`, async(() => {
         node.entry.properties['qshare:sharedId'] = 'sharedId';
         spyOn(document, 'execCommand').and.callThrough();
 
@@ -134,9 +139,8 @@ describe('ShareDialogComponent', () => {
 
             expect(document.execCommand).toHaveBeenCalledWith('copy');
             expect(notificationServiceMock.openSnackMessage).toHaveBeenCalledWith('SHARE.CLIPBOARD-MESSAGE');
-            done();
         });
-    });
+    }));
 
     it('should open a confirmation dialog when unshare button is triggered', () => {
         spyOn(matDialog, 'open').and.returnValue({ beforeClose: () => of(false) });
