@@ -186,6 +186,37 @@ exports.Files = {
                 dropdown_visible: "dropdownvisibility",
                 checkbox_id: "clickcheckbox"
             }
+        },
+
+        NUMBER: {
+            formName: "NumberProcess",
+            title: "NumberProcess",
+            processName: "NumberProcess",
+            FIELD: {
+                number_general: "numbergeneral",
+                number_visible: "number",
+                checkbox_id: "check"
+            }
+        },
+
+        AMOUNT: {
+            formName: "AmountProcess",
+            title: "AmountProcess",
+            processName: "AmountProcess",
+            FIELD: {
+                amount_input_id: "amunt_widget",
+                checkbox_id: "check"
+            }
+        },
+
+        RADIO_BUTTONS: {
+            formName: "RadioButtonsWidgetProcess",
+            title: "RadioButtonsWidgetProcess",
+            processName: "RadioButtonsWidgetProcess",
+            FIELD: {
+                radio_buttons_id: "RockFM",
+                checkbox_id: "Dollars"
+            }
         }
     },
 

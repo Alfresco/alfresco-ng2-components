@@ -29,6 +29,8 @@ import { Checkbox } from './checkbox';
 import { DateWidget } from './date';
 import { DateTime } from './dateTime';
 import { People } from './people';
+import { NumberWidget } from './number';
+import { Amount } from './amount';
 
 export class Widget {
 
@@ -86,6 +88,14 @@ export class Widget {
 
     dateTimeWidget() {
         return new DateTime();
+    }
+
+    numberWidget() {
+        return new NumberWidget();
+    }
+
+    amountWidget() {
+        return new Amount();
     }
 
     peopleWidget() {

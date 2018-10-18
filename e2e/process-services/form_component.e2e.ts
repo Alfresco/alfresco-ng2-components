@@ -19,8 +19,8 @@ import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { FormPage } from '../pages/adf/process_services/formPage';
 import { DateWidget } from '../pages/adf/process_services/widgets/date';
-import { Amount } from '../pages/adf/process_services/widgets/Amount';
-import { NumberWidget } from '../pages/adf/process_services/widgets/Number';
+import { Amount } from '../pages/adf/process_services/widgets/amount';
+import { NumberWidget } from '../pages/adf/process_services/widgets/number';
 import TestConfig = require('../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
@@ -38,7 +38,9 @@ describe('Form Component', () => {
     let tenantId, user;
 
     let fields = {
-        dateWidgetId: 'label7'
+        dateWidgetId: 'label7',
+        numberWidgetId: 'label4',
+        amountWidgetId: 'label11'
     };
 
     let message = {

@@ -560,7 +560,7 @@ describe('Form widgets', () => {
         });
     });
 
-    fdescribe('Dropdown Widget', () => {
+    describe('Dropdown Widget', () => {
         let app = resources.Files.WIDGET_CHECK_APP.DROPDOWN;
         let deployedApp, process;
 
@@ -605,9 +605,159 @@ describe('Form widgets', () => {
         });
 
         it('[C269052] Dropdown menu - Visibility', () => {
-            expect(widget.dropdown().checkDropdownIsVisible(app.FIELD.dropdown_visible)).toBeFalsy();
+            taskPage.formFields().checkWidgetIsHidden(app.FIELD.dropdown_visible);
             widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
-            expect(widget.dropdown().checkDropdownIsVisible(app.FIELD.dropdown_visible)).toBeTruthy();
+            taskPage.formFields().checkWidgetIsVisible(app.FIELD.dropdown_visible);
+        });
+    });
+
+    describe('Number Widget', () => {
+        let app = resources.Files.WIDGET_CHECK_APP.NUMBER;
+        let deployedApp, process;
+
+        beforeAll(async (done) => {
+            let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            deployedApp = appDefinitions.data.find((currentApp) => {
+                return currentApp.modelId === appModel.id;
+            });
+            process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
+            loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+            done();
+        });
+
+        afterAll(async (done) => {
+            await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
+            done();
+        });
+
+        beforeEach(() => {
+            let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            browser.get(urlToNavigateTo);
+            taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            taskPage.formFields().checkFormIsDisplayed();
+        });
+
+        it('[C269111] Number Widget - General Properties', () => {
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+            expect(widget.numberWidget().getNumberFieldLabel(app.FIELD.number_general)).toContain('Number General');
+            expect(widget.numberWidget().getPlaceholder(app.FIELD.number_general)).toContain('Type a number');
+
+            widget.numberWidget().setFieldValue(app.FIELD.number_general, 2);
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        });
+
+        it('[C274702] Number Widget - Advanced and visibility properties', () => {
+            widget.numberWidget().setFieldValue(app.FIELD.number_general, 2);
+
+            taskPage.formFields().checkWidgetIsHidden(app.FIELD.number_visible);
+            widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+            taskPage.formFields().checkWidgetIsVisible(app.FIELD.number_visible);
+
+            widget.numberWidget().setFieldValue(app.FIELD.number_visible, 2);
+            expect(widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe('Can\'t be less than 3');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+            widget.numberWidget().clearFieldValue(app.FIELD.number_visible);
+
+            widget.numberWidget().setFieldValue(app.FIELD.number_visible, 101);
+            expect(widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe('Can\'t be greater than 100');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+            widget.numberWidget().clearFieldValue(app.FIELD.number_visible);
+
+            widget.numberWidget().setFieldValue(app.FIELD.number_visible, 4);
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        });
+    });
+
+    describe('Amount Widget', () => {
+        let app = resources.Files.WIDGET_CHECK_APP.AMOUNT;
+        let deployedApp, process;
+
+        beforeAll(async (done) => {
+            let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            deployedApp = appDefinitions.data.find((currentApp) => {
+                return currentApp.modelId === appModel.id;
+            });
+            process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
+            loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+            done();
+        });
+
+        afterAll(async (done) => {
+            await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
+            done();
+        });
+
+        beforeEach(() => {
+            let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            browser.get(urlToNavigateTo);
+            taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            taskPage.formFields().checkFormIsDisplayed();
+        });
+
+        it('[C274703] Amount widget - General, advanced, Amount and Visibility properties', () => {
+            taskPage.formFields().checkWidgetIsHidden(app.FIELD.amount_input_id);
+            widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+            taskPage.formFields().checkWidgetIsVisible(app.FIELD.amount_input_id);
+
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+            expect(widget.amountWidget().getAmountFieldLabel(app.FIELD.amount_input_id)).toContain('Amount');
+            expect(widget.amountWidget().getPlaceholder(app.FIELD.amount_input_id)).toContain('Type amount');
+            expect(widget.amountWidget().getAmountFieldCurrency(app.FIELD.amount_input_id)).toBe('$');
+
+            widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 4);
+            expect(widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe('Can\'t be less than 5');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+            widget.amountWidget().clearFieldValue(app.FIELD.amount_input_id);
+
+            widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 101);
+            expect(widget.amountWidget().getErrorMessage(app.FIELD.amount_input_id)).toBe('Can\'t be greater than 100');
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+            widget.amountWidget().clearFieldValue(app.FIELD.amount_input_id);
+
+            widget.amountWidget().setFieldValue(app.FIELD.amount_input_id, 6);
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        });
+    });
+
+    describe('Radio Buttons Widget', () => {
+        let app = resources.Files.WIDGET_CHECK_APP.RADIO_BUTTONS;
+        let deployedApp, process;
+
+        beforeAll(async (done) => {
+            let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            deployedApp = appDefinitions.data.find((currentApp) => {
+                return currentApp.modelId === appModel.id;
+            });
+            process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
+            loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+            done();
+        });
+
+        afterAll(async (done) => {
+            await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
+            done();
+        });
+
+        beforeEach(() => {
+            let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            browser.get(urlToNavigateTo);
+            taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            taskPage.formFields().checkFormIsDisplayed();
+        });
+
+        it('[C277316] Radio buttons widget - default behaviour', () => {
+            widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+            widget.radioWidget().isSelectionClean(app.FIELD.radio_buttons_id);
+        });
+
+        it('[C274704] Radio buttons widget - Visibility', () => {
+            taskPage.formFields().checkWidgetIsHidden(app.FIELD.radio_buttons_id);
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+
+            widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+            expect(widget.radioWidget().getRadioWidgetLabel(app.FIELD.radio_buttons_id)).toContain('Radio posts');
+            widget.radioWidget().selectOption(app.FIELD.radio_buttons_id, 1);
+            expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
         });
     });
 });

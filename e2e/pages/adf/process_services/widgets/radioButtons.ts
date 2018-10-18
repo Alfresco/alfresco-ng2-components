@@ -17,9 +17,11 @@
 
 import FormFields = require('../formFields');
 import Util = require('../../../../util/util');
-import { by } from 'protractor';
+import { by, element } from 'protractor';
 
 export class RadioButtons {
+
+    selectedOption = by.css('mat-radio-button[ng-reflect-checked="false"]');
 
     formFields = new FormFields();
 
@@ -29,6 +31,25 @@ export class RadioButtons {
         let option = this.formFields.getWidget(fieldId).element(optionLocator);
         Util.waitUntilElementIsVisible(option);
         return option.getText();
+    }
+
+    selectOption(fieldId, optionNumber) {
+        let optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"] div[class*="content"]`);
+
+        let option = this.formFields.getWidget(fieldId).element(optionLocator);
+        Util.waitUntilElementIsVisible(option);
+        return option.click();
+    }
+
+    isSelectionClean(fieldId) {
+        let option = this.formFields.getWidget(fieldId).element(this.selectedOption);
+        return Util.waitUntilElementIsNotVisible(option);
+    }
+
+    getRadioWidgetLabel(fieldId) {
+        let label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
+        Util.waitUntilElementIsVisible(label);
+        return label.getText();
     }
 
 }
