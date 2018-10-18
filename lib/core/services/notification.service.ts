@@ -66,4 +66,8 @@ export class NotificationService {
 
         return this.snackBar.open(translatedMessage, action, config);
     }
+
+    dismissSnackMessageAction() {
+        return this.snackBar.dismiss();
+    }
 }

@@ -113,4 +113,8 @@ export class NotificationsComponent implements OnInit {
             }
         }
     }
+
+    dismissSnackBar() {
+        this.notificationService.dismissSnackMessageAction();
+    }
 }

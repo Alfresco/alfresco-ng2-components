@@ -46,17 +46,14 @@ describe('Notifications Component', () => {
 
         notificationPage.goToNotificationsPage();
 
-        notificationPage.enterDurationField(6000);
+        notificationPage.enterDurationField(3000);
 
         done();
     });
 
-    afterEach(async (done) => {
-        notificationPage.enterDurationField(1);
-        notificationPage.clickNotificationButton();
-        browser.sleep(100);
-        notificationPage.enterDurationField(6000);
-        done();
+    afterEach( () => {
+        browser.executeScript(`document.querySelector('button[data-automation-id="notification-custom-dismiss-button"]').click();`);
+        notificationPage.enterDurationField(3000);
     });
 
     it('[C279977] Should show notification when the message is not empty and button is clicked', () => {

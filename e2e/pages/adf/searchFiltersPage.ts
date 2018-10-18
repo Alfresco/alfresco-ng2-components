@@ -21,13 +21,13 @@ import { element, by } from 'protractor';
 export class SearchFiltersPage {
 
     searchFilters = element(by.css('adf-search-filter'));
-    fileTypeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.TYPE"'));
-    searchFileTypeFilter = element(by.css('input[data-automation-id="facet-result-filter-SEARCH.FACET_FIELDS.TYPE"'));
-    creatorFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATOR"'));
-    searchCreatorFilter = element(by.css('input[data-automation-id="facet-result-filter-SEARCH.FACET_FIELDS.CREATOR"'));
-    fileSizeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"'));
-    showMoreButtonForSize = this.fileSizeFilter.element(by.css('button[title="Show more"]'));
-    showLessButtonForSize = this.fileSizeFilter.element(by.css('button[title="Show less"]'));
+    fileTypeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.TYPE"]'));
+    searchFileTypeFilter = element(by.css('input[data-automation-id="facet-result-filter-SEARCH.FACET_FIELDS.TYPE"]'));
+    creatorFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATOR"]'));
+    searchCreatorFilter = element(by.css('input[data-automation-id="facet-result-filter-SEARCH.FACET_FIELDS.CREATOR"]'));
+    fileSizeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"]'));
+    showMoreButtonForSize = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"] button[title="Show more"]'));
+    showLessButtonForSize = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"] button[title="Show less"]'));
     numberOfCheckboxesforSize = element.all(by.css('mat-checkbox[data-automation-id*="checkbox-SEARCH.FACET_FIELDS.SIZE"]'));
 
     checkSearchFiltersIsDisplayed() {
