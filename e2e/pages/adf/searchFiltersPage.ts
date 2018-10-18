@@ -20,14 +20,14 @@ import Util = require('../../util/util');
 export class SearchFiltersPage {
 
     searchFilters = element(by.css('adf-search-filter'));
-    fileTypeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-1:Type"'));
-    searchFileTypeFilter = element(by.css('input[data-automation-id="facet-result-filter-1:Type"'));
-    creatorFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-3:Creator"'));
-    searchCreatorFilter = element(by.css('input[data-automation-id="facet-result-filter-3:Creator"'));
-    fileSizeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-2:Size"'));
+    fileTypeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.TYPE"'));
+    searchFileTypeFilter = element(by.css('input[data-automation-id="facet-result-filter-SEARCH.FACET_FIELDS.TYPE"'));
+    creatorFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATOR"'));
+    searchCreatorFilter = element(by.css('input[data-automation-id="facet-result-filter-SEARCH.FACET_FIELDS.CREATOR"'));
+    fileSizeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"'));
     showMoreButtonForSize = this.fileSizeFilter.element(by.css('button[title="Show more"]'));
     showLessButtonForSize = this.fileSizeFilter.element(by.css('button[title="Show less"]'));
-    numberOfCheckboxesforSize = element.all(by.css('mat-checkbox[data-automation-id*="checkbox-2:Size"]'));
+    numberOfCheckboxesforSize = element.all(by.css('mat-checkbox[data-automation-id*="checkbox-SEARCH.FACET_FIELDS.SIZE"]'));
 
     checkSearchFiltersIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchFilters);
@@ -62,13 +62,13 @@ export class SearchFiltersPage {
     }
 
     selectFileType(fileType) {
-        let result = element(by.css(`mat-checkbox[data-automation-id='checkbox-1:Type-${fileType}'] .mat-checkbox-inner-container`));
+        let result = element(by.css(`mat-checkbox[data-automation-id='checkbox-SEARCH.FACET_FIELDS.TYPE-${fileType}'] .mat-checkbox-inner-container`));
         Util.waitUntilElementIsClickable(result);
         result.click();
     }
 
     selectCreator(creatorName) {
-        let result = element(by.css(`mat-checkbox[data-automation-id='checkbox-3:Creator-${creatorName}'] .mat-checkbox-inner-container`));
+        let result = element(by.css(`mat-checkbox[data-automation-id='checkbox-SEARCH.FACET_FIELDS.CREATOR-${creatorName}'] .mat-checkbox-inner-container`));
         Util.waitUntilElementIsClickable(result);
         result.click();
     }
