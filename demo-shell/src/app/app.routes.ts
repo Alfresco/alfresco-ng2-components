@@ -41,6 +41,7 @@ import { DemoPermissionComponent } from './components/permissions/demo-permissio
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { AppComponent } from './app.component';
 import { CloudComponent } from './components/cloud/cloud.component';
+import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -137,6 +138,10 @@ export const appRoutes: Routes = [
             {
                 path: 'cloud',
                 component: CloudComponent
+            },
+            {
+                path: 'taskCloud',
+                component: TaskListCloudDemoComponent
             },
             {
                 path: 'node-selector',

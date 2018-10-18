@@ -128,7 +128,7 @@ export let fakeGlobalTask = {
     }
 };
 
-export let fakeCutomSchema =
+export let fakeCustomSchema =
     [
         new ObjectDataColumn({
             'key': 'fakeName',

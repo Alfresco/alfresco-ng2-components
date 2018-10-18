@@ -58,7 +58,7 @@ export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
     }
 
     private getAppDefinitionList(): Observable<any> {
-        let appUrl = `${this.appConfigService.get('backend')}/alfresco-deployment-service/v1/applications`;
+        let appUrl = `${this.appConfigService.get('bpmHost', '')}/alfresco-deployment-service/v1/applications`;
         return from(this.alfrescoApi.getInstance()
                     .oauth2Auth.callCustomApi(appUrl, 'GET',
                     null, null, null, null, null, null,
