@@ -15,23 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-@Component({
-    selector: 'app-cloud',
-    templateUrl: './cloud.component.html',
-    styleUrls: ['./cloud.component.scss']
-})
-export class CloudComponent {
+/**
+ * This object represent of the Form.
+ */
+export class FormCloud {
 
-    constructor(private router: Router) {
-    }
+    id: number;
+    name: string;
 
-    onAppClicked(app: any) {
-        this.router.navigate(['/cloud/', app.name, 'tasks']);
-    }
-
-    onAppClick(app) {
-        this.router.navigate([`/cloud/${app.name}/tasks/`]);
+    constructor(id: number, name: string) {
+        this.name = name;
+        this.id = id;
     }
 }

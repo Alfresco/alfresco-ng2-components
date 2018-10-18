@@ -1,0 +1,29 @@
+<mat-tab-group>
+    <mat-tab label="Tasks">
+        <div fxLayout="row" fxLayout.xs="column" >
+            <div fxFlexOrder="1" fxFlex="15%">
+                <adf-sidebar-action-menu [expanded]="true" [width]="205" title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
+                        <mat-icon sidebar-menu-title-icon>arrow_drop_down</mat-icon>
+                        <div sidebar-menu-options>
+                        <button mat-menu-item data-automation-id="btn-start-task" (click)="navigateStartTask()">
+                            <mat-icon>assessment</mat-icon>
+                            <span>{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.NEW_TASK' | translate}}</span>
+                        </button>
+                        </div>
+                </adf-sidebar-action-menu>
+            </div>
+            <div fxFlexOrder="2" fxFlex="85%" fxFlexFill *ngIf="showStartTask">
+                <adf-cloud-start-task
+                    [runtimeBundle]="runtimeBundle"
+                    (success)="onStartTaskSuccess($event)"
+                    (cancel)="onCancelStartTask()">
+                </adf-cloud-start-task>
+            </div>
+            <div *ngIf="showResponse">
+                <h1>Created Task Details: </h1>
+                {{createdTaskDetails | json}}
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>
+
