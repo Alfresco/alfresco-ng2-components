@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
-import { HelloModule } from './hello/hello.module';
 import { TRANSLATION_PROVIDER } from '@alfresco/adf-core';
+import { AppListCloudModule } from './app-list-cloud/app-list-cloud.module';
+
 @NgModule({
     imports: [
-        HelloModule
+        AppListCloudModule
     ],
     providers: [
         {
@@ -16,6 +17,6 @@ import { TRANSLATION_PROVIDER } from '@alfresco/adf-core';
         }
     ],
     declarations: [],
-    exports: [HelloModule]
+    exports: [AppListCloudModule]
 })
 export class ProcessServicesCloudModule { }
