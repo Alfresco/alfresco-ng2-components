@@ -154,6 +154,10 @@ export const appRoutes: Routes = [
                 component: ProcessListCloudExampleComponent
             },
             {
+                path: 'cloud/:runtimeBundle/tasks',
+                component: ProcessServicesCloudComponent
+            },
+            {
                 path: 'node-selector',
                 loadChildren: 'app/components/content-node-selector/content-node-selector.module#AppContentNodeSelectorModule'
             },
