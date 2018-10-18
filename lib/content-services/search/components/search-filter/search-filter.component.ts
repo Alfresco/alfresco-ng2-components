@@ -224,22 +224,22 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                     return <FacetFieldBucket> {
                         ...bucket,
                         checked: !!selectedBucket,
-                        display: this.translationService.instant(bucket.display),
-                        label: this.translationService.instant(bucket.label)
+                        display: bucket.display,
+                        label: bucket.label
                     };
                 });
                 const bucketList = new SearchFilterList<FacetFieldBucket>(buckets, field.pageSize);
                 bucketList.filter = (bucket: FacetFieldBucket): boolean => {
                     if (bucket && bucketList.filterText) {
                         const pattern = (bucketList.filterText || '').toLowerCase();
-                        const label = (bucket.display || bucket.label || '').toLowerCase();
+                        const label = (this.translationService.instant(bucket.display) || this.translationService.instant(bucket.label)).toLowerCase();
                         return label.startsWith(pattern);
                     }
                     return true;
                 };
                 return {
                     ...field,
-                    label: this.translationService.instant(field.label),
+                    label: field.label,
                     pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
                     currentPageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
                     buckets: bucketList
@@ -282,7 +282,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                     }
                     return <FacetQuery> {
                         ...query,
-                        label: this.translationService.instant(query.label),
+                        label: query.label,
                         count: queryResult.count
                     };
                 });
@@ -292,7 +292,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                     this.responseFacetQueries.items = facetQueries;
 
                 } else {
-                    this.responseFacetQueries = new ResponseFacetQueryList(facetQueries, this.facetQueriesPageSize);
+                    this.responseFacetQueries = new ResponseFacetQueryList(facetQueries, this.translationService, this.facetQueriesPageSize);
                 }
 
             } else {
