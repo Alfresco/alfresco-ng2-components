@@ -26,7 +26,6 @@
      templateUrl: './app-list-cloud.component.html',
      styleUrls: ['./app-list-cloud.component.scss']
  })
-
  export class AppListCloudComponent implements OnInit, AfterContentInit {
 
      public static LAYOUT_LIST: string = 'LIST';
