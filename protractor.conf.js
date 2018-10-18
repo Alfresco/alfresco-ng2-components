@@ -145,132 +145,137 @@ exports.config = {
     },
 
     afterLaunch: async function () {
-        var retryCount = 1;
-        if (argv.retry) {
-            retryCount = ++argv.retry;
-        }
-
-        let filenameReport = `ProtractorTestReport-${FOLDER.replace('/', '')}-${retryCount}`;
-
-        console.log(filenameReport);
 
         let saveScreenshot = process.env.SAVE_SCREENSHOT;
 
-        let alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: TestConfig.adf.url
-        });
-        alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        if (saveScreenshot) {
+            console.log('HOST AFTER' +HOST );
+            var retryCount = 1;
+            if (argv.retry) {
+                retryCount = ++argv.retry;
+            }
 
-        if (saveScreenshot === 'true') {
+            let filenameReport = `ProtractorTestReport-${FOLDER.replace('/', '')}-${retryCount}`;
+
+            console.log(filenameReport);
 
 
-            let files = fs.readdirSync(path.join(__dirname, './e2e-output/screenshots'));
+            let alfrescoJsApi = new AlfrescoApi({
+                provider: 'ECM',
+                hostEcm: TestConfig.adf.url
+            });
+            alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-            if (files && files.length > 0) {
+            if (saveScreenshot === 'true') {
 
-                try {
-                    folder = await
-                        alfrescoJsApi.nodes.addNode('-my-', {
-                            'name': `retry-${retryCount}`,
-                            'relativePath': `Builds/${buildNumber()}/screenshot`,
-                            'nodeType': 'cm:folder'
-                        }, {}, {
-                            'overwrite': true
-                        });
-                } catch (error) {
-                    console.log('Folder screenshot already present');
+                let files = fs.readdirSync(path.join(__dirname, './e2e-output/screenshots'));
 
-                    folder = await
-                        alfrescoJsApi.nodes.getNode('-my-', {
-                            'relativePath': `Builds/${buildNumber()}/screenshot/retry-${retryCount}`,
-                            'nodeType': 'cm:folder'
-                        }, {}, {
-                            'overwrite': true
-                        });
-                }
+                if (files && files.length > 0) {
 
-                for (const fileName of files) {
+                    try {
+                        folder = await
+                            alfrescoJsApi.nodes.addNode('-my-', {
+                                'name': `retry-${retryCount}`,
+                                'relativePath': `Builds/${buildNumber()}/screenshot`,
+                                'nodeType': 'cm:folder'
+                            }, {}, {
+                                'overwrite': true
+                            });
+                    } catch (error) {
+                        console.log('Folder screenshot already present');
 
-                    let pathFile = path.join(__dirname, './e2e-output/screenshots', fileName);
-                    let file = fs.createReadStream(pathFile);
+                        folder = await
+                            alfrescoJsApi.nodes.getNode('-my-', {
+                                'relativePath': `Builds/${buildNumber()}/screenshot/retry-${retryCount}`,
+                                'nodeType': 'cm:folder'
+                            }, {}, {
+                                'overwrite': true
+                            });
+                    }
 
-                    await
-                        alfrescoJsApi.upload.uploadFile(
-                            file,
-                            '',
-                            folder.entry.id,
-                            null,
-                            {
-                                'name': file.name,
-                                'nodeType': 'cm:content',
-                                'autoRename' : true
-                            }
-                        );
+                    for (const fileName of files) {
+
+                        let pathFile = path.join(__dirname, './e2e-output/screenshots', fileName);
+                        let file = fs.createReadStream(pathFile);
+
+                        await
+                            alfrescoJsApi.upload.uploadFile(
+                                file,
+                                '',
+                                folder.entry.id,
+                                null,
+                                {
+                                    'name': file.name,
+                                    'nodeType': 'cm:content',
+                                    'autoRename': true
+                                }
+                            );
+                    }
                 }
             }
-        }
 
-        testConfigReport = {
-            reportTitle: 'Protractor Test Execution Report',
-            outputPath: `${projectRoot}/e2e-output/junit-report`,
-            outputFilename: filenameReport,
-            screenshotPath: `${projectRoot}/e2e-output/screenshots/`,
-            screenshotsOnlyOnFailure: true,
-        };
+            testConfigReport = {
+                reportTitle: 'Protractor Test Execution Report',
+                outputPath: `${projectRoot}/e2e-output/junit-report`,
+                outputFilename: filenameReport,
+                screenshotPath: `${projectRoot}/e2e-output/screenshots/`,
+                screenshotsOnlyOnFailure: true,
+            };
 
-        new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/results.xml`, testConfigReport);
+            new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/results.xml`, testConfigReport);
 
-        let pathFile = path.join(__dirname, './e2e-output/junit-report', filenameReport + '.html');
-        let reportFile = fs.createReadStream(pathFile);
+            let pathFile = path.join(__dirname, './e2e-output/junit-report', filenameReport + '.html');
+            let reportFile = fs.createReadStream(pathFile);
 
-        let reportFolder;
+            let reportFolder;
 
-        try {
-            reportFolder = await
-                alfrescoJsApi.nodes.addNode('-my-', {
-                    'name': 'report',
-                    'relativePath': `Builds/${buildNumber()}`,
-                    'nodeType': 'cm:folder'
-                }, {}, {
-                    'overwrite': true
+            try {
+                reportFolder = await
+                    alfrescoJsApi.nodes.addNode('-my-', {
+                        'name': 'report',
+                        'relativePath': `Builds/${buildNumber()}`,
+                        'nodeType': 'cm:folder'
+                    }, {}, {
+                        'overwrite': true
+                    });
+            } catch (error) {
+                //  console.log('Folder report already present' + error);
+
+                reportFolder = await
+                    alfrescoJsApi.nodes.getNode('-my-', {
+                        'relativePath': `Builds/${buildNumber()}/report`,
+                        'nodeType': 'cm:folder'
+                    }, {}, {
+                        'overwrite': true
+                    });
+
+            }
+
+            try {
+                await
+                    alfrescoJsApi.upload.uploadFile(
+                        reportFile,
+                        '',
+                        reportFolder.entry.id,
+                        null,
+                        {
+                            'name': reportFile.name,
+                            'nodeType': 'cm:content',
+                            'autoRename': true
+                        }
+                    );
+
+            } catch (error) {
+                console.log('error' + error);
+
+            }
+
+            if (saveScreenshot === 'true') {
+                rimraf(`${projectRoot}/e2e-output/screenshots/`, function () {
+                    console.log('done delete screenshot');
                 });
-        } catch (error) {
-           //  console.log('Folder report already present' + error);
+            }
 
-            reportFolder = await
-                alfrescoJsApi.nodes.getNode('-my-', {
-                    'relativePath': `Builds/${buildNumber()}/report`,
-                    'nodeType': 'cm:folder'
-                }, {}, {
-                    'overwrite': true
-                });
-
-        }
-
-        try {
-            await
-                alfrescoJsApi.upload.uploadFile(
-                    reportFile,
-                    '',
-                    reportFolder.entry.id,
-                    null,
-                    {
-                        'name': reportFile.name,
-                        'nodeType': 'cm:content',
-                        'autoRename' : true
-                    }
-                );
-
-        } catch (error) {
-            console.log('error' + error);
-
-        }
-
-        if (saveScreenshot === 'true') {
-            rimraf(`${projectRoot}/e2e-output/screenshots/`, function () {
-                console.log('done delete screenshot');
-            });
         }
 
         return retry.afterLaunch(3);
