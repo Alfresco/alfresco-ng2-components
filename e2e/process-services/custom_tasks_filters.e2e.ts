@@ -19,7 +19,7 @@ import { by } from 'protractor';
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import TaskListSinglePage = require('../pages/adf/process_services/taskListSinglePage');
+import {  TaskListSinglePage } from '../pages/adf/process_services/taskListSinglePage';
 import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
 import PaginationPage = require('../pages/adf/paginationPage');
 import TasksPage = require('../pages/adf/process_services/tasksPage');
