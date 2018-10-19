@@ -19,7 +19,7 @@ import { Component, ViewEncapsulation, OnChanges, Input, SimpleChanges, Output, 
 import { AppConfigService, UserPreferencesService,
          DataTableSchema, UserPreferenceValues,
          PaginatedComponent, PaginationModel,
-         DataRowEvent, EmptyCustomContentDirective } from '@alfresco/adf-core';
+         DataRowEvent, EmptyCustomContentDirective, PaginationComponent } from '@alfresco/adf-core';
 import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { BehaviorSubject } from 'rxjs';
@@ -107,7 +107,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     requestNode: TaskQueryCloudRequestModel;
     rows: any[] = [];
-    size: number = 25;
+    size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;;
     skipCount: number = 0;
     currentInstanceId: any;
     isLoading = false;
@@ -119,12 +119,12 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         super(appConfigService, TaskListCloudComponent.PRESET_KEY, taskPresetsCloudDefaultModel);
         this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
             this.size = pageSize;
+        });
 
-            this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
-                maxItems: this.size,
-                skipCount: 0,
-                totalItems: 0
-            });
+        this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
+            maxItems: this.size,
+            skipCount: 0,
+            totalItems: 0
         });
 
     }
