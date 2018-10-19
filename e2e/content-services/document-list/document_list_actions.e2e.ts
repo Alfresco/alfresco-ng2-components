@@ -80,7 +80,8 @@ describe('Document List Component - Actions', () => {
                 await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfUploadedNode.entry.id);
                 await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, testFileNode.entry.id);
                 await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
-            } catch (error) {}
+            } catch (error) {
+            }
             done();
         });
 
@@ -92,10 +93,8 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.typeIntoNodeSelectorSearchField(folderName);
             contentServicesPage.clickContentNodeSelectorResult(folderName);
             contentServicesPage.clickCopyButton();
-            contentServicesPage.checkAcsContainer();
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
-            browser.get(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
-            contentServicesPage.checkAcsContainer();
+            contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
         });
 
@@ -168,7 +167,8 @@ describe('Document List Component - Actions', () => {
                 await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
                 await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
                 await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, secondUploadedFolder.entry.id);
-            } catch (error) {}
+            } catch (error) {
+            }
             done();
         });
 
@@ -195,10 +195,8 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.typeIntoNodeSelectorSearchField(secondfolderName);
             contentServicesPage.clickContentNodeSelectorResult(secondfolderName);
             contentServicesPage.clickCopyButton();
-            contentServicesPage.checkAcsContainer();
             contentServicesPage.checkContentIsDisplayed(folderName);
-            browser.get(TestConfig.adf.url + '/files/' + secondUploadedFolder.entry.id);
-            contentServicesPage.checkAcsContainer();
+            contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);
             contentServicesPage.checkContentIsDisplayed(folderName);
         });
 
