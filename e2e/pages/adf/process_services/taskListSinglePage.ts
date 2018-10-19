@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
-import { DataTable } from '../dataTablePage';
+import Util = require('../../../util/util');
+import DataTable = require('../dataTablePage');
 import { element, by, browser, protractor } from 'protractor';
 
 export class TaskListSinglePage {

@@ -612,7 +612,7 @@ describe('Start Task - Custom App', () => {
         });
     });
 
-    fit('[C286623] Should be able to see No tasks found when typing an invalid processInstanceId', () => {
+    it('[C286623] Should be able to see No tasks found when typing an invalid processInstanceId', () => {
         navigationBarPage.clickTaskListButton();
         taskListSinglePage.clickResetButton();
 
