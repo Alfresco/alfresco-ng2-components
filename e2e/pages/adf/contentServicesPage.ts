@@ -260,11 +260,6 @@ export class ContentServicesPage {
         return this;
     }
 
-    checkElementIsDisplayed(elementName) {
-        let dataElement = element(by.css(`div[data-automation-id="${elementName}"]`));
-        Util.waitUntilElementIsVisible(dataElement);
-    }
-
     navigateToFolderViaBreadcrumbs(folder) {
         this.contentList.tableIsLoaded();
         let breadcrumb = element(by.css('a[data-automation-id="breadcrumb_' + folder + '"]'));
