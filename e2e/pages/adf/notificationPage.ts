@@ -16,7 +16,7 @@
  */
 
 import Util = require('../../util/util');
-import { element, by, protractor } from 'protractor';
+import { element, by, protractor, browser } from 'protractor';
 
 export class NotificationPage {
 
@@ -28,7 +28,6 @@ export class NotificationPage {
     actionToggle = element(by.css('mat-slide-toggle[data-automation-id="notification-action-toggle"]'));
     notificationSnackBar = element.all(by.css('simple-snack-bar')).first();
     actionOutput = element(by.css('div[data-automation-id="notification-action-output"]'));
-    actionButton = element(by.css('simple-snack-bar > div > button'));
     customNotificationButton = element(by.css('button[data-automation-id="notification-custom-config-button"]'));
     selectionDropDown = element.all(by.css('div[class*="mat-select-content"]')).first();
     notificationsPage = element(by.css('a[data-automation-id="Notifications"]'));
@@ -112,7 +111,7 @@ export class NotificationPage {
     }
 
     clickActionButton() {
-        this.actionButton.click();
+        browser.executeScript(`document.querySelector("simple-snack-bar > div > button").click();`);
     }
 
     clearMessage() {
