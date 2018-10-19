@@ -22,7 +22,6 @@
       "@angular/cdk/platform": "@angular/cdk/platform",
       "@angular/material/core": "@angular/material/core",
       "moment": "moment",
-      "moment-es6": "moment-es6",
       "moment/src/moment": "moment/src/moment",
       "@ngx-translate/core": "@ngx-translate/core"
     }
