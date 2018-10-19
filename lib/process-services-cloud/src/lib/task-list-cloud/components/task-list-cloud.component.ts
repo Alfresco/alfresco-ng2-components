@@ -107,7 +107,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     requestNode: TaskQueryCloudRequestModel;
     rows: any[] = [];
-    size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;;
+    size: number;
     skipCount: number = 0;
     currentInstanceId: any;
     isLoading = false;
@@ -117,10 +117,10 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
                 appConfigService: AppConfigService,
                 private userPreferences: UserPreferencesService) {
         super(appConfigService, TaskListCloudComponent.PRESET_KEY, taskPresetsCloudDefaultModel);
+        this.size = userPreferences.paginationSize;
         this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
             this.size = pageSize;
         });
-
         this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
             maxItems: this.size,
             skipCount: 0,
