@@ -91,13 +91,13 @@ describe('Search Filters', () => {
     it('[C277146] Should Show more/less buttons be hidden when inactive', () => {
         browser.get(TestConfig.adf.url + '/search;q=*');
 
-        searchFiltersPage.checkShowLessButtonIsNotDisplayed();
-        searchFiltersPage.checkSizeShowMoreButtonIsDisplayed();
+        searchFiltersPage.checkCreatedShowLessButtonIsNotDisplayed();
+        searchFiltersPage.checkCreatedShowMoreButtonIsDisplayed();
 
-        searchFiltersPage.clickSizeShowMoreButtonUntilIsNotDisplayed();
-        searchFiltersPage.checkShowLessButtonIsDisplayed();
+        searchFiltersPage.clickCreatedShowMoreButtonUntilIsNotDisplayed();
+        searchFiltersPage.checkCreatedShowLessButtonIsDisplayed();
 
-        searchFiltersPage.clickSizeShowLessButtonUntilIsNotDisplayed();
+        searchFiltersPage.clickCreatedShowLessButtonUntilIsNotDisplayed();
     });
 
     it('[C286556] Search categories should preserve their collapsed/expanded state after the search', () => {
