@@ -301,7 +301,7 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
     });
 
-    it('[C272808] Shouldn\'t be able to delete a folder from search results without rights', () => {
+    it('[C272808] Shoul not be able to delete a folder from search results without rights', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible();
         searchDialog.checkSearchIconIsVisible();
@@ -321,7 +321,7 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
     });
 
-    it('[C286675] Should display results when searching for \*', () => {
+    it('[C286675] Should display results when searching for all elements', () => {
         contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter('*');
