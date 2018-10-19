@@ -17,9 +17,9 @@
 
 import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
 import { TaskListCloudComponent, TaskListCloudSortingModel } from '@alfresco/adf-process-services-cloud';
-import { UserPreferencesService, AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
-import { Observable, from } from 'rxjs';
-
+import { UserPreferencesService } from '@alfresco/adf-core';
+import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'app-task-list-cloud-demo',
     templateUrl: 'task-list-cloud-demo.component.html',
@@ -31,7 +31,7 @@ export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
     taskCloud: TaskListCloudComponent;
 
     appDefinitionList: Observable<any>;
-    appChosen: string = '';
+    applicationName: string = '';
     status: string = '';
     clickedRow: string = '';
     selectTask: string = '';
@@ -39,30 +39,23 @@ export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
     sortDirection: string = 'ASC';
     sortArray: TaskListCloudSortingModel[] = [];
 
-    constructor(private alfrescoApi: AlfrescoApiService,
-                private appConfigService: AppConfigService,
+    constructor(private route: ActivatedRoute,
                 private userPreference: UserPreferencesService) {
     }
 
     ngOnInit() {
-        this.appDefinitionList = this.getAppDefinitionList();
+        this.route.params.subscribe(params => {
+            this.applicationName = params.applicationName;
+        });
     }
 
     ngAfterViewInit() {
         /*tslint:disable-next-line*/
-        this.taskCloud && this.appChosen ? this.taskCloud.reload() : console.log('FAIL');
+        this.taskCloud && this.applicationName ? this.taskCloud.reload() : console.log('FAIL');
     }
 
     onChangePageSize(event) {
         this.userPreference.paginationSize = event.maxItems;
-    }
-
-    private getAppDefinitionList(): Observable<any> {
-        let appUrl = `${this.appConfigService.get('bpmHost', '')}/alfresco-deployment-service/v1/applications`;
-        return from(this.alfrescoApi.getInstance()
-                    .oauth2Auth.callCustomApi(appUrl, 'GET',
-                    null, null, null, null, null, null,
-                    ['application/json'], ['application/json'], Object, null, null ));
     }
 
     onRowClick($event) {

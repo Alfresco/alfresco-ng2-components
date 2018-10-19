@@ -45,7 +45,6 @@ import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/ta
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
-    { path: 'cloud', component: CloudComponent },
     { path: 'logout', component: LogoutComponent },
     {
         path: 'settings',
@@ -137,11 +136,16 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'cloud',
-                component: CloudComponent
-            },
-            {
-                path: 'taskCloud',
-                component: TaskListCloudDemoComponent
+                children: [
+                    {
+                        path: '',
+                        component: CloudComponent
+                    },
+                    {
+                        path: ':applicationName/tasks',
+                        component: TaskListCloudDemoComponent
+                    }
+                ]
             },
             {
                 path: 'node-selector',
