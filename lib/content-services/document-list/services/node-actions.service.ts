@@ -25,7 +25,9 @@ import { DocumentListService } from './document-list.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 import { NodeDownloadDirective } from '../../directives/node-download.directive';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class NodeActionsService {
 
     @Output()

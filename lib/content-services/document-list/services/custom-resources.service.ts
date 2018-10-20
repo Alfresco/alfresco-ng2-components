@@ -32,7 +32,9 @@ import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class CustomResourcesService {
 
     private CREATE_PERMISSION = 'create';

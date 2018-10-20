@@ -28,7 +28,9 @@ import { ContentNodeSelectorComponentData } from './content-node-selector.compon
 import { NodeLockDialogComponent } from '../dialogs/node-lock.dialog';
 import { switchMap } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ContentNodeDialogService {
 
     /** Emitted when an error occurs. */

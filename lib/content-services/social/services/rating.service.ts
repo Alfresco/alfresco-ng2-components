@@ -22,7 +22,9 @@ import { RatingBody } from 'alfresco-js-api';
 import { from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class RatingService {
 
     constructor(private apiService: AlfrescoApiService) {

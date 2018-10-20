@@ -21,7 +21,9 @@ import { Observable, defer, forkJoin } from 'rxjs';
 import { PropertyGroup, PropertyGroupContainer } from '../interfaces/content-metadata.interfaces';
 import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PropertyDescriptorsService {
 
     constructor(private alfrescoApiService: AlfrescoApiService) {}

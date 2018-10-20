@@ -26,7 +26,9 @@ import { ContentMetadataConfigFactory } from './config/content-metadata-config.f
 import { PropertyDescriptorsService } from './property-descriptors.service';
 import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ContentMetadataService {
 
     constructor(private basicPropertiesService: BasicPropertiesService,
