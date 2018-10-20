@@ -95,7 +95,7 @@ describe('Tag component', () => {
 
     afterAll(async (done) => {
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfUploadedFile.entry.id);
-
+        browser.refresh();
         done();
     });
 
