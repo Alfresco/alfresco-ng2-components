@@ -1,26 +1,22 @@
 <h2>TASK LIST CLOUD DEMO</h2>
+<adf-cloud-task-filters
+    [appName]="'my-app'"
+    [showIcons]="true"
+    (filterClick)="onFilterSelected($event)">
+</adf-cloud-task-filters>
+
 <mat-accordion>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
             <mat-panel-title>
-                Filter Examples
+                {{filterName}}
             </mat-panel-title>
             <mat-panel-description>
-                Choose which application you want to see and filter tasks related to it
+                Customise your filter
             </mat-panel-description>
         </mat-expansion-panel-header>
         <div class="task-cloud-demo-select">
-            <mat-form-field>
-                <mat-select placeholder="Application Name" [(ngModel)]="appChosen">
-                    <mat-option>No App</mat-option>
-                    <mat-option *ngFor="let app of appDefinitionList | async" [value]="app.name">
-                        {{app.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="task-cloud-demo-select">
-            <mat-form-field>
+            <mat-form-field style="margin: 8px;">
                 <mat-select placeholder="Status" [(ngModel)]="status">
                     <mat-option value="">
                         ALL
@@ -45,25 +41,8 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-        </div>
-        <div class="task-cloud-demo-select">
-            <mat-form-field>
-                <input matInput placeholder="Task to select" [(ngModel)]="selectTask">
-            </mat-form-field>
-        </div>
-    </mat-expansion-panel>
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Sorting Panel
-            </mat-panel-title>
-            <mat-panel-description>
-                Choose how to sort your tasks
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div class="task-cloud-demo-select">
-            <mat-form-field>
-                <mat-select placeholder="Sort Field" [(ngModel)]="sortField">
+            <mat-form-field style="margin: 8px;">
+                <mat-select placeholder="Sort Field" [(ngModel)]="sort">
                     <mat-option value="id">
                         ID
                     </mat-option>
@@ -75,21 +54,18 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-        </div>
-        <div class="task-cloud-demo-select">
             <mat-form-field>
-                <mat-select placeholder="Direction" [(ngModel)]="sortDirection">
-                    <mat-option value="ASC">
-                        ASC
-                    </mat-option>
-                    <mat-option value="DESC">
-                        DESC
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <button mat-button (click)="onFilterButtonClick($event)">Apply Filter</button>
+                    <mat-select placeholder="Direction" [(ngModel)]="sortDirection">
+                        <mat-option value="ASC">
+                            ASC
+                        </mat-option>
+                        <mat-option value="DESC">
+                            DESC
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
         </div>
+
     </mat-expansion-panel>
 </mat-accordion>
 <div>

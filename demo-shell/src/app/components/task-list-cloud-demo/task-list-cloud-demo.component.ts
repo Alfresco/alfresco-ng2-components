@@ -19,7 +19,7 @@ import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
 import { TaskListCloudComponent, TaskListCloudSortingModel } from '@alfresco/adf-process-services-cloud';
 import { UserPreferencesService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
     selector: 'app-task-list-cloud-demo',
     templateUrl: 'task-list-cloud-demo.component.html',
@@ -33,25 +33,47 @@ export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
     appDefinitionList: Observable<any>;
     applicationName: string = '';
     status: string = '';
+    sort: string = '';
+    sortDirection: string = 'ASC';
+    filterName: string;
     clickedRow: string = '';
     selectTask: string = '';
     sortField: string = '';
-    sortDirection: string = 'ASC';
     sortArray: TaskListCloudSortingModel[] = [];
 
-    constructor(private route: ActivatedRoute,
-                private userPreference: UserPreferencesService) {
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private userPreference: UserPreferencesService) {
     }
 
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.applicationName = params.applicationName;
         });
+
+        this.route.queryParams
+            .subscribe(params => {
+                this.status = params.status;
+                this.sort = params.sort;
+                this.sortDirection = params.order;
+                this.filterName = params.filterName;
+            });
     }
 
     ngAfterViewInit() {
         /*tslint:disable-next-line*/
         this.taskCloud && this.applicationName ? this.taskCloud.reload() : console.log('FAIL');
+    }
+
+    onFilterSelected(filter) {
+        const queryParams = {
+            status: filter.query.state,
+            filterName: filter.name,
+            sort: filter.query.sort,
+            order: filter.query.order
+        };
+        this.router.navigate([`/cloud/${this.applicationName}/tasks/`], {queryParams: queryParams});
     }
 
     onChangePageSize(event) {

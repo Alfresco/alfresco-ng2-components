@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-cloud',
     templateUrl: './cloud.component.html',
@@ -24,9 +24,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CloudComponent implements OnInit {
 
-    constructor() {
+    constructor(private router: Router) {
     }
 
     ngOnInit() {
+    }
+
+    onAppClick(app) {
+        this.router.navigate([`/cloud/${app.name}/tasks/`]);
     }
 }

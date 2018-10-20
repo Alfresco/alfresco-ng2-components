@@ -102,15 +102,15 @@ export class TaskFilterCloudService {
      */
     getInvolvedTasksFilterInstance(appName: string): FilterRepresentationModel {
         return new FilterRepresentationModel({
-            name: 'Involved Tasks',
+            name: 'Cancelled Tasks',
             icon: 'view_headline',
             query: new QueryModel(
                 {
                     appName: appName,
-                    sort: 'created',
-                    state: 'open',
+                    sort: 'id',
+                    state: 'CANCELLED',
                     assignment: 'involved',
-                    order: 'desc'
+                    order: 'DESC'
                 }
             )
         });
@@ -128,10 +128,10 @@ export class TaskFilterCloudService {
             query: new QueryModel(
                 {
                     appName: appName,
-                    sort: 'created',
-                    state: 'open',
+                    sort: 'id',
+                    state: 'CREATED',
                     assignment: 'assignee',
-                    order: 'desc'
+                    order: 'ASC'
                 }
             )
         });
@@ -144,13 +144,13 @@ export class TaskFilterCloudService {
      */
     getQueuedTasksFilterInstance(appName: string): FilterRepresentationModel {
         return new FilterRepresentationModel({
-            name: 'Queued Tasks',
+            name: 'Suspended Tasks',
             icon: 'adjust',
             query: new QueryModel(
                 {
                     appName: appName,
                     sort: 'created',
-                    state: 'open',
+                    state: 'SUSPENDED',
                     assignment: 'candidate',
                     order: 'desc'
                 }
@@ -171,7 +171,7 @@ export class TaskFilterCloudService {
                 {
                     appName: appName,
                     sort: 'created',
-                    state: 'completed',
+                    state: 'COMPLETED',
                     assignment: 'involved',
                     order: 'desc'
                 }
