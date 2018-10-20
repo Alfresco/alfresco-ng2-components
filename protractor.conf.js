@@ -149,7 +149,6 @@ exports.config = {
         let saveScreenshot = process.env.SAVE_SCREENSHOT;
 
         if (saveScreenshot) {
-            console.log('HOST AFTER' +HOST );
             var retryCount = 1;
             if (argv.retry) {
                 retryCount = ++argv.retry;

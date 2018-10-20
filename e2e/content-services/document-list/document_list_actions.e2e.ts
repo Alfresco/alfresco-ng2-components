@@ -53,19 +53,6 @@ describe('Document List Component - Actions', () => {
         });
     });
 
-    afterEach(async (done) => {
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        if (uploadedFolder) {
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
-            uploadedFolder = null;
-        }
-        if (testFileNode) {
-            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, testFileNode.entry.id);
-            testFileNode = null;
-        }
-        done();
-    });
-
     describe('File Actions', () => {
 
         let pdfUploadedNode;
@@ -87,18 +74,27 @@ describe('Document List Component - Actions', () => {
             done();
         });
 
+        afterEach(async (done) => {
+            try {
+                await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfUploadedNode.entry.id);
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, testFileNode.entry.id);
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
+            } catch (error) {
+            }
+            done();
+        });
+
         it('[C213257] Should be able to copy a file', () => {
-            browser.driver.sleep(12000);
+            browser.driver.sleep(15000);
 
             contentListPage.rightClickOnRowNamed(pdfUploadedNode.entry.name);
             contentListPage.pressContextMenuActionNamed('Copy');
             contentServicesPage.typeIntoNodeSelectorSearchField(folderName);
             contentServicesPage.clickContentNodeSelectorResult(folderName);
             contentServicesPage.clickCopyButton();
-            contentServicesPage.checkAcsContainer();
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
-            browser.get(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
-            contentServicesPage.checkAcsContainer();
+            contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
         });
 
@@ -166,6 +162,16 @@ describe('Document List Component - Actions', () => {
             done();
         });
 
+        afterEach(async (done) => {
+            try {
+                await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, uploadedFolder.entry.id);
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, secondUploadedFolder.entry.id);
+            } catch (error) {
+            }
+            done();
+        });
+
         it('[C260123] Should be able to delete a folder using context menu', () => {
             contentListPage.deleteContent(folderName);
             contentListPage.checkContentIsNotDisplayed(folderName);
@@ -183,16 +189,14 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C260138] Should be able to copy a folder', () => {
-            browser.driver.sleep(12000);
+            browser.driver.sleep(15000);
 
             contentListPage.copyContent(folderName);
             contentServicesPage.typeIntoNodeSelectorSearchField(secondfolderName);
             contentServicesPage.clickContentNodeSelectorResult(secondfolderName);
             contentServicesPage.clickCopyButton();
-            contentServicesPage.checkAcsContainer();
             contentServicesPage.checkContentIsDisplayed(folderName);
-            browser.get(TestConfig.adf.url + '/files/' + secondUploadedFolder.entry.id);
-            contentServicesPage.checkAcsContainer();
+            contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);
             contentServicesPage.checkContentIsDisplayed(folderName);
         });
 

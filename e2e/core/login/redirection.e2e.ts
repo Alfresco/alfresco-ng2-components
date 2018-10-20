@@ -39,6 +39,7 @@ describe('Login component - Redirect', () => {
     let navigationBarPage = new NavigationBarPage();
     let contentServicesPage = new ContentServicesPage();
     let loginPage = new LoginPage();
+    let user = new AcsUserModel();
     let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
@@ -53,12 +54,14 @@ describe('Login component - Redirect', () => {
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
+        await this.alfrescoJsApi.core.peopleApi.addPerson(user);
+
         done();
     });
 
     it('[C213838] Should after login in CS be redirect to Login page when try to access to PS', () => {
         settingsPage.setProviderEcm();
-        loginPage.login(adminUserModel.id, adminUserModel.password);
+        loginPage.login(user.id, user.password);
 
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
@@ -96,14 +99,14 @@ describe('Login component - Redirect', () => {
         contentServicesPage.checkAcsContainer();
     });
 
-    it('[C260088] Sould be re-redirect to the request URL after login when try to access to a protect URL ', () => {
+    it('[C260088] Should be re-redirect to the request URL after login when try to access to a protect URL ', () => {
         let uploadActions = new UploadActions();
 
         let uploadedFolder;
         let folderName = Util.generateRandomString();
 
-        settingsPage.setProviderEcmBpm();
-        loginPage.login(adminUserModel.id, adminUserModel.password);
+        settingsPage.setProviderEcm();
+        loginPage.login(user.id, user.password);
 
         browser.controlFlow().execute(async () => {
             uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
@@ -123,8 +126,8 @@ describe('Login component - Redirect', () => {
             navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
             loginPage.waitForElements();
-            loginPage.enterUsername(adminUserModel.id);
-            loginPage.enterPassword(adminUserModel.password);
+            loginPage.enterUsername(user.id);
+            loginPage.enterPassword(user.password);
             loginPage.clickSignInButton();
 
             browser.driver.sleep(1000);

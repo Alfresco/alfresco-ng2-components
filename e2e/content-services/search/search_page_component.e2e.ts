@@ -55,7 +55,7 @@ describe('Search component - Search Page', () => {
     let searchResultPage = new SearchResultsPage();
 
     let acsUser = new AcsUserModel();
-    let emptyFolderModel = new FolderModel({ 'name': Util.generateRandomString() });
+    let emptyFolderModel = new FolderModel({ 'name': 'search' + Util.generateRandomString() });
     let firstFileModel;
     let newFolderModel = new FolderModel({ 'name': 'newFolder' });
     let fileNames = [], adminFileNames = [], nrOfFiles = 15, adminNrOfFiles = 5;
@@ -100,25 +100,18 @@ describe('Search component - Search Page', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.goToDocumentList();
-
         done();
     });
 
     it('[C260264] Should display message when no results are found', () => {
         let notExistentFileName = Util.generateRandomString();
-        contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(notExistentFileName);
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
     it('[C260265] Should display file previewer when opening a file from search results', () => {
-        contentServicesPage.goToDocumentList();
-
         searchDialog
-            .checkSearchBarIsNotVisible()
-            .checkSearchIconIsVisible()
             .clickOnSearchIcon()
             .enterTextAndPressEnter(firstFileModel.name);
 
@@ -131,11 +124,7 @@ describe('Search component - Search Page', () => {
     });
 
     it('[C272810] Should display only files corresponding to search', () => {
-        contentServicesPage.goToDocumentList();
-
         searchDialog
-            .checkSearchBarIsNotVisible()
-            .checkSearchIconIsVisible()
             .clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.firstFile);
 
@@ -144,10 +133,7 @@ describe('Search component - Search Page', () => {
     });
 
     it('[C260267] Should display content when opening a folder from search results', () => {
-        contentServicesPage.goToDocumentList();
-
-        searchDialog.checkSearchBarIsNotVisible()
-            .checkSearchIconIsVisible()
+        searchDialog
             .clickOnSearchIcon()
             .enterTextAndPressEnter(emptyFolderModel.name);
 
@@ -160,11 +146,7 @@ describe('Search component - Search Page', () => {
     });
 
     it('[C260261] Should be able to delete a file from search results', () => {
-        contentServicesPage.goToDocumentList();
-
         searchDialog
-            .checkSearchBarIsNotVisible()
-            .checkSearchIconIsVisible()
             .clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.firstFile);
 
@@ -175,15 +157,13 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkNoResultMessageIsDisplayed();
         searchResultPage.checkContentIsNotDisplayed(search.active.firstFile);
 
-        contentServicesPage.goToDocumentList();
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.active.firstFile);
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
     it('[C272809] Should be able to delete a folder from search results', () => {
-        searchDialog.checkSearchBarIsNotVisible()
-            .checkSearchIconIsVisible()
+        searchDialog
             .clickOnSearchIcon()
             .enterTextAndPressEnter(emptyFolderModel.name);
 
@@ -198,100 +178,87 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('[C272803] Should be able to sort results by name (Ascending)', () => {
-        contentServicesPage.goToDocumentList();
+    describe('Sorting', () => {
 
-        searchDialog
-            .checkSearchBarIsNotVisible()
-            .checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search.active.base);
-
-        searchResultPage.checkContentIsDisplayed(search.active.secondFile);
-        searchResultPage.sortAndCheckListIsOrderedByName(true).then((result) => {
-            expect(result).toEqual(true);
+        afterEach(async (done) => {
+            await browser.refresh();
+            done();
         });
+
+        it('[C272803] Should be able to sort results by name (Ascending)', () => {
+            searchDialog
+                .clickOnSearchIcon()
+                .enterTextAndPressEnter(search.active.base);
+
+            searchResultPage.checkContentIsDisplayed(search.active.secondFile);
+            searchResultPage.sortAndCheckListIsOrderedByName(true).then((result) => {
+                expect(result).toEqual(true);
+            });
+        });
+
+        it('[C272804] Should be able to sort results by name (Descending)', () => {
+            searchDialog
+                .clickOnSearchIcon()
+                .enterTextAndPressEnter(search.active.base);
+
+            searchResultPage.checkContentIsDisplayed(search.active.secondFile);
+            searchResultPage.sortAndCheckListIsOrderedByName(false).then((result) => {
+                expect(result).toEqual(true);
+            });
+        });
+
+        it('[C272805] Should be able to sort results by author (Ascending)', () => {
+            searchDialog
+                .clickOnSearchIcon()
+                .enterTextAndPressEnter(search.active.base);
+
+            searchResultPage.checkContentIsDisplayed(search.active.secondFile);
+
+            searchResultPage.sortAndCheckListIsOrderedByAuthor(true).then((result) => {
+                expect(result).toEqual(true);
+            });
+        });
+
+        it('[C272806] Should be able to sort results by author (Descending)', () => {
+            searchDialog
+                .clickOnSearchIcon()
+                .enterTextAndPressEnter(search.active.base);
+
+            searchResultPage.checkContentIsDisplayed(search.active.secondFile);
+            searchResultPage.sortAndCheckListIsOrderedByAuthor(false).then((result) => {
+                expect(result).toEqual(true);
+            });
+        });
+
+        it('[C272807] Should be able to sort results by date (Ascending)', () => {
+            searchDialog
+                .clickOnSearchIcon()
+                .enterTextAndPressEnter(search.active.base);
+
+            searchResultPage.checkContentIsDisplayed(search.active.secondFile);
+            searchResultPage.sortAndCheckListIsOrderedByCreated(true).then((result) => {
+                expect(result).toEqual(true);
+            });
+        });
+
+        it('[C260260] Should be able to sort results by date (Descending)', () => {
+            searchDialog
+                .clickOnSearchIcon()
+                .enterTextAndPressEnter(search.active.base);
+
+            searchResultPage.checkContentIsDisplayed(search.active.secondFile);
+            searchResultPage.sortAndCheckListIsOrderedByCreated(false).then((result) => {
+                expect(result).toEqual(true);
+            });
+        });
+
     });
 
-    it('[C272804] Should be able to sort results by name (Descending)', () => {
-        contentServicesPage.goToDocumentList();
-
+    it('[C260262] Should not be able to delete a file from search results without rights', () => {
         searchDialog
-            .checkSearchBarIsNotVisible()
-            .checkSearchIconIsVisible()
             .clickOnSearchIcon()
-            .enterTextAndPressEnter(search.active.base);
-
-        searchResultPage.checkContentIsDisplayed(search.active.secondFile);
-        searchResultPage.sortAndCheckListIsOrderedByName(false).then((result) => {
-            expect(result).toEqual(true);
-        });
-    });
-
-    it('[C272805] Should be able to sort results by author (Ascending)', () => {
-        contentServicesPage.goToDocumentList();
-
-        searchDialog
-            .checkSearchBarIsNotVisible()
-            .checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search.active.base);
-
-        searchResultPage.checkContentIsDisplayed(search.active.secondFile);
-        searchResultPage.sortAndCheckListIsOrderedByAuthor(true).then((result) => {
-            expect(result).toEqual(true);
-        });
-    });
-
-    it('[C272806] Should be able to sort results by author (Descending)', () => {
-        contentServicesPage.goToDocumentList();
-
-        searchDialog
-            .checkSearchBarIsNotVisible()
-            .checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search.active.base);
-
-        searchResultPage.checkContentIsDisplayed(search.active.secondFile);
-        searchResultPage.sortAndCheckListIsOrderedByAuthor(false).then((result) => {
-            expect(result).toEqual(true);
-        });
-    });
-
-    it('[C272807] Should be able to sort results by date (Ascending)', () => {
-        contentServicesPage.goToDocumentList();
-
-        searchDialog
-            .checkSearchBarIsNotVisible()
-            .checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search.active.base);
-
-        searchResultPage.checkContentIsDisplayed(search.active.secondFile);
-        searchResultPage.sortAndCheckListIsOrderedByCreated(true).then((result) => {
-            expect(result).toEqual(true);
-        });
-    });
-
-    it('[C260260] Should be able to sort results by date (Descending)', () => {
-        contentServicesPage.goToDocumentList();
-
-        searchDialog
-            .checkSearchBarIsNotVisible()
-            .checkSearchIconIsVisible()
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search.active.base);
-
-        searchResultPage.checkContentIsDisplayed(search.active.secondFile);
-        searchResultPage.sortAndCheckListIsOrderedByCreated(false).then((result) => {
-            expect(result).toEqual(true);
-        });
-    });
-
-    it('[C260262] Shouldn\'t be able to delete a file from search results without rights', () => {
-        contentServicesPage.goToDocumentList();
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter(search.no_permission.noPermFile);
+
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
         searchResultPage.checkDeleteIsDisabled(search.no_permission.noPermFile);
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
@@ -301,19 +268,16 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
     });
 
-    it('[C272808] Shouldn\'t be able to delete a folder from search results without rights', () => {
-        contentServicesPage.goToDocumentList();
-        searchDialog.checkSearchBarIsNotVisible();
-        searchDialog.checkSearchIconIsVisible();
-        searchDialog.clickOnSearchIcon();
-        searchDialog.enterTextAndPressEnter(search.no_permission.noPermFolder);
+    it('[C272808] Should not be able to delete a folder from search results without rights', () => {
+        searchDialog
+            .clickOnSearchIcon()
+            .enterTextAndPressEnter(search.no_permission.noPermFolder);
 
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
         searchResultPage.checkDeleteIsDisabled(search.no_permission.noPermFolder);
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
 
-        searchDialog.checkSearchBarIsNotVisible()
-            .checkSearchIconIsVisible()
+        searchDialog
             .clickOnSearchIcon()
             .enterTextAndPressEnter(search.no_permission.noPermFolder);
 
@@ -321,10 +285,11 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
     });
 
-    it('[C286675] Should display results when searching for \*', () => {
-        contentServicesPage.goToDocumentList();
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
+    it('[C286675] Should display results when searching for all elements', () => {
+        searchDialog
+            .clickOnSearchIcon()
             .enterTextAndPressEnter('*');
+
         searchResultPage.checkNoResultMessageIsNotDisplayed();
     });
 });

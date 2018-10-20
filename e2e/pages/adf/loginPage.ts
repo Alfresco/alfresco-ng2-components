@@ -20,6 +20,7 @@ import { FormControllersPage } from './material/formControllersPage';
 import Util = require('../../util/util');
 import TestConfig = require('../../test.config');
 import { SettingsPage } from './settingsPage';
+import { element, by, protractor, browser } from 'protractor';
 
 export class LoginPage {
 
@@ -50,11 +51,6 @@ export class LoginPage {
     header = element(by.id('adf-header'));
     cardBackground = element(by.css('mat-card[class*="adf-login-card"]'));
     settingsPage = new SettingsPage();
-    loginForm = element(by.css('form[id="adf-login-form"'));
-
-    checkLoginFormIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.loginForm);
-    }
 
     waitForElements() {
         let deferred = protractor.promise.defer();

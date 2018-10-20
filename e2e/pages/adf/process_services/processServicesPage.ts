@@ -18,6 +18,8 @@
 import Util = require('../../../util/util');
 import { AppNavigationBarPage } from './appNavigationBarPage';
 
+import { element, by } from 'protractor';
+
 export class ProcessServicesPage {
 
     apsAppsContainer = element(by.css('div[class="adf-app-listgrid ng-star-inserted"]'));

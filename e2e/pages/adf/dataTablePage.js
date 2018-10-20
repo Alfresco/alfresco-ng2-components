@@ -229,15 +229,6 @@ var DataTablePage = function () {
         Util.waitUntilElementIsVisible(nodeId, 10000);
     };
 
-    this.navigateToContent = function (content) {
-        var row = this.getRowByRowName(content);
-        Util.waitUntilElementIsPresent(row);
-        row.click();
-        this.checkRowIsSelected(content);
-        browser.actions().sendKeys(protractor.Key.ENTER).perform();
-        return this;
-    };
-
     this.getRowsName = function (content) {
         var row = element(by.css("div[data-automation-id*='" + content + "']"));
         Util.waitUntilElementIsPresent(row);

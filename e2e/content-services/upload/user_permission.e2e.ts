@@ -132,7 +132,7 @@ describe('Upload - User permission', () => {
 
             navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
-            browser.sleep(1000);
+            browser.sleep(3000);
 
             dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
             dragAndDrop.dropFolder(dragAndDropArea, folder.location);
@@ -146,7 +146,7 @@ describe('Upload - User permission', () => {
             contentServicesPage.checkContentIsNotDisplayed(folder.name);
         });
 
-        it('[C279915] Should not be allowed to upload a file in folder with consumer permissions', () => {
+        fit('[C279915] Should not be allowed to upload a file in folder with consumer permissions', () => {
             contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
 
             uploadDialog.fileIsUploaded(emptyFile.name);
@@ -155,7 +155,7 @@ describe('Upload - User permission', () => {
 
             navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
-            browser.sleep(1000);
+            browser.sleep(3000);
 
             contentServicesPage.uploadFile(emptyFile.location);
 
@@ -175,7 +175,7 @@ describe('Upload - User permission', () => {
 
             navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
-            browser.sleep(1000);
+            browser.sleep(3000);
 
             uploadToggles.enableFolderUpload();
 
