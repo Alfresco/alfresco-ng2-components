@@ -16,6 +16,7 @@
  */
 
 import FormFields = require('../formFields');
+import { by } from 'protractor';
 
 export class Hyperlink {
 

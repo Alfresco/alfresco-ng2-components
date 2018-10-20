@@ -89,7 +89,7 @@ describe('Search Filters', () => {
     });
 
     it('[C277146] Should Show more/less buttons be hidden when inactive', () => {
-        browser.get(TestConfig.adf.url + '/search;q=files*');
+        browser.get(TestConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.checkShowLessButtonIsNotDisplayed();
         searchFiltersPage.checkSizeShowMoreButtonIsDisplayed();

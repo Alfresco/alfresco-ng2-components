@@ -25,6 +25,8 @@ Shows a notification message with optional feedback.
     -   _action:_ `string`  - Caption for the response button
     -   _config:_ `number|MatSnackBarConfig`  - Time before notification disappears after being shown or MatSnackBarConfig object
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
+-   **dismissSnackMessageAction()**<br/>
+      dismiss the notification snackbar 
 
 ## Details
 

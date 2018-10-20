@@ -27,7 +27,6 @@ import AcsUserModel = require('../../models/ACS/acsUserModel');
 import TestConfig = require('../../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import CONSTANTS = require('../../util/constants');
 
 import { browser, protractor } from 'protractor';
 
@@ -41,8 +40,6 @@ describe('Create folder directive', function () {
     let contentListPage = new ContentListPage();
 
     let acsUser = new AcsUserModel();
-    let consumerUser = new AcsUserModel();
-    let site;
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({

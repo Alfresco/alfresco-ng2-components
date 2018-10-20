@@ -18,6 +18,7 @@
 import Util = require('../../util/util');
 import ContentList = require('./dialog/contentList');
 import DatatablePage = require('./dataTablePage');
+import { element, by, protractor, browser } from 'protractor';
 
 export class SearchResultsPage {
 
@@ -61,7 +62,7 @@ export class SearchResultsPage {
     }
 
     navigateToFolder(content) {
-        this.dataTable.navigateToContent(content);
+        this.contentList.doubleClickRow(content);
         return this;
     }
 
@@ -86,13 +87,13 @@ export class SearchResultsPage {
         this.sortBy(sortOrder, 'Name');
     }
 
-    sortBy(sortOrder) {
-
+    sortBy(sortOrder, sortType) {
+        Util.waitUntilElementIsClickable(this.sortingArrow);
         this.sortingArrow.click();
 
-        let selectedSortingOption = element(by.xpath('//span [contains(text(), \"Name\")]'));
-
-        selectedSortingOption.click();
+        let selectedSortingOption = element(by.xpath(``));
+        Util.waitUntilElementIsClickable(selectedSortingOption);
+        browser.executeScript(`document.evaluate('//span [contains(text(), "${sortType}")]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();`);
 
         this.sortByOrder(sortOrder);
     }
@@ -102,11 +103,11 @@ export class SearchResultsPage {
         return element(this.sortArrowLocator).getText().then((result) => {
             if (sortOrder === true) {
                 if (result !== 'arrow_upward') {
-                    element(this.sortArrowLocator).click();
+                    browser.executeScript(`document.querySelector('adf-sorting-picker button mat-icon').click();`);
                 }
             } else {
                 if (result === 'arrow_upward') {
-                    element(this.sortArrowLocator).click();
+                    browser.executeScript(`document.querySelector('adf-sorting-picker button mat-icon').click();`);
                 }
             }
 

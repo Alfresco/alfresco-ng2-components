@@ -23,6 +23,8 @@ import { NavigationBarPage } from './navigationBarPage';
 
 import path = require('path');
 
+import { element, by, protractor, browser } from 'protractor';
+
 export class ContentServicesPage {
 
     contentList = new ContentList();
@@ -256,11 +258,6 @@ export class ContentServicesPage {
     checkEmptyFolderMessageIsDisplayed() {
         this.contentList.checkEmptyFolderMessageIsDisplayed();
         return this;
-    }
-
-    checkElementIsDisplayed(elementName) {
-        let dataElement = element(by.css(`div[data-automation-id="${elementName}"]`));
-        Util.waitUntilElementIsVisible(dataElement);
     }
 
     navigateToFolderViaBreadcrumbs(folder) {

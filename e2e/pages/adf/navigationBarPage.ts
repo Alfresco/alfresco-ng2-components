@@ -17,6 +17,7 @@
 
 import Util = require('../../util/util');
 import TestConfig = require('../../test.config');
+import { element, by } from 'protractor';
 
 export class NavigationBarPage {
 

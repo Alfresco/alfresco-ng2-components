@@ -113,7 +113,7 @@ describe('Comment Component', () => {
         expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
         expect(commentsPage.getMessage(0)).toEqual(comments.test);
         expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toContain('ago');
+        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
 
     });
 
@@ -129,7 +129,7 @@ describe('Comment Component', () => {
         expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
         expect(commentsPage.getMessage(0)).toEqual(comments.first);
         expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toContain('ago');
+        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
     it('[C280021] Should be able to add a multiline comment on a file', () => {
@@ -144,7 +144,7 @@ describe('Comment Component', () => {
         expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
         expect(commentsPage.getMessage(0)).toEqual(comments.multiline);
         expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toContain('ago');
+        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
 
         commentsPage.addComment(comments.second);
         commentsPage.checkUserIconIsDisplayed(0);
@@ -152,7 +152,7 @@ describe('Comment Component', () => {
         expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (2)');
         expect(commentsPage.getMessage(0)).toEqual(comments.second);
         expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toContain('ago');
+        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 
     it('[C280022] Should not be able to add an HTML or other code input into the comment input filed', () => {
@@ -167,6 +167,6 @@ describe('Comment Component', () => {
         expect(commentsPage.getTotalNumberOfComments()).toEqual('Comments (1)');
         expect(commentsPage.getMessage(0)).toEqual('First name: Last name:');
         expect(commentsPage.getUserName(0)).toEqual(userFullName);
-        expect(commentsPage.getTime(0)).toContain('ago');
+        expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
     });
 });

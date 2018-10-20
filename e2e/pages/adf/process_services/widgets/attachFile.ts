@@ -20,6 +20,7 @@ import TestConfig = require('../../../../test.config');
 import path = require('path');
 import Util = require('../../../../util/util');
 import remote = require('selenium-webdriver/remote');
+import { element, by, browser } from 'protractor';
 
 export class AttachFile {
 

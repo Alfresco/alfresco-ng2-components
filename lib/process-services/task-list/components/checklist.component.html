@@ -36,8 +36,8 @@
             </mat-form-field>
         </mat-dialog-content>
         <mat-dialog-actions class="adf-checklist-dialog-actions">
-            <button mat-button type="button" id="close-check-dialog" (click)="cancel()">{{ 'ADF_TASK_LIST.DETAILS.CHECKLIST.DIALOG.CANCEL-BUTTON' | translate }}</button>
-            <button mat-button type="button" id="add-check" (click)="add()">{{ 'ADF_TASK_LIST.DETAILS.CHECKLIST.DIALOG.ADD-BUTTON' | translate }}</button>
+            <button mat-button type="button" id="close-check-dialog" (click)="cancel()">{{ 'ADF_TASK_LIST.DETAILS.CHECKLIST.DIALOG.CANCEL-BUTTON' | translate | uppercase }}</button>
+            <button mat-button type="button" id="add-check" (click)="add()">{{ 'ADF_TASK_LIST.DETAILS.CHECKLIST.DIALOG.ADD-BUTTON' | translate | uppercase  }}</button>
         </mat-dialog-actions>
     </div>
 </ng-template>

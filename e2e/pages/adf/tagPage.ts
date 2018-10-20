@@ -18,6 +18,8 @@
 import Util = require('../../util/util');
 import ContentList = require('./dialog/contentList');
 
+import { element, by, protractor, browser } from 'protractor';
+
 export class TagPage {
 
     addTagButton = element(by.css('button[id="add-tag"]'));
