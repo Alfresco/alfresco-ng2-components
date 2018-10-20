@@ -22,7 +22,9 @@ import { Observable, from } from 'rxjs';
 import { FormModel } from '../components/widgets/core/form.model';
 import { map, catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class EcmModelService {
 
     public static MODEL_NAMESPACE: string = 'activitiForms';

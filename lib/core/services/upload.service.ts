@@ -28,7 +28,9 @@ import {
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class UploadService {
 
     private cache: { [key: string]: any } = {};

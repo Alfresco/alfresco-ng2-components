@@ -21,7 +21,9 @@ import { Observable, from } from 'rxjs';
 import { NodeMetadata } from '../models/node-metadata.model';
 import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class NodeService {
 
     constructor(private apiService: AlfrescoApiService) {

@@ -23,7 +23,9 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
 import { catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DeletedNodesApiService {
     constructor(
         private apiService: AlfrescoApiService,

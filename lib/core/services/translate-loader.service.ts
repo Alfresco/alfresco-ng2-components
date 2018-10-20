@@ -24,7 +24,9 @@ import { ComponentTranslationModel } from '../models/component.model';
 import { ObjectUtils } from '../utils/object-utils';
 import { map, catchError, retry } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class TranslateLoaderService implements TranslateLoader {
 
     private prefix: string = 'i18n';

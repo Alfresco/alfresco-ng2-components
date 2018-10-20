@@ -26,7 +26,9 @@ import { concatMap, switchMap, takeWhile } from 'rxjs/operators';
  * RenditionsService
  * (this service is deprecated in 2.2.0 and will be removed in future revisions)
  */
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class RenditionsService {
 
     constructor(private apiService: AlfrescoApiService) {

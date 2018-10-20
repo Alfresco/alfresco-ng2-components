@@ -22,7 +22,9 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { map, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DiscoveryApiService {
 
     constructor(private apiService: AlfrescoApiService) { }

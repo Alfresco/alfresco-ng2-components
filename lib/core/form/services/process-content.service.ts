@@ -22,7 +22,9 @@ import { RelatedContentRepresentation } from 'alfresco-js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ProcessContentService {
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';

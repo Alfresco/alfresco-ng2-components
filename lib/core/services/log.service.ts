@@ -22,7 +22,9 @@ import { AppConfigService, AppConfigValues } from '../app-config/app-config.serv
 import { logLevels, LogLevelsEnum } from '../models/log-levels.model';
 import { Subject } from 'rxjs';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class LogService {
 
     get currentLogLevel() {

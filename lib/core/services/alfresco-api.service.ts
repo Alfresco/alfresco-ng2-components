@@ -39,7 +39,9 @@ import { OauthConfigModel } from '../models/oauth-config.model';
 
 /* tslint:disable:adf-file-name */
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AlfrescoApiService {
     /**
      * Publish/subscribe to events related to node updates.

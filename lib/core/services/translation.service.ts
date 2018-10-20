@@ -28,7 +28,9 @@ export interface TranslationProvider {
     source: string;
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class TranslationService {
     defaultLang: string;
     userLang: string;

@@ -24,7 +24,9 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { EcmUserModel } from '../models/ecm-user.model';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class EcmUserService {
 
     constructor(private apiService: AlfrescoApiService,
