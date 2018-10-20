@@ -28,25 +28,6 @@ import { AppsListModule } from './app-list/apps-list.module';
 import { ProcessCommentsModule } from './process-comments/process-comments.module';
 import { AttachmentModule } from './attachment/attachment.module';
 import { PeopleModule } from './people/people.module';
-import { ProcessService } from './process-list/services/process.service';
-import { ProcessFilterService } from './process-list/services/process-filter.service';
-import { TaskListService } from './task-list/services/tasklist.service';
-import { TaskFilterService } from './task-list/services/task-filter.service';
-import { TaskUploadService } from './task-list/services/task-upload.service';
-import { ProcessUploadService } from './task-list/services/process-upload.service';
-import { AttachFileWidgetDialogService } from './content-widget/attach-file-widget-dialog.service';
-
-export function providers() {
-    return [
-        ProcessService,
-        ProcessFilterService,
-        TaskListService,
-        TaskFilterService,
-        TaskUploadService,
-        ProcessUploadService,
-        AttachFileWidgetDialogService
-    ];
-}
 
 @NgModule({
     imports: [
@@ -63,7 +44,6 @@ export function providers() {
         PeopleModule
     ],
     providers: [
-        ...providers(),
         {
             provide: TRANSLATION_PROVIDER,
             multi: true,
@@ -90,7 +70,6 @@ export class ProcessModule {
         return {
             ngModule: ProcessModule,
             providers: [
-                ...providers(),
                 {
                     provide: TRANSLATION_PROVIDER,
                     multi: true,

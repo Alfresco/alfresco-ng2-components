@@ -21,7 +21,9 @@ import { Observable, from, forkJoin, throwError } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { map, catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ProcessFilterService {
 
     constructor(private alfrescoApiService: AlfrescoApiService) {

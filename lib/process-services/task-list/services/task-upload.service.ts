@@ -19,7 +19,9 @@ import { AlfrescoApiService, AppConfigService, UploadService } from '@alfresco/a
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class TaskUploadService extends UploadService {
 
     constructor(apiService: AlfrescoApiService, appConfigService: AppConfigService) {

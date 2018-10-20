@@ -21,7 +21,9 @@ import { Observable, forkJoin, from, throwError } from 'rxjs';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { map, catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class TaskFilterService {
 
     constructor(private apiService: AlfrescoApiService,
