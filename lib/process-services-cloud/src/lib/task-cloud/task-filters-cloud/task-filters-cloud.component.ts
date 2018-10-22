@@ -19,10 +19,6 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { FilterRepresentationModel } from '../models/filter-cloud.model';
-
-/**
- * @deprecated: in 2.4.0 'adf-filters' selector was deprecated, use adf-task-filters instead.
- */
 @Component({
     selector: 'adf-cloud-task-filters',
     templateUrl: './task-filters-cloud.component.html',
@@ -95,7 +91,7 @@ export class TaskFiltersCloudComponent implements OnChanges {
                 } else {
                     this.resetFilter();
                     this.filters = res;
-                    this.selectFilter(this.filterParam);
+                    this.selectFilterAndEmit(this.filterParam);
                     this.success.emit(res);
                 }
             },
