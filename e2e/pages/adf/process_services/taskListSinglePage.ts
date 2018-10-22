@@ -70,14 +70,14 @@ export class TaskListSinglePage {
     getTaskId() {
         Util.waitUntilElementIsVisible(this.taskId);
         return this.taskId.getAttribute('value');
-    };
+    }
 
     typeTaskName(input) {
         Util.waitUntilElementIsVisible(this.taskName);
         this.clearText(this.taskName);
         this.taskName.sendKeys(input);
         return this;
-    };
+    }
 
     getTaskName() {
         Util.waitUntilElementIsVisible(this.taskName);
@@ -122,7 +122,7 @@ export class TaskListSinglePage {
 
     getItemsPerPageFieldErrorMessage() {
         Util.waitUntilElementIsVisible(this.itemsPerPageForm);
-        var errorMessage = this.itemsPerPageForm.element(by.css("mat-error"));
+        let errorMessage = this.itemsPerPageForm.element(by.css('mat-error'));
         Util.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
     }
@@ -141,7 +141,7 @@ export class TaskListSinglePage {
 
     getPageFieldErrorMessage() {
         Util.waitUntilElementIsVisible(this.pageForm);
-        var errorMessage = this.pageForm.element(by.css("mat-error"));
+        let errorMessage = this.pageForm.element(by.css('mat-error'));
         Util.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
     }
@@ -156,7 +156,7 @@ export class TaskListSinglePage {
     getDueAfter() {
         Util.waitUntilElementIsVisible(this.dueAfter);
         return this.dueAfter.getAttribute('value');
-    };
+    }
 
     typeDueBefore(input) {
         Util.waitUntilElementIsVisible(this.dueBefore);
@@ -202,7 +202,7 @@ export class TaskListSinglePage {
     selectState(state) {
         this.clickOnStateDropDownArrow();
 
-        var stateElement = element.all(by.cssContainingText("mat-option span", state)).first();
+        let stateElement = element.all(by.cssContainingText('mat-option span', state)).first();
         Util.waitUntilElementIsClickable(stateElement);
         Util.waitUntilElementIsVisible(stateElement);
         stateElement.click();
@@ -218,7 +218,7 @@ export class TaskListSinglePage {
     selectSort(sort) {
         this.clickOnSortDropDownArrow();
 
-        var sortElement = element.all(by.cssContainingText("mat-option span", sort)).first();
+        let sortElement = element.all(by.cssContainingText('mat-option span', sort)).first();
         Util.waitUntilElementIsClickable(sortElement);
         Util.waitUntilElementIsVisible(sortElement);
         sortElement.click();
@@ -234,5 +234,3 @@ export class TaskListSinglePage {
     }
 
 }
-
-

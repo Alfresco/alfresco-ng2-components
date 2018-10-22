@@ -124,7 +124,7 @@ describe('Start Task - Custom App', () => {
 
         for (let i = 0; i < 3; i++) {
             completedTasks[i] = await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': completedTasksName[i],
-                'dueDate': Util.getSpecificDateAfterCrtDateInFormat('YYYY-MM-DDTHH:mm:ss.SSSZ', i+2)});
+                'dueDate': Util.getSpecificDateAfterCrtDateInFormat('YYYY-MM-DDTHH:mm:ss.SSSZ', i + 2)});
             await this.alfrescoJsApi.activiti.taskActionsApi.completeTask(completedTasks[i].id);
         }
 
