@@ -18,6 +18,7 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { AuthenticationService, AlfrescoApiService, PageTitleService } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'app-root',
@@ -30,7 +31,8 @@ export class AppComponent implements OnInit {
     constructor(private pageTitleService: PageTitleService,
                 private alfrescoApiService: AlfrescoApiService,
                 private authenticationService: AuthenticationService,
-                private router: Router) {
+                private router: Router,
+                private dialogRef: MatDialog) {
     }
 
     ngOnInit() {
@@ -39,6 +41,7 @@ export class AppComponent implements OnInit {
         this.alfrescoApiService.getInstance().on('error', (error) => {
             if (error.status === 401) {
                 if (!this.authenticationService.isLoggedIn()) {
+                    this.dialogRef.closeAll();
                     this.router.navigate(['/login']);
                 }
             }
