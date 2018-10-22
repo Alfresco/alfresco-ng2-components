@@ -41,35 +41,31 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field style="margin: 8px;">
-                <mat-select placeholder="Sort Field" [(ngModel)]="sort">
-                    <mat-option value="id">
-                        ID
-                    </mat-option>
-                    <mat-option value="name">
-                        NAME
-                    </mat-option>
-                    <mat-option value="status">
-                        STATUS
+            <mat-form-field>
+                <mat-select [formControl]="sortFormControl">
+                    <mat-option [value]="''">Select a column</mat-option>
+                    <mat-option *ngFor="let statusObj of statusValues" [value]="statusObj.key">
+                    {{statusObj.label}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field>
-                    <mat-select placeholder="Direction" [(ngModel)]="sortDirection">
-                        <mat-option value="ASC">
-                            ASC
-                        </mat-option>
-                        <mat-option value="DESC">
-                            DESC
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+                <mat-select [formControl]="sortDirectionFormControl">
+                    <mat-option [value]="''">Select a direction</mat-option>
+                    <mat-option value="ASC">
+                        ASC
+                    </mat-option>
+                    <mat-option value="DESC">
+                        DESC
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
 
     </mat-expansion-panel>
 </mat-accordion>
 <div>
-    <adf-cloud-task-list #taskCloud
+    <adf-cloud-task-list *ngIf="isFilterLoaded" #taskCloud
                          [applicationName]="applicationName"
                          [status]="status"
                          [landingTaskId]="selectTask"
@@ -78,8 +74,10 @@
         <data-columns>
             <data-column key="entry.id" title="Id"></data-column>
             <data-column key="entry.name" title="Name"></data-column>
-            <data-column key="entry.createdDate" title="Created Date"></data-column>
             <data-column key="entry.status" title="Status"></data-column>
+            <data-column key="entry.processDefinitionId" title="Process Definition Id"></data-column>
+            <data-column key="entry.priority" title="Priority"></data-column>
+            <data-column key="entry.createdDate" title="Created Date"></data-column>
         </data-columns>
     </adf-cloud-task-list>
     <adf-pagination [target]="taskCloud"

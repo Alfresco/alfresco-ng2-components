@@ -20,6 +20,8 @@ import { TaskListCloudComponent, TaskListCloudSortingModel } from '@alfresco/adf
 import { UserPreferencesService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
+
 @Component({
     selector: 'app-task-list-cloud-demo',
     templateUrl: 'task-list-cloud-demo.component.html',
@@ -30,16 +32,28 @@ export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
     @ViewChild('taskCloud')
     taskCloud: TaskListCloudComponent;
 
+    sortFormControl: FormControl;
+    sortDirectionFormControl: FormControl;
+
     appDefinitionList: Observable<any>;
     applicationName: string = '';
     status: string = '';
     sort: string = '';
+    isFilterLoaded = false;
     sortDirection: string = 'ASC';
     filterName: string;
     clickedRow: string = '';
     selectTask: string = '';
-    sortField: string = '';
-    sortArray: TaskListCloudSortingModel[] = [];
+    sortArray: TaskListCloudSortingModel [];
+
+    providers = [ 'test1', 'test2' ];
+
+    statusValues = [
+        {key: 'id', label: 'ID'},
+        {key: 'name', label: 'NAME'},
+        {key: 'priority', label: 'PRIORITY'},
+        {key: 'processDefinitionId', label: 'PROCESS DEFINITION ID'}
+      ];
 
     constructor(
         private route: ActivatedRoute,
@@ -48,16 +62,45 @@ export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        this.isFilterLoaded = false;
         this.route.params.subscribe(params => {
             this.applicationName = params.applicationName;
         });
 
+        this.sortFormControl = new FormControl('');
+
+        this.sortFormControl.valueChanges.subscribe(
+            (selectedValue) => {
+                // update sorting
+                this.sortArray = [{
+                    orderBy: selectedValue,
+                    direction: this.sortDirection
+                }];
+            }
+        );
+        this.sortDirectionFormControl = new FormControl('');
+
+        this.sortDirectionFormControl.valueChanges.subscribe(
+            (selectedValue) => {
+                // update sorting
+                this.sortArray = [{
+                    orderBy: this.sort,
+                    direction: selectedValue
+                }];
+            }
+        );
+
         this.route.queryParams
             .subscribe(params => {
-                this.status = params.status;
-                this.sort = params.sort;
-                this.sortDirection = params.order;
-                this.filterName = params.filterName;
+                if (params.status) {
+                    this.status = params.status;
+                    this.sort = params.sort;
+                    this.sortDirection = params.order;
+                    this.filterName = params.filterName;
+                    this.isFilterLoaded = true;
+                    this.sortDirectionFormControl.setValue(this.sortDirection);
+                    this.sortFormControl.setValue(this.sort);
+                }
             });
     }
 
@@ -82,14 +125,6 @@ export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
 
     onRowClick($event) {
         this.clickedRow = $event;
-    }
-
-    onFilterButtonClick($event) {
-        let newSortParam: TaskListCloudSortingModel = {
-            orderBy: this.sortField,
-            direction: this.sortDirection };
-        this.sortArray.push(newSortParam);
-        this.taskCloud.reload();
     }
 
 }
