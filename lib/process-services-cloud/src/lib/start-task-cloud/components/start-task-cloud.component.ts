@@ -29,8 +29,7 @@ import {
     UserPreferencesService,
     UserProcessModel,
     FormFieldModel,
-    FormModel,
-    TranslationService
+    FormModel
 } from '@alfresco/adf-core';
 
 @Component({
@@ -55,7 +54,7 @@ export class StartTaskCloudComponent implements OnInit {
     maxTaskNameLength: number = 255;
 
     @Input()
-    defaultTaskName: string = '';
+    name: string = '';
 
     /** Emitted when the task is successfully created. */
     @Output()
@@ -83,9 +82,7 @@ export class StartTaskCloudComponent implements OnInit {
 
     field: FormFieldModel;
 
-    defaultTaskNameTranslated: string;
-
-    taskModelForm: FormGroup;
+    taskForm: FormGroup;
 
     /**
      * Constructor
@@ -97,7 +94,6 @@ export class StartTaskCloudComponent implements OnInit {
                 private dateAdapter: DateAdapter<Moment>,
                 private preferences: UserPreferencesService,
                 private formBuilder: FormBuilder,
-                private translateService: TranslationService,
                 private logService: LogService) {
     }
 
@@ -106,19 +102,18 @@ export class StartTaskCloudComponent implements OnInit {
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
-        this.defaultTaskNameTranslated = this.translateService.instant(this.defaultTaskName);
         this.loadFormsTask();
         this.buildForm();
     }
 
     buildForm() {
-        this.taskModelForm = this.formBuilder.group({
-            taskModelName: new FormControl(this.defaultTaskNameTranslated, [Validators.required, Validators.maxLength(this.maxTaskNameLength)]),
+        this.taskForm = this.formBuilder.group({
+            taskModelName: new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxTaskNameLength)]),
             taskModelDescription: new FormControl(''),
             taskModelFormKey: new FormControl('')
         });
 
-        this.taskModelForm.valueChanges
+        this.taskForm.valueChanges
             .subscribe(taskFormData => {
                 if (this.isFormValid()) {
                     this.setTaskDetailsModel(taskFormData);
@@ -127,7 +122,7 @@ export class StartTaskCloudComponent implements OnInit {
     }
 
     isFormValid() {
-        return this.taskModelForm && this.taskModelForm.valid;
+        return this.taskForm && this.taskForm.valid;
     }
 
     setTaskDetailsModel(taskFormData: any) {
@@ -143,7 +138,7 @@ export class StartTaskCloudComponent implements OnInit {
             this.taskDetailsModel.appName = this.runtimeBundle;
         }
         if (!this.taskDetailsModel.name) {
-            this.taskDetailsModel.name = this.defaultTaskNameTranslated;
+            this.taskDetailsModel.name = this.name;
         }
 
         this.taskService.createNewTask(this.taskDetailsModel)
@@ -194,8 +189,8 @@ export class StartTaskCloudComponent implements OnInit {
         }
     }
 
-    get taskName(): AbstractControl {
-        return this.taskModelForm.get('taskModelName');
+    get taskNameController(): AbstractControl {
+        return this.taskForm.get('taskModelName');
     }
 
 }
