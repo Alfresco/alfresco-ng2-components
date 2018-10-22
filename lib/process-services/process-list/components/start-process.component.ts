@@ -165,7 +165,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
 
                 if (!this.isProcessDefinitionsEmpty()) {
 
-                    if (this.processDefinitions.length == 1) {
+                    if (this.processDefinitions.length === 1) {
                         this.selectedProcessDef = this.processDefinitions[0];
                     }
 
