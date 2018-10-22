@@ -79,18 +79,15 @@ describe('Dropdown widget', () => {
     it('[C269051] General and Options properties', () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
-        widget.dropdown().openDropdown(app.FIELD.general_dropdown);
-        widget.dropdown().selectOptionFromDropdown('Happy');
+        widget.dropdown().selectOption('Happy');
         expect(widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Happy');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
 
-        widget.dropdown().openDropdown(app.FIELD.general_dropdown);
-        widget.dropdown().selectOptionFromDropdown('Choose one');
+        widget.dropdown().selectOption('Choose one');
         expect(widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Choose one');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
-        widget.dropdown().openDropdown(app.FIELD.general_dropdown);
-        widget.dropdown().selectOptionFromDropdown('Sad');
+        widget.dropdown().selectOption('Sad');
         expect(widget.dropdown().getSelectedOptionText(app.FIELD.general_dropdown)).toContain('Sad');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
