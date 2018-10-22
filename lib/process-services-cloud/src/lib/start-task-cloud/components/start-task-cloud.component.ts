@@ -19,17 +19,15 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from '@angular/forms';
-import { FormCloud } from '../models/form-cloud.model';
 import { StartTaskCloudService } from '../services/start-task-cloud.service';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 import {
     LogService,
     UserPreferencesService,
     UserProcessModel,
-    FormFieldModel,
-    FormModel
+    FormFieldModel
 } from '@alfresco/adf-core';
 
 @Component({
@@ -54,7 +52,7 @@ export class StartTaskCloudComponent implements OnInit {
     maxTaskNameLength: number = 255;
 
     @Input()
-    name: string = '';
+    defaultTaskName: string = '';
 
     /** Emitted when the task is successfully created. */
     @Output()
@@ -70,11 +68,7 @@ export class StartTaskCloudComponent implements OnInit {
 
     taskDetailsModel: TaskDetailsCloudModel = new TaskDetailsCloudModel();
 
-    forms$: Observable<FormCloud[]>;
-
-    assigneeId: number;
-
-    formKey: number;
+    users$: Observable<any[]>;
 
     taskId: string;
 
@@ -98,70 +92,49 @@ export class StartTaskCloudComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.field = new FormFieldModel(new FormModel(), {id: this.assigneeId, value: this.assigneeId, placeholder: 'Assignee'});
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
-        this.loadFormsTask();
+        this.loadUsers();
         this.buildForm();
     }
 
     buildForm() {
         this.taskForm = this.formBuilder.group({
-            taskModelName: new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxTaskNameLength)]),
-            taskModelDescription: new FormControl(''),
-            taskModelFormKey: new FormControl('')
+            name: new FormControl(this.defaultTaskName, [Validators.required, Validators.maxLength(this.maxTaskNameLength)]),
+            description: '',
+            dueDate: '',
+            assignee: ''
         });
-
-        this.taskForm.valueChanges
-            .subscribe(taskFormData => {
-                if (this.isFormValid()) {
-                    this.setTaskDetailsModel(taskFormData);
-                }
-       });
     }
 
     isFormValid() {
         return this.taskForm && this.taskForm.valid;
     }
 
-    setTaskDetailsModel(taskFormData: any) {
-        this.taskDetailsModel.name = taskFormData.taskModelName;
-        this.taskDetailsModel.description = taskFormData.taskModelDescription;
-        this.formKey = taskFormData.taskModelFormKey;
-
-        this.taskDetailsModel.formKey = taskFormData.taskModelFormKey;
-    }
-
     public saveTask(): void {
+        let newTask = new TaskDetailsCloudModel(this.taskForm.value);
         if (this.runtimeBundle) {
-            this.taskDetailsModel.appName = this.runtimeBundle;
-        }
-        if (!this.taskDetailsModel.name) {
-            this.taskDetailsModel.name = this.name;
+            newTask.appName = this.runtimeBundle;
         }
 
-        this.taskService.createNewTask(this.taskDetailsModel)
-                .subscribe(
-                    (res: any) => {
-                        this.success.emit(res);
-                    },
-                    (err) => {
-                        this.error.emit(err);
-                        this.logService.error('An error occurred while creating new task');
-                    });
-    }
-
-    getAssigneeId(userId) {
-        this.assigneeId = userId;
+        this.taskService.createNewTask(newTask)
+            .subscribe(
+                (res: any) => {
+                    this.success.emit(res);
+                },
+                (err) => {
+                    this.error.emit(err);
+                    this.logService.error('An error occurred while creating new task');
+            });
     }
 
     public onCancel(): void {
         this.cancel.emit();
     }
 
-    private loadFormsTask(): void {
-        this.forms$ = of([]);
+    private loadUsers(): void {
+        this.users$ = this.taskService.getUsers();
     }
 
     public isUserNameEmpty(user: UserProcessModel): boolean {
@@ -170,12 +143,6 @@ export class StartTaskCloudComponent implements OnInit {
 
     private isEmpty(data: string): boolean {
         return data === undefined || data === null || data.trim().length === 0;
-    }
-
-    public getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {
-        firstName = (firstName !== null ? firstName : '');
-        lastName = (lastName !== null ? lastName : '');
-        return firstName + delimiter + lastName;
     }
 
     onDateChanged(newDateValue): void {
@@ -189,8 +156,8 @@ export class StartTaskCloudComponent implements OnInit {
         }
     }
 
-    get taskNameController(): AbstractControl {
-        return this.taskForm.get('taskModelName');
+    get nameController(): AbstractControl {
+        return this.taskForm.get('name');
     }
 
 }
