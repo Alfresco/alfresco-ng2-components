@@ -135,13 +135,15 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     }
 
     private _filter(value: string): ProcessDefinitionRepresentation[] {
-        const filterValue = value.toLowerCase();
-        let filteredProcess = this.processDefinitions.filter(option => option.name.toLowerCase().includes(filterValue));
+        if (value !== null && value !== undefined) {
+            const filterValue = value.toLowerCase();
+            let filteredProcess = this.processDefinitions.filter(option => option.name.toLowerCase().includes(filterValue));
 
-        if (this.processFilterSelector) {
-            this.selectedProcessDef = this.getSelectedProcess(filterValue);
+            if (this.processFilterSelector) {
+                this.selectedProcessDef = this.getSelectedProcess(filterValue);
+            }
+            return filteredProcess;
         }
-        return filteredProcess;
     }
 
     getSelectedProcess(selectedProcess) {
@@ -162,7 +164,10 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
                 this.processDefinitions = processDefinitionRepresentations;
 
                 if (!this.isProcessDefinitionsEmpty()) {
-                    this.selectedProcessDef = this.processDefinitions[0];
+
+                    if (this.processDefinitions.length == 1) {
+                        this.selectedProcessDef = this.processDefinitions[0];
+                    }
 
                     if (this.processDefinitionName) {
                         let selectedProcess = this.processDefinitions.find((currentProcessDefinition) => {
