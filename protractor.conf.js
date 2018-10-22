@@ -56,9 +56,7 @@ exports.config = {
 
     capabilities: {
         browserName: 'chrome',
-
-        shardTestFiles: true,
-        maxInstances: 1,
+        
         chromeOptions: {
             prefs: {
                 'credentials_enable_service': false,
