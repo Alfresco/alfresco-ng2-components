@@ -25,7 +25,9 @@ import { NodePermissionService } from './node-permission.service';
 import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
 import { switchMap } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class NodePermissionDialogService {
 
     constructor(private dialog: MatDialog,

@@ -31,7 +31,9 @@ import {
 import { EcmModelService } from './ecm-model.service';
 import { map, catchError, switchMap, combineAll, defaultIfEmpty } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class FormService {
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';

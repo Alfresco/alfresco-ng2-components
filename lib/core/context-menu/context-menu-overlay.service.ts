@@ -29,7 +29,9 @@ const DEFAULT_CONFIG: ContextMenuOverlayConfig = {
     hasBackdrop: true
 };
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ContextMenuOverlayService {
 
     constructor( private injector: Injector, private overlay: Overlay) { }

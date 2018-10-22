@@ -24,7 +24,9 @@ import {
 import * as alfrescoApi from 'alfresco-js-api';
 /* tslint:disable:adf-file-name */
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ExternalAlfrescoApiService {
 
     protected alfrescoApi: AlfrescoApi;

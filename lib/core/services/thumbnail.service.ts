@@ -20,7 +20,9 @@ import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ContentService } from './content.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ThumbnailService {
 
     DEFAULT_ICON: string = './assets/images/ft_ic_miscellaneous.svg';

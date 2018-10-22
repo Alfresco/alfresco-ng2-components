@@ -24,7 +24,9 @@ import { CardViewBoolItemComponent } from '../components/card-view-boolitem/card
 import { CardViewKeyValuePairsItemComponent } from '../components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component';
 import { DynamicComponentMapper, DynamicComponentResolveFunction, DynamicComponentResolver } from '../../services/dynamic-component-mapper.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class CardItemTypeService extends DynamicComponentMapper {
 
     protected defaultValue: Type<{}> = CardViewTextItemComponent;

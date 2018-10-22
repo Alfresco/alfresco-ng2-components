@@ -29,7 +29,9 @@ import { HttpHeaders } from '@angular/common/http';
 const REMEMBER_ME_COOKIE_KEY = 'ALFRESCO_REMEMBER_ME';
 const REMEMBER_ME_UNTIL = 1000 * 60 * 60 * 24 * 30;
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthenticationService {
     private redirectUrl: RedirectionModel = null;
 

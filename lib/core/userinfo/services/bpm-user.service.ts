@@ -28,7 +28,9 @@ import { map, catchError } from 'rxjs/operators';
  * BPMUserService retrieve all the information of an Ecm user.
  *
  */
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class BpmUserService {
 
     constructor(private apiService: AlfrescoApiService,

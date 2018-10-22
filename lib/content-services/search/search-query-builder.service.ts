@@ -28,7 +28,9 @@ import { SearchSortingDefinition } from './search-sorting-definition.interface';
 import { FacetField } from './facet-field.interface';
 import { FacetFieldBucket } from './facet-field-bucket.interface';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class SearchQueryBuilderService {
 
     private _userQuery = '';

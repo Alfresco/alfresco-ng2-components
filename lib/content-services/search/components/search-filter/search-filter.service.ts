@@ -23,7 +23,9 @@ import { SearchNumberRangeComponent } from '../search-number-range/search-number
 import { SearchCheckListComponent } from '../search-check-list/search-check-list.component';
 import { SearchDateRangeComponent } from '../search-date-range/search-date-range.component';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class SearchFilterService {
 
     /**

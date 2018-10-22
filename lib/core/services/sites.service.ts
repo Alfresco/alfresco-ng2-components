@@ -22,7 +22,9 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { SitePaging, SiteEntry } from 'alfresco-js-api';
 import { catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class SitesService {
 
     constructor(

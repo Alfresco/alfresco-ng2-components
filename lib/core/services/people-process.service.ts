@@ -23,7 +23,9 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
 import { catchError, map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PeopleProcessService {
 
     constructor(private alfrescoJsApi: AlfrescoApiService,

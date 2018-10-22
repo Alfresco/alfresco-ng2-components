@@ -23,7 +23,9 @@ import { Observable } from 'rxjs';
 /**
  * Internal service used by ContentNodeSelector component.
  */
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ContentNodeSelectorService {
 
     constructor(private searchService: SearchService) {

@@ -25,7 +25,9 @@ import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DocumentActionsService {
 
     permissionEvent: Subject<PermissionModel> = new Subject<PermissionModel>();

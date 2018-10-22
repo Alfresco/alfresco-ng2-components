@@ -24,7 +24,9 @@ import { ExternalContent } from '../components/widgets/core/external-content';
 import { ExternalContentLink } from '../components/widgets/core/external-content-link';
 import { map, catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ActivitiContentService {
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';

@@ -26,7 +26,9 @@ import { AuthenticationService } from './authentication.service';
 import { LogService } from './log.service';
 import { catchError, tap } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ContentService {
 
     private saveData: Function;

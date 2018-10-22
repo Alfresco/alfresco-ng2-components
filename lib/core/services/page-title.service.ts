@@ -20,7 +20,9 @@ import { Title } from '@angular/platform-browser';
 import { AppConfigService } from '../app-config/app-config.service';
 import { TranslationService } from './translation.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PageTitleService {
 
     private originalTitle: string = '';

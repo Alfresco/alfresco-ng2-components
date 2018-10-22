@@ -36,7 +36,9 @@ export function transformKeyToObject(key: string, value): Object {
     }, value);
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class CardViewUpdateService {
 
     // Observable sources

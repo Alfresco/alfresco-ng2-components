@@ -20,7 +20,9 @@ import { AppConfigService, AppConfigValues } from '../app-config/app-config.serv
 import { LogService } from './log.service';
 import { StorageService } from './storage.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class SettingsService {
 
     constructor(private appConfig: AppConfigService,

@@ -21,7 +21,9 @@ import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TagPaging } from 'alfresco-js-api';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class TagService {
 
     /** Emitted when tag information is updated. */

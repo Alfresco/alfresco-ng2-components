@@ -23,7 +23,9 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
 import { map, catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class CommentProcessService {
 
     constructor(private apiService: AlfrescoApiService,

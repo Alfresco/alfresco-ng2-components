@@ -22,7 +22,9 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { SearchConfigurationService } from './search-configuration.service';
 import { catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class SearchService {
 
     dataLoaded: Subject<NodePaging> = new Subject();

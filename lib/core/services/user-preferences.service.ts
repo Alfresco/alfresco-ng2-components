@@ -28,7 +28,9 @@ export enum UserPreferenceValues {
     SupportedPageSizes = 'supportedPageSizes'
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class UserPreferencesService {
 
     defaults = {

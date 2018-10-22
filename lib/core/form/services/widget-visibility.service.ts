@@ -25,7 +25,9 @@ import { TaskProcessVariableModel } from '../models/task-process-variable.model'
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { map, catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class WidgetVisibilityService {
 
     private processVarList: TaskProcessVariableModel[];

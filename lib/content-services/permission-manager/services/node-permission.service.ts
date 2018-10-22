@@ -21,7 +21,9 @@ import { AlfrescoApiService, SearchService, NodesApiService, TranslationService 
 import { QueryBody, MinimalNodeEntryEntity, MinimalNodeEntity, PathElement, GroupMemberEntry, GroupsPaging, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
 import { switchMap, map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class NodePermissionService {
 
     constructor(private apiService: AlfrescoApiService,

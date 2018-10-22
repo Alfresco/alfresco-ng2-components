@@ -24,7 +24,9 @@ import { PermissionModel } from '../models/permissions.model';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class FolderActionsService {
 
     permissionEvent: Subject<PermissionModel> = new Subject<PermissionModel>();
