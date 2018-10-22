@@ -112,6 +112,27 @@ exports.Files = {
         }
     },
 
+    FORM_ADF: {
+        file_location: "/resources/apps/Test-ADF.zip",
+        title: "Test App",
+        formName: "test-1",
+        form_fields: {
+            text_id: "label",
+            displaytext_id: "label1",
+            displayvalue_id: "labeldisplayusingvariable"
+        }
+    },
+
+    FILE_FORM_ADF: {
+        file_location: "/resources/apps/App_file_form.zip",
+        attached_file: "generatedDocument.docx",
+        title: "ADF-180-test",
+        formName: "ADF-180-test",
+        form_fields: {
+            container_id: "1504783671016"
+        }
+    },
+
     WIDGET_CHECK_APP: {
 
         file_location: "/resources/apps/WidgetApps.zip",
@@ -184,7 +205,10 @@ exports.Files = {
             FIELD: {
                 general_dropdown: "dropdown",
                 dropdown_visible: "dropdownvisibility",
-                checkbox_id: "clickcheckbox"
+                checkbox_id: "clickcheckbox",
+                option_0: "empty",
+                option_1: "option_1",
+                option_2: "option_2"
             }
         },
 
@@ -217,6 +241,50 @@ exports.Files = {
                 radio_buttons_id: "RockFM",
                 checkbox_id: "Dollars"
             }
+        },
+
+        HYPERLINK: {
+            formName: "HyperlinkProcess",
+            title: "HyperlinkProcess",
+            processName: "HyperlinkProcess",
+            FIELD: {
+                hyperlink_id: "hyperlink_automation",
+                checkbox_id: "check"
+            }
+        },
+
+        DYNAMIC_TABLE: {
+            formName: "DynamicTableProcess",
+            title: "DynamicTableProcess",
+            processName: "DynamicTableProcess",
+            FIELD: {
+                dynamic_table_age_id: "label2",
+                dynamic_table_date_id: "label",
+                checkbox_id: "viewtable",
+                datatime_input_id: "datetime",
+                row: "label-row-0"
+
+            }
+        },
+
+        HEADER: {
+            formName: "HeaderProcess",
+            title: "HeaderProcess",
+            processName: "HeaderProcess",
+            FIELD: {
+                header_id: "Happy",
+                checkbox_id: "check"
+            }
+        },
+
+        ATTACH_FOLDER: {
+            formName: "UploadFolderProcess",
+            title: "UploadFolderProcess",
+            processName: "UploadFolderProcess",
+            FIELD: {
+                checkbox_id: "check",
+                upload_button_id: "Upload"
+            }
         }
     },
 
@@ -225,17 +293,6 @@ exports.Files = {
         title: "Dynamic Table App",
         formName: "Dynamic Table App",
         process_se_name: "DynamicTableProcess"
-    },
-
-    FORM_ADF: {
-        file_location: "/resources/apps/Test-ADF.zip",
-        title: "Test App",
-        formName: "test-1",
-        form_fields: {
-            text_id: "label",
-            displaytext_id: "field-label1-container",
-            displayvalue_id: "labeldisplayusingvariable"
-        }
     },
 
     ADF_DOCUMENTS: {

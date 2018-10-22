@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, protractor } from 'protractor';
 import Util = require('../../../../util/util');
 import FormFields = require('../formFields');
 
@@ -23,29 +23,6 @@ export class Amount {
 
     currency = by.css('span[class="adf-amount-widget__prefix-spacing"]');
 
-    // amountWidgetLabel11 = element(by.id('field-label11-container'));
-    // amountWidgetInput = element(by.css('div[id="field-label11-container"] input[id="label11"]'));
-
-    // checkLabel11IsDisplayed() {
-    //     return Util.waitUntilElementIsVisible(this.amountWidgetLabel11);
-    // }
-
-    // addIntoAmountWidget(input) {
-    //     Util.waitUntilElementIsVisible(this.amountWidgetLabel11);
-    //     this.amountWidgetInput.click();
-    //     this.amountWidgetInput.sendKeys(input);
-    //     return this.amountWidgetInput.sendKeys(protractor.Key.ENTER);
-    // }
-
-    // removeFromAmountWidget() {
-    //     Util.waitUntilElementIsVisible(this.amountWidgetLabel11);
-
-    //     this.amountWidgetInput.getAttribute('value').then((result) => {
-    //         for (let i = result.length; i >= 0; i--) {
-    //             this.amountWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
-    //         }
-    //     });
-    // }
 
     formFields = new FormFields();
 
@@ -61,6 +38,17 @@ export class Amount {
 
     setFieldValue(fieldId, value) {
         return this.formFields.setValueInInputById(fieldId, value);
+    }
+
+    removeFromAmountWidget(fieldId) {
+        Util.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
+
+        let amountWidgetInput = element(by.id(fieldId));
+        amountWidgetInput.getAttribute('value').then((result) => {
+            for (let i = result.length; i >= 0; i--) {
+                amountWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
+            }
+        });
     }
 
     clearFieldValue(fieldId) {

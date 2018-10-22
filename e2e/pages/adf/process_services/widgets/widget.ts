@@ -31,6 +31,8 @@ import { DateTime } from './dateTime';
 import { People } from './people';
 import { NumberWidget } from './number';
 import { Amount } from './amount';
+import { Container } from './container';
+import { People } from './people';
 
 export class Widget {
 
@@ -96,6 +98,14 @@ export class Widget {
 
     amountWidget() {
         return new Amount();
+    }
+
+    containerWidget() {
+        return new Container();
+    }
+
+    peopleWidget() {
+        return new People();
     }
 
     peopleWidget() {

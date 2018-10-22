@@ -85,8 +85,8 @@ describe('Form Component', () => {
     });
 
     it('[C286505] Should be able to display errors under the Error Log section', () => {
-        numberWidget.checkLabel4IsDisplayed();
-        numberWidget.addIntoNumberWidget(message.test);
+        numberWidget.getNumberFieldLabel(fields.numberWidgetId);
+        numberWidget.setFieldValue(fields.numberWidgetId, message.test);
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
         formPage.checkErrorLogMessage(message.errorLogNumber);
 
@@ -96,16 +96,16 @@ describe('Form Component', () => {
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningDate);
         formPage.checkErrorLogMessage(message.errorLogDate);
 
-        amountWidget.checkLabel11IsDisplayed();
-        amountWidget.addIntoAmountWidget(message.test);
+        amountWidget.getAmountFieldLabel(fields.amountWidgetId);
+        amountWidget.setFieldValue(fields.amountWidgetId, message.test);
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
         formPage.checkErrorLogMessage(message.errorLogAmount);
 
-        amountWidget.removeFromAmountWidget();
+        amountWidget.removeFromAmountWidget(fields.amountWidgetId);
         formPage.checkErrorMessageIsNotDisplayed(message.errorLogAmount);
 
         dateWidget.clearDateInput(fields.dateWidgetId);
-        numberWidget.removeFromNumberWidget();
+        numberWidget.clearFieldValue(fields.numberWidgetId);
         formPage.checkErrorMessageForWidgetIsNotDisplayed(message.warningDate);
         formPage.checkErrorMessageIsNotDisplayed(message.errorLogDate);
         formPage.checkErrorLogMessage(message.errorLabel);

@@ -16,7 +16,8 @@
  */
 
 import FormFields = require('../formFields');
-import { by } from 'protractor';
+import { by, element } from 'protractor';
+import Util = require('../../../../util/util');
 
 export class Hyperlink {
 
@@ -28,4 +29,9 @@ export class Hyperlink {
         return this.formFields.getFieldText(fieldId, this.fieldLocator);
     }
 
+    getFieldLabel(fieldId) {
+        let label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
+        Util.waitUntilElementIsVisible(label);
+        return label.getText();
+    }
 }

@@ -23,6 +23,7 @@ import {  TaskDetailsPage } from './taskDetailsPage';
 import FiltersPage = require('./filtersPage');
 import ChecklistDialog = require('./dialog/createChecklistDialog');
 import TasksListPage = require('./tasksListPage');
+import { element, by } from 'protractor';
 
 import { element, by } from 'protractor';
 

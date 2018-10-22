@@ -38,6 +38,7 @@ export class FormFieldTypes {
     static AMOUNT: string = 'amount';
     static DOCUMENT: string = 'document';
     static DATETIME: string = 'datetime';
+    static ATTACH_FOLDER: string = 'select-folder';
 
     static READONLY_TYPES: string[] = [
         FormFieldTypes.HYPERLINK,

@@ -15,26 +15,52 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import FormFields = require('../formFields');
 import Util = require('../../../../util/util');
+import { by, element } from 'protractor';
 
 export class People {
 
-    peopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
-    firstResult = element(by.id('adf-people-widget-user-0'));
+    formFields = new FormFields();
+    labelLocator = by.css('div[class*="display-text-widget"]');
+    inputLocator = by.id('involvepeople');
+    peopleDropDownList = by.css('div[class*="adf-people-widget-list"]');
+    userProfileImage = by.css('div[class*="adf-people-widget-pic"');
+    userProfileName = by.css('div[class*="adf-people-label-name"');
 
-    checkPeopleFieldIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.peopleField);
+    getFieldLabel(fieldId) {
+        return this.formFields.getFieldLabel(fieldId, this.labelLocator);
     }
 
-    fillPeopleField(value) {
-        Util.waitUntilElementIsClickable(this.peopleField);
-        return this.peopleField.sendKeys(value);
+    getFieldValue(fieldId) {
+        return this.formFields.getFieldValue(fieldId, this.inputLocator);
     }
 
-    selectUserFromDropdown() {
-        Util.waitUntilElementIsVisible(this.firstResult);
-        return this.firstResult.click();
+    getFieldText(fieldId) {
+        return this.formFields.getFieldText(fieldId, this.labelLocator);
     }
 
-}
+    insertUser(value) {
+        return this.formFields.setFieldValue(by.id, 'involvepeople', value);
+    }
+
+    checkDropDownListIsDisplayed() {
+        return Util.waitUntilElementIsVisible(element(this.peopleDropDownList));
+    }
+
+    checkUserIsListed(userName) {
+        let user = element(by.cssContainingText('.adf-people-label-name', userName));
+        return Util.waitUntilElementIsVisible(user);
+    }
+
+    checkUserNotListed(userName) {
+        let user = element(by.xpath('div[text()="' + userName + '"]'));
+        return Util.waitUntilElementIsNotVisible(user);
+    }
+
+    selectUserFromDropDown(userName) {
+        let user = element(by.cssContainingText('.adf-people-label-name', userName));
+        user.click();
+        return this;
+    }
+

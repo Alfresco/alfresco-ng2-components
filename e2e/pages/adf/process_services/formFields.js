@@ -157,7 +157,7 @@ var FormFields = function () {
     this.setValueInInputById = function(fieldId, value) {
         let input = element(by.id(fieldId));
         Util.waitUntilElementIsVisible(input);
-        input.sendKeys(value);
+        input.clear().sendKeys(value);
         return this;
     }
 

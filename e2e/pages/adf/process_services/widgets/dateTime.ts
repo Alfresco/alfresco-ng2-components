@@ -37,7 +37,7 @@ export class DateTime {
         return label.getText();
     }
 
-    setDateInput(fieldId, value) {
+    setDateTimeInput(fieldId, value) {
         return this.formFields.setValueInInputById(fieldId, value);
     }
 
@@ -57,5 +57,33 @@ export class DateTime {
         let errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
         Util.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
+    }
+
+    selectDay(day) {
+        let selectedDay = element(by.cssContainingText('div[class*="mat-datetimepicker-calendar-body-cell-content"]', day));
+        Util.waitUntilElementIsVisible(selectedDay);
+        return selectedDay.click();
+    }
+
+    openDatepicker(fieldId) {
+        return element(by.id(fieldId)).click();
+    }
+
+    private selectTime(time) {
+        let selectedTime = element(by.cssContainingText('div[class*="mat-datetimepicker-clock-cell"]', time));
+        Util.waitUntilElementIsVisible(selectedTime);
+        return selectedTime.click();
+    }
+
+    selectHour(hour) {
+        return this.selectTime(hour);
+    }
+
+    selectMinute(minute) {
+        return this.selectTime(minute);
+    }
+
+    getPlaceholder(fieldId) {
+        return this.formFields.getFieldPlaceHolder(fieldId);
     }
 }

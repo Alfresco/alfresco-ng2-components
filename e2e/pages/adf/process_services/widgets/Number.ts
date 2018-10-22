@@ -21,30 +21,6 @@ import FormFields = require('../formFields');
 
 export class NumberWidget {
 
-    // numberWidgetLabel4 = element(by.id('field-label4-container'));
-    // numberWidgetInput = element(by.css('div[id="field-label4-container"] input[id="label4"]'));
-
-    // checkLabel4IsDisplayed() {
-    //     return Util.waitUntilElementIsVisible(this.numberWidgetLabel4);
-    // }
-
-    // addIntoNumberWidget(input) {
-    //     Util.waitUntilElementIsVisible(this.numberWidgetLabel4);
-    //     this.numberWidgetInput.click();
-    //     this.numberWidgetInput.sendKeys(input);
-    //     return this.numberWidgetInput.sendKeys(protractor.Key.ENTER);
-    // }
-
-    // removeFromNumberWidget() {
-    //     Util.waitUntilElementIsVisible(this.numberWidgetLabel4);
-
-    //     this.numberWidgetInput.getAttribute('value').then((result) => {
-    //         for (let i = result.length; i >= 0; i--) {
-    //             this.numberWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
-    //         }
-    //     });
-    // }
-
     formFields = new FormFields();
 
     getNumberFieldLabel(fieldId) {
