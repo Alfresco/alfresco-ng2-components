@@ -40,7 +40,9 @@ import {
     DateTimeWidgetComponent
 } from './../components/widgets/index';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class FormRenderingService extends DynamicComponentMapper {
 
     protected defaultValue: Type<{}> = UnknownWidgetComponent;

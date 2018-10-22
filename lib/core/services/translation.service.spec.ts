@@ -22,11 +22,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { TranslateLoaderService } from './translate-loader.service';
 import { TRANSLATION_PROVIDER, TranslationService } from './translation.service';
-import { LogService } from './log.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AppConfigServiceMock } from '../mock/app-config.service.mock';
-import { UserPreferencesService } from './user-preferences.service';
-import { StorageService } from './storage.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 
@@ -49,11 +46,7 @@ describe('TranslationService', () => {
             ],
             providers: [
                 { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-                LogService,
                 { provide: AppConfigService, useClass: AppConfigServiceMock },
-                UserPreferencesService,
-                StorageService,
-                TranslationService,
                 {
                     provide: TRANSLATION_PROVIDER,
                     multi: true,

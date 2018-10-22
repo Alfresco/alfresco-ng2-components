@@ -25,7 +25,9 @@ import { MinimalNodeEntity, MinimalNodeEntryEntity,  NodeEntry, NodePaging } fro
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DocumentListService {
 
     static ROOT_ID = '-root-';

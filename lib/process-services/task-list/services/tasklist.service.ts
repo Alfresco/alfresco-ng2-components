@@ -24,7 +24,9 @@ import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListModel } from '../models/task-list.model';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class TaskListService {
 
     constructor(private apiService: AlfrescoApiService,

@@ -21,7 +21,9 @@ import { Subject, Observable } from 'rxjs';
 import { LoginDialogComponent } from '../login/components/login-dialog.component';
 import { LoginDialogComponentData } from '../login/components/login-dialog-component-data.interface';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class LoginDialogService {
 
     constructor(private dialog: MatDialog) {

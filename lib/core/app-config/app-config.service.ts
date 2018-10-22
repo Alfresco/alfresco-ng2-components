@@ -37,7 +37,9 @@ export enum AppConfigValues {
     DISABLECSRF = 'disableCSRF'
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AppConfigService {
 
     config: any = {

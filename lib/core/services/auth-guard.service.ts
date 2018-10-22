@@ -25,7 +25,9 @@ import { Observable } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthGuard implements CanActivate, CanActivateChild {
     constructor(private authService: AuthenticationService,
                 private router: Router,

@@ -21,7 +21,9 @@ import { AppConfigService, AppConfigValues } from '../app-config/app-config.serv
 import { AuthenticationService } from './authentication.service';
 import { OauthConfigModel } from '../models/oauth-config.model';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthGuardBpm implements CanActivate, CanActivateChild {
     constructor(private authService: AuthenticationService, private router: Router, private appConfig: AppConfigService) {}
 

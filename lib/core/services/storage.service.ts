@@ -17,7 +17,9 @@
 
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class StorageService {
 
     private memoryStore: { [key: string]: any } = {};

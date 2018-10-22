@@ -15,11 +15,16 @@
  * limitations under the License.
  */
 
+import { Injectable } from '@angular/core';
+
 export interface HightlightTransformResult {
     text: string;
     changed: boolean;
 }
 
+@Injectable({
+    providedIn: 'root'
+})
 export class HighlightTransformService {
 
     /**

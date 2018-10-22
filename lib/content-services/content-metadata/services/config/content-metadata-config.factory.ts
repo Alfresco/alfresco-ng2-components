@@ -28,7 +28,9 @@ import {
     LayoutOrientedConfig
 } from '../../interfaces/content-metadata.interfaces';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ContentMetadataConfigFactory {
 
     static readonly INDIFFERENT_PRESET = '*';

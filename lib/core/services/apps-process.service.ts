@@ -22,7 +22,9 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
 import { map, catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AppsProcessService {
 
     constructor(private apiService: AlfrescoApiService,

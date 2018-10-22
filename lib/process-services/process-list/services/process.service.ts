@@ -28,7 +28,9 @@ import { map, catchError } from 'rxjs/operators';
 
 declare let moment: any;
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ProcessService {
 
     constructor(private alfrescoApiService: AlfrescoApiService) {

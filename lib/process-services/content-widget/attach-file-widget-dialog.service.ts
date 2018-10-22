@@ -22,7 +22,9 @@ import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AttachFileWidgetDialogService {
 
     /** Emitted when an error occurs. */

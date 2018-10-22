@@ -39,7 +39,9 @@ const D_FLOAT = 'd:float';
 const D_DOUBLE = 'd:double';
 const D_BOOLEAN = 'd:boolean';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PropertyGroupTranslatorService {
 
     static readonly RECOGNISED_ECM_TYPES = [ D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT, D_LONG , D_FLOAT, D_DOUBLE, D_BOOLEAN ];
