@@ -30,7 +30,7 @@ export class ProcessServicesCloudComponent implements OnInit {
     this.showStartTask = true;
   }
 
-  onStartTaskSuccess(event: any) {
+    onStartTaskSuccess(event: any) {
     this.showStartTask = false;
     this.showResponse = true;
     this.createdTaskDetails = event;

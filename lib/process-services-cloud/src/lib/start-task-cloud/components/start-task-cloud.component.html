@@ -6,7 +6,7 @@
     </mat-grid-list>
     <mat-card-content>
         <div class="adf-cloud-start-task-layout-card-content">
-            <form [formGroup]="taskModelForm" class="adf-cloud-start-task-form">
+            <form [formGroup]="taskForm" class="adf-cloud-start-task-form">
                 <div class="adf-grid-full-width adf-grid-row">
                     <mat-form-field class="adf-grid-full-width adf-grid-column">
                         <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME' | translate}}</mat-label>
@@ -14,10 +14,10 @@
                             class="adf-grid-full-width"
                             id="name_id"
                             formControlName="taskModelName">
-                                    <mat-error *ngIf="taskName.hasError('required')">
+                                    <mat-error *ngIf="taskNameController.hasError('required')">
                                         {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.REQUIRED' | translate }}
                                     </mat-error>
-                                    <mat-error *ngIf="taskName.hasError('maxlength')">
+                                    <mat-error *ngIf="taskNameController.hasError('maxlength')">
                                         {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxTaskNameLength } }}
                                     </mat-error>
                     </mat-form-field>

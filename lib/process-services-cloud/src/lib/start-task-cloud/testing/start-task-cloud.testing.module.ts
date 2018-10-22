@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MaterialModule } from '../material.module';
+import { MaterialModule } from '../../material.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TemplateModule, TranslateLoaderService, FormModule } from '@alfresco/adf-core';
-import { StartTaskCloudComponent } from './components/start-task-cloud.component';
-import { StartTaskCloudService } from './services/start-task-cloud.service';
+// import { CoreModule } from '@alfresco/adf-core';
+import { StartTaskCloudComponent } from '../components/start-task-cloud.component';
+import { StartTaskCloudService } from '../services/start-task-cloud.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -32,4 +33,4 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         StartTaskCloudComponent
     ]
 })
-export class StartTaskCloudModule { }
+export class StartTaskCloudTestingModule { }
