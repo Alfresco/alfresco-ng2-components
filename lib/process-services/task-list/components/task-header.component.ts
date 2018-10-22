@@ -133,24 +133,10 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                     key: 'created'
                 }
             ),
-            new CardViewDateItemModel(
-                {
-                    label: 'ADF_TASK_LIST.PROPERTIES.END_DATE',
-                    value: this.taskDetails.endDate,
-                    key: 'endDate'
-                }
-            ),
-            new CardViewTextItemModel(
-                {
-                    label: 'ADF_TASK_LIST.PROPERTIES.PARENT_NAME',
-                    value: this.taskDetails.parentName,
-                    key: 'parentName'
-                }
-            ),
             new CardViewTextItemModel(
                 {
                     label: 'ADF_TASK_LIST.PROPERTIES.DURATION',
-                    value: `${this.taskDetails.duration} ms`,
+                    value: this.getTaskDuration(),
                     key: 'duration'
                 }
             ),
@@ -312,5 +298,9 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
      */
     isCompleted(): boolean {
         return this.taskDetails && !!this.taskDetails.endDate;
+    }
+
+    getTaskDuration(): string {
+        return this.taskDetails.duration ? `${this.taskDetails.duration} ms` : '';
     }
 }
