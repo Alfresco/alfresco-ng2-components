@@ -46,6 +46,23 @@ var ProcessDetailsPage = function () {
     var completedTask = element(by.css('div[data-automation-id="completed-tasks"]'));
     var taskTitle = element(by.css("h2[class='activiti-task-details__header']"));
 
+    this.checkDetailsAreDisplayed = function () {
+        Util.waitUntilElementIsVisible(processStatusField);
+        Util.waitUntilElementIsVisible(processEndDateField);
+        Util.waitUntilElementIsVisible(processCategoryField);
+        Util.waitUntilElementIsVisible(processBusinessKeyField);
+        Util.waitUntilElementIsVisible(processCreatedByField);
+        Util.waitUntilElementIsVisible(processCreatedField);
+        Util.waitUntilElementIsVisible(processIdField);
+        Util.waitUntilElementIsVisible(processDescription);
+        Util.waitUntilElementIsVisible(showDiagramButton);
+        Util.waitUntilElementIsVisible(activeTask);
+        Util.waitUntilElementIsVisible(cancelProcessButton);
+        Util.waitUntilElementIsVisible(commentInput);
+        Util.waitUntilElementIsVisible(auditLogButton);
+        return this;
+    };
+
     this.checkProcessTitleIsDisplayed = function () {
         Util.waitUntilElementIsVisible(processTitle);
         return processTitle.getText();

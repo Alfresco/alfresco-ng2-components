@@ -20,6 +20,7 @@ import ContentList = require('./dialog/contentList');
 import CreateFolderDialog = require('./dialog/createFolderDialog');
 import TestConfig = require('../../test.config');
 import { NavigationBarPage } from './navigationBarPage';
+import { by, element, protractor, $$, browser } from 'protractor';
 
 import path = require('path');
 
@@ -61,6 +62,45 @@ export class ContentServicesPage {
     copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
     searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
+
+    getElementsDisplayed() {
+        let deferred = protractor.promise.defer();
+        let fileNameLocator = by.css("div[id*='document-list-container'] div[class*='adf-datatable-row'] div[title='Display name'] span[class='adf-datatable-cell-value']");
+        Util.waitUntilElementIsVisible(element.all(fileNameLocator).first());
+        let initialList = [];
+
+        element.all(fileNameLocator).each(function (item) {
+            item.getText().then(function (text) {
+                if (text !== '') {
+                    initialList.push(text);
+                }
+            });
+        }).then(function () {
+            deferred.fulfill(initialList);
+        });
+
+        return deferred.promise;
+    }
+
+    checkElementsSortedByNameAsc(elements) {
+        browser.controlFlow().execute(async () => {
+            let numberOfElements = await this.numberOfResultsDisplayed();
+            for (let i = 0; i < (numberOfElements - 1) ; i++ ) {
+                expect(JSON.stringify(elements[i]) <= JSON.stringify(elements[i + 1])).toEqual(true);
+            }
+        });
+        return this;
+    }
+
+    checkElementsSortedByNameDesc(elements) {
+        browser.controlFlow().execute(async () => {
+            let numberOfElements = await this.numberOfResultsDisplayed();
+            for (let i = 0; i < (numberOfElements - 1) ; i++ ) {
+                expect(JSON.stringify(elements[i]) >= JSON.stringify(elements[i + 1])).toEqual(true);
+            }
+        });
+        return this;
+    }
 
     getContentList() {
         return this.contentList;
@@ -280,6 +320,13 @@ export class ContentServicesPage {
 
     checkIconColumn(file, extension) {
         this.contentList.checkIconColumn(file, extension);
+        return this;
+    }
+
+    startUploadFile(fileLocation) {
+        this.checkUploadButton();
+        Util.waitUntilElementIsVisible(this.uploadFileButton);
+        this.uploadFileButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
         return this;
     }
 

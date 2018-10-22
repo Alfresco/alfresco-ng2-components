@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
 import { browser } from 'protractor';
 
 import fs = require('fs');
