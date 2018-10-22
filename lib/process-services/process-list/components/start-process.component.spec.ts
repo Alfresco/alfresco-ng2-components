@@ -284,6 +284,16 @@ describe('StartFormComponent', () => {
             });
         }));
 
+        it('should not select automatically any processDefinition if the app contain multiple process and does not have any processDefinition as input', async(() => {
+            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
+            component.appId = 123;
+            component.ngOnChanges({});
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(component.selectedProcessDef.name).toBeNull();
+            });
+        }));
+
         describe('dropdown', () => {
 
             it('should hide the process dropdown button if showSelectProcessDropdown is false', async(() => {
