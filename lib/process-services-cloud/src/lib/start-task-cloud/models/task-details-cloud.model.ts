@@ -73,3 +73,7 @@ export class TaskDetailsCloudModel {
           }
       }
   }
+
+export interface StartTaskCloudResponseModel {
+    entry: TaskDetailsCloudModel;
+}

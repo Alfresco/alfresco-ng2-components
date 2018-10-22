@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../material.module';
@@ -11,8 +12,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
-      CommonModule,
-      TranslateModule.forRoot({
+        CommonModule,
+        NoopAnimationsModule,
+        TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
                 useClass: TranslateLoaderService

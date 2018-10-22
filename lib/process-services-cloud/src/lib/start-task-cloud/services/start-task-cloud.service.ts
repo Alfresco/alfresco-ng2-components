@@ -6,8 +6,9 @@ import {
 } from '@alfresco/adf-core';
 import { from, Observable, throwError } from 'rxjs';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
-import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
+import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../models/task-details-cloud.model';
 import { map, catchError } from 'rxjs/operators';
+import { UserCloudModel } from '../models/user-cloud.model';
 
 @Injectable()
 export class StartTaskCloudService {
@@ -30,17 +31,38 @@ export class StartTaskCloudService {
                 .oauth2Auth.callCustomApi(
                     queryUrl, httpMethod, pathParams, queryParams,
                     headerParams, formParams, bodyParam, authNames,
-                    contentTypes, accepts, [], '')
+                    contentTypes, accepts, Object, null, null)
                 ).pipe(
-                    map((response: TaskDetailsCloudModel) => {
-                        return new TaskDetailsCloudModel(response);
+                    map((response: StartTaskCloudResponseModel) => {
+                        return new TaskDetailsCloudModel(response.entry);
                     }),
                     catchError(err => this.handleError(err))
-                );
+            );
+    }
+
+    getUsers(): Observable<UserCloudModel[]> {
+        const url = this.getUserUrl();
+        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
+            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+                    url, httpMethod, pathParams, queryParams,
+                    headerParams, formParams, bodyParam, authNames,
+                    contentTypes, accepts, Object, null, null)
+                ).pipe(
+                    map((response: UserCloudModel[]) => {
+                        return response;
+                    }),
+                catchError(err => this.handleError(err))
+            );
     }
 
     private buildCreateTaskUrl(appName: string): any {
         return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/tasks`;
+    }
+
+    private getUserUrl(): any {
+        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/users`;
     }
 
     private buildRequestBody(taskDetails: any) {
