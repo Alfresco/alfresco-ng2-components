@@ -130,8 +130,10 @@
           "START": "Start",
           "CANCEL": "Cancel"
         },
-        "DATE": {
-          "ERROR": "Date format DD/MM/YYYY"
+        "ERROR": {
+          "REQUIRED": "Field required",
+          "DATE": "Date format DD/MM/YYYY",
+          "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max."
         }
       }
     },

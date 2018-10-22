@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-process-services-cloud',
@@ -14,7 +14,8 @@ export class ProcessServicesCloudComponent implements OnInit {
   showResponse = false;
 
   constructor(
-    private route: ActivatedRoute
+      private route: ActivatedRoute,
+      private router: Router
   ) { }
 
   ngOnInit() {
@@ -28,16 +29,16 @@ export class ProcessServicesCloudComponent implements OnInit {
 
   navigateStartTask() {
     this.showStartTask = true;
+    this.showResponse = false;
   }
 
-    onStartTaskSuccess(event: any) {
+ onStartTaskSuccess(event: any) {
     this.showStartTask = false;
     this.showResponse = true;
     this.createdTaskDetails = event;
-
   }
 
   onCancelStartTask() {
-    // TODO
+    this.router.navigate(['/cloud/']);
   }
 }

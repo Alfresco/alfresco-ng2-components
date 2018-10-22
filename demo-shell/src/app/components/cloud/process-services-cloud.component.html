@@ -12,16 +12,21 @@
                         </div>
                 </adf-sidebar-action-menu>
             </div>
-            <div fxFlexOrder="2" fxFlex="85%" fxFlexFill *ngIf="showStartTask">
-                <adf-cloud-start-task
+            <div fxFlexOrder="2" fxFlex="85%" fxFlexFill>
+                <adf-cloud-start-task *ngIf="showStartTask"
                     [runtimeBundle]="runtimeBundle"
                     (success)="onStartTaskSuccess($event)"
                     (cancel)="onCancelStartTask()">
                 </adf-cloud-start-task>
-            </div>
-            <div *ngIf="showResponse">
+                <div *ngIf="showResponse">
                 <h1>Created Task Details: </h1>
-                {{createdTaskDetails | json}}
+                    <p>
+                        Name: {{createdTaskDetails.name}}
+                        Description: {{createdTaskDetails.description}}
+                        DueDate: {{createdTaskDetails.dueDate}}
+                        Assignee: {{createdTaskDetails.assignee}}
+                    </p>
+                </div>
             </div>
         </div>
     </mat-tab>
