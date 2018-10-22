@@ -263,11 +263,11 @@ describe('Task Details component', () => {
 
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(checklistName).selectTaskFromTasksList(checklistName);
 
-        let tasks = await browser.controlFlow().execute(async () => {
+        let allTasks = await browser.controlFlow().execute(async () => {
             return this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
         });
 
-        let checklistTask = new TaskModel(tasks.data[0]);
+        let checklistTask = new TaskModel(allTasks.data[0]);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(checklistTask.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(checklistTask.getCreated(), TASKDATAFORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(checklistTask.getId());
