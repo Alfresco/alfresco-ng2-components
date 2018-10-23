@@ -114,8 +114,8 @@ describe('Metadata component', () => {
 
         metadataViewPage.editIconIsDisplayed();
         metadataViewPage.informationButtonIsDisplayed();
-        expect(metadataViewPage.getInformationButtonText()).toEqual(METADATA.MORE_INFO_BUTTON);
-        expect(metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_DOWN);
+        expect(metadataViewPage.getInformationButtonText()).toEqual(METADATA.LESS_INFO_BUTTON);
+        expect(metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_UP);
 
         viewerPage.clickCloseButton();
     });
@@ -127,8 +127,8 @@ describe('Metadata component', () => {
         metadataViewPage.clickOnPropertiesTab();
         metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
-        expect(metadataViewPage.getInformationButtonText()).toEqual(METADATA.LESS_INFO_BUTTON);
-        expect(metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_UP);
+        expect(metadataViewPage.getInformationButtonText()).toEqual(METADATA.MORE_INFO_BUTTON);
+        expect(metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_DOWN);
 
         viewerPage.clickCloseButton();
     });
