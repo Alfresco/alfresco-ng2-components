@@ -117,10 +117,10 @@ describe('FolderActionsService', () => {
         let folder = new FolderNode();
         let folderWithPermission: any = folder;
         folderWithPermission.entry.allowableOperations = [permission];
-        const deleteObservale = service.getHandler('delete')(folderWithPermission, null, permission);
+        const deleteObservable = service.getHandler('delete')(folderWithPermission, null, permission);
 
         expect(documentListService.deleteNode).toHaveBeenCalledWith(folder.entry.id);
-        expect(deleteObservale.subscribe).toBeDefined();
+        expect(deleteObservable.subscribe).toBeDefined();
     });
 
     it('should not delete the folder node if there is no delete permission', (done) => {

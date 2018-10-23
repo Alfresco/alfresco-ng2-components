@@ -395,7 +395,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
-            expect((component.activiticomments as any).readOnly).toBe(true);
+            expect((component.activitiComments as any).readOnly).toBe(true);
         });
 
         it('should comments be readonly if the task is complete and user are NOT involved', () => {
@@ -407,7 +407,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
-            expect((component.activiticomments as any).readOnly).toBe(true);
+            expect((component.activitiComments as any).readOnly).toBe(true);
         });
 
         it('should comments NOT be readonly if the task is NOT complete and user are NOT involved', () => {
@@ -419,7 +419,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails.endDate = null;
 
             fixture.detectChanges();
-            expect((component.activiticomments as any).readOnly).toBe(false);
+            expect((component.activitiComments as any).readOnly).toBe(false);
         });
 
         it('should comments NOT be readonly if the task is complete and user are involved', () => {
@@ -431,7 +431,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails.endDate = new Date('2017-10-03T17:03:57.311+0000');
 
             fixture.detectChanges();
-            expect((component.activiticomments as any).readOnly).toBe(false);
+            expect((component.activitiComments as any).readOnly).toBe(false);
         });
 
         it('should comments be present if showComments is true', () => {
@@ -442,7 +442,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
 
             fixture.detectChanges();
-            expect(component.activiticomments).toBeDefined();
+            expect(component.activitiComments).toBeDefined();
         });
 
         it('should comments NOT be present if showComments is false', () => {
@@ -452,7 +452,7 @@ describe('TaskDetailsComponent', () => {
             component.taskDetails = new TaskDetailsModel(taskDetailsMock);
 
             fixture.detectChanges();
-            expect(component.activiticomments).not.toBeDefined();
+            expect(component.activitiComments).not.toBeDefined();
         });
     });
 

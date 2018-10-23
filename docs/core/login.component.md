@@ -156,7 +156,7 @@ need your own custom validation:
 ```html
 <adf-login 
     [fieldsValidation]="customValidation"
-    #alfrescologin>
+    #alfrescoLogin>
 </adf-login>
 ```
 
@@ -165,8 +165,8 @@ need your own custom validation:
 ```ts
 export class MyCustomLogin {
     
-    @ViewChild('alfrescologin')
-    alfrescologin: any;
+    @ViewChild('alfrescoLogin')
+    alfrescoLogin: any;
 
     customValidation: any;
 
@@ -178,8 +178,8 @@ export class MyCustomLogin {
     }
 
     ngOnInit() {
-        this.alfrescologin.addCustomValidationError('username', 'minlength', 'Username must be at least 8 characters.');
-        this.alfrescologin.addCustomValidationError('username', 'maxlength', 'Username must not be longer than 11 characters.');
+        this.alfrescoLogin.addCustomValidationError('username', 'minlength', 'Username must be at least 8 characters.');
+        this.alfrescoLogin.addCustomValidationError('username', 'maxlength', 'Username must not be longer than 11 characters.');
     }
 }
 ```
@@ -242,7 +242,7 @@ to present a summary of validation before submitting the form.
 ```html
 <adf-login 
     (executeSubmit)="validateForm($event)" 
-    #alfrescologin>
+    #alfrescoLogin>
 </adf-login>
 ```
 
@@ -256,7 +256,7 @@ export class MyCustomLogin {
         
         // check if the username is in the blacklist
         if (values.controls['username'].value === 'invalidUsername') {
-            this.alfrescologin.addCustomFormError('username', 'the
+            this.alfrescoLogin.addCustomFormError('username', 'the
             username is in blacklist');
             event.preventDefault();
         }

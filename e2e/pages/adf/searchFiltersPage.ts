@@ -28,7 +28,7 @@ export class SearchFiltersPage {
     fileSizeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"]'));
     showMoreButtonForSize = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"] button[title="Show more"]'));
     showLessButtonForSize = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"] button[title="Show less"]'));
-    numberOfCheckboxesforSize = element.all(by.css('mat-checkbox[data-automation-id*="checkbox-SEARCH.FACET_FIELDS.SIZE"]'));
+    numberOfCheckboxesForSize = element.all(by.css('mat-checkbox[data-automation-id*="checkbox-SEARCH.FACET_FIELDS.SIZE"]'));
 
     checkSearchFiltersIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchFilters);
@@ -110,7 +110,7 @@ export class SearchFiltersPage {
         this.showMoreButtonForSize.isDisplayed().then(async (visible) => {
             if (visible) {
                 for (let checkboxes = 5; checkboxes <= totalNumberOfCheckboxes; checkboxes + 5) {
-                    let totalNumberOfCheckboxes = await numberOfCheckboxesforSize.count();
+                    let totalNumberOfCheckboxes = await numberOfCheckboxesForSize.count();
 
                     expect(totalNumberOfCheckboxes).toEqual(checkboxes);
                 }
@@ -131,7 +131,7 @@ export class SearchFiltersPage {
 
         this.showLessButtonForSize.isDisplayed().then(async (visible) => {
             if (visible) {
-                let totalNumberOfCheckboxes = await this.numberOfCheckboxesforSize.count();
+                let totalNumberOfCheckboxes = await this.numberOfCheckboxesForSize.count();
 
                 for (let checkboxes = totalNumberOfCheckboxes; checkboxes > 10; checkboxes = totalNumberOfCheckboxes - checkboxes) {
                     expect(totalNumberOfCheckboxes).toEqual(checkboxes);

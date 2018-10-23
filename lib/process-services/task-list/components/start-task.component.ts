@@ -57,7 +57,7 @@ export class StartTaskComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    startTaskmodel: StartTaskModel = new StartTaskModel();
+    startTaskModel: StartTaskModel = new StartTaskModel();
 
     forms: Form[];
 
@@ -92,11 +92,11 @@ export class StartTaskComponent implements OnInit {
     }
 
     public start(): void {
-        if (this.startTaskmodel.name) {
+        if (this.startTaskModel.name) {
             if (this.appId) {
-                this.startTaskmodel.category = this.appId.toString();
+                this.startTaskModel.category = this.appId.toString();
             }
-            this.taskService.createNewTask(new TaskDetailsModel(this.startTaskmodel))
+            this.taskService.createNewTask(new TaskDetailsModel(this.startTaskModel))
                 .pipe(
                     switchMap((createRes: any) =>
                         this.attachForm(createRes.id, this.formKey).pipe(
@@ -181,7 +181,7 @@ export class StartTaskComponent implements OnInit {
 
     clearDateInput() {
         const emptyValue = '';
-        this.startTaskmodel.dueDate = emptyValue;
+        this.startTaskModel.dueDate = emptyValue;
         this.onDateChanged(emptyValue);
     }
 }

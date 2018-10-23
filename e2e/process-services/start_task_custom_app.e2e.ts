@@ -43,7 +43,7 @@ import CONSTANTS = require('../util/constants');
 
 describe('Start Task - Custom App', () => {
 
-    let TASKDATAFORMAT = 'mmm dd yyyy';
+    let TASK_DATA_FORMAT = 'mmm dd yyyy';
 
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
@@ -98,7 +98,7 @@ describe('Start Task - Custom App', () => {
 
         taskPage
             .filtersPage()
-            .goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         taskPage
             .createNewTask()
@@ -144,7 +144,7 @@ describe('Start Task - Custom App', () => {
 
     it('[C263946] Should display information box for started task', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
             .addForm(app.formName).clickStartButton()
             .then(() => {
@@ -157,24 +157,24 @@ describe('Start Task - Custom App', () => {
                 let taskModel = new TaskModel(response.data[0]);
                 taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskModel.getName());
 
-                expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASKDATAFORMAT));
+                expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
                 expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
                 expect(taskPage.taskDetails().getDescription()).toEqual(taskModel.getDescription());
                 expect(taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
                 expect(taskPage.taskDetails().getCategory())
-                    .toEqual(taskModel.getCategory() === null ? CONSTANTS.TASKDETAILS.NO_CATEGORY : taskModel.getCategory());
+                    .toEqual(taskModel.getCategory() === null ? CONSTANTS.TASK_DETAILS.NO_CATEGORY : taskModel.getCategory());
                 expect(taskPage.taskDetails().getDueDate())
-                    .toEqual(taskModel.getDueDate() === null ? CONSTANTS.TASKDETAILS.NO_DATE : taskModel.getDueDate());
+                    .toEqual(taskModel.getDueDate() === null ? CONSTANTS.TASK_DETAILS.NO_DATE : taskModel.getDueDate());
                 expect(taskPage.taskDetails().getParentName())
-                    .toEqual(taskModel.getParentTaskName() === null ? CONSTANTS.TASKDETAILS.NO_PARENT : taskModel.getParentTaskName());
-                expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASKSTATUS.RUNNING);
+                    .toEqual(taskModel.getParentTaskName() === null ? CONSTANTS.TASK_DETAILS.NO_PARENT : taskModel.getParentTaskName());
+                expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
                 return this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response.data[0].id);
             })
             .then((response) => {
                 let formModel = new FormModel(response);
                 expect(taskPage.taskDetails().getFormName())
-                    .toEqual(formModel.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : formModel.getName());
+                    .toEqual(formModel.getName() === null ? CONSTANTS.TASK_DETAILS.NO_FORM : formModel.getName());
             });
     });
 
@@ -186,7 +186,7 @@ describe('Start Task - Custom App', () => {
 
         taskPage
             .filtersPage()
-            .goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         taskPage
             .createNewTask()
@@ -201,7 +201,7 @@ describe('Start Task - Custom App', () => {
             .formFields()
             .noFormIsDisplayed();
 
-        expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASKDETAILS.NO_FORM);
+        expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
 
     it('[C263948] Should be possible to cancel a task', () => {
@@ -211,7 +211,7 @@ describe('Start Task - Custom App', () => {
 
         taskPage
             .filtersPage()
-            .goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         taskPage
             .createNewTask()
@@ -223,13 +223,13 @@ describe('Start Task - Custom App', () => {
         taskPage.tasksListPage()
             .checkTaskIsNotDisplayedInTasksList(tasks[3]);
 
-        expect(taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASKFILTERS.MY_TASKS);
+        expect(taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
 
     it('[C263949] Should be possible to save filled form', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage()
-            .goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         taskPage.createNewTask()
             .addForm(app.formName)
@@ -268,7 +268,7 @@ describe('Start Task - Custom App', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
         taskPage
             .filtersPage()
-            .goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         taskPage
             .createNewTask()
@@ -286,7 +286,7 @@ describe('Start Task - Custom App', () => {
 
         taskPage
             .filtersPage()
-            .goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+            .goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
 
         taskPage.tasksListPage()
             .checkTaskIsDisplayedInTasksList(tasks[5])
@@ -299,7 +299,7 @@ describe('Start Task - Custom App', () => {
 
     it('Attach a file', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage
             .createNewTask()
             .addName(tasks[6])
@@ -311,7 +311,7 @@ describe('Start Task - Custom App', () => {
 
     it('[C263945] Should Information box be hidden when showHeaderContent property is set on false on custom app', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(showHeaderTask).clickStartButton();
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(showHeaderTask).selectTaskFromTasksList(showHeaderTask);
 
@@ -330,7 +330,7 @@ describe('Start Task - Custom App', () => {
 
     it('[C263950] Should be able to see Spinner loading on task list when clicking on Tasks on custom app', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[7]).clickStartButton();
 
         processServicesPage.goToProcessServices().goToTaskApp();

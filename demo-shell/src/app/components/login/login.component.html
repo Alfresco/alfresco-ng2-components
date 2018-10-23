@@ -21,16 +21,16 @@
     </p>
     <p class="toggle">
         <mat-slide-toggle
-            id="adf-toogle-show-rememberme"
+            id="adf-toggle-show-rememberme"
             [color]="'primary'"
-            (change)="toggleRemamberme()"
+            (change)="toggleRememberMe()"
             [checked]="showRememberMe">
             {{ 'LOGIN.SHOW_REMEMBERME'| translate }}
         </mat-slide-toggle>
     </p>
     <p class="toggle">
         <mat-slide-toggle
-            id="adf-toogle-show-successRoute"
+            id="adf-toggle-show-successRoute"
             [color]="'primary'"
             (change)="toggleSuccessRoute()"
             [checked]="customSuccessRoute">
@@ -50,7 +50,7 @@
 
     <p class="toggle">
         <mat-slide-toggle
-            id="adf-toogle-logo"
+            id="adf-toggle-logo"
             [color]="'primary'"
             (change)="toggleLogo()"
             [checked]="customLogoImage">
@@ -77,7 +77,7 @@
 </a>
 
 <adf-login
-    #alfrescologin
+    #alfrescoLogin
     [successRoute]="customSuccessRouteURI"
     [logoImageUrl]="customLogoImageURL"
     [fieldsValidation]="customValidation"

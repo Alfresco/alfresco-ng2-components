@@ -273,6 +273,7 @@ describe('AuthenticationService', () => {
         it('[BPM] should return an BPM ticket after the login done', (done) => {
             let disposableLogin = authService.login('fake-username', 'fake-password').subscribe((response) => {
                 expect(authService.isLoggedIn()).toBe(true);
+                // cspell: disable-next
                 expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
                 expect(authService.isBpmLoggedIn()).toBe(true);
                 disposableLogin.unsubscribe();
@@ -376,6 +377,7 @@ describe('AuthenticationService', () => {
             let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
+                // cspell: disable-next
                 expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
                 expect(authService.isBpmLoggedIn()).toBe(true);
                 expect(authService.isEcmLoggedIn()).toBe(true);
@@ -401,6 +403,7 @@ describe('AuthenticationService', () => {
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false, 'isLoggedIn');
                     expect(authService.getTicketEcm()).toBe(undefined, 'getTicketEcm');
+                    // cspell: disable-next
                     expect(authService.getTicketBpm()).toBe('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk', 'getTicketBpm');
                     expect(authService.isEcmLoggedIn()).toBe(false, 'isEcmLoggedIn');
                     disposableLogin.unsubscribe();

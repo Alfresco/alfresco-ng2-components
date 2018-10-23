@@ -333,7 +333,7 @@ describe('TaskFiltersComponent', () => {
         expect(component.getCurrentFilter()).toBe(filter);
     });
 
-    it('should load default list when appid is null', () => {
+    it('should load default list when app id is null', () => {
         spyOn(component, 'getFiltersByAppId').and.stub();
 
         let change = new SimpleChange(undefined, null, true);

@@ -110,10 +110,10 @@ describe('AddPermissionComponent', () => {
 
     it('should emit an error event when the node update fail', (done) => {
         fixture.componentInstance.selectedItems = fakeAuthorityResults;
-        spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(throwError({ error: 'errored'}));
+        spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(throwError({ error: 'err'}));
 
         fixture.componentInstance.error.subscribe((error) => {
-            expect(error.error).toBe('errored');
+            expect(error.error).toBe('err');
             done();
         });
 

@@ -117,7 +117,7 @@ describe('FolderDialogComponent', () => {
             expect(dialogRef.close).toHaveBeenCalledWith(folder);
         });
 
-        it('should emit success output event with folder when submit is succesfull', async(() => {
+        it('should emit success output event with folder when submit is successful', async(() => {
                 const folder = { data: 'folder-data' };
                 let expectedNode = null;
 

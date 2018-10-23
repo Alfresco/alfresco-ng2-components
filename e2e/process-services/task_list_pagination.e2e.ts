@@ -93,7 +93,7 @@ describe('Task List Pagination', () => {
 
     it('[C260304] Should be possible to set Items per page to 5', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.five);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + nrOfTasks);
@@ -115,13 +115,13 @@ describe('Task List Pagination', () => {
         expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
 
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
     });
 
     it('[C260303] Should be possible to set Items per page to 10', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue + ' of ' + nrOfTasks);
@@ -132,13 +132,13 @@ describe('Task List Pagination', () => {
         expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.tenValue);
 
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
     });
 
     it('[C260302] Should be possible to set Items per page to 15', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + nrOfTasks);
@@ -149,7 +149,7 @@ describe('Task List Pagination', () => {
         expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
 
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 
@@ -157,7 +157,7 @@ describe('Task List Pagination', () => {
         currentPage = 1;
         totalPages = 2;
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         taskPage.tasksListPage().waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
         taskPage.tasksListPage().waitForTableBody();

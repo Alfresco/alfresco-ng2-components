@@ -71,7 +71,7 @@ describe('PeopleSelectorComponent', () => {
             });
     });
 
-    it('should emit an event with the selected users\'s id when userSelected method is invoked', (done) => {
+    it('should emit an event with the selected users id when userSelected method is invoked', (done) => {
 
         component.peopleIdChange.subscribe((userId) => {
             expect(userId).toBe(789);

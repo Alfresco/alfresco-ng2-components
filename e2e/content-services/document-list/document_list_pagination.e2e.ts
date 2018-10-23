@@ -62,8 +62,8 @@ describe('Document List - Pagination', function () {
     beforeAll(async (done) => {
         let uploadActions = new UploadActions();
 
-        fileNames = Util.generateSeqeunceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
-        secondSetOfFiles = Util.generateSeqeunceFiles(10, secondSetNumber + 9, pagination.secondSetBase, pagination.extension);
+        fileNames = Util.generateSequenceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
+        secondSetOfFiles = Util.generateSequenceFiles(10, secondSetNumber + 9, pagination.secondSetBase, pagination.extension);
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -77,9 +77,9 @@ describe('Document List - Pagination', function () {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         let folderThreeUploadedModel = await uploadActions.uploadFolder(this.alfrescoJsApi, folderThreeModel.name, '-my-');
-        let newFolderUploadeModel = await uploadActions.uploadFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
+        let newFolderUploadedModel = await uploadActions.uploadFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
 
-        await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, newFolderUploadeModel.entry.id);
+        await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, newFolderUploadedModel.entry.id);
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderThreeUploadedModel.entry.id);
 

@@ -342,7 +342,7 @@ export class TaskListService {
     }
 
     /**
-     * Unclaims a task for the current user.
+     * Un-claims a task for the current user.
      * @param taskId ID of the task to unclaim
      * @returns Null response notifying when the operation is complete
      */

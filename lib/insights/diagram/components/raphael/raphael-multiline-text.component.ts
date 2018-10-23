@@ -78,8 +78,8 @@ export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit
         let letterWidth = textPaper.getBBox().width / text.length;
         let removedLineBreaks = text.split('\n');
         let actualRowLength = 0, formattedText = [];
-        removedLineBreaks.forEach(senteces => {
-            let words = senteces.split(' ');
+        removedLineBreaks.forEach(sentence => {
+            let words = sentence.split(' ');
             words.forEach(word => {
                 let length = word.length;
                 if (actualRowLength + (length * letterWidth) > elementWidth) {

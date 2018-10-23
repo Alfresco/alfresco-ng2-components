@@ -28,7 +28,7 @@ import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/a
 import { fakeProcessInstance, fakeProcessInstancesWithNoName } from '../../mock';
 import { ProcessService } from '../services/process.service';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { fakeProcessCutomSchema } from '../../mock';
+import { fakeProcessCustomSchema } from '../../mock';
 
 describe('ProcessInstanceListComponent', () => {
 
@@ -53,7 +53,7 @@ describe('ProcessInstanceListComponent', () => {
         getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(of(fakeProcessInstance));
         appConfig.config['adf-process-list'] = {
             'presets': {
-                'fakeProcessCutomSchema': [
+                'fakeProcessCustomSchema': [
                     {
                         'key': 'fakeName',
                         'type': 'text',
@@ -91,14 +91,14 @@ describe('ProcessInstanceListComponent', () => {
     });
 
     it('should fetch the custom schemaColumn from app.config.json', () => {
-        component.presetColumn = 'fakeProcessCutomSchema';
+        component.presetColumn = 'fakeProcessCustomSchema';
         component.ngAfterContentInit();
         fixture.detectChanges();
-        expect(component.columns).toEqual(fakeProcessCutomSchema);
+        expect(component.columns).toEqual(fakeProcessCustomSchema);
     });
 
     it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
-        component.presetColumn = 'fakeProcessCutomSchema';
+        component.presetColumn = 'fakeProcessCustomSchema';
         component.ngAfterContentInit();
         fixture.detectChanges();
         expect(component.columns).toBeDefined();

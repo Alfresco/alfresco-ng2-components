@@ -30,7 +30,7 @@ export class LogoutDirective implements OnInit {
 
     /** Enable redirect after logout */
     @Input()
-    enabelRedirect: boolean = true;
+    enableRedirect: boolean = true;
 
     constructor(private elementRef: ElementRef,
                 private renderer: Renderer2,
@@ -55,7 +55,7 @@ export class LogoutDirective implements OnInit {
     }
 
     redirectToUri() {
-        if (this.enabelRedirect) {
+        if (this.enableRedirect) {
             this.router.navigate([this.redirectUri]);
         }
     }

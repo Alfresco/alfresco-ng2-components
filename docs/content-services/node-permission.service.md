@@ -12,7 +12,7 @@ Manages role permissions for content nodes.
 
 ### Methods
 
--   **getGroupMemeberByGroupName**(groupName: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<GroupMemberPaging>`<br/>
+-   **getGroupMemberByGroupName**(groupName: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<GroupMemberPaging>`<br/>
     Gets all members related to a group name.
     -   _groupName:_ `string`  - Name of group to look for members
     -   _opts:_ `any`  - (Optional) Extra options supported by JSAPI

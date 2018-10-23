@@ -61,8 +61,8 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     @ViewChild('startDialog')
     startDialog: any;
 
-    @ViewChild('taskdetails')
-    taskdetails: any;
+    @ViewChild('taskDetails')
+    taskDetails: any;
 
     /** Emitted when a task is clicked. */
     @Output()
@@ -170,7 +170,7 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
         this.dialog.open(this.startDialog, { height: '500px', width: '700px' });
     }
 
-    closeSartDialog() {
+    closeStartDialog() {
         this.dialog.closeAll();
     }
 
@@ -179,6 +179,6 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     }
 
     onFormContentClick() {
-        this.closeSartDialog();
+        this.closeStartDialog();
     }
 }

@@ -23,7 +23,7 @@ import { DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { fakeGlobalTask, fakeCutomSchema } from '../../mock';
+import { fakeGlobalTask, fakeCustomSchema } from '../../mock';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
@@ -50,7 +50,7 @@ describe('TaskListComponent', () => {
         appConfig.config = Object.assign(appConfig.config, {
             'adf-task-list': {
                 'presets': {
-                    'fakeCutomSchema': [
+                    'fakeCustomSchema': [
                         {
                             'key': 'fakeName',
                             'type': 'text',
@@ -86,14 +86,14 @@ describe('TaskListComponent', () => {
     });
 
     it('should use the custom schemaColumn from app.config.json', () => {
-        component.presetColumn = 'fakeCutomSchema';
+        component.presetColumn = 'fakeCustomSchema';
         component.ngAfterContentInit();
         fixture.detectChanges();
-        expect(component.columns).toEqual(fakeCutomSchema);
+        expect(component.columns).toEqual(fakeCustomSchema);
     });
 
     it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
-        component.presetColumn = 'fakeCutomSchema';
+        component.presetColumn = 'fakeCustomSchema';
         fixture.detectChanges();
         expect(component.columns).toBeDefined();
         expect(component.columns.length).toEqual(2);
@@ -151,6 +151,7 @@ describe('TaskListComponent', () => {
 
     it('should return the filtered task list by processDefinitionKey', (done) => {
         let state = new SimpleChange(null, 'open', true);
+        /* cspell:disable-next-line */
         let processDefinitionKey = new SimpleChange(null, 'fakeprocess', true);
         let assignment = new SimpleChange(null, 'fake-assignee', true);
 
@@ -250,6 +251,7 @@ describe('TaskListComponent', () => {
 
     it('should return the filtered task list for all state', (done) => {
         let state = new SimpleChange(null, 'all', true);
+        /* cspell:disable-next-line */
         let processInstanceId = new SimpleChange(null, 'fakeprocessId', true);
 
         component.success.subscribe((res) => {

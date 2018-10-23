@@ -157,7 +157,7 @@ export class NodePermissionService {
 
     private getGroupMembersBySiteName(siteName: string): Observable<string[]> {
         const groupName = 'GROUP_site_' + siteName;
-        return this.getGroupMemeberByGroupName(groupName)
+        return this.getGroupMemberByGroupName(groupName)
             .pipe(
                 map((res: GroupsPaging) => {
                     let displayResult: string[] = [];
@@ -172,10 +172,10 @@ export class NodePermissionService {
     /**
      * Gets all members related to a group name.
      * @param groupName Name of group to look for members
-     * @param opts Extra options supported by JSAPI
+     * @param opts Extra options supported by JS-API
      * @returns List of members
      */
-    getGroupMemeberByGroupName(groupName: string, opts?: any): Observable<GroupMemberPaging> {
+    getGroupMemberByGroupName(groupName: string, opts?: any): Observable<GroupMemberPaging> {
         return from<GroupMemberPaging>(this.apiService.groupsApi.getGroupMembers(groupName, opts));
     }
 

@@ -46,6 +46,7 @@ describe('TimeAgoPipe', () => {
         it('should return a localised message', async(() => {
             let date = new Date();
             const transformedDate  = pipe.transform(date, 'de');
+            /* cspell:disable-next-line */
             expect(transformedDate).toBe('vor ein paar Sekunden');
         }));
     });

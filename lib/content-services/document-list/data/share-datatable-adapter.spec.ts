@@ -151,7 +151,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should generate fallback icon for a file thumbnail with missing mime type', () => {
-        spyOn(documentListService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneouse.svg`);
+        spyOn(documentListService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneous.svg`);
 
         let adapter = new ShareDataTableAdapter(documentListService, null, null);
 
@@ -167,7 +167,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should generate fallback icon for a file with no content entry', () => {
-        spyOn(documentListService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneouse.svg`);
+        spyOn(documentListService, 'getDefaultMimeTypeIcon').and.returnValue(`assets/images/ft_ic_miscellaneous.svg`);
 
         let adapter = new ShareDataTableAdapter(documentListService, null, null);
 

@@ -27,7 +27,7 @@ describe('FileUploadingDialogComponent', () => {
     let uploadService: UploadService;
     let component: FileUploadingDialogComponent;
     let emitter: EventEmitter<any>;
-    let filelist: FileModel[];
+    let fileList: FileModel[];
 
     setupTestBed({
         imports: [
@@ -48,7 +48,7 @@ describe('FileUploadingDialogComponent', () => {
         uploadService.clearQueue();
 
         emitter = new EventEmitter();
-        filelist = [
+        fileList = [
             new FileModel(<File> { name: 'fake-name', size: 10 }),
             new FileModel(<File> { name: 'fake-name2', size: 10 })
         ];
@@ -65,14 +65,14 @@ describe('FileUploadingDialogComponent', () => {
         });
 
         it('should open dialog when uploading list is not empty', () => {
-            uploadService.addToQueue(...filelist);
+            uploadService.addToQueue(...fileList);
             uploadService.uploadFilesInTheQueue(emitter);
 
             expect(component.isDialogActive).toBe(true);
         });
 
         it('should update uploading file list', () => {
-            uploadService.addToQueue(...filelist);
+            uploadService.addToQueue(...fileList);
             uploadService.uploadFilesInTheQueue(emitter);
 
             expect(component.filesUploadingList.length).toBe(2);
@@ -204,7 +204,7 @@ describe('FileUploadingDialogComponent', () => {
         });
 
         it('should reset upload queue', () => {
-            uploadService.addToQueue(...filelist);
+            uploadService.addToQueue(...fileList);
             uploadService.uploadFilesInTheQueue(emitter);
             component.close();
 

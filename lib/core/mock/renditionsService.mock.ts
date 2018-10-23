@@ -15,67 +15,98 @@
  * limitations under the License.
  */
 
-export let fakeRedition = {
-    'entry': {
-        'id': 'pdf',
-        'content': {'mimeType': 'application/pdf', 'mimeTypeName': 'Adobe PDF Document'},
-        'status': 'NOT_CREATED'
-    }
-};
-
-export let fakeReditionCreated = {
-    'entry': {
-        'id': 'pdf',
-        'content': {'mimeType': 'application/pdf', 'mimeTypeName': 'Adobe PDF Document'},
-        'status': 'CREATED'
-    }
-};
-
-export let fakeReditionsList = {
-    'list': {
-        'pagination': {
-            'count': 6,
-            'hasMoreItems': false,
-            'totalItems': 6,
-            'skipCount': 0,
-            'maxItems': 100
+export let fakeRendition = {
+    entry: {
+        id: 'pdf',
+        content: {
+            mimeType: 'application/pdf',
+            mimeTypeName: 'Adobe PDF Document'
         },
-        'entries': [{
-            'entry': {
-                'id': 'avatar',
-                'content': {'mimeType': 'image/png', 'mimeTypeName': 'PNG Image'},
-                'status': 'NOT_CREATED'
+        status: 'NOT_CREATED'
+    }
+};
+
+export let fakeRenditionCreated = {
+    entry: {
+        id: 'pdf',
+        content: {
+            mimeType: 'application/pdf',
+            mimeTypeName: 'Adobe PDF Document'
+        },
+        status: 'CREATED'
+    }
+};
+
+export let fakeRenditionsList = {
+    list: {
+        pagination: {
+            count: 6,
+            hasMoreItems: false,
+            totalItems: 6,
+            skipCount: 0,
+            maxItems: 100
+        },
+        entries: [
+            {
+                entry: {
+                    id: 'avatar',
+                    content: {
+                        mimeType: 'image/png',
+                        mimeTypeName: 'PNG Image'
+                    },
+                    status: 'NOT_CREATED'
+                }
+            },
+            {
+                entry: {
+                    id: 'avatar32',
+                    content: {
+                        mimeType: 'image/png',
+                        mimeTypeName: 'PNG Image'
+                    },
+                    status: 'NOT_CREATED'
+                }
+            },
+            {
+                entry: {
+                    id: 'doclib',
+                    content: {
+                        mimeType: 'image/png',
+                        mimeTypeName: 'PNG Image'
+                    },
+                    status: 'NOT_CREATED'
+                }
+            },
+            {
+                entry: {
+                    id: 'imgpreview',
+                    content: {
+                        mimeType: 'image/jpeg',
+                        mimeTypeName: 'JPEG Image'
+                    },
+                    status: 'NOT_CREATED'
+                }
+            },
+            {
+                entry: {
+                    id: 'medium',
+                    content: {
+                        mimeType: 'image/jpeg',
+                        mimeTypeName: 'JPEG Image'
+                    },
+                    status: 'NOT_CREATED'
+                }
+            },
+            {
+                entry: {
+                    id: 'pdf',
+                    content: {
+                        mimeType: 'application/pdf',
+                        mimeTypeName: 'Adobe PDF Document'
+                    },
+                    status: 'NOT_CREATED'
+                }
             }
-        }, {
-            'entry': {
-                'id': 'avatar32',
-                'content': {'mimeType': 'image/png', 'mimeTypeName': 'PNG Image'},
-                'status': 'NOT_CREATED'
-            }
-        }, {
-            'entry': {
-                'id': 'doclib',
-                'content': {'mimeType': 'image/png', 'mimeTypeName': 'PNG Image'},
-                'status': 'NOT_CREATED'
-            }
-        }, {
-            'entry': {
-                'id': 'imgpreview',
-                'content': {'mimeType': 'image/jpeg', 'mimeTypeName': 'JPEG Image'},
-                'status': 'NOT_CREATED'
-            }
-        }, {
-            'entry': {
-                'id': 'medium',
-                'content': {'mimeType': 'image/jpeg', 'mimeTypeName': 'JPEG Image'},
-                'status': 'NOT_CREATED'
-            }
-        }, {
-            'entry': {
-                'id': 'pdf',
-                'content': {'mimeType': 'application/pdf', 'mimeTypeName': 'Adobe PDF Document'},
-                'status': 'NOT_CREATED'
-            }
-        }]
+        ]
     }
 };

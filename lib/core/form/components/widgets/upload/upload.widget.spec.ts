@@ -301,6 +301,7 @@ describe('UploadWidgetComponent', () => {
         }));
 
         it('should show correctly the file name when is formed with French characters', async(() => {
+            // cspell: disable-next
             uploadWidgetComponent.field.value.push(fakeCreationFile('Àâæçéèêëïîôœùûüÿ.jpg', 12));
 
             fixture.detectChanges();
@@ -309,11 +310,13 @@ describe('UploadWidgetComponent', () => {
                 fixture.detectChanges();
                 let jpegElement = element.querySelector('#file-12');
                 expect(jpegElement).not.toBeNull();
+                // cspell: disable-next
                 expect(jpegElement.textContent).toBe('Àâæçéèêëïîôœùûüÿ.jpg');
             });
         }));
 
         it('should show correctly the file name when is formed with Greek characters', async(() => {
+            // cspell: disable-next
             uploadWidgetComponent.field.value.push(fakeCreationFile('άέήίϊϊΐόύϋΰώθωερτψυιοπασδφγηςκλζχξωβνμ.jpg', 13));
 
             fixture.detectChanges();
@@ -322,6 +325,7 @@ describe('UploadWidgetComponent', () => {
                 fixture.detectChanges();
                 let jpegElement = element.querySelector('#file-13');
                 expect(jpegElement).not.toBeNull();
+                // cspell: disable-next
                 expect(jpegElement.textContent).toBe('άέήίϊϊΐόύϋΰώθωερτψυιοπασδφγηςκλζχξωβνμ.jpg');
             });
         }));
@@ -351,6 +355,7 @@ describe('UploadWidgetComponent', () => {
         }));
 
         it('should show correctly the file name when is formed with Swedish characters', async(() => {
+            // cspell: disable-next
             uploadWidgetComponent.field.value.push(fakeCreationFile('Äåéö.jpg', 16));
             fixture.detectChanges();
 
@@ -358,6 +363,7 @@ describe('UploadWidgetComponent', () => {
                 fixture.detectChanges();
                 let jpegElement = element.querySelector('#file-16');
                 expect(jpegElement).not.toBeNull();
+                // cspell: disable-next
                 expect(jpegElement.textContent).toBe('Äåéö.jpg');
             });
         }));

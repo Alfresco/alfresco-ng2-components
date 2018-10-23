@@ -33,7 +33,7 @@ describe('AppConfigService', () => {
             name: 'Custom Name'
         },
         files: {
-            'excluded': ['exluded']
+            'excluded': ['excluded']
         }
     };
 
@@ -141,7 +141,7 @@ describe('AppConfigService', () => {
 
     it('should take excluded file list', () => {
         appConfigService.load().then(() => {
-            expect(appConfigService.get('files.excluded')[0]).toBe('exluded');
+            expect(appConfigService.get('files.excluded')[0]).toBe('excluded');
         });
     });
 });

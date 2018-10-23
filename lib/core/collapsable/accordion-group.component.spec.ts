@@ -49,13 +49,13 @@ describe('AccordionGroupComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            let accordin = element.querySelector('mat-accordion');
+            let accordion = element.querySelector('mat-accordion');
             let expansionPanel = element.querySelector('mat-expansion-panel');
-            let accordinHeader = element.querySelector('mat-expansion-panel-header');
+            let accordionHeader = element.querySelector('mat-expansion-panel-header');
             let content = element.querySelector('#adf-expansion-panel-content-id').innerHTML;
-            expect(accordin).toBeDefined();
+            expect(accordion).toBeDefined();
             expect(expansionPanel).toBeDefined();
-            expect(accordinHeader).toBeDefined();
+            expect(accordionHeader).toBeDefined();
             expect(content).toEqual('<a>Test</a>');
         });
     }));

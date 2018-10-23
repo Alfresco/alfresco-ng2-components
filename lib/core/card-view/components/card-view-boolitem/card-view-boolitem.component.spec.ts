@@ -111,7 +111,7 @@ describe('CardViewBoolItemComponent', () => {
             expect(value.nativeElement.checked).toBe(true);
         });
 
-        it('should render unticked checkbox if property value is false', () => {
+        it('should render un-ticked checkbox if property value is false', () => {
             component.property.value = false;
             fixture.detectChanges();
 
@@ -120,7 +120,7 @@ describe('CardViewBoolItemComponent', () => {
             expect(value.nativeElement.checked).toBe(false);
         });
 
-        it('should render unticked checkbox if property value is not set but default is false and editable', () => {
+        it('should render un-ticked checkbox if property value is not set but default is false and editable', () => {
             component.editable = true;
             component.property.editable = true;
             component.property.value = undefined;

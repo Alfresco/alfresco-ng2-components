@@ -40,7 +40,7 @@ describe('Task List Pagination - Sorting', () => {
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let nrOfTasks = 20, processUserModel;
     let taskNameBase = 'Task';
-    let taskNames = Util.generateSeqeunceFiles(10, nrOfTasks + 9, taskNameBase, '');
+    let taskNames = Util.generateSequenceFiles(10, nrOfTasks + 9, taskNameBase, '');
 
     let itemsPerPage = {
         five: '5',
@@ -79,7 +79,7 @@ describe('Task List Pagination - Sorting', () => {
 
     it('[C260308] Should be possible to sort tasks by name', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         taskPage.tasksListPage().waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
         taskPage.tasksListPage().waitForTableBody();

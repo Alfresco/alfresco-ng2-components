@@ -149,7 +149,7 @@ export class ProcessContentService {
      * Associates an uploaded file with a process instance.
      * @param processInstanceId ID of the target process instance
      * @param content File to associate
-     * @param opts Options supported by JSAPI
+     * @param opts Options supported by JS-API
      * @returns Details of created content
      */
     createProcessRelatedContent(processInstanceId: string, content: any, opts?: any): Observable<any> {
@@ -161,7 +161,7 @@ export class ProcessContentService {
      * Associates an uploaded file with a task instance.
      * @param taskId ID of the target task
      * @param file File to associate
-     * @param opts Options supported by JSAPI
+     * @param opts Options supported by JS-API
      * @returns Details of created content
      */
     createTaskRelatedContent(taskId: string, file: any, opts?: any) {

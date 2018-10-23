@@ -84,7 +84,7 @@ describe('Start Task - Task App', () => {
     it('[C274690] Should be able to open a file attached to a start form', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         taskPage
             .createNewTask()
@@ -92,8 +92,8 @@ describe('Start Task - Task App', () => {
             .addForm(app.formName)
             .clickStartButton();
 
-        widget.attachFileWidget().attachFile(appFields.attachfile_id, pdfFile.location);
-        widget.attachFileWidget().checkFileIsAttached(appFields.attachfile_id, pdfFile.name);
+        widget.attachFileWidget().attachFile(appFields.attachFile_id, pdfFile.location);
+        widget.attachFileWidget().checkFileIsAttached(appFields.attachFile_id, pdfFile.name);
 
         widget.attachFileWidget().viewFile(pdfFile.name);
         viewerPage.checkFileContent('1', pdfFile.firstPageText);

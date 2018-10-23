@@ -42,7 +42,7 @@ export class NodesApiService {
     /**
      * Gets the stored information about a node.
      * @param nodeId ID of the target node
-     * @param options Optional parameters supported by JSAPI
+     * @param options Optional parameters supported by JS-API
      * @returns Node information
      */
     getNode(nodeId: string, options: any = {}): Observable<MinimalNodeEntryEntity> {
@@ -62,7 +62,7 @@ export class NodesApiService {
     /**
      * Gets the items contained in a folder node.
      * @param nodeId ID of the target node
-     * @param options Optional parameters supported by JSAPI
+     * @param options Optional parameters supported by JS-API
      * @returns List of child items from the folder
      */
     getNodeChildren(nodeId: string, options: any = {}): Observable<NodePaging> {
@@ -84,7 +84,7 @@ export class NodesApiService {
      * Creates a new document node inside a folder.
      * @param parentNodeId ID of the parent folder node
      * @param nodeBody Data for the new node
-     * @param options Optional parameters supported by JSAPI
+     * @param options Optional parameters supported by JS-API
      * @returns Details of the new node
      */
     createNode(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity> {
@@ -101,7 +101,7 @@ export class NodesApiService {
      * Creates a new folder node inside a parent folder.
      * @param parentNodeId ID of the parent folder node
      * @param nodeBody Data for the new folder
-     * @param options Optional parameters supported by JSAPI
+     * @param options Optional parameters supported by JS-API
      * @returns Details of the new folder
      */
     createFolder(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity> {
@@ -113,7 +113,7 @@ export class NodesApiService {
      * Updates the information about a node.
      * @param nodeId ID of the target node
      * @param nodeBody New data for the node
-     * @param options Optional parameters supported by JSAPI
+     * @param options Optional parameters supported by JS-API
      * @returns Updated node information
      */
     updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity> {
@@ -134,7 +134,7 @@ export class NodesApiService {
     /**
      * Moves a node to the trashcan.
      * @param nodeId ID of the target node
-     * @param options Optional parameters supported by JSAPI
+     * @param options Optional parameters supported by JS-API
      * @returns Empty result that notifies when the deletion is complete
      */
     deleteNode(nodeId: string, options: any = {}): Observable<any> {

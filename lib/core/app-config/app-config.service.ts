@@ -21,6 +21,7 @@ import { ObjectUtils } from '../utils/object-utils';
 import { Observable, Subject } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 
+/* spellchecker: disable */
 export enum AppConfigValues {
     APP_CONFIG_LANGUAGES_KEY = 'languages',
     PROVIDERS = 'providers',
@@ -36,6 +37,7 @@ export enum AppConfigValues {
     LOGIN_ROUTE = 'loginRoute',
     DISABLECSRF = 'disableCSRF'
 }
+/* spellchecker: enable */
 
 @Injectable({
     providedIn: 'root'

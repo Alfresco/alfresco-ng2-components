@@ -110,8 +110,8 @@ export class EcmModelService {
                 typeCreated => {
                     this.logService.info('type Created', typeCreated);
                     this.addPropertyToAType(EcmModelService.MODEL_NAME, formName, form).subscribe(
-                        properyAdded => {
-                            this.logService.info('property Added', properyAdded);
+                        propertyAdded => {
+                            this.logService.info('property Added', propertyAdded);
                             observer.next(typeCreated);
                             observer.complete();
                         },

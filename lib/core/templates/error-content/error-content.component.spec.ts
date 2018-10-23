@@ -111,7 +111,7 @@ describe('ErrorContentComponent', () => {
         });
     }));
 
-    it('shoul the default value of return burron be /', async(() => {
+    it('should the default value of return button be /', async(() => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             expect(errorContentComponent.returnButtonUrl).toBe('/');

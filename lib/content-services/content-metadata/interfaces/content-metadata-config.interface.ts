@@ -19,6 +19,6 @@ import { PropertyGroupContainer } from './property-group.interface';
 import { OrganisedPropertyGroup } from './organised-property-group.interface';
 
 export interface ContentMetadataConfig {
-    isGroupAllowed(groupname: string): boolean;
+    isGroupAllowed(groupName: string): boolean;
     reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[];
 }

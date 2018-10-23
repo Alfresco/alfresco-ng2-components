@@ -312,7 +312,7 @@ export class DemoForm {
                                 'maxLength': 0,
                                 'minValue': null,
                                 'maxValue': null,
-                                'regexPatt§12212ern': null,
+                                'regexPattern': null,
                                 'optionType': null,
                                 'hasEmptyValue': null,
                                 'options': [
@@ -1519,8 +1519,8 @@ export class DemoForm {
                     '1': [
                       {
                         'fieldType': 'RestFieldRepresentation',
-                        'id': 'typeahedField',
-                        'name': 'TypeahedField',
+                        'id': 'typeaheadField',
+                        'name': 'TypeaheadField',
                         'type': 'typeahead',
                         'value': null,
                         'required': false,

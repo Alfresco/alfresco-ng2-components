@@ -87,7 +87,7 @@ describe('Breadcrumb', () => {
         expect(component.parseRoute(null)).toEqual([]);
     });
 
-    it('should not parase the route when node has no path', () => {
+    it('should not parse the route when node has no path', () => {
         const node: any = {};
         expect(component.parseRoute(node)).toEqual([]);
     });

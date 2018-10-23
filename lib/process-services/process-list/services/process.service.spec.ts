@@ -83,6 +83,7 @@ describe('ProcessService', () => {
                 expect(instances.data.length).toBe(1);
                 let instance = instances.data[0];
                 expect(instance.id).toBe('340124');
+                /* cspell:disable-next-line */
                 expect(instance.name).toBe('James Franklin EMEA Onboarding');
                 expect(instance.started).toEqual(new Date('2017-10-09T12:19:44.560+0000'));
             });

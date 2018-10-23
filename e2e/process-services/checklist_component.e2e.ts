@@ -76,7 +76,7 @@ describe('Checklist component', () => {
 
     it('[C279976] Should no checklist be created when no title is typed', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
 
         taskPage.clickOnAddChecklistButton().clickCreateChecklistButton();
@@ -86,7 +86,7 @@ describe('Checklist component', () => {
 
     it('[C279975] Should no checklist be created when clicking on Cancel button on checklist dialog', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
 
         taskPage.clickOnAddChecklistButton().addName(checklists[0]).clickCancelButton();
@@ -96,7 +96,7 @@ describe('Checklist component', () => {
 
     it('[C261025] Should Checklist dialog be displayed when clicking on add checklist button', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
 
         taskPage.clickOnAddChecklistButton();
@@ -109,7 +109,7 @@ describe('Checklist component', () => {
 
     it('[C261026] Should Checklist number increase when a new checklist is added', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[1]).selectTaskFromTasksList(tasks[1]);
 
         taskPage.clickOnAddChecklistButton().addName(checklists[2]).clickCreateChecklistButton();
@@ -124,7 +124,7 @@ describe('Checklist component', () => {
 
     it('[C279980] Should checklist be removed when clicking on remove button', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[2]).selectTaskFromTasksList(tasks[2]);
 
         taskPage.clickOnAddChecklistButton().addName(removeChecklist[0]).clickCreateChecklistButton();
@@ -140,7 +140,7 @@ describe('Checklist component', () => {
 
     it('[C261027] Should not be able to remove a completed Checklist when clicking on remove button', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[3]).selectTaskFromTasksList(tasks[3]);
 
         taskPage.clickOnAddChecklistButton().addName(removeChecklist[2]).clickCreateChecklistButton();
@@ -162,7 +162,7 @@ describe('Checklist component', () => {
 
     it('[C261028] Should all checklists of a task be completed when the task is completed', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[4]).selectTaskFromTasksList(tasks[4]);
 
         taskPage.clickOnAddChecklistButton().addName(hierarchyChecklist[0]).clickCreateChecklistButton();
@@ -179,7 +179,7 @@ describe('Checklist component', () => {
         taskPage.tasksListPage().selectTaskFromTasksList(tasks[4]);
         taskPage.completeTaskNoForm();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[4]);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(hierarchyChecklist[0]);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(hierarchyChecklist[1]);

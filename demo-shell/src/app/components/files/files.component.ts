@@ -181,7 +181,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
-    currentSiteid = '';
     warnOnMultipleUploads = false;
     thumbnails = false;
     enableCustomPermissionMessage = false;
@@ -335,7 +334,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     handlePermissionError(event: any) {
-        this.translateService.get('PERMISSON.LACKOF', {
+        this.translateService.get('PERMISSION.LACKOF', {
             permission: event.permission,
             action: event.action,
             type: event.type
@@ -476,7 +475,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         return false;
     }
 
-    startProcesAction($event) {
+    startProcessAction($event) {
         this.formValues['file'] = $event.value.entry;
 
         const dialogRef = this.dialog.open(SelectAppsDialogComponent, {
@@ -515,7 +514,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.turnedPreviousPage.emit(event);
     }
 
-    toogleGalleryView(): void {
+    toggleGalleryView(): void {
         this.displayMode = this.displayMode === DisplayMode.List ? DisplayMode.Gallery : DisplayMode.List;
         const url = this
             .router

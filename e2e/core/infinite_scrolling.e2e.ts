@@ -59,7 +59,7 @@ describe('Enable infinite scrolling', () => {
 
         contentServicesPage.goToDocumentList();
 
-        fileNames = Util.generateSeqeunceFiles(1, nrOfFiles, files.base, files.extension);
+        fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 

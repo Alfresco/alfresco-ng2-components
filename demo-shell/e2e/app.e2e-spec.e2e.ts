@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { MyappPage } from './app.po';
+import { MyAppPage } from './app.po';
 
-describe('myapp App', () => {
-    let page: MyappPage;
+describe('MyApp App', () => {
+    let page: MyAppPage;
 
     beforeEach(() => {
-        page = new MyappPage();
+        page = new MyAppPage();
     });
 
     it('should display toolbar', () => {

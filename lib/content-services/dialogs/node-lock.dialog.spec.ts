@@ -117,7 +117,7 @@ describe('NodeLockDialogComponent', () => {
             expect(alfrescoApi.nodesApi.unlockNode).toHaveBeenCalledWith('node-id');
         });
 
-        it('should call dialog to close with form data when submit is succesfluly', fakeAsync(() => {
+        it('should call dialog to close with form data when submit is successfully', fakeAsync(() => {
             const node = { entry: {} };
             spyOn(alfrescoApi.nodesApi, 'lockNode').and.returnValue(Promise.resolve(node));
 

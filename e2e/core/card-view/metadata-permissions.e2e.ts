@@ -35,7 +35,7 @@ import CONSTANTS = require('../../util/constants');
 describe('permissions', () => {
 
     const METADATA = {
-        DATAFORMAT: 'mmm dd yyyy',
+        DATA_FORMAT: 'mmm dd yyyy',
         TITLE: 'Details',
         COMMENTS_TAB: 'COMMENTS',
         PROPERTY_TAB: 'PROPERTIES',
@@ -134,7 +134,7 @@ describe('permissions', () => {
 
         metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.clickMetadatGroup('EXIF');
+        metadataViewPage.clickMetadataGroup('EXIF');
 
         metadataViewPage.editIconIsDisplayed();
     });
@@ -154,7 +154,7 @@ describe('permissions', () => {
 
         metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.clickMetadatGroup('EXIF');
+        metadataViewPage.clickMetadataGroup('EXIF');
 
         metadataViewPage.editIconIsDisplayed();
     });

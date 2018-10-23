@@ -29,7 +29,7 @@ import { of } from 'rxjs';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 
-class FakeSanitazer extends DomSanitizer {
+class FakeSanitizer extends DomSanitizer {
 
     constructor() {
         super();
@@ -265,7 +265,7 @@ describe('User info component', () => {
             it('should display the current user Initials if the user dose not have avatarId', async(() => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let pipe = new InitialUsernamePipe(new FakeSanitazer());
+                    let pipe = new InitialUsernamePipe(new FakeSanitizer());
                     expect(component.ecmUser.avatarId).toBeNull();
                     expect(pipe.transform({
                         id: 13,

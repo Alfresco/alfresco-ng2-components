@@ -106,7 +106,7 @@ describe('ObjectUtils', () => {
             });
         });
 
-        it('shoud overwrite only single property in the object', () => {
+        it('should overwrite only single property in the object', () => {
             const obj1 = {
                 child: {
                     prop1: 1,

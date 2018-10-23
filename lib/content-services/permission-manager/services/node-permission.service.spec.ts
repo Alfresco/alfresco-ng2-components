@@ -60,7 +60,7 @@ describe('NodePermissionService', () => {
 
     it('should return a list of roles taken from the site groups', async(() => {
         spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
-        spyOn(service, 'getGroupMemeberByGroupName').and.returnValue(of(fakeSiteRoles));
+        spyOn(service, 'getGroupMemberByGroupName').and.returnValue(of(fakeSiteRoles));
 
         service.getNodeRoles(fakeNodeWithOnlyLocally).subscribe((roleArray: string[]) => {
             expect(roleArray).not.toBeNull();
@@ -122,7 +122,7 @@ describe('NodePermissionService', () => {
         spyOn(nodeService, 'getNode').and.returnValue(of(fakeNodeCopy));
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
         spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
-        spyOn(service, 'getGroupMemeberByGroupName').and.returnValue(of(fakeSiteRoles));
+        spyOn(service, 'getGroupMemberByGroupName').and.returnValue(of(fakeSiteRoles));
 
         service.updateNodePermissions('fake-node-id', fakeAuthorityResults).subscribe((node: MinimalNodeEntryEntity) => {
             expect(node).not.toBeNull();

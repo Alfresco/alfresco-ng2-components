@@ -294,13 +294,13 @@ describe('TypeaheadWidgetComponent', () => {
             }));
 
             it('should show typeahead options', async(() => {
-                let typeahedElement = fixture.debugElement.query(By.css('#typeahead-id'));
-                let typeahedHTMLElement: HTMLInputElement = <HTMLInputElement> typeahedElement.nativeElement;
-                typeahedHTMLElement.focus();
+                let typeaheadElement = fixture.debugElement.query(By.css('#typeahead-id'));
+                let typeaheadHTMLElement: HTMLInputElement = <HTMLInputElement> typeaheadElement.nativeElement;
+                typeaheadHTMLElement.focus();
                 typeaheadWidgetComponent.value = 'F';
-                typeahedHTMLElement.value = 'F';
-                typeahedHTMLElement.dispatchEvent(new Event('keyup'));
-                typeahedHTMLElement.dispatchEvent(new Event('input'));
+                typeaheadHTMLElement.value = 'F';
+                typeaheadHTMLElement.dispatchEvent(new Event('keyup'));
+                typeaheadHTMLElement.dispatchEvent(new Event('input'));
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -311,21 +311,21 @@ describe('TypeaheadWidgetComponent', () => {
             }));
 
             it('should hide the option when the value is empty', async(() => {
-                let typeahedElement = fixture.debugElement.query(By.css('#typeahead-id'));
-                let typeahedHTMLElement: HTMLInputElement = <HTMLInputElement> typeahedElement.nativeElement;
-                typeahedHTMLElement.focus();
+                let typeaheadElement = fixture.debugElement.query(By.css('#typeahead-id'));
+                let typeaheadHTMLElement: HTMLInputElement = <HTMLInputElement> typeaheadElement.nativeElement;
+                typeaheadHTMLElement.focus();
                 typeaheadWidgetComponent.value = 'F';
-                typeahedHTMLElement.value = 'F';
-                typeahedHTMLElement.dispatchEvent(new Event('keyup'));
-                typeahedHTMLElement.dispatchEvent(new Event('input'));
+                typeaheadHTMLElement.value = 'F';
+                typeaheadHTMLElement.dispatchEvent(new Event('keyup'));
+                typeaheadHTMLElement.dispatchEvent(new Event('input'));
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(fixture.debugElement.query(By.css('[id="typeahead-name_option_1"]'))).not.toBeNull();
-                    typeahedHTMLElement.focus();
+                    typeaheadHTMLElement.focus();
                     typeaheadWidgetComponent.value = '';
-                    typeahedHTMLElement.dispatchEvent(new Event('keyup'));
-                    typeahedHTMLElement.dispatchEvent(new Event('input'));
+                    typeaheadHTMLElement.dispatchEvent(new Event('keyup'));
+                    typeaheadHTMLElement.dispatchEvent(new Event('input'));
                     fixture.detectChanges();
                     fixture.whenStable().then(() => {
                         fixture.detectChanges();

@@ -102,7 +102,7 @@ describe('LoginComponent', () => {
         fixture.detectChanges();
     }
 
-    it('should be autocompelete off', () => {
+    it('should be autocomplete off', () => {
         expect(element.querySelector('#adf-login-form').getAttribute('autocomplete')).toBe('off');
     });
 
@@ -493,7 +493,7 @@ describe('LoginComponent', () => {
         loginWithCredentials('fake-username-CSRF-error', 'fake-password');
     }));
 
-    it('should return ECOM read-oly error when error occurs', async(() => {
+    it('should return ECM read-only error when error occurs', async(() => {
         spyOn(authService, 'login')
             .and.returnValue(
                 throwError(

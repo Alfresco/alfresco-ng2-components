@@ -89,7 +89,7 @@ describe('CardViewItemDispatcherComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    describe('Subcompomnent creation', () => {
+    describe('Sub-component creation', () => {
 
         it('should load the CardViewShinyCustomElementItemComponent', () => {
             const innerElement = fixture.debugElement.query(By.css('[data-automation-id="found-me"]'));
@@ -136,7 +136,7 @@ describe('CardViewItemDispatcherComponent', () => {
         });
     });
 
-    describe('Angular lifecycle methods', () => {
+    describe('Angular life-cycle methods', () => {
 
         let shinyCustomElementItemComponent;
 
@@ -155,7 +155,7 @@ describe('CardViewItemDispatcherComponent', () => {
             shinyCustomElementItemComponent = fixture.debugElement.query(By.css('whatever-you-want-to-have')).componentInstance;
         });
 
-        it('should call through the lifecycle methods', () => {
+        it('should call through the life-cycle methods', () => {
             lifeCycleMethods.forEach((lifeCycleMethod) => {
                 shinyCustomElementItemComponent[lifeCycleMethod] = () => {};
                 spyOn(shinyCustomElementItemComponent, lifeCycleMethod);
@@ -167,7 +167,7 @@ describe('CardViewItemDispatcherComponent', () => {
             });
         });
 
-        it('should NOT call through the lifecycle methods if the method does not exist (no error should be thrown)', () => {
+        it('should NOT call through the life-cycle methods if the method does not exist (no error should be thrown)', () => {
             const param = {};
             lifeCycleMethods.forEach((lifeCycleMethod) => {
                 shinyCustomElementItemComponent[lifeCycleMethod] = undefined;

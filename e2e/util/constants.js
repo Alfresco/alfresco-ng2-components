@@ -67,21 +67,21 @@ exports.APPLICATION = {
     APS: 'main'
 };
 
-exports.TASKFILTERS = {
+exports.TASK_FILTERS = {
     MY_TASKS: 'My Tasks',
     INV_TASKS: 'Involved Tasks',
     QUE_TASKS: 'Queued Tasks',
-    COMPL_TASKS: 'Completed Tasks'
+    COMPLETED_TASKS: 'Completed Tasks'
 };
 
-exports.TASKDETAILS = {
+exports.TASK_DETAILS = {
     NO_FORM: 'No form',
     NO_PARENT: 'No parent',
     NO_DATE: 'No date',
     NO_CATEGORY: 'No category'
 };
 
-exports.TASKSTATUS = {
+exports.TASK_STATUS = {
     RUNNING: 'Running'
 };
 
@@ -106,17 +106,17 @@ exports.APP_ICON = {
     UNIT: "ac_unit"
 };
 
-exports.PROCESSENDDATE = "No date";
+exports.PROCESS_END_DATE = "No date";
 
-exports.PROCESSCATEGORY = "http://www.activiti.org/processdef";
+exports.PROCESS_CATEGORY = "http://www.activiti.org/processdef";
 
-exports.PROCESSBUSINESSKEY = "None";
+exports.PROCESS_BUSINESS_KEY = "None";
 
-exports.PROCESSDESCRIPTION = "No description";
+exports.PROCESS_DESCRIPTION = "No description";
 
-exports.PROCESSDATEFORMAT = "mmm dd yyyy";
+exports.PROCESS_DATE_FORMAT = "mmm dd yyyy";
 
-exports.PROCESSSTATUS = {
+exports.PROCESS_STATUS = {
     RUNNING: 'Running',
     COMPLETED: 'Completed'
 };

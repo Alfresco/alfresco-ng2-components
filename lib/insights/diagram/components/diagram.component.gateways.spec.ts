@@ -81,7 +81,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.exclusiveGatway] };
+            let resp = { elements: [diagramsGatewaysMock.exclusiveGateway] };
             ajaxReply(resp);
         }));
 
@@ -102,7 +102,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.inclusiveGatway] };
+            let resp = { elements: [diagramsGatewaysMock.inclusiveGateway] };
             ajaxReply(resp);
         }));
 
@@ -123,7 +123,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.parallelGatway] };
+            let resp = { elements: [diagramsGatewaysMock.parallelGateway] };
             ajaxReply(resp);
         }));
 
@@ -154,7 +154,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.eventGatway] };
+            let resp = { elements: [diagramsGatewaysMock.eventGateway] };
             ajaxReply(resp);
         }));
     });
@@ -178,7 +178,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.exclusiveGatway] };
+            let resp = { elements: [diagramsGatewaysMock.exclusiveGateway] };
             ajaxReply(resp);
         }));
 
@@ -199,7 +199,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.exclusiveGatwayActive] };
+            let resp = { elements: [diagramsGatewaysMock.exclusiveGatewayActive] };
             ajaxReply(resp);
         }));
 
@@ -220,7 +220,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.exclusiveGatwayCompleted] };
+            let resp = { elements: [diagramsGatewaysMock.exclusiveGatewayCompleted] };
             ajaxReply(resp);
         }));
 
@@ -241,7 +241,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.inclusiveGatway] };
+            let resp = { elements: [diagramsGatewaysMock.inclusiveGateway] };
             ajaxReply(resp);
         }));
 
@@ -262,7 +262,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.inclusiveGatwayActive] };
+            let resp = { elements: [diagramsGatewaysMock.inclusiveGatewayActive] };
             ajaxReply(resp);
         }));
 
@@ -283,7 +283,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.inclusiveGatwayCompleted] };
+            let resp = { elements: [diagramsGatewaysMock.inclusiveGatewayCompleted] };
             ajaxReply(resp);
         }));
 
@@ -304,7 +304,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.parallelGatway] };
+            let resp = { elements: [diagramsGatewaysMock.parallelGateway] };
             ajaxReply(resp);
         }));
 
@@ -325,7 +325,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.parallelGatwayActive] };
+            let resp = { elements: [diagramsGatewaysMock.parallelGatewayActive] };
             ajaxReply(resp);
         }));
 
@@ -346,7 +346,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.parallelGatwayCompleted] };
+            let resp = { elements: [diagramsGatewaysMock.parallelGatewayCompleted] };
             ajaxReply(resp);
         }));
 
@@ -377,7 +377,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.eventGatway] };
+            let resp = { elements: [diagramsGatewaysMock.eventGateway] };
             ajaxReply(resp);
         }));
 
@@ -408,7 +408,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.eventGatwayActive] };
+            let resp = { elements: [diagramsGatewaysMock.eventGatewayActive] };
             ajaxReply(resp);
         }));
 
@@ -439,7 +439,7 @@ describe('Diagrams gateways', () => {
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [diagramsGatewaysMock.eventGatwayCompleted] };
+            let resp = { elements: [diagramsGatewaysMock.eventGatewayCompleted] };
             ajaxReply(resp);
         }));
     });

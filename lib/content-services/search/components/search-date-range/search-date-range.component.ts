@@ -80,7 +80,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit {
             this.datePickerDateFormat = this.settings.dateFormat || DEFAULT_FORMAT_DATE;
         }
         const theCustomDateAdapter = <MomentDateAdapter> <any> this.dateAdapter;
-        theCustomDateAdapter.overrideDisplyaFormat = this.datePickerDateFormat;
+        theCustomDateAdapter.overrideDisplayFormat = this.datePickerDateFormat;
 
         this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
             this.setLocale(locale);

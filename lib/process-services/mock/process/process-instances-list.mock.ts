@@ -18,15 +18,24 @@
 import { ObjectDataColumn } from '@alfresco/adf-core';
 
 export let fakeProcessInstance = {
-    size: 2, total: 2, start: 0,
+    size: 2,
+    total: 2,
+    start: 0,
     data: [
         {
-            id: '1', name: 'Process 773443333', businessKey: null,
+            id: '1',
+            name: 'Process 773443333',
+            businessKey: null,
             processDefinitionId: 'fakeprocess:5:7507',
             tenantId: 'tenant_1',
             started: '2015-11-09T12:36:14.184+0000',
             ended: null,
-            startedBy: { id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant'},
+            startedBy: {
+                id: 3,
+                firstName: 'tenant2',
+                lastName: 'tenantLastName',
+                email: 'tenant2@tenant'
+            },
             processDefinitionName: 'Fake Process Name',
             processDefinitionDescription: null,
             processDefinitionKey: 'fakeprocess',
@@ -39,12 +48,19 @@ export let fakeProcessInstance = {
             variables: []
         },
         {
-            id: '2', name: 'Process 382927392', businessKey: null,
+            id: '2',
+            name: 'Process 382927392',
+            businessKey: null,
             processDefinitionId: 'fakeprocess:5:7507',
             tenantId: 'tenant_1',
             started: '2018-01-10T17:02:22.597+0000',
             ended: null,
-            startedBy: { id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant' },
+            startedBy: {
+                id: 3,
+                firstName: 'tenant2',
+                lastName: 'tenantLastName',
+                email: 'tenant2@tenant'
+            },
             processDefinitionName: 'Fake Process Name',
             processDefinitionDescription: null,
             processDefinitionKey: 'fakeprocess',
@@ -60,7 +76,9 @@ export let fakeProcessInstance = {
 };
 
 export let fakeProcessInstancesWithNoName = {
-    size: 2, total: 2, start: 0,
+    size: 2,
+    total: 2,
+    start: 0,
     data: [
         {
             id: '1',
@@ -68,10 +86,14 @@ export let fakeProcessInstancesWithNoName = {
             processDefinitionId: 'fakeprocess:5:7507',
             processDefinitionKey: 'fakeprocess',
             processDefinitionName: 'Fake Process Name',
-            description: null, category: null,
+            description: null,
+            category: null,
             started: '2017-11-09T12:36:14.184+0000',
             startedBy: {
-                id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant'
+                id: 3,
+                firstName: 'tenant2',
+                lastName: 'tenantLastName',
+                email: 'tenant2@tenant'
             }
         },
         {
@@ -84,36 +106,38 @@ export let fakeProcessInstancesWithNoName = {
             category: null,
             started: '2017-11-09T12:37:25.184+0000',
             startedBy: {
-                id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant'
+                id: 3,
+                firstName: 'tenant2',
+                lastName: 'tenantLastName',
+                email: 'tenant2@tenant'
             }
         }
     ]
 };
 
-export let fakeProcessCutomSchema =
-    [
-        new ObjectDataColumn({
-            'key': 'fakeName',
-            'type': 'text',
-            'title': 'ADF_PROCESS_LIST.PROPERTIES.FAKE',
-            'sortable': true
-        }),
-        new ObjectDataColumn({
-            'key': 'fakeProcessName',
-            'type': 'text',
-            'title': 'ADF_PROCESS_LIST.PROPERTIES.PROCESS_FAKE',
-            'sortable': true
-        })
-    ];
+export let fakeProcessCustomSchema = [
+    new ObjectDataColumn({
+        key: 'fakeName',
+        type: 'text',
+        title: 'ADF_PROCESS_LIST.PROPERTIES.FAKE',
+        sortable: true
+    }),
+    new ObjectDataColumn({
+        key: 'fakeProcessName',
+        type: 'text',
+        title: 'ADF_PROCESS_LIST.PROPERTIES.PROCESS_FAKE',
+        sortable: true
+    })
+];
 
 export let fakeProcessColumnSchema = {
-    'default': [
+    default: [
         {
-            'key': 'name',
-            'type': 'text',
-            'title': 'ADF_PROCESS_LIST.PROPERTIES.NAME',
-            'sortable': true
+            key: 'name',
+            type: 'text',
+            title: 'ADF_PROCESS_LIST.PROPERTIES.NAME',
+            sortable: true
         }
-    ]
-    , fakeProcessCutomSchema
+    ],
+    fakeProcessCustomSchema
 };
