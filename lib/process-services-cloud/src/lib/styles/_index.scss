@@ -5,5 +5,5 @@
 @mixin adf-process-services-cloud-theme($theme) {
     @include adf-cloud-app-list-theme($theme);
     @include adf-cloud-app-details-theme($theme);
-    @include adf-task-filters-cloud-theme($theme);
+    @include adf-cloud-task-filters-theme($theme);
 }

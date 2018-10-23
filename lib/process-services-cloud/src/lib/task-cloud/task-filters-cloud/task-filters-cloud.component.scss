@@ -1,4 +1,4 @@
-@mixin adf-task-filters-cloud-theme($theme) {
+@mixin adf-cloud-task-filters-theme($theme) {
     $primary: map-get($theme, primary);
 
     .adf {
