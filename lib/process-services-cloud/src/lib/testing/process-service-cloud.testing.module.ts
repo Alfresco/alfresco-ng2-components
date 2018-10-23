@@ -18,7 +18,6 @@
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { AppListCloudModule } from '../app-list-cloud.module';
 import {
     AlfrescoApiService,
     AlfrescoApiServiceMock,
@@ -27,21 +26,24 @@ import {
     StorageService,
     LogService,
     TranslationService,
-    TranslationMock
+    TranslationMock,
+    UserPreferencesService,
+    ContextMenuModule
 } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
         HttpClientModule,
         NoopAnimationsModule,
-        AppListCloudModule
+        ContextMenuModule
     ],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: TranslationService, useClass: TranslationMock },
         StorageService,
-        LogService
+        LogService,
+        UserPreferencesService
     ]
 })
-export class AppListTestingModule {}
+export class ProcessServiceCloudTestingModule {}

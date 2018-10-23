@@ -22,9 +22,10 @@ import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
-import { TaskListTestingModule } from '../testing/task-list.testing.module';
 import { fakeGlobalTask, fakeCustomSchema, fakeTaskCloudList } from '../mock/fakeTaskResponseMock';
 import { of } from 'rxjs';
+import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { TaskListCloudModule } from '../task-list-cloud.module';
 @Component({
     template: `
     <adf-cloud-task-list #taskListCloud>
@@ -62,7 +63,7 @@ describe('TaskListCloudComponent', () => {
 
     setupTestBed({
         imports: [
-            TaskListTestingModule
+            ProcessServiceCloudTestingModule, TaskListCloudModule
         ],
         providers: [TaskListCloudService]
     });
@@ -70,7 +71,6 @@ describe('TaskListCloudComponent', () => {
     beforeEach(() => {
         appConfig = TestBed.get(AppConfigService);
         taskListCloudService = TestBed.get(TaskListCloudService);
-        appConfig.config.bpmHost = 'http://localhost:9876/bpm';
         fixture = TestBed.createComponent(TaskListCloudComponent);
         component = fixture.componentInstance;
         appConfig.config = Object.assign(appConfig.config, {
@@ -287,7 +287,7 @@ describe('TaskListCloudComponent', () => {
         let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
 
         setupTestBed({
-            imports: [TaskListTestingModule],
+            imports: [ProcessServiceCloudTestingModule, TaskListCloudModule],
             declarations: [EmptyTemplateComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });

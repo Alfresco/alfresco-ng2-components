@@ -17,15 +17,16 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { from, Observable } from 'rxjs';
 import { FilterRepresentationModel } from '../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
 import { By } from '@angular/platform-browser';
-import { ProcessServicesCloudModule } from '../../process-services-cloud.module';
+import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { TaskCloudModule } from '../task-cloud.module';
 
-describe('TaskFiltersComponent', () => {
+describe('TaskFiltersCloudComponent', () => {
 
     let taskFilterService: TaskFilterCloudService;
 
@@ -51,7 +52,7 @@ describe('TaskFiltersComponent', () => {
     ];
 
     let fakeGlobalFilterObservable =
-        Observable.create(function(observer) {
+        new Observable(function(observer) {
             observer.next(fakeGlobalFilter);
             observer.complete();
         });
@@ -78,15 +79,11 @@ describe('TaskFiltersComponent', () => {
     let fixture: ComponentFixture<TaskFiltersCloudComponent>;
 
     setupTestBed({
-        imports: [
-            ProcessServicesCloudModule
-        ]
+        imports: [ProcessServiceCloudTestingModule, TaskCloudModule],
+        providers: [TaskFilterCloudService]
     });
 
     beforeEach(() => {
-        let appConfig: AppConfigService = TestBed.get(AppConfigService);
-        appConfig.config.bpmHost = 'http://localhost:9876/bpm';
-
         fixture = TestBed.createComponent(TaskFiltersCloudComponent);
         component = fixture.componentInstance;
 
