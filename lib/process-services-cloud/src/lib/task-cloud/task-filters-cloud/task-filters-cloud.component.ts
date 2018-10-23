@@ -91,9 +91,9 @@ export class TaskFiltersCloudComponent implements OnChanges {
                 } else {
                     this.resetFilter();
                     this.filters = res;
-                    this.selectFilterAndEmit(this.filterParam);
-                    this.success.emit(res);
                 }
+                this.selectFilterAndEmit(this.filterParam);
+                this.success.emit(res);
             },
             (err: any) => {
                 this.error.emit(err);
@@ -112,8 +112,6 @@ export class TaskFiltersCloudComponent implements OnChanges {
             (resDefault: FilterRepresentationModel[]) => {
                 this.resetFilter();
                 this.filters = resDefault;
-                this.selectFilter(this.filterParam);
-                this.success.emit(resDefault);
             },
             (errDefault: any) => {
                 this.error.emit(errDefault);
