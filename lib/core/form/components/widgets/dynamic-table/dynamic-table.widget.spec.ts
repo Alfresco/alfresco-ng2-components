@@ -114,7 +114,7 @@ describe('DynamicTableWidgetComponent', () => {
         expect(widget.content.selectedRow).toBe(row);
     });
 
-    it('should requre table to select clicked row', () => {
+    it('should require table to select clicked row', () => {
         let row = <DynamicTableRow> {selected: false};
         widget.content = null;
         widget.onRowClicked(row);

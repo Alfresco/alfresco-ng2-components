@@ -34,7 +34,7 @@ export let poolLanes = {
     y: 45,
     lanes: [{
         id: 'sid-332204AB-D0F8-44CD-87B3-BF9DF59FF8AB',
-        name: 'Beckend',
+        name: 'Backend',
         width: 570,
         height: 250,
         x: 90,

@@ -61,10 +61,10 @@ describe('TaskStandaloneComponent', () => {
     it('should show No form message if isCompleted is false', async(() => {
         component.isCompleted = false;
         fixture.detectChanges();
-        const noformElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-message');
+        const noFormElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-message');
         fixture.whenStable().then(() => {
-            expect(noformElement).toBeDefined();
-            expect(noformElement.innerText).toBe('ADF_TASK_LIST.STANDALONE_TASK.NO_FORM_MESSAGE');
+            expect(noFormElement).toBeDefined();
+            expect(noFormElement.innerText).toBe('ADF_TASK_LIST.STANDALONE_TASK.NO_FORM_MESSAGE');
             expect(element.querySelector('#adf-completed-form-message')).toBeNull();
             expect(element.querySelector('.adf-no-form-submessage')).toBeNull();
         });

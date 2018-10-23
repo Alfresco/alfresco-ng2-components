@@ -95,7 +95,7 @@ describe('Comment component for Processes', () => {
 
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         taskPage.tasksListPage().selectTaskFromTasksList(taskName.completed_task);
 
         commentsPage.checkCommentInputIsNotDisplayed();
@@ -118,7 +118,7 @@ describe('Comment component for Processes', () => {
 
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().selectTaskFromTasksList(taskName.multiple_users);
         taskPage.taskDetails().selectActivityTab();
 
@@ -148,7 +148,7 @@ describe('Comment component for Processes', () => {
 
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         taskPage.tasksListPage().selectTaskFromTasksList(taskName.multiple_users);
         taskPage.taskDetails().selectActivityTab();
 

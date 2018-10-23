@@ -35,7 +35,7 @@ export class FakeFormService extends FormService {
     }
 
     public getRestFieldValues(taskId: string, fieldId: string): Observable<any> {
-        if (fieldId === 'typeahedField') {
+        if (fieldId === 'typeaheadField') {
             return of([
                 { 'id': '1', 'name': 'Leanne Graham' },
                 { 'id': '2', 'name': 'Ervin Howell' },

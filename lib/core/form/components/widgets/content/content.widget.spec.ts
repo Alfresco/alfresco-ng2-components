@@ -133,7 +133,7 @@ describe('ContentWidgetComponent', () => {
                     created: 1490354907883,
                     createdBy: {
                         id: 2,
-                        firstName: 'dasdas', 'lastName': 'dasads', 'email': 'administrator@admin.com'
+                        firstName: 'admin', 'lastName': 'admin', 'email': 'administrator@admin.com'
                     },
                     relatedContent: false,
                     contentAvailable: true,
@@ -176,7 +176,7 @@ describe('ContentWidgetComponent', () => {
                     created: 1490354907883,
                     createdBy: {
                         id: 2,
-                        firstName: 'dasdas', 'lastName': 'dasads', 'email': 'administrator@admin.com'
+                        firstName: 'admin', 'lastName': 'admin', 'email': 'administrator@admin.com'
                     },
                     relatedContent: false,
                     contentAvailable: true,
@@ -215,7 +215,7 @@ describe('ContentWidgetComponent', () => {
                     created: 1490354907883,
                     createdBy: {
                         id: 2,
-                        firstName: 'dasdas', 'lastName': 'dasads', 'email': 'administrator@admin.com'
+                        firstName: 'admin', 'lastName': 'admin', 'email': 'administrator@admin.com'
                     },
                     relatedContent: false,
                     contentAvailable: false,
@@ -239,7 +239,7 @@ describe('ContentWidgetComponent', () => {
                 created: 1490354907883,
                 createdBy: {
                     id: 2,
-                    firstName: 'dasdas', 'lastName': 'dasads', 'email': 'administrator@admin.com'
+                    firstName: 'admin', 'lastName': 'admin', 'email': 'administrator@admin.com'
                 },
                 relatedContent: false,
                 contentAvailable: true,
@@ -273,7 +273,7 @@ describe('ContentWidgetComponent', () => {
                 created: 1490354907883,
                 createdBy: {
                     id: 2,
-                    firstName: 'dasdas', 'lastName': 'dasads', 'email': 'administrator@admin.com'
+                    firstName: 'admin', 'lastName': 'admin', 'email': 'administrator@admin.com'
                 },
                 relatedContent: false,
                 contentAvailable: true,

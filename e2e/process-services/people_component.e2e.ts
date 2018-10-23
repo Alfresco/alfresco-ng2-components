@@ -78,7 +78,7 @@ describe('People component', () => {
 
     it('[C279989] Should no people be involved when no user is typed', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
 
         taskPage.taskDetails().clickInvolvePeopleButton();
@@ -88,7 +88,7 @@ describe('People component', () => {
 
     it('[C279990] Should no people be involved when clicking on Cancel button', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
 
         taskPage.taskDetails().clickInvolvePeopleButton()
@@ -101,7 +101,7 @@ describe('People component', () => {
 
     it('[C261029] Should People dialog be displayed when clicking on add people button', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
 
         taskPage.taskDetails().clickInvolvePeopleButton();
@@ -113,7 +113,7 @@ describe('People component', () => {
 
     it('[C279991] Should not be able to involve a user when is the creator of the task', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
 
         taskPage.taskDetails().clickInvolvePeopleButton()
@@ -125,7 +125,7 @@ describe('People component', () => {
 
     it('[C261030] Should involved user be removed when clicking on remove button', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]).selectTaskFromTasksList(tasks[0]);
 
         taskPage.taskDetails().clickInvolvePeopleButton()
@@ -142,7 +142,7 @@ describe('People component', () => {
 
     it('[C280013] Should not be able to complete a task by a involved user', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[1]).selectTaskFromTasksList(tasks[1]);
 
         taskPage.taskDetails().clickInvolvePeopleButton()
@@ -156,7 +156,7 @@ describe('People component', () => {
 
         loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[1]).selectTaskFromTasksList(tasks[1]);
 
         taskPage.completeTaskNoFormNotDisplayed();
@@ -165,7 +165,7 @@ describe('People component', () => {
     it('[C261031] Should be able to involve multiple users to a task', () => {
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[2]).selectTaskFromTasksList(tasks[2]);
 
         taskPage.taskDetails().clickInvolvePeopleButton()
@@ -196,7 +196,7 @@ describe('People component', () => {
 
     it('[C280014] Should involved user see the task in completed filters when the task is completed', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[3]).selectTaskFromTasksList(tasks[3]);
 
         taskPage.taskDetails().clickInvolvePeopleButton()
@@ -209,17 +209,17 @@ describe('People component', () => {
             .toEqual(assigneeUserModel.email);
 
         taskPage.completeTaskNoForm();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         taskPage.tasksListPage().selectTaskFromTasksList(tasks[3]);
         expect(taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
         loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[3]).selectTaskFromTasksList(tasks[3]);
 
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         taskPage.tasksListPage().checkTaskIsNotDisplayedInTasksList(tasks[3]);
     });
 

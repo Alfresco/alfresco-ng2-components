@@ -19,7 +19,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { UserProcessModel } from '../models/user-process.model';
 import { InitialUsernamePipe } from './user-initial.pipe';
 
-class FakeSanitazer extends DomSanitizer {
+class FakeSanitizer extends DomSanitizer {
 
     constructor() {
         super();
@@ -56,7 +56,7 @@ describe('UserInitialPipe', () => {
     let fakeUser: UserProcessModel;
 
     beforeEach(() => {
-        pipe = new InitialUsernamePipe(new FakeSanitazer());
+        pipe = new InitialUsernamePipe(new FakeSanitizer());
         fakeUser = new UserProcessModel();
     });
 
@@ -74,7 +74,7 @@ describe('UserInitialPipe', () => {
         expect(result).toBe('<div id="user-initials-image" class="fake-class-to-check">FF</div>');
     });
 
-    it('should return a single letter into div when lastname is undefined', () => {
+    it('should return a single letter into div when lastName is undefined', () => {
         fakeUser.firstName = 'FAKE-NAME';
         fakeUser.lastName = undefined;
         let result = pipe.transform(fakeUser);

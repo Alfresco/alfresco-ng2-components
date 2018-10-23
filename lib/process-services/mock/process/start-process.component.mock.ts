@@ -23,7 +23,7 @@ export let newProcess = new ProcessInstance({
     name: 'Process'
 });
 
-export let testProcessDefRepr = new ProcessDefinitionRepresentation({
+export let testProcessDef = new ProcessDefinitionRepresentation({
     id: 'my:process1',
     name: 'My Process 1',
     hasStartForm: false

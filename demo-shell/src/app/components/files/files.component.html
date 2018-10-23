@@ -70,7 +70,7 @@
                         mat-icon-button
                         data-automation-id="document-list-grid-view"
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}"
-                        (click)="toogleGalleryView()">
+                        (click)="toggleGalleryView()">
                         <mat-icon *ngIf="displayMode === 'list'" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}">view_comfy</mat-icon>
                         <mat-icon *ngIf="displayMode === 'gallery'" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.LISTVIEW' | translate }}">list</mat-icon>
                     </button>
@@ -155,7 +155,7 @@
                 </button>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item
-                            (click)="toogleGalleryView()">
+                            (click)="toggleGalleryView()">
                         <mat-icon *ngIf="displayMode === 'list'" >view_comfy</mat-icon>
                         <mat-icon *ngIf="displayMode === 'gallery'">list</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}</span>
@@ -374,7 +374,7 @@
                         icon="play_arrow"
                         target="document" 
                         title="DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION"
-                        (execute)="startProcesAction($event)">
+                        (execute)="startProcessAction($event)">
                     </content-action>
                     <content-action
                         target="document" 

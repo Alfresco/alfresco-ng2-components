@@ -25,7 +25,7 @@ import { ProcessService } from '../services/process.service';
 import {
     newProcess,
     taskFormMock,
-    testProcessDefRepr,
+    testProcessDef,
     testMultipleProcessDefs,
     testProcessDefWithForm,
     testProcessDefinitions
@@ -89,7 +89,7 @@ describe('StartFormComponent', () => {
             it('should enable start button when name and process filled out', async(() => {
                 spyOn(component, 'loadStartProcess').and.callThrough();
                 component.processNameInput.setValue('My Process');
-                component.processDefinitionInput.setValue(testProcessDefRepr.name);
+                component.processDefinitionInput.setValue(testProcessDef.name);
 
                 fixture.detectChanges();
 
@@ -102,7 +102,7 @@ describe('StartFormComponent', () => {
             it('should have start button disabled when name not filled out', async(() => {
                 spyOn(component, 'loadStartProcess').and.callThrough();
                 component.processNameInput.setValue('');
-                component.processDefinitionInput.setValue(testProcessDefRepr.name);
+                component.processDefinitionInput.setValue(testProcessDef.name);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     let startBtn = fixture.nativeElement.querySelector('#button-start');
@@ -257,9 +257,9 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                let noprocessElement = fixture.nativeElement.querySelector('#no-process-message');
-                expect(noprocessElement).not.toBeNull('Expected no available process message to be present');
-                expect(noprocessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS');
+                const noProcessElement = fixture.nativeElement.querySelector('#no-process-message');
+                expect(noProcessElement).not.toBeNull('Expected no available process message to be present');
+                expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS');
             });
         }));
 
@@ -298,7 +298,7 @@ describe('StartFormComponent', () => {
 
             it('should hide the process dropdown button if showSelectProcessDropdown is false', async(() => {
                 fixture.detectChanges();
-                getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([testProcessDefRepr]));
+                getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([testProcessDef]));
                 component.appId = 123;
                 component.showSelectProcessDropdown = false;
                 component.ngOnChanges({});
@@ -379,7 +379,7 @@ describe('StartFormComponent', () => {
         });
 
         it('should call service to start process if required fields provided', async(() => {
-            component.selectedProcessDef = testProcessDefRepr;
+            component.selectedProcessDef = testProcessDef;
             component.startProcess();
             fixture.whenStable().then(() => {
                 expect(startProcessSpy).toHaveBeenCalled();
@@ -395,7 +395,7 @@ describe('StartFormComponent', () => {
         }));
 
         it('should call service to start process with the correct parameters', async(() => {
-            component.selectedProcessDef = testProcessDefRepr;
+            component.selectedProcessDef = testProcessDef;
             component.startProcess();
             fixture.whenStable().then(() => {
                 expect(startProcessSpy).toHaveBeenCalledWith('my:process1', 'My new process', undefined, undefined, undefined);
@@ -412,7 +412,7 @@ describe('StartFormComponent', () => {
             inputProcessVariable.push(variable);
 
             component.variables = inputProcessVariable;
-            component.selectedProcessDef = testProcessDefRepr;
+            component.selectedProcessDef = testProcessDef;
             component.startProcess();
             fixture.whenStable().then(() => {
                 expect(startProcessSpy).toHaveBeenCalledWith('my:process1', 'My new process', undefined, undefined, inputProcessVariable);
@@ -421,7 +421,7 @@ describe('StartFormComponent', () => {
 
         it('should output start event when process started successfully', async(() => {
             let emitSpy = spyOn(component.start, 'emit');
-            component.selectedProcessDef = testProcessDefRepr;
+            component.selectedProcessDef = testProcessDef;
             component.startProcess();
             fixture.whenStable().then(() => {
                 expect(emitSpy).toHaveBeenCalledWith(newProcess);
@@ -432,7 +432,7 @@ describe('StartFormComponent', () => {
             let errorSpy = spyOn(component.error, 'error');
             let error = { message: 'My error' };
             startProcessSpy = startProcessSpy.and.returnValue(throwError(error));
-            component.selectedProcessDef = testProcessDefRepr;
+            component.selectedProcessDef = testProcessDef;
             component.startProcess();
             fixture.whenStable().then(() => {
                 expect(errorSpy).toHaveBeenCalledWith(error);
@@ -442,7 +442,7 @@ describe('StartFormComponent', () => {
         it('should indicate an error to the user if process cannot be started', async(() => {
             fixture.detectChanges();
             startProcessSpy = startProcessSpy.and.returnValue(throwError({}));
-            component.selectedProcessDef = testProcessDefRepr;
+            component.selectedProcessDef = testProcessDef;
             component.startProcess();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -458,7 +458,7 @@ describe('StartFormComponent', () => {
                 done();
             });
 
-            component.selectedProcessDef = testProcessDefRepr;
+            component.selectedProcessDef = testProcessDef;
             component.name = 'my:Process';
             component.startProcess();
             fixture.detectChanges();
@@ -491,7 +491,7 @@ describe('StartFormComponent', () => {
 
         it('should able to start the process when the required fields are filled up', (done) => {
             component.name = 'my:process1';
-            component.selectedProcessDef = testProcessDefRepr;
+            component.selectedProcessDef = testProcessDef;
 
             let disposableStart = component.start.subscribe(() => {
                 disposableStart.unsubscribe();
@@ -502,7 +502,7 @@ describe('StartFormComponent', () => {
         });
 
         it('should return true if startFrom defined', async(() => {
-            component.selectedProcessDef = testProcessDefRepr;
+            component.selectedProcessDef = testProcessDef;
             component.name = 'my:process1';
             component.selectedProcessDef.hasStartForm = true;
             component.hasStartForm();

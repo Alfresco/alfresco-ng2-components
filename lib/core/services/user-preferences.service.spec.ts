@@ -126,7 +126,7 @@ describe('UserPreferencesService', () => {
         expect(preferences.getDefaultLocale()).toBe('fake-locate-browser');
     });
 
-    it('should return as default locale the component propery as third ', () => {
+    it('should return as default locale the component property as third ', () => {
         spyOn(translate, 'getBrowserLang').and.stub();
         expect(preferences.getDefaultLocale()).toBe('en');
     });

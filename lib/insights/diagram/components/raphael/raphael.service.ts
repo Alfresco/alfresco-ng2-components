@@ -48,8 +48,6 @@ export class RaphaelService implements OnDestroy {
             throw new Error('insights configuration issue: Embedding Chart.js lib is mandatory');
         }
         let paper = new Raphael(ctx, this.width, this.height);
-        // paper.setViewBox(0, 0, 583, 344.08374193550003, false);
-        // paper.renderfix();
         return paper;
     }
 

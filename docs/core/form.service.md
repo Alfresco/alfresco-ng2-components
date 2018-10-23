@@ -78,7 +78,7 @@ class MyComponent {
 -   `getProcessDefinitions():`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Get Process Definitions  
 
--   `getProcessVarablesById(processInstanceId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any[]>`  
+-   `getProcessVariablesById(processInstanceId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any[]>`  
     Get instance variables for a process.  
     -   `processInstanceId` - ID of the target process
 -   `getTasks():`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
@@ -108,7 +108,7 @@ class MyComponent {
 -   `getStartFormInstance(processId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Get start form instance for a given processId  
     -   `processId` - Process definition ID
--   `getProcessIntance(processId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
+-   `getProcessInstance(processId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Gets a process instance.  
     -   `processId` - ID of the process to get
 -   `getStartFormDefinition(processId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  

@@ -120,8 +120,8 @@ describe('Version component actions', () => {
 
         versionManagePage.clickAcceptConfirm();
 
-        versionManagePage.chekFileVersionNotExist('1.1');
-        versionManagePage.chekFileVersionExist('1.0');
+        versionManagePage.checkFileVersionNotExist('1.1');
+        versionManagePage.checkFileVersionExist('1.0');
     });
 
     it('[C280006] Should be possible prevent a version to be deleted when click on No on the confirm dialog', () => {
@@ -129,20 +129,20 @@ describe('Version component actions', () => {
 
         versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
-        versionManagePage.chekFileVersionExist('1.1');
+        versionManagePage.checkFileVersionExist('1.1');
 
         versionManagePage.deleteFileVersion('1.1');
 
         versionManagePage.clickCancelConfirm();
 
-        versionManagePage.chekFileVersionExist('1.1');
-        versionManagePage.chekFileVersionExist('1.0');
+        versionManagePage.checkFileVersionExist('1.1');
+        versionManagePage.checkFileVersionExist('1.0');
     });
 
     it('[C280007] Should be possible restore an old version of your file', () => {
         versionManagePage.restoreFileVersion('1.0');
 
-        versionManagePage.chekFileVersionExist('2.0');
+        versionManagePage.checkFileVersionExist('2.0');
     });
 
 });

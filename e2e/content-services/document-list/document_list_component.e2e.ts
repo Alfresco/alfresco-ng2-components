@@ -145,6 +145,7 @@ describe('Document List Component', () => {
 
             acsUser = new AcsUserModel();
 
+            /* cspell:disable-next-line */
             folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
 
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -333,6 +334,7 @@ describe('Document List Component', () => {
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
         acsUser = new AcsUserModel();
+        /* cspell:disable-next-line */
         let folderName = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -364,6 +366,7 @@ describe('Document List Component', () => {
 
     it('[C268119] "ygj" letters should be rendered properly', async (done) => {
         acsUser = new AcsUserModel();
+        /* cspell:disable-next-line */
         let folderName = 'ggggggjjjjjjjjjjjjyyyyyy';
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -391,8 +394,8 @@ describe('Document List Component', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkContentIsDisplayed(folderNameA);
         contentServicesPage.checkContentIsDisplayed(folderNameB);
-        contentServicesPage.checkLockIsDislpayedForElement(folderNameA);
-        contentServicesPage.checkLockIsDislpayedForElement(folderNameB);
+        contentServicesPage.checkLockIsDisplayedForElement(folderNameA);
+        contentServicesPage.checkLockIsDisplayedForElement(folderNameB);
         done();
     });
 
@@ -415,8 +418,8 @@ describe('Document List Component', () => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.checkContentIsDisplayed(testFileA.name);
         contentServicesPage.checkContentIsDisplayed(testFileB.name);
-        contentServicesPage.checkLockIsDislpayedForElement(testFileA.name);
-        contentServicesPage.checkLockIsDislpayedForElement(testFileB.name);
+        contentServicesPage.checkLockIsDisplayedForElement(testFileA.name);
+        contentServicesPage.checkLockIsDisplayedForElement(testFileB.name);
         done();
     });
 

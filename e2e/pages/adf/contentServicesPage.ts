@@ -423,11 +423,11 @@ export class ContentServicesPage {
         Util.waitUntilElementIsVisible(this.createdHeader);
     }
 
-    checkDandDIsDisplayed() {
+    checkDragAndDropDIsDisplayed() {
         Util.waitUntilElementIsVisible(this.dragAndDrop);
     }
 
-    checkLockIsDislpayedForElement(name) {
+    checkLockIsDisplayedForElement(name) {
         let lockButton = element(by.css(`div.adf-data-table-cell[filename="${name}"] button`));
         Util.waitUntilElementIsVisible(lockButton);
     }

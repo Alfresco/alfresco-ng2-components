@@ -55,6 +55,7 @@ export class AppLayoutComponent implements OnInit {
         { href: '/settings-layout', icon: 'settings', title: 'APP_LAYOUT.SETTINGS' },
         { href: '/config-editor', icon: 'code', title: 'APP_LAYOUT.CONFIG-EDITOR' },
         { href: '/extendedSearch', icon: 'search', title: 'APP_LAYOUT.SEARCH' },
+        /* cspell:disable-next-line */
         { href: '/overlay-viewer', icon: 'pageview', title: 'APP_LAYOUT.OVERLAY_VIEWER' },
         { href: '/about', icon: 'info_outline', title: 'APP_LAYOUT.ABOUT' }
     ];
@@ -66,7 +67,7 @@ export class AppLayoutComponent implements OnInit {
     hideSidenav = false;
     showMenu = true;
 
-    enabelRedirect = true;
+    enableRedirect = true;
     color = 'primary';
     title = 'APP_LAYOUT.APP_NAME';
     logo: string;
@@ -78,7 +79,7 @@ export class AppLayoutComponent implements OnInit {
         const preserveState = this.config.get('sideNav.preserveState');
 
         if (preserveState && expand) {
-            this.expandedSidenav = (this.userpreference.get('expandedSidenav', expand.toString()) === 'true');
+            this.expandedSidenav = (this.userPreferences.get('expandedSidenav', expand.toString()) === 'true');
         } else if (expand) {
             this.expandedSidenav = expand;
         }
@@ -94,18 +95,18 @@ export class AppLayoutComponent implements OnInit {
     }
 
     constructor(
-        private userpreference: UserPreferencesService,
+        private userPreferences: UserPreferencesService,
         private config: AppConfigService,
         private alfrescoApiService: AlfrescoApiService,
         private headerService: HeaderDataService) {
         if (this.alfrescoApiService.getInstance().isOauthConfiguration()) {
-            this.enabelRedirect = false;
+            this.enableRedirect = false;
         }
     }
 
     setState(state) {
         if (this.config.get('sideNav.preserveState')) {
-            this.userpreference.set('expandedSidenav', state);
+            this.userPreferences.set('expandedSidenav', state);
         }
     }
 }

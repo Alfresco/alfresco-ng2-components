@@ -23,7 +23,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
 
     private localeData: any = moment.localeData();
 
-    overrideDisplyaFormat: string;
+    overrideDisplayFormat: string;
 
     getYear(date: Moment): number {
         return date.year();
@@ -109,7 +109,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
             let m = moment(value, parseFormat, locale, true);
             if (!m.isValid()) {
                 // use strict parsing because Moment's parser is very forgiving, and this can lead to undesired behavior.
-                m = moment(value, this.overrideDisplyaFormat, locale, true);
+                m = moment(value, this.overrideDisplayFormat, locale, true);
             }
             if (m.isValid()) {
                 // if user omits year, it defaults to 2001, so check for that issue.
@@ -131,7 +131,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
 
     format(date: Moment, displayFormat: any): string {
         date = this.clone(date);
-        displayFormat = this.overrideDisplyaFormat ? this.overrideDisplyaFormat : displayFormat;
+        displayFormat = this.overrideDisplayFormat ? this.overrideDisplayFormat : displayFormat;
 
         if (date && date.format) {
             return date.format(displayFormat);

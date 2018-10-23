@@ -49,7 +49,7 @@ describe('FormRenderingService', () => {
         expect(type).toBe(UploadWidgetComponent);
     });
 
-    it('should resolve Uknown widget for unknown field type', () => {
+    it('should resolve Unknown widget for unknown field type', () => {
         let resolver = service.getComponentTypeResolver('missing-type');
         let type = resolver(null);
         expect(type).toBe(UnknownWidgetComponent);

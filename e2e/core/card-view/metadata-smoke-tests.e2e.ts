@@ -36,7 +36,7 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 describe('Metadata component', () => {
 
     const METADATA = {
-        DATAFORMAT: 'mmm dd yyyy',
+        DATA_FORMAT: 'mmm dd yyyy',
         TITLE: 'Details',
         COMMENTS_TAB: 'COMMENTS',
         PROPERTY_TAB: 'PROPERTIES',
@@ -106,9 +106,9 @@ describe('Metadata component', () => {
         expect(metadataViewPage.getExpandedAspectName()).toEqual(METADATA.DEFAULT_ASPECT);
         expect(metadataViewPage.getName()).toEqual(pngFileModel.name);
         expect(metadataViewPage.getCreator()).toEqual(pngFileModel.getCreatedByUser().displayName);
-        expect(metadataViewPage.getCreatedDate()).toEqual(dateFormat(pngFileModel.createdAt, METADATA.DATAFORMAT));
+        expect(metadataViewPage.getCreatedDate()).toEqual(dateFormat(pngFileModel.createdAt, METADATA.DATA_FORMAT));
         expect(metadataViewPage.getModifier()).toEqual(pngFileModel.getCreatedByUser().displayName);
-        expect(metadataViewPage.getModifiedDate()).toEqual(dateFormat(pngFileModel.createdAt, METADATA.DATAFORMAT));
+        expect(metadataViewPage.getModifiedDate()).toEqual(dateFormat(pngFileModel.createdAt, METADATA.DATA_FORMAT));
         expect(metadataViewPage.getMimetypeName()).toEqual(pngFileModel.getContent().mimeTypeName);
         expect(metadataViewPage.getSize()).toEqual(pngFileModel.getContent().getSizeInBytes());
 
@@ -288,7 +288,7 @@ describe('Metadata component', () => {
 
         metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.clickMetadatGroup('EXIF');
+        metadataViewPage.clickMetadataGroup('EXIF');
 
         metadataViewPage.editIconClick();
 

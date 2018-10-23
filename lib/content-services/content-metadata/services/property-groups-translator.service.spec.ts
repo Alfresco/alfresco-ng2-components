@@ -152,7 +152,7 @@ describe('PropertyGroupTranslatorService', () => {
             expect(logService.error).toHaveBeenCalledWith('Unknown type for mapping: daemonic:scorcher');
         });
 
-        it('should fall back to singleline property type if unrecognised type is found', () => {
+        it('should fall back to single-line property type if unrecognised type is found', () => {
             property.name = 'FAS:PLAGUE';
             property.title = 'The Faro Plague';
             property.dataType = 'daemonic:scorcher';
@@ -170,7 +170,7 @@ describe('PropertyGroupTranslatorService', () => {
         });
     });
 
-    describe('Different types\'s attributes', () => {
+    describe('Different types attributes', () => {
 
         beforeEach(() => {
             propertyGroups.push(propertyGroup);

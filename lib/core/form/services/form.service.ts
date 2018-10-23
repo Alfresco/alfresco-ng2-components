@@ -193,7 +193,7 @@ export class FormService {
         )
         .pipe(
             map(function (forms: any) {
-                return forms.data.find(formdata => formdata.name === name);
+                return forms.data.find(formData => formData.name === name);
             }),
             catchError(err => this.handleError(err))
         );
@@ -232,7 +232,7 @@ export class FormService {
      * @param processInstanceId ID of the target process
      * @returns List of instance variable information
      */
-    getProcessVarablesById(processInstanceId: string): Observable<any[]> {
+    getProcessVariablesById(processInstanceId: string): Observable<any[]> {
         return from(this.processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId))
             .pipe(
                 map(this.toJson),
@@ -363,7 +363,7 @@ export class FormService {
      * @param processId ID of the process to get
      * @returns Process instance
      */
-    getProcessIntance(processId: string): Observable<any> {
+    getProcessInstance(processId: string): Observable<any> {
         return from(this.processApi.getProcessInstance(processId))
             .pipe(
                 map(this.toJson),

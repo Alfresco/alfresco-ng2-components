@@ -23,11 +23,15 @@ export let fakeGlobalTask = {
     total: 2,
     data: [
         {
-            id: 14, name: 'nameFake1',
+            id: 14,
+            name: 'nameFake1',
             description: 'descriptionFake1',
             category: 'categoryFake1',
             assignee: {
-                id: 2, firstName: 'firstNameFake1', lastName: 'lastNameFake1', email: 'emailFake1'
+                id: 2,
+                firstName: 'firstNameFake1',
+                lastName: 'lastNameFake1',
+                email: 'emailFake1'
             },
             created: '2017-03-01T12:25:17.189+0000',
             dueDate: '2017-04-02T12:25:17.189+0000',
@@ -57,9 +61,15 @@ export let fakeGlobalTask = {
         },
 
         {
-            id: 2, name: '', description: 'descriptionFake2', category: null,
+            id: 2,
+            name: '',
+            description: 'descriptionFake2',
+            category: null,
             assignee: {
-                id: 1, firstName: 'fistNameFake2', lastName: 'Administrator2', email: 'admin'
+                id: 1,
+                firstName: 'fistNameFake2',
+                lastName: 'Administrator2',
+                email: 'admin'
             },
             created: '2017-03-01T12:25:17.189+0000',
             dueDate: '2017-04-02T12:25:17.189+0000',
@@ -68,30 +78,29 @@ export let fakeGlobalTask = {
     ]
 };
 
-export let fakeCutomSchema =
-    [
-        new ObjectDataColumn({
-            'key': 'fakeName',
-            'type': 'text',
-            'title': 'ADF_TASK_LIST.PROPERTIES.FAKE',
-            'sortable': true
-        }),
-        new ObjectDataColumn({
-            'key': 'fakeTaskName',
-            'type': 'text',
-            'title': 'ADF_TASK_LIST.PROPERTIES.TASK_FAKE',
-            'sortable': true
-        })
-    ];
+export let fakeCustomSchema = [
+    new ObjectDataColumn({
+        key: 'fakeName',
+        type: 'text',
+        title: 'ADF_TASK_LIST.PROPERTIES.FAKE',
+        sortable: true
+    }),
+    new ObjectDataColumn({
+        key: 'fakeTaskName',
+        type: 'text',
+        title: 'ADF_TASK_LIST.PROPERTIES.TASK_FAKE',
+        sortable: true
+    })
+];
 
 export let fakeColumnSchema = {
-    'default': [
+    default: [
         {
-            'key': 'name',
-            'type': 'text',
-            'title': 'ADF_TASK_LIST.PROPERTIES.NAME',
-            'sortable': true
+            key: 'name',
+            type: 'text',
+            title: 'ADF_TASK_LIST.PROPERTIES.NAME',
+            sortable: true
         }
-    ]
-    , fakeCutomSchema
+    ],
+    fakeCustomSchema
 };

@@ -53,11 +53,11 @@ import { share } from 'rxjs/operators';
 })
 export class TaskDetailsComponent implements OnInit, OnChanges {
 
-    @ViewChild('activiticomments')
-    activiticomments: CommentsComponent;
+    @ViewChild('activitiComments')
+    activitiComments: CommentsComponent;
 
-    @ViewChild('activitichecklist')
-    activitichecklist: any;
+    @ViewChild('activitiChecklist')
+    activitiChecklist: any;
 
     @ViewChild('errorDialog')
     errorDialog: TemplateRef<any>;

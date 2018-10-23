@@ -65,7 +65,7 @@ export class CardViewDateItemComponent implements OnInit {
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
-        (<MomentDateAdapter> this.dateAdapter).overrideDisplyaFormat = this.SHOW_FORMAT;
+        (<MomentDateAdapter> this.dateAdapter).overrideDisplayFormat = this.SHOW_FORMAT;
 
         if (this.property.value) {
             this.valueDate = moment(this.property.value, this.SHOW_FORMAT);

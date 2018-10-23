@@ -18,7 +18,7 @@ Logs the user out when the decorated element is clicked.
 | Name | Type | Default value | Description |
 | -- | -- | -- | -- |
 | redirectUri | `string` |  'login' | Uri to be redirect after the logout |
-| enabelRedirect | `boolean` |  'true' | enable/disable redirect after logout |
+| enableRedirect | `boolean` |  'true' | enable/disable redirect after logout |
 
 
 ## See also

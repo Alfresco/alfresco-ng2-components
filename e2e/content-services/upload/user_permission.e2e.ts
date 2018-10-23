@@ -119,7 +119,7 @@ describe('Upload - User permission', () => {
         });
 
         it('[C212861] Should not be allowed to Drag and drop a file/folder in a folder with consumer permissions', () => {
-            contentServicesPage.checkDandDIsDisplayed();
+            contentServicesPage.checkDragAndDropDIsDisplayed();
 
             let dragAndDrop = new DropActions();
             let dragAndDropArea = element.all(by.css('adf-upload-drag-area div')).first();
@@ -196,7 +196,7 @@ describe('Upload - User permission', () => {
         });
 
         it('[C260130] Should be allowed to Drag and drop a file/folder in a folder with manager permissions', () => {
-            contentServicesPage.checkDandDIsDisplayed();
+            contentServicesPage.checkDragAndDropDIsDisplayed();
 
             let dragAndDrop = new DropActions();
 

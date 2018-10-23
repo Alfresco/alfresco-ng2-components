@@ -346,7 +346,7 @@ export let startMockForm = {
                 1: [
                     {
                         fieldType: 'FormFieldRepresentation',
-                        id: 'billamount',
+                        id: 'billAmount',
                         name: 'BillAmount',
                         type: 'integer',
                         value: null,
@@ -526,7 +526,7 @@ export let startMockForm = {
                 2: [
                     {
                         fieldType: 'FormFieldRepresentation',
-                        id: 'hospitalname',
+                        id: 'hospitalName',
                         name: 'HospitalName',
                         type: 'text',
                         value: null,
@@ -769,7 +769,7 @@ export let startMockFormWithTab = {
                 1: [
                     {
                         fieldType: 'FormFieldRepresentation',
-                        id: 'billamount',
+                        id: 'billAmount',
                         name: 'BillAmount',
                         type: 'integer',
                         value: null,
@@ -949,7 +949,7 @@ export let startMockFormWithTab = {
                 2: [
                     {
                         fieldType: 'FormFieldRepresentation',
-                        id: 'hospitalname',
+                        id: 'hospitalName',
                         name: 'HospitalName',
                         type: 'text',
                         value: null,

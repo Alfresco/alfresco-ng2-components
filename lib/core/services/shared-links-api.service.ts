@@ -37,7 +37,7 @@ export class SharedLinksApiService {
 
     /**
      * Gets shared links available to the current user.
-     * @param options Options supported by JSAPI
+     * @param options Options supported by JS-API
      * @returns List of shared links
      */
     getSharedLinks(options: any = {}): Observable<NodePaging> {
@@ -57,7 +57,7 @@ export class SharedLinksApiService {
     /**
      * Creates a shared link available to the current user.
      * @param nodeId ID of the node to link to
-     * @param options Options supported by JSAPI
+     * @param options Options supported by JS-API
      * @returns The shared link just created
      */
     createSharedLinks(nodeId: string, options: any = {}): Observable<SharedLinkEntry> {

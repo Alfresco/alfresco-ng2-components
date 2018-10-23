@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* spellchecker: disable */
+
 export const fakeAuthorityResults: any[] = [{
     'entry': {
         'aspectNames': [

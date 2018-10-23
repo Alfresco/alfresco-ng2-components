@@ -53,7 +53,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
 
     constructor(private cardItemTypeService: CardItemTypeService,
                 private resolver: ComponentFactoryResolver) {
-        const dynamicLifecycleMethods = [
+        const dynamicLifeCycleMethods = [
             'ngOnInit',
             'ngDoCheck',
             'ngAfterContentInit',
@@ -63,8 +63,8 @@ export class CardViewItemDispatcherComponent implements OnChanges {
             'ngOnDestroy'
         ];
 
-        dynamicLifecycleMethods.forEach((dynamicLifecycleMethod) => {
-            this[dynamicLifecycleMethod] = this.proxy.bind(this, dynamicLifecycleMethod);
+        dynamicLifeCycleMethods.forEach(method => {
+            this[method] = this.proxy.bind(this, method);
         });
     }
 

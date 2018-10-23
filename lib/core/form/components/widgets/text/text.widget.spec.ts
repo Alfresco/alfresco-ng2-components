@@ -117,7 +117,7 @@ describe('TextWidgetComponent', () => {
                     params: {inputMask: '##-##0,00%'},
                     type: FormFieldTypes.TEXT,
                     readOnly: false,
-                    placeholder: 'simple palceholder'
+                    placeholder: 'simple placeholder'
                 });
 
                 fixture.detectChanges();
@@ -132,7 +132,7 @@ describe('TextWidgetComponent', () => {
             it('should show the field placeholder', () => {
                 expect(inputElement).toBeDefined();
                 expect(inputElement).not.toBeNull();
-                expect(inputElement.placeholder).toBe('simple palceholder');
+                expect(inputElement.placeholder).toBe('simple placeholder');
             });
 
             it('should show the field placeholder when clicked', async(() => {
@@ -142,7 +142,7 @@ describe('TextWidgetComponent', () => {
                     fixture.detectChanges();
                     expect(inputElement).toBeDefined();
                     expect(inputElement).not.toBeNull();
-                    expect(inputElement.placeholder).toBe('simple palceholder');
+                    expect(inputElement.placeholder).toBe('simple placeholder');
                 });
             }));
 
@@ -194,7 +194,7 @@ describe('TextWidgetComponent', () => {
                 });
             }));
 
-            it('should autofill masked configured value on keyUp event', async(() => {
+            it('should auto-fill masked configured value on keyUp event', async(() => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
 
                 inputElement.value = '12345678';
@@ -263,7 +263,7 @@ describe('TextWidgetComponent', () => {
                     params: {inputMask: '##-##0,00%', inputMaskPlaceholder: 'Phone : (__) ___-___'},
                     type: FormFieldTypes.TEXT,
                     readOnly: false,
-                    placeholder: 'simple palceholder'
+                    placeholder: 'simple placeholder'
                 });
 
                 fixture.detectChanges();

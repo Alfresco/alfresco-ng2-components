@@ -39,7 +39,7 @@ describe('CardViewDateItemComponent', () => {
         component.property = new CardViewDateItemModel({
             label: 'Date label',
             value: new Date('07/10/2017'),
-            key: 'datekey',
+            key: 'dateKey',
             default: '',
             format: '',
             editable: false
@@ -66,7 +66,7 @@ describe('CardViewDateItemComponent', () => {
         component.property = new CardViewDateItemModel({
             label: 'Date label',
             value: '',
-            key: 'datekey',
+            key: 'dateKey',
             default: 'FAKE-DEFAULT-KEY',
             format: '',
             editable: false
@@ -84,7 +84,7 @@ describe('CardViewDateItemComponent', () => {
         component.property = new CardViewDateItemModel({
             label: 'Date label',
             value: '',
-            key: 'datekey',
+            key: 'dateKey',
             default: 'FAKE-DEFAULT-KEY',
             format: '',
             editable: false
@@ -102,7 +102,7 @@ describe('CardViewDateItemComponent', () => {
         component.property = new CardViewDateItemModel({
             label: 'Date label',
             value: '',
-            key: 'datekey',
+            key: 'dateKey',
             default: 'FAKE-DEFAULT-KEY',
             format: '',
             editable: true
@@ -157,7 +157,7 @@ describe('CardViewDateItemComponent', () => {
         expect(datePickerToggle).toBeNull('Datepicker toggle should NOT be shown');
     });
 
-    it('should open the dateXXXpicker when clicking on the label', () => {
+    it('should open the datepicker when clicking on the label', () => {
         component.editable = true;
         component.property.editable = true;
         fixture.detectChanges();
@@ -179,7 +179,7 @@ describe('CardViewDateItemComponent', () => {
         let disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
             (updateNotification) => {
                 expect(updateNotification.target).toBe(component.property);
-                expect(updateNotification.changed).toEqual({ datekey: expectedDate.toDate() });
+                expect(updateNotification.changed).toEqual({ dateKey: expectedDate.toDate() });
                 disposableUpdate.unsubscribe();
                 done();
             }
@@ -188,7 +188,7 @@ describe('CardViewDateItemComponent', () => {
         component.onDateChanged({ value: expectedDate });
     });
 
-    it('should update the propery\'s value after a succesful update attempt', async(() => {
+    it('should update the property value after a successful update attempt', async(() => {
         component.editable = true;
         component.property.editable = true;
         component.property.value = null;

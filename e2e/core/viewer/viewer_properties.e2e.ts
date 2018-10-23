@@ -145,7 +145,7 @@ describe('Viewer - properties', () => {
         viewerPage.disableCustomName();
     });
 
-    it('[C260090] Sould showSidebar allow right info-drawer to be shown', () => {
+    it('[C260090] Should showSidebar allow right info-drawer to be shown', () => {
         viewerPage.clickToggleRightSidebar();
         viewerPage.checkInfoSideBarIsDisplayed();
 
@@ -153,7 +153,7 @@ describe('Viewer - properties', () => {
         viewerPage.checkInfoSideBarIsNotDisplayed();
     });
 
-    it('[C286442] Sould showLeftSidebar allow left info-drawer to be shown', () => {
+    it('[C286442] Should showLeftSidebar allow left info-drawer to be shown', () => {
         viewerPage.clickToggleLeftSidebar();
         viewerPage.checkLeftSideBarIsNotDisplayed();
         viewerPage.clickLeftSidebarButton();

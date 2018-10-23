@@ -235,7 +235,7 @@
       }
     }
   },
-  "PERMISSON": {
+  "PERMISSION": {
     "LACKOF": "您没有 {{action}} {{type}} 的 {{permission}} 权限"
   },
   "METADATA": {

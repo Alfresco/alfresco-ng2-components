@@ -36,7 +36,7 @@ export class FormFieldModel extends FormWidgetModel {
     private _required: boolean = false;
 
     readonly defaultDateFormat: string = 'D-M-YYYY';
-    readonly deafultDateTimeFormat: string = 'D-M-YYYY hh:mm A';
+    readonly defaultDateTimeFormat: string = 'D-M-YYYY hh:mm A';
 
     // model members
     fieldType: string;
@@ -209,10 +209,10 @@ export class FormFieldModel extends FormWidgetModel {
             jsonField.params.field) {
             originalType = jsonField.params.field.type;
         }
-        return originalType === FormFieldTypes.DATETIME ? this.deafultDateTimeFormat : this.defaultDateFormat;
+        return originalType === FormFieldTypes.DATETIME ? this.defaultDateTimeFormat : this.defaultDateFormat;
     }
 
-    private isTypeaHeadFieldType(type: string): boolean {
+    private isTypeaheadFieldType(type: string): boolean {
         return type === 'typeahead' ? true : false;
     }
 
@@ -222,7 +222,7 @@ export class FormFieldModel extends FormWidgetModel {
 
     private getProcessVariableValue(field: any, form: FormModel) {
         let fieldName = field.name;
-        if (this.isTypeaHeadFieldType(field.type)) {
+        if (this.isTypeaheadFieldType(field.type)) {
             fieldName = this.getFieldNameWithLabel(field.id);
         }
         return this.findProcessVariableValue(fieldName, form);
@@ -400,6 +400,7 @@ export class FormFieldModel extends FormWidgetModel {
             case FormFieldTypes.DATETIME:
                 const dateTimeValue = moment(this.value, this.dateDisplayFormat, true);
                 if (dateTimeValue && dateTimeValue.isValid()) {
+                    /* cspell:disable-next-line */
                     this.form.values[this.id] = dateTimeValue.format('YYYY-MM-DDTHH:mm:ssZ');
                 } else {
                     this.form.values[this.id] = null;

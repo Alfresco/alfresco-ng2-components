@@ -45,9 +45,9 @@ export class LoginPage {
     needHelp = element(by.css('div[id="adf-login-action-left"]'));
     register = element(by.css('div[id="adf-login-action-right"]'));
     footerSwitch = element(by.id('switch4'));
-    rememberMeSwitch = element(by.id('adf-toogle-show-rememberme'));
-    successRouteSwitch = element(by.id('adf-toogle-show-successRoute'));
-    logoSwitch = element(by.id('adf-toogle-logo'));
+    rememberMeSwitch = element(by.id('adf-toggle-show-rememberme'));
+    successRouteSwitch = element(by.id('adf-toggle-show-successRoute'));
+    logoSwitch = element(by.id('adf-toggle-logo'));
     header = element(by.id('adf-header'));
     cardBackground = element(by.css('mat-card[class*="adf-login-card"]'));
     settingsPage = new SettingsPage();
@@ -297,10 +297,6 @@ export class LoginPage {
 
     enableSuccessRouteSwitch() {
         this.formControllersPage.enableToggle(this.successRouteSwitch);
-    }
-
-    disableLogowitch() {
-        this.formControllersPage.disableToggle(this.logoSwitch);
     }
 
     enableLogoSwitch() {

@@ -183,10 +183,10 @@ describe('DocumentActionsService', () => {
         let file = new FileNode();
         let fileWithPermission: any = file;
         fileWithPermission.entry.allowableOperations = [permission];
-        const deleteObservale = service.getHandler('delete')(fileWithPermission, null, permission);
+        const deleteObservable = service.getHandler('delete')(fileWithPermission, null, permission);
 
         expect(documentListService.deleteNode).toHaveBeenCalledWith(file.entry.id);
-        expect(deleteObservale.subscribe).toBeDefined();
+        expect(deleteObservable.subscribe).toBeDefined();
     });
 
     it('should support deletion only file node', () => {

@@ -19,7 +19,7 @@ The release can be found on GitHub at [this link.](https://github.com/Alfresc
     -   [8. Process Header Component](#8-process-header-component)
     -   [9. Search list Component new delete file feature]\(#9-search-list-component new-delete-file-feature)
     -   [10. Login new property](#10-login-new-property)
-    -   [11. TaskDetails - DueDate and Description editable](#11-taskdetails---duedate-and-description-editable)
+    -   [11. TaskDetails - DueDate and Description editable](#11-taskDetails---duedate-and-description-editable)
     -   [12. Configuration back end service hostname feature]\(#12-configuration-back-end-service hostname feature)
     -   [13. User Preferences Service](#13-user-preferences-service)
     -   [14. Search results highlighting properties](#14-search-results-highlighting-properties)

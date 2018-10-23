@@ -98,7 +98,7 @@ describe('Version component', () => {
     it('[C272768] Should be visible the first file version when you upload a file', () => {
         versionManagePage.checkUploadNewVersionsButtonIsDisplayed();
 
-        versionManagePage.chekFileVersionExist('1.0');
+        versionManagePage.checkFileVersionExist('1.0');
         expect(versionManagePage.getFileVersionName('1.0')).toEqual(txtFileModel.name);
         expect(versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
     });
@@ -133,11 +133,11 @@ describe('Version component', () => {
         versionManagePage.showNewVersionButton.click();
         versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
-        versionManagePage.chekFileVersionExist('1.0');
+        versionManagePage.checkFileVersionExist('1.0');
         expect(versionManagePage.getFileVersionName('1.0')).toEqual(txtFileModel.name);
         expect(versionManagePage.getFileVersionDate('1.0')).not.toBeUndefined();
 
-        versionManagePage.chekFileVersionExist('1.1');
+        versionManagePage.checkFileVersionExist('1.1');
         expect(versionManagePage.getFileVersionName('1.1')).toEqual(fileModelVersionTwo.name);
         expect(versionManagePage.getFileVersionDate('1.1')).not.toBeUndefined();
     });
@@ -147,7 +147,7 @@ describe('Version component', () => {
         versionManagePage.enterCommentText('Example comment text');
         versionManagePage.uploadNewVersionFile(fileModelVersionThree.location);
 
-        versionManagePage.chekFileVersionExist('1.2');
+        versionManagePage.checkFileVersionExist('1.2');
         expect(versionManagePage.getFileVersionName('1.2')).toEqual(fileModelVersionThree.name);
         expect(versionManagePage.getFileVersionDate('1.2')).not.toBeUndefined();
         expect(versionManagePage.getFileVersionComment('1.2')).toEqual('Example comment text');
@@ -159,7 +159,7 @@ describe('Version component', () => {
 
         versionManagePage.uploadNewVersionFile(fileModelVersionFor.location);
 
-        versionManagePage.chekFileVersionExist('2.0');
+        versionManagePage.checkFileVersionExist('2.0');
         expect(versionManagePage.getFileVersionName('2.0')).toEqual(fileModelVersionFor.name);
 
         versionManagePage.showNewVersionButton.click();
@@ -167,7 +167,7 @@ describe('Version component', () => {
 
         versionManagePage.uploadNewVersionFile(fileModelVersionFive.location);
 
-        versionManagePage.chekFileVersionExist('2.1');
+        versionManagePage.checkFileVersionExist('2.1');
         expect(versionManagePage.getFileVersionName('2.1')).toEqual(fileModelVersionFive.name);
     });
 

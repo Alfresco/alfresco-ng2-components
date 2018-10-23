@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { fakeRedition, fakeReditionCreated, fakeReditionsList } from '../mock/renditionsService.mock';
+import { fakeRendition, fakeRenditionCreated, fakeRenditionsList } from '../mock/renditionsService.mock';
 import { RenditionsService } from './renditions.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';
@@ -55,7 +55,7 @@ describe('RenditionsService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 200,
             contentType: 'application/json',
-            responseText: JSON.stringify(fakeReditionsList)
+            responseText: JSON.stringify(fakeRenditionsList)
         });
     });
 
@@ -107,7 +107,7 @@ describe('RenditionsService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 200,
             contentType: 'application/json',
-            responseText: JSON.stringify(fakeRedition)
+            responseText: JSON.stringify(fakeRendition)
         });
     });
 
@@ -132,7 +132,7 @@ describe('RenditionsService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 200,
             contentType: 'application/json',
-            responseText: JSON.stringify(fakeReditionCreated)
+            responseText: JSON.stringify(fakeRenditionCreated)
         });
     });
 
@@ -145,7 +145,7 @@ describe('RenditionsService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 200,
             contentType: 'application/json',
-            responseText: JSON.stringify(fakeRedition)
+            responseText: JSON.stringify(fakeRendition)
         });
     });
 

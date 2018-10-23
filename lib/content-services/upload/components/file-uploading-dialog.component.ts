@@ -54,7 +54,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     private errorSubscription: Subscription;
 
     constructor(private uploadService: UploadService,
-                private changeDetecor: ChangeDetectorRef) {
+                private changeDetector: ChangeDetectorRef) {
     }
 
     ngOnInit() {
@@ -73,18 +73,18 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
             )
             .subscribe((event: (FileUploadDeleteEvent | FileUploadCompleteEvent)) => {
                 this.totalCompleted = event.totalComplete;
-                this.changeDetecor.detectChanges();
+                this.changeDetector.detectChanges();
             });
 
         this.errorSubscription = this.uploadService.fileUploadError
             .subscribe((event: FileUploadErrorEvent) => {
                 this.totalErrors = event.totalError;
-                this.changeDetecor.detectChanges();
+                this.changeDetector.detectChanges();
             });
 
         this.fileUploadSubscription = this.uploadService
             .fileUpload.subscribe(() => {
-                this.changeDetecor.detectChanges();
+                this.changeDetector.detectChanges();
             });
 
         this.uploadService.fileDeleted.subscribe((objId) => {
@@ -94,7 +94,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
                 });
                 if (file) {
                     file.status = FileUploadStatus.Cancelled;
-                    this.changeDetecor.detectChanges();
+                    this.changeDetector.detectChanges();
                 }
             }
         });
@@ -112,7 +112,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Cancel uploads and hide confiramtion
+     * Cancel uploads and hide confirmation
      */
     cancelAllUploads() {
         this.toggleConfirmation();
@@ -125,7 +125,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
      */
     toggleMinimized(): void {
         this.isDialogMinimized = !this.isDialogMinimized;
-        this.changeDetecor.detectChanges();
+        this.changeDetector.detectChanges();
     }
 
     /**
@@ -139,7 +139,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
         this.isDialogActive = false;
         this.isDialogMinimized = false;
         this.uploadService.clearQueue();
-        this.changeDetecor.detectChanges();
+        this.changeDetector.detectChanges();
     }
 
     ngOnDestroy() {

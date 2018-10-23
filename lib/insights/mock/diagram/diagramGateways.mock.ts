@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export let exclusiveGatway = {
+export let exclusiveGateway = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'ExclusiveGateway',
     width: 40,
@@ -25,7 +25,7 @@ export let exclusiveGatway = {
     properties: [{}]
 };
 
-export let exclusiveGatwayActive = {
+export let exclusiveGatewayActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -37,7 +37,7 @@ export let exclusiveGatwayActive = {
     properties: [{}]
 };
 
-export let exclusiveGatwayCompleted = {
+export let exclusiveGatewayCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -49,7 +49,7 @@ export let exclusiveGatwayCompleted = {
     properties: [{}]
 };
 
-export let inclusiveGatway = {
+export let inclusiveGateway = {
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
     type: 'InclusiveGateway',
     width: 40,
@@ -59,7 +59,7 @@ export let inclusiveGatway = {
     properties: [{}]
 };
 
-export let inclusiveGatwayActive = {
+export let inclusiveGatewayActive = {
     completed: false,
     current: true,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -71,7 +71,7 @@ export let inclusiveGatwayActive = {
     properties: [{}]
 };
 
-export let inclusiveGatwayCompleted = {
+export let inclusiveGatewayCompleted = {
     completed: true,
     current: false,
     id: 'sid-C05B7CB7-1CFD-4AE4-9E01-C2C91E35E5A7',
@@ -83,7 +83,7 @@ export let inclusiveGatwayCompleted = {
     properties: [{}]
 };
 
-export let parallelGatway = {
+export let parallelGateway = {
     id: 'sid-14EE23CE-0731-4E23-80F3-C557DA2A0CFC',
     type: 'ParallelGateway',
     width: 40,
@@ -93,7 +93,7 @@ export let parallelGatway = {
     properties: [{}]
 };
 
-export let parallelGatwayActive = {
+export let parallelGatewayActive = {
     completed: false,
     current: true,
     id: 'sid-14EE23CE-0731-4E23-80F3-C557DA2A0CFC',
@@ -105,7 +105,7 @@ export let parallelGatwayActive = {
     properties: [{}]
 };
 
-export let parallelGatwayCompleted = {
+export let parallelGatewayCompleted = {
     completed: true,
     current: false,
     id: 'sid-14EE23CE-0731-4E23-80F3-C557DA2A0CFC',
@@ -117,7 +117,7 @@ export let parallelGatwayCompleted = {
     properties: [{}]
 };
 
-export let eventGatway = {
+export let eventGateway = {
     id: 'sid-14EE23CE-0731-4E23-80F3-C557DA2A0CFC',
     type: 'EventGateway',
     width: 40,
@@ -127,7 +127,7 @@ export let eventGatway = {
     properties: [{}]
 };
 
-export let eventGatwayActive = {
+export let eventGatewayActive = {
     completed: false,
     current: true,
     id: 'sid-14EE23CE-0731-4E23-80F3-C557DA2A0CFC',
@@ -139,7 +139,7 @@ export let eventGatwayActive = {
     properties: [{}]
 };
 
-export let eventGatwayCompleted = {
+export let eventGatewayCompleted = {
     completed: true,
     current: false,
     id: 'sid-14EE23CE-0731-4E23-80F3-C557DA2A0CFC',

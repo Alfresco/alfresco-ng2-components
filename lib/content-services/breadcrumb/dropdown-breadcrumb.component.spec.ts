@@ -82,7 +82,7 @@ describe('DropdownBreadcrumb', () => {
         });
     });
 
-    it('should display only the path in the selectbox', (done) => {
+    it('should display only the path in the selectBox', (done) => {
         let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [
             { id: '1', name: 'Stark Industries' },
@@ -169,7 +169,7 @@ describe('DropdownBreadcrumb', () => {
         });
     });
 
-    it('should open the selectbox when clicking on the folder icon', (done) => {
+    it('should open the selectBox when clicking on the folder icon', (done) => {
         triggerComponentChange(JSON.parse(JSON.stringify(fakeNodeWithCreatePermission)));
         spyOn(component.dropdown, 'open');
 

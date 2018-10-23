@@ -249,7 +249,7 @@ describe('FileUploadingListComponent', () => {
             expect(component.isUploadCancelled()).toBe(false);
         });
 
-        it('should return false when there is at leat one file in progress', () => {
+        it('should return false when there is at least one file in progress', () => {
             component.files = <any> [
                 { status: FileUploadStatus.Progress },
                 { status: FileUploadStatus.Error },
@@ -259,7 +259,7 @@ describe('FileUploadingListComponent', () => {
             expect(component.isUploadCancelled()).toBe(false);
         });
 
-        it('should return false when there is at leat one file in pendding', () => {
+        it('should return false when there is at least one file in pending', () => {
             component.files = <any> [
                 { status: FileUploadStatus.Pending },
                 { status: FileUploadStatus.Error },

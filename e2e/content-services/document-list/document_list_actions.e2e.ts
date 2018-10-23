@@ -144,17 +144,17 @@ describe('Document List Component - Actions', () => {
 
     describe('Folder Actions', () => {
 
-        let folderName, secondfolderName;
+        let folderName, secondFolderName;
 
         beforeEach(async (done) => {
             acsUser = new AcsUserModel();
             folderName = `TATSUMAKY_${Util.generateRandomString(5)}_SENPOUKYAKU`;
-            secondfolderName = `TATSUMAKY_${Util.generateRandomString(5)}_SENPOUKYAKU`;
+            secondFolderName = `TATSUMAKY_${Util.generateRandomString(5)}_SENPOUKYAKU`;
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
-            secondUploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, secondfolderName, '-my-');
+            secondUploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, secondFolderName, '-my-');
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -192,8 +192,8 @@ describe('Document List Component - Actions', () => {
             browser.driver.sleep(15000);
 
             contentListPage.copyContent(folderName);
-            contentServicesPage.typeIntoNodeSelectorSearchField(secondfolderName);
-            contentServicesPage.clickContentNodeSelectorResult(secondfolderName);
+            contentServicesPage.typeIntoNodeSelectorSearchField(secondFolderName);
+            contentServicesPage.clickContentNodeSelectorResult(secondFolderName);
             contentServicesPage.clickCopyButton();
             contentServicesPage.checkContentIsDisplayed(folderName);
             contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);

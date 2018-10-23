@@ -203,10 +203,10 @@ describe('CommentListComponent', () => {
     }));
 
     it('comment date time should start with few seconds ago when comment date is few seconds ago', async(() => {
-        let commenFewSecond = Object.assign({}, processCommentOne);
-        commenFewSecond.created = new Date();
+        let commentFewSecond = Object.assign({}, processCommentOne);
+        commentFewSecond.created = new Date();
 
-        commentList.comments = [commenFewSecond];
+        commentList.comments = [commentFewSecond];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {

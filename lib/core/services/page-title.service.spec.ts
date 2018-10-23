@@ -65,6 +65,7 @@ describe('AppTitle service', () => {
     });
 
     it('should update title on language change', () => {
+        // cspell: disable-next
         spyOn(translationService, 'instant').and.returnValues('hello', 'привет');
 
         pageTitleService.setTitle('key');
@@ -73,10 +74,12 @@ describe('AppTitle service', () => {
         (<any> titleService).setTitle.calls.reset();
 
         translationService.translate.onLangChange.next(<any> {});
+        // cspell: disable-next
         expect(titleServiceSpy).toHaveBeenCalledWith('привет - My application');
     });
 
     it('should update title on new content download', () => {
+        // cspell: disable-next
         spyOn(translationService, 'instant').and.returnValues('hello', 'привет');
 
         pageTitleService.setTitle('key');
@@ -85,6 +88,7 @@ describe('AppTitle service', () => {
         (<any> titleService).setTitle.calls.reset();
 
         translationService.translate.onTranslationChange.next(<any> {});
+        // cspell: disable-next
         expect(titleServiceSpy).toHaveBeenCalledWith('привет - My application');
     });
 });

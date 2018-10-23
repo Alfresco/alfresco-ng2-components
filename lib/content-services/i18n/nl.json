@@ -235,7 +235,7 @@
       }
     }
   },
-  "PERMISSON": {
+  "PERMISSION": {
     "LACKOF": "U hebt geen {{permission}} rechten voor het {{action}} van {{type}}"
   },
   "METADATA": {

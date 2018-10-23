@@ -110,7 +110,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
         return this.getDisplayUser(firstName, lastName, '');
     }
 
-    onAddAssignement() {
+    onAddAssignment() {
         this.showAssignment = true;
     }
 

@@ -107,7 +107,7 @@ describe('Version Properties', () => {
         versionManagePage.enterCommentText('Example comment text');
         versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
 
-        versionManagePage.chekFileVersionExist('1.1');
+        versionManagePage.checkFileVersionExist('1.1');
         expect(versionManagePage.getFileVersionComment('1.1')).toEqual('Example comment text');
 
         versionManagePage.disableComments();

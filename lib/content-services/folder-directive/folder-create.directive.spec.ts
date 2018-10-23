@@ -32,7 +32,7 @@ import { MinimalNodeEntryEntity } from 'alfresco-js-api';
             [adf-create-folder]="parentNode"
             (success)="success($event)"
             title="create-title"
-            [nodeType]="'cm:my-litte-pony'">
+            [nodeType]="'cm:my-little-pony'">
         </div>`
 })
 class TestTypeComponent {
@@ -154,7 +154,7 @@ describe('FolderCreateDirective', () => {
                 data: {
                     parentNodeId: jasmine.any(String),
                     createTitle: 'create-title',
-                    nodeType: 'cm:my-litte-pony'
+                    nodeType: 'cm:my-little-pony'
                 },
                 width: jasmine.any(String)
             });

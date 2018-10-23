@@ -39,7 +39,7 @@ export class TaskDetailsPage {
     addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
     emailInvolvedUser = by.xpath('following-sibling::div[@class="people-email ng-star-inserted"]');
     editActionInvolvedUser = by.xpath('following-sibling::div[@class="people-edit-label ng-star-inserted"]');
-    tadkDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
+    taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
     taskDetailsSection = element(by.css('div[data-automation-id="adf-tasks-details"]'));
     taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
     completeTask = element(by.css('button[id="adf-no-form-complete-button"]'));
@@ -284,11 +284,11 @@ export class TaskDetailsPage {
     }
 
     taskInfoDrawerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.tadkDetailsInfoDrawer);
+        Util.waitUntilElementIsVisible(this.taskDetailsInfoDrawer);
     }
 
     taskInfoDrawerIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.tadkDetailsInfoDrawer);
+        Util.waitUntilElementIsNotOnPage(this.taskDetailsInfoDrawer);
     }
 
     checkNoPeopleIsInvolved() {

@@ -289,7 +289,7 @@ describe('CardViewTextItemComponent', () => {
             expect(component.errorMessages).toBe(expectedErrorMessages);
         });
 
-        it('should update the propery\'s value after a succesful update attempt', async(() => {
+        it('should update the property value after a successful update attempt', async(() => {
             component.property.isValid = () => true;
             component.update();
 

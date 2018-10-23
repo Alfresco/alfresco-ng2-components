@@ -30,11 +30,11 @@ import { AnalyticsReportListComponent } from './components/analytics-report-list
 import { AnalyticsReportParametersComponent } from './components/analytics-report-parameters.component';
 import { AnalyticsComponent } from './components/analytics.component';
 
-import { CheckboxWidgetAanalyticsComponent } from './components/widgets/checkbox/checkbox.widget';
+import { CheckboxWidgetAnalyticsComponent } from './components/widgets/checkbox/checkbox.widget';
 import { DateRangeWidgetComponent } from './components/widgets/date-range/date-range.widget';
-import { DropdownWidgetAanalyticsComponent } from './components/widgets/dropdown/dropdown.widget';
+import { DropdownWidgetAnalyticsComponent } from './components/widgets/dropdown/dropdown.widget';
 import { DurationWidgetComponent } from './components/widgets/duration/duration.widget';
-import { NumberWidgetAanlyticsComponent } from './components/widgets/number/number.widget';
+import { NumberWidgetAnalyticsComponent } from './components/widgets/number/number.widget';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -55,10 +55,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         AnalyticsReportParametersComponent,
         AnalyticsGeneratorComponent,
         AnalyticsReportHeatMapComponent,
-        DropdownWidgetAanalyticsComponent,
-        NumberWidgetAanlyticsComponent,
+        DropdownWidgetAnalyticsComponent,
+        NumberWidgetAnalyticsComponent,
         DurationWidgetComponent,
-        CheckboxWidgetAanalyticsComponent,
+        CheckboxWidgetAnalyticsComponent,
         DateRangeWidgetComponent
     ],
     exports: [
@@ -67,10 +67,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         AnalyticsReportParametersComponent,
         AnalyticsGeneratorComponent,
         AnalyticsReportHeatMapComponent,
-        DropdownWidgetAanalyticsComponent,
-        NumberWidgetAanlyticsComponent,
+        DropdownWidgetAnalyticsComponent,
+        NumberWidgetAnalyticsComponent,
         DurationWidgetComponent,
-        CheckboxWidgetAanalyticsComponent,
+        CheckboxWidgetAnalyticsComponent,
         DateRangeWidgetComponent
     ]
 })

@@ -37,7 +37,7 @@ export class TagService {
     /**
      * Gets a list of tags added to a node.
      * @param nodeId ID of the target node
-     * @returns TagPaging object (defined in JSAPI) containing the tags
+     * @returns TagPaging object (defined in JS-API) containing the tags
      */
     getTagsByNodeId(nodeId: string): any {
         return from(this.apiService.getInstance().core.tagsApi.getNodeTags(nodeId)).pipe(
@@ -47,8 +47,8 @@ export class TagService {
 
     /**
      * Gets a list of all the tags already defined in the repository.
-     * @param opts Options supported by JSAPI
-     * @returns TagPaging object (defined in JSAPI) containing the tags
+     * @param opts Options supported by JS-API
+     * @returns TagPaging object (defined in JS-API) containing the tags
      */
     getAllTheTags(opts?: any): Observable<TagPaging> {
         return from(this.apiService.getInstance().core.tagsApi.getTags(opts))
@@ -59,7 +59,7 @@ export class TagService {
      * Adds a tag to a node.
      * @param nodeId ID of the target node
      * @param tagName Name of the tag to add
-     * @returns TagEntry object (defined in JSAPI) with details of the new tag
+     * @returns TagEntry object (defined in JS-API) with details of the new tag
      */
     addTag(nodeId: string, tagName: string): any {
         const alfrescoApi: any = this.apiService.getInstance();

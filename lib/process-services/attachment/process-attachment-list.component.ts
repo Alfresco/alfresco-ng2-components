@@ -91,7 +91,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         });
     }
 
-    hasCutomEmptyTemplate() {
+    hasCustomEmptyTemplate() {
         return !!this.emptyTemplate;
     }
 

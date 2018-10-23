@@ -87,19 +87,19 @@ exports.Files = {
             people_id: "people",
             group_id: "groupofpeople",
             multiline_id: "multilinetext",
-            typeahead_id: "typeahead",
-            displaytext_id: "displaytext",
-            displayvalue_id: "displayvalue",
+            typeAhead_id: "typeahead",
+            displayText_id: "displaytext",
+            displayValue_id: "displayvalue",
             hyperlink_id: "hyperlink",
-            attachfolder_id: "attachfolder",
-            attachfile_id: "attachfile",
+            attachFolder_id: "attachfolder",
+            attachFile_id: "attachfile",
             date_id: "date",
             dateTime_id: "dateandtime",
             checkbox_id: "checkbox",
             dropdown_id: "dropdown",
             dropdown_value: "mat-select[id='dropdown'] span span",
-            radiobuttons_id: "radiobuttons",
-            dynamictable_id: "dynamictable"
+            radioButtons_id: "radiobuttons",
+            dynamicTable_id: "dynamictable"
         }
     },
 

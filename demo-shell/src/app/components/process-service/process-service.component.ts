@@ -79,8 +79,8 @@ const REPORT_ROUTE = 2;
 })
 export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit {
 
-    @ViewChild('activitifilter')
-    activitifilter: TaskFiltersComponent;
+    @ViewChild('activitiFilter')
+    activitiFilter: TaskFiltersComponent;
 
     @ViewChild('processListPagination')
     processListPagination: PaginationComponent;
@@ -91,23 +91,23 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @ViewChild('taskList')
     taskList: TaskListComponent;
 
-    @ViewChild('activitiprocessfilter')
-    activitiprocessfilter: ProcessFiltersComponent;
+    @ViewChild('activitiProcessFilter')
+    activitiProcessFilter: ProcessFiltersComponent;
 
     @ViewChild('processList')
     processList: ProcessInstanceListComponent;
 
-    @ViewChild('activitiprocessdetails')
-    activitiprocessdetails: ProcessInstanceDetailsComponent;
+    @ViewChild('activitiProcessDetails')
+    activitiProcessDetails: ProcessInstanceDetailsComponent;
 
-    @ViewChild('activitidetails')
-    activitidetails: TaskDetailsComponent;
+    @ViewChild('activitiDetails')
+    activitiDetails: TaskDetailsComponent;
 
     @ViewChild('activitiStartProcess')
     activitiStartProcess: StartProcessInstanceComponent;
 
-    @ViewChild('analyticsreportlist')
-    analyticsreportlist: AnalyticsReportListComponent;
+    @ViewChild('analyticsReportList')
+    analyticsReportList: AnalyticsReportListComponent;
 
     @Input()
     appId: number = null;
@@ -288,7 +288,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onSuccessTaskFilterList(event: any): void {
-        this.applyTaskFilter(this.activitifilter.getCurrentFilter());
+        this.applyTaskFilter(this.activitiFilter.getCurrentFilter());
     }
 
     applyTaskFilter(filter: FilterRepresentationModel) {
@@ -301,7 +301,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onStartTaskSuccess(event: any): void {
-        this.activitifilter.selectFilterWithTask(event.id);
+        this.activitiFilter.selectFilterWithTask(event.id);
         this.currentTaskId = event.id;
     }
 
@@ -325,7 +325,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onSuccessProcessFilterList(event: ProcessInstanceFilterRepresentation[]): void {
-        this.processFilter = this.activitiprocessfilter.getCurrentFilter();
+        this.processFilter = this.activitiProcessFilter.getCurrentFilter();
     }
 
     onSuccessProcessList(event: any): void {
@@ -351,16 +351,16 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onEditReport(name: string): void {
-        this.analyticsreportlist.reload();
+        this.analyticsReportList.reload();
     }
 
     onReportSaved(reportId): void {
-        this.analyticsreportlist.reload(reportId);
+        this.analyticsReportList.reload(reportId);
     }
 
     onReportDeleted(): void {
-        this.analyticsreportlist.reload();
-        this.analyticsreportlist.selectReport(null);
+        this.analyticsReportList.reload();
+        this.analyticsReportList.selectReport(null);
     }
 
     navigateStartProcess(): void {
@@ -374,7 +374,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     onStartProcessInstance(instance: ProcessInstance): void {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
-        this.activitiprocessfilter.selectRunningFilter();
+        this.activitiProcessFilter.selectRunningFilter();
     }
 
     onCancelProcessInstance() {
@@ -460,10 +460,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     loadStencilScriptsInPageFromProcessService() {
         this.apiService.getInstance().activiti.scriptFileApi.getControllers().then(response => {
             if (response) {
-                const stencilSript = document.createElement('script');
-                stencilSript.type = 'text/javascript';
-                stencilSript.text = response;
-                this.elementRef.nativeElement.appendChild(stencilSript);
+                const stencilScript = document.createElement('script');
+                stencilScript.type = 'text/javascript';
+                stencilScript.text = response;
+                this.elementRef.nativeElement.appendChild(stencilScript);
             }
         });
     }
@@ -482,7 +482,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             name: event.value.name || 'No name',
             created: event.value.created
         };
-        this.activitifilter.selectFilter(null);
+        this.activitiFilter.selectFilter(null);
         if (this.taskList) {
             this.taskList.setCustomDataSource([processTaskDataRow]);
             this.taskList.selectTask(taskId);
@@ -491,11 +491,11 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     private reloadProcessFilters(): void {
-        this.activitiprocessfilter.selectFilter(this.activitiprocessfilter.getCurrentFilter());
+        this.activitiProcessFilter.selectFilter(this.activitiProcessFilter.getCurrentFilter());
     }
 
     private reloadTaskFilters(): void {
-        this.activitifilter.selectFilter(this.activitifilter.getCurrentFilter());
+        this.activitiFilter.selectFilter(this.activitiFilter.getCurrentFilter());
     }
 
     onRowClick(event): void {

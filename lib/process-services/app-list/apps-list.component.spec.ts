@@ -114,7 +114,7 @@ describe('AppsListComponent', () => {
         expect(component.appList[0].modelId).toEqual(66);
     });
 
-    it('should show the apps filtered by tenandId', () => {
+    it('should show the apps filtered by tenantId', () => {
         component.filtersAppId = [{tenantId: 9}];
         fixture.detectChanges();
         expect(component.isEmpty()).toBe(false);
@@ -190,7 +190,7 @@ describe('AppsListComponent', () => {
             expect(debugElement.queryAll(By.css('h1')).length).toBe(6);
         });
 
-        it('should not display undeployed apps', () => {
+        it('should not display apps that are not deployed', () => {
             getAppsSpy.and.returnValue(of(nonDeployedApps));
             fixture.detectChanges();
             expect(debugElement.queryAll(By.css('h1')).length).toBe(0);

@@ -31,7 +31,7 @@ describe('FileDraggableDirective', () => {
         expect(component.enabled).toBeTruthy();
     });
 
-    it('should not allow drad and drop when disabled', () => {
+    it('should not allow drag and drop when disabled', () => {
         component.enabled = false;
         let event = new CustomEvent('custom-event');
         spyOn(event, 'preventDefault').and.stub();

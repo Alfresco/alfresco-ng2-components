@@ -23,7 +23,7 @@ export interface FileInfo {
 
 export class FileUtils {
 
-    static flattern(folder: any): Promise<FileInfo[]> {
+    static flatten(folder: any): Promise<FileInfo[]> {
         let reader = folder.createReader();
         let files: FileInfo[] = [];
         return new Promise(resolve => {
@@ -46,7 +46,7 @@ export class FileUtils {
                                     });
                                 });
                             } else {
-                                return FileUtils.flattern(entry).then(result => {
+                                return FileUtils.flatten(entry).then(result => {
                                     files.push(...result);
                                 });
                             }

@@ -145,7 +145,7 @@ describe('Start Process Component', () => {
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('');
-            browser.actions().sendKeys('v\b\b').perform(); // clear doesnt' trigger the validator
+            browser.actions().sendKeys('v\b\b').perform(); // clear doesn't trigger the validator
             startProcessPage.checkStartProcessButtonIsDisabled();
             startProcessPage.clickCancelProcessButton();
             processFiltersPage.checkNoContentMessage();
@@ -185,14 +185,14 @@ describe('Start Process Component', () => {
                             return this.alfrescoJsApi.activiti.processApi.getProcessInstance(result);
                         })
                         .then(function (response) {
-                            expect(processDetailsPage.getProcessStatus()).toEqual(CONSTANTS.PROCESSSTATUS.RUNNING);
-                            expect(processDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESSENDDATE);
-                            expect(processDetailsPage.getProcessCategory()).toEqual(CONSTANTS.PROCESSCATEGORY);
-                            expect(processDetailsPage.getBusinessKey()).toEqual(CONSTANTS.PROCESSBUSINESSKEY);
+                            expect(processDetailsPage.getPROCESS_STATUS()).toEqual(CONSTANTS.PROCESS_STATUS.RUNNING);
+                            expect(processDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESS_END_DATE);
+                            expect(processDetailsPage.getProcessCategory()).toEqual(CONSTANTS.PROCESS_CATEGORY);
+                            expect(processDetailsPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_BUSINESS_KEY);
                             expect(processDetailsPage.getCreatedBy()).toEqual(response.getStartedBy().getEntireName());
-                            expect(processDetailsPage.getCreated()).toEqual(dateFormat(CONSTANTS.PROCESSDATEFORMAT));
+                            expect(processDetailsPage.getCreated()).toEqual(dateFormat(CONSTANTS.PROCESS_DATE_FORMAT));
                             expect(processDetailsPage.getId()).toEqual(response.getId());
-                            expect(processDetailsPage.getProcessDescription()).toEqual(CONSTANTS.PROCESSDESCRIPTION);
+                            expect(processDetailsPage.getPROCESS_DESCRIPTION()).toEqual(CONSTANTS.PROCESS_DESCRIPTION);
                             expect(processDetailsPage.checkProcessTitleIsDisplayed()).toEqual(response.getName());
                         });
                 });
