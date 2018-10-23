@@ -19,6 +19,6 @@ import { Property } from './property.interface';
 
 export interface OrganisedPropertyGroup {
     title: string;
-    name: string;
+    name?: string;
     properties: Property[];
 }
