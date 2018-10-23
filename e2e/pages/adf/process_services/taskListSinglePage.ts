@@ -127,7 +127,7 @@ export class TaskListSinglePage {
         return errorMessage.getText();
     }
 
-    typePage = function(input) {
+    typePage(input) {
         Util.waitUntilElementIsVisible(this.page);
         this.clearText(this.page);
         this.page.sendKeys(input);
