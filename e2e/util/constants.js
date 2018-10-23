@@ -82,7 +82,7 @@ exports.TASK_DETAILS = {
     NO_DESCRIPTION: 'No description'
 };
 
-exports.TASKSTATUS = {
+exports.TASK_STATUS = {
     RUNNING: 'Running',
     COMPLETED: 'Completed'
 };

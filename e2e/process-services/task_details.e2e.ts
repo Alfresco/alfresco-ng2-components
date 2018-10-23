@@ -38,7 +38,7 @@ describe('Task Details component', () => {
     let processUserModel, appModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
-    let TASKDATAFORMAT = 'mmm dd yyyy';
+    let TASK_DATA_FORMAT = 'mmm dd yyyy';
     let formModel;
     let apps;
 
@@ -72,7 +72,7 @@ describe('Task Details component', () => {
 
     it('[C260506] Should display task details for standalone task - Task App', async () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
             .addForm(app.formName).clickStartButton();
         expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
@@ -83,24 +83,24 @@ describe('Task Details component', () => {
 
         let taskModel = new TaskModel(allTasks.data[0]);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskModel.getName());
-        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASKDATAFORMAT));
+        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         expect(taskPage.taskDetails().getDescription())
-            .toEqual(taskModel.getDescription() === null ? CONSTANTS.TASKDETAILS.NO_DESCRIPTION : taskModel.getDescription());
+            .toEqual(taskModel.getDescription() === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : taskModel.getDescription());
         expect(taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
         expect(taskPage.taskDetails().getCategory())
-            .toEqual(taskModel.getCategory() === null ? CONSTANTS.TASKDETAILS.NO_CATEGORY : taskModel.getCategory());
+            .toEqual(taskModel.getCategory() === null ? CONSTANTS.TASK_DETAILS.NO_CATEGORY : taskModel.getCategory());
         expect(taskPage.taskDetails().getDueDate())
-            .toEqual(taskModel.getDueDate() === null ? CONSTANTS.TASKDETAILS.NO_DATE : taskModel.getDueDate());
+            .toEqual(taskModel.getDueDate() === null ? CONSTANTS.TASK_DETAILS.NO_DATE : taskModel.getDueDate());
         expect(taskPage.taskDetails().getParentName())
-            .toEqual(taskModel.getParentTaskName() === null ? CONSTANTS.TASKDETAILS.NO_PARENT : taskModel.getParentTaskName());
+            .toEqual(taskModel.getParentTaskName() === null ? CONSTANTS.TASK_DETAILS.NO_PARENT : taskModel.getParentTaskName());
         expect(taskPage.taskDetails().getParentTaskId())
             .toEqual(taskModel.getParentTaskId() === null ? '' : taskModel.getParentTaskId());
         expect(taskPage.taskDetails().getDuration())
             .toEqual(taskModel.getDuration() === null ? '' : taskModel.getDuration() + ' ms');
         expect(taskPage.taskDetails().getEndDate())
-            .toEqual(taskModel.getEndDate() === null ? '' : dateFormat(taskModel.getEndDate(), TASKDATAFORMAT));
-        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASKSTATUS.RUNNING);
+            .toEqual(taskModel.getEndDate() === null ? '' : dateFormat(taskModel.getEndDate(), TASK_DATA_FORMAT));
+        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
         let taskForm = await browser.controlFlow().execute(async () => {
             return await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
@@ -109,12 +109,12 @@ describe('Task Details component', () => {
         formModel = new FormModel(taskForm);
 
         expect(taskPage.taskDetails().getFormName())
-            .toEqual(formModel.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : formModel.getName());
+            .toEqual(formModel.getName() === null ? CONSTANTS.TASK_DETAILS.NO_FORM : formModel.getName());
     });
 
     it('[C263946] Should display task details for standalone task - Custom App', async () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
             .addForm(app.formName).clickStartButton();
         expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
@@ -126,24 +126,24 @@ describe('Task Details component', () => {
         let taskModel = new TaskModel(allTasks.data[0]);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskModel.getName());
 
-        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASKDATAFORMAT));
+        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         expect(taskPage.taskDetails().getDescription())
-            .toEqual(taskModel.getDescription() === null ? CONSTANTS.TASKDETAILS.NO_DESCRIPTION : taskModel.getDescription());
+            .toEqual(taskModel.getDescription() === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : taskModel.getDescription());
         expect(taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
         expect(taskPage.taskDetails().getCategory())
-            .toEqual(taskModel.getCategory() === null ? CONSTANTS.TASKDETAILS.NO_CATEGORY : taskModel.getCategory());
+            .toEqual(taskModel.getCategory() === null ? CONSTANTS.TASK_DETAILS.NO_CATEGORY : taskModel.getCategory());
         expect(taskPage.taskDetails().getDueDate())
-            .toEqual(taskModel.getDueDate() === null ? CONSTANTS.TASKDETAILS.NO_DATE : taskModel.getDueDate());
+            .toEqual(taskModel.getDueDate() === null ? CONSTANTS.TASK_DETAILS.NO_DATE : taskModel.getDueDate());
         expect(taskPage.taskDetails().getParentName())
-            .toEqual(taskModel.getParentTaskName() === null ? CONSTANTS.TASKDETAILS.NO_PARENT : taskModel.getParentTaskName());
+            .toEqual(taskModel.getParentTaskName() === null ? CONSTANTS.TASK_DETAILS.NO_PARENT : taskModel.getParentTaskName());
         expect(taskPage.taskDetails().getDuration())
             .toEqual(taskModel.getDuration() === null ? '' : taskModel.getDuration() + ' ms');
         expect(taskPage.taskDetails().getEndDate())
-            .toEqual(taskModel.getEndDate() === null ? '' : dateFormat(taskModel.getEndDate(), TASKDATAFORMAT));
+            .toEqual(taskModel.getEndDate() === null ? '' : dateFormat(taskModel.getEndDate(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getParentTaskId())
             .toEqual(taskModel.getParentTaskId() === null ? '' : taskModel.getParentTaskId());
-        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASKSTATUS.RUNNING);
+        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
         let taskForm = await browser.controlFlow().execute(async () => {
             return await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
@@ -152,7 +152,7 @@ describe('Task Details component', () => {
         formModel = new FormModel(taskForm);
 
         expect(taskPage.taskDetails().getFormName())
-            .toEqual(formModel.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : formModel.getName());
+            .toEqual(formModel.getName() === null ? CONSTANTS.TASK_DETAILS.NO_FORM : formModel.getName());
     });
 
     it('[C286706] Should display task details for task - Task App', async () => {
@@ -161,7 +161,7 @@ describe('Task Details component', () => {
         });
 
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
 
@@ -172,15 +172,15 @@ describe('Task Details component', () => {
         let taskModel = new TaskModel(allTasks.data[0]);
 
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskModel.getName());
-        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASKDATAFORMAT));
+        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         expect(taskPage.taskDetails().getDescription())
-            .toEqual(taskModel.getDescription() === null ? CONSTANTS.TASKDETAILS.NO_DESCRIPTION : taskModel.getDescription());
+            .toEqual(taskModel.getDescription() === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : taskModel.getDescription());
         expect(taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
         expect(taskPage.taskDetails().getCategory())
-            .toEqual(taskModel.getCategory() === null ? CONSTANTS.TASKDETAILS.NO_CATEGORY : taskModel.getCategory());
+            .toEqual(taskModel.getCategory() === null ? CONSTANTS.TASK_DETAILS.NO_CATEGORY : taskModel.getCategory());
         expect(taskPage.taskDetails().getDueDate())
-            .toEqual(taskModel.getDueDate() === null ? CONSTANTS.TASKDETAILS.NO_DATE : taskModel.getDueDate());
+            .toEqual(taskModel.getDueDate() === null ? CONSTANTS.TASK_DETAILS.NO_DATE : taskModel.getDueDate());
         expect(taskPage.taskDetails().getParentName())
             .toEqual(appModel.definition.models[0].name);
         expect(taskPage.taskDetails().getParentTaskId())
@@ -188,8 +188,8 @@ describe('Task Details component', () => {
         expect(taskPage.taskDetails().getDuration())
             .toEqual(taskModel.getDuration() === null ? '' : taskModel.getDuration() + ' ms');
         expect(taskPage.taskDetails().getEndDate())
-            .toEqual(taskModel.getEndDate() === null ? '' : dateFormat(taskModel.getEndDate(), TASKDATAFORMAT));
-        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASKSTATUS.RUNNING);
+            .toEqual(taskModel.getEndDate() === null ? '' : dateFormat(taskModel.getEndDate(), TASK_DATA_FORMAT));
+        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
         let taskForm = await browser.controlFlow().execute(async () => {
             return await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
@@ -198,7 +198,7 @@ describe('Task Details component', () => {
         formModel = new FormModel(taskForm);
 
         expect(taskPage.taskDetails().getFormName())
-            .toEqual(formModel.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : formModel.getName());
+            .toEqual(formModel.getName() === null ? CONSTANTS.TASK_DETAILS.NO_FORM : formModel.getName());
     });
 
     it('[C286705] Should display task details for task - Custom App', async () => {
@@ -207,7 +207,7 @@ describe('Task Details component', () => {
         });
 
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
 
@@ -218,15 +218,15 @@ describe('Task Details component', () => {
         let taskModel = new TaskModel(allTasks.data[0]);
 
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskModel.getName());
-        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASKDATAFORMAT));
+        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         expect(taskPage.taskDetails().getDescription())
-            .toEqual(taskModel.getDescription() === null ? CONSTANTS.TASKDETAILS.NO_DESCRIPTION : taskModel.getDescription());
+            .toEqual(taskModel.getDescription() === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : taskModel.getDescription());
         expect(taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
         expect(taskPage.taskDetails().getCategory())
-            .toEqual(taskModel.getCategory() === null ? CONSTANTS.TASKDETAILS.NO_CATEGORY : taskModel.getCategory());
+            .toEqual(taskModel.getCategory() === null ? CONSTANTS.TASK_DETAILS.NO_CATEGORY : taskModel.getCategory());
         expect(taskPage.taskDetails().getDueDate())
-            .toEqual(taskModel.getDueDate() === null ? CONSTANTS.TASKDETAILS.NO_DATE : taskModel.getDueDate());
+            .toEqual(taskModel.getDueDate() === null ? CONSTANTS.TASK_DETAILS.NO_DATE : taskModel.getDueDate());
         expect(taskPage.taskDetails().getParentName())
             .toEqual(appModel.definition.models[0].name);
         expect(taskPage.taskDetails().getParentTaskId())
@@ -234,8 +234,8 @@ describe('Task Details component', () => {
         expect(taskPage.taskDetails().getDuration())
             .toEqual(taskModel.getDuration() === null ? '' : taskModel.getDuration() + ' ms');
         expect(taskPage.taskDetails().getEndDate())
-            .toEqual(taskModel.getEndDate() === null ? '' : dateFormat(taskModel.getEndDate(), TASKDATAFORMAT));
-        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASKSTATUS.RUNNING);
+            .toEqual(taskModel.getEndDate() === null ? '' : dateFormat(taskModel.getEndDate(), TASK_DATA_FORMAT));
+        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
         let taskForm = await browser.controlFlow().execute(async () => {
             return await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
@@ -244,7 +244,7 @@ describe('Task Details component', () => {
         formModel = new FormModel(taskForm);
 
         expect(taskPage.taskDetails().getFormName())
-            .toEqual(formModel.getName() === null ? CONSTANTS.TASKDETAILS.NO_FORM : formModel.getName());
+            .toEqual(formModel.getName() === null ? CONSTANTS.TASK_DETAILS.NO_FORM : formModel.getName());
     });
 
     it('[C286708] Should display task details for subtask - Task App', async() => {
@@ -255,7 +255,7 @@ describe('Task Details component', () => {
         });
 
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskName).selectTaskFromTasksList(taskName);
 
         taskPage.clickOnAddChecklistButton().addName(checklistName).clickCreateChecklistButton();
@@ -269,24 +269,24 @@ describe('Task Details component', () => {
 
         let checklistTask = new TaskModel(allTasks.data[0]);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(checklistTask.getName());
-        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(checklistTask.getCreated(), TASKDATAFORMAT));
+        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(checklistTask.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(checklistTask.getId());
         expect(taskPage.taskDetails().getDescription())
-            .toEqual(checklistTask.getDescription() === null ? CONSTANTS.TASKDETAILS.NO_DESCRIPTION : taskModel.getDescription());
+            .toEqual(checklistTask.getDescription() === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : taskModel.getDescription());
         expect(taskPage.taskDetails().getAssignee()).toEqual(checklistTask.getAssignee().getEntireName());
         expect(taskPage.taskDetails().getCategory())
-            .toEqual(checklistTask.getCategory() === null ? CONSTANTS.TASKDETAILS.NO_CATEGORY : checklistTask.getCategory());
+            .toEqual(checklistTask.getCategory() === null ? CONSTANTS.TASK_DETAILS.NO_CATEGORY : checklistTask.getCategory());
         expect(taskPage.taskDetails().getDueDate())
-            .toEqual(checklistTask.getDueDate() === null ? CONSTANTS.TASKDETAILS.NO_DATE : checklistTask.getDueDate());
+            .toEqual(checklistTask.getDueDate() === null ? CONSTANTS.TASK_DETAILS.NO_DATE : checklistTask.getDueDate());
         expect(taskPage.taskDetails().getParentName())
-            .toEqual(checklistTask.getParentTaskName() === null ? CONSTANTS.TASKDETAILS.NO_PARENT : checklistTask.getParentTaskName());
+            .toEqual(checklistTask.getParentTaskName() === null ? CONSTANTS.TASK_DETAILS.NO_PARENT : checklistTask.getParentTaskName());
         expect(taskPage.taskDetails().getParentTaskId())
             .toEqual(checklistTask.getParentTaskId() === null ? '' : checklistTask.getParentTaskId());
         expect(taskPage.taskDetails().getDuration())
             .toEqual(checklistTask.getDuration() === null ? '' : checklistTask.getDuration() + ' ms');
         expect(taskPage.taskDetails().getEndDate())
-            .toEqual(checklistTask.getEndDate() === null ? '' : dateFormat(checklistTask.getEndDate(), TASKDATAFORMAT));
-        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASKSTATUS.RUNNING);
+            .toEqual(checklistTask.getEndDate() === null ? '' : dateFormat(checklistTask.getEndDate(), TASK_DATA_FORMAT));
+        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
     });
 
     it('[C286707] Should display task details for subtask - Custom App', async() => {
@@ -297,7 +297,7 @@ describe('Task Details component', () => {
         });
 
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
 
@@ -312,24 +312,24 @@ describe('Task Details component', () => {
 
         let checklistTask = new TaskModel(allTasks.data[0]);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(checklistTask.getName());
-        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(checklistTask.getCreated(), TASKDATAFORMAT));
+        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(checklistTask.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(checklistTask.getId());
         expect(taskPage.taskDetails().getDescription())
-            .toEqual(checklistTask.getDescription() === null ? CONSTANTS.TASKDETAILS.NO_DESCRIPTION : taskModel.getDescription());
+            .toEqual(checklistTask.getDescription() === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : taskModel.getDescription());
         expect(taskPage.taskDetails().getAssignee()).toEqual(checklistTask.getAssignee().getEntireName());
         expect(taskPage.taskDetails().getCategory())
-            .toEqual(checklistTask.getCategory() === null ? CONSTANTS.TASKDETAILS.NO_CATEGORY : checklistTask.getCategory());
+            .toEqual(checklistTask.getCategory() === null ? CONSTANTS.TASK_DETAILS.NO_CATEGORY : checklistTask.getCategory());
         expect(taskPage.taskDetails().getDueDate())
-            .toEqual(checklistTask.getDueDate() === null ? CONSTANTS.TASKDETAILS.NO_DATE : checklistTask.getDueDate());
+            .toEqual(checklistTask.getDueDate() === null ? CONSTANTS.TASK_DETAILS.NO_DATE : checklistTask.getDueDate());
         expect(taskPage.taskDetails().getParentName())
-            .toEqual(checklistTask.getParentTaskName() === null ? CONSTANTS.TASKDETAILS.NO_PARENT : checklistTask.getParentTaskName());
+            .toEqual(checklistTask.getParentTaskName() === null ? CONSTANTS.TASK_DETAILS.NO_PARENT : checklistTask.getParentTaskName());
         expect(taskPage.taskDetails().getParentTaskId())
             .toEqual(checklistTask.getParentTaskId() === null ? '' : checklistTask.getParentTaskId());
         expect(taskPage.taskDetails().getDuration())
             .toEqual(checklistTask.getDuration() === null ? '' : checklistTask.getDuration() + ' ms');
         expect(taskPage.taskDetails().getEndDate())
-            .toEqual(checklistTask.getEndDate() === null ? '' : dateFormat(checklistTask.getEndDate(), TASKDATAFORMAT));
-        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASKSTATUS.RUNNING);
+            .toEqual(checklistTask.getEndDate() === null ? '' : dateFormat(checklistTask.getEndDate(), TASK_DATA_FORMAT));
+        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
     });
 
     it('[C286709] Should display task details for completed task - Task App', async() => {
@@ -339,11 +339,11 @@ describe('Task Details component', () => {
         });
 
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskName).selectTaskFromTasksList(taskName);
 
         taskPage.completeTaskNoForm();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETE_TASKS);
         taskPage.tasksListPage().selectTaskFromTasksList(taskName);
 
         let getTaskResponse = await browser.controlFlow().execute(async () => {
@@ -352,24 +352,24 @@ describe('Task Details component', () => {
 
         let completedTask = new TaskModel(getTaskResponse);
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(completedTask.getName());
-        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(completedTask.getCreated(), TASKDATAFORMAT));
+        expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(completedTask.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(completedTask.getId());
         expect(taskPage.taskDetails().getDescription())
-            .toEqual(completedTask.getDescription() === null ? CONSTANTS.TASKDETAILS.NO_DESCRIPTION : completedTask.getDescription());
+            .toEqual(completedTask.getDescription() === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : completedTask.getDescription());
         expect(taskPage.taskDetails().getAssignee()).toEqual(completedTask.getAssignee().getEntireName());
         expect(taskPage.taskDetails().getCategory())
-            .toEqual(completedTask.getCategory() === null ? CONSTANTS.TASKDETAILS.NO_CATEGORY : completedTask.getCategory());
+            .toEqual(completedTask.getCategory() === null ? CONSTANTS.TASK_DETAILS.NO_CATEGORY : completedTask.getCategory());
         expect(taskPage.taskDetails().getDueDate())
-            .toEqual(completedTask.getDueDate() === null ? CONSTANTS.TASKDETAILS.NO_DATE : completedTask.getDueDate());
+            .toEqual(completedTask.getDueDate() === null ? CONSTANTS.TASK_DETAILS.NO_DATE : completedTask.getDueDate());
         expect(taskPage.taskDetails().getParentName())
-            .toEqual(completedTask.getParentTaskName() === null ? CONSTANTS.TASKDETAILS.NO_PARENT : completedTask.getParentTaskName());
+            .toEqual(completedTask.getParentTaskName() === null ? CONSTANTS.TASK_DETAILS.NO_PARENT : completedTask.getParentTaskName());
         expect(taskPage.taskDetails().getParentTaskId())
             .toEqual(completedTask.getParentTaskId() === null ? '' : completedTask.getParentTaskId());
         expect(taskPage.taskDetails().getDuration())
             .toEqual(completedTask.getDuration() === null ? '' : completedTask.getDuration() + ' ms');
         expect(taskPage.taskDetails().getEndDate())
-            .toEqual(completedTask.getEndDate() === null ? '' : dateFormat(completedTask.getEndDate(), TASKDATAFORMAT));
-        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASKSTATUS.COMPLETED);
+            .toEqual(completedTask.getEndDate() === null ? '' : dateFormat(completedTask.getEndDate(), TASK_DATA_FORMAT));
+        expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.COMPLETED);
     });
 
 });
