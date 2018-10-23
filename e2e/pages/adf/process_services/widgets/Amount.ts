@@ -22,8 +22,6 @@ import FormFields = require('../formFields');
 export class Amount {
 
     currency = by.css('span[class="adf-amount-widget__prefix-spacing"]');
-
-
     formFields = new FormFields();
 
     getAmountFieldLabel(fieldId) {

@@ -15,27 +15,20 @@
  * limitations under the License.
  */
 
-var FormFields = require('../formFields');
+var FileModel = require('./fileModel');
 
-var DisplayText = function () {
+var FilesModel = function () {
 
-    var formFields = new FormFields();
+    var files = null;
 
-    var labelLocator = by.css("div[class*='display-text-widget']");
-
-    this.getFieldLabel = function (fieldId) {
-        return formFields.getFieldLabel(fieldId, labelLocator);
+    this.setFiles = function (arr) {
+        files = arr.map(function(item) {
+            return new FileModel(item.entry);
+        });
     };
 
-    this.getFieldValue = function (fieldId) {
-        return formFields.getFieldValue(fieldId, fieldLocator);
+    this.getFiles = function () {
+        return files;
     };
-
-    this.getErrorMessage = function(fieldId) {
-        return formFields.getFieldErrorMessage(fieldId);
-    }
-
 };
-
-module.exports = DisplayText;
-
+module.exports = FilesModel;

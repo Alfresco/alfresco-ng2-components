@@ -18,7 +18,7 @@
 import FormFields = require('../formFields');
 import { by } from 'protractor';
 
-export class TextWidget {
+export class Text {
 
     formFields = new FormFields();
 

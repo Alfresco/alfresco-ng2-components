@@ -24,7 +24,7 @@ import { RadioButtons } from './radioButtons';
 import { Hyperlink } from './hyperlink';
 import { Dropdown } from './dropdown';
 import { DynamicTable } from './dynamicTable';
-import { TextWidget } from './text-widget';
+import { Text } from './text';
 import { Checkbox } from './checkbox';
 import { DateWidget } from './date';
 import { DateTime } from './dateTime';
@@ -73,7 +73,7 @@ export class Widget {
     }
 
     textWidget() {
-        return new TextWidget();
+        return new Text();
     }
 
     documentWidget() {
