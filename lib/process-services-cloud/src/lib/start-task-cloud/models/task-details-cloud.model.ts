@@ -71,7 +71,7 @@ export class TaskDetailsCloudModel {
               this.serviceFullName = obj.serviceFullName || null;
               this.serviceVersion = obj.serviceVersion || null;
           }
-      }
+        }
   }
 
 export interface StartTaskCloudResponseModel {

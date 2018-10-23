@@ -25,9 +25,7 @@ import { StartTaskCloudService } from '../services/start-task-cloud.service';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 import {
     LogService,
-    UserPreferencesService,
-    UserProcessModel,
-    FormFieldModel
+    UserPreferencesService
 } from '@alfresco/adf-core';
 
 @Component({
@@ -66,15 +64,13 @@ export class StartTaskCloudComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    taskDetailsModel: TaskDetailsCloudModel = new TaskDetailsCloudModel();
-
     users$: Observable<any[]>;
 
     taskId: string;
 
-    dateError: boolean;
+    dueDate: Date;
 
-    field: FormFieldModel;
+    dateError: boolean;
 
     taskForm: FormGroup;
 
@@ -103,7 +99,6 @@ export class StartTaskCloudComponent implements OnInit {
         this.taskForm = this.formBuilder.group({
             name: new FormControl(this.defaultTaskName, [Validators.required, Validators.maxLength(this.maxTaskNameLength)]),
             description: '',
-            dueDate: '',
             assignee: ''
         });
     }
@@ -114,10 +109,12 @@ export class StartTaskCloudComponent implements OnInit {
 
     public saveTask(): void {
         let newTask = new TaskDetailsCloudModel(this.taskForm.value);
-        if (this.runtimeBundle) {
-            newTask.appName = this.runtimeBundle;
-        }
+        newTask.appName = this.getRuntimeBundle();
+        newTask.dueDate = this.getDueDate();
+        this.createNewTask(newTask);
+    }
 
+    private createNewTask(newTask: TaskDetailsCloudModel) {
         this.taskService.createNewTask(newTask)
             .subscribe(
                 (res: any) => {
@@ -137,12 +134,12 @@ export class StartTaskCloudComponent implements OnInit {
         this.users$ = this.taskService.getUsers();
     }
 
-    public isUserNameEmpty(user: UserProcessModel): boolean {
-        return !user || (this.isEmpty(user.firstName) && this.isEmpty(user.lastName));
+    private getDueDate(): Date {
+        return this.dueDate ? this.dueDate : null;
     }
 
-    private isEmpty(data: string): boolean {
-        return data === undefined || data === null || data.trim().length === 0;
+    private getRuntimeBundle(): string {
+        return this.runtimeBundle ? this.runtimeBundle : '';
     }
 
     onDateChanged(newDateValue): void {
