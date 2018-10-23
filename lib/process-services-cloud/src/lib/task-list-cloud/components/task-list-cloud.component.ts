@@ -19,7 +19,7 @@ import { Component, ViewEncapsulation, OnChanges, Input, SimpleChanges, Output, 
 import { AppConfigService, UserPreferencesService,
          DataTableSchema, UserPreferenceValues,
          PaginatedComponent, PaginationModel,
-         DataRowEvent, EmptyCustomContentDirective, PaginationComponent } from '@alfresco/adf-core';
+         DataRowEvent, EmptyCustomContentDirective } from '@alfresco/adf-core';
 import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { BehaviorSubject } from 'rxjs';
