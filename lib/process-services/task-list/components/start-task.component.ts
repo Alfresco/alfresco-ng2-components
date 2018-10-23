@@ -40,13 +40,14 @@ import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from
 export class StartTaskComponent implements OnInit {
 
     public FORMAT_DATE: string = 'DD/MM/YYYY';
+    MAX_LENGTH: number = 255;
 
     /** (required) The id of the app. */
     @Input()
     appId: number;
 
     @Input()
-    maxTaskNameLength: number = 255;
+    maxTaskNameLength: number = this.MAX_LENGTH;
 
     @Input()
     name: string = '';
@@ -65,11 +66,9 @@ export class StartTaskComponent implements OnInit {
 
     taskDetailsModel: TaskDetailsModel;
 
-    forms$: Observable<Form []>;
+    forms$: Observable<Form[]>;
 
     assigneeId: number;
-
-    formKey: string;
 
     taskId: string;
 
@@ -98,11 +97,16 @@ export class StartTaskComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.field = new FormFieldModel(new FormModel(), {id: this.assigneeId, value: this.assigneeId, placeholder: 'Assignee'});
+        if (this.maxTaskNameLength > this.MAX_LENGTH) {
+            this.maxTaskNameLength = this.MAX_LENGTH;
+        }
+        this.field = new FormFieldModel(new FormModel(), { id: this.assigneeId, value: this.assigneeId, placeholder: 'Assignee' });
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
-        this.defaultTaskNameTranslated = this.translateService.instant(this.defaultTaskName);
+
+        this.taskDetailsModel.name = this.name;
+
         this.loadFormsTask();
         this.buildForm();
         this.validateName();
@@ -191,6 +195,14 @@ export class StartTaskComponent implements OnInit {
         return firstName + delimiter + lastName;
     }
 
+    onKeydown(event) {
+        if (event.key === 'Enter') {
+            if (this.isFormValid()) {
+                this.saveTask();
+            }
+        }
+    }
+
     onDateChanged(newDateValue): void {
         this.dateError = false;
 
@@ -198,6 +210,8 @@ export class StartTaskComponent implements OnInit {
             let momentDate = moment(newDateValue, this.FORMAT_DATE, true);
             if (!momentDate.isValid()) {
                 this.dateError = true;
+            } else {
+                this.taskDetailsModel.dueDate = momentDate.toDate();
             }
         }
     }
