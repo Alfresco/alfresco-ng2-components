@@ -38,8 +38,8 @@
                         (keydown)="true"
                         (focusout)="onDateChanged($event.srcElement.value)"
                         placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
-                        class="form-control"
-                        formControlName="dueDate"
+                        [(ngModel)]="dueDate"
+                        [ngModelOptions]="{standalone: true}"
                         id="date_id">
                         <mat-datepicker-toggle matSuffix [for]="taskDatePicker"></mat-datepicker-toggle>
                         <mat-datepicker #taskDatePicker
@@ -48,7 +48,7 @@
                         </mat-datepicker>
                     <div class="adf-error-text-container">
                         <div *ngIf="dateError">
-                            <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.DATE.ERROR'|translate}}</div>
+                            <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE' | translate}}</div>
                             <mat-icon class="adf-error-icon">warning</mat-icon>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
             <button
                 mat-button
                 (click)="onCancel()"
-                id="button-cancle">
+                id="button-cancel">
                 {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL'|translate}}
             </button>
             <button

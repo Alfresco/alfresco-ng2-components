@@ -17,7 +17,6 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
-// import { Observable } from 'rxjs/Observable';
 import {
     AlfrescoApiService,
     AppConfigService,
@@ -28,11 +27,8 @@ import {
 import { StartTaskCloudService } from '../services/start-task-cloud.service';
 import { StartTaskCloudComponent } from './start-task-cloud.component';
 import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { taskDetailsMock, mockUsers } from '../mock/task-details.mock';
-import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
-// import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
-// import { taskDetailsMock } from '../mock/task-details.mock';
 
 describe('StartTaskCloudComponent', () => {
 
@@ -77,30 +73,28 @@ describe('StartTaskCloudComponent', () => {
                 {
                     id: 91,
                     name: 'fakeName',
-                    assignee: 'mock-assignee'
+                    assignee: 'fake-assignee'
                 }
             ));
         });
 
-        it('should create new task when start is clicked', async(() => {
+        it('should create new task when start button is clicked', async(() => {
             let successSpy = spyOn(component.success, 'emit');
-            component.taskForm.controls['name'].setValue('task');
-            component.taskForm.controls['dueDate'].setValue('Mon Oct 22 2018 20:12:43 GMT+0530 (IST)');
+            component.taskForm.controls['name'].setValue('fakeName');
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                expect(successSpy).toHaveBeenCalled();
                 expect(createNewTaskSpy).toHaveBeenCalled();
+                expect(successSpy).toHaveBeenCalled();
             });
         }));
 
         it('should send on success event when the task is started', async(() => {
             let successSpy = spyOn(component.success, 'emit');
-            component.taskDetailsModel = new TaskDetailsCloudModel(taskDetailsMock);
             component.taskForm.controls['name'].setValue('fakeName');
-            component.taskForm.controls['dueDate'].setValue('Mon Oct 22 2018 20:12:43 GMT+0530 (IST)');
+            component.taskForm.controls['assignee'].setValue('fake-assignee');
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
@@ -109,7 +103,7 @@ describe('StartTaskCloudComponent', () => {
                 expect(successSpy).toHaveBeenCalledWith({
                     id: 91,
                     name: 'fakeName',
-                    assignee: 'mock-assignee'
+                    assignee: 'fake-assignee'
                 });
             });
         }));
@@ -118,7 +112,6 @@ describe('StartTaskCloudComponent', () => {
             let successSpy = spyOn(component.success, 'emit');
             component.runtimeBundle = 'runtimBundle-id';
             component.taskForm.controls['name'].setValue('fakeName');
-            component.taskForm.controls['dueDate'].setValue('Mon Oct 22 2018 20:12:43 GMT+0530 (IST)');
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
@@ -130,32 +123,18 @@ describe('StartTaskCloudComponent', () => {
 
         it('should not emit success event when data not present', () => {
             let successSpy = spyOn(component.success, 'emit');
-            component.taskDetailsModel = new TaskDetailsCloudModel(null);
+            component.taskForm.controls['name'].setValue('');
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
             expect(createNewTaskSpy).not.toHaveBeenCalled();
             expect(successSpy).not.toHaveBeenCalled();
         });
-    });
-
-    describe('assign user', () => {
-        beforeEach(() => {
-            createNewTaskSpy.and.returnValue(of(
-                {
-                    id: 91,
-                    name: 'fakeName',
-                    assignee: 'mock-assignee'
-                }
-            ));
-        });
 
         it('should assign task when an assignee is selected', async(() => {
             let successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('fakeName');
-            component.taskForm.controls['dueDate'].setValue('Mon Oct 22 2018 20:12:43 GMT+0530 (IST)');
             component.taskForm.controls['assignee'].setValue('mock-assignee');
-            component.runtimeBundle = 'runtimBundle-id';
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
@@ -164,10 +143,74 @@ describe('StartTaskCloudComponent', () => {
                 expect(successSpy).toHaveBeenCalledWith({
                     id: 91,
                     name: 'fakeName',
-                    assignee: 'mock-assignee'
+                    assignee: 'fake-assignee'
                 });
             });
         }));
     });
 
+    it('should show start task button', () => {
+        component.taskForm.controls['name'].setValue('fakeName');
+        fixture.detectChanges();
+        expect(element.querySelector('#button-start')).toBeDefined();
+        expect(element.querySelector('#button-start')).not.toBeNull();
+        expect(element.querySelector('#button-start').textContent).toContain('ADF_TASK_LIST.START_TASK.FORM.ACTION.START');
+    });
+
+    it('should disable start button if name is empty', () => {
+        component.taskForm.controls['name'].setValue('');
+        fixture.detectChanges();
+        let createTaskButton = fixture.nativeElement.querySelector('#button-start');
+        expect(createTaskButton.disabled).toBeTruthy();
+    });
+
+    it('should cancel start task on cancel button click', () => {
+        fixture.detectChanges();
+        let emitSpy = spyOn(component.cancel, 'emit');
+        let cancelTaskButton = fixture.nativeElement.querySelector('#button-cancel');
+        cancelTaskButton.click();
+        expect(emitSpy).not.toBeNull();
+        expect(emitSpy).toHaveBeenCalled();
+    });
+
+    it('should enable start button if name is filled out', () => {
+        component.taskForm.controls['name'].setValue('fakeName');
+        fixture.detectChanges();
+        let createTaskButton = fixture.nativeElement.querySelector('#button-start');
+        expect(createTaskButton.disabled).toBeFalsy();
+    });
+
+    it('should emit error when there is an error while creating task', () => {
+        component.taskForm.controls['name'].setValue('fakeName');
+        let errorSpy = spyOn(component.error, 'emit');
+        createNewTaskSpy.and.returnValue(throwError({}));
+        let createTaskButton = <HTMLElement> element.querySelector('#button-start');
+        fixture.detectChanges();
+        createTaskButton.click();
+        expect(errorSpy).toHaveBeenCalled();
+    });
+
+    it('should emit error when task name exceeds maximum length', () => {
+        component.maxTaskNameLength = 2;
+        component.ngOnInit();
+        fixture.detectChanges();
+        let name = component.taskForm.controls['name'];
+        name.setValue('task');
+        fixture.detectChanges();
+        expect(name.valid).toBeFalsy();
+        name.setValue('ta');
+        fixture.detectChanges();
+        expect(name.valid).toBeTruthy();
+    });
+
+    it('should emit error when task name field is empty', () => {
+        fixture.detectChanges();
+        let name = component.taskForm.controls['name'];
+        name.setValue('');
+        fixture.detectChanges();
+        expect(name.valid).toBeFalsy();
+        name.setValue('task');
+        fixture.detectChanges();
+        expect(name.valid).toBeTruthy();
+    });
 });
