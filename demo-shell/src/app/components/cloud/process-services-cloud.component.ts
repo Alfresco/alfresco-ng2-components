@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProcessServicesCloudComponent implements OnInit {
 
   showStartTask = false;
-  runtimeBundle = 'sentiment-analysis-app';
+  appName: string;
   createdTaskDetails: any;
   showResponse = false;
 
@@ -20,10 +20,7 @@ export class ProcessServicesCloudComponent implements OnInit {
 
   ngOnInit() {
       this.route.params.subscribe(params => {
-        const runtimeBundle = params['appId'];
-        if (runtimeBundle && runtimeBundle !== '0') {
-          this.runtimeBundle = params['runtimeBundle'];
-        }
+        this.appName = params['appName'];
     });
   }
 
