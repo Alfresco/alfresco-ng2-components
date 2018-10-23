@@ -46,11 +46,10 @@ export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
     selectTask: string = '';
     sortArray: TaskListCloudSortingModel [];
 
-    providers = [ 'test1', 'test2' ];
-
-    statusValues = [
+    columns = [
         {key: 'id', label: 'ID'},
         {key: 'name', label: 'NAME'},
+        {key: 'createdDate', label: 'Created Date'},
         {key: 'priority', label: 'PRIORITY'},
         {key: 'processDefinitionId', label: 'PROCESS DEFINITION ID'}
       ];
@@ -70,10 +69,11 @@ export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
         this.sortFormControl = new FormControl('');
 
         this.sortFormControl.valueChanges.subscribe(
-            (selectedValue) => {
-                // update sorting
+            (sortValue) => {
+                this.sort = sortValue;
+
                 this.sortArray = [{
-                    orderBy: selectedValue,
+                    orderBy: this.sort,
                     direction: this.sortDirection
                 }];
             }
@@ -81,11 +81,12 @@ export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
         this.sortDirectionFormControl = new FormControl('');
 
         this.sortDirectionFormControl.valueChanges.subscribe(
-            (selectedValue) => {
-                // update sorting
+            (sortDirectionValue) => {
+                this.sortDirection = sortDirectionValue;
+
                 this.sortArray = [{
                     orderBy: this.sort,
-                    direction: selectedValue
+                    direction: this.sortDirection
                 }];
             }
         );

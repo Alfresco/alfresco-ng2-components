@@ -149,10 +149,10 @@ export class TaskFilterCloudService {
             query: new QueryModel(
                 {
                     appName: appName,
-                    sort: 'created',
+                    sort: 'createdDate',
                     state: 'SUSPENDED',
                     assignment: 'candidate',
-                    order: 'desc'
+                    order: 'DESC'
                 }
             )
         });
@@ -170,10 +170,10 @@ export class TaskFilterCloudService {
             query: new QueryModel(
                 {
                     appName: appName,
-                    sort: 'created',
+                    sort: 'createdDate',
                     state: 'COMPLETED',
                     assignment: 'involved',
-                    order: 'desc'
+                    order: 'ASC'
                 }
             )
         });

@@ -14,35 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { UserTaskFilterRepresentation } from 'alfresco-js-api';
-
-export class AppDefinitionRepresentationModel {
-    defaultAppId: string;
-    deploymentId: string;
-    name: string;
-    description: string;
-    theme: string;
-    icon: string;
-    id: number;
-    modelId: number;
-    tenantId: number;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.defaultAppId = obj.defaultAppId ? obj.defaultAppId : null;
-            this.deploymentId = obj.deploymentId ? obj.deploymentId : null;
-            this.name = obj.name ? obj.name : null;
-            this.description = obj.description ? obj.description : null;
-            this.theme = obj.theme ? obj.theme : null;
-            this.icon = obj.icon ? obj.icon : null;
-            this.id = obj.id ? obj.id : null;
-            this.modelId = obj.modelId ? obj.modelId : null;
-            this.tenantId = obj.tenantId ? obj.tenantId : null;
-        }
-    }
-}
-
 export class QueryModel {
     processDefinitionId: string;
     appName: string;
@@ -50,8 +21,6 @@ export class QueryModel {
     sort: string;
     assignment: string;
     order: string;
-    dueAfter: Date;
-    dueBefore: Date;
 
     constructor(obj?: any) {
         if (obj) {
@@ -61,13 +30,10 @@ export class QueryModel {
             this.sort = obj.sort || null;
             this.assignment = obj.assignment || null;
             this.order = obj.order || null;
-            this.dueAfter = obj.dueAfter || null;
-            this.dueBefore = obj.dueBefore || null;
         }
     }
 }
-
-export class FilterRepresentationModel implements UserTaskFilterRepresentation {
+export class FilterRepresentationModel {
     name: string;
     icon: string;
     query: QueryModel;

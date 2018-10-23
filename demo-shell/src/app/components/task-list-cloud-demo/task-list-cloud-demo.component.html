@@ -44,8 +44,8 @@
             <mat-form-field>
                 <mat-select [formControl]="sortFormControl">
                     <mat-option [value]="''">Select a column</mat-option>
-                    <mat-option *ngFor="let statusObj of statusValues" [value]="statusObj.key">
-                    {{statusObj.label}}
+                    <mat-option *ngFor="let column of columns" [value]="column.key">
+                    {{column.label}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
