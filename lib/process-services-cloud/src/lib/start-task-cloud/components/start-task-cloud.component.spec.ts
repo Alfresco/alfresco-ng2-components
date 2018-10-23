@@ -110,7 +110,6 @@ describe('StartTaskCloudComponent', () => {
 
         it('should send on success event when only name is given', async(() => {
             let successSpy = spyOn(component.success, 'emit');
-            component.runtimeBundle = 'runtimBundle-id';
             component.taskForm.controls['name'].setValue('fakeName');
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');

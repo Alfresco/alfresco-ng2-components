@@ -148,7 +148,7 @@ export const appRoutes: Routes = [
                 ]
             },
             {
-                path: 'cloud/:runtimeBundle/tasks',
+                path: 'cloud/:appName/tasks',
                 component: ProcessServicesCloudComponent
             },
             {

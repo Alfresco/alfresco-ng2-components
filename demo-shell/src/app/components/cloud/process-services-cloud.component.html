@@ -14,7 +14,7 @@
             </div>
             <div fxFlexOrder="2" fxFlex="85%" fxFlexFill>
                 <adf-cloud-start-task *ngIf="showStartTask"
-                    [runtimeBundle]="runtimeBundle"
+                    [appName]="appName"
                     (success)="onStartTaskSuccess($event)"
                     (cancel)="onCancelStartTask()">
                 </adf-cloud-start-task>
