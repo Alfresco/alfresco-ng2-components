@@ -1,6 +1,7 @@
 <header mat-dialog-title>{{'METADATA.DIALOG.TITLE' | translate}}</header>
 <section mat-dialog-content>
-    <adf-content-metadata-card [node]="contentEntry"></adf-content-metadata-card>
+    <adf-content-metadata-card [node]="contentEntry"
+                               [displayEmpty]="displayEmptyMetadata"></adf-content-metadata-card>
 </section>
 <footer mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
     <button mat-button (click)="close()">{{'METADATA.DIALOG.CLOSE' | translate}}</button>

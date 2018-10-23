@@ -44,9 +44,10 @@ const D_BOOLEAN = 'd:boolean';
 })
 export class PropertyGroupTranslatorService {
 
-    static readonly RECOGNISED_ECM_TYPES = [ D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT, D_LONG , D_FLOAT, D_DOUBLE, D_BOOLEAN ];
+    static readonly RECOGNISED_ECM_TYPES = [D_TEXT, D_MLTEXT, D_DATE, D_DATETIME, D_INT, D_LONG, D_FLOAT, D_DOUBLE, D_BOOLEAN];
 
-    constructor(private logService: LogService) {}
+    constructor(private logService: LogService) {
+    }
 
     public translateToCardViewGroups(propertyGroups: OrganisedPropertyGroup[], propertyValues): CardViewGroup[] {
         return propertyGroups.map(propertyGroup => {
@@ -58,17 +59,22 @@ export class PropertyGroupTranslatorService {
 
     private translateArray(properties: Property[], propertyValues: any): CardViewItem[] {
         return properties.map(property => {
-            return this.translate(property, propertyValues[property.name]);
+            return this.translate(property, propertyValues);
         });
     }
 
-    private translate(property: Property, propertyValue: any): CardViewItem {
+    private translate(property: Property, propertyValues: any): CardViewItem {
+        let propertyValue;
+        if (propertyValues && propertyValues[property.name]) {
+            propertyValue = propertyValues[property.name];
+        }
+
         this.checkECMTypeValidity(property.dataType);
 
         const prefix = 'properties.';
 
         let propertyDefinition: CardViewItemProperties = {
-            label: property.title,
+            label: property.title || property.name,
             value: propertyValue,
             key: `${prefix}${property.name}`,
             default: property.defaultValue,

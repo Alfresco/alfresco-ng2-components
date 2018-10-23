@@ -27,9 +27,12 @@ export class MetadataDialogAdapterComponent {
 
     public contentEntry: MinimalNodeEntryEntity;
 
+    displayEmptyMetadata = false;
+
     constructor(@Inject(MAT_DIALOG_DATA) data: any,
                 private containingDialog?: MatDialogRef<MetadataDialogAdapterComponent>) {
         this.contentEntry = data.contentEntry;
+        this.displayEmptyMetadata = data.displayEmptyMetadata;
     }
 
     close() {

@@ -186,6 +186,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     thumbnails = false;
     enableCustomPermissionMessage = false;
     enableMediumTimeFormat = false;
+    displayEmptyMetadata = false;
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
@@ -415,7 +416,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.contentService.hasPermission(contentEntry, 'update')) {
             this.dialog.open(MetadataDialogAdapterComponent, {
-                data: { contentEntry },
+                data: {
+                    contentEntry: contentEntry,
+                    displayEmptyMetadata: this.displayEmptyMetadata
+                },
                 panelClass: 'adf-metadata-manager-dialog',
                 width: '630px'
             });
@@ -439,8 +443,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     hasOneFileSelected(): boolean {
         const selection: Array<MinimalNodeEntity> = this.documentList.selection;
-        const hasOneFileSelected = selection && selection.length === 1 && selection[0].entry.isFile;
-        return hasOneFileSelected;
+        return selection && selection.length === 1 && selection[0].entry.isFile;
     }
 
     userHasPermissionToManageVersions(): boolean {
@@ -528,11 +531,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.documentList.reload();
     }
 
-    canDownloadNode = (node: MinimalNodeEntity): boolean => {
-        if (node && node.entry && node.entry.name === 'custom') {
-            return true;
-        }
-        return false;
+    canDownloadNode(node: MinimalNodeEntity): boolean {
+        return node && node.entry && node.entry.name === 'custom';
+
     }
 
     onBeginUpload(event: UploadFilesEvent) {
@@ -558,7 +559,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    isCustomActionDisabled = (node: MinimalNodeEntity): boolean => {
+    isCustomActionDisabled(node: MinimalNodeEntity): boolean {
         if (node && node.entry && node.entry.name === 'custom') {
             return false;
         }
