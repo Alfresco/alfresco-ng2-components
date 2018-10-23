@@ -44,13 +44,13 @@ export class StartTaskCloudComponent implements OnInit {
 
     /** (required) The id of the app. */
     @Input()
-    runtimeBundle: string;
+    appName: string;
 
     @Input()
     maxTaskNameLength: number = 255;
 
     @Input()
-    defaultTaskName: string = '';
+    name: string = '';
 
     /** Emitted when the task is successfully created. */
     @Output()
@@ -97,7 +97,7 @@ export class StartTaskCloudComponent implements OnInit {
 
     buildForm() {
         this.taskForm = this.formBuilder.group({
-            name: new FormControl(this.defaultTaskName, [Validators.required, Validators.maxLength(this.maxTaskNameLength)]),
+            name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxTaskNameLength)]),
             description: '',
             assignee: ''
         });
@@ -109,7 +109,7 @@ export class StartTaskCloudComponent implements OnInit {
 
     public saveTask(): void {
         let newTask = new TaskDetailsCloudModel(this.taskForm.value);
-        newTask.appName = this.getRuntimeBundle();
+        newTask.appName = this.getAppName();
         newTask.dueDate = this.getDueDate();
         this.createNewTask(newTask);
     }
@@ -138,8 +138,8 @@ export class StartTaskCloudComponent implements OnInit {
         return this.dueDate ? this.dueDate : null;
     }
 
-    private getRuntimeBundle(): string {
-        return this.runtimeBundle ? this.runtimeBundle : '';
+    private getAppName(): string {
+        return this.appName ? this.appName : '';
     }
 
     onDateChanged(newDateValue): void {
