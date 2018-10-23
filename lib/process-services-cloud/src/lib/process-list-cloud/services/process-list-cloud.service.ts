@@ -16,7 +16,7 @@
  */
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-// import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { Observable, from, throwError } from 'rxjs';
 // import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 @Injectable()
@@ -30,7 +30,7 @@ export class ProcessListCloudService {
                 private logService: LogService) {
     }
 
-    getProcessByRequest(requestNode: any): Observable<any> {
+    getProcessByRequest(requestNode: ProcessQueryCloudRequestModel): Observable<any> {
         if (requestNode.appName) {
             let queryUrl = this.buildQueryUrl(requestNode);
             let queryParams = this.buildQueryParams(requestNode);
@@ -46,10 +46,10 @@ export class ProcessListCloudService {
             return throwError('Appname not configured');
         }
     }
-    private buildQueryUrl(requestNode: any) {
+    private buildQueryUrl(requestNode: ProcessQueryCloudRequestModel) {
         return `${this.appConfigService.get('bpmHost', '')}/${requestNode.appName}-query/v1/process-instances`;
     }
-    private buildQueryParams(requestNode: any) {
+    private buildQueryParams(requestNode: ProcessQueryCloudRequestModel) {
         let queryParam = {};
         for (let property in requestNode) {
             if (requestNode.hasOwnProperty(property) &&

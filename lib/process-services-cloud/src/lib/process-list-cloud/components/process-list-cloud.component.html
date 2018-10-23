@@ -1,7 +1,7 @@
 <adf-datatable #dataTable
         [rows]="rows"
         [columns]="columns"
-        [sorting]="sorting"
+
         [loading]="isLoading"
         [selectionMode]="selectionMode"
         [multiselect]="multiselect"
@@ -17,13 +17,13 @@
             </ng-template>
         </loading-content-template>
         <no-content-template>
-            <!-- <ng-template>
+            <ng-template>
                     <adf-empty-content *ngIf="!emptyCustomContent"
                         icon="assessment"
-                        [title]="(requestNode ? 'ADF_PROCESS_LIST.LIST.TITLE' : 'ADF_PROCESS_LIST.FILTERS.MESSAGES.NONE') | translate "
-                        [subtitle]="'ADF_PROCESS_LIST.LIST.SUBTITLE'| translate">
+                        [title]="'ADF-PROCESS-LIST-CLOUD.MESSAGES.TITLE' | translate"
+                        [subtitle]="'ADF-PROCESS-LIST-CLOUD.MESSAGES.SUBTITLE'| translate">
                     </adf-empty-content>
                 <ng-content select="adf-empty-custom-content"></ng-content>
-            </ng-template> -->
+            </ng-template>
         </no-content-template>
 </adf-datatable>
