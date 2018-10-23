@@ -18,18 +18,16 @@
 import FormFields = require('../formFields');
 import { by } from 'protractor';
 
-export class DisplayValue {
+export class DocumentWidget {
 
     formFields = new FormFields();
-    labelLocator = by.css('span[class*="unknown-text"]');
-    inputLocator = by.css('input');
+    fileLocator = by.css("div [class*='upload-widget__content-text']");
 
-    getFieldLabel(fieldId) {
-        return this.formFields.getFieldLabel(fieldId, this.labelLocator);
+    getFieldText(fieldId) {
+        return this.formFields.getFieldText(fieldId, this.fileLocator);
     }
 
-    getFieldValue(fieldId) {
-        return this.formFields.getFieldValue(fieldId, this.inputLocator);
+    getFileName(fieldId) {
+        return this.formFields.getFieldText(fieldId, this.fileLocator);
     }
-
 }

@@ -19,7 +19,7 @@ import FormFields = require('../formFields');
 import { element, by } from 'protractor';
 import Util = require('../../../../util/util');
 
-export class DateTime {
+export class DateTimeWidget {
 
     formFields = new FormFields();
 

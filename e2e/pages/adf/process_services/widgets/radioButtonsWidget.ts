@@ -19,7 +19,7 @@ import FormFields = require('../formFields');
 import Util = require('../../../../util/util');
 import { by, element } from 'protractor';
 
-export class RadioButtons {
+export class RadioButtonsWidget {
 
     selectedOption = by.css('mat-radio-button[ng-reflect-checked="false"]');
 

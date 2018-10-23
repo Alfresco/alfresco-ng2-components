@@ -19,7 +19,7 @@ import FormFields = require('../formFields');
 import Util = require('../../../../util/util');
 import { by, element } from 'protractor';
 
-export class Checkbox {
+export class CheckboxWidget {
 
     formFields = new FormFields();
     checkboxField = element(by.css('span[class*="mat-checkbox-label"]'));

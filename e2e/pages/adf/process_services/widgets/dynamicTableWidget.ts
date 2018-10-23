@@ -19,7 +19,8 @@ import FormFields = require('../formFields');
 import Util = require('../../../../util/util');
 import { by, element, browser, protractor } from 'protractor';
 
-export class DynamicTable {
+export class DynamicTableWidget {
+
     formFields = new FormFields();
 
     labelLocator = by.css('dynamic-table-widget div div');

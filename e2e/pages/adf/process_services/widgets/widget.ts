@@ -15,73 +15,73 @@
  * limitations under the License.
  */
 
-import { MultilineText } from './multilineText';
-import { Header } from './header';
-import { DisplayText } from './displayText';
-import { AttachFile } from './attachFile';
-import { DisplayValue } from './displayValue';
-import { RadioButtons } from './radioButtons';
-import { Hyperlink } from './hyperlink';
-import { Dropdown } from './dropdown';
-import { DynamicTable } from './dynamicTable';
-import { Text } from './text';
-import { Checkbox } from './checkbox';
-import { DateWidget } from './date';
-import { DateTime } from './dateTime';
-import { People } from './people';
-import { NumberWidget } from './number';
-import { Amount } from './amount';
-import { Container } from './container';
-import { People } from './people';
+import { MultilineTextWidget } from './multilineTextWidget';
+import { HeaderWidget } from './headerWidget';
+import { DisplayTextWidget } from './displayTextWidget';
+import { AttachFileWidget } from './attachFileWidget';
+import { DisplayValueWidget } from './displayValueWidget';
+import { RadioButtonsWidget } from './radioButtonsWidget';
+import { HyperlinkWidget } from './hyperlinkWidget';
+import { DropdownWidget } from './dropdownWidget';
+import { DynamicTableWidget } from './dynamicTableWidget';
+import { TextWidget } from './textWidget';
+import { CheckboxWidget } from './checkboxWidget';
+import { DateWidget } from './dateWidget';
+import { DateTimeWidget } from './dateTimeWidget';
+import { NumberWidget } from './numberWidget';
+import { AmountWidget } from './amountWidget';
+import { ContainerWidget } from './containerWidget';
+import { PeopleWidget } from './peopleWidget';
+import { DocumentWidget } from './documentWidget';
 
 export class Widget {
 
     multilineTextWidget() {
-        return new MultilineText();
+        return new MultilineTextWidget();
     }
 
     headerWidget() {
-        return new Header();
+        return new HeaderWidget();
     }
 
     displayTextWidget() {
-        return new DisplayText();
+        return new DisplayTextWidget();
     }
 
     attachFileWidget() {
-        return new AttachFile();
+        return new AttachFileWidget();
     }
 
     displayValueWidget() {
-        return new DisplayValue();
+        return new DisplayValueWidget();
     }
 
     radioWidget() {
-        return new RadioButtons();
+        return new RadioButtonsWidget();
     }
 
     hyperlink() {
-        return new Hyperlink();
+        return new HyperlinkWidget();
     }
 
     dropdown() {
-        return new Dropdown();
+        return new DropdownWidget();
     }
 
     dynamicTable() {
-        return new DynamicTable();
+        return new DynamicTableWidget();
     }
 
     textWidget() {
-        return new Text();
+        return new TextWidget();
     }
 
     documentWidget() {
-        return new Document();
+        return new DocumentWidget();
     }
 
     checkboxWidget() {
-        return new Checkbox();
+        return new CheckboxWidget();
     }
 
     dateWidget() {
@@ -89,7 +89,7 @@ export class Widget {
     }
 
     dateTimeWidget() {
-        return new DateTime();
+        return new DateTimeWidget();
     }
 
     numberWidget() {
@@ -97,19 +97,14 @@ export class Widget {
     }
 
     amountWidget() {
-        return new Amount();
+        return new AmountWidget();
     }
 
     containerWidget() {
-        return new Container();
+        return new ContainerWidget();
     }
 
     peopleWidget() {
-        return new People();
+        return new PeopleWidget();
     }
-
-    peopleWidget() {
-        return new People();
-    }
-
 }

@@ -19,7 +19,7 @@ import { element, by, protractor } from 'protractor';
 import Util = require('../../../../util/util');
 import FormFields = require('../formFields');
 
-export class Amount {
+export class AmountWidget {
 
     currency = by.css('span[class="adf-amount-widget__prefix-spacing"]');
     formFields = new FormFields();

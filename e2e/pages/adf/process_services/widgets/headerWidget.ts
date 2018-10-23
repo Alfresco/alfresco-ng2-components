@@ -18,31 +18,14 @@
 import FormFields = require('../formFields');
 import { by } from 'protractor';
 
-export class MultilineText {
+export class HeaderWidget {
 
     formFields = new FormFields();
 
-    valueLocator = by.css('textarea');
-    labelLocator = by.css("label[class*='adf-label']");
-
-    getFieldValue(fieldId) {
-        return this.formFields.getFieldValue(fieldId, this.valueLocator);
-    }
+    labelLocator = by.css('span[id="container-header-label"]');
 
     getFieldLabel(fieldId) {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
-    }
-
-    getFieldPlaceHolder(fieldId) {
-        return this.formFields.getFieldPlaceHolder(fieldId, 'textarea');
-    }
-
-    setValue(fieldId, value) {
-        return this.formFields.setFieldValue(by.id, fieldId, value);
-    }
-
-    getErrorMessage(fieldId) {
-        return this.formFields.getFieldErrorMessage(fieldId);
     }
 
 }

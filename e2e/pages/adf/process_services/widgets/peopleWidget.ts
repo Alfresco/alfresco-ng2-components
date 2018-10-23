@@ -19,7 +19,7 @@ import FormFields = require('../formFields');
 import Util = require('../../../../util/util');
 import { by, element } from 'protractor';
 
-export class People {
+export class PeopleWidget {
 
     formFields = new FormFields();
     labelLocator = by.css('div[class*="display-text-widget"]');
