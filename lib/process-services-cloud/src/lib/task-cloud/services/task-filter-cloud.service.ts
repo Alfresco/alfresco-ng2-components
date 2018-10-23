@@ -45,7 +45,7 @@ export class TaskFilterCloudService {
         let completedTasksFilter = this.getCompletedTasksFilterInstance(appName);
         let completeObservable = this.addFilter(completedTasksFilter);
 
-        return Observable.create(observer => {
+        return new Observable(observer => {
             forkJoin(
                 involvedObservable,
                 myTaskObservable,
@@ -70,7 +70,7 @@ export class TaskFilterCloudService {
     getTaskListFilters(appName?: string): Observable<FilterRepresentationModel[]> {
         let key = 'task-filters-' + appName;
         const filters = JSON.parse(this.storage.getItem(key) || '[]');
-        return Observable.create(function(observer) {
+        return new Observable(function(observer) {
             observer.next(filters);
             observer.complete();
         });
@@ -89,7 +89,7 @@ export class TaskFilterCloudService {
 
         this.storage.setItem(key, JSON.stringify(filters));
 
-        return Observable.create(function(observer) {
+        return new Observable(function(observer) {
             observer.next(filter);
             observer.complete();
         });
