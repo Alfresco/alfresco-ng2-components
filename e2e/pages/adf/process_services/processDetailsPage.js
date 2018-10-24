@@ -43,6 +43,7 @@ var ProcessDetailsPage = function () {
     var cancelProcessButton = element(by.css('div[data-automation-id="header-status"] > button'));
     //Tasks
     var activeTask = element(by.css('div[data-automation-id="active-tasks"]'));
+    var completedTask = element(by.css('div[data-automation-id="completed-tasks"]'));
     var taskTitle = element(by.css("h2[class='activiti-task-details__header']"));
 
     this.checkProcessTitleIsDisplayed = function () {
@@ -134,7 +135,12 @@ var ProcessDetailsPage = function () {
 
     this.clickOnActiveTask = function () {
         Util.waitUntilElementIsVisible(activeTask);
-        activeTask.click();
+        return activeTask.click();
+    };
+
+    this.clickOnCompletedTask = function () {
+        Util.waitUntilElementIsClickable(completedTask);
+        return completedTask.click();
     };
 
     this.checkActiveTaskTitleIsDisplayed = function () {
