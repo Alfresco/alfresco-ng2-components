@@ -22,7 +22,6 @@ import { browser } from 'protractor';
 import { LoginPage } from '../../pages/adf/loginPage';
 import { TasksPage } from '../../pages/adf/process_services/tasksPage';
 import { Widget } from '../../pages/adf/process_services/widgets/widget';
-
 import CONSTANTS = require('../../util/constants');
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');

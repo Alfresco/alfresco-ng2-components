@@ -267,6 +267,20 @@ exports.Files = {
             }
         },
 
+        DYNAMIC_TABLE_USERS: {
+            formName: "ALL_WIDGETS",
+            title: "ALL_WIDGETS",
+            processName: "ALL_WIDGETS",
+            FIELD: {
+                dynamic_table_age_id: "label2",
+                dynamic_table_date_id: "label",
+                checkbox_id: "viewtable",
+                datatime_input_id: "datetime",
+                row: "label-row-0"
+
+            }
+        },
+
         HEADER: {
             formName: "HeaderProcess",
             title: "HeaderProcess",

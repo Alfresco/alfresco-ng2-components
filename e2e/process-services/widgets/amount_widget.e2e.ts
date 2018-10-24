@@ -18,19 +18,14 @@
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../../actions/APS/apps.actions';
 import { UsersActions } from '../../actions/users.actions';
-import { browser, protractor } from 'protractor';
+import { browser } from 'protractor';
 import { LoginPage } from '../../pages/adf/loginPage';
-import { ProcessServicesPage } from '../../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../../pages/adf/process_services/tasksPage';
 import { Widget } from '../../pages/adf/process_services/widgets/widget';
-import FormDefinitionModel = require('../../models/APS/FormDefinitionModel');
 
 import CONSTANTS = require('../../util/constants');
-import Task = require('../../models/APS/Task');
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-
-let formInstance = new FormDefinitionModel();
 
 describe('Amount Widget', () => {
 

@@ -63,4 +63,4 @@ export class PeopleWidget {
         user.click();
         return this;
     }
-
+}
