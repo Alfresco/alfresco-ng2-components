@@ -239,6 +239,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     private layoutPresets = {};
     private subscriptions: Subscription[] = [];
     private rowMenuCache: { [key: string]: ContentActionModel[] } = {};
+    private loadingTimeout;
 
     constructor(private documentListService: DocumentListService,
                 private ngZone: NgZone,
@@ -571,9 +572,21 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
+    private setLoadingState(value: boolean) {
+        if (value) {
+            clearTimeout(this.loadingTimeout);
+            this.loadingTimeout = setTimeout(() => {
+                this.loading = true;
+            }, 1000);
+        } else {
+            clearTimeout(this.loadingTimeout);
+            this.loading = false;
+        }
+    }
+
     loadFolder() {
         if (!this.pagination.getValue().merge) {
-            this.loading = true;
+            this.setLoadingState(true);
         }
 
         if (!this.hasCustomLayout) {
@@ -622,7 +635,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 .subscribe(
                     nodePaging => {
                         this.data.loadPage(<NodePaging> nodePaging, this.pagination.getValue().merge);
-                        this.loading = false;
+                        this.setLoadingState(false);
                         this.onDataReady(nodePaging);
                         resolve(true);
                     }, err => {
@@ -640,7 +653,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     onPageLoaded(nodePaging: NodePaging) {
         if (nodePaging) {
             this.data.loadPage(nodePaging, this.pagination.getValue().merge);
-            this.loading = false;
+            this.setLoadingState(false);
             this.onDataReady(nodePaging);
         }
     }
@@ -829,7 +842,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     private handleError(err: any) {
         if (err.message) {
             if (JSON.parse(err.message).error.statusCode === 403) {
-                this.loading = false;
+                this.setLoadingState(false);
                 this.noPermission = true;
             }
         }
