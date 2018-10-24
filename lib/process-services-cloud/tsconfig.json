@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": false,
+    "noLib": false,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
+    "noImplicitUseStrict": false,
+    "noFallthroughCasesInSwitch": true,
+    "removeComments": true,
+    "declaration": true,
+    "outDir": "../dist/process-services-cloud/",
+    "baseUrl" :  "./",
+    "paths": {
+      "@alfresco/adf-content-services": ["../content-services"],
+      "@alfresco/adf-insights": ["../analytics"],
+      "@alfresco/adf-core": ["../core"]
+    },
+    "lib": [
+      "es2016",
+      "dom"
+    ],
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true
+  },
+  "exclude": [
+    "demo",
+    "node_modules",
+    "dist"
+  ],
+  "angularCompilerOptions": {
+    "strictMetadataEmit": false,
+    "skipTemplateCodegen": true
+  }
+}
