@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, LogService } from '@alfresco/adf-core';
 import { of, throwError, Observable } from 'rxjs';
 import { TaskListService } from '../services/tasklist.service';
 import { StartTaskComponent } from './start-task.component';
@@ -29,9 +29,11 @@ describe('StartTaskComponent', () => {
     let component: StartTaskComponent;
     let fixture: ComponentFixture<StartTaskComponent>;
     let service: TaskListService;
+    let logService: LogService;
     let element: HTMLElement;
     let getFormListSpy: jasmine.Spy;
     let createNewTaskSpy: jasmine.Spy;
+    let logSpy: jasmine.Spy;
     let fakeForms$ = [
         {
             id: 123,
@@ -55,7 +57,8 @@ describe('StartTaskComponent', () => {
         element = fixture.nativeElement;
 
         service = TestBed.get(TaskListService);
-        getFormlistSpy = spyOn(service, 'getFormList').and.returnValue(Observable.create(observer => {
+        logService = TestBed.get(LogService);
+        getFormListSpy = spyOn(service, 'getFormList').and.returnValue(Observable.create(observer => {
             observer.next(fakeForms$);
             observer.complete();
         }));
@@ -71,7 +74,7 @@ describe('StartTaskComponent', () => {
         component.ngOnInit();
         fixture.detectChanges();
         expect(component.forms$).toBeDefined();
-        expect(getFormlistSpy).toHaveBeenCalled();
+        expect(getFormListSpy).toHaveBeenCalled();
     });
 
     describe('create task', () => {
@@ -380,5 +383,13 @@ describe('StartTaskComponent', () => {
         name.setValue('task');
         fixture.detectChanges();
         expect(name.valid).toBeTruthy();
+    });
+
+    it('should call logService when task name exceeds maximum length', () => {
+        logSpy = spyOn(logService, 'log').and.callThrough();
+        component.maxTaskNameLength = 300;
+        component.ngOnInit();
+        fixture.detectChanges();
+        expect(logSpy).toHaveBeenCalled();
     });
 });
