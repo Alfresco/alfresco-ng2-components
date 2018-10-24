@@ -237,7 +237,7 @@ export class StartTaskComponent implements OnInit {
     }
 
     private validateMaxTaskNameLength() {
-        if (this.maxTaskNameLength >= this.MAX_LENGTH) {
+        if (this.maxTaskNameLength > this.MAX_LENGTH) {
             this.maxTaskNameLength = this.MAX_LENGTH;
             this.logService.log(`the task name length cannot be greater than ${this.MAX_LENGTH}`);
         }
