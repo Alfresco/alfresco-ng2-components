@@ -57,8 +57,6 @@ describe('Search Filters', () => {
 
     let fileUploaded, fileTypePng;
 
-    // let filterType = 'TYPE-PNG Image';
-
     let filter = {
         type: 'TYPE-PNG Image',
         name: 'PNG Image ('
