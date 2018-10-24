@@ -21,7 +21,6 @@ import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import PaginationPage = require('../../pages/adf/paginationPage');
 import ContentList = require('../../pages/adf/dialog/contentList');
 
-
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');
 
@@ -101,14 +100,14 @@ describe('Search Filters', () => {
         done();
     });
 
-    xit('[C286298] Should be able to cancel a filter using "x" button from the toolbar', () => {
+    it('[C286298] Should be able to cancel a filter using "x" button from the toolbar', () => {
         searchFiltersPage.filterByCreator(acsUser.firstName, acsUser.lastName);
         searchFiltersPage.checkCreatorChipIsDisplayed(acsUser.firstName, acsUser.lastName);
         searchFiltersPage.removeCreatorFilter(acsUser.firstName, acsUser.lastName);
         searchFiltersPage.checkCreatorChipIsNotDisplayed(acsUser.firstName, acsUser.lastName);
     });
 
-    xit('[C277146] Should Show more/less buttons be hidden when inactive', () => {
+    it('[C277146] Should Show more/less buttons be hidden when inactive', () => {
         browser.get(TestConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.checkCreatedShowLessButtonIsNotDisplayed();
