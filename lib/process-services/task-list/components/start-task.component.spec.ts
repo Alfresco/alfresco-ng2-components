@@ -58,7 +58,7 @@ describe('StartTaskComponent', () => {
 
         service = TestBed.get(TaskListService);
         logService = TestBed.get(LogService);
-        getFormListSpy = spyOn(service, 'getFormList').and.returnValue(new Observable(observer => {
+        getFormListSpy = spyOn(service, 'getFormList').and.returnValue(Observable.create(observer => {
             observer.next(fakeForms$);
             observer.complete();
         }));
