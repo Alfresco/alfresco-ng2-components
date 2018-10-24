@@ -51,6 +51,16 @@ exports.Files = {
         processName: "Process3576"
     },
 
+    APP_WITH_USER_WIDGET:{
+        file_location:"/resources/apps/appWithUser.zip",
+        title: "appWithUser",
+        description: "Description for app",
+        processName: "ProcessWithUser",
+        startForm: "user",
+        taskForm: "displayUser",
+        peopleWidgetId: "label1"
+    },
+
     SIMPLE_APP: {
         file_location: "/resources/Simple App.zip",
         title: "Simple App",
