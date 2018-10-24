@@ -208,7 +208,7 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
 
     private load(requestNode: ProcessFilterParamRepresentationModel) {
         this.isLoading = true;
-        this.processService.getProcessInstances(requestNode, this.processDefinitionKey)
+        this.processService.getProcesses(requestNode, this.processDefinitionKey)
             .subscribe(
                 (response) => {
                     this.rows = this.optimizeNames(response.data);

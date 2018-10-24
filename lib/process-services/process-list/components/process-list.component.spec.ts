@@ -31,7 +31,7 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { fakeProcessCustomSchema } from '../../mock';
 import { ProcessListModule } from 'process-list/process-list.module';
 
-describe('ProcessInstanceListComponent', () => {
+fdescribe('ProcessInstanceListComponent', () => {
 
     let fixture: ComponentFixture<ProcessInstanceListComponent>;
     let component: ProcessInstanceListComponent;
@@ -185,15 +185,14 @@ describe('ProcessInstanceListComponent', () => {
         expect(dataRow[0]['id']).toEqual('999');
     });
 
-    it('should throw an exception when the response is wrong', fakeAsync(() => {
-        let emitSpy: jasmine.Spy = spyOn(component.error, 'emit');
+    it('should return an empty list when the response is wrong', fakeAsync(() => {
         let mockError = 'Fake server error';
         getProcessInstancesSpy.and.returnValue(throwError(mockError));
         component.appId = 1;
         component.state = 'open';
         fixture.detectChanges();
         tick();
-        expect(emitSpy).toHaveBeenCalledWith(mockError);
+        expect(component.isListEmpty()).toBeTruthy();
     }));
 
     it('should emit onSuccess event when reload() called', fakeAsync(() => {
