@@ -29,7 +29,6 @@ import { TaskCloudModule } from '../task-cloud.module';
 describe('TaskFiltersCloudComponent', () => {
 
     let taskFilterService: TaskFilterCloudService;
-    let  element: HTMLElement;
 
     let fakeGlobalFilter = [
         new FilterRepresentationModel({
@@ -87,7 +86,6 @@ describe('TaskFiltersCloudComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(TaskFiltersCloudComponent);
         component = fixture.componentInstance;
-        element = fixture.nativeElement;
 
         taskFilterService = TestBed.get(TaskFilterCloudService);
     });
@@ -101,11 +99,11 @@ describe('TaskFiltersCloudComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(component.filters.length).toBe(3);
-            let filters = element.querySelectorAll('.adf-filters__entry-icon');
+            let filters = fixture.nativeElement.querySelectorAll('.adf-filters__entry-icon');
             expect(filters.length).toBe(3);
-            // expect(filters[0].nativeElement.innerText).toContain('adjust');
-            // expect(filters[1].nativeElement.innerText).toContain('done');
-            // expect(filters[2].nativeElement.innerText).toContain('inbox');
+            expect(filters[0].innerText).toContain('adjust');
+            expect(filters[1].innerText).toContain('done');
+            expect(filters[2].innerText).toContain('inbox');
         });
     }));
 
