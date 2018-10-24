@@ -28,7 +28,7 @@ var ContentList = function () {
     var actionMenu = element(by.css("div[role='menu']"));
     var optionButton = by.css("button[data-automation-id*='action_menu_']");
     var rowByRowName = by.xpath("ancestor::div[contains(@class, 'adf-datatable-row')]");
-    var nameColumn = by.css("div[id*='document-list-container'] div[class*='adf-datatable-row'] div[class*='--text full-width'] span");
+    var nameColumn = by.css('div[class*="adf-data-table-cell"][title="Display name"]');
     var nameColumnHeader = by.css("div[data-automation-id='auto_id_name']");
     var createdByColumn = by.css("div[class*='--text'][title='Created by'] span");
     var sizeColumn = by.css("div[id*='document-list-container'] div[class*='adf-datatable-row'] .adf-filesize-cell");
