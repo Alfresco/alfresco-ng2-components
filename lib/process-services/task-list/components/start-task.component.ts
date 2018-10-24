@@ -102,10 +102,10 @@ export class StartTaskComponent implements OnInit {
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
-
         this.loadFormsTask();
         this.buildForm();
         this.validateName();
+        this.validateMaxTaskNameLength();
     }
 
     buildForm() {
@@ -219,6 +219,12 @@ export class StartTaskComponent implements OnInit {
         if ((control.touched || control.dirty) && control.errors) {
           this.errorMessage = Object.keys(control.errors).map(key =>
             this.validationMessages[key]).join('');
+        }
+    }
+
+    private validateMaxTaskNameLength() {
+        if (this.maxTaskNameLength >= 255) {
+            this.logService.log('the task name length cannot be greater than 255');
         }
     }
 
