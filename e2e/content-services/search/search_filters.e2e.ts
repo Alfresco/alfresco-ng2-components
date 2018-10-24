@@ -133,7 +133,7 @@ describe('Search Filters', () => {
         searchFiltersPage.checkFileSizeFilterIsCollapsed();
     });
 
-    it('[C287796] Should be able to display the correct bucket number after selecting a filter',  async () => {
+    it('[C287796] Should be able to display the correct bucket number after selecting a filter',  () => {
         browser.get(TestConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.clickPngImageType();
@@ -149,7 +149,7 @@ describe('Search Filters', () => {
         resultFileNames.then((fileNames) => {
             fileNames.map((nameOfResultFiles) => {
                 expect(nameOfResultFiles).toContain('.png');
-            })
+            });
         });
     });
 
