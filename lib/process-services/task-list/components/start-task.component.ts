@@ -49,7 +49,7 @@ export class StartTaskComponent implements OnInit {
     maxTaskNameLength: number = 255;
 
     @Input()
-    defaultTaskName: string = '';
+    name: string = '';
 
     /** Emitted when the task is successfully created. */
     @Output()
@@ -63,7 +63,7 @@ export class StartTaskComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    taskDetailsModel: TaskDetailsModel = new TaskDetailsModel();
+    taskDetailsModel: TaskDetailsModel;
 
     forms$: Observable<Form []>;
 
@@ -73,13 +73,16 @@ export class StartTaskComponent implements OnInit {
 
     taskId: string;
 
+    dueDate: any;
+
     dateError: boolean;
 
     field: FormFieldModel;
 
-    defaultTaskNameTranslated: string;
+    taskForm: FormGroup;
 
-    taskModelForm: FormGroup;
+    errorMessage: string;
+    private validationMessages = { required: 'ADF_TASK_LIST.START_TASK.FORM.ERROR.REQUIRED', maxlength: 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MAXIMUM_LENGTH' };
 
     /**
      * Constructor
@@ -99,47 +102,30 @@ export class StartTaskComponent implements OnInit {
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
-        this.defaultTaskNameTranslated = this.translateService.instant(this.defaultTaskName);
+
         this.loadFormsTask();
         this.buildForm();
+        this.validateName();
     }
 
     buildForm() {
-        this.taskModelForm = this.formBuilder.group({
-            taskModelName: new FormControl(this.defaultTaskNameTranslated, [Validators.required, Validators.maxLength(this.maxTaskNameLength)]),
-            taskModelDescription: new FormControl(''),
-            taskModelFormKey: new FormControl('')
+        this.taskForm = this.formBuilder.group({
+            name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxTaskNameLength)]),
+            description: new FormControl(''),
+            formKey: new FormControl('')
         });
-
-        this.taskModelForm.valueChanges
-            .subscribe(taskFormData => {
-                if (this.isFormValid()) {
-                    this.setTaskDetailsModel(taskFormData);
-                }
-       });
     }
 
     isFormValid() {
-        return this.taskModelForm && this.taskModelForm.valid;
-    }
-
-    setTaskDetailsModel(taskFormData: any) {
-        this.taskDetailsModel.name = taskFormData.taskModelName;
-        this.taskDetailsModel.description = taskFormData.taskModelDescription;
-        this.formKey = taskFormData.taskModelFormKey;
-
-        this.taskDetailsModel.formKey = taskFormData.taskModelFormKey;
+        return this.taskForm && this.taskForm.valid;
     }
 
     public saveTask(): void {
-        if (this.appId) {
-            this.taskDetailsModel.category = this.appId.toString();
-        }
-        if (!this.taskDetailsModel.name) {
-            this.taskDetailsModel.name = this.defaultTaskNameTranslated;
-        }
-
-        this.taskService.createNewTask(this.taskDetailsModel)
+        const newTask = new TaskDetailsModel(this.taskForm.value);
+        newTask.category = this.getAppId();
+        newTask.dueDate = this.getDueDate();
+        this.formKey = +newTask.formKey;
+        this.taskService.createNewTask(newTask)
                 .pipe(
                     switchMap((createRes: any) =>
                         this.attachForm(createRes.id, this.formKey).pipe(
@@ -217,11 +203,38 @@ export class StartTaskComponent implements OnInit {
 
     clearDateInput() {
         const emptyValue = '';
-        this.startTaskModel.dueDate = emptyValue;
+        this.dueDate = emptyValue;
         this.onDateChanged(emptyValue);
     }
 
-    get taskName(): AbstractControl {
-        return this.taskModelForm.get('taskModelName');
+    validateName() {
+        const nameControl = this.nameController;
+        nameControl.valueChanges.subscribe(val => {
+          this.setValidationMessage(nameControl);
+        });
+    }
+
+    setValidationMessage(control: AbstractControl): void {
+        this.errorMessage = '';
+        if ((control.touched || control.dirty) && control.errors) {
+          this.errorMessage = Object.keys(control.errors).map(key =>
+            this.validationMessages[key]).join('');
+        }
+    }
+
+    private getDueDate(): Date {
+        return this.dueDate ? this.dueDate : '';
+    }
+
+    private getAppId(): string {
+        return this.appId ? this.appId.toString() : '';
+    }
+
+    get nameController(): AbstractControl {
+        return this.taskForm.get('name');
+    }
+
+    get formKeyController(): AbstractControl {
+        return this.taskForm.get('formKey');
     }
 }
