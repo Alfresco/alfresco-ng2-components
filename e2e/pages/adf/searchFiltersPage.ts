@@ -26,9 +26,9 @@ export class SearchFiltersPage {
     creatorFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATOR"]'));
     searchCreatorFilter = element(by.css('input[data-automation-id="facet-result-filter-SEARCH.FACET_FIELDS.CREATOR"]'));
     fileSizeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"]'));
-    showMoreButtonForSize = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"] button[title="Show more"]'));
-    showLessButtonForSize = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"] button[title="Show less"]'));
-    numberOfCheckboxesForSize = element.all(by.css('mat-checkbox[data-automation-id*="checkbox-SEARCH.FACET_FIELDS.SIZE"]'));
+    createdFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATED"'));
+    showMoreButtonForCreated = this.createdFilter.element(by.css('button[title="Show more"]'));
+    showLessButtonForCreated = this.createdFilter.element(by.css('button[title="Show less"]'));
 
     checkSearchFiltersIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchFilters);
@@ -74,6 +74,30 @@ export class SearchFiltersPage {
         result.click();
     }
 
+    clickFileSizeFilterHeader() {
+        let fileSizeFilterHeader = this.fileSizeFilter.element(by.css('mat-expansion-panel-header'));
+        Util.waitUntilElementIsClickable(fileSizeFilterHeader);
+        return fileSizeFilterHeader.click();
+    }
+
+    clickFileTypeFilterHeader() {
+        let fileTypeFilterHeader = this.fileTypeFilter.element(by.css('mat-expansion-panel-header'));
+        Util.waitUntilElementIsClickable(fileTypeFilterHeader);
+        return fileTypeFilterHeader.click();
+    }
+
+    checkFileTypeFilterIsCollapsed() {
+        this.fileTypeFilter.getAttribute('class').then((elementClass) => {
+            expect(elementClass).not.toContain('mat-expanded');
+        });
+    }
+
+    checkFileSizeFilterIsCollapsed() {
+        this.fileSizeFilter.getAttribute('class').then((elementClass) => {
+            expect(elementClass).not.toContain('mat-expanded');
+        });
+    }
+
     filterByFileType(fileType) {
         this.checkFileTypeFilterIsDisplayed();
 
@@ -104,53 +128,42 @@ export class SearchFiltersPage {
         return Util.waitUntilElementIsNotOnPage(element(by.cssContainingText('mat-chip', ` ${creatorFirstName} ${creatorLastName} `)).element(by.css('mat-icon')));
     }
 
-    clickSizeShowMoreButtonUntilIsNotDisplayed() {
-        Util.waitUntilElementIsVisible(this.fileSizeFilter);
+    clickCreatedShowMoreButtonUntilIsNotDisplayed() {
+        Util.waitUntilElementIsVisible(this.createdFilter);
 
-        this.showMoreButtonForSize.isDisplayed().then(async (visible) => {
+        this.showMoreButtonForCreated.isDisplayed().then(async (visible) => {
             if (visible) {
-                for (let checkboxes = 5; checkboxes <= totalNumberOfCheckboxes; checkboxes + 5) {
-                    let totalNumberOfCheckboxes = await numberOfCheckboxesForSize.count();
+                this.showMoreButtonForCreated.click();
 
-                    expect(totalNumberOfCheckboxes).toEqual(checkboxes);
-                }
-                this.showMoreButtonForSize.click();
-
-                this.clickSizeShowMoreButtonUntilIsNotDisplayed();
+                this.clickCreatedShowMoreButtonUntilIsNotDisplayed();
             }
         }, err => {
         });
     }
 
-    checkSizeShowMoreButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.showMoreButtonForSize);
+    checkCreatedShowMoreButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.showMoreButtonForCreated);
     }
 
-    clickSizeShowLessButtonUntilIsNotDisplayed() {
-        Util.waitUntilElementIsVisible(this.fileSizeFilter);
+    clickCreatedShowLessButtonUntilIsNotDisplayed() {
+        Util.waitUntilElementIsVisible(this.createdFilter);
 
-        this.showLessButtonForSize.isDisplayed().then(async (visible) => {
+        this.showLessButtonForCreated.isDisplayed().then(async (visible) => {
             if (visible) {
-                let totalNumberOfCheckboxes = await this.numberOfCheckboxesForSize.count();
+                this.showLessButtonForCreated.click();
 
-                for (let checkboxes = totalNumberOfCheckboxes; checkboxes > 10; checkboxes = totalNumberOfCheckboxes - checkboxes) {
-                    expect(totalNumberOfCheckboxes).toEqual(checkboxes);
-                }
-
-                this.showLessButtonForSize.click();
-
-                this.clickSizeShowLessButtonUntilIsNotDisplayed();
+                this.clickCreatedShowLessButtonUntilIsNotDisplayed();
             }
         }, err => {
         });
     }
 
-    checkShowLessButtonIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.showLessButtonForSize);
+    checkCreatedShowLessButtonIsNotDisplayed() {
+        Util.waitUntilElementIsNotVisible(this.showLessButtonForCreated);
     }
 
-    checkShowLessButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.showLessButtonForSize);
+    checkCreatedShowLessButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.showLessButtonForCreated);
     }
 
 }
