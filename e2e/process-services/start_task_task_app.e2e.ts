@@ -116,51 +116,6 @@ describe('Start Task - Task App', () => {
             });
     });
 
-    it('[C260506] Should display information box for started task', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
-            .addForm(app.formName).clickStartButton()
-            .then(() => {
-                expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
-            })
-            .then(() => {
-                return this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
-            })
-            .then((response) => {
-                let taskModel = new TaskModel(response.data[0]);
-                taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskModel.getName());
-                expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
-                expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
-                expect(taskPage.taskDetails().getDescription()).toEqual(taskModel.getDescription());
-                expect(taskPage.taskDetails().getAssignee()).toEqual(taskModel.getAssignee().getEntireName());
-                expect(taskPage.taskDetails().getCategory())
-                    .toEqual(taskModel.getCategory() === null ? CONSTANTS.TASK_DETAILS.NO_CATEGORY : taskModel.getCategory());
-                expect(taskPage.taskDetails().getDueDate())
-                    .toEqual(taskModel.getDueDate() === null ? CONSTANTS.TASK_DETAILS.NO_DATE : taskModel.getDueDate());
-                expect(taskPage.taskDetails().getParentName())
-                    .toEqual(taskModel.getParentTaskName() === null ? CONSTANTS.TASK_DETAILS.NO_PARENT : taskModel.getParentTaskName());
-                expect(taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
-                return this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response.data[0].id);
-            })
-            .then(function (response) {
-                formModel = new FormModel(response);
-                expect(taskPage.taskDetails().getFormName())
-                    .toEqual(formModel.getName() === null ? CONSTANTS.TASK_DETAILS.NO_FORM : formModel.getName());
-            });
-    });
-
-    it('Start task with no form', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.createNewTask().addName(tasks[2]).clickStartButton()
-            .then(() => {
-                taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[2]);
-                taskPage.formFields().noFormIsDisplayed();
-                expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-            });
-    });
-
     it('[C260422] Should be possible to cancel a task', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
