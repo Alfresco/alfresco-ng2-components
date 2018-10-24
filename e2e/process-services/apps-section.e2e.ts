@@ -151,11 +151,11 @@ describe('Modify applications', () => {
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
 
-        expect(processServicesPage.getAppIconType(appTobeDeleted.title)).toEqual(CONSTANTS.APP_ICON.USER);
-        expect(processServicesPage.getBackgroundColor(appTobeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
-        expect(processServicesPage.getDescription(appTobeDeleted.title)).toEqual(appTobeDeleted.description);
+        expect(processServicesPage.getAppIconType(appToBeDeleted.title)).toEqual(CONSTANTS.APP_ICON.USER);
+        expect(processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
+        expect(processServicesPage.getDescription(appToBeDeleted.title)).toEqual(appToBeDeleted.description);
 
-        let appDefinition = {'appDefinition': {'id': appVersionToBeDeleted.id, 'name': appTobeDeleted.title,
+        let appDefinition = {'appDefinition': {'id': appVersionToBeDeleted.id, 'name': appToBeDeleted.title,
             'description': newDescription, 'definition': {'models': [firstApp.definition.models[0]], 'theme': 'theme-4',
                 'icon': 'glyphicon-user'}}, 'publish': true};
 
@@ -165,9 +165,9 @@ describe('Modify applications', () => {
 
         browser.refresh();
 
-        expect(processServicesPage.getDescription(appTobeDeleted.title)).toEqual(newDescription);
-        expect(processServicesPage.getBackgroundColor(appTobeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.RED);
-        expect(processServicesPage.getAppIconType(appTobeDeleted.title)).toEqual(CONSTANTS.APP_ICON.USER);
+        expect(processServicesPage.getDescription(appToBeDeleted.title)).toEqual(newDescription);
+        expect(processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.RED);
+        expect(processServicesPage.getAppIconType(appToBeDeleted.title)).toEqual(CONSTANTS.APP_ICON.USER);
     });
 
 });
