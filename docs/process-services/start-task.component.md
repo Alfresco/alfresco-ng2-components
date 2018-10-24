@@ -25,10 +25,7 @@ Creates/Starts a new task for the specified app
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | (required) The id of the app. |
-| taskModelForm | `FormGroup` |  | FormGroup for the new task |
-| taskDetailsModel | `TaskDetailsModel` |  | Model for the task |
-| forms$ | `Observable<Form[]>;` |  | Forms for the dropdown list |
-| maxTaskNameLength | `number` | 100 | Maximum mask name length |
+| maxTaskNameLength | `number` | 255 | Maximum mask name length |
 | defaultTaskName | `string` |  | Default Task Name |
 
 ### Events
