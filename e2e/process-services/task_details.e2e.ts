@@ -343,7 +343,7 @@ describe('Task Details component', () => {
         taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskName).selectTaskFromTasksList(taskName);
 
         taskPage.completeTaskNoForm();
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETE_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         taskPage.tasksListPage().selectTaskFromTasksList(taskName);
 
         let getTaskResponse = await browser.controlFlow().execute(async () => {
