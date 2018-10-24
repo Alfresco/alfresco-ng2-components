@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { UserPreferencesService } from '@alfresco/adf-core';
+import { ProcessListCloudComponent, ProcessListCloudSortingModel } from '@alfresco/adf-process-services-cloud';
 
 @Component({
     selector: 'app-process-list-example',
@@ -25,7 +26,15 @@ import { UserPreferencesService } from '@alfresco/adf-core';
 })
 export class ProcessListCloudExampleComponent {
 
+    @ViewChild('processCloud')
+    processCloud: ProcessListCloudComponent;
+
     currentAppName: string = '';
+    status: string = '';
+    filterId: string = '';
+    sortArray: ProcessListCloudSortingModel = [];
+    sortField: string;
+    sortDirection: string;
 
     constructor(private userPreference: UserPreferencesService) {
     }
@@ -40,5 +49,18 @@ export class ProcessListCloudExampleComponent {
 
     onChangePageSize(event) {
         this.userPreference.paginationSize = event.maxItems;
+    }
+
+    onFilterButtonClick($event) {
+        let newSortParam: ProcessListCloudSortingModel = {
+            orderBy: this.sortField,
+            direction: this.sortDirection };
+        this.sortArray.push(newSortParam);
+        this.processCloud.reload();
+    }
+
+    onClearFilters() {
+        this.sortArray = [];
+        this.processCloud.reload();
     }
 }

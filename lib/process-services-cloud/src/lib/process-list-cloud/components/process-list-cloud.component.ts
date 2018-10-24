@@ -7,7 +7,7 @@ import { ProcessListCloudService } from '../services/process-list-cloud.service'
 import { BehaviorSubject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
-
+import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 @Component({
     selector: 'adf-cloud-process-list',
     templateUrl: './process-list-cloud.component.html',
@@ -73,8 +73,8 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     multiselect: boolean = false;
 
-    // @Input()
-    // sorting: TaskListCloudSortingModel[];
+    @Input()
+    sorting: ProcessListCloudSortingModel[];
 
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -213,7 +213,8 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             serviceType: this.serviceType,
             serviceVersion: this.serviceVersion,
             status: this.status,
-            businessKey: this.businessKey
+            businessKey: this.businessKey,
+            sorting: this.sorting
         };
         return new ProcessQueryCloudRequestModel(requestNode);
     }

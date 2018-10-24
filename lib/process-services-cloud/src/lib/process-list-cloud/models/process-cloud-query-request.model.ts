@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-// import { TaskListCloudSortingModel } from './task-list-sorting.model';
+import { ProcessListCloudSortingModel } from './process-list-sorting.model';
 
 export class ProcessQueryCloudRequestModel {
    appName: string;
@@ -38,7 +38,7 @@ export class ProcessQueryCloudRequestModel {
    lastModifiedFrom?: string;
    maxItems: number;
    skipCount: number;
-//    sorting?: TaskListCloudSortingModel[];
+   sorting?: ProcessListCloudSortingModel[];
     constructor(obj?: any) {
        if (obj) {
            this.appName = obj.appName;
@@ -61,7 +61,7 @@ export class ProcessQueryCloudRequestModel {
            this.lastModifiedFrom = obj.lastModifiedFrom;
            this.maxItems = obj.maxItems;
            this.skipCount = obj.skipCount;
-           //    this.sorting = obj.sorting;
+           this.sorting = obj.sorting;
        }
    }
 }

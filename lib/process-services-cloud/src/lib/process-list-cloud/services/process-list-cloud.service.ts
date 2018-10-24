@@ -18,7 +18,7 @@ import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { Observable, from, throwError } from 'rxjs';
-// import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
+import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 @Injectable()
 export class ProcessListCloudService {
 
@@ -34,7 +34,10 @@ export class ProcessListCloudService {
         if (requestNode.appName) {
             let queryUrl = this.buildQueryUrl(requestNode);
             let queryParams = this.buildQueryParams(requestNode);
-
+            let sortingParams = this.buildSortingParam(requestNode.sorting);
+            if (sortingParams) {
+                queryParams['sort'] = sortingParams;
+            }
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, queryParams, null,
@@ -49,17 +52,38 @@ export class ProcessListCloudService {
     private buildQueryUrl(requestNode: ProcessQueryCloudRequestModel) {
         return `${this.appConfigService.get('bpmHost', '')}/${requestNode.appName}-query/v1/process-instances`;
     }
+
+    private isPropertyValueValid(requestNode, property) {
+        return requestNode[property] !== '' && requestNode[property] !== null && requestNode[property] !== undefined;
+    }
+
     private buildQueryParams(requestNode: ProcessQueryCloudRequestModel) {
         let queryParam = {};
         for (let property in requestNode) {
             if (requestNode.hasOwnProperty(property) &&
-                !this.isExcludedField(property)) {
+                !this.isExcludedField(property) &&
+                this.isPropertyValueValid(requestNode, property)) {
                 queryParam[property] = requestNode[property];
             }
         }
         return queryParam;
     }
+
     private isExcludedField(property) {
         return property === 'appName' || property === 'sorting';
+    }
+
+    private buildSortingParam(sortings: ProcessListCloudSortingModel[]): string {
+        let finalSorting: string = '';
+        if (sortings) {
+            for (let sort of sortings) {
+                if (!finalSorting) {
+                    finalSorting = `${sort.orderBy},${sort.direction}`;
+                } else {
+                    finalSorting = `${finalSorting}&${sort.orderBy},${sort.direction}`;
+                }
+            }
+        }
+        return encodeURI(finalSorting);
     }
 }
