@@ -27,7 +27,10 @@ var TaskModel = function (details) {
     this.dueDate;
     this.priority;
     this.parentTaskName;
+    this.parentTaskId;
     this.formKey;
+    this.duration;
+    this.endDate;
     this.assignee = {};
 
     this.getName = function () {
@@ -58,8 +61,20 @@ var TaskModel = function (details) {
         return this.priority;
     };
 
+    this.getDuration = function () {
+        return this.duration;
+    };
+
+    this.getEndDate = function () {
+        return this.endDate;
+    };
+
     this.getParentTaskName = function () {
         return this.parentTaskName;
+    };
+
+    this.getParentTaskId = function () {
+        return this.parentTaskId;
     };
 
     this.getFormKey = function () {

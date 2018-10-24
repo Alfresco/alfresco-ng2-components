@@ -27,6 +27,9 @@ export class TaskDetailsPage {
     statusField = element(by.css('span[data-automation-id*="status"] span'));
     categoryField = element(by.css('span[data-automation-id*="category"] span'));
     parentNameField = element(by.css('span[data-automation-id*="parentName"] span'));
+    parentTaskIdField = element(by.css('span[data-automation-id*="parentTaskId"] span'));
+    durationField = element(by.css('span[data-automation-id*="duration"] span'));
+    endDateField = element(by.css('span[data-automation-id*="endDate"] span'));
     createdField = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
     idField = element(by.css('span[data-automation-id*="id"] span'));
     descriptionField = element(by.css('span[data-automation-id*="description"] span'));
@@ -157,6 +160,21 @@ export class TaskDetailsPage {
     getParentName() {
         Util.waitUntilElementIsVisible(this.parentNameField);
         return this.parentNameField.getText();
+    }
+
+    getParentTaskId() {
+        Util.waitUntilElementIsVisible(this.parentTaskIdField);
+        return this.parentTaskIdField.getText();
+    }
+
+    getDuration() {
+        Util.waitUntilElementIsVisible(this.durationField);
+        return this.durationField.getText();
+    }
+
+    getEndDate() {
+        Util.waitUntilElementIsVisible(this.endDateField);
+        return this.endDateField.getText();
     }
 
     getCreated() {

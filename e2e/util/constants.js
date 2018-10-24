@@ -78,11 +78,13 @@ exports.TASK_DETAILS = {
     NO_FORM: 'No form',
     NO_PARENT: 'No parent',
     NO_DATE: 'No date',
-    NO_CATEGORY: 'No category'
+    NO_CATEGORY: 'No category',
+    NO_DESCRIPTION: 'No description'
 };
 
 exports.TASK_STATUS = {
-    RUNNING: 'Running'
+    RUNNING: 'Running',
+    COMPLETED: 'Completed'
 };
 
 exports.THEMING = {
