@@ -63,7 +63,7 @@ import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
-import { AppListCloudModule, TaskListCloudModule, TaskCloudModule } from '@alfresco/adf-process-services-cloud';
+import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
 import { CloudComponent } from './components/cloud/cloud.component';
 import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
 
@@ -84,9 +84,7 @@ import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/ta
         ThemePickerModule,
         ChartsModule,
         MonacoEditorModule.forRoot(),
-        AppListCloudModule,
-        TaskListCloudModule,
-        TaskCloudModule
+        ProcessServicesCloudModule
     ],
     declarations: [
         AppComponent,
