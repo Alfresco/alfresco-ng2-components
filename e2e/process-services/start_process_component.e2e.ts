@@ -241,6 +241,21 @@ describe('Start Process Component', () => {
             startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
+        it('[C289302] Should display "Select" placeholder when more than one processDefinitions are available', () =>{
+            processServicesPage.goToApp(app.title);
+
+            appNavigationBarPage.clickProcessButton();
+
+            processFiltersPage.clickCreateProcessButton();
+            processFiltersPage.clickNewProcessDropdown();
+
+            expect(startProcessPage.checkSelectProcessPlaceholderIsDisplayed()).toBe('');
+
+            startProcessPage.clickProcessDropdownArrow();
+            startProcessPage.checkOptionIsDisplayed(processModelWithSe);
+            startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
+        });
+
         it('[C286511] Should be able to type the process definition and start a process', () => {
             processServicesPage.goToApp(app.title);
             appNavigationBarPage.clickProcessButton();

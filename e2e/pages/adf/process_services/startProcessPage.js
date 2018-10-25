@@ -134,6 +134,14 @@ var StartProcessPage = function () {
         return startProcessButton.click();
     };
 
+    this.checkSelectProcessPlaceholderIsDisplayed = function () {
+        Util.waitUntilElementIsVisible(processDefinition);
+        var processPlaceholder = processDefinition.getAttribute('value').then((function (result) {
+            return result;
+        }));
+        return processPlaceholder;
+    };
+
 };
 
 module.exports = StartProcessPage;
