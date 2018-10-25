@@ -65,7 +65,7 @@ when the task list is empty:
 | selectFirstRow | `boolean` | true | Toggles default selection of the first row |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | multiselect | `boolean` | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
-| sorting | `TaskListCloudSortingModel` |  | This array of `TaskListCloudSortingModel` specify how the sorting on our table should be provided. This parameters are for BE sorting. |
+| sorting | `[TaskListCloudSortingModel]` |  | This array of `TaskListCloudSortingModel` specify how the sorting on our table should be provided. This parameters are for BE sorting. |
 
 ### Events
 

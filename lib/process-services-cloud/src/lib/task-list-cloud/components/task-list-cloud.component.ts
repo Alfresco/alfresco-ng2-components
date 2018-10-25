@@ -161,7 +161,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         return false;
     }
 
-    reload(): void {
+    reload() {
         this.requestNode = this.createRequestNode();
         if (this.requestNode.appName) {
             this.load(this.requestNode);
@@ -185,7 +185,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             });
     }
 
-    selectTask(taskIdSelected: string): void {
+    selectTask(taskIdSelected: string) {
         if (!this.isListEmpty()) {
             let dataRow: any = null;
             if (taskIdSelected) {

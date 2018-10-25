@@ -26,31 +26,23 @@ import { FilterRepresentationModel } from '../models/filter-cloud.model';
 })
 export class TaskFiltersCloudComponent implements OnChanges {
 
-    /** Parameters to use for the task filter. If there is no match then
-     * the default filter (the first one the list) is selected.
-     */
-    @Input()
-    filterParam: FilterRepresentationModel;
-
-    /** Emitted when a filter in the list is clicked. */
-    @Output()
-    filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
-
-    /** Emitted when the list is loaded. */
-    @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
-
-    /** Emitted when an error occurs during loading. */
-    @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
-
-    /** Display filters available to the current user for the application with the specified name. */
     @Input()
     appName: string;
 
-    /** Toggles display of the filter's icon. */
+    @Input()
+    filterParam: FilterRepresentationModel;
+
     @Input()
     showIcons: boolean = false;
+
+    @Output()
+    filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
+
+    @Output()
+    success: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     filters$: Observable<FilterRepresentationModel[]>;
 
@@ -70,12 +62,6 @@ export class TaskFiltersCloudComponent implements OnChanges {
             this.selectFilter(filter.currentValue);
         }
     }
-
-    /**
-     * Return the task list filtered by appId or by appName
-     * @param appId
-     * @param appName
-     */
 
     /**
      * Return the filter list filtered by appName
