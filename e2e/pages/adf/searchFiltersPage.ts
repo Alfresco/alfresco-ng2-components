@@ -172,12 +172,13 @@ export class SearchFiltersPage {
         return this.pngImageFileType.click();
     }
 
-    getBucketNumberOfFilterType(fileType, filterLength) {
+    getBucketNumberOfFilterType(fileType) {
         let fileTypeFilter = element(by.css('mat-checkbox[data-automation-id="checkbox-SEARCH.FACET_FIELDS.' + fileType + '"] span'));
         Util.waitUntilElementIsVisible(fileTypeFilter);
         let bucketNumber = fileTypeFilter.getText().then((valueOfBucket) => {
-            let numberOfBucket = valueOfBucket.substring(filterLength, valueOfBucket.length - 1);
-            return numberOfBucket;
+            let numberOfBucket = valueOfBucket.split("(")[1];
+            let totalNumberOfBucket = numberOfBucket.split(")")[0];
+            return totalNumberOfBucket;
         });
 
         return bucketNumber;

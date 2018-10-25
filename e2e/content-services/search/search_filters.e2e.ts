@@ -56,10 +56,7 @@ describe('Search Filters', () => {
 
     let fileUploaded, fileTypePng;
 
-    let filter = {
-        type: 'TYPE-PNG Image',
-        name: 'PNG Image ('
-    };
+    let filter = {type: 'TYPE-PNG Image'};
 
     beforeAll(async (done) => {
 
@@ -138,7 +135,7 @@ describe('Search Filters', () => {
 
         searchFiltersPage.clickPngImageType();
 
-        let bucketNumberForFilter = searchFiltersPage.getBucketNumberOfFilterType(filter.type, filter.name.length);
+        let bucketNumberForFilter = searchFiltersPage.getBucketNumberOfFilterType(filter.type);
 
         let resultFileNames = contentList.getAllRowsNameColumn();
 

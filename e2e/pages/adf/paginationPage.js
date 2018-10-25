@@ -134,7 +134,7 @@ var PaginationPage = function () {
     this.getTotalNumberOfFiles = function () {
         Util.waitUntilElementIsVisible(totalFiles);
         var numberOfFiles = totalFiles.getText().then(function (totalNumber) {
-          var totalNumberOfFiles = totalNumber.substring(16, totalNumber.length);
+            var totalNumberOfFiles = totalNumber.split('of ')[1];
           return totalNumberOfFiles;
         });
 
