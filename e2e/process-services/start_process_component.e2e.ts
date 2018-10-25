@@ -241,7 +241,7 @@ describe('Start Process Component', () => {
             startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
-        it('[C289302] Should display "Select" placeholder when more than one processDefinitions are available', () =>{
+        it('[C289302] Should display "Select" placeholder when more than one processDefinitions are available', () => {
             processServicesPage.goToApp(app.title);
 
             appNavigationBarPage.clickProcessButton();
