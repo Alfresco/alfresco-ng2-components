@@ -187,11 +187,11 @@ describe('Start Process Component', () => {
                     expect(processDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESS_END_DATE);
                     expect(processDetailsPage.getProcessCategory()).toEqual(CONSTANTS.PROCESS_CATEGORY);
                     expect(processDetailsPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_BUSINESS_KEY);
-                    expect(processDetailsPage.getCreatedBy()).toEqual(response.getStartedBy().getEntireName());
+                    expect(processDetailsPage.getCreatedBy()).toEqual(`${response.startedBy.firstName} ${response.startedBy.lastName}`);
                     expect(processDetailsPage.getCreated()).toEqual(dateFormat(CONSTANTS.PROCESS_DATE_FORMAT));
-                    expect(processDetailsPage.getId()).toEqual(response.getId());
+                    expect(processDetailsPage.getId()).toEqual(response.id);
                     expect(processDetailsPage.getProcessDescription()).toEqual(CONSTANTS.PROCESS_DESCRIPTION);
-                    expect(processDetailsPage.checkProcessTitleIsDisplayed()).toEqual(response.getName());
+                    expect(processDetailsPage.checkProcessTitleIsDisplayed()).toEqual(response.name);
                 });
             });
         });

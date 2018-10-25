@@ -209,7 +209,7 @@ describe('Upload component', () => {
     it('[C272792] Should be possible to cancel upload of a big file using row cancel icon', () => {
         browser.executeScript(' setTimeout(() => {document.querySelector(\'mat-icon[class*="adf-file-uploading-row__action"]\').click();}, 3000)');
 
-        contentServicesPage.startUploadFile(largeFile.location);
+        contentServicesPage.uploadFile(largeFile.location);
 
         expect(uploadDialog.getTitleText()).toEqual('Upload canceled');
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
@@ -220,7 +220,7 @@ describe('Upload component', () => {
         browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
             'document.querySelector("#adf-upload-dialog-cancel").click();  }, 3000)');
 
-        contentServicesPage.startUploadFile(largeFile.location);
+        contentServicesPage.uploadFile(largeFile.location);
 
         expect(uploadDialog.getTitleText()).toEqual('Upload canceled');
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();

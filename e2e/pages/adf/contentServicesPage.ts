@@ -24,8 +24,6 @@ import { by, element, protractor, $$, browser } from 'protractor';
 
 import path = require('path');
 
-import { element, by, protractor, browser } from 'protractor';
-
 export class ContentServicesPage {
 
     contentList = new ContentList();
@@ -36,7 +34,6 @@ export class ContentServicesPage {
     currentFolder = element(by.css('div[class*="adf-breadcrumb-item active"] div'));
     createFolderButton = element(by.cssContainingText('mat-icon', 'create_new_folder'));
     activeBreadcrumb = element(by.css('div[class*="active"]'));
-    folderID = element.all(by.css('div[class*="settings"] p')).first();
     tooltip = by.css('div[class*="--text full-width"] span');
     uploadFileButton = element(by.css('input[data-automation-id="upload-single-file"]'));
     uploadMultipleFileButton = element(by.css('input[data-automation-id="upload-multiple-files"]'));
@@ -253,11 +250,6 @@ export class ContentServicesPage {
         return this;
     }
 
-    doubleClickEntireRow(folder) {
-        this.contentList.doubleClickEntireRow(folder);
-        return this;
-    }
-
     clickOnCreateNewFolder() {
         Util.waitUntilElementIsVisible(this.createFolderButton);
         this.createFolderButton.click();
@@ -288,46 +280,9 @@ export class ContentServicesPage {
         return this;
     }
 
-    checkContentsAreNotDisplayed(content) {
-        for (let i = 0; i < content.length; i++) {
-            this.checkContentIsNotDisplayed(content[i]);
-        }
-        return this;
-    }
-
-    checkEmptyFolderMessageIsDisplayed() {
-        this.contentList.checkEmptyFolderMessageIsDisplayed();
-        return this;
-    }
-
-    navigateToFolderViaBreadcrumbs(folder) {
-        this.contentList.tableIsLoaded();
-        let breadcrumb = element(by.css('a[data-automation-id="breadcrumb_' + folder + '"]'));
-        Util.waitUntilElementIsVisible(breadcrumb);
-        breadcrumb.click();
-        return this;
-    }
-
     getActiveBreadcrumb() {
         Util.waitUntilElementIsVisible(this.activeBreadcrumb);
         return this.activeBreadcrumb.getAttribute('title');
-    }
-
-    getCurrentFolderID() {
-        Util.waitUntilElementIsVisible(this.folderID);
-        return this.folderID.getText();
-    }
-
-    checkIconColumn(file, extension) {
-        this.contentList.checkIconColumn(file, extension);
-        return this;
-    }
-
-    startUploadFile(fileLocation) {
-        this.checkUploadButton();
-        Util.waitUntilElementIsVisible(this.uploadFileButton);
-        this.uploadFileButton.sendKeys(path.resolve(path.join(TestConfig.main.rootPath, fileLocation)));
-        return this;
     }
 
     uploadFile(fileLocation) {
@@ -386,15 +341,6 @@ export class ContentServicesPage {
         return this;
     }
 
-    deleteContents(content) {
-        for (let i = 0; i < content.length; i++) {
-            this.deleteContent(content[i]);
-            this.checkContentIsNotDisplayed(content[i]);
-            browser.driver.sleep(1000);
-        }
-        return this;
-    }
-
     getErrorMessage() {
         Util.waitUntilElementIsVisible(this.errorSnackBar);
         let deferred = protractor.promise.defer();
@@ -450,8 +396,7 @@ export class ContentServicesPage {
     getDocumentListRowNumber() {
         let documentList = element(by.css('adf-upload-drag-area adf-document-list'));
         Util.waitUntilElementIsVisible(documentList);
-        let actualRows = $$('adf-upload-drag-area adf-document-list .adf-datatable-row').count();
-        return actualRows;
+        return $$('adf-upload-drag-area adf-document-list .adf-datatable-row').count();
     }
 
     checkColumnNameHeader() {
