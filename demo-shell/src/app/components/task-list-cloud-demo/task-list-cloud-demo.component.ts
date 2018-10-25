@@ -27,7 +27,7 @@ import { FormControl } from '@angular/forms';
     templateUrl: 'task-list-cloud-demo.component.html',
     styleUrls: ['task-list-cloud-demo.component.scss']
 })
-export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
+export class TaskListCloudDemoComponent implements OnInit {
 
     @ViewChild('taskCloud')
     taskCloud: TaskListCloudComponent;
