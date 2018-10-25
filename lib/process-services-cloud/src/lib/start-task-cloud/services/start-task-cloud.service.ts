@@ -57,12 +57,38 @@ export class StartTaskCloudService {
             );
     }
 
+    getUsersByRole(role: string): Observable<UserCloudModel[]> {
+        const url = this.getUserByRoleUrl(role);
+        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
+            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+                    url, httpMethod, pathParams, queryParams,
+                    headerParams, formParams, bodyParam, authNames,
+                    contentTypes, accepts, Object, null, null)
+                ).pipe(
+                    map((response: UserCloudModel[]) => {
+                        return response;
+                    }),
+                catchError(err => this.handleError(err))
+            );
+    }
+
     private buildCreateTaskUrl(appName: string): any {
         return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/tasks`;
     }
 
     private getUserUrl(): any {
         return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/users`;
+    }
+
+    // private exmple(): any {
+    //     6f8858b8-f5c7-4782-92bd-a595c3c8c829
+    //     return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/users`;
+    // }
+
+    private getUserByRoleUrl(role: string): any {
+        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/roles/user/users`;
     }
 
     private buildRequestBody(taskDetails: any) {

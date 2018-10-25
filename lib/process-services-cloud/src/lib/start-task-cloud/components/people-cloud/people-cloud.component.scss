@@ -1,0 +1,36 @@
+@mixin adf-cloud-people-theme($theme) {
+    $primary: map-get($theme, primary);
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+    .adf {
+
+        &-people-cloud {
+            width: 100%;
+        }
+
+        &-people-cloud-list {
+            margin: 5px 0;
+            padding: 10px 0;
+        }
+
+        &-people-cloud-row {
+            display: flex;
+            align-items: center;
+        }
+
+        &-people-cloud-pic {
+            background: mat-color($primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 100px;
+            color: mat-color($foreground, text);
+            font-weight: bolder;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+    }
+}

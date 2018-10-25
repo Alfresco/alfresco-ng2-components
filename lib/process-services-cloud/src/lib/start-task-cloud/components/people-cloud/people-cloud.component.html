@@ -1,0 +1,23 @@
+<form>
+<mat-form-field class="adf-people-cloud">
+    <mat-label id="assignee-id">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'|translate}}</mat-label>
+    <input #inputValue
+           matInput
+           class="adf-input"
+           data-automation-id="adf-people-search-input"
+           type="text"
+           [formControl]="searchUser"
+           [matAutocomplete]="auto">
+    <mat-autocomplete class="adf-people-cloud-list"
+                      #auto="matAutocomplete"
+                      (optionSelected)="onItemSelect($event.option.value)"
+                      [displayWith]="getDisplayName">
+        <mat-option *ngFor="let user of users$ | async; let i = index" [value]="user">
+            <div class="adf-people-cloud-row" id="adf-people-cloud-user-{{i}}">
+                <div [outerHTML]="user | initialUserNamePipe:'adf-people-cloud-pic'"></div>
+                <span class="adf-people-label-name">{{getDisplayName(user)}}</span>
+            </div>
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+</form>
