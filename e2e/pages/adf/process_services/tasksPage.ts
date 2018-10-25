@@ -25,8 +25,6 @@ import ChecklistDialog = require('./dialog/createChecklistDialog');
 import TasksListPage = require('./tasksListPage');
 import { element, by } from 'protractor';
 
-import { element, by } from 'protractor';
-
 export class TasksPage {
 
     createButton = element(by.css('button[data-automation-id="create-button"'));

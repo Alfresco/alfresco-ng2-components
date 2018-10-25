@@ -18,6 +18,7 @@
 import { AppSettingsToggles } from './dialog/appSettingsToggles';
 import Util = require('../../../util/util');
 import { element, by, protractor, browser } from 'protractor';
+import { TabsPage } from '../material/tabsPage';
 
 export class TaskDetailsPage {
 
@@ -45,7 +46,7 @@ export class TaskDetailsPage {
     addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
     emailInvolvedUser = by.xpath('following-sibling::div[@class="people-email ng-star-inserted"]');
     editActionInvolvedUser = by.xpath('following-sibling::div[@class="people-edit-label ng-star-inserted"]');
-	involvedUserPic = by.xpath('ancestor::div/ancestor::div/preceding-sibling::div//div[@class="adf-people-search-people-pic ng-star-inserted"]');
+    involvedUserPic = by.xpath('ancestor::div/ancestor::div/preceding-sibling::div//div[@class="adf-people-search-people-pic ng-star-inserted"]');
     taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
     taskDetailsSection = element(by.css('div[data-automation-id="adf-tasks-details"]'));
     taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
@@ -217,24 +218,14 @@ export class TaskDetailsPage {
     }
 
     selectActivityTab() {
-        Util.waitUntilElementIsVisible(this.activityTab);
-        this.activityTab.getAttribute('aria-selected').then((check) => {
-            if (check === 'false') {
-                this.activityTab.click();
-                expect(this.activityTab.getAttribute('aria-selected') === 'true');
-            }
-        });
+        let tabsPage = new TabsPage;
+        tabsPage.clickTabByTitle('Activity');
         return this;
     }
 
     selectDetailsTab() {
-        Util.waitUntilElementIsVisible(this.detailsTab);
-        this.detailsTab.getAttribute('aria-selected').then((check) => {
-            if (check === 'false') {
-                this.detailsTab.click();
-                expect(this.detailsTab.getAttribute('aria-selected') === 'true');
-            }
-        });
+        let tabsPage = new TabsPage;
+        tabsPage.clickTabByTitle('Details');
         return this;
     }
 

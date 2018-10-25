@@ -23,7 +23,7 @@ import { Widget } from '../pages/adf/process_services/widgets/widget';
 import CONSTANTS = require('../util/constants');
 
 import FormDefinitionModel = require('../models/APS/FormDefinitionModel');
-import { Task } from '../models/APS/Task';
+import Task = require('../models/APS/Task');
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -82,8 +82,7 @@ describe('Form widgets', () => {
             loginPage.loginToProcessServicesUsingUserModel(processUserModel);
             processServicesPage.goToProcessServices().goToApp(appModel.name)
                 .clickTasksButton();
-            /* cspell:disable-next-line */
-            taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             taskPage.createNewTask().addName(newTask).addDescription('Description').addForm(app.formName).clickStartButton()
                 .then(() => {
                     taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(newTask);
@@ -171,14 +170,12 @@ describe('Form widgets', () => {
         });
 
         it('[C272784] Should display typeahead and header in form', () => {
-
             expect(widget.headerWidget().getFieldLabel(appFields.header_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.header_id).name);
-
-            expect(taskPage.formFields().getFieldValue(appFields.typeahead_id))
-                .toEqual(formInstance.getWidgetBy('id', appFields.typeahead_id).value || '');
-            expect(taskPage.formFields().getFieldLabel(appFields.typeahead_id))
-                .toEqual(formInstance.getWidgetBy('id', appFields.typeahead_id).name);
+            expect(taskPage.formFields().getFieldValue(appFields.typeAhead_id))
+                .toEqual(formInstance.getWidgetBy('id', appFields.typeAhead_id).value || '');
+            expect(taskPage.formFields().getFieldLabel(appFields.typeAhead_id))
+                .toEqual(formInstance.getWidgetBy('id', appFields.typeAhead_id).name);
         });
 
         it('[C272785] Should display checkbox and radio button in form', () => {
@@ -247,8 +244,7 @@ describe('Form widgets', () => {
         beforeEach(() => {
             let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
             browser.get(urlToNavigateTo);
-            /* cspell:disable-next-line */
-            taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+            taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             taskPage.formFields().checkFormIsDisplayed();
         });
 
@@ -265,7 +261,7 @@ describe('Form widgets', () => {
 
             taskPage.formFields().setValueInInputById('label', 'value 1').completeForm();
             /* cspell:disable-next-line */
-            taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.COMPL_TASKS);
+            taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
 
             expect(widget.displayTextWidget().getFieldText(appFields.displayText_id))
                 .toContain('value 1');

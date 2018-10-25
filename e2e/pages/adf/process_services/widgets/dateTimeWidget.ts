@@ -16,12 +16,13 @@
  */
 
 import FormFields = require('../formFields');
-import { element, by } from 'protractor';
+import { element, by, protractor } from 'protractor';
 import Util = require('../../../../util/util');
 
 export class DateTimeWidget {
 
     formFields = new FormFields();
+    outsideLayer = element(by.css('div[class*="cdk-overlay-container"]'));
 
     checkWidgetIsVisible(fieldId) {
         return this.formFields.checkWidgetIsVisible(fieldId);
@@ -53,6 +54,11 @@ export class DateTimeWidget {
         return form.click();
     }
 
+    closeDataTimeWidget() {
+        Util.waitUntilElementIsVisible(this.outsideLayer);
+        return this.outsideLayer.click();
+    }
+
     getErrorMessage(fieldId) {
         let errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
         Util.waitUntilElementIsVisible(errorMessage);
@@ -71,7 +77,7 @@ export class DateTimeWidget {
 
     private selectTime(time) {
         let selectedTime = element(by.cssContainingText('div[class*="mat-datetimepicker-clock-cell"]', time));
-        Util.waitUntilElementIsVisible(selectedTime);
+        Util.waitUntilElementIsClickable(selectedTime);
         return selectedTime.click();
     }
 
@@ -85,5 +91,16 @@ export class DateTimeWidget {
 
     getPlaceholder(fieldId) {
         return this.formFields.getFieldPlaceHolder(fieldId);
+    }
+
+    removeFromDatetimeWidget(fieldId) {
+        Util.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
+
+        let amountWidgetInput = element(by.id(fieldId));
+        amountWidgetInput.getAttribute('value').then((result) => {
+            for (let i = result.length; i >= 0; i--) {
+                amountWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
+            }
+        });
     }
 }

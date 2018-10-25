@@ -67,8 +67,7 @@ describe('Amount Widget', () => {
     beforeEach(() => {
         let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         browser.get(urlToNavigateTo);
-        /* cspell:disable-next-line */
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.formFields().checkFormIsDisplayed();
     });
 
@@ -79,7 +78,7 @@ describe('Amount Widget', () => {
         done();
     });
 
-    it('[C274703] Amount widget - General, advanced, Amount and Visibility properties', () => {
+    it('[C274703] General, advanced, Amount and Visibility properties', () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.amount_input_id);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.amount_input_id);

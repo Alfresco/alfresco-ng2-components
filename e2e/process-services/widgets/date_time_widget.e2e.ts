@@ -65,8 +65,7 @@ describe('Date and time widget', () => {
     beforeEach(() => {
         let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         browser.get(urlToNavigateTo);
-        /* cspell:disable-next-line */
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.formFields().checkFormIsDisplayed();
     });
 
@@ -92,17 +91,16 @@ describe('Date and time widget', () => {
 
     it('[C268819] Date and time widget - Advanced properties', () => {
         widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
-        widget.dateTimeWidget().selectDay('10');
-        widget.dateTimeWidget().selectHour('8');
-        widget.dateTimeWidget().selectMinute('30');
+        widget.dateTimeWidget().closeDataTimeWidget();
         widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-17 07:30 PM');
         widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
         expect(widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be less than');
 
-        widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '');
-        widget.dateTimeWidget().selectDay('28');
-        widget.dateTimeWidget().selectHour('22');
-        widget.dateTimeWidget().selectMinute('30');
+        widget.dateTimeWidget().closeDataTimeWidget();
+
+        widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
+        widget.dateTimeWidget().removeFromDatetimeWidget(app.FIELD.date_time_between_input);
+        widget.dateTimeWidget().closeDataTimeWidget();
         widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-19 07:30 PM');
         widget.dateTimeWidget().clickOutsideWidget(app.FIELD.date_time_between_input);
         expect(widget.dateTimeWidget().getErrorMessage(app.FIELD.date_time_between_input)).toContain('Can\'t be greater than');

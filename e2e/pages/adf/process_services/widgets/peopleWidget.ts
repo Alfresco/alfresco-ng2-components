@@ -40,8 +40,8 @@ export class PeopleWidget {
         return this.formFields.getFieldText(fieldId, this.labelLocator);
     }
 
-    insertUser(value) {
-        return this.formFields.setFieldValue(by.id, 'involvepeople', value);
+    insertUser(fieldId, value) {
+        return this.formFields.setValueInInputById(fieldId, value);
     }
 
     checkDropDownListIsDisplayed() {

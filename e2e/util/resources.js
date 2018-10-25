@@ -299,6 +299,17 @@ exports.Files = {
                 checkbox_id: "check",
                 upload_button_id: "Upload"
             }
+        },
+
+        ADD_PEOPLE: {
+            formName: "AddPeopleProcess",
+            title: "AddPeopleProcess",
+            processName: "AddPeopleProcess",
+            FIELD: {
+                widget_id: "Finally",
+                user_id: "adf-people-search-input",
+                checkbox_id: "check"
+            }
         }
     },
 

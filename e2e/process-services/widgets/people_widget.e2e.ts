@@ -35,7 +35,7 @@ describe('People widget', () => {
     let alfrescoJsApi;
     let appsActions = new AppsActions();
     let appModel;
-    let app = resources.Files.WIDGET_CHECK_APP.AMOUNT;
+    let app = resources.Files.WIDGET_CHECK_APP.ADD_PEOPLE;
     let deployedApp, process;
 
     beforeAll(async (done) => {
@@ -65,30 +65,36 @@ describe('People widget', () => {
     beforeEach(() => {
         let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         browser.get(urlToNavigateTo);
-        /* cspell:disable-next-line */
-        taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.formFields().checkFormIsDisplayed();
     });
 
     afterAll(async (done) => {
+        await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-        await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-
         done();
     });
 
     it('[C212870] should check People widget', () => {
+        taskPage.formFields().checkWidgetIsHidden(app.FIELD.widget_id);
+        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        taskPage.formFields().checkWidgetIsVisible(app.FIELD.widget_id);
+
         let admin = processUserModel.firstName + ' ' + processUserModel.lastName;
-        widget.peopleWidget().insertUser(admin.charAt(0));
+        widget.peopleWidget().insertUser(app.FIELD.widget_id, admin.charAt(0));
         widget.peopleWidget().checkDropDownListIsDisplayed();
         widget.peopleWidget().checkUserIsListed(admin);
         widget.peopleWidget().selectUserFromDropDown(admin);
     });
 
     it('[C274707] Add people widget - Visibility', () => {
+        taskPage.formFields().checkWidgetIsHidden(app.FIELD.widget_id);
+        widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
+        taskPage.formFields().checkWidgetIsVisible(app.FIELD.widget_id);
+
         let admin = processUserModel.firstName + ' ' + processUserModel.lastName;
-        widget.peopleWidget().insertUser(admin.charAt(0));
+        widget.peopleWidget().insertUser(app.FIELD.widget_id, admin.charAt(0));
         widget.peopleWidget().checkDropDownListIsDisplayed();
         widget.peopleWidget().checkUserIsListed(admin);
         widget.peopleWidget().selectUserFromDropDown(admin);
