@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { TaskListCloudComponent, TaskListCloudSortingModel } from '@alfresco/adf-process-services-cloud';
 import { UserPreferencesService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
