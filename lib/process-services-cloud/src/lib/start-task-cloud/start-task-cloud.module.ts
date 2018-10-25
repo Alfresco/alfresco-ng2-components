@@ -7,6 +7,8 @@ import { TemplateModule, TranslateLoaderService, FormModule } from '@alfresco/ad
 import { StartTaskCloudComponent } from './components/start-task-cloud.component';
 import { StartTaskCloudService } from './services/start-task-cloud.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PeopleCloudComponent } from './components/people-cloud/people-cloud.component';
+import { InitialUserNamePipe } from './components/pipes/initial-user-name.pipe';
 
 @NgModule({
     imports: [
@@ -24,7 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         ReactiveFormsModule,
         FormModule
     ],
-    declarations: [StartTaskCloudComponent],
+    declarations: [StartTaskCloudComponent, PeopleCloudComponent, InitialUserNamePipe],
     providers: [
         StartTaskCloudService
      ],
