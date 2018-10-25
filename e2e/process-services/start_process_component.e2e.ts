@@ -171,31 +171,29 @@ describe('Start Process Component', () => {
             startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
-        xit('[C260449] Should be possible to start a process with start event', () => {
+        it('[C260449] Should be possible to start a process with start event', () => {
             processServicesPage.goToApp(app.title);
             appNavigationBarPage.clickProcessButton();
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
             startProcessPage.enterProcessName('Test');
             startProcessPage.selectFromProcessDropdown(processModelWithSe);
-            startProcessPage.clickFormStartProcessButton()
-                .then(() => {
-                    processDetailsPage.getId()
-                        .then(function (result) {
-                            return this.alfrescoJsApi.activiti.processApi.getProcessInstance(result);
-                        })
-                        .then(function (response) {
-                            expect(processDetailsPage.getPROCESS_STATUS()).toEqual(CONSTANTS.PROCESS_STATUS.RUNNING);
-                            expect(processDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESS_END_DATE);
-                            expect(processDetailsPage.getProcessCategory()).toEqual(CONSTANTS.PROCESS_CATEGORY);
-                            expect(processDetailsPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_BUSINESS_KEY);
-                            expect(processDetailsPage.getCreatedBy()).toEqual(response.getStartedBy().getEntireName());
-                            expect(processDetailsPage.getCreated()).toEqual(dateFormat(CONSTANTS.PROCESS_DATE_FORMAT));
-                            expect(processDetailsPage.getId()).toEqual(response.getId());
-                            expect(processDetailsPage.getPROCESS_DESCRIPTION()).toEqual(CONSTANTS.PROCESS_DESCRIPTION);
-                            expect(processDetailsPage.checkProcessTitleIsDisplayed()).toEqual(response.getName());
-                        });
+            startProcessPage.clickFormStartProcessButton();
+            processDetailsPage.checkDetailsAreDisplayed();
+            browser.controlFlow().execute(async () => {
+                let processId = await processDetailsPage.getId();
+                await this.alfrescoJsApi.activiti.processApi.getProcessInstance(processId).then(function (response) {
+                    expect(processDetailsPage.getProcessStatus()).toEqual(CONSTANTS.PROCESS_STATUS.RUNNING);
+                    expect(processDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESS_END_DATE);
+                    expect(processDetailsPage.getProcessCategory()).toEqual(CONSTANTS.PROCESS_CATEGORY);
+                    expect(processDetailsPage.getBusinessKey()).toEqual(CONSTANTS.PROCESS_BUSINESS_KEY);
+                    expect(processDetailsPage.getCreatedBy()).toEqual(`${response.startedBy.firstName} ${response.startedBy.lastName}`);
+                    expect(processDetailsPage.getCreated()).toEqual(dateFormat(CONSTANTS.PROCESS_DATE_FORMAT));
+                    expect(processDetailsPage.getId()).toEqual(response.id);
+                    expect(processDetailsPage.getProcessDescription()).toEqual(CONSTANTS.PROCESS_DESCRIPTION);
+                    expect(processDetailsPage.checkProcessTitleIsDisplayed()).toEqual(response.name);
                 });
+            });
         });
 
         it('[C286503] Should NOT display any process definition when typing a non-existent one', () => {
