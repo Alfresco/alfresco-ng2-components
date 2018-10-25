@@ -22,9 +22,9 @@ import { FormModel } from './form.model';
 
 export class FormOutcomeModel extends FormWidgetModel {
 
-    static SAVE_ACTION: string = 'Save';            // Activiti 'Save' action name
-    static COMPLETE_ACTION: string = 'Complete';    // Activiti 'Complete' action name
-    static START_PROCESS_ACTION: string = 'Start Process';    // Activiti 'Start Process' action name
+    static SAVE_ACTION: string = 'SAVE';            // Activiti 'Save' action name
+    static COMPLETE_ACTION: string = 'COMPLETE';    // Activiti 'Complete' action name
+    static START_PROCESS_ACTION: string = 'START PROCESS';    // Activiti 'Start Process' action name
 
     isSystem: boolean = false;
     isSelected: boolean = false;

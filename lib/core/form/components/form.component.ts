@@ -48,7 +48,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
     static START_PROCESS_OUTCOME_ID: string = '$startProcess';
     static CUSTOM_OUTCOME_ID: string = '$custom';
     static COMPLETE_BUTTON_COLOR: string = 'primary';
-    static COMPLETE_OUTCOME_NAME: string = 'Complete'
+    static COMPLETE_OUTCOME_NAME: string = 'START';
 
     /** Underlying form model instance. */
     @Input()
