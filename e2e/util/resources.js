@@ -61,12 +61,10 @@ exports.Files = {
         peopleWidgetId: "label1"
     },
 
-    SIMPLE_APP: {
-        file_location: "/resources/Simple App.zip",
-        title: "Simple App",
-        id: -18,
-        process_definitions: null,
-        start_form: null
+    NO_FORM_APP: {
+        file_location: "/resources/apps/No form app.zip",
+        title: "No form app",
+        taskName: "No form task"
     },
 
     SIMPLE_APP_WITH_USER_FORM: {
