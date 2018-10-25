@@ -99,6 +99,10 @@ describe('Share file', () => {
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickShareLinkButton();
             shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
+            shareDialog.waitForNotificationToClose();
+            shareDialog.clickShareLinkButton();
+            shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
+
         });
 
         it('[C286543] Should be possible to close Share dialog', () => {
@@ -150,6 +154,24 @@ describe('Share file', () => {
             shareDialog.clickShareLinkButton();
             shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
             const sharedLink = await shareDialog.getShareLink();
+            browser.get(sharedLink);
+            viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
+        });
+
+        it('[C287803] Should the URL be kept the same when opening the share dialog multiple times', async () => {
+            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.clickShareLinkButton();
+            shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
+            const sharedLink = await shareDialog.getShareLink();
+            shareDialog.clickCloseButton();
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.clickShareLinkButton();
+            shareDialog.checkNotificationWithMessage('Link copied to the clipboard');
+            const secondSharedLink = await shareDialog.getShareLink();
+            expect(sharedLink).toEqual(secondSharedLink);
             browser.get(sharedLink);
             viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
         });
