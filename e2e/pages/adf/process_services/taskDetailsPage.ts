@@ -21,7 +21,7 @@ import { element, by, browser, protractor } from 'protractor';
 import Util = require('../../../util/util');
 
 export class TaskDetailsPage {
-    formContent = element(by.css("adf-form"));
+    formContent = element(by.css('adf-form'));
     formNameField = element(by.css('span[data-automation-id*="formName"] span'));
     assigneeField = element(by.css('span[data-automation-id*="assignee"] span'));
     statusField = element(by.css('span[data-automation-id*="status"] span'));
