@@ -42,19 +42,19 @@ describe('Dynamic Table widget ', () => {
 
         beforeAll(async (done) => {
             let users = new UsersActions();
-    
+
             alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
                 hostBpm: TestConfig.adf.url
             });
-    
+
             await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    
+
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
-    
+
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
             appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, resources.Files.WIDGET_CHECK_APP.file_location);
-    
+
             let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => {
                 return currentApp.modelId === appModel.id;
@@ -63,35 +63,36 @@ describe('Dynamic Table widget ', () => {
             loginPage.loginToProcessServicesUsingUserModel(processUserModel);
             done();
         });
-    
+
         beforeEach(() => {
             let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
             browser.get(urlToNavigateTo);
+            /* cspell:disable-next-line */
             taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
             taskPage.formFields().checkFormIsDisplayed();
         });
-    
+
         afterAll(async (done) => {
             await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
             await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
             done();
         });
-    
+
         it('[C276729] Dynamic table widget - Visiblity', () => {
             taskPage.formFields().checkWidgetIsHidden(app.FIELD.dynamic_table_age_id);
             widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
             taskPage.formFields().checkWidgetIsVisible(app.FIELD.dynamic_table_age_id);
         });
-    
+
         it('[C279349] Dynamic table with Datetime', () => {
             widget.dynamicTable().clickAddButton();
-            widget.dateTimeWidget().openDatepicker(app.FIELD.datatime_input_id);
+            widget.dateTimeWidget().openDatepicker(app.FIELD.dataTime_input_id);
             widget.dateTimeWidget().selectDay('10');
             widget.dateTimeWidget().selectHour('8');
             widget.dateTimeWidget().selectMinute('30');
-            widget.dateTimeWidget().clearDateTimeInput(app.FIELD.datatime_input_id);
-    
+            widget.dateTimeWidget().clearDateTimeInput(app.FIELD.dataTime_input_id);
+
             widget.dynamicTable().clickSaveButton();
             widget.dynamicTable().getTableRow(0);
         });
@@ -103,19 +104,19 @@ describe('Dynamic Table widget ', () => {
 
         beforeAll(async (done) => {
             let users = new UsersActions();
-    
+
             alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
                 hostBpm: TestConfig.adf.url
             });
-    
+
             await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    
+
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
-    
+
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
             appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, resources.Files.WIDGET_CHECK_APP.file_location);
-    
+
             let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => {
                 return currentApp.modelId === appModel.id;
@@ -124,44 +125,45 @@ describe('Dynamic Table widget ', () => {
             loginPage.loginToProcessServicesUsingUserModel(processUserModel);
             done();
         });
-    
+
         beforeEach(() => {
             let urlToNavigateTo = `${TestConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
             browser.get(urlToNavigateTo);
+            /* cspell:disable-next-line */
             taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);
             taskPage.formFields().checkFormIsDisplayed();
         });
-    
+
         afterAll(async (done) => {
             await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
             await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
             done();
         });
-    
+
         it('[C260407] should check Dynamic Table widget', () => {
-    
+
             widget.dynamicTable().clickAddRow();
             widget.dynamicTable().setDatatableInput('User1');
             widget.dynamicTable().clickSaveButton();
             expect(widget.dynamicTable().getTableRowText(0)).toEqual('User1');
-    
+
             widget.dynamicTable().clickTableRow(0);
             widget.dynamicTable().clickEditButton();
             widget.dynamicTable().setDatatableInput('User2');
             widget.dynamicTable().clickCancelButton();
             expect(widget.dynamicTable().getTableRowText(0)).toEqual('User1');
-    
+
             widget.dynamicTable().clickEditButton();
             widget.dynamicTable().setDatatableInput('User2');
             widget.dynamicTable().clickSaveButton();
             expect(widget.dynamicTable().getTableRowText(0)).toEqual('User2');
-    
+
             widget.dynamicTable().clickAddRow();
             widget.dynamicTable().setDatatableInput('User3');
             widget.dynamicTable().clickCancelButton();
             widget.dynamicTable().checkTableRowIsNotVisible(1);
         });
     });
-    
+
 });

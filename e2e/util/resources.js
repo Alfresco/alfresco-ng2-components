@@ -31,7 +31,7 @@ exports.Files = {
         process_title: "TestDateField",
         id: -1,
         form_fields: {
-            testdate_field: "activiti-testdate",
+            testDate_field: "activiti-testdate",
             completed_task_date_field: "span[ng-if*='field.dateDisplayFormat']"
         }
     },
@@ -118,8 +118,8 @@ exports.Files = {
         formName: "test-1",
         form_fields: {
             text_id: "label",
-            displaytext_id: "label1",
-            displayvalue_id: "labeldisplayusingvariable"
+            displayText_id: "label1",
+            displayValue_id: "labeldisplayusingvariable"
         }
     },
 
@@ -261,7 +261,7 @@ exports.Files = {
                 dynamic_table_age_id: "label2",
                 dynamic_table_date_id: "label",
                 checkbox_id: "viewtable",
-                datatime_input_id: "datetime",
+                dataTime_input_id: "datetime",
                 row: "label-row-0"
 
             }
@@ -275,7 +275,7 @@ exports.Files = {
                 dynamic_table_age_id: "label2",
                 dynamic_table_date_id: "label",
                 checkbox_id: "viewtable",
-                datatime_input_id: "datetime",
+                dataTime_input_id: "datetime",
                 row: "label-row-0"
 
             }
