@@ -55,7 +55,7 @@ describe('Document List - Pagination', function () {
 
     let acsUser = new AcsUserModel();
     let newFolderModel = new FolderModel({ 'name': 'newFolder' });
-    let fileNames = [], nrOfFiles = 20, currentPage = 1, secondSetOfFiles, secondSetNumber = 20;
+    let fileNames = [], nrOfFiles = 20, currentPage = 1, secondSetOfFiles = [], secondSetNumber = 25;
     let folderTwoModel = new FolderModel({ 'name': 'folderTwo' });
     let folderThreeModel = new FolderModel({ 'name': 'folderThree' });
 
@@ -81,7 +81,7 @@ describe('Document List - Pagination', function () {
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, newFolderUploadedModel.entry.id);
 
-        await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderThreeUploadedModel.entry.id);
+        await uploadActions.createEmptyFiles(this.alfrescoJsApi, secondSetOfFiles, folderThreeUploadedModel.entry.id);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -256,7 +256,7 @@ describe('Document List - Pagination', function () {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 
-    xit('[C91320] Pagination should preserve sorting', function () {
+    it('[C91320] Pagination should preserve sorting', function () {
         contentServicesPage.goToDocumentList();
         contentServicesPage.navigateToFolder(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
@@ -265,34 +265,34 @@ describe('Document List - Pagination', function () {
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
-            expect(JSON.stringify(list) === JSON.stringify(fileNames)).toEqual(true);
+        contentServicesPage.getElementsDisplayed().then(function (list) {
+            contentServicesPage.checkElementsSortedByNameAsc(list);
         });
+
         contentServicesPage.sortByName(false);
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
-            fileNames.reverse();
-            expect(JSON.stringify(list) === JSON.stringify(fileNames)).toEqual(true);
+        contentServicesPage.getElementsDisplayed().then(function (list) {
+            contentServicesPage.checkElementsSortedByNameDesc(list);
         });
 
         paginationPage.selectItemsPerPage(itemsPerPage.five);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
-            expect(JSON.stringify(list) === JSON.stringify(fileNames.slice(15, 20))).toEqual(true);
+        contentServicesPage.getElementsDisplayed().then(function (list) {
+            contentServicesPage.checkElementsSortedByNameDesc(list);
         });
 
         paginationPage.clickOnNextPage();
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
-            expect(JSON.stringify(list) === JSON.stringify(fileNames.slice(10, 15))).toEqual(true);
+        contentServicesPage.getElementsDisplayed().then(function (list) {
+            contentServicesPage.checkElementsSortedByNameDesc(list);
         });
 
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
-        contentServicesPage.getAllRowsNameColumn().then(function (list) {
-            expect(JSON.stringify(list) === JSON.stringify(fileNames.slice(10, 20))).toEqual(true);
+        contentServicesPage.getElementsDisplayed().then(function (list) {
+            contentServicesPage.checkElementsSortedByNameDesc(list);
         });
     });
 
@@ -312,7 +312,7 @@ describe('Document List - Pagination', function () {
         contentServicesPage.checkPaginationIsNotDisplayed();
     });
 
-    xit('[C260071] Items per page when having 25 files', function () {
+    it('[C260071] Should be able to change pagination when having 25 files', function () {
         currentPage = 1;
         contentServicesPage.goToDocumentList();
         contentServicesPage.navigateToFolder(folderThreeModel.name);
