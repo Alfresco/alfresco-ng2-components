@@ -81,4 +81,4 @@ describe('Task Details - No form', () => {
 
     });
 
-})
+});
