@@ -18,11 +18,11 @@
         </loading-content-template>
         <no-content-template>
             <ng-template>
-                    <adf-empty-content *ngIf="!emptyCustomContent"
-                        icon="assessment"
-                        [title]="'ADF-PROCESS-LIST-CLOUD.MESSAGES.TITLE' | translate"
-                        [subtitle]="'ADF-PROCESS-LIST-CLOUD.MESSAGES.SUBTITLE'| translate">
-                    </adf-empty-content>
+                <adf-empty-content *ngIf="!emptyCustomContent"
+                    icon="assessment"
+                    [title]="'ADF-PROCESS-LIST-CLOUD.MESSAGES.TITLE' | translate"
+                    [subtitle]="'ADF-PROCESS-LIST-CLOUD.MESSAGES.SUBTITLE'| translate">
+                </adf-empty-content>
                 <ng-content select="adf-empty-custom-content"></ng-content>
             </ng-template>
         </no-content-template>

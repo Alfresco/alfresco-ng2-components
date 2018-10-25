@@ -105,7 +105,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         this.userPreferences.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
             this.size = pageSize;
         });
-        this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel>{
+        this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
             maxItems: this.size,
             skipCount: 0,
             totalItems: 0
@@ -127,7 +127,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         return this.currentInstanceId;
     }
 
-    reload(): void {
+    reload() {
         this.requestNode = this.createRequestNode();
         if (this.requestNode.appName) {
             this.load(this.requestNode);
@@ -141,7 +141,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         this.processListCloudService.getProcessByRequest(requestNode).subscribe(
             (processes) => {
                 this.rows = processes.list.entries;
-                // this.selectTask(this.landingTaskId);
                 this.success.emit(processes);
                 this.isLoading = false;
                 this.pagination.next(processes.list.pagination);

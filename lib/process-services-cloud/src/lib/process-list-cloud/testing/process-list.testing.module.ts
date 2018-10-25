@@ -46,4 +46,4 @@ import {
         UserPreferencesService
     ]
 })
-export class ProcessListTestingModule { }
+export class ProcessListCloudTestingModule { }
