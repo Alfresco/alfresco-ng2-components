@@ -54,7 +54,10 @@
                     </div>
                 </mat-form-field>
 
-                <mat-form-field fxFlex>
+                <div fxFlex>
+                    <adf-cloud-people></adf-cloud-people>
+                </div>
+                <!-- <mat-form-field fxFlex>
                     <mat-label id="assignee-id">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'|translate}}</mat-label>
                     <mat-select
                         class="form-control"
@@ -62,7 +65,7 @@
                         <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
                         <mat-option *ngFor="let user of users$ | async" [value]="user.username">{{ user.username }}</mat-option>
                     </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
             </div>
         </form>
 
