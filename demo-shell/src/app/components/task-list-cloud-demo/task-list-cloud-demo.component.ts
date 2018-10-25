@@ -105,11 +105,6 @@ export class TaskListCloudDemoComponent implements OnInit, AfterViewInit {
             });
     }
 
-    ngAfterViewInit() {
-        /*tslint:disable-next-line*/
-        this.taskCloud && this.applicationName ? this.taskCloud.reload() : console.log('FAIL');
-    }
-
     onFilterSelected(filter) {
         const queryParams = {
             status: filter.query.state,
