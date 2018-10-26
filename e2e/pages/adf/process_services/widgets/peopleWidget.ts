@@ -21,6 +21,9 @@ import { by, element } from 'protractor';
 
 export class PeopleWidget {
 
+    peopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
+    firstResult = element(by.id('adf-people-widget-user-0'));
+
     formFields = new FormFields();
     labelLocator = by.css('div[class*="display-text-widget"]');
     inputLocator = by.id('involvepeople');
@@ -62,5 +65,19 @@ export class PeopleWidget {
         let user = element(by.cssContainingText('.adf-people-label-name', userName));
         user.click();
         return this;
+    }
+
+    checkPeopleFieldIsDisplayed() {
+        return Util.waitUntilElementIsVisible(this.peopleField);
+    }
+
+    fillPeopleField(value) {
+        Util.waitUntilElementIsClickable(this.peopleField);
+        return this.peopleField.sendKeys(value);
+    }
+
+    selectUserFromDropdown() {
+        Util.waitUntilElementIsVisible(this.firstResult);
+        return this.firstResult.click();
     }
 }
