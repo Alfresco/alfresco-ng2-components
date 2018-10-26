@@ -15,5 +15,6 @@
  * limitations under the License.
  */
 
-export * from './lib/process-services-cloud.module';
-export * from './lib/app-list-cloud/app-list-cloud.module';
+export * from './components/app-list-cloud.component';
+export * from './models/application-instance.model';
+export * from './app-list-cloud.module';

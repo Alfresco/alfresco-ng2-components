@@ -15,4 +15,10 @@
  * limitations under the License.
  */
 
-export * from './src/public-api';
+export * from './components/task-list-cloud.component';
+
+export * from './models/filter-cloud-model';
+export * from './models/task-list-sorting.model';
+export * from './models/task-preset-cloud.model';
+
+export * from './task-list-cloud.module';

@@ -22,14 +22,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AppsProcessCloudService } from './apps-process-cloud.service';
 import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
-import { AppListTestingModule } from '../testing/app-list.testing.module';
+import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 
 describe('AppsProcessCloudService', () => {
 
     let service: AppsProcessCloudService;
 
     setupTestBed({
-        imports: [AppListTestingModule],
+        imports: [ProcessServiceCloudTestingModule],
         providers: [AppsProcessCloudService]
     });
 

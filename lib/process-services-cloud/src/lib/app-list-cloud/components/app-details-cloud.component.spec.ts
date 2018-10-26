@@ -20,7 +20,8 @@ import { setupTestBed } from '@alfresco/adf-core';
 
 import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppDetailsCloudComponent } from './app-details-cloud.component';
-import { AppListTestingModule } from '../testing/app-list.testing.module';
+import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { AppListCloudModule } from '../app-list-cloud.module';
 
 describe('AppDetailsCloudComponent', () => {
 
@@ -28,7 +29,7 @@ describe('AppDetailsCloudComponent', () => {
     let fixture: ComponentFixture<AppDetailsCloudComponent>;
 
     setupTestBed({
-        imports: [AppListTestingModule]
+        imports: [ProcessServiceCloudTestingModule, AppListCloudModule]
     });
 
     beforeEach(() => {

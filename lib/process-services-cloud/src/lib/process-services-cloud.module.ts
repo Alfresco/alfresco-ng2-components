@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 import { AppListCloudModule } from './app-list-cloud/app-list-cloud.module';
+import { TaskListCloudModule } from './task-list-cloud/task-list-cloud.module';
+import { TaskCloudModule } from './task-cloud/task-cloud.module';
 
 @NgModule({
     imports: [
-        AppListCloudModule
+        AppListCloudModule,
+        TaskListCloudModule,
+        TaskCloudModule
     ],
     providers: [
         {
@@ -17,6 +21,6 @@ import { AppListCloudModule } from './app-list-cloud/app-list-cloud.module';
         }
     ],
     declarations: [],
-    exports: [AppListCloudModule]
+    exports: [AppListCloudModule, TaskListCloudModule, TaskCloudModule]
 })
 export class ProcessServicesCloudModule { }

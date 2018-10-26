@@ -61,6 +61,7 @@
     "NOTIFICATIONS": "Notifications",
     "TASK_LIST": "Task List",
     "PROCESS_LIST": "Process List",
+    "PROCESS_CLOUD": "Process Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",
