@@ -21,6 +21,8 @@ import { LoginPage } from '../../pages/adf/loginPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
+import ContentListPage = require('../../pages/adf/dialog/contentList');
+import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
 
 import resources = require('../../util/resources');
 import Util = require('../../util/util');
@@ -32,6 +34,7 @@ import AcsUserModel = require('../../models/ACS/acsUserModel');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
+import { browser } from 'protractor';
 
 describe('Viewer', () => {
 
@@ -43,6 +46,8 @@ describe('Viewer', () => {
     let site;
     let acsUser = new AcsUserModel();
     let pngFileUploaded;
+    const contentList = new ContentListPage();
+    const shareDialog = new ShareDialog();
 
     let pngFileInfo = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -355,9 +360,70 @@ describe('Viewer', () => {
 
     });
 
+    describe('Display files via API', () => {
+
+        let wordFileInfo = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.DOCX_SUPPORTED.file_location
+        });
+
+        let pngFileShared, wordFileUploaded;
+
+        beforeAll(async (done) => {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+
+            wordFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, wordFileInfo.location, wordFileInfo.name, '-my-');
+
+            pngFileShared = await this.alfrescoJsApi.core.sharedlinksApi.addSharedLink({'nodeId': pngFileUploaded.entry.id});
+
+            done();
+        });
+
+        afterAll(async (done) => {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, wordFileUploaded.entry.id);
+            done();
+        });
+
+        beforeEach(() => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+        });
+
+        it('[C260105] Should be able to open an image file shared via API', () => {
+            browser.get(TestConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
+            viewerPage.checkImgContainerIsDisplayed();
+            browser.get(TestConfig.adf.url);
+            navigationBarPage.clickLogoutButton();
+            browser.get(TestConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
+            viewerPage.checkImgContainerIsDisplayed();
+        });
+
+        it('[C260106] Should be able to open a Word file shared via API', () => {
+            contentServicesPage.navigateToDocumentList();
+
+            contentList.clickRowToSelect(wordFileInfo.name);
+            contentServicesPage.clickShareButton();
+            shareDialog.checkDialogIsDisplayed();
+            shareDialog.clickShareLinkButton();
+            browser.controlFlow().execute(async () => {
+                let sharedLink = await shareDialog.getShareLink();
+
+                await browser.get(sharedLink);
+                viewerPage.checkFileIsLoaded();
+                viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
+
+                await browser.get(TestConfig.adf.url);
+                navigationBarPage.clickLogoutButton();
+                await browser.get(sharedLink);
+                viewerPage.checkFileIsLoaded();
+                viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
+            });
+        });
+    });
+
     it('[C272813] Should be redirected to site when opening and closing a file in a site', () => {
         navigationBarPage.goToSite(site);
-        viewerPage.checkDatatableHeaderIsDisplayed();
+        contentServicesPage.checkAcsContainer();
 
         viewerPage.viewFile(pngFileUploaded.entry.name);
 

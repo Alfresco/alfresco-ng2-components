@@ -111,7 +111,7 @@ describe('Login component', () => {
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterPassword('a');
         loginPage.checkSignInButtonIsEnabled();
-        loginPage.clearUsername(adminUserModel.id);
+        loginPage.clearUsername();
         loginPage.clearPassword();
     });
 

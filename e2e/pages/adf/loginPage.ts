@@ -85,12 +85,18 @@ export class LoginPage {
         });
     }
 
-    checkUsernameTooltip() {
+    checkUsernameTooltip(message) {
         Util.waitUntilElementIsVisible(this.usernameTooltip);
+        browser.controlFlow().execute(async () => {
+            await expect(this.loginTooltip.getText()).toEqual(message);
+        });
     }
 
-    checkPasswordTooltip() {
+    checkPasswordTooltip(message) {
         Util.waitUntilElementIsVisible(this.passwordTooltip);
+        browser.controlFlow().execute(async () => {
+            await expect(this.loginTooltip.getText()).toEqual(message);
+        });
     }
 
     checkLoginError(message) {

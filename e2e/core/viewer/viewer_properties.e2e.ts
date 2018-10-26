@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-
 import TestConfig = require('../../test.config');
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import DataTablePage = require('../../pages/adf/dataTablePage');
 
 import resources = require('../../util/resources');
 
@@ -37,9 +37,16 @@ describe('Viewer - properties', () => {
     let viewerPage = new ViewerPage();
     let contentServicesPage = new ContentServicesPage();
     let loginPage = new LoginPage();
+    let navigationBarPage = new NavigationBarPage();
+    let dataTable = new DataTablePage();
 
     let pngFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+    });
+
+    let fileForOverlay = new FileModel({
+        'name': 'fileForOverlay.png',
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
@@ -59,6 +66,9 @@ describe('Viewer - properties', () => {
 
         let pngFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pngFile.location, pngFile.name, '-my-');
         Object.assign(pngFile, pngFileUploaded.entry);
+
+        pngFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, fileForOverlay.location, fileForOverlay.name, '-my-');
+        Object.assign(fileForOverlay, pngFileUploaded.entry);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -180,5 +190,25 @@ describe('Viewer - properties', () => {
 
         viewerPage.checkLeftSideBarButtonIsNotDisplayed();
         viewerPage.checkLeftSideBarIsNotDisplayed();
+    });
+
+    it('[C260100] Should be possible to disable Overlay viewer', () => {
+        viewerPage.clickCloseButton();
+        navigationBarPage.clickOverlayViewerButton();
+
+        dataTable.doubleClickRow(fileForOverlay.name);
+        viewerPage.checkOverlayViewerIsDisplayed();
+        viewerPage.clickCloseButton();
+        dataTable.doubleClickRow(pngFile.name);
+        viewerPage.checkOverlayViewerIsDisplayed();
+        viewerPage.clickCloseButton();
+
+        viewerPage.disableOverlay();
+        dataTable.doubleClickRow(fileForOverlay.name);
+        viewerPage.checkImgContainerIsDisplayed();
+        viewerPage.checkInlineViewerIsDisplayed();
+        dataTable.doubleClickRow(pngFile.name);
+        viewerPage.checkImgContainerIsDisplayed();
+        viewerPage.checkInlineViewerIsDisplayed();
     });
 });
