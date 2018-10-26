@@ -141,6 +141,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         this.processListCloudService.getProcessByRequest(requestNode).subscribe(
             (processes) => {
                 this.rows = processes.list.entries;
+                this.selectTask(this.landingTaskId);
                 this.success.emit(processes);
                 this.isLoading = false;
                 this.pagination.next(processes.list.pagination);
@@ -164,6 +165,30 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             }
         }
         return false;
+    }
+
+    selectTask(taskIdSelected: string) {
+        if (!this.isListEmpty()) {
+            let dataRow: any = null;
+            if (taskIdSelected) {
+                dataRow = this.rows.find((currentRow: MinimalNodeEntity) => {
+                    return currentRow.entry.id === taskIdSelected;
+                });
+            }
+            if (!dataRow && this.selectFirstRow) {
+                dataRow = this.rows[0];
+            }
+            if (dataRow) {
+                dataRow.isSelected = true;
+                this.currentInstanceId = dataRow.entry.id;
+            }
+        } else {
+            this.currentInstanceId = null;
+        }
+    }
+
+    isListEmpty(): boolean {
+        return !this.rows || this.rows.length === 0;
     }
 
     updatePagination(pagination: PaginationModel) {
