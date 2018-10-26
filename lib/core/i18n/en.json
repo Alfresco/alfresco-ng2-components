@@ -1,6 +1,6 @@
 {
   "SAVE": "SAVE",
-  "START": "COMPLETE",
+  "COMPLETE": "COMPLETE",
   "START PROCESS": "START PROCESS",
   "FORM": {
     "START_FORM": {

@@ -129,7 +129,7 @@ export class FormModel {
                 });
                 let completeOutcome = new FormOutcomeModel(this, {
                     id: FormModel.COMPLETE_OUTCOME,
-                    name: 'START',
+                    name: 'COMPLETE',
                     isSystem: true
                 });
                 let startProcessOutcome = new FormOutcomeModel(this, {
