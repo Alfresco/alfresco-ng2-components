@@ -21,7 +21,7 @@ import { element, by, browser, protractor } from 'protractor';
 import Util = require('../../../util/util');
 
 export class TaskDetailsPage {
-
+    formContent = element(by.css('adf-form'));
     formNameField = element(by.css('span[data-automation-id*="formName"] span'));
     assigneeField = element(by.css('span[data-automation-id*="assignee"] span'));
     statusField = element(by.css('span[data-automation-id*="status"] span'));
@@ -108,6 +108,11 @@ export class TaskDetailsPage {
         Util.waitUntilElementIsVisible(this.cancelAttachForm);
     }
 
+    noFormIsDisplayed() {
+        Util.waitUntilElementIsNotOnPage(this.formContent);
+        return this;
+    }
+
     clickCancelAttachForm() {
         Util.waitUntilElementIsClickable(this.cancelAttachForm);
         return this.cancelAttachForm.click();
@@ -124,6 +129,10 @@ export class TaskDetailsPage {
 
     checkAttachFormButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.attachFormButton);
+    }
+
+    checkAttachFormButtonIsNotDisplayed() {
+        Util.waitUntilElementIsNotOnPage(this.attachFormButton);
     }
 
     clickAttachFormButton() {
@@ -386,6 +395,16 @@ export class TaskDetailsPage {
     checkCompleteFormButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.completeFormTask);
         return this.completeFormTask;
+    }
+
+    checkCompleteTaskButtonIsEnabled() {
+        Util.waitUntilElementIsClickable(this.completeTask);
+        return this;
+    }
+
+    checkCompleteTaskButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.completeTask);
+        return this;
     }
 
     clickCompleteFormTask() {
