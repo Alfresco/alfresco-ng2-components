@@ -76,7 +76,10 @@ describe('Start Task - Task App', () => {
         taskPage.createNewTask().addName(tasks[0]).clickStartButton()
             .then(() => {
                 taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]);
-                taskPage.formFields().noFormIsDisplayed();
+                taskPage.taskDetails().noFormIsDisplayed();
+                taskPage.taskDetails().checkCompleteTaskButtonIsDisplayed().checkCompleteTaskButtonIsEnabled();
+                taskPage.taskDetails().checkAttachFormButtonIsDisplayed();
+                taskPage.taskDetails().checkAttachFormButtonIsEnabled();
                 expect(taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
                 expect(taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
             });
