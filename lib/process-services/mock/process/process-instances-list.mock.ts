@@ -115,6 +115,13 @@ export let fakeProcessInstancesWithNoName = {
     ]
 };
 
+export let fakeProcessInstancesEmpty = {
+    size: 0,
+    total: 0,
+    start: 0,
+    data: []
+};
+
 export let fakeProcessCustomSchema = [
     new ObjectDataColumn({
         key: 'fakeName',

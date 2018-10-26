@@ -14,10 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Component, SimpleChange, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, CoreModule, DataTableModule } from '@alfresco/adf-core';
 import { DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
 import { ProcessListCloudComponent } from './process-list-cloud.component';
@@ -48,9 +48,9 @@ class CustomTaskListComponent {
 @Component({
     template: `
     <adf-cloud-process-list>
-        <adf-empty-content-holder>
+        <adf-empty-custom-content>
             <p id="custom-id">TEST</p>
-        </adf-empty-content-holder>
+        </adf-empty-custom-content>
     </adf-cloud-process-list>
        `
 })
@@ -58,8 +58,7 @@ class CustomTaskListComponent {
 class EmptyTemplateComponent {
 }
 
-/*tslint:disable:ban*/
-fdescribe('ProcessListCloudComponent', () => {
+describe('ProcessListCloudComponent', () => {
     let component: ProcessListCloudComponent;
     let fixture: ComponentFixture<ProcessListCloudComponent>;
     let appConfig: AppConfigService;
@@ -259,14 +258,13 @@ fdescribe('ProcessListCloudComponent', () => {
         });
     });
 
-    fdescribe('Creating an empty custom template - EmptyTemplateComponent', () => {
+    describe('Creating an empty custom template - EmptyTemplateComponent', () => {
 
         let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
 
         setupTestBed({
-            imports: [ProcessListCloudModule, ProcessListCloudTestingModule],
-            declarations: [EmptyTemplateComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            imports: [ProcessListCloudModule, ProcessListCloudTestingModule, DataTableModule],
+            declarations: [EmptyTemplateComponent]
         });
 
         beforeEach(() => {
@@ -282,7 +280,7 @@ fdescribe('ProcessListCloudComponent', () => {
             fixtureEmpty.whenStable().then(() => {
                 fixtureEmpty.detectChanges();
                 expect(fixtureEmpty.debugElement.query(By.css('#custom-id'))).not.toBeNull();
-                // expect(fixtureEmpty.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
+                expect(fixtureEmpty.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
             });
         }));
     });

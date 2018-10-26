@@ -15,20 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 
 import { ProcessInstanceListComponent } from './process-list.component';
 
-import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, CoreModule, DataTableModule } from '@alfresco/adf-core';
 import { DataRowEvent, ObjectDataRow, ObjectDataTableAdapter } from '@alfresco/adf-core';
 
-import { fakeProcessInstance, fakeProcessInstancesWithNoName } from '../../mock';
+import { fakeProcessInstance, fakeProcessInstancesWithNoName, fakeProcessInstancesEmpty } from '../../mock';
 import { ProcessService } from '../services/process.service';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { fakeProcessCustomSchema } from '../../mock';
+import { ProcessListModule } from 'process-list/process-list.module';
 
 describe('ProcessInstanceListComponent', () => {
 
@@ -506,27 +507,28 @@ describe('CustomProcessListComponent', () => {
 
 @Component({
     template: `
-    <adf-process-instance-list>
-        <adf-empty-content-holder>
+    <adf-process-instance-list [appId]="1">
+        <adf-empty-custom-content>
             <p id="custom-id"> No Process Instance</p>
-        </adf-empty-content-holder>
+        </adf-empty-custom-content>
     </adf-process-instance-list>
        `
 })
 class EmptyTemplateComponent {
 }
-
 describe('Process List: Custom EmptyTemplateComponent', () => {
     let fixture: ComponentFixture<EmptyTemplateComponent>;
+    let processService: ProcessService;
 
     setupTestBed({
-        imports: [ProcessTestingModule],
-        declarations: [EmptyTemplateComponent],
-        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+        imports: [ProcessTestingModule, ProcessListModule, DataTableModule],
+        declarations: [EmptyTemplateComponent]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(EmptyTemplateComponent);
+        processService = TestBed.get(ProcessService);
+        spyOn(processService, 'getProcessInstances').and.returnValue(of(fakeProcessInstancesEmpty));
         fixture.detectChanges();
     });
 
@@ -534,13 +536,14 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
         fixture.destroy();
     });
 
-    it('should render the custom template', async(() => {
+    it('should render the custom template', (done) => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let title = fixture.debugElement.query(By.css('#custom-id'));
             expect(title).not.toBeNull();
             expect(title.nativeElement.innerText).toBe('No Process Instance');
             expect(fixture.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
+            done();
         });
-    }));
+    });
 });
