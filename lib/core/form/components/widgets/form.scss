@@ -64,4 +64,16 @@
         }
     }
 
+    
+    /* query for Microsoft IE 11*/
+    @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+        adf-form-field {
+            .mat-input-element, .mat-select, .mat-form-field {
+                display: block !important;
+            }
+        }
+    }
+
+    
+
 }
