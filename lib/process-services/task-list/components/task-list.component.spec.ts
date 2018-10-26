@@ -29,7 +29,7 @@ import { of } from 'rxjs';
 
 declare let jasmine: any;
 
-fdescribe('TaskListComponent', () => {
+describe('TaskListComponent', () => {
     let component: TaskListComponent;
     let fixture: ComponentFixture<TaskListComponent>;
     let appConfig: AppConfigService;
