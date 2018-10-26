@@ -176,8 +176,8 @@ export class SearchFiltersPage {
         let fileTypeFilter = element(by.css('mat-checkbox[data-automation-id="checkbox-SEARCH.FACET_FIELDS.' + fileType + '"] span'));
         Util.waitUntilElementIsVisible(fileTypeFilter);
         let bucketNumber = fileTypeFilter.getText().then((valueOfBucket) => {
-            let numberOfBucket = valueOfBucket.split("(")[1];
-            let totalNumberOfBucket = numberOfBucket.split(")")[0];
+            let numberOfBucket = valueOfBucket.split('(')[1];
+            let totalNumberOfBucket = numberOfBucket.split(')')[0];
             return totalNumberOfBucket;
         });
 
