@@ -15,4 +15,7 @@
  * limitations under the License.
  */
 
-export * from './src/public-api';
+export * from './lib/process-services-cloud.module';
+export * from './lib/app-list-cloud/public-api';
+export * from './lib/task-list-cloud/public-api';
+export * from './lib/task-cloud/public-api';

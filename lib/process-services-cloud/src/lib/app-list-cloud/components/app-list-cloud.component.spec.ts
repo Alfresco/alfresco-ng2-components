@@ -23,8 +23,9 @@ import { of } from 'rxjs';
 import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppListCloudComponent } from './app-list-cloud.component';
 import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
-import { AppListTestingModule } from '../testing/app-list.testing.module';
+import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
+import { AppListCloudModule } from '../app-list-cloud.module';
 
 describe('AppListCloudComponent', () => {
 
@@ -34,7 +35,7 @@ describe('AppListCloudComponent', () => {
     let getAppsSpy: jasmine.Spy;
 
     setupTestBed({
-        imports: [AppListTestingModule],
+        imports: [ProcessServiceCloudTestingModule, AppListCloudModule],
         providers: [AppsProcessCloudService]
     });
 
@@ -184,7 +185,7 @@ describe('Custom CustomEmptyAppListCloudTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyAppListCloudTemplateComponent>;
 
     setupTestBed({
-        imports: [AppListTestingModule],
+        imports: [ProcessServiceCloudTestingModule],
         declarations: [CustomEmptyAppListCloudTemplateComponent],
         schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     });

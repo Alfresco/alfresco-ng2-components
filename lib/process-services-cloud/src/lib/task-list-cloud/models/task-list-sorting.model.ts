@@ -15,6 +15,14 @@
  * limitations under the License.
  */
 
-export * from './components/app-list-cloud.component';
-export * from './models/application-instance.model';
-export * from './apps-list-cloud.module';
+export class TaskListCloudSortingModel {
+    orderBy: string;
+    direction: string;
+
+    constructor(obj: any) {
+        if (obj) {
+            this.orderBy = obj.orderBy;
+            this.direction = obj.direction;
+        }
+    }
+}

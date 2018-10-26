@@ -15,4 +15,6 @@
  * limitations under the License.
  */
 
-export * from './index';
+export * from './task-filters-cloud/task-filters-cloud.component';
+export * from './models/filter-cloud.model';
+export * from './task-cloud.module';
