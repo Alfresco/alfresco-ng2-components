@@ -65,7 +65,6 @@ export class TaskFiltersCloudComponent implements OnChanges {
 
     /**
      * Return the filter list filtered by appName
-     * @param appName
      */
     getFilters(appName: string) {
         this.filters$ = this.taskFilterCloudService.getTaskListFilters(appName);
@@ -89,7 +88,6 @@ export class TaskFiltersCloudComponent implements OnChanges {
 
     /**
      * Create default filters by appId
-     * @param appId
      */
     createFilters(appName?: string) {
         this.filters$ =  this.taskFilterCloudService.createDefaultFilters(appName);
@@ -107,7 +105,6 @@ export class TaskFiltersCloudComponent implements OnChanges {
 
     /**
      * Pass the selected filter as next
-     * @param filter
      */
     public selectFilter(newFilter: FilterRepresentationModel) {
         if (newFilter) {
@@ -128,7 +125,6 @@ export class TaskFiltersCloudComponent implements OnChanges {
 
     /**
      * Select as default task filter the first in the list
-     * @param filteredFilterList
      */
     public selectDefaultTaskFilter() {
         if (!this.isFilterListEmpty()) {
