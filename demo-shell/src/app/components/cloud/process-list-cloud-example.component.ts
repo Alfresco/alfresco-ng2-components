@@ -17,7 +17,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { UserPreferencesService } from '@alfresco/adf-core';
-import { ProcessListCloudComponent, ProcessListCloudSortingModel } from '@alfresco/adf-process-services-cloud';
+import { ProcessListCloudComponent } from '@alfresco/adf-process-services-cloud';
 
 @Component({
     selector: 'app-process-list-example',
@@ -32,7 +32,7 @@ export class ProcessListCloudExampleComponent {
     currentAppName: string = '';
     status: string = '';
     filterId: string = '';
-    sortArray: ProcessListCloudSortingModel = [];
+    sortArray: any = [];
     sortField: string;
     sortDirection: string;
 
