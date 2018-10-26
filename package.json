@@ -1,7 +1,7 @@
 {
   "name": "alfresco-components",
   "description": "Alfresco Angular components",
-  "version": "2.7.0-858584bcf0db96433770ecea50d4aaff6252e911",
+  "version": "2.7.0-beta4",
   "author": "Alfresco Software, Ltd.",
   "main": "./index.js",
   "scripts": {
@@ -57,11 +57,11 @@
     "process services-cloud"
   ],
   "dependencies": {
-    "@alfresco/adf-content-services": "2.7.0-858584bcf0db96433770ecea50d4aaff6252e911",
-    "@alfresco/adf-core": "2.7.0-858584bcf0db96433770ecea50d4aaff6252e911",
-    "@alfresco/adf-insights": "2.7.0-858584bcf0db96433770ecea50d4aaff6252e911",
-    "@alfresco/adf-process-services": "2.7.0-858584bcf0db96433770ecea50d4aaff6252e911",
-    "@alfresco/adf-process-services-cloud": "2.7.0-858584bcf0db96433770ecea50d4aaff6252e911",
+    "@alfresco/adf-content-services": "2.7.0-beta4",
+    "@alfresco/adf-core": "2.7.0-beta4",
+    "@alfresco/adf-insights": "2.7.0-beta4",
+    "@alfresco/adf-process-services": "2.7.0-beta4",
+    "@alfresco/adf-process-services-cloud": "2.7.0-beta4",
     "@angular/animations": "6.1.8",
     "@angular/cdk": "6.4.7",
     "@angular/common": "6.1.8",
@@ -79,8 +79,8 @@
     "@mat-datetimepicker/moment": "2.0.1-beta.1",
     "@ngx-translate/core": "10.0.2",
     "adf-tslint-rules": "0.0.4",
-    "alfresco-js-api": "2.7.0-6d1e61de7e274a14eda3fcd30efe30396889b3b0",
-    "alfresco-js-api-node": "2.7.0-6d1e61de7e274a14eda3fcd30efe30396889b3b0",
+    "alfresco-js-api": "2.7.0-beta4",
+    "alfresco-js-api-node": "2.7.0-beta4",
     "chart.js": "2.5.0",
     "classlist.js": "1.1.20150312",
     "core-js": "^2.5.4",
