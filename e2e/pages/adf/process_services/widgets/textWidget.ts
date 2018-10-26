@@ -18,14 +18,37 @@
 import FormFields = require('../formFields');
 import { by } from 'protractor';
 
-export class DisplayValue {
+export class TextWidget {
 
     formFields = new FormFields();
 
-    labelLocator = by.css('span[class*="unknown-text"]');
+    labelLocator = by.css("label[class*='adf-label']");
 
     getFieldLabel(fieldId) {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
     }
 
+    getFieldPlaceHolder(fieldId) {
+        return this.formFields.getFieldPlaceHolder(fieldId);
+    }
+
+    setValue(fieldId, value) {
+        return this.formFields.setFieldValue(by.id, fieldId, value);
+    }
+
+    getFieldValue(fieldId) {
+        return this.formFields.getFieldValue(fieldId);
+    }
+
+    getErrorMessage(fieldId) {
+        return this.formFields.getFieldErrorMessage(fieldId);
+    }
+
+    isWidgetVisible(fieldId) {
+        return this.formFields.checkWidgetIsVisible(fieldId);
+    }
+
+    isWidgetNotVisible(fieldId) {
+        return this.formFields.checkWidgetIsHidden(fieldId);
+    }
 }

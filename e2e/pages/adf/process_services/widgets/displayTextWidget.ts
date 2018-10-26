@@ -18,14 +18,22 @@
 import FormFields = require('../formFields');
 import { by } from 'protractor';
 
-export class Hyperlink {
+export class DisplayTextWidget {
 
     formFields = new FormFields();
+    labelLocator = by.css('div[class*="adf-display-text-widget"]');
+    inputLocator = by.css('input');
 
-    fieldLocator = by.css('div[class="adf-hyperlink-widget "] a');
+    getFieldLabel(fieldId) {
+        return this.formFields.getFieldLabel(fieldId, this.labelLocator);
+    }
+
+    getFieldValue(fieldId) {
+        return this.formFields.getFieldValue(fieldId, this.inputLocator);
+    }
 
     getFieldText(fieldId) {
-        return this.formFields.getFieldText(fieldId, this.fieldLocator);
+        return this.formFields.getFieldText(fieldId, this.labelLocator);
     }
 
 }

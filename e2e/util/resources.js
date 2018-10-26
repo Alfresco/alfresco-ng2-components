@@ -31,7 +31,7 @@ exports.Files = {
         process_title: "TestDateField",
         id: -1,
         form_fields: {
-            testdate_field: "activiti-testdate",
+            testDate_field: "activiti-testdate",
             completed_task_date_field: "span[ng-if*='field.dateDisplayFormat']"
         }
     },
@@ -109,6 +109,207 @@ exports.Files = {
             dropdown_value: "mat-select[id='dropdown'] span span",
             radioButtons_id: "radiobuttons",
             dynamicTable_id: "dynamictable"
+        }
+    },
+
+    FORM_ADF: {
+        file_location: "/resources/apps/Test-ADF.zip",
+        title: "Test App",
+        formName: "test-1",
+        form_fields: {
+            text_id: "label",
+            displayText_id: "label1",
+            displayValue_id: "labeldisplayusingvariable"
+        }
+    },
+
+    FILE_FORM_ADF: {
+        file_location: "/resources/apps/App_file_form.zip",
+        attached_file: "generatedDocument.docx",
+        title: "ADF-180-test",
+        formName: "ADF-180-test",
+        form_fields: {
+            container_id: "1504783671016"
+        }
+    },
+
+    WIDGET_CHECK_APP: {
+
+        file_location: "/resources/apps/WidgetApps.zip",
+
+        TEXT: {
+            formName: "TextWidgetForm",
+            title: "TextWidgetForm",
+            processName: "TextWidgetProcess",
+            FIELD: {
+                simpleText: "textsimple",
+                textMinMax: "textminmax",
+                textMask: "textmask",
+                textMaskReversed: "textmaskreversed",
+                textRegexp: "textregexp",
+                showHiddenText: "showhiddentext",
+                textHidden: "texthidden"
+            }
+        },
+
+        MULTILINE_TEXT: {
+            formName: "MultiWidgetProcess",
+            title: "MultiWidgetProcess",
+            processName: "MultiWidgetProcess",
+            FIELD: {
+                multiSimple: "multisimple",
+                multiMinMax: "multiminmax",
+                multiRegexp: "multiregexp",
+                showMultiHidden: "showmultihidden",
+                multiVisible: "multivisible"
+            }
+        },
+
+        CHECKBOX: {
+            formName: "CheckboxVisibilityProcess",
+            title: "CheckboxVisibilityProcess",
+            processName: "CheckboxVisibilityProcess",
+            FIELD: {
+                number_input_id: "label",
+                checkbox_field_id: "label1",
+                checkbox_id: "field-checkbox_input-container",
+                checkbox_input_id: "label1",
+                checkbox_label: "Label1"
+            }
+        },
+
+        DATE: {
+            formName: "DateWidgetProcess",
+            title: "DateWidgetProcess",
+            processName: "DateWidgetProcess",
+            FIELD: {
+                date_input: "date_standard",
+                date_between_input: "betweendate"
+            }
+        },
+
+        DATETIME: {
+            formName: "DateTimeProcess",
+            title: "DateTimeProcess",
+            processName: "DateTimeProcess",
+            FIELD: {
+                date_time_input: "datetimegeneral",
+                date_time_between_input: "dateandtimeadvance"
+            }
+        },
+
+        DROPDOWN: {
+            formName: "DropdownProcess",
+            title: "DropdownProcess",
+            processName: "DropdownProcess",
+            FIELD: {
+                general_dropdown: "dropdown",
+                dropdown_visible: "dropdownvisibility",
+                checkbox_id: "clickcheckbox",
+                option_0: "empty",
+                option_1: "option_1",
+                option_2: "option_2"
+            }
+        },
+
+        NUMBER: {
+            formName: "NumberProcess",
+            title: "NumberProcess",
+            processName: "NumberProcess",
+            FIELD: {
+                number_general: "numbergeneral",
+                number_visible: "number",
+                checkbox_id: "check"
+            }
+        },
+
+        AMOUNT: {
+            formName: "AmountProcess",
+            title: "AmountProcess",
+            processName: "AmountProcess",
+            FIELD: {
+                amount_input_id: "amunt_widget",
+                checkbox_id: "check"
+            }
+        },
+
+        RADIO_BUTTONS: {
+            formName: "RadioButtonsWidgetProcess",
+            title: "RadioButtonsWidgetProcess",
+            processName: "RadioButtonsWidgetProcess",
+            FIELD: {
+                radio_buttons_id: "RockFM",
+                checkbox_id: "Dollars"
+            }
+        },
+
+        HYPERLINK: {
+            formName: "HyperlinkProcess",
+            title: "HyperlinkProcess",
+            processName: "HyperlinkProcess",
+            FIELD: {
+                hyperlink_id: "hyperlink_automation",
+                checkbox_id: "check"
+            }
+        },
+
+        DYNAMIC_TABLE: {
+            formName: "DynamicTableProcess",
+            title: "DynamicTableProcess",
+            processName: "DynamicTableProcess",
+            FIELD: {
+                dynamic_table_age_id: "label2",
+                dynamic_table_date_id: "label",
+                checkbox_id: "viewtable",
+                dataTime_input_id: "datetime",
+                row: "label-row-0"
+
+            }
+        },
+
+        DYNAMIC_TABLE_USERS: {
+            formName: "ALL_WIDGETS",
+            title: "ALL_WIDGETS",
+            processName: "ALL_WIDGETS",
+            FIELD: {
+                dynamic_table_age_id: "label2",
+                dynamic_table_date_id: "label",
+                checkbox_id: "viewtable",
+                dataTime_input_id: "datetime",
+                row: "label-row-0"
+
+            }
+        },
+
+        HEADER: {
+            formName: "HeaderProcess",
+            title: "HeaderProcess",
+            processName: "HeaderProcess",
+            FIELD: {
+                header_id: "Happy",
+                checkbox_id: "check"
+            }
+        },
+
+        ATTACH_FOLDER: {
+            formName: "UploadFolderProcess",
+            title: "UploadFolderProcess",
+            processName: "UploadFolderProcess",
+            FIELD: {
+                checkbox_id: "check",
+                upload_button_id: "Upload"
+            }
+        },
+
+        ADD_PEOPLE: {
+            formName: "AddPeopleProcess",
+            title: "AddPeopleProcess",
+            processName: "AddPeopleProcess",
+            FIELD: {
+                widget_id: "Finally",
+                user_id: "adf-people-search-input",
+                checkbox_id: "check"
+            }
         }
     },
 

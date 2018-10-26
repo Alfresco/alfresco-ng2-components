@@ -18,14 +18,18 @@
 import FormFields = require('../formFields');
 import { by } from 'protractor';
 
-export class DisplayText {
+export class DisplayValueWidget {
 
     formFields = new FormFields();
-
-    labelLocator = by.css('div[class*="display-text-widget"]');
+    labelLocator = by.css('span[class*="unknown-text"]');
+    inputLocator = by.css('input');
 
     getFieldLabel(fieldId) {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
+    }
+
+    getFieldValue(fieldId) {
+        return this.formFields.getFieldValue(fieldId, this.inputLocator);
     }
 
 }

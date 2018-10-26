@@ -19,8 +19,8 @@ import { LoginPage } from '../pages/adf/loginPage';
 import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
-import { DynamicTable } from '../pages/adf/process_services/widgets/dynamicTable';
-import { Dropdown } from '../pages/adf/process_services/widgets/dropdown';
+import { DynamicTableWidget } from '../pages/adf/process_services/widgets/dynamicTableWidget';
+import { DropdownWidget } from '../pages/adf/process_services/widgets/dropdownWidget';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -35,7 +35,7 @@ describe('Dynamic Table', () => {
     let processServicesPage = new ProcessServicesPage();
     let processFiltersPage = new ProcessFiltersPage();
     let appNavigationBarPage = new AppNavigationBarPage();
-    let dynamicTable = new DynamicTable();
+    let dynamicTable = new DynamicTableWidget();
     let user, tenantId, appId, apps, users;
 
     beforeAll(async(done) => {
@@ -128,7 +128,7 @@ describe('Dynamic Table', () => {
 
     describe('Required Dropdown', () => {
         let app = resources.Files.APP_DYNAMIC_TABLE_DROPDOWN;
-        let dropdown = new Dropdown();
+        let dropdown = new DropdownWidget();
 
         beforeAll(async(done) => {
 

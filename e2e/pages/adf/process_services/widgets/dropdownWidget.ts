@@ -16,10 +16,10 @@
  */
 
 import FormFields = require('../formFields');
-import Util = require('../../../../util/util');
 import { by, element } from 'protractor';
+import Util = require('../../../../util/util');
 
-export class Dropdown {
+export class DropdownWidget {
 
     formFields = new FormFields();
 

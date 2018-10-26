@@ -22,7 +22,7 @@ import Util = require('../../../../util/util');
 import remote = require('selenium-webdriver/remote');
 import { element, by, browser } from 'protractor';
 
-export class AttachFile {
+export class AttachFileWidget {
 
     formFields = new FormFields();
     uploadLocator = by.css('button[id="attachfile"]');

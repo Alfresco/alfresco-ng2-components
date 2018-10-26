@@ -18,9 +18,9 @@
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { FormPage } from '../pages/adf/process_services/formPage';
-import { Date } from '../pages/adf/process_services/widgets/Date';
-import { Amount } from '../pages/adf/process_services/widgets/Amount';
-import { NumberWidget } from '../pages/adf/process_services/widgets/Number';
+import { DateWidget } from '../pages/adf/process_services/widgets/dateWidget';
+import { AmountWidget } from '../pages/adf/process_services/widgets/amountWidget';
+import { NumberWidget } from '../pages/adf/process_services/widgets/numberWidget';
 import TestConfig = require('../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
@@ -31,11 +31,17 @@ describe('Form Component', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const formPage = new FormPage();
-    const dateWidget = new Date();
-    const amountWidget = new Amount();
+    const dateWidget = new DateWidget();
+    const amountWidget = new AmountWidget();
     const numberWidget = new NumberWidget();
 
     let tenantId, user;
+
+    let fields = {
+        dateWidgetId: 'label7',
+        numberWidgetId: 'label4',
+        amountWidgetId: 'label11'
+    };
 
     let message = {
         test: 'Text Test',
@@ -79,26 +85,27 @@ describe('Form Component', () => {
     });
 
     it('[C286505] Should be able to display errors under the Error Log section', () => {
-        numberWidget.checkLabel4IsDisplayed();
-        numberWidget.addIntoNumberWidget(message.test);
+        numberWidget.getNumberFieldLabel(fields.numberWidgetId);
+        numberWidget.setFieldValue(fields.numberWidgetId, message.test);
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
         formPage.checkErrorLogMessage(message.errorLogNumber);
 
-        dateWidget.checkLabel7IsDisplayed();
-        dateWidget.addIntoDateWidget(message.test);
+        dateWidget.checkLabelIsVisible(fields.dateWidgetId);
+        dateWidget.setDateInput(fields.dateWidgetId, message.test);
+        dateWidget.clickOutsideWidget(fields.dateWidgetId);
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningDate);
         formPage.checkErrorLogMessage(message.errorLogDate);
 
-        amountWidget.checkLabel11IsDisplayed();
-        amountWidget.addIntoAmountWidget(message.test);
+        amountWidget.getAmountFieldLabel(fields.amountWidgetId);
+        amountWidget.setFieldValue(fields.amountWidgetId, message.test);
         formPage.checkErrorMessageForWidgetIsDisplayed(message.warningNumberAndAmount);
         formPage.checkErrorLogMessage(message.errorLogAmount);
 
-        amountWidget.removeFromAmountWidget();
+        amountWidget.removeFromAmountWidget(fields.amountWidgetId);
         formPage.checkErrorMessageIsNotDisplayed(message.errorLogAmount);
 
-        dateWidget.removeFromDateWidget();
-        numberWidget.removeFromNumberWidget();
+        dateWidget.clearDateInput(fields.dateWidgetId);
+        numberWidget.clearFieldValue(fields.numberWidgetId);
         formPage.checkErrorMessageForWidgetIsNotDisplayed(message.warningDate);
         formPage.checkErrorMessageIsNotDisplayed(message.errorLogDate);
         formPage.checkErrorLogMessage(message.errorLabel);
