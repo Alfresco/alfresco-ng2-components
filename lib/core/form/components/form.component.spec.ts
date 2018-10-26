@@ -79,7 +79,7 @@ describe('FormComponent', () => {
     });
 
     it('should return primary color for complete button', () => {
-        expect(formComponent.getColorForOutcome('Complete')).toBe('primary');
+        expect(formComponent.getColorForOutcome('COMPLETE')).toBe('primary');
     });
 
     it('should not enable outcome button when model missing', () => {
