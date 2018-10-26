@@ -39,8 +39,6 @@ export class TaskDetailsPage {
     activitiesTitle = element(by.css('div[class*="adf-info-drawer-layout-header-title"] div'));
     commentField = element(by.id('comment-input'));
     addCommentButton = element(by.css('[data-automation-id="comments-input-add"]'));
-    activityTab = element(by.cssContainingText('div[class*="mat-tab-label"]', 'Activity'));
-    detailsTab = element(by.cssContainingText('div[class*="mat-tab-label""]', 'Details'));
     involvePeopleButton = element(by.css('div[class*="add-people"]'));
     addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
     addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
