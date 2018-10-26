@@ -17,12 +17,12 @@
 
 import TestConfig = require('../test.config');
 import Util = require('../util/util');
+import CONSTANTS = require('../util/constants');
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import TasksListPage = require('../pages/adf/process_services/tasksListPage');
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
-
 import FiltersPage = require('../pages/adf/process_services/filtersPage');
 
 import TaskModel = require('../models/APS/StandaloneTask');
@@ -135,6 +135,8 @@ describe('Task Details - Form', () => {
         taskDetailsPage.clickRemoveAttachForm();
 
         taskDetailsPage.checkFormIsAttached('No form');
+
+        expect(taskDetailsPage.getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
 
     it('[C280557] Should display task details when selecting another task while the Attach Form dialog is displayed', () => {
