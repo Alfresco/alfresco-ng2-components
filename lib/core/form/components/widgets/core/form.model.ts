@@ -124,17 +124,17 @@ export class FormModel {
             if (json.fields) {
                 let saveOutcome = new FormOutcomeModel(this, {
                     id: FormModel.SAVE_OUTCOME,
-                    name: 'Save',
+                    name: 'SAVE',
                     isSystem: true
                 });
                 let completeOutcome = new FormOutcomeModel(this, {
                     id: FormModel.COMPLETE_OUTCOME,
-                    name: 'Complete',
+                    name: 'COMPLETE',
                     isSystem: true
                 });
                 let startProcessOutcome = new FormOutcomeModel(this, {
                     id: FormModel.START_PROCESS_OUTCOME,
-                    name: 'Start Process',
+                    name: 'START PROCESS',
                     isSystem: true
                 });
 
