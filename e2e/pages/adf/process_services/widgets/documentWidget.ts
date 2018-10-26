@@ -18,14 +18,16 @@
 import FormFields = require('../formFields');
 import { by } from 'protractor';
 
-export class MultilineText {
+export class DocumentWidget {
 
     formFields = new FormFields();
+    fileLocator = by.css("div [class*='upload-widget__content-text']");
 
-    valueLocator = by.css('textarea');
-
-    getFieldValue(fieldId) {
-        return this.formFields.getFieldValue(fieldId, this.valueLocator);
+    getFieldText(fieldId) {
+        return this.formFields.getFieldText(fieldId, this.fileLocator);
     }
 
+    getFileName(fieldId) {
+        return this.formFields.getFieldText(fieldId, this.fileLocator);
+    }
 }

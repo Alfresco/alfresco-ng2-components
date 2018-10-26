@@ -74,7 +74,13 @@ export class AppsActions {
 
         let processDefinitionList = await alfrescoJsApi.activiti.processApi.getProcessDefinitions({ deploymentId: appDefinition.deploymentId });
 
-        let startProcessOptions: any = { processDefinitionId: processDefinitionList.data[0].id };
+        let chosenProcess = processDefinitionList.data.find( (processDefinition) => {
+            return processDefinition.name === processName;
+        });
+
+        let processDefinitionIdToStart = chosenProcess ? chosenProcess.id : processDefinitionList.data[0].id;
+
+        let startProcessOptions: any = { processDefinitionId: processDefinitionIdToStart };
 
         if (typeof processName !== 'undefined') {
             startProcessOptions.name = processName;

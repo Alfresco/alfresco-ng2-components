@@ -16,11 +16,13 @@
  */
 
 import { AppSettingsToggles } from './dialog/appSettingsToggles';
-import { TabsPage } from '../material/tabsPage';
-import { element, by, browser, protractor } from 'protractor';
 import Util = require('../../../util/util');
+import { element, by, protractor, browser } from 'protractor';
+import { TabsPage } from '../material/tabsPage';
 
 export class TaskDetailsPage {
+
+    appSettingsTogglesClass = new AppSettingsToggles();
     formContent = element(by.css('adf-form'));
     formNameField = element(by.css('span[data-automation-id*="formName"] span'));
     assigneeField = element(by.css('span[data-automation-id*="assignee"] span'));
@@ -42,6 +44,7 @@ export class TaskDetailsPage {
     addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
     emailInvolvedUser = by.xpath('following-sibling::div[@class="people-email ng-star-inserted"]');
     editActionInvolvedUser = by.xpath('following-sibling::div[@class="people-edit-label ng-star-inserted"]');
+    involvedUserPic = by.xpath('ancestor::div/ancestor::div/preceding-sibling::div//div[@class="adf-people-search-people-pic ng-star-inserted"]');
     taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
     taskDetailsSection = element(by.css('div[data-automation-id="adf-tasks-details"]'));
     taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
@@ -307,7 +310,7 @@ export class TaskDetailsPage {
     }
 
     appSettingsToggles() {
-        return new AppSettingsToggles();
+        return this.appSettingsTogglesClass;
     }
 
     taskInfoDrawerIsDisplayed() {
@@ -359,6 +362,12 @@ export class TaskDetailsPage {
     getInvolvedPeopleTitle() {
         Util.waitUntilElementIsVisible(this.peopleTitle);
         return this.peopleTitle.getText();
+    }
+
+    getInvolvedPeopleInitialImage(user) {
+        let pic = this.getRowsUser(user).element(this.involvedUserPic);
+        Util.waitUntilElementIsVisible(pic);
+        return pic.getText();
     }
 
     checkTaskDetails() {

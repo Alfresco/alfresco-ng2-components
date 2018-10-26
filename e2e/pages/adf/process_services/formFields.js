@@ -30,6 +30,7 @@ var FormFields = function () {
     var selectFormDropDownArrow = element.all(by.css("adf-attach-form div[class*='mat-select-arrow']")).first();
     var selectFormContent = element(by.css("div[class*='mat-select-content']"));
     var completeButton = element(by.id('adf-form-complete'));
+    var errorMessage = by.css('.adf-error-text-container .adf-error-text');
 
     this.setFieldValue = function (By, field, value) {
         var fieldElement =  element(By(field));
@@ -37,6 +38,16 @@ var FormFields = function () {
         fieldElement.clear().sendKeys(value);
         return this;
     };
+
+    this.checkWidgetIsVisible = function (fieldId) {
+        var fieldElement = element(by.css("adf-form-field div[id='field-"+fieldId+"-container']"));
+        Util.waitUntilElementIsVisible(fieldElement);
+    }
+
+    this.checkWidgetIsHidden = function (fieldId) {
+        var hiddenElement = element(by.css("adf-form-field div[id='field-"+fieldId+"-container'][hidden]"));
+        Util.waitUntilElementIsVisible(hiddenElement);
+    }
 
     this.getWidget = function (fieldId) {
         var widget = element(by.css("adf-form-field div[id='field-" + fieldId + "-container']"));
@@ -51,13 +62,26 @@ var FormFields = function () {
     };
 
     this.getFieldLabel = function (fieldId, labelLocatorParam) {
-        return this.getFieldText(fieldId, labelLocatorParam);
-    };
-
-    this.getFieldText = function (fieldId, labelLocatorParam) {
-        var label = this.getWidget(fieldId).all(labelLocatorParam || labelLocator).first();
+        var label = this.getWidget(fieldId).element(labelLocatorParam || labelLocator);
         Util.waitUntilElementIsVisible(label);
         return label.getText();
+    };
+
+    this.getFieldErrorMessage = function (fieldId) {
+        var error = this.getWidget(fieldId).element(errorMessage);
+        return error.getText();
+    }
+
+    this.getFieldText = function (fieldId, labelLocatorParam) {
+        var label = this.getWidget(fieldId).element(labelLocatorParam || labelLocator);
+        Util.waitUntilElementIsVisible(label);
+        return label.getText();
+    };
+
+    this.getFieldPlaceHolder = function (fieldId, locator='input') {
+        let placeHolderLocator = element(by.css(`${locator}#${fieldId}`)).getAttribute('placeholder');
+        Util.waitUntilElementIsVisible(placeHolderLocator);
+        return placeHolderLocator;
     };
 
     this.checkFieldValue = function (By, field, val) {
@@ -129,6 +153,18 @@ var FormFields = function () {
         Util.waitUntilElementIsVisible(completeButton);
         return completeButton.click();
     };
+
+    this.setValueInInputById = function(fieldId, value) {
+        let input = element(by.id(fieldId));
+        Util.waitUntilElementIsVisible(input);
+        input.clear().sendKeys(value);
+        return this;
+    }
+
+    this.isCompleteFormButtonDisabled = function() {
+        Util.waitUntilElementIsVisible(completeButton);
+        return completeButton.getAttribute('disabled');
+    }
 };
 
 module.exports = FormFields;

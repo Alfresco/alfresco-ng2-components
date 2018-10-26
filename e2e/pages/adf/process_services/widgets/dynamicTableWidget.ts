@@ -17,14 +17,18 @@
 
 import FormFields = require('../formFields');
 import Util = require('../../../../util/util');
-import { element, by, browser, protractor } from 'protractor';
+import { by, element, browser, protractor } from 'protractor';
 
-export class DynamicTable {
+export class DynamicTableWidget {
+
     formFields = new FormFields();
 
     labelLocator = by.css('dynamic-table-widget div div');
     columnNameLocator = by.css('table[id*="dynamic-table"] th');
     addButton = element(by.id('label-add-row'));
+    cancelButton = element(by.cssContainingText('button span', 'Cancel'));
+    editButton = element(by.cssContainingText('button span', 'edit'));
+    addRow = element(by.id('dynamictable-add-row'));
     columnDateTime = element(by.id('columnDateTime'));
     columnDate = element(by.id('columnDate'));
     calendarHeader = element(by.css('div[class="mat-datetimepicker-calendar-header-date-time"]'));
@@ -34,6 +38,7 @@ export class DynamicTable {
     dateWidget = element.all(by.css('button[aria-label="Open calendar"]')).first();
     calendarNumber = element.all(by.css('td div'));
     tableRow = element.all(by.css('tbody tr'));
+    dataTableInput = element(by.id('id'));
 
     getFieldLabel(fieldId) {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
@@ -46,6 +51,49 @@ export class DynamicTable {
     clickAddButton() {
         Util.waitUntilElementIsVisible(this.addButton);
         return this.addButton.click();
+    }
+
+    clickAddRow() {
+        Util.waitUntilElementIsVisible(this.addRow);
+        return this.addRow.click();
+    }
+
+    clickTableRow(rowNumber) {
+        let tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
+        Util.waitUntilElementIsVisible(tableRowByIndex);
+        return tableRowByIndex.click();
+    }
+
+    clickEditButton() {
+        Util.waitUntilElementIsVisible(this.editButton);
+        return this.editButton.click();
+    }
+
+    clickCancelButton() {
+        Util.waitUntilElementIsVisible(this.cancelButton);
+        return this.cancelButton.click();
+    }
+
+    setDatatableInput(text) {
+        Util.waitUntilElementIsVisible(this.dataTableInput);
+        this.dataTableInput.clear();
+        return this.dataTableInput.sendKeys(text);
+    }
+
+    getTableRowText(rowNumber) {
+        let tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
+        Util.waitUntilElementIsVisible(tableRowByIndex);
+        return tableRowByIndex.getText();
+    }
+
+    checkTableRowIsVisible(rowNumber) {
+        let tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
+        return Util.waitUntilElementIsVisible(tableRowByIndex);
+    }
+
+    checkTableRowIsNotVisible(rowNumber) {
+        let tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));
+        return Util.waitUntilElementIsNotVisible(tableRowByIndex);
     }
 
     clickColumnDateTime() {

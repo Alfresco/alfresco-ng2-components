@@ -16,19 +16,16 @@
  */
 
 import FormFields = require('../formFields');
-import Util = require('../../../../util/util');
 import { by } from 'protractor';
 
-export class RadioButtons {
+export class HeaderWidget {
 
     formFields = new FormFields();
 
-    getSpecificOptionLabel(fieldId, optionNumber) {
-        let optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"] div[class*="content"]');
+    labelLocator = by.css('span[id="container-header-label"]');
 
-        let option = this.formFields.getWidget(fieldId).element(optionLocator);
-        Util.waitUntilElementIsVisible(option);
-        return option.getText();
+    getFieldLabel(fieldId) {
+        return this.formFields.getFieldLabel(fieldId, this.labelLocator);
     }
 
 }
