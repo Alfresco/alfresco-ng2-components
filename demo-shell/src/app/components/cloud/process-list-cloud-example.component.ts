@@ -52,7 +52,7 @@ export class ProcessListCloudExampleComponent {
     }
 
     onFilterButtonClick($event) {
-        let newSortParam: ProcessListCloudSortingModel = {
+        let newSortParam: any = {
             orderBy: this.sortField,
             direction: this.sortDirection };
         this.sortArray.push(newSortParam);
