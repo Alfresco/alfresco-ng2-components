@@ -38,6 +38,7 @@ import moment from 'moment-es6';
 export class TaskListComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
 
     static PRESET_KEY = 'adf-task-list.presets';
+    public FORMAT_DATE: string = 'll';
 
     @ContentChild(EmptyCustomContentDirective) emptyCustomContent: EmptyCustomContentDirective;
 
@@ -251,7 +252,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         this.isLoading = true;
         this.loadTasksByState().subscribe(
             (tasks) => {
-                this.rows = this.optimizeNames(tasks.data);
+                this.rows = this.optimizeTaskDetails(tasks.data);
                 this.selectTask(this.landingTaskId);
                 this.success.emit(tasks);
                 this.isLoading = false;
@@ -345,12 +346,21 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      * Optimize name field
      * @param instances
      */
-    private optimizeNames(instances: any[]): any[] {
-        instances = instances.map(t => {
-            if (!t.name) {
-                t.name = 'No name';
+    private optimizeTaskDetails(instances: any[]): any[] {
+        instances = instances.map(task => {
+            if (!task.name) {
+                task.name = 'No name';
             }
-            return t;
+            if (task.created) {
+                task.created = moment(task.created).format(this.FORMAT_DATE);
+            }
+            if (task.dueDate) {
+                task.dueDate = moment(task.dueDate).format(this.FORMAT_DATE);
+            }
+            if (task.endDate) {
+                task.endDate = moment(task.endDate).format(this.FORMAT_DATE);
+            }
+            return task;
         });
         return instances;
     }
