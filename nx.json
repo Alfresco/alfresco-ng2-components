@@ -31,9 +31,6 @@
     },
     "extensions": {
       "tags": []
-    },
-    "lib-e2e": {
-      "tags": []
     }
   }
 }
