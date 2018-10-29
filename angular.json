@@ -496,8 +496,7 @@
       }
     },
     "lib-e2e": {
-      "root": "demo-shell",
-      "sourceRoot": "./demo-shell",
+      "root": "e2e/",
       "projectType": "application",
       "architect": {
         "serve": {
