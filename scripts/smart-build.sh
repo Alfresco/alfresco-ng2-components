@@ -37,7 +37,7 @@ then
 fi
 
 #find affected libs
-npm run affected:libs -- $SHA_1 $SHA_2 > deps.txt
+npm run affected:libs -- $(git merge-base $SHA_1 HEAD) $SHA_2 > deps.txt
 
 #clean file
 sed -i '/^$/d'  ./deps.txt
