@@ -160,7 +160,29 @@ exports.config = {
             var output = '';
             var savePath = `${projectRoot}/e2e-output/junit-report/`;
             var lastFileName = '';
-            fs.readdirSync(savePath).forEach(function(file){
+
+
+
+            let files = fs.readdirSync(savePath);
+
+            if (files && files.length > 0) {
+                for (const fileName of files) {
+                    testConfigReport = {
+                        reportTitle: 'Protractor Test Execution Report',
+                        outputPath: `${projectRoot}/e2e-output/junit-report/html`,
+                        outputFilename: Math.random().toString(36).substr(2, 5) + filenameReport,
+                        screenshotPath: `${projectRoot}/e2e-output/screenshots/`,
+                        screenshotsOnlyOnFailure: true,
+                    };
+
+                    new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/` + file, testConfigReport);
+                    lastFileName = testConfigReport.outputFilename;
+                }
+            };
+
+
+
+            /*fs.readdirSync(savePath).forEach(function(file){
 
                 testConfigReport = {
                     reportTitle: 'Protractor Test Execution Report',
@@ -172,7 +194,7 @@ exports.config = {
 
                 new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/` + file, testConfigReport);
                 lastFileName = testConfigReport.outputFilename;
-            });
+            });*/
 
             var htmlpath = savePath + 'html/';
 
