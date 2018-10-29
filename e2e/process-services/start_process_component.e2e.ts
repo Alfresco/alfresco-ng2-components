@@ -153,21 +153,34 @@ describe('Start Process Component', () => {
 
         it('[C260444] Should require process name', () => {
             processServicesPage.goToApp(app.title);
+
             appNavigationBarPage.clickProcessButton();
+
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
+
             startProcessPage.selectFromProcessDropdown(processModelWithoutSe);
             startProcessPage.deleteDefaultName('My Default Name');
             startProcessPage.checkStartProcessButtonIsDisabled();
+            startProcessPage.clickProcessDropdownArrow();
+            startProcessPage.checkOptionIsDisplayed(processModelWithSe);
+            startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
         });
 
         it('[C260443] Should be possible to start a process without start event', () => {
             processServicesPage.goToApp(app.title);
+
             appNavigationBarPage.clickProcessButton();
+
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
+
+            expect(startProcessPage.checkSelectProcessPlaceholderIsDisplayed()).toBe('');
+
             startProcessPage.selectFromProcessDropdown(processModelWithoutSe);
+
             expect(startProcessPage.getDefaultName()).toEqual('My Default Name');
+
             startProcessPage.checkStartProcessButtonIsEnabled();
         });
 
@@ -239,21 +252,6 @@ describe('Start Process Component', () => {
             processFiltersPage.clickNewProcessDropdown();
             expect(startProcessPage.getProcessDefinitionValue()).toBe(simpleApp.title);
             startProcessPage.checkStartProcessButtonIsEnabled();
-        });
-
-        it('[C289302] Should display "Select" placeholder when more than one processDefinitions are available', () => {
-            processServicesPage.goToApp(app.title);
-
-            appNavigationBarPage.clickProcessButton();
-
-            processFiltersPage.clickCreateProcessButton();
-            processFiltersPage.clickNewProcessDropdown();
-
-            expect(startProcessPage.checkSelectProcessPlaceholderIsDisplayed()).toBe('');
-
-            startProcessPage.clickProcessDropdownArrow();
-            startProcessPage.checkOptionIsDisplayed(processModelWithSe);
-            startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
         });
 
         it('[C286511] Should be able to type the process definition and start a process', () => {
