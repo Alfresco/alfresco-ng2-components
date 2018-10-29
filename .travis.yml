@@ -26,7 +26,8 @@ jobs:
                 (./scripts/update-version.sh -gnu -alpha && ././scripts/npm-build-all.sh -sb --skip-lint || exit 1;);
             fi
         - stage: Smart Build
-          script: (./scripts/smart-build.sh || exit 1;);
+            # TO DO: change dev-mvitale-ADF-nx-2 with $TRAVIS_BRANCH
+          script: (./scripts/smart-build.sh $(git merge-base origin/dev-mvitale-ADF-nx-2 HEAD) HEAD || exit 1;);
 # jobs:
 #   include:
 #     - stage: Publish alpha to NPM

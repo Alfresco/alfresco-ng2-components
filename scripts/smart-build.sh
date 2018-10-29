@@ -27,8 +27,17 @@ smart_build_process_services_cloud() {
     cp -R ./lib/dist/process-services-cloud/* ./node_modules/@alfresco/adf-process-services-cloud/
 }
 
+eval SHA_1=$1
+eval SHA_2=$2
+
+if [[ "$1" == "" ]]
+then
+    echo "The SHA1 is mandatory"
+    exit 0
+fi
+
 #find affected libs
-npm run affected:libs -- --uncommitted > deps.txt
+npm run affected:libs -- $SHA_1 $SHA_2 > deps.txt
 
 #clean file
 sed -i '/^$/d'  ./deps.txt
