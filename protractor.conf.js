@@ -175,7 +175,7 @@ exports.config = {
                         screenshotsOnlyOnFailure: true,
                     };
 
-                    new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/` + file, testConfigReport);
+                    new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/` + fileName, testConfigReport);
                     lastFileName = testConfigReport.outputFilename;
                 }
             };
