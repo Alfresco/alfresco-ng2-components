@@ -33,6 +33,7 @@ var PaginationPage = function () {
     var pageDropDownOptions = by.css("div[class*='mat-menu-content'] button");
     var paginationSection = element(by.css("adf-pagination"));
     var paginationSectionEmpty = element(by.css("adf-pagination[class*='adf-pagination__empty ng-star-inserted']"));
+    var totalFiles = element(by.css('span[class="adf-pagination__range"]'));
 
     this.selectItemsPerPage = function (item) {
         Util.waitUntilElementIsVisible(itemsPerPageDropdown);
@@ -130,6 +131,16 @@ var PaginationPage = function () {
         Util.waitUntilElementIsNotOnPage(previousButtonDisabled);
     };
 
+    this.getTotalNumberOfFiles = function () {
+        Util.waitUntilElementIsVisible(totalFiles);
+        var numberOfFiles = totalFiles.getText().then(function (totalNumber) {
+            var totalNumberOfFiles = totalNumber.split('of ')[1];
+          return totalNumberOfFiles;
+        });
+
+        return numberOfFiles;
+    }
 };
+
 module.exports = PaginationPage;
 

@@ -29,6 +29,7 @@ export class SearchFiltersPage {
     createdFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATED"'));
     showMoreButtonForCreated = this.createdFilter.element(by.css('button[title="Show more"]'));
     showLessButtonForCreated = this.createdFilter.element(by.css('button[title="Show less"]'));
+    pngImageFileType = element(by.css('mat-checkbox[data-automation-id="checkbox-SEARCH.FACET_FIELDS.TYPE-PNG Image"]'));
 
     checkSearchFiltersIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchFilters);
@@ -164,6 +165,23 @@ export class SearchFiltersPage {
 
     checkCreatedShowLessButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.showLessButtonForCreated);
+    }
+
+    clickPngImageType() {
+        Util.waitUntilElementIsVisible(this.pngImageFileType);
+        return this.pngImageFileType.click();
+    }
+
+    getBucketNumberOfFilterType(fileType) {
+        let fileTypeFilter = element(by.css('mat-checkbox[data-automation-id="checkbox-SEARCH.FACET_FIELDS.' + fileType + '"] span'));
+        Util.waitUntilElementIsVisible(fileTypeFilter);
+        let bucketNumber = fileTypeFilter.getText().then((valueOfBucket) => {
+            let numberOfBucket = valueOfBucket.split('(')[1];
+            let totalNumberOfBucket = numberOfBucket.split(')')[0];
+            return totalNumberOfBucket;
+        });
+
+        return bucketNumber;
     }
 
 }
