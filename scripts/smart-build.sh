@@ -27,12 +27,29 @@ smart_build_process_services_cloud() {
     cp -R ./lib/dist/process-services-cloud/* ./node_modules/@alfresco/adf-process-services-cloud/
 }
 
-eval SHA_1=$1
-eval SHA_2=$2
+eval SHA_1=""
+eval SHA_2="HEAD"
 
-if [[ "$1" == "" ]]
+show_help() {
+    echo "Usage: smart-build.sh"
+    echo ""
+    echo "-b branch name"
+}
+
+branch_name(){
+    SHA_1=$1
+}
+
+while [[ $1  == -* ]]; do
+    case "$1" in
+      -b)  branch_name $2; shift 2;;
+      -*) echo "invalid option: $1" 1>&2; show_help; exit 0;;
+    esac
+done
+
+if [[ "$SHA_1" == "" ]]
 then
-    echo "The SHA1 is mandatory"
+    echo "The branch name is mandatory"
     exit 0
 fi
 
