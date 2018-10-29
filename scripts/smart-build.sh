@@ -27,7 +27,8 @@ smart_build_process_services_cloud() {
     cp -R ./lib/dist/process-services-cloud/* ./node_modules/@alfresco/adf-process-services-cloud/
 }
 
-eval SHA_1=""
+eval BRANCH_NAME=""
+eval HEAD_SHA_BRANCH=""
 eval SHA_2="HEAD"
 
 show_help() {
@@ -37,7 +38,7 @@ show_help() {
 }
 
 branch_name(){
-    SHA_1=$1
+    BRANCH_NAME=$1
 }
 
 while [[ $1  == -* ]]; do
@@ -47,14 +48,17 @@ while [[ $1  == -* ]]; do
     esac
 done
 
-if [[ "$SHA_1" == "" ]]
+if [[ "$BRANCH_NAME" == "" ]]
 then
     echo "The branch name is mandatory"
     exit 0
 fi
 
+HEAD_SHA_BRANCH=(`git merge-base $BRANCH_NAME HEAD`)
+echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
+
 #find affected libs
-npm run affected:libs -- $(git merge-base $SHA_1 HEAD) $SHA_2 > deps.txt
+npm run affected:libs -- "$HEAD_SHA_BRANCH" "HEAD" > deps.txt
 
 #clean file
 sed -i '/^$/d'  ./deps.txt
