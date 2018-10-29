@@ -178,8 +178,11 @@ exports.config = {
 
             var lastHtmlFile = htmlpath + lastFileName + '.html';
 
-            if(!(fs.lstatSync(lastHtmlFile).isDirectory()))
+            console.log("Last html file: ", lastHtmlFile);
+
+            if(!(fs.lstatSync(lastHtmlFile).isDirectory())) {
                 output = output + fs.readFileSync(lastHtmlFile);
+            };
 
             var fileName = savePath + '/' + filenameReport + '.html';
 
