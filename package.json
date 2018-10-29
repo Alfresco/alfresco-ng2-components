@@ -5,6 +5,7 @@
   "author": "Alfresco Software, Ltd.",
   "main": "./index.js",
   "scripts": {
+    "affected:libs": "./node_modules/.bin/nx affected:libs",
     "docbuild": "node node_modules/typedoc/bin/typedoc --tsconfig tsconfig.json --json docs/docs.json --exclude '**/*.spec.ts' --ignoreCompilerErrors && node tools/doc/buildYamlSourceInfo.js docs/docs.json && node ./tools/doc/docProcessor.js",
     "prepublishOnly": "npm run build-lib",
     "markdownlint": "markdownlint ./docs",
@@ -88,6 +89,8 @@
     "hammerjs": "2.0.8",
     "minimatch-browser": "1.0.0",
     "moment": "2.22.2",
+    "@nrwl/schematics": "6.3.1",
+    "@nrwl/nx": "6.3.1",
     "moment-es6": "^1.0.0",
     "ng2-charts": "1.6.0",
     "ngx-monaco-editor": "6.0.0",
