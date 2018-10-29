@@ -116,32 +116,13 @@ exports.config = {
 
         jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
 
-        browser.getCapabilities().then(function (cap) {
-            browser.browserName = cap.get('browserName');
-            browser.version = cap.get('version');
-         }).then(function (cap) {
-            var prePendStr = browser.browserName + "-" + browser.version + "-";
-            var generatedSuiteName = Math.random().toString(36).substr(2, 5);
-            var junitReporter = new jasmineReporters.JUnitXmlReporter(
-                {
-                    consolidateAll: true,
-                    savePath: `${projectRoot}/e2e-output/junit-report`,
-                    // this will produce distinct xml files for each capability
-                    filePrefix: 'results.xml-' + generatedSuiteName,
-                });
-            jasmine.getEnv().addReporter(junitReporter);
-        });
-
-
-
-        /*jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter({
+        var generatedSuiteName = Math.random().toString(36).substr(2, 5);
+        var junitReporter = new jasmineReporters.JUnitXmlReporter({
             consolidateAll: true,
             savePath: `${projectRoot}/e2e-output/junit-report`,
-            filePrefix: 'results.xml',
-            useDotNotation: false,
-            useFullTestName: false,
-            reportFailedUrl: true
-        }));*/
+            filePrefix: 'results.xml-' + generatedSuiteName
+        });
+        jasmine.getEnv().addReporter(junitReporter);
 
         return browser.driver.executeScript(disableCSSAnimation);
 
@@ -257,16 +238,6 @@ exports.config = {
                     }
                 }
             }
-
-            /*testConfigReport = {
-                reportTitle: 'Protractor Test Execution Report',
-                outputPath: `${projectRoot}/e2e-output/junit-report`,
-                outputFilename: filenameReport,
-                screenshotPath: `${projectRoot}/e2e-output/screenshots/`,
-                screenshotsOnlyOnFailure: true,
-            };
-
-            new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/results.xml`, testConfigReport);*/
 
             let pathFile = path.join(__dirname, './e2e-output/junit-report', filenameReport + '.html');
             let reportFile = fs.createReadStream(pathFile);
