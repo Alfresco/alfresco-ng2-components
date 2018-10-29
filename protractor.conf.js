@@ -116,14 +116,32 @@ exports.config = {
 
         jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
 
-        jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter({
+        browser.getCapabilities().then(function (cap) {
+            browser.browserName = cap.get('browserName');
+            browser.version = cap.get('version');
+         }).then(function (cap) {
+            var prePendStr = browser.browserName + "-" + browser.version + "-";
+            var generatedSuiteName = Math.random().toString(36).substr(2, 5);
+            var junitReporter = new jasmineReporters.JUnitXmlReporter(
+                {
+                    consolidateAll: true,
+                    savePath: `${projectRoot}/e2e-output/junit-report`,
+                    // this will produce distinct xml files for each capability
+                    filePrefix: 'results.xml-' + generatedSuiteName,
+                });
+            jasmine.getEnv().addReporter(junitReporter);
+        });
+
+
+
+        /*jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter({
             consolidateAll: true,
             savePath: `${projectRoot}/e2e-output/junit-report`,
             filePrefix: 'results.xml',
             useDotNotation: false,
             useFullTestName: false,
             reportFailedUrl: true
-        }));
+        }));*/
 
         return browser.driver.executeScript(disableCSSAnimation);
 
@@ -158,6 +176,33 @@ exports.config = {
 
             console.log(filenameReport);
 
+            var output = '';
+            var savePath = `${projectRoot}/e2e-output/junit-report/`;
+            var lastFileName = '';
+            fs.readdirSync(savePath).forEach(function(file){
+
+                testConfigReport = {
+                    reportTitle: 'Protractor Test Execution Report',
+                    outputPath: `${projectRoot}/e2e-output/junit-report/html`,
+                    outputFilename: Math.random().toString(36).substr(2, 5) + filenameReport,
+                    screenshotPath: `${projectRoot}/e2e-output/screenshots/`,
+                    screenshotsOnlyOnFailure: true,
+                };
+
+                new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/` + file, testConfigReport);
+                lastFileName = testConfigReport.outputFilename;
+            });
+
+            var htmlpath = savePath + 'html/';
+
+            var lastHtmlFile = htmlpath + lastFileName + '.html';
+
+            if(!(fs.lstatSync(lastHtmlFile).isDirectory()))
+                output = output + fs.readFileSync(lastHtmlFile);
+
+            var fileName = savePath + '/' + filenameReport + '.html';
+
+            fs.writeFileSync(fileName, output, 'utf8');
 
             let alfrescoJsApi = new AlfrescoApi({
                 provider: 'ECM',
@@ -213,7 +258,7 @@ exports.config = {
                 }
             }
 
-            testConfigReport = {
+            /*testConfigReport = {
                 reportTitle: 'Protractor Test Execution Report',
                 outputPath: `${projectRoot}/e2e-output/junit-report`,
                 outputFilename: filenameReport,
@@ -221,7 +266,7 @@ exports.config = {
                 screenshotsOnlyOnFailure: true,
             };
 
-            new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/results.xml`, testConfigReport);
+            new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/results.xml`, testConfigReport);*/
 
             let pathFile = path.join(__dirname, './e2e-output/junit-report', filenameReport + '.html');
             let reportFile = fs.createReadStream(pathFile);
