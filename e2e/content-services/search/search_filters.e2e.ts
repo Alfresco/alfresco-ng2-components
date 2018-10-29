@@ -18,12 +18,15 @@
 import { LoginPage } from '../../pages/adf/loginPage';
 import SearchDialog = require('../../pages/adf/dialog/searchDialog');
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
+import PaginationPage = require('../../pages/adf/paginationPage');
+import ContentList = require('../../pages/adf/dialog/contentList');
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');
 
 import TestConfig = require('../../test.config');
 import Util = require('../../util/util');
+import resources = require('../../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
@@ -35,6 +38,8 @@ describe('Search Filters', () => {
     let searchDialog = new SearchDialog();
     let searchFiltersPage = new SearchFiltersPage();
     let uploadActions = new UploadActions();
+    let paginationPage = new PaginationPage();
+    let contentList = new ContentList();
 
     let acsUser = new AcsUserModel();
 
@@ -43,7 +48,15 @@ describe('Search Filters', () => {
     let fileModel = new FileModel({
         'name': filename, 'shortName': filename.substring(0, 8)
     });
-    let fileUploaded;
+
+    let pngFileModel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+    });
+
+    let fileUploaded, fileTypePng;
+
+    let filter = {type: 'TYPE-PNG Image'};
 
     beforeAll(async (done) => {
 
@@ -59,6 +72,8 @@ describe('Search Filters', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         fileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
+
+        fileTypePng = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -77,6 +92,7 @@ describe('Search Filters', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileUploaded.entry.id);
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTypePng.entry.id);
 
         done();
     });
@@ -112,6 +128,26 @@ describe('Search Filters', () => {
 
         searchFiltersPage.checkFileTypeFilterIsCollapsed();
         searchFiltersPage.checkFileSizeFilterIsCollapsed();
+    });
+
+    it('[C287796] Should be able to display the correct bucket number after selecting a filter',  () => {
+        browser.get(TestConfig.adf.url + '/search;q=*');
+
+        searchFiltersPage.clickPngImageType();
+
+        let bucketNumberForFilter = searchFiltersPage.getBucketNumberOfFilterType(filter.type);
+
+        let resultFileNames = contentList.getAllRowsNameColumn();
+
+        expect(bucketNumberForFilter).not.toEqual('0');
+
+        expect(paginationPage.getTotalNumberOfFiles()).toEqual(bucketNumberForFilter);
+
+        resultFileNames.then((fileNames) => {
+            fileNames.map((nameOfResultFiles) => {
+                expect(nameOfResultFiles).toContain('.png');
+            });
+        });
     });
 
 });
