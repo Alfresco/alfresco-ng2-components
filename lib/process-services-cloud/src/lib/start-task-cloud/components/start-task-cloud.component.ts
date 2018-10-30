@@ -94,15 +94,13 @@ export class StartTaskCloudComponent implements OnInit {
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
-        this.loadUsers();
         this.buildForm();
     }
 
     buildForm() {
         this.taskForm = this.formBuilder.group({
             name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxTaskNameLength)]),
-            description: '',
-            assignee: ''
+            description: ''
         });
     }
 
@@ -132,10 +130,6 @@ export class StartTaskCloudComponent implements OnInit {
 
     public onCancel(): void {
         this.cancel.emit();
-    }
-
-    private loadUsers(): void {
-        this.users$ = this.taskService.getUsers();
     }
 
     private getDueDate(): Date {
