@@ -92,12 +92,10 @@ exports.config = {
 
     plugins: [{
         package: 'jasmine2-protractor-utils',
-        disableHTMLReport: false,
         disableScreenshot: false,
         screenshotOnExpectFailure: true,
         screenshotOnSpecFailure: false,
         clearFoldersBeforeTest: true,
-        htmlReportDir: `${projectRoot}/e2e-output/html-report/`,
         screenshotPath: `${projectRoot}/e2e-output/screenshots/`
     }],
 
@@ -115,7 +113,6 @@ exports.config = {
         browser.manage().window().setSize(width, height);
 
         jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
-
         var generatedSuiteName = Math.random().toString(36).substr(2, 5);
         var junitReporter = new jasmineReporters.JUnitXmlReporter({
             consolidateAll: true,
@@ -173,11 +170,10 @@ exports.config = {
 
             console.log(filenameReport);
 
-            var output = '';
-            var savePath = `${projectRoot}/e2e-output/junit-report/`;
-            var lastFileName = '';
-
-
+            let output = '';
+            let savePath = `${projectRoot}/e2e-output/junit-report/`;
+            let temporaryHtmlPath = savePath + 'html/temporaryHtml/';
+            let lastFileName = '';
 
             let files = fs.readdirSync(savePath);
 
@@ -185,42 +181,18 @@ exports.config = {
                 for (const fileName of files) {
                     testConfigReport = {
                         reportTitle: 'Protractor Test Execution Report',
-                        outputPath: `${projectRoot}/e2e-output/junit-report/html/temporaryHtml`,
+                        outputPath: temporaryHtmlPath,
                         outputFilename: Math.random().toString(36).substr(2, 5) + filenameReport,
-                        screenshotPath: `${projectRoot}/e2e-output/screenshots/`,
-                        screenshotsOnlyOnFailure: true,
                     };
 
                     let filePath = `${projectRoot}/e2e-output/junit-report/` + fileName;
-
-                    console.log("File path: ", filePath);
 
                     new htmlReporter().from(filePath, testConfigReport);
                     lastFileName = testConfigReport.outputFilename;
                 }
             };
 
-
-
-            /*fs.readdirSync(savePath).forEach(function(file){
-
-                testConfigReport = {
-                    reportTitle: 'Protractor Test Execution Report',
-                    outputPath: `${projectRoot}/e2e-output/junit-report/html`,
-                    outputFilename: Math.random().toString(36).substr(2, 5) + filenameReport,
-                    screenshotPath: `${projectRoot}/e2e-output/screenshots/`,
-                    screenshotsOnlyOnFailure: true,
-                };
-
-                new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/` + file, testConfigReport);
-                lastFileName = testConfigReport.outputFilename;
-            });*/
-
-            var temporaryHtmlPath = savePath + 'html/temporaryHtml/';
-
             var lastHtmlFile = temporaryHtmlPath + lastFileName + '.html';
-
-            console.log("Last html file: ", lastHtmlFile);
 
             if(!(fs.lstatSync(lastHtmlFile).isDirectory())) {
                 output = output + fs.readFileSync(lastHtmlFile);
@@ -299,8 +271,6 @@ exports.config = {
                         'overwrite': true
                     });
             } catch (error) {
-                //  console.log('Folder report already present' + error);
-
                 reportFolder = await
                     alfrescoJsApi.nodes.getNode('-my-', {
                         'relativePath': `Builds/${buildNumber()}/report`,
