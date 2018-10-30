@@ -30,9 +30,41 @@ export class SearchFiltersPage {
     showMoreButtonForCreated = this.createdFilter.element(by.css('button[title="Show more"]'));
     showLessButtonForCreated = this.createdFilter.element(by.css('button[title="Show less"]'));
     pngImageFileType = element(by.css('mat-checkbox[data-automation-id="checkbox-SEARCH.FACET_FIELDS.TYPE-PNG Image"]'));
+    nameFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Name"]'));
+    checkListFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]'));
 
     checkSearchFiltersIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchFilters);
+    }
+
+    checkCheckListFilterIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.checkListFilter);
+    }
+
+    checkNameFilterIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.nameFilter);
+    }
+
+    getNamePlaceholder() {
+        Util.waitUntilElementIsVisible(this.nameFilter);
+        return this.nameFilter.element(by.css('input')).getAttribute('placeholder');
+    }
+
+    searchByName(name) {
+        Util.waitUntilElementIsVisible(this.nameFilter);
+        this.nameFilter.clear();
+        this.nameFilter.element(by.css('input')).sendKeys(name).sendKeys(protractor.Key.ENTER);
+    }
+
+    clickCheckListFilter() {
+        Util.waitUntilElementIsVisible(this.checkListFilter);
+        this.checkListFilter.element(by.css('mat-expansion-panel-header')).click();
+    }
+
+    selectCheckListOption(option) {
+        Util.waitUntilElementIsVisible(this.checkListFilter);
+        let checkboxSpan = this.checkListFilter.element(by.cssContainingText('span', option));
+        let checkbox = checkboxSpan.element(by.xpath(''));
     }
 
     checkFileTypeFilterIsDisplayed() {
