@@ -54,9 +54,9 @@ export class AttachFormComponent implements OnInit, OnChanges {
 
     forms: Form[];
 
-    formId: number;
+    formId: string;
     disableSubmit: boolean = true;
-    selectedFormId: number;
+    selectedFormId: string;
 
     attachFormControl: FormControl;
 
@@ -125,7 +125,7 @@ export class AttachFormComponent implements OnInit, OnChanges {
             });
     }
 
-    private attachForm(taskId: string, formId: number) {
+    private attachForm(taskId: string, formId: string) {
         if (taskId && formId) {
             this.taskService.attachFormToATask(taskId, formId)
                 .subscribe(() => {

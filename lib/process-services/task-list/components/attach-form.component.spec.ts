@@ -81,7 +81,7 @@ describe('AttachFormComponent', () => {
 
     it('should render the attachForm enabled if the user select the different formId', async(() => {
         component.taskId = 1;
-        component.formId = 2;
+        component.formId = '2';
         component.attachFormControl.setValue(3);
         fixture.detectChanges();
         spyOn(taskService, 'attachFormToATask').and.returnValue(of(true));
@@ -94,7 +94,7 @@ describe('AttachFormComponent', () => {
 
     it('should render a disabled attachForm button if the user select the original formId', async(() => {
         component.taskId = 1;
-        component.formId = 2;
+        component.formId = '2';
         component.attachFormControl.setValue(3);
         fixture.detectChanges();
         spyOn(taskService, 'attachFormToATask').and.returnValue(of(true));
@@ -110,7 +110,7 @@ describe('AttachFormComponent', () => {
 
     it('should show the adf-form of the selected form', async(() => {
         component.taskId = 1;
-        component.selectedFormId = 12;
+        component.selectedFormId = '12';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();

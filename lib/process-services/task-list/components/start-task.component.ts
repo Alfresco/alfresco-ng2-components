@@ -79,6 +79,8 @@ export class StartTaskComponent implements OnInit {
 
     taskForm: FormGroup;
 
+    formKey: string;
+
     errorMessage: string;
     private validationMessages = { required: 'ADF_TASK_LIST.START_TASK.FORM.ERROR.REQUIRED', maxlength: 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MAXIMUM_LENGTH' };
 
@@ -104,8 +106,6 @@ export class StartTaskComponent implements OnInit {
             this.dateAdapter.setLocale(locale);
         });
 
-        this.taskDetailsModel.name = this.name;
-
         this.loadFormsTask();
         this.buildForm();
         this.validateName();
@@ -128,7 +128,7 @@ export class StartTaskComponent implements OnInit {
         const newTask = new TaskDetailsModel(this.taskForm.value);
         newTask.category = this.getAppId();
         newTask.dueDate = this.getDueDate();
-        this.formKey = +newTask.formKey;
+        this.formKey = newTask.formKey;
         this.taskService.createNewTask(newTask)
                 .pipe(
                     switchMap((createRes: any) =>
@@ -237,8 +237,9 @@ export class StartTaskComponent implements OnInit {
     }
 
     private validateMaxTaskNameLength() {
-        if (this.maxTaskNameLength >= 255) {
-            this.logService.log('the task name length cannot be greater than 255');
+        if (this.maxTaskNameLength >= this.MAX_LENGTH) {
+            this.maxTaskNameLength = this.MAX_LENGTH;
+            this.logService.log(`the task name length cannot be greater than ${this.MAX_LENGTH}`);
         }
     }
 
