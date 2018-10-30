@@ -6,7 +6,8 @@
   "rules": {
     "adf-license-banner": [
       true,
-      "e2e/**/*.ts"
+      "e2e/**/*.ts",
+      "./license-community.txt"
     ],
     "align": [
       true,

@@ -6,11 +6,11 @@ const minimatch = require("minimatch");
 const fs = require("fs");
 class Rule extends Lint.Rules.AbstractRule {
     apply(sourceFile) {
-        return this.applyWithWalker(new ADFLicenseBannerRule(sourceFile, this.getOptions()));
+        return this.applyWithWalker(new ADFEnterpriseLicenseBannerRule(sourceFile, this.getOptions()));
     }
 }
 Rule.metadata = {
-    ruleName: 'adf-license-banner',
+    ruleName: 'adf-enterprise-license-banner',
     type: 'maintainability',
     description: ``,
     descriptionDetails: ``,
@@ -22,7 +22,7 @@ Rule.metadata = {
 Rule.FAILURE_STRING = 'Missing license header in this TypeScript ' +
     'file Every TypeScript file of the library needs to have the Alfresco license banner at the top.';
 exports.Rule = Rule;
-class ADFLicenseBannerRule extends Lint.RuleWalker {
+class ADFEnterpriseLicenseBannerRule extends Lint.RuleWalker {
     constructor(sourceFile, options) {
         super(sourceFile, options);
         const fileGlobs = options.ruleArguments;

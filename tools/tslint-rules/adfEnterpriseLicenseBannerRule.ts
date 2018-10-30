@@ -11,7 +11,7 @@ import *  as fs from 'fs';
 export class Rule extends Lint.Rules.AbstractRule {
 
     public static metadata: Lint.IRuleMetadata = {
-        ruleName: 'adf-license-banner',
+        ruleName: 'adf-enterprise-license-banner',
         type: 'maintainability',
         description: ``,
         descriptionDetails: ``,
@@ -26,12 +26,12 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(
-            new ADFLicenseBannerRule(sourceFile,
+            new ADFEnterpriseLicenseBannerRule(sourceFile,
                 this.getOptions()));
     }
 }
 
-class ADFLicenseBannerRule extends Lint.RuleWalker {
+class ADFEnterpriseLicenseBannerRule extends Lint.RuleWalker {
 
     /** Whether the walker should check the current source file. */
     private _enabled: boolean;
