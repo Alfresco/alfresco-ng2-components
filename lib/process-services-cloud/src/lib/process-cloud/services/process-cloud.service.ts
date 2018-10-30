@@ -61,6 +61,7 @@ export class ProcessCloudService {
 
     /**
      * Starts a process based on a process definition, name, form values or variables.
+     * @param appName name of the Application
      * @param processDefinitionId Process definition ID
      * @param name Process name
      * @param outcome Process outcome
@@ -76,22 +77,22 @@ export class ProcessCloudService {
                  variables?: ProcessInstanceVariableCloud[]
     ): Observable<ProcessInstanceCloud> {
 
-        let startRequest: any = {
+        let requestPayload: any = {
             processInstanceName: name,
             processDefinitionId: processDefinitionId,
             payloadType: 'StartProcessPayload'
         };
         if (outcome) {
-            startRequest.outcome = outcome;
+            requestPayload.outcome = outcome;
         }
         if (startFormValues) {
-            startRequest.values = startFormValues;
+            requestPayload.values = startFormValues;
         }
         if (variables) {
-            startRequest.variables = variables;
+            requestPayload.variables = variables;
         }
 
-        let queryUrl = this.buildQueryUrl(appName);
+        let queryUrl = this.buildStartProcessUrl(appName);
 
         return from(this.alfrescoApiService.getInstance()
             .oauth2Auth.callCustomApi(
@@ -100,8 +101,8 @@ export class ProcessCloudService {
                 null,
                 null,
                 null,
-                startRequest,
                 null,
+                requestPayload,
                 null,
                 ['application/json'],
                 ['application/json'],
@@ -116,6 +117,10 @@ export class ProcessCloudService {
 
     private buildQueryUrl(appName: string) {
         return `${this.appConfigService.get('bpmHost', '')}/${appName}-rb/v1/process-definitions`;
+    }
+
+    private buildStartProcessUrl(appName: string) {
+        return `${this.appConfigService.get('bpmHost', '')}/${appName}-rb/v1/process-instances`;
     }
 
     private extractData(res: any) {
