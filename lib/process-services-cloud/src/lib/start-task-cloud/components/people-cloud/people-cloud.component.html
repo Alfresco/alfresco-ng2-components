@@ -1,6 +1,6 @@
 <form>
 <mat-form-field class="adf-people-cloud">
-    <mat-label id="assignee-id">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'|translate}}</mat-label>
+    <mat-label id="assignee-id">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE' | translate}}</mat-label>
     <input #inputValue
            matInput
            class="adf-input"
@@ -10,7 +10,7 @@
            [matAutocomplete]="auto">
     <mat-autocomplete class="adf-people-cloud-list"
                       #auto="matAutocomplete"
-                      (optionSelected)="onItemSelect($event.option.value)"
+                      (optionSelected)="onSelect($event.option.value)"
                       [displayWith]="getDisplayName">
         <mat-option *ngFor="let user of users$ | async; let i = index" [value]="user">
             <div class="adf-people-cloud-row" id="adf-people-cloud-user-{{i}}">

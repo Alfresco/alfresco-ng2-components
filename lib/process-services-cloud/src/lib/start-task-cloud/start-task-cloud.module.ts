@@ -31,7 +31,9 @@ import { InitialUserNamePipe } from './components/pipes/initial-user-name.pipe';
         StartTaskCloudService
      ],
     exports: [
-        StartTaskCloudComponent
+        StartTaskCloudComponent,
+        PeopleCloudComponent,
+        InitialUserNamePipe
     ]
 })
 export class StartTaskCloudModule { }
