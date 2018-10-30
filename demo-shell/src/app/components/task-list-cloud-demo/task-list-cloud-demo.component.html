@@ -1,5 +1,5 @@
 <h2>TASK LIST CLOUD DEMO</h2>
-<adf-cloud-task-filters
+<!-- <adf-cloud-task-filters
     [appName]="'my-app'"
     [showIcons]="true"
     (filterClick)="onFilterSelected($event)">
@@ -83,4 +83,8 @@
     <adf-pagination [target]="taskCloud"
                     (changePageSize)="onChangePageSize($event)">
     </adf-pagination>
-</div>
+</div> -->
+
+<adf-cloud-start-process 
+    [appName]="applicationName">
+</adf-cloud-start-process>
