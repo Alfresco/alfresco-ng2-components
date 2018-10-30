@@ -1,3 +1,4 @@
+import { RoleCloudModel } from './../models/role-cloud.model';
 import { Injectable } from '@angular/core';
 import {
     AlfrescoApiService,
@@ -41,7 +42,7 @@ export class StartTaskCloudService {
     }
 
     getUsers(): Observable<UserCloudModel[]> {
-        const url = this.getUserUrl();
+        const url = this.buildUserUrl();
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
 
@@ -57,8 +58,8 @@ export class StartTaskCloudService {
             );
     }
 
-    getUsersByRole(role: string): Observable<UserCloudModel[]> {
-        const url = this.getUserByRoleUrl(role);
+    getRolesByUserId(userId: string): Observable<RoleCloudModel[]> {
+        const url = this.buildRolesUrl(userId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
 
@@ -67,7 +68,7 @@ export class StartTaskCloudService {
                     headerParams, formParams, bodyParam, authNames,
                     contentTypes, accepts, Object, null, null)
                 ).pipe(
-                    map((response: UserCloudModel[]) => {
+                    map((response: RoleCloudModel[]) => {
                         return response;
                     }),
                 catchError(err => this.handleError(err))
@@ -78,17 +79,12 @@ export class StartTaskCloudService {
         return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/tasks`;
     }
 
-    private getUserUrl(): any {
+    private buildUserUrl(): any {
         return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/users`;
     }
 
-    // private exmple(): any {
-    //     6f8858b8-f5c7-4782-92bd-a595c3c8c829
-    //     return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/users`;
-    // }
-
-    private getUserByRoleUrl(role: string): any {
-        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/roles/user/users`;
+    private buildRolesUrl(userId: string): any {
+        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/users/${userId}/role-mappings/realm`;
     }
 
     private buildRequestBody(taskDetails: any) {

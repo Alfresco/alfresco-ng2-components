@@ -27,6 +27,7 @@ import {
     LogService,
     UserPreferencesService
 } from '@alfresco/adf-core';
+import { UserCloudModel } from '../models/user-cloud.model';
 
 @Component({
   selector: 'adf-cloud-start-task',
@@ -70,6 +71,8 @@ export class StartTaskCloudComponent implements OnInit {
 
     dueDate: Date;
 
+    assigneeName: string;
+
     dateError: boolean;
 
     taskForm: FormGroup;
@@ -111,6 +114,7 @@ export class StartTaskCloudComponent implements OnInit {
         let newTask = new TaskDetailsCloudModel(this.taskForm.value);
         newTask.appName = this.getAppName();
         newTask.dueDate = this.getDueDate();
+        newTask.assignee = this.getAssigneeName();
         this.createNewTask(newTask);
     }
 
@@ -142,6 +146,10 @@ export class StartTaskCloudComponent implements OnInit {
         return this.appName ? this.appName : '';
     }
 
+    private getAssigneeName(): string {
+        return this.assigneeName ? this.assigneeName : '';
+    }
+
     onDateChanged(newDateValue): void {
         this.dateError = false;
 
@@ -151,6 +159,10 @@ export class StartTaskCloudComponent implements OnInit {
                 this.dateError = true;
             }
         }
+    }
+
+    onAssigneeSelect(assignee: UserCloudModel) {
+        this.assigneeName = assignee ? assignee.username : '';
     }
 
     get nameController(): AbstractControl {
