@@ -22,7 +22,7 @@ import { UserProcessModel } from '@alfresco/adf-core';
 import { TaskRepresentation } from 'alfresco-js-api';
 import { UserGroupModel } from './user-group.model';
 
-export class TaskDetailsModel extends TaskRepresentation {
+export class TaskDetailsModel implements TaskRepresentation {
     id: string;
     name: string;
     assignee: UserProcessModel;
@@ -36,7 +36,7 @@ export class TaskDetailsModel extends TaskRepresentation {
     duration: number;
     endDate: Date;
     executionId: string;
-    formKey: number;
+    formKey: string;
     initiatorCanCompleteTask: boolean;
     managerOfCandidateGroup: boolean;
     memberOfCandidateGroup: boolean;
@@ -58,7 +58,6 @@ export class TaskDetailsModel extends TaskRepresentation {
     taskDefinitionKey: string;
 
     constructor(obj?: any) {
-        super();
         if (obj) {
             this.id = obj.id || null;
             this.name = obj.name || null;

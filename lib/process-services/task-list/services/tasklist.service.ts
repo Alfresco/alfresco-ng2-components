@@ -206,7 +206,7 @@ export class TaskListService {
      * @param formId ID of the form to add
      * @returns Null response notifying when the operation is complete
      */
-    attachFormToATask(taskId: string, formId: number): Observable<any> {
+    attachFormToATask(taskId: string, formId: string): Observable<any> {
         return from(this.apiService.taskApi.attachForm(taskId, { 'formId': formId }))
             .pipe(
                 catchError(err => this.handleError(err))
