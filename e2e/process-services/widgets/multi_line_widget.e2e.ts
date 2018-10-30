@@ -86,13 +86,14 @@ describe('Multi-line Widget', () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
-    it('[C268184] Should be able to set advanced properties for Multi-line Text Widget', async () => {
+    fit('[C268184] Should be able to set advanced properties for Multi-line Text Widget', async () => {
         widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'A');
         expect(widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toBe('Enter at least 4 characters');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAAAAAAAAA');
         expect(widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toBe('Enter no more than 10 characters');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAA');
 
         widget.multilineTextWidget().setValue(app.FIELD.multiSimple, 'TEST');
         widget.multilineTextWidget().setValue(app.FIELD.multiRegexp, '3');
