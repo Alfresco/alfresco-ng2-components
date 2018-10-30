@@ -36,7 +36,7 @@ export class TaskDetailsModel implements TaskRepresentation {
     duration: number;
     endDate: Date;
     executionId: string;
-    formKey: number;
+    formKey: string;
     initiatorCanCompleteTask: boolean;
     managerOfCandidateGroup: boolean;
     memberOfCandidateGroup: boolean;
