@@ -261,7 +261,7 @@ exports.Files = {
                 dynamic_table_age_id: "label2",
                 dynamic_table_date_id: "label",
                 checkbox_id: "viewtable",
-                dataTime_input_id: "datetime",
+                dateTime_input_id: "datetime",
                 row: "label-row-0"
 
             }
@@ -275,7 +275,7 @@ exports.Files = {
                 dynamic_table_age_id: "label2",
                 dynamic_table_date_id: "label",
                 checkbox_id: "viewtable",
-                dataTime_input_id: "datetime",
+                dateTime_input_id: "datetime",
                 row: "label-row-0"
 
             }

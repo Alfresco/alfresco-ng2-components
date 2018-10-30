@@ -76,7 +76,7 @@ describe('Date and time widget', () => {
         done();
     });
 
-    it('C268818] Date and time widget - General properties', () => {
+    it('[C268818] Should be able to set general settings for Date Time widget', () => {
         expect(widget.dateTimeWidget().getDateTimeLabel(app.FIELD.date_time_input)).toContain('Date');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
@@ -89,7 +89,7 @@ describe('Date and time widget', () => {
         expect(widget.dateTimeWidget().getPlaceholder(app.FIELD.date_time_between_input)).toBe('Choose anything...');
     });
 
-    it('[C268819] Date and time widget - Advanced properties', () => {
+    it('[C268819] Should be able to set advanced settings for Date Time widget ', () => {
         widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_between_input);
         widget.dateTimeWidget().closeDataTimeWidget();
         widget.dateTimeWidget().setDateTimeInput(app.FIELD.date_time_between_input, '20-03-17 07:30 PM');
