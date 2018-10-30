@@ -76,7 +76,7 @@ describe('People widget', () => {
         done();
     });
 
-    it('[C212870] should check People widget', () => {
+    it('[C260435] Should select user from People Widget', () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.widget_id);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.widget_id);
@@ -88,7 +88,7 @@ describe('People widget', () => {
         widget.peopleWidget().selectUserFromDropDown(admin);
     });
 
-    it('[C274707] Add people widget - Visibility', () => {
+    it('[C274707] Should be possible to set visibility properties for People Widget', () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.widget_id);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.widget_id);

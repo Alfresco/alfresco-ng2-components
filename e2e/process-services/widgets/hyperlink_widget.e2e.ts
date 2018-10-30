@@ -76,7 +76,7 @@ describe('Hyperlink widget', () => {
         done();
     });
 
-    it('[C276728] Hyperlink widget - Visibility', () => {
+    it('[C276728] Should be able to set visibility properties for Hyperlink widget', () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.hyperlink_id);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.hyperlink_id);

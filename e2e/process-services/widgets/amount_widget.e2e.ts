@@ -78,7 +78,7 @@ describe('Amount Widget', () => {
         done();
     });
 
-    it('[C274703] General, advanced, Amount and Visibility properties', () => {
+    it('[C274703] Should be possible to set general, advance and visibility properties for Amount Widget', () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.amount_input_id);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.amount_input_id);

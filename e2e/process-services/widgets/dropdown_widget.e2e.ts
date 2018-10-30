@@ -76,7 +76,7 @@ describe('Dropdown widget', () => {
         done();
     });
 
-    it('[C269051] General and Options properties', () => {
+    it('[C269051] Should be possible to set general and options properties for Dropdown widget ', () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
         widget.dropdown().selectOption('Happy');
@@ -92,7 +92,7 @@ describe('Dropdown widget', () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
-    it('[C269052] Dropdown menu - Visibility', () => {
+    it('[C269052] Should be possible to set visibility properties for Dropdown widget', () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.dropdown_visible);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.dropdown_visible);

@@ -76,7 +76,7 @@ describe('Header widget', () => {
         done();
     });
 
-    it('[C276737] Header widget - general and visibility properties', () => {
+    it('[C276737] Should be able to set general and visibility properties for Header widget', () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.header_id);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.header_id);

@@ -77,7 +77,7 @@ describe('Number widget', () => {
         done();
     });
 
-    it('[C269111] Number Widget - General Properties', () => {
+    it('[C269111] Should be able to set general properties for Number Widget', () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         expect(widget.numberWidget().getNumberFieldLabel(app.FIELD.number_general)).toContain('Number General');
         expect(widget.numberWidget().getPlaceholder(app.FIELD.number_general)).toContain('Type a number');
@@ -86,7 +86,7 @@ describe('Number widget', () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
-    it('[C274702] Number Widget - Advanced and visibility properties', () => {
+    it('[C274702] Should be able to set advanced and visibility properties for Number Widget', () => {
         widget.numberWidget().setFieldValue(app.FIELD.number_general, 2);
 
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.number_visible);

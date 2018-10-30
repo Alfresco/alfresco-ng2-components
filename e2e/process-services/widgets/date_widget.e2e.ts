@@ -76,7 +76,7 @@ describe('Date widget', () => {
         done();
     });
 
-    it('[C268814] Date Widget - General Properties', () => {
+    it('[C268814] Should be able to set general settings for Date widget', () => {
         expect(widget.dateWidget().getDateLabel(app.FIELD.date_input)).toContain('Date');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         widget.dateWidget().setDateInput(app.FIELD.date_input, '20-10-2018');
@@ -84,7 +84,7 @@ describe('Date widget', () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
-    it('[C277234] Date widget - Advanced properties', () => {
+    it('[C277234] Should be able to set advanced settings for Date widget ', () => {
         widget.dateWidget().setDateInput(app.FIELD.date_between_input, '20-10-2017');
         widget.dateWidget().clickOutsideWidget(app.FIELD.date_between_input);
         expect(widget.dateWidget().getErrorMessage(app.FIELD.date_between_input)).toBe('Can\'t be less than 1-10-2018');
