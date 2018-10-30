@@ -26,10 +26,12 @@ import {
 } from '@alfresco/adf-core';
 import { StartTaskCloudService } from '../services/start-task-cloud.service';
 import { StartTaskCloudComponent } from './start-task-cloud.component';
-import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
 import { of, throwError } from 'rxjs';
 import { taskDetailsMock, mockUsers } from '../mock/task-details.mock';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ProcessServiceCloudTestingModule } from './../../testing/process-service-cloud.testing.module';
+import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
+import { mockRoles } from '../mock/user-cloud.mock';
 
 describe('StartTaskCloudComponent', () => {
 
@@ -38,10 +40,11 @@ describe('StartTaskCloudComponent', () => {
     let service: StartTaskCloudService;
     let element: HTMLElement;
     let createNewTaskSpy: jasmine.Spy;
+    let getRolesByUserIdSpy: jasmine.Spy;
     let getUserSpy: jasmine.Spy;
 
     setupTestBed({
-        imports: [StartTaskCloudTestingModule],
+        imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
         providers: [StartTaskCloudService, AlfrescoApiService, AppConfigService, LogService, StorageService, UserPreferencesService],
         schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     });
@@ -53,6 +56,7 @@ describe('StartTaskCloudComponent', () => {
 
         service = TestBed.get(StartTaskCloudService);
         createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(taskDetailsMock));
+        getRolesByUserIdSpy = spyOn(service, 'getRolesByUserId').and.returnValue(of(mockRoles));
         getUserSpy = spyOn(service, 'getUsers').and.returnValue(of(mockUsers));
         fixture.detectChanges();
     }));
@@ -61,10 +65,12 @@ describe('StartTaskCloudComponent', () => {
         expect(component instanceof StartTaskCloudComponent).toBe(true, 'should create StartTaskCloudComponent');
     });
 
-    it('should fetch users on ngonint', () => {
+    it('should defined adf-cloud-people and fetch users ', () => {
         component.ngOnInit();
         fixture.detectChanges();
-        expect(component.users$).toBeDefined();
+        const peopleElement = fixture.debugElement.nativeElement.querySelector('adf-cloud-people');
+        expect(peopleElement).toBeDefined();
+        expect(getRolesByUserIdSpy).toHaveBeenCalled();
         expect(getUserSpy).toHaveBeenCalled();
     });
 
@@ -96,7 +102,7 @@ describe('StartTaskCloudComponent', () => {
         it('should send on success event when the task is started', async(() => {
             let successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('fakeName');
-            component.taskForm.controls['assignee'].setValue('fake-assignee');
+            component.assigneeName = 'fake-assignee';
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
@@ -135,7 +141,7 @@ describe('StartTaskCloudComponent', () => {
         it('should assign task when an assignee is selected', async(() => {
             let successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('fakeName');
-            component.taskForm.controls['assignee'].setValue('mock-assignee');
+            component.assigneeName = 'fake-assignee';
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();

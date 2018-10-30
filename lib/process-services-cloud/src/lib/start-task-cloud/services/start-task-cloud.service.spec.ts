@@ -1,3 +1,20 @@
+/*!
+ * @license
+ * Copyright 2016 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { TestBed } from '@angular/core/testing';
 
 import { setupTestBed } from '@alfresco/adf-core';
@@ -14,6 +31,8 @@ import {
     StorageService
 } from '@alfresco/adf-core';
 import { UserCloudModel } from '../models/user-cloud.model';
+import { RoleCloudModel } from '../models/role-cloud.model';
+import { mockRoles } from './../mock/user-cloud.mock';
 
 describe('StartTaskCloudService', () => {
 
@@ -92,4 +111,34 @@ describe('StartTaskCloudService', () => {
             );
     });
 
+    it('should able to fetch roles by userId', (done) => {
+        spyOn(service, 'getRolesByUserId').and.returnValue(of(mockRoles));
+        service.getRolesByUserId('mock-user-id').subscribe(
+            (res: RoleCloudModel[]) => {
+                expect(res).toBeDefined();
+                expect(res[0].name).toEqual('MOCK-ADMIN-ROLE');
+                expect(res[1].name).toEqual('MOCK-USER-ROLE');
+                expect(res[4].name).toEqual('MOCK-ROLE-2');
+                done();
+            }
+        );
+    });
+
+    it('Should not fetch roles if error occurred', () => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'getRolesByUserId').and.returnValue(throwError(errorResponse));
+        service.getRolesByUserId('mock-user-id')
+            .subscribe(
+                users => fail('expected an error, not users'),
+                error => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                }
+            );
+    });
 });
