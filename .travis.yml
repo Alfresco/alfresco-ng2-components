@@ -5,6 +5,11 @@ node_js:
  # Use the explicit NodeJS LTS version 8.9.4 to avoid any automatic upgrade of the version.
   - '8.9.4'
 
+branches:
+  only:
+  - dev-mvitale-ADF-nx-2
+  - development
+
 addons:
     chrome: stable
 before_script:
