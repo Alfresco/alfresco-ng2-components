@@ -12,8 +12,8 @@
       "clientId": "activiti",
       "scope": "openid",
       "secret": "",
-      "implicitFlow": true,
-      "silentLogin": true,
+      "implicitFlow": false,
+      "silentLogin": false,
       "redirectUri": "/",
       "redirectUriLogout": "/logout"
     },

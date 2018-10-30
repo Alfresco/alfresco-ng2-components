@@ -43,6 +43,7 @@ import { AppComponent } from './app.component';
 import { CloudComponent } from './components/cloud/cloud.component';
 import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
 import { ProcessListCloudExampleComponent } from './components/cloud/process-list-cloud-example.component';
+import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -277,6 +278,11 @@ export const appRoutes: Routes = [
             {
                 path: 'permissions/:id',
                 component: DemoPermissionComponent,
+                canActivate: [AuthGuardEcm]
+            },
+            {
+                path: 'treeview',
+                component: TreeViewSampleComponent,
                 canActivate: [AuthGuardEcm]
             },
             {
