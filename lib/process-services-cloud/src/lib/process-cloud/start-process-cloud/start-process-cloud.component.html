@@ -1,0 +1,67 @@
+<mat-card class="adf-start-process">
+    <mat-card-title>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.TITLE' | translate}}
+    </mat-card-title>
+    <mat-card-content *ngIf="isProcessDefinitionEmpty()">
+        <mat-card-subtitle id="error-message" *ngIf="errorMessageId">
+            {{errorMessageId|translate}}
+        </mat-card-subtitle>
+        <mat-form-field class="adf-process-input-container">
+            <input
+                matInput
+                placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.NAME' | translate}}"
+                [formControl]="processNameInput"
+                id="processName"
+                required/>
+        </mat-form-field>
+        <mat-form-field class="adf-process-input-container">
+            <input
+                type="text"
+                placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE'|translate}}"
+                matInput
+                [formControl]="processDefinitionInput"
+                [matAutocomplete]="auto"
+                id="processDefinitionName"
+                #inputAutocomplete>
+            <div class="adf-process-input-autocomplete">
+                <mat-autocomplete
+                    #auto="matAutocomplete"
+                    id="processDefinitionOptions"
+                    [displayWith]="displayFn">
+                    <mat-option *ngFor="let processDef of filteredProcesses | async" [value]="processDef.name">
+                        {{ processDef.name }}
+                    </mat-option>
+                </mat-autocomplete>
+                <button
+                    id="adf-select-process-dropdown"
+                    *ngIf="showSelectProcessDropdown"
+                    mat-icon-button
+                    (click)="displayDropdown($event)">
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </button>
+            </div>
+        </mat-form-field>
+    </mat-card-content>
+    <mat-card-content *ngIf="hasErrorMessage()">
+        <mat-card-subtitle class="error-message" id="no-process-message">
+            {{'ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS' | translate | uppercase}}
+        </mat-card-subtitle>
+    </mat-card-content>
+    <mat-card-actions>
+        <button
+            mat-button
+            (click)="cancelStartProcess()"
+            id="cancel_process">
+            {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate | uppercase}}
+        </button>
+        <button
+            color="primary"
+            mat-button
+            [disabled]="!validateForm()"
+            (click)="startProcess()"
+            data-automation-id="btn-start"
+            id="button-start"
+            class="btn-start">
+            {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.START' | translate | uppercase}}
+        </button>
+    </mat-card-actions>
+</mat-card>
