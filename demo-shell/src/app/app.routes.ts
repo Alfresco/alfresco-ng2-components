@@ -44,6 +44,7 @@ import { CloudComponent } from './components/cloud/cloud.component';
 import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
 import { ProcessListCloudExampleComponent } from './components/cloud/process-list-cloud-example.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
+import { StartTaskCloudDemoComponent } from './components/start-task-cloud-demo/start-task-cloud-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -146,6 +147,10 @@ export const appRoutes: Routes = [
                     {
                         path: ':applicationName/tasks',
                         component: TaskListCloudDemoComponent
+                    },
+                    {
+                        path: ':applicationName/starttask',
+                        component: StartTaskCloudDemoComponent
                     }
                 ]
             },
