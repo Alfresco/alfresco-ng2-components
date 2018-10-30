@@ -55,17 +55,8 @@
                 </mat-form-field>
 
                 <div fxFlex>
-                    <adf-cloud-people></adf-cloud-people>
+                    <adf-cloud-people (selectedUser)="onAssigneeSelect($event)"></adf-cloud-people>
                 </div>
-                <!-- <mat-form-field fxFlex>
-                    <mat-label id="assignee-id">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE'|translate}}</mat-label>
-                    <mat-select
-                        class="form-control"
-                        formControlName="assignee" >
-                        <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
-                        <mat-option *ngFor="let user of users$ | async" [value]="user.username">{{ user.username }}</mat-option>
-                    </mat-select>
-                </mat-form-field> -->
             </div>
         </form>
 

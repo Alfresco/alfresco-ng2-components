@@ -29,6 +29,7 @@ import { StartTaskCloudComponent } from './start-task-cloud.component';
 import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
 import { of, throwError } from 'rxjs';
 import { taskDetailsMock, mockUsers } from '../mock/task-details.mock';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('StartTaskCloudComponent', () => {
 
@@ -41,7 +42,8 @@ describe('StartTaskCloudComponent', () => {
 
     setupTestBed({
         imports: [StartTaskCloudTestingModule],
-        providers: [StartTaskCloudService, AlfrescoApiService, AppConfigService, LogService, StorageService, UserPreferencesService]
+        providers: [StartTaskCloudService, AlfrescoApiService, AppConfigService, LogService, StorageService, UserPreferencesService],
+        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     });
 
     beforeEach(async(() => {
