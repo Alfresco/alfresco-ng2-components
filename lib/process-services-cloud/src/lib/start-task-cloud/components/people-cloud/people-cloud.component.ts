@@ -1,3 +1,20 @@
+/*!
+ * @license
+ * Copyright 2016 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { FormControl } from '@angular/forms';
 import { StartTaskCloudService } from './../../services/start-task-cloud.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
@@ -19,17 +36,17 @@ export class PeopleCloudComponent implements OnInit {
     static ACTIVITI_USER = 'ACTIVITI_USER';
     static ACTIVITI_MODELER = 'ACTIVITI_MODELER';
 
-    users$: Observable<any[]>;
-
-    searchUser: FormControl = new FormControl();
-
-    users: any[] = [];
-
     @Output()
     selectedUser: EventEmitter<UserCloudModel> = new EventEmitter<UserCloudModel>();
 
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
+
+    users$: Observable<any[]>;
+
+    searchUser: FormControl = new FormControl();
+
+    users: any[] = [];
 
     constructor(private taskService: StartTaskCloudService,
                 private logService: LogService) { }
