@@ -86,7 +86,7 @@ describe('Multi-line Widget', () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
-    fit('[C268184] Should be able to set advanced properties for Multi-line Text Widget', async () => {
+    it('[C268184] Should be able to set advanced properties for Multi-line Text Widget', async () => {
         widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'A');
         expect(widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toBe('Enter at least 4 characters');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
