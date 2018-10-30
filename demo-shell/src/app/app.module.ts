@@ -66,6 +66,7 @@ import { AuthBearerInterceptor } from './services';
 import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
 import { CloudComponent } from './components/cloud/cloud.component';
 import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
+import { StartTaskCloudDemoComponent } from './components/start-task-cloud-demo/start-task-cloud-demo.component';
 
 @NgModule({
     imports: [
@@ -115,7 +116,8 @@ import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/ta
         DemoPermissionComponent,
         FormLoadingComponent,
         ReportIssueComponent,
-        TaskListCloudDemoComponent
+        TaskListCloudDemoComponent,
+        StartTaskCloudDemoComponent
     ],
     providers: [
         {

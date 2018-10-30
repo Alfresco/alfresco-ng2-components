@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 @Component({
     selector: 'app-cloud',
@@ -25,10 +25,6 @@ import { Router } from '@angular/router';
 export class CloudComponent {
 
     constructor(private router: Router) {
-    }
-
-    onAppClicked(app: any) {
-        this.router.navigate(['/cloud/', app.name, 'tasks']);
     }
 
     onAppClick(app) {
