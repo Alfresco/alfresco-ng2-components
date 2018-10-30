@@ -75,7 +75,7 @@ describe('Attach Folder widget', () => {
         done();
     });
 
-    it('[C276745] Attach folder widget - Visibility', () => {
+    it('[C276745] Should be possible to set visibility properties for Attach Folder Widget', () => {
         taskPage.formFields().checkWidgetIsHidden(app.FIELD.upload_button_id);
         widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         taskPage.formFields().checkWidgetIsVisible(app.FIELD.upload_button_id);

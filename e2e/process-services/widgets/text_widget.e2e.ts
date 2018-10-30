@@ -76,7 +76,7 @@ describe('Text widget', () => {
         done();
     });
 
-    it('[C268157] General Properties', async () => {
+    it('[C268157] Should be able to set general properties for Text widget', async () => {
         let label = widget.textWidget().getFieldLabel(app.FIELD.simpleText);
         expect(label).toBe('textSimple*');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
@@ -105,7 +105,7 @@ describe('Text widget', () => {
         expect(widget.textWidget().getFieldValue(app.FIELD.textMaskReversed)).toBe('3456-7899');
     });
 
-    it('[C268177] Regex Pattern property', async () => {
+    it('[C268177] Should be able to set Regex Pattern property for Text widget', async () => {
         widget.textWidget().setValue(app.FIELD.simpleText, 'TEST');
         widget.textWidget().setValue(app.FIELD.textRegexp, 'T');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
@@ -114,7 +114,7 @@ describe('Text widget', () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
-    it('[C274712] Visibility condition', async () => {
+    it('[C274712] Should be able to set visibility properties for Text widget ', async () => {
         widget.textWidget().isWidgetNotVisible(app.FIELD.textHidden);
         widget.textWidget().setValue(app.FIELD.showHiddenText, '1');
         widget.textWidget().isWidgetVisible(app.FIELD.textHidden);

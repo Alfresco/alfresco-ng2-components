@@ -76,7 +76,7 @@ describe('Multi-line Widget', () => {
         done();
     });
 
-    it('[C268182] Multi-line Text Widget - General Properties', async () => {
+    it('[C268182] Should be able to set general properties for Multi-line Text Widget', () => {
         let label = widget.multilineTextWidget().getFieldLabel(app.FIELD.multiSimple);
         expect(label).toBe('multiSimple*');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
@@ -86,16 +86,15 @@ describe('Multi-line Widget', () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
-    it('[C268184] Multi-line Text Widget - Advanced Properties - Min and Max', async () => {
+    it('[C268184] Should be able to set advanced properties for Multi-line Text Widget', async () => {
         widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'A');
         expect(widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toBe('Enter at least 4 characters');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAAAAAAAAA');
         expect(widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toBe('Enter no more than 10 characters');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
-    });
+        widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAA');
 
-    it('[C268184] Multi-line Text Widget - Advanced Properties - Regex Pattern property', async () => {
         widget.multilineTextWidget().setValue(app.FIELD.multiSimple, 'TEST');
         widget.multilineTextWidget().setValue(app.FIELD.multiRegexp, '3');
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
@@ -104,7 +103,7 @@ describe('Multi-line Widget', () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
-    it('[C268232] Multi-line Text Widget - Visibility properties', async () => {
+    it('[C268232] Should be able to set visibility properties for Multi-line Text Widget', async () => {
         widget.textWidget().isWidgetNotVisible(app.FIELD.multiVisible);
         widget.textWidget().setValue(app.FIELD.showMultiHidden, '1');
         widget.textWidget().isWidgetVisible(app.FIELD.multiVisible);

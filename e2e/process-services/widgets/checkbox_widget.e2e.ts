@@ -76,7 +76,7 @@ describe('Checkbox Widget', () => {
         done();
     });
 
-    it('[C268554] Checkbox widget - General settings', () => {
+    it('[C268554] Should be able to set general settings for Checkbox widget ', () => {
         taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
         expect(widget.checkboxWidget().getCheckboxLabel()).toContain(app.FIELD.checkbox_label);
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
@@ -84,7 +84,7 @@ describe('Checkbox Widget', () => {
         expect(taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
-    it('[C272812] Checkbox widget - Visibility settings', () => {
+    it('[C272812] Should be able to set visibility settings for Checkbox widget', () => {
         widget.checkboxWidget().isCheckboxHidden(app.FIELD.checkbox_field_id);
         taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
         widget.checkboxWidget().isCheckboxDisplayed(app.FIELD.checkbox_field_id);
