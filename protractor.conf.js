@@ -143,6 +143,22 @@ exports.config = {
 
     },
 
+    beforeLaunch: function () {
+        var reportsFolder = `${projectRoot}/e2e-output/junit-report/`;
+
+        fs.exists(reportsFolder, function(exists, error) {
+            if (exists) {
+                rimraf(reportsFolder, function(err) {
+                    console.log('[ERROR] rimraf: ', err);
+                });
+            }
+
+            if(error) {
+                console.log('[ERROR] fs', error);
+            }
+        });
+    },
+
     afterLaunch: async function () {
 
         let saveScreenshot = process.env.SAVE_SCREENSHOT;
@@ -169,7 +185,7 @@ exports.config = {
                 for (const fileName of files) {
                     testConfigReport = {
                         reportTitle: 'Protractor Test Execution Report',
-                        outputPath: `${projectRoot}/e2e-output/junit-report/html`,
+                        outputPath: `${projectRoot}/e2e-output/junit-report/html/temporaryHtml`,
                         outputFilename: Math.random().toString(36).substr(2, 5) + filenameReport,
                         screenshotPath: `${projectRoot}/e2e-output/screenshots/`,
                         screenshotsOnlyOnFailure: true,
@@ -200,9 +216,9 @@ exports.config = {
                 lastFileName = testConfigReport.outputFilename;
             });*/
 
-            var htmlpath = savePath + 'html/';
+            var temporaryHtmlPath = savePath + 'html/temporaryHtml/';
 
-            var lastHtmlFile = htmlpath + lastFileName + '.html';
+            var lastHtmlFile = temporaryHtmlPath + lastFileName + '.html';
 
             console.log("Last html file: ", lastHtmlFile);
 
@@ -210,7 +226,7 @@ exports.config = {
                 output = output + fs.readFileSync(lastHtmlFile);
             };
 
-            var fileName = savePath + '/' + filenameReport + '.html';
+            var fileName = savePath + 'html/' + filenameReport + '.html';
 
             fs.writeFileSync(fileName, output, 'utf8');
 
@@ -268,7 +284,7 @@ exports.config = {
                 }
             }
 
-            let pathFile = path.join(__dirname, './e2e-output/junit-report', filenameReport + '.html');
+            let pathFile = path.join(__dirname, './e2e-output/junit-report/html', filenameReport + '.html');
             let reportFile = fs.createReadStream(pathFile);
 
             let reportFolder;
