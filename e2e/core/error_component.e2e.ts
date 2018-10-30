@@ -46,7 +46,7 @@ describe('Error Component', () => {
 
     it('[C277302] Should display the error 403 when access to unauthorized page', () => {
         browser.get(TestConfig.adf.url + '/error/403');
-        expect(errorPage.getErrorCode()).toBe('404');
+        expect(errorPage.getErrorCode()).toBe('403');
         expect(errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
         expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
     });
