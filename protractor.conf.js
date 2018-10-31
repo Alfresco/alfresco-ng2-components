@@ -92,12 +92,10 @@ exports.config = {
 
     plugins: [{
         package: 'jasmine2-protractor-utils',
-        disableHTMLReport: false,
         disableScreenshot: false,
         screenshotOnExpectFailure: true,
         screenshotOnSpecFailure: false,
         clearFoldersBeforeTest: true,
-        htmlReportDir: `${projectRoot}/e2e-output/html-report/`,
         screenshotPath: `${projectRoot}/e2e-output/screenshots/`
     }],
 
@@ -115,33 +113,13 @@ exports.config = {
         browser.manage().window().setSize(width, height);
 
         jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
-
-        browser.getCapabilities().then(function (cap) {
-            browser.browserName = cap.get('browserName');
-            browser.version = cap.get('version');
-         }).then(function (cap) {
-            var prePendStr = browser.browserName + "-" + browser.version + "-";
-            var generatedSuiteName = Math.random().toString(36).substr(2, 5);
-            var junitReporter = new jasmineReporters.JUnitXmlReporter(
-                {
-                    consolidateAll: true,
-                    savePath: `${projectRoot}/e2e-output/junit-report`,
-                    // this will produce distinct xml files for each capability
-                    filePrefix: 'results.xml-' + generatedSuiteName,
-                });
-            jasmine.getEnv().addReporter(junitReporter);
-        });
-
-
-
-        /*jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter({
+        var generatedSuiteName = Math.random().toString(36).substr(2, 5);
+        var junitReporter = new jasmineReporters.JUnitXmlReporter({
             consolidateAll: true,
             savePath: `${projectRoot}/e2e-output/junit-report`,
-            filePrefix: 'results.xml',
-            useDotNotation: false,
-            useFullTestName: false,
-            reportFailedUrl: true
-        }));*/
+            filePrefix: 'results.xml-' + generatedSuiteName,
+        });
+        jasmine.getEnv().addReporter(junitReporter);
 
         return browser.driver.executeScript(disableCSSAnimation);
 
@@ -162,6 +140,22 @@ exports.config = {
 
     },
 
+    beforeLaunch: function () {
+        var reportsFolder = `${projectRoot}/e2e-output/junit-report/`;
+
+        fs.exists(reportsFolder, function(exists, error) {
+            if (exists) {
+                rimraf(reportsFolder, function(err) {
+                    console.log('[ERROR] rimraf: ', err);
+                });
+            }
+
+            if(error) {
+                console.log('[ERROR] fs', error);
+            }
+        });
+    },
+
     afterLaunch: async function () {
 
         let saveScreenshot = process.env.SAVE_SCREENSHOT;
@@ -176,31 +170,35 @@ exports.config = {
 
             console.log(filenameReport);
 
-            var output = '';
-            var savePath = `${projectRoot}/e2e-output/junit-report/`;
-            var lastFileName = '';
-            fs.readdirSync(savePath).forEach(function(file){
+            let output = '';
+            let savePath = `${projectRoot}/e2e-output/junit-report/`;
+            let temporaryHtmlPath = savePath + 'html/temporaryHtml/';
+            let lastFileName = '';
 
-                testConfigReport = {
-                    reportTitle: 'Protractor Test Execution Report',
-                    outputPath: `${projectRoot}/e2e-output/junit-report/html`,
-                    outputFilename: Math.random().toString(36).substr(2, 5) + filenameReport,
-                    screenshotPath: `${projectRoot}/e2e-output/screenshots/`,
-                    screenshotsOnlyOnFailure: true,
-                };
+            let files = fs.readdirSync(savePath);
 
-                new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/` + file, testConfigReport);
-                lastFileName = testConfigReport.outputFilename;
-            });
+            if (files && files.length > 0) {
+                for (const fileName of files) {
+                    testConfigReport = {
+                        reportTitle: 'Protractor Test Execution Report',
+                        outputPath: temporaryHtmlPath,
+                        outputFilename: Math.random().toString(36).substr(2, 5) + filenameReport,
+                    };
 
-            var htmlpath = savePath + 'html/';
+                    let filePath = `${projectRoot}/e2e-output/junit-report/` + fileName;
 
-            var lastHtmlFile = htmlpath + lastFileName + '.html';
+                    new htmlReporter().from(filePath, testConfigReport);
+                    lastFileName = testConfigReport.outputFilename;
+                }
+            };
 
-            if(!(fs.lstatSync(lastHtmlFile).isDirectory()))
+            var lastHtmlFile = temporaryHtmlPath + lastFileName + '.html';
+
+            if(!(fs.lstatSync(lastHtmlFile).isDirectory())) {
                 output = output + fs.readFileSync(lastHtmlFile);
+            };
 
-            var fileName = savePath + '/' + filenameReport + '.html';
+            var fileName = savePath + 'html/' + filenameReport + '.html';
 
             fs.writeFileSync(fileName, output, 'utf8');
 
@@ -218,23 +216,23 @@ exports.config = {
 
                     try {
                         folder = await
-                            alfrescoJsApi.nodes.addNode('-my-', {
-                                'name': `retry-${retryCount}`,
-                                'relativePath': `Builds/${buildNumber()}/screenshot`,
-                                'nodeType': 'cm:folder'
-                            }, {}, {
-                                'overwrite': true
-                            });
+                        alfrescoJsApi.nodes.addNode('-my-', {
+                            'name': `retry-${retryCount}`,
+                            'relativePath': `Builds/${buildNumber()}/screenshot`,
+                            'nodeType': 'cm:folder'
+                        }, {}, {
+                            'overwrite': true
+                        });
                     } catch (error) {
                         console.log('Folder screenshot already present');
 
                         folder = await
-                            alfrescoJsApi.nodes.getNode('-my-', {
-                                'relativePath': `Builds/${buildNumber()}/screenshot/retry-${retryCount}`,
-                                'nodeType': 'cm:folder'
-                            }, {}, {
-                                'overwrite': true
-                            });
+                        alfrescoJsApi.nodes.getNode('-my-', {
+                            'relativePath': `Builds/${buildNumber()}/screenshot/retry-${retryCount}`,
+                            'nodeType': 'cm:folder'
+                        }, {}, {
+                            'overwrite': true
+                        });
                     }
 
                     for (const fileName of files) {
@@ -243,71 +241,59 @@ exports.config = {
                         let file = fs.createReadStream(pathFile);
 
                         await
-                            alfrescoJsApi.upload.uploadFile(
-                                file,
-                                '',
-                                folder.entry.id,
-                                null,
-                                {
-                                    'name': file.name,
-                                    'nodeType': 'cm:content',
-                                    'autoRename': true
-                                }
-                            );
+                        alfrescoJsApi.upload.uploadFile(
+                            file,
+                            '',
+                            folder.entry.id,
+                            null,
+                            {
+                                'name': file.name,
+                                'nodeType': 'cm:content',
+                                'autoRename': true
+                            }
+                        );
                     }
                 }
             }
 
-            /*testConfigReport = {
-                reportTitle: 'Protractor Test Execution Report',
-                outputPath: `${projectRoot}/e2e-output/junit-report`,
-                outputFilename: filenameReport,
-                screenshotPath: `${projectRoot}/e2e-output/screenshots/`,
-                screenshotsOnlyOnFailure: true,
-            };
-
-            new htmlReporter().from(`${projectRoot}/e2e-output/junit-report/results.xml`, testConfigReport);*/
-
-            let pathFile = path.join(__dirname, './e2e-output/junit-report', filenameReport + '.html');
+            let pathFile = path.join(__dirname, './e2e-output/junit-report/html', filenameReport + '.html');
             let reportFile = fs.createReadStream(pathFile);
 
             let reportFolder;
 
             try {
                 reportFolder = await
-                    alfrescoJsApi.nodes.addNode('-my-', {
-                        'name': 'report',
-                        'relativePath': `Builds/${buildNumber()}`,
-                        'nodeType': 'cm:folder'
-                    }, {}, {
-                        'overwrite': true
-                    });
+                alfrescoJsApi.nodes.addNode('-my-', {
+                    'name': 'report',
+                    'relativePath': `Builds/${buildNumber()}`,
+                    'nodeType': 'cm:folder'
+                }, {}, {
+                    'overwrite': true
+                });
             } catch (error) {
-                //  console.log('Folder report already present' + error);
-
                 reportFolder = await
-                    alfrescoJsApi.nodes.getNode('-my-', {
-                        'relativePath': `Builds/${buildNumber()}/report`,
-                        'nodeType': 'cm:folder'
-                    }, {}, {
-                        'overwrite': true
-                    });
+                alfrescoJsApi.nodes.getNode('-my-', {
+                    'relativePath': `Builds/${buildNumber()}/report`,
+                    'nodeType': 'cm:folder'
+                }, {}, {
+                    'overwrite': true
+                });
 
             }
 
             try {
                 await
-                    alfrescoJsApi.upload.uploadFile(
-                        reportFile,
-                        '',
-                        reportFolder.entry.id,
-                        null,
-                        {
-                            'name': reportFile.name,
-                            'nodeType': 'cm:content',
-                            'autoRename': true
-                        }
-                    );
+                alfrescoJsApi.upload.uploadFile(
+                    reportFile,
+                    '',
+                    reportFolder.entry.id,
+                    null,
+                    {
+                        'name': reportFile.name,
+                        'nodeType': 'cm:content',
+                        'autoRename': true
+                    }
+                );
 
             } catch (error) {
                 console.log('error' + error);
