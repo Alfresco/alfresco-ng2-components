@@ -8,7 +8,7 @@
            type="text"
            [formControl]="searchUser"
            [matAutocomplete]="auto">
-    <mat-autocomplete class="adf-people-cloud-list"
+    <mat-autocomplete autoActiveFirstOption class="adf-people-cloud-list"
                       #auto="matAutocomplete"
                       (optionSelected)="onSelect($event.option.value)"
                       [displayWith]="getDisplayName">

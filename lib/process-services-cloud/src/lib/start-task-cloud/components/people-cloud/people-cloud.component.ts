@@ -19,7 +19,7 @@ import { FormControl } from '@angular/forms';
 import { StartTaskCloudService } from './../../services/start-task-cloud.service';
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import * as _ from 'lodash';
+import { uniqBy } from 'lodash';
 import { RoleCloudModel } from '../../models/role-cloud.model';
 import { UserCloudModel } from '../../models/user-cloud.model';
 import { LogService } from '@alfresco/adf-core';
@@ -123,7 +123,7 @@ export class PeopleCloudComponent implements OnInit {
     }
 
     removeDuplicates(users: any[]): UserCloudModel[] {
-        return _.uniqBy(users, 'username');
+        return uniqBy(users, 'username');
     }
 
     onSelect(selectedUser: UserCloudModel) {
