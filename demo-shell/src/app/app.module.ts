@@ -66,7 +66,7 @@ import { AuthBearerInterceptor } from './services';
 import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
 import { CloudComponent } from './components/cloud/cloud.component';
 import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
-import { StartTaskCloudDemoComponent } from './components/start-task-cloud-demo/start-task-cloud-demo.component';
+import { StartTaskCloudDemoDialogComponent } from './components/start-task-cloud-demo/start-task-cloud-demo-dialog.component';
 
 @NgModule({
     imports: [
@@ -117,7 +117,7 @@ import { StartTaskCloudDemoComponent } from './components/start-task-cloud-demo/
         FormLoadingComponent,
         ReportIssueComponent,
         TaskListCloudDemoComponent,
-        StartTaskCloudDemoComponent
+        StartTaskCloudDemoDialogComponent
     ],
     providers: [
         {
@@ -145,7 +145,8 @@ import { StartTaskCloudDemoComponent } from './components/start-task-cloud-demo/
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,
-        MetadataDialogAdapterComponent
+        MetadataDialogAdapterComponent,
+        StartTaskCloudDemoDialogComponent
     ],
     bootstrap: [AppComponent]
 })
