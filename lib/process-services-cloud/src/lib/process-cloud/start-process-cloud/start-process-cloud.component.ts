@@ -17,12 +17,9 @@
 
 import {
     Component, EventEmitter, Input, OnChanges, OnInit,
-    Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy
+    Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
-import {
-    ActivitiContentService, AppConfigService, AppConfigValues,
-    StartFormComponent, FormValues
-} from '@alfresco/adf-core';
+import { StartFormComponent, FormValues } from '@alfresco/adf-core';
 import { ProcessInstanceVariableCloud } from '../models/process-instance-variable-cloud.model';
 import { ProcessDefinitionRepresentationCloud } from '../models/process-definition-cloud.model';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
@@ -39,7 +36,7 @@ import { MatAutocompleteTrigger } from '@angular/material';
     styleUrls: ['./start-process-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy {
+export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     /** (optional) Limit the list of processes that can be started to those
      * contained in the specified app.
@@ -101,9 +98,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     processDefinitionInput: FormControl;
     filteredProcesses: Observable<ProcessDefinitionRepresentationCloud[]>;
 
-    constructor(private processCloudService: ProcessCloudService,
-                private activitiContentService: ActivitiContentService,
-                private appConfig: AppConfigService) {
+    constructor(private processCloudService: ProcessCloudService) {
     }
 
     ngOnInit() {
@@ -120,21 +115,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['values'] && changes['values'].currentValue) {
-            this.moveNodeFromCStoPS();
-        }
-
         if (changes['appName'] && changes['appName'].currentValue) {
             this.appName = changes['appName'].currentValue;
         }
 
         this.loadStartProcess();
-    }
-
-    ngOnDestroy() {
-        // if (this.processCloudService.getProcessDefinitions(this.appName)) {
-        //     this.processCloudService.getProcessDefinitions(this.appName).unsubscribe();
-        // }
     }
 
     private _filter(value: string): ProcessDefinitionRepresentationCloud[] {
@@ -191,30 +176,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     isProcessDefinitionsEmpty(): boolean {
         return this.processDefinitions.length === 0;
-    }
-
-    getAlfrescoRepositoryName(): string {
-        let alfrescoRepositoryName = this.appConfig.get<string>(AppConfigValues.ALFRESCO_REPOSITORY_NAME);
-        if (!alfrescoRepositoryName) {
-            alfrescoRepositoryName = 'alfresco-1';
-        }
-        return alfrescoRepositoryName + 'Alfresco';
-    }
-
-    moveNodeFromCStoPS() {
-        let accountIdentifier = this.getAlfrescoRepositoryName();
-
-        for (let key in this.values) {
-            if (this.values.hasOwnProperty(key)) {
-                let currentValue = this.values[key];
-
-                if (currentValue.isFile) {
-                    this.activitiContentService.applyAlfrescoNode(currentValue, null, accountIdentifier).subscribe((res) => {
-                        this.values[key] = [res];
-                    });
-                }
-            }
-        }
     }
 
     public startProcess(outcome?: string) {
