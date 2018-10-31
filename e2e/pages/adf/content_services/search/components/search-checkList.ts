@@ -1,4 +1,3 @@
-
 /*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
@@ -36,4 +35,3 @@ export class SearchCheckListPage {
     }
 
 }
-

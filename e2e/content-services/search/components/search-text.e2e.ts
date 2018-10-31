@@ -93,7 +93,5 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
 
         navigationBarPage.clickConfigEditorButton();
-        let cuurentSearchConfig = configEditorPage.getConfiguration();
     });
 });
-

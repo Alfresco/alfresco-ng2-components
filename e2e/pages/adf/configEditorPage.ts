@@ -27,13 +27,6 @@ export class ConfigEditorPage {
         return this;
     }
 
-    getConfiguration() {
-        let textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
-        Util.waitUntilElementIsVisible(textField);
-        console.log("Text: ", textField.getAttribute('value'));
-        return textField.getAttribute('value');
-    }
-
     clickSaveButton() {
         let saveButton = element(by.id('adf-configuration-save'));
         Util.waitUntilElementIsVisible(saveButton);
