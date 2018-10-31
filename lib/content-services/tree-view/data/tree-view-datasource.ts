@@ -29,8 +29,7 @@ import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { TreeBaseNode } from '../models/tree-view.model';
-import { NodesApiService } from '@alfresco/adf-core';
-import { NodePaging, NodeEntry } from 'alfresco-js-api';
+import { TreeViewService } from '../services/tree-view.service';
 
 @Injectable()
 export class TreeViewDataSource {
@@ -44,7 +43,7 @@ export class TreeViewDataSource {
     }
 
     constructor(private treeControl: FlatTreeControl<TreeBaseNode>,
-        private nodeApi: NodesApiService) {
+                private treeViewService: TreeViewService) {
     }
 
     connect(collectionViewer: CollectionViewer): Observable<TreeBaseNode[]> {
@@ -68,16 +67,18 @@ export class TreeViewDataSource {
     }
 
     toggleNode(node: TreeBaseNode, expand: boolean) {
-        this.loadChildrenNode(node.nodeId).subscribe((children) => {
-
+        node.isLoading = true;
+        this.treeViewService.getTreeNodes(node.nodeId).subscribe((children) => {
             const index = this.data.indexOf(node);
-            if (!children || index < 0) { // If no children, or cannot find the node, no op
+            if (!children || index < 0) {
+                node.expandable = false;
                 return;
             }
-            node.isLoading = true;
             if (expand) {
-                const nodes = children.map(actualNode =>
-                    new TreeBaseNode(actualNode, node.level + 1));
+                const nodes = children.map(actualNode => {
+                    actualNode.level = node.level + 1;
+                    return actualNode;
+                });
                 this.data.splice(index + 1, 0, ...nodes);
             } else {
                 let count = 0;
@@ -86,16 +87,9 @@ export class TreeViewDataSource {
                 this.data.splice(index + 1, count);
             }
 
-            // notify the change
             this.dataChange.next(this.data);
             node.isLoading = false;
         });
-
     }
 
-    loadChildrenNode(nodeId: string): Observable<NodeEntry[]> {
-        return this.nodeApi.getNodeChildren(nodeId)
-            .pipe(map((node: NodePaging) => node.list.entries)
-            );
-    }
 }

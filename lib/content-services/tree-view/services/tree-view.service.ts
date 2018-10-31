@@ -15,15 +15,29 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { NodesApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TreeBaseNode } from '../models/tree-view.model';
+import { NodePaging, NodeEntry } from 'alfresco-js-api';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TreeViewService {
 
-    constructor(private apiService: AlfrescoApiService) {
+    constructor(private nodeApi: NodesApiService) {
+    }
+
+    getTreeNodes(nodeId): Observable<TreeBaseNode[]> {
+        return this.nodeApi.getNodeChildren(nodeId)
+            .pipe(
+                map((nodePage: NodePaging) => {
+                    return nodePage.list.entries.filter((node) => node.entry.isFolder ? node : null);
+                }),
+                map((nodes: NodeEntry[]) => nodes.map(node => new TreeBaseNode(node)))
+            );
     }
 
 }

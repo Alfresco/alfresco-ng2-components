@@ -16,12 +16,10 @@
  */
 
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { TreeViewDataSource } from '../data/tree-view-datasource';
-import { NodesApiService } from '@alfresco/adf-core';
-import { map } from 'rxjs/operators';
-import { NodeEntry, NodePaging } from 'alfresco-js-api';
+import { TreeViewService } from '../services/tree-view.service';
 
 @Component({
     selector: 'adf-tree-view-list',
@@ -29,38 +27,43 @@ import { NodeEntry, NodePaging } from 'alfresco-js-api';
     styleUrls: ['tree-view.component.scss']
 })
 /*tslint:disable*/
-export class TreeViewComponent implements OnInit {
+export class TreeViewComponent implements OnInit, OnChanges {
 
     @Input()
     nodeId: string;
 
-    constructor(private nodeApi: NodesApiService) {
+    treeControl: FlatTreeControl<TreeBaseNode>;
+    dataSource: TreeViewDataSource;
+
+    constructor(private treeViewService: TreeViewService) {
         this.treeControl = new FlatTreeControl<TreeBaseNode>(this.getLevel, this.isExpandable);
-        this.dataSource = new TreeViewDataSource(this.treeControl, this.nodeApi);
+        this.dataSource = new TreeViewDataSource(this.treeControl, this.treeViewService);
     }
 
     ngOnInit() {
-        this.loadChildrenNode();
+        if (this.nodeId) {
+            this.loadTreeNode();
+        }
     }
 
-    loadChildrenNode() {
-        this.nodeApi.getNodeChildren(this.nodeId)
-            .pipe(map((node: NodePaging) => node.list.entries),
-                  map((nodes: NodeEntry[]) => nodes.map(node => new TreeBaseNode(node)))
-            )
-            .subscribe(
-                (treeNode: TreeBaseNode[]) => {
-                    this.dataSource.data = treeNode;
-                });
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['nodeId'].currentValue &&
+            changes['nodeId'].currentValue != changes['nodeId'].previousValue) {
+            this.loadTreeNode();
+        }
     }
-
-    treeControl: FlatTreeControl<TreeBaseNode>;
-
-    dataSource: TreeViewDataSource;
 
     getLevel = (node: TreeBaseNode) => node.level;
 
     isExpandable = (node: TreeBaseNode) => node.expandable;
 
-    hasChild = (_: number, _nodeData: TreeBaseNode) => _nodeData.expandable;
+    hasChild = (level: number, nodeData: TreeBaseNode) => nodeData.expandable;
+
+    private loadTreeNode() {
+        this.treeViewService.getTreeNodes(this.nodeId)
+            .subscribe(
+                (treeNode: TreeBaseNode[]) => {
+                    this.dataSource.data = treeNode;
+                });
+    }
 }
