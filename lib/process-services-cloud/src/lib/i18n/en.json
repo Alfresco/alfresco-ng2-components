@@ -1,3 +1,8 @@
 {
-  "TEST_KEY": "MY TEST"
+  "TEST_KEY": "MY TEST",
+  "START-TASK-CLOUD": {
+    "ERROR": {
+      "MESSAGE": "Enter a different value"
+    }
+  }
 }
