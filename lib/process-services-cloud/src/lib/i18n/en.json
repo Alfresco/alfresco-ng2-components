@@ -14,5 +14,10 @@
     "ALL_PROCESSES": "All Processes",
     "RUNNING_PROCESSES": "Running Processes",
     "COMPLETED_PROCESSES": "Completed Processes"
+  },
+  "START-TASK-CLOUD": {
+    "ERROR": {
+      "MESSAGE": "Enter a different value"
+    }
   }
 }
