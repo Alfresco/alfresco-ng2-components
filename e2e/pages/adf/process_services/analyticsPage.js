@@ -34,12 +34,25 @@ var AnalyticsPage = function () {
     this.changeReportTitle = function (title) {
         Util.waitUntilElementIsVisible(reportContainer);
         Util.waitUntilElementIsVisible(toolbarTitleContainer);
+        Util.waitUntilElementIsClickable(toolbarTitleContainer);
         toolbarTitleContainer.click();
         Util.waitUntilElementIsVisible(toolbarTitleInput);
-        toolbarTitleInput.clear();
+        toolbarTitleInput.click();
+        this.clearReportTitle();
         toolbarTitleInput.sendKeys(title);
         toolbarTitleInput.sendKeys(protractor.Key.ENTER);
     };
+
+    this.clearReportTitle = function() {
+        Util.waitUntilElementIsVisible(toolbarTitleInput);
+        toolbarTitleInput.getAttribute('value').then( function (value) {
+            var i;
+            for (i = value.length; i >= 0; i--) {
+                toolbarTitleInput.sendKeys(protractor.Key.BACK_SPACE);
+            }
+        });
+        Util.waitUntilElementIsVisible(toolbarTitleInput);
+    }
 
     this.getReportTitle = function () {
         Util.waitUntilElementIsVisible(toolbarTitle);
