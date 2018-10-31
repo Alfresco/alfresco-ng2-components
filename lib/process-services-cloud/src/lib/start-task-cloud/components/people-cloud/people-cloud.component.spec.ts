@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, async, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PeopleCloudComponent } from './people-cloud.component';
 import { StartTaskCloudTestingModule } from '../../testing/start-task-cloud.testing.module';
@@ -48,16 +48,6 @@ describe('PeopleCloudComponent', () => {
         getUserSpy = spyOn(service, 'getUsers').and.returnValue(of(fakeUsers));
         fixture.detectChanges();
     });
-
-    function sendInput(text: string) {
-        let inputElement: HTMLInputElement;
-        inputElement = fixture.nativeElement.querySelector('input');
-        inputElement.focus();
-        inputElement.value = text;
-        inputElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-        return fixture.whenStable();
-    }
 
     it('should create PeopleCloudComponent', () => {
         expect(component instanceof PeopleCloudComponent).toBeTruthy();
@@ -92,77 +82,58 @@ describe('PeopleCloudComponent', () => {
         expect(component.getDisplayName(model)).toBe('John');
     });
 
-    it('should filter users based on input', fakeAsync(() => {
-        const hostElement = fixture.nativeElement;
-        sendInput('john').then(() => {
+    it('should show the users if the typed result match', async(() => {
+        component.users$ = of(fakeUsers);
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        inputHTMLElement.dispatchEvent(new Event('keyup'));
+        inputHTMLElement.dispatchEvent(new Event('keydown'));
+        inputHTMLElement.value = 'M';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(fixture.nativeElement.querySelectorAll('mat-option').length).toBe(1);
-            expect(hostElement.textContent).toContain('John Rambo');
+            expect(fixture.debugElement.query(By.css('mat-option'))).toBeDefined();
         });
     }));
 
-    // it('should show the users if the typed result match', async(() => {
-    //     fixture.detectChanges();
-    //     let userHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-    //     userHTMLElement.focus();
-    //     userHTMLElement.dispatchEvent(new Event('input'));
-    //     userHTMLElement.dispatchEvent(new Event('keyup'));
-    //     userHTMLElement.dispatchEvent(new Event('keydown'));
-    //     userHTMLElement.value = 'M';
-    //     fixture.detectChanges();
-    //     fixture.whenStable().then(() => {
-    //         fixture.detectChanges();
-    //         expect(fixture.debugElement.query(By.css('#adf-people-cloud-user-0'))).not.toBeNull();
-    //         expect(fixture.debugElement.query(By.css('#adf-people-cloud-user-1'))).not.toBeNull();
-    //     });
-    // }));
+    it('should hide result list if input is empty', () => {
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.value = '';
+        inputHTMLElement.dispatchEvent(new Event('keyup'));
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css('mat-option'))).toBeNull();
+            expect(fixture.debugElement.query(By.css('#adf-people-cloud-user-0'))).toBeNull();
+        });
+    });
 
-    // it('should hide result list if input is empty', () => {
-    //     fixture.detectChanges();
-    //     let userHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-    //     userHTMLElement.focus();
-    //     userHTMLElement.value = '';
-    //     userHTMLElement.dispatchEvent(new Event('keyup'));
-    //     userHTMLElement.dispatchEvent(new Event('input'));
-    //     fixture.detectChanges();
-    //     fixture.whenStable().then(() => {
-    //         fixture.detectChanges();
-    //         expect(fixture.debugElement.query(By.css('#adf-people-cloud-user-0'))).toBeNull();
-    //     });
-    // });
+    it('should emit selectedUser if option is valid', async() => {
+        fixture.detectChanges();
+        let selectEmitSpy = spyOn(component.selectedUser, 'emit');
+        component.onSelect({ username: 'username'});
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(selectEmitSpy).toHaveBeenCalled();
+        });
+    });
 
-    // it('should display two options if we tap one letter', async(() => {
-    //     fixture.detectChanges();
-    //     let userHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-    //     debugger;
-    //     userHTMLElement.focus();
-    //     userHTMLElement.dispatchEvent(new Event('input'));
-    //     userHTMLElement.dispatchEvent(new Event('keyup'));
-    //     userHTMLElement.dispatchEvent(new Event('keydown'));
-    //     userHTMLElement.value = 'M';
-    //     fixture.detectChanges();
-    //     fixture.whenStable().then(() => {
-    //         fixture.detectChanges();
-    //         expect(fixture.debugElement.query(By.css('#adf-people-cloud-user-0'))).not.toBeNull();
-    //         expect(fixture.debugElement.query(By.css('#adf-people-cloud-user-1'))).not.toBeNull();
-    //     });
-    // }));
+    it('should show an error message if the user is invalid', async(() => {
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.value = 'Z';
+        inputHTMLElement.dispatchEvent(new Event('keyup'));
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(element.querySelector('.adf-start-task-cloud-error-message')).not.toBeNull();
+            expect(element.querySelector('.adf-start-task-cloud-error-message').textContent).toContain('START-TASK-CLOUD.ERROR.MESSAGE');
+        });
+    }));
 
-    // it('should emit selectedUser if option is valid', async() => {
-    //     fixture.detectChanges();
-    //     let selectEmitSpy = spyOn(component.selectedUser, 'emit');
-    //     let userHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
-    //     userHTMLElement.focus();
-    //     userHTMLElement.dispatchEvent(new Event('input'));
-    //     userHTMLElement.dispatchEvent(new Event('keyup'));
-    //     userHTMLElement.dispatchEvent(new Event('keydown'));
-    //     debugger;
-    //     userHTMLElement.value = 'mock-firstName1 mock-lastName1';
-    //     fixture.detectChanges();
-    //     fixture.whenStable().then(() => {
-    //         fixture.detectChanges();
-    //         debugger;
-    //         expect(selectEmitSpy).toHaveBeenCalled();
-    //     });
-    // });
 });

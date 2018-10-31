@@ -32,5 +32,30 @@
             font-size: 18px;
             text-transform: uppercase;
         }
+
+        &-start-task-cloud-error {
+            margin-top: -10px;
+        }
+
+        &-start-task-cloud-error {
+            position: absolute;
+            height: 20px;
+            width: 100%;
+
+            &-message {
+                padding-right: 8px;
+                height: 16px;
+                font-size: 12px;
+                line-height: 1.33;
+                color: mat-color($warn);
+                width: auto;
+            }
+
+            &-icon {
+                font-size: 17px;
+                color: mat-color($warn);
+            }
+        }
+
     }
 }

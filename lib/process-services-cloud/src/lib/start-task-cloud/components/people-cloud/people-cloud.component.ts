@@ -17,17 +17,28 @@
 
 import { FormControl } from '@angular/forms';
 import { StartTaskCloudService } from './../../services/start-task-cloud.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import * as _ from 'lodash';
 import { RoleCloudModel } from '../../models/role-cloud.model';
 import { UserCloudModel } from '../../models/user-cloud.model';
 import { LogService } from '@alfresco/adf-core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
     selector: 'adf-cloud-people',
     templateUrl: './people-cloud.component.html',
-    styleUrls: ['./people-cloud.component.scss']
+    styleUrls: ['./people-cloud.component.scss'],
+    animations: [
+        trigger('transitionMessages', [
+            state('enter', style({opacity: 1, transform: 'translateY(0%)'})),
+            transition('void => enter', [
+                style({opacity: 0, transform: 'translateY(-100%)'}),
+                animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')
+            ])
+        ])
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 
 export class PeopleCloudComponent implements OnInit {
@@ -46,7 +57,11 @@ export class PeopleCloudComponent implements OnInit {
 
     searchUser: FormControl = new FormControl();
 
+    _subscriptAnimationState: string = 'enter';
+
     users: any[] = [];
+
+    dataError = false;
 
     constructor(private taskService: StartTaskCloudService,
                 private logService: LogService) { }
@@ -99,6 +114,7 @@ export class PeopleCloudComponent implements OnInit {
     private filterUsers(users: UserCloudModel[], searchedWord: string) {
         let filteredUsers: UserCloudModel[];
         filteredUsers = this.removeDuplicates(users).filter((user) => this.findUserBySearchedWord(user.username, searchedWord));
+        this.dataError = filteredUsers.length <= 0 ? true : false;
         return of(filteredUsers);
     }
 
@@ -112,6 +128,7 @@ export class PeopleCloudComponent implements OnInit {
 
     onSelect(selectedUser: UserCloudModel) {
         this.selectedUser.emit(selectedUser);
+        this.dataError = false;
     }
 
     getDisplayName(model: any) {
