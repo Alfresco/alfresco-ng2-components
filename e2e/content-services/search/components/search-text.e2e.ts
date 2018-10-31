@@ -24,14 +24,18 @@ import TestConfig = require('../../../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 
-import { SearchFiltersPage } from '../../../pages/adf/searchFiltersPage';
 import { LoginPage } from '../../../pages/adf/loginPage';
 import SearchDialog = require('../../../pages/adf/dialog/searchDialog');
 import { SearchResultsPage } from '../../../pages/adf/searchResultsPage';
+import { SearchCategoriesPage } from '../../../pages/adf/content_services/search/search-categories';
+import { ConfigEditorPage } from '../../../pages/adf/configEditorPage';
+import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 
 describe('Search component - Search Page', () => {
 
-    let searchFiltersPage = new SearchFiltersPage();
+    const searchCategoriesPage = new SearchCategoriesPage();
+    const configEditorPage = new ConfigEditorPage();
+    const navigationBarPage = new NavigationBarPage();
 
     let loginPage = new LoginPage();
     let searchDialog = new SearchDialog();
@@ -67,21 +71,29 @@ describe('Search component - Search Page', () => {
     it('[C289329] Placeholder should be displayed in the widget when the input string is empty', () => {
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter('*');
+        searchResultPage.tableIsLoaded();
 
-        searchFiltersPage.checkNameFilterIsDisplayed();
-        expect(searchFiltersPage.getNamePlaceholder()).toEqual('Enter the name');
+        searchCategoriesPage.checkNameFilterIsDisplayed();
+        expect(searchCategoriesPage.textFiltersPage().getNamePlaceholder()).toEqual('Enter the name');
     });
 
     it('[C289330] Should be able to change the Field setting', () => {
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter('*');
 
-        searchFiltersPage.checkCheckListFilterIsDisplayed();
-        searchFiltersPage.clickCheckListFilter();
-        // check Folder checkbox
-        searchFiltersPage.checkNameFilterIsDisplayed();
-        searchFiltersPage.searchByName(newFolderModel.name);
+        searchCategoriesPage.checkCheckListFilterIsDisplayed();
+        searchCategoriesPage.clickCheckListFilter();
+        searchCategoriesPage.checkListFiltersPage().clickCheckListFolderOption();
+
+        searchCategoriesPage.checkNameFilterIsDisplayed();
+        searchCategoriesPage.textFiltersPage().searchByName(newFolderModel.name);
         searchResultPage.checkContentIsDisplayed(newFolderModel.name);
+
+        searchCategoriesPage.textFiltersPage().searchByName(newFolderModel.description);
+        searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
+
+        navigationBarPage.clickConfigEditorButton();
+        let cuurentSearchConfig = configEditorPage.getConfiguration();
     });
 });
 

@@ -29,6 +29,10 @@ export class SearchResultsPage {
     sortArrowLocator = by.css('adf-sorting-picker button mat-icon');
     sortingArrow = element(by.css('adf-sorting-picker div[class="mat-select-arrow"]'));
 
+    tableIsLoaded() {
+        this.contentList.tableIsLoaded();
+    }
+
     closeActionButton() {
         let container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
         Util.waitUntilElementIsVisible(container);
