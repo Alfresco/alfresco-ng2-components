@@ -1,4 +1,12 @@
-<h2>TASK LIST CLOUD DEMO</h2>
+<mat-toolbar>
+    <mat-toolbar-row>
+        <span>TASK LIST CLOUD DEMO</span>
+        <span class="example-spacer"></span>
+        <button mat-icon-button matTooltip="Create Task" (click)="startTask()">
+            <mat-icon>add</mat-icon>
+          </button>
+    </mat-toolbar-row>
+</mat-toolbar>
 <adf-cloud-task-filters
     [appName]="applicationName"
     [showIcons]="true"

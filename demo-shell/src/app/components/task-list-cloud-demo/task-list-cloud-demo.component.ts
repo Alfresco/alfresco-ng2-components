@@ -21,6 +21,8 @@ import { UserPreferencesService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { StartTaskCloudDemoDialogComponent } from '../start-task-cloud-demo/start-task-cloud-demo-dialog.component';
 
 @Component({
     selector: 'app-task-list-cloud-demo',
@@ -55,6 +57,7 @@ export class TaskListCloudDemoComponent implements OnInit {
       ];
 
     constructor(
+        public dialog: MatDialog,
         private route: ActivatedRoute,
         private router: Router,
         private userPreference: UserPreferencesService) {
@@ -125,4 +128,20 @@ export class TaskListCloudDemoComponent implements OnInit {
         this.clickedRow = $event;
     }
 
+    startTask(): void {
+        const dialogRef = this.dialog.open(StartTaskCloudDemoDialogComponent, {
+            data: {
+                applicationName: this.applicationName
+            },
+            height: 'auto',
+            minWidth: '60%'
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result === 'YES') {
+                this.router.navigate([`/cloud/`]);
+            } else {
+                this.dialog.closeAll();
+            }
+        });
+    }
 }

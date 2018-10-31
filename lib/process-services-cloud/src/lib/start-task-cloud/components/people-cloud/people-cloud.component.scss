@@ -7,6 +7,7 @@
 
         &-people-cloud {
             width: 100%;
+            padding-top: 8px;
         }
 
         &-people-cloud-list {
@@ -40,7 +41,6 @@
         &-start-task-cloud-error {
             position: absolute;
             height: 20px;
-            width: 100%;
 
             &-message {
                 padding-right: 8px;

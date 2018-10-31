@@ -14,10 +14,6 @@
         }
     }
 
-    .adf-cloud-start-task-layout-card {
-        margin: 10px auto;
-    }
-
     .adf-cloud-start-task-footer {
         padding: 4px;
         font-size: 18px;
@@ -30,63 +26,6 @@
             &-cloud-start-task-footer {
                 .mat-button {
                     text-transform: uppercase !important;
-                }
-            }
-
-            &-error-text-container {
-                position: absolute;
-                height: 20px;
-                margin-top: 12px;
-                width: 100%;
-
-                & > div {
-                    display: flex;
-                    flex-flow: row;
-                    justify-content: flex-start;
-                }
-            }
-
-            &-error-text {
-                padding-right: 8px;
-                height: 16px;
-                font-size: 12px;
-                line-height: 1.33;
-                color: mat-color($warn);
-                width: auto;
-            }
-
-            &-error-icon {
-                font-size: 17px;
-                color: mat-color($warn);
-            }
-
-            &-label {
-                color: rgb(186, 186, 186);;
-            }
-
-            &-invalid {
-
-                .mat-form-field-underline {
-                    background-color: #f44336 !important;
-                }
-
-                .adf-file {
-                    border-color: mat-color($warn);
-                }
-
-                .mat-form-field-prefix {
-                    color: mat-color($warn);
-                }
-
-                .adf-input {
-                    border-color: mat-color($warn);
-                }
-
-                .adf-label {
-                    color: mat-color($warn);
-                    &:after {
-                        background-color: mat-color($warn);
-                    }
                 }
             }
         }

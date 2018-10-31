@@ -147,10 +147,6 @@ export const appRoutes: Routes = [
                     {
                         path: ':applicationName/tasks',
                         component: TaskListCloudDemoComponent
-                    },
-                    {
-                        path: ':applicationName/starttask',
-                        component: StartTaskCloudDemoComponent
                     }
                 ]
             },
