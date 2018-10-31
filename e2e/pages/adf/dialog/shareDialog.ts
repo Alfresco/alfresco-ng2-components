@@ -118,9 +118,8 @@ export class ShareDialog {
     async setDefaultDay() {
         const selector = '.mat-datetimepicker-calendar-body-active .mat-datetimepicker-calendar-body-cell-content';
         Util.waitUntilElementIsVisible(this.dayPicker);
-        const today = await this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
-        const tomorrow = (parseInt(today, 10) + 1).toString();
-        this.dayPicker.element(by.cssContainingText(selector, tomorrow )).click();
+        let tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getDate();
+        this.dayPicker.element(by.cssContainingText(selector, `${tomorrow}`)).click();
     }
 
     setDefaultHour() {
