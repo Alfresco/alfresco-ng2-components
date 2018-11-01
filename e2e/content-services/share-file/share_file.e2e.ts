@@ -122,7 +122,7 @@ describe('Share file', () => {
             shareDialog.calendarTodayDayIsDisabled();
         });
 
-        fit('[C286548] Should be possible to set expiry date for link', async () => {
+        it('[C286548] Should be possible to set expiry date for link', async () => {
             contentListPage.clickRowToSelect(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
