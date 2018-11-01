@@ -20,7 +20,7 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div class="adf-task-description">
+            <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
                 <mat-form-field fxFlex>
                     <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION' | translate}}</mat-label>
                     <textarea
@@ -29,6 +29,12 @@
                         id="description_id"
                         formControlName="description">
                     </textarea>
+                </mat-form-field>
+
+                <mat-form-field fxFlex>
+                    <div style="height: 40px;">
+                    <input  matInput type="number" placeholder="Priority" formControlName="priority">
+                    </div>
                 </mat-form-field>
             </div>
             <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">

@@ -125,7 +125,8 @@ import { StartTaskCloudDemoDialogComponent } from './components/start-task-cloud
         ProcessListCloudExampleComponent,
         TreeViewSampleComponent,
         StartTaskCloudDemoComponent,
-        StartTaskCloudDemoDialogComponent
+        StartTaskCloudDemoDialogComponent,
+        TaskListCloudDemoComponent
     ],
     providers: [
         {
@@ -153,8 +154,7 @@ import { StartTaskCloudDemoDialogComponent } from './components/start-task-cloud
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,
-        MetadataDialogAdapterComponent,
-        StartTaskCloudDemoDialogComponent
+        MetadataDialogAdapterComponent
     ],
     bootstrap: [AppComponent]
 })
