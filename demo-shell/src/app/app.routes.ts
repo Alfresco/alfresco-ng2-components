@@ -139,11 +139,13 @@ export const appRoutes: Routes = [
                 children: [
                     {
                         path: '',
-                        component: CloudComponent
+                        component: CloudComponent,
+                        canActivate: [AuthGuard]
                     },
                     {
                         path: ':applicationName/tasks',
-                        component: TaskListCloudDemoComponent
+                        component: TaskListCloudDemoComponent,
+                        canActivate: [AuthGuard]
                     }
                 ]
             },
