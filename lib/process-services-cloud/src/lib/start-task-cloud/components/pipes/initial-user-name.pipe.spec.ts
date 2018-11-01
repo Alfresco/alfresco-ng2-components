@@ -70,7 +70,7 @@ describe('InitialUserNamePipe', () => {
     it('should apply the style class passed in input', () => {
         fakeUser.firstName = 'FAKE-NAME';
         fakeUser.lastName = 'FAKE-SURNAME';
-        let result = pipe.transform(fakeUser, 'fake-class-to-check');
+        let result = pipe.transform(fakeUser, 'fake-class-to-check', '');
         expect(result).toBe('<div id="user-initials-image" class="fake-class-to-check">FF</div>');
     });
 

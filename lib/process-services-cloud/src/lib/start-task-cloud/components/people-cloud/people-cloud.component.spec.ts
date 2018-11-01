@@ -124,15 +124,22 @@ describe('PeopleCloudComponent', () => {
     });
 
     it('should show an error message if the user is invalid', async(() => {
+        getUserSpy.and.returnValue(of([]));
+        getRolesByUserIdSpy.and.returnValue(of([]));
+        component.dataError = true;
+        fixture.detectChanges();
         let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
-        inputHTMLElement.value = 'Z';
-        inputHTMLElement.dispatchEvent(new Event('keyup'));
         inputHTMLElement.dispatchEvent(new Event('input'));
+        inputHTMLElement.dispatchEvent(new Event('keyup'));
+        inputHTMLElement.dispatchEvent(new Event('keydown'));
+        inputHTMLElement.value = 'ZZZ';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            expect(element.querySelector('.adf-start-task-cloud-error-message')).not.toBeNull();
-            expect(element.querySelector('.adf-start-task-cloud-error-message').textContent).toContain('START-TASK-CLOUD.ERROR.MESSAGE');
+            fixture.detectChanges();
+            const errorMessage = element.querySelector('.adf-start-task-cloud-error-message');
+            expect(element.querySelector('.adf-start-task-cloud-error')).not.toBeNull();
+            expect(errorMessage.textContent).toContain('START-TASK-CLOUD.ERROR.MESSAGE');
         });
     }));
 
