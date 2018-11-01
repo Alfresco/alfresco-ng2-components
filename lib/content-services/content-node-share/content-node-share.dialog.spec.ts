@@ -118,7 +118,7 @@ describe('ShareDialogComponent', () => {
         });
     }));
 
-    it(`should copy shared link and notify on button event`, async(() => {
+    it(`should copy shared link and notify on button event`, (done) => {
         node.entry.properties['qshare:sharedId'] = 'sharedId';
         spyOn(document, 'execCommand').and.callThrough();
 
@@ -139,8 +139,9 @@ describe('ShareDialogComponent', () => {
 
             expect(document.execCommand).toHaveBeenCalledWith('copy');
             expect(notificationServiceMock.openSnackMessage).toHaveBeenCalledWith('SHARE.CLIPBOARD-MESSAGE');
+            done();
         });
-    }));
+    });
 
     it('should open a confirmation dialog when unshare button is triggered', () => {
         spyOn(matDialog, 'open').and.returnValue({ beforeClose: () => of(false) });
