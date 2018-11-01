@@ -1,0 +1,18 @@
+@mixin adf-tree-view-theme($theme) {
+    $primary: map-get($theme, primary);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
+
+    .adf {
+        &-tree-view-icon {
+            color: #D9E022;
+        }
+
+        &-tree-view-node.mat-tree-node {
+            min-height: 40px;
+            font-size: 12px;
+            align-items: baseline;
+        }
+    }
+}

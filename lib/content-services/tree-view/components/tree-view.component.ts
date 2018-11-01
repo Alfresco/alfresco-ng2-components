@@ -26,7 +26,7 @@ import { TreeViewService } from '../services/tree-view.service';
     templateUrl: 'tree-view.component.html',
     styleUrls: ['tree-view.component.scss']
 })
-/*tslint:disable*/
+
 export class TreeViewComponent implements OnInit, OnChanges {
 
     @Input()
@@ -48,7 +48,7 @@ export class TreeViewComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['nodeId'].currentValue &&
-            changes['nodeId'].currentValue != changes['nodeId'].previousValue) {
+            changes['nodeId'].currentValue !== changes['nodeId'].previousValue) {
             this.loadTreeNode();
         }
     }
