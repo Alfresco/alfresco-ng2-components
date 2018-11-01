@@ -110,16 +110,16 @@ export class ShareDialog {
         this.timeDatePickerButton.click();
     }
 
-    async calendarTodayDayIsDisabled() {
-        const today = await this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
+    calendarTodayDayIsDisabled() {
+        const today = this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
         Util.waitUntilElementIsPresent(element(by.cssContainingText('.mat-datetimepicker-calendar-body-disabled', today)));
     }
 
-    async setDefaultDay() {
+    setDefaultDay() {
         const selector = '.mat-datetimepicker-calendar-body-active .mat-datetimepicker-calendar-body-cell-content';
         Util.waitUntilElementIsVisible(this.dayPicker);
-        let tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getDate();
-        this.dayPicker.element(by.cssContainingText(selector, `${tomorrow}`)).click();
+        let tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getDate().toString();
+        this.dayPicker.element(by.cssContainingText(selector, tomorrow)).click();
     }
 
     setDefaultHour() {
