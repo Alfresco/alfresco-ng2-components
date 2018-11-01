@@ -21,17 +21,108 @@ import { element, by } from 'protractor';
 export class SearchCheckListPage {
 
     filter;
-    inputBy = by.css('input');
+    inputBy = by.css('div[class*="mat-expansion-panel-content"] input');
+    showMoreBy = by.css('button[title="Show more"]');
+    showLessBy = by.css('button[title="Show less"]');
 
     constructor(filter) {
         this.filter = filter;
     }
 
-    clickCheckListFolderOption() {
+    clickCheckListOption(option) {
         Util.waitUntilElementIsVisible(this.filter);
-        let checkboxSpan = this.filter.element(by.cssContainingText('span', 'Folder'));
-        let checkbox = checkboxSpan.element(by.xpath('preceding-sibling::div'));
-        checkbox.click();
+        let result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'] .mat-checkbox-inner-container`));
+        Util.waitUntilElementIsVisible(result);
+        Util.waitUntilElementIsClickable(result);
+        result.click();
+    }
+
+    checkChipIsDisplayed(option) {
+        Util.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon')));
+        return this;
+    }
+
+    checkChipIsNotDisplayed(option) {
+        Util.waitUntilElementIsNotOnPage(element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon')));
+        return this;
+    }
+
+    removeFilterOption(option) {
+        let cancelChipButton = element(by.cssContainingText('mat-chip', option)).element(by.css('mat-icon'));
+        Util.waitUntilElementIsClickable(cancelChipButton);
+        cancelChipButton.click();
+        return this;
+    }
+
+    filterBy(option) {
+        this.checkSearchFilterInputIsDisplayed();
+        this.searchInFilter(option);
+        this.clickCheckListOption(option);
+        return this;
+    }
+
+    checkSearchFilterInputIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.filter.element(this.inputBy));
+    }
+
+    searchInFilter(option) {
+        let inputElement = this.filter.element(this.inputBy);
+        Util.waitUntilElementIsClickable(this.filter);
+        Util.waitUntilElementIsClickable(inputElement);
+
+        inputElement.clear();
+        this.filter.element(this.inputBy).sendKeys(option);
+    }
+
+    checkShowLessButtonIsNotDisplayed() {
+        Util.waitUntilElementIsNotVisible(this.filter.element(this.showLessBy));
+        return this;
+    }
+
+    checkShowLessButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.filter.element(this.showLessBy));
+        return this;
+    }
+
+    checkShowMoreButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.filter.element(this.showMoreBy));
+        return this;
+    }
+
+    clickShowMoreButtonUntilIsNotDisplayed() {
+        this.filter.element(this.showMoreBy).isDisplayed().then(async (visible) => {
+            if (visible) {
+                this.filter.element(this.showMoreBy).click();
+
+                this.clickShowMoreButtonUntilIsNotDisplayed();
+            }
+        }, err => {
+        });
+        return this;
+    }
+
+    clickShowLessButtonUntilIsNotDisplayed() {
+        this.filter.element(this.showLessBy).isDisplayed().then(async (visible) => {
+            if (visible) {
+                this.filter.element(this.showLessBy).click();
+
+                this.clickShowLessButtonUntilIsNotDisplayed();
+            }
+        }, err => {
+        });
+        return this;
+    }
+
+    getBucketNumberOfFilterType(option) {
+        let fileTypeFilter = this.filter.element(by.css('mat-checkbox[data-automation-id*=".' + option + '"] span'));
+        Util.waitUntilElementIsVisible(fileTypeFilter);
+        let bucketNumber = fileTypeFilter.getText().then((valueOfBucket) => {
+            let numberOfBucket = valueOfBucket.split('(')[1];
+            let totalNumberOfBucket = numberOfBucket.split(')')[0];
+            return totalNumberOfBucket;
+        });
+
+        return bucketNumber;
     }
 
 }

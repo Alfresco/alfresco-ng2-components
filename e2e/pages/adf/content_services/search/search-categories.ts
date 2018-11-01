@@ -22,73 +22,37 @@ import { SearchCheckListPage } from './components/search-checkList';
 
 export class SearchCategoriesPage {
 
-    searchFilters = element(by.css('adf-search-filter'));
-    fileTypeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.TYPE"]'));
-    creatorFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATOR"]'));
-    fileSizeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"]'));
-    createdFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATED"'));
-    nameFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Name"]'));
-    checkListFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]'));
-
-    textFiltersPage() {
-        return new SearchTextPage(this.nameFilter);
+    checkListFiltersPage(filter) {
+        return new SearchCheckListPage(filter);
     }
 
-    checkListFiltersPage() {
-        return new SearchCheckListPage(this.checkListFilter);
+    textFiltersPage(filter) {
+        return new SearchTextPage(filter);
     }
 
-    checkSearchFiltersIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.searchFilters);
+    checkFilterIsDisplayed(filter) {
+        Util.waitUntilElementIsVisible(filter);
+        return this;
     }
 
-    checkCheckListFilterIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.checkListFilter);
+    clickFilter(filter) {
+        Util.waitUntilElementIsVisible(filter);
+        filter.element(by.css('mat-expansion-panel-header')).click();
+        return this;
     }
 
-    checkNameFilterIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.nameFilter);
-    }
-
-    clickCheckListFilter() {
-        Util.waitUntilElementIsVisible(this.checkListFilter);
-        this.checkListFilter.element(by.css('mat-expansion-panel-header')).click();
-    }
-
-    checkFileTypeFilterIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.fileTypeFilter);
-    }
-
-    checkSearchFileTypeFilterIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.fileTypeFilter);
-    }
-
-    checkCreatorFilterIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.creatorFilter);
-    }
-
-    clickFileSizeFilterHeader() {
-        let fileSizeFilterHeader = this.fileSizeFilter.element(by.css('mat-expansion-panel-header'));
+    clickFilterHeader(filter) {
+        let fileSizeFilterHeader = filter.element(by.css('mat-expansion-panel-header'));
         Util.waitUntilElementIsClickable(fileSizeFilterHeader);
-        return fileSizeFilterHeader.click();
+        fileSizeFilterHeader.click();
+        return this;
     }
 
-    clickFileTypeFilterHeader() {
-        let fileTypeFilterHeader = this.fileTypeFilter.element(by.css('mat-expansion-panel-header'));
-        Util.waitUntilElementIsClickable(fileTypeFilterHeader);
-        return fileTypeFilterHeader.click();
-    }
-
-    checkFileTypeFilterIsCollapsed() {
-        this.fileTypeFilter.getAttribute('class').then((elementClass) => {
+    checkFilterIsCollapsed(filter) {
+        filter.getAttribute('class').then((elementClass) => {
             expect(elementClass).not.toContain('mat-expanded');
         });
-    }
-
-    checkFileSizeFilterIsCollapsed() {
-        this.fileSizeFilter.getAttribute('class').then((elementClass) => {
-            expect(elementClass).not.toContain('mat-expanded');
-        });
+        return this;
     }
 
 }

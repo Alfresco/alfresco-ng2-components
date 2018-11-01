@@ -28,6 +28,7 @@ import { LoginPage } from '../../../pages/adf/loginPage';
 import SearchDialog = require('../../../pages/adf/dialog/searchDialog');
 import { SearchResultsPage } from '../../../pages/adf/searchResultsPage';
 import { SearchCategoriesPage } from '../../../pages/adf/content_services/search/search-categories';
+import { SearchFiltersPage } from '../../../pages/adf/searchFiltersPage';
 import { ConfigEditorPage } from '../../../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 
@@ -36,6 +37,7 @@ describe('Search component - Search Page', () => {
     const searchCategoriesPage = new SearchCategoriesPage();
     const configEditorPage = new ConfigEditorPage();
     const navigationBarPage = new NavigationBarPage();
+    const searchFiltersPage = new SearchFiltersPage();
 
     let loginPage = new LoginPage();
     let searchDialog = new SearchDialog();
@@ -73,23 +75,23 @@ describe('Search component - Search Page', () => {
             .enterTextAndPressEnter('*');
         searchResultPage.tableIsLoaded();
 
-        searchCategoriesPage.checkNameFilterIsDisplayed();
-        expect(searchCategoriesPage.textFiltersPage().getNamePlaceholder()).toEqual('Enter the name');
+        searchFiltersPage.checkNameFilterIsDisplayed();
+        expect(searchFiltersPage.textFiltersPage().getNamePlaceholder()).toEqual('Enter the name');
     });
 
     it('[C289330] Should be able to change the Field setting', () => {
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
             .enterTextAndPressEnter('*');
 
-        searchCategoriesPage.checkCheckListFilterIsDisplayed();
-        searchCategoriesPage.clickCheckListFilter();
-        searchCategoriesPage.checkListFiltersPage().clickCheckListFolderOption();
+        searchFiltersPage.checkCheckListFilterIsDisplayed();
+        searchFiltersPage.clickCheckListFilter();
+        searchFiltersPage.checkListFiltersPage().clickCheckListOption('Folder');
 
-        searchCategoriesPage.checkNameFilterIsDisplayed();
-        searchCategoriesPage.textFiltersPage().searchByName(newFolderModel.name);
+        searchFiltersPage.checkNameFilterIsDisplayed();
+        searchFiltersPage.textFiltersPage().searchByName(newFolderModel.name);
         searchResultPage.checkContentIsDisplayed(newFolderModel.name);
 
-        searchCategoriesPage.textFiltersPage().searchByName(newFolderModel.description);
+        searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
         searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
 
         navigationBarPage.clickConfigEditorButton();
