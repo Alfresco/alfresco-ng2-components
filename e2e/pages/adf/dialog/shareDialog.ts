@@ -17,6 +17,7 @@
 
 import { element, by } from 'protractor';
 import Util = require('../../../util/util');
+import moment = require('moment');
 import { FormControllersPage } from '../material/formControllersPage';
 
 export class ShareDialog {
@@ -110,17 +111,17 @@ export class ShareDialog {
         this.timeDatePickerButton.click();
     }
 
-    async calendarTodayDayIsDisabled() {
-        const today = await this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
+    calendarTodayDayIsDisabled() {
+        const today = this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
         Util.waitUntilElementIsPresent(element(by.cssContainingText('.mat-datetimepicker-calendar-body-disabled', today)));
     }
 
-    async setDefaultDay() {
+    setDefaultDay() {
         const selector = '.mat-datetimepicker-calendar-body-active .mat-datetimepicker-calendar-body-cell-content';
         Util.waitUntilElementIsVisible(this.dayPicker);
-        const today = await this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
-        const tomorrow = (parseInt(today, 10) + 1).toString();
-        this.dayPicker.element(by.cssContainingText(selector, tomorrow )).click();
+        const tomorrow = moment().add(1, 'day').date();
+        let tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getDate().toString();
+        this.dayPicker.element(by.cssContainingText(selector, tomorrow)).click();
     }
 
     setDefaultHour() {
