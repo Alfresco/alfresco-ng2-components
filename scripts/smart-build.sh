@@ -54,7 +54,7 @@ then
     exit 0
 fi
 
-HEAD_SHA_BRANCH=(`git merge-base $BRANCH_NAME HEAD`)
+HEAD_SHA_BRANCH=(`git merge-base origin/$BRANCH_NAME HEAD`)
 echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
 
 #find affected libs
