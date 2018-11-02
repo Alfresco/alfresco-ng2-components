@@ -12,7 +12,7 @@ import { MinimalNodeEntity } from 'alfresco-js-api';
 @Component({
     selector: 'adf-cloud-process-list',
     templateUrl: './process-list-cloud.component.html',
-    styleUrls: ['./process-list-cloud.component.css'],
+    styleUrls: ['./process-list-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class ProcessListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
