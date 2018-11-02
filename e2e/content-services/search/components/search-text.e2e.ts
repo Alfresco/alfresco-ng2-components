@@ -67,6 +67,8 @@ describe('Search component - Text widget', () => {
             }
         }, {}, {});
 
+        await browser.driver.sleep(10000);
+
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
