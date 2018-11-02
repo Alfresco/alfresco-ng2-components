@@ -59,11 +59,11 @@ describe('Search component - Text widget', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         await this.alfrescoJsApi.nodes.addNode('-my-', {
-            "name": newFolderModel.name,
-            "nodeType":"cm:folder",
-            "properties":
+            'name': newFolderModel.name,
+            'nodeType': 'cm:folder',
+            'properties':
             {
-                "cm:description": newFolderModel.description
+                'cm:description': newFolderModel.description
             }
         }, {}, {});
 
@@ -95,7 +95,7 @@ describe('Search component - Text widget', () => {
         searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
         searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
 
-        var json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
+        let json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
         json.categories[0].component.settings.field = 'cm:description';
 
         navigationBarPage.clickConfigEditorButton();
