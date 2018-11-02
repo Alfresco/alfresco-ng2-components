@@ -101,7 +101,7 @@ describe('Search component - Text widget', () => {
         navigationBarPage.clickConfigEditorButton();
         configEditorPage.clickSearchConfiguration();
         configEditorPage.clickClearButton();
-        configEditorPage.enterConfiguration(JSON.stringify(json));
+        configEditorPage.enterBigConfigurationText(JSON.stringify(json));
         configEditorPage.clickSaveButton();
 
         searchDialog.clickOnSearchIcon().enterTextAndPressEnter('*');
