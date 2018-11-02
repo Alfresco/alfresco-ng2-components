@@ -34,7 +34,7 @@ export class TxtViewerComponent implements OnChanges {
     @Input()
     blobFile: Blob;
 
-    content: string;
+    content: string | ArrayBuffer;
 
     constructor(private http: HttpClient) {
     }
