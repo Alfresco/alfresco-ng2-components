@@ -111,6 +111,7 @@
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "6.0.90",
+    "@types/lodash": "^4.14.117",
     "ajv-cli": "^3.0.0",
     "angular2-template-loader": "0.6.2",
     "archiver": "^3.0.0",
