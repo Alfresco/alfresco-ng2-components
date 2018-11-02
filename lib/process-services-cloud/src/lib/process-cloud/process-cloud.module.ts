@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { StartProcessCloudComponent } from './start-process-cloud/start-process-cloud.component';
 import { ProcessCloudService } from './services/process-cloud.service';
 import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
     imports: [
         HttpClientModule,
@@ -21,9 +22,16 @@ import { ReactiveFormsModule } from '@angular/forms';
         MaterialModule,
         ReactiveFormsModule
     ],
-    declarations: [StartProcessCloudComponent],
-
-    exports: [StartProcessCloudComponent],
-    providers: [ProcessCloudService, LogService, StorageService]
+    declarations: [
+        StartProcessCloudComponent
+    ],
+    exports: [
+        StartProcessCloudComponent
+    ],
+    providers: [
+        ProcessCloudService,
+        LogService,
+        StorageService
+    ]
 })
 export class ProcessCloudModule { }

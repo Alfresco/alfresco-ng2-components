@@ -19,16 +19,14 @@ import {
     Component, EventEmitter, Input, OnChanges, OnInit,
     Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
-import { StartFormComponent, FormValues } from '@alfresco/adf-core';
 import { ProcessInstanceVariableCloud } from '../models/process-instance-variable-cloud.model';
 import { ProcessDefinitionRepresentationCloud } from '../models/process-definition-cloud.model';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessCloudService } from './../services/process-cloud.service';
 
-import { FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material';
+import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 
 @Component({
     selector: 'adf-cloud-start-process',
@@ -38,52 +36,32 @@ import { MatAutocompleteTrigger } from '@angular/material';
 })
 export class StartProcessCloudComponent implements OnChanges, OnInit {
 
-    /** (optional) Limit the list of processes that can be started to those
-     * contained in the specified app.
-     */
     @Input()
     appName: string;
 
-    /** (optional) Definition name of the process to start. */
     @Input()
     processDefinitionName: string;
 
-    /** Variables in input to the process
-     * [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md).
-     */
     @Input()
-    variables: ProcessInstanceVariableCloud[];
+    variables: ProcessInstanceVariableCloud;
 
-    /** Parameter to pass form field values in the start form if it is associated. */
-    @Input()
-    values: FormValues;
-
-    /** (optional) Name to assign to the current process. */
     @Input()
     name: string = '';
 
-    /** Hide or show the process selection dropdown. */
     @Input()
     showSelectProcessDropdown: boolean = true;
 
-    /** (optional) Parameter to enable selection of process when filtering. */
     @Input()
     processFilterSelector: boolean = true;
 
-    /** Emitted when the process starts. */
     @Output()
     start: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
 
-    /** Emitted when the process is canceled. */
     @Output()
     cancel: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
 
-    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
-
-    @ViewChild('startForm')
-    startForm: StartFormComponent;
 
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
@@ -94,24 +72,31 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     errorMessageId: string = '';
 
-    processNameInput: FormControl;
-    processDefinitionInput: FormControl;
-    filteredProcesses: Observable<ProcessDefinitionRepresentationCloud[]>;
+    processForm: FormGroup;
 
-    constructor(private processCloudService: ProcessCloudService) {
+    processPayloadCloud = new ProcessPayloadCloud();
+
+    filteredProcesses: ProcessDefinitionRepresentationCloud[];
+
+    constructor(private processCloudService: ProcessCloudService,
+                private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
-        this.processNameInput = new FormControl(this.name, Validators.required);
-        this.processDefinitionInput = new FormControl();
+        this.processForm = this.formBuilder.group({
+            processName: new FormControl(this.name, Validators.required),
+            processDefinition: new FormControl('', Validators.required)
+        });
+
+        this.processForm.valueChanges.subscribe((formValues) => {
+            if (this.processForm.valid) {
+                this.createProcessInstance(formValues);
+            }
+        });
 
         this.loadStartProcess();
 
-        this.processNameInput.valueChanges.subscribe(name => this.name = name);
-        this.filteredProcesses = this.processDefinitionInput.valueChanges
-            .pipe(
-                map(value => this._filter(value))
-            );
+        this.processPayloadCloud.variables = this.variables;
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -122,15 +107,20 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.loadStartProcess();
     }
 
+    createProcessInstance(formValues) {
+        this.processPayloadCloud.processInstanceName = formValues.processName;
+        this.filteredProcesses = this._filter(formValues.processDefinition);
+    }
+
     private _filter(value: string): ProcessDefinitionRepresentationCloud[] {
         if (value !== null && value !== undefined) {
             const filterValue = value.toLowerCase();
-            let filteredProcess = this.processDefinitions.filter(option => option.name.toLowerCase().includes(filterValue));
+            let filteredProcesses = this.processDefinitions.filter(option => option.name.toLowerCase().includes(filterValue));
 
             if (this.processFilterSelector) {
-                this.selectedProcessDef = this.getSelectedProcess(filterValue);
+                this.processPayloadCloud.processDefinitionKey = this.getSelectedProcess(filterValue).key;
             }
-            return filteredProcess;
+            return filteredProcesses;
         }
     }
 
@@ -166,7 +156,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                         }
                     }
 
-                    this.processDefinitionInput.setValue(this.selectedProcessDef.name);
+                    this.processForm.controls['processDefinition'].setValue(this.selectedProcessDef.name);
                 }
             },
             () => {
@@ -178,21 +168,20 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         return this.processDefinitions.length === 0;
     }
 
-    public startProcess(outcome?: string) {
-        if (this.selectedProcessDef && this.selectedProcessDef.id && this.name) {
-            this.resetErrorMessage();
-            let formValues = this.startForm ? this.startForm.form.values : undefined;
-            this.processCloudService.startProcess(this.appName, this.selectedProcessDef.id, this.name, outcome, formValues, this.variables).subscribe(
-                (res) => {
-                    this.name = '';
-                    this.start.emit(res);
-                },
-                (err) => {
-                    this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.START';
-                    this.error.error(err);
-                }
-            );
+    public startProcess() {
+        if (this.variables) {
+            this.processPayloadCloud.variables = this.variables;
         }
+        this.processPayloadCloud.payloadType = 'StartProcessPayload';
+        this.processCloudService.startProcess(this.appName, this.processPayloadCloud).subscribe(
+            (res) => {
+                this.start.emit(res);
+            },
+            (err) => {
+                this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.START';
+                this.error.error(err);
+            }
+        );
     }
 
     public cancelStartProcess() {
@@ -203,16 +192,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         return this.processDefinitions ? (this.processDefinitions.length > 0 || this.errorMessageId) : this.errorMessageId;
     }
 
-    isStartFormMissingOrValid(): boolean {
-        if (this.startForm) {
-            return this.startForm.form && this.startForm.form.isValid;
-        } else {
-            return true;
-        }
-    }
-
     validateForm(): boolean {
-        return this.selectedProcessDef && this.selectedProcessDef.id && this.name && this.isStartFormMissingOrValid();
+        return this.processForm && this.processForm.valid;
     }
 
     private resetSelectedProcessDefinition() {
@@ -230,14 +211,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     public reset() {
         this.resetSelectedProcessDefinition();
         this.name = '';
-        if (this.startForm) {
-            this.startForm.data = {};
-        }
         this.resetErrorMessage();
-    }
-
-    hasProcessName(): boolean {
-        return this.name ? true : false;
     }
 
     displayFn(process: any) {
@@ -253,10 +227,30 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     displayDropdown(event) {
         event.stopPropagation();
         if (!this.inputAutocomplete.panelOpen) {
-            this.processDefinitionInput.setValue('');
+            this.processForm.controls['processDefinition'].setValue('');
             this.inputAutocomplete.openPanel();
         } else {
             this.inputAutocomplete.closePanel();
         }
+    }
+
+    processDefinitionValidator(control: AbstractControl) {
+        let processDefinition = control.value;
+
+        this.filteredProcesses = this._filter(processDefinition);
+
+        if (!this.processPayloadCloud.processDefinitionKey) {
+
+            return {};
+        }
+        return null;
+    }
+
+    get processName(): AbstractControl {
+        return this.processForm.get('processName');
+    }
+
+    get processDefinition(): AbstractControl {
+        return this.processForm.get('processDefinition');
     }
 }

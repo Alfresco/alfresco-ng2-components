@@ -17,7 +17,7 @@
 
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { TaskListCloudComponent, TaskListCloudSortingModel } from '@alfresco/adf-process-services-cloud';
-import { UserPreferencesService } from '@alfresco/adf-core';
+import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -54,10 +54,15 @@ export class TaskListCloudDemoComponent implements OnInit {
         {key: 'processDefinitionId', label: 'PROCESS DEFINITION ID'}
       ];
 
+    defaultProcessName: string;
+    showStartProcess: boolean = false;
+
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private userPreference: UserPreferencesService) {
+            private route: ActivatedRoute,
+            private router: Router,
+            private userPreference: UserPreferencesService,
+            private appConfigService: AppConfigService) {
+        this.defaultProcessName = this.appConfigService.get<string>('adf-start-process.name');
     }
 
     ngOnInit() {
@@ -121,6 +126,14 @@ export class TaskListCloudDemoComponent implements OnInit {
 
     onRowClick($event) {
         this.clickedRow = $event;
+    }
+
+    onStartProcess() {
+        this.showStartProcess = true;
+    }
+
+    onProcessStarted() {
+        this.showStartProcess = false;
     }
 
 }
