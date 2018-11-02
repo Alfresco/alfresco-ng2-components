@@ -16,7 +16,7 @@
  */
 
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { TreeViewDataSource } from '../data/tree-view-datasource';
 import { TreeViewService } from '../services/tree-view.service';
@@ -31,6 +31,9 @@ export class TreeViewComponent implements OnInit, OnChanges {
 
     @Input()
     nodeId: string;
+
+    @Output()
+    nodeClicked: EventEmitter<TreeBaseNode> = new EventEmitter();
 
     treeControl: FlatTreeControl<TreeBaseNode>;
     dataSource: TreeViewDataSource;
@@ -51,6 +54,10 @@ export class TreeViewComponent implements OnInit, OnChanges {
             changes['nodeId'].currentValue !== changes['nodeId'].previousValue) {
             this.loadTreeNode();
         }
+    }
+
+    onNodeClicked(node: TreeBaseNode) {
+        this.nodeClicked.emit(node);
     }
 
     getLevel = (node: TreeBaseNode) => node.level;

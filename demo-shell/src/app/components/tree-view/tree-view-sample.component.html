@@ -2,6 +2,9 @@
 <mat-form-field class="example-full-width">
     <input matInput placeholder="Node Id" [(ngModel)]="nodeIdSample">
 </mat-form-field>
+<span>
+    CLICKED NODE: {{clickedNodeName}}
+</span>
 
-<adf-tree-view-list [nodeId]="nodeIdSample">
+<adf-tree-view-list [nodeId]="nodeIdSample" (nodeClicked)="onClick($event)">
 </adf-tree-view-list>

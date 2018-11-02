@@ -69,7 +69,7 @@ describe('TreeViewComponent', () => {
             fixture = TestBed.createComponent(TreeViewComponent);
             element = fixture.nativeElement;
             component = fixture.componentInstance;
-            spyOn(treeService,'getTreeNodes').and.callFake((nodeId) => returnRootOrChildrenNode(nodeId));
+            spyOn(treeService, 'getTreeNodes').and.callFake((nodeId) => returnRootOrChildrenNode(nodeId));
             component.nodeId = '9999999';
             fixture.detectChanges();
         }));
@@ -92,6 +92,21 @@ describe('TreeViewComponent', () => {
                 expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
             });
         }));
+
+        it('should throw a nodeClicked event when a node is clicked', (done) => {
+            component.nodeClicked.subscribe((nodeClicked) => {
+                expect(nodeClicked).toBeDefined();
+                expect(nodeClicked).not.toBeNull();
+                expect(nodeClicked.name).toBe('fake-node-name');
+                expect(nodeClicked.nodeId).toBe('fake-node-id');
+                expect(nodeClicked.level).toBe(0);
+                expect(nodeClicked.expandable).toBeTruthy();
+                done();
+            });
+            let rootFolderButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#button-fake-node-name');
+            expect(rootFolderButton).not.toBeNull();
+            rootFolderButton.click();
+        });
 
         it('should change the icon of the opened folders', async(() => {
             let rootFolderButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#button-fake-node-name');
