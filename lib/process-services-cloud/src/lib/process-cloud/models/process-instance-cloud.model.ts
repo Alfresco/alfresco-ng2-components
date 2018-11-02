@@ -16,14 +16,9 @@
  */
 
 export class ProcessInstanceCloud {
-    appName?: string;
-    appVersion?: number;
-    serviceName?: string;
-    serviceFullName?: string;
-    serviceType?: string;
-    serviceVersion?: string;
-    id?: string;
-    name?: string;
+    appName: string;
+    id: string;
+    name: string;
     startDate?: Date;
     initiator?: string;
     status?: string;
@@ -32,11 +27,6 @@ export class ProcessInstanceCloud {
 
     constructor(obj?: any) {
         this.appName = obj && obj.appName || null;
-        this.appVersion = obj && obj.appVersion || null;
-        this.serviceName = obj && obj.serviceName || null;
-        this.serviceFullName = obj && obj.serviceFullName || null;
-        this.serviceType = obj && obj.serviceType || null;
-        this.serviceVersion = obj && obj.serviceVersion || null;
         this.id = obj && obj.id || null;
         this.name = obj && obj.name || null;
         this.startDate = obj && obj.startDate || null;

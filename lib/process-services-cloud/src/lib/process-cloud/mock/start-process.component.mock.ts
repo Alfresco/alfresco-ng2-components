@@ -17,6 +17,7 @@
 
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessDefinitionRepresentationCloud } from '../models/process-definition-cloud.model';
+import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 
 export let fakeProcessInstance = new ProcessInstanceCloud({
     appName: 'simple-app',
@@ -58,3 +59,9 @@ export let fakeProcessDefinitions: ProcessDefinitionRepresentationCloud[] = [
         serviceVersion: null
     })
 ];
+
+export let fakeProcessPayload = new ProcessPayloadCloud({
+    processDefinitionKey: 'NewProcess:1',
+    processInstanceName: 'NewProcess 1',
+    payloadType: 'string'
+});

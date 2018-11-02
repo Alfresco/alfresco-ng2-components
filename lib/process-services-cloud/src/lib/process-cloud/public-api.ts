@@ -16,3 +16,10 @@
  */
 
 export * from './start-process-cloud/start-process-cloud.component';
+
+export * from './process-cloud.module';
+
+export * from './models/process-definition-cloud.model';
+export * from './models/process-instance-cloud.model';
+export * from './models/process-instance-variable-cloud.model';
+export * from './models/process-payload-cloud.model';
