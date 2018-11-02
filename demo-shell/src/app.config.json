@@ -68,6 +68,17 @@
         }
     ],
     "search": {
+      "app:fields": [
+        "cm:name",
+        "cm:title",
+        "cm:description",
+        "ia:whatEvent",
+        "ia:descriptionEvent",
+        "lnk:title",
+        "lnk:description",
+        "TEXT",
+        "TAG"
+      ],
       "include": ["path", "allowableOperations"],
       "sorting": {
         "options": [
