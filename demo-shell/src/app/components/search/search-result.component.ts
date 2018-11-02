@@ -19,7 +19,7 @@ import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NodePaging, Pagination } from 'alfresco-js-api';
 import { SearchQueryBuilderService } from '@alfresco/adf-content-services';
-import { UserPreferencesService, SearchService } from '@alfresco/adf-core';
+import { UserPreferencesService, SearchService, AppConfigService } from '@alfresco/adf-core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -41,6 +41,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     private subscriptions: Subscription[] = [];
 
     constructor(public router: Router,
+                private config: AppConfigService,
                 private preferences: UserPreferencesService,
                 private queryBuilder: SearchQueryBuilderService,
                 @Optional() private route: ActivatedRoute) {
@@ -61,6 +62,8 @@ export class SearchResultComponent implements OnInit, OnDestroy {
             }),
 
             this.queryBuilder.executed.subscribe(data => {
+                this.queryBuilder.paging.skipCount = 0;
+
                 this.onSearchResultLoaded(data);
                 this.isLoading = false;
             })
@@ -87,10 +90,8 @@ export class SearchResultComponent implements OnInit, OnDestroy {
             return null;
         }
 
-        const suffix = userInput.lastIndexOf('*') >= 0 ? '' : '*';
-        const query = `cm:name:${userInput}${suffix} OR cm:title:${userInput}${suffix} OR cm:description:${userInput}${suffix}
-         OR ia:whatEvent:${userInput}${suffix} OR ia:descriptionEvent:${userInput}${suffix} OR lnk:title:${userInput}${suffix}
-         OR lnk:description:${userInput}${suffix} OR TEXT:${userInput}${suffix} OR TAG:${userInput}${suffix}`;
+        const fields = this.config.get<string[]>('search.app:fields', ['cm:name']);
+        const query = fields.map(field => `${field}:"${userInput}*"`).join(' OR ');
 
         return query;
     }
