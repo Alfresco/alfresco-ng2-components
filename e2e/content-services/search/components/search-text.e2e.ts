@@ -32,7 +32,7 @@ import { SearchFiltersPage } from '../../../pages/adf/searchFiltersPage';
 import { ConfigEditorPage } from '../../../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 
-describe('Search component - Search Page', () => {
+describe('Search component - Text widget', () => {
 
     const searchCategoriesPage = new SearchCategoriesPage();
     const configEditorPage = new ConfigEditorPage();
