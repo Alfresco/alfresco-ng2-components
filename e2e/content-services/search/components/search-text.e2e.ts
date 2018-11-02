@@ -71,8 +71,7 @@ describe('Search component - Text widget', () => {
     });
 
     it('[C289329] Placeholder should be displayed in the widget when the input string is empty', () => {
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
-            .enterTextAndPressEnter('*');
+        browser.get(TestConfig.adf.url + '/search;q=*');
         searchResultPage.tableIsLoaded();
 
         searchFiltersPage.checkNameFilterIsDisplayed();
@@ -80,8 +79,7 @@ describe('Search component - Text widget', () => {
     });
 
     it('[C289330] Should be able to change the Field setting', () => {
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
-            .enterTextAndPressEnter('*');
+        browser.get(TestConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.checkCheckListFilterIsDisplayed();
         searchFiltersPage.clickCheckListFilter();
