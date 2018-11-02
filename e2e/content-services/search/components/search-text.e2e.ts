@@ -31,6 +31,7 @@ import { SearchCategoriesPage } from '../../../pages/adf/content_services/search
 import { SearchFiltersPage } from '../../../pages/adf/searchFiltersPage';
 import { ConfigEditorPage } from '../../../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
+import path = require('path');
 
 describe('Search component - Text widget', () => {
 
@@ -80,6 +81,7 @@ describe('Search component - Text widget', () => {
 
     it('[C289330] Should be able to change the Field setting', () => {
         browser.get(TestConfig.adf.url + '/search;q=*');
+        searchResultPage.tableIsLoaded();
 
         searchFiltersPage.checkCheckListFilterIsDisplayed();
         searchFiltersPage.clickCheckListFilter();
@@ -92,6 +94,29 @@ describe('Search component - Text widget', () => {
         searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
         searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
 
+        var json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
+
+        json.categories[0].component.settings.field = 'cm:description';
+
         navigationBarPage.clickConfigEditorButton();
+        configEditorPage.clickSearchConfiguration();
+        configEditorPage.clickClearButton();
+
+        configEditorPage.enterConfiguration(JSON.stringify(json));
+        // configEditorPage.enterConfiguration("{  edcefefef wefweffwfwaef wefwefwef}");
+        configEditorPage.clickSaveButton();
+
+        browser.get(TestConfig.adf.url + '/search;q=*');
+
+        searchFiltersPage.checkCheckListFilterIsDisplayed();
+        searchFiltersPage.clickCheckListFilter();
+        searchFiltersPage.checkListFiltersPage().clickCheckListOption('Folder');
+
+        searchFiltersPage.checkNameFilterIsDisplayed();
+        searchFiltersPage.textFiltersPage().searchByName(newFolderModel.name);
+        searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
+
+        searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
+        searchResultPage.checkContentIsDisplayed(newFolderModel.name);
     });
 });

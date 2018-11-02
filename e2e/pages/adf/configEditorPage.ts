@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, browser } from 'protractor';
 import Util = require('../../util/util');
 
 export class ConfigEditorPage {
@@ -23,7 +23,7 @@ export class ConfigEditorPage {
     enterConfiguration(text) {
         let textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
         Util.waitUntilElementIsVisible(textField);
-        textField.sendKeys(text);
+        browser.executeScript('this.monaco.editor.getModels()[0].setValue("' + text + '")');
         return this;
     }
 
