@@ -38,7 +38,7 @@ export class TaskListCloudDemoComponent implements OnInit {
     sortDirectionFormControl: FormControl;
 
     appDefinitionList: Observable<any>;
-    applicationName: string = '';
+    applicationName;
     status: string = '';
     sort: string = '';
     isFilterLoaded = false;
@@ -47,6 +47,7 @@ export class TaskListCloudDemoComponent implements OnInit {
     filterName: string;
     clickedRow: string = '';
     selectTask: string = '';
+    filterTaskParam;
     sortArray: TaskListCloudSortingModel [];
 
     columns = [
@@ -127,6 +128,7 @@ export class TaskListCloudDemoComponent implements OnInit {
 
     onStartTaskSuccess() {
         this.showStartTask = false;
+        this.filterTaskParam = { name: 'My tasks'};
     }
 
     onCancelStartTask() {

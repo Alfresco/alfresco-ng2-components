@@ -18,7 +18,7 @@
     </adf-cloud-start-task>
 </div>
 <div *ngIf="!showStartTask">
-    <adf-cloud-task-filters [appName]="applicationName" [showIcons]="true" (filterClick)="onFilterSelected($event)">
+    <adf-cloud-task-filters [appName]="applicationName" [filterParam]="filterTaskParam" [showIcons]="true" (filterClick)="onFilterSelected($event)">
     </adf-cloud-task-filters>
 
 <mat-accordion>
