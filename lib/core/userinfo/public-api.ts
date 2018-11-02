@@ -18,5 +18,6 @@
 export * from './components/user-info.component';
 export * from './services/bpm-user.service';
 export * from './services/ecm-user.service';
+export * from './services/identity-user.service';
 
 export * from './userinfo.module';
