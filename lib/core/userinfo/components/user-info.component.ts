@@ -21,6 +21,8 @@ import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserModel } from './../models/ecm-user.model';
 import { BpmUserService } from './../services/bpm-user.service';
 import { EcmUserService } from './../services/ecm-user.service';
+import { IdentityUserModel } from '../models/identity-user.model';
+import { IdentityUserService } from '../services/identity-user.service';
 
 @Component({
     selector: 'adf-userinfo',
@@ -58,12 +60,14 @@ export class UserInfoComponent implements OnInit {
 
     ecmUser: EcmUserModel;
     bpmUser: BpmUserModel;
+    cloudUser: IdentityUserModel;
     bpmUserImage: any;
     ecmUserImage: any;
     selectedIndex: number;
 
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
+                private identityUserService: IdentityUserService,
                 private authService: AuthenticationService) {
     }
 
@@ -74,6 +78,7 @@ export class UserInfoComponent implements OnInit {
     getUserInfo() {
         this.loadEcmUserInfo();
         this.loadBpmUserInfo();
+        this.loadIdentityUserInfo();
     }
 
     isLoggedIn() {
@@ -104,6 +109,12 @@ export class UserInfoComponent implements OnInit {
             this.bpmUser = null;
             this.bpmUserImage = null;
         }
+    }
+
+    loadIdentityUserInfo() {
+        this.identityUserService.getCurrentIdentityUserInfo().subscribe((res) => {
+            this.cloudUser = new IdentityUserModel(res);
+        });
     }
 
     stopClosing(event) {
