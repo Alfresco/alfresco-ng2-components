@@ -15,22 +15,25 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, FormValues, AppConfigService, LogService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { ProcessDefinitionRepresentationCloud } from '../models/process-definition-cloud.model';
-import { ProcessInstanceVariableCloud } from '../models/process-instance-variable-cloud.model';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
+import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProcessCloudService {
 
+    contextRoot: string;
+
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private appConfigService: AppConfigService,
                 private logService: LogService) {
+        this.contextRoot = this.appConfigService.get('bpmHost', '');
     }
 
     /**
@@ -38,10 +41,10 @@ export class ProcessCloudService {
      * @param appId ID of a target app
      * @returns Array of process definitions
      */
-    getProcessDefinitions(appName?: string): Observable<ProcessDefinitionRepresentationCloud[]> {
+    getProcessDefinitions(appName: string): Observable<ProcessDefinitionRepresentationCloud[]> {
 
         if (appName) {
-            let queryUrl = this.buildQueryUrl(appName);
+            let queryUrl = `${this.contextRoot}/${appName}-rb/v1/process-definitions`;
 
             return from(this.alfrescoApiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
@@ -49,14 +52,18 @@ export class ProcessCloudService {
                     null, null, null, ['application/json'],
                     ['application/json'], Object, null, null)
             ).pipe(
-                map(this.extractData),
-                map(processDefs => processDefs.map((pd) => new ProcessDefinitionRepresentationCloud(pd.entry))),
+                map(this.extractProcessDefinitions),
                 catchError(err => this.handleProcessError(err))
             );
         } else {
             this.logService.error('AppName is mandatory for querying task');
             return throwError('AppName not configured');
         }
+    }
+
+    private extractProcessDefinitions(res: any) {
+        let processDefinitions = res.list.entries.map(processDefs => new ProcessDefinitionRepresentationCloud(processDefs.entry));
+        return processDefinitions || [{}];
     }
 
     /**
@@ -69,62 +76,29 @@ export class ProcessCloudService {
      * @param variables Array of process instance variables
      * @returns Details of the process instance just started
      */
-    startProcess(appName: string,
-                 processDefinitionId: string,
-                 name: string,
-                 outcome?: string,
-                 startFormValues?: FormValues,
-                 variables?: ProcessInstanceVariableCloud[]
-    ): Observable<ProcessInstanceCloud> {
+    startProcess(appName: string, requestPayload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {
 
-        let requestPayload: any = {
-            processInstanceName: name,
-            processDefinitionId: processDefinitionId,
-            payloadType: 'StartProcessPayload'
-        };
-        if (outcome) {
-            requestPayload.outcome = outcome;
-        }
-        if (startFormValues) {
-            requestPayload.values = startFormValues;
-        }
-        if (variables) {
-            requestPayload.variables = variables;
-        }
-
-        let queryUrl = this.buildStartProcessUrl(appName);
+        let queryUrl = `${this.contextRoot}/${appName}-rb/v1/process-instances`;
 
         return from(this.alfrescoApiService.getInstance()
-            .oauth2Auth.callCustomApi(
-                queryUrl,
-                'POST',
-                null,
-                null,
-                null,
-                null,
-                requestPayload,
-                null,
-                ['application/json'],
-                ['application/json'],
-                Object,
-                null,
-                null)
+        .oauth2Auth.callCustomApi(
+            queryUrl,
+            'POST',
+            null,
+            null,
+            null,
+            null,
+            requestPayload,
+            null,
+            ['application/json'],
+            ['application/json'],
+            Object,
+            null,
+            null)
         ).pipe(
             map((processInstance) => new ProcessInstanceCloud(processInstance)),
             catchError(err => this.handleProcessError(err))
         );
-    }
-
-    private buildQueryUrl(appName: string) {
-        return `${this.appConfigService.get('bpmHost', '')}/${appName}-rb/v1/process-definitions`;
-    }
-
-    private buildStartProcessUrl(appName: string) {
-        return `${this.appConfigService.get('bpmHost', '')}/${appName}-rb/v1/process-instances`;
-    }
-
-    private extractData(res: any) {
-        return res.list.entries || {};
     }
 
     private handleProcessError(error: any) {

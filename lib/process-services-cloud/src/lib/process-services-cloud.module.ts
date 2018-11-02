@@ -31,6 +31,6 @@ import { ProcessListCloudModule } from './process-list-cloud/process-list-cloud.
         TaskCloudModule,
         ProcessCloudModule,
         ProcessListCloudModule
-        ]
+    ]
 })
 export class ProcessServicesCloudModule { }

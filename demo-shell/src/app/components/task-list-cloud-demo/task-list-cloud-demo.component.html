@@ -80,7 +80,23 @@
         </div>
     </mat-tab>
     <mat-tab label="Processes">
-        <adf-cloud-start-process [appName]="applicationName">
-        </adf-cloud-start-process>
+        <div class="adf-start-process-button">
+            <adf-sidebar-action-menu [expanded]="true" title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
+                <mat-icon sidebar-menu-title-icon>arrow_drop_down</mat-icon>
+                <div sidebar-menu-options>
+                    <button mat-menu-item data-automation-id="btn-start-process" (click)="onStartProcess()">
+                        <mat-icon>assessment</mat-icon>
+                        <span>{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.NEW_PROCESS' | translate}}</span>
+                    </button>
+                </div>
+            </adf-sidebar-action-menu>
+        </div>
+
+
+        <div *ngIf="showStartProcess">
+            <adf-cloud-start-process [appName]="applicationName" [name]="defaultProcessName" (start)="onProcessStarted()">
+            </adf-cloud-start-process>
+        </div>
+
     </mat-tab>
 </mat-tab-group>
