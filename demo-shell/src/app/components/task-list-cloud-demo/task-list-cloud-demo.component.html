@@ -1,94 +1,98 @@
-<mat-toolbar>
-    <mat-toolbar-row>
-        <span>TASK LIST CLOUD DEMO</span>
-        <span class="example-spacer"></span>
-        <button mat-icon-button matTooltip="Create Task" (click)="startTask()">
-            <mat-icon>add</mat-icon>
-          </button>
-    </mat-toolbar-row>
-</mat-toolbar>
-<adf-cloud-task-filters
-    [appName]="'my-app'"
-    [showIcons]="true"
-    (filterClick)="onFilterSelected($event)">
-</adf-cloud-task-filters>
+<h2>TASK LIST CLOUD DEMO</h2>
+<div fxLayout="row" fxLayout.xs="column">
+    <div fxFlexOrder="1" fxFlex="15%">
+        <adf-sidebar-action-menu [expanded]="true" [width]="205" title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
+            <mat-icon sidebar-menu-title-icon>arrow_drop_down</mat-icon>
+            <div sidebar-menu-options>
+                <button mat-menu-item data-automation-id="btn-start-task" (click)="onStartTask()">
+                    <mat-icon>assessment</mat-icon>
+                    <span>{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.NEW_TASK' | translate}}</span>
+                </button>
+            </div>
+        </adf-sidebar-action-menu>
+    </div>
+</div>
 
-<mat-accordion>
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                {{filterName}}
-            </mat-panel-title>
-            <mat-panel-description>
-                Customise your filter
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div class="task-cloud-demo-select">
-            <mat-form-field style="margin: 8px;">
-                <mat-select placeholder="Status" [(ngModel)]="status">
-                    <mat-option value="">
-                        ALL
-                    </mat-option>
-                    <mat-option value="CREATED">
-                        CREATED
-                    </mat-option>
-                    <mat-option value="CANCELLED">
-                        CANCELLED
-                    </mat-option>
-                    <mat-option value="ASSIGNED">
-                        ASSIGNED
-                    </mat-option>
-                    <mat-option value="SUSPENDED">
-                        SUSPENDED
-                    </mat-option>
-                    <mat-option value="COMPLETED">
-                        COMPLETED
-                    </mat-option>
-                    <mat-option value="DELETED">
-                        DELETED
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-select [formControl]="sortFormControl">
-                    <mat-option [value]="''">Select a column</mat-option>
-                    <mat-option *ngFor="let column of columns" [value]="column.key">
-                    {{column.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-select [formControl]="sortDirectionFormControl">
-                    <mat-option [value]="''">Select a direction</mat-option>
-                    <mat-option value="ASC">
-                        ASC
-                    </mat-option>
-                    <mat-option value="DESC">
-                        DESC
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+<div *ngIf="showStartTask">
+    <adf-cloud-start-task [appName]="applicationName" (success)="onStartTaskSuccess()" (cancel)="onCancelStartTask()">
+    </adf-cloud-start-task>
+</div>
+<div *ngIf="!showStartTask">
+    <adf-cloud-task-filters [appName]="applicationName" [showIcons]="true" (filterClick)="onFilterSelected($event)">
+    </adf-cloud-task-filters>
 
-    </mat-expansion-panel>
-</mat-accordion>
-<div>
-    <adf-cloud-task-list *ngIf="isFilterLoaded" #taskCloud
-                         [applicationName]="applicationName"
-                         [status]="status"
-                         [landingTaskId]="selectTask"
-                         [sorting]="sortArray"
-                         (rowClick)="onRowClick($event)">
-        <data-columns>
-            <data-column key="entry.id" title="Id"></data-column>
-            <data-column key="entry.name" title="Name"></data-column>
-            <data-column key="entry.status" title="Status"></data-column>
-            <data-column key="entry.processDefinitionId" title="Process Definition Id"></data-column>
-            <data-column key="entry.priority" title="Priority"></data-column>
-            <data-column key="entry.createdDate" title="Created Date"></data-column>
-        </data-columns>
-    </adf-cloud-task-list>
-    <adf-pagination [target]="taskCloud"
-                    (changePageSize)="onChangePageSize($event)">
-    </adf-pagination>
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{filterName}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    Customise your filter
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="task-cloud-demo-select">
+                <mat-form-field style="margin: 8px;">
+                    <mat-select placeholder="Status" [(ngModel)]="status">
+                        <mat-option value="">
+                            ALL
+                        </mat-option>
+                        <mat-option value="CREATED">
+                            CREATED
+                        </mat-option>
+                        <mat-option value="CANCELLED">
+                            CANCELLED
+                        </mat-option>
+                        <mat-option value="ASSIGNED">
+                            ASSIGNED
+                        </mat-option>
+                        <mat-option value="SUSPENDED">
+                            SUSPENDED
+                        </mat-option>
+                        <mat-option value="COMPLETED">
+                            COMPLETED
+                        </mat-option>
+                        <mat-option value="DELETED">
+                            DELETED
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select [formControl]="sortFormControl">
+                        <mat-option [value]="''">Select a column</mat-option>
+                        <mat-option *ngFor="let column of columns" [value]="column.key">
+                            {{column.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select [formControl]="sortDirectionFormControl">
+                        <mat-option [value]="''">Select a direction</mat-option>
+                        <mat-option value="ASC">
+                            ASC
+                        </mat-option>
+                        <mat-option value="DESC">
+                            DESC
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+    <div>
+        <adf-cloud-task-list *ngIf="isFilterLoaded" #taskCloud [applicationName]="applicationName" [status]="status"
+            [landingTaskId]="selectTask" [sorting]="sortArray" (rowClick)="onRowClick($event)">
+            <data-columns>
+                <data-column key="entry.id" title="Id"></data-column>
+                <data-column key="entry.name" title="Name" class="full-width name-column ellipsis-cell"></data-column>
+                <data-column key="entry.status" title="Status"></data-column>
+                <data-column key="entry.processDefinitionId" title="Process Definition Id"></data-column>
+                <data-column key="entry.priority" title="Priority"></data-column>
+                <data-column key="entry.createdDate" type="date" title="Created Date" [format]="'timeAgo'"></data-column>
+            </data-columns>
+        </adf-cloud-task-list>
+        <adf-pagination *ngIf="isFilterLoaded" [target]="taskCloud" (changePageSize)="onChangePageSize($event)">
+        </adf-pagination>
+    </div>
 </div>

@@ -42,6 +42,7 @@ export class TaskListCloudDemoComponent implements OnInit {
     status: string = '';
     sort: string = '';
     isFilterLoaded = false;
+    showStartTask = false;
     sortDirection: string = 'ASC';
     filterName: string;
     clickedRow: string = '';
@@ -116,6 +117,18 @@ export class TaskListCloudDemoComponent implements OnInit {
             order: filter.query.order
         };
         this.router.navigate([`/cloud/${this.applicationName}/tasks/`], {queryParams: queryParams});
+    }
+
+    onStartTask() {
+        this.showStartTask = true;
+    }
+
+    onStartTaskSuccess() {
+        this.showStartTask = false;
+    }
+
+    onCancelStartTask() {
+        this.showStartTask = false;
     }
 
     onChangePageSize(event) {

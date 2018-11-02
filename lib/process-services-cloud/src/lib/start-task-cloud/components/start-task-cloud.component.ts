@@ -43,7 +43,6 @@ export class StartTaskCloudComponent implements OnInit {
 
     public FORMAT_DATE: string = 'DD/MM/YYYY';
 
-    /** (required) The id of the app. */
     @Input()
     appName: string;
 
@@ -100,6 +99,7 @@ export class StartTaskCloudComponent implements OnInit {
     buildForm() {
         this.taskForm = this.formBuilder.group({
             name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxTaskNameLength)]),
+            priority: new FormControl(),
             description: ''
         });
     }
@@ -161,6 +161,10 @@ export class StartTaskCloudComponent implements OnInit {
 
     get nameController(): AbstractControl {
         return this.taskForm.get('name');
+    }
+
+    get priorityController(): AbstractControl {
+        return this.taskForm.get('priority');
     }
 
 }
