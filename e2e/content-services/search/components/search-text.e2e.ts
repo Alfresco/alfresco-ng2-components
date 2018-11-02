@@ -27,7 +27,6 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { LoginPage } from '../../../pages/adf/loginPage';
 import SearchDialog = require('../../../pages/adf/dialog/searchDialog');
 import { SearchResultsPage } from '../../../pages/adf/searchResultsPage';
-import { SearchCategoriesPage } from '../../../pages/adf/content_services/search/search-categories';
 import { SearchFiltersPage } from '../../../pages/adf/searchFiltersPage';
 import { ConfigEditorPage } from '../../../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
@@ -35,7 +34,6 @@ import path = require('path');
 
 describe('Search component - Text widget', () => {
 
-    const searchCategoriesPage = new SearchCategoriesPage();
     const configEditorPage = new ConfigEditorPage();
     const navigationBarPage = new NavigationBarPage();
     const searchFiltersPage = new SearchFiltersPage();
@@ -61,9 +59,12 @@ describe('Search component - Text widget', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         await this.alfrescoJsApi.nodes.addNode('-my-', {
-            'name': newFolderModel.name,
-            'description': newFolderModel.description,
-            'nodeType': 'cm:folder'
+            "name": newFolderModel.name,
+            "nodeType":"cm:folder",
+            "properties":
+            {
+                "cm:description": newFolderModel.description
+            }
         }, {}, {});
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -95,18 +96,16 @@ describe('Search component - Text widget', () => {
         searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
 
         var json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
-
         json.categories[0].component.settings.field = 'cm:description';
 
         navigationBarPage.clickConfigEditorButton();
         configEditorPage.clickSearchConfiguration();
         configEditorPage.clickClearButton();
-
         configEditorPage.enterConfiguration(JSON.stringify(json));
-        // configEditorPage.enterConfiguration("{  edcefefef wefweffwfwaef wefwefwef}");
         configEditorPage.clickSaveButton();
 
-        browser.get(TestConfig.adf.url + '/search;q=*');
+        searchDialog.clickOnSearchIcon().enterTextAndPressEnter('*');
+        searchResultPage.tableIsLoaded();
 
         searchFiltersPage.checkCheckListFilterIsDisplayed();
         searchFiltersPage.clickCheckListFilter();

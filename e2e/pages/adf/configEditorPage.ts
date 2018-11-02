@@ -23,7 +23,8 @@ export class ConfigEditorPage {
     enterConfiguration(text) {
         let textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
         Util.waitUntilElementIsVisible(textField);
-        browser.executeScript('this.monaco.editor.getModels()[0].setValue("' + text + '")');
+        //browser.executeScript('this.monaco.editor.getModels()[0].setValue("' + text + '")');
+        browser.executeScript('this.monaco.editor.getModels()[0].setValue(`'+text+'`)');
         return this;
     }
 
