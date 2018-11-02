@@ -21,8 +21,8 @@ import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { of } from 'rxjs';
 import { TreeBaseNode } from 'tree-view/models/tree-view.model';
-/*tslint:disable:ban*/
-fdescribe('TreeViewService', () => {
+
+describe('TreeViewService', () => {
 
     let service: TreeViewService;
     let nodeService: NodesApiService;
