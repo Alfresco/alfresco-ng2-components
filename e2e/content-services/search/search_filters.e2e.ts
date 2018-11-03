@@ -20,6 +20,7 @@ import SearchDialog = require('../../pages/adf/dialog/searchDialog');
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import PaginationPage = require('../../pages/adf/paginationPage');
 import ContentList = require('../../pages/adf/dialog/contentList');
+import { SearchCategoriesPage } from '../../pages/adf/content_services/search/search-categories';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');
@@ -37,6 +38,7 @@ describe('Search Filters', () => {
     let loginPage = new LoginPage();
     let searchDialog = new SearchDialog();
     let searchFiltersPage = new SearchFiltersPage();
+    const searchCategoriesPage = new SearchCategoriesPage();
     let uploadActions = new UploadActions();
     let paginationPage = new PaginationPage();
     let contentList = new ContentList();
@@ -98,44 +100,43 @@ describe('Search Filters', () => {
     });
 
     it('[C286298] Should be able to cancel a filter using "x" button from the toolbar', () => {
-        searchFiltersPage.filterByCreator(acsUser.firstName, acsUser.lastName);
-        searchFiltersPage.checkCreatorChipIsDisplayed(acsUser.firstName, acsUser.lastName);
-        searchFiltersPage.removeCreatorFilter(acsUser.firstName, acsUser.lastName);
-        searchFiltersPage.checkCreatorChipIsNotDisplayed(acsUser.firstName, acsUser.lastName);
+        let userOption = `${acsUser.firstName} ${acsUser.lastName}`;
+        searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption)
+            .checkChipIsDisplayed(userOption)
+            .removeFilterOption(userOption)
+            .checkChipIsNotDisplayed(userOption);
     });
 
     it('[C277146] Should Show more/less buttons be hidden when inactive', () => {
         browser.get(TestConfig.adf.url + '/search;q=*');
 
-        searchFiltersPage.checkCreatedShowLessButtonIsNotDisplayed();
-        searchFiltersPage.checkCreatedShowMoreButtonIsDisplayed();
-
-        searchFiltersPage.clickCreatedShowMoreButtonUntilIsNotDisplayed();
-        searchFiltersPage.checkCreatedShowLessButtonIsDisplayed();
-
-        searchFiltersPage.clickCreatedShowLessButtonUntilIsNotDisplayed();
+        searchFiltersPage.creatorCheckListFiltersPage().checkShowLessButtonIsNotDisplayed()
+            .checkShowMoreButtonIsDisplayed()
+            .clickShowMoreButtonUntilIsNotDisplayed()
+            .checkShowLessButtonIsDisplayed()
+            .clickShowLessButtonUntilIsNotDisplayed();
     });
 
     it('[C286556] Search categories should preserve their collapsed/expanded state after the search', () => {
         browser.get(TestConfig.adf.url + '/search;q=*');
 
-        searchFiltersPage.clickFileTypeFilterHeader();
-        searchFiltersPage.checkFileTypeFilterIsCollapsed();
-        searchFiltersPage.clickFileSizeFilterHeader();
-        searchFiltersPage.checkFileSizeFilterIsCollapsed();
+        searchFiltersPage.clickFileTypeListFilter()
+            .checkFileTypeFilterIsCollapsed()
+            .clickFileSizeFilterHeader()
+            .checkFileSizeFilterIsCollapsed();
 
-        searchFiltersPage.selectCreator('Administrator');
+        searchFiltersPage.creatorCheckListFiltersPage().clickCheckListOption('Administrator');
 
-        searchFiltersPage.checkFileTypeFilterIsCollapsed();
-        searchFiltersPage.checkFileSizeFilterIsCollapsed();
+        searchFiltersPage.checkFileTypeFilterIsCollapsed()
+            .checkFileSizeFilterIsCollapsed();
     });
 
     it('[C287796] Should be able to display the correct bucket number after selecting a filter',  () => {
         browser.get(TestConfig.adf.url + '/search;q=*');
 
-        searchFiltersPage.clickPngImageType();
+        searchFiltersPage.fileTypeCheckListFiltersPage().clickCheckListOption('PNG Image');
 
-        let bucketNumberForFilter = searchFiltersPage.getBucketNumberOfFilterType(filter.type);
+        let bucketNumberForFilter = searchFiltersPage.fileTypeCheckListFiltersPage().getBucketNumberOfFilterType(filter.type);
 
         let resultFileNames = contentList.getAllRowsNameColumn();
 

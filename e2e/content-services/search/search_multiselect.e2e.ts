@@ -38,7 +38,7 @@ describe('Search Component - Multi-Select Facet', () => {
     let searchResultsPage = new SearchResultsPage();
     let uploadActions = new UploadActions();
     let searchFiltersPage = new SearchFiltersPage();
-    let site;
+    let site, userOption;
 
     beforeAll(() => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -89,8 +89,10 @@ describe('Search Component - Multi-Select Facet', () => {
             searchDialog.clickOnSearchIcon();
             searchDialog.enterTextAndPressEnter(`${randomName}`);
 
+            userOption = `${acsUser.firstName} ${acsUser.lastName}`;
+
             searchFiltersPage.checkSearchFiltersIsDisplayed();
-            searchFiltersPage.filterByCreator(acsUser.firstName, acsUser.lastName);
+            searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
 
             done();
         });
@@ -109,13 +111,13 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         it('[C280054] Should be able to select multiple items from a search facet filter', () => {
-            searchFiltersPage.filterByFileType('Plain Text');
+            searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
 
             expect(searchResultsPage.numberOfResultsDisplayed()).toBe(2);
             searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
             searchResultsPage.checkContentIsDisplayed(txtFileSite.entry.name);
 
-            searchFiltersPage.filterByFileType('JPEG Image');
+            searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('JPEG Image');
 
             expect(searchResultsPage.numberOfResultsDisplayed()).toBe(4);
             searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
@@ -176,17 +178,18 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         it('[C280056] Should be able to select multiple items from multiple search facet filters', () => {
+
             searchFiltersPage.checkSearchFiltersIsDisplayed();
 
-            searchFiltersPage.filterByCreator(userUploadingTxt.firstName, userUploadingTxt.lastName);
+            searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingTxt.firstName} ${userUploadingTxt.lastName}`);
 
-            searchFiltersPage.filterByCreator(userUploadingImg.firstName, userUploadingImg.lastName);
+            searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingImg.firstName} ${userUploadingImg.lastName}`);
 
             searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
             searchResultsPage.checkContentIsDisplayed(jpgFile.entry.name);
 
-            searchFiltersPage.filterByFileType('Plain Text');
-            searchFiltersPage.filterByFileType('JPEG Image');
+            searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
+            searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('JPEG Image');
 
             expect(searchResultsPage.numberOfResultsDisplayed()).toBe(2);
             searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
@@ -237,9 +240,8 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         it('[C280058] Should update filter facets items number when another filter facet item is selected', () => {
-            searchFiltersPage.filterByFileType('Plain Text');
-
-            searchFiltersPage.filterByCreator(acsUser.firstName, acsUser.lastName);
+            searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
+            searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
 
             expect(searchResultsPage.numberOfResultsDisplayed()).toBe(1);
             searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);

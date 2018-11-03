@@ -17,171 +17,86 @@
 
 import Util = require('../../util/util');
 import { element, by } from 'protractor';
+import { SearchCategoriesPage } from './content_services/search/search-categories';
 
 export class SearchFiltersPage {
 
+    searchCategoriesPage = new SearchCategoriesPage();
+
     searchFilters = element(by.css('adf-search-filter'));
     fileTypeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.TYPE"]'));
-    searchFileTypeFilter = element(by.css('input[data-automation-id="facet-result-filter-SEARCH.FACET_FIELDS.TYPE"]'));
     creatorFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATOR"]'));
-    searchCreatorFilter = element(by.css('input[data-automation-id="facet-result-filter-SEARCH.FACET_FIELDS.CREATOR"]'));
     fileSizeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"]'));
-    createdFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATED"'));
-    showMoreButtonForCreated = this.createdFilter.element(by.css('button[title="Show more"]'));
-    showLessButtonForCreated = this.createdFilter.element(by.css('button[title="Show less"]'));
-    pngImageFileType = element(by.css('mat-checkbox[data-automation-id="checkbox-SEARCH.FACET_FIELDS.TYPE-PNG Image"]'));
+    nameFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Name"]'));
+    checkListFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]'));
 
     checkSearchFiltersIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchFilters);
     }
 
-    checkFileTypeFilterIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.fileTypeFilter);
+    textFiltersPage() {
+        return this.searchCategoriesPage.textFiltersPage(this.nameFilter);
     }
 
-    checkSearchFileTypeFilterIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.fileTypeFilter);
+    checkListFiltersPage() {
+        return this.searchCategoriesPage.checkListFiltersPage(this.checkListFilter);
+    }
+
+    creatorCheckListFiltersPage() {
+        return this.searchCategoriesPage.checkListFiltersPage(this.creatorFilter);
+    }
+
+    fileTypeCheckListFiltersPage() {
+        return this.searchCategoriesPage.checkListFiltersPage(this.fileTypeFilter);
+    }
+
+    checkFileTypeFilterIsDisplayed() {
+        this.searchCategoriesPage.checkFilterIsDisplayed(this.fileTypeFilter);
+        return this;
     }
 
     checkCreatorFilterIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.creatorFilter);
+        this.searchCategoriesPage.checkFilterIsDisplayed(this.creatorFilter);
+        return this;
     }
 
-    checkSearchCreatorFilterIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.searchCreatorFilter);
+    checkCheckListFilterIsDisplayed() {
+        this.searchCategoriesPage.checkFilterIsDisplayed(this.checkListFilter);
+        return this;
     }
 
-    searchInFileTypeFilter(fileType) {
-        Util.waitUntilElementIsClickable(this.searchFileTypeFilter);
-        this.searchFileTypeFilter.clear();
-        this.searchFileTypeFilter.sendKeys(fileType);
+    checkNameFilterIsDisplayed() {
+        this.searchCategoriesPage.checkFilterIsDisplayed(this.nameFilter);
+        return this;
     }
 
-    searchInCreatorFilter(creatorName) {
-        Util.waitUntilElementIsClickable(this.searchCreatorFilter);
-        this.searchCreatorFilter.clear();
-        this.searchCreatorFilter.sendKeys(creatorName);
+    clickCheckListFilter() {
+        this.searchCategoriesPage.clickFilter(this.checkListFilter);
+        return this;
     }
 
-    selectFileType(fileType) {
-        let result = element(by.css(`mat-checkbox[data-automation-id='checkbox-SEARCH.FACET_FIELDS.TYPE-${fileType}'] .mat-checkbox-inner-container`));
-        Util.waitUntilElementIsClickable(result);
-        result.click();
-    }
-
-    selectCreator(creatorName) {
-        let result = element(by.css(`mat-checkbox[data-automation-id='checkbox-SEARCH.FACET_FIELDS.CREATOR-${creatorName}'] .mat-checkbox-inner-container`));
-        Util.waitUntilElementIsClickable(result);
-        result.click();
+    clickFileTypeListFilter() {
+        this.searchCategoriesPage.clickFilter(this.fileTypeFilter);
+        return this;
     }
 
     clickFileSizeFilterHeader() {
-        let fileSizeFilterHeader = this.fileSizeFilter.element(by.css('mat-expansion-panel-header'));
-        Util.waitUntilElementIsClickable(fileSizeFilterHeader);
-        return fileSizeFilterHeader.click();
+        this.searchCategoriesPage.clickFilterHeader(this.fileSizeFilter);
+        return this;
     }
 
     clickFileTypeFilterHeader() {
-        let fileTypeFilterHeader = this.fileTypeFilter.element(by.css('mat-expansion-panel-header'));
-        Util.waitUntilElementIsClickable(fileTypeFilterHeader);
-        return fileTypeFilterHeader.click();
+        this.searchCategoriesPage.clickFilterHeader(this.fileTypeFilter);
+        return this;
     }
 
     checkFileTypeFilterIsCollapsed() {
-        this.fileTypeFilter.getAttribute('class').then((elementClass) => {
-            expect(elementClass).not.toContain('mat-expanded');
-        });
+        this.searchCategoriesPage.checkFilterIsCollapsed(this.fileTypeFilter);
+        return this;
     }
 
     checkFileSizeFilterIsCollapsed() {
-        this.fileSizeFilter.getAttribute('class').then((elementClass) => {
-            expect(elementClass).not.toContain('mat-expanded');
-        });
+        this.searchCategoriesPage.checkFilterIsCollapsed(this.fileSizeFilter);
+        return this;
     }
-
-    filterByFileType(fileType) {
-        this.checkFileTypeFilterIsDisplayed();
-
-        this.checkSearchFileTypeFilterIsDisplayed();
-        this.searchInFileTypeFilter(fileType);
-        this.selectFileType(fileType);
-    }
-
-    filterByCreator(creatorFirstName, creatorLastName) {
-        this.checkCreatorFilterIsDisplayed();
-
-        this.checkSearchCreatorFilterIsDisplayed();
-        this.searchInCreatorFilter(`${creatorFirstName} ${creatorLastName}`);
-        this.selectCreator(`${creatorFirstName} ${creatorLastName}`);
-    }
-
-    removeCreatorFilter(creatorFirstName, creatorLastName) {
-        let cancelChipButton = element(by.cssContainingText('mat-chip', ` ${creatorFirstName} ${creatorLastName} `)).element(by.css('mat-icon'));
-        Util.waitUntilElementIsClickable(cancelChipButton);
-        return cancelChipButton.click();
-    }
-
-    checkCreatorChipIsDisplayed(creatorFirstName, creatorLastName) {
-        return Util.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip', ` ${creatorFirstName} ${creatorLastName} `)).element(by.css('mat-icon')));
-    }
-
-    checkCreatorChipIsNotDisplayed(creatorFirstName, creatorLastName) {
-        return Util.waitUntilElementIsNotOnPage(element(by.cssContainingText('mat-chip', ` ${creatorFirstName} ${creatorLastName} `)).element(by.css('mat-icon')));
-    }
-
-    clickCreatedShowMoreButtonUntilIsNotDisplayed() {
-        Util.waitUntilElementIsVisible(this.createdFilter);
-
-        this.showMoreButtonForCreated.isDisplayed().then(async (visible) => {
-            if (visible) {
-                this.showMoreButtonForCreated.click();
-
-                this.clickCreatedShowMoreButtonUntilIsNotDisplayed();
-            }
-        }, err => {
-        });
-    }
-
-    checkCreatedShowMoreButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.showMoreButtonForCreated);
-    }
-
-    clickCreatedShowLessButtonUntilIsNotDisplayed() {
-        Util.waitUntilElementIsVisible(this.createdFilter);
-
-        this.showLessButtonForCreated.isDisplayed().then(async (visible) => {
-            if (visible) {
-                this.showLessButtonForCreated.click();
-
-                this.clickCreatedShowLessButtonUntilIsNotDisplayed();
-            }
-        }, err => {
-        });
-    }
-
-    checkCreatedShowLessButtonIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.showLessButtonForCreated);
-    }
-
-    checkCreatedShowLessButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.showLessButtonForCreated);
-    }
-
-    clickPngImageType() {
-        Util.waitUntilElementIsVisible(this.pngImageFileType);
-        return this.pngImageFileType.click();
-    }
-
-    getBucketNumberOfFilterType(fileType) {
-        let fileTypeFilter = element(by.css('mat-checkbox[data-automation-id="checkbox-SEARCH.FACET_FIELDS.' + fileType + '"] span'));
-        Util.waitUntilElementIsVisible(fileTypeFilter);
-        let bucketNumber = fileTypeFilter.getText().then((valueOfBucket) => {
-            let numberOfBucket = valueOfBucket.split('(')[1];
-            let totalNumberOfBucket = numberOfBucket.split(')')[0];
-            return totalNumberOfBucket;
-        });
-
-        return bucketNumber;
-    }
-
 }

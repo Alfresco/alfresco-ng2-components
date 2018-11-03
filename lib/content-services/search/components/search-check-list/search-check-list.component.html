@@ -2,6 +2,7 @@
     <mat-checkbox
         *ngFor="let option of options"
         [checked]="option.checked"
+        [attr.data-automation-id]="'checkbox-' + (option.name)"
         (change)="changeHandler($event, option)">
         {{ option.name | translate }}
     </mat-checkbox>
