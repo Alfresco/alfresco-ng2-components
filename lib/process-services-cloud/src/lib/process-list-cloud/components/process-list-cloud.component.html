@@ -1,0 +1,28 @@
+<adf-datatable #dataTable
+        [rows]="rows"
+        [columns]="columns"
+        [loading]="isLoading"
+        [selectionMode]="selectionMode"
+        [multiselect]="multiselect"
+        (rowClick)="onRowClick($event)"
+        (row-keyup)="onRowKeyUp($event)">
+        <loading-content-template>
+            <ng-template>
+                <mat-progress-spinner
+                    class="adf-cloud-process-list-loading-margin"
+                    [color]="'primary'"
+                    [mode]="'indeterminate'">
+                </mat-progress-spinner>
+            </ng-template>
+        </loading-content-template>
+        <no-content-template>
+            <ng-template>
+                <adf-empty-content *ngIf="!emptyCustomContent"
+                    icon="assessment"
+                    [title]="'ADF-PROCESS-LIST-CLOUD.MESSAGES.TITLE' | translate"
+                    [subtitle]="'ADF-PROCESS-LIST-CLOUD.MESSAGES.SUBTITLE'| translate">
+                </adf-empty-content>
+                <ng-content select="adf-empty-custom-content"></ng-content>
+            </ng-template>
+        </no-content-template>
+</adf-datatable>

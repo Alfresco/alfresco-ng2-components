@@ -42,6 +42,7 @@ import { ReportIssueComponent } from './components/report-issue/report-issue.com
 import { AppComponent } from './app.component';
 import { CloudComponent } from './components/cloud/cloud.component';
 import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
+import { ProcessListCloudExampleComponent } from './components/cloud/process-list-cloud-example.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -146,6 +147,10 @@ export const appRoutes: Routes = [
                         component: TaskListCloudDemoComponent
                     }
                 ]
+            },
+            {
+                path: 'process-cloud',
+                component: ProcessListCloudExampleComponent
             },
             {
                 path: 'node-selector',

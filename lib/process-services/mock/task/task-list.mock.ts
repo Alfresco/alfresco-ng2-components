@@ -104,3 +104,10 @@ export let fakeColumnSchema = {
     ],
     fakeCustomSchema
 };
+
+export let fakeEmptyTask = {
+    size: 0,
+    start: 0,
+    total: 0,
+    data: []
+};
