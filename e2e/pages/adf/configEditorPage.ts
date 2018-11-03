@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, browser } from 'protractor';
 import Util = require('../../util/util');
 
 export class ConfigEditorPage {
@@ -24,6 +24,13 @@ export class ConfigEditorPage {
         let textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
         Util.waitUntilElementIsVisible(textField);
         textField.sendKeys(text);
+        return this;
+    }
+
+    enterBigConfigurationText(text) {
+        let textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
+        Util.waitUntilElementIsVisible(textField);
+        browser.executeScript('this.monaco.editor.getModels()[0].setValue(`' + text + '`)');
         return this;
     }
 
@@ -43,6 +50,13 @@ export class ConfigEditorPage {
 
     clickFileConfiguration() {
         let button = element(by.id('adf-file-conf'));
+        Util.waitUntilElementIsVisible(button);
+        Util.waitUntilElementIsClickable(button);
+        return button.click();
+    }
+
+    clickSearchConfiguration() {
+        let button = element(by.id('adf-search-conf'));
         Util.waitUntilElementIsVisible(button);
         Util.waitUntilElementIsClickable(button);
         return button.click();

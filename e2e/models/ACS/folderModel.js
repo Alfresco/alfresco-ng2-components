@@ -24,6 +24,7 @@ var FolderModel = function (details) {
     this.shortName = this.name;
     this.tooltip = this.name;
     this.location = "";
+    this.description= "";
 
     this.getName = function () {
         return this.name;
