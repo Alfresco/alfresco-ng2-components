@@ -1,7 +1,7 @@
 {
   "name": "alfresco-components",
   "description": "Alfresco Angular components",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "author": "Alfresco Software, Ltd.",
   "main": "./index.js",
   "scripts": {
