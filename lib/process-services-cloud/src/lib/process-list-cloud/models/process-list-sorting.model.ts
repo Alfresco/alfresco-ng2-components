@@ -15,8 +15,13 @@
  * limitations under the License.
  */
 
-export * from './lib/process-services-cloud.module';
-export * from './lib/app-list-cloud/public-api';
-export * from './lib/task-list-cloud/public-api';
-export * from './lib/task-cloud/public-api';
-export * from './lib/process-list-cloud/public_api';
+export class ProcessListCloudSortingModel {
+    orderBy: string;
+    direction: string;
+     constructor(obj: any) {
+        if (obj) {
+            this.orderBy = obj.orderBy;
+            this.direction = obj.direction;
+        }
+    }
+}

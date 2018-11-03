@@ -15,8 +15,20 @@
  * limitations under the License.
  */
 
-export * from './lib/process-services-cloud.module';
-export * from './lib/app-list-cloud/public-api';
-export * from './lib/task-list-cloud/public-api';
-export * from './lib/task-cloud/public-api';
-export * from './lib/process-list-cloud/public_api';
+export let processCloudPresetsDefaultModel = {
+    'default': [
+        {
+            'key': 'name',
+            'type': 'text',
+            'title': 'ADF_PROCESS_LIST.PROPERTIES.NAME',
+            'sortable': true
+        },
+        {
+            'key': 'created',
+            'type': 'text',
+            'title': 'ADF_PROCESS_LIST.PROPERTIES.CREATED',
+            'cssClass': 'hidden',
+            'sortable': true
+        }
+    ]
+};

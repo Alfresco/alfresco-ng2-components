@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { Component, SimpleChange, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, CoreModule, DataTableModule } from '@alfresco/adf-core';
 import { DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { fakeGlobalTask, fakeCustomSchema } from '../../mock';
+import { fakeGlobalTask, fakeCustomSchema, fakeEmptyTask } from '../../mock';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
+import { TaskListModule } from 'task-list/task-list.module';
 
 declare let jasmine: any;
 
@@ -567,10 +568,10 @@ describe('CustomTaskListComponent', () => {
 
 @Component({
     template: `
-    <adf-tasklist>
-        <adf-empty-content-holder>
-            <p id="custom-id"></p>
-        </adf-empty-content-holder>
+    <adf-tasklist [appId]="1">
+        <adf-empty-custom-content>
+            <p id="custom-id">CUSTOM EMPTY</p>
+        </adf-empty-custom-content>
     </adf-tasklist>
        `
 })
@@ -580,19 +581,20 @@ class EmptyTemplateComponent {
 describe('Task List: Custom EmptyTemplateComponent', () => {
     let fixture: ComponentFixture<EmptyTemplateComponent>;
     let translateService: TranslateService;
+    let taskListService: TaskListService;
 
     setupTestBed({
-        imports: [ProcessTestingModule],
-        declarations: [EmptyTemplateComponent],
-        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+        imports: [ProcessTestingModule, TaskListModule, DataTableModule],
+        declarations: [EmptyTemplateComponent]
     });
 
     beforeEach(() => {
         translateService = TestBed.get(TranslateService);
+        taskListService = TestBed.get(TaskListService);
         spyOn(translateService, 'get').and.callFake((key) => {
             return of(key);
         });
-
+        spyOn(taskListService, 'findTasksByState').and.returnValue(of(fakeEmptyTask));
         fixture = TestBed.createComponent(EmptyTemplateComponent);
         fixture.detectChanges();
     });
@@ -601,10 +603,12 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
         fixture.destroy();
     });
 
-    it('should render the custom template', fakeAsync(() => {
+    it('should render the custom template', (done) => {
         fixture.detectChanges();
-        tick(100);
-        expect(fixture.debugElement.query(By.css('#custom-id'))).not.toBeNull();
-        expect(fixture.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
-    }));
+        fixture.whenStable().then(() => {
+            expect(fixture.debugElement.query(By.css('#custom-id'))).not.toBeNull();
+            expect(fixture.debugElement.query(By.css('.adf-empty-content'))).toBeNull();
+            done();
+        });
+    });
 });

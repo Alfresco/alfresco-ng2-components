@@ -1,0 +1,94 @@
+<div>PROCESS LIST CLOUD</div>
+<adf-cloud-app-list *ngIf="!currentAppName"
+                    (appClick)="onAppClick($event)"></adf-cloud-app-list>
+<div *ngIf="currentAppName">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Process Example Filters
+                </mat-panel-title>
+                <mat-panel-description>
+                    Apply one of the filters to the process list
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="app-process-cloud-spacing">
+                <mat-form-field>
+                    <mat-select placeholder="Status" [(ngModel)]="status">
+                        <mat-option value="">
+                            ALL
+                        </mat-option>
+                        <mat-option value="RUNNING">
+                            RUNNING
+                        </mat-option>
+                        <mat-option value="SUSPENDED">
+                            SUSPENDED
+                        </mat-option>
+                        <mat-option value="CANCELLED">
+                            CANCELLED
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="app-process-cloud-spacing">
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Filter by id" [(ngModel)]="filterId">
+                </mat-form-field>
+            </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Sorting Panel
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Choose how to sort your tasks
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="task-cloud-demo-select">
+                    <mat-form-field>
+                        <mat-select placeholder="Sort Field" [(ngModel)]="sortField">
+                            <mat-option value="id">
+                                ID
+                            </mat-option>
+                            <mat-option value="name">
+                                NAME
+                            </mat-option>
+                            <mat-option value="status">
+                                STATUS
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="task-cloud-demo-select">
+                    <mat-form-field>
+                        <mat-select placeholder="Direction" [(ngModel)]="sortDirection">
+                            <mat-option value="ASC">
+                                ASC
+                            </mat-option>
+                            <mat-option value="DESC">
+                                DESC
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <button mat-button (click)="onFilterButtonClick($event)">Apply Filter</button>
+                <button mat-button (click)="onClearFilters()">Clear Filter</button>
+            </mat-expansion-panel>
+    </mat-accordion>
+    <adf-cloud-process-list
+                            [applicationName]="currentAppName"
+                            [status]="status"
+                            [sorting]="sortArray"
+                            [id]="filterId"
+                            #processCloud>
+        <data-columns>
+            <data-column key="entry.id" title="Id"></data-column>
+            <data-column key="entry.appName" title="Name"></data-column>
+            <data-column key="entry.status" title="Status"></data-column>
+        </data-columns>
+    </adf-cloud-process-list>
+    <adf-pagination [target]="processCloud" (changePageSize)="onChangePageSize($event)">
+    </adf-pagination>
+    <button mat-fab class="adf-process-list-cloud-button" color="primary" (click)="onClick()">Back</button>
+</div>
