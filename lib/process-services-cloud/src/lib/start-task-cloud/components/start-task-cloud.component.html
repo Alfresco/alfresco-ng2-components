@@ -2,8 +2,9 @@
     <mat-card-header fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="adf-cloud-start-task-heading">
         <mat-card-title>{{'ADF_TASK_LIST.START_TASK.FORM.TITLE' | translate}}</mat-card-title>
     </mat-card-header>
+    <form [formGroup]="taskForm" fxLayout="column" (ngSubmit)="saveTask()">
+
     <mat-card-content>
-        <form [formGroup]="taskForm" fxLayout="column">
             <div class="adf-task-name">
                 <mat-form-field fxFlex>
                     <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME' | translate }}</mat-label>
@@ -64,8 +65,6 @@
                     <adf-cloud-people (selectedUser)="onAssigneeSelect($event)"></adf-cloud-people>
                 </div>
             </div>
-        </form>
-
     </mat-card-content>
 
     <mat-card-actions>
@@ -78,12 +77,12 @@
             </button>
             <button
                 color="primary"
+                type="submit" [disabled]="!taskForm.valid || submitted"
                 mat-button
-                [disabled]="!isFormValid() || dateError"
-                (click)="saveTask()"
                 id="button-start">
                 {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}
             </button>
         </div>
     </mat-card-actions>
+    </form>
 </mat-card>

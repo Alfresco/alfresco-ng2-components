@@ -1,4 +1,5 @@
 @mixin adf-cloud-people-theme($theme) {
+    $warn: map-get($theme, warn);
     $primary: map-get($theme, primary);
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);

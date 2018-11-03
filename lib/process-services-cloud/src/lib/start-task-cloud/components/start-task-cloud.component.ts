@@ -70,6 +70,8 @@ export class StartTaskCloudComponent implements OnInit {
 
     dueDate: Date;
 
+    submitted = false;
+
     assigneeName: string;
 
     dateError: boolean;
@@ -104,11 +106,8 @@ export class StartTaskCloudComponent implements OnInit {
         });
     }
 
-    isFormValid() {
-        return this.taskForm && this.taskForm.valid;
-    }
-
     public saveTask(): void {
+        this.submitted = true;
         let newTask = new TaskDetailsCloudModel(this.taskForm.value);
         newTask.appName = this.getAppName();
         newTask.dueDate = this.getDueDate();
@@ -120,9 +119,11 @@ export class StartTaskCloudComponent implements OnInit {
         this.taskService.createNewTask(newTask)
             .subscribe(
                 (res: any) => {
+                    this.submitted = false;
                     this.success.emit(res);
                 },
                 (err) => {
+                    this.submitted = false;
                     this.error.emit(err);
                     this.logService.error('An error occurred while creating new task');
             });
