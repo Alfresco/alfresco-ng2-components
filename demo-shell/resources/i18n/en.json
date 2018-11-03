@@ -204,7 +204,25 @@
   },
   "SEARCH": {
     "RESULTS": "Search results",
-    "NO_RESULT": "No results found"
+    "NO_RESULT": "No results found",
+    "FACET_FIELDS": {
+      "TYPE": "1:Type",
+      "SIZE": "2:Size",
+      "CREATOR": "3:Creator",
+      "MODIFIER": "4:Modifier",
+      "CREATED": "5:Created"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "My facet queries",
+      "CREATED_THIS_YEAR": "1.Created This Year",
+      "MIMETYPE": "2.Type",
+      "XTRASMALL": "3.Size: xtra small",
+      "SMALL": "4.Size: small",
+      "MEDIUM": "5.Size: medium",
+      "LARGE": "6.Size: large",
+      "XTRALARGE": "7.Size: xtra large",
+      "XXTRALARGE": "8.Size: XX large"
+    }
   },
   "SOCIAL": {
     "LIKE": "Like component",

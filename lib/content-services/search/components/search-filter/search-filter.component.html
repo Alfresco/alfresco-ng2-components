@@ -41,7 +41,7 @@
                         [checked]="query.checked"
                         [attr.data-automation-id]="'checkbox-'+facetQueriesLabel+'-'+query.label"
                         (change)="onToggleFacetQuery($event, query)">
-                        {{ query.label }} ({{ query.count }})
+                        {{ query.label | translate }} ({{ query.count }})
                     </mat-checkbox>
                 </ng-container>
             </div>
@@ -72,7 +72,7 @@
         <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+field.label" *ngFor="let field of responseFacetFields"
                              [expanded]="facetFieldsExpanded">
             <mat-expansion-panel-header>
-                <mat-panel-title>{{ field.label }}</mat-panel-title>
+                <mat-panel-title>{{ field.label | translate }}</mat-panel-title>
             </mat-expansion-panel-header>
 
             <div class="facet-result-filter">
@@ -96,7 +96,7 @@
                     [checked]="bucket.checked"
                     [attr.data-automation-id]="'checkbox-'+field.label+'-'+(bucket.display || bucket.label)"
                     (change)="onToggleBucket($event, field, bucket)">
-                    {{ bucket.display || bucket.label }} <span *ngIf="bucket.count!==null">(</span>{{ bucket.count }}<span *ngIf="bucket.count!==null">)</span>
+                    {{ bucket.display || bucket.label | translate }} <span *ngIf="bucket.count!==null">(</span>{{ bucket.count }}<span *ngIf="bucket.count!==null">)</span>
                 </mat-checkbox>
             </div>
 

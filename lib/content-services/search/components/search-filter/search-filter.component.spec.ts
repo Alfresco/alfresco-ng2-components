@@ -30,6 +30,7 @@ describe('SearchFilterComponent', () => {
     let component: SearchFilterComponent;
     let queryBuilder: SearchQueryBuilderService;
     let appConfig: AppConfigService;
+    const translationMock = new TranslationMock();
 
     beforeEach(() => {
         appConfig = new AppConfigService(null);
@@ -39,7 +40,7 @@ describe('SearchFilterComponent', () => {
         const searchMock: any = {
             dataLoaded: new Subject()
         };
-        const translationMock = new TranslationMock();
+        translationMock.instant = (key) => `translated${key}`;
         component = new SearchFilterComponent(queryBuilder, searchMock, translationMock);
         component.ngOnInit();
     });
@@ -293,6 +294,32 @@ describe('SearchFilterComponent', () => {
         expect(component.responseFacetFields[0].buckets.items[1].count).toEqual(0);
     });
 
+    it('should update correctly the existing facetFields bucket values', () => {
+        component.responseFacetFields = null;
+
+        queryBuilder.config = {
+            categories: [],
+            facetFields: { fields: [{ label: 'f1', field: 'f1' }] },
+            facetQueries: { queries: [] }
+        };
+
+        const firstCallFields: any = [{
+            label: 'f1',
+            buckets: [{ label: 'b1', count: 10 }]
+        }];
+        const firstCallData = { list: { context: { facetsFields: firstCallFields }}};
+        component.onDataLoaded(firstCallData);
+        expect(component.responseFacetFields[0].buckets.items[0].count).toEqual(10);
+
+        const secondCallFields: any = [{
+            label: 'f1',
+            buckets: [{ label: 'b1', count: 6 }]
+        }];
+        const secondCallData = { list: { context: { facetsFields: secondCallFields}}};
+        component.onDataLoaded(secondCallData);
+        expect(component.responseFacetFields[0].buckets.items[0].count).toEqual(6);
+    });
+
     it('should fetch facet fields from response payload and show the already checked items', () => {
         spyOn(queryBuilder, 'execute').and.stub();
         queryBuilder.config = {
@@ -490,7 +517,7 @@ describe('SearchFilterComponent', () => {
             { label: 'q1', query: 'q1', checked: true, count: 1 },
             { label: 'q2', query: 'q2', checked: false, count: 1 },
             { label: 'q3', query: 'q3', checked: true, count: 1 }
-        ]);
+        ], translationMock);
         component.resetSelectedQueries();
 
         expect(queryBuilder.removeUserFacetQuery).toHaveBeenCalledTimes(3);
