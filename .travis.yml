@@ -5,7 +5,8 @@ node_js:
  # Use the explicit NodeJS LTS version 8.9.4 to avoid any automatic upgrade of the version.
   - '8.9.4'
 env:
-  - AFFECTED_LIBS="process-services-cloud"
+    global:
+        - AFFECTED_LIBS="process-services-cloud"
 
 addons:
     chrome: stable
@@ -36,29 +37,21 @@ jobs:
         - stage: Unit Test
           env: STAGE=core
           script:
-            echo $AFFECTED_LIBS;
-            if [[ $AFFECTED_LIBS =~ "core" ]];
+            if [[ $AFFECTED_LIBS = "core" ]];
                     then
-                        echo $STAGE;
+                        echo "core";
                         (./scripts/npm-build-all.sh -si -sb -t "core" --skip-lint || exit 1;);
-                    fi
-        - stage: Unit Test
-          env: STAGE=content-services
-          script:   if [[ $AFFECTED_LIBS =~ "content-services" ]];
-                    then
-                        (./scripts/npm-build-all.sh -si -sb -t "content-services" --skip-lint|| exit 1;);
-                    fi
-        - stage: Unit Test
-          env: STAGE=process-services
-          script:   if [[ $AFFECTED_LIBS =~ "process-services" ]];
-                    then
-                        (./scripts/npm-build-all.sh -si -sb -t "process-services" --skip-lint|| exit 1;);
+                    else
+                        echo "no core";
                     fi
         - stage: Unit Test
           env: STAGE=process-services-cloud
-          script:   if [[ $AFFECTED_LIBS =~ "process-services-cloud" ]];
+          script:   if [[ $AFFECTED_LIBS = "process-services-cloud" ]];
                     then
+                        echo "process-services-cloud";
                         (./scripts/npm-build-all.sh -si -sb -t "process-services-cloud" --skip-lint|| exit 1;);
+                    else
+                        echo "NO process-services-cloud";
                     fi
         - stage: Unit test
           env: STAGE=extensions
