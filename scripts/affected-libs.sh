@@ -32,7 +32,7 @@ HEAD_SHA_BRANCH=(`git merge-base origin/$BRANCH_NAME HEAD`)
 echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
 
 #find affected libs
-npm run affected:libs -- "7f9841ac015b74dd2d375012ef39835f2495e35c" "HEAD" > deps.txt
+npm run affected:libs -- "c30c1a5" "HEAD" > deps.txt
 
 #clean file
 sed -i '/^$/d'  ./deps.txt
@@ -60,32 +60,11 @@ fi
 #process-services
 for i in "${libs[@]}"
 do
-    if [ "$i" == "process-services" ] ; then
-        echo "========= Process Services ========="
-        echo "====== lint ======"
-        ./node_modules/.bin/tslint -p ./lib/process-services/tsconfig.json -c ./lib/tslint.json || exit 1
-
-        echo "====== Unit test ======"
-        #ng test process-services --watch=false
-
-        echo "====== Build ======"
-        ng build process-services
-
-        echo "====== Build style ======"
-        node ./lib/config/bundle-process-services-scss.js
-
-        echo "====== Copy i18n ======"
-        mkdir -p ./lib/dist/process-services/bundles/assets/adf-process-services/i18n
-        cp -R ./lib/process-services/src/lib/i18n/* ./lib/dist/process-services/bundles/assets/adf-process-services/i18n
-
-        echo "====== Copy assets ======"
-        cp -R ./lib/process-services/src/lib/assets/* ./lib/dist/process-services/bundles/assets
-
-        echo "====== Move to node_modules ======"
-        rm -rf ./node_modules/@alfresco/adf-process-services/ && \
-        mkdir -p ./node_modules/@alfresco/adf-process-services/ && \
-        cp -R ./lib/dist/process-services/* ./node_modules/@alfresco/adf-process-services/
-
+    if [ "$i" == "core" ] ; then
+        AFFECTED_LIBS="core content-services process-services process-services-cloud"
+        echo "AFFECTED_LIBS: ${AFFECTED_LIBS}"
+        rm deps.txt
+        exit 0
     fi
 done
 
@@ -93,6 +72,10 @@ done
 for i in "${libs[@]}"
 do
     if [ "$i" == "process-services-cloud" ] ; then
+        AFFECTED_LIBS="process-services-cloud"
+        echo "AFFECTED_LIBS: ${AFFECTED_LIBS}"
+        rm deps.txt
+        exit 0
         echo "========= Process Services Cloud ========="
         echo "====== lint ======"
         ./node_modules/.bin/tslint -p ./lib/process-services-cloud/tsconfig.json -c ./lib/tslint.json || exit 1
