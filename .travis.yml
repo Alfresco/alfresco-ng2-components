@@ -33,8 +33,11 @@ jobs:
             - npm run spellcheck
         - stage: Unit Test
           env: STAGE=core
-          script:   if [[ $AFFECTED_LIBS =~ "core" ]];
+          script:
+            echo $AFFECTED_LIBS;
+            if [[ $AFFECTED_LIBS =~ "core" ]];
                     then
+                        echo $STAGE;
                         (./scripts/npm-build-all.sh -si -sb -t "core" --skip-lint || exit 1;);
                     fi
         - stage: Unit Test
