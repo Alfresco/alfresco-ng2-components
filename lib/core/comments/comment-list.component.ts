@@ -48,6 +48,7 @@ export class CommentListComponent {
         userPreferenceService.select(UserPreferenceValues.Locale).subscribe((locale) => {
             this.currentLocale = locale;
         });
+        const uselessVar = "";
     }
 
     selectComment(comment: CommentModel): void {

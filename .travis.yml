@@ -31,13 +31,19 @@ jobs:
           env: STAGE=core
           script:   if [[ $AFFECTED_LIBS =~ "core" ]];
                     then
+                        echo "Lint core";
                         (./node_modules/.bin/tslint -p ./lib/core/tsconfig.json -c ./lib/tslint.json  || exit 1;);
+                    else
+                        echo "No core"
                     fi
         - stage: Lint
           env: STAGE=process-services-cloud
           script:   if [[ $AFFECTED_LIBS =~ "process-services-cloud" ]];
                 then
+                    echo "process-services-cloud";
                     (./node_modules/.bin/tslint -p ./lib/process-services-cloud/tsconfig.json -c ./lib/tslint.json || exit 1;);
+                else
+                    echo "No process cloud"
                 fi
         - stage: Unit test
           env: STAGE=core
