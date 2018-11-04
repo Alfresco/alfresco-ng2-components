@@ -22,49 +22,12 @@ before_install:
 
 jobs:
     include:
-        - stage: Warm Up Cache
+        - stage: Lint - Unit Tests - Build
           script:  if ([ "$TRAVIS_BRANCH" = "master" ]); then
                 (./scripts/npm-build-all.sh  || exit 1;);
             else
-                (./scripts/update-version.sh -gnu -alpha && npm install && ./scripts/smart-build.sh -b development || exit 1;);
+                (./scripts/update-version.sh -gnu -alpha && npm install && ./scripts/smart-build.sh -b $TRAVIS_BRANCH || exit 1;);
             fi
-        #- stage: Affected libs
-        #  script: (./scripts/affected-libs.sh -b development || exit 1;);
-        #- stage: Lint
-        #  script:
-        #    - ./scripts/lint.sh
-        #    - npm run spellcheck
-        - stage: Unit Test
-          env: STAGE=core
-          script:
-            if [[ $AFFECTED_LIBS = "core" ]];
-                    then
-                        echo "core";
-                        (./scripts/npm-build-all.sh -si -sb -t "core" --skip-lint || exit 1;);
-                    else
-                        echo "no core";
-                    fi
-        - stage: Unit Test
-          env: STAGE=process-services-cloud
-          script:   if [[ $AFFECTED_LIBS = "process-services-cloud" ]];
-                    then
-                        echo "process-services-cloud";
-                        (./scripts/npm-build-all.sh -si -sb -t "process-services-cloud" --skip-lint|| exit 1;);
-                    else
-                        echo "NO process-services-cloud";
-                    fi
-        - stage: Unit test
-          env: STAGE=extensions
-          script:   if [[ $AFFECTED_LIBS =~ "extensions" ]];
-                    then
-                        (./scripts/npm-build-all.sh -si -sb -t "extensions" --skip-lint || exit 1;);
-                    fi
-        - stage: Unit test
-          env: STAGE=insights
-          script:   if [[ $AFFECTED_LIBS =~ "insights" ]];
-                    then
-                        (./scripts/npm-build-all.sh -si -sb -t "insights" --skip-lint || exit 1;);
-                    fi
 
 # jobs:
 #   include:
