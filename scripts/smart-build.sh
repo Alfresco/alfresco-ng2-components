@@ -139,7 +139,7 @@ then
 fi
 
 #HEAD_SHA_BRANCH=(`git merge-base origin/$BRANCH_NAME HEAD`)
-HEAD_SHA_BRANCH=af28c79
+HEAD_SHA_BRANCH=a090ece
 echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
 
 #find affected libs
