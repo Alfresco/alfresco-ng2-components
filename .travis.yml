@@ -25,7 +25,7 @@ jobs:
           script:  if ([ "$TRAVIS_BRANCH" = "master" ]); then
                 (./scripts/npm-build-all.sh  || exit 1;);
             else
-                (./scripts/update-version.sh -gnu -alpha && ././scripts/npm-build-all.sh -sb --skip-lint || exit 1;);
+                (./scripts/update-version.sh -gnu -alpha && npm install || exit 1;);
             fi
         #- stage: Affected libs
         #  script: (./scripts/affected-libs.sh -b development || exit 1;);
