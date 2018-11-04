@@ -3,16 +3,16 @@
 smart_build_process_services_cloud() {
     echo "========= Process Services Cloud ========="
     echo "====== lint ======"
-    ./node_modules/.bin/tslint -p ./lib/process-services-cloud/tsconfig.json -c ./lib/tslint.json || exit 1
+    time ./node_modules/.bin/tslint -p ./lib/process-services-cloud/tsconfig.json -c ./lib/tslint.json || exit 1
 
     echo "====== Unit test ======"
-    #ng test process-services-cloud --watch=false || exit 1
+    time ng test process-services-cloud --watch=false || exit 1
 
     echo "====== Build ======"
-    ng build process-services-cloud || exit 1
+    time ng build process-services-cloud || exit 1
 
     echo "====== Build style ======"
-    node ./lib/config/bundle-process-services-cloud-scss.js || exit 1
+    time node ./lib/config/bundle-process-services-cloud-scss.js || exit 1
 
     echo "====== Copy i18n ======"
     mkdir -p ./lib/dist/process-services-cloud/bundles/assets/adf-process-services-cloud/i18n
@@ -22,7 +22,7 @@ smart_build_process_services_cloud() {
     cp -R ./lib/process-services-cloud/src/lib/assets/* ./lib/dist/process-services-cloud/bundles/assets
 
     echo "====== Move to node_modules ======"
-    rm -rf ./node_modules/@alfresco/adf-process-cloud/ && \
+    rm -rf ./node_modules/@alfresco/adf-process-services-cloud/ && \
     mkdir -p ./node_modules/@alfresco/adf-process-services-cloud/ && \
     cp -R ./lib/dist/process-services-cloud/* ./node_modules/@alfresco/adf-process-services-cloud/
 }
@@ -54,7 +54,8 @@ then
     exit 0
 fi
 
-HEAD_SHA_BRANCH=(`git merge-base origin/$BRANCH_NAME HEAD`)
+#HEAD_SHA_BRANCH=(`git merge-base origin/$BRANCH_NAME HEAD`)
+HEAD_SHA_BRANCH=59c76dd
 echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
 
 #find affected libs
@@ -118,30 +119,7 @@ done
 for i in "${libs[@]}"
 do
     if [ "$i" == "process-services-cloud" ] ; then
-        echo "========= Process Services Cloud ========="
-        echo "====== lint ======"
-        ./node_modules/.bin/tslint -p ./lib/process-services-cloud/tsconfig.json -c ./lib/tslint.json || exit 1
-
-        echo "====== Unit test ======"
-        ng test process-services-cloud --watch=false || exit 1
-
-        echo "====== Build ======"
-        ng build process-services-cloud || exit 1
-
-        echo "====== Build style ======"
-        node ./lib/config/bundle-process-services-cloud-scss.js || exit 1
-
-        echo "====== Copy i18n ======"
-        mkdir -p ./lib/dist/process-services-cloud/bundles/assets/adf-process-services-cloud/i18n
-        cp -R ./lib/process-services-cloud/src/lib/i18n/* ./lib/dist/process-services-cloud/bundles/assets/adf-process-services-cloud/i18n
-
-        echo "====== Copy assets ======"
-        cp -R ./lib/process-services-cloud/src/lib/assets/* ./lib/dist/process-services-cloud/bundles/assets
-
-        echo "====== Move to node_modules ======"
-        rm -rf ./node_modules/@alfresco/adf-process-cloud/ && \
-        mkdir -p ./node_modules/@alfresco/adf-process-services-cloud/ && \
-        cp -R ./lib/dist/process-services-cloud/* ./node_modules/@alfresco/adf-process-services-cloud/
+        smart_build_process_services_cloud
     fi
 done
 
