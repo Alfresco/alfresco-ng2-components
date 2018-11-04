@@ -3,7 +3,6 @@
 eval BRANCH_NAME=""
 eval HEAD_SHA_BRANCH=""
 eval SHA_2="HEAD"
-export AFFECTED_LIBS="TEST"
 
 show_help() {
     echo "Usage: smart-build.sh"
