@@ -19,7 +19,6 @@
     "outDir": "../dist/content-services/",
     "baseUrl" :  "./",
     "paths": {
-      "@alfresco/adf-process-services": ["../process-services"],
       "@alfresco/adf-core": ["../core"]
     },
     "lib": [

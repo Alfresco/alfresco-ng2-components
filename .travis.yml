@@ -28,41 +28,45 @@ jobs:
         - stage: Affected libs
           script: (./scripts/affected-libs.sh -b development || exit 1;);
         - stage: Lint
+          script:
+            - ./scripts/lint.sh
+            - npm run spellcheck
+        - stage: Unit Test
           env: STAGE=core
           script:   if [[ $AFFECTED_LIBS =~ "core" ]];
                     then
-                        echo "Lint core";
-                        (./node_modules/.bin/tslint -p ./lib/core/tsconfig.json -c ./lib/tslint.json  || exit 1;);
-                    else
-                        echo "No core"
+                        (./scripts/npm-build-all.sh -si -sb -t "core" --skip-lint || exit 1;);
                     fi
-        - stage: Lint
+        - stage: Unit Test
+          env: STAGE=content-services
+          script:   if [[ $AFFECTED_LIBS =~ "content-services" ]];
+                    then
+                        (./scripts/npm-build-all.sh -si -sb -t "content-services" --skip-lint|| exit 1;);
+                    fi
+        - stage: Unit Test
+          env: STAGE=process-services
+          script:   if [[ $AFFECTED_LIBS =~ "process-services" ]];
+                    then
+                        (./scripts/npm-build-all.sh -si -sb -t "process-services" --skip-lint|| exit 1;);
+                    fi
+        - stage: Unit Test
           env: STAGE=process-services-cloud
           script:   if [[ $AFFECTED_LIBS =~ "process-services-cloud" ]];
-                then
-                    echo "process-services-cloud";
-                    (./node_modules/.bin/tslint -p ./lib/process-services-cloud/tsconfig.json -c ./lib/tslint.json || exit 1;);
-                else
-                    echo "No process cloud"
-                fi
-        - stage: Unit test
-          env: STAGE=core
-          script:  (./scripts/npm-build-all.sh -si -sb -t "core" --skip-lint || exit 1;);
+                    then
+                        (./scripts/npm-build-all.sh -si -sb -t "process-services-cloud" --skip-lint|| exit 1;);
+                    fi
         - stage: Unit test
           env: STAGE=extensions
-          script:  (./scripts/npm-build-all.sh -si -sb -t "extensions" --skip-lint || exit 1;);
-        - stage: Unit test
-          env: STAGE=process-services
-          script: (./scripts/npm-build-all.sh -si -sb -t "process-services" --skip-lint|| exit 1;);
+          script:   if [[ $AFFECTED_LIBS =~ "extensions" ]];
+                    then
+                        (./scripts/npm-build-all.sh -si -sb -t "extensions" --skip-lint || exit 1;);
+                    fi
         - stage: Unit test
           env: STAGE=insights
-          script:  (./scripts/npm-build-all.sh -si -sb -t "insights" --skip-lint || exit 1;);
-        - stage: Unit test
-          env: STAGE=content-services
-          script:  (./scripts/npm-build-all.sh -si -sb -t "content-services" --skip-lint|| exit 1;);
-        - stage: Unit test
-          env: STAGE=process-services-cloud
-          script: (./scripts/npm-build-all.sh -si -sb -t "process-services-cloud" --skip-lint|| exit 1;);
+          script:   if [[ $AFFECTED_LIBS =~ "insights" ]];
+                    then
+                        (./scripts/npm-build-all.sh -si -sb -t "insights" --skip-lint || exit 1;);
+                    fi
         - stage: Unit test
           env: STAGE=demo-shell
           script:   if ([ "$TRAVIS_BRANCH" = "master" ]); then
