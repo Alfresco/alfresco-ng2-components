@@ -11,8 +11,10 @@ env:
 
 stages:
   - compile
-  - test
-  - deploy
+  - name: test
+    if: AFFECTED_LIBS = core$
+  - name: deploy
+    if: AFFECTED_LIBS = process-services-cloud$
 
 addons:
     chrome: stable
