@@ -369,7 +369,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
         let requestNode = {
             appDefinitionId: this.appId,
-            dueAfter: this.dueAfter ? moment(this.dueAfter).toDate() : null,
+            dueAfter: this.dueAfter ? this.setDueAfterFilter() : null,
             dueBefore: this.dueBefore ? moment(this.dueBefore).toDate() : null,
             processInstanceId: this.processInstanceId,
             processDefinitionId: this.processDefinitionId,
@@ -398,5 +398,16 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     currentPage(skipCount: number, maxItems: number): number {
         return (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
+    }
+
+    setDueAfterFilter() {
+        let dueDateFilter = moment(this.dueAfter);
+        dueDateFilter.set({
+            hour: 23,
+            minute: 59,
+            second: 59,
+            millisecond: 999
+        });
+        return dueDateFilter.toDate();
     }
 }
