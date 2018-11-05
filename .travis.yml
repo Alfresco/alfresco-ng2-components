@@ -11,7 +11,7 @@ env:
 stages:
   - compile
   - name: testcore
-    if: env(AFFECTED_LIBS) = core
+    if: commit_message !~ /(no-deploy|wip)/
   - name: testcloud
     if: env(AFFECTED_LIBS) = process-services-cloud
   - name: deploy
