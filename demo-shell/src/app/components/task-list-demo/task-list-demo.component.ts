@@ -19,6 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
+import moment from 'moment-es6';
 
 @Component({
     templateUrl: './task-list-demo.component.html',
@@ -131,7 +132,7 @@ export class TaskListDemoComponent implements OnInit {
         this.state = taskFilter.taskState;
         this.sort = taskFilter.taskSort;
         this.start = taskFilter.taskStart;
-        this.dueAfter = taskFilter.taskDueAfter;
+        this.dueAfter = this.setDueAfterFilter(taskFilter.taskDueAfter);
         this.dueBefore = taskFilter.taskDueBefore;
 
         if (taskFilter.taskSize) {
@@ -146,6 +147,16 @@ export class TaskListDemoComponent implements OnInit {
         }
 
         this.includeProcessInstance = taskFilter.taskIncludeProcessInstance === 'include';
+    }
+
+    setDueAfterFilter(date): string {
+        let dueDateFilter = moment(date);
+        dueDateFilter.set({
+            hour: 23,
+            minute: 59,
+            second: 59
+        });
+        return dueDateFilter.toString();
     }
 
     resetTaskForm() {
