@@ -68,8 +68,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     processDefinitions: ProcessDefinitionRepresentationCloud[] = [];
 
-    selectedProcessDef: ProcessDefinitionRepresentationCloud = new ProcessDefinitionRepresentationCloud();
-
     errorMessageId: string = '';
 
     processForm: FormGroup;
@@ -77,6 +75,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     processPayloadCloud = new ProcessPayloadCloud();
 
     filteredProcesses: ProcessDefinitionRepresentationCloud[];
+
+    isLoading = false;
 
     constructor(private processCloudService: ProcessCloudService,
                 private formBuilder: FormBuilder) {
@@ -109,10 +109,14 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     createProcessInstance(formValues) {
         this.processPayloadCloud.processInstanceName = formValues.processName;
-        this.filteredProcesses = this._filter(formValues.processDefinition);
+        this.filteredProcesses = this.filter(formValues.processDefinition);
     }
 
-    private _filter(value: string): ProcessDefinitionRepresentationCloud[] {
+    validateForm(): boolean {
+        return this.processForm.valid && this.processPayloadCloud.processDefinitionKey !== null;
+    }
+
+    private filter(value: string): ProcessDefinitionRepresentationCloud[] {
         if (value !== null && value !== undefined) {
             const filterValue = value.toLowerCase();
             let filteredProcesses = this.processDefinitions.filter(option => option.name.toLowerCase().includes(filterValue));
@@ -134,7 +138,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     public loadStartProcess() {
-        this.resetSelectedProcessDefinition();
         this.resetErrorMessage();
 
         this.processCloudService.getProcessDefinitions(this.appName).subscribe(
@@ -143,20 +146,20 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
                 if (!this.isProcessDefinitionsEmpty()) {
 
-                    if (this.processDefinitions.length === 1) {
-                        this.selectedProcessDef = this.processDefinitions[0];
-                    }
+                    let selectedProcess;
 
-                    if (this.processDefinitionName) {
-                        let selectedProcess = this.processDefinitions.find((currentProcessDefinition) => {
+                    if (this.processDefinitions.length === 1) {
+                        selectedProcess = this.processDefinitions[0];
+                    } else if (this.processDefinitionName) {
+                        selectedProcess = this.processDefinitions.find((currentProcessDefinition) => {
                             return currentProcessDefinition.name === this.processDefinitionName;
                         });
-                        if (selectedProcess) {
-                            this.selectedProcessDef = selectedProcess;
-                        }
                     }
 
-                    this.processForm.controls['processDefinition'].setValue(this.selectedProcessDef.name);
+                    if (selectedProcess) {
+                        this.processForm.controls['processDefinition'].setValue(selectedProcess.name);
+                        this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
+                    }
                 }
             },
             () => {
@@ -169,6 +172,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     public startProcess() {
+
+        this.isLoading = true;
+
         if (this.variables) {
             this.processPayloadCloud.variables = this.variables;
         }
@@ -176,10 +182,12 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.processCloudService.startProcess(this.appName, this.processPayloadCloud).subscribe(
             (res) => {
                 this.start.emit(res);
+                this.isLoading = false;
             },
             (err) => {
                 this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.START';
                 this.error.error(err);
+                this.isLoading = false;
             }
         );
     }
@@ -188,30 +196,13 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.cancel.emit();
     }
 
-    isProcessDefinitionEmpty() {
-        return this.processDefinitions ? (this.processDefinitions.length > 0 || this.errorMessageId) : this.errorMessageId;
-    }
-
-    validateForm(): boolean {
-        return this.processForm && this.processForm.valid;
-    }
-
-    private resetSelectedProcessDefinition() {
-        this.selectedProcessDef = new ProcessDefinitionRepresentationCloud();
-    }
-
-    private resetErrorMessage(): void {
+    private resetErrorMessage() {
         this.errorMessageId = '';
     }
 
-    hasErrorMessage(): boolean {
-        return this.processDefinitions.length === 0 && !this.errorMessageId;
-    }
-
-    public reset() {
-        this.resetSelectedProcessDefinition();
-        this.name = '';
-        this.resetErrorMessage();
+    private resetMatAutocomplete() {
+        this.processForm.controls['processDefinition'].setValue('');
+        this.filter('');
     }
 
     displayFn(process: any) {
@@ -227,23 +218,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     displayDropdown(event) {
         event.stopPropagation();
         if (!this.inputAutocomplete.panelOpen) {
-            this.processForm.controls['processDefinition'].setValue('');
+            this.resetMatAutocomplete();
             this.inputAutocomplete.openPanel();
         } else {
             this.inputAutocomplete.closePanel();
         }
-    }
-
-    processDefinitionValidator(control: AbstractControl) {
-        let processDefinition = control.value;
-
-        this.filteredProcesses = this._filter(processDefinition);
-
-        if (!this.processPayloadCloud.processDefinitionKey) {
-
-            return {};
-        }
-        return null;
     }
 
     get processName(): AbstractControl {
