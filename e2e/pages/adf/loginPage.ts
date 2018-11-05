@@ -59,7 +59,7 @@ export class LoginPage {
             Util.waitUntilElementIsVisible(this.txtPassword).then(() => {
                 deferred.fulfill();
             }, () => {
-                deferred.rejected();
+                deferred.reject();
             });
         });
 
@@ -173,7 +173,10 @@ export class LoginPage {
 
     loginToContentServices(username, password) {
         this.settingsPage.setProviderEcm();
-        this.waitForElements();
+
+        browser.controlFlow().execute(async () => {
+            await this.waitForElements();
+        });
 
         this.login(username, password);
     }
@@ -316,7 +319,9 @@ export class LoginPage {
     }
 
     login(username, password) {
-        this.waitForElements();
+        browser.controlFlow().execute(async () => {
+            await this.waitForElements();
+        });
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickSignInButton();

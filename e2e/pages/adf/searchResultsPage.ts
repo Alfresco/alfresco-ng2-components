@@ -79,14 +79,6 @@ export class SearchResultsPage {
         this.closeActionButton();
     }
 
-    copyContent(content) {
-        this.contentList.copyContent(content);
-    }
-
-    moveContent(content) {
-        this.contentList.moveContent(content);
-    }
-
     sortByName(sortOrder) {
         this.sortBy(sortOrder, 'Name');
     }
@@ -98,6 +90,10 @@ export class SearchResultsPage {
         let selectedSortingOption = element(by.xpath(``));
         Util.waitUntilElementIsClickable(selectedSortingOption);
         browser.executeScript(`document.evaluate('//span [contains(text(), "${sortType}")]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();`);
+
+        browser.controlFlow().execute(async () => {
+            await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        });
 
         this.sortByOrder(sortOrder);
     }

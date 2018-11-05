@@ -7,10 +7,11 @@
                 placeholder="{{ 'SEARCH.FILTER.RANGE.FROM-DATE' | translate }}"
                 [matDatepicker]="fromDatepicker"
                 [max]="maxDate"
-                (focusout)="onChangedHandler($event, from)">
-        <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
+                (focusout)="onChangedHandler($event, from)"
+                data-automation-id="date-range-from-input">
+        <mat-datepicker-toggle matSuffix [for]="fromDatepicker" data-automation-id="date-range-from-date-toggle"></mat-datepicker-toggle>
         <mat-datepicker #fromDatepicker></mat-datepicker>
-        <mat-error *ngIf="from.invalid">
+        <mat-error *ngIf="from.invalid" data-automation-id="date-range-from-error">
             {{ getFromValidationMessage() | translate: { requiredFormat: datePickerDateFormat } }}
         </mat-error>
     </mat-form-field>
@@ -24,19 +25,20 @@
                 [matDatepicker]="toDatepicker"
                 [min]="from.value"
                 [max]="maxDate"
-                (focusout)="onChangedHandler($event, to)">
-        <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
+                (focusout)="onChangedHandler($event, to)"
+                data-automation-id="date-range-to-input">
+        <mat-datepicker-toggle matSuffix [for]="toDatepicker" data-automation-id="date-range-to-date-toggle"></mat-datepicker-toggle>
         <mat-datepicker #toDatepicker></mat-datepicker>
-        <mat-error *ngIf="to.invalid">
+        <mat-error *ngIf="to.invalid" data-automation-id="date-range-to-error">
             {{ getToValidationMessage() | translate: { requiredFormat: datePickerDateFormat } }}
         </mat-error>
     </mat-form-field>
 
     <div class="facet-buttons facet-buttons--topSpace">
-        <button mat-button color="primary" type="button" (click)="reset()">
+        <button mat-button color="primary" type="button" (click)="reset()" data-automation-id="date-range-clear-btn">
             {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
         </button>
-        <button mat-button color="primary" type="submit" [disabled]="!form.valid">
+        <button mat-button color="primary" type="submit" [disabled]="!form.valid" data-automation-id="date-range-apply-btn">
             {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
         </button>
     </div>
