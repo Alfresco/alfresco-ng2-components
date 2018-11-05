@@ -169,6 +169,11 @@
         #taskList>
         <data-columns>
             <data-column key="id" title="Id"></data-column>
+            <data-column key="assignee" title="Assignee" class="full-width name-column">
+                <ng-template let-entry="$implicit">
+                    <div>{{entry.row.obj.assignee | fullName}}</div>
+                </ng-template>
+            </data-column>
             <data-column key="name" title="Name"></data-column>
             <data-column key="description" title="Description"></data-column>
             <data-column key="created" title="Created"></data-column>
