@@ -87,6 +87,17 @@ jobs:
                        else
                             (./scripts/start.sh -dev -t -ss -vjsapi alpha || exit 1;);
                     fi
+        - stage: Packaging
+          env: STAGE=core
+          script:   if [[ $AFFECTED_LIBS =~ "core$" ]]; then
+                        (npm run build-lib || exit 1;) && node ./scripts/upload-build-lib-in-cs.js -u "$E2E_USERNAME"  -p "$E2E_PASSWORD" --host "$E2E_HOST" -f $TRAVIS_BUILD_NUMBER
+                    fi
+        - stage: Packaging
+          env: STAGE=process-services-cloud
+          script:   if [[ $AFFECTED_LIBS =~ "process-services-cloud$" ]]; then
+                        (./scripts/build-process-services-cloud.sh || exit 1;) && node ./scripts/upload-build-lib-in-cs.js -u "$E2E_USERNAME"  -p "$E2E_PASSWORD" --host "$E2E_HOST" -f $TRAVIS_BUILD_NUMBER
+                    fi
+
 # jobs:
 #   include:
 #     - stage: Publish alpha to NPM
