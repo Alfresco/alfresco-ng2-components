@@ -6,7 +6,7 @@ node_js:
   - '8.9.4'
 
 env:
-  - AFFECTED_LIBS="process-services-cloud$"
+  - AFFECTED_LIBS="process-services-cloud"
   - FOO="core"
 
 stages:
@@ -14,7 +14,7 @@ stages:
   - name: testcore
     if: env(FOO) = core
   - name: testcloud
-    if: env(AFFECTED_LIBS) =~ /^(process-services-cloud$)$/
+    if: env(AFFECTED_LIBS) =~ process-services-cloud
   - name: deploy
     if: branch = master
 
