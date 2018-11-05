@@ -6,7 +6,7 @@ node_js:
   - '8.9.4'
 
 env:
-  - AFFECTED_LIBS="test2"
+  - AFFECTED_LIBS="core processe"
 
 stages:
   - compile
@@ -32,6 +32,7 @@ before_install:
 
 jobs:
   include:
+    - script: echo commit_message
     - stage: compile
       script: AFFECTED_LIBS="process-services-cloud"
     - stage: deploy
