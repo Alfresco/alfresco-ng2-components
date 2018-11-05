@@ -10,22 +10,34 @@ rm -rf node_modules/@alfresco
 echo "====== Build lib ====="
 
 echo "------ Build core -----"
-npm run ng-packagr -- -p ./lib/core/
+npm run ng-packagr -- -p ./lib/core/ && \
+mkdir -p ./node_modules/@alfresco/adf-core/ && \
+cp -R ./lib/dist/core/* ./node_modules/@alfresco/adf-core/
 
 echo "------ Build content-services -----"
-npm run ng-packagr -- -p ./lib/content-services/
+npm run ng-packagr -- -p ./lib/content-services/ && \
+mkdir -p ./node_modules/@alfresco/adf-content-services/ && \
+cp -R ./lib/dist/content-services/* ./node_modules/@alfresco/adf-content-services/
 
 echo "------ Build process-services -----"
-npm run ng-packagr -- -p ./lib/process-services/
+npm run ng-packagr -- -p ./lib/process-services/ && \
+mkdir -p ./node_modules/@alfresco/adf-process-services/ && \
+cp -R ./lib/dist/process-services/* ./node_modules/@alfresco/adf-process-services/
 
 echo "------ Build insights -----"
-npm run ng-packagr -- -p ./lib/insights/
+npm run ng-packagr -- -p ./lib/insights/ && \
+mkdir -p ./node_modules/@alfresco/adf-insights/ && \
+cp -R ./lib/dist/insights/* ./node_modules/@alfresco/adf-insights/
 
 echo "------ Build extensions -----"
-npm run ng-packagr -- -p ./lib/extensions/
+npm run ng-packagr -- -p ./lib/extensions/ && \
+mkdir -p ./node_modules/@alfresco/adf-extensions/ && \
+cp -R ./lib/dist/extensions/* ./node_modules/@alfresco/adf-extensions/
 
 echo "------ Build process-services-cloud -----"
-npm run ng-packagr -- -p ./lib/process-services-cloud/
+npm run ng-packagr -- -p ./lib/process-services-cloud/ && \
+mkdir -p ./node_modules/@alfresco/adf-process-services-cloud/ && \
+cp -R ./lib/dist/process-services-cloud/* ./node_modules/@alfresco/adf-process-services-cloud/
 
 
 echo "====== Build style ====="
@@ -35,22 +47,16 @@ node ./lib/config/bundle-scss.js
 npm run webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail
 
 echo "====== Copy from lib/dit to node_modules ====="
-mkdir -p ./node_modules/@alfresco/adf-core/ && \
 cp -R ./lib/dist/core/* ./node_modules/@alfresco/adf-core/
 
-mkdir -p ./node_modules/@alfresco/adf-content-services/ && \
 cp -R ./lib/dist/content-services/* ./node_modules/@alfresco/adf-content-services/
 
-mkdir -p ./node_modules/@alfresco/adf-process-services/ && \
 cp -R ./lib/dist/process-services/* ./node_modules/@alfresco/adf-process-services/
 
-mkdir -p ./node_modules/@alfresco/adf-insights/ && \
 cp -R ./lib/dist/insights/* ./node_modules/@alfresco/adf-insights/
 
-mkdir -p ./node_modules/@alfresco/adf-extensions/ && \
 cp -R ./lib/dist/extensions/* ./node_modules/@alfresco/adf-extensions/
 
-mkdir -p ./node_modules/@alfresco/adf-process-services-cloud/ && \
 cp -R ./lib/dist/process-services-cloud/* ./node_modules/@alfresco/adf-process-services-cloud/
 
 echo "====== Copy i18n ====="
