@@ -22,6 +22,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TreeViewService } from '../services/tree-view.service';
 import { of } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
+import { NodeEntry } from 'alfresco-js-api';
 /*tslint:disable*/
 fdescribe('TreeViewComponent', () => {
 
@@ -94,13 +95,11 @@ fdescribe('TreeViewComponent', () => {
         }));
 
         it('should throw a nodeClicked event when a node is clicked', (done) => {
-            component.nodeClicked.subscribe((nodeClicked) => {
+            component.nodeClicked.subscribe((nodeClicked: NodeEntry) => {
                 expect(nodeClicked).toBeDefined();
                 expect(nodeClicked).not.toBeNull();
-                expect(nodeClicked.name).toBe('fake-node-name');
-                expect(nodeClicked.nodeId).toBe('fake-node-id');
-                expect(nodeClicked.level).toBe(0);
-                expect(nodeClicked.expandable).toBeTruthy();
+                expect(nodeClicked.entry.name).toBe('fake-node-name');
+                expect(nodeClicked.entry.id).toBe('fake-node-id');
                 done();
             });
             let rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-node-name');
