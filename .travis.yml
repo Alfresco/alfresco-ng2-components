@@ -12,9 +12,9 @@ env:
 stages:
   - compile
   - name: testcore
-    if: env(AFFECTED_LIBS) = core$
+    if: env(AFFECTED_LIBS) =~ /^(core$)$/
   - name: testcloud
-    if: env(AFFECTED_LIBS) = process-services-cloud$
+    if: env(AFFECTED_LIBS) =~ /^(process-services-cloud$)$/
   - name: deploy
     if: branch = master
 
