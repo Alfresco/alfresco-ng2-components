@@ -48,7 +48,7 @@ jobs:
                         echo "content-services";
                         ng test content-services --watch=false || exit 1;
                     else
-                        echo "NO content-services";
+                        echo "no content-services";
                     fi
         - stage: Unit Test
           env: STAGE=process-services-cloud
