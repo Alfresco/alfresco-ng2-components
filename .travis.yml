@@ -31,12 +31,12 @@ before_install:
 
 jobs:
   include:
-    - stage: compile-master
-      script: echo compile-master
-      if: branch = master
-    - stage: compile-dev
-      script: echo compile-development
+    - # require the branch name to be master (note for PRs this is the base branch name)
       if: branch = development
+      env: FOO=foo
+      script: echo test
+    - stage: compile
+      script: echo compile
     - stage: deploy
       script: echo  the deploy
     - stage: test
