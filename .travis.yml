@@ -34,7 +34,7 @@ jobs:
     - stage: compile
       script: echo compile
     - stage: deploy
-      script: echo deploy
+      script: echo  the deploy
     - stage: test
       script: echo test
 
