@@ -26,9 +26,9 @@ import { ProcessServiceCloudTestingModule } from '../../testing/process-service-
 import { ProcessCloudModule } from '../process-cloud.module';
 import { ProcessInstanceVariableCloud } from '../models/process-instance-variable-cloud.model';
 import { fakeProcessDefinitions, fakeProcessInstance, fakeProcessPayload } from '../mock/start-process.component.mock';
+import { By } from '@angular/platform-browser';
 
-/*tslint:disable */
-fdescribe('StartProcessCloudComponent', () => {
+describe('StartProcessCloudComponent', () => {
 
     let component: StartProcessCloudComponent;
     let fixture: ComponentFixture<StartProcessCloudComponent>;
@@ -98,7 +98,7 @@ fdescribe('StartProcessCloudComponent', () => {
             }));
 
             it('should have start button disabled when no process is selected', async(() => {
-                component.selectedProcessDef = null;
+                component.processPayloadCloud.processDefinitionKey = null;
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     let startBtn = fixture.nativeElement.querySelector('#button-start');
@@ -182,7 +182,7 @@ fdescribe('StartProcessCloudComponent', () => {
             });
         }));
 
-        fit('should select automatically the processDefinition if the app contain only one', async(() => {
+        it('should select automatically the processDefinition if the app contain only one', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[0]]));
             component.appName = 'myApp';
             component.ngOnInit();
@@ -295,10 +295,11 @@ fdescribe('StartProcessCloudComponent', () => {
         }));
 
         it('should avoid calling service to start process if required fields NOT provided', async(() => {
-            component.name = '';
-            component.startProcess();
+            component.processForm.controls['processName'].setValue('');
+                component.processForm.controls['processDefinition'].setValue('');
             fixture.whenStable().then(() => {
-                expect(startProcessSpy).not.toHaveBeenCalled();
+                let startProcessButton = fixture.debugElement.query(By.css('[data-automation-id="btn-start"]'));
+                expect(startProcessButton.nativeElement.disabled).toBeTruthy();
             });
         }));
 
@@ -306,7 +307,7 @@ fdescribe('StartProcessCloudComponent', () => {
             component.processPayloadCloud = fakeProcessPayload;
             component.startProcess();
             fixture.whenStable().then(() => {
-                expect(startProcessSpy).toHaveBeenCalledWith('myApp', 'NewProcess:1', 'NewProcess 1', undefined, undefined, undefined);
+                expect(startProcessSpy).toHaveBeenCalledWith('myApp', fakeProcessPayload);
             });
         }));
 
@@ -317,9 +318,10 @@ fdescribe('StartProcessCloudComponent', () => {
 
             component.variables = inputProcessVariable;
             component.processPayloadCloud = fakeProcessPayload;
-            component.startProcess();
+
+            component.ngOnInit();
             fixture.whenStable().then(() => {
-                expect(startProcessSpy).toHaveBeenCalledWith('myApp', 'NewProcess:1', 'NewProcess 1', undefined, undefined, inputProcessVariable);
+                expect(component.processPayloadCloud.variables).toBe(inputProcessVariable);
             });
         }));
 
@@ -368,32 +370,6 @@ fdescribe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should not emit start event when start the process without select a process and name', () => {
-            component.name = null;
-            component.processPayloadCloud = null;
-            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
-            component.startProcess();
-            fixture.detectChanges();
-            expect(startSpy).not.toHaveBeenCalled();
-        });
-
-        it('should not emit start event when start the process without name', () => {
-            component.name = null;
-            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
-            component.startProcess();
-            fixture.detectChanges();
-            expect(startSpy).not.toHaveBeenCalled();
-        });
-
-        it('should not emit start event when start the process without select a process', () => {
-            component.processForm.controls['processName'].setValue('My Process 1');
-                component.processForm.controls['processDefinition'].setValue('');
-            let startSpy: jasmine.Spy = spyOn(component.start, 'emit');
-            component.startProcess();
-            fixture.detectChanges();
-            expect(startSpy).not.toHaveBeenCalled();
-        });
-
         it('should able to start the process when the required fields are filled up', (done) => {
             component.processForm.controls['processName'].setValue('My Process 1');
             component.processForm.controls['processDefinition'].setValue('NewProcess 1');
@@ -406,5 +382,4 @@ fdescribe('StartProcessCloudComponent', () => {
             component.startProcess();
         });
     });
-
 });
