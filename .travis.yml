@@ -10,10 +10,12 @@ env:
         - AFFECTED_LIBS="process-services-cloud$"
 
 stages:
-  - warmup
-  - name: unit-test-core
+  - compile
+  - name: testcore
+    if: branch = master
+  - name: testcloud
     if: branch = development
-  - name: unit-test-cloud
+  - name: deploy
     if: branch = master
 
 addons:
@@ -31,14 +33,16 @@ before_install:
 
 jobs:
   include:
-   - stage: warmup
-      script: echo  warmup
-    - stage: unit-test-core
-      script: echo core
-      script: echo content
-     - stage: unit-test-cloud
-      script: echo cloud
-
+    - stage: compile
+      script: echo compile
+    - stage: deploy
+      script: echo  the deploy
+    - stage: testcore
+      script: echo test1
+      script: echo test2
+    - stage: testcloud
+      script: echo cloud1
+      script: echo cloud2
 
 # jobs:
 #   include:
