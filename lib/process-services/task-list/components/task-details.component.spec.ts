@@ -145,17 +145,16 @@ describe('TaskDetailsComponent', () => {
         expect(fixture.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.MESSAGES.NONE');
     });
 
-    it('shoud display a form when the task has an associated form', (done) => {
+    it('shoud display a form when the task has an associated form', async(() => {
         component.taskId = '123';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('adf-form'))).not.toBeNull();
-            done();
         });
-    });
+    }));
 
-    it('shoud display a form in readonly when the task has an associated form and readOnlyForm is true', (done) => {
+    it('shoud display a form in readonly when the task has an associated form and readOnlyForm is true', async(() => {
         component.readOnlyForm = true;
         component.taskId = '123';
         fixture.detectChanges();
@@ -163,9 +162,8 @@ describe('TaskDetailsComponent', () => {
             fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('adf-form'))).not.toBeNull();
             expect(fixture.debugElement.query(By.css('.adf-readonly-form'))).not.toBeNull();
-            done();
         });
-    });
+    }));
 
     it('should not display a form when the task does not have an associated form', async(() => {
         component.taskId = '123';
