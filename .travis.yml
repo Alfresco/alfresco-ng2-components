@@ -43,6 +43,7 @@ jobs:
     - stage: testcloud
       env: STAGE=cloud1
       script: echo cloud1
+    - stage: testcloud
       env: STAGE=cloud2
       script: echo cloud1
 
