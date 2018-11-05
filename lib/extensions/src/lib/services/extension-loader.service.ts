@@ -35,20 +35,12 @@ export class ExtensionLoaderService {
             this.loadConfig(configPath, 0).then(result => {
                 let config = result.config;
 
-                const override = sessionStorage.getItem('aca.extension.config');
+                const override = sessionStorage.getItem('app.extension.config');
                 if (override) {
                     config = JSON.parse(override);
                 }
 
-                const externalPlugins =
-                    localStorage.getItem('experimental.external-plugins') ===
-                    'true';
-
-                if (
-                    externalPlugins &&
-                    config.$references &&
-                    config.$references.length > 0
-                ) {
+                if (config.$references && config.$references.length > 0) {
                     const plugins = config.$references.map((name, idx) =>
                         this.loadConfig(`${pluginsPath}/${name}`, idx)
                     );
