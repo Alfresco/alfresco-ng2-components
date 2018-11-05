@@ -31,12 +31,12 @@ before_install:
 
 jobs:
   include:
-    if: branch = master
     - stage: compile-master
       script: echo compile-master
-    if: branch = development
+      if: branch = master
     - stage: compile-dev
       script: echo compile-development
+      if: branch = development
     - stage: deploy
       script: echo  the deploy
     - stage: test
