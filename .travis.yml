@@ -6,12 +6,12 @@ node_js:
   - '8.9.4'
 
 env:
-  - AFFECTED_LIBS="process-services-cloud"
+  - AFFECTED_LIBS="test"
 
 stages:
   - compile
   - name: testcore
-    if: env(AFFECTED_LIBS) = process-services-cloud
+    if: env(AFFECTED_LIBS) = core
   - name: testcloud
     if: env(AFFECTED_LIBS) = process-services-cloud
   - name: deploy
@@ -33,7 +33,7 @@ before_install:
 jobs:
   include:
     - stage: compile
-      script: echo compile
+      script: AFFECTED_LIBS="process-services-cloud"
     - stage: deploy
       script: echo  the deploy
     - stage: testcore
