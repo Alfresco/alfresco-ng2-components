@@ -38,7 +38,14 @@ jobs:
     - stage: deploy
       script: echo  the deploy
     - stage: testcore
-      script: echo test1
+      env: STAGE=core
+      script: echo core
+    - stage: testcore
+      env: STAGE=content-services
+      script: echo content-services
+    - stage: testcore
+      env: STAGE=process-services
+      script: echo process-services
     - stage: testcloud
       env: STAGE=cloud1
       script: echo cloud1
