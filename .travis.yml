@@ -10,11 +10,9 @@ env:
         - AFFECTED_LIBS="process-services-cloud$"
 
 stages:
-  - Warm Up Cache
-  - name: unit-test-core
-    if: AFFECTED_LIBS = "core$"
-  - name: unit-test-cloud
-    if: AFFECTED_LIBS = "process-services-cloud$"
+  - compile
+  - test
+  - deploy
 
 addons:
     chrome: stable
@@ -28,28 +26,15 @@ before_install:
     - sh -e /etc/init.d/xvfb start
     - sleep 3 # give xvfb some time to start
 
-jobs:
-    include:
-        - stage: Warm Up Cache
-          script:  if ([ "$TRAVIS_BRANCH" = "master" ]); then
-                (./scripts/npm-build-all.sh  || exit 1;);
-            else
-                (./scripts/update-version.sh -gnu -alpha && npm install || exit 1;);
-            fi
-        - stage: unit-test-core
-          script:   ng test core --watch=false || exit 1;
-        #- stage: Unit test
-        #  env: STAGE=content-services
-        #  script:   if [[ $AFFECTED_LIBS =~ "content-services$" ]];
-        #            then
-        #                echo "content-services";
-        #                ng test content-services --watch=false || exit 1;
-        #            else
-        #                echo "no content-services";
-        #            fi
-        - stage: unit-test-cloud
-          script:  ng test process-services-cloud --watch=false || exit 1;
 
+jobs:
+  include:
+    - stage: compile
+      script: echo compile
+    - stage: deploy
+      script: echo deploy
+    - stage: test
+      script: echo test
 
 # jobs:
 #   include:
