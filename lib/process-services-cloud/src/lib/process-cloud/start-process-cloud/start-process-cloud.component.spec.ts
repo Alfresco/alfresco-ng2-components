@@ -296,7 +296,7 @@ describe('StartProcessCloudComponent', () => {
 
         it('should avoid calling service to start process if required fields NOT provided', async(() => {
             component.processForm.controls['processName'].setValue('');
-                component.processForm.controls['processDefinition'].setValue('');
+            component.processForm.controls['processDefinition'].setValue('');
             fixture.whenStable().then(() => {
                 let startProcessButton = fixture.debugElement.query(By.css('[data-automation-id="btn-start"]'));
                 expect(startProcessButton.nativeElement.disabled).toBeTruthy();
