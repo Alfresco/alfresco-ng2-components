@@ -7,12 +7,11 @@ node_js:
 
 env:
   - AFFECTED_LIBS="process-services-cloud"
-  - FOO="core"
 
 stages:
   - compile
   - name: testcore
-    if: env(FOO) = core
+    if: env(AFFECTED_LIBS) = process-services-cloud
   - name: testcloud
     if: env(AFFECTED_LIBS) = process-services-cloud
   - name: deploy
