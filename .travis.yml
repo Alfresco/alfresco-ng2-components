@@ -9,13 +9,6 @@ env:
     global:
         - AFFECTED_LIBS="process-services-cloud$"
 
-stages:
-  - compile
-  - name: test
-    if: branch = development
-  - name: deploy
-    if: branch = master
-
 addons:
     chrome: stable
 before_script:
