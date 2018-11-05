@@ -12,7 +12,7 @@ env:
 stages:
   - compile
   - name: testcore
-    if: branch = master
+    if: branch = development
   - name: testcloud
     if: branch = development
   - name: deploy
