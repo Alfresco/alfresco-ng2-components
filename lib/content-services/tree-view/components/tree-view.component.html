@@ -1,17 +1,17 @@
 <mat-tree class="adf-tree-view-main" [dataSource]="dataSource" [treeControl]="treeControl" *ngIf="nodeId; else missingNodeId">
-    <mat-tree-node class="adf-tree-view-node" *matTreeNodeDef="let node" id="{{node.name + '-tree-node'}}"
+    <mat-tree-node class="adf-tree-view-node" *matTreeNodeDef="let treeNode" id="{{treeNode.name + '-tree-node'}}"
         matTreeNodePadding [matTreeNodePaddingIndent]="15">
-        {{node.name}}
+        {{treeNode.name}}
     </mat-tree-node>
-    <mat-tree-node class="adf-tree-view-node" id="{{node.name + '-tree-child-node'}}" *matTreeNodeDef="let node; when: hasChild"
+    <mat-tree-node class="adf-tree-view-node" id="{{treeNode.name + '-tree-child-node'}}" *matTreeNodeDef="let treeNode; when: hasChild"
         matTreeNodePadding [matTreeNodePaddingIndent]="15">
-        <button id="{{'button-'+node.name}}" (click)="onNodeClicked(node)"
-                mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
+        <button id="{{'button-'+treeNode.name}}" (click)="onNodeClicked(treeNode.node)"
+                mat-icon-button [attr.aria-label]="'toggle ' + treeNode.filename" matTreeNodeToggle>
             <mat-icon class="adf-tree-view-icon">
-                {{treeControl.isExpanded(node) ? 'folder_open' : 'folder'}}
+                {{treeControl.isExpanded(treeNode) ? 'folder_open' : 'folder'}}
             </mat-icon>
         </button>
-        {{node.name}}
+        {{treeNode.name}}
     </mat-tree-node>
 </mat-tree>
 <ng-template #missingNodeId>

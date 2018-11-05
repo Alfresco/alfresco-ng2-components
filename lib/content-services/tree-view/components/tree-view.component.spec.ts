@@ -22,8 +22,8 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TreeViewService } from '../services/tree-view.service';
 import { of } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
-
-describe('TreeViewComponent', () => {
+/*tslint:disable*/
+fdescribe('TreeViewComponent', () => {
 
     let fixture: ComponentFixture<TreeViewComponent>;
     let element: HTMLElement;
@@ -31,17 +31,17 @@ describe('TreeViewComponent', () => {
     let component: any;
 
     let fakeNodeList: TreeBaseNode[] = [
-        { nodeId: 'fake-node-id', name: 'fake-node-name', level: 0, expandable: true }
+        { nodeId: 'fake-node-id', name: 'fake-node-name', level: 0, expandable: true, node : {} }
     ];
 
     let fakeChildrenList: TreeBaseNode[] = [
-        { nodeId: 'fake-child-id', name: 'fake-child-name', level: 0, expandable: true },
-        { nodeId: 'fake-second-id', name: 'fake-second-name', level: 0, expandable: true }
+        { nodeId: 'fake-child-id', name: 'fake-child-name', level: 0, expandable: true, node : {} },
+        { nodeId: 'fake-second-id', name: 'fake-second-name', level: 0, expandable: true, node : {} }
     ];
 
     let fakeNextChildrenList: TreeBaseNode[] = [
-        { nodeId: 'fake-next-child-id', name: 'fake-next-child-name', level: 0, expandable: true },
-        { nodeId: 'fake-next-second-id', name: 'fake-next-second-name', level: 0, expandable: true }
+        { nodeId: 'fake-next-child-id', name: 'fake-next-child-name', level: 0, expandable: true, node : {} },
+        { nodeId: 'fake-next-second-id', name: 'fake-next-second-name', level: 0, expandable: true, node : {} }
     ];
 
     let returnRootOrChildrenNode = function (nodeId: string) {

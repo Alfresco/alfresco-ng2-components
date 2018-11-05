@@ -20,6 +20,7 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitte
 import { TreeBaseNode } from '../models/tree-view.model';
 import { TreeViewDataSource } from '../data/tree-view-datasource';
 import { TreeViewService } from '../services/tree-view.service';
+import { NodeEntry } from 'alfresco-js-api';
 
 @Component({
     selector: 'adf-tree-view-list',
@@ -33,7 +34,7 @@ export class TreeViewComponent implements OnInit, OnChanges {
     nodeId: string;
 
     @Output()
-    nodeClicked: EventEmitter<TreeBaseNode> = new EventEmitter();
+    nodeClicked: EventEmitter<NodeEntry> = new EventEmitter();
 
     treeControl: FlatTreeControl<TreeBaseNode>;
     dataSource: TreeViewDataSource;
@@ -56,7 +57,7 @@ export class TreeViewComponent implements OnInit, OnChanges {
         }
     }
 
-    onNodeClicked(node: TreeBaseNode) {
+    onNodeClicked(node: NodeEntry) {
         this.nodeClicked.emit(node);
     }
 

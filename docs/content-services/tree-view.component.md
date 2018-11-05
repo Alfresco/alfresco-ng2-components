@@ -29,4 +29,4 @@ Allow a user to show the folder and subfolders of a node in a tree view
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| nodeClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<TreeBaseNode>` | Emitted when a node on the tree view is clicked |
+| nodeClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<NodeEntry>` | Emitted when a node on the tree view is clicked |

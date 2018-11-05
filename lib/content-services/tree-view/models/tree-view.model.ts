@@ -23,10 +23,12 @@ export class TreeBaseNode {
     nodeId: string;
     level: number;
     expandable = true;
+    node: NodeEntry;
 
-    constructor(obj: NodeEntry, level?: number) {
-        this.name = obj.entry.name;
+    constructor(nodeEntry: NodeEntry, level?: number) {
+        this.name = nodeEntry.entry.name;
         this.level = level ? level : 0;
-        this.nodeId = obj.entry.id;
+        this.nodeId = nodeEntry.entry.id;
+        this.node = nodeEntry;
     }
 }

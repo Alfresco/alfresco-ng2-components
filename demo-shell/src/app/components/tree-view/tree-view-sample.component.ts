@@ -26,9 +26,9 @@ export class TreeViewSampleComponent {
 
     clickedNodeName: string = '';
 
-    nodeIdSample: string = '712a36b7-542b-48c7-a64e-8484acedefc3';
+    nodeIdSample: string = '-my-';
 
     onClick(node) {
-        this.clickedNodeName = node.name;
+        this.clickedNodeName = node.entry.name;
     }
 }
