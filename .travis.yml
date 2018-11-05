@@ -9,6 +9,13 @@ env:
     global:
         - AFFECTED_LIBS="process-services-cloud$"
 
+stages:
+  - warmup
+  - name: unit-test-core
+    if: branch = development
+  - name: unit-test-cloud
+    if: branch = master
+
 addons:
     chrome: stable
 before_script:
@@ -24,17 +31,14 @@ before_install:
 
 jobs:
   include:
-    - # require the branch name to be master (note for PRs this is the base branch name)
-      if: branch = development
-      env: FOO=foo
-      script: echo test
-    - stage: compile
-      script: echo compile
-    - stage: deploy
-      script: echo  the deploy
-    - stage: test
-      script: echo test1
-      script: echo test2
+   - stage: warmup
+      script: echo  warmup
+    - stage: unit-test-core
+      script: echo core
+      script: echo content
+     - stage: unit-test-cloud
+      script: echo cloud
+
 
 # jobs:
 #   include:
