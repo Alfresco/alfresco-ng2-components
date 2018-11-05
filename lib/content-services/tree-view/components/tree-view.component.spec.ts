@@ -23,8 +23,8 @@ import { TreeViewService } from '../services/tree-view.service';
 import { of } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { NodeEntry } from 'alfresco-js-api';
-/*tslint:disable*/
-fdescribe('TreeViewComponent', () => {
+
+describe('TreeViewComponent', () => {
 
     let fixture: ComponentFixture<TreeViewComponent>;
     let element: HTMLElement;
@@ -32,7 +32,8 @@ fdescribe('TreeViewComponent', () => {
     let component: any;
 
     let fakeNodeList: TreeBaseNode[] = [
-        { nodeId: 'fake-node-id', name: 'fake-node-name', level: 0, expandable: true, node : {} }
+        { nodeId: 'fake-node-id', name: 'fake-node-name', level: 0, expandable: true,
+             node: { entry: { name: 'fake-node-name', id: 'fake-node-id' } } }
     ];
 
     let fakeChildrenList: TreeBaseNode[] = [
