@@ -17,8 +17,8 @@
 
 import { browser } from 'protractor';
 
-import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import { LoginPage } from '../../pages/adf/loginPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import CardViewPage = require('../../pages/adf/metadataViewPage');
 import ContentListPage = require('../../pages/adf/dialog/contentList');
@@ -36,7 +36,7 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 describe('Metadata component', () => {
 
     const METADATA = {
-        DATAFORMAT: 'mmm dd yyyy',
+        DATA_FORMAT: 'mmm dd yyyy',
         TITLE: 'Details',
         COMMENTS_TAB: 'COMMENTS',
         PROPERTY_TAB: 'PROPERTIES',
@@ -94,7 +94,7 @@ describe('Metadata component', () => {
         contentServicesPage.navigateToDocumentList();
     });
 
-    it('[C245652] Properties', () => {
+    it('[C245652] Should be possible to display a file\'s properties', () => {
         viewerPage.viewFile(pngFileModel.name);
 
         viewerPage.clickInfoButton();
@@ -106,34 +106,34 @@ describe('Metadata component', () => {
         expect(metadataViewPage.getExpandedAspectName()).toEqual(METADATA.DEFAULT_ASPECT);
         expect(metadataViewPage.getName()).toEqual(pngFileModel.name);
         expect(metadataViewPage.getCreator()).toEqual(pngFileModel.getCreatedByUser().displayName);
-        expect(metadataViewPage.getCreatedDate()).toEqual(dateFormat(pngFileModel.createdAt, METADATA.DATAFORMAT));
+        expect(metadataViewPage.getCreatedDate()).toEqual(dateFormat(pngFileModel.createdAt, METADATA.DATA_FORMAT));
         expect(metadataViewPage.getModifier()).toEqual(pngFileModel.getCreatedByUser().displayName);
-        expect(metadataViewPage.getModifiedDate()).toEqual(dateFormat(pngFileModel.createdAt, METADATA.DATAFORMAT));
+        expect(metadataViewPage.getModifiedDate()).toEqual(dateFormat(pngFileModel.createdAt, METADATA.DATA_FORMAT));
         expect(metadataViewPage.getMimetypeName()).toEqual(pngFileModel.getContent().mimeTypeName);
         expect(metadataViewPage.getSize()).toEqual(pngFileModel.getContent().getSizeInBytes());
 
         metadataViewPage.editIconIsDisplayed();
         metadataViewPage.informationButtonIsDisplayed();
-        expect(metadataViewPage.getInformationButtonText()).toEqual(METADATA.MORE_INFO_BUTTON);
-        expect(metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_DOWN);
-
-        viewerPage.clickCloseButton();
-    });
-
-    it('[C272769] Information button', () => {
-        viewerPage.viewFile(pngFileModel.name);
-        viewerPage.clickInfoButton();
-        viewerPage.checkInfoSideBarIsDisplayed();
-        metadataViewPage.clickOnPropertiesTab();
-        metadataViewPage.informationButtonIsDisplayed();
-        metadataViewPage.clickOnInformationButton();
         expect(metadataViewPage.getInformationButtonText()).toEqual(METADATA.LESS_INFO_BUTTON);
         expect(metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_UP);
 
         viewerPage.clickCloseButton();
     });
 
-    it('[C270952] Info icon', () => {
+    it('[C272769] Should be possible to display more details when clicking on More Information button', () => {
+        viewerPage.viewFile(pngFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        metadataViewPage.clickOnPropertiesTab();
+        metadataViewPage.informationButtonIsDisplayed();
+        metadataViewPage.clickOnInformationButton();
+        expect(metadataViewPage.getInformationButtonText()).toEqual(METADATA.MORE_INFO_BUTTON);
+        expect(metadataViewPage.getInformationIconText()).toEqual(METADATA.ARROW_DOWN);
+
+        viewerPage.clickCloseButton();
+    });
+
+    it('[C270952] Should be possible to open/close properties using info icon', () => {
         viewerPage.viewFile(pngFileModel.name);
         viewerPage.clickInfoButton();
         viewerPage.checkInfoSideBarIsDisplayed();
@@ -288,7 +288,7 @@ describe('Metadata component', () => {
 
         metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.clickMetadatGroup('EXIF');
+        metadataViewPage.clickMetadataGroup('EXIF');
 
         metadataViewPage.editIconClick();
 

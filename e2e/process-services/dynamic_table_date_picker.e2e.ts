@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
-import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage.js');
-import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
-import DynamicTable = require('../pages/adf/process_services/widgets/DynamicTable');
+import { LoginPage } from '../pages/adf/loginPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
+import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
+import { DynamicTable } from '../pages/adf/process_services/widgets/dynamicTable';
+import { Dropdown } from '../pages/adf/process_services/widgets/dropdown';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -28,25 +29,14 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
-describe('Dynamic Table - Date Picker', () => {
+describe('Dynamic Table', () => {
 
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();
     let processFiltersPage = new ProcessFiltersPage();
     let appNavigationBarPage = new AppNavigationBarPage();
     let dynamicTable = new DynamicTable();
-
-    let app = resources.Files.DYNAMIC_TABLE_APP;
-    let user, tenantId, appId;
-
-    let randomText = {
-        date: 'HELLO WORLD',
-        dateTime: 'Test',
-        error: `Field 'columnDate' is required.`
-    };
-
-    let datePosition = 15;
-    let rowPosition = 0;
+    let user, tenantId, appId, apps, users;
 
     beforeAll(async(done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -54,8 +44,8 @@ describe('Dynamic Table - Date Picker', () => {
             hostBpm: TestConfig.adf.url
         });
 
-        let apps = new AppsActions();
-        let users = new UsersActions();
+        apps = new AppsActions();
+        users = new UsersActions();
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -63,21 +53,10 @@ describe('Dynamic Table - Date Picker', () => {
 
         tenantId = user.tenantId;
 
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        let importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
-        appId = importedApp.id;
-
-        await loginPage.loginToProcessServicesUsingUserModel(user);
-
         done();
     });
 
     afterAll(async(done) => {
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
@@ -85,41 +64,108 @@ describe('Dynamic Table - Date Picker', () => {
         done();
     });
 
-    it('[C286277] Should have a datepicker and a mask for DateTime field', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+    describe('Date Picker', () => {
+        let app = resources.Files.DYNAMIC_TABLE_APP;
 
-        appNavigationBarPage.clickProcessButton();
+        let randomText = {
+            date: 'HELLO WORLD',
+            dateTime: 'Test',
+            error: `Field 'columnDate' is required.`
+        };
 
-        processFiltersPage.clickCreateProcessButton();
-        processFiltersPage.clickNewProcessDropdown();
+        let datePosition = 15;
+        let rowPosition = 0;
 
-        dynamicTable.clickAddButton();
-        dynamicTable.clickColumnDateTime();
+        beforeAll(async(done) => {
+            await this.alfrescoJsApi.login(user.email, user.password);
 
-        expect(dynamicTable.addRandomStringOnDateTime(randomText.dateTime)).toBe('');
+            let importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+            appId = importedApp.id;
+
+            await loginPage.loginToProcessServicesUsingUserModel(user);
+
+            done();
+        });
+
+        afterAll(async(done) => {
+            await this.alfrescoJsApi.login(user.email, user.password);
+
+            await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
+
+            done();
+        });
+
+        beforeEach(() => {
+            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+
+            appNavigationBarPage.clickProcessButton();
+
+            processFiltersPage.clickCreateProcessButton();
+            processFiltersPage.clickNewProcessDropdown();
+        });
+
+        it('[C286277] Should have a datepicker and a mask for DateTime field', () => {
+            dynamicTable.clickAddButton();
+            dynamicTable.clickColumnDateTime();
+
+            expect(dynamicTable.addRandomStringOnDateTime(randomText.dateTime)).toBe('');
+        });
+
+        it('[C286279] Should be able to save row with Date field', () => {
+            dynamicTable.clickAddButton();
+            dynamicTable.addRandomStringOnDate(randomText.date);
+            dynamicTable.clickSaveButton();
+
+            expect(dynamicTable.checkErrorMessage()).toBe(randomText.error);
+
+            dynamicTable.clickDateWidget();
+            dynamicTable.getDateCalendarNumber(datePosition);
+            dynamicTable.waitForCalendarToDisappear();
+            dynamicTable.clickSaveButton();
+            dynamicTable.getTableRow(rowPosition);
+        });
     });
 
-    it('[C286279] Should be able to save row with Date field', () => {
-        loginPage.loginToProcessServicesUsingUserModel(user);
+    describe('Required Dropdown', () => {
+        let app = resources.Files.APP_DYNAMIC_TABLE_DROPDOWN;
+        let dropdown = new Dropdown();
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+        beforeAll(async(done) => {
 
-        appNavigationBarPage.clickProcessButton();
+            await this.alfrescoJsApi.login(user.email, user.password);
 
-        processFiltersPage.clickCreateProcessButton();
-        processFiltersPage.clickNewProcessDropdown();
+            let importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+            appId = importedApp.id;
 
-        dynamicTable.clickAddButton();
-        dynamicTable.addRandomStringOnDate(randomText.date);
-        dynamicTable.clickSaveButton();
+            await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        expect(dynamicTable.checkErrorMessage()).toBe(randomText.error);
+            done();
+        });
 
-        dynamicTable.clickDateWidget();
-        dynamicTable.getDateCalendarNumber(datePosition);
-        dynamicTable.waitForCalendarToDisappear();
-        dynamicTable.clickSaveButton();
-        dynamicTable.getTableRow(rowPosition);
+        afterAll(async(done) => {
+            await this.alfrescoJsApi.login(user.email, user.password);
+
+            await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
+
+            done();
+        });
+
+        beforeEach(() => {
+            processServicesPage.goToProcessServices().goToApp(app.title).clickProcessButton();
+
+            appNavigationBarPage.clickProcessButton();
+
+            processFiltersPage.clickCreateProcessButton();
+            processFiltersPage.clickNewProcessDropdown();
+        });
+
+        it('[C286519] Should be able to save row with required dropdown column', () => {
+            let dropdownOption = 'Option 1';
+            dynamicTable.clickAddButton();
+            dropdown.selectOption(dropdownOption);
+            dynamicTable.clickSaveButton();
+            dynamicTable.checkItemIsPresent(dropdownOption);
+        });
     });
 
 });

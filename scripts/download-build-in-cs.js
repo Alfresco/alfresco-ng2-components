@@ -4,25 +4,24 @@ var http = require('http');
 
 var fs = require('fs');
 var path = require('path');
-var archiver = require('archiver');
 var unzip = require('unzip-stream');
 
-replaceHrefInIndex = (folder) => {
+replaceHrefInIndex = (folder, href) => {
     fs.readFile(`demo-shell/${folder}/index.html`, 'utf8', function (err, data) {
         if (err) {
             return console.log(err);
         }
 
-        var result = data.replace(`base href="/"`, `base href=\"/${folder}/\"`);
+        let result = data.replace(`base href="/"`, `base href=\"/${href}/\"`);
 
         fs.writeFile(`demo-shell/${folder}/index.html`, result, 'utf8', function (err) {
             if (err) return console.log(err);
         });
     });
-}
+};
 
 unzipRetry = (tentativeNumber, outputFolder, url) => {
-    var file = fs.createWriteStream('demo.zip');
+    let file = fs.createWriteStream('demo.zip');
     http.get(`http://${url}`, (response) => {
         response.pipe(file);
         file.on('finish', async () => {
@@ -41,15 +40,19 @@ unzipRetry = (tentativeNumber, outputFolder, url) => {
                     .on('finish', () => {
 
                         setTimeout(() => {
-                            let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`)
-                            let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`)
+                            let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`);
+                            let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`);
 
-                            fs.rename(oldFolder, newFolder, (err) => {
-                                console.log('renamed complete');
+                            if (!fs.existsSync(path.join(__dirname, `../demo-shell/dist`))) {
+                                fs.mkdirSync(path.join(__dirname, `../demo-shell/dist`));
+                            }
+
+                            fs.rename(oldFolder, newFolder, () => {
+                                console.log('renamed complete ');
                             });
 
                             if (program.baseHref) {
-                                replaceHrefInIndex(outputFolder);
+                                replaceHrefInIndex(outputFolder, program.baseHref);
                             }
                         }, 10000);
 
@@ -58,7 +61,7 @@ unzipRetry = (tentativeNumber, outputFolder, url) => {
 
         });
     });
-}
+};
 
 async function main() {
 
@@ -92,7 +95,7 @@ async function main() {
 
     console.log('Download zip');
 
-    let outputFolder = program.baseHref ? program.baseHref : 'dist';
+    let outputFolder = program.baseHref ? path.join('dist', program.baseHref) : 'dist';
 
     unzipRetry(0, outputFolder, url);
 }

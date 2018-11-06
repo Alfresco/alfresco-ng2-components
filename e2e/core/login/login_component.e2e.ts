@@ -17,23 +17,24 @@
 
 import { browser } from 'protractor';
 
-import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
-import ProcessServicesPage = require('../../pages/adf/process_services/processServicesPage');
-import NavigationBarPage = require('../../pages/adf/navigationBarPage');
-import UserInfoDialog = require('../../pages/adf/dialog/userInfoDialog');
+import { LoginPage } from '../../pages/adf/loginPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
+import { ProcessServicesPage } from '../../pages/adf/process_services/processServicesPage';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+
+import { UserInfoDialog } from '../../pages/adf/dialog/userInfoDialog';
 
 import TestConfig = require('../../test.config');
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 
-import AdfSettingsPage = require('../../pages/adf/settingsPage');
+import { SettingsPage } from '../../pages/adf/settingsPage';
 import AlfrescoApi = require('alfresco-js-api-node');
 
 import Util = require('../../util/util');
 
 describe('Login component', () => {
 
-    let adfSettingsPage = new AdfSettingsPage();
+    let settingsPage = new SettingsPage();
     let processServicesPage = new ProcessServicesPage();
     let navigationBarPage = new NavigationBarPage();
     let userInfoDialog = new UserInfoDialog();
@@ -69,7 +70,7 @@ describe('Login component', () => {
         done();
     });
 
-    it('[C260036] Username Required', () => {
+    it('[C260036] Should require username', () => {
         loginPage.goToLoginPage();
         loginPage.checkUsernameInactive();
         loginPage.checkSignInButtonIsDisabled();
@@ -81,7 +82,7 @@ describe('Login component', () => {
         loginPage.checkSignInButtonIsDisabled();
     });
 
-    it('[C260043] Enter Password to sign in', () => {
+    it('[C260043] Should require password', () => {
         loginPage.goToLoginPage();
         loginPage.checkPasswordInactive();
         loginPage.checkSignInButtonIsDisabled();
@@ -93,7 +94,7 @@ describe('Login component', () => {
         loginPage.checkSignInButtonIsDisabled();
     });
 
-    it('[C260044] Username must be at least 2 characters long', () => {
+    it('[C260044] Username should be at least 2 characters long', () => {
         loginPage.goToLoginPage();
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterUsername('A');
@@ -104,7 +105,7 @@ describe('Login component', () => {
         loginPage.clearUsername();
     });
 
-    it('[C260045] Login button is enabled', () => {
+    it('[C260045] Should enable login button after entering a valid username and a password', () => {
         loginPage.goToLoginPage();
         loginPage.enterUsername(adminUserModel.id);
         loginPage.checkSignInButtonIsDisabled();
@@ -114,7 +115,7 @@ describe('Login component', () => {
         loginPage.clearPassword();
     });
 
-    it('[C260046] You have entered an invalid username or password', () => {
+    it('[C260046] Should NOT be possible to login with an invalid username/password', () => {
         loginPage.goToLoginPage();
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterUsername('test');
@@ -126,7 +127,7 @@ describe('Login component', () => {
         loginPage.clearPassword();
     });
 
-    it('[C260047] Password field is crypted', () => {
+    it('[C260047] Password should be crypted', () => {
         loginPage.goToLoginPage();
         loginPage.checkSignInButtonIsDisabled();
         loginPage.enterPassword('test');
@@ -137,7 +138,7 @@ describe('Login component', () => {
         loginPage.clearPassword();
     });
 
-    it('[C260048] Remember  Need Help? and Register are displayed and hidden', () => {
+    it('[C260048] Should be possible to enable/disable login footer', () => {
         loginPage.goToLoginPage();
         loginPage.enableFooter();
         loginPage.checkRememberIsDisplayed();
@@ -149,10 +150,10 @@ describe('Login component', () => {
         loginPage.checkRegisterIsNotDisplayed();
     });
 
-    it('[C260049] Login to Process Services with Content Services disabled', () => {
+    it('[C260049] Should be possible to login to Process Services with Content Services disabled', () => {
         loginPage.goToLoginPage();
         loginPage.checkSignInButtonIsDisabled();
-        adfSettingsPage.setProviderBpm();
+        settingsPage.setProviderBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
@@ -160,10 +161,10 @@ describe('Login component', () => {
         loginPage.waitForElements();
     });
 
-    it('[C260050] Login to Content Services with Process Services disabled', () => {
+    it('[C260050] Should be possible to login to Content Services with Process Services disabled', () => {
         loginPage.goToLoginPage();
         loginPage.checkSignInButtonIsDisabled();
-        adfSettingsPage.setProviderEcm();
+        settingsPage.setProviderEcm();
         loginPage.login(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
@@ -171,10 +172,10 @@ describe('Login component', () => {
         loginPage.waitForElements();
     });
 
-    it('[C260051] Able to login to both Content Services and Process Services', () => {
-        adfSettingsPage.setProviderEcmBpm();
+    it('[C260051] Should be able to login to both Content Services and Process Services', () => {
+        settingsPage.setProviderEcmBpm();
         loginPage.checkSignInButtonIsDisabled();
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
@@ -185,7 +186,7 @@ describe('Login component', () => {
     });
 
     it('[C277754] Should the user be redirect to the login page when the Content Service session expire', () => {
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         browser.executeScript('window.localStorage.removeItem("ticket-ECM");').then(() => {
             browser.get(TestConfig.adf.url + '/files');
@@ -195,7 +196,7 @@ describe('Login component', () => {
     });
 
     it('[C279932] Should successRoute property change the landing page when the user Login', () => {
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.enableSuccessRouteSwitch();
         loginPage.enterSuccessRoute('activiti');
         loginPage.login(adminUserModel.id, adminUserModel.password);
@@ -203,7 +204,7 @@ describe('Login component', () => {
     });
 
     it('[C279931] Should the user be redirect to the login page when the Process Service session expire', () => {
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         browser.executeScript('window.localStorage.removeItem("ticket-BPM");').then(() => {
             browser.get(TestConfig.adf.url + '/activiti');
@@ -212,7 +213,7 @@ describe('Login component', () => {
     });
 
     it('[C279930] Should a user still be logged-in when open a new tab', () => {
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
 
         Util.openNewTabInBrowser();
@@ -229,7 +230,7 @@ describe('Login component', () => {
         });
     });
 
-    it('[C276746] Login with two different users', () => {
+    it('[C276746] Should display the right information in user-info when a different users logs in', () => {
         loginPage.loginToContentServicesUsingUserModel(userA);
         navigationBarPage.clickUserProfile();
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
@@ -242,7 +243,7 @@ describe('Login component', () => {
     });
 
     it('[C279933] Should be possible change the login component logo when logoImageUrl is changed', () => {
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.enableLogoSwitch();
         loginPage.enterLogo('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');
         loginPage.checkLoginImgURL('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');

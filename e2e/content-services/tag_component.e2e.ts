@@ -18,9 +18,9 @@
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import FileModel = require('../models/ACS/fileModel');
 
-import LoginPage = require('../pages/adf/loginPage');
-import TagPage = require('../pages/adf/tagPage');
-import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { TagPage } from '../pages/adf/tagPage';
+import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -99,7 +99,7 @@ describe('Tag component', () => {
         done();
     });
 
-    it('[C260374] Tag node ID', () => {
+    it('[C260374] Should NOT be possible to add a new tag without Node ID', () => {
         expect(tagPage.getNodeId()).toEqual('');
         expect(tagPage.getNewTagPlaceholder()).toEqual('New Tag');
         expect(tagPage.addTagButtonIsEnabled()).toEqual(false);
@@ -109,7 +109,7 @@ describe('Tag component', () => {
         expect(tagPage.getNewTagInput()).toEqual('a');
     });
 
-    it('[C268151] New tag for specific Node ID', () => {
+    it('[C268151] Should be possible to add a new tag to a Node', () => {
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(tagList[0]);
 
@@ -117,7 +117,7 @@ describe('Tag component', () => {
         tagPage.checkTagIsDisplayedInTagListByNodeId(tagList[0]);
     });
 
-    it('[C260377] Tag name already exists', () => {
+    it('[C260377] Should NOT be possible to add a tag that already exists', () => {
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(sameTag);
         tagPage.checkTagIsDisplayedInTagList(sameTag);
@@ -125,7 +125,7 @@ describe('Tag component', () => {
         expect(tagPage.getErrorMessage()).toEqual('Tag already exists');
     });
 
-    it('[C260378] Multiple tags', () => {
+    it('[C260378] Should be possible to add multiple tags', () => {
         tagPage.insertNodeId(pdfFileModel.id);
         tagPage.addTag(tagList[2]);
 
@@ -136,7 +136,7 @@ describe('Tag component', () => {
         tagPage.checkTagListContentServicesIsOrderedAscending();
     });
 
-    it('[C91326] Tag text field', () => {
+    it('[C91326] Should be possible to create a tag with different characters', () => {
         tagPage.insertNodeId(pdfFileModel.id);
 
         tagPage.addTag(uppercaseTag);
@@ -159,7 +159,7 @@ describe('Tag component', () => {
         tagPage.checkTagIsDisplayedInTagListByNodeId(nonLatinTag);
     });
 
-    it('[C260375] Delete tag', () => {
+    it('[C260375] Should be possible to delete a tag', () => {
         let deleteTag = Util.generateRandomStringToUpperCase();
 
         tagPage.insertNodeId(deleteFile.id);
@@ -199,7 +199,7 @@ describe('Tag component', () => {
         tagPage.checkDeleteTagFromTagListByNodeIdIsNotDisplayed(tagList[3]);
     });
 
-    it('[C286472] Should be able to click Show more/less button on "List Tags Content Services"', () => {
+    it('[C286472] Should be able to click Show more/less button on List Tags Content Services', () => {
         tagPage.insertNodeId(pdfFileModel.id);
 
         tagPage.checkShowMoreButtonIsDisplayed();

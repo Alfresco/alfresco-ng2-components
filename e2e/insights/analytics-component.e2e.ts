@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
-import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import AnalyticsPage = require('../pages/adf/process_services/analyticsPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
-import AppNavigationBarPage = require('../pages/adf/process_services/appNavigationBarPage');
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import TestConfig = require('../test.config');
 import Tenant = require('../models/APS/Tenant');
 import User = require('../models/APS/User');
@@ -61,7 +61,7 @@ describe('Analytics Smoke Test', () => {
         done();
     });
 
-    it('Change name from Process Definition Heat Map', () => {
+    it('[C260346] Should be able to change title of a report', () => {
         navigationBarPage.clickProcessServicesButton();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp('Task App');

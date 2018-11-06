@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
+import { LoginPage } from '../pages/adf/loginPage';
 import { TrashcanPage } from '../pages/adf/trashcanPage';
 
 import PaginationPage = require('../pages/adf/paginationPage');
-import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import FolderModel = require('../models/ACS/folderModel');
@@ -88,7 +88,7 @@ describe('Trashcan - Pagination', () => {
         done();
     });
 
-    it('[C272811] 20 Items per page', () => {
+    it('[C272811] Should be able to set Items per page to 20', () => {
         navigationBarPage.clickTrashcanButton();
 
         trashcanPage.waitForTableBody();
@@ -106,7 +106,7 @@ describe('Trashcan - Pagination', () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('[C276742] 15 Items per page', () => {
+    it('[C276742] Should be able to set Items per page to 15', () => {
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
@@ -119,7 +119,7 @@ describe('Trashcan - Pagination', () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('[C276743] 10 Items per page', () => {
+    it('[C276743] Should be able to set Items per page to 10', () => {
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
@@ -132,7 +132,7 @@ describe('Trashcan - Pagination', () => {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('[C276744] 5 Items per page', () => {
+    it('[C276744] Should be able to set Items per page to 5', () => {
         navigationBarPage.clickTrashcanButton();
         trashcanPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.five);

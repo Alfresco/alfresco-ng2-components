@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
-import TasksPage = require('../pages/adf/process_services/tasksPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { TasksPage } from '../pages/adf/process_services/tasksPage';
 
 import CONSTANTS = require('../util/constants');
 
@@ -33,7 +33,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import path = require('path');
 import Util = require('../util/util');
 
-describe('Start Task - Task App', () => {
+describe('Task Audit', () => {
 
     let loginPage = new LoginPage();
     let processServicesPage = new ProcessServicesPage();

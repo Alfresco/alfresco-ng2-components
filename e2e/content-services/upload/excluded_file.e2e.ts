@@ -17,11 +17,11 @@
 
 import { element, by, browser } from 'protractor';
 
-import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import { LoginPage } from '../../pages/adf/loginPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import UploadDialog = require('../../pages/adf/dialog/uploadDialog');
 import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
-import NavigationBarPage = require('../../pages/adf/navigationBarPage');
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');
@@ -118,8 +118,7 @@ describe('Upload component - Excluded Files', () => {
         browser.refresh();
 
         navigationBarPage.clickConfigEditorButton();
-
-        configEditorPage.clickFileConfiguration('adf-file-conf');
+        configEditorPage.clickFileConfiguration();
 
         configEditorPage.clickClearButton();
 
@@ -149,7 +148,7 @@ describe('Upload component - Excluded Files', () => {
 
         navigationBarPage.clickConfigEditorButton();
 
-        configEditorPage.clickFileConfiguration('adf-file-conf');
+        configEditorPage.clickFileConfiguration();
 
         configEditorPage.clickClearButton();
 

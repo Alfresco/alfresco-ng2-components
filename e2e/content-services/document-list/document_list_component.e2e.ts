@@ -16,9 +16,9 @@
  */
 
 import { browser } from 'protractor';
-import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
-import NavigationBarPage = require('../../pages/adf/navigationBarPage');
+import { LoginPage } from '../../pages/adf/loginPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
@@ -93,14 +93,14 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C217334] - Error message displayed without permissions', () => {
+        it('[C217334] Should display a message when accessing file without permissions', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorCode()).toBe('403');
             expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
         });
 
-        it('[C279924] - Custom error message is displayed', () => {
+        it('[C279924] Should display custom message when accessing a file without permissions', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.enableCustomPermissionMessage();
@@ -108,7 +108,7 @@ describe('Document List Component', () => {
             expect(errorPage.getErrorCode()).toBe('403');
         });
 
-        it('[C279925] - Message is translated', () => {
+        it('[C279925] Should display translated message when accessing a file without permissions if language is changed', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             navBar.openLanguageMenu();
             navBar.chooseLanguage('Italian');
@@ -176,7 +176,7 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C279926] - Checks that only the files and folders of the users are showed', () => {
+        it('[C279926] Should only display the user\'s files and folders', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkContentIsDisplayed(folderName);
@@ -185,7 +185,7 @@ describe('Document List Component', () => {
             expect(contentServicesPage.getDocumentListRowNumber()).toBe(4);
         });
 
-        it('[C279927] - All columns are showed', () => {
+        it('[C279927] Should display default columns', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkColumnNameHeader();
@@ -194,7 +194,7 @@ describe('Document List Component', () => {
             contentServicesPage.checkColumnCreatedHeader();
         });
 
-        it('[C279928] - The date is showed with timeAgo', async (done) => {
+        it('[C279928] Should be able to display date with timeAgo', async (done) => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             timeAgoUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
             loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -204,7 +204,7 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C279929] - The date is showed with date type', async (done) => {
+        it('[C279929] Should be able to display the date with date type', async (done) => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             mediumDateUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, mediumFileModel.location, mediumFileModel.name, '-my-');
             let createdDate = moment(mediumDateUploadedNode.createdAt).format('ll');
@@ -265,44 +265,44 @@ describe('Document List Component', () => {
             done();
         });
 
-        it('[C260112] - Sorting ascending by name', () => {
+        it('[C260112] Should be able to sort by name (Ascending)', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.sortAndCheckListIsOrderedByName('asc');
         });
 
-        it('[C272770] - Sorting descending by name', () => {
+        it('[C272770] Should be able to sort by name (Descending)', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.sortAndCheckListIsOrderedByName('desc');
         });
 
-        it('[C272771] - Sorting ascending by author', () => {
+        it('[C272771] Should be able to sort by author (Ascending)', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc');
         });
 
-        it('[C272772] - Sorting descending by author', () => {
+        it('[C272772] Should be able to sort by author (Descending)', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc');
         });
 
-        it('[C272773] - Sorting ascending by created date', () => {
+        it('[C272773] Should be able to sort by date (Ascending)', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.sortAndCheckListIsOrderedByCreated('asc');
         });
 
-        it('[C272774] - Sorting descending by created date', () => {
+        it('[C272774] Should be able to sort by date (Descending)', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.sortAndCheckListIsOrderedByCreated('desc');
         });
     });
 
-    it('[C260121] - should show the spinner on loading', async (done) => {
+    it('[C260121] Should show the spinner on content loading', async (done) => {
         acsUser = new AcsUserModel();
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -312,7 +312,7 @@ describe('Document List Component', () => {
         done();
     });
 
-    it('[C279959] - Empty Folder state is displayed for new folders', async (done) => {
+    it('[C279959] Should display empty folder state for new folders', async (done) => {
         acsUser = new AcsUserModel();
 
         let folderName = 'BANANA';
@@ -327,7 +327,7 @@ describe('Document List Component', () => {
         done();
     });
 
-    it('[C272775] - File can be uploaded in a new created folder', async (done) => {
+    it('[C272775] Should be able to upload a file in new folder', async (done) => {
         let testFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
@@ -347,7 +347,7 @@ describe('Document List Component', () => {
         done();
     });
 
-    it('[C261997] - Recent Files empty', async (done) => {
+    it('[C261997] Should be able to clean Recent Files history', async (done) => {
         acsUser = new AcsUserModel();
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -362,7 +362,7 @@ describe('Document List Component', () => {
         done();
     });
 
-    it('[C268119] - "ygj" letters rendering in document list', async (done) => {
+    it('[C268119] "ygj" letters should be rendered properly', async (done) => {
         acsUser = new AcsUserModel();
         let folderName = 'ggggggjjjjjjjjjjjjyyyyyy';
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
@@ -378,7 +378,7 @@ describe('Document List Component', () => {
         done();
     });
 
-    it('[C279970] - Custom column - isLocked field is showed for folders', async (done) => {
+    it('[C279970] Should display "Islocked" field for folders', async (done) => {
         acsUser = new AcsUserModel();
         let folderNameA = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
         let folderNameB = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
@@ -396,7 +396,7 @@ describe('Document List Component', () => {
         done();
     });
 
-    it('[C269086] - Custom column - IsLocked field is showed for files', async (done) => {
+    it('[C269086] Should display "Islocked" field for files', async (done) => {
         let testFileA = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
@@ -448,7 +448,7 @@ describe('Document List Component', () => {
             );
         });
 
-        it('[C277093] - Sorting files with Items per page set to default', async (done) => {
+        it('[C277093] Should sort files with Items per page set to default', async (done) => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.checkListIsSortedByNameColumn('asc');
@@ -513,39 +513,39 @@ describe('Document List Component', () => {
             contentServicesPage.goToDocumentList();
         });
 
-        it('[C260108] - File tooltip', () => {
+        it('[C260108] Should display tooltip for file\'s name', () => {
             expect(contentServicesPage.getTooltip(pdfFile.name)).toEqual(pdfFile.name);
         });
 
-        it('[C260109] - Folder tooltip', () => {
+        it('[C260109] Should display tooltip for folder\'s name', () => {
             expect(contentServicesPage.getTooltip(folderName)).toEqual(folderName);
         });
 
-        it('[C260119] - Thumbnail - Disabled - folder', async (done) => {
+        it('[C260119] Should have a specific thumbnail for folders', async (done) => {
             let folderIconUrl = await contentServicesPage.getRowIconImageUrl(folderName);
             expect(folderIconUrl).toContain('/assets/images/ft_ic_folder.svg');
             done();
         });
 
-        it('[C280066] - Thumbnail - Disabled - pdf file', async (done) => {
+        it('[C280066] Should have a specific thumbnail PDF files', async (done) => {
             let fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
             expect(fileIconUrl).toContain('/assets/images/ft_ic_pdf.svg');
             done();
         });
 
-        it('[C280067] - Thumbnail - Disabled - docx file', async (done) => {
+        it('[C280067] Should have a specific thumbnail DOCX files', async (done) => {
             let fileIconUrl = await contentServicesPage.getRowIconImageUrl(docxFile.name);
             expect(fileIconUrl).toContain('/assets/images/ft_ic_ms_word.svg');
             done();
         });
 
-        it('[C280068] - Thumbnail - Disabled - test file', async (done) => {
+        it('[C280068] Should have a specific thumbnail files', async (done) => {
             let fileIconUrl = await contentServicesPage.getRowIconImageUrl(testFile.name);
             expect(fileIconUrl).toContain('/assets/images/ft_ic_document.svg');
             done();
         });
 
-        it('[C274701] - Thumbnails - Enabled', async (done) => {
+        it('[C274701] Should be able to enable thumbnails', async (done) => {
             contentServicesPage.enableThumbnails();
             contentServicesPage.checkAcsContainer();
             let fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
@@ -604,11 +604,11 @@ describe('Document List Component', () => {
             contentServicesPage.checkCardViewContainerIsDisplayed();
         });
 
-        it('[C280016] - Gallery view is showed', () => {
+        it('[C280016] Should be able to choose Gallery View', () => {
             expect(contentServicesPage.getCardElementShowedInPage()).toBe(4);
         });
 
-        it('[C280023] - Gallery Card show details', () => {
+        it('[C280023] Gallery Card should show details', () => {
             expect(contentServicesPage.getDocumentCardIconForElement(folderName)).toContain('/assets/images/ft_ic_folder.svg');
             expect(contentServicesPage.getDocumentCardIconForElement(pdfFile.name)).toContain('/assets/images/ft_ic_pdf.svg');
             expect(contentServicesPage.getDocumentCardIconForElement(docxFile.name)).toContain('/assets/images/ft_ic_ms_word.svg');
@@ -619,7 +619,7 @@ describe('Document List Component', () => {
             contentServicesPage.checkMenuIsShowedForElementIndex(3);
         });
 
-        it('[C280069] - Gallery Card show details - attributes', () => {
+        it('[C280069] Gallery Card should show attributes', () => {
             contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.DISPLAY_NAME);
             contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.SIZE);
             contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.CREATED_BY);
@@ -649,35 +649,35 @@ describe('Document List Component', () => {
             expect(contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toContain('ago');
         });
 
-        it('[C280129] - Gallery Card show details - subfolder gallery displayed', () => {
+        it('[C280129] Should keep Gallery View when accessing a folder', () => {
             contentServicesPage.navigateToCardFolder(folderName);
             expect(contentServicesPage.getCardElementShowedInPage()).toBe(1);
             expect(contentServicesPage.getDocumentCardIconForElement(pdfFile.name)).toContain('/assets/images/ft_ic_pdf.svg');
         });
 
-        it('[C280130] - Gallery Card show details - back to list view', () => {
+        it('[C280130] Should be able to go back to List View', () => {
             contentServicesPage.clickGridViewButton();
             contentServicesPage.checkAcsContainer();
             contentServicesPage.navigateToFolder(folderName);
             contentServicesPage.checkRowIsDisplayed(pdfFile.name);
         });
 
-        it('[C261993] - Sort by Display name', () => {
+        it('[C261993] Should be able to sort Gallery Cards by display name', () => {
             contentServicesPage.selectGridSortingFromDropdown(cardProperties.DISPLAY_NAME);
             contentServicesPage.checkListIsSortedByNameColumn('asc');
         });
 
-        it('[C261994] - Sort by Size', () => {
+        it('[C261994] Should be able to sort Gallery Cards by size', () => {
             contentServicesPage.selectGridSortingFromDropdown(cardProperties.SIZE);
             contentServicesPage.checkListIsSortedBySizeColumn('asc');
         });
 
-        it('[C261995] - Sort by Author', () => {
+        it('[C261995] Should be able to sort Gallery Cards by author', () => {
             contentServicesPage.selectGridSortingFromDropdown(cardProperties.CREATED_BY);
             contentServicesPage.checkListIsSortedByAuthorColumn('asc');
         });
 
-        it('[C261996] - Sort by Created', () => {
+        it('[C261996] Should be able to sort Gallery Cards by created date', () => {
             contentServicesPage.selectGridSortingFromDropdown(cardProperties.CREATED);
             contentServicesPage.checkListIsSortedByCreatedColumn('asc');
         });

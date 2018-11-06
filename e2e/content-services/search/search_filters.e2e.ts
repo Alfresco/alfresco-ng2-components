@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../../pages/adf/loginPage');
+import { LoginPage } from '../../pages/adf/loginPage';
 import SearchDialog = require('../../pages/adf/dialog/searchDialog');
-import SearchFiltersPage = require('../../pages/adf/searchFiltersPage');
+import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');
@@ -88,8 +88,8 @@ describe('Search Filters', () => {
         searchFiltersPage.checkCreatorChipIsNotDisplayed(acsUser.firstName, acsUser.lastName);
     });
 
-    it('[C277146] Show more/less buttons are hidden when inactive', () => {
-        browser.get(TestConfig.adf.url + '/search;q=*');
+    it('[C277146] Should Show more/less buttons be hidden when inactive', () => {
+        browser.get(TestConfig.adf.url + '/search;q=files*');
 
         searchFiltersPage.checkShowLessButtonIsNotDisplayed();
         searchFiltersPage.checkSizeShowMoreButtonIsDisplayed();

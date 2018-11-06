@@ -233,35 +233,35 @@ var MetadataViewPage = function () {
         return editPropertyIcon.getAttribute('title');
     };
 
-    this.clickMetadatGroup = function (groupName) {
+    this.clickMetadataGroup = function (groupName) {
         var group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
         Util.waitUntilElementIsVisible(group);
         group.click();
     };
 
-    this.checkkMetadatGroupIsPresent = function (groupName) {
+    this.checkMetadataGroupIsPresent = function (groupName) {
         var group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
         return Util.waitUntilElementIsVisible(group);
     };
 
-    this.checkkMetadatGroupIsNotPresent = function (groupName) {
+    this.checkMetadataGroupIsNotPresent = function (groupName) {
         var group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
         return Util.waitUntilElementIsNotVisible(group);
     };
 
-    this.chekMetadatGroupIsExpand = function (groupName) {
+    this.checkMetadataGroupIsExpand = function (groupName) {
         var group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
         Util.waitUntilElementIsVisible(group);
         expect(group.getAttribute('class')).toContain('mat-expanded')
     };
 
-    this.chekMetadatGroupIsNotExpand = function (groupName) {
+    this.checkMetadataGroupIsNotExpand = function (groupName) {
         var group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
         Util.waitUntilElementIsVisible(group);
         expect(group.getAttribute('class')).not.toContain('mat-expanded')
     };
 
-    this.getkMetadatGroupTitle = function (groupName) {
+    this.getMetadataGroupTitle = function (groupName) {
         var group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'));
         Util.waitUntilElementIsVisible(group);
         return group.getText();
@@ -397,12 +397,12 @@ var MetadataViewPage = function () {
         })
     };
 
-    this.checkPopertyIsVisible = function (propertyName, type) {
+    this.checkPropertyIsVisible = function (propertyName, type) {
         var property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(property);
     };
 
-    this.checkPopertyIsNotVisible = function (propertyName, type) {
+    this.checkPropertyIsNotVisible = function (propertyName, type) {
         var property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
         Util.waitUntilElementIsNotVisible(property);
     };

@@ -16,8 +16,8 @@
  */
 
 import { browser } from 'protractor';
-import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import { LoginPage } from '../../pages/adf/loginPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import ContentListPage = require('../../pages/adf/dialog/contentList');
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import TestConfig = require('../../test.config');
@@ -87,7 +87,7 @@ describe('Document List Component - Actions', () => {
             done();
         });
 
-        it('[C213257] - Copy File', () => {
+        it('[C213257] Should be able to copy a file', () => {
             browser.driver.sleep(12000);
 
             contentListPage.rightClickOnRowNamed(pdfUploadedNode.entry.name);
@@ -102,13 +102,13 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
         });
 
-        it('[C280561] - Delete File', () => {
+        it('[C280561] Should be able to delete a file via dropdown menu', () => {
             contentListPage.deleteContent(pdfFileModel.name);
             contentListPage.checkContentIsNotDisplayed(pdfFileModel.name);
             pdfUploadedNode = null;
         });
 
-        it('[C280562] - Multiple Files Delete - Dropdown Menu', () => {
+        it('[C280562] Should be able to delete multiple files via dropdown menu', () => {
             contentListPage.clickRowToSelect(pdfFileModel.name);
             contentListPage.clickRowToSelect(testFileModel.name);
             contentListPage.deleteContent(pdfFileModel.name);
@@ -116,14 +116,14 @@ describe('Document List Component - Actions', () => {
             contentListPage.checkContentIsDisplayed(testFileModel.name);
         });
 
-        it('[C280565] - Delete - Right Click', () => {
+        it('[C280565] Should be able to delete a file using context menu', () => {
             contentListPage.rightClickOnRowNamed(pdfFileModel.name);
             contentListPage.pressContextMenuActionNamed('Delete');
             contentListPage.checkContentIsNotDisplayed(pdfFileModel.name);
             pdfUploadedNode = null;
         });
 
-        it('[C280566] - Context Menu - Actions for file', () => {
+        it('[C280566] Should be able to open context menu with right click', () => {
             contentListPage.rightClickOnRowNamed(pdfFileModel.name);
             contentListPage.checkContextActionIsVisible('Download');
             contentListPage.checkContextActionIsVisible('Copy');
@@ -135,7 +135,7 @@ describe('Document List Component - Actions', () => {
             contentListPage.checkContextActionIsVisible('Lock');
         });
 
-        it('[C280567] - Delete - Right click after multiselection of files', () => {
+        it('[C280567] Should be able to delete multiple files using context menu', () => {
             contentListPage.clickRowToSelect(pdfFileModel.name);
             contentListPage.clickRowToSelect(testFileModel.name);
             contentListPage.rightClickOnRowNamed(pdfFileModel.name);
@@ -166,13 +166,13 @@ describe('Document List Component - Actions', () => {
             done();
         });
 
-        it('[C260123] - Delete - Dropdown Menu', () => {
+        it('[C260123] Should be able to delete a folder using context menu', () => {
             contentListPage.deleteContent(folderName);
             contentListPage.checkContentIsNotDisplayed(folderName);
             uploadedFolder = null;
         });
 
-        it('[C280566] - Context Menu - Actions for folder', () => {
+        it('[C280568] Should be able to open context menu with right click', () => {
             contentListPage.rightClickOnRowNamed(folderName);
             contentListPage.checkContextActionIsVisible('Download');
             contentListPage.checkContextActionIsVisible('Copy');
@@ -182,7 +182,7 @@ describe('Document List Component - Actions', () => {
             contentListPage.checkContextActionIsVisible('Permission');
         });
 
-        it('[C260138] - Copy - folder', () => {
+        it('[C260138] Should be able to copy a folder', () => {
             browser.driver.sleep(12000);
 
             contentListPage.copyContent(folderName);

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
-import TasksPage = require('../pages/adf/process_services/tasksPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import PaginationPage = require('../pages/adf/paginationPage');
 
 import CONSTANTS = require('../util/constants');
@@ -77,7 +77,7 @@ describe('Task List Pagination - Sorting', () => {
         done();
     });
 
-    it('[C260308] Sorting by Name', () => {
+    it('[C260308] Should be possible to sort tasks by name', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.INV_TASKS);
         taskPage.tasksListPage().waitForTableBody();

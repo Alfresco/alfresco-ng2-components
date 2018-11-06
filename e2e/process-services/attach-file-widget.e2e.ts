@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
-import TasksPage = require('../pages/adf/process_services/tasksPage');
-import Widget = require('../pages/adf/process_services/widgets/widget');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { Widget } from '../pages/adf/process_services/widgets/widget';
+
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { TasksPage } from '../pages/adf/process_services/tasksPage';
 
 import CONSTANTS = require('../util/constants');
 
@@ -80,7 +81,7 @@ describe('Start Task - Task App', () => {
         done();
     });
 
-    it('[C274690] Task List attachment - View file', () => {
+    it('[C274690] Should be able to open a file attached to a start form', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASKFILTERS.MY_TASKS);

@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import AdfSettingsPage = require('../pages/adf/settingsPage');
-import LoginPage = require('../pages/adf/loginPage');
-import UserInfoDialog = require('../pages/adf/dialog/userInfoDialog');
-import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import { SettingsPage } from '../pages/adf/settingsPage';
+import { LoginPage } from '../pages/adf/loginPage';
+import { UserInfoDialog } from '../pages/adf/dialog/userInfoDialog';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import FileModel = require('../models/ACS/fileModel');
@@ -30,10 +30,11 @@ import resources = require('../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
+import { browser } from 'protractor';
 
 describe('User Info component', () => {
 
-    let adfSettingsPage = new AdfSettingsPage();
+    let settingsPage = new SettingsPage();
     let loginPage = new LoginPage();
     let navigationBarPage = new NavigationBarPage();
     let userInfoDialog = new UserInfoDialog();
@@ -73,62 +74,69 @@ describe('User Info component', () => {
         done();
     });
 
-    it('[C260111] Enable Process Services and Content Services ', () => {
+    it('[C260111] Should display UserInfo when Process Services and Content Services are enabled', () => {
         loginPage.goToLoginPage();
-        adfSettingsPage.setProviderEcmBpm();
+        settingsPage.setProviderEcmBpm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
         navigationBarPage.clickUserProfile();
-        userInfoDialog.dialogIsDisplayed().contentServicesTabIsDisplayed().processServicesTabIsDisplayed();
+
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoDialog.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoDialog.getContentEmail()).toEqual(contentUserModel.email);
         expect(userInfoDialog.getContentJobTitle()).toEqual(contentUserModel.jobTitle);
+
         userInfoDialog.checkInitialImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.ACSProfileImageNotDisplayed();
         userInfoDialog.clickOnContentServicesTab();
+
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoDialog.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoDialog.getContentEmail()).toEqual(contentUserModel.email);
         expect(userInfoDialog.getContentJobTitle()).toEqual(contentUserModel.jobTitle);
+
         userInfoDialog.checkInitialImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.ACSProfileImageNotDisplayed();
-        userInfoDialog.clickOnProcessServicesTab().processServicesTabIsDisplayed();
+        userInfoDialog.clickOnProcessServicesTab();
+
         expect(userInfoDialog.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
         expect(userInfoDialog.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
         expect(userInfoDialog.getProcessEmail()).toEqual(processUserModel.email);
+
         userInfoDialog.checkInitialImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.ACSProfileImageNotDisplayed();
         userInfoDialog.closeUserProfile();
     });
 
-    it('[C260113] Enable Content Services and disable Process Services ', () => {
+    it('[C260113] Should display UserInfo when Content Services is enabled and Process Services is disabled', () => {
         loginPage.goToLoginPage();
-        adfSettingsPage.setProviderEcm();
+        settingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
 
         navigationBarPage.clickUserProfile();
-        userInfoDialog.dialogIsDisplayed().contentServicesTabIsNotDisplayed().processServicesTabIsNotDisplayed();
+        userInfoDialog.dialogIsDisplayed();
+
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoDialog.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoDialog.getContentEmail()).toEqual(contentUserModel.email);
         expect(userInfoDialog.getContentJobTitle()).toEqual(contentUserModel.jobTitle);
+
         userInfoDialog.checkInitialImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.ACSProfileImageNotDisplayed();
         userInfoDialog.closeUserProfile();
     });
 
-    it('[C260115] Enable Process Services and disable Content Services ', () => {
+    it('[C260115] Should display UserInfo when Process Services is enabled and Content Services is disabled', () => {
         loginPage.goToLoginPage();
-        adfSettingsPage.setProviderBpm();
+        settingsPage.setProviderBpm();
         loginPage.login(processUserModel.email, processUserModel.password);
 
         navigationBarPage.clickUserProfile();
 
-        userInfoDialog.dialogIsDisplayed().contentServicesTabIsNotDisplayed().processServicesTabIsNotDisplayed();
+        userInfoDialog.dialogIsDisplayed();
 
         expect(userInfoDialog.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
         expect(userInfoDialog.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
@@ -140,43 +148,49 @@ describe('User Info component', () => {
         userInfoDialog.closeUserProfile();
     });
 
-    it('[C260117] Enable Process Services and Content Services ', async(done) => {
+    it('[C260117] Should display UserInfo with profile image uploaded in ACS', async(done) => {
         browser.controlFlow().execute(async() => {
             await PeopleAPI.updateAvatarViaAPI(contentUserModel, acsAvatarFileModel, '-me-');
             await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-', function (result) {});
         });
 
         loginPage.goToLoginPage();
-        adfSettingsPage.setProviderEcm();
+        settingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
         navigationBarPage.clickUserProfile();
+
         userInfoDialog.checkACSProfileImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.closeUserProfile();
+
         done();
     });
 
-    it('[C260118] The profile picture is changed from APS', async () => {
+    it('[C260118] Should display UserInfo with profile image uploaded in APS', async () => {
         let users = new UsersActions();
         await this.alfrescoJsApi.login(contentUserModel.email, contentUserModel.password);
         await users.changeProfilePictureAps(this.alfrescoJsApi, apsAvatarFileModel.getLocation());
 
         loginPage.goToLoginPage();
-        adfSettingsPage.setProviderBpm();
+        settingsPage.setProviderBpm();
         loginPage.login(processUserModel.email, processUserModel.password);
         navigationBarPage.clickUserProfile();
+
         userInfoDialog.checkAPSProfileImage();
         userInfoDialog.ACSProfileImageNotDisplayed();
         userInfoDialog.initialImageNotDisplayed();
         userInfoDialog.closeUserProfile();
     });
 
-    it('[C260120] Delete the profile picture from ACS', () => {
+    it('[C260120] Should not display profile image in UserInfo when deleted in ACS', () => {
         PeopleAPI.deleteAvatarViaAPI(contentUserModel, '-me-');
+
         loginPage.goToLoginPage();
-        adfSettingsPage.setProviderEcm();
+
+        settingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
         navigationBarPage.clickUserProfile();
+
         userInfoDialog.checkInitialImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.ACSProfileImageNotDisplayed();

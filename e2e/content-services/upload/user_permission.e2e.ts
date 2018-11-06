@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, browser } from 'protractor';
 
 import Util = require('../../util/util');
 
-import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import { LoginPage } from '../../pages/adf/loginPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import UploadDialog = require('../../pages/adf/dialog/uploadDialog');
 import { UploadToggles } from '../../pages/adf/dialog/uploadToggles';
-import NavigationBarPage = require('../../pages/adf/navigationBarPage');
-import NotificationPage = require('../../pages/adf/notificationPage');
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { NotificationPage } from '../../pages/adf/notificationPage';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');
@@ -47,7 +47,6 @@ describe('Upload - User permission', () => {
     let acsUserTwo;
     let navigationBarPage = new NavigationBarPage();
     let notificationPage = new NotificationPage();
-    let consumerSite, managerSite;
 
     let emptyFile = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
