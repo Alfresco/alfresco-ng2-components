@@ -30,11 +30,11 @@ export class DatePickerPage {
     }
 
     checkDatesAfterDateAreDisabled(date) {
-        let tomorrowDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
-        let tomorrowCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${this.convertDateToDefaultFormat(tomorrowDate)}"]`));
+        let afterDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
+        let afterCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${this.convertDateToDefaultFormat(afterDate)}"]`));
         browser.controlFlow().execute(async () => {
-            if (await tomorrowCalendar.isPresent()) {
-                await expect(tomorrowCalendar.getAttribute('aria-disabled')).toBe('true');
+            if (await afterCalendar.isPresent()) {
+                await expect(afterCalendar.getAttribute('aria-disabled')).toBe('true');
             }
             await expect(this.nextMonthButton.isEnabled()).toBe(false);
         });
@@ -42,11 +42,11 @@ export class DatePickerPage {
     }
 
     checkDatesBeforeDateAreDisabled(date) {
-        let tomorrowDate = new Date(date.getTime() - 24 * 60 * 60 * 1000);
-        let tomorrowCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${this.convertDateToDefaultFormat(tomorrowDate)}"]`));
+        let beforeDate = new Date(date.getTime() - 24 * 60 * 60 * 1000);
+        let beforeCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${this.convertDateToDefaultFormat(beforeDate)}"]`));
         browser.controlFlow().execute(async () => {
-            if (await tomorrowCalendar.isPresent()) {
-                await expect(tomorrowCalendar.getAttribute('aria-disabled')).toBe('true');
+            if (await beforeCalendar.isPresent()) {
+                await expect(beforeCalendar.getAttribute('aria-disabled')).toBe('true');
             }
             await expect(this.previousMonthButton.isEnabled()).toBe(false);
         });
@@ -60,6 +60,10 @@ export class DatePickerPage {
 
     convertDateToDefaultFormat(date) { // Format : dd-Mmm-yy
         return `${('0' + date.getDate()).slice(-2)}-${this.months[date.getMonth()]}-${date.getFullYear().toString().substr(-2)}`;
+    }
+
+    convertDateToNewFormat(date) { // Format : mm-dd-yy
+        return `${date.getMonth() + 1}-${('0' + date.getDate()).slice(-2)}-${date.getFullYear().toString().substr(-2)}`;
     }
 
     selectTodayDate() {

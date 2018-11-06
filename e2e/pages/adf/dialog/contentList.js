@@ -308,11 +308,6 @@ var ContentList = function () {
         return this;
     };
 
-    this.getNodeIdFirstElement = function () {
-        let firstNode = element.all(by.css('adf-datatable div[title="Node id"] span')).first();
-        return firstNode.getText();
-    };
-
     this.getNodeIdByFilename = function (filename) {
         var nodeIdColumn = element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + filename + "' and @title='Node id']"));
         var text = nodeIdColumn.getText();

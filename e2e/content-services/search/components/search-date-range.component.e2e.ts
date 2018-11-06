@@ -15,14 +15,17 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/loginPage';
-import SearchDialog = require('../../pages/adf/dialog/searchDialog');
-import ContentList = require('../../pages/adf/dialog/contentList');
-import { DateRangeFilterPage } from '../../pages/adf/content_services/search/dateRangeFilterPage';
-import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
-import { DatePickerPage } from '../../pages/adf/material/datePickerPage';
+import { LoginPage } from '../../../pages/adf/loginPage';
+import SearchDialog = require('../../../pages/adf/dialog/searchDialog');
+import DataTablePage = require('../../../pages/adf/dataTablePage');
+import { SearchResultsPage } from '../../../pages/adf/searchResultsPage';
+import { DatePickerPage } from '../../../pages/adf/material/datePickerPage';
+import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
+import { ConfigEditorPage } from '../../../pages/adf/configEditorPage';
+import { SearchFiltersPage } from '../../../pages/adf/searchFiltersPage';
+import path = require('path');
 
-import TestConfig = require('../../test.config');
+import TestConfig = require('../../../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { browser } from 'protractor';
@@ -31,10 +34,13 @@ describe('Search Filters', () => {
 
     let loginPage = new LoginPage();
     let searchDialog = new SearchDialog();
-    let contentList = new ContentList();
-    let dateRangeFilter = new DateRangeFilterPage();
+    let searchFilters = new SearchFiltersPage();
+    let dateRangeFilter = searchFilters.createdDateRangeFilterPage();
     let searchResults = new SearchResultsPage();
     let datePicker = new DatePickerPage();
+    let navigationBar = new NavigationBarPage();
+    let configEditor = new ConfigEditorPage();
+    let dataTable = new DataTablePage();
 
     beforeAll(async (done) => {
 
@@ -45,15 +51,15 @@ describe('Search Filters', () => {
 
         loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        searchDialog.checkSearchIconIsVisible();
-        searchDialog.clickOnSearchIcon();
-        searchDialog.enterTextAndPressEnter('*');
+        searchDialog.checkSearchIconIsVisible()
+            .clickOnSearchIcon()
+            .enterTextAndPressEnter('*');
 
         done();
     });
 
     beforeEach(() => {
-        dateRangeFilter.checkCreatedRangeFilterIsDisplayed()
+        searchFilters.checkCreatedRangeFilterIsDisplayed()
             .clickCreatedRangeFilterHeader()
             .checkCreatedRangeFilterIsExpanded();
     });
@@ -130,7 +136,7 @@ describe('Search Filters', () => {
 
         searchResults.sortByCreated(true);
         browser.controlFlow().execute(async () => {
-            let firstResult = await contentList.getNodeIdFirstElement();
+            let firstResult = await dataTable.getNodeIdFirstElement();
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then((node) => {
                 let nodeCreation = new Date(node.entry.createdAt);
@@ -144,7 +150,7 @@ describe('Search Filters', () => {
 
         searchResults.sortByCreated(false);
         browser.controlFlow().execute(async () => {
-            let firstResult = await contentList.getNodeIdFirstElement();
+            let firstResult = await dataTable.getNodeIdFirstElement();
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then((node) => {
                 let nodeCreation = new Date(node.entry.createdAt);
@@ -192,5 +198,30 @@ describe('Search Filters', () => {
             .checkFromErrorMessageIsDisplayed('Invalid date. The date must be in the format \'DD-MMM-YY\'')
             .putFromDate('01-May-18')
             .checkFromErrorMessageIsNotDisplayed();
+    });
+
+    it('[C277117] Should be able to change date format', () => {
+        let json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
+        json.categories[4].component.settings.dateFormat = 'MM-DD-YY';
+
+        navigationBar.clickConfigEditorButton();
+        configEditor.clickSearchConfiguration();
+        configEditor.clickClearButton();
+        configEditor.enterBigConfigurationText(JSON.stringify(json));
+        configEditor.clickSaveButton();
+
+        searchDialog.clickOnSearchIcon().enterTextAndPressEnter('*');
+        searchFilters.checkCreatedRangeFilterIsDisplayed()
+            .clickCreatedRangeFilterHeader()
+            .checkCreatedRangeFilterIsExpanded();
+        dateRangeFilter.checkFromFieldIsDisplayed()
+            .openFromDatePicker();
+
+        let todayDate = datePicker.convertDateToNewFormat(new Date());
+        datePicker.selectTodayDate();
+
+        browser.controlFlow().execute(async () => {
+            await expect(dateRangeFilter.getFromDate()).toEqual(todayDate);
+        });
     });
 });
