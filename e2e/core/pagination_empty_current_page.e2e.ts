@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
-import ContentServicesPage = require('../pages/adf/contentServicesPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import PaginationPage = require('../pages/adf/paginationPage');
 
 import AcsUserModel = require('../models/ACS/acsUserModel');
@@ -77,7 +77,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
         done();
     });
 
-    it('[C274710] returns to previous page when current is empty', () => {
+    it('[C274710] Should redirect to previous page when current is emptied', () => {
         contentServicesPage.navigateToFolder(folderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();

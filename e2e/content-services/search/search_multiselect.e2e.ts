@@ -24,10 +24,10 @@ import CONSTANTS = require('../../util/constants');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 
-import LoginPage = require('../../pages/adf/loginPage');
+import { LoginPage } from '../../pages/adf/loginPage';
 import SearchDialog = require('../../pages/adf/dialog/searchDialog');
-import SearchResultPage = require('../../pages/adf/searchResultsPage');
-import SearchFiltersPage = require('../../pages/adf/searchFiltersPage');
+import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
+import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');
@@ -35,7 +35,7 @@ import FileModel = require('../../models/ACS/fileModel');
 describe('Search Component - Multi-Select Facet', () => {
     let loginPage = new LoginPage();
     let searchDialog = new SearchDialog();
-    let searchResultsPage = new SearchResultPage();
+    let searchResultsPage = new SearchResultsPage();
     let uploadActions = new UploadActions();
     let searchFiltersPage = new SearchFiltersPage();
     let site;
@@ -51,13 +51,14 @@ describe('Search Component - Multi-Select Facet', () => {
         let jpgFile, jpgFileSite, txtFile, txtFileSite;
         let acsUser = new AcsUserModel();
 
+        let randomName = Util.generateRandomString();
         let jpgFileInfo = new FileModel({
             'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
-            'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
+            'name': `${randomName}.jpg`
         });
         let txtFileInfo = new FileModel({
             'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
-            'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name
+            'name': `${randomName}.txt`
         });
 
         beforeAll(async (done) => {
@@ -80,13 +81,13 @@ describe('Search Component - Multi-Select Facet', () => {
 
             txtFileSite = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, site.entry.guid);
 
-            await browser.driver.sleep(20000);
+            await browser.driver.sleep(30000);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             searchDialog.checkSearchIconIsVisible();
             searchDialog.clickOnSearchIcon();
-            searchDialog.enterTextAndPressEnter('file');
+            searchDialog.enterTextAndPressEnter(`${randomName}`);
 
             searchFiltersPage.checkSearchFiltersIsDisplayed();
             searchFiltersPage.filterByCreator(acsUser.firstName, acsUser.lastName);
@@ -107,7 +108,7 @@ describe('Search Component - Multi-Select Facet', () => {
             done();
         });
 
-        it('[C280054] Multiple items can be selected from a search facet filter', () => {
+        it('[C280054] Should be able to select multiple items from a search facet filter', () => {
             searchFiltersPage.filterByFileType('Plain Text');
 
             expect(searchResultsPage.numberOfResultsDisplayed()).toBe(2);
@@ -129,13 +130,14 @@ describe('Search Component - Multi-Select Facet', () => {
         let userUploadingTxt = new AcsUserModel();
         let userUploadingImg = new AcsUserModel();
 
+        let randomName = Util.generateRandomString();
         let jpgFileInfo = new FileModel({
             'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
-            'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
+            'name': `${randomName}.jpg`
         });
         let txtFileInfo = new FileModel({
             'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
-            'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name
+            'name': `${randomName}.txt`
         });
 
         beforeAll(async (done) => {
@@ -162,34 +164,22 @@ describe('Search Component - Multi-Select Facet', () => {
 
             jpgFile = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
 
-            await browser.driver.sleep(20000);
+            await browser.driver.sleep(30000);
 
             loginPage.loginToContentServicesUsingUserModel(userUploadingImg);
 
             searchDialog.checkSearchIconIsVisible();
             searchDialog.clickOnSearchIcon();
-            searchDialog.enterTextAndPressEnter('file');
+            searchDialog.enterTextAndPressEnter(`*${randomName}*`);
 
             done();
         });
 
-        afterAll(async (done) => {
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-            Promise.all([
-                uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, jpgFile.entry.id),
-                uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, txtFile.entry.id)
-            ]);
-
-            await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
-
-            done();
-        });
-
-        it('[C280056] Multiple items can be selected from multiple search facets', () => {
+        it('[C280056] Should be able to select multiple items from multiple search facet filters', () => {
             searchFiltersPage.checkSearchFiltersIsDisplayed();
 
             searchFiltersPage.filterByCreator(userUploadingTxt.firstName, userUploadingTxt.lastName);
+
             searchFiltersPage.filterByCreator(userUploadingImg.firstName, userUploadingImg.lastName);
 
             searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
@@ -208,9 +198,10 @@ describe('Search Component - Multi-Select Facet', () => {
         let txtFile;
         let acsUser = new AcsUserModel();
 
+        let randomName = Util.generateRandomString();
         let txtFileInfo = new FileModel({
             'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
-            'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name
+            'name': `${randomName}.txt`
         });
 
         beforeAll(async (done) => {
@@ -226,13 +217,13 @@ describe('Search Component - Multi-Select Facet', () => {
             });
 
             txtFile = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileInfo.location, txtFileInfo.name, '-my-');
-            await browser.driver.sleep(20000);
+            await browser.driver.sleep(30000);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             searchDialog.checkSearchIconIsVisible();
             searchDialog.clickOnSearchIcon();
-            searchDialog.enterTextAndPressEnter('file');
+            searchDialog.enterTextAndPressEnter(`*${randomName}*`);
 
             searchFiltersPage.checkSearchFiltersIsDisplayed();
 
@@ -245,7 +236,7 @@ describe('Search Component - Multi-Select Facet', () => {
             done();
         });
 
-        it('[C280058] The filter facets items number is updated when another filter facet item is selected', () => {
+        it('[C280058] Should update filter facets items number when another filter facet item is selected', () => {
             searchFiltersPage.filterByFileType('Plain Text');
 
             searchFiltersPage.filterByCreator(acsUser.firstName, acsUser.lastName);

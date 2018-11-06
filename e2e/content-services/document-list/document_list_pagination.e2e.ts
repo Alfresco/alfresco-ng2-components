@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import { LoginPage } from '../../pages/adf/loginPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import PaginationPage = require('../../pages/adf/paginationPage');
-import NavigationBarPage = require('../../pages/adf/navigationBarPage');
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FolderModel = require('../../models/ACS/folderModel');
@@ -88,7 +88,7 @@ describe('Document List - Pagination', function () {
         done();
     });
 
-    it('[C260062] Default pagination settings', function () {
+    it('[C260062] Should use default pagination settings', function () {
         contentServicesPage.goToDocumentList();
         contentServicesPage.navigateToFolder(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
@@ -103,7 +103,7 @@ describe('Document List - Pagination', function () {
         paginationPage.checkPreviousPageButtonIsDisabled();
     });
 
-    it('[C274713] 20 Items per page', function () {
+    it('[C274713] Should be able to set Items per page to 20', function () {
         contentServicesPage.goToDocumentList();
         contentServicesPage.navigateToFolder(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
@@ -130,7 +130,7 @@ describe('Document List - Pagination', function () {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
-    it('[C260069] 5 Items per page', function () {
+    it('[C260069] Should be able to set Items per page to 5', function () {
         contentServicesPage.goToDocumentList();
         contentServicesPage.navigateToFolder(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
@@ -185,7 +185,7 @@ describe('Document List - Pagination', function () {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
-    it('[C260067] 10 Items per page', function () {
+    it('[C260067] Should be able to set Items per page to 10', function () {
         currentPage = 1;
         contentServicesPage.goToDocumentList();
         contentServicesPage.navigateToFolder(newFolderModel.name);
@@ -222,7 +222,7 @@ describe('Document List - Pagination', function () {
         currentPage = 1;
     });
 
-    it('[C260065] 15 Items per page', function () {
+    it('[C260065] Should be able to set Items per page to 15', function () {
         currentPage = 1;
         contentServicesPage.goToDocumentList();
         contentServicesPage.navigateToFolder(newFolderModel.name);
@@ -256,7 +256,7 @@ describe('Document List - Pagination', function () {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
     });
 
-    xit('[C91320] Pagination when the content is sorted', function () {
+    xit('[C91320] Pagination should preserve sorting', function () {
         contentServicesPage.goToDocumentList();
         contentServicesPage.navigateToFolder(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
@@ -296,7 +296,7 @@ describe('Document List - Pagination', function () {
         });
     });
 
-    it('[C260107] Pagination in an empty folder', function () {
+    it('[C260107] Should not display pagination bar when a folder is empty', function () {
         contentServicesPage.goToDocumentList();
         paginationPage.selectItemsPerPage(itemsPerPage.five);
         contentServicesPage.checkAcsContainer();

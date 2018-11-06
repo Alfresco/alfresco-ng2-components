@@ -17,12 +17,12 @@
 
 import { element, by } from 'protractor';
 
-import LoginPage = require('../../pages/adf/loginPage');
+import { LoginPage } from '../../pages/adf/loginPage';
 import ContentListPage = require('../../pages/adf/dialog/contentList');
-import NavigationBarPage = require('../../pages/adf/navigationBarPage');
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 import UploadDialog = require('../../pages/adf/dialog/uploadDialog');
-import NotificationPage = require('../../pages/adf/notificationPage');
+import { NotificationPage } from '../../pages/adf/notificationPage';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
+import { element, by } from 'protractor';
 import Util = require('../../util/util');
 
 export class ConfigEditorPage {

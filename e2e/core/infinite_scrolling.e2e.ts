@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
-import ContentServicesPage = require('../pages/adf/contentServicesPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import FolderModel = require('../models/ACS/folderModel');
@@ -70,7 +70,7 @@ describe('Enable infinite scrolling', () => {
         done();
     });
 
-    it('Enable infinite scrolling', () => {
+    it('[C260484] Should be possible to enable infinite scrolling', () => {
         contentServicesPage.navigateToFolder(folderModel.name);
         contentServicesPage.enableInfiniteScrolling();
         contentServicesPage.clickLoadMoreButton();

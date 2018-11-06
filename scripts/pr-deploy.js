@@ -28,7 +28,7 @@ async function main() {
         .option('-u, --username [type]', 'username RANCHER')
         .parse(process.argv);
 
-    auth = 'Basic ' + new Buffer(program.username + ':' + program.password).toString('base64')
+    auth = 'Basic ' + new Buffer(program.username + ':' + program.password).toString('base64');
 
     var project = await asyncRequest({
         url: program.server + `/v1/project?name=${program.env}`,
@@ -41,11 +41,11 @@ async function main() {
         },
         body: ""
     }).catch((error) => {
-        console.log('Project name errror'+ error);
+        console.log('Project name error'+ error);
     });
 
     var stacks = await asyncRequest({
-        url: `${program.server}/v2-beta/projects/1a2747/stacks?limit=-1&sort=name`,
+        url: `${program.server}/v2-beta/projects/${project.data[0].id}/stacks?limit=-1&sort=name`,
         method: 'GET',
         json: true,
         headers: {
@@ -55,11 +55,12 @@ async function main() {
         },
         body: ""
     }).catch((error) => {
-        console.log('Stacks errror'+ error);
+        console.log('Stacks error'+ error);
     });
 
+
     var stackId = stacks.data[0].id;
-    var environmentId = project.data[0].id
+    var environmentId = project.data[0].id;
 
     console.log("StackId " + stackId);
     console.log("ID environment " + environmentId);
@@ -240,7 +241,7 @@ async function main() {
 
     loadBalancerGet.lbConfig.portRules.push(newRule);
 
-    var loadBalancerUpdate = await asyncRequest({
+    await asyncRequest({
         url: `${program.server}/v2-beta/projects/${environmentId}/loadbalancerservices/${loadBalancerId}`,
         method: 'PUT',
         json: true,

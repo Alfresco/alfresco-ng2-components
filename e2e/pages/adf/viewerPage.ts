@@ -16,10 +16,10 @@
  */
 
 import Util = require('../../util/util');
-import CardViewPage = require('./cardViewPageComponent');
 
 import { TabsPage } from './material/tabsPage';
 import { FormControllersPage } from './material/formControllersPage';
+import { element, by, browser, protractor } from 'protractor';
 
 export class ViewerPage {
 
@@ -35,12 +35,10 @@ export class ViewerPage {
     zoomInButton = element(by.id('viewer-zoom-in-button'));
     zoomOutButton = element(by.id('viewer-zoom-out-button'));
     scalePageButton = element(by.id('viewer-scale-page-button'));
-    pdfContainer = element(by.id('viewer-pdf-container'));
     fullScreenButton = element(by.css('button[data-automation-id="adf-toolbar-fullscreen"]'));
     rotateLeft = element(by.css('button[id="viewer-rotate-left-button"]'));
     rotateRight = element(by.css('button[id="viewer-rotate-right-button"]'));
     scaleImg = element(by.css('button[id="viewer-reset-button"]'));
-    customBtn = element(by.css('data-automation-id="adf-toolbar-custom-btn"'));
     fileThumbnail = element(by.css('img[data-automation-id="adf-file-thumbnail"]'));
     pageSelectorInput = element(by.css('input[data-automation-id="adf-page-selector"]'));
     imgContainer = element(by.css('div[data-automation-id="adf-image-container"]'));
@@ -58,14 +56,12 @@ export class ViewerPage {
     passwordError = element(by.css('mat-error[data-automation-id="adf-password-dialog-error"]'));
     infoSideBar = element(by.id('adf-right-sidebar'));
     leftSideBar = element(by.id('adf-left-sidebar'));
-    unsupportedFileContainer = element(by.cssContainingText('.label', 'Document preview could not be loaded'));
     pageCanvas = element.all(by.css('div[class="canvasWrapper"]')).first();
     viewer = element(by.css('adf-viewer'));
     pdfViewer = element(by.css('adf-pdf-viewer'));
     imgViewer = element(by.css('adf-img-viewer'));
     activeTab = element(by.css('div[class*="mat-tab-label-active"]'));
     uploadNewVersionButton = element(by.css('input[data-automation-id="upload-single-file"]'));
-    rightChevron = element(by.css('div[class*="header-pagination-after"]'));
     toolbarSwitch = element(by.id('adf-switch-toolbar'));
     toolbar = element(by.id('adf-viewer-toolbar'));
     datatableHeader = element(by.css('div.adf-datatable-header'));
@@ -80,7 +76,7 @@ export class ViewerPage {
     showLeftSidebarSwitch = element(by.id('adf-switch-showleftsidebar'));
 
     moreActionsSwitch = element(by.id('adf-switch-moreactions'));
-    moreActions = element(by.id('adf-viewer-moreactions'));
+    pdfPageLoaded = element(by.css('[data-page-number="1"][data-loaded="true"], adf-img-viewer, adf-txt-viewer'));
 
     downloadSwitch = element(by.id('adf-switch-download'));
     downloadButton = element(by.id('adf-viewer-download'));
@@ -89,6 +85,7 @@ export class ViewerPage {
     printButton = element(by.id('adf-viewer-print'));
 
     allowSidebarSwitch = element(by.id('adf-switch-allowsidebar'));
+    allowLeftSidebarSwitch = element(by.id('adf-switch-allowLeftSidebar'));
 
     shareSwitch = element(by.id('adf-switch-share'));
     shareButton = element(by.id('adf-viewer-share'));
@@ -147,20 +144,8 @@ export class ViewerPage {
         Util.waitUntilElementIsVisible(this.datatableHeader);
     }
 
-    checkPageCanvasIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.pageCanvas);
-    }
-
-    checkToolbarIsDisplayed(timeout) {
-        Util.waitUntilElementIsVisible(this.toolbar, timeout);
-    }
-
-    checkViewerIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.viewer);
-    }
-
-    checkPdfViewerIsDisplayed() {
-        Util.waitUntilElementIsOnPage(this.pdfViewer);
+    checkFileIsLoaded() {
+        Util.waitUntilElementIsOnPage(this.pdfPageLoaded, 15000);
     }
 
     checkImgViewerIsDisplayed() {
@@ -280,10 +265,6 @@ export class ViewerPage {
         Util.waitUntilElementIsVisible(this.imgContainer);
     }
 
-    checkPdfContainerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.pdfContainer);
-    }
-
     checkMediaPlayerContainerIsDisplayed() {
         Util.waitUntilElementIsVisible(this.mediaContainer);
     }
@@ -328,10 +309,6 @@ export class ViewerPage {
         Util.waitUntilElementIsVisible(this.rotateRight);
     }
 
-    checkScaled(zoom) {
-        expect(this.percentage.getText()).toEqual(zoom);
-    }
-
     checkScaleImgButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.scaleImg);
     }
@@ -341,24 +318,12 @@ export class ViewerPage {
         expect(rotation).toEqual(text);
     }
 
-    checkCustomBtnDisplayed() {
-        Util.waitUntilElementIsVisible(this.customBtn);
-    }
-
-    checkUnsupportedFileContainerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.unsupportedFileContainer);
-    }
-
     checkInfoSideBarIsNotDisplayed() {
         Util.waitUntilElementIsNotVisible(this.infoSideBar);
     }
 
     checkInfoSideBarIsDisplayed() {
         Util.waitUntilElementIsVisible(this.infoSideBar);
-    }
-
-    checkInfoSideBarIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.infoSideBar);
     }
 
     checkLeftSideBarButtonIsNotDisplayed() {
@@ -418,11 +383,6 @@ export class ViewerPage {
         return this.scaleImg.click();
     }
 
-    clickScalePdfButton() {
-        Util.waitUntilElementIsClickable(this.scalePageButton);
-        return this.scalePageButton.click();
-    }
-
     clickDownloadButton() {
         Util.waitUntilElementIsVisible(this.downloadButton);
         return this.downloadButton.click();
@@ -453,11 +413,6 @@ export class ViewerPage {
         return this.zoomOutButton.click();
     }
 
-    clickScalePageButton() {
-        Util.waitUntilElementIsVisible(this.scalePageButton);
-        this.scalePageButton.click();
-    }
-
     clickFullScreenButton() {
         Util.waitUntilElementIsClickable(this.fullScreenButton);
         return this.fullScreenButton.click();
@@ -476,29 +431,6 @@ export class ViewerPage {
     getActiveTab() {
         Util.waitUntilElementIsVisible(this.activeTab);
         return this.activeTab.getText();
-    }
-
-    checkUnsupportedFileContainerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.unsupportedFileContainer);
-    }
-
-    clickRightChevronToGetToTab = (tabName) => {
-        element.all(by.css('.mat-tab-label'))
-            .map((element) => element.getAttribute('innerText'))
-            .then((texts) => {
-                for (let text of texts) {
-                    if (text === tabName) {
-                        break;
-                    }
-                    clickRightChevron();
-                }
-            });
-    }
-
-    clickRightChevron() {
-        Util.waitUntilElementIsVisible(this.rightChevron);
-        this.rightChevron.click();
-        return this;
     }
 
     clickOnVersionsTab() {
@@ -628,6 +560,14 @@ export class ViewerPage {
         this.formControllersPage.enableToggle(this.allowSidebarSwitch);
     }
 
+    disableAllowLeftSidebar() {
+        this.formControllersPage.disableToggle(this.allowLeftSidebarSwitch);
+    }
+
+    enableAllowLeftSidebar() {
+        this.formControllersPage.enableToggle(this.allowLeftSidebarSwitch);
+    }
+
     checkShareButtonDisplayed() {
         Util.waitUntilElementIsVisible(this.shareButton);
         return this;
@@ -682,7 +622,8 @@ export class ViewerPage {
         const textField = element(by.css('input[data-automation-id="adf-text-custom-name"]'));
         Util.waitUntilElementIsVisible(textField);
         textField.sendKeys('');
-        textField.clear().sendKeys(text);
+        textField.clear();
+        textField.sendKeys(text);
         return this;
     }
 }

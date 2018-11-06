@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
-import TasksPage = require('../pages/adf/process_services/tasksPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import PaginationPage = require('../pages/adf/paginationPage');
 
 import CONSTANTS = require('../util/constants');
@@ -28,6 +28,7 @@ import { UsersActions } from '../actions/users.actions';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
+import { browser } from 'protractor';
 
 describe('Items per page set to 15 and adding of tasks', () => {
 
@@ -38,7 +39,9 @@ describe('Items per page set to 15 and adding of tasks', () => {
 
     let processUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let currentPage = 1, nrOfTasks = 25, totalPages = 2;
+    let currentPage = 1, nrOfTasks = 25, totalPages = 2, i, resultApp;
+
+    let apps = new AppsActions();
 
     let itemsPerPage = {
         fifteen: '15',
@@ -46,7 +49,6 @@ describe('Items per page set to 15 and adding of tasks', () => {
     };
 
     beforeAll(async (done) => {
-        let apps = new AppsActions();
         let users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -60,9 +62,9 @@ describe('Items per page set to 15 and adding of tasks', () => {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        let resultApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        resultApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
 
-        for (let i = 0; i < nrOfTasks; i++) {
+        for (i = 0; i < (nrOfTasks - 5); i++) {
             await apps.startProcess(this.alfrescoJsApi, resultApp);
         }
 
@@ -78,11 +80,17 @@ describe('Items per page set to 15 and adding of tasks', () => {
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
-        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + nrOfTasks);
+        expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + (nrOfTasks - 5));
         expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fifteenValue);
+
+        browser.controlFlow().execute(async () => {
+            for (i; i < nrOfTasks; i++) {
+                await apps.startProcess(this.alfrescoJsApi, resultApp);
+            }
+        });
+
         currentPage++;
         paginationPage.clickOnNextPage();
-
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);

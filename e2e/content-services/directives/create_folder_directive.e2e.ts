@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../../pages/adf/loginPage');
-import ContentServicesPage = require('../../pages/adf/contentServicesPage');
+import { LoginPage } from '../../pages/adf/loginPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import CreateFolderDialog = require('../../pages/adf/dialog/createFolderDialog');
-import NotificationPage = require('../../pages/adf/notificationPage');
+import { NotificationPage } from '../../pages/adf/notificationPage';
 import MetadataViewPage = require('../../pages/adf/metadataViewPage');
 import ContentListPage = require('../../pages/adf/dialog/contentList');
 
@@ -127,7 +127,7 @@ describe('Create folder directive', function () {
         expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('this is the description');
     });
 
-    it('[C260159] Should not be possible create a folder with banned carachter', () => {
+    it('[C260159] Should not be possible create a folder with banned character', () => {
         let bannedChar = ['* ', '<', '>', '\\', '/', '?', ':', '|'];
 
         contentServicesPage.clickOnCreateNewFolder();

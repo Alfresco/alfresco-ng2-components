@@ -34,7 +34,6 @@ npm run ng-packagr -- -p ./lib/extensions/ && \
 mkdir -p ./node_modules/@alfresco/adf-extensions/ && \
 cp -R ./lib/dist/extensions/* ./node_modules/@alfresco/adf-extensions/
 
-
 echo "====== Build style ====="
 
 node ./lib/config/bundle-scss.js
@@ -54,7 +53,6 @@ cp -R ./lib/process-services/i18n/* ./lib/dist/process-services/bundles/assets/a
 
 mkdir -p ./lib/dist/insights/bundles/assets/adf-insights/i18n
 cp -R ./lib/insights/i18n/* ./lib/dist/insights/bundles/assets/adf-insights/i18n
-
 
 echo "====== Copy assets ====="
 

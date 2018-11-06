@@ -162,7 +162,7 @@ You can use an HTML-based schema and an `app.config.json` custom schema declarat
     <data-columns>
         <data-column key="assignee" title="Assignee" class="full-width name-column">
             <ng-template let-entry="$implicit">
-                    <div>{{getFullName(entry.row.obj.assignee)}}</div>
+                    <div>{{entry.row.obj.assignee | fullName}}</div>
             </ng-template>
         </data-column>
     </data-columns>

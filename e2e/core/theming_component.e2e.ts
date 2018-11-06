@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../pages/adf/loginPage');
-import NavigationBarPage = require('../pages/adf/navigationBarPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
 
@@ -47,7 +47,7 @@ describe('Theming component', () => {
         done();
     });
 
-    xit('Theming component', () => {
+    xit('Should display "Show password" icon in high contrast when a dark theme is selected', () => {
         expect(loginPage.getShowPasswordIconColor()).toEqual(CONSTANTS.THEMING.DEFAULT_PASSWORD_ICON_COLOR);
         expect(loginPage.getSignInButtonColor()).toEqual(CONSTANTS.THEMING.DEFAULT_LOGIN_BUTTON_COLOR);
         expect(loginPage.getBackgroundColor()).toEqual(CONSTANTS.THEMING.DEFAULT_BACKGROUND_COLOR);

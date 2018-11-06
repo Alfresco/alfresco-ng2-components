@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
 import Util = require('../../../util/util');
 
 export class FormControllersPage {
+
     enableToggle(toggle) {
         Util.waitUntilElementIsVisible(toggle);
         toggle.getAttribute('class').then((check) => {

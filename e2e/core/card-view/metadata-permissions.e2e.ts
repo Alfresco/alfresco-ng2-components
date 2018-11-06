@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import LoginPage = require('../../pages/adf/loginPage');
+import { LoginPage } from '../../pages/adf/loginPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import CardViewPage = require('../../pages/adf/metadataViewPage');
-import NavigationBarPage = require('../../pages/adf/navigationBarPage');
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');

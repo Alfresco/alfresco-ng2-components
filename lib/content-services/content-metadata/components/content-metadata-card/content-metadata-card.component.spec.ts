@@ -152,7 +152,7 @@ describe('ContentMetadataCardComponent', () => {
 
         const buttonLabel = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-expand-label"]'));
 
-        expect(buttonLabel.nativeElement.innerText.trim()).toBe('ADF_VIEWER.SIDEBAR.METADATA.MORE_INFORMATION');
+        expect(buttonLabel.nativeElement.innerText.trim()).toBe('ADF_VIEWER.SIDEBAR.METADATA.LESS_INFORMATION');
     });
 
     it('should have the proper text on button while collapsed', () => {
@@ -161,7 +161,7 @@ describe('ContentMetadataCardComponent', () => {
 
         const buttonLabel = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-expand-label"]'));
 
-        expect(buttonLabel.nativeElement.innerText.trim()).toBe('ADF_VIEWER.SIDEBAR.METADATA.LESS_INFORMATION');
+        expect(buttonLabel.nativeElement.innerText.trim()).toBe('ADF_VIEWER.SIDEBAR.METADATA.MORE_INFORMATION');
     });
 
     it('should hide the edit button in readOnly is true', () => {

@@ -17,9 +17,9 @@
 
 import { browser } from 'protractor';
 
-import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
-import TasksPage = require('../pages/adf/process_services/tasksPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
 import { ViewerPage } from '../pages/adf/viewerPage';
 
@@ -27,7 +27,7 @@ import CONSTANTS = require('../util/constants');
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import Util = require('../util/util.js');
+import Util = require('../util/util');
 
 import path = require('path');
 import fs = require('fs');

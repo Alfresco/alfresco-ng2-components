@@ -17,9 +17,9 @@
 
 import { browser } from 'protractor';
 
-import LoginPage = require('../pages/adf/loginPage');
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
-import TasksPage = require('../pages/adf/process_services/tasksPage');
+import { LoginPage } from '../pages/adf/loginPage';
+import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { TasksPage } from '../pages/adf/process_services/tasksPage';
 
 import CONSTANTS = require('../util/constants');
 
@@ -33,7 +33,6 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
 import path = require('path');
-import Util = require('..ro/util/util');
 
 describe('Start Task - Task App', () => {
 
