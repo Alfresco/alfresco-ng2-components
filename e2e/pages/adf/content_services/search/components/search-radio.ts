@@ -29,12 +29,12 @@ export class SearchRadioPage {
     }
 
     checkFilterTypeRadioButtonIsDisplayed(filterName) {
-        let filterType = element(by.css('mat-radio-button[data-automation-id="search-radio-'+ filterName +'"]'));
+        let filterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"]'));
         return Util.waitUntilElementIsVisible(filterType);
     }
 
     checkFilterTypeRadioButtonIsChecked(filterName) {
-        let selectedFilterType = element(by.css('mat-radio-button[data-automation-id="search-radio-'+ filterName +'"][class*="checked"]'));
+        let selectedFilterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"][class*="checked"]'));
         return Util.waitUntilElementIsVisible(selectedFilterType);
     }
 

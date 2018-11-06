@@ -79,7 +79,7 @@ describe('Search Radio Component', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        browser.get(TestConfig.adf.url + '/search;q=' + nodeNames.folder +'');
+        browser.get(TestConfig.adf.url + '/search;q=' + nodeNames.folder + '');
 
         done();
     });
@@ -133,8 +133,8 @@ describe('Search Radio Component', () => {
         let json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
         json.categories[5].component.settings.pageSize = 10;
 
-        for (let numberOfOptions = 0; numberOfOptions <6; numberOfOptions++) {
-            json.categories[5].component.settings.options.push({ "name": "APP.SEARCH.RADIO.FOLDER", "value": "TYPE:'cm:folder'" });
+        for (let numberOfOptions = 0; numberOfOptions < 6; numberOfOptions++) {
+            json.categories[5].component.settings.options.push({ 'name': 'APP.SEARCH.RADIO.FOLDER', 'value': "TYPE:'cm:folder'" });
         }
 
         configEditorPage.clickSearchConfiguration();
@@ -191,8 +191,8 @@ describe('Search Radio Component', () => {
         let json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
         json.categories[5].component.settings.pageSize = 0;
 
-        for (let numberOfOptions = 0; numberOfOptions <6; numberOfOptions++) {
-            json.categories[5].component.settings.options.push({ "name": "APP.SEARCH.RADIO.FOLDER", "value": "TYPE:'cm:folder'" });
+        for (let numberOfOptions = 0; numberOfOptions < 6; numberOfOptions++) {
+            json.categories[5].component.settings.options.push({ 'name': 'APP.SEARCH.RADIO.FOLDER', 'value': "TYPE:'cm:folder'" });
         }
 
         configEditorPage.clickSearchConfiguration();
@@ -268,7 +268,7 @@ describe('Search Radio Component', () => {
             navigationBarPage.clickConfigEditorButton();
 
             let json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
-            json.categories[5].component.settings.options.push({ "name": filterType.custom, "value": "TYPE:'cm:content'" });
+            json.categories[5].component.settings.options.push({ 'name': filterType.custom, 'value': "TYPE:'cm:content'" });
 
             configEditorPage.clickSearchConfiguration();
             configEditorPage.clickClearButton();
