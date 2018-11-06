@@ -1,11 +1,3 @@
-
-<adf-search [searchTerm]="searchedWord"
-            [maxResults]="maxItems"
-            [skipResults]="skipCount"
-            (resultLoaded)="onSearchResultLoaded($event)"
-            #searchResult>
-</adf-search>
-
 <div class="adf-search-results__facets">
     <adf-search-chip-list [searchFilter]="searchFilter"></adf-search-chip-list>
 </div>
@@ -14,6 +6,7 @@
     <adf-search-filter #searchFilter></adf-search-filter>
 
     <div class="adf-search-results__content">
+        <mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"></mat-progress-bar>
         <div class="adf-search-results__sorting">
             <adf-search-sorting-picker></adf-search-sorting-picker>
         </div>
@@ -25,7 +18,7 @@
             [showSitePicker]="false"
             [showSettingsPanel]="false"
             [currentFolderId]="null"
-            [nodeResult]="resultNodePageList"
+            [nodeResult]="data"
             [disableDragArea]="true"
             [pagination]="pagination"
             (changedPageSize)="onRefreshPagination($event)"
@@ -33,7 +26,7 @@
             (turnedNextPage)="onRefreshPagination($event)"
             (loadNext)="onRefreshPagination($event)"
             (turnedPreviousPage)="onRefreshPagination($event)"
-            (deleteElementSuccess)="onDeleteElementSuccess($event)">
+            (deleteElementSuccess)="onDeleteElementSuccess()">
         </app-files-component>
     </div>
 </div>

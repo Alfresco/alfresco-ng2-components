@@ -68,17 +68,33 @@
         }
     ],
     "search": {
+      "app:fields": [
+        "cm:name",
+        "cm:title",
+        "cm:description",
+        "ia:whatEvent",
+        "ia:descriptionEvent",
+        "lnk:title",
+        "lnk:description",
+        "TEXT",
+        "TAG"
+      ],
       "include": ["path", "allowableOperations"],
       "sorting": {
         "options": [
           { "key": "name", "label": "Name", "type": "FIELD", "field": "cm:name", "ascending": true },
           { "key": "content.sizeInBytes", "label": "Size", "type": "FIELD", "field": "content.size", "ascending": true },
-          { "key": "description", "label": "Description", "type": "FIELD", "field": "cm:description", "ascending": true },
           { "key": "createdByUser", "label": "Author", "type": "FIELD", "field": "cm:creator", "ascending": true },
-          { "key": "createdAt", "label": "Created", "type": "FIELD", "field": "cm:created", "ascending": true }
+          { "key": "createdAt", "label": "Created", "type": "FIELD", "field": "cm:created", "ascending": true },
+          { "key": "score", "label": "Relevance", "type": "FIELD", "field": "score", "ascending": false}
         ],
         "defaults": [
-          { "key": "name", "type": "FIELD", "field": "cm:name", "ascending": true }
+          {
+            "key": "score",
+            "type": "FIELD",
+            "field": "score",
+            "ascending": false
+          }
         ]
       },
       "filterQueries": [

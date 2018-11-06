@@ -21,7 +21,6 @@
       "SHOW_COMMENTS": "Show comments on versions",
       "ALLOW_DOWNLOAD": "Enable version download",
       "READ_ONLY": "Read-only",
-      "ALLOW_DOWNLOAD": "Allow Download",
       "COMMENTS": "Show comments"
     },
     "PERSONAL-FILES": "Personal Files",
@@ -62,6 +61,7 @@
     "NOTIFICATIONS": "Notifications",
     "TASK_LIST": "Task List",
     "PROCESS_LIST": "Process List",
+    "PROCESS_CLOUD": "Process Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",
@@ -81,7 +81,6 @@
     "OVERLAY_VIEWER": "Overlay Viewer",
     "ABOUT": "About",
     "SEARCH": "Extended Search",
-    "NOTIFICATIONS": "Notifications",
     "EXTENDED_SEARCH_QUERY_BODY": "Extended Search with Query Body",
     "WORD_TO_SEARCH": "Search Word",
     "SEARCH_CREATED_BY": "Created By",
@@ -102,6 +101,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multiselect (with checkboxes)",
     "THUMBNAILS": "Enable Thumbnails",
+    "ALLOW_DROP_FILES": "Enable Drop Files in a folder",
     "MULTIPLE_FILE_UPLOAD": "Multiple File Upload",
     "FOLDER_UPLOAD": "Folder upload",
     "CUSTOM_FILTER": "Custom extensions filter",
@@ -241,15 +241,19 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Insert App ID",
       "APP_ID_TYPE_ERROR": "App ID must be a number",
-      "NUMBER_TYPE_ERROR": "Value must be a number"
+      "NUMBER_TYPE_ERROR": "Value must be a number",
+      "NUMBER_GREATER_THAN": "Value must be greater than or equal to {{ value }}"
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Starting page"
     }
   },
   "PROCESS_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Insert App ID",
-    "APP_ID_TYPE_ERROR": "App ID must be a number"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Insert App ID",
+      "APP_ID_TYPE_ERROR": "App ID must be a number",
+      "NUMBER_GREATER_THAN": "Value must be greater than or equal to {{ value }}"
+    }
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION ONE",
   "GROUP-TITLE2-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION TWO"
