@@ -29,6 +29,7 @@ export class SearchFiltersPage {
     fileSizeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"]'));
     nameFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Name"]'));
     checkListFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]'));
+    typeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type"]'));
 
     checkSearchFiltersIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchFilters);
@@ -97,6 +98,30 @@ export class SearchFiltersPage {
 
     checkFileSizeFilterIsCollapsed() {
         this.searchCategoriesPage.checkFilterIsCollapsed(this.fileSizeFilter);
+        return this;
+    }
+
+    typeFiltersPage() {
+        return this.searchCategoriesPage.typeFiltersPage(this.typeFilter);
+    }
+
+    checkTypeFilterIsDisplayed() {
+        this.searchCategoriesPage.checkFilterIsDisplayed(this.typeFilter);
+        return this;
+    }
+
+    clickTypeFilter() {
+        this.searchCategoriesPage.clickFilter(this.typeFilter);
+        return this;
+    }
+
+    checkTypeFilterIsCollapsed() {
+        this.searchCategoriesPage.checkFilterIsCollapsed(this.typeFilter);
+        return this;
+    }
+
+    clickTypeFilterHeader() {
+        this.searchCategoriesPage.clickFilterHeader(this.typeFilter);
         return this;
     }
 }
