@@ -38,6 +38,7 @@ import { DialogModule } from './dialogs/dialog.module';
 import { FolderDirectiveModule } from './folder-directive/folder-directive.module';
 import { ContentMetadataModule } from './content-metadata/content-metadata.module';
 import { PermissionManagerModule } from './permission-manager/permission-manager.module';
+import { TreeViewModule } from './tree-view/tree-view.module';
 
 @NgModule({
     imports: [
@@ -61,7 +62,8 @@ import { PermissionManagerModule } from './permission-manager/permission-manager
         FolderDirectiveModule,
         ContentDirectiveModule,
         PermissionManagerModule,
-        VersionManagerModule
+        VersionManagerModule,
+        TreeViewModule
     ],
     exports: [
         SocialModule,
@@ -79,7 +81,8 @@ import { PermissionManagerModule } from './permission-manager/permission-manager
         FolderDirectiveModule,
         ContentDirectiveModule,
         PermissionManagerModule,
-        VersionManagerModule
+        VersionManagerModule,
+        TreeViewModule
     ]
 })
 export class ContentModuleLazy {}
@@ -106,7 +109,8 @@ export class ContentModuleLazy {}
         FolderDirectiveModule,
         ContentDirectiveModule,
         PermissionManagerModule,
-        VersionManagerModule
+        VersionManagerModule,
+        TreeViewModule
     ],
     providers: [
         {
@@ -134,7 +138,8 @@ export class ContentModuleLazy {}
         FolderDirectiveModule,
         ContentDirectiveModule,
         PermissionManagerModule,
-        VersionManagerModule
+        VersionManagerModule,
+        TreeViewModule
     ]
 })
 export class ContentModule {
