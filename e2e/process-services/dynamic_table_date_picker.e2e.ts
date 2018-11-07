@@ -21,6 +21,7 @@ import ProcessFiltersPage = require('../pages/adf/process_services/processFilter
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import { DynamicTableWidget } from '../pages/adf/process_services/widgets/dynamicTableWidget';
 import { DropdownWidget } from '../pages/adf/process_services/widgets/dropdownWidget';
+import { DatePickerPage } from '../pages/adf/material/datePickerPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -36,6 +37,7 @@ describe('Dynamic Table', () => {
     let processFiltersPage = new ProcessFiltersPage();
     let appNavigationBarPage = new AppNavigationBarPage();
     let dynamicTable = new DynamicTableWidget();
+    let datePicker = new DatePickerPage();
     let user, tenantId, appId, apps, users;
 
     beforeAll(async(done) => {
@@ -73,7 +75,6 @@ describe('Dynamic Table', () => {
             error: `Field 'columnDate' is required.`
         };
 
-        let datePosition = 15;
         let rowPosition = 0;
 
         beforeAll(async(done) => {
@@ -119,8 +120,8 @@ describe('Dynamic Table', () => {
             expect(dynamicTable.checkErrorMessage()).toBe(randomText.error);
 
             dynamicTable.clickDateWidget();
-            dynamicTable.getDateCalendarNumber(datePosition);
-            dynamicTable.waitForCalendarToDisappear();
+            datePicker.selectTodayDate()
+                .checkDatePickerIsNotDisplayed();
             dynamicTable.clickSaveButton();
             dynamicTable.getTableRow(rowPosition);
         });
