@@ -58,6 +58,7 @@ export class AppLayoutComponent implements OnInit {
         { href: '/extendedSearch', icon: 'search', title: 'APP_LAYOUT.SEARCH' },
         /* cspell:disable-next-line */
         { href: '/overlay-viewer', icon: 'pageview', title: 'APP_LAYOUT.OVERLAY_VIEWER' },
+        { href: '/treeview', icon: 'nature', title: 'APP_LAYOUT.TREE_VIEW' },
         { href: '/about', icon: 'info_outline', title: 'APP_LAYOUT.ABOUT' }
     ];
 

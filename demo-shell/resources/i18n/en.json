@@ -85,7 +85,8 @@
     "WORD_TO_SEARCH": "Search Word",
     "SEARCH_CREATED_BY": "Created By",
     "SEARCH_SERVICE_APPROACH": "Check this to disable the input property and configure using the service",
-    "HEADER_DATA": "Header Data"
+    "HEADER_DATA": "Header Data",
+    "TREE_VIEW": "Tree View"
   },
   "TRASHCAN": {
     "ACTIONS": {
