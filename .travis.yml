@@ -33,7 +33,7 @@ before_install:
 
 jobs:
   include:
-    - script: echo commit_message
+    - script: echo $commit_message; echo $TRAVIS_COMMIT_MESSAGE - sha - $TRAVIS_PULL_REQUEST_SHA;
     - stage: compile
       script: AFFECTED_LIBS="process-services-cloud"
     - stage: deploy
