@@ -34,8 +34,10 @@ jobs:
     - stage: deploy
       script: echo  the deploy
     - stage: testcore
+      env: STAGE=core
       script:
-        ./scripts/affected-libs.sh -b development;
+        AFFECTED_LIBS="$(./scripts/affected-libs.sh -b development)";
+        echo "AFFECTED_LIBS $AFFECTED_LIBS";
         if [[ $AFFECTED_LIBS =~ "core$" ]];
         then
             echo "core";
@@ -69,7 +71,7 @@ jobs:
     - stage: testcore
       env: STAGE=process-services-cloud
       script:
-        ./scripts/affected-libs.sh -b development;
+        AFFECTED_LIBS=(`echo ./scripts/affected-libs.sh -b development;`)
         if [[ $AFFECTED_LIBS =~ "process-services-cloud" ]];
         then
             echo "process-services-cloud";

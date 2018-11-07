@@ -28,7 +28,7 @@ then
 fi
 
 #HEAD_SHA_BRANCH=(`git merge-base origin/$BRANCH_NAME HEAD`)
-echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
+#echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
 
 #find affected libs
 #npm run affected:libs -- "c30c1a5" "HEAD" > deps.txt
@@ -46,7 +46,6 @@ do
     fileLine=$var
 done < "./deps.txt"
 
-echo "Libs changed: $fileLine";
 #transform string to array
 libs=(`echo $fileLine | sed 's/^$/\n/g'`)
 
@@ -55,9 +54,8 @@ for i in "${libs[@]}"
 do
     if [ "$i" == "core" ] ; then
         AFFECTED_LIBS="core$ content-services$ process-services$ process-services-cloud$"
-        echo "AFFECTED_LIBS: ${AFFECTED_LIBS}"
         rm deps.txt
-        export AFFECTED_LIBS;
+        echo "${AFFECTED_LIBS}"
         exit 0
     fi
 done
