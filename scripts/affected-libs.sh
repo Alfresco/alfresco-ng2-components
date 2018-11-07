@@ -53,7 +53,7 @@ libs=(`echo $fileLine | sed 's/^$/\n/g'`)
 for i in "${libs[@]}"
 do
     if [ "$i" == "core" ] ; then
-        AFFECTED_LIBS="core$ content-services$ process-services$ process-services-cloud$"
+        AFFECTED_LIBS="process-services$ process-services-cloud$"
         rm deps.txt
         echo "${AFFECTED_LIBS}"
         exit 0
