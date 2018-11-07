@@ -43,6 +43,8 @@ export class SettingsPage {
     ecmText = element(by.css('input[data-automation-id*="ecmHost"]'));
     bpmText = element(by.css('input[data-automation-id*="bpmHost"]'));
     authHostText = element(by.css('input[id="oauthHost"]'));
+    ssoRadioButton = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
+    silentLoginToggleBar = element(by.css('[name="silentLogin"] label'));
     applyButton = element(by.css('button[data-automation-id*="host-button"]'));
 
     goToSettingsPage() {
@@ -96,9 +98,43 @@ export class SettingsPage {
         return this;
     }
 
-    clickApply() {
+    async clickSsoRadioButton () {
+        Util.waitUntilElementIsVisible(this.ssoRadioButton);
+        await this.ssoRadioButton.click();
+    }
+
+    async setSSO (processServiceURL, authHost ) {
+        await this.goToSettingsPage();
+        await this.setProvider(this.bpm.option, this.bpm.text);
+        Util.waitUntilElementIsVisible(this.bpmText);
+        expect(this.ecmText.isPresent()).toBe(false);
+        await this.clickSsoRadioButton();
+        await this.setProcessServicesURL(processServiceURL);
+        await this.setAuthHost(authHost);
+        await this.disableSilentLogin();
+        await this.clickApply();
+    }
+
+    async setProcessServicesURL (processServiceURL) {
+        Util.waitUntilElementIsVisible(this.bpmText);
+        await this.bpmText.clear();
+        await this.bpmText.sendKeys(processServiceURL);
+    }
+
+    async setAuthHost (authHostURL) {
+        Util.waitUntilElementIsVisible(this.authHostText);
+        await this.authHostText.clear();
+        await this.authHostText.sendKeys(authHostURL);
+    }
+
+    async clickApply () {
         Util.waitUntilElementIsVisible(this.applyButton);
-        this.applyButton.click();
+        await this.applyButton.click();
+    }
+
+    async disableSilentLogin () {
+        Util.waitUntilElementIsVisible(this.silentLoginToggleBar);
+        await this.silentLoginToggleBar.click();
     }
 
     checkProviderDropdownIsDisplayed() {
