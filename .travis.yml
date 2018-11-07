@@ -6,12 +6,12 @@ node_js:
   - '8.9.4'
 
 env:
-  - AFFECTED_LIBS="core processe"
+  - AFFECTED_LIBS="core"
 
 stages:
   - compile
   - name: testcore
-    if: commit_message !~ /(no-deploy|wip)/
+    if: env(AFFECTED_LIBS) = core
   - name: testcloud
     if: env(AFFECTED_LIBS) = process-services-cloud
   - name: deploy
@@ -39,13 +39,44 @@ jobs:
       script: echo  the deploy
     - stage: testcore
       env: STAGE=core
-      script: echo core
+      script:
+        if [[ $AFFECTED_LIBS = "core" ]];
+            then
+                echo "core";
+                ng test core --watch=false || exit 1;
+            else
+                echo "NO core";
+            fi
     - stage: testcore
       env: STAGE=content-services
-      script: echo content-services
+      script:
+        if [[ $AFFECTED_LIBS = "content-services" ]];
+        then
+            echo "content-services";
+            ng test content-services --watch=false || exit 1;
+        else
+            echo "NO content-services";
+        fi
     - stage: testcore
       env: STAGE=process-services
-      script: echo process-services
+      script:
+        if [[ $AFFECTED_LIBS = "process-services" ]];
+        then
+            echo "process-services";
+            ng test process-services --watch=false || exit 1;
+        else
+            echo "NO process-services";
+        fi
+    - stage: testcore
+      env: STAGE=process-services-cloud
+      script:
+        if [[ $AFFECTED_LIBS = "process-services-cloud" ]];
+        then
+            echo "process-services-cloud";
+            ng test process-services-cloud --watch=false || exit 1;
+        else
+            echo "NO process-services-cloud";
+        fi
     - stage: testcloud
       env: STAGE=cloud1
       script: echo cloud1
