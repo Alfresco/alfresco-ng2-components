@@ -8,44 +8,21 @@ node_js:
 env:
   - AFFECTED_LIBS="core"
 
-stages:
-  - compile
-  - name: testcore
-    if: env(AFFECTED_LIBS) = core
-  - name: testcloud
-    if: env(AFFECTED_LIBS) = process-services-cloud
-  - name: deploy
-    if: branch = master
-
-addons:
-    chrome: stable
-before_script:
-    - "sudo chown root /opt/google/chrome/chrome-sandbox"
-    - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
-
-before_install:
-    - export CHROME_BIN=chromium-browser
-    - export DISPLAY=:99.0
-    - sh -e /etc/init.d/xvfb start
-    - sleep 3 # give xvfb some time to start
-
-
 jobs:
   include:
     - stage: compile
       script:
-        echo "before $AFFECTED_LIBS";
+        echo "1before $AFFECTED_LIBS";
         AFFECTED_LIBS="process-services-cloud";
         echo "after $AFFECTED_LIBS";
-        echo "commit_message $commit_message";
-        echo "commit_message env env(commit_message)";
-        echo "TRAVIS_COMMIT_MESSAGE $TRAVIS_COMMIT_MESSAGE";
-        echo "TRAVIS_PULL_REQUEST_SHA $TRAVIS_COMMIT_MESSAGE";
-    - stage: deploy
-      script: echo  the deploy
+       script:
+        echo "2before $AFFECTED_LIBS";
+        AFFECTED_LIBS="process-services-cloud";
+        echo "after $AFFECTED_LIBS";
     - stage: testcore
       env: STAGE=core
       script:
+        echo "before $AFFECTED_LIBS";
         if [[ $AFFECTED_LIBS = "core" ]];
         then
             echo "core";
