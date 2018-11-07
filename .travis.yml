@@ -37,7 +37,6 @@ jobs:
       env: STAGE=core
       script:
         AFFECTED_LIBS="$(./scripts/affected-libs.sh -b development)";
-        echo "AFFECTED_LIBS $AFFECTED_LIBS";
         if [[ $AFFECTED_LIBS =~ "core$" ]];
         then
             echo "core";
@@ -49,7 +48,7 @@ jobs:
     - stage: testcore
       env: STAGE=content-services
       script:
-        ./scripts/affected-libs.sh -b development;
+        AFFECTED_LIBS="$(./scripts/affected-libs.sh -b development)";
         if [[ $AFFECTED_LIBS =~ "content-services$" ]];
         then
             echo "content-services";
@@ -60,7 +59,7 @@ jobs:
     - stage: testcore
       env: STAGE=process-services
       script:
-        ./scripts/affected-libs.sh -b development;
+        AFFECTED_LIBS="$(./scripts/affected-libs.sh -b development)";
         if [[ $AFFECTED_LIBS =~ "process-services$" ]];
         then
             echo "process-services";
@@ -71,7 +70,7 @@ jobs:
     - stage: testcore
       env: STAGE=process-services-cloud
       script:
-        AFFECTED_LIBS=(`echo ./scripts/affected-libs.sh -b development;`)
+        AFFECTED_LIBS="$(./scripts/affected-libs.sh -b development)";
         if [[ $AFFECTED_LIBS =~ "process-services-cloud$" ]];
         then
             echo "process-services-cloud";
