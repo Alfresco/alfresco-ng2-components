@@ -15,12 +15,21 @@
  * limitations under the License.
  */
 
-export * from './file-size.pipe';
-export * from './mime-type-icon.pipe';
-export * from './node-name-tooltip.pipe';
-export * from './text-highlight.pipe';
-export * from './time-ago.pipe';
-export * from './user-initial.pipe';
-export * from './full-name.pipe';
+import { Pipe, PipeTransform } from '@angular/core';
 
-export * from './pipe.module';
+@Pipe({ name: 'fullName' })
+export class FullNamePipe implements PipeTransform {
+    transform(user: any): string {
+        let fullName = '';
+        if (user) {
+            if (user.firstName) {
+                fullName += user.firstName;
+            }
+            if (user.lastName) {
+                fullName += fullName.length > 0 ? ' ' : '';
+                fullName += user.lastName;
+            }
+        }
+        return fullName;
+    }
+}
