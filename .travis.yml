@@ -34,7 +34,7 @@ jobs:
   include:
     - stage: compile
       script:
-        - echo $AFFECTED_LIB; AFFECTED_LIBS="test"; echo $AFFECTED_LIB;
+        - echo "before $AFFECTED_LIB"; AFFECTED_LIBS="test"; echo $AFFECTED_LIB;
         - echo $AFFECTED_LIB;
     - stage: deploy
       script: echo  the deploy
