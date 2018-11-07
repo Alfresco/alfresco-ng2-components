@@ -31,7 +31,7 @@ export class SearchCategoriesPage {
         return new SearchTextPage(filter);
     }
 
-    typeFiltersPage(filter) {
+    radioFiltersPage(filter) {
         return new SearchRadioPage(filter);
     }
 

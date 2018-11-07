@@ -102,7 +102,7 @@ export class SearchFiltersPage {
     }
 
     typeFiltersPage() {
-        return this.searchCategoriesPage.typeFiltersPage(this.typeFilter);
+        return this.searchCategoriesPage.radioFiltersPage(this.typeFilter);
     }
 
     checkTypeFilterIsDisplayed() {

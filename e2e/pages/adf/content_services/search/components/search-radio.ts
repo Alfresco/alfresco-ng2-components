@@ -21,8 +21,8 @@ import { element, by, browser } from 'protractor';
 export class SearchRadioPage {
 
     filter;
-    showMoreButtonForType = element(by.css('adf-search-radio button[title="Show more"]'));
-    showLessButtonForType = element(by.css('adf-search-radio button[title="Show less"]'));
+    showMoreButton = element(by.css('adf-search-radio button[title="Show more"]'));
+    showLessButton = element(by.css('adf-search-radio button[title="Show less"]'));
 
     constructor(filter) {
         this.filter = filter;
@@ -42,35 +42,35 @@ export class SearchRadioPage {
         browser.executeScript(`document.querySelector('[data-automation-id="search-radio-${filterName}"] input').click();`);
     }
 
-    checkRadioButtonsNumberOnPage() {
+    getRadioButtonsNumberOnPage() {
         let radioButtons = element.all(by.css('mat-radio-button'));
         return radioButtons.count();
     }
 
-    checkShowMoreButtonForTypeIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.showMoreButtonForType);
+    checkShowMoreButtonIsDisplayed() {
+        return Util.waitUntilElementIsVisible(this.showMoreButton);
     }
 
-    checkShowLessButtonForTypeIsDisplayed() {
-        return Util.waitUntilElementIsVisible(this.showLessButtonForType);
+    checkShowLessButtonIsDisplayed() {
+        return Util.waitUntilElementIsVisible(this.showLessButton);
     }
 
-    checkShowMoreButtonForTypeIsNotDisplayed() {
-        return Util.waitUntilElementIsNotVisible(this.showMoreButtonForType);
+    checkShowMoreButtonIsNotDisplayed() {
+        return Util.waitUntilElementIsNotVisible(this.showMoreButton);
     }
 
-    checkShowLessButtonForTypeIsNotDisplayed() {
-        return Util.waitUntilElementIsNotVisible(this.showLessButtonForType);
+    checkShowLessButtonIsNotDisplayed() {
+        return Util.waitUntilElementIsNotVisible(this.showLessButton);
     }
 
     clickShowMoreButton() {
-        Util.waitUntilElementIsVisible(this.showMoreButtonForType);
-        return this.showMoreButtonForType.click();
+        Util.waitUntilElementIsVisible(this.showMoreButton);
+        return this.showMoreButton.click();
     }
 
     clickShowLessButton() {
-        Util.waitUntilElementIsVisible(this.showLessButtonForType);
-        return this.showLessButtonForType.click();
+        Util.waitUntilElementIsVisible(this.showLessButton);
+        return this.showLessButton.click();
     }
 
 }

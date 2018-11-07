@@ -145,7 +145,7 @@ describe('Search Radio Component', () => {
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
         searchFiltersPage.clickTypeFilterHeader();
 
-        expect(searchFiltersPage.typeFiltersPage().checkRadioButtonsNumberOnPage()).toBe(10);
+        expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
 
         browser.refresh();
 
@@ -161,7 +161,7 @@ describe('Search Radio Component', () => {
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
         searchFiltersPage.clickTypeFilterHeader();
 
-        expect(searchFiltersPage.typeFiltersPage().checkRadioButtonsNumberOnPage()).toBe(10);
+        expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
 
         browser.refresh();
 
@@ -177,10 +177,10 @@ describe('Search Radio Component', () => {
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
         searchFiltersPage.clickTypeFilterHeader();
 
-        expect(searchFiltersPage.typeFiltersPage().checkRadioButtonsNumberOnPage()).toBe(9);
+        expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(9);
 
-        searchFiltersPage.typeFiltersPage().checkShowMoreButtonForTypeIsDisplayed();
-        searchFiltersPage.typeFiltersPage().checkShowLessButtonForTypeIsNotDisplayed();
+        searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
+        searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
 
         browser.refresh();
     });
@@ -203,24 +203,24 @@ describe('Search Radio Component', () => {
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
         searchFiltersPage.clickTypeFilterHeader();
 
-        expect(searchFiltersPage.typeFiltersPage().checkRadioButtonsNumberOnPage()).toBe(5);
+        expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
 
-        searchFiltersPage.typeFiltersPage().checkShowMoreButtonForTypeIsDisplayed();
-        searchFiltersPage.typeFiltersPage().checkShowLessButtonForTypeIsNotDisplayed();
+        searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
+        searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
 
         searchFiltersPage.typeFiltersPage().clickShowMoreButton();
 
-        expect(searchFiltersPage.typeFiltersPage().checkRadioButtonsNumberOnPage()).toBe(10);
+        expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
 
-        searchFiltersPage.typeFiltersPage().checkShowMoreButtonForTypeIsNotDisplayed();
-        searchFiltersPage.typeFiltersPage().checkShowLessButtonForTypeIsDisplayed();
+        searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsNotDisplayed();
+        searchFiltersPage.typeFiltersPage().checkShowLessButtonIsDisplayed();
 
         searchFiltersPage.typeFiltersPage().clickShowLessButton();
 
-        expect(searchFiltersPage.typeFiltersPage().checkRadioButtonsNumberOnPage()).toBe(5);
+        expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
 
-        searchFiltersPage.typeFiltersPage().checkShowMoreButtonForTypeIsDisplayed();
-        searchFiltersPage.typeFiltersPage().checkShowLessButtonForTypeIsNotDisplayed();
+        searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
+        searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
 
         browser.refresh();
 
@@ -236,24 +236,24 @@ describe('Search Radio Component', () => {
         searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
         searchFiltersPage.clickTypeFilterHeader();
 
-        expect(searchFiltersPage.typeFiltersPage().checkRadioButtonsNumberOnPage()).toBe(5);
+        expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
 
-        searchFiltersPage.typeFiltersPage().checkShowMoreButtonForTypeIsDisplayed();
-        searchFiltersPage.typeFiltersPage().checkShowLessButtonForTypeIsNotDisplayed();
+        searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
+        searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
 
         searchFiltersPage.typeFiltersPage().clickShowMoreButton();
 
-        expect(searchFiltersPage.typeFiltersPage().checkRadioButtonsNumberOnPage()).toBe(10);
+        expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
 
-        searchFiltersPage.typeFiltersPage().checkShowMoreButtonForTypeIsNotDisplayed();
-        searchFiltersPage.typeFiltersPage().checkShowLessButtonForTypeIsDisplayed();
+        searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsNotDisplayed();
+        searchFiltersPage.typeFiltersPage().checkShowLessButtonIsDisplayed();
 
         searchFiltersPage.typeFiltersPage().clickShowLessButton();
 
-        expect(searchFiltersPage.typeFiltersPage().checkRadioButtonsNumberOnPage()).toBe(5);
+        expect(searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
 
-        searchFiltersPage.typeFiltersPage().checkShowMoreButtonForTypeIsDisplayed();
-        searchFiltersPage.typeFiltersPage().checkShowLessButtonForTypeIsNotDisplayed();
+        searchFiltersPage.typeFiltersPage().checkShowMoreButtonIsDisplayed();
+        searchFiltersPage.typeFiltersPage().checkShowLessButtonIsNotDisplayed();
     });
 
     describe('Properties', () => {
