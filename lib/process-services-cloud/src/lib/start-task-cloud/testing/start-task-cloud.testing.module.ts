@@ -21,12 +21,11 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../material.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TemplateModule, TranslateLoaderService, FormModule } from '@alfresco/adf-core';
+import { TemplateModule, TranslateLoaderService, FormModule, PipeModule } from '@alfresco/adf-core';
 import { StartTaskCloudComponent } from '../components/start-task-cloud.component';
 import { StartTaskCloudService } from '../services/start-task-cloud.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PeopleCloudComponent } from '../components/people-cloud/people-cloud.component';
-import { InitialUserNamePipe } from '../components/pipes/initial-user-name.pipe';
 
 @NgModule({
     imports: [
@@ -43,16 +42,16 @@ import { InitialUserNamePipe } from '../components/pipes/initial-user-name.pipe'
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        FormModule
+        FormModule,
+        PipeModule
     ],
-    declarations: [StartTaskCloudComponent, PeopleCloudComponent, InitialUserNamePipe],
+    declarations: [StartTaskCloudComponent, PeopleCloudComponent],
     providers: [
         StartTaskCloudService
      ],
     exports: [
         StartTaskCloudComponent,
-        PeopleCloudComponent,
-        InitialUserNamePipe
+        PeopleCloudComponent
     ]
 })
 export class StartTaskCloudTestingModule { }

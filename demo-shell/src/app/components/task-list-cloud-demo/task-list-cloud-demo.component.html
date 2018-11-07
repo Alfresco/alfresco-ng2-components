@@ -80,8 +80,8 @@
 
         </mat-expansion-panel>
     </mat-accordion>
-    <div>
-        <adf-cloud-task-list *ngIf="isFilterLoaded" #taskCloud [applicationName]="applicationName" [status]="status"
+    <div *ngIf="isFilterLoaded">
+        <adf-cloud-task-list #taskCloud [applicationName]="applicationName" [status]="status"
             [landingTaskId]="selectTask" [sorting]="sortArray" (rowClick)="onRowClick($event)">
             <data-columns>
                 <data-column key="entry.id" title="Id"></data-column>
@@ -92,7 +92,7 @@
                 <data-column key="entry.createdDate" type="date" title="Created Date" [format]="'timeAgo'"></data-column>
             </data-columns>
         </adf-cloud-task-list>
-        <adf-pagination *ngIf="isFilterLoaded" [target]="taskCloud" (changePageSize)="onChangePageSize($event)">
+        <adf-pagination [target]="taskCloud" (changePageSize)="onChangePageSize($event)">
         </adf-pagination>
     </div>
 </div>

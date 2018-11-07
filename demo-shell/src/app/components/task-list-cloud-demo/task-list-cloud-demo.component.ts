@@ -65,7 +65,6 @@ export class TaskListCloudDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.isFilterLoaded = false;
         this.route.params.subscribe(params => {
             this.applicationName = params.applicationName;
         });
