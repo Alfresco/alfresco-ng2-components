@@ -9,7 +9,6 @@ env:
   - AFFECTED_LIBS="core"
 
 stages:
-  - compile
   - name: testcore
     if: env(AFFECTED_LIBS) = core
   - name: testcloud
@@ -32,17 +31,12 @@ before_install:
 
 jobs:
   include:
-    - stage: compile
-      script:
-        - echo "before $AFFECTED_LIB"; AFFECTED_LIBS="test"; echo $AFFECTED_LIB;
-        - echo $AFFECTED_LIB;
     - stage: deploy
       script: echo  the deploy
     - stage: testcore
-      env: STAGE=core
       script:
-        echo "before $AFFECTED_LIBS";
-        if [[ $AFFECTED_LIBS = "core" ]];
+        ./scripts/affected-libs.sh -b development;
+        if [[ $AFFECTED_LIBS =~ "core$" ]];
         then
             echo "core";
             ng test core --watch=false || exit 1;
@@ -53,7 +47,8 @@ jobs:
     - stage: testcore
       env: STAGE=content-services
       script:
-        if [[ $AFFECTED_LIBS = "content-services" ]];
+        ./scripts/affected-libs.sh -b development;
+        if [[ $AFFECTED_LIBS =~ "content-services" ]];
         then
             echo "content-services";
             ng test content-services --watch=false || exit 1;
@@ -63,7 +58,8 @@ jobs:
     - stage: testcore
       env: STAGE=process-services
       script:
-        if [[ $AFFECTED_LIBS = "process-services" ]];
+        ./scripts/affected-libs.sh -b development;
+        if [[ $AFFECTED_LIBS =~ "process-services" ]];
         then
             echo "process-services";
             ng test process-services --watch=false || exit 1;
@@ -73,7 +69,8 @@ jobs:
     - stage: testcore
       env: STAGE=process-services-cloud
       script:
-        if [[ $AFFECTED_LIBS = "process-services-cloud" ]];
+        ./scripts/affected-libs.sh -b development;
+        if [[ $AFFECTED_LIBS =~ "process-services-cloud" ]];
         then
             echo "process-services-cloud";
             ng test process-services-cloud --watch=false || exit 1;
