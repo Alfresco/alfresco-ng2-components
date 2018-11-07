@@ -98,30 +98,30 @@ describe('Search Radio Component', () => {
         searchFiltersPage.checkTypeFilterIsCollapsed();
         searchFiltersPage.clickTypeFilterHeader();
 
-        searchFiltersPage.typeFiltersPage().checkFilterTypeRadioButtonIsDisplayed(filterType.none);
-        searchFiltersPage.typeFiltersPage().checkFilterTypeRadioButtonIsDisplayed(filterType.all);
-        searchFiltersPage.typeFiltersPage().checkFilterTypeRadioButtonIsDisplayed(filterType.folder);
-        searchFiltersPage.typeFiltersPage().checkFilterTypeRadioButtonIsDisplayed(filterType.document);
+        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.none);
+        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.all);
+        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.folder);
+        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.document);
 
-        searchFiltersPage.typeFiltersPage().checkFilterTypeRadioButtonIsChecked(filterType.none);
+        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.none);
 
         contentList.checkContentIsDisplayed(nodeNames.folder);
         contentList.checkContentIsDisplayed(nodeNames.document);
 
-        searchFiltersPage.typeFiltersPage().clickFilterTypeRadioButton(filterType.folder);
-        searchFiltersPage.typeFiltersPage().checkFilterTypeRadioButtonIsChecked(filterType.folder);
+        searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.folder);
+        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.folder);
 
         contentList.checkContentIsDisplayed(nodeNames.folder);
         contentList.checkContentIsNotDisplayed(nodeNames.document);
 
-        searchFiltersPage.typeFiltersPage().clickFilterTypeRadioButton(filterType.document);
-        searchFiltersPage.typeFiltersPage().checkFilterTypeRadioButtonIsChecked(filterType.document);
+        searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.document);
+        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.document);
 
         contentList.checkContentIsDisplayed(nodeNames.document);
         contentList.checkContentIsNotDisplayed(nodeNames.folder);
 
-        searchFiltersPage.typeFiltersPage().clickFilterTypeRadioButton(filterType.all);
-        searchFiltersPage.typeFiltersPage().checkFilterTypeRadioButtonIsChecked(filterType.all);
+        searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.all);
+        searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.all);
 
         contentList.checkContentIsDisplayed(nodeNames.folder);
         contentList.checkContentIsDisplayed(nodeNames.document);
@@ -278,14 +278,14 @@ describe('Search Radio Component', () => {
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
             searchFiltersPage.clickTypeFilterHeader();
 
-            searchFiltersPage.typeFiltersPage().checkFilterTypeRadioButtonIsDisplayed(filterType.none);
-            searchFiltersPage.typeFiltersPage().checkFilterTypeRadioButtonIsDisplayed(filterType.all);
-            searchFiltersPage.typeFiltersPage().checkFilterTypeRadioButtonIsDisplayed(filterType.folder);
-            searchFiltersPage.typeFiltersPage().checkFilterTypeRadioButtonIsDisplayed(filterType.document);
-            searchFiltersPage.typeFiltersPage().checkFilterTypeRadioButtonIsDisplayed(filterType.custom);
-            searchFiltersPage.typeFiltersPage().checkFilterTypeRadioButtonIsChecked(filterType.none);
+            searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.none);
+            searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.all);
+            searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.folder);
+            searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.document);
+            searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.custom);
+            searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.none);
 
-            searchFiltersPage.typeFiltersPage().clickFilterTypeRadioButton(filterType.custom);
+            searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.custom);
 
             contentList.checkContentIsDisplayed(nodeNames.document);
             contentList.checkContentIsNotDisplayed(nodeNames.folder);

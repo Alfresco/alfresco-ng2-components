@@ -28,17 +28,17 @@ export class SearchRadioPage {
         this.filter = filter;
     }
 
-    checkFilterTypeRadioButtonIsDisplayed(filterName) {
+    checkFilterRadioButtonIsDisplayed(filterName) {
         let filterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"]'));
         return Util.waitUntilElementIsVisible(filterType);
     }
 
-    checkFilterTypeRadioButtonIsChecked(filterName) {
+    checkFilterRadioButtonIsChecked(filterName) {
         let selectedFilterType = element(by.css('mat-radio-button[data-automation-id="search-radio-' + filterName + '"][class*="checked"]'));
         return Util.waitUntilElementIsVisible(selectedFilterType);
     }
 
-    clickFilterTypeRadioButton(filterName) {
+    clickFilterRadioButton(filterName) {
         browser.executeScript(`document.querySelector('[data-automation-id="search-radio-${filterName}"] input').click();`);
     }
 
