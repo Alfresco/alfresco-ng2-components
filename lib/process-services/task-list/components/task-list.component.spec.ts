@@ -520,7 +520,7 @@ describe('TaskListComponent', () => {
             <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
             <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
                 <ng-template let-entry="$implicit">
-                    <div>{{getFullName(entry.row.obj.startedBy)}}</div>
+                    <div>{{entry.row.obj.startedBy | fullName}}</div>
                 </ng-template>
             </data-column>
         </data-columns>
