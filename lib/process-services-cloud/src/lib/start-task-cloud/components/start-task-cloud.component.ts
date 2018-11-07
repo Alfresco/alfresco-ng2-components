@@ -14,12 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from '@angular/forms';
 import { StartTaskCloudService } from '../services/start-task-cloud.service';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
@@ -39,7 +39,7 @@ import { UserCloudModel } from '../models/user-cloud.model';
     encapsulation: ViewEncapsulation.None
 })
 
-export class StartTaskCloudComponent implements OnInit {
+export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     public FORMAT_DATE: string = 'DD/MM/YYYY';
 
@@ -78,6 +78,9 @@ export class StartTaskCloudComponent implements OnInit {
 
     taskForm: FormGroup;
 
+    private localeSub: Subscription;
+    private createTaskSub: Subscription;
+
     /**
      * Constructor
      * @param auth
@@ -92,10 +95,20 @@ export class StartTaskCloudComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.preferences.locale$.subscribe((locale) => {
+        this.localeSub = this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
         this.buildForm();
+    }
+
+    ngOnDestroy() {
+        if (this.localeSub) {
+            this.localeSub.unsubscribe();
+        }
+
+        if (this.createTaskSub) {
+            this.createTaskSub.unsubscribe();
+        }
     }
 
     buildForm() {
@@ -116,7 +129,7 @@ export class StartTaskCloudComponent implements OnInit {
     }
 
     private createNewTask(newTask: TaskDetailsCloudModel) {
-        this.taskService.createNewTask(newTask)
+        this.createTaskSub = this.taskService.createNewTask(newTask)
             .subscribe(
                 (res: any) => {
                     this.submitted = false;
