@@ -6,6 +6,7 @@ node_js:
   - '8.9.4'
 
 env:
+global:
   - AFFECTED_LIBS="core"
 
 stages:
@@ -41,12 +42,13 @@ jobs:
       env: STAGE=core
       script:
         if [[ $AFFECTED_LIBS = "core" ]];
-            then
-                echo "core";
-                ng test core --watch=false || exit 1;
-            else
-                echo "NO core";
-            fi
+        then
+            echo "core";
+            ng test core --watch=false || exit 1;
+        else
+            echo $AFFECTED_LIBS;
+            echo "NO core";
+        fi
     - stage: testcore
       env: STAGE=content-services
       script:
