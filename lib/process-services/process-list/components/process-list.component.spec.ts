@@ -31,7 +31,7 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { fakeProcessCustomSchema } from '../../mock';
 import { ProcessListModule } from 'process-list/process-list.module';
 
-fdescribe('ProcessInstanceListComponent', () => {
+describe('ProcessInstanceListComponent', () => {
 
     let fixture: ComponentFixture<ProcessInstanceListComponent>;
     let component: ProcessInstanceListComponent;
