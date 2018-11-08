@@ -41,7 +41,12 @@
                         [checked]="query.checked"
                         [attr.data-automation-id]="'checkbox-'+facetQueriesLabel+'-'+query.label"
                         (change)="onToggleFacetQuery($event, query)">
-                        {{ query.label | translate }} ({{ query.count }})
+                        <div 
+                            matTooltip="{{ query.label | translate }} ({{ query.count }})"
+                            matTooltipPosition="right"
+                            class="facet-label">
+                            {{ query.label | translate }} ({{ query.count }})
+                        </div>
                     </mat-checkbox>
                 </ng-container>
             </div>
@@ -96,7 +101,15 @@
                     [checked]="bucket.checked"
                     [attr.data-automation-id]="'checkbox-'+field.label+'-'+(bucket.display || bucket.label)"
                     (change)="onToggleBucket($event, field, bucket)">
-                    {{ bucket.display || bucket.label | translate }} <span *ngIf="bucket.count!==null">(</span>{{ bucket.count }}<span *ngIf="bucket.count!==null">)</span>
+                    <div 
+                        matTooltip="{{ bucket.display || bucket.label | translate }}"
+                        matTooltipPosition="right"
+                        class="facet-label">
+                        {{ bucket.display || bucket.label | translate }} 
+                        <span *ngIf="bucket.count!==null">(</span>
+                        {{ bucket.count }}
+                        <span *ngIf="bucket.count!==null">)</span>
+                    </div>
                 </mat-checkbox>
             </div>
 
