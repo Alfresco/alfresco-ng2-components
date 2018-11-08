@@ -51,11 +51,11 @@ Manages Process Instances, Process Variables, and Process Audit Log.
     -   _requestNode:_ [`ProcessFilterParamRepresentationModel`](../../lib/process-services/process-list/models/filter-process.model.ts)  - Filter for instances
     -   _processDefinitionKey:_ `string`  - (Optional) Limits returned instances to a process definition
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<ProcessListModel>` - List of process instances
--   **getProcessTasks**(processInstanceId: `string`, state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../process-services/task-details.model.md)`[]>`<br/>
+-   **getProcessTasks**(processInstanceId: `string`, state?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../lib/process-services/task-list/models/task-details.model.ts)`[]>`<br/>
     Gets task instances for a process instance.
     -   _processInstanceId:_ `string`  - ID of the process instance
     -   _state:_ `string`  - (Optional) Task state filter (can be "active" or "completed")
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../process-services/task-details.model.md)`[]>` - Array of task instance details
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../lib/process-services/task-list/models/task-details.model.ts)`[]>` - Array of task instance details
 -   **startProcess**(processDefinitionId: `string`, name: `string`, outcome?: `string`, startFormValues?: `FormValues`, variables?: [`ProcessInstanceVariable`](../../lib/process-services/process-list/models/process-instance-variable.model.ts)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstance`](../../lib/process-services/process-list/models/process-instance.model.ts)`>`<br/>
     Starts a process based on a process definition, name, form values or variables.
     -   _processDefinitionId:_ `string`  - Process definition ID
