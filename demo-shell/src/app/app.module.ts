@@ -124,8 +124,6 @@ import { StartTaskCloudDemoDialogComponent } from './components/start-task-cloud
         TaskListCloudDemoComponent,
         ProcessListCloudExampleComponent,
         TreeViewSampleComponent,
-        StartTaskCloudDemoComponent,
-        StartTaskCloudDemoDialogComponent,
         TaskListCloudDemoComponent
     ],
     providers: [
