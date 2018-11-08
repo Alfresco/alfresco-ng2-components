@@ -75,7 +75,7 @@ describe('Task Audit', () => {
     it('[C260386] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone running task', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskTaskApp);
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskTaskApp);
 
         taskPage.taskDetails().clickAuditLogButton();
         expect(Util.fileExists(auditLogFile, 10)).toBe(true);
@@ -84,11 +84,11 @@ describe('Task Audit', () => {
     it('[C260389] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone completed task', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskTaskApp);
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskTaskApp);
 
         taskPage.completeTaskNoForm();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().selectTaskFromTasksList(taskTaskApp);
+        taskPage.tasksListPage().getDataTable().selectRowByContentName(taskTaskApp);
         expect(taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskTaskApp + ' completed');
 
         taskPage.taskDetails().clickAuditLogButton();
@@ -101,11 +101,11 @@ describe('Task Audit', () => {
         taskPage.createNewTask().addName(taskCompleteCustomApp).clickStartButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskCompleteCustomApp);
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskCompleteCustomApp);
 
         taskPage.completeTaskNoForm();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().selectTaskFromTasksList(taskCompleteCustomApp);
+        taskPage.tasksListPage().getDataTable().selectRowByContentName(taskCompleteCustomApp);
         expect(taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskCompleteCustomApp + ' completed');
 
         taskPage.taskDetails().clickAuditLogButton();
@@ -118,7 +118,7 @@ describe('Task Audit', () => {
         taskPage.createNewTask().addName(taskCustomApp).clickStartButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskCustomApp);
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskCustomApp);
 
         taskPage.taskDetails().clickAuditLogButton();
         expect(Util.fileExists(auditLogFile, 10)).toBe(true);

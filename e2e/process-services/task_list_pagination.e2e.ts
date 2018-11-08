@@ -83,7 +83,7 @@ describe('Task List Pagination', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.default);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
-        expect(taskPage.getAllDisplayedRows()).toBe(nrOfTasks);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(nrOfTasks);
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsDisabled();
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
@@ -97,22 +97,22 @@ describe('Task List Pagination', () => {
         paginationPage.selectItemsPerPage(itemsPerPage.five);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + nrOfTasks);
-        expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(itemsPerPage.fiveValue);
         paginationPage.clickOnNextPage();
         currentPage++;
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 6-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(itemsPerPage.fiveValue);
         paginationPage.clickOnNextPage();
         currentPage++;
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(itemsPerPage.fiveValue);
         paginationPage.clickOnNextPage();
         currentPage++;
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(itemsPerPage.fiveValue);
 
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -125,11 +125,11 @@ describe('Task List Pagination', () => {
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue + ' of ' + nrOfTasks);
-        expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.tenValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(itemsPerPage.tenValue);
         paginationPage.clickOnNextPage();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.twentyValue + ' of ' + nrOfTasks);
-        expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.tenValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(itemsPerPage.tenValue);
 
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -142,11 +142,11 @@ describe('Task List Pagination', () => {
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + nrOfTasks);
-        expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fifteenValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(itemsPerPage.fifteenValue);
         paginationPage.clickOnNextPage();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.twentyValue + ' of ' + nrOfTasks);
-        expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(itemsPerPage.fiveValue);
 
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -158,14 +158,14 @@ describe('Task List Pagination', () => {
         totalPages = 2;
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        taskPage.tasksListPage().waitForTableBody();
+        taskPage.tasksListPage().getDataTable().waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
-        taskPage.tasksListPage().waitForTableBody();
+        taskPage.tasksListPage().getDataTable().waitForTableBody();
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.tenValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(itemsPerPage.tenValue);
         paginationPage.checkNextPageButtonIsEnabled();
         paginationPage.checkPreviousPageButtonIsDisabled();
 
@@ -173,12 +173,12 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
         currentPage = 2;
         paginationPage.clickOnPageDropdownOption('2');
-        taskPage.tasksListPage().waitForTableBody();
+        taskPage.tasksListPage().getDataTable().waitForTableBody();
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.tenValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(itemsPerPage.tenValue);
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsEnabled();
 
@@ -186,12 +186,12 @@ describe('Task List Pagination', () => {
         expect(paginationPage.getPageDropdownOptions()).toEqual(['1', '2']);
         currentPage = 1;
         paginationPage.clickOnPageDropdownOption('1');
-        taskPage.tasksListPage().waitForTableBody();
+        taskPage.tasksListPage().getDataTable().waitForTableBody();
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.tenValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(itemsPerPage.tenValue);
         paginationPage.checkNextPageButtonIsEnabled();
         paginationPage.checkPreviousPageButtonIsDisabled();
     });

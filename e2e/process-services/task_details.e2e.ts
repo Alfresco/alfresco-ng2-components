@@ -82,7 +82,7 @@ describe('Task Details component', () => {
         });
 
         let taskModel = new TaskModel(allTasks.data[0]);
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskModel.getName());
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskModel.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         expect(taskPage.taskDetails().getDescription())
@@ -124,7 +124,7 @@ describe('Task Details component', () => {
         });
 
         let taskModel = new TaskModel(allTasks.data[0]);
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskModel.getName());
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskModel.getName());
 
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
@@ -171,7 +171,7 @@ describe('Task Details component', () => {
 
         let taskModel = new TaskModel(allTasks.data[0]);
 
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskModel.getName());
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskModel.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         expect(taskPage.taskDetails().getDescription())
@@ -217,7 +217,7 @@ describe('Task Details component', () => {
 
         let taskModel = new TaskModel(allTasks.data[0]);
 
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskModel.getName());
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskModel.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         expect(taskPage.taskDetails().getDescription())
@@ -256,19 +256,19 @@ describe('Task Details component', () => {
 
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskName).selectTaskFromTasksList(taskName);
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskName).selectRowByContentName(taskName);
 
         taskPage.clickOnAddChecklistButton().addName(checklistName).clickCreateChecklistButton();
         taskPage.checkChecklistIsDisplayed(checklistName);
 
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(checklistName).selectTaskFromTasksList(checklistName);
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(checklistName).selectRowByContentName(checklistName);
 
         let allTasks = await browser.controlFlow().execute(async () => {
             return this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
         });
 
         let checklistTask = new TaskModel(allTasks.data[0]);
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(checklistTask.getName());
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(checklistTask.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(checklistTask.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(checklistTask.getId());
         expect(taskPage.taskDetails().getDescription())
@@ -304,14 +304,14 @@ describe('Task Details component', () => {
         taskPage.clickOnAddChecklistButton().addName(checklistName).clickCreateChecklistButton();
         taskPage.checkChecklistIsDisplayed(checklistName);
 
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(checklistName).selectTaskFromTasksList(checklistName);
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(checklistName).selectRowByContentName(checklistName);
 
         let allTasks = await browser.controlFlow().execute(async () => {
             return this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
         });
 
         let checklistTask = new TaskModel(allTasks.data[0]);
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(checklistTask.getName());
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(checklistTask.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(checklistTask.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(checklistTask.getId());
         expect(taskPage.taskDetails().getDescription())
@@ -340,18 +340,18 @@ describe('Task Details component', () => {
 
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(taskName).selectTaskFromTasksList(taskName);
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskName).selectRowByContentName(taskName);
 
         taskPage.completeTaskNoForm();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().selectTaskFromTasksList(taskName);
+        taskPage.tasksListPage().getDataTable().selectRowByContentName(taskName);
 
         let getTaskResponse = await browser.controlFlow().execute(async () => {
             return this.alfrescoJsApi.activiti.taskApi.getTask(taskId.id);
         });
 
         let completedTask = new TaskModel(getTaskResponse);
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(completedTask.getName());
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(completedTask.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(completedTask.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(completedTask.getId());
         expect(taskPage.taskDetails().getDescription())

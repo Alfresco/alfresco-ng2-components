@@ -71,8 +71,8 @@ describe('Task Details - No form', () => {
         processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(app.taskName);
-        taskPage.tasksListPage().selectTaskFromTasksList(app.taskName);
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(app.taskName);
+        taskPage.tasksListPage().getDataTable().selectRowByContentName(app.taskName);
         taskPage.taskDetails().noFormIsDisplayed();
         taskPage.taskDetails().checkCompleteTaskButtonIsDisplayed().checkCompleteTaskButtonIsEnabled();
         taskPage.taskDetails().checkAttachFormButtonIsNotDisplayed();
