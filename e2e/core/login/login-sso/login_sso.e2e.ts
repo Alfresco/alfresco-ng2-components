@@ -24,11 +24,9 @@ describe('Login component - SSO', () => {
 
     const settingsPage = new SettingsPage();
     const loginApsPage = new LoginAPSPage();
-    const processServiceURL = 'http://aps2dev.envalfresco.com';
-    const authHost = 'http://aps2dev.envalfresco.com/auth/realms/springboot';
 
     beforeAll(async (done) => {
-        await settingsPage.setSSO(processServiceURL, authHost);
+        await settingsPage.setSSO(TestConfig.adf.hostSso, TestConfig.adf.hostSso + '/auth/realms/springboot' );
         done();
     });
 
