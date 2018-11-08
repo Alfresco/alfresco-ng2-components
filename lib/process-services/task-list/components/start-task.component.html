@@ -45,7 +45,7 @@
                     </mat-datepicker>
                     <div class="adf-error-text-container">
                         <div *ngIf="dateError">
-                            <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.DATE.ERROR'|translate}}</div>
+                            <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</div>
                             <mat-icon class="adf-error-icon">warning</mat-icon>
                         </div>
                     </div>
@@ -56,8 +56,9 @@
             </div>
             <div class="adf-task-form">
                 <mat-form-field fxFlex="48%" fxFlex.xs="100%">
-                    <mat-label id="form_id">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}</mat-label>
+                    <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}</mat-label>
                     <mat-select
+                    id="form_id"
                     class="form-control"
                     formControlName="formKey" >
                     <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
