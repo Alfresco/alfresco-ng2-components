@@ -104,11 +104,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
             const node = (<ShareDataRow> row).node;
 
             if (node.entry.isFolder) {
-                if (this.isSmartFolder(node)) {
-                    return this.documentListService.getMimeTypeIcon('smartFolder');
-                } else {
-                    return this.documentListService.getMimeTypeIcon('folder');
-                }
+                return this.getFolderIcon(node);
             }
 
             if (node.entry.isFile) {
@@ -167,10 +163,33 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.imageResolver = resolver;
     }
 
+    private getFolderIcon(node: any) {
+        if (this.isSmartFolder(node)) {
+            return this.documentListService.getMimeTypeIcon('smartFolder');
+        } else if (this.isRuleFolder(node)) {
+            return this.documentListService.getMimeTypeIcon('ruleFolder');
+        } else if (this.isALinkFolder(node)) {
+            return this.documentListService.getMimeTypeIcon('linkFolder');
+        } else {
+            return this.documentListService.getMimeTypeIcon('folder');
+        }
+    }
+
     isSmartFolder(node: any) {
         let nodeAspects = this.getNodeAspectNames(node);
         return nodeAspects.indexOf('smf:customConfigSmartFolder') > -1 ||
             (nodeAspects.indexOf('smf:systemConfigSmartFolder') > -1);
+    }
+
+    isRuleFolder(node: any) {
+        let nodeAspects = this.getNodeAspectNames(node);
+        return nodeAspects.indexOf('rule:rules') > -1 ||
+            (nodeAspects.indexOf('rule:rules') > -1);
+    }
+
+    isALinkFolder(node: any) {
+        const nodeType = node.entry ? node.entry.nodeType : node.nodeType;
+        return nodeType === 'app:folderlink';
     }
 
     private getNodeAspectNames(node: any): any[] {
