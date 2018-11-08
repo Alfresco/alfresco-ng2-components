@@ -104,8 +104,8 @@ export class SettingsPage {
     }
 
     async setSSO (processServiceURL, authHost ) {
-        await this.goToSettingsPage();
-        await this.setProvider(this.bpm.option, this.bpm.text);
+        this.goToSettingsPage();
+        this.setProvider(this.bpm.option, this.bpm.text);
         Util.waitUntilElementIsVisible(this.bpmText);
         expect(this.ecmText.isPresent()).toBe(false);
         await this.clickSsoRadioButton();
