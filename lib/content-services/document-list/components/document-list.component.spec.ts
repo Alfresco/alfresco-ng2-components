@@ -990,8 +990,9 @@ describe('DocumentList', () => {
     });
 
     it('should emit folderChange event when loadFolderNodesByFolderNodeId is called', (done) => {
+        const error = { message: '{ "error": { "statusCode": 501 } }' };
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeWithCreatePermission));
-        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.callThrough();
+        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.reject(error));
 
         documentList.folderChange.subscribe((folderNode) => {
             expect(folderNode.value.id).toBe('70e1cc6a-6918-468a-b84a-1048093b06fd');
