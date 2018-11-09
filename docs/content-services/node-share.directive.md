@@ -35,9 +35,7 @@ Creates and manages public shared links for files.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | baseShareUrl | `string` |  | Prefix to add to the generated link. |
-| adf-share | [`MinimalNodeEntity`](../content-services/document-library.model.md) |  | Node to share. |
-| isFile | `boolean` | false | bound to 'adfShare' exportAs |
-| isShared | `boolean` | false | bound to 'adfShare' exportAs |
+| node | [`MinimalNodeEntity`](../content-services/document-library.model.md) |  | Node to share. |
 
 ## Details
 

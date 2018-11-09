@@ -22,70 +22,102 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @ContentChild(EmptyCustomContentDirective)
     emptyCustomContent: EmptyCustomContentDirective;
 
+    /** The name of the application. */
     @Input()
     applicationName: string = '';
 
+    /** The related application version. */
     @Input()
     appVersion: string = '';
 
+    /** Name of the initiator of the process. */
     @Input()
     initiator: string = '';
 
+    /** Filter the processes to display only the ones with this ID. */
     @Input()
     id: string = '';
 
+    /** Filter the processes to display only the ones with this name. */
     @Input()
     name: string = '';
 
+    /** Filter the processes to display only the ones with this process definition ID. */
     @Input()
     processDefinitionId: string = '';
 
+    /** Filter the processes to display only the ones with this process definition key. */
     @Input()
     processDefinitionKey: string = '';
 
+    /** Filter the processes to display only the ones with this serviceFullName value. */
     @Input()
     serviceFullName: string = '';
 
+    /** Filter the processes to display only the ones with this serviceName value. */
     @Input()
     serviceName: string = '';
 
+    /** Filter the processes to display only the ones with this serviceType value. */
     @Input()
     serviceType: string = '';
 
+    /** Filter the processes to display only the ones with this serviceVersion value. */
     @Input()
     serviceVersion: string = '';
 
+    /** Filter the processes to display only the ones with this status. */
     @Input()
     status: string = '';
 
+    /** Filter the tasks to display only the ones with this businessKey value. */
     @Input()
     businessKey: string = '';
 
+    /** Toggles default selection of the first row */
     @Input()
     selectFirstRow: boolean = true;
 
+    /**
+     * Define which task id should be selected after reloading.
+     * If the task id doesn't exist or nothing is passed then the first
+     * task will be selected.
+     */
     @Input()
     landingTaskId: string;
 
+    /**
+     * Row selection mode. Can be "none", "single" or "multiple".
+     * For multiple mode, you can use Cmd (macOS) or Ctrl (Win) modifier
+     * key to toggle selection for multiple rows.
+     */
     @Input()
     selectionMode: string = 'single'; // none|single|multiple
 
-    /** Toggles multiple row selection, renders checkboxes at the beginning of each row */
+    /** Toggles multiple row selection and renders checkboxes at the beginning of each row */
     @Input()
     multiselect: boolean = false;
 
+    /**
+     * Array of objects specifying the sort order and direction for the
+     * list. The sort parameters are for BE sorting.
+     */
     @Input()
     sorting: ProcessListCloudSortingModel[];
 
+    /** Emitted when a row in the process list is clicked. */
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
 
+    /** Emitted when rows are selected/unselected. */
     @Output()
     rowsSelected: EventEmitter<any[]> = new EventEmitter<any[]>();
 
+    /** Emitted when an error occurs while loading the list of process instances from the server. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when the list of process instances has been loaded successfully from the server. */
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 

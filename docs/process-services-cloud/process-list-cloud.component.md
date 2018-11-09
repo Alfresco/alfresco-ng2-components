@@ -1,7 +1,7 @@
 ---
-Added: v2.0.0
+Added: v3.0.0
 Status: Active
-Last reviewed: 2018-05-24
+Last reviewed: 2018-11-09
 ---
 
 # Process Instance List
@@ -49,24 +49,24 @@ when the process list is empty:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| applicationName | `string` |  | The name of the application. |
-| appVersion | `string` |  | The application related version |
-| initiator | `string` |  | the name of the initiator of the process |
-| id | `string` |  | Filter the processes. Display only processes with id equal to the one insterted. |
-| name | `string` |  | Filter the processes. Display only processes with name equal to the one insterted. |
-| processDefinitionId | `string` |  | Filter the processes. Display only processes with processDefinitionId equal to the one insterted. |
-| processDefinitionKey | `string` |  | Filter the processes. Display only processes with processDefinitionKey equal to the one insterted. |
-| serviceFullName | `string` |  | Filter the processes. Display only processes with serviceFullName equal to the one insterted. |
-| serviceName | `string` |  | Filter the processes. Display only processes with serviceName equal to the one insterted. |
-| serviceType | `string` |  | Filter the processes. Display only processes with serviceType equal to the one insterted. |
-| serviceVersion | `string` |  | Filter the processes. Display only processes with serviceVersion equal to the one insterted. |
-| status | `string` |  | Filter the tasks. Display only processes with status equal to the one insterted. |
-| businessKey | `string` |  | Filter the tasks. Display only processes with businessKey equal to the one insterted. |
-| selectFirstRow | `boolean` | true | Toggles default selection of the first row |
+| appVersion | `string` | "" | The related application version. |
+| applicationName | `string` | "" | The name of the application. |
+| businessKey | `string` | "" | Filter the tasks to display only the ones with this businessKey value. |
+| id | `string` | "" | Filter the processes to display only the ones with this ID. |
+| initiator | `string` | "" | Name of the initiator of the process. |
 | landingTaskId | `string` |  | Define which task id should be selected after reloading. If the task id doesn't exist or nothing is passed then the first task will be selected. |
-| selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| multiselect | `boolean` | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
-| sorting | `[ProcessListCloudSortingModel]` |  | This array of `ProcessListCloudSortingModel` specify how the sorting on our table should be provided. This parameters are for BE sorting. |
+| multiselect | `boolean` | false | Toggles multiple row selection and renders checkboxes at the beginning of each row |
+| name | `string` | "" | Filter the processes to display only the ones with this name. |
+| processDefinitionId | `string` | "" | Filter the processes to display only the ones with this process definition ID. |
+| processDefinitionKey | `string` | "" | Filter the processes to display only the ones with this process definition key. |
+| selectFirstRow | `boolean` | true | Toggles default selection of the first row |
+| selectionMode | `string` | "single" | Row selection mode. Can be "none", "single" or "multiple". For multiple mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| serviceFullName | `string` | "" | Filter the processes to display only the ones with this serviceFullName value. |
+| serviceName | `string` | "" | Filter the processes to display only the ones with this serviceName value. |
+| serviceType | `string` | "" | Filter the processes to display only the ones with this serviceType value. |
+| serviceVersion | `string` | "" | Filter the processes to display only the ones with this serviceVersion value. |
+| sorting | [`ProcessListCloudSortingModel`](../../lib/process-services-cloud/src/lib/process-list-cloud/models/process-list-sorting.model.ts)`[]` |  | Array of objects specifying the sort order and direction for the list. The sort parameters are for BE sorting. |
+| status | `string` | "" | Filter the processes to display only the ones with this status. |
 
 ### Events
 
@@ -75,7 +75,7 @@ when the process list is empty:
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
 | rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>` | Emitted when rows are selected/unselected. |
-success |  [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the list of process instances has been loaded successfully from the server. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the list of process instances has been loaded successfully from the server. |
 
 ## Details
 
@@ -151,10 +151,9 @@ information defined in `app.config.json` as in the example below:
 
 ### Setting Sorting Order for the list
 
-you can pass sorting order as shown in the example below:
+You can specify a sorting order as shown in the example below:
 
 ```ts
-
 let sorting = [{ orderBy: 'status', direction: 'desc' }];
 ```
 
