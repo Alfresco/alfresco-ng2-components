@@ -19,7 +19,6 @@ import { FormControl } from '@angular/forms';
 import { StartTaskCloudService } from './../../services/start-task-cloud.service';
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { uniqBy } from 'lodash';
 import { RoleCloudModel } from '../../models/role-cloud.model';
 import { UserCloudModel } from '../../models/user-cloud.model';
 import { LogService } from '@alfresco/adf-core';
@@ -68,10 +67,10 @@ export class PeopleCloudComponent implements OnInit {
 
     ngOnInit() {
         this.loadUsers();
-        this.search();
+        this.initSearch();
     }
 
-    search() {
+    initSearch(): void {
         this.searchUser.valueChanges.subscribe((searchedWord) => {
             this.users$ = this.filterUsers(this.users, searchedWord);
         });
@@ -122,20 +121,19 @@ export class PeopleCloudComponent implements OnInit {
         return username.toLowerCase().indexOf(searchedWord.toString().toLowerCase()) !== -1;
     }
 
-    removeDuplicates(users: any[]): UserCloudModel[] {
-        return uniqBy(users, 'username');
+    private removeDuplicates(users: UserCloudModel[]): UserCloudModel[] {
+        const userMap = new Map();
+        users.forEach(user => {
+            if (!userMap.has(user.id)) {
+                userMap.set(user.id, user);
+            }
+        });
+        return Array.from(userMap.values());
     }
 
-    onSelect(selectedUser: UserCloudModel) {
+    onSelect(selectedUser: UserCloudModel): void {
         this.selectedUser.emit(selectedUser);
         this.dataError = false;
     }
 
-    getDisplayName(model: any) {
-        if (model) {
-            let displayName = `${model.firstName || ''} ${model.lastName || ''}`;
-            return displayName.trim();
-        }
-        return '';
-    }
 }

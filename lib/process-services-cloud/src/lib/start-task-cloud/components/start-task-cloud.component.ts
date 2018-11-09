@@ -81,12 +81,6 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     private localeSub: Subscription;
     private createTaskSub: Subscription;
 
-    /**
-     * Constructor
-     * @param auth
-     * @param translate
-     * @param taskService
-     */
     constructor(private taskService: StartTaskCloudService,
                 private dateAdapter: DateAdapter<Moment>,
                 private preferences: UserPreferencesService,
