@@ -57,14 +57,14 @@
 
             .adf-label {
                 color: mat-color($warn);
-                &:after {
+                &::after {
                     background-color: mat-color($warn);
                 }
             }
         }
     }
 
-    
+
     /* query for Microsoft IE 11*/
     @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
         adf-form-field {
@@ -74,6 +74,6 @@
         }
     }
 
-    
+
 
 }

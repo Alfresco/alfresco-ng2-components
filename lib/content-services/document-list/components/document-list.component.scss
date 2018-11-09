@@ -63,7 +63,7 @@
         font-size: 16px;
         line-height: 1.5;
         letter-spacing: -0.4px;
-        color: mat-color($foreground, text)0;
+        color: mat-color($foreground, text) 0;
         margin-top: 17px;
     }
 
@@ -160,7 +160,7 @@
             img {
                 height: 100px;
             }
-            
+
             :first-child .cell-container .cell-value {
                 display: flex;
                 width: 265px;

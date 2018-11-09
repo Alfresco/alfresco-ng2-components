@@ -21,7 +21,7 @@
         color: mat-color($warn);
     }
 
-    .dropdown-widget__invalid .dropdown-widget__label:after {
+    .dropdown-widget__invalid .dropdown-widget__label::after {
         background-color: mat-color($warn);
     }
 

@@ -7,7 +7,7 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-    }    
+    }
 
     ng-content {
         display: block;
@@ -33,12 +33,12 @@
     .mat-sidenav {
         overflow: hidden;
         border-right: 1px solid mat-color($foreground, text, 0.07);
-        background-color: mat-color($background,background);
+        background-color: mat-color($background, background);
     }
 
     mat-sidenav-content.mat-sidenav-content,
     .mat-drawer-transition .mat-drawer-content {
-        margin-left: 0px !important;
+        margin-left: 0 !important;
         transform: unset !important;
         transition-property: unset !important;
         transition-duration: unset !important;

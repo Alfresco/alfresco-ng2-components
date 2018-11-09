@@ -146,7 +146,7 @@
 
                 .adf-label {
                     color: mat-color($warn);
-                    &:after {
+                    &::after {
                         background-color: mat-color($warn);
                     }
                 }

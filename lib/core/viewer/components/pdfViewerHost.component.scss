@@ -7,7 +7,7 @@
         bottom: 0;
         overflow: hidden;
         opacity: 0.2;
-        line-height: 1.0;
+        line-height: 1;
         border: 1px solid gray;
 
         & > div {
@@ -30,15 +30,15 @@
             border-radius: 4px;
 
             &.begin {
-                border-radius: 4px 0px 0px 4px;
+                border-radius: 4px 0 0 4px;
             }
 
             &.end {
-                border-radius: 0px 4px 4px 0px;
+                border-radius: 0 4px 4px 0;
             }
 
             &.middle {
-                border-radius: 0px;
+                border-radius: 0;
             }
 
             &.selected {
@@ -46,16 +46,16 @@
             }
         }
 
-        &::selection { background: rgb(0,0,255); }
-        &::-moz-selection { background: rgb(0,0,255); }
+        &::selection { background: rgb(0, 0, 255); }
+        &::-moz-selection { background: rgb(0, 0, 255); }
 
         .endOfContent {
             display: block;
             position: absolute;
-            left: 0px;
+            left: 0;
             top: 100%;
-            right: 0px;
-            bottom: 0px;
+            right: 0;
+            bottom: 0;
             z-index: -1;
             cursor: default;
             user-select: none;
@@ -64,7 +64,7 @@
             -moz-user-select: none;
 
             &.active {
-                top: 0px;
+                top: 0;
             }
         }
     }
@@ -82,12 +82,12 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7") 0 0 repeat;
+                background: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7') 0 0 repeat;
 
                 &:hover {
                     opacity: 0.2;
                     background: #ff0;
-                    box-shadow: 0px 2px 10px #ff0;
+                    box-shadow: 0 2px 10px #ff0;
                 }
             }
         }
@@ -108,8 +108,8 @@
             position: absolute;
             z-index: 200;
             max-width: 20em;
-            background-color: #FFFF99;
-            box-shadow: 0px 2px 5px #333;
+            background-color: #ffff99;
+            box-shadow: 0 2px 5px #333;
             border-radius: 2px;
             padding: 0.6em;
             margin-left: 5px;
@@ -137,7 +137,7 @@
     }
 
     .pdfViewer {
-        canvasWrapper {
+        canvaswrapper {
             overflow: hidden;
         }
 
@@ -174,7 +174,7 @@
 
         &.removePageBorders {
             .page {
-                margin: 0px auto 10px auto;
+                margin: 0 auto 10px;
                 border: none;
             }
         }
@@ -190,9 +190,9 @@
 
             font-size: 5px;
             text-indent: -9999em;
-            border-top: 1.1em solid rgba(3,0,2, 0.2);
-            border-right: 1.1em solid rgba(3,0,2, 0.2);
-            border-bottom: 1.1em solid rgba(3,0,2, 0.2);
+            border-top: 1.1em solid rgba(3, 0, 2, 0.2);
+            border-right: 1.1em solid rgba(3, 0, 2, 0.2);
+            border-bottom: 1.1em solid rgba(3, 0, 2, 0.2);
             border-left: 1.1em solid #030002;
             -webkit-transform: translateZ(0);
             -ms-transform: translateZ(0);
@@ -201,7 +201,7 @@
             animation: load8 1.1s infinite linear;
 
             border-radius: 50%;
-            &:after {
+            &::after {
                 border-radius: 50%;
             }
         }
@@ -246,8 +246,8 @@
     outline: none;
 }
 html[dir='ltr'] .viewer-pdf-viewer {
-    box-shadow: inset 1px 0 0 hsla(0,0%,100%,.05);
+    box-shadow: inset 1px 0 0 hsla(0, 0%, 100%, 0.05);
 }
 html[dir='rtl'] .viewer-pdf-viewer {
-    box-shadow: inset -1px 0 0 hsla(0,0%,100%,.05);
+    box-shadow: inset -1px 0 0 hsla(0, 0%, 100%, 0.05);
 }

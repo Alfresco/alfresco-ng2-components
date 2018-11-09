@@ -13,7 +13,7 @@
     font-weight: 300;
     line-height: normal;
     overflow: hidden;
-    margin: 8px 0 16px 0;
+    margin: 8px 0 16px;
     cursor: pointer;
     user-select: none;
     -moz-user-select: none;
@@ -30,7 +30,7 @@
     width: auto;
 }
 
-adf-task-header.assign-edit-view ::ng-deep adf-card-view ::ng-deep .adf-property[data-automation-id="header-assignee"] {
+adf-task-header.assign-edit-view ::ng-deep adf-card-view ::ng-deep .adf-property[data-automation-id='header-assignee'] {
     display: none;
 }
 
@@ -63,7 +63,7 @@ adf-task-header.assign-edit-view ::ng-deep adf-card-view ::ng-deep .adf-property
         &-sidebar {
             &-drawer {
                 @media screen and (max-width: 1279px) {
-                    margin-left: 0px;
+                    margin-left: 0;
                 }
             }
 

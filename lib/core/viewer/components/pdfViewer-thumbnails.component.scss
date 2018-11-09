@@ -24,11 +24,11 @@
         }
 
         &__thumb:hover {
-            box-shadow: 0px 0px 5px 0px $black-87-opacity;
+            box-shadow: 0 0 5px 0 $black-87-opacity;
         }
 
         &__thumb--selected:not(:hover) {
-            box-shadow: 0px 0px 5px 0px $black-87-opacity;
+            box-shadow: 0 0 5px 0 $black-87-opacity;
         }
     }
 }

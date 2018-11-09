@@ -9,7 +9,7 @@
         &-userinfo-container {
             display: flex;
             align-items: center;
-            padding: 0 5px 0 5px;
+            padding: 0 5px;
         }
 
         &-userinfo-name-right {
@@ -17,7 +17,7 @@
         }
 
         &-userinfo-name {
-            padding: 0 5px 0 5px;
+            padding: 0 5px;
         }
 
         &-userinfo-pic {
@@ -31,7 +31,7 @@
             font-size: 18px;
             text-transform: uppercase;
             vertical-align: middle;
-            line-height: 40px
+            line-height: 40px;
         }
 
         &-userinfo-profile-image {
@@ -43,10 +43,10 @@
             margin-right: 0;
             cursor: pointer;
             vertical-align: middle;
-            margin-left: 0px;
+            margin-left: 0;
         }
 
-        &-userinfo-profile-container{
+        &-userinfo-profile-container {
             display: inline-block;
         }
 
@@ -123,9 +123,9 @@
             text-overflow: ellipsis;
             font-size: 16px;
             font-weight: 400;
-            letter-spacing: .04em;
+            letter-spacing: 0.04em;
             line-height: 20px;
-            align-items: flex-start
+            align-items: flex-start;
         }
 
         &-userinfo__secondary-info {
@@ -142,7 +142,7 @@
             border-radius: 50%;
             height: 80px;
             width: 80px;
-            margin-left: 0px;
+            margin-left: 0;
             margin-right: 8px;
         }
 
@@ -171,7 +171,7 @@
         }
 
         &-userinfo-detail {
-            text-align: left
+            text-align: left;
         }
 
         &-hide-tab .mat-tab-label-active {

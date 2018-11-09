@@ -10,7 +10,7 @@
 
     .assigment-count {
         float: left;
-        padding: 10px 0px;
+        padding: 10px 0;
         font-weight: bolder;
         opacity: 0.54;
     }
@@ -28,8 +28,8 @@
 
     .assignment-top-container.mat-card {
         border-top: $header-border;
-        margin: 0px;
-        padding: 0px;
+        margin: 0;
+        padding: 0;
         display: flex;
         flex-flow: row wrap;
         align-items: stretch;
@@ -50,7 +50,7 @@
     }
 
     .assignment-list-container {
-        padding: 0px;
+        padding: 0;
     }
 
 

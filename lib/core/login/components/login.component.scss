@@ -47,7 +47,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center
+            align-items: center;
         }
 
         .show {
@@ -73,7 +73,7 @@
             box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
             width: 450px;
             min-width: 320px;
-            padding: 21px 64px 34px 64px;
+            padding: 21px 64px 34px;
             box-sizing: border-box;
         }
 
@@ -94,7 +94,7 @@
             justify-content: flex-start;
 
             color: mat-color($warn);
-            padding: 0px;
+            padding: 0;
             margin-bottom: 4px;
             font-size: 13px;
         }
@@ -103,7 +103,7 @@
             margin-right: 10px;
         }
 
-        .mat-card-header-text{
+        .mat-card-header-text {
             margin: 0 auto;
         }
 
@@ -114,7 +114,7 @@
         }
 
         .adf-alfresco-logo {
-            padding: 24px 16px 24px 16px;
+            padding: 24px 16px;
         }
 
         .adf-alfresco-logo img {
@@ -167,18 +167,18 @@
             justify-content: center;
         }
 
-        .adf-login-spinner-container{
+        .adf-login-spinner-container {
             margin-left: 15px;
             margin-top: 5px;
         }
 
-        #checking-spinner > svg > circle{
+        #checking-spinner > svg > circle {
             stroke-width: 16% !important;
 
         }
 
         .adf-login-controls {
-            padding: 0 0 26px 0;
+            padding: 0 0 26px;
             overflow: visible;
             width: 100%;
         }
@@ -227,12 +227,12 @@
         }
 
         .adf-login__field .mat-form-field-wrapper {
-            margin: 1em 0 0 0;
+            margin: 1em 0 0;
             font-size: 16px;
         }
 
         .adf-login__field input:-webkit-autofill {
-            -webkit-box-shadow: 0 0 0px 1000px mat-color($background, dialog) inset;
+            -webkit-box-shadow: 0 0 0 1000px mat-color($background, dialog) inset;
             -webkit-text-fill-color: $text-color-primary !important;
         }
 
@@ -274,7 +274,7 @@
         }
 
         .adf-login-action-container {
-            border-top: 1px solid rgba(0, 0, 0, .1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
             margin-top: 23px;
         }
     }
