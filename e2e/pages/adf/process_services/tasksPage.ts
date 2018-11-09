@@ -38,6 +38,7 @@ export class TasksPage {
     checklistDialog = element(by.id('checklist-dialog'));
     checklistNoMessage = element(by.id('checklist-none-message'));
     numberOfChecklists = element(by.css('[data-automation-id="checklist-label"] mat-chip'));
+    sortByName = by.css('div[data-automation-id="auto_id_name"]');
 
     createNewTask() {
         this.createButtonIsDisplayed();
@@ -118,10 +119,6 @@ export class TasksPage {
         return this;
     }
 
-    getAllDisplayedRows() {
-        return element.all(this.rows).count();
-    }
-
     completeTaskNoForm() {
         Util.waitUntilElementIsClickable(this.completeButtonNoForm);
         this.completeButtonNoForm.click();
@@ -163,6 +160,14 @@ export class TasksPage {
         let row = this.getRowsName(checklist).element(this.rowByRowName);
         Util.waitUntilElementIsNotOnPage(row.element(by.css('mat-icon')));
         return this;
+    }
+
+    clickSortByNameAsc() {
+        return this.tasksListPage().getDataTable().sortByColumn(true, this.sortByName);
+    }
+
+    clickSortByNameDesc() {
+        return this.tasksListPage().getDataTable().sortByColumn(false, this.sortByName);
     }
 
 }

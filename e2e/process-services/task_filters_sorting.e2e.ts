@@ -121,9 +121,9 @@ describe('Task Filters Sorting', () => {
 
         taskFiltersPage.clickTaskFilter('Newest first');
 
-        expect(tasksListPage.taskOnTaskListInPosition(1)).toBe(tasks[2].name);
-        expect(tasksListPage.taskOnTaskListInPosition(2)).toBe(tasks[1].name);
-        expect(tasksListPage.taskOnTaskListInPosition(3)).toBe(tasks[0].name);
+        expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[2].name);
+        expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
+        expect(tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[0].name);
 
     });
 
@@ -144,9 +144,9 @@ describe('Task Filters Sorting', () => {
 
         taskFiltersPage.clickTaskFilter('Newest last');
 
-        expect(tasksListPage.taskOnTaskListInPosition(1)).toBe(tasks[0].name);
-        expect(tasksListPage.taskOnTaskListInPosition(2)).toBe(tasks[1].name);
-        expect(tasksListPage.taskOnTaskListInPosition(3)).toBe(tasks[2].name);
+        expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[0].name);
+        expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
+        expect(tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[2].name);
     });
 
     it('[C277256] Should display tasks under new filter from closest due date to farthest when they are completed', () => {
@@ -166,9 +166,9 @@ describe('Task Filters Sorting', () => {
 
         taskFiltersPage.clickTaskFilter('Due first');
 
-        expect(tasksListPage.taskOnTaskListInPosition(1)).toBe(tasks[2].name);
-        expect(tasksListPage.taskOnTaskListInPosition(2)).toBe(tasks[1].name);
-        expect(tasksListPage.taskOnTaskListInPosition(3)).toBe(tasks[0].name);
+        expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[2].name);
+        expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
+        expect(tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[0].name);
     });
 
     it('[C277257] Should display tasks under new filter from farthest due date to closest when they are completed', () => {
@@ -188,9 +188,9 @@ describe('Task Filters Sorting', () => {
 
         taskFiltersPage.clickTaskFilter('Due last');
 
-        expect(tasksListPage.taskOnTaskListInPosition(1)).toBe(tasks[0].name);
-        expect(tasksListPage.taskOnTaskListInPosition(2)).toBe(tasks[1].name);
-        expect(tasksListPage.taskOnTaskListInPosition(3)).toBe(tasks[2].name);
+        expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[0].name);
+        expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
+        expect(tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[2].name);
     });
 
     it('[C277258] Should display tasks under new filter from newest to oldest when they are open  ', () => {
@@ -210,9 +210,9 @@ describe('Task Filters Sorting', () => {
 
         taskFiltersPage.clickTaskFilter('Newest first Open');
 
-        expect(tasksListPage.taskOnTaskListInPosition(1)).toBe(tasks[5].name);
-        expect(tasksListPage.taskOnTaskListInPosition(2)).toBe(tasks[4].name);
-        expect(tasksListPage.taskOnTaskListInPosition(3)).toBe(tasks[3].name);
+        expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[5].name);
+        expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
+        expect(tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[3].name);
     });
 
     it('[C277259] Should display tasks under new filter from oldest to newest when they are open', () => {
@@ -232,9 +232,9 @@ describe('Task Filters Sorting', () => {
 
         taskFiltersPage.clickTaskFilter('Newest last Open');
 
-        expect(tasksListPage.taskOnTaskListInPosition(1)).toBe(tasks[3].name);
-        expect(tasksListPage.taskOnTaskListInPosition(2)).toBe(tasks[4].name);
-        expect(tasksListPage.taskOnTaskListInPosition(3)).toBe(tasks[5].name);
+        expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[3].name);
+        expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
+        expect(tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[5].name);
     });
 
     it('[C277260] Should display tasks under new filter from closest due date to farthest when they are open', () => {
@@ -254,9 +254,9 @@ describe('Task Filters Sorting', () => {
 
         taskFiltersPage.clickTaskFilter('Due first Open');
 
-        expect(tasksListPage.taskOnTaskListInPosition(1)).toBe(tasks[5].name);
-        expect(tasksListPage.taskOnTaskListInPosition(2)).toBe(tasks[4].name);
-        expect(tasksListPage.taskOnTaskListInPosition(3)).toBe(tasks[3].name);
+        expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[5].name);
+        expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
+        expect(tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[3].name);
     });
 
     it('[C277261] Should display tasks under new filter from farthest due date to closest when they are open', () => {
@@ -276,9 +276,9 @@ describe('Task Filters Sorting', () => {
 
         taskFiltersPage.clickTaskFilter('Due last Open');
 
-        expect(tasksListPage.taskOnTaskListInPosition(1)).toBe(tasks[3].name);
-        expect(tasksListPage.taskOnTaskListInPosition(2)).toBe(tasks[4].name);
-        expect(tasksListPage.taskOnTaskListInPosition(3)).toBe(tasks[5].name);
+        expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[3].name);
+        expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
+        expect(tasksListPage.getDataTable().contentInPosition(3)).toBe(tasks[5].name);
 
     });
 });

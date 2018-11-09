@@ -107,7 +107,7 @@ describe('Start Task - Custom App', () => {
             .then(() => {
                 taskPage
                     .tasksListPage()
-                    .checkTaskIsDisplayedInTasksList(tasks[0]);
+                    .getDataTable().checkContentIsDisplayed(tasks[0]);
 
                 taskPage
                     .taskDetails()
@@ -159,7 +159,7 @@ describe('Start Task - Custom App', () => {
 
         taskPage
             .tasksListPage()
-            .checkTaskIsDisplayedInTasksList(tasks[2]);
+            .getDataTable().checkContentIsDisplayed(tasks[2]);
 
         taskPage
             .formFields()
@@ -185,7 +185,7 @@ describe('Start Task - Custom App', () => {
             .clickCancelButton();
 
         taskPage.tasksListPage()
-            .checkTaskIsNotDisplayedInTasksList(tasks[3]);
+            .getDataTable().checkContentIsNotDisplayed(tasks[3]);
 
         expect(taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
@@ -202,7 +202,7 @@ describe('Start Task - Custom App', () => {
 
         taskPage
             .tasksListPage()
-            .checkTaskIsDisplayedInTasksList(tasks[4]);
+            .getDataTable().checkContentIsDisplayed(tasks[4]);
 
         expect(taskPage.formFields()
             .setFieldValue(by.id, formTextField, formFieldValue)
@@ -215,7 +215,7 @@ describe('Start Task - Custom App', () => {
 
         taskPage
             .tasksListPage()
-            .checkTaskIsDisplayedInTasksList(tasks[4]);
+            .getDataTable().checkContentIsDisplayed(tasks[4]);
 
         taskPage
             .formFields()
@@ -246,15 +246,15 @@ describe('Start Task - Custom App', () => {
 
         taskPage
             .tasksListPage()
-            .waitForTableBody();
+            .getDataTable().waitForTableBody();
 
         taskPage
             .filtersPage()
             .goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
 
         taskPage.tasksListPage()
-            .checkTaskIsDisplayedInTasksList(tasks[5])
-            .selectTaskFromTasksList(tasks[5]);
+            .getDataTable().checkContentIsDisplayed(tasks[5])
+            .selectRowByContentName(tasks[5]);
 
         taskPage.checkTaskTitle(tasks[5]);
 
@@ -277,7 +277,7 @@ describe('Start Task - Custom App', () => {
         processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(showHeaderTask).clickStartButton();
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(showHeaderTask).selectTaskFromTasksList(showHeaderTask);
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(showHeaderTask);
 
         appNavigationBarPage.clickSettingsButton();
         taskPage.taskDetails().appSettingsToggles().disableShowHeader();
@@ -298,7 +298,7 @@ describe('Start Task - Custom App', () => {
         taskPage.createNewTask().addName(tasks[7]).clickStartButton();
 
         processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.tasksListPage().checkSpinnerIsDisplayed();
+        taskPage.tasksListPage().getDataTable().checkSpinnerIsDisplayed();
     });
 
 });

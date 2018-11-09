@@ -63,11 +63,11 @@ describe('Datatable component', () => {
     });
 
     it('[C277314] Should filter the table rows when the input filter is passed', () => {
-        expect(dataTablePage.getNumberOfRows()).toEqual(5);
-        dataTablePage.insertFilter('Name');
         expect(dataTablePage.getNumberOfRows()).toEqual(4);
+        dataTablePage.insertFilter('Name');
+        expect(dataTablePage.getNumberOfRows()).toEqual(3);
         dataTablePage.insertFilter('I');
-        expect(dataTablePage.getNumberOfRows()).toEqual(2);
+        expect(dataTablePage.getNumberOfRows()).toEqual(1);
     });
 
 });

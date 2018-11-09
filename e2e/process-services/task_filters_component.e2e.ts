@@ -108,23 +108,23 @@ describe('Task', () => {
             taskFiltersPage.clickNewTaskButton();
             tasksPage.createNewTask().addName('Test').clickStartButton();
             taskFiltersPage.clickMyTaskTaskFilter();
-            tasksListPage.checkTaskIsDisplayedInTasksList('Test');
+            tasksListPage.getDataTable().checkContentIsDisplayed('Test');
             expect(taskFiltersPage.checkActiveFilterActive()).toBe('My Tasks');
             expect(taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
 
             taskFiltersPage.clickQueuedTaskFilter();
             expect(taskFiltersPage.checkActiveFilterActive()).toBe('Queued Tasks');
-            tasksListPage.checkTaskIsNotDisplayedInTasksList('Test');
+            tasksListPage.getDataTable().checkContentIsNotDisplayed('Test');
             expect(taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
 
             taskFiltersPage.clickInvolvedTaskFilter();
             expect(taskFiltersPage.checkActiveFilterActive()).toBe('Involved Tasks');
-            tasksListPage.checkTaskIsDisplayedInTasksList('Test');
+            tasksListPage.getDataTable().checkContentIsDisplayed('Test');
             expect(taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
 
             taskFiltersPage.clickCompletedTaskFilter();
             expect(taskFiltersPage.checkActiveFilterActive()).toBe('Completed Tasks');
-            tasksListPage.checkTaskIsNotDisplayedInTasksList('Test');
+            tasksListPage.getDataTable().checkContentIsNotDisplayed('Test');
             expect(taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
         });
 
@@ -148,7 +148,7 @@ describe('Task', () => {
             taskFiltersPage.clickNewTaskButton();
             tasksPage.createNewTask().addName('Test').clickStartButton();
             taskFiltersPage.clickMyTaskTaskFilter();
-            tasksListPage.checkTaskIsDisplayedInTasksList('Test');
+            tasksListPage.getDataTable().checkContentIsDisplayed('Test');
             expect(taskFiltersPage.checkActiveFilterActive()).toBe('My Tasks');
             expect(taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
 
@@ -159,7 +159,7 @@ describe('Task', () => {
 
             taskFiltersPage.clickInvolvedTaskFilter();
             expect(taskFiltersPage.checkActiveFilterActive()).toBe('Involved Tasks');
-            tasksListPage.checkTaskIsDisplayedInTasksList('Test');
+            tasksListPage.getDataTable().checkContentIsDisplayed('Test');
             expect(taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
 
             taskFiltersPage.clickCompletedTaskFilter();
@@ -184,27 +184,27 @@ describe('Task', () => {
             tasksPage.clickOnCreateButton();
             taskFiltersPage.clickNewTaskButton();
             tasksPage.createNewTask().addName('Test4').clickStartButton();
-            tasksListPage.checkTaskIsDisplayedInTasksList('Test4');
-            tasksListPage.checkHighlightedTaskInTasksList('Test4');
-            tasksListPage.checkTaskIsDisplayedInTasksList('Test3');
+            tasksListPage.getDataTable().checkContentIsDisplayed('Test4');
+            tasksListPage.getDataTable().checkRowIsSelected('Test4');
+            tasksListPage.getDataTable().checkContentIsDisplayed('Test3');
             taskDetailsPage.checkTaskDetailsDisplayed();
 
-            tasksListPage.clickSortByName();
-            expect(tasksListPage.firstTaskOnTaskList()).toBe('Test3');
-            tasksListPage.clickSortByName();
-            expect(tasksListPage.firstTaskOnTaskList()).toBe('Test4');
+            tasksPage.clickSortByNameAsc();
+            expect(tasksListPage.getDataTable().contentInPosition(1)).toBe('Test3');
+            tasksPage.clickSortByNameDesc();
+            expect(tasksListPage.getDataTable().contentInPosition(1)).toBe('Test4');
 
             taskFiltersPage.clickCompletedTaskFilter();
-            tasksListPage.checkTaskIsDisplayedInTasksList('Test1');
-            tasksListPage.checkTaskIsDisplayedInTasksList('Test2');
-            expect(tasksListPage.firstTaskOnTaskList()).toBe('Test2');
+            tasksListPage.getDataTable().checkContentIsDisplayed('Test1');
+            tasksListPage.getDataTable().checkContentIsDisplayed('Test2');
+            expect(tasksListPage.getDataTable().contentInPosition(1)).toBe('Test2');
 
-            tasksListPage.clickSortByName();
-            expect(tasksListPage.firstTaskOnTaskList()).toBe('Test1');
+            tasksPage.clickSortByNameAsc();
+            expect(tasksListPage.getDataTable().contentInPosition(1)).toBe('Test1');
 
             taskFiltersPage.clickInvolvedTaskFilter();
-            tasksListPage.checkTaskIsDisplayedInTasksList('Test3');
-            tasksListPage.checkTaskIsDisplayedInTasksList('Test4');
+            tasksListPage.getDataTable().checkContentIsDisplayed('Test3');
+            tasksListPage.getDataTable().checkContentIsDisplayed('Test4');
         });
 
         it('[C277264] Should display task filter results when task filter is selected', () => {
@@ -213,7 +213,7 @@ describe('Task', () => {
             tasksPage.createNewTask().addName('Test').clickStartButton();
 
             taskFiltersPage.clickTaskFilter('My Tasks');
-            tasksListPage.checkTaskIsDisplayedInTasksList('Test');
+            tasksListPage.getDataTable().checkContentIsDisplayed('Test');
             expect(taskDetailsPage.getTaskDetailsTitle()).toBe('Test');
         });
     });

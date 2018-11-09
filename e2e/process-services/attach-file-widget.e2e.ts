@@ -99,7 +99,7 @@ describe('Start Task - Task App', () => {
         viewerPage.checkFileContent('1', pdfFile.firstPageText);
         viewerPage.checkCloseButtonIsDisplayed();
         viewerPage.clickCloseButton();
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList('View file');
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed('View file');
     });
 
 });
