@@ -106,6 +106,10 @@ export class SearchFiltersPage {
         return this;
     }
 
+    checkCheckListFilterIsCollapsed() {
+        this.searchCategoriesPage.checkFilterIsCollapsed(this.checkListFilter);
+    }
+
     checkCreatedRangeFilterIsDisplayed() {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.createdDateRangeFilter);
         return this;
@@ -142,11 +146,6 @@ export class SearchFiltersPage {
 
     clickTypeFilterHeader() {
         this.searchCategoriesPage.clickFilterHeader(this.typeFilter);
-        return this;
-    }
-
-    checkCheckListFilterIsCollapsed() {
-        this.searchCategoriesPage.checkFilterIsCollapsed(this.checkListFilter);
         return this;
     }
 
