@@ -4,7 +4,7 @@ Status: Active
 Last reviewed: 2018-11-09
 ---
 
-# Process Instance List
+# Process Instance List Cloud component
 
 Renders a list containing all the process instances matched by the parameters specified.
 
