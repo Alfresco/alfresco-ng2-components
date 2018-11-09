@@ -80,11 +80,11 @@ describe('Task List Pagination - Sorting', () => {
     it('[C260308] Should be possible to sort tasks by name', () => {
         processServicesPage.goToProcessServices().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        taskPage.tasksListPage().waitForTableBody();
+        taskPage.tasksListPage().getDataTable().waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-        taskPage.tasksListPage().waitForTableBody();
+        taskPage.tasksListPage().getDataTable().waitForTableBody();
         taskPage.filtersPage().sortByName(true);
-        taskPage.tasksListPage().waitForTableBody();
+        taskPage.tasksListPage().getDataTable().waitForTableBody();
         taskPage.filtersPage().getAllRowsNameColumn().then(function (list) {
             expect(JSON.stringify(list) === JSON.stringify(taskNames)).toEqual(true);
         });

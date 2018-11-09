@@ -81,7 +81,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + (nrOfTasks - 5));
-        expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fifteenValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(itemsPerPage.fifteenValue);
 
         browser.controlFlow().execute(async () => {
             for (i; i < nrOfTasks; i++) {
@@ -95,7 +95,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfTasks + ' of ' + nrOfTasks);
-        expect(taskPage.getAllDisplayedRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsEnabled();
     });

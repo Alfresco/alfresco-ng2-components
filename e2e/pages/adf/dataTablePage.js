@@ -18,24 +18,27 @@
 var TestConfig = require('../../test.config');
 var Util = require('../../util/util');
 
-var DataTablePage = function () {
+var DataTablePage = function (rootElement = element(by.css("adf-datatable"))) {
 
     var dataTableURL = TestConfig.adf.url + TestConfig.adf.port + "/datatable";
+
+    var contents = element.all(by.css('div[class="adf-datatable-body"] span'));
     var multiSelect = element(by.css("div[data-automation-id='multiselect'] label > div[class='mat-checkbox-inner-container']"));
     var selectionButton = element(by.css("div[class='mat-select-arrow']"));
     var selectionDropDown = element(by.css("div[class*='ng-trigger-transformPanel']"));
     var allSelectedRows = element.all(by.css("div[class*='is-selected']"));
     var selectedRowNumber = element(by.css("div[class*='is-selected'] div[data-automation-id*='text_']"));
     var selectAll = element(by.css("div[class*='header'] label"));
-    var list = element.all(by.css("div[class*=adf-datatable-row]"));
+    var list = rootElement.all(by.css("div[class*=adf-datatable-body] div[class*=adf-datatable-row]"));
     var addRow = element(by.xpath("//span[contains(text(),'Add row')]/.."));
     var replaceRows = element(by.xpath("//span[contains(text(),'Replace rows')]/.."));
     var reset = element(by.xpath("//span[contains(text(),'Reset to default')]/.."));
     var replaceColumns = element(by.xpath("//span[contains(text(),'Replace columns')]/.."));
-    var loadNode = element(by.xpath("//span[contains(text(),'Load Node')]/.."));
     var createdOnColumn = element(by.css("div[data-automation-id='auto_id_createdOn']"));
     var pageLoaded = element(by.css("div[data-automation-id='auto_id_id']"));
-    var tableBody = element.all(by.css("adf-document-list div[class='adf-datatable-body']")).first();
+    var tableBody = element.all(by.css("div[class='adf-datatable-body']")).first();
+    var spinner = element(by.css('mat-progress-spinner'));
+
 
     this.goToDatatable = function () {
         browser.driver.get(dataTableURL);
@@ -217,18 +220,6 @@ var DataTablePage = function () {
         Util.waitUntilElementIsNotOnPage(createdOnColumn);
     };
 
-    /**
-     * check the nodeID is the same with the userHome folder's ID
-     * @method replaceColumns
-     */
-    this.checkLoadNode = function (userHome) {
-        var nodeId = element(by.css("div[data-automation-id*='" + userHome + "']"));
-
-        Util.waitUntilElementIsVisible(loadNode);
-        loadNode.click();
-        Util.waitUntilElementIsVisible(nodeId, 10000);
-    };
-
     this.getRowsName = function (content) {
         var row = element(by.css("div[data-automation-id*='" + content + "']"));
         Util.waitUntilElementIsPresent(row);
@@ -251,9 +242,61 @@ var DataTablePage = function () {
         return inputFilter.sendKeys(filterText);
     };
 
+
     this.getNodeIdFirstElement = function () {
         let firstNode = element.all(by.css('adf-datatable div[title="Node id"] span')).first();
         return firstNode.getText();
+    };
+
+    this.sortByColumn = function (sortOrder, locator) {
+        Util.waitUntilElementIsVisible(element(locator));
+        return element(locator).getAttribute('class').then(function (result) {
+            if (sortOrder === true) {
+                if (!result.includes('sorted-asc')) {
+                    if (result.includes('sorted-desc') || result.includes('sortable')) {
+                        element(locator).click();
+                    }
+                }
+            }
+            else {
+                if (result.includes('sorted-asc')) {
+                    element(locator).click();
+                } else if (result.includes('sortable')) {
+                    element(locator).click();
+                    element(locator).click();
+                }
+            }
+
+            return Promise.resolve();
+        });
+    };
+
+    this.checkContentIsDisplayed = function(content) {
+        var row = by.cssContainingText("span", content);
+        Util.waitUntilElementIsVisible(tableBody.all(row).first());
+        return this;
+    };
+
+    this.checkContentIsNotDisplayed = function(content) {
+        var row = by.cssContainingText("span", content);
+        Util.waitUntilElementIsNotOnPage(tableBody.all(row).first());
+        return this;
+    };
+
+    this.selectRowByContentName = function(content) {
+        var row = by.cssContainingText("span", content);
+        Util.waitUntilElementIsVisible(tableBody.element(row));
+        tableBody.element(row).click();
+        return this;
+    };
+
+    this.contentInPosition = function (position){
+        Util.waitUntilElementIsVisible(contents);
+        return contents.get(position -1).getText();
+    };
+
+    this.checkSpinnerIsDisplayed = function () {
+        Util.waitUntilElementIsPresent(spinner);
     };
 
 };
