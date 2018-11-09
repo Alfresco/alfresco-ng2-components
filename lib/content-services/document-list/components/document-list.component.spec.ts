@@ -720,6 +720,18 @@ describe('DocumentList', () => {
         expect(documentList.performNavigation(null)).toBeFalsy();
     });
 
+    it('should perform navigation through corret linked folder', () => {
+        let linkFolder = new FolderNode();
+        linkFolder.entry.id = 'link-folder';
+        linkFolder.entry.nodeType = 'app:folderlink';
+        linkFolder.entry.properties['cm:destination'] = 'normal-folder';
+
+        spyOn(documentList, 'loadFolder').and.stub();
+
+        expect(documentList.performNavigation(linkFolder)).toBeTruthy();
+        expect(documentList.currentFolderId).toBe('normal-folder');
+    });
+
     it('should require valid node for file preview', () => {
         let file = new FileNode();
         file.entry = null;
@@ -974,6 +986,17 @@ describe('DocumentList', () => {
             done();
         });
 
+        documentList.loadFolderByNodeId('123');
+    });
+
+    it('should emit folderChange event when loadFolderNodesByFolderNodeId is called', (done) => {
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeWithCreatePermission));
+        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.callThrough();
+
+        documentList.folderChange.subscribe((folderNode) => {
+            expect(folderNode.value.id).toBe('70e1cc6a-6918-468a-b84a-1048093b06fd');
+            done();
+        });
         documentList.loadFolderByNodeId('123');
     });
 

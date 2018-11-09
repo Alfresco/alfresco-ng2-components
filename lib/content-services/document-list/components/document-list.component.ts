@@ -539,9 +539,17 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     updateFolderData(node: MinimalNodeEntity): void {
         this.resetNewFolderPagination();
-        this.currentFolderId = node.entry.id;
+        this.currentFolderId = this.getNodeFolderDestinationId(node);
         this.reload();
-        this.folderChange.emit(new NodeEntryEvent(node.entry));
+    }
+
+    private getNodeFolderDestinationId(node: MinimalNodeEntity) {
+        return this.isLinkFolder(node) ? node.entry.properties['cm:destination'] : node.entry.id;
+    }
+
+    private isLinkFolder(node: MinimalNodeEntity) {
+        return node.entry.nodeType === 'app:folderlink' && node.entry.properties &&
+            node.entry.properties['cm:destination'];
     }
 
     updateCustomSourceData(nodeId: string): void {
@@ -615,6 +623,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 .getFolderNode(nodeId, this.includeFields)
                 .subscribe((node: MinimalNodeEntryEntity) => {
                     this.folderNode = node;
+                    this.folderChange.emit(new NodeEntryEvent(node));
                     return this.loadFolderNodesByFolderNodeId(node.id, this.pagination.getValue())
                         .catch(err => this.handleError(err));
                 }, err => {
