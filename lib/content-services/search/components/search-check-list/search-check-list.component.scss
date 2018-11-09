@@ -1,4 +1,22 @@
 .adf-search-check-list {
     display: flex;
     flex-direction: column;
+
+    .facet-filter {
+        .mat-checkbox-label {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: 100%;
+        }
+    
+        .mat-checkbox-layout {
+            width: 100%;
+        }
+
+        .facet-name {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    }
 }

@@ -3,8 +3,15 @@
         *ngFor="let option of options"
         [checked]="option.checked"
         [attr.data-automation-id]="'checkbox-' + (option.name)"
-        (change)="changeHandler($event, option)">
-        {{ option.name | translate }}
+        (change)="changeHandler($event, option)"
+        class="facet-filter">
+        <div 
+            matTooltip="{{ option.name | translate }}"
+            matTooltipPosition="right"
+            class="facet-name">
+            {{ option.name | translate }}
+        </div>
+        
     </mat-checkbox>
 </div>
 
