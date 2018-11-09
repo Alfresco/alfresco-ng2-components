@@ -25,7 +25,7 @@ Shows all the information related to a task.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | formName | `string` | null | The name of the form. |
-| taskDetails | [`TaskDetailsModel`](../process-services/task-details.model.md) |  | (required) Details related to the task. |
+| taskDetails | [`TaskDetailsModel`](../../lib/process-services/task-list/models/task-details.model.ts) |  | (required) Details related to the task. |
 
 ### Events
 
@@ -54,7 +54,3 @@ However, you can also choose which properties to show using a configuration in `
 ```
 
 With this configuration, only the four listed properties will be shown.
-
-## See also
-
--   [Task Details model](task-details.model.md)
