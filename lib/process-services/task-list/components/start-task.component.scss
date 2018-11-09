@@ -62,24 +62,24 @@
         padding-top: 0;
     }
 
-    #people-widget-content {
-        .mat-form-field {
-            width: 100%;
-        }
-        .adf-label {
-            line-height: 0;
-        }
-        .adf-error-text-container {
-            margin-top: -10px;
-        }
-    }
-
     adf-start-task {
 
         people-widget {
             width: 100%;
             .mat-form-field-label-wrapper {
                 top: -14px !important;
+            }
+        }
+
+        #people-widget-content {
+            .mat-form-field {
+                width: 100%;
+            }
+            .adf-label {
+                line-height: 0;
+            }
+            .adf-error-text-container {
+                margin-top: -10px;
             }
         }
 
