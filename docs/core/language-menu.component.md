@@ -1,17 +1,18 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-11-09
 ---
 
 # Language Menu component
 
-Displays all the languages that are present in the "app.config.json" or the default one (EN).
+Displays all the languages that are present in "app.config.json" and the default (EN).
 
 ![Language Menu screenshot](../docassets/images/languages-menu.png)
 
 ## Basic usage
 
-How to attach an ADF Language Menu as main menu
+How to attach an ADF Language Menu as a main menu
 
 ```html
 <button mat-icon-button [matMenuTriggerFor]="langMenu">
@@ -24,9 +25,13 @@ How to attach an ADF Language Menu as main menu
 
 ## Details
 
-In the previous example we are using the ADF Language Menu as main menu.
-The [Language Menu component](../core/language-menu.component.md) is able to fetch all the languages from the "app.config.json".
-This is how the configuration looks like in the the "app.config.json"
+Add a [Language Menu component](../core/language-menu.component.md) to let the
+user set the locale language for the app. For further information about the
+locale language, see the
+[Internationalization](../user-guide/internationalization.md#how-the-display-language-is-selected)
+page in the user guide.
+
+The component fetches the list of available languages from `app.config.json`:
 
 ```json
 "languages": [
@@ -45,11 +50,11 @@ This is how the configuration looks like in the the "app.config.json"
     ]
 ```
 
-In case no setting is provided, the component shows only the English language.
+If no `languages` setting is provided, the component shows only the English language.
 
 ### Nested Menu language
 
-How to attach an ADF Language Menu as nested menu
+You can also attach the Language Menu as a nested menu:
 
 ```html
 <button mat-icon-button class="dw-profile-menu" [matMenuTriggerFor]="profileMenu">
@@ -66,10 +71,6 @@ How to attach an ADF Language Menu as nested menu
 ```
 
 ![Nested Language Menu screenshot](../docassets/images/languages-menu-nested.png)
-
-### Nested menu details
-
-In the previous example we are using the ADF Language Menu as nested menu.
 
 ## See Also
 
