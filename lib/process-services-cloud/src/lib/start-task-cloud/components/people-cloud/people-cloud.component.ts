@@ -19,7 +19,7 @@ import { FormControl } from '@angular/forms';
 import { StartTaskCloudService } from './../../services/start-task-cloud.service';
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import uniqBy from 'lodash/uniqBy';
+import { uniqBy } from 'lodash';
 import { RoleCloudModel } from '../../models/role-cloud.model';
 import { UserCloudModel } from '../../models/user-cloud.model';
 import { LogService } from '@alfresco/adf-core';
