@@ -81,6 +81,7 @@ for more information about installing and using the source code.
 | [Text highlight pipe](text-highlight.pipe.md) | Adds highlighting to words or sections of text that match a search string. | [Source](../../lib/core/pipes/text-highlight.pipe.ts) |
 | [Time ago pipe](time-ago.pipe.md) | Converts a recent past date into a number of days ago. | [Source](../../lib/core/pipes/time-ago.pipe.ts) |
 | [User initial pipe](user-initial.pipe.md) | Takes the name fields of a UserProcessModel object and extracts and formats the initials. | [Source](../../lib/core/pipes/user-initial.pipe.ts) |
+| _Full name pipe_ | _Not currently documented_ | [Source](../../lib/core/pipes/full-name.pipe.ts) |
 
 ## Services
 
@@ -139,5 +140,5 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Data Table Adapter interface](datatable-adapter.interface.md) | Defines how table data is supplied to DataTable and Tasklist components. | [Source](../../lib/core/datatable/data/datatable-adapter.ts) |
-| [Form Field Validator interface](form-field-validator.interface.md) | Defines how the input fields of Form and Task Details components are validated. | [Source](../../lib/core/form/components/widgets/core/form-field-validator.ts) |
+| [Form Field Validator interface](form-field-validator.interface.md) | Defines how the input fields of [`Form`](../../lib/process-services/task-list/models/form.model.ts) and Task Details components are validated. | [Source](../../lib/core/form/components/widgets/core/form-field-validator.ts) |
 | [Search Configuration interface](search-configuration.interface.md) | Provides fine control of parameters to a search. | [Source](../../lib/core/services/search-configuration.service.ts) |

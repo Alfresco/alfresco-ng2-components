@@ -28,6 +28,7 @@ See the [Tutorials index](tutorials/README.md) for the full list.
 -   [ADF Core](#adf-core)
 -   [ADF Content Services](#adf-content-services)
 -   [ADF Process Services](#adf-process-services)
+-   [ADF Process Services Cloud](#adf-process-services-cloud)
 -   [ADF Insights](#adf-insights)
 
 ## User guide
@@ -129,6 +130,7 @@ for more information about installing and using the source code.
 | [Text highlight pipe](core/text-highlight.pipe.md) | Adds highlighting to words or sections of text that match a search string. | [Source](../lib/core/pipes/text-highlight.pipe.ts) |
 | [Time ago pipe](core/time-ago.pipe.md) | Converts a recent past date into a number of days ago. | [Source](../lib/core/pipes/time-ago.pipe.ts) |
 | [User initial pipe](core/user-initial.pipe.md) | Takes the name fields of a UserProcessModel object and extracts and formats the initials. | [Source](../lib/core/pipes/user-initial.pipe.ts) |
+| _Full name pipe_ | _Not currently documented_ | [Source](../lib/core/pipes/full-name.pipe.ts) |
 
 ## Services
 
@@ -187,7 +189,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Data Table Adapter interface](core/datatable-adapter.interface.md) | Defines how table data is supplied to DataTable and Tasklist components. | [Source](../lib/core/datatable/data/datatable-adapter.ts) |
-| [Form Field Validator interface](core/form-field-validator.interface.md) | Defines how the input fields of Form and Task Details components are validated. | [Source](../lib/core/form/components/widgets/core/form-field-validator.ts) |
+| [Form Field Validator interface](core/form-field-validator.interface.md) | Defines how the input fields of [`Form`](../../lib/process-services/task-list/models/form.model.ts) and Task Details components are validated. | [Source](../lib/core/form/components/widgets/core/form-field-validator.ts) |
 | [Search Configuration interface](core/search-configuration.interface.md) | Provides fine control of parameters to a search. | [Source](../lib/core/services/search-configuration.service.ts) |
 
 [(Back to Contents)](#contents)
@@ -234,6 +236,7 @@ for more information about installing and using the source code.
 | [Tag actions component](content-services/tag-actions.component.md) | Shows available actions for tags. | [Source](../lib/content-services/tag/tag-actions.component.ts) |
 | [Tag list component](content-services/tag-list.component.md) | Shows tags for an item. | [Source](../lib/content-services/tag/tag-list.component.ts) |
 | [Tag node list component](content-services/tag-node-list.component.md) | Shows tags for a node. | [Source](../lib/content-services/tag/tag-node-list.component.ts) |
+| [Tree view component](content-services/tree-view.component.md) | Allow a user to show the folder and subfolders of a node in a tree view | [Source](../lib/content-services/tree-view/components/tree-view.component.ts) |
 | [File uploading dialog component](content-services/file-uploading-dialog.component.md) | Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components. | [Source](../lib/content-services/upload/components/file-uploading-dialog.component.ts) |
 | [Upload button component](content-services/upload-button.component.md) | Activates a file upload. | [Source](../lib/content-services/upload/components/upload-button.component.ts) |
 | [Upload drag area component](content-services/upload-drag-area.component.md) | Adds a drag and drop area to upload files to ACS. | [Source](../lib/content-services/upload/components/upload-drag-area.component.ts) |
@@ -275,6 +278,7 @@ for more information about installing and using the source code.
 | [Search query builder service](content-services/search-query-builder.service.md) | Stores information from all the custom search and faceted search widgets, compiles and runs the final search query. | [Source](../lib/content-services/search/search-query-builder.service.ts) |
 | [Rating service](content-services/rating.service.md) | Manages ratings for items in Content Services. | [Source](../lib/content-services/social/services/rating.service.ts) |
 | [Tag service](content-services/tag.service.md) | Manages tags in Content Services. | [Source](../lib/content-services/tag/services/tag.service.ts) |
+| _Tree view service_ | _Not currently documented_ | [Source](../lib/content-services/tree-view/services/tree-view.service.ts) |
 
 <!--content-services end-->
 
@@ -282,7 +286,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Search Widget interface](content-services/search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../lib/content-services/search/search-widget.interface.ts) |
+| [Search Widget interface](content-services/search-widget.interface.md) | Specifies required properties for [Search filter component](../content-services/search-filter.component.md) widgets. | [Source](../lib/content-services/search/search-widget.interface.ts) |
 
 [(Back to Contents)](#contents)
 
@@ -335,7 +339,6 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Filter model](process-services/filter.model.md) | Contains classes related to filters in Process Services. | [Source](../lib/process-services/task-list/models/filter.model.ts) |
-| [Task details model](process-services/task-details.model.md) | Information about a task. | [Source](../lib/process-services/task-list/models/task-details.model.ts) |
 
 ## Services
 
@@ -347,6 +350,38 @@ for more information about installing and using the source code.
 | [Tasklist service](process-services/tasklist.service.md) | Manages Task Instances. | [Source](../lib/process-services/task-list/services/tasklist.service.ts) |
 
 <!--process-services end-->
+
+[(Back to Contents)](#contents)
+
+# ADF Process Services Cloud
+
+Contains components related to Process Services Cloud.
+See the library's
+[README file](../lib/process-services-cloud/README.md)
+for more information about installing and using the source code.
+
+<!--process-services-cloud start-->
+
+## Components
+
+| Name | Description | Source link |
+| ---- | ----------- | ----------- |
+| [App list cloud component](process-services-cloud/app-list-cloud.component.md) | Shows all deployed cloud application instances. | [Source](../lib/process-services-cloud/src/lib/app-list-cloud/components/app-list-cloud.component.ts) |
+| [Process list cloud component](process-services-cloud/process-list-cloud.component.md) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../lib/process-services-cloud/src/lib/process-list-cloud/components/process-list-cloud.component.ts) |
+| _App details cloud component_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/app-list-cloud/components/app-details-cloud.component.ts) |
+| _Task filters cloud component_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/task-cloud/task-filters-cloud/task-filters-cloud.component.ts) |
+| _Task list cloud component_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/task-list-cloud/components/task-list-cloud.component.ts) |
+
+## Services
+
+| Name | Description | Source link |
+| ---- | ----------- | ----------- |
+| _Apps process cloud service_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/app-list-cloud/services/apps-process-cloud.service.ts) |
+| _Process list cloud service_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/process-list-cloud/services/process-list-cloud.service.ts) |
+| _Task filter cloud service_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/task-cloud/services/task-filter-cloud.service.ts) |
+| _Task list cloud service_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/task-list-cloud/services/task-list-cloud.service.ts) |
+
+<!--process-services-cloud end-->
 
 [(Back to Contents)](#contents)
 
