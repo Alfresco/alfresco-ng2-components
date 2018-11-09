@@ -4,6 +4,22 @@
         display: flex;
         flex-direction: column;
 
+        .mat-checkbox-label {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: 100%;
+        }
+    
+        .mat-checkbox-layout {
+            width: 100%;
+        }
+
+        .facet-label {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
         .mat-checkbox {
             margin: 5px;
 

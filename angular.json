@@ -495,7 +495,7 @@
         }
       }
     },
-    "lib-e2e": {
+    "lib-e2e-test": {
       "root": "demo-shell",
       "sourceRoot": "./demo-shell",
       "projectType": "application",
@@ -517,7 +517,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "lib-e2e:serve"
+            "devServerTarget": "lib-e2e-test:serve"
           }
         },
         "lint": {

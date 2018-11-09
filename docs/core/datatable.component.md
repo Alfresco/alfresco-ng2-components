@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-09-13
+Last reviewed: 2018-11-12
 ---
 
 # DataTable component
@@ -77,7 +77,7 @@ export class DataTableDemo {
 
 ### Setting the rows and column schema
 
-You can set rows and columns to the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) like shown below:
+You can set rows and columns in the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) as shown below:
 
 ```ts
 import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
@@ -120,7 +120,7 @@ export class DataTableDemo {
 </adf-datatable>
 ```
 
-You can also set rows and HTML-based schema declaration like shown below:
+You can also set rows and use an HTML-based schema declaration as shown below:
 
 ```ts
 import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
@@ -154,7 +154,7 @@ export class DataTableDemo {
 </adf-datatable>
 ```
 
-You can also set rows to the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) and set columns as an input like shown below :
+You can also set rows to the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) and set columns as an input as shown below :
 
 ```ts
 import { ObjectDataTableAdapter }  from '@alfresco/adf-core';

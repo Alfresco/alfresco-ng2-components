@@ -16,9 +16,9 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import PaginationPage = require('../pages/adf/paginationPage');
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import CONSTANTS = require('../util/constants');
 
@@ -33,7 +33,6 @@ import { browser } from 'protractor';
 describe('Items per page set to 15 and adding of tasks', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
     let taskPage = new TasksPage();
     let paginationPage = new PaginationPage();
 
@@ -74,14 +73,14 @@ describe('Items per page set to 15 and adding of tasks', () => {
     });
 
     it('[C260306] Items per page set to 15 and adding of tasks', () => {
-        processServicesPage.goToProcessServices().goToTaskApp();
+        new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + (nrOfTasks - 5));
-        expect(taskPage.getAllDisplayedRows()).toBe(itemsPerPage.fifteenValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(itemsPerPage.fifteenValue);
 
         browser.controlFlow().execute(async () => {
             for (i; i < nrOfTasks; i++) {
@@ -95,7 +94,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfTasks + ' of ' + nrOfTasks);
-        expect(taskPage.getAllDisplayedRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
+        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsEnabled();
     });

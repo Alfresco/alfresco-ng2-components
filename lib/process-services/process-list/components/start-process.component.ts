@@ -51,13 +51,13 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     @Input()
     processDefinitionName: string;
 
-    /** Variables in input to the process
+    /** Variables in the input to the process
      * [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md).
      */
     @Input()
     variables: ProcessInstanceVariable[];
 
-    /** Parameter to pass form field values in the start form if it is associated. */
+    /** Parameter to pass form field values in the start form if one is associated. */
     @Input()
     values: FormValues;
 

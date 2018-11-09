@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-16
+Last reviewed: 2018-11-13
 ---
 
 # Task Details component
@@ -49,7 +49,7 @@ Shows the details of the task ID passed in as input.
 | formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when the form field content is clicked. |
 | formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
 | formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
-| taskCreated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskDetailsModel`](../process-services/task-details.model.md)`>` | Emitted when a checklist task is created. |
+| taskCreated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskDetailsModel`](../../lib/process-services/task-list/models/task-details.model.ts)`>` | Emitted when a checklist task is created. |
 | taskDeleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a checklist task is deleted. |
 | unClaimedTask | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a task is unclaimed. |
 

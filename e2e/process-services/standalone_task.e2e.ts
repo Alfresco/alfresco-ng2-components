@@ -18,8 +18,8 @@
 import { browser } from 'protractor';
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import CONSTANTS = require('../util/constants');
 
@@ -37,7 +37,7 @@ import path = require('path');
 describe('Start Task - Task App', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
+    let navigationBarPage = new NavigationBarPage();
     let processUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let taskPage = new TasksPage();
@@ -71,11 +71,11 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C260421] Should a standalone task be displayed when creating a new task without form', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[0]).clickStartButton()
             .then(() => {
-                taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[0]);
+                taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[0]);
                 taskPage.taskDetails().noFormIsDisplayed();
                 taskPage.taskDetails().checkCompleteTaskButtonIsDisplayed().checkCompleteTaskButtonIsEnabled();
                 taskPage.taskDetails().checkAttachFormButtonIsDisplayed();
@@ -86,16 +86,16 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C268910] Should a standalone task be displayed in completed tasks when completing it', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).clickStartButton()
             .then(() => {
-                taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[1]);
+                taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[1]);
                 taskPage.formFields().noFormIsDisplayed();
 
                 taskPage.completeTaskNoForm();
                 taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-                taskPage.tasksListPage().selectTaskFromTasksList(tasks[1]);
+                taskPage.tasksListPage().getDataTable().selectRowByContentName(tasks[1]);
                 expect(taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + tasks[1] + ' completed');
 
                 taskPage.formFields().noFormIsDisplayed();
@@ -104,11 +104,11 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C268911] Should allow adding a form to a standalone task when clicking on Add form button', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[2]).clickStartButton()
             .then(() => {
-                taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[2]);
+                taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[2]);
                 taskPage.formFields().noFormIsDisplayed();
 
                 taskPage.formFields().clickOnAttachFormButton().selectForm(app.formName).clickOnAttachFormButton();
@@ -117,11 +117,11 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C268912] Should a standalone task be displayed when removing the form from APS', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[3]).addForm(app.formName).clickStartButton();
 
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[3]);
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[3]);
         expect(taskPage.taskDetails().getFormName()).toEqual(app.formName);
 
         browser.controlFlow().execute(async () => {
@@ -130,7 +130,7 @@ describe('Start Task - Task App', () => {
         });
 
         browser.refresh();
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(tasks[3]);
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[3]);
         taskPage.checkTaskTitle(tasks[3]);
 
         taskPage.formFields().noFormIsDisplayed();

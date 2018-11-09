@@ -41,6 +41,7 @@ exports.Files = {
         title: "App_with_processes",
         description: "Description for app",
         process_se_name: "process_with_se",
+        process_wse_name: "process_without_se",
         task_name: "Task Test 2"
     },
 
@@ -86,6 +87,7 @@ exports.Files = {
 
     WIDGETS_SMOKE_TEST: {
         file_location: "/resources/apps/Widgets smoke test.zip",
+        title: "Widgets smoke test",
         formName: "Widgets smoke test",
         title: "Widgets smoke test",
         form_fields: {

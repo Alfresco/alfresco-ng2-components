@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-10
+Last reviewed: 2018-11-13
 ---
 
 # Node Favorite directive
@@ -48,7 +48,7 @@ export class MyComponent {
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the favorite setting has fail. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the favorite setting fails. |
 | toggle | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the favorite setting is complete. |
 
 ## Details
@@ -75,7 +75,7 @@ which also lets you add extra styling to the element:
 The directive behaves as follows:
 
 -   If there are no favorite nodes in the selection, then all are marked as favorites
--   If there are one or more favorite node in the selection, then only those that are not
+-   If there are one or more favorite nodes in the selection, then only those that are not
     favorites are marked
 -   If all nodes in the selection are favorites, then they all have their favorite status removed
 

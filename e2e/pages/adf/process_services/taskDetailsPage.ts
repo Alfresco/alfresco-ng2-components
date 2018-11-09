@@ -64,6 +64,7 @@ export class TaskDetailsPage {
     disabledAttachFormButton = element(by.css('button[id="adf-no-form-attach-form-button"][disabled]'));
     removeAttachForm = element(by.id('adf-no-form-remove-button'));
     attachFormName = element(by.css('span[class="adf-form-title ng-star-inserted"]'));
+    emptyTaskDetails = element(by.css('adf-task-details > div > div'));
 
     getTaskDetailsTitle() {
         Util.waitUntilElementIsVisible(this.taskDetailsTitle);
@@ -419,6 +420,11 @@ export class TaskDetailsPage {
     clickCompleteFormTask() {
         Util.waitUntilElementIsClickable(this.completeFormTask);
         return this.completeFormTask.click();
+    }
+
+    getEmptyTaskDetailsMessage() {
+        Util.waitUntilElementIsVisible(this.emptyTaskDetails);
+        return this.emptyTaskDetails.getText();
     }
 
 }

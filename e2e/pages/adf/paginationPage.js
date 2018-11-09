@@ -21,6 +21,7 @@ var PaginationPage = function () {
 
     var itemsPerPageDropdown = element(by.css("div[class*='adf-pagination__perpage-block'] button"));
     var pageSelectorDropDown = element(by.css("div[class*='adf-pagination__page-selector']"));
+    var pageSelectorArrow = element(by.css("button[aria-label='Current page selector']"));
     var itemsPerPage = element(by.css("span[class='adf-pagination__max-items']"));
     var currentPage = element(by.css("span[class='adf-pagination__current-page']"));
     var totalPages = element(by.css("span[class='adf-pagination__total-pages']"));
@@ -32,7 +33,7 @@ var PaginationPage = function () {
     var pageDropDown = element(by.css("div[class*='adf-pagination__actualinfo-block'] button"));
     var pageDropDownOptions = by.css("div[class*='mat-menu-content'] button");
     var paginationSection = element(by.css("adf-pagination"));
-    var paginationSectionEmpty = element(by.css("adf-pagination[class*='adf-pagination__empty ng-star-inserted']"));
+    var paginationSectionEmpty = element(by.css("adf-pagination[class*='adf-pagination__empty']"));
     var totalFiles = element(by.css('span[class="adf-pagination__range"]'));
 
     this.selectItemsPerPage = function (item) {
@@ -51,6 +52,14 @@ var PaginationPage = function () {
         Util.waitUntilElementIsVisible(itemsPerPage);
         itemsPerPage.click();
         return this;
+    };
+
+    this.checkPageSelectorIsNotDisplayed = function() {
+        Util.waitUntilElementIsNotOnPage(pageSelectorArrow);
+    };
+
+    this.checkPageSelectorIsDisplayed = function() {
+        Util.waitUntilElementIsVisible(pageSelectorArrow);
     };
 
     this.checkPaginationIsNotDisplayed = function () {
@@ -82,6 +91,11 @@ var PaginationPage = function () {
     this.clickOnNextPage = function () {
         Util.waitUntilElementIsVisible(nextPageButton);
         Util.waitUntilElementIsClickable(nextPageButton);
+        browser.actions().mouseMove(nextPageButton).perform();
+        Util.waitUntilElementIsVisible(nextPageButton);
+        Util.waitUntilElementIsClickable(nextPageButton).then(()=> {
+            browser.driver.sleep(2000);
+        });
         return nextPageButton.click();
     };
 

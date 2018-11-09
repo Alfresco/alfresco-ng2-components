@@ -1,7 +1,7 @@
 ---
 Added: v2.4.0
 Status: Active
-Last reviewed: 2018-05-03
+Last reviewed: 2018-11-13
 ---
 
 # Add Permission Dialog Component
@@ -30,9 +30,11 @@ import { NodePermissionDialogService } from '@alfresco/adf-content-services';
 
 This component extends the [Add permission panel component](../content-services/add-permission-panel.component.md)
 to apply the chosen selection of permissions when they are accepted.
-You can open the dialog with the [Node Permission Dialog Service](../content-services/node-permission-dialog.service.md). This returns Observables that
-you can subscribe to for get the details of the node after the update.
-Use the `updateNodePermissionByDialog` from the service to update node permissions, as shown in
+You can open the dialog with the `openAddPermissionDialog` method from the
+[Node Permission Dialog Service](../content-services/node-permission-dialog.service.md).
+This returns an [`Observable`](http://reactivex.io/documentation/observable.html)
+that you can subscribe to so you can get the details of the node after the update.
+Use the `updateNodePermissionByDialog` nethod from the service to update node permissions, as shown in
 the following example:
 
 ```ts

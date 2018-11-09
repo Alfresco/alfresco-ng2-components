@@ -16,11 +16,12 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import { DynamicTableWidget } from '../pages/adf/process_services/widgets/dynamicTableWidget';
 import { DropdownWidget } from '../pages/adf/process_services/widgets/dropdownWidget';
+import { DatePickerPage } from '../pages/adf/material/datePickerPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -32,10 +33,11 @@ import { UsersActions } from '../actions/users.actions';
 describe('Dynamic Table', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
     let processFiltersPage = new ProcessFiltersPage();
     let appNavigationBarPage = new AppNavigationBarPage();
     let dynamicTable = new DynamicTableWidget();
+    let datePicker = new DatePickerPage();
+    let navigationBarPage = new NavigationBarPage();
     let user, tenantId, appId, apps, users;
 
     beforeAll(async(done) => {
@@ -73,7 +75,6 @@ describe('Dynamic Table', () => {
             error: `Field 'columnDate' is required.`
         };
 
-        let datePosition = 15;
         let rowPosition = 0;
 
         beforeAll(async(done) => {
@@ -96,7 +97,7 @@ describe('Dynamic Table', () => {
         });
 
         beforeEach(() => {
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
             appNavigationBarPage.clickProcessButton();
 
@@ -119,8 +120,8 @@ describe('Dynamic Table', () => {
             expect(dynamicTable.checkErrorMessage()).toBe(randomText.error);
 
             dynamicTable.clickDateWidget();
-            dynamicTable.getDateCalendarNumber(datePosition);
-            dynamicTable.waitForCalendarToDisappear();
+            datePicker.selectTodayDate()
+                .checkDatePickerIsNotDisplayed();
             dynamicTable.clickSaveButton();
             dynamicTable.getTableRow(rowPosition);
         });
@@ -151,7 +152,7 @@ describe('Dynamic Table', () => {
         });
 
         beforeEach(() => {
-            processServicesPage.goToProcessServices().goToApp(app.title).clickProcessButton();
+            navigationBarPage.navigateToProcessServicesPage().goToApp(app.title).clickProcessButton();
 
             appNavigationBarPage.clickProcessButton();
 

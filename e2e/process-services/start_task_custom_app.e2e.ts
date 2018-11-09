@@ -18,10 +18,10 @@
 import { by } from 'protractor';
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import Task = require('../models/APS/Task');
 import Tenant = require('../models/APS/Tenant');
@@ -46,7 +46,7 @@ describe('Start Task - Custom App', () => {
     let TASK_DATA_FORMAT = 'mmm dd yyyy';
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
+    let navigationBarPage = new NavigationBarPage();
     let attachmentListPage = new AttachmentListPage();
     let appNavigationBarPage = new AppNavigationBarPage();
 
@@ -91,8 +91,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263942] Should be possible to modify a task', () => {
-        processServicesPage
-            .goToProcessServices()
+        navigationBarPage.navigateToProcessServicesPage()
             .goToApp(appModel.name)
             .clickTasksButton();
 
@@ -107,7 +106,7 @@ describe('Start Task - Custom App', () => {
             .then(() => {
                 taskPage
                     .tasksListPage()
-                    .checkTaskIsDisplayedInTasksList(tasks[0]);
+                    .getDataTable().checkContentIsDisplayed(tasks[0]);
 
                 taskPage
                     .taskDetails()
@@ -143,8 +142,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263947] Should be able to start a task without form', () => {
-        processServicesPage
-            .goToProcessServices()
+        navigationBarPage.navigateToProcessServicesPage()
             .goToApp(appModel.name)
             .clickTasksButton();
 
@@ -159,7 +157,7 @@ describe('Start Task - Custom App', () => {
 
         taskPage
             .tasksListPage()
-            .checkTaskIsDisplayedInTasksList(tasks[2]);
+            .getDataTable().checkContentIsDisplayed(tasks[2]);
 
         taskPage
             .formFields()
@@ -169,7 +167,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263948] Should be possible to cancel a task', () => {
-        processServicesPage.goToProcessServices()
+        navigationBarPage.navigateToProcessServicesPage()
             .goToApp(appModel.name)
             .clickTasksButton();
 
@@ -185,13 +183,13 @@ describe('Start Task - Custom App', () => {
             .clickCancelButton();
 
         taskPage.tasksListPage()
-            .checkTaskIsNotDisplayedInTasksList(tasks[3]);
+            .getDataTable().checkContentIsNotDisplayed(tasks[3]);
 
         expect(taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
 
     it('[C263949] Should be possible to save filled form', () => {
-        processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage()
             .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
@@ -202,7 +200,7 @@ describe('Start Task - Custom App', () => {
 
         taskPage
             .tasksListPage()
-            .checkTaskIsDisplayedInTasksList(tasks[4]);
+            .getDataTable().checkContentIsDisplayed(tasks[4]);
 
         expect(taskPage.formFields()
             .setFieldValue(by.id, formTextField, formFieldValue)
@@ -215,7 +213,7 @@ describe('Start Task - Custom App', () => {
 
         taskPage
             .tasksListPage()
-            .checkTaskIsDisplayedInTasksList(tasks[4]);
+            .getDataTable().checkContentIsDisplayed(tasks[4]);
 
         taskPage
             .formFields()
@@ -229,7 +227,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263951] Should be possible to assign a user', () => {
-        processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage
             .filtersPage()
             .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -246,15 +244,15 @@ describe('Start Task - Custom App', () => {
 
         taskPage
             .tasksListPage()
-            .waitForTableBody();
+            .getDataTable().waitForTableBody();
 
         taskPage
             .filtersPage()
             .goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
 
         taskPage.tasksListPage()
-            .checkTaskIsDisplayedInTasksList(tasks[5])
-            .selectTaskFromTasksList(tasks[5]);
+            .getDataTable().checkContentIsDisplayed(tasks[5])
+            .selectRowByContentName(tasks[5]);
 
         taskPage.checkTaskTitle(tasks[5]);
 
@@ -262,7 +260,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('Attach a file', () => {
-        processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage
             .createNewTask()
@@ -274,10 +272,10 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263945] Should Information box be hidden when showHeaderContent property is set on false on custom app', () => {
-        processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(showHeaderTask).clickStartButton();
-        taskPage.tasksListPage().checkTaskIsDisplayedInTasksList(showHeaderTask).selectTaskFromTasksList(showHeaderTask);
+        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(showHeaderTask);
 
         appNavigationBarPage.clickSettingsButton();
         taskPage.taskDetails().appSettingsToggles().disableShowHeader();
@@ -293,12 +291,12 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263950] Should be able to see Spinner loading on task list when clicking on Tasks on custom app', () => {
-        processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[7]).clickStartButton();
 
-        processServicesPage.goToProcessServices().goToTaskApp();
-        taskPage.tasksListPage().checkSpinnerIsDisplayed();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
+        taskPage.tasksListPage().getDataTable().checkSpinnerIsDisplayed();
     });
 
 });

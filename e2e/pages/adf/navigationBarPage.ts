@@ -18,10 +18,12 @@
 import Util = require('../../util/util');
 import TestConfig = require('../../test.config');
 import { element, by } from 'protractor';
+import { ProcessServicesPage } from './process_services/processServicesPage';
 
 export class NavigationBarPage {
 
     contentServicesButton = element(by.css('a[data-automation-id="Content Services"]'));
+    taskListButton = element(by.css("a[data-automation-id='Task List']"));
     configEditorButton = element(by.css('a[data-automation-id="Configuration Editor"]'));
     processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
     loginButton = element(by.css('a[data-automation-id="Login"]'));
@@ -42,14 +44,20 @@ export class NavigationBarPage {
         this.contentServicesButton.click();
     }
 
+    clickTaskListButton() {
+        Util.waitUntilElementIsVisible(this.taskListButton);
+        this.taskListButton.click();
+    }
+
     clickConfigEditorButton() {
         Util.waitUntilElementIsVisible(this.configEditorButton);
         this.configEditorButton.click();
     }
 
-    clickProcessServicesButton() {
+    navigateToProcessServicesPage() {
         Util.waitUntilElementIsVisible(this.processServicesButton);
         this.processServicesButton.click();
+        return new ProcessServicesPage();
     }
 
     clickLoginButton() {
@@ -153,5 +161,9 @@ export class NavigationBarPage {
 
     goToSite(site) {
         browser.get(TestConfig.adf.url + `/files/${site.entry.guid}/display/list`);
+    }
+
+    checkContentServicesButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(contentServicesButton);
     }
 }

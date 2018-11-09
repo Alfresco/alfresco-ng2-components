@@ -38,6 +38,7 @@ var ContentList = function () {
     var rows = by.css("div[id='document-list-container'] div[class*='adf-datatable-body'] div[class*='adf-datatable-row']");
     var emptyFolderMessage = element(by.css("div[class='adf-empty-folder-this-space-is-empty']"));
     var table = element(by.css("div[class*='upload-border']"));
+    var tableBody = element.all(by.css("adf-document-list div[class='adf-datatable-body']")).first();
 
     this.getRowsName = function (content) {
         var row = element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + content + "']")).first();
@@ -380,6 +381,10 @@ var ContentList = function () {
         var lockIcon = element(by.cssContainingText('div[filename="'+ content +'"] mat-icon', 'lock_open'));
         Util.waitUntilElementIsVisible(lockIcon);
         return this;
+    };
+
+    this.waitForTableBody = function () {
+        Util.waitUntilElementIsVisible(tableBody);
     };
 
 };

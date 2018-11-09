@@ -40,6 +40,7 @@ for more information about installing and using the source code.
 | [Tag actions component](tag-actions.component.md) | Shows available actions for tags. | [Source](../../lib/content-services/tag/tag-actions.component.ts) |
 | [Tag list component](tag-list.component.md) | Shows tags for an item. | [Source](../../lib/content-services/tag/tag-list.component.ts) |
 | [Tag node list component](tag-node-list.component.md) | Shows tags for a node. | [Source](../../lib/content-services/tag/tag-node-list.component.ts) |
+| [Tree view component](tree-view.component.md) | Shows the folder and subfolders of a node as a tree view. | [Source](../../lib/content-services/tree-view/components/tree-view.component.ts) |
 | [File uploading dialog component](file-uploading-dialog.component.md) | Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components. | [Source](../../lib/content-services/upload/components/file-uploading-dialog.component.ts) |
 | [Upload button component](upload-button.component.md) | Activates a file upload. | [Source](../../lib/content-services/upload/components/upload-button.component.ts) |
 | [Upload drag area component](upload-drag-area.component.md) | Adds a drag and drop area to upload files to ACS. | [Source](../../lib/content-services/upload/components/upload-drag-area.component.ts) |
@@ -52,6 +53,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Content node share directive](content-node-share.directive.md) | Creates and manages public shared links for files. | [Source](../../lib/content-services/content-node-share/content-node-share.directive.ts) |
 | [Node download directive](node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../../lib/content-services/directives/node-download.directive.ts) |
 | [Node lock directive](node-lock.directive.md) | Locks a node. | [Source](../../lib/content-services/directives/node-lock.directive.ts) |
 | [Folder create directive](folder-create.directive.md) | Creates folders. | [Source](../../lib/content-services/folder-directive/folder-create.directive.ts) |
@@ -88,4 +90,4 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Search Widget interface](search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../../lib/content-services/search/search-widget.interface.ts) |
+| [Search Widget interface](search-widget.interface.md) | Specifies required properties for [Search filter component](../content-services/search-filter.component.md) widgets. | [Source](../../lib/content-services/search/search-widget.interface.ts) |

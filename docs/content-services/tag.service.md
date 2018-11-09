@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-05
+Last reviewed: 2018-11-13
 ---
 
 # Tag service
@@ -16,15 +16,15 @@ Manages tags in Content Services.
     Adds a tag to a node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _tagName:_ `string`  - Name of the tag to add
-    -   **Returns** `any` - TagEntry object (defined in JSAPI) with details of the new tag
--   **getAllTheTags**(opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<TagPaging>`<br/>
+    -   **Returns** `any` - [TagEntry](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagEntry.md) object (defined in JS-API) with details of the new tag
+-   **getAllTheTags**(opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`>`<br/>
     Gets a list of all the tags already defined in the repository.
-    -   _opts:_ `any`  - (Optional) Options supported by JSAPI
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<TagPaging>` - TagPaging object (defined in JSAPI) containing the tags
+    -   _opts:_ `any`  - (Optional) Options supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`>` - TagPaging object (defined in JS-API) containing the tags
 -   **getTagsByNodeId**(nodeId: `string`): `any`<br/>
     Gets a list of tags added to a node.
     -   _nodeId:_ `string`  - ID of the target node
-    -   **Returns** `any` - TagPaging object (defined in JSAPI) containing the tags
+    -   **Returns** `any` - [TagPaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md) object (defined in JS-API) containing the tags
 -   **removeTag**(nodeId: `string`, tag: `string`): `any`<br/>
     Removes a tag from a node.
     -   _nodeId:_ `string`  - ID of the target node

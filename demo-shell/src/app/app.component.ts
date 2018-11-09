@@ -45,6 +45,13 @@ export class AppComponent implements OnInit {
                     this.router.navigate(['/login']);
                 }
             }
+
+            if (error.status === 507) {
+                if (!this.authenticationService.isLoggedIn()) {
+                    this.dialogRef.closeAll();
+                    this.router.navigate(['error/507']);
+                }
+            }
         });
     }
 }

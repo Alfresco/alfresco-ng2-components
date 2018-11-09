@@ -18,6 +18,7 @@
 @import '../permission-manager/components/add-permission/add-permission.component';
 @import '../permission-manager/components/add-permission/add-permission-dialog.component';
 @import '../permission-manager/components/add-permission/add-permission-panel.component';
+@import '../tree-view/components/tree-view.component';
 
 @mixin adf-content-services-theme($theme) {
     @include adf-breadcrumb-theme($theme);
@@ -36,4 +37,5 @@
     @include adf-add-permission-theme($theme);
     @include adf-add-permission-dialog-theme($theme);
     @include adf-add-permission-panel-theme($theme);
+    @include adf-tree-view-theme($theme);
 }

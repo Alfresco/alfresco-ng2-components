@@ -20,6 +20,7 @@ import { element, by } from 'protractor';
 import { SearchTextPage } from './components/search-text';
 import { SearchCheckListPage } from './components/search-checkList';
 import { SearchRadioPage } from './components/search-radio';
+import { DateRangeFilterPage } from './components/dateRangeFilterPage';
 
 export class SearchCategoriesPage {
 
@@ -29,6 +30,10 @@ export class SearchCategoriesPage {
 
     textFiltersPage(filter) {
         return new SearchTextPage(filter);
+    }
+
+    dateRangeFilter(filter) {
+        return new DateRangeFilterPage(filter);
     }
 
     radioFiltersPage(filter) {
@@ -56,6 +61,13 @@ export class SearchCategoriesPage {
     checkFilterIsCollapsed(filter) {
         filter.getAttribute('class').then((elementClass) => {
             expect(elementClass).not.toContain('mat-expanded');
+        });
+        return this;
+    }
+
+    checkFilterIsExpanded(filter) {
+        filter.getAttribute('class').then((elementClass) => {
+            expect(elementClass).toContain('mat-expanded');
         });
         return this;
     }

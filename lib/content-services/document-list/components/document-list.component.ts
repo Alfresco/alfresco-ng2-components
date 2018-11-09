@@ -60,7 +60,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
 
-    /** Include additional information about the node in the server request.for example: association, isLink, isLocked and others. */
+    /** Include additional information about the node in the server request. For example: association, isLink, isLocked and others. */
     @Input()
     includeFields: string[];
 
@@ -68,7 +68,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     display: string = DisplayMode.List;
 
-    /** Define a set of CSS styles styles to apply depending on the permission
+    /** Define a set of CSS styles to apply depending on the permission
      * of the user on that node. See the Permission Style model
      * page for further details and examples.
      */
@@ -123,7 +123,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
 
-    /** Toggle file drop support for rows (see Upload Directive for further details */
+    /** Toggle file drop support for rows (see Upload Directive for further details) */
     @Input()
     allowDropFiles: boolean = false;
 
@@ -539,9 +539,18 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     updateFolderData(node: MinimalNodeEntity): void {
         this.resetNewFolderPagination();
-        this.currentFolderId = node.entry.id;
+        this.currentFolderId = this.getNodeFolderDestinationId(node);
+        this.folderChange.emit(new NodeEntryEvent({ id: this.currentFolderId }));
         this.reload();
-        this.folderChange.emit(new NodeEntryEvent(node.entry));
+    }
+
+    private getNodeFolderDestinationId(node: MinimalNodeEntity) {
+        return this.isLinkFolder(node) ? node.entry.properties['cm:destination'] : node.entry.id;
+    }
+
+    private isLinkFolder(node: MinimalNodeEntity) {
+        return node.entry.nodeType === 'app:folderlink' && node.entry.properties &&
+            node.entry.properties['cm:destination'];
     }
 
     updateCustomSourceData(nodeId: string): void {

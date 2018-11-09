@@ -19,6 +19,15 @@
         </mat-form-field>
 
         <mat-form-field>
+            <mat-label>ProcessInstanceId</mat-label>
+            <input
+                matInput
+                class="form-control"
+                [formControl]="processInstanceId">
+            <mat-hint>SimpleProcess:1:2</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
             <mat-label>ProcessDefinitionId</mat-label>
             <input
                 matInput
@@ -85,6 +94,7 @@
         #processList
         [appId]="appId"
         [processDefinitionId]="processDefId"
+        [processInstanceId]="processInsId"
         [state]="state"
         [sort]="sort"
         [page]="page"

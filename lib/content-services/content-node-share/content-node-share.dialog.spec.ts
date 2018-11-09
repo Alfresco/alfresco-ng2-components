@@ -18,13 +18,14 @@
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TestBed, fakeAsync, async } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-import { of } from 'rxjs';
+import { of, empty } from 'rxjs';
 import {
     setupTestBed,
     CoreModule,
     SharedLinksApiService,
     NodesApiService,
-    NotificationService
+    NotificationService,
+    RenditionsService
 } from '@alfresco/adf-core';
 import { ContentNodeShareModule } from './content-node-share.module';
 import { ShareDialogComponent } from './content-node-share.dialog';
@@ -37,6 +38,7 @@ describe('ShareDialogComponent', () => {
         openSnackMessage: jasmine.createSpy('openSnackMessage')
     };
     let sharedLinksApiService: SharedLinksApiService;
+    let renditionService: RenditionsService;
     let nodesApiService: NodesApiService;
     let fixture;
     let component;
@@ -60,6 +62,7 @@ describe('ShareDialogComponent', () => {
         fixture = TestBed.createComponent(ShareDialogComponent);
         matDialog = TestBed.get(MatDialog);
         sharedLinksApiService = TestBed.get(SharedLinksApiService);
+        renditionService = TestBed.get(RenditionsService);
         nodesApiService = TestBed.get(NodesApiService);
         component = fixture.componentInstance;
     });
@@ -83,6 +86,7 @@ describe('ShareDialogComponent', () => {
         spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of({
             entry: { id: 'sharedId', sharedId: 'sharedId' }
         }));
+        spyOn(renditionService, 'generateRenditionForNode').and.returnValue(empty());
 
         component.data = {
             node,
@@ -92,12 +96,14 @@ describe('ShareDialogComponent', () => {
         fixture.detectChanges();
 
         expect(sharedLinksApiService.createSharedLinks).toHaveBeenCalled();
+        expect(renditionService.generateRenditionForNode).toHaveBeenCalled();
         expect(fixture.nativeElement.querySelector('input[formcontrolname="sharedUrl"]').value).toBe('some-url/sharedId');
         expect(fixture.nativeElement.querySelector('.mat-slide-toggle').classList).toContain('mat-checked');
     });
 
     it(`should not toggle share action when file has 'sharedId' property`, async(() => {
         spyOn(sharedLinksApiService, 'createSharedLinks');
+        spyOn(renditionService, 'generateRenditionForNode').and.returnValue(empty());
 
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 

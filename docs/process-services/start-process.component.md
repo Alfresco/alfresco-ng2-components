@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-13
+Last reviewed: 2018-11-13
 ---
 
 # Start Process component
@@ -35,23 +35,23 @@ Starts a process.
 
 ### Properties
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| appId | `number` | (optional): Limit the list of processes which can be started to those contained in the specified app |
-| name | `string` | (optional) name to assign to the current process |
-| processDefinitionName | `string` | (optional) definition name of the process to start |
-| processFilterSelector | `boolean` | (optional) Enables automatic selection of process when typing dowm in process field, true by default |
-| variables | [`ProcessInstanceVariable[]`](../../lib/process-services/process-list/models/process-instance-variable.model.ts) | Variables in input to the process [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md) |
-| values | [`FormValues`](../../lib/core/form/components/widgets/core/form-values.ts) | Parameter to pass form field values in the start form if is associated |
-| showSelectProcessDropdown | `boolean` | hide or show the process selection drodown, true by default |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| appId | `number` |  | (optional) Limit the list of processes that can be started to those contained in the specified app. |
+| name | `string` | "" | (optional) Name to assign to the current process. |
+| processDefinitionName | `string` |  | (optional) Definition name of the process to start. |
+| processFilterSelector | `boolean` | true | (optional) Parameter to enable selection of process when filtering. |
+| showSelectProcessDropdown | `boolean` | true | Hide or show the process selection dropdown. |
+| values | `FormValues` |  | Parameter to pass form field values in the start form if one is associated. |
+| variables | [`ProcessInstanceVariable`](../../lib/process-services/process-list/models/process-instance-variable.model.ts)`[]` |  | Variables in the input to the process [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md). |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| start | [`EventEmitter<ProcessInstance>`](../../lib/process-services/process-list/models/process-instance.model.ts) | Emitted when the process starts |
-| cancel | [`EventEmitter<ProcessInstance>`](../../lib/process-services/process-list/models/process-instance.model.ts) | Emitted when the process is canceled |
-| error | [`EventEmitter<ProcessInstance>`](../../lib/process-services/process-list/models/process-instance.model.ts) | Emitted when the start process operation fails |
+| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../lib/process-services/process-list/models/process-instance.model.ts)`>` | Emitted when the process is canceled. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../lib/process-services/process-list/models/process-instance.model.ts)`>` | Emitted when an error occurs. |
+| start | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../lib/process-services/process-list/models/process-instance.model.ts)`>` | Emitted when the process starts. |
 
 ## Details
 
@@ -112,13 +112,13 @@ to _alfresco-1002_ as follows:
 
 ```json
 {
-    application: {
-        name: 'Alfresco ADF Application'
+    "application": {
+        "name": "Alfresco ADF Application"
     },
-    ecmHost: 'http://{hostname}{:port}/ecm',
-    bpmHost: 'http://{hostname}{:port}/bpm',
-    logLevel: 'silent',
-    alfrescoRepositoryName : 'alfresco-1002'
+    "ecmHost": "http://{hostname}{:port}/ecm",
+    "bpmHost": "http://{hostname}{:port}/bpm",
+    "logLevel": "silent",
+    "alfrescoRepositoryName": "alfresco-1002"
 }       
 ```
 

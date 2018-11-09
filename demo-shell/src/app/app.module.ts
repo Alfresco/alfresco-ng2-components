@@ -67,6 +67,7 @@ import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud
 import { CloudComponent } from './components/cloud/cloud.component';
 import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
 import { ProcessListCloudExampleComponent } from './components/cloud/process-list-cloud-example.component';
+import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 
 @NgModule({
     imports: [
@@ -117,7 +118,8 @@ import { ProcessListCloudExampleComponent } from './components/cloud/process-lis
         FormLoadingComponent,
         ReportIssueComponent,
         TaskListCloudDemoComponent,
-        ProcessListCloudExampleComponent
+        ProcessListCloudExampleComponent,
+        TreeViewSampleComponent
     ],
     providers: [
         {

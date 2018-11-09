@@ -16,68 +16,29 @@
  */
 
 var Util = require('../../../util/util');
+var DataTablePage = require('../dataTablePage');
 
 var TasksListPage = function () {
 
     var taskList = element(by.css("adf-tasklist"));
-    var tableBody = element.all(by.css("adf-datatable div[class='adf-datatable-body']")).first();
-    var sortByName = element(by.css('div[data-automation-id="auto_id_name"]'));
-    var firstTaskOnTaskList = element.all(by.css('div[class="adf-datatable-body"] span')).first();
-    var taskOnTaskList = element.all(by.css('div[class="adf-datatable-body"] span'));
-    var spinner = element(by.css('mat-progress-spinner'));
+    var noTasksFound = element(by.css("p[class='adf-empty-content__title']"));
 
-    this.clickSortByName = function () {
-        Util.waitUntilElementIsVisible(sortByName);
-        return sortByName.click();
+    var dataTable = new DataTablePage(taskList);
+
+    this.getDataTable = function() {
+        return dataTable;
     };
 
-    this.checkHighlightedTaskInTasksList = function(taskName) {
-        var row = by.cssContainingText('div[class="adf-datatable-row is-selected ng-star-inserted"] span', taskName);
-        Util.waitUntilElementIsVisible(taskList.element(row));
-        return this;
-    };
-
-    this.checkTaskIsDisplayedInTasksList = function(taskName) {
-        var row = by.cssContainingText("span", taskName);
-        Util.waitUntilElementIsVisible(taskList.all(row).first());
-        return this;
-    };
-
-    this.selectTaskFromTasksList = function(taskName) {
-        var row = by.cssContainingText("span", taskName);
-        Util.waitUntilElementIsVisible(taskList.element(row));
-        taskList.element(row).click();
-        return this;
-    };
-
-    this.checkTaskIsNotDisplayedInTasksList = function(taskName) {
-        var row = by.cssContainingText("span", taskName);
-        Util.waitUntilElementIsNotOnPage(taskList.element(row));
-        return this;
-    };
-
-    this.checkTaskListIsLoaded = function () {
+    this.checkTaskListIsLoaded = function() {
         Util.waitUntilElementIsVisible(taskList);
         return this;
     };
 
-    this.waitForTableBody = function (){
-        Util.waitUntilElementIsVisible(tableBody);
+    this.getNoTasksFoundMessage = function() {
+        Util.waitUntilElementIsVisible(noTasksFound);
+        return noTasksFound.getText();
     };
 
-    this.firstTaskOnTaskList = function (){
-        Util.waitUntilElementIsVisible(firstTaskOnTaskList);
-        return firstTaskOnTaskList.getText();
-    };
-
-    this.taskOnTaskListInPosition = function (position){
-        Util.waitUntilElementIsVisible(taskOnTaskList);
-        return taskOnTaskList.get(position -1).getText();
-    };
-
-    this.checkSpinnerIsDisplayed = function () {
-        Util.waitUntilElementIsPresent(spinner);
-    };
 };
 
 module.exports = TasksListPage;

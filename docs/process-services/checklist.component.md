@@ -31,6 +31,6 @@ Shows the checklist task functionality.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| checklistTaskCreated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskDetailsModel`](../process-services/task-details.model.md)`>` | Emitted when a new checklist task is created. |
-| checklistTaskDeleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a checklitst task is deleted. |
+| checklistTaskCreated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskDetailsModel`](../../lib/process-services/task-list/models/task-details.model.ts)`>` | Emitted when a new checklist task is created. |
+| checklistTaskDeleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a checklist task is deleted. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |

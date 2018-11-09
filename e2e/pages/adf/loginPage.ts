@@ -49,38 +49,31 @@ export class LoginPage {
     successRouteSwitch = element(by.id('adf-toggle-show-successRoute'));
     logoSwitch = element(by.id('adf-toggle-logo'));
     header = element(by.id('adf-header'));
-    cardBackground = element(by.css('mat-card[class*="adf-login-card"]'));
     settingsPage = new SettingsPage();
 
     waitForElements() {
-        let deferred = protractor.promise.defer();
-
-        Util.waitUntilElementIsVisible(this.txtUsername).then(() => {
-            Util.waitUntilElementIsVisible(this.txtPassword).then(() => {
-                deferred.fulfill();
-            }, () => {
-                deferred.rejected();
-            });
-        });
-
-        return deferred.promise;
-
+        Util.waitUntilElementIsVisible(this.txtUsername);
+        Util.waitUntilElementIsVisible(this.txtPassword);
+        return this;
     }
 
     enterUsername(username) {
         Util.waitUntilElementIsVisible(this.txtUsername);
         this.txtUsername.sendKeys('');
-        return this.txtUsername.clear().sendKeys(username);
+        this.txtUsername.clear();
+        return this.txtUsername.sendKeys(username);
     }
 
     enterPassword(password) {
         Util.waitUntilElementIsVisible(this.txtPassword);
-        return this.txtPassword.clear().sendKeys(password);
+        this.txtPassword.clear();
+        return this.txtPassword.sendKeys(password);
     }
 
     clearUsername() {
         Util.waitUntilElementIsVisible(this.txtUsername);
-        return this.txtUsername.click().clear();
+        this.txtUsername.click();
+        return this.txtUsername.clear();
     }
 
     clearPassword() {
@@ -102,12 +95,16 @@ export class LoginPage {
 
     checkLoginError(message) {
         Util.waitUntilElementIsVisible(this.loginTooltip);
-        expect(this.loginTooltip.getText()).toEqual(message);
+        browser.controlFlow().execute(async () => {
+            await expect(this.loginTooltip.getText()).toEqual(message);
+        });
     }
 
     checkLoginImgURL(url) {
         Util.waitUntilElementIsVisible(this.logoImg);
-        expect(this.logoImg.getAttribute('src')).toEqual(url);
+        browser.controlFlow().execute(async () => {
+            await expect(this.logoImg.getAttribute('src')).toEqual(url);
+        });
     }
 
     checkUsernameInactive() {
@@ -138,30 +135,15 @@ export class LoginPage {
 
     checkSignInButtonIsEnabled() {
         Util.waitUntilElementIsVisible(this.signInButton);
-        expect(this.signInButton.isEnabled()).toBe(true);
-    }
-
-    defaultLogin() {
-        browser.driver.get(TestConfig.adf.url + TestConfig.adf.login);
-        this.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    }
-
-    loginUsingUserModel(userModel) {
-        browser.driver.get(TestConfig.adf.url + TestConfig.adf.login);
-        this.waitForElements();
-        this.login(userModel.getId(), userModel.getPassword());
+        browser.controlFlow().execute(async () => {
+            await expect(this.signInButton.isEnabled()).toBe(true);
+        });
     }
 
     loginToProcessServicesUsingUserModel(userModel) {
         this.settingsPage.setProviderBpm();
         this.waitForElements();
         this.login(userModel.email, userModel.password);
-    }
-
-    loginToProcessServicesUsingDefaultUser() {
-        this.settingsPage.setProviderBpm();
-        this.waitForElements();
-        this.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
     }
 
     loginToContentServicesUsingUserModel(userModel) {
@@ -174,18 +156,21 @@ export class LoginPage {
     loginToContentServices(username, password) {
         this.settingsPage.setProviderEcm();
         this.waitForElements();
-
         this.login(username, password);
     }
 
     goToLoginPage() {
-        browser.driver.get(TestConfig.adf.url + TestConfig.adf.port + '/login');
+        browser.controlFlow().execute(async () => {
+            await browser.driver.get(TestConfig.adf.url + TestConfig.adf.port + '/login');
+        });
         this.waitForElements();
     }
 
     checkSignInButtonIsDisabled() {
         Util.waitUntilElementIsVisible(this.signInButton);
-        expect(this.signInButton.isEnabled()).toBe(false);
+        browser.controlFlow().execute(async () => {
+            await expect(this.signInButton.isEnabled()).toBe(false);
+        });
     }
 
     clickSignInButton() {
@@ -193,47 +178,9 @@ export class LoginPage {
         this.signInButton.click();
     }
 
-    clickRememberMe() {
-        Util.waitUntilElementIsVisible(this.rememberMe);
-        this.rememberMe.click();
-    }
-
     showPassword() {
         Util.waitUntilElementIsVisible(this.showPasswordElement);
         this.showPasswordElement.click();
-    }
-
-    getShowPasswordIconColor() {
-        let deferred = protractor.promise.defer();
-
-        Util.waitUntilElementIsVisible(this.showPasswordElement);
-        this.showPasswordElement.getCssValue('color').then((value) => {
-            deferred.fulfill(value);
-        });
-
-        return deferred.promise;
-    }
-
-    getSignInButtonColor() {
-        let deferred = protractor.promise.defer();
-
-        Util.waitUntilElementIsVisible(this.signInButton);
-        this.signInButton.getCssValue('color').then((value) => {
-            deferred.fulfill(value);
-        });
-
-        return deferred.promise;
-    }
-
-    getBackgroundColor() {
-        let deferred = protractor.promise.defer();
-
-        Util.waitUntilElementIsVisible(this.cardBackground);
-        this.cardBackground.getCssValue('color').then((value) => {
-            deferred.fulfill(value);
-        });
-
-        return deferred.promise;
     }
 
     hidePassword() {
@@ -242,8 +189,8 @@ export class LoginPage {
     }
 
     checkPasswordIsShown(password) {
-        this.txtPassword.getAttribute('value').then((text) => {
-            expect(text).toEqual(password);
+        this.txtPassword.getAttribute('value').then(async (text) => {
+            await expect(text).toEqual(password);
         });
     }
 
@@ -287,14 +234,6 @@ export class LoginPage {
         this.formControllersPage.disableToggle(this.rememberMeSwitch);
     }
 
-    enableRememberMe() {
-        this.formControllersPage.enableToggle(this.rememberMeSwitch);
-    }
-
-    disableSuccessRouteSwitch() {
-        this.formControllersPage.disableToggle(this.successRouteSwitch);
-    }
-
     enableSuccessRouteSwitch() {
         this.formControllersPage.enableToggle(this.successRouteSwitch);
     }
@@ -306,13 +245,15 @@ export class LoginPage {
     enterSuccessRoute(route) {
         Util.waitUntilElementIsVisible(this.successRouteTxt);
         this.successRouteTxt.sendKeys('');
-        return this.successRouteTxt.clear().sendKeys(route);
+        this.successRouteTxt.clear();
+        return this.successRouteTxt.sendKeys(route);
     }
 
     enterLogo(logo) {
         Util.waitUntilElementIsVisible(this.logoTxt);
         this.logoTxt.sendKeys('');
-        return this.logoTxt.clear().sendKeys(logo);
+        this.logoTxt.clear();
+        return this.logoTxt.sendKeys(logo);
     }
 
     login(username, password) {

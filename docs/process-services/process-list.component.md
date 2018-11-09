@@ -139,7 +139,7 @@ information defined in `app.config.json` as in the example below:
     <data-columns>
         <data-column key="key" title="title" class="full-width name-column">
             <ng-template let-entry="$implicit">
-                    <div>{{getFullName(entry.row.obj.assignee)}}</div>
+                    <div>{{entry.row.obj.assignee | fullName}}</div>
             </ng-template>
         </data-column>
     </data-columns>

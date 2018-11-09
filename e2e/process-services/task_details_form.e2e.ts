@@ -20,7 +20,7 @@ import Util = require('../util/util');
 import CONSTANTS = require('../util/constants');
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import TasksListPage = require('../pages/adf/process_services/tasksListPage');
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
 import FiltersPage = require('../pages/adf/process_services/filtersPage');
@@ -32,7 +32,7 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Task Details - Form', () => {
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
+    let navigationBarPage = new NavigationBarPage();
     let tasksListPage = new TasksListPage();
     let taskDetailsPage = new TaskDetailsPage();
     let filtersPage = new FiltersPage();
@@ -82,8 +82,7 @@ describe('Task Details - Form', () => {
 
         task = await this.alfrescoJsApi.activiti.taskApi.getTask(emptyTask.id);
 
-        processServicesPage.goToProcessServices();
-        processServicesPage.goToTaskApp();
+        new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp();
         tasksListPage.checkTaskListIsLoaded();
         filtersPage.goToFilter('Involved Tasks');
         tasksListPage.checkTaskListIsLoaded();
@@ -92,7 +91,7 @@ describe('Task Details - Form', () => {
     });
 
     it('[C280018] Should be able to change the form in a task', () => {
-        tasksListPage.selectTaskFromTasksList(task.name);
+        tasksListPage.getDataTable().selectRowByContentName(task.name);
 
         taskDetailsPage.checkEditFormButtonIsDisplayed();
         taskDetailsPage.clickEditFormButton();
@@ -126,7 +125,7 @@ describe('Task Details - Form', () => {
     });
 
     it('[C280019] Should be able to remove the form form a task', () => {
-        tasksListPage.selectTaskFromTasksList(task.name);
+        tasksListPage.getDataTable().selectRowByContentName(task.name);
 
         taskDetailsPage.checkEditFormButtonIsDisplayed();
         taskDetailsPage.clickEditFormButton();
@@ -140,14 +139,14 @@ describe('Task Details - Form', () => {
     });
 
     it('[C280557] Should display task details when selecting another task while the Attach Form dialog is displayed', () => {
-        tasksListPage.selectTaskFromTasksList(task.name);
+        tasksListPage.getDataTable().selectRowByContentName(task.name);
 
         taskDetailsPage.checkEditFormButtonIsDisplayed();
         taskDetailsPage.clickEditFormButton();
 
         taskDetailsPage.checkRemoveAttachFormIsDisplayed();
 
-        tasksListPage.selectTaskFromTasksList(otherTask.name);
+        tasksListPage.getDataTable().selectRowByContentName(otherTask.name);
         taskDetailsPage.checkFormIsAttached(otherAttachedForm.name);
     });
 });

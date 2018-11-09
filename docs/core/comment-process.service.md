@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-05
+Last reviewed: 2018-11-14
 ---
 
 # Comment Process service
@@ -33,11 +33,6 @@ Adds and retrieves comments for task and process instances in Process Services.
 
 ## Details
 
-See the [Comment Process model](comment-process.model.md) for more information about the
-comments returned by the methods of this service. Also, the Comments API section of the
+See the Comments API section of the
 [Alfresco JS API docs](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api)
-has further details about the underlying REST API.
-
-## See also
-
--   [Comment process model](comment-process.model.md)
+for further details about the underlying REST API.

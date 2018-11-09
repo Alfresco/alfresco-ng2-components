@@ -35,7 +35,8 @@ import {
     MatDatepickerModule,
     MatSlideToggleModule,
     MatRadioModule,
-    MatSliderModule
+    MatSliderModule,
+    MatTreeModule
 } from '@angular/material';
 
 export function modules() {
@@ -58,7 +59,8 @@ export function modules() {
         MatDatepickerModule,
         MatSlideToggleModule,
         MatRadioModule,
-        MatSliderModule
+        MatSliderModule,
+        MatTreeModule
     ];
 }
 

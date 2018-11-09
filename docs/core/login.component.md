@@ -1,12 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-09-13
+Last reviewed: 2018-11-13
 ---
 
 # Login component
 
-Authenticates to Alfresco Content Services and or Alfresco Process Services.
+Authenticates to Alfresco Content Services and Alfresco Process Services.
 
 ![Login component](../docassets/images/login-extra-content.png)
 
@@ -291,7 +291,7 @@ enabled the setting in `app.config.json`) then the [login component](../core/log
 
 ![Login component](../docassets/images/sso-login.png)
 
-Note that if the `silentLogin property` in the `oauth2` configuration is set to true
+Note that if the `silentLogin` property in the `oauth2` configuration is set to true
 then the login page will not be shown. Instead, the application will redirect
 automatically to the authorization server when the user is not logged-in
 
