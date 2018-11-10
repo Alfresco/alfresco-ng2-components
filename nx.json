@@ -1,0 +1,36 @@
+{
+  "npmScope": "my-company",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "dev": {
+      "tags": []
+    },
+    "dist": {
+      "tags": []
+    },
+    "core": {
+      "tags": []
+    },
+    "content-services": {
+      "tags": []
+    },
+    "process-services": {
+      "tags": []
+    },
+    "process-services-cloud": {
+      "tags": []
+    },
+    "insights": {
+      "tags": []
+    },
+    "extensions": {
+      "tags": []
+    }
+  }
+}
