@@ -9,10 +9,7 @@ cache: npm
 
 stages:
   - name: Warm Up Cache & Lint
-    if: branch = master
-  - name: Affected
   - name: Unit test
-    if: branch = master
   - name: Packaging & Create Shell dist
   - name: Create Docker PR
     if: branch = master
@@ -51,10 +48,6 @@ jobs:
             then
                 ng test core --watch=false || exit 1;
             fi
-
-        - stage: Affected
-          script:
-          - (./scripts/affected-libs.sh -b $TRAVIS_BRANCH || exit 1;);
         - stage: Unit test
           env: STAGE=process-services
           script:
