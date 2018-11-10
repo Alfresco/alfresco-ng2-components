@@ -8,7 +8,10 @@ node_js:
 cache: npm
 
 stages:
+  - name: Warm Up Cache
+    if: branch = master
   - name: Warm Up Cache & Lint
+    if: branch != master
   - name: Unit test
   - name: Packaging & Create Shell dist
   - name: Create Docker PR
@@ -30,16 +33,15 @@ before_install:
 
 jobs:
     include:
+        - stage: Warm Up Cache
+          script:
+          - (./scripts/npm-build-all.sh || exit 1;);
+          - (./scripts/lint.sh || exit 1;);
         - stage: Warm Up Cache & Lint
-          script:  if ([ "$TRAVIS_BRANCH" = "master" ]); then
-                (./scripts/npm-build-all.sh  || exit 1;);
-            else
-                (./scripts/update-version.sh -gnu -alpha && npm install && ./scripts/lint.sh && npm run spellcheck || exit 1;);
-            fi
-        #- stage: Lint
-        #  script:
-        #    - ./scripts/lint.sh
-        #    - npm run spellcheck
+          script:
+          - (./scripts/update-version.sh -gnu -alpha && npm install || exit 1;);
+          - (./scripts/lint.sh || exit 1;);
+          - (npm run spellcheck || exit 1;)
         - stage: Unit test
           env: STAGE=core
           script:
