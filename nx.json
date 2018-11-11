@@ -29,6 +29,9 @@
     "insights": {
       "tags": []
     },
+    "lib-e2e-test": {
+      "tags": []
+    },
     "extensions": {
       "tags": []
     }

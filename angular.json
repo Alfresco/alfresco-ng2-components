@@ -703,6 +703,42 @@
         }
       }
     },
+    "lib-e2e-test": {
+      "root": "demo-shell",
+      "sourceRoot": "./demo-shell",
+      "projectType": "application",
+      "architect": {
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "./e2e/proxy.conf.js",
+            "browserTarget": "dev:build",
+            "port": 3000
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "dev:build:production"
+            }
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "./protractor.conf.js",
+            "devServerTarget": "lib-e2e-test:serve"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [],
+            "exclude": [
+              "**/node_modules/**/*"
+            ]
+          }
+        }
+      }
+    },
     "extensions": {
       "root": "lib/extensions",
       "sourceRoot": "lib/extensions/src/lib",
