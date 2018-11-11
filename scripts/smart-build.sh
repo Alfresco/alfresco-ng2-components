@@ -23,7 +23,7 @@ done
 for i in "${libs[@]}"
 do
     if [ "$i" == "process-services$" ] ; then
-        ./scripts/build-process-services-cloud.sh
+        ./scripts/build-process-services.sh
     fi
 done
 
