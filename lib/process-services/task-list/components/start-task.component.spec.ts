@@ -145,6 +145,9 @@ describe('StartTaskComponent', () => {
                     assignee: null
                 }
             ));
+        });
+
+        it('should attach form to the task when a form is selected', () => {
             spyOn(service, 'attachFormToATask').and.returnValue(of(
                 {
                     id: 91,
@@ -153,9 +156,6 @@ describe('StartTaskComponent', () => {
                     assignee: null
                 }
             ));
-        });
-
-        it('should attach form to the task when a form is selected', () => {
             let successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('fakeName');
             component.taskForm.controls['formKey'].setValue(1204);
@@ -173,6 +173,14 @@ describe('StartTaskComponent', () => {
         });
 
         it('should not attach form to the task when a no form is selected', () => {
+            spyOn(service, 'attachFormToATask').and.returnValue(of(
+                {
+                    id: 91,
+                    name: 'fakeName',
+                    formKey: null,
+                    assignee: null
+                }
+            ));
             let successSpy = spyOn(component.success, 'emit');
             component.taskForm.controls['name'].setValue('fakeName');
             component.taskForm.controls['formKey'].setValue(null);
@@ -330,7 +338,7 @@ describe('StartTaskComponent', () => {
     it('should define the select options for Forms', () => {
         component.forms$ = service.getFormList();
         fixture.detectChanges();
-        let selectElement = fixture.nativeElement.querySelector('#form_id');
+        let selectElement = fixture.nativeElement.querySelector('#form_label');
         expect(selectElement.innerHTML).toContain('ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM');
     });
 
