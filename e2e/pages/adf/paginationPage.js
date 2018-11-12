@@ -33,7 +33,7 @@ var PaginationPage = function () {
     var pageDropDown = element(by.css("div[class*='adf-pagination__actualinfo-block'] button"));
     var pageDropDownOptions = by.css("div[class*='mat-menu-content'] button");
     var paginationSection = element(by.css("adf-pagination"));
-    var paginationSectionEmpty = element(by.css("adf-pagination[class*='adf-pagination__empty ng-star-inserted']"));
+    var paginationSectionEmpty = element(by.css("adf-pagination[class*='adf-pagination__empty']"));
     var totalFiles = element(by.css('span[class="adf-pagination__range"]'));
 
     this.selectItemsPerPage = function (item) {

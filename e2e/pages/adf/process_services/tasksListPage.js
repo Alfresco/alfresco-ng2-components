@@ -29,7 +29,7 @@ var TasksListPage = function () {
         return dataTable;
     };
 
-    this.checkTaskListIsLoaded = function () {
+    this.checkTaskListIsLoaded = function() {
         Util.waitUntilElementIsVisible(taskList);
         return this;
     };
@@ -37,7 +37,11 @@ var TasksListPage = function () {
     this.getNoTasksFoundMessage = function() {
         Util.waitUntilElementIsVisible(noTasksFound);
         return noTasksFound.getText();
+<<<<<<< HEAD
     };
+=======
+    }
+>>>>>>> Refactored taskListDemoPage
 
 };
 

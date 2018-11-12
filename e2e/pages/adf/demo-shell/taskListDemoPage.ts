@@ -17,9 +17,11 @@
 
 import Util = require('../../../util/util');
 import DataTable = require('../dataTablePage');
-import { element, by, browser, protractor } from 'protractor';
+import TaskListPage = require('../process_services/tasksListPage');
+import PaginationPage = require('../paginationPage');
+import { element, by } from 'protractor';
 
-export class TaskListSinglePage {
+export class TaskListDemoPage {
 
     appId = element(by.css("input[data-automation-id='appId input']"));
     itemsPerPage = element(by.css("input[data-automation-id='items per page']"));
@@ -29,9 +31,7 @@ export class TaskListSinglePage {
     page = element(by.css("input[data-automation-id='page']"));
     pageForm = element(by.css("mat-form-field[data-automation-id='page']"));
     taskName = element(by.css("input[data-automation-id='task name']"));
-    noTasksFound = element(by.css("p[class='adf-empty-content__title']"));
     resetButton = element(by.css("div[class='adf-reset-button'] button"));
-    emptyPagination = element(by.css("adf-pagination[class*='adf-pagination__empty']"));
     dueBefore = element(by.css("input[data-automation-id='due before']"));
     dueAfter = element(by.css("input[data-automation-id='due after']"));
     taskId = element(by.css("input[data-automation-id='task id']"));
@@ -41,6 +41,14 @@ export class TaskListSinglePage {
     sortSelector = element(by.css("div[class*='mat-select-content']"));
     processDefinitionIdColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Process Definition Id'] span");
     processInstanceIdColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Process Instance Id'] span");
+
+    taskList() {
+        return new TaskListPage();
+    }
+
+    paginationPage() {
+        return new PaginationPage();
+    }
 
     typeAppId(input) {
         Util.waitUntilElementIsVisible(this.appId);
@@ -175,44 +183,9 @@ export class TaskListSinglePage {
         return input.clear(); 
     }
 
-    usingDataTable() {
-        return new DataTable();
-    }
-
-    getNoTasksFoundMessage() {
-        Util.waitUntilElementIsVisible(this.noTasksFound);
-        return this.noTasksFound.getText();
-    }
-
     clickResetButton() {
         Util.waitUntilElementIsVisible(this.resetButton);
         this.resetButton.click();
-    }
-
-    checkPaginationIsNotDisplayed() {
-        Util.waitUntilElementIsVisible(this.emptyPagination);
-    }
-
-    clickOnStateDropDownArrow() {
-        Util.waitUntilElementIsVisible(this.stateDropDownArrow);
-        this.stateDropDownArrow.click();
-        Util.waitUntilElementIsVisible(this.stateSelector);
-    }
-
-    selectState(state) {
-        this.clickOnStateDropDownArrow();
-
-        let stateElement = element.all(by.cssContainingText('mat-option span', state)).first();
-        Util.waitUntilElementIsClickable(stateElement);
-        Util.waitUntilElementIsVisible(stateElement);
-        stateElement.click();
-        return this;
-    }
-
-    clickOnSortDropDownArrow() {
-        Util.waitUntilElementIsVisible(this.sortDropDownArrow);
-        this.sortDropDownArrow.click();
-        Util.waitUntilElementIsVisible(this.sortSelector);
     }
 
     selectSort(sort) {
@@ -225,12 +198,34 @@ export class TaskListSinglePage {
         return this;
     }
 
+    clickOnSortDropDownArrow() {
+        Util.waitUntilElementIsVisible(this.sortDropDownArrow);
+        this.sortDropDownArrow.click();
+        Util.waitUntilElementIsVisible(this.sortSelector);
+    }
+
+    selectState(state) {
+        this.clickOnStateDropDownArrow();
+
+        let stateElement = element.all(by.cssContainingText('mat-option span', state)).first();
+        Util.waitUntilElementIsClickable(stateElement);
+        Util.waitUntilElementIsVisible(stateElement);
+        stateElement.click();
+        return this;
+    }
+
+    clickOnStateDropDownArrow() {
+        Util.waitUntilElementIsVisible(this.stateDropDownArrow);
+        this.stateDropDownArrow.click();
+        Util.waitUntilElementIsVisible(this.stateSelector);
+    }
+
     getAllProcessDefinitionIds() {
-        return new DataTable().getAllRowsColumnValues(this.processDefinitionIdColumn);
+        return this.taskList().getDataTable().getAllRowsColumnValues(this.processDefinitionIdColumn);
     }
 
     getAllProcessInstanceIds() {
-        return new DataTable().getAllRowsColumnValues(this.processInstanceIdColumn);
+        return this.taskList().getDataTable().getAllRowsColumnValues(this.processInstanceIdColumn);
     }
 
 }
