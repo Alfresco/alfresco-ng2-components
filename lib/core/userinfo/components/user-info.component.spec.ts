@@ -473,12 +473,11 @@ describe('User info component', () => {
     describe('when user is logged on SSO', () => {
 
         let getCurrentUserInfoStub;
-        let getValueFromTokenSpy;
 
         beforeEach(async(() => {
-            spyOn(authService, 'isLoggedIn').and.returnValue(true);
+            spyOn(authService, 'isOauth').and.returnValue(true);
             getCurrentUserInfoStub = spyOn(identityUserService, 'getCurrentIdentityUserInfo').and.returnValue(of(identityUserMock));
-            getValueFromTokenSpy = spyOn(identityUserService, 'getValueFromToken').and.returnValue('firstName lastName');
+            spyOn(identityUserService, 'getValueFromToken').and.returnValue('firstName lastName');
         }));
 
         it('should show full name next the user image', async(() => {

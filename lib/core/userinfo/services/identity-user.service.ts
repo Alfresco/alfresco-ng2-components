@@ -20,7 +20,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { of, Observable } from 'rxjs';
 import { IdentityUserModel } from '../models/identity-user.model';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class IdentityUserService {
 
     static USER_NAME = 'given_name';
