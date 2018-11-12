@@ -16,11 +16,11 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
 import { ViewerPage } from '../pages/adf/viewerPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -37,10 +37,10 @@ import { browser } from 'protractor';
 describe('Attachment list action menu for processes', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
     let processFiltersPage = new ProcessFiltersPage();
     let processDetailsPage = new ProcessDetailsPage();
     let attachmentListPage = new AttachmentListPage();
+    let navigationBarPage = new NavigationBarPage();
     let viewerPage = new ViewerPage();
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let pngFile = new FileModel({
@@ -97,7 +97,7 @@ describe('Attachment list action menu for processes', () => {
     });
 
     it('[C260228] Should be able to access options of a file attached to an active process', () => {
-        processServicesPage.goToProcessServices().goToApp(app.title).clickProcessButton();
+        navigationBarPage.clickProcessServicesButton().goToApp(app.title).clickProcessButton();
 
         processFiltersPage.selectFromProcessList(processName.active);
 
@@ -131,7 +131,7 @@ describe('Attachment list action menu for processes', () => {
     });
 
     it('[C279886] Should be able to access options of a file attached to a completed process', () => {
-        processServicesPage.goToProcessServices().goToApp(app.title).clickProcessButton();
+        navigationBarPage.clickProcessServicesButton().goToApp(app.title).clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList(processName.completed);
@@ -165,7 +165,7 @@ describe('Attachment list action menu for processes', () => {
     });
 
     it('[C277296] Should allow upload file when clicking on \'add\' icon', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList(processName.taskApp);
@@ -177,7 +177,7 @@ describe('Attachment list action menu for processes', () => {
     });
 
     it('[C260235] Should empty list component be displayed when no file is attached', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList(processName.emptyList);

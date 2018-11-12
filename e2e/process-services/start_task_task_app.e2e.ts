@@ -18,10 +18,10 @@
 import { by } from 'protractor';
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import CONSTANTS = require('../util/constants');
 
@@ -43,19 +43,16 @@ import path = require('path');
 
 describe('Start Task - Task App', () => {
 
-    let TASK_DATA_FORMAT = 'mmm dd yyyy';
-
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
     let attachmentListPage = new AttachmentListPage();
     let appNavigationBarPage = new AppNavigationBarPage();
+    let navigationBarPage = new NavigationBarPage();
 
     let processUserModel, assigneeUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let formTextField = app.form_fields.form_fieldId;
     let formFieldValue = 'First value ';
     let taskPage = new TasksPage();
-    let formModel;
     let firstComment = 'comm1', firstChecklist = 'checklist1';
     let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
     let showHeaderTask = 'Show Header';
@@ -95,7 +92,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C260383] Should be possible to modify a task', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[0])
             .addForm(app.formName).clickStartButton()
@@ -117,7 +114,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C260422] Should be possible to cancel a task', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().checkStartButtonIsDisabled().addName(tasks[3])
             .checkStartButtonIsEnabled().clickCancelButton()
@@ -128,7 +125,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C260423] Should be possible to save filled form', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask()
             .addForm(app.formName).addName(tasks[4]).clickStartButton()
@@ -145,7 +142,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C260425] Should be possible to assign a user', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[5])
             .addAssignee(assigneeUserModel.firstName).clickStartButton()
@@ -160,7 +157,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('Attach a file', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[6]).clickStartButton()
             .then(() => {
@@ -170,7 +167,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C260420] Should Information box be hidden when showHeaderContent property is set on false', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(showHeaderTask);
 
@@ -188,7 +185,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C260424] Should be able to see Spinner loading on task list when clicking on Tasks', () => {
-        processServicesPage.goToProcessServices().goToTaskApp();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp();
         taskPage.tasksListPage().getDataTable().checkSpinnerIsDisplayed();
     });
 

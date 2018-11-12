@@ -18,8 +18,8 @@
 import { browser } from 'protractor';
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import CONSTANTS = require('../util/constants');
 
@@ -37,7 +37,7 @@ import path = require('path');
 describe('Start Task - Task App', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
+    let navigationBarPage = new NavigationBarPage();
     let processUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let taskPage = new TasksPage();
@@ -71,7 +71,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C260421] Should a standalone task be displayed when creating a new task without form', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[0]).clickStartButton()
             .then(() => {
@@ -86,7 +86,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C268910] Should a standalone task be displayed in completed tasks when completing it', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).clickStartButton()
             .then(() => {
@@ -104,7 +104,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C268911] Should allow adding a form to a standalone task when clicking on Add form button', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[2]).clickStartButton()
             .then(() => {
@@ -117,7 +117,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C268912] Should a standalone task be displayed when removing the form from APS', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[3]).addForm(app.formName).clickStartButton();
 

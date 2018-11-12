@@ -18,10 +18,10 @@
 import { browser } from 'protractor';
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import { AppSettingsToggles } from '../pages/adf/process_services/dialog/appSettingsToggles';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
 
@@ -31,10 +31,10 @@ import { UsersActions } from '../actions/users.actions';
 describe('New Process Filters', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
     let processFiltersPage = new ProcessFiltersPage();
     let appNavigationBarPage = new AppNavigationBarPage();
     let appSettingsToggles = new AppSettingsToggles();
+    let navigationBarPage = new NavigationBarPage();
 
     let tenantId, user, filterId, customProcessFilter;
 
@@ -77,8 +77,7 @@ describe('New Process Filters', () => {
     it('[C279965] Should be able to view default filters on ADF', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
 
-        processServicesPage
-            .goToProcessServices()
+        navigationBarPage.clickProcessServicesButton()
             .goToTaskApp()
             .clickProcessButton();
 
@@ -103,8 +102,7 @@ describe('New Process Filters', () => {
 
         loginPage.loginToProcessServicesUsingUserModel(user);
 
-        processServicesPage
-            .goToProcessServices()
+        navigationBarPage.clickProcessServicesButton()
             .goToTaskApp()
             .clickProcessButton();
 
@@ -126,7 +124,7 @@ describe('New Process Filters', () => {
         });
 
         loginPage.loginToProcessServicesUsingUserModel(user);
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
 
         processFiltersPage.checkFilterIsDisplayed(processFilter.new_icon);
 
@@ -150,8 +148,7 @@ describe('New Process Filters', () => {
 
         loginPage.loginToProcessServicesUsingUserModel(user);
 
-        processServicesPage
-            .goToProcessServices()
+        navigationBarPage.clickProcessServicesButton()
             .goToTaskApp()
             .clickProcessButton();
 
@@ -173,7 +170,7 @@ describe('New Process Filters', () => {
         });
 
         loginPage.loginToProcessServicesUsingUserModel(user);
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
 
         processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
 
@@ -188,7 +185,7 @@ describe('New Process Filters', () => {
 
         loginPage.loginToProcessServicesUsingUserModel(user);
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
 
         processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
 
@@ -202,7 +199,7 @@ describe('New Process Filters', () => {
 
     it('[C286452] Should display process filter icons only when showIcon property is set on true', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
         processFiltersPage.checkFilterHasNoIcon(processFilter.all);
 
         appNavigationBarPage.clickSettingsButton();
@@ -233,7 +230,7 @@ describe('New Process Filters', () => {
 
         loginPage.loginToProcessServicesUsingUserModel(user);
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
 
         processFiltersPage.checkFilterIsNotDisplayed(processFilter.deleted);
     });

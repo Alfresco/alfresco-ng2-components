@@ -20,7 +20,7 @@ import Util = require('../util/util');
 import CONSTANTS = require('../util/constants');
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import TasksListPage = require('../pages/adf/process_services/tasksListPage');
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
 import FiltersPage = require('../pages/adf/process_services/filtersPage');
@@ -32,7 +32,7 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Task Details - Form', () => {
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
+    let navigationBarPage = new NavigationBarPage();
     let tasksListPage = new TasksListPage();
     let taskDetailsPage = new TaskDetailsPage();
     let filtersPage = new FiltersPage();
@@ -82,8 +82,7 @@ describe('Task Details - Form', () => {
 
         task = await this.alfrescoJsApi.activiti.taskApi.getTask(emptyTask.id);
 
-        processServicesPage.goToProcessServices();
-        processServicesPage.goToTaskApp();
+        new NavigationBarPage().clickProcessServicesButton().goToTaskApp();
         tasksListPage.checkTaskListIsLoaded();
         filtersPage.goToFilter('Involved Tasks');
         tasksListPage.checkTaskListIsLoaded();

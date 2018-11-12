@@ -16,7 +16,7 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 
 import CONSTANTS = require('../util/constants');
@@ -36,7 +36,7 @@ import Util = require('../util/util');
 describe('Task Audit', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
+    let navigationBarPage = new NavigationBarPage();
     let processUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let taskPage = new TasksPage();
@@ -73,7 +73,7 @@ describe('Task Audit', () => {
     });
 
     it('[C260386] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone running task', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskTaskApp);
 
@@ -82,7 +82,7 @@ describe('Task Audit', () => {
     });
 
     it('[C260389] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone completed task', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskTaskApp);
 
@@ -96,7 +96,7 @@ describe('Task Audit', () => {
     });
 
     it('[C263944] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone completed task', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
 
         taskPage.createNewTask().addName(taskCompleteCustomApp).clickStartButton();
 
@@ -113,7 +113,7 @@ describe('Task Audit', () => {
     });
 
     it('[C263943] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone running task', () => {
-        processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToApp(appModel.name).clickTasksButton();
 
         taskPage.createNewTask().addName(taskCustomApp).clickStartButton();
 

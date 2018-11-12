@@ -23,21 +23,12 @@ import { element, by } from 'protractor';
 export class ProcessServicesPage {
 
     apsAppsContainer = element(by.css('div[class="adf-app-listgrid ng-star-inserted"]'));
-    processServices = element(by.css('a[data-automation-id="Process Services"]'));
     taskApp = element(by.css('mat-card[title="Task App"]'));
     iconTypeLocator = by.css('mat-icon[class*="card-logo-icon"]');
     descriptionLocator = by.css('mat-card-subtitle[class*="subtitle"]');
-    processInstanceList = element(by.css('adf-process-instance-list'));
 
     checkApsContainer() {
         Util.waitUntilElementIsVisible(this.apsAppsContainer);
-    }
-
-    goToProcessServices() {
-        Util.waitUntilElementIsVisible(this.processServices);
-        this.processServices.click();
-        this.checkApsContainer();
-        return this;
     }
 
     goToApp(applicationName) {
@@ -83,10 +74,6 @@ export class ProcessServicesPage {
     checkAppIsDisplayed(applicationName) {
         let app = element(by.css('mat-card[title="' + applicationName + '"]'));
         return Util.waitUntilElementIsVisible(app);
-    }
-
-    checkProcessListIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.processInstanceList);
     }
 
 }

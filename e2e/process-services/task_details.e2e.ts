@@ -30,7 +30,7 @@ import CONSTANTS = require('../util/constants');
 import dateFormat = require('dateformat');
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 
 describe('Task Details component', () => {
@@ -43,8 +43,8 @@ describe('Task Details component', () => {
     let apps;
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
     let taskPage = new TasksPage();
+    let navigationBarPage = new NavigationBarPage();
 
     beforeAll(async (done) => {
         let users = new UsersActions();
@@ -71,7 +71,7 @@ describe('Task Details component', () => {
     });
 
     it('[C260506] Should display task details for standalone task - Task App', async () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
             .addForm(app.formName).clickStartButton();
@@ -113,7 +113,7 @@ describe('Task Details component', () => {
     });
 
     it('[C263946] Should display task details for standalone task - Custom App', async () => {
-        processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
             .addForm(app.formName).clickStartButton();
@@ -160,7 +160,7 @@ describe('Task Details component', () => {
             await apps.startProcess(this.alfrescoJsApi, appModel);
         });
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
@@ -206,7 +206,7 @@ describe('Task Details component', () => {
             await apps.startProcess(this.alfrescoJsApi, appModel);
         });
 
-        processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
@@ -254,7 +254,7 @@ describe('Task Details component', () => {
             await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': taskName});
         });
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskName).selectRowByContentName(taskName);
 
@@ -296,7 +296,7 @@ describe('Task Details component', () => {
             await apps.startProcess(this.alfrescoJsApi, appModel);
         });
 
-        processServicesPage.goToProcessServices().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
@@ -338,7 +338,7 @@ describe('Task Details component', () => {
             return this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': taskName});
         });
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskName).selectRowByContentName(taskName);
 

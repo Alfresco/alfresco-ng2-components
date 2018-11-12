@@ -18,7 +18,7 @@
 import { browser } from 'protractor';
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
 import { ViewerPage } from '../pages/adf/viewerPage';
@@ -40,7 +40,7 @@ import FileModel = require('../models/ACS/fileModel');
 describe('Attachment list action menu for tasks', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
+    let navigationBarPage = new NavigationBarPage();
     let taskPage = new TasksPage();
     let attachmentListPage = new AttachmentListPage();
     let viewerPage = new ViewerPage();
@@ -91,7 +91,7 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C277311] Should be able to View /Download /Remove from Attachment List on an active task', () => {
-        processServicesPage.goToProcessServices().goToApp(app.title).clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToApp(app.title).clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.active).clickStartButton();
@@ -122,7 +122,7 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C260236] Should be able to View /Download /Remove from Attachment List on a completed task', () => {
-        processServicesPage.goToProcessServices().goToApp(app.title).clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToApp(app.title).clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.completed).clickStartButton();
@@ -154,7 +154,7 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C260225] Should be able to upload a file in the Attachment list on Task App', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.taskApp).clickStartButton();
@@ -164,7 +164,7 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C279884] Should be able to view the empty attachment list for tasks', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.emptyList).clickStartButton();
@@ -191,7 +191,7 @@ describe('Attachment list action menu for tasks', () => {
             relatedContentId = relatedContent.id;
         });
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName('SHARE KNOWLEDGE');
@@ -202,7 +202,7 @@ describe('Attachment list action menu for tasks', () => {
             await this.alfrescoJsApi.activiti.contentApi.deleteContent(relatedContentId);
         });
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName('SHARE KNOWLEDGE');

@@ -18,6 +18,7 @@
 import Util = require('../../util/util');
 import TestConfig = require('../../test.config');
 import { element, by } from 'protractor';
+import { ProcessServicesPage} from './process_services/processServicesPage';
 
 export class NavigationBarPage {
 
@@ -50,6 +51,7 @@ export class NavigationBarPage {
     clickProcessServicesButton() {
         Util.waitUntilElementIsVisible(this.processServicesButton);
         this.processServicesButton.click();
+        return new ProcessServicesPage();
     }
 
     clickLoginButton() {

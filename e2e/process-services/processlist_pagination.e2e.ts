@@ -16,7 +16,7 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import PaginationPage = require('../pages/adf/paginationPage');
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');
@@ -45,7 +45,7 @@ describe('Process List - Pagination', function () {
     let processFilterRunning = 'Running';
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
+    let navigationBarPage = new NavigationBarPage();
     let paginationPage = new PaginationPage();
     let processFiltersPage = new ProcessFiltersPage();
     let processDetailsPage = new ProcessDetailsPage();
@@ -80,7 +80,7 @@ describe('Process List - Pagination', function () {
     describe('Empty processes', function () {
 
         it('[C280015] Should show empty content message an no pagination when no process are present', function () {
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
             processFiltersPage.checkNoContentMessage();
             paginationPage.checkPaginationIsNotDisplayed();
         });
@@ -106,11 +106,11 @@ describe('Process List - Pagination', function () {
         });
 
         it('[C261042] Should display default pagination', function () {
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
 
             page = 1;
             totalPages = 1;
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -128,7 +128,7 @@ describe('Process List - Pagination', function () {
         it('[C261043] Should be possible to Items per page to 15', function () {
             page = 1;
             totalPages = 2;
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -157,7 +157,7 @@ describe('Process List - Pagination', function () {
             paginationPage.checkPreviousPageButtonIsEnabled();
 
             page = 1;
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -170,7 +170,7 @@ describe('Process List - Pagination', function () {
         it('[C261044] Should be possible to Items per page to 10', function () {
             page = 1;
             totalPages = 2;
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -199,7 +199,7 @@ describe('Process List - Pagination', function () {
             paginationPage.checkPreviousPageButtonIsEnabled();
 
             page = 1;
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -212,7 +212,7 @@ describe('Process List - Pagination', function () {
         it('[C261047] Should be possible to Items per page to 20', function () {
             page = 1;
             totalPages = 1;
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -228,7 +228,7 @@ describe('Process List - Pagination', function () {
             paginationPage.checkNextPageButtonIsDisabled();
             paginationPage.checkPreviousPageButtonIsDisabled();
 
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -242,7 +242,7 @@ describe('Process List - Pagination', function () {
             let showing;
             page = 1;
             totalPages = 4;
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -303,7 +303,7 @@ describe('Process List - Pagination', function () {
             paginationPage.checkPreviousPageButtonIsEnabled();
 
             page = 1;
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -317,7 +317,7 @@ describe('Process List - Pagination', function () {
             let showing;
             page = 1;
             totalPages = 2;
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processDetailsPage.checkProcessTitleIsDisplayed();
             processFiltersPage.waitForTableBody();
@@ -368,7 +368,7 @@ describe('Process List - Pagination', function () {
         });
 
         it('[C261048] Should be possible to sort processes by name', function () {
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -388,7 +388,7 @@ describe('Process List - Pagination', function () {
         });
 
         it('[C286260] Should keep sorting when changing \'Items per page\'', function () {
-            processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();

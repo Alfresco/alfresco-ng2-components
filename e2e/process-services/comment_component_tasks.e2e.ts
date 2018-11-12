@@ -18,9 +18,9 @@
 import { browser } from 'protractor';
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import { CommentsPage } from '../pages/adf/commentsPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import CONSTANTS = require('../util/constants');
 
@@ -34,7 +34,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 describe('Comment component for Processes', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
+    let navigationBarPage = new NavigationBarPage();
     let taskPage = new TasksPage();
     let commentsPage = new CommentsPage();
 
@@ -93,7 +93,7 @@ describe('Comment component for Processes', () => {
             this.alfrescoJsApi.activiti.taskActionsApi.completeTask(taskId);
         });
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName(taskName.completed_task);
@@ -116,7 +116,7 @@ describe('Comment component for Processes', () => {
             await this.alfrescoJsApi.activiti.taskApi.addTaskComment(secondTaskComment, newTaskId);
         });
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName(taskName.multiple_users);
@@ -146,7 +146,7 @@ describe('Comment component for Processes', () => {
             await this.alfrescoJsApi.activiti.taskApi.addTaskComment(thirdTaskComment, newTaskId);
         });
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName(taskName.multiple_users);
