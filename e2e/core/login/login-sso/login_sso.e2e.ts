@@ -28,7 +28,6 @@ describe('Login component - SSO', () => {
     const navigationBarPage = new NavigationBarPage();
     const path = '/auth/realms/springboot';
     let silentLogin;
-    let implicitFlow;
 
     afterEach(() => {
         navigationBarPage.clickLogoutButton();
@@ -38,19 +37,15 @@ describe('Login component - SSO', () => {
 
     it('[C261050] Should be possible login in the PS with SSO', async () => {
         silentLogin = false;
-        implicitFlow = true;
-        await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin, implicitFlow );
+        await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
         await loginApsPage.clickOnSSOButton();
         browser.ignoreSynchronization = true;
         await loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
     });
 
     it ('[C280667] Should be redirect directly to keycloak without show the login page with silent login', async () => {
-        silentLogin = true;
-        implicitFlow = true;
-        await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin, implicitFlow );
+        await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path);
         browser.ignoreSynchronization = true;
         await loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
     });
 });

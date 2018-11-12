@@ -106,7 +106,7 @@ export class SettingsPage {
         await this.ssoRadioButton.click();
     }
 
-    async setProviderBpmSso (processServiceURL, authHost, silentLogin, implicitFlow ) {
+    async setProviderBpmSso (processServiceURL, authHost, silentLogin = true, implicitFlow = true ) {
         this.goToSettingsPage();
         this.setProvider(this.bpm.option, this.bpm.text);
         Util.waitUntilElementIsVisible(this.bpmText);
