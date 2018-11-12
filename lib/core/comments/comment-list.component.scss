@@ -28,7 +28,9 @@
            background-position: center;
 
            &:hover {
-            background: $primaryColor radial-gradient(circle, transparent 1%, $primaryColor 1%) center/15000%;
+            background: $primaryColor
+            radial-gradient(circle, transparent 1%, $primaryColor 1%)
+            center/15000%;
            }
            &:active {
             background-color: $rippleColor;

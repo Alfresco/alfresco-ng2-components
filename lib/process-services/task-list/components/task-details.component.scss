@@ -2,11 +2,11 @@
     width: 100%;
 }
 
-.error-dialog h3 {
+.adf-error-dialog h3 {
     margin: 16px 0;
 }
 
-.activiti-task-details__header {
+.adf-activiti-task-details__header {
     align-self: flex-end;
     display: flex;
     font-size: 24px;
@@ -21,16 +21,17 @@
     -ms-user-select: none;
 }
 
-.activiti-task-details__action-button {
+.adf-activiti-task-details__action-button {
     text-transform: uppercase;
 }
 
-.assignment-container {
+.adf-assignment-container {
     padding: 10px 20px;
     width: auto;
 }
 
-adf-task-header.assign-edit-view ::ng-deep adf-card-view ::ng-deep .adf-property[data-automation-id='header-assignee'] {
+adf-task-header.adf-assign-edit-view ::ng-deep adf-card-view ::ng-deep
+.adf-property[data-automation-id='header-assignee'] {
     display: none;
 }
 

@@ -1,7 +1,7 @@
 @mixin adf-task-attachment-list-theme($theme) {
 
 
-    adf-datatable .data-cell {
+    adf-datatable .adf-data-cell {
         cursor: pointer !important;
     }
 

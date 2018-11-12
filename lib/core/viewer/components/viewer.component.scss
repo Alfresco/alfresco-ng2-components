@@ -3,7 +3,7 @@
     $foreground: map-get($theme, foreground);
     $adf-viewer-background-color: mat-color($background, card);
 
-    .full-screen {
+    .adf-full-screen {
         width: 100%;
         height: 100%;
         background-color: $adf-viewer-background-color;
@@ -179,7 +179,7 @@
                 overflow: hidden;
             }
 
-            .info-drawer-content {
+            .adf-info-drawer-content {
                 height: 100%;
             }
 

@@ -15,7 +15,7 @@
           height: 100%;
       }
 
-      .loader-container {
+      .adf-loader-container {
           display: flex;
           flex-direction: column;
           height:100%;
@@ -24,23 +24,23 @@
           justify-content: center;
       }
 
-      .loader-item {
+      .adf-loader-item {
           max-height:100px;
           max-width:300px;
       }
 
-      .loader-spinner {
+      .adf-loader-spinner {
           max-height:300px;
           max-width:300px;
       }
 
-      .loader-text{
+      .adf-loader-text {
           white-space: nowrap;
           text-align: center;
           position: relative;
       }
 
-      .loader {
+      .adf-loader {
           position: absolute;
           width: 100px;
           height: 100px;
@@ -49,17 +49,17 @@
           transform: translate(-50%, -50%);
       }
 
-      .circular {
+      .adf-circular {
           animation: rotate 2s linear infinite;
           height: 100px;
           position: relative;
           width: 100px;
       }
 
-      .path {
-          stroke-dasharray: 1,200;
+      .adf-path {
+          stroke-dasharray: 1, 200;
           stroke-dashoffset: 0;
-          stroke: #B6463A;
+          stroke: #b6463a;
           animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
           stroke-linecap: round;
       }
@@ -71,15 +71,15 @@
       }
       @keyframes dash {
           0% {
-              stroke-dasharray: 1,200;
+              stroke-dasharray: 1, 200;
               stroke-dashoffset: 0;
           }
           50% {
-              stroke-dasharray: 89,200;
+              stroke-dasharray: 89, 200;
               stroke-dashoffset: -35;
           }
           100% {
-              stroke-dasharray: 89,200;
+              stroke-dasharray: 89, 200;
               stroke-dashoffset: -124;
           }
       }
@@ -101,14 +101,14 @@
 </head>
 <body class="adf-background-color">
 <app-root>
-  <div id="loader-container" class="loader-container">
-      <div class="loader-spinner">
-          <svg class="circular">
+  <div id="loader-container" class="adf-loader-container">
+      <div class="adf-loader-spinner">
+          <svg class="adf-circular">
             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"></circle>
           </svg>
       </div>
-    <div class="loader-item">
-      <div id="loader-text" class="loader-text">Loading Demo Shell..</div>
+    <div class="adf-loader-item">
+      <div id="loader-text" class="adf-loader-text">Loading Demo Shell..</div>
     </div>
   </div>
 </app-root>

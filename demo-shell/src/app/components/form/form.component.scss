@@ -1,17 +1,17 @@
-.form-container {
+.adf-form-container {
     padding: 10px;
 }
 
-.main-content {
+.adf-main-content {
     padding: 0 15px;
 }
 
-.card-view {
+.adf-card-view {
     width: 30%;
     display: inline-block;
 }
 
-.console {
+.adf-console {
     width: 60%;
     display: inline-block;
     vertical-align: top;
@@ -35,12 +35,12 @@
     height: 500px !important;
 }
 
-.form-editor-buttons {
+.adf-form-editor-buttons {
     display: flex;
     justify-content: space-evenly;
 }
 
-.upload-config-button {
+.adf-upload-config-button {
     display: flex;
     justify-content: center;
 

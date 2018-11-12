@@ -1,7 +1,7 @@
 @mixin adf-pdf-thumbnails-theme($theme) {
     $background: map-get($theme, background);
 
-    .pdf-thumbnails {
+    .adf-pdf-thumbnails {
         display: block;
         overflow: hidden;
         overflow-y: auto;

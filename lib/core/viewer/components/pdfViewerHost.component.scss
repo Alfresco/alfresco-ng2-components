@@ -1,5 +1,5 @@
 .adf-pdf-viewer {
-    .textLayer {
+    .adf-textLayer {
         position: absolute;
         left: 0;
         top: 0;
@@ -22,26 +22,26 @@
             transform-origin: 0% 0%;
         }
 
-        .highlight {
+        .adf-highlight {
             margin: -1px;
             padding: 1px;
 
             background-color: rgb(180, 0, 170);
             border-radius: 4px;
 
-            &.begin {
+            &.adf-begin {
                 border-radius: 4px 0 0 4px;
             }
 
-            &.end {
+            &.adf-end {
                 border-radius: 0 4px 4px 0;
             }
 
-            &.middle {
+            &.adf-middle {
                 border-radius: 0;
             }
 
-            &.selected {
+            &.adf-selected {
                 background-color: rgb(0, 100, 0);
             }
         }
@@ -49,7 +49,7 @@
         &::selection { background: rgb(0, 0, 255); }
         &::-moz-selection { background: rgb(0, 0, 255); }
 
-        .endOfContent {
+        .adf-endOfContent {
             display: block;
             position: absolute;
             left: 0;
@@ -69,12 +69,12 @@
         }
     }
 
-    .annotationLayer {
+    .adf-annotationLayer {
         section {
             position: absolute;
         }
 
-        .linkAnnotation {
+        .adf-linkAnnotation {
             & > a {
                 position: absolute;
                 font-size: 1em;
@@ -92,19 +92,19 @@
             }
         }
 
-        .textAnnotation {
+        .adf-textAnnotation {
             img {
                 position: absolute;
                 cursor: pointer;
             }
         }
 
-        .popupWrapper {
+        .adf-popupWrapper {
             position: absolute;
             width: 20em;
         }
 
-        .popup {
+        .adf-popup {
             position: absolute;
             z-index: 200;
             max-width: 20em;
@@ -127,21 +127,21 @@
             }
         }
 
-        .highlightAnnotation,
-        .underlineAnnotation,
-        .squigglyAnnotation,
-        .strikeoutAnnotation,
-        .fileAttachmentAnnotation {
+        .adf-highlightAnnotation,
+        .adf-underlineAnnotation,
+        .adf-squigglyAnnotation,
+        .adf-strikeoutAnnotation,
+        .adf-fileAttachmentAnnotation {
             cursor: pointer;
         }
     }
 
-    .pdfViewer {
+    .adf-pdfViewer {
         canvaswrapper {
             overflow: hidden;
         }
 
-        .page {
+        .adf-page {
             direction: ltr;
             width: 816px;
             height: 1056px;
@@ -157,7 +157,7 @@
                 display: block;
             }
 
-            .loadingIcon {
+            .adf-loadingIcon {
                 position: absolute;
                 display: block;
                 left: 0;
@@ -172,14 +172,14 @@
             }
         }
 
-        &.removePageBorders {
-            .page {
+        &.adf-removePageBorders {
+            .adf-page {
                 margin: 0 auto 10px;
                 border: none;
             }
         }
 
-        .loadingIcon {
+        .adf-loadingIcon {
             width: 100px;
             height: 100px;
             left: 50% !important;
@@ -209,7 +209,7 @@
 
 
 
-    .hidden, [hidden] {
+    .adf-hidden, [hidden] {
         display: none !important;
     }
 }
@@ -235,7 +235,7 @@
     }
 }
 
-.viewer-pdf-viewer {
+.adf-viewer-pdf-viewer {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     position: absolute;
@@ -245,9 +245,9 @@
     left: 0;
     outline: none;
 }
-html[dir='ltr'] .viewer-pdf-viewer {
+html[dir='ltr'] .adf-viewer-pdf-viewer {
     box-shadow: inset 1px 0 0 hsla(0, 0%, 100%, 0.05);
 }
-html[dir='rtl'] .viewer-pdf-viewer {
+html[dir='rtl'] .adf-viewer-pdf-viewer {
     box-shadow: inset -1px 0 0 hsla(0, 0%, 100%, 0.05);
 }
