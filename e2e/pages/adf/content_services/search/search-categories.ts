@@ -32,12 +32,12 @@ export class SearchCategoriesPage {
         return new SearchTextPage(filter);
     }
 
-    dateRangeFilter(filter) {
-        return new DateRangeFilterPage(filter);
-    }
-
     radioFiltersPage(filter) {
         return new SearchRadioPage(filter);
+    }
+
+    dateRangeFilter(filter) {
+        return new DateRangeFilterPage(filter);
     }
 
     checkFilterIsDisplayed(filter) {
