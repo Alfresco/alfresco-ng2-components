@@ -110,7 +110,6 @@ export class SettingsPage {
         this.goToSettingsPage();
         this.setProvider(this.bpm.option, this.bpm.text);
         Util.waitUntilElementIsVisible(this.bpmText);
-        // expect(this.ecmText.isPresent()).toBe(false);
         Util.waitUntilElementIsNotOnPage(this.ecmText);
         await this.clickSsoRadioButton();
         await this.setProcessServicesURL(processServiceURL);
