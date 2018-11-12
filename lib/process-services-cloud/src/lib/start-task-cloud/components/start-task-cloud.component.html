@@ -17,7 +17,7 @@
                         {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.REQUIRED' | translate }}
                     </mat-error>
                     <mat-error *ngIf="nameController.hasError('maxlength')">
-                        {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxTaskNameLength } }}
+                        {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxNameLength } }}
                     </mat-error>
                 </mat-form-field>
             </div>

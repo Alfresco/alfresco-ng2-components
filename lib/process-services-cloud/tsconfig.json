@@ -18,7 +18,6 @@
     "declaration": true,
     "outDir": "../dist/process-services-cloud/",
     "baseUrl" :  "./",
-    "allowSyntheticDefaultImports": true,
     "paths": {
       "@alfresco/adf-content-services": ["../content-services"],
       "@alfresco/adf-insights": ["../analytics"],

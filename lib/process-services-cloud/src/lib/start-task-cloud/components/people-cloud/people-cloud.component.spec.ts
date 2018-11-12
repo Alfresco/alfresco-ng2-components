@@ -24,7 +24,6 @@ import { LogService, setupTestBed } from '@alfresco/adf-core';
 import { fakeUsers, mockRoles } from '../../mock/user-cloud.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { UserCloudModel } from '../../models/user-cloud.model';
 
 describe('PeopleCloudComponent', () => {
     let component: PeopleCloudComponent;
@@ -61,25 +60,6 @@ describe('PeopleCloudComponent', () => {
     it('should able to fetch roles by user id', () => {
         fixture.detectChanges();
         expect(getRolesByUserIdSpy).toHaveBeenCalled();
-    });
-
-    it('should return empty display name for missing model', () => {
-        expect(component.getDisplayName(null)).toBe('');
-    });
-
-    it('should return full name for a given model', () => {
-        let model = <UserCloudModel> { firstName: 'John', lastName: 'Doe'};
-        expect(component.getDisplayName(model)).toBe('John Doe');
-    });
-
-    it('should skip first name for display name', () => {
-        let model = <UserCloudModel> { firstName: null, lastName: 'Doe'};
-        expect(component.getDisplayName(model)).toBe('Doe');
-    });
-
-    it('should skip last name for display name', () => {
-        let model = <UserCloudModel> { firstName: 'John', lastName: null};
-        expect(component.getDisplayName(model)).toBe('John');
     });
 
     it('should show the users if the typed result match', async(() => {

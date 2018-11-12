@@ -43,12 +43,15 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     public FORMAT_DATE: string = 'DD/MM/YYYY';
 
+    /** (required) Name of the app. */
     @Input()
     appName: string;
 
+    /** Maximum length of the task name. */
     @Input()
-    maxTaskNameLength: number = 255;
+    maxNameLength: number = 255;
 
+    /** Name of the task. */
     @Input()
     name: string = '';
 
@@ -107,13 +110,13 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     buildForm() {
         this.taskForm = this.formBuilder.group({
-            name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxTaskNameLength)]),
+            name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxNameLength)]),
             priority: new FormControl(),
             description: ''
         });
     }
 
-    public saveTask(): void {
+    public saveTask() {
         this.submitted = true;
         let newTask = new TaskDetailsCloudModel(this.taskForm.value);
         newTask.appName = this.getAppName();
@@ -136,12 +139,12 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
             });
     }
 
-    public onCancel(): void {
+    public onCancel() {
         this.cancel.emit();
     }
 
     private getDueDate(): Date {
-        return this.dueDate ? this.dueDate : null;
+        return this.dueDate;
     }
 
     private getAppName(): string {
@@ -152,7 +155,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         return this.assigneeName ? this.assigneeName : '';
     }
 
-    onDateChanged(newDateValue): void {
+    onDateChanged(newDateValue) {
         this.dateError = false;
 
         if (newDateValue) {

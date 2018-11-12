@@ -198,7 +198,7 @@ describe('StartTaskCloudComponent', () => {
     });
 
     it('should emit error when task name exceeds maximum length', () => {
-        component.maxTaskNameLength = 2;
+        component.maxNameLength = 2;
         component.ngOnInit();
         fixture.detectChanges();
         let name = component.taskForm.controls['name'];

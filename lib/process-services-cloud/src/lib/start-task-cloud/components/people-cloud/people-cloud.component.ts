@@ -46,9 +46,11 @@ export class PeopleCloudComponent implements OnInit {
     static ACTIVITI_USER = 'ACTIVITI_USER';
     static ACTIVITI_MODELER = 'ACTIVITI_MODELER';
 
+    /** Emitted when a user is selected. */
     @Output()
     selectedUser: EventEmitter<UserCloudModel> = new EventEmitter<UserCloudModel>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
@@ -70,7 +72,7 @@ export class PeopleCloudComponent implements OnInit {
         this.initSearch();
     }
 
-    initSearch(): void {
+    initSearch() {
         this.searchUser.valueChanges.subscribe((searchedWord) => {
             this.users$ = this.filterUsers(this.users, searchedWord);
         });
@@ -131,7 +133,7 @@ export class PeopleCloudComponent implements OnInit {
         return Array.from(userMap.values());
     }
 
-    onSelect(selectedUser: UserCloudModel): void {
+    onSelect(selectedUser: UserCloudModel) {
         this.selectedUser.emit(selectedUser);
         this.dataError = false;
     }

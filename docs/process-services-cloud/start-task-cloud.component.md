@@ -25,7 +25,8 @@ Creates/Starts new task for the specified app
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | (required) The name of the app. |
-| name | `string` |  | you can specific default task name. |
+| name | `string` |  | Name of the task. |
+| maxNameLength | `number` | 255 | Maximum length of the task name. |
 
 ### Events
 
