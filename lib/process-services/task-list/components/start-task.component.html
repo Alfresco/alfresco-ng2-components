@@ -7,11 +7,15 @@
             <div class="adf-task-name">
                 <mat-form-field fxFlex>
                     <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME' | translate}}</mat-label>
-                    <input matInput
+                    <input 
+                        matInput
                         id="name_id"
                         formControlName="name">
-                        <mat-error *ngIf="errorMessage">
-                            {{ errorMessage | translate : { characters : maxTaskNameLength } }}
+                        <mat-error *ngIf="nameController.hasError('required')">
+                            {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.REQUIRED' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="nameController.hasError('maxlength')">
+                            {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxTaskNameLength } }}
                         </mat-error>
                 </mat-form-field>
             </div>
@@ -28,20 +32,19 @@
             </div>
             <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
                 <mat-form-field fxFlex>
-                    <input matInput
-                        [matDatepicker]="taskDatePicker"
-                        (keydown)="true"
+                    <input 
+                        matInput
                         (keyup)="onDateChanged($event.srcElement.value)"
                         (dateInput)="onDateChanged($event.value)"
+                        [matDatepicker]="taskDatePicker"
                         placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
-                        [(ngModel)]="dueDate"
-                        [ngModelOptions]="{standalone: true}"
                         id="date_id">
-                    <mat-datepicker-toggle matSuffix [for]="taskDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #taskDatePicker
-                        [touchUi]="true"
-                        (dateChanged)="onDateChanged($event)"
-                        (opened)="clearDateInput()">
+                    <mat-datepicker-toggle 
+                        matSuffix
+                        [for]="taskDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker 
+                        #taskDatePicker
+                        [touchUi]="true">
                     </mat-datepicker>
                     <div class="adf-error-text-container">
                         <div *ngIf="dateError">
@@ -56,11 +59,11 @@
             </div>
             <div class="adf-task-form">
                 <mat-form-field fxFlex="48%" fxFlex.xs="100%">
-                    <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}</mat-label>
+                    <mat-label id="form_label">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}</mat-label>
                     <mat-select
-                    id="form_id"
-                    class="form-control"
-                    formControlName="formKey" >
+                        id="form_id"
+                        class="form-control"
+                        formControlName="formKey">
                     <mat-option>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
                     <mat-option *ngFor="let form of forms$ | async" [value]="form.id">{{ form.name }}</mat-option>
                     </mat-select>
@@ -79,7 +82,7 @@
             <button
                 color="primary"
                 mat-button
-                [disabled]="!isFormValid() || dateError"
+                [disabled]="!isFormValid()"
                 (click)="saveTask()"
                 id="button-start">
                 {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}
