@@ -26,7 +26,7 @@ import AcsUserModel = require('../../../models/ACS/acsUserModel');
 
 import TestConfig = require('../../../test.config');
 
-import path = require('path');
+import { SearchConfiguration } from '../search.config';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../../actions/ACS/upload.actions';
@@ -129,164 +129,177 @@ describe('Search Radio Component', () => {
         contentList.checkContentIsNotDisplayed(nodeNames.folder);
     });
 
-    it('[C277143] Should be able to click show more/less button with pageSize set as default', () => {
-        navigationBarPage.clickConfigEditorButton();
+    describe('configuration change',()=> {
+        let jsonFile;
 
-        let json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
+        beforeEach(()=> {
+            let searchConfiguration = new SearchConfiguration();
+            jsonFile = searchConfiguration.getConfiguration();
+        });
 
-        for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
-            json.categories[1].component.settings.options.push({ 'name': 'Folder', 'value': "TYPE:'cm:folder'" });
-        }
+        it('[C277143] Should be able to click show more/less button with pageSize set as default', () => {
+            navigationBarPage.clickConfigEditorButton();
 
-        configEditorPage.clickSearchConfiguration();
-        configEditorPage.clickClearButton();
-        configEditorPage.enterBigConfigurationText(JSON.stringify(json));
-        configEditorPage.clickSaveButton();
+            for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
+                jsonFile.categories[1].component.settings.options.push({ 'name': 'Folder', 'value': "TYPE:'cm:folder'" });
+            }
 
-        searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
-        searchFiltersPage.clickCheckListFilter();
+            configEditorPage.clickSearchConfiguration();
+            configEditorPage.clickClearButton();
+            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
+            configEditorPage.clickSaveButton();
 
-        expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
+            searchFiltersPage.clickCheckListFilter();
 
-        searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
-        searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
+            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
-        searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
+            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
+            searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
 
-        expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
 
-        searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
-        searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
+            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
-        searchFiltersPage.checkListFiltersPage().clickShowLessButton();
+            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
+            searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
 
-        expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            searchFiltersPage.checkListFiltersPage().clickShowLessButton();
 
-        searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
-        searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
+            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
-        browser.refresh();
-    });
+            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
+            searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
 
-    it('[C277144] Should be able to click show more/less button with pageSize set with a custom value', () => {
-        navigationBarPage.clickConfigEditorButton();
+            browser.refresh();
+        });
 
-        let json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
-        json.categories[1].component.settings.pageSize = 10;
+        it('[C277144] Should be able to click show more/less button with pageSize set with a custom value', () => {
+            navigationBarPage.clickConfigEditorButton();
 
-        for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
-            json.categories[1].component.settings.options.push({ 'name': 'Folder', 'value': "TYPE:'cm:folder'" });
-        }
+            jsonFile.categories[1].component.settings.pageSize = 10;
 
-        configEditorPage.clickSearchConfiguration();
-        configEditorPage.clickClearButton();
-        configEditorPage.enterBigConfigurationText(JSON.stringify(json));
-        configEditorPage.clickSaveButton();
+            for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
+                jsonFile.categories[1].component.settings.options.push({ 'name': 'Folder', 'value': "TYPE:'cm:folder'" });
+            }
 
-        searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
-        searchFiltersPage.clickCheckListFilter();
+            configEditorPage.clickSearchConfiguration();
+            configEditorPage.clickClearButton();
+            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
+            configEditorPage.clickSaveButton();
 
-        expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
+            searchFiltersPage.clickCheckListFilter();
 
-        searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
+            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
-        browser.refresh();
+            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
 
-        navigationBarPage.clickConfigEditorButton();
+            browser.refresh();
 
-        json.categories[1].component.settings.pageSize = 11;
+            navigationBarPage.clickConfigEditorButton();
 
-        configEditorPage.clickSearchConfiguration();
-        configEditorPage.clickClearButton();
-        configEditorPage.enterBigConfigurationText(JSON.stringify(json));
-        configEditorPage.clickSaveButton();
+            jsonFile.categories[1].component.settings.pageSize = 11;
 
-        searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
-        searchFiltersPage.clickCheckListFilter();
+            configEditorPage.clickSearchConfiguration();
+            configEditorPage.clickClearButton();
+            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
+            configEditorPage.clickSaveButton();
 
-        expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
+            searchFiltersPage.clickCheckListFilter();
 
-        searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
+            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
-        browser.refresh();
+            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
 
-        navigationBarPage.clickConfigEditorButton();
+            browser.refresh();
 
-        json.categories[1].component.settings.pageSize = 9;
+            navigationBarPage.clickConfigEditorButton();
 
-        configEditorPage.clickSearchConfiguration();
-        configEditorPage.clickClearButton();
-        configEditorPage.enterBigConfigurationText(JSON.stringify(json));
-        configEditorPage.clickSaveButton();
+            jsonFile.categories[1].component.settings.pageSize = 9;
 
-        searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
-        searchFiltersPage.clickCheckListFilter();
+            configEditorPage.clickSearchConfiguration();
+            configEditorPage.clickClearButton();
+            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
+            configEditorPage.clickSaveButton();
 
-        expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(9);
+            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
+            searchFiltersPage.clickCheckListFilter();
 
-        searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
+            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(9);
 
-        browser.refresh();
-    });
+            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
 
-    it('[C277145] Should be able to click show more/less button with pageSize set to zero', () => {
-        navigationBarPage.clickConfigEditorButton();
+            browser.refresh();
+        });
 
-        let json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
-        json.categories[1].component.settings.pageSize = 0;
+        it('[C277145] Should be able to click show more/less button with pageSize set to zero', () => {
+            navigationBarPage.clickConfigEditorButton();
 
-        for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
-            json.categories[1].component.settings.options.push({ 'name': 'Folder', 'value': "TYPE:'cm:folder'" });
-        }
+            jsonFile.categories[1].component.settings.pageSize = 0;
 
-        configEditorPage.clickSearchConfiguration();
-        configEditorPage.clickClearButton();
-        configEditorPage.enterBigConfigurationText(JSON.stringify(json));
-        configEditorPage.clickSaveButton();
+            for (let numberOfOptions = 0; numberOfOptions < 8; numberOfOptions++) {
+                jsonFile.categories[1].component.settings.options.push({ 'name': 'Folder', 'value': "TYPE:'cm:folder'" });
+            }
 
-        searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
-        searchFiltersPage.clickCheckListFilter();
+            configEditorPage.clickSearchConfiguration();
+            configEditorPage.clickClearButton();
+            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
+            configEditorPage.clickSaveButton();
 
-        expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
+            searchFiltersPage.clickCheckListFilter();
 
-        searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
-        searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
+            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
-        searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
+            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
+            searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
 
-        expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
 
-        searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
-        searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
+            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
 
-        browser.refresh();
+            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
+            searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
 
-        navigationBarPage.clickConfigEditorButton();
+            browser.refresh();
 
-        delete json.categories[1].component.settings.pageSize;
+            navigationBarPage.clickConfigEditorButton();
 
-        configEditorPage.clickSearchConfiguration();
-        configEditorPage.clickClearButton();
-        configEditorPage.enterBigConfigurationText(JSON.stringify(json));
-        configEditorPage.clickSaveButton();
+            delete jsonFile.categories[1].component.settings.pageSize;
 
-        searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
-        searchFiltersPage.clickCheckListFilter();
+            configEditorPage.clickSearchConfiguration();
+            configEditorPage.clickClearButton();
+            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
+            configEditorPage.clickSaveButton();
 
-        expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
+            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
+            searchFiltersPage.clickCheckListFilter();
 
-        searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
-        searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
+            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
 
-        searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
+            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsDisplayed();
+            searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsNotDisplayed();
 
-        expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+            searchFiltersPage.checkListFiltersPage().clickShowMoreButton();
 
-        searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
-        searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
+            expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
+
+            searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
+            searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
+        });
+
     });
 
     describe('Properties', () => {
+
+        let jsonFile;
+
+        beforeEach(()=> {
+            let searchConfiguration = new SearchConfiguration();
+            jsonFile = searchConfiguration.getConfiguration();
+        });
 
         beforeAll(async (done) => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
@@ -297,12 +310,11 @@ describe('Search Radio Component', () => {
         it('[C277018] Should be able to change the operator', () => {
             navigationBarPage.clickConfigEditorButton();
 
-            let json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
-            json.categories[1].component.settings.operator = 'AND';
+            jsonFile.categories[1].component.settings.operator = 'AND';
 
             configEditorPage.clickSearchConfiguration();
             configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(json));
+            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
             configEditorPage.clickSaveButton();
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
@@ -325,12 +337,11 @@ describe('Search Radio Component', () => {
         it('[C277019] Should be able to add new properties with different types', () => {
             navigationBarPage.clickConfigEditorButton();
 
-            let json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
-            json.categories[1].component.settings.options.push({ 'name': filterType.custom, 'value': "TYPE:'cm:auditable'" });
+            jsonFile.categories[1].component.settings.options.push({ 'name': filterType.custom, 'value': "TYPE:'cm:auditable'" });
 
             configEditorPage.clickSearchConfiguration();
             configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(json));
+            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
             configEditorPage.clickSaveButton();
 
             searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
