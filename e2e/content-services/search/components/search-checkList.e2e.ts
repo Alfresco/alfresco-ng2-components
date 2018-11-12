@@ -129,10 +129,10 @@ describe('Search Radio Component', () => {
         contentList.checkContentIsNotDisplayed(nodeNames.folder);
     });
 
-    describe('configuration change',()=> {
+    describe('configuration change', () => {
         let jsonFile;
 
-        beforeEach(()=> {
+        beforeEach(() => {
             let searchConfiguration = new SearchConfiguration();
             jsonFile = searchConfiguration.getConfiguration();
         });
@@ -296,7 +296,7 @@ describe('Search Radio Component', () => {
 
         let jsonFile;
 
-        beforeEach(()=> {
+        beforeEach(() => {
             let searchConfiguration = new SearchConfiguration();
             jsonFile = searchConfiguration.getConfiguration();
         });
