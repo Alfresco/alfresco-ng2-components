@@ -17,7 +17,7 @@ fairly straightforward to maintain.
 -   [Using the translate pipe](#using-the-translate-pipe)
 -   [Adding and replacing messages](#adding-and-replacing-messages)
 -   [Interpolations](#interpolations)
--   [Selecting the display language](#selecting-the-display-language)
+-   [How the display language is selected](#how-the-display-language-is-selected)
 -   [Support for i18n within ADF components](#support-for-i18n-within-adf-components)
 -   [See also](#see-also)
 
@@ -227,19 +227,42 @@ You can use interpolations with the `translate` pipe in a similar way:
 
 <!-- {% endraw %} -->
 
-## Selecting the display language
+## How the display language is selected
 
-ADF provides a [Language Menu component](../core/language-menu.component.md) that
-you can add to a page to let the user choose their preferred language. The
-available languages are defined in the `app.config.json` file for the app.
+The `locale` preference in the [user preferences](../core/user-preferences.service.md)
+contains the language code that will be used to display the ADF app. Since the user
+preferences can only be saved by the app when it runs, they will not immediately be available when
+the app launches for the first time. The app uses the following priorities to determine
+the locale language for the first launch:
 
-Note that when the user selects an item from the menu, it simply changes the "locale"
-preference (which you can get via the [User Preferences service](../core/user-preferences.service.md)).
-The `translate` pipe reacts automatically to this and changes the page text
-immediately to the new language. However, text added via a variable set using
-[`TranslationService`](../core/translation.service.md)`.get`, as in the example above, will not be updated like this;
-you will need to get a new translation and set the variable's value again explicitly
-from the code.
+1. If the `locale` property is set in `app.config.json` then this will be used.
+1. If there is no `locale` property then the browser's language setting will be used instead.
+1. If neither of the first two options is available then English will be used by default.
+
+The table below illustrates how the selection is made:
+
+| User Preference | `locale` in `app.config.json` | Browser language | Default | Result |
+| -- | -- | -- | -- | -- |
+| X | X | X | en | en |
+| X | X | jp | en | jp |
+| X | fr | jp | en | fr |
+| it | fr | jp | en | it |
+
+Once the locale language is determined, it is saved to the user preferences and this saved value
+will be used from that point on, regardless of the `app.config.json` and browser settings.
+
+However, you can change the `locale` user preference from code using the
+[User Preferences service](../core/user-preferences.service.md) and the updated value
+will still override any browser or `app.config.json` settings.
+ADF also provides a [Language Menu component](../core/language-menu.component.md) that
+you can add to a page to let the user set the `locale` preference easily. The
+list of available languages is defined in the `app.config.json` file for the app.
+
+The `translate` pipe reacts automatically to a change in the locale language and
+immediately updates the display. However, text added via a variable set using
+[`TranslationService`](../core/translation.service.md)`.get`, as in the example above, will not be
+updated directly in this way. Instead, you will need to get a new translation and set the
+variable's value again explicitly from the code.
 
 See the [Language Menu component](../core/language-menu.component.md) page for further
 details and usage examples.
