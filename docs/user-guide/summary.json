@@ -8,7 +8,7 @@
     { "title": "Walkthrough - adding indicators to highlight information about a node", "file": "metadata-indicators.md" },
     { "title": "Tutorials", "file": "tutorialIndex.md",
         "children": [
-            { "title": "Preparing the development environment", "file": "preparing-environment.md"},
+            { "title": "Creating your first ADF application", "file": "creating-your-first-adf-application.md"},
             { "title": "Creating your ADF application using Yeoman", "file": "creating-the-app-using-yeoman.md"},
             { "title": "Creating your JavaScript application using alfresco-js-api", "file": "creating-javascript-app-using-alfresco-js-api.md"},
             { "title": "Adding a new component", "file": "new-component.md"},
