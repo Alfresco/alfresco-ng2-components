@@ -26,7 +26,7 @@ import { LoginSuccessEvent } from '../models/login-success.event';
     encapsulation: ViewEncapsulation.None
 })
 export class LoginDialogPanelComponent {
-
+    /** Emitted when the login succeeds. */
     @Output()
     success = new EventEmitter<LoginSuccessEvent>();
 
