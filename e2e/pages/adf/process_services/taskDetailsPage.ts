@@ -54,7 +54,7 @@ export class TaskDetailsPage {
     auditLogButton = element(by.css('button[adf-task-audit]'));
     noPeopleInvolved = element(by.id('no-people-label'));
     cancelInvolvePeopleButton = element(by.id('close-people-search'));
-    involvePeopleHeader = element(by.css('div[class="search-text-header"]'));
+    involvePeopleHeader = element(by.css('div[class="adf-search-text-header"]'));
     removeInvolvedPeople = element(by.css('button[data-automation-id="Remove"]'));
     peopleTitle = element(by.id('people-title'));
     editFormButton = element.all(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-create"]')).last();

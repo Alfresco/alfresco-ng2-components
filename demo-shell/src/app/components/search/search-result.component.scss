@@ -20,7 +20,7 @@
     }
 }
 
-div.search-results-container {
+div.adf-search-results-container {
     padding: 0 20px 20px;
 }
 
@@ -30,13 +30,13 @@ div.search-results-container {
 }
 
 @media screen and (max-width: 600px) {
-    :host .col-display-name {
+    :host .adf-col-display-name {
         min-width: 100px;
     }
-    :host .col-modified-at, :host .col-modified-by {
+    :host .adf-col-modified-at, :host .adf-col-modified-by {
         display: none;
     }
-    :host div.search-results-container table {
+    :host div.adf-search-results-container table {
         width: 100%;
     }
 }

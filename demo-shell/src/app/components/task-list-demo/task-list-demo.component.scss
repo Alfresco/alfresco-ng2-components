@@ -1,10 +1,10 @@
-.task-list-demo-inputs {
+.adf-task-list-demo-inputs {
     margin: 20px auto 0;
     max-width: 1200px;
 
     & mat-form-field {
         margin: 20px 5px;
-        width: calc(100% * (1/4) - 10px);
+        width: calc(100% * (1 / 4) - 10px);
     }
 }
 
@@ -14,7 +14,7 @@
     justify-content: center;
 }
 
-.task-list-demo-error-message {
+.adf-task-list-demo-error-message {
     color: red;
     text-align: center;
 }

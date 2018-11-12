@@ -1,13 +1,13 @@
 <div
-    *ngIf="data" class="full-width"
+    *ngIf="data" class="adf-full-width"
     [class.adf-data-table-card]="display === 'gallery'"
     [class.adf-data-table]="display === 'list'"
     [class.adf-data-table--empty]="isEmpty()">
     <div *ngIf="isHeaderVisible()" class="adf-datatable-header">
         <div class="adf-datatable-row" *ngIf="display === 'list'">
             <!-- Actions (left) -->
-            <div *ngIf="actions && actionsPosition === 'left'" class="actions-column adf-datatable-table-cell-header">
-                <span class="sr-only">Actions</span>
+            <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-table-cell-header">
+                <span class="adf-sr-only">Actions</span>
             </div>
             <!-- Columns -->
             <div *ngIf="multiselect" class="adf-datatable-table-cell-header">
@@ -15,7 +15,7 @@
             </div>
             <div class="adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-table-cell-header"
                  *ngFor="let col of data.getColumns()"
-                 [class.sortable]="col.sortable"
+                 [class.adf-sortable]="col.sortable"
                  [attr.data-automation-id]="'auto_id_' + col.key"
                  [class.adf-data-table__header--sorted-asc]="isColumnSorted(col, 'asc')"
                  [class.adf-data-table__header--sorted-desc]="isColumnSorted(col, 'desc')"
@@ -24,12 +24,12 @@
                  role="button"
                  tabindex="0"
                  title="{{ col.title | translate }}">
-                <span *ngIf="col.srTitle" class="sr-only">{{ col.srTitle | translate }}</span>
+                <span *ngIf="col.srTitle" class="adf-sr-only">{{ col.srTitle | translate }}</span>
                 <span *ngIf="col.title">{{ col.title | translate}}</span>
             </div>
             <!-- Actions (right) -->
-            <div *ngIf="actions && actionsPosition === 'right'" class="actions-column adf-datatable-table-cell-header">
-                <span class="sr-only">Actions</span>
+            <div *ngIf="actions && actionsPosition === 'right'" class="adf-actions-column adf-datatable-table-cell-header">
+                <span class="adf-sr-only">Actions</span>
             </div>
         </div>
         <mat-form-field *ngIf="display === 'gallery'">
@@ -50,7 +50,7 @@
             <div *ngFor="let row of data.getRows(); let idx = index"
                  class="adf-datatable-row"
                  role="button"
-                 [class.is-selected]="row.isSelected"
+                 [class.adf-is-selected]="row.isSelected"
                  [adf-upload]="allowDropFiles && rowAllowsDrop(row)" [adf-upload-data]="row"
                  [ngStyle]="rowStyle"
                  [ngClass]="getRowStyle(row)"
@@ -89,9 +89,9 @@
                      (keydown.enter)="onEnterKeyPressed(row, $event)"
                      [context-menu]="getContextMenuActions(row, col)"
                      [context-menu-enabled]="contextMenu">
-                    <div *ngIf="!col.template" class="cell-container">
+                    <div *ngIf="!col.template" class="adf-cell-container">
                         <ng-container [ngSwitch]="col.type">
-                            <div *ngSwitchCase="'image'" class="cell-value">
+                            <div *ngSwitchCase="'image'" class="adf-cell-value">
                                 <mat-icon *ngIf="isIconValue(row, col); else no_iconvalue">{{ asIconValue(row, col) }}
                                 </mat-icon>
                                 <ng-template #no_iconvalue>
@@ -106,11 +106,11 @@
                                     </ng-template>
                                 </ng-template>
                             </div>
-                            <div *ngSwitchCase="'icon'" class="cell-value">
-                                <span class="sr-only">{{ iconAltTextKey(data.getValue(row, col)) | translate }}</span>
+                            <div *ngSwitchCase="'icon'" class="adf-cell-value">
+                                <span class="adf-sr-only">{{ iconAltTextKey(data.getValue(row, col)) | translate }}</span>
                                 <mat-icon>{{ data.getValue(row, col) }}</mat-icon>
                             </div>
-                            <div *ngSwitchCase="'date'" class="cell-value"
+                            <div *ngSwitchCase="'date'" class="adf-cell-value"
                                  [attr.data-automation-id]="'date_' + (data.getValue(row, col) | date: 'medium') ">
                                 <adf-date-cell
                                     [data]="data"
@@ -119,7 +119,7 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-date-cell>
                             </div>
-                            <div *ngSwitchCase="'location'" class="cell-value"
+                            <div *ngSwitchCase="'location'" class="adf-cell-value"
                                  [attr.data-automation-id]="'location' + data.getValue(row, col)">
                                 <adf-location-cell
                                     [data]="data"
@@ -128,7 +128,7 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-location-cell>
                             </div>
-                            <div *ngSwitchCase="'fileSize'" class="cell-value"
+                            <div *ngSwitchCase="'fileSize'" class="adf-cell-value"
                                  [attr.data-automation-id]="'fileSize_' + data.getValue(row, col)">
                                 <adf-filesize-cell
                                     [data]="data"
@@ -137,7 +137,7 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-filesize-cell>
                             </div>
-                            <div *ngSwitchCase="'text'" class="cell-value"
+                            <div *ngSwitchCase="'text'" class="adf-cell-value"
                                  [attr.data-automation-id]="'text_' + data.getValue(row, col)">
                                 <adf-datatable-cell
                                     [data]="data"
@@ -146,12 +146,12 @@
                                     [tooltip]="getCellTooltip(row, col)">
                                 </adf-datatable-cell>
                             </div>
-                            <span *ngSwitchDefault class="cell-value">
+                            <span *ngSwitchDefault class="adf-cell-value">
                     <!-- empty cell for unknown column type -->
                     </span>
                         </ng-container>
                     </div>
-                    <div *ngIf="col.template" class="cell-container">
+                    <div *ngIf="col.template" class="adf-cell-container">
                         <ng-container
                             [ngTemplateOutlet]="col.template"
                             [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col) }">
@@ -161,7 +161,7 @@
 
                 <!-- Actions (right) -->
                 <div *ngIf="actions && actionsPosition === 'right'"
-                     class="adf-datatable-table-cell alfresco-datatable__actions-cell">
+                     class="adf-datatable-table-cell adf-datatable__actions-cell">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
                             [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
                             [attr.id]="'action_menu_right_' + idx"

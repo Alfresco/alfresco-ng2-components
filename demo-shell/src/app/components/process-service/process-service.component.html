@@ -1,7 +1,7 @@
 <mat-tab-group [(selectedIndex)]="activeTab" (selectedTabChange)="onTabChange($event)"
                data-automation-id="navigation-bar">
-    <mat-tab id="tasks-header" href="#tasks" label="{{'PS-TAB.TASKS-TAB' | translate}}">
-        <div class="page-content" *ngIf="showTaskTab">
+    <mat-tab id="adf-tasks-header" href="#tasks" label="{{'PS-TAB.TASKS-TAB' | translate}}">
+        <div class="adf-page-content" *ngIf="showTaskTab">
             <div class="adf-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
                 <div class="adf-grid-item adf-tasks-menu" fxFlex.gt-md="265px">
                     <div class="adf-list-buttons">
@@ -57,8 +57,8 @@
                         <!-- Custom column definition demo -->
 
                         <!-- <data-columns>
-                            <data-column key="name" title="{{'ADF_TASK_LIST.PROPERTIES.NAME' | translate}}" class="full-width name-column"></data-column>
-                            <data-column key="created" title="{{'ADF_TASK_LIST.PROPERTIES.CREATED' | translate}}" class="hidden"></data-column>
+                            <data-column key="name" title="{{'ADF_TASK_LIST.PROPERTIES.NAME' | translate}}" class="adf-full-width name-column"></data-column>
+                            <data-column key="created" title="{{'ADF_TASK_LIST.PROPERTIES.CREATED' | translate}}" class="adf-hidden"></data-column>
                         </data-columns> -->
 
                     </adf-tasklist>
@@ -113,7 +113,7 @@
     </mat-tab>
     <mat-tab id="processes-header" href="#processes"
              label="{{'PS-TAB.PROCESSES-TAB' | translate}}">
-        <div class="page-content" *ngIf="showProcessTab">
+        <div class="adf-page-content" *ngIf="showProcessTab">
             <div class="adf-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
                 <div class="adf-grid-item adf-processes-menu" fxFlex.gt-md="225px">
                     <div class="adf-list-buttons">
@@ -150,7 +150,7 @@
                     </mat-accordion>
                 </div>
                 <div class="adf-grid-item adf-processes-list adf-list" fxFlex.gt-md="380px"
-                     [ngClass.gt-md]="{'small-pagination': true}"
+                     [ngClass.gt-md]="{'adf-small-pagination': true}"
                      *ngIf="processFilter && !isStartProcessMode()">
                     <adf-process-instance-list
                         #processList
@@ -169,8 +169,8 @@
                         <!-- Custom column definition demo -->
 
                         <!-- <data-columns>
-                            <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
-                            <data-column key="created" title="ADF_PROCESS_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
+                            <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="adf-full-width name-column"></data-column>
+                            <data-column key="created" title="ADF_PROCESS_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
                         </data-columns> -->
 
                     </adf-process-instance-list>

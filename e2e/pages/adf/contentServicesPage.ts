@@ -509,7 +509,7 @@ export class ContentServicesPage {
     navigateToCardFolder(folderName) {
         let folderCard = element(by.css(`.document-list-container div.image-table-cell.adf-data-table-cell[filename="${folderName}"]`));
         folderCard.click();
-        let folderSelected = element(by.css(`.adf-datatable-row.is-selected div[filename="${folderName}"].adf-data-table-cell--image`));
+        let folderSelected = element(by.css(`.adf-datatable-row.adf-is-selected div[filename="${folderName}"].adf-data-table-cell--image`));
         Util.waitUntilElementIsVisible(folderSelected);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }

@@ -1,17 +1,17 @@
-<mat-card class="assignment-top-container">
-    <div mat-card-content class="assignment-top-container-content">
+<mat-card class="adf-assignment-top-container">
+    <div mat-card-content class="adf-assignment-top-container-content">
         <div class="assignment-header">
-                <div *ngIf="hasPeople()" class="assigment-count" id="people-title">
+                <div *ngIf="hasPeople()" class="adf-assignment-count" id="people-title">
                     {{ 'ADF_TASK_LIST.DETAILS.LABELS.PEOPLE' | translate }} {{ ' (' + people.length + ')' }}
                 </div>
-                <div *ngIf="!hasPeople()" class="assigment-count" id="no-people-label">
+                <div *ngIf="!hasPeople()" class="adf-assignment-count" id="no-people-label">
                     {{ 'ADF_TASK_LIST.DETAILS.PEOPLE.NONE' | translate }}
                 </div>
-                <div *ngIf="isEditMode()" class="add-people" (click)="onAddAssignment()">
+                <div *ngIf="isEditMode()" class="adf-add-people" (click)="onAddAssignment()">
                     <mat-icon class="adf-add-person-icon">person_add</mat-icon>
                 </div>
             </div>
-            <div class="assignment-container" *ngIf="showAssignment">
+            <div class="adf-assignment-container" *ngIf="showAssignment">
                 <adf-people-search
                     #peopleSearch
                     (searchPeople)="searchUser($event)"
@@ -22,7 +22,7 @@
                     <ng-container people-search-action-label>{{ 'ADF_TASK_LIST.PEOPLE.ADD_USER' | translate }}</ng-container>
                 </adf-people-search>
             </div>
-            <div class="assignment-list-container" id="assignment-people-list" *ngIf="hasPeople()">
+            <div class="adf-assignment-list-container" id="assignment-people-list" *ngIf="hasPeople()">
                 <adf-people-list
                 [users]="people"
                 [actions]="isEditMode()"
@@ -33,16 +33,16 @@
                                 <div *ngIf="!entry.row.obj.pictureId" class="adf-people-search-people-pic">
                                     {{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
                                 <div>
-                                    <img *ngIf="entry.row.obj.pictureId" class="people-img"
+                                    <img *ngIf="entry.row.obj.pictureId" class="adf-people-img"
                                         [src]="peopleProcessService.getUserImage(entry.row.obj)"/>
                                 </div>
                             </ng-template>
                         </data-column>
-                        <data-column key="email" class="full-width">
+                        <data-column key="email" class="adf-full-width">
                             <ng-template let-entry="$implicit">
-                                <div class="people-full-name">{{ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ') }}</div>
-                                <div class="people-email">{{ entry.row.obj.email }}</div>
-                                <div class="people-edit-label">can edit</div>
+                                <div class="adf-people-full-name">{{ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ') }}</div>
+                                <div class="adf-people-email">{{ entry.row.obj.email }}</div>
+                                <div class="adf-people-edit-label">can edit</div>
                             </ng-template>
                         </data-column>
                     </data-columns>

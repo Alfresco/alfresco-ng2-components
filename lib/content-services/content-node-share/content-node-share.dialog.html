@@ -20,7 +20,7 @@
         </div>
 
         <form [formGroup]="form">
-            <mat-form-field class="full-width">
+            <mat-form-field class="adf-full-width">
                 <input #sharedLinkInput
                     data-automation-id="adf-share-link"
                     class="adf-share-link__input"
@@ -37,7 +37,7 @@
             </mat-form-field>
 
             <h1 class="adf-share-link__label">{{ 'SHARE.EXPIRES' | translate }}</h1>
-            <mat-form-field class="full-width">
+            <mat-form-field class="adf-full-width">
                 <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
                 <mat-datetimepicker #datetimePicker type="datetime" openOnFocus="true" timeInterval="1"></mat-datetimepicker>
                 <input class="adf-share-link__input"

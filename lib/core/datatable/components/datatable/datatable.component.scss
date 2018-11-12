@@ -63,7 +63,7 @@
                 margin-bottom: 0;
             }
 
-            .is-selected {
+            .adf-is-selected {
                 background: mat-color($primary, 100);
                 padding-bottom: 31px;
             }
@@ -117,7 +117,8 @@
                 }
 
             }
-            .alfresco-datatable__actions-cell {
+
+            .adf-datatable__actions-cell {
                 position: absolute;
                 height: 42px !important;
                 width: 42px !important;
@@ -125,7 +126,7 @@
                 text-align: right;
             }
 
-            .image-table-cell {
+            .adf-image-table-cell {
                 margin: 8px;
                 padding: 4px;
                 overflow: visible;
@@ -133,7 +134,7 @@
                 border-bottom-width: 1px;
                 border-bottom-style: solid;
 
-                .cell-container {
+                .adf-cell-container {
                     float: left;
                     width: 42px;
                 }
@@ -216,7 +217,7 @@
                     background-color: $data-table-hover-color;
                 }
 
-                &.is-selected, &.is-selected:hover {
+                &.adf-is-selected, &.adf-is-selected:hover {
                     background-color: $data-table-selection-color;
                 }
 
@@ -264,16 +265,15 @@
             padding-top: $data-table-cell-top;
             box-sizing: border-box;
 
-            @include no-select;
+            @include adf-no-select;
         }
 
         .adf-datatable-table-cell-header {
-            @include no-select;
+            @include adf-no-select;
             cursor: pointer;
             position: relative;
             vertical-align: bottom;
             text-overflow: ellipsis;
-            font-size: 14px;
             font-weight: bold;
             line-height: 24px;
             letter-spacing: 0;
@@ -284,8 +284,8 @@
             box-sizing: border-box;
             white-space: nowrap;
 
-            &.sortable {
-                @include no-select;
+            &.adf-sortable {
+                @include adf-no-select;
                 &:hover {
                     cursor: pointer;
                 }
@@ -329,7 +329,7 @@
                 width: 10px;
                 text-align: left;
 
-                .cell-value {
+                .adf-cell-value {
                     height: 24px;
                 }
 
@@ -338,7 +338,7 @@
                 }
             }
 
-            .cell-container {
+            .adf-cell-container {
                 display: flex;
                 align-items: center;
             }
@@ -356,7 +356,7 @@
             }
         }
 
-        .full-width {
+        .adf-full-width {
             width: 100%;
         }
 
@@ -392,12 +392,12 @@
             }
         }
 
-        .ellipsis-cell {
-            .cell-container {
+        .adf-ellipsis-cell {
+            .adf-cell-container {
                 height: 100%;
             }
 
-            .cell-container > * {
+            .adf-cell-container > * {
                 display: block;
                 position: absolute;
                 max-width: calc(100% - 2em);
@@ -408,7 +408,7 @@
             }
 
             /* visible content */
-            .cell-value {
+            .adf-cell-value {
                 display: block;
                 position: absolute;
                 max-width: calc(100% - 2em);
@@ -420,7 +420,7 @@
 
             /* query for Microsoft IE 11*/
             @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-                .cell-value {
+                .adf-cell-value {
                     top: 100%;
                 }
             }
@@ -435,7 +435,7 @@
         }
 
         /* [Accessibility] For screen reader only */
-        .sr-only {
+        .adf-sr-only {
             position: absolute;
             width: 1px;
             height: 1px;
@@ -447,19 +447,19 @@
         }
 
         /* Utils */
-        .hidden {
+        .adf-hidden {
             display: none;
         }
 
         /* mobile phone */
         @media all and (max-width: 768px) {
-            .desktop-only {
+            .adf-desktop-only {
                 display: none;
             }
         }
 
         @media (max-device-width: 768px) {
-            .desktop-only {
+            .adf-desktop-only {
                 display: none;
             }
         }

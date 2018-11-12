@@ -1,5 +1,5 @@
 @mixin adf-login-component-theme($theme) {
-    .setting-button.mat-fab.mat-accent {
+    .adf-setting-button.mat-fab.mat-accent {
         position: absolute;
         right: 10px;
         top: 10px;
@@ -7,7 +7,7 @@
 
     }
 
-    .settings {
+    .adf-settings {
         border-radius: 8px;
         position: absolute;
         background-color: papayawhip;
@@ -17,36 +17,36 @@
         z-index: 1;
     }
 
-    .toggle {
+    .adf-toggle {
         width: auto;
         margin: 5px;
         padding: 5px;
     }
 
-    .mobile-settings, .mobile-setting-button {
+    .adf-mobile-settings, .adf-mobile-setting-button {
         display: none;
     }
 
     @media screen and ($mat-small) {
-        .settings, .setting-button.mat-fab.mat-accent {
+        .adf-settings, .adf-setting-button.mat-fab.mat-accent {
             display: none;
         }
 
-        .mobile-settings, .mobile-setting-button {
+        .adf-mobile-settings, .adf-mobile-setting-button {
             display: block;
         }
 
-        .mobile-setting-button {
+        .adf-mobile-setting-button {
             width: 100%;
         }
 
-        .mobile-settings {
+        .adf-mobile-settings {
             padding-bottom: 20px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
     }
 
-    .settings ::ng-deep .mat-slide-toggle-thumb-container {
+    .adf-settings ::ng-deep .mat-slide-toggle-thumb-container {
         cursor: pointer;
     }
 }

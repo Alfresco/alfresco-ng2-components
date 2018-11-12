@@ -238,7 +238,7 @@
                         key="name"
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         [formatTooltip]="getNodeNameTooltip"
-                        class="full-width ellipsis-cell">
+                        class="adf-full-width adf-ellipsis-cell">
                     </data-column>
                     <!-- Location column demo -->
                     <!--
@@ -259,19 +259,19 @@
                     <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
                         key="id"
-                        class="full-width ellipsis-cell">
+                        class="adf-full-width adf-ellipsis-cell">
                         <ng-template let-entry="$implicit">
                             <alfresco-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></alfresco-tag-node-list>
                         </ng-template>
                     </data-column>
                     -->
                     <data-column
-                        class="full-width ellipsis-cell"
+                        class="adf-full-width adf-ellipsis-cell"
                         title="{{'DOCUMENT_LIST.COLUMNS.NODE_ID' | translate}}"
                         key="id">
                     </data-column>
                     <data-column
-                        class="desktop-only"
+                        class="adf-desktop-only"
                         title="{{'DOCUMENT_LIST.COLUMNS.IS_LOCKED' | translate}}"
                         key="id">
                         <ng-template let-entry="$implicit">
@@ -284,14 +284,14 @@
                     <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
                         key="createdByUser.displayName"
-                        class="desktop-only">
+                        class="adf-desktop-only">
                     </data-column>
                     <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED' | translate}}"
                         key="createdAt"
                         type="date"
                         [format]="enableMediumTimeFormat ? 'medium' : 'timeAgo'"
-                        class="desktop-only">
+                        class="adf-desktop-only">
                     </data-column>
 
                 </data-columns>

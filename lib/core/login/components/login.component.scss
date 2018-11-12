@@ -28,7 +28,7 @@
             }
         }
 
-        .ie11FixerParent {
+        .adf-ie11FixerParent {
             margin-top: 16px;
             min-width: 320px;
 
@@ -42,7 +42,7 @@
         }
 
         // IE11 vertical centering
-        .ie11FixerChild {
+        .adf-ie11FixerChild {
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -50,15 +50,15 @@
             align-items: center;
         }
 
-        .show {
+        .adf-show {
             display: block !important;
         }
 
-        .hide {
+        .adf-hide {
             display: none !important;
         }
 
-        .icon-inline {
+        .adf-icon-inline {
             position: absolute;
             display: block;
             top: 31%;
@@ -99,7 +99,7 @@
             font-size: 13px;
         }
 
-        .adf-error-message .error-icon {
+        .adf-error-message .adf-error-icon {
             margin-right: 10px;
         }
 
@@ -132,20 +132,20 @@
             color: rgb(255, 255, 255);
         }
 
-        .adf-login-button.isChecking {
+        .adf-login-button.adf-isChecking {
             background-color: #e0f7fa;
         }
 
-        .adf-login-button.isChecking .adf-login-button-label {
+        .adf-login-button.adf-isChecking .adf-login-button-label {
             color: #00bcd4;
         }
 
-        .adf-login-button.isWelcome {
+        .adf-login-button.adf-isWelcome {
             background-color: #00bcd4;
             color: #ffffff;
         }
 
-        .adf-login-button.isWelcome .welcome-icon {
+        .adf-login-button.adf-isWelcome .adf-welcome-icon {
             margin: 5px 0 0 10px;
         }
 
@@ -206,7 +206,7 @@
             text-decoration: none;
         }
 
-        .is-active {
+        .adf-is-active {
             background-color: transparent;
             font-size: 12px;
             font-weight: normal;
@@ -214,7 +214,7 @@
             color: mat-color($warn);
         }
 
-        .copyright {
+        .adf-copyright {
             min-width: 320px;
             text-align: center;
             padding: 16px 0;
