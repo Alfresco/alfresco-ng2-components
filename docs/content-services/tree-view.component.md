@@ -1,11 +1,11 @@
 ---
-Added: v2.6.1
+Added: v3.0.0
 Status: Active
 ---
 
-# Rating component
+# Tree View component
 
-Allow a user to show the folder and subfolders of a node in a tree view
+Shows the folder and subfolders of a node as a tree view.
 
 ![TreeView component screenshot](../docassets/images/tree-view.png)
 
@@ -23,10 +23,10 @@ Allow a user to show the folder and subfolders of a node in a tree view
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| nodeId | `string` |  | Identifier of the node to apply the rating to. |
+| nodeId | `string` |  | Identifier of the node to display. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| nodeClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<NodeEntry>` | Emitted when a node on the tree view is clicked |
+| nodeClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` | Emitted when a node in the tree view is clicked. |

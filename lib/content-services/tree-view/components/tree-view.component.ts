@@ -30,9 +30,11 @@ import { NodeEntry } from 'alfresco-js-api';
 
 export class TreeViewComponent implements OnInit, OnChanges {
 
+    /** Identifier of the node to display. */
     @Input()
     nodeId: string;
 
+    /** Emitted when a node in the tree view is clicked. */
     @Output()
     nodeClicked: EventEmitter<NodeEntry> = new EventEmitter();
 

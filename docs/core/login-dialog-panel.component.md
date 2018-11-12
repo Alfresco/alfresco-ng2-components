@@ -14,7 +14,7 @@ Shows and manages a login dialog.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSuccessEvent`](../../lib/core/login/models/login-success.event.ts)`>` | Emitted when the login succeeds |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSuccessEvent`](../../lib/core/login/models/login-success.event.ts)`>` | Emitted when the login succeeds. |
 
 ## Details
 
