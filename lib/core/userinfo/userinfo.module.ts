@@ -22,7 +22,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { PipeModule } from '../pipes/pipe.module';
 import { UserInfoComponent } from './components/user-info.component';
-import { IdentityUserService } from './services/identity-user.service';
 
 @NgModule({
     imports: [
@@ -34,7 +33,6 @@ import { IdentityUserService } from './services/identity-user.service';
     declarations: [
         UserInfoComponent
     ],
-    providers: [ IdentityUserService ],
     exports: [
         UserInfoComponent
     ]

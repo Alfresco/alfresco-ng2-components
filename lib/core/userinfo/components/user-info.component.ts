@@ -76,13 +76,20 @@ export class UserInfoComponent implements OnInit {
     }
 
     getUserInfo() {
-        this.loadEcmUserInfo();
-        this.loadBpmUserInfo();
-        this.loadIdentityUserInfo();
+        if (this.isOauth()) {
+            this.loadIdentityUserInfo();
+        } else {
+            this.loadEcmUserInfo();
+            this.loadBpmUserInfo();
+        }
     }
 
     isLoggedIn() {
         return this.authService.isLoggedIn();
+    }
+
+    isOauth() {
+        return this.authService.isOauth();
     }
 
     loadEcmUserInfo(): void {
@@ -112,7 +119,7 @@ export class UserInfoComponent implements OnInit {
     }
 
     loadIdentityUserInfo() {
-        if (this.isLoggedIn()) {
+        if (this.isOauth()) {
             this.identityUserService.getCurrentIdentityUserInfo().subscribe((res) => {
                 this.identityUser = new IdentityUserModel(res);
             });
