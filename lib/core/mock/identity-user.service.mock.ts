@@ -15,23 +15,8 @@
  * limitations under the License.
  */
 
-export class IdentityUserModel {
+import { IdentityUserModel } from 'userinfo/models/identity-user.model';
 
-    firstName: string;
-    lastName: string;
-    email: string;
-    fullNameDisplay: string;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.firstName = obj.firstName || null;
-            this.lastName = obj.lastName || null;
-            this.email = obj.email || null;
-            this.fullNameDisplay = obj ? this.formatValue(obj.firstName).trim() + ' ' + this.formatValue(obj.lastName).trim() : null;
-        }
-    }
-
-    private formatValue(value: string): string {
-        return value && value !== 'null' ? value : '';
-    }
-}
+export let identityUserMock = new IdentityUserModel({ firstName: 'firstName', lastName: 'lastName', email: 'email' });
+export let identityUserWithOutFirstNameMock = new IdentityUserModel({ firstName: null, lastName: 'lastName', email: 'email' });
+export let identityUserMockLastNameMock = new IdentityUserModel({ firstName: 'firstName', lastName: null, email: 'email' });
