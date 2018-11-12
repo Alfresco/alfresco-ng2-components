@@ -60,7 +60,7 @@ export class UserInfoComponent implements OnInit {
 
     ecmUser: EcmUserModel;
     bpmUser: BpmUserModel;
-    cloudUser: IdentityUserModel;
+    identityUser: IdentityUserModel;
     bpmUserImage: any;
     ecmUserImage: any;
     selectedIndex: number;
@@ -112,9 +112,13 @@ export class UserInfoComponent implements OnInit {
     }
 
     loadIdentityUserInfo() {
-        this.identityUserService.getCurrentIdentityUserInfo().subscribe((res) => {
-            this.cloudUser = new IdentityUserModel(res);
-        });
+        if (this.isLoggedIn()) {
+            this.identityUserService.getCurrentIdentityUserInfo().subscribe((res) => {
+                this.identityUser = new IdentityUserModel(res);
+            });
+        } else {
+            this.identityUser = null;
+        }
     }
 
     stopClosing(event) {

@@ -5,6 +5,8 @@
           class="adf-userinfo-name">{{ecmUser.fullNameDisplay}}</span>
     <span *ngIf="bpmUser && !ecmUser && showName" id="adf-userinfo-bpm-name-display"
           class="adf-userinfo-name">{{bpmUser.fullNameDisplay}}</span>
+    <span *ngIf="identityUser && showName" id="adf-userinfo-identity-name-display"
+          class="adf-userinfo-name">{{identityUser.fullNameDisplay}}</span>
     <button mat-button [matMenuTriggerFor]="menu" class="adf-userinfo-menu_button" data-automation-id="adf-user-profile">
         <div class="adf-userinfo-button-profile" id="user-profile">
             <div *ngIf="bpmUser && !ecmUser" id="bpm-user-image">
@@ -21,6 +23,9 @@
                         <img id="logged-user-img" [src]="ecmUserImage" alt="user-info-profile-button"
                             class="adf-userinfo-profile-image"/>
                     </div>
+            </div>
+            <div *ngIf="identityUser" id="identity-user-image">
+                <div [outerHTML]="identityUser | usernameInitials:'adf-userinfo-pic'"></div>
             </div>
     </div>
 </button>
@@ -78,6 +83,24 @@
                     </div>
                 </mat-card-content>
             </mat-card>
+            </mat-tab>
+            <mat-tab id="identity-panel" label="{{ 'USER_PROFILE.TAB.PSC' | translate }}" *ngIf="identityUser">
+                <mat-card class="adf-userinfo-card">
+                    <mat-card-header class="adf-userinfo-card-header" [style.background-image]="'url(' + ecmBackgroundImage + ')'">
+                        <div
+                             [outerHTML]="identityUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'">
+                        </div>
+                       <div class="adf-userinfo-title" id="ecm-username">{{identityUser.fullNameDisplay}}</div>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="adf-userinfo-supporting-text">
+                                <div class="adf-userinfo-detail">
+                                    <span id="identity-full-name" class="adf-userinfo__detail-title">{{identityUser.fullNameDisplay}}</span>
+                                    <span class="adf-userinfo__detail-profile" id="identity-email"> {{identityUser.email}} </span>
+                                </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
             </mat-tab>
         </mat-tab-group>
     </mat-menu>
