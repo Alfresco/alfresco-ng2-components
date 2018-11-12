@@ -28,7 +28,7 @@ for more information about installing and using the source code.
 | [Text mask component](text-mask.component.md) | Implements text field input masks. | [Source](../../lib/core/form/components/widgets/text/text-mask.component.ts) |
 | [Info drawer layout component](info-drawer-layout.component.md) | Displays a sidebar-style information panel. | [Source](../../lib/core/info-drawer/info-drawer-layout.component.ts) |
 | [Info drawer component](info-drawer.component.md) | Displays a sidebar-style information panel with tabs. | [Source](../../lib/core/info-drawer/info-drawer.component.ts) |
-| [Language menu component](language-menu.component.md) | Displays all the languages that are present in the "app.config.json" or the default one (EN). | [Source](../../lib/core/language-menu/language-menu.component.ts) |
+| [Language menu component](language-menu.component.md) | Displays all the languages that are present in "app.config.json" and the default (EN). | [Source](../../lib/core/language-menu/language-menu.component.ts) |
 | [Header component](header.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Reusable header for Alfresco applications. | [Source](../../lib/core/layout/components/header/header.component.ts) |
 | [Sidebar action menu component](sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../../lib/core/layout/components/sidebar-action/sidebar-action-menu.component.ts) |
 | [Sidenav layout component](sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../../lib/core/layout/components/sidenav-layout/sidenav-layout.component.ts) |
@@ -76,12 +76,12 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [File size pipe](file-size.pipe.md) | Converts a number of bytes to the equivalent in KB, MB, etc. | [Source](../../lib/core/pipes/file-size.pipe.ts) |
+| [Full name pipe](full-name.pipe.md) | Joins the first and last name properties from a UserProcessModel object into a single string. | [Source](../../lib/core/pipes/full-name.pipe.ts) |
 | [Mime type icon pipe](mime-type-icon.pipe.md) | Retrieves an icon to represent a MIME type. | [Source](../../lib/core/pipes/mime-type-icon.pipe.ts) |
 | [Node name tooltip pipe](node-name-tooltip.pipe.md) | Formats the tooltip for a Node. | [Source](../../lib/core/pipes/node-name-tooltip.pipe.ts) |
 | [Text highlight pipe](text-highlight.pipe.md) | Adds highlighting to words or sections of text that match a search string. | [Source](../../lib/core/pipes/text-highlight.pipe.ts) |
 | [Time ago pipe](time-ago.pipe.md) | Converts a recent past date into a number of days ago. | [Source](../../lib/core/pipes/time-ago.pipe.ts) |
 | [User initial pipe](user-initial.pipe.md) | Takes the name fields of a UserProcessModel object and extracts and formats the initials. | [Source](../../lib/core/pipes/user-initial.pipe.ts) |
-| _Full name pipe_ | _Not currently documented_ | [Source](../../lib/core/pipes/full-name.pipe.ts) |
 
 ## Services
 
