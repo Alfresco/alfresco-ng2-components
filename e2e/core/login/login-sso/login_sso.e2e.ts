@@ -19,20 +19,38 @@ import { LoginAPSPage } from '../../../pages/adf/loginApsPage';
 import { SettingsPage } from '../../../pages/adf/settingsPage';
 import TestConfig = require('../../../test.config');
 import { browser } from 'protractor';
+import { NavigationBarPage } from '../../../pages/adf/NavigationBarPage';
 
 describe('Login component - SSO', () => {
 
     const settingsPage = new SettingsPage();
     const loginApsPage = new LoginAPSPage();
+    const navigationBarPage = new NavigationBarPage();
+    const path = '/auth/realms/springboot';
+    let silentLogin;
+    let implicitFlow;
 
-    beforeAll(async (done) => {
-        await settingsPage.setSSO(TestConfig.adf.hostSso, TestConfig.adf.hostSso + '/auth/realms/springboot' );
-        done();
-    });
+    afterEach(() => {
+        navigationBarPage.clickLogoutButton();
+        browser.executeScript('window.sessionStorage.clear();');
+        browser.executeScript('window.localStorage.clear();');
+       });
 
     it('[C261050] Should be possible login in the PS with SSO', async () => {
+        silentLogin = false;
+        implicitFlow = true;
+        await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin, implicitFlow );
         await loginApsPage.clickOnSSOButton();
         browser.ignoreSynchronization = true;
         await loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    });
+
+    it ('[C280667] Should be redirect directly to keycloak without show the login page with silent login', async () => {
+        silentLogin = true;
+        implicitFlow = true;
+        await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin, implicitFlow );
+        browser.ignoreSynchronization = true;
+        await loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
     });
 });

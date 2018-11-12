@@ -44,7 +44,10 @@ export class SettingsPage {
     bpmText = element(by.css('input[data-automation-id*="bpmHost"]'));
     authHostText = element(by.css('input[id="oauthHost"]'));
     ssoRadioButton = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
-    silentLoginToggleBar = element(by.css('[name="silentLogin"] label'));
+    silentLoginToggleLabel = element(by.css('mat-slide-toggle[name="silentLogin"] label'));
+    silentLoginToggleElement = element(by.css('mat-slide-toggle[name="silentLogin"]'));
+    implicitFlowLabel = element(by.css('mat-slide-toggle[name="implicitFlow"] label'));
+    implicitFlowElement = element(by.css('mat-slide-toggle[name="implicitFlow"]'));
     applyButton = element(by.css('button[data-automation-id*="host-button"]'));
 
     goToSettingsPage() {
@@ -103,15 +106,17 @@ export class SettingsPage {
         await this.ssoRadioButton.click();
     }
 
-    async setSSO (processServiceURL, authHost ) {
+    async setProviderBpmSso (processServiceURL, authHost, silentLogin, implicitFlow ) {
         this.goToSettingsPage();
         this.setProvider(this.bpm.option, this.bpm.text);
         Util.waitUntilElementIsVisible(this.bpmText);
-        expect(this.ecmText.isPresent()).toBe(false);
+        // expect(this.ecmText.isPresent()).toBe(false);
+        Util.waitUntilElementIsNotOnPage(this.ecmText);
         await this.clickSsoRadioButton();
         await this.setProcessServicesURL(processServiceURL);
         await this.setAuthHost(authHost);
-        await this.disableSilentLogin();
+        await this.setSilentLogin(silentLogin);
+        await this.setImplicitFlow(implicitFlow);
         await this.clickApply();
     }
 
@@ -132,9 +137,28 @@ export class SettingsPage {
         await this.applyButton.click();
     }
 
-    async disableSilentLogin () {
-        Util.waitUntilElementIsVisible(this.silentLoginToggleBar);
-        await this.silentLoginToggleBar.click();
+    async setSilentLogin (enableToggle) {
+        await Util.waitUntilElementIsVisible(this.silentLoginToggleElement);
+
+        const isChecked = (await this.silentLoginToggleElement.getAttribute('class')).includes('mat-checked');
+
+        if (isChecked && !enableToggle || !isChecked && enableToggle) {
+            return this.silentLoginToggleLabel.click();
+        }
+
+        return Promise.resolve();
+    }
+
+    async setImplicitFlow (enableToggle) {
+        await Util.waitUntilElementIsVisible(this.implicitFlowElement);
+
+        const isChecked = (await this.implicitFlowElement.getAttribute('class')).includes('mat-checked');
+
+        if (isChecked && !enableToggle || !isChecked && enableToggle) {
+            return this.implicitFlowLabel.click();
+        }
+
+        return Promise.resolve();
     }
 
     checkProviderDropdownIsDisplayed() {
