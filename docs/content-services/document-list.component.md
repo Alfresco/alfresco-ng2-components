@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-13
+Last reviewed: 2018-11-12
 ---
 
 # Document List component
@@ -54,7 +54,7 @@ Displays the documents from a repository.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| allowDropFiles | `boolean` | false | Toggle file drop support for rows (see [Upload Directive](../core/upload.directive.md) for further details |
+| allowDropFiles | `boolean` | false | Toggle file drop support for rows (see [Upload Directive](../core/upload.directive.md) for further details) |
 | contentActions | `boolean` | false | Toggles content actions for each row |
 | contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |
 | contextMenuActions | `boolean` | false | Toggles context menus for each row |
@@ -64,7 +64,7 @@ Displays the documents from a repository.
 | enableInfiniteScrolling | `boolean` | false | (**Deprecated:** 2.3.0) Set document list to work in infinite scrolling mode |
 | folderNode | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) | null | (**Deprecated:** 2.3.0 - use currentFolderId or node) Currently displayed folder node |
 | imageResolver | `any \| null` | null | Custom image resolver |
-| includeFields | `string[]` |  | Include additional information about the node in the server request.for example: association, isLink, isLocked and others. |
+| includeFields | `string[]` |  | Include additional information about the node in the server request. For example: association, isLink, isLocked and others. |
 | loading | `boolean` | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
 | locationFormat | `string` | "/" | The default route for all the location-based columns (if declared). |
 | maxItems | `number` |  | Default value is stored into user preference settings use it only if you are not using the pagination |
@@ -72,7 +72,7 @@ Displays the documents from a repository.
 | navigate | `boolean` | true | Toggles navigation to folder content or file preview |
 | navigationMode | `string` |  | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
 | node | [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) | null | The Document list will show all the nodes contained in the [NodePaging](../../lib/content-services/document-list/models/document-library.model.ts) entity |
-| permissionsStyle | [`PermissionStyleModel`](../../lib/content-services/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
+| permissionsStyle | [`PermissionStyleModel`](../../lib/content-services/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
 | rowFilter | `any \| null` | null | Custom row filter |
 | rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
 | rowStyleClass | `string` |  | The CSS class to apply to every row |
@@ -569,7 +569,7 @@ This column displays a clickable location link pointing to the parent path of th
 
 **Important note**:
 
-_For granular permissions, the Location Column may or may not the render link location_
+_For granular permissions, the Location Column may or may not render the link location_
 
 You would normally use this with custom navigation or when displaying content from sources like:
 

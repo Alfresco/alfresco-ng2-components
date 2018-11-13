@@ -115,6 +115,7 @@
         "view-util",
         "clipboard",
         "external-alfresco",
-        "content-node-share"
+        "content-node-share",
+        "tree-view"
     ]
 }
