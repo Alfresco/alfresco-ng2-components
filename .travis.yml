@@ -41,7 +41,8 @@ jobs:
           - (./scripts/lint.sh || exit 1;);
         - stage: Warm Up Cache & Lint & Build Dist
           script:
-          - (./scripts/update-version.sh -gnu -alpha && npm install || exit 1;);
+          - (./scripts/update-version.sh -gnu -alpha || exit 1;);
+          - npm install
           - (./scripts/lint.sh || exit 1;);
           - (npm run spellcheck || exit 1;)
           - rm -rf tmp && (./scripts/smart-build.sh || exit 1;);
