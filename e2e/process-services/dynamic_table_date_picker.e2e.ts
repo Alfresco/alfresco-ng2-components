@@ -97,7 +97,7 @@ describe('Dynamic Table', () => {
         });
 
         beforeEach(() => {
-            navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
+            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
             appNavigationBarPage.clickProcessButton();
 
@@ -152,7 +152,7 @@ describe('Dynamic Table', () => {
         });
 
         beforeEach(() => {
-            navigationBarPage.clickProcessServicesButton().goToApp(app.title).clickProcessButton();
+            navigationBarPage.navigateToProcessServicesPage().goToApp(app.title).clickProcessButton();
 
             appNavigationBarPage.clickProcessButton();
 

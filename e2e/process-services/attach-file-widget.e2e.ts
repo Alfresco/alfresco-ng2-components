@@ -39,6 +39,7 @@ describe('Start Task - Task App', () => {
     let viewerPage = new ViewerPage();
     let widget = new Widget();
     let taskPage = new TasksPage();
+    let navigationBarPage = new NavigationBarPage();
 
     let processUserModel;
     let app = resources.Files.WIDGETS_SMOKE_TEST;
@@ -81,7 +82,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C274690] Should be able to open a file attached to a start form', () => {
-        new NavigationBarPage().clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 

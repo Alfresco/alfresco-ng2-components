@@ -91,7 +91,7 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C277311] Should be able to View /Download /Remove from Attachment List on an active task', () => {
-        navigationBarPage.clickProcessServicesButton().goToApp(app.title).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(app.title).clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.active).clickStartButton();
@@ -122,7 +122,7 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C260236] Should be able to View /Download /Remove from Attachment List on a completed task', () => {
-        navigationBarPage.clickProcessServicesButton().goToApp(app.title).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(app.title).clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.completed).clickStartButton();
@@ -154,7 +154,7 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C260225] Should be able to upload a file in the Attachment list on Task App', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.taskApp).clickStartButton();
@@ -164,7 +164,7 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C279884] Should be able to view the empty attachment list for tasks', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(taskName.emptyList).clickStartButton();
@@ -191,7 +191,7 @@ describe('Attachment list action menu for tasks', () => {
             relatedContentId = relatedContent.id;
         });
 
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName('SHARE KNOWLEDGE');
@@ -202,7 +202,7 @@ describe('Attachment list action menu for tasks', () => {
             await this.alfrescoJsApi.activiti.contentApi.deleteContent(relatedContentId);
         });
 
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName('SHARE KNOWLEDGE');

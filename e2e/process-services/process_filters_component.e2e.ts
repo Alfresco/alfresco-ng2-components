@@ -80,7 +80,7 @@ describe('Process Filters Test', () => {
     });
 
     beforeEach(() => {
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
         appNavigationBarPage.clickProcessButton();
@@ -96,7 +96,7 @@ describe('Process Filters Test', () => {
         startProcessPage.clickFormStartProcessButton();
 
         processDetailsPage.clickCancelProcessButton();
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
 
         processServicesPage.goToApp(app.title);
 

@@ -77,7 +77,7 @@ describe('Sorting for process filters', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
 
         navigationBarPage
-            .clickProcessServicesButton()
+            .navigateToProcessServicesPage()
             .goToTaskApp()
             .clickProcessButton();
 
@@ -104,7 +104,7 @@ describe('Sorting for process filters', () => {
             await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
             await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
         });          loginPage.loginToProcessServicesUsingUserModel(user);          navigationBarPage
-            .clickProcessServicesButton()
+            .navigateToProcessServicesPage()
             .goToTaskApp()
             .clickProcessButton();          processFiltersPage.checkFilterIsDisplayed(processFilter.running_old_first);          filtersPage.goToFilter(processFilter.running_old_first);          browser.controlFlow().execute(async () => {
             processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
@@ -134,7 +134,7 @@ describe('Sorting for process filters', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
 
         navigationBarPage
-            .clickProcessServicesButton()
+            .navigateToProcessServicesPage()
             .goToTaskApp()
             .clickProcessButton();
 
@@ -175,7 +175,7 @@ describe('Sorting for process filters', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
 
         navigationBarPage
-            .clickProcessServicesButton()
+            .navigateToProcessServicesPage()
             .goToTaskApp()
             .clickProcessButton();
 
@@ -211,7 +211,7 @@ describe('Sorting for process filters', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
 
         navigationBarPage
-            .clickProcessServicesButton()
+            .navigateToProcessServicesPage()
             .goToTaskApp()
             .clickProcessButton();
 
@@ -248,7 +248,7 @@ describe('Sorting for process filters', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
 
         navigationBarPage
-            .clickProcessServicesButton()
+            .navigateToProcessServicesPage()
             .goToTaskApp()
             .clickProcessButton();
 
@@ -289,7 +289,7 @@ describe('Sorting for process filters', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
 
         navigationBarPage
-            .clickProcessServicesButton()
+            .navigateToProcessServicesPage()
             .goToTaskApp()
             .clickProcessButton();
 
@@ -329,7 +329,7 @@ describe('Sorting for process filters', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
 
         navigationBarPage
-            .clickProcessServicesButton()
+            .navigateToProcessServicesPage()
             .goToTaskApp()
             .clickProcessButton();
 
@@ -366,7 +366,7 @@ describe('Sorting for process filters', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
 
         navigationBarPage
-            .clickProcessServicesButton()
+            .navigateToProcessServicesPage()
             .goToTaskApp()
             .clickProcessButton();
 

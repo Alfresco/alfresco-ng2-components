@@ -93,7 +93,7 @@ describe('Comment component for Processes', () => {
             this.alfrescoJsApi.activiti.taskActionsApi.completeTask(taskId);
         });
 
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName(taskName.completed_task);
@@ -116,7 +116,7 @@ describe('Comment component for Processes', () => {
             await this.alfrescoJsApi.activiti.taskApi.addTaskComment(secondTaskComment, newTaskId);
         });
 
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName(taskName.multiple_users);
@@ -146,7 +146,7 @@ describe('Comment component for Processes', () => {
             await this.alfrescoJsApi.activiti.taskApi.addTaskComment(thirdTaskComment, newTaskId);
         });
 
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName(taskName.multiple_users);

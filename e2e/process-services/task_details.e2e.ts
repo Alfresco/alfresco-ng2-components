@@ -71,7 +71,7 @@ describe('Task Details component', () => {
     });
 
     it('[C260506] Should display task details for standalone task - Task App', async () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
             .addForm(app.formName).clickStartButton();
@@ -113,7 +113,7 @@ describe('Task Details component', () => {
     });
 
     it('[C263946] Should display task details for standalone task - Custom App', async () => {
-        navigationBarPage.clickProcessServicesButton().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
             .addForm(app.formName).clickStartButton();
@@ -160,7 +160,7 @@ describe('Task Details component', () => {
             await apps.startProcess(this.alfrescoJsApi, appModel);
         });
 
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
@@ -206,7 +206,7 @@ describe('Task Details component', () => {
             await apps.startProcess(this.alfrescoJsApi, appModel);
         });
 
-        navigationBarPage.clickProcessServicesButton().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
@@ -254,7 +254,7 @@ describe('Task Details component', () => {
             await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': taskName});
         });
 
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskName).selectRowByContentName(taskName);
 
@@ -296,7 +296,7 @@ describe('Task Details component', () => {
             await apps.startProcess(this.alfrescoJsApi, appModel);
         });
 
-        navigationBarPage.clickProcessServicesButton().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
@@ -338,7 +338,7 @@ describe('Task Details component', () => {
             return this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': taskName});
         });
 
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskName).selectRowByContentName(taskName);
 

@@ -34,6 +34,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 describe('Task Details - No form', () => {
 
     let loginPage = new LoginPage();
+    let navigationBarPage = new NavigationBarPage();
     let processUserModel;
     let app = resources.Files.NO_FORM_APP;
     let taskPage = new TasksPage();
@@ -67,7 +68,7 @@ describe('Task Details - No form', () => {
     });
 
     it('[C289311] Should attach form and complete buttons to be displayed when no form is attached', () => {
-        new NavigationBarPage().clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(app.taskName);

@@ -77,7 +77,7 @@ describe('People component', () => {
     });
 
     it('[C279989] Should no people be involved when no user is typed', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[0]).selectRowByContentName(tasks[0]);
 
@@ -87,7 +87,7 @@ describe('People component', () => {
     });
 
     it('[C279990] Should no people be involved when clicking on Cancel button', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[0]).selectRowByContentName(tasks[0]);
 
@@ -100,7 +100,7 @@ describe('People component', () => {
     });
 
     it('[C261029] Should People dialog be displayed when clicking on add people button', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[0]).selectRowByContentName(tasks[0]);
 
@@ -112,7 +112,7 @@ describe('People component', () => {
     });
 
     it('[C279991] Should not be able to involve a user when is the creator of the task', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[0]).selectRowByContentName(tasks[0]);
 
@@ -124,7 +124,7 @@ describe('People component', () => {
     });
 
     it('[C261030] Should involved user be removed when clicking on remove button', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[0]).selectRowByContentName(tasks[0]);
 
@@ -141,7 +141,7 @@ describe('People component', () => {
     });
 
     it('[C280013] Should not be able to complete a task by a involved user', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[1]).selectRowByContentName(tasks[1]);
 
@@ -155,7 +155,7 @@ describe('People component', () => {
             .toEqual(assigneeUserModel.email);
 
         loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[1]).selectRowByContentName(tasks[1]);
 
@@ -164,7 +164,7 @@ describe('People component', () => {
 
     it('[C261031] Should be able to involve multiple users to a task', () => {
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[2]).selectRowByContentName(tasks[2]);
 
@@ -195,7 +195,7 @@ describe('People component', () => {
     });
 
     it('[C280014] Should involved user see the task in completed filters when the task is completed', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[3]).selectRowByContentName(tasks[3]);
 
@@ -215,7 +215,7 @@ describe('People component', () => {
             .toEqual(assigneeUserModel.email);
 
         loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[3]).selectRowByContentName(tasks[3]);
 

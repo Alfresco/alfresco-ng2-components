@@ -73,7 +73,7 @@ describe('Task Audit', () => {
     });
 
     it('[C260386] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone running task', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskTaskApp);
 
@@ -82,7 +82,7 @@ describe('Task Audit', () => {
     });
 
     it('[C260389] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone completed task', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskTaskApp);
 
@@ -96,7 +96,7 @@ describe('Task Audit', () => {
     });
 
     it('[C263944] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone completed task', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.createNewTask().addName(taskCompleteCustomApp).clickStartButton();
 
@@ -113,7 +113,7 @@ describe('Task Audit', () => {
     });
 
     it('[C263943] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone running task', () => {
-        navigationBarPage.clickProcessServicesButton().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
 
         taskPage.createNewTask().addName(taskCustomApp).clickStartButton();
 

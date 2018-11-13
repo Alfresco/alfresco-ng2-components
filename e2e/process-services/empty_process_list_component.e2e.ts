@@ -65,7 +65,7 @@ describe('Empty Process List Test', () => {
 
     it('[C260494] Should add process to list when a process is created', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(appA.title).clickProcessButton();
         expect(processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');
@@ -79,7 +79,7 @@ describe('Empty Process List Test', () => {
         expect(processFiltersPage.numberOfProcessRows()).toEqual(1);
 
         processDetailsPage.checkProcessDetailsCard();
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(appB.title).clickProcessButton();
         expect(processListPage.checkProcessListTitleIsDisplayed()).toEqual('No Processes Found');

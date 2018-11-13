@@ -91,7 +91,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263942] Should be possible to modify a task', () => {
-        navigationBarPage.clickProcessServicesButton()
+        navigationBarPage.navigateToProcessServicesPage()
             .goToApp(appModel.name)
             .clickTasksButton();
 
@@ -142,7 +142,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263947] Should be able to start a task without form', () => {
-        navigationBarPage.clickProcessServicesButton()
+        navigationBarPage.navigateToProcessServicesPage()
             .goToApp(appModel.name)
             .clickTasksButton();
 
@@ -167,7 +167,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263948] Should be possible to cancel a task', () => {
-        navigationBarPage.clickProcessServicesButton()
+        navigationBarPage.navigateToProcessServicesPage()
             .goToApp(appModel.name)
             .clickTasksButton();
 
@@ -189,7 +189,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263949] Should be possible to save filled form', () => {
-        navigationBarPage.clickProcessServicesButton().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage()
             .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
@@ -227,7 +227,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263951] Should be possible to assign a user', () => {
-        navigationBarPage.clickProcessServicesButton().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage
             .filtersPage()
             .goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -260,7 +260,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('Attach a file', () => {
-        navigationBarPage.clickProcessServicesButton().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage
             .createNewTask()
@@ -272,7 +272,7 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263945] Should Information box be hidden when showHeaderContent property is set on false on custom app', () => {
-        navigationBarPage.clickProcessServicesButton().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(showHeaderTask).clickStartButton();
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(showHeaderTask);
@@ -291,11 +291,11 @@ describe('Start Task - Custom App', () => {
     });
 
     it('[C263950] Should be able to see Spinner loading on task list when clicking on Tasks on custom app', () => {
-        navigationBarPage.clickProcessServicesButton().goToApp(appModel.name).clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[7]).clickStartButton();
 
-        navigationBarPage.clickProcessServicesButton().goToTaskApp();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
         taskPage.tasksListPage().getDataTable().checkSpinnerIsDisplayed();
     });
 

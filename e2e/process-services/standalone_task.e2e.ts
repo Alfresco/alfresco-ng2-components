@@ -71,7 +71,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C260421] Should a standalone task be displayed when creating a new task without form', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[0]).clickStartButton()
             .then(() => {
@@ -86,7 +86,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C268910] Should a standalone task be displayed in completed tasks when completing it', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).clickStartButton()
             .then(() => {
@@ -104,7 +104,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C268911] Should allow adding a form to a standalone task when clicking on Add form button', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[2]).clickStartButton()
             .then(() => {
@@ -117,7 +117,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C268912] Should a standalone task be displayed when removing the form from APS', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[3]).addForm(app.formName).clickStartButton();
 

@@ -77,7 +77,7 @@ describe('Task', () => {
 
             loginPage.loginToProcessServicesUsingUserModel(user);
 
-            navigationBarPage.clickProcessServicesButton();
+            navigationBarPage.navigateToProcessServicesPage();
 
             processServicesPage.checkApsContainer();
             processServicesPage.goToApp(app.title);
@@ -265,7 +265,7 @@ describe('Task', () => {
         });
 
         beforeEach(async () => {
-            navigationBarPage.clickProcessServicesButton();
+            navigationBarPage.navigateToProcessServicesPage();
             processServicesPage.checkApsContainer();
             processServicesPage.goToApp(app.title);
         });

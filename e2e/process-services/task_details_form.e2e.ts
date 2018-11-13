@@ -82,7 +82,7 @@ describe('Task Details - Form', () => {
 
         task = await this.alfrescoJsApi.activiti.taskApi.getTask(emptyTask.id);
 
-        new NavigationBarPage().clickProcessServicesButton().goToTaskApp();
+        new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp();
         tasksListPage.checkTaskListIsLoaded();
         filtersPage.goToFilter('Involved Tasks');
         tasksListPage.checkTaskListIsLoaded();

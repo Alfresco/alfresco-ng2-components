@@ -66,7 +66,7 @@ describe('Modify applications', () => {
     });
 
     it('[C260198] Should the app be displayed on dashboard when is deployed on APS', () => {
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
 
         processServicesPage.checkApsContainer();
 
@@ -76,7 +76,7 @@ describe('Modify applications', () => {
     });
 
     it('[C260213] Should a new version of the app be displayed on dashboard when is replaced by importing another app in APS', async () => {
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
 
         processServicesPage.checkApsContainer();
 
@@ -98,7 +98,7 @@ describe('Modify applications', () => {
     });
 
     it('[C260220] Should the app not be displayed on dashboard after it was deleted in APS', async () => {
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
 
         processServicesPage.checkApsContainer();
 
@@ -115,7 +115,7 @@ describe('Modify applications', () => {
     });
 
     it('[C260215] Should the penultimate version of an app be displayed on dashboard when the last version is deleted in APS', async () => {
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
 
         processServicesPage.checkApsContainer();
 
@@ -148,7 +148,7 @@ describe('Modify applications', () => {
     it('[C260207] Should the app be updated when is edited in APS', async () => {
         let newDescription = 'new description';
 
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
 
         expect(processServicesPage.getAppIconType(appToBeDeleted.title)).toEqual(CONSTANTS.APP_ICON.USER);

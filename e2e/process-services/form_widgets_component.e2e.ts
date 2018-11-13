@@ -81,7 +81,7 @@ describe('Form widgets', () => {
 
         it('[C272778] Should display text and multi-line in form', () => {
             loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-            new NavigationBarPage().clickProcessServicesButton().goToApp(appModel.name)
+            new NavigationBarPage().navigateToProcessServicesPage().goToApp(appModel.name)
                 .clickTasksButton();
             taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             taskPage.createNewTask().addName(newTask).addDescription('Description').addForm(app.formName).clickStartButton()

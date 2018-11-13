@@ -48,7 +48,7 @@ export class NavigationBarPage {
         this.configEditorButton.click();
     }
 
-    clickProcessServicesButton() {
+    navigateToProcessServicesPage() {
         Util.waitUntilElementIsVisible(this.processServicesButton);
         this.processServicesButton.click();
         return new ProcessServicesPage();

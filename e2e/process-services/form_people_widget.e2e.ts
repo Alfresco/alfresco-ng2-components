@@ -78,7 +78,7 @@ describe('Form widgets - People', () => {
     });
 
     beforeEach(() => {
-        new NavigationBarPage().clickProcessServicesButton().goToApp(appModel.name)
+        new NavigationBarPage().navigateToProcessServicesPage().goToApp(appModel.name)
             .clickProcessButton();
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();

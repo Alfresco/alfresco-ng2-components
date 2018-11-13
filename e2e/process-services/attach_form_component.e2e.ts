@@ -95,7 +95,7 @@ describe('Attach Form Component', () => {
     });
 
     it('[C280047] Should be able to view the attach-form component after creating a standalone task', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName(testNames.taskName);
@@ -106,7 +106,7 @@ describe('Attach Form Component', () => {
     });
 
     it('[C280048] Should be able to view the attach-form component after clicking cancel button', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName(testNames.taskName);
@@ -126,7 +126,7 @@ describe('Attach Form Component', () => {
     });
 
     it('[C280017] Should be able to attach a form on a standalone task and complete', () => {
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName(testNames.taskName);

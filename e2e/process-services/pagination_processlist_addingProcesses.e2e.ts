@@ -71,7 +71,7 @@ describe('Process List - Pagination when adding processes', () => {
 
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        new NavigationBarPage().clickProcessServicesButton().goToTaskApp().clickProcessButton();
+        new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
         processDetailsPage.checkProcessTitleIsDisplayed();
         processFiltersPage.waitForTableBody();
 

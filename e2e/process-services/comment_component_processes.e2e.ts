@@ -83,7 +83,7 @@ describe('Comment component for Processes', () => {
             await this.alfrescoJsApi.activiti.commentsApi.addProcessInstanceComment(comment, processInstanceId);
         });
 
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList('Comment APS');
@@ -107,7 +107,7 @@ describe('Comment component for Processes', () => {
             await this.alfrescoJsApi.activiti.commentsApi.addProcessInstanceComment(comment, processInstanceId);
         });
 
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList('Comment APS');
@@ -133,7 +133,7 @@ describe('Comment component for Processes', () => {
             await this.alfrescoJsApi.activiti.taskApi.addTaskComment(taskComment, taskId);
         });
 
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList('Comment APS');

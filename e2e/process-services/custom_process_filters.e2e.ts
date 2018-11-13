@@ -77,7 +77,7 @@ describe('New Process Filters', () => {
     it('[C279965] Should be able to view default filters on ADF', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
 
-        navigationBarPage.clickProcessServicesButton()
+        navigationBarPage.navigateToProcessServicesPage()
             .goToTaskApp()
             .clickProcessButton();
 
@@ -102,7 +102,7 @@ describe('New Process Filters', () => {
 
         loginPage.loginToProcessServicesUsingUserModel(user);
 
-        navigationBarPage.clickProcessServicesButton()
+        navigationBarPage.navigateToProcessServicesPage()
             .goToTaskApp()
             .clickProcessButton();
 
@@ -124,7 +124,7 @@ describe('New Process Filters', () => {
         });
 
         loginPage.loginToProcessServicesUsingUserModel(user);
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
         processFiltersPage.checkFilterIsDisplayed(processFilter.new_icon);
 
@@ -148,7 +148,7 @@ describe('New Process Filters', () => {
 
         loginPage.loginToProcessServicesUsingUserModel(user);
 
-        navigationBarPage.clickProcessServicesButton()
+        navigationBarPage.navigateToProcessServicesPage()
             .goToTaskApp()
             .clickProcessButton();
 
@@ -170,7 +170,7 @@ describe('New Process Filters', () => {
         });
 
         loginPage.loginToProcessServicesUsingUserModel(user);
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
         processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
 
@@ -185,7 +185,7 @@ describe('New Process Filters', () => {
 
         loginPage.loginToProcessServicesUsingUserModel(user);
 
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
         processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
 
@@ -199,7 +199,7 @@ describe('New Process Filters', () => {
 
     it('[C286452] Should display process filter icons only when showIcon property is set on true', () => {
         loginPage.loginToProcessServicesUsingUserModel(user);
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
         processFiltersPage.checkFilterHasNoIcon(processFilter.all);
 
         appNavigationBarPage.clickSettingsButton();
@@ -230,7 +230,7 @@ describe('New Process Filters', () => {
 
         loginPage.loginToProcessServicesUsingUserModel(user);
 
-        navigationBarPage.clickProcessServicesButton().goToTaskApp().clickProcessButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
         processFiltersPage.checkFilterIsNotDisplayed(processFilter.deleted);
     });
