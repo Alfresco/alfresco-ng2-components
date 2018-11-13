@@ -247,8 +247,7 @@
     },
     "TAB": {
       "CS": "Content Services",
-      "PS": "Process Services",
-      "PSC": "Process Services cloud"
+      "PS": "Process Services"
     }
   },
   "ADF_VIEWER": {

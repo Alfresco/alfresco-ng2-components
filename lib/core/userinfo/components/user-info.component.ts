@@ -21,7 +21,6 @@ import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserModel } from './../models/ecm-user.model';
 import { BpmUserService } from './../services/bpm-user.service';
 import { EcmUserService } from './../services/ecm-user.service';
-import { IdentityUserModel } from '../models/identity-user.model';
 import { IdentityUserService } from '../services/identity-user.service';
 
 @Component({
@@ -60,7 +59,6 @@ export class UserInfoComponent implements OnInit {
 
     ecmUser: EcmUserModel;
     bpmUser: BpmUserModel;
-    identityUser: IdentityUserModel;
     bpmUserImage: any;
     ecmUserImage: any;
     selectedIndex: number;
@@ -76,20 +74,12 @@ export class UserInfoComponent implements OnInit {
     }
 
     getUserInfo() {
-        if (this.isOauth()) {
-            this.loadIdentityUserInfo();
-        } else {
-            this.loadEcmUserInfo();
-            this.loadBpmUserInfo();
-        }
+        this.loadEcmUserInfo();
+        this.loadBpmUserInfo();
     }
 
     isLoggedIn() {
         return this.authService.isLoggedIn();
-    }
-
-    isOauth() {
-        return this.authService.isOauth();
     }
 
     loadEcmUserInfo(): void {
@@ -106,26 +96,29 @@ export class UserInfoComponent implements OnInit {
     }
 
     loadBpmUserInfo(): void {
-        if (this.authService.isBpmLoggedIn()) {
-            this.bpmUserService.getCurrentUserInfo()
-                .subscribe((res) => {
-                    this.bpmUser = new BpmUserModel(res);
-                });
-            this.bpmUserImage = this.bpmUserService.getCurrentUserProfileImage();
+        if (this.authService.isOauth()) {
+            this.getIdentityUserInfo();
+        } else if (this.authService.isBpmLoggedIn()) {
+            this.getBpmUserInfo();
         } else {
             this.bpmUser = null;
             this.bpmUserImage = null;
         }
     }
 
-    loadIdentityUserInfo() {
-        if (this.isOauth()) {
-            this.identityUserService.getCurrentIdentityUserInfo().subscribe((res) => {
-                this.identityUser = new IdentityUserModel(res);
+    getBpmUserInfo() {
+        this.bpmUserService.getCurrentUserInfo()
+            .subscribe((res) => {
+                this.bpmUser = new BpmUserModel(res);
+                this.getBpmUserImage();
             });
-        } else {
-            this.identityUser = null;
-        }
+    }
+
+    getIdentityUserInfo() {
+        this.identityUserService.getCurrentUserInfo()
+            .subscribe((res) => {
+                this.bpmUser = new BpmUserModel(res);
+            });
     }
 
     stopClosing(event) {
@@ -136,12 +129,20 @@ export class UserInfoComponent implements OnInit {
         this.ecmUserImage = this.ecmUserService.getUserProfileImage(this.ecmUser.avatarId);
     }
 
+    private getBpmUserImage() {
+        this.bpmUserImage = this.bpmUserService.getCurrentUserProfileImage();
+    }
+
     showOnRight() {
         return this.namePosition === 'right';
     }
 
     hasBpmUserPictureId(): boolean {
         return !!this.bpmUser.pictureId;
+    }
+
+    hasTenantName(): boolean {
+        return !!(this.bpmUser && this.bpmUser.tenantName);
     }
 
     hasEcmUserAvatarId(): boolean {

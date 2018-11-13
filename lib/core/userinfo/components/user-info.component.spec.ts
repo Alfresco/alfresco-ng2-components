@@ -21,7 +21,6 @@ import { AuthenticationService, ContentService } from '../../services';
 import { InitialUsernamePipe } from '../../pipes';
 import { fakeBpmUser } from '../../mock/bpm-user.service.mock';
 import { fakeEcmEditedUser, fakeEcmUser, fakeEcmUserNoImage } from '../../mock/ecm-user.service.mock';
-import { identityUserMock, identityUserWithOutFirstNameMock, identityUserMockLastNameMock } from '../../mock/identity-user.service.mock';
 import { BpmUserService } from '../services/bpm-user.service';
 import { EcmUserService } from '../services/ecm-user.service';
 import { IdentityUserService } from '../services/identity-user.service';
@@ -72,6 +71,10 @@ describe('User info component', () => {
     let ecmUserService: EcmUserService;
     let bpmUserService: BpmUserService;
     let identityUserService: IdentityUserService;
+
+    let identityUserMock = { firstName: 'fake-first-name', lastName: 'fake-last-name', email: 'fake@email.com' };
+    let identityUserWithOutFirstNameMock = { firstName: null, lastName: 'fake-last-name', email: 'fake@email.com' };
+    let identityUserWithOutLastNameMock = { firstName: 'fake-first-name', lastName: null, email: 'fake@email.com' };
 
     function openUserInfo() {
         fixture.detectChanges();
@@ -288,6 +291,7 @@ describe('User info component', () => {
         let getCurrentUserInfoStub;
 
         beforeEach(async(() => {
+            spyOn(authService, 'isOauth').and.returnValue(false);
             spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
             spyOn(authService, 'isLoggedIn').and.returnValue(true);
             getCurrentUserInfoStub = spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeBpmUser));
@@ -387,6 +391,7 @@ describe('User info component', () => {
         let ecmUserInfoSpy;
 
         beforeEach(async(() => {
+            spyOn(authService, 'isOauth').and.returnValue(false);
             spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
             spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
             spyOn(authService, 'isLoggedIn').and.returnValue(true);
@@ -470,13 +475,14 @@ describe('User info component', () => {
         });
     });
 
-    describe('when user is logged on SSO', () => {
+    describe('when APS2 user is logged in', () => {
 
         let getCurrentUserInfoStub;
 
         beforeEach(async(() => {
             spyOn(authService, 'isOauth').and.returnValue(true);
-            getCurrentUserInfoStub = spyOn(identityUserService, 'getCurrentIdentityUserInfo').and.returnValue(of(identityUserMock));
+            spyOn(authService, 'isLoggedIn').and.returnValue(true);
+            getCurrentUserInfoStub = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(of(identityUserMock));
             spyOn(identityUserService, 'getValueFromToken').and.returnValue('firstName lastName');
         }));
 
@@ -487,29 +493,59 @@ describe('User info component', () => {
                 let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
                 imageButton.click();
                 fixture.detectChanges();
-                let bpmUserName = fixture.debugElement.query(By.css('#identity-username'));
+                let bpmUserName = element.querySelector('#bpm-username');
                 expect(element.querySelector('#userinfo_container')).not.toBeNull();
                 expect(bpmUserName).toBeDefined();
                 expect(bpmUserName).not.toBeNull();
-                expect(bpmUserName.nativeElement.innerHTML).toContain('fake-bpm-first-name fake-bpm-last-name');
+                expect(bpmUserName.textContent).toContain('fake-first-name fake-last-name');
+            });
+        }));
+
+        it('should show email', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                imageButton.click();
+                fixture.detectChanges();
+                let bpmEmail = element.querySelector('#bpm-email');
+                expect(element.querySelector('#userinfo_container')).not.toBeNull();
+                expect(bpmEmail).toBeDefined();
+                expect(bpmEmail).not.toBeNull();
+                expect(bpmEmail.textContent).toContain('fake@email.com');
+            });
+        }));
+
+        it('should not show tenantName', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
+                imageButton.click();
+                fixture.detectChanges();
+                let bpmTenant = element.querySelector('#bpm-tenant');
+                expect(element.querySelector('#userinfo_container')).not.toBeNull();
+                expect(bpmTenant).not.toBeNull();
             });
         }));
 
         it('should show last name if first name is null', async(() => {
-            getCurrentUserInfoStub.and.returnValue(of(identityUserWithOutFirstNameMock));
+            let fakeIdentityUser: BpmUserModel = new BpmUserModel(identityUserWithOutFirstNameMock);
+            getCurrentUserInfoStub.and.returnValue(of(fakeIdentityUser));
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(element.querySelector('#userinfo_container')).toBeDefined();
                 expect(element.querySelector('#adf-userinfo-bpm-name-display')).not.toBeNull();
                 expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).toContain('fake-last-name');
-                expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).not.toContain('fake-bpm-first-name');
+                expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).not.toContain('fake-first-name');
 
             });
         }));
 
         it('should not show first name if it is null string', async(() => {
-            getCurrentUserInfoStub.and.returnValue(of(identityUserWithOutFirstNameMock));
+            let fakeIdentityUser: BpmUserModel = new BpmUserModel(identityUserWithOutFirstNameMock);
+            getCurrentUserInfoStub.and.returnValue(of(fakeIdentityUser));
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -522,7 +558,8 @@ describe('User info component', () => {
         }));
 
         it('should not show last name if it is null string', async(() => {
-            getCurrentUserInfoStub.and.returnValue(of(identityUserMockLastNameMock));
+            let fakeIdentityUser: BpmUserModel = new BpmUserModel(identityUserWithOutLastNameMock);
+            getCurrentUserInfoStub.and.returnValue(of(fakeIdentityUser));
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -531,17 +568,6 @@ describe('User info component', () => {
                 expect(element.querySelector('#adf-userinfo-bpm-name-display')).toBeDefined();
                 expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).toContain('fake-first-name');
                 expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).not.toContain('null');
-            });
-        }));
-
-        it('should not show the tabs', async(() => {
-            fixture.detectChanges();
-            let imageButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#logged-user-img');
-            imageButton.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(fixture.debugElement.query(By.css('#tab-group-env')).classes['adf-hide-tab']).toBeTruthy();
             });
         }));
     });
