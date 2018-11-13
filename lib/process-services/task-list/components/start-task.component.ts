@@ -115,7 +115,7 @@ export class StartTaskComponent implements OnInit {
     setTaskDetails(form) {
         this.taskDetailsModel.name = form.name;
         this.taskDetailsModel.description = form.description;
-        this.taskDetailsModel.formKey = form.formKey;
+        this.taskDetailsModel.formKey = form.formKey.toString();
     }
 
     isFormValid() {
@@ -153,7 +153,7 @@ export class StartTaskComponent implements OnInit {
         this.assigneeId = userId;
     }
 
-    private attachForm(taskId: string, formKey: number): Observable<any> {
+    private attachForm(taskId: string, formKey: string): Observable<any> {
         let response = of();
         if (taskId && formKey) {
             response = this.taskService.attachFormToATask(taskId, parseInt(formKey, 10));
