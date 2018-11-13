@@ -19,7 +19,7 @@ var Util = require('../../util/util');
 
 var CardViewComponentPage = function () {
 
-    const addButton = element(by.className('card-view__key-value-pairs__add-btn'));
+    const addButton = element(by.className('adf-card-view__key-value-pairs__add-btn'));
     const keyValueRow = 'card-view__key-value-pairs__row';
     const selectValue = 'mat-option';
     const textField = element(by.css("input[data-automation-id='card-textitem-editinput-name']"));
@@ -27,8 +27,8 @@ var CardViewComponentPage = function () {
     const floatField = element(by.css("input[data-automation-id='card-textitem-editinput-float']"));
     const valueInputField = element(by.xpath("//*[contains(@id,'input') and @placeholder='Value']"));
     const nameInputField = element(by.xpath("//*[contains(@id,'input') and @placeholder='Name']"));
-    const consoleLog = element(by.className('console'));
-    const deleteButton = element.all(by.className('card-view__key-value-pairs__remove-btn')).first();
+    const consoleLog = element(by.className('adf-console'));
+    const deleteButton = element.all(by.className('adf-card-view__key-value-pairs__remove-btn')).first();
     const select = element(by.css('mat-select[data-automation-class="select-box"]'));
     const checkbox = element(by.css("mat-checkbox[data-automation-id='card-boolean-boolean']"));
     const resetButton = element(by.css("#adf-reset-card-log"));

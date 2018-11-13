@@ -11,12 +11,12 @@
         vertical-align: top;
     }
 
-    .adf-activiti-label + .icon {
+    .adf-activiti-label + .adf-icon {
         position: relative;
         top: -2px;
     }
 
-    .list-wrap {
+    .adf-list-wrap {
         word-wrap: break-word;
         word-break: break-all;
         -moz-hyphens: auto;
@@ -25,7 +25,7 @@
         hyphens: auto;
     }
 
-    .hide-long-names {
+    .adf-hide-long-names {
         overflow: auto;
     }
 

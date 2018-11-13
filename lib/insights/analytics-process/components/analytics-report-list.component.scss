@@ -24,11 +24,11 @@
             line-height: 48px;
         }
 
-        .adf-activiti-filters__entry.active {
+        .adf-activiti-filters__entry.adf-active {
             color:  mat-color($primary);
         }
 
-        .adf-activiti-filters__entry.active .adf-activiti-filters__entry-icon {
+        .adf-activiti-filters__entry.adf-active .adf-activiti-filters__entry-icon {
             color:  mat-color($primary);
         }
 

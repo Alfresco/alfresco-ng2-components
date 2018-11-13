@@ -43,7 +43,7 @@
         }
 
         .adf-sidenav-link {
-            &.active {
+            &.adf-active {
                 color: mat-color($primary);
             }
 
@@ -85,7 +85,7 @@
                 min-width: 0;
                 line-height: $toolbarHeight;
 
-                &.active {
+                &.adf-active {
                     background-color: rgba(0, 0, 0, 0.12);
                 }
             }

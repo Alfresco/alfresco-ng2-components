@@ -58,7 +58,7 @@
 
         &-container {
             .adf-viewer-layout-content {
-                @extend .full-screen;
+                @extend .adf-full-screen;
                 position: relative;
                 overflow-y: hidden;
                 overflow-x: hidden;
@@ -80,7 +80,7 @@
             }
 
             .adf-viewer-layout {
-                @extend .full-screen;
+                @extend .adf-full-screen;
 
                 display: flex;
                 flex-direction: row;
@@ -90,7 +90,7 @@
             }
 
             .adf-viewer-content {
-                @extend .full-screen;
+                @extend .adf-full-screen;
                 flex: 1;
 
                 & > div {
@@ -109,7 +109,7 @@
         }
 
         &-inline-container {
-            @extend .full-screen;
+            @extend .adf-full-screen;
         }
 
         &-content-container {

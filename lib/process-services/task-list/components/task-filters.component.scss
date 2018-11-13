@@ -21,7 +21,7 @@
         }
 
         &-filters__entry {
-            &.active, &:hover {
+            &.adf-active, &:hover {
                 color: mat-color($primary);
                 opacity: 1;
             }

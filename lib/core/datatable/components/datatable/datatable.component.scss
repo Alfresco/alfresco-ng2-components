@@ -168,7 +168,7 @@
         width: 100%;
         position: relative;
         border: $data-table-dividers;
-        border-collapse: collapse;
+        // border-collapse: collapse;
         white-space: nowrap;
         font-size: $data-table-font-size;
         background-color: mat-color($background, card);

@@ -220,7 +220,7 @@ Let's start by assigning an "image-table-cell" class to the thumbnail column:
             key="$thumbnail"
             type="image"
             [sortable]="false"
-            class="image-table-cell">
+            class="adf-image-table-cell">
         </data-column>
         
         ...
@@ -231,7 +231,7 @@ Let's start by assigning an "image-table-cell" class to the thumbnail column:
 Now your application can define styles to change the content of the column based on conditions such as the selection state:
 
 ```css
-adf-document-list ::ng-deep adf-datatable > table > tbody > tr.is-selected > td.adf-data-table-cell.adf-data-table-cell--image.image-table-cell > div > div > mat-icon > svg {
+adf-document-list ::ng-deep adf-datatable > table > tbody > tr.is-selected > td.adf-data-table-cell.adf-data-table-cell--image.adf-image-table-cell > div > div > mat-icon > svg {
     fill: #00bcd4;
 }
 ```

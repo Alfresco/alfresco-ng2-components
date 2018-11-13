@@ -4,7 +4,7 @@
     [style.transform]="'translate(-50%, ' + translateY + 'px)'">
     <adf-pdf-thumb *ngFor="let page of renderItems; trackBy: trackByFn"
         class="adf-pdf-thumbnails__thumb"
-        [ngClass]="{'pdf-thumbnails__thumb--selected' : isSelected(page.id)}"
+        [ngClass]="{'adf-pdf-thumbnails__thumb--selected' : isSelected(page.id)}"
         [page]="page"
         (click)="goTo(page.id)">
     </adf-pdf-thumb>

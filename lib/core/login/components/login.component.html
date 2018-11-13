@@ -106,10 +106,9 @@
 
                             </button>
                             <div *ngIf="showRememberMe" class="adf-login__remember-me">
-                                <mat-checkbox id="adf-login-remember" color="primary" class="adf-login-rememberme"
+                                <mat-checkbox id="adf-login-remember" color="primary" class="adf-login-remember-me"
                                               [checked]="rememberMe"
-                                              (change)="rememberMe = !rememberMe">{{ 'LOGIN.LABEL.REMEMBER' | translate
-                                    }}
+                                              (change)="rememberMe = !rememberMe">{{ 'LOGIN.LABEL.REMEMBER' | translate }}
                                 </mat-checkbox>
                             </div>
                         </div>

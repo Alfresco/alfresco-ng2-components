@@ -65,7 +65,7 @@
                     z-index: 2;
                 }
 
-                &-arrow.isRoot {
+                &-arrow.adf-isRoot {
                     visibility: hidden;
                 }
 
@@ -74,7 +74,7 @@
                 }
             }
 
-            &-trigger.isRoot {
+            &-trigger.adf-isRoot {
                 cursor: not-allowed;
             }
         }
@@ -95,11 +95,11 @@
             text-overflow: ellipsis;
 
             &:hover,
-            &.active {
+            &.adf-active {
                 opacity: 1;
             }
 
-            &.active {
+            &.adf-active {
                 flex: 1 1 auto;
                 color: mat-color($foreground, text, 0.87);
                 min-width: initial;

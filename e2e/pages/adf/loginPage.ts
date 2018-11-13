@@ -32,7 +32,7 @@ export class LoginPage {
     logoTxt = element(by.css('input[data-automation-id="adf-url-logo"]'));
     usernameTooltip = element(by.css('span[data-automation-id="username-error"]'));
     passwordTooltip = element(by.css('span[data-automation-id="password-required"]'));
-    loginTooltip = element(by.css('span[class="login-error-message"]'));
+    loginTooltip = element(by.css('span[class="adf-login-error-message"]'));
     usernameInactive = element(by.css('input[id="username"][aria-invalid="false"]'));
     passwordInactive = element(by.css('input[id="password"][aria-invalid="false"]'));
     adfLogo = element(by.css('img[class="adf-img-logo ng-star-inserted"]'));

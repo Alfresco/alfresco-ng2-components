@@ -21,7 +21,7 @@ var Util = require('../../util/util');
 var contentServices = element(by.css("a[data-automation-id='files'] span"));
 var siteList = element(by.css("md-select[class*='dropdown-list']"));
 var folderID = element(by.css('adf-files-component p'));
-var folderText = element(by.css("md-input-container[class*='create-folder--name'] input"));
+var folderText = element(by.css("md-input-container[class*='adf-create-folder--name'] input"));
 var createButtonDialog = element(by.xpath("//span[contains(text(), 'Create')]/ancestor::button"));
 var createFolderButton = element(by.xpath("//md-icon[contains(text(), 'create_new_folder')]"));
 var currentFolder = element(by.xpath("//div[@class='adf-breadcrumb-container']/li[last()]/div"));

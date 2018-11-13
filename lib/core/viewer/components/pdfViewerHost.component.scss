@@ -1,5 +1,5 @@
 .adf-pdf-viewer {
-    .adf-textLayer {
+    .textLayer {
         position: absolute;
         left: 0;
         top: 0;
@@ -63,7 +63,7 @@
             -ms-user-select: none;
             -moz-user-select: none;
 
-            &.active {
+            &.adf-active {
                 top: 0;
             }
         }
@@ -137,7 +137,7 @@
     }
 
     .adf-pdfViewer {
-        canvaswrapper {
+        .canvasWrapper {
             overflow: hidden;
         }
 
