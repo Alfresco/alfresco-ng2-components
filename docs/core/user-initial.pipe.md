@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-11-12
 ---
 
 # User Initial pipe
@@ -28,3 +29,7 @@ The first pipe parameter specifies an optional CSS class to add to the &lt;div>
 element (eg, a background color is commonly used to emphasise initials). The
 second parameter is an optional delimiter to add between the initials.
 Both parameters default to empty strings.
+
+## See also
+
+-   [Full name pipe](../core/full-name.pipe.md)

@@ -77,7 +77,7 @@ for more information about installing and using the source code.
 | [Text mask component](core/text-mask.component.md) | Implements text field input masks. | [Source](../lib/core/form/components/widgets/text/text-mask.component.ts) |
 | [Info drawer layout component](core/info-drawer-layout.component.md) | Displays a sidebar-style information panel. | [Source](../lib/core/info-drawer/info-drawer-layout.component.ts) |
 | [Info drawer component](core/info-drawer.component.md) | Displays a sidebar-style information panel with tabs. | [Source](../lib/core/info-drawer/info-drawer.component.ts) |
-| [Language menu component](core/language-menu.component.md) | Displays all the languages that are present in the "app.config.json" or the default one (EN). | [Source](../lib/core/language-menu/language-menu.component.ts) |
+| [Language menu component](core/language-menu.component.md) | Displays all the languages that are present in "app.config.json" and the default (EN). | [Source](../lib/core/language-menu/language-menu.component.ts) |
 | [Header component](core/header.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Reusable header for Alfresco applications. | [Source](../lib/core/layout/components/header/header.component.ts) |
 | [Sidebar action menu component](core/sidebar-action-menu.component.md) | Displays a sidebar-action menu information panel. | [Source](../lib/core/layout/components/sidebar-action/sidebar-action-menu.component.ts) |
 | [Sidenav layout component](core/sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../lib/core/layout/components/sidenav-layout/sidenav-layout.component.ts) |
@@ -125,12 +125,12 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [File size pipe](core/file-size.pipe.md) | Converts a number of bytes to the equivalent in KB, MB, etc. | [Source](../lib/core/pipes/file-size.pipe.ts) |
+| [Full name pipe](core/full-name.pipe.md) | Joins the first and last name properties from a UserProcessModel object into a single string. | [Source](../lib/core/pipes/full-name.pipe.ts) |
 | [Mime type icon pipe](core/mime-type-icon.pipe.md) | Retrieves an icon to represent a MIME type. | [Source](../lib/core/pipes/mime-type-icon.pipe.ts) |
 | [Node name tooltip pipe](core/node-name-tooltip.pipe.md) | Formats the tooltip for a Node. | [Source](../lib/core/pipes/node-name-tooltip.pipe.ts) |
 | [Text highlight pipe](core/text-highlight.pipe.md) | Adds highlighting to words or sections of text that match a search string. | [Source](../lib/core/pipes/text-highlight.pipe.ts) |
 | [Time ago pipe](core/time-ago.pipe.md) | Converts a recent past date into a number of days ago. | [Source](../lib/core/pipes/time-ago.pipe.ts) |
 | [User initial pipe](core/user-initial.pipe.md) | Takes the name fields of a UserProcessModel object and extracts and formats the initials. | [Source](../lib/core/pipes/user-initial.pipe.ts) |
-| _Full name pipe_ | _Not currently documented_ | [Source](../lib/core/pipes/full-name.pipe.ts) |
 
 ## Services
 
@@ -236,7 +236,7 @@ for more information about installing and using the source code.
 | [Tag actions component](content-services/tag-actions.component.md) | Shows available actions for tags. | [Source](../lib/content-services/tag/tag-actions.component.ts) |
 | [Tag list component](content-services/tag-list.component.md) | Shows tags for an item. | [Source](../lib/content-services/tag/tag-list.component.ts) |
 | [Tag node list component](content-services/tag-node-list.component.md) | Shows tags for a node. | [Source](../lib/content-services/tag/tag-node-list.component.ts) |
-| [Tree view component](content-services/tree-view.component.md) | Allow a user to show the folder and subfolders of a node in a tree view | [Source](../lib/content-services/tree-view/components/tree-view.component.ts) |
+| [Tree view component](content-services/tree-view.component.md) | Shows the folder and subfolders of a node as a tree view. | [Source](../lib/content-services/tree-view/components/tree-view.component.ts) |
 | [File uploading dialog component](content-services/file-uploading-dialog.component.md) | Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components. | [Source](../lib/content-services/upload/components/file-uploading-dialog.component.ts) |
 | [Upload button component](content-services/upload-button.component.md) | Activates a file upload. | [Source](../lib/content-services/upload/components/upload-button.component.ts) |
 | [Upload drag area component](content-services/upload-drag-area.component.md) | Adds a drag and drop area to upload files to ACS. | [Source](../lib/content-services/upload/components/upload-drag-area.component.ts) |
@@ -278,7 +278,6 @@ for more information about installing and using the source code.
 | [Search query builder service](content-services/search-query-builder.service.md) | Stores information from all the custom search and faceted search widgets, compiles and runs the final search query. | [Source](../lib/content-services/search/search-query-builder.service.ts) |
 | [Rating service](content-services/rating.service.md) | Manages ratings for items in Content Services. | [Source](../lib/content-services/social/services/rating.service.ts) |
 | [Tag service](content-services/tag.service.md) | Manages tags in Content Services. | [Source](../lib/content-services/tag/services/tag.service.ts) |
-| _Tree view service_ | _Not currently documented_ | [Source](../lib/content-services/tree-view/services/tree-view.service.ts) |
 
 <!--content-services end-->
 

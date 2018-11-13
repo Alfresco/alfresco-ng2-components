@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-11-12
 ---
 
 # Data Column Component
@@ -65,8 +66,9 @@ You can use `ngIf` directives to provide conditional visibility support for the 
 
 ### Automatic column header translation
 
-You can use i18n resource keys with [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) `title` property.
-The component will automatically check the corresponding i18n resources and fetch corresponding value.
+You can use i18n resource keys with the
+[`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) `title` property.
+The component will automatically check the appropriate i18n resources and fetch the corresponding value.
 
 ```html
 <data-column
@@ -75,7 +77,7 @@ The component will automatically check the corresponding i18n resources and fetc
 </data-column>
 ```
 
-This feature is optional. Regular text either plain or converted via the `translate` pipe will still be working as it was before.
+This feature is optional. Regular text (either plain or converted via the `translate` pipe) will still work as normal.
 
 ### Custom tooltips
 
@@ -123,7 +125,7 @@ Every cell in the DataTable component is bound to the dynamic data context conta
 | col | [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) | Current data column instance. |
 
 You can use all three properties to gain full access to underlying data from within your custom templates. 
-In order to wire HTML templates with the data context you will need defining a variable that is bound to `$implicit` like shown below:
+In order to wire HTML templates with the data context you will need to define a variable that is bound to `$implicit` as shown below:
 
 ```html
 <ng-template let-context="$implicit">
@@ -131,22 +133,22 @@ In order to wire HTML templates with the data context you will need defining a v
 </ng-template>
 ```
 
-The format of naming is `let-VARIABLE_NAME="$implicit"` where `VARIABLE_NAME` is the name of the variable you want to bind template data context to.
+The name format is `let-VARIABLE_NAME="$implicit"` where `VARIABLE_NAME` is the name of the variable you want to bind the template data context to.
 
-Getting a cell value from the underlying [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts):
+You can also get a cell value from the underlying [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts):
 
 ```ts
 context.data.getValue(entry.row, entry.col);
 ```
 
-You can retrieve all property values for underlying node, including nested properties (via property paths):
+You can retrieve all property values for the underlying node, including nested properties (via property paths):
 
 ```ts
 context.row.getValue('name')
 context.row.getValue('createdByUser.displayName')
 ```
 
-You may want using **row** api to get raw value access.
+You may want to use the **row** API to get access to the raw values.
 
 <!-- {% raw %} -->
 
@@ -161,7 +163,7 @@ You may want using **row** api to get raw value access.
 
 <!-- {% endraw %} -->
 
-Use **data** api to get values with post-processing, like datetime/icon conversion.\_
+Use the **data** API to get values with post-processing (eg, datetime or icon conversion).
 
 In the Example below we will prepend `Hi!` to each file and folder name in the list: 
 
@@ -178,7 +180,7 @@ In the Example below we will prepend `Hi!` to each file and folder name in the l
 <!-- {% endraw %} -->
 
 In the Example below we will integrate the [adf-tag-node-list](../content-services/tag-node-list.component.md) component
-with the document list.
+within the document list.
 
 <!-- {% raw %} -->
 
@@ -254,7 +256,7 @@ You can hide columns on small screens using custom CSS rules:
 }
 ```
 
-Now you can declare columns and assign `desktop-only` class where needed:
+Now you can declare columns and assign the `desktop-only` class where needed:
 
 ```html
 <adf-document-list ...>
@@ -295,13 +297,8 @@ Now you can declare columns and assign `desktop-only` class where needed:
 
 ![Responsive Mobile](../docassets/images/responsive-mobile.png)
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-
-<!-- seealso start -->
-
 ## See also
 
 -   [Document list component](../content-services/document-list.component.md)
 -   [Datatable component](datatable.component.md)
 -   [Task list component](../process-services/task-list.component.md)
-    <!-- seealso end -->
