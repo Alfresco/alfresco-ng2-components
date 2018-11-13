@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-13
+Last reviewed: 2018-11-13
 ---
 
 # Content service
@@ -12,12 +12,12 @@ Accesses app-generated data objects via URLs and file downloads.
 
 ### Methods
 
--   **createFolder**(relativePath: `string`, name: `string`, parentId?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<FolderCreatedEvent>`<br/>
+-   **createFolder**(relativePath: `string`, name: `string`, parentId?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Creates a folder.
     -   _relativePath:_ `string`  - Location to create the folder
     -   _name:_ `string`  - Folder name
     -   _parentId:_ `string`  - (Optional) Node ID of parent folder
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<FolderCreatedEvent>` - Information about the new folder
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Information about the new folder
 -   **createTrustedUrl**(blob: [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)): `string`<br/>
     Creates a trusted object URL from the [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob). WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
     -   _blob:_ [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)  - Data to wrap into object URL
@@ -49,7 +49,7 @@ Accesses app-generated data objects via URLs and file downloads.
 -   **getNode**(nodeId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Gets a Node via its node ID.
     -   _nodeId:_ `string`  - ID of the target node
-    -   _opts:_ `any`  - (Optional) Options supported by JSAPI
+    -   _opts:_ `any`  - (Optional) Options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
 -   **getNodeContent**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets content for the given node.

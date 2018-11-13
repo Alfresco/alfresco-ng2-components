@@ -34,7 +34,7 @@ for more information about installing and using the source code.
 | [Sidenav layout component](sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../../lib/core/layout/components/sidenav-layout/sidenav-layout.component.ts) |
 | [Login dialog panel component](login-dialog-panel.component.md) | Shows and manages a login dialog. | [Source](../../lib/core/login/components/login-dialog-panel.component.ts) |
 | [Login dialog component](login-dialog.component.md) | Allows a user to perform a login via a dialog. | [Source](../../lib/core/login/components/login-dialog.component.ts) |
-| [Login component](login.component.md) | Authenticates to Alfresco Content Services and or Alfresco Process Services. | [Source](../../lib/core/login/components/login.component.ts) |
+| [Login component](login.component.md) | Authenticates to Alfresco Content Services and Alfresco Process Services. | [Source](../../lib/core/login/components/login.component.ts) |
 | [Infinite pagination component](infinite-pagination.component.md) | Adds "infinite" pagination to the component it is used with. | [Source](../../lib/core/pagination/infinite-pagination.component.ts) |
 | [Pagination component](pagination.component.md) | Adds pagination to the component it is used with. | [Source](../../lib/core/pagination/pagination.component.ts) |
 | [Host settings component](host-settings.component.md) ![Internal](../docassets/images/InternalIcon.png) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../../lib/core/settings/host-settings.component.ts) |
