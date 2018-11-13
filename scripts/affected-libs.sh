@@ -3,6 +3,7 @@
 eval BRANCH_NAME=""
 eval HEAD_SHA_BRANCH=""
 eval SHA_2="HEAD"
+eval DIRECTORY="tmp"
 
 show_help() {
     echo "Usage: smart-build.sh"
@@ -31,21 +32,27 @@ fi
 HEAD_SHA_BRANCH="$(git merge-base origin/$BRANCH_NAME HEAD)"
 echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
 
-#find affected libs
-npm run affected:libs -- $HEAD_SHA_BRANCH "HEAD" > deps.txt
+# tmp folder doesn't exist.
+if [ ! -d "$DIRECTORY" ]; then
+  #find affected libs
+  echo "Directory tmp created";
+  mkdir $DIRECTORY;
+  npm run affected:libs -- $HEAD_SHA_BRANCH "HEAD" > $DIRECTORY/deps.txt
+fi
+
 #echo "extensions" > deps.txt
 
 #clean file
-sed -i '/^$/d'  ./deps.txt
-sed -i '/alfresco-components/d' ./deps.txt
-sed -i '/nx affected:libs/d' ./deps.txt
-sed -i '/^$/d'  ./deps.txt
+sed -i '/^$/d'  ./$DIRECTORY/deps.txt
+sed -i '/alfresco-components/d' ./$DIRECTORY/deps.txt
+sed -i '/nx affected:libs/d' ./$DIRECTORY/deps.txt
+sed -i '/^$/d'  ./$DIRECTORY/deps.txt
 
 #read result from file
 while IFS= read -r var
 do
     fileLine=$var
-done < "./deps.txt"
+done < "./$DIRECTORY/deps.txt"
 
 #transform string to array
 libs=(`echo $fileLine | sed 's/^$/\n/g'`)
@@ -55,7 +62,6 @@ for i in "${libs[@]}"
 do
     if [ "$i" == "core" ] ; then
         AFFECTED_LIBS="core$ content-services$ process-services$ process-services-cloud$ insights$ extensions$ "
-        rm deps.txt
         echo "${AFFECTED_LIBS}"
         exit 0
     fi
@@ -101,5 +107,4 @@ do
     fi
 done
 
-rm deps.txt
 echo "${AFFECTED_LIBS}"

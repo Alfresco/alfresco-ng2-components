@@ -1,5 +1,6 @@
 *.log
 node_modules
+tmp
 bundles
 workspace.xml
 .idea/

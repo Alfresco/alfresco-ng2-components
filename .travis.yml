@@ -5,15 +5,20 @@ node_js:
  # Use the explicit NodeJS LTS version 8.9.4 to avoid any automatic upgrade of the version.
   - '8.9.4'
 
-cache: npm
+cache:
+  directories:
+  - node_modules
+  - demo-shell/dist
+  - tmp
 
 stages:
   - name: Warm Up Cache
     if: branch = master
-  - name: Warm Up Cache & Lint
+  - name: Warm Up Cache & Lint & Build Dist
     if: branch != master
-  - name: Unit test
   - name: Packaging & Create Shell dist
+    if: branch = master
+  - name: Unit test
   - name: e2e Test
   - name: Create Docker PR
   - name: Deploy Docker PR
@@ -36,13 +41,20 @@ jobs:
           script:
           - (./scripts/npm-build-all.sh || exit 1;);
           - (./scripts/lint.sh || exit 1;);
-        - stage: Warm Up Cache & Lint
+        - stage: Warm Up Cache & Lint & Build Dist
           script:
           - (./scripts/update-version.sh -gnu -alpha && npm install || exit 1;);
           - (./scripts/lint.sh || exit 1;);
           - (npm run spellcheck || exit 1;)
+          - rm -rf tmp && (./scripts/smart-build.sh || exit 1;);
+          - (npm run build:dist || exit 1;);
+        - stage: Packaging & Create Shell dist
+          script:
+          - (./scripts/update-version.sh -gnu -alpha && npm install || exit 1;);
+          - (./scripts/smart-build.sh || exit 1;);
+          - (npm run build:dist || exit 1;);
         - stage: Unit test
-          env: STAGE=core
+          name: core
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "core$" ]];
@@ -50,7 +62,7 @@ jobs:
                 ng test core --watch=false || exit 1;
             fi
         - stage: Unit test
-          env: STAGE=process-services
+          name: process-services
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "process-services$" ]];
@@ -58,7 +70,7 @@ jobs:
                 ng test process-services --watch=false || exit 1;
             fi
         - stage: Unit test
-          env: STAGE=content-services
+          name: content-services
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "content-services$" ]];
@@ -66,7 +78,7 @@ jobs:
                 ng test content-services --watch=false || exit 1;
             fi
         - stage: Unit test
-          env: STAGE=process-services-cloud
+          name: process-services-cloud
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "process-services-cloud$" ]];
@@ -74,7 +86,7 @@ jobs:
                 ng test process-services-cloud --watch=false || exit 1;
             fi
         - stage: Unit test
-          env: STAGE=extensions
+          name: extensions
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "extensions$" ]];
@@ -82,7 +94,7 @@ jobs:
                 ng test extensions --watch=false || exit 1;
             fi
         - stage: Unit test
-          env: STAGE=insights
+          name: insights
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "insights$" ]];
@@ -90,17 +102,12 @@ jobs:
                 ng test insights --watch=false || exit 1;
             fi
         - stage: Unit test
-          env: STAGE=demo-shell
+          name: demo-shell
           script:   if ([ "$TRAVIS_BRANCH" = "master" ]); then
                             (./scripts/start.sh -t -ss || exit 1;);
                        else
                             (./scripts/start.sh -dev -t -ss -vjsapi alpha || exit 1;);
                     fi
-        - stage: Packaging & Create Shell dist
-          script:
-          - (./scripts/update-version.sh -gnu -alpha && npm install || exit 1;);
-          - (./scripts/smart-build.sh || exit 1;);
-          - (npm run build:dist || exit 1;) && (node ./scripts/upload-build-in-cs.js -u "$E2E_USERNAME"  -p "$E2E_PASSWORD" --host "$E2E_HOST" -f  $TRAVIS_BUILD_NUMBER || exit 1;)
         - stage: Update children projects dependency #Update generator-ng2-alfresco-app
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n generator-ng2-alfresco-app
@@ -119,7 +126,7 @@ jobs:
         #- stage: Create Shell dist
         #  script: rm -rf ./node_modules/@alfresco; node ./scripts/download-smart-build-lib-in-cs.js -u "$E2E_USERNAME"  -p "$E2E_PASSWORD" --host "$E2E_HOST" -f $TRAVIS_BUILD_NUMBER || exit 1; npm run build:dist || exit 1
         - stage: e2e Test # Test core
-          env: STAGE=core
+          name: core
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "core$" ]];
@@ -127,7 +134,7 @@ jobs:
                  (rm -rf ./node_modules/@alfresco; node ./scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder core --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
         - stage: e2e Test # Test process-services-cloud
-          env: STAGE=process-services-cloud
+          name: process-services-cloud
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "process-services-cloud$" ]];
@@ -135,7 +142,7 @@ jobs:
                  (rm -rf ./node_modules/@alfresco; node ./scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder process-services-cloud --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
         - stage: e2e Test # Test process-services
-          env: STAGE=process-services
+          name: process-services
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "process-services$" ]];
@@ -143,7 +150,7 @@ jobs:
                  (rm -rf ./node_modules/@alfresco; node ./scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder process-services --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
         - stage: e2e Test # Test content-services
-          env: STAGE=content-services
+          name: content-services
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "content-services$" ]];
@@ -151,7 +158,7 @@ jobs:
                  (rm -rf ./node_modules/@alfresco; node ./scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder content-services --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
         - stage: e2e Test # Test insights
-          env: STAGE=insights
+          name: insights
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "insights$" ]];
@@ -197,8 +204,3 @@ jobs:
 # Send coverage data to codecov
 after_success:
     bash <(curl -s https://codecov.io/bash) -X gcov
-
-
-cache:
-  directories:
-  - node_modules
