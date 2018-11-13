@@ -31,7 +31,8 @@ import { tap, skip } from 'rxjs/operators';
 import {
     SharedLinksApiService,
     NodesApiService,
-    ContentService
+    ContentService,
+    RenditionsService
 } from '@alfresco/adf-core';
 import { SharedLinkEntry, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
@@ -66,6 +67,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private nodesApiService: NodesApiService,
         private contentService: ContentService,
+        private renditionService: RenditionsService,
         @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
@@ -94,6 +96,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             if (properties && !properties['qshare:sharedId']) {
 
                 this.createSharedLinks(this.data.node.entry.id);
+
             } else {
                 this.sharedId = properties['qshare:sharedId'];
                 this.isFileShared = true;
@@ -157,6 +160,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                     this.data.node.entry.properties['qshare:sharedId'] = this.sharedId;
                     this.isDisabled = false;
                     this.isFileShared = true;
+                    this.renditionService.generateRenditionForNode(this.data.node.entry.id).subscribe();
 
                     this.updateForm();
                 }
