@@ -18,6 +18,7 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { of, Observable } from 'rxjs';
+import { IdentityUserModel } from '../models/identity-user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -34,12 +35,12 @@ export class IdentityUserService {
         this.helper = new JwtHelperService();
     }
 
-    getCurrentUserInfo(): Observable<any> {
+    getCurrentUserInfo(): Observable<IdentityUserModel> {
         const fullName = this.getValueFromToken<string>(IdentityUserService.USER_NAME);
         const email = this.getValueFromToken<string>(IdentityUserService.USER_EMAIL);
         const nameParts = fullName.split(' ');
         const user = { firstName: nameParts[0], lastName: nameParts[1], email: email };
-        return of(user);
+        return of(new IdentityUserModel(user));
     }
 
     getValueFromToken<T>(key: string): T {

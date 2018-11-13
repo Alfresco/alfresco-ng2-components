@@ -120,6 +120,7 @@ describe('User info component', () => {
         describe('ui ', () => {
 
             beforeEach(() => {
+                spyOn(authService, 'isOauth').and.returnValue(false);
                 spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
                 spyOn(authService, 'isLoggedIn').and.returnValue(true);
                 spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeEcmEditedUser));
@@ -183,6 +184,7 @@ describe('User info component', () => {
         describe('and has image', () => {
 
             beforeEach(async(() => {
+                spyOn(authService, 'isOauth').and.returnValue(false);
                 spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
                 spyOn(authService, 'isLoggedIn').and.returnValue(true);
                 spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeEcmUser));
@@ -243,6 +245,7 @@ describe('User info component', () => {
         describe('and has no image', () => {
 
             beforeEach(async(() => {
+                spyOn(authService, 'isOauth').and.returnValue(false);
                 spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
                 spyOn(authService, 'isLoggedIn').and.returnValue(true);
                 spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeEcmUserNoImage));

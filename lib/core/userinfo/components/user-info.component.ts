@@ -19,9 +19,12 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserModel } from './../models/ecm-user.model';
+import { IdentityUserModel } from './../models/identity-user.model';
 import { BpmUserService } from './../services/bpm-user.service';
 import { EcmUserService } from './../services/ecm-user.service';
 import { IdentityUserService } from '../services/identity-user.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-userinfo',
@@ -57,8 +60,9 @@ export class UserInfoComponent implements OnInit {
     @Input()
     namePosition: string = 'right';
 
-    ecmUser: EcmUserModel;
-    bpmUser: BpmUserModel;
+    ecmUser$: Observable<EcmUserModel>;
+    bpmUser$: Observable<BpmUserModel>;
+    identityUser$: Observable<IdentityUserModel>;
     bpmUserImage: any;
     ecmUserImage: any;
     selectedIndex: number;
@@ -74,8 +78,16 @@ export class UserInfoComponent implements OnInit {
     }
 
     getUserInfo() {
-        this.loadEcmUserInfo();
-        this.loadBpmUserInfo();
+        if (this.authService.isOauth()) {
+            this.loadIdentityUserInfo();
+        } else if (this.authService.isEcmLoggedIn() && this.authService.isBpmLoggedIn()) {
+            this.loadEcmUserInfo();
+            this.loadBpmUserInfo();
+        } else if (this.authService.isEcmLoggedIn()) {
+            this.loadEcmUserInfo();
+        } else if (this.authService.isBpmLoggedIn()) {
+            this.loadBpmUserInfo();
+        }
     }
 
     isLoggedIn() {
@@ -83,50 +95,35 @@ export class UserInfoComponent implements OnInit {
     }
 
     loadEcmUserInfo(): void {
-        if (this.authService.isEcmLoggedIn()) {
-            this.ecmUserService.getCurrentUserInfo()
-                .subscribe((res) => {
-                    this.ecmUser = new EcmUserModel(res);
-                    this.getEcmAvatar();
-                });
-        } else {
-            this.ecmUser = null;
-            this.ecmUserImage = null;
-        }
+        this.ecmUser$ = this.ecmUserService.getCurrentUserInfo().pipe(
+            map((response) => {
+                const ecmUser = new EcmUserModel(response);
+                this.getEcmAvatar(ecmUser.avatarId);
+                return ecmUser;
+            })
+        );
     }
 
     loadBpmUserInfo(): void {
-        if (this.authService.isOauth()) {
-            this.getIdentityUserInfo();
-        } else if (this.authService.isBpmLoggedIn()) {
-            this.getBpmUserInfo();
-        } else {
-            this.bpmUser = null;
-            this.bpmUserImage = null;
-        }
-    }
-
-    getBpmUserInfo() {
-        this.bpmUserService.getCurrentUserInfo()
-            .subscribe((res) => {
-                this.bpmUser = new BpmUserModel(res);
+        this.bpmUser$ = this.bpmUserService.getCurrentUserInfo().pipe(
+            map((response) => {
+                const bpmUser = new BpmUserModel(response);
                 this.getBpmUserImage();
-            });
+                return bpmUser;
+            })
+        );
     }
 
-    getIdentityUserInfo() {
-        this.identityUserService.getCurrentUserInfo()
-            .subscribe((res) => {
-                this.bpmUser = new BpmUserModel(res);
-            });
+    loadIdentityUserInfo() {
+        this.identityUser$ = this.identityUserService.getCurrentUserInfo();
     }
 
     stopClosing(event) {
         event.stopPropagation();
     }
 
-    private getEcmAvatar() {
-        this.ecmUserImage = this.ecmUserService.getUserProfileImage(this.ecmUser.avatarId);
+    private getEcmAvatar(avatarId: any ) {
+        this.ecmUserImage = this.ecmUserService.getUserProfileImage(avatarId);
     }
 
     private getBpmUserImage() {
@@ -136,17 +133,4 @@ export class UserInfoComponent implements OnInit {
     showOnRight() {
         return this.namePosition === 'right';
     }
-
-    hasBpmUserPictureId(): boolean {
-        return !!this.bpmUser.pictureId;
-    }
-
-    hasTenantName(): boolean {
-        return !!(this.bpmUser && this.bpmUser.tenantName);
-    }
-
-    hasEcmUserAvatarId(): boolean {
-        return !!this.ecmUser.avatarId;
-    }
-
 }
