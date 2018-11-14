@@ -1,7 +1,7 @@
 ---
 Added: v2.1.0
 Status: Active
-Last reviewed: 2018-05-03
+Last reviewed: 2018-11-14
 ---
 
 # Content Node Dialog service
@@ -52,7 +52,7 @@ Displays and manages dialogs for selecting content to open, copy or upload.
     Opens a dialog to choose folders to upload.
     -   _action:_ `string`  - Name of the action to show in the title
     -   _contentEntry:_ [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)  - Item to upload
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>` - Information about the chosed folder(s)
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`[]>` - Information about the chosen folder(s)
 
 ## Details
 

@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-11-14
 ---
 
 # Comment list component
@@ -14,11 +15,11 @@ Shows a list of comments.
 Populate the comments in the component class:
 
 ```ts
-import { CommentProcessModel } from '@alfresco/adf-core';
+import { CommentModel } from '@alfresco/adf-core';
 
 export class SomeComponent implements OnInit {
 
-  comments: CommentProcessModel[] = [
+  comments: CommentModel[] = [
     {
       id: 1,
       message: 'Comment number 1',
@@ -43,7 +44,7 @@ export class SomeComponent implements OnInit {
     }
   ];
 
-  onClickCommentRow(comment: CommentProcessModel) {
+  onClickCommentRow(comment: CommentModel) {
     console.log('Clicked row: ', comment);
   }
 ```

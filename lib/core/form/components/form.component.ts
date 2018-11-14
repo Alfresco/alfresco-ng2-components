@@ -146,7 +146,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     formDataRefreshed: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
-    /** Emitted when form validations has validation error.*/
+    /** Emitted when the supplied form values have a validation error.*/
     @Output()
     formError: EventEmitter<FormFieldModel[]> = new EventEmitter<FormFieldModel[]>();
 

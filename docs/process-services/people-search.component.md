@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-11-14
 ---
 
 # People Search component
@@ -42,6 +43,8 @@ special sub-components in the body of the `<adf-people-search>` element:
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessModel`](../core/user-process.model.md)`>` | Emitted when a user is selected and the action button is clicked. |
 
 ## Details
+
+Usage example:
 
 <!-- {% raw %} -->
 

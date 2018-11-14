@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-09-14
+Last reviewed: 2018-11-14
 ---
 
 # Node Permission service
@@ -15,7 +15,7 @@ Manages role permissions for content nodes.
 -   **getGroupMemberByGroupName**(groupName: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<GroupMemberPaging>`<br/>
     Gets all members related to a group name.
     -   _groupName:_ `string`  - Name of group to look for members
-    -   _opts:_ `any`  - (Optional) Extra options supported by JSAPI
+    -   _opts:_ `any`  - (Optional) Extra options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<GroupMemberPaging>` - List of members
 -   **getNodeRoles**(node: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>`<br/>
     Gets a list of roles for the current node.
