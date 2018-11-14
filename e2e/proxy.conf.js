@@ -3,7 +3,7 @@ var HOST = process.env.URL_HOST_ADF;
 
 module.exports = {
     "/alfresco": {
-        "target": "http://adfdev.envalfresco.com",
+        "target": "http://" + (PROXY_HOST_ADF || HOST),
         "secure": false,
         "pathRewrite": {
             "^/alfresco/alfresco": ""
@@ -18,7 +18,7 @@ module.exports = {
         }
     },
     "/activiti-app": {
-        "target": "http://adfdev.envalfresco.com",
+        "target": "http://" + (PROXY_HOST_ADF || HOST),
         "secure": false,
         "pathRewrite": {
             "^/activiti-app/activiti-app": ""

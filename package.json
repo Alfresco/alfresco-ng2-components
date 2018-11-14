@@ -26,7 +26,7 @@
     "webpack-bundle-analyzer": "webpack-bundle-analyzer demo-shell/dist/stats.json",
     "test": "npm run validate-config && ng test dev --watch=false",
     "e2e": "./scripts/test-e2e-lib.sh -host 'localhost:4200' -dev --folder demo-shell",
-    "e2e-lib": "ng e2e lib-e2e-test --port=4200",
+    "e2e-lib": "ng e2e lib-e2e --port=4200",
     "server-versions": "rimraf ./demo-shell/src/versions.json && npm list --depth=0 --json=true --prod=true > ./demo-shell/src/versions.json  || exit 0",
     "clean": "rimraf dist ./node_modules typings",
     "clean-lock": "rimraf package-lock.json",
