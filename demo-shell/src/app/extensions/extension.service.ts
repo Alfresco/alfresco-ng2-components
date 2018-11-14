@@ -16,13 +16,24 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ExtensionService, ExtensionConfig } from '@alfresco/adf-extensions';
+import {
+    ExtensionService,
+    ExtensionConfig,
+    ExtensionRef
+} from '@alfresco/adf-extensions';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AppExtensionService {
-    constructor(private extensions: ExtensionService) {}
+    private _references = new BehaviorSubject<ExtensionRef[]>([]);
+
+    references$: Observable<ExtensionRef[]>;
+
+    constructor(private extensions: ExtensionService) {
+        this.references$ = this._references.asObservable();
+    }
 
     async load() {
         const config = await this.extensions.load();
@@ -36,5 +47,10 @@ export class AppExtensionService {
         }
         // tslint:disable-next-line:no-console
         console.log('loaded extension config', config);
+
+        const references = (config.$references || [])
+            .filter(entry => typeof entry === 'object')
+            .map(entry => <ExtensionRef> entry);
+        this._references.next(references);
     }
 }
