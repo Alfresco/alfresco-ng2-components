@@ -24,16 +24,20 @@ before_install:
 
 jobs:
     include:
-        - stage: Warm Up Cache
-          script:  if ([ "$TRAVIS_BRANCH" = "master" ]); then
-                (./scripts/npm-build-all.sh  || exit 1;);
-            else
-                (./scripts/update-version.sh -gnu -alpha && ././scripts/npm-build-all.sh -sb --skip-lint || exit 1;);
-            fi
-        - stage: Lint
+        #- stage: Warm Up Cache
+        #  script:  if ([ "$TRAVIS_BRANCH" = "master" ]); then
+        #        (./scripts/npm-build-all.sh  || exit 1;);
+        #    else
+        #        (./scripts/update-version.sh -gnu -alpha && ././scripts/npm-build-all.sh -sb --skip-lint || exit 1;);
+        #    fi
+        - stage: Warm Up Cache & Lint & Build Dist
           script:
-            - ./scripts/lint.sh
-            - npm run spellcheck
+          - (./scripts/update-version.sh -gnu -alpha || exit 1;);
+          - npm install
+          - (./scripts/lint.sh || exit 1;);
+          - (npm run spellcheck || exit 1;)
+          - rm -rf tmp && (./scripts/smart-build.sh || exit 1;);
+          - (npm run build:dist || exit 1;);
         - stage: Unit test
           env: STAGE=core
           script:  (./scripts/npm-build-all.sh -si -sb -t "core" --skip-lint || exit 1;);
@@ -138,3 +142,4 @@ cache:
   directories:
   - node_modules
   - demo-shell/dist
+  - tmp
