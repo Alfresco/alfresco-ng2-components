@@ -119,7 +119,7 @@ jobs:
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-modeler-app
         - stage: e2e Test # Test core
-          env: STAGE=core
+          name: core
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "core$" ]];
