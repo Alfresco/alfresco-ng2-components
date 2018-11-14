@@ -22,8 +22,8 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import TasksListPage = require('../pages/adf/process_services/tasksListPage');
-import TaskFiltersPage = require('../pages/adf/process_services/taskFiltersPage');
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
+import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/taskFiltersDemoPage'
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -37,8 +37,8 @@ describe('Task Filters Sorting', () => {
     let processServicesPage = new ProcessServicesPage();
     let tasksPage = new TasksPage();
     let tasksListPage = new TasksListPage();
-    let taskFiltersPage = new TaskFiltersPage();
     let taskDetailsPage = new TaskDetailsPage();
+    let taskFiltersDemoPage = new TaskFiltersDemoPage();
 
     let user;
     let appId;
@@ -119,7 +119,7 @@ describe('Task Filters Sorting', () => {
 
         browser.refresh();
 
-        taskFiltersPage.clickTaskFilter('Newest first');
+        taskFiltersDemoPage.customTaskFilter('Newest first').clickTaskFilter();
 
         expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[2].name);
         expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
@@ -142,7 +142,7 @@ describe('Task Filters Sorting', () => {
 
         browser.refresh();
 
-        taskFiltersPage.clickTaskFilter('Newest last');
+        taskFiltersDemoPage.customTaskFilter('Newest last').clickTaskFilter();
 
         expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[0].name);
         expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
@@ -164,7 +164,7 @@ describe('Task Filters Sorting', () => {
 
         browser.refresh();
 
-        taskFiltersPage.clickTaskFilter('Due first');
+        taskFiltersDemoPage.customTaskFilter('Due first').clickTaskFilter();
 
         expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[2].name);
         expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
@@ -186,7 +186,7 @@ describe('Task Filters Sorting', () => {
 
         browser.refresh();
 
-        taskFiltersPage.clickTaskFilter('Due last');
+        taskFiltersDemoPage.customTaskFilter('Due last').clickTaskFilter();
 
         expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[0].name);
         expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[1].name);
@@ -208,7 +208,7 @@ describe('Task Filters Sorting', () => {
 
         browser.refresh();
 
-        taskFiltersPage.clickTaskFilter('Newest first Open');
+        taskFiltersDemoPage.customTaskFilter('Newest first Open').clickTaskFilter();
 
         expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[5].name);
         expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
@@ -230,7 +230,7 @@ describe('Task Filters Sorting', () => {
 
         browser.refresh();
 
-        taskFiltersPage.clickTaskFilter('Newest last Open');
+        taskFiltersDemoPage.customTaskFilter('Newest last Open').clickTaskFilter();
 
         expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[3].name);
         expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
@@ -252,7 +252,7 @@ describe('Task Filters Sorting', () => {
 
         browser.refresh();
 
-        taskFiltersPage.clickTaskFilter('Due first Open');
+        taskFiltersDemoPage.customTaskFilter('Due first Open').clickTaskFilter();
 
         expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[5].name);
         expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
@@ -274,7 +274,7 @@ describe('Task Filters Sorting', () => {
 
         browser.refresh();
 
-        taskFiltersPage.clickTaskFilter('Due last Open');
+        taskFiltersDemoPage.customTaskFilter('Due last Open').clickTaskFilter();
 
         expect(tasksListPage.getDataTable().contentInPosition(1)).toBe(tasks[3].name);
         expect(tasksListPage.getDataTable().contentInPosition(2)).toBe(tasks[4].name);
