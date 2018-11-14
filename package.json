@@ -32,7 +32,7 @@
     "clean-lock": "rimraf package-lock.json",
     "webpack": "node ./node_modules/webpack/bin/webpack.js",
     "ng-packagr": "node ./node_modules/ng-packagr/cli/main.js",
-    "lite-server-e2e": "lite-server --baseDir='./demo-shell/dist/' -c ./e2e/lite-server-proxy.js",
+    "lite-server-e2e": "lite-server --baseDir='demo-shell/dist/' -c ./e2e/lite-server-proxy.js",
     "spellcheck": "cspell 'demo-shell/{src,e2e}/**/*.ts' 'e2e/**/*.ts' 'lib/{content-services,core,extensions,insights,process-services}/**/*.ts'"
   },
   "config": {

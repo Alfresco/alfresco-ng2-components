@@ -47,6 +47,7 @@ jobs:
           - (npm run spellcheck || exit 1;)
           - rm -rf tmp && (./scripts/smart-build.sh || exit 1;);
           - (npm run build:dist || exit 1;);
+          - node ./scripts/upload-build-in-cs.js -u "$E2E_USERNAME"  -p "$E2E_PASSWORD" --host "$E2E_HOST" -f  $TRAVIS_BUILD_NUMBER || exit 1
         - stage: Unit test
           name: core
           script:
@@ -118,44 +119,44 @@ jobs:
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-modeler-app
         - stage: e2e Test # Test core
-          name: core
+          env: STAGE=core
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "core$" ]];
             then
-                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder core --skip-lint --use-dist --timeout 7000 || exit 1;);
+                 (node ./scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder core --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
         - stage: e2e Test # Test process-services-cloud
-          name: process-services-cloud
+          env: STAGE=process-services-cloud
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "process-services-cloud$" ]];
             then
-                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder process-services-cloud --skip-lint --use-dist --timeout 7000 || exit 1;);
+                 (node ./scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER;  ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder process-services-cloud --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
         - stage: e2e Test # Test process-services
-          name: process-services
+          env: STAGE=process-services
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "process-services$" ]];
             then
-                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder process-services --skip-lint --use-dist --timeout 7000 || exit 1;);
+                 (node ./scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER;  ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder process-services --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
         - stage: e2e Test # Test content-services
-          name: content-services
+          env: STAGE=content-services
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "content-services$" ]];
             then
-                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder content-services --skip-lint --use-dist --timeout 7000 || exit 1;);
+                 (node ./scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER;  ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder content-services --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
         - stage: e2e Test # Test insights
-          name: insights
+          env: STAGE=insights
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "insights$" ]];
             then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder insights --skip-lint --use-dist --timeout 7000 || exit 1;);
+                (node ./scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER;  ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder insights --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
         - stage: Create Docker PR
           script: (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1)
