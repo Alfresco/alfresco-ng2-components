@@ -25,11 +25,7 @@ var TaskFiltersPage = function () {
     var involvedTask = element(by.css('span[data-automation-id="Involved Tasks_filter"]'));
     var tasksAccordionButton = element(by.css('div[class="adf-panel-heading adf-panel-heading-selected"]'));
     var tasksAccordionExpanded = element(by.css("mat-expansion-panel[class*='mat-expanded']"));
-    var startTaskButton = element(by.css('button[id="button-start"]'));
-    var newTaskButton = element(by.css('button[data-automation-id="btn-start-task"]'));
     var activeFilter = element(by.css("mat-list-item[class*='active']"));
-    var emptyTaskList = element(by.css('p[class="adf-empty-content__title"]'));
-    var emptyTaskDetails = element(by.css('adf-task-details > div > div'));
     var taskIcon = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
 
     this.checkTaskFilterDisplayed = function(name) {
@@ -63,6 +59,8 @@ var TaskFiltersPage = function () {
         Util.waitUntilElementIsNotVisible(customTask);
         return customTask;
     };
+
+
 
     this.checkMyTasksFilter = function() {
         Util.waitUntilElementIsVisible(myTasks);
@@ -118,31 +116,14 @@ var TaskFiltersPage = function () {
         Util.waitUntilElementIsNotVisible(tasksAccordionExpanded);
         return tasksAccordionExpanded;
     };
-
-    this.clickStartTaskButton = function() {
-        Util.waitUntilElementIsVisible(startTaskButton);
-        startTaskButton.click();
-    };
-
-    this.clickNewTaskButton = function() {
-        Util.waitUntilElementIsVisible(newTaskButton);
-        newTaskButton.click();
-    };
+    
 
     this.checkActiveFilterActive = function() {
         Util.waitUntilElementIsVisible(activeFilter);
         return activeFilter.getText();
     }
 
-    this.checkEmptyTaskList = function() {
-        Util.waitUntilElementIsVisible(emptyTaskList);
-        return emptyTaskList.getText();
-    };
 
-    this.checkEmptyTaskDetails = function() {
-        Util.waitUntilElementIsVisible(emptyTaskDetails);
-        return emptyTaskDetails.getText();
-    }
 };
 
 module.exports = TaskFiltersPage;

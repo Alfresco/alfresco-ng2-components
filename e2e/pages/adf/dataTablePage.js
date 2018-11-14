@@ -242,7 +242,6 @@ var DataTablePage = function (rootElement = element(by.css("adf-datatable"))) {
         return inputFilter.sendKeys(filterText);
     };
 
-
     this.getNodeIdFirstElement = function () {
         let firstNode = element.all(by.css('adf-datatable div[title="Node id"] span')).first();
         return firstNode.getText();

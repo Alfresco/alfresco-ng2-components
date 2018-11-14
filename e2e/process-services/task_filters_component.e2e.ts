@@ -104,8 +104,6 @@ describe('Task', () => {
         });
 
         it('[C260330] Should display Task Filter List when app is in Task Tab', () => {
-            tasksPage.clickOnCreateButton();
-            taskFiltersPage.clickNewTaskButton();
             tasksPage.createNewTask().addName('Test').clickStartButton();
             taskFiltersPage.clickMyTaskTaskFilter();
             tasksListPage.getDataTable().checkContentIsDisplayed('Test');
@@ -133,19 +131,12 @@ describe('Task', () => {
             expect(taskFiltersPage.checkQueuedTaskFilter()).toBeDefined();
             expect(taskFiltersPage.checkInvolvedTaskFilter()).toBeDefined();
             expect(taskFiltersPage.checkCompletedTaskFilter()).toBeDefined();
-            expect(taskFiltersPage.checkTasksAccordionExtended()).toBeDefined();
 
-            taskFiltersPage.clickTasksAccordionButton();
-            expect(taskFiltersPage.checkTasksAccordionClosed()).toBeDefined();
-
-            taskFiltersPage.clickTasksAccordionButton();
             expect(taskFiltersPage.checkMyTasksFilter()).toBeDefined();
             expect(taskFiltersPage.checkQueuedTaskFilter()).toBeDefined();
             expect(taskFiltersPage.checkInvolvedTaskFilter()).toBeDefined();
             expect(taskFiltersPage.checkCompletedTaskFilter()).toBeDefined();
 
-            tasksPage.clickOnCreateButton();
-            taskFiltersPage.clickNewTaskButton();
             tasksPage.createNewTask().addName('Test').clickStartButton();
             taskFiltersPage.clickMyTaskTaskFilter();
             tasksListPage.getDataTable().checkContentIsDisplayed('Test');
@@ -154,8 +145,8 @@ describe('Task', () => {
 
             taskFiltersPage.clickQueuedTaskFilter();
             expect(taskFiltersPage.checkActiveFilterActive()).toBe('Queued Tasks');
-            expect(taskFiltersPage.checkEmptyTaskList()).toBe('No Tasks Found');
-            expect(taskFiltersPage.checkEmptyTaskDetails()).toBe('No task details found');
+            expect(tasksListPage.getNoTasksFoundMessage()).toBe('No Tasks Found');
+            expect(taskDetailsPage.getEmptyTaskDetailsMessage()).toBe('No task details found');
 
             taskFiltersPage.clickInvolvedTaskFilter();
             expect(taskFiltersPage.checkActiveFilterActive()).toBe('Involved Tasks');
@@ -164,25 +155,17 @@ describe('Task', () => {
 
             taskFiltersPage.clickCompletedTaskFilter();
             expect(taskFiltersPage.checkActiveFilterActive()).toBe('Completed Tasks');
-            expect(taskFiltersPage.checkEmptyTaskList()).toBe('No Tasks Found');
-            expect(taskFiltersPage.checkEmptyTaskDetails()).toBe('No task details found');
+            expect(tasksListPage.getNoTasksFoundMessage()).toBe('No Tasks Found');
+            expect(taskDetailsPage.getEmptyTaskDetailsMessage()).toBe('No task details found');
         });
 
         it('[C260349] Should sort task by name when Name sorting is clicked', () => {
-            tasksPage.clickOnCreateButton();
-            taskFiltersPage.clickNewTaskButton();
             tasksPage.createNewTask().addName('Test1').clickStartButton();
             taskDetailsPage.clickCompleteTask();
-            tasksPage.clickOnCreateButton();
-            taskFiltersPage.clickNewTaskButton();
             tasksPage.createNewTask().addName('Test2').clickStartButton();
             taskDetailsPage.clickCompleteTask();
-            tasksPage.clickOnCreateButton();
-            taskFiltersPage.clickNewTaskButton();
             tasksPage.createNewTask().addName('Test3').clickStartButton();
 
-            tasksPage.clickOnCreateButton();
-            taskFiltersPage.clickNewTaskButton();
             tasksPage.createNewTask().addName('Test4').clickStartButton();
             tasksListPage.getDataTable().checkContentIsDisplayed('Test4');
             tasksListPage.getDataTable().checkRowIsSelected('Test4');
@@ -208,8 +191,6 @@ describe('Task', () => {
         });
 
         it('[C277264] Should display task filter results when task filter is selected', () => {
-            tasksPage.clickOnCreateButton();
-            taskFiltersPage.clickNewTaskButton();
             tasksPage.createNewTask().addName('Test').clickStartButton();
 
             taskFiltersPage.clickTaskFilter('My Tasks');
