@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-11-14
 ---
 
 # Card View Update service
@@ -58,7 +59,7 @@ card view (see the [Card View component](card-view.component.md) for further inf
 about this). The model objects and the `key` property are used to identify which item has been clicked
 or updated when an event occurs. 
 
-You must "subscribe" to the service in order to be informed about clicks and updates. You can do this by
+You must subscribe to the service to be informed about clicks and updates. You can do this by
 registering your own functions with the service's `itemUpdated$` and `itemClicked$` events
 (place this code in the `ngOnInit` 
 [lifecycle hook](https://angular.io/guide/lifecycle-hooks#oninit) rather than the constructor):

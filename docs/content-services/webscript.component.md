@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-11-14
 ---
 
 # Webscript component
@@ -112,15 +113,17 @@ This sample demonstrates how to implement a [Webscript component](../content-ser
 </adf-webscript-get>
 ```
 
-If you want to show the result from a webscript inside a ng2-alfresco-datatable you have to return from the GET of the webscript the datastructure below:
-subdivide in data and schema
+If you want to show the result from a webscript inside a 
+[datatable component](../core/datatable.component.md)
+you have to return the data structure below (subdivided into data and
+schema) from the GET method of the webscript:
 
 ```ts
 data: [],
 schema: []
 ```
 
-this is an example: 
+Here is an example: 
 
 ```ts
 data: [
@@ -140,7 +143,7 @@ schema: [{
 }]
 ```
 
-or you can send just the array data and the component will create a schema for you: 
+Alternatively, you can send just the array data and the component will create a schema for you: 
 
 ```ts
 data: [
@@ -149,14 +152,14 @@ data: [
 ]]
 ```
 
-that will render the following table
+This will render the following table:
 
 ![Custom columns](../docassets/images/datatable.png)
 
 ### Webscript View JSON example
 
-This sample demonstrates how to implement a [Webscript component](../content-services/webscript.component.md) that renders the JSON contents that come from a webscript
-This sample Web Scripts reside in your Alfresco Server. You can access the folder webscript here:
+This sample demonstrates how to implement a [Webscript component](../content-services/webscript.component.md) that renders the JSON contents that come from a webscript.
+This sample webscript resides in your Alfresco Server. You can access the folder webscript here:
 
 `http://localhost:8080/alfresco/service/sample/folder/JSON%EXAMPLE`
 
@@ -176,6 +179,6 @@ You can get the plain data from the webscript through the **success** event para
 
 ```ts
 logDataExample(data) {
-    console.log('You webscript data are here' + data);
+    console.log('Your webscript data is here' + data);
 }
 ```
