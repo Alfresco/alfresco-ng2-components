@@ -23,7 +23,7 @@ import { ProcessServicesPage } from '../pages/adf/process_services/processServic
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import TasksListPage = require('../pages/adf/process_services/tasksListPage');
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
-import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/taskFiltersDemoPage'
+import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/taskFiltersDemoPage';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';

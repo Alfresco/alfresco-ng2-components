@@ -34,7 +34,7 @@ export class TaskFiltersPage {
 
     getTaskFilterIcon() {
         Util.waitUntilElementIsVisible(this.filter);
-        var icon = this.filter.element(this.taskIcon);
+        let icon = this.filter.element(this.taskIcon);
         Util.waitUntilElementIsVisible(icon);
         return icon.getText();
     }

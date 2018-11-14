@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-var Util = require('../../../util/util');
+import Util = require('../../../util/util');
 
 import { element, by } from 'protractor';
-import { TaskFiltersPage } from '../process_services/taskFiltersPage'
+import { TaskFiltersPage } from '../process_services/taskFiltersPage';
 
 export class TaskFiltersDemoPage {
 
@@ -58,4 +58,3 @@ export class TaskFiltersDemoPage {
     }
 
 }
-
