@@ -155,7 +155,7 @@ describe('Login component', () => {
         loginPage.checkSignInButtonIsDisabled();
         settingsPage.setProviderBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         navigationBarPage.clickContentServicesButton();
         loginPage.waitForElements();
@@ -168,7 +168,7 @@ describe('Login component', () => {
         loginPage.login(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
         loginPage.waitForElements();
     });
 
@@ -177,7 +177,7 @@ describe('Login component', () => {
         loginPage.checkSignInButtonIsDisabled();
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();

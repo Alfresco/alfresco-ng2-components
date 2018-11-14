@@ -18,7 +18,6 @@
 import { LoginPage } from '../pages/adf/loginPage';
 import { Widget } from '../pages/adf/process_services/widgets/widget';
 
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 
 import CONSTANTS = require('../util/constants');
@@ -30,6 +29,7 @@ import resources = require('../util/resources');
 
 import { ViewerPage } from '../pages/adf/viewerPage';
 import { AppsActions } from '../actions/APS/apps.actions';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
 
@@ -38,8 +38,8 @@ describe('Start Task - Task App', () => {
     let loginPage = new LoginPage();
     let viewerPage = new ViewerPage();
     let widget = new Widget();
-    let processServicesPage = new ProcessServicesPage();
     let taskPage = new TasksPage();
+    let navigationBarPage = new NavigationBarPage();
 
     let processUserModel;
     let app = resources.Files.WIDGETS_SMOKE_TEST;
@@ -82,7 +82,7 @@ describe('Start Task - Task App', () => {
     });
 
     it('[C274690] Should be able to open a file attached to a start form', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 

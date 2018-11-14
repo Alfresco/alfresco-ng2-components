@@ -25,6 +25,7 @@ import StartProcessPage = require('../pages/adf/process_services/startProcessPag
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');
+import { ProcessListPage } from '../pages/adf/process_services/processListPage';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 
@@ -35,6 +36,7 @@ import { browser } from 'protractor';
 describe('Process Filters Test', () => {
 
     let loginPage = new LoginPage();
+    let processListPage = new ProcessListPage();
     let navigationBarPage = new NavigationBarPage();
     let processServicesPage = new ProcessServicesPage();
     let startProcessPage = new StartProcessPage();
@@ -78,11 +80,11 @@ describe('Process Filters Test', () => {
     });
 
     beforeEach(() => {
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
         appNavigationBarPage.clickProcessButton();
-        processServicesPage.checkProcessListIsDisplayed();
+        processListPage.checkProcessListIsDisplayed();
     });
 
     it('[C260387] Should the running process be displayed when clicking on Running filter', () => {
@@ -94,7 +96,7 @@ describe('Process Filters Test', () => {
         startProcessPage.clickFormStartProcessButton();
 
         processDetailsPage.clickCancelProcessButton();
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
 
         processServicesPage.goToApp(app.title);
 
@@ -151,7 +153,7 @@ describe('Process Filters Test', () => {
 
         taskAppFilters.data.forEach((filter) => {
             browser.get(processFilterUrl + filter.id);
-            processServicesPage.checkProcessListIsDisplayed();
+            processListPage.checkProcessListIsDisplayed();
             processFiltersPage.checkFilterIsHighlighted(filter.name);
         });
     });

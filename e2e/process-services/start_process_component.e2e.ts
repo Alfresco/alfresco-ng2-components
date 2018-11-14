@@ -110,7 +110,7 @@ describe('Start Process Component', () => {
 
         beforeEach(() => {
             loginPage.loginToProcessServicesUsingUserModel(procUserModel);
-            navigationBarPage.clickProcessServicesButton();
+            navigationBarPage.navigateToProcessServicesPage();
             processServicesPage.checkApsContainer();
         });
 
@@ -127,7 +127,7 @@ describe('Start Process Component', () => {
 
         beforeEach(() => {
             loginPage.loginToProcessServicesUsingUserModel(secondProcUserModel);
-            navigationBarPage.clickProcessServicesButton();
+            navigationBarPage.navigateToProcessServicesPage();
             processServicesPage.checkApsContainer();
         });
 
@@ -373,7 +373,7 @@ describe('Start Process Component', () => {
 
         it('[C260457] Should display process in Completed when cancelled', () => {
             loginPage.loginToProcessServicesUsingUserModel(secondProcUserModel);
-            navigationBarPage.clickProcessServicesButton();
+            navigationBarPage.navigateToProcessServicesPage();
             processServicesPage.checkApsContainer();
             processServicesPage.goToApp(app.title);
             appNavigationBarPage.clickProcessButton();

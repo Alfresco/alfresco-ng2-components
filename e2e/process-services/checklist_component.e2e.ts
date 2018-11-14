@@ -16,8 +16,8 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import CONSTANTS = require('../util/constants');
 
@@ -34,7 +34,7 @@ import path = require('path');
 describe('Checklist component', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
+    let navigationBarPage = new NavigationBarPage();
     let processUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let taskPage = new TasksPage();
@@ -75,7 +75,7 @@ describe('Checklist component', () => {
     });
 
     it('[C279976] Should no checklist be created when no title is typed', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[0]).selectRowByContentName(tasks[0]);
 
@@ -85,7 +85,7 @@ describe('Checklist component', () => {
     });
 
     it('[C279975] Should no checklist be created when clicking on Cancel button on checklist dialog', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[0]).selectRowByContentName(tasks[0]);
 
@@ -95,7 +95,7 @@ describe('Checklist component', () => {
     });
 
     it('[C261025] Should Checklist dialog be displayed when clicking on add checklist button', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[0]).selectRowByContentName(tasks[0]);
 
@@ -108,7 +108,7 @@ describe('Checklist component', () => {
     });
 
     it('[C261026] Should Checklist number increase when a new checklist is added', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[1]).selectRowByContentName(tasks[1]);
 
@@ -123,7 +123,7 @@ describe('Checklist component', () => {
     });
 
     it('[C279980] Should checklist be removed when clicking on remove button', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[2]).selectRowByContentName(tasks[2]);
 
@@ -139,7 +139,7 @@ describe('Checklist component', () => {
     });
 
     it('[C261027] Should not be able to remove a completed Checklist when clicking on remove button', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[3]).selectRowByContentName(tasks[3]);
 
@@ -161,7 +161,7 @@ describe('Checklist component', () => {
     });
 
     it('[C261028] Should all checklists of a task be completed when the task is completed', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[4]).selectRowByContentName(tasks[4]);
 

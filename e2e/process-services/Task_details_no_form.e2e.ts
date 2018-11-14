@@ -16,7 +16,7 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 
 import CONSTANTS = require('../util/constants');
@@ -34,7 +34,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 describe('Task Details - No form', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
+    let navigationBarPage = new NavigationBarPage();
     let processUserModel;
     let app = resources.Files.NO_FORM_APP;
     let taskPage = new TasksPage();
@@ -68,7 +68,7 @@ describe('Task Details - No form', () => {
     });
 
     it('[C289311] Should attach form and complete buttons to be displayed when no form is attached', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(app.taskName);

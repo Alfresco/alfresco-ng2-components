@@ -18,6 +18,7 @@
 import { LoginPage } from '../pages/adf/loginPage';
 import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import PaginationPage = require('../pages/adf/paginationPage');
 
 import CONSTANTS = require('../util/constants');
@@ -78,7 +79,7 @@ describe('Task List Pagination - Sorting', () => {
     });
 
     it('[C260308] Should be possible to sort tasks by name', () => {
-        processServicesPage.goToProcessServices().goToTaskApp();
+        new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         taskPage.tasksListPage().getDataTable().waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);

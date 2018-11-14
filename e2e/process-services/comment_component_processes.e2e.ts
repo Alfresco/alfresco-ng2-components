@@ -17,9 +17,9 @@
 
 import { browser } from 'protractor';
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 import { CommentsPage } from '../pages/adf/commentsPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -31,9 +31,9 @@ import { AppsActions } from '../actions/APS/apps.actions';
 describe('Comment component for Processes', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
     let processFiltersPage = new ProcessFiltersPage();
     let commentsPage = new CommentsPage();
+    let navigationBarPage = new NavigationBarPage();
 
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let user, tenantId, appId, processInstanceId, comment, taskComment, addedComment;
@@ -83,7 +83,7 @@ describe('Comment component for Processes', () => {
             await this.alfrescoJsApi.activiti.commentsApi.addProcessInstanceComment(comment, processInstanceId);
         });
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList('Comment APS');
@@ -107,7 +107,7 @@ describe('Comment component for Processes', () => {
             await this.alfrescoJsApi.activiti.commentsApi.addProcessInstanceComment(comment, processInstanceId);
         });
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList('Comment APS');
@@ -133,7 +133,7 @@ describe('Comment component for Processes', () => {
             await this.alfrescoJsApi.activiti.taskApi.addTaskComment(taskComment, taskId);
         });
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
 
         processFiltersPage.clickRunningFilterButton();
         processFiltersPage.selectFromProcessList('Comment APS');

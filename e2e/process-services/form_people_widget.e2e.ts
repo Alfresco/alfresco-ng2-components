@@ -16,13 +16,13 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 import { Widget } from '../pages/adf/process_services/widgets/widget';
 import StartProcess = require('../pages/adf/process_services/startProcessPage');
 import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -35,7 +35,6 @@ import { browser } from 'protractor';
 describe('Form widgets - People', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
     let processUserModel;
     let app = resources.Files.APP_WITH_USER_WIDGET;
     let processFiltersPage = new ProcessFiltersPage();
@@ -79,7 +78,7 @@ describe('Form widgets - People', () => {
     });
 
     beforeEach(() => {
-        processServicesPage.goToProcessServices().goToApp(appModel.name)
+        new NavigationBarPage().navigateToProcessServicesPage().goToApp(appModel.name)
             .clickProcessButton();
         processFiltersPage.clickCreateProcessButton();
         processFiltersPage.clickNewProcessDropdown();

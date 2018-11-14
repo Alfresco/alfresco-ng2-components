@@ -16,10 +16,10 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import PaginationPage = require('../pages/adf/paginationPage');
 import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
 import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -37,7 +37,6 @@ describe('Process List - Pagination when adding processes', () => {
     };
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
     let paginationPage = new PaginationPage();
     let processFiltersPage = new ProcessFiltersPage();
     let processDetailsPage = new ProcessDetailsPage();
@@ -72,7 +71,7 @@ describe('Process List - Pagination when adding processes', () => {
 
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
-        processServicesPage.goToProcessServices().goToTaskApp().clickProcessButton();
+        new NavigationBarPage().navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
         processDetailsPage.checkProcessTitleIsDisplayed();
         processFiltersPage.waitForTableBody();
 
