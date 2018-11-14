@@ -11,11 +11,11 @@ Once you have the prerequisites installed, you need to create the application us
 
 ## Install node.js
 
-You need the latest `node.js` `8.x` release, which you can download from [https://nodejs.org/en/](https://nodejs.org/en/). Choose the installer for your OS and follow the install instructions. Once completed, open a terminal and verify the installation with the following command:
+You need the latest `node.js` release, which you can download from [https://nodejs.org/en/](https://nodejs.org/en/). Choose the installer for your OS and follow the install instructions. Once completed, open a terminal and verify the installation with the following command:
 
 	node -v
 	
-Node `10.x` should work too, but we have had a few reports that it might not work out of the box for everyone.
+*Note: Both version `10.x` and `11.x` should work just fine.*
 
 **TIP**: If you are planning to do extensive development with ADF, `node.js` and Angular, you might consider installing a version manager for `node.js` such as [n](https://github.com/tj/n) or [nvm](https://github.com/creationix/nvm/). This tool will allow you to have multiple `node.js` versions installed at the same time, and easily switch between versions.
 
@@ -30,10 +30,9 @@ Other recommendations include IntelliJ IDEA or WebStorm from [JetBrains](https:/
 
 ## Install ADF Yeoman generator
 
-**Note:** If you're on Linux or macOS you might need to run these commands with `sudo`
-
 ![yeoman_creation](../docassets/images/yeoman-alfresco-adf-app.jpg)
 
+**Note:** If you're on Linux or macOS you might need to run these commands with `sudo`.
 
 You need to ensure you have `Yeoman` installed by running `yo --version`. If this is not in your system you should run:
 
@@ -41,7 +40,7 @@ You need to ensure you have `Yeoman` installed by running `yo --version`. If thi
 	
 Now install the latest version of the `generator-alfresco-adf-app`:
 
-	npm install -g generator-alfresco-adf-app
+	npm install -g generator-alfresco-adf-app@latest
 
 
 ## Create your first ADF application
@@ -54,6 +53,8 @@ Enter a name and choose `Content Services` as the application blueprint, then en
 
 The `Yeoman` generator will now create a new project and install all dependencies required for your application. 
 
+*Note: The `Yeoman` generator creates a new directory for your project. Make sure you change into this new directory.*
+
 ## Configure ADF to work with Alfresco Content Services
 
 The next step is to open up the newly-created project in your code editor, and open the file `proxy.conf.json`. Change the `target` property in this file so it points to your Alfresco Content Services URL and port. Please refer to your installation guide to find this URL, or if you're running an online trial you will find the information in the email.
@@ -65,9 +66,21 @@ Please note that you do not need `/alfresco` at the end of the target URL. Let's
 ```json
 {
 	"/alfresco": {
-	"target": "http://localhost:8082",
-	"secure": false,
-	"changeOrigin": true
+		"target": "http://localhost:8082",
+		"secure": false,
+		"changeOrigin": true
+	}
+}
+```
+
+If you're running an [online trial](https://www.alfresco.com/platform/content-services-ecm/trial/online), consult your emails for the correct URL. The `proxy.conf.json` should look like this:
+
+```json
+{
+	"/alfresco": {
+		"target": "https://xyz.trial.alfresco.com",
+		"secure": true,
+		"changeOrigin": true
 	}
 }
 ```
