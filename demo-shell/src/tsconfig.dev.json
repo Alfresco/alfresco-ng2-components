@@ -17,6 +17,12 @@
       "@angular/*": [
         "../../node_modules/@angular/*"
       ],
+      "@alfresco/adf-extensions": [
+        "../../lib/dist/extensions"
+      ],
+      "@alfresco/adf-extensions/*": [
+        "../../lib/dist/extensions/*"
+      ],
       "@alfresco/adf-core": [
         "../../lib/core"
       ],

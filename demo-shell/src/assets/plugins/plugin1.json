@@ -1,0 +1,17 @@
+{
+  "$schema": "../extension.schema.json",
+  "$id": "plugin1.1.0.0",
+  "$name": "plugin1",
+  "$version": "1.0.0",
+  "$vendor": "Alfresco",
+  "$license": "Apache-2.0",
+  "$runtime": "2.7.0",
+  "$description": "example plugin",
+  "$dependencies": [],
+
+  "features": {
+    "custom": {
+      "key": "value"
+    }
+  }
+}
