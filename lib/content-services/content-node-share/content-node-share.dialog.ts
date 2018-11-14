@@ -160,7 +160,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                     this.data.node.entry.properties['qshare:sharedId'] = this.sharedId;
                     this.isDisabled = false;
                     this.isFileShared = true;
-                    this.renditionService.generateRenditionForNode(this.data.node.entry.id).subscribe();
+                    this.renditionService.generateRenditionForNode(this.data.node.entry.id).subscribe(() => {});
 
                     this.updateForm();
                 }
