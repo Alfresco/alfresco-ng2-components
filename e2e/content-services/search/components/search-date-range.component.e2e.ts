@@ -23,7 +23,7 @@ import { DatePickerPage } from '../../../pages/adf/material/datePickerPage';
 import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../../../pages/adf/configEditorPage';
 import { SearchFiltersPage } from '../../../pages/adf/searchFiltersPage';
-import path = require('path');
+import { SearchConfiguration } from '../search.config';
 
 import TestConfig = require('../../../test.config');
 
@@ -95,7 +95,7 @@ describe('Search Filters', () => {
         });
     });
 
-    it('[C277119] FROM and TO dates should depend on each other',  () => {
+    it('[C277119] FROM and TO dates should depend on each other', () => {
         dateRangeFilter.checkFromDateToggleIsDisplayed().openFromDatePicker()
             .checkDatesAfterDateAreDisabled(new Date())
             .closeDatePicker();
@@ -200,28 +200,39 @@ describe('Search Filters', () => {
             .checkFromErrorMessageIsNotDisplayed();
     });
 
-    it('[C277117] Should be able to change date format', () => {
-        let json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
-        json.categories[4].component.settings.dateFormat = 'MM-DD-YY';
+    describe('configuration change', () => {
 
-        navigationBar.clickConfigEditorButton();
-        configEditor.clickSearchConfiguration();
-        configEditor.clickClearButton();
-        configEditor.enterBigConfigurationText(JSON.stringify(json));
-        configEditor.clickSaveButton();
+        let jsonFile;
 
-        searchDialog.clickOnSearchIcon().enterTextAndPressEnter('*');
-        searchFilters.checkCreatedRangeFilterIsDisplayed()
-            .clickCreatedRangeFilterHeader()
-            .checkCreatedRangeFilterIsExpanded();
-        dateRangeFilter.checkFromFieldIsDisplayed()
-            .openFromDatePicker();
+        beforeAll(async (done) => {
+            let searchConfiguration = new SearchConfiguration();
+            jsonFile = searchConfiguration.getConfiguration();
 
-        let todayDate = datePicker.convertDateToNewFormat(new Date());
-        datePicker.selectTodayDate();
+            done();
+        });
 
-        browser.controlFlow().execute(async () => {
-            await expect(dateRangeFilter.getFromDate()).toEqual(todayDate);
+        it('[C277117] Should be able to change date format', () => {
+            jsonFile.categories[4].component.settings.dateFormat = 'MM-DD-YY';
+
+            navigationBar.clickConfigEditorButton();
+            configEditor.clickSearchConfiguration();
+            configEditor.clickClearButton();
+            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
+            configEditor.clickSaveButton();
+
+            searchDialog.clickOnSearchIcon().enterTextAndPressEnter('*');
+            searchFilters.checkCreatedRangeFilterIsDisplayed()
+                .clickCreatedRangeFilterHeader()
+                .checkCreatedRangeFilterIsExpanded();
+            dateRangeFilter.checkFromFieldIsDisplayed()
+                .openFromDatePicker();
+
+            let todayDate = datePicker.convertDateToNewFormat(new Date());
+            datePicker.selectTodayDate();
+
+            browser.controlFlow().execute(async () => {
+                await expect(dateRangeFilter.getFromDate()).toEqual(todayDate);
+            });
         });
     });
 });
