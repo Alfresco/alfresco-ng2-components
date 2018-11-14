@@ -16,7 +16,7 @@
  */
 
 import { Util } from '../../util/util';
-import { element, by, protractor, browser } from 'protractor';
+import { element, by, protractor, browser, until } from 'protractor';
 
 export class NotificationPage {
 
@@ -98,8 +98,10 @@ export class NotificationPage {
     }
 
     clickNotificationButton() {
-        Util.waitUntilElementIsVisible(this.customNotificationButton);
-        this.customNotificationButton.click();
+        // Util.waitUntilElementIsVisible(this.customNotificationButton);
+        // this.customNotificationButton.click();
+        const button = browser.wait(until.elementLocated(by.css('button[data-automation-id="notification-custom-config-button"]')));
+        button.click();
     }
 
     checkActionEvent() {
