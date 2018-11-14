@@ -12,14 +12,14 @@ module.exports = {
     server: {
         middleware: {
             1: proxy('/alfresco', {
-                target: targetProxy,
+                target: "http://adfdev.envalfresco.com",
                 changeOrigin: true,
                 pathRewrite: {
                     "^/alfresco/alfresco": ""
                 }
             }),
             2: proxy('/activiti-app', {
-                target: targetProxy,
+                target: "http://adfdev.envalfresco.com",
                 changeOrigin: true,
                 "pathRewrite": {
                     "^/activiti-app/activiti-app": ""
