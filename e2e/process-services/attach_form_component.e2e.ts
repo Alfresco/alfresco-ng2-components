@@ -16,9 +16,9 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import { AttachFormPage } from '../pages/adf/process_services/attachFormPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import FormFields = require('../pages/adf/process_services/formFields');
 
 import CONSTANTS = require('../util/constants');
@@ -34,10 +34,10 @@ import { by } from 'protractor';
 describe('Attach Form Component', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
     let taskPage = new TasksPage();
     let attachFormPage = new AttachFormPage();
     let formFields = new FormFields();
+    let navigationBarPage = new NavigationBarPage();
 
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let formTextField = app.form_fields.form_fieldId;
@@ -95,7 +95,7 @@ describe('Attach Form Component', () => {
     });
 
     it('[C280047] Should be able to view the attach-form component after creating a standalone task', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName(testNames.taskName);
@@ -106,7 +106,7 @@ describe('Attach Form Component', () => {
     });
 
     it('[C280048] Should be able to view the attach-form component after clicking cancel button', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName(testNames.taskName);
@@ -126,7 +126,7 @@ describe('Attach Form Component', () => {
     });
 
     it('[C280017] Should be able to attach a form on a standalone task and complete', () => {
-        processServicesPage.goToProcessServices().goToTaskApp().clickTasksButton();
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.tasksListPage().getDataTable().selectRowByContentName(testNames.taskName);

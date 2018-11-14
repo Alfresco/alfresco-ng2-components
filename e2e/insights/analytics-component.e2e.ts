@@ -62,7 +62,7 @@ describe('Analytics Smoke Test', () => {
     });
 
     it('[C260346] Should be able to change title of a report', () => {
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp('Task App');
         appNavigationBarPage.clickReportsButton();

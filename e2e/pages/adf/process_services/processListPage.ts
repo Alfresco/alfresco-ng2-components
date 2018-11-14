@@ -26,6 +26,7 @@ export class ProcessListPage {
     openProcessDropdownElement = element(by.id('adf-select-process-dropdown'));
     selectProcessDropdownElement = element.all(by.css('span[class="mat-option-text"]'));
     startProcessButton = element(by.css('button[data-automation-id="btn-start"]'));
+    processInstanceList = element(by.css('adf-process-instance-list'));
 
     checkProcessListTitleIsDisplayed() {
         Util.waitUntilElementIsVisible(this.processListTitle);
@@ -50,6 +51,10 @@ export class ProcessListPage {
     startProcess() {
         Util.waitUntilElementIsVisible(this.startProcessButton);
         return this.startProcessButton.click();
+    }
+
+    checkProcessListIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.processInstanceList);
     }
 
 }

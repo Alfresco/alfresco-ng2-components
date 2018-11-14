@@ -381,7 +381,7 @@ describe('Document List Component', () => {
         done();
     });
 
-    it('[C279970] Should display "Islocked" field for folders', async (done) => {
+    it('[C279970] Should display Islocked field for folders', async (done) => {
         acsUser = new AcsUserModel();
         let folderNameA = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
         let folderNameB = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;

@@ -79,7 +79,7 @@ describe('Task Filters Sorting', () => {
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
         processServicesPage.goToApp(app.title);
 

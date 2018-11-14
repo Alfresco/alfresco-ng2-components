@@ -66,7 +66,7 @@ describe('Login component - Redirect', () => {
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
 
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
 
         loginPage.waitForElements();
     });
@@ -79,7 +79,7 @@ describe('Login component - Redirect', () => {
 
         loginPage.login(adminUserModel.id, adminUserModel.password);
 
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
 
         navigationBarPage.clickContentServicesButton();
@@ -92,7 +92,7 @@ describe('Login component - Redirect', () => {
 
         loginPage.login(adminUserModel.id, adminUserModel.password);
 
-        navigationBarPage.clickProcessServicesButton();
+        navigationBarPage.navigateToProcessServicesPage();
         processServicesPage.checkApsContainer();
 
         navigationBarPage.clickContentServicesButton();
