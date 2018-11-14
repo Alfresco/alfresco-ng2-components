@@ -204,11 +204,9 @@ describe('Search Filters', () => {
 
         let jsonFile;
 
-        beforeAll(async (done) => {
+        beforeAll(() => {
             let searchConfiguration = new SearchConfiguration();
             jsonFile = searchConfiguration.getConfiguration();
-
-            done();
         });
 
         it('[C277117] Should be able to change date format', () => {
