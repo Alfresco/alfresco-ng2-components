@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-29
+Last reviewed: 2018-11-13
 ---
 
 # Cookie service
@@ -13,7 +13,7 @@ Stores key-value data items as browser cookies.
 ### Methods
 
 -   **clear**()<br/>
-
+    Placeholder for testing purposes - do not use.
 -   **getItem**(key: `string`): `string|null`<br/>
     Retrieves a cookie by its key.
     -   _key:_ `string`  - Key to identify the cookie

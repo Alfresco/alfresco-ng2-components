@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-21
+Last reviewed: 2018-11-13
 ---
 
 # Process Filter Service
@@ -16,10 +16,10 @@ Manage Process Filters, which are pre-configured Process Instance queries.
     Adds a filter.
     -   _filter:_ [`FilterProcessRepresentationModel`](../../lib/process-services/process-list/models/filter-process.model.ts)  - The filter to add
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../lib/process-services/process-list/models/filter-process.model.ts)`>` - The filter just added
--   **callApiProcessFilters**(appId?: `number`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<any>`<br/>
+-   **callApiProcessFilters**(appId?: `number`): `any`<br/>
     Calls `getUserProcessInstanceFilters` from the Alfresco JS API.
     -   _appId:_ `number`  - (Optional) ID of the target app
-    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<any>` - List of filter details
+    -   **Returns** `any` - List of filter details
 -   **createDefaultFilters**(appId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../lib/process-services/process-list/models/filter-process.model.ts)`[]>`<br/>
     Creates and returns the default filters for an app.
     -   _appId:_ `number`  - ID of the target app

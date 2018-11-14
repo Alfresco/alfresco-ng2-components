@@ -83,7 +83,7 @@ for more information about installing and using the source code.
 | [Sidenav layout component](core/sidenav-layout.component.md) | Displays the standard three-region ADF application layout. | [Source](../lib/core/layout/components/sidenav-layout/sidenav-layout.component.ts) |
 | [Login dialog panel component](core/login-dialog-panel.component.md) | Shows and manages a login dialog. | [Source](../lib/core/login/components/login-dialog-panel.component.ts) |
 | [Login dialog component](core/login-dialog.component.md) | Allows a user to perform a login via a dialog. | [Source](../lib/core/login/components/login-dialog.component.ts) |
-| [Login component](core/login.component.md) | Authenticates to Alfresco Content Services and or Alfresco Process Services. | [Source](../lib/core/login/components/login.component.ts) |
+| [Login component](core/login.component.md) | Authenticates to Alfresco Content Services and Alfresco Process Services. | [Source](../lib/core/login/components/login.component.ts) |
 | [Infinite pagination component](core/infinite-pagination.component.md) | Adds "infinite" pagination to the component it is used with. | [Source](../lib/core/pagination/infinite-pagination.component.ts) |
 | [Pagination component](core/pagination.component.md) | Adds pagination to the component it is used with. | [Source](../lib/core/pagination/pagination.component.ts) |
 | [Host settings component](core/host-settings.component.md) ![Internal](docassets/images/InternalIcon.png) | Validates the URLs for ACS and APS and saves them in the user's local storage | [Source](../lib/core/settings/host-settings.component.ts) |
@@ -249,6 +249,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Content node share directive](content-services/content-node-share.directive.md) | Creates and manages public shared links for files. | [Source](../lib/content-services/content-node-share/content-node-share.directive.ts) |
 | [Node download directive](content-services/node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../lib/content-services/directives/node-download.directive.ts) |
 | [Node lock directive](content-services/node-lock.directive.md) | Locks a node. | [Source](../lib/content-services/directives/node-lock.directive.ts) |
 | [Folder create directive](content-services/folder-create.directive.md) | Creates folders. | [Source](../lib/content-services/folder-directive/folder-create.directive.ts) |
@@ -319,7 +320,7 @@ for more information about installing and using the source code.
 | [Start process component](process-services/start-process.component.md) | Starts a process. | [Source](../lib/process-services/process-list/components/start-process.component.ts) |
 | [Attach form component](process-services/attach-form.component.md) | This component can be used when there is no form attached to a task and we want to add one. | [Source](../lib/process-services/task-list/components/attach-form.component.ts) |
 | [Checklist component](process-services/checklist.component.md) | Shows the checklist task functionality. | [Source](../lib/process-services/task-list/components/checklist.component.ts) |
-| [Start task component](process-services/start-task.component.md) | Creates/Starts new task for the specified app | [Source](../lib/process-services/task-list/components/start-task.component.ts) |
+| [Start task component](process-services/start-task.component.md) | Creates/Starts a new task for the specified app | [Source](../lib/process-services/task-list/components/start-task.component.ts) |
 | [Task details component](process-services/task-details.component.md) | Shows the details of the task ID passed in as input. | [Source](../lib/process-services/task-list/components/task-details.component.ts) |
 | [Task filters component](process-services/task-filters.component.md) | Shows all available filters. | [Source](../lib/process-services/task-list/components/task-filters.component.ts) |
 | [Task header component](process-services/task-header.component.md) | Shows all the information related to a task. | [Source](../lib/process-services/task-list/components/task-header.component.ts) |

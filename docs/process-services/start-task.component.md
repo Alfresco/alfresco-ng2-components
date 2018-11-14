@@ -1,11 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-11-13
 ---
 
 # Start Task Component
 
-Creates/Starts new task for the specified app
+Creates/Starts a new task for the specified app
 
 ![adf-start-task](../docassets/images/adf-start-task.png)
 

@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-21
+Last reviewed: 2018-11-13
 ---
 
 # Task Header component

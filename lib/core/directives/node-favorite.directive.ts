@@ -37,7 +37,7 @@ export class NodeFavoriteDirective implements OnChanges {
     /** Emitted when the favorite setting is complete. */
     @Output() toggle: EventEmitter<any> = new EventEmitter();
 
-    /** Emitted when the favorite setting has fail. */
+    /** Emitted when the favorite setting fails. */
     @Output() error: EventEmitter<any> = new EventEmitter();
 
     @HostListener('click')

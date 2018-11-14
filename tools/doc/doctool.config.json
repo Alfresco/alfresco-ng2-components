@@ -31,6 +31,7 @@
         "Blob": "https://developer.mozilla.org/en-US/docs/Web/API/Blob",
         "Promise": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises",
         "EventEmitter": "https://angular.io/api/core/EventEmitter",
+        "MatIconRegistry": "https://material.angular.io/components/icon/api",
         "MatSnackBarRef": "https://material.angular.io/components/snack-bar/overview",
         "TemplateRef": "https://angular.io/api/core/TemplateRef",
         "Observable": "http://reactivex.io/documentation/observable.html",
@@ -42,7 +43,9 @@
         "NodeEntry": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md",
         "RelatedContentRepresentation": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md",
         "SiteEntry": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md",
-        "SitePaging": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md"
+        "SitePaging": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md",
+        "TagEntry": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagEntry.md",
+        "TagPaging": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md"
     },
     "typeNameExceptions": {
         "datatable.component": "DataTableComponent",
@@ -53,7 +56,8 @@
         "process-list.component": "ProcessInstanceListComponent",
         "inherited-button.directive": "InheritPermissionDirective",
         "node-share.directive": "NodeSharedDirective",
-        "sites-dropdown.component": "DropdownSitesComponent"
+        "sites-dropdown.component": "DropdownSitesComponent",
+        "start-process.component": "StartProcessInstanceComponent"
     },
     "undocStoplist": [
         "model",

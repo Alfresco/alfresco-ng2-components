@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-21
+Last reviewed: 2018-11-13
 ---
 
 # Thumbnail service
@@ -49,7 +49,7 @@ and icons is shown in the table below:
 
 ### Mat-icon
 
-All the ADF icons for MIME types are now registered into the MatIconRegistry, so you can use all
+All the ADF icons for MIME types are now registered into the [`MatIconRegistry`](https://material.angular.io/components/icon/api), so you can use all
 the icons via the &lt;mat-icon> tag:
 
 ```javascript

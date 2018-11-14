@@ -53,6 +53,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Content node share directive](content-node-share.directive.md) | Creates and manages public shared links for files. | [Source](../../lib/content-services/content-node-share/content-node-share.directive.ts) |
 | [Node download directive](node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../../lib/content-services/directives/node-download.directive.ts) |
 | [Node lock directive](node-lock.directive.md) | Locks a node. | [Source](../../lib/content-services/directives/node-lock.directive.ts) |
 | [Folder create directive](folder-create.directive.md) | Creates folders. | [Source](../../lib/content-services/folder-directive/folder-create.directive.ts) |
