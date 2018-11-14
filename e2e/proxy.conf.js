@@ -18,7 +18,7 @@ module.exports = {
         }
     },
     "/activiti-app": {
-        "target": "http://" + (PROXY_HOST_ADF || HOST),
+        "target": "http://adfdev.envalfresco.com",
         "secure": false,
         "pathRewrite": {
             "^/activiti-app/activiti-app": ""
