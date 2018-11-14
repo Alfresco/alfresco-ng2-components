@@ -63,8 +63,8 @@ jobs:
                        else
                             (./scripts/start.sh -dev -t -ss -vjsapi alpha || exit 1;);
                     fi
-        - stage: Packaging test
-          script:  (npm run build-lib || exit 1;) && node ./scripts/upload-build-lib-in-cs.js -u "$E2E_USERNAME"  -p "$E2E_PASSWORD" --host "$E2E_HOST" -f $TRAVIS_BUILD_NUMBER
+        #- stage: Packaging test
+        #  script:  (npm run build-lib || exit 1;) && node ./scripts/upload-build-lib-in-cs.js -u "$E2E_USERNAME"  -p "$E2E_PASSWORD" --host "$E2E_HOST" -f $TRAVIS_BUILD_NUMBER
         - stage: Update children projects dependency #Update generator-ng2-alfresco-app
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n generator-ng2-alfresco-app
@@ -80,8 +80,8 @@ jobs:
         - stage: Update children projects dependency # Test Update alfresco-modeler-app
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-modeler-app
-        - stage: Create Shell dist
-          script: rm -rf ./node_modules/@alfresco; node ./scripts/download-build-lib-in-cs.js -u "$E2E_USERNAME"  -p "$E2E_PASSWORD" --host "$E2E_HOST" -f $TRAVIS_BUILD_NUMBER || exit 1; npm run build:dist || exit 1;
+        #- stage: Create Shell dist
+        #  script: rm -rf ./node_modules/@alfresco; node ./scripts/download-build-lib-in-cs.js -u "$E2E_USERNAME"  -p "$E2E_PASSWORD" --host "$E2E_HOST" -f $TRAVIS_BUILD_NUMBER || exit 1; npm run build:dist || exit 1;
         - stage: e2e Test # Test core
           name: core
           script: ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder core --skip-lint --use-dist --timeout 7000
