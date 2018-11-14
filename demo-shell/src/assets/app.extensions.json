@@ -8,7 +8,8 @@
   "$runtime": "2.7.0",
   "$description": "base application extensions",
   "$references": [
-    "plugin1.json"
+    "plugin1.json",
+    "plugin2.json"
   ],
   "$dependencies": []
 }

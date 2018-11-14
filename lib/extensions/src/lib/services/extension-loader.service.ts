@@ -55,7 +55,11 @@ export class ExtensionLoaderService {
                             config = mergeObjects(config, ...configs);
                         }
 
-                        config.$references = configs.map(ext => this.getMetadata(ext));
+                        config = {
+                            ...config,
+                            ...this.getMetadata(result.config),
+                            $references: configs.map(ext => this.getMetadata(ext))
+                        };
 
                         resolve(config);
                     });
