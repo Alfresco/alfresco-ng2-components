@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-06
+Last reviewed: 2018-11-13
 ---
 
 # Nodes Api service
@@ -27,33 +27,29 @@ Accesses and manipulates ACS document nodes using their node IDs.
     Creates a new folder node inside a parent folder.
     -   _parentNodeId:_ `string`  - ID of the parent folder node
     -   _nodeBody:_ `any`  - Data for the new folder
-    -   _options:_ `any`  - Optional parameters supported by JSAPI
+    -   _options:_ `any`  - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Details of the new folder
 -   **createNode**(parentNodeId: `string`, nodeBody: `any`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
     Creates a new document node inside a folder.
     -   _parentNodeId:_ `string`  - ID of the parent folder node
     -   _nodeBody:_ `any`  - Data for the new node
-    -   _options:_ `any`  - Optional parameters supported by JSAPI
+    -   _options:_ `any`  - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Details of the new node
--   **deleteNode**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`<br/>
+-   **deleteNode**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Moves a node to the trashcan.
     -   _nodeId:_ `string`  - ID of the target node
-    -   _options:_ `any`  - Optional parameters supported by JSAPI
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<void>` - Empty result that notifies when the deletion is complete
+    -   _options:_ `any`  - Optional parameters supported by JS-API
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty result that notifies when the deletion is complete
 -   **getNode**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
     Gets the stored information about a node.
     -   _nodeId:_ `string`  - ID of the target node
-    -   _options:_ `any`  - Optional parameters supported by JSAPI
+    -   _options:_ `any`  - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Node information
 -   **getNodeChildren**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
     Gets the items contained in a folder node.
     -   _nodeId:_ `string`  - ID of the target node
-    -   _options:_ `any`  - Optional parameters supported by JSAPI
+    -   _options:_ `any`  - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of child items from the folder
--   **handleError**(error: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
-    Reports an error.
-    -   _error:_ `any`  - Object representing the error
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Error information
 -   **restoreNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
     Restores a node previously moved to the trashcan.
     -   _nodeId:_ `string`  - ID of the node to restore
@@ -62,7 +58,7 @@ Accesses and manipulates ACS document nodes using their node IDs.
     Updates the information about a node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _nodeBody:_ `any`  - New data for the node
-    -   _options:_ `any`  - Optional parameters supported by JSAPI
+    -   _options:_ `any`  - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Updated node information
 
 ## Details

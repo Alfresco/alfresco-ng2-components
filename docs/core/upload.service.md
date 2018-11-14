@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-05
+Last reviewed: 2018-11-12
 ---
 
 # Upload Service
@@ -61,9 +61,13 @@ The configuration of this service is saved in the `app.config.json` file
 The example below shows how to filter out the : '.git', '.DS_Store' and 'desktop.ini' files.
 Each element of the ignore list is a glob pattern string, so you could exclude all the `.txt`
 files, for example, by adding a `*.txt` pattern to the list.
-There is also the possibility to add some more option to how perform the check via the `match-options` parameter.
-For example in this case we have added the ignore case so `*.TXT` will match all the txt files ignoring the case for the extension.
-For more information about the options available please check [minimatch](https://www.npmjs.com/package/minimatch#options) documentation.
+You can also specify some more options about how to perform the check via the `match-options` parameter.
+
+In the example below, we have added the `nocase` option (ie, ignore case when performing the
+glob match), so `*.TXT` will also match `.txt`, etc.
+For more information about the options available please check the documentation for the
+[minimatch](https://www.npmjs.com/package/minimatch#options)
+node module.
 
 **app.config.json**
 
