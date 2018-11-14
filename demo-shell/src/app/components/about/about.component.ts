@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { ExtensionRef } from '@alfresco/adf-extensions';
 import { AppExtensionService } from '../../extensions/extension.service';
 import { Observable } from 'rxjs';
