@@ -76,15 +76,15 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Input()
     customQueryBody: QueryBody;
 
-    /** Emitted when the search is submitted pressing ENTER button.
-     * The search term is provided as value of the event.
+    /** Emitted when the search is submitted by pressing the ENTER key.
+     * The search term is provided as the value of the event.
      */
     @Output()
     submit: EventEmitter<any> = new EventEmitter();
 
     /** Emitted when the search term is changed. The search term is provided
      * in the 'value' property of the returned object.  If the term is less
-     * than three characters in length then the term is truncated to an empty
+     * than three characters in length then it is truncated to an empty
      * string.
      */
     @Output()

@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-21
+Last reviewed: 2018-11-14
 ---
 
 # Form component
@@ -80,7 +80,7 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 | formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
 | formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when form content is clicked. |
 | formDataRefreshed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when form values are refreshed due to a data property change. |
-| formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../core/form-field.model.md)`[]>` | Emitted when form validations has validation error. |
+| formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../core/form-field.model.md)`[]>` | Emitted when the supplied form values have a validation error. |
 | formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
 | formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
 | onError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | (**Deprecated:** in 2.4.0, will be renamed as "error" in 3.x.x) Emitted when any error occurs. |
@@ -277,7 +277,7 @@ could use this, say, to provide two alternative ways of entering the same inform
 up default values that can be edited.
 
 You can implement this in ADF using the `formFieldValueChanged` event of the
-[Form service](form.service.md). For example, if you had a form with a dropdown widget (id: `type`)
+[Form service](form.service.md). For example, if you had a form with a [dropdown widget](../../e2e/pages/adf/process_services/widgets/dropdownWidget.ts) (id: `type`)
 and a multiline text (id:`description`), you could synchronize their values as follows:
 
 ```ts
@@ -294,7 +294,7 @@ formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
 ```
 
 The code shown above subscribes to the `formFieldValueChanged` event to check whether an event
-is emitted for the `type` widget. Then it finds the `description` widget and assigns some text
+is emitted for the `type` [widget](../../e2e/pages/adf/process_services/widgets/widget.ts). Then it finds the `description` [widget](../../e2e/pages/adf/process_services/widgets/widget.ts) and assigns some text
 to its `value` property.
 
 The result should look like the following:
