@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 import { ActionRef, ContentActionRef, ContentActionType } from '../config/action.extensions';
 import { ExtensionElement } from '../config/extension-element';
 import { filterEnabled, getValue, mergeObjects, sortByOrder } from '../config/extension-utils';
-import { ExtensionConfig } from '../config/extension.config';
+import { ExtensionConfig, ExtensionRef } from '../config/extension.config';
 import { RouteRef } from '../config/routing.extensions';
 import { RuleRef } from '../config/rule.extensions';
 
@@ -55,6 +55,8 @@ export class ExtensionLoaderService {
                             config = mergeObjects(config, ...configs);
                         }
 
+                        config.$references = configs.map(ext => this.getMetadata(ext));
+
                         resolve(config);
                     });
                 } else {
@@ -62,6 +64,19 @@ export class ExtensionLoaderService {
                 }
             });
         });
+    }
+
+    protected getMetadata(config: ExtensionConfig): ExtensionRef {
+        const result: any = {};
+
+        Object
+            .keys(config)
+            .filter(key => key.startsWith('$'))
+            .forEach(key => {
+                result[key] = config[key];
+            });
+
+        return result;
     }
 
     protected loadConfig(
