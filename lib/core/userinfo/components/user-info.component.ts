@@ -96,7 +96,7 @@ export class UserInfoComponent implements OnInit {
 
     loadEcmUserInfo(): void {
         this.ecmUser$ = this.ecmUserService.getCurrentUserInfo().pipe(
-            map((response) => {
+            map((response: EcmUserModel) => {
                 const ecmUser = new EcmUserModel(response);
                 this.getEcmAvatar(ecmUser.avatarId);
                 return ecmUser;
@@ -106,7 +106,7 @@ export class UserInfoComponent implements OnInit {
 
     loadBpmUserInfo(): void {
         this.bpmUser$ = this.bpmUserService.getCurrentUserInfo().pipe(
-            map((response) => {
+            map((response: BpmUserModel) => {
                 const bpmUser = new BpmUserModel(response);
                 this.getBpmUserImage();
                 return bpmUser;
@@ -115,7 +115,12 @@ export class UserInfoComponent implements OnInit {
     }
 
     loadIdentityUserInfo() {
-        this.identityUser$ = this.identityUserService.getCurrentUserInfo();
+        this.identityUser$ = this.identityUserService.getCurrentUserInfo().pipe(
+            map((response: IdentityUserModel) => {
+                const identityUser = new IdentityUserModel(response);
+                return identityUser;
+            })
+        );
     }
 
     stopClosing(event) {

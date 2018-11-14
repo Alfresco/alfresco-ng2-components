@@ -40,7 +40,7 @@ export class IdentityUserService {
         const email = this.getValueFromToken<string>(IdentityUserService.USER_EMAIL);
         const nameParts = fullName.split(' ');
         const user = { firstName: nameParts[0], lastName: nameParts[1], email: email };
-        return of(new IdentityUserModel(user));
+        return of(<IdentityUserModel> user);
     }
 
     getValueFromToken<T>(key: string): T {

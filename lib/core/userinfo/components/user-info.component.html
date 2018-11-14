@@ -1,9 +1,9 @@
 <div id="userinfo_container" [class.adf-userinfo-name-right]="showOnRight()"
     class="adf-userinfo-container" *ngIf="isLoggedIn()">
     <div *ngIf="showName">
-        <span *ngIf="identityUser$ | async as identityUser; else showFullNames" id="adf-userinfo-identity-name-display"
-            class="adf-userinfo-name">{{identityUser.fullNameDisplay}}</span>
-        <ng-template #showFullNames>
+        <span *ngIf="identityUser$ | async as identityUser; else showBpmAndEcmUserFullNames" id="adf-user-info-identity-name-display"
+            class="adf-user-info-name">{{identityUser.fullNameDisplay}}</span>
+        <ng-template #showBpmAndEcmUserFullNames>
             <span *ngIf="ecmUser$ | async as ecmUser; else showBpmUserFullName" id="adf-userinfo-ecm-name-display"
                 class="adf-userinfo-name">{{ecmUser.fullNameDisplay}}</span>
             <ng-template #showBpmUserFullName>
@@ -15,10 +15,10 @@
 
     <button mat-button [matMenuTriggerFor]="menu" class="adf-userinfo-menu_button" data-automation-id="adf-user-profile">
         <div class="adf-userinfo-button-profile" id="user-profile">
-            <div *ngIf="identityUser$ | async as identityUser; else showUserImage" id="identity-user-image">
+            <div *ngIf="identityUser$ | async as identityUser; else showBpmAndEcmUserImage" id="identity-user-image">
                 <div [outerHTML]="identityUser | usernameInitials:'adf-userinfo-pic'"></div>
             </div>
-            <ng-template #showUserImage>
+            <ng-template #showBpmAndEcmUserImage>
                 <div *ngIf="ecmUser$ | async as ecmUser; else showBpmUserImage" id="ecm-user-image">
                     <div *ngIf="!ecmUser.avatarId" [outerHTML]="ecmUser | usernameInitials:'adf-userinfo-pic'"></div>
                         <div *ngIf="ecmUser.avatarId" class="adf-userinfo-profile-container">
@@ -99,7 +99,7 @@
                         <div
                              [outerHTML]="identityUser | usernameInitials:'adf-userinfo-profile-initials adf-hide-small'">
                         </div>
-                       <div class="adf-userinfo-title" id="ecm-username">{{identityUser.fullNameDisplay}}</div>
+                       <div class="adf-userinfo-title" id="identity-username">{{identityUser.fullNameDisplay}}</div>
                     </mat-card-header>
                     <mat-card-content>
                         <div class="adf-userinfo-supporting-text">
