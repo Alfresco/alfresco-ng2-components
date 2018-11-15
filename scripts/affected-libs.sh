@@ -37,7 +37,10 @@ if [ ! -d "$DIRECTORY" ]; then
   #find affected libs
   echo "Directory tmp created";
   mkdir $DIRECTORY;
-  npm run affected:libs -- $HEAD_SHA_BRANCH "HEAD" > $DIRECTORY/deps.txt
+fi
+
+if [ ! -f $DIRECTORY/deps.txt ]; then
+    npm run affected:libs -- $HEAD_SHA_BRANCH "HEAD" > $DIRECTORY/deps.txt
 fi
 
 #echo "extensions" > deps.txt
