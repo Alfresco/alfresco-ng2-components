@@ -137,7 +137,6 @@ describe('User info component', () => {
                         expect(response.firstName).toBe('fake-ecm-first-name');
                         expect(response.lastName).toBe('fake-ecm-last-name');
                         expect(response.email).toBe('fakeEcm@ecmUser.com');
-                        expect(response.fullNameDisplay).toBe('fake-ecm-first-name fake-ecm-last-name');
                     });
                 });
             }));
@@ -320,7 +319,6 @@ describe('User info component', () => {
             spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
             spyOn(authService, 'isLoggedIn').and.returnValue(true);
             getCurrentUserInfoStub = spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeBpmUser));
-            fixture.detectChanges();
         }));
 
         it('should fetch bpm userInfo', async(() => {
@@ -332,7 +330,6 @@ describe('User info component', () => {
                     expect(response.firstName).toBe('fake-bpm-first-name');
                     expect(response.lastName).toBe('fake-bpm-last-name');
                     expect(response.email).toBe('fakeBpm@fake.com');
-                    expect(response.fullNameDisplay).toBe('fake-bpm-first-name fake-bpm-last-name');
                 });
             });
         }));
@@ -378,8 +375,8 @@ describe('User info component', () => {
                 fixture.detectChanges();
                 expect(element.querySelector('#userinfo_container')).toBeDefined();
                 expect(element.querySelector('#adf-userinfo-bpm-name-display')).not.toBeNull();
-                expect(fullNameElement.textContent).toContain('fake-bpm-last-name');
-                expect(fullNameElement.textContent).not.toContain('fake-bpm-first-name');
+                expect(fullNameElement.textContent).toContain('fake-last-name');
+                expect(fullNameElement.textContent).not.toContain('fake-first-name');
 
             });
         }));
@@ -396,7 +393,7 @@ describe('User info component', () => {
                 fixture.detectChanges();
                 expect(element.querySelector('#userinfo_container')).toBeDefined();
                 expect(element.querySelector('#adf-userinfo-bpm-name-display')).toBeDefined();
-                expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).toContain('fake-bpm-last-name');
+                expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).toContain('fake-last-name');
                 expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).not.toContain('null');
             });
         }));
@@ -413,7 +410,7 @@ describe('User info component', () => {
                 fixture.detectChanges();
                 expect(element.querySelector('#userinfo_container')).toBeDefined();
                 expect(element.querySelector('#adf-userinfo-bpm-name-display')).toBeDefined();
-                expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).toContain('fake-bpm-first-name');
+                expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).toContain('fake-first-name');
                 expect(element.querySelector('#adf-userinfo-bpm-name-display').textContent).not.toContain('null');
             });
         }));
@@ -443,7 +440,6 @@ describe('User info component', () => {
 
             ecmUserInfoSpy = spyOn(ecmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeEcmUser));
             spyOn(bpmUserService, 'getCurrentUserInfo').and.returnValue(of(fakeBpmUser));
-            fixture.detectChanges();
         }));
 
         it('should able to fetch ecm userInfo', async(() => {
@@ -455,7 +451,6 @@ describe('User info component', () => {
                     expect(response.firstName).toBe('fake-ecm-first-name');
                     expect(response.lastName).toBe('fake-ecm-last-name');
                     expect(response.email).toBe('fakeEcm@ecmUser.com');
-                    expect(response.fullNameDisplay).toBe('fake-ecm-first-name fake-ecm-last-name');
                 });
             });
         }));
@@ -469,7 +464,6 @@ describe('User info component', () => {
                     expect(response.firstName).toBe('fake-bpm-first-name');
                     expect(response.lastName).toBe('fake-bpm-last-name');
                     expect(response.email).toBe('fakeBpm@fake.com');
-                    expect(response.fullNameDisplay).toBe('fake-bpm-first-name fake-bpm-last-name');
                 });
             });
         }));
@@ -555,7 +549,6 @@ describe('User info component', () => {
             spyOn(authService, 'isOauth').and.returnValue(true);
             spyOn(authService, 'isLoggedIn').and.returnValue(true);
             getCurrentUserInfoStub = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(of(identityUserMock));
-            fixture.detectChanges();
         }));
 
         it('should able to fetch identity userInfo', async(() => {
@@ -588,6 +581,7 @@ describe('User info component', () => {
         }));
 
         it('should show last name if first name is null', async(() => {
+            fixture.detectChanges();
             let fakeIdentityUser: IdentityUserModel = new IdentityUserModel(identityUserWithOutFirstNameMock);
             getCurrentUserInfoStub.and.returnValue(of(fakeIdentityUser));
 

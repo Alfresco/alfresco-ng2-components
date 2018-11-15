@@ -42,7 +42,9 @@ export class EcmUserService {
     getUserInfo(userName: string): Observable<EcmUserModel> {
         return from(this.apiService.getInstance().core.peopleApi.getPerson(userName))
             .pipe(
-                map(data => <EcmUserModel> data['entry']),
+                map((data) => {
+                    return new EcmUserModel(data['entry']);
+                }),
                 catchError(err => this.handleError(err))
             );
     }

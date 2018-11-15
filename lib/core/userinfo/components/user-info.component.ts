@@ -24,7 +24,6 @@ import { BpmUserService } from './../services/bpm-user.service';
 import { EcmUserService } from './../services/ecm-user.service';
 import { IdentityUserService } from '../services/identity-user.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-userinfo',
@@ -63,8 +62,6 @@ export class UserInfoComponent implements OnInit {
     ecmUser$: Observable<EcmUserModel>;
     bpmUser$: Observable<BpmUserModel>;
     identityUser$: Observable<IdentityUserModel>;
-    bpmUserImage: any;
-    ecmUserImage: any;
     selectedIndex: number;
 
     constructor(private ecmUserService: EcmUserService,
@@ -95,44 +92,27 @@ export class UserInfoComponent implements OnInit {
     }
 
     loadEcmUserInfo(): void {
-        this.ecmUser$ = this.ecmUserService.getCurrentUserInfo().pipe(
-            map((response: EcmUserModel) => {
-                const ecmUser = new EcmUserModel(response);
-                this.getEcmAvatar(ecmUser.avatarId);
-                return ecmUser;
-            })
-        );
+        this.ecmUser$ = this.ecmUserService.getCurrentUserInfo();
     }
 
     loadBpmUserInfo(): void {
-        this.bpmUser$ = this.bpmUserService.getCurrentUserInfo().pipe(
-            map((response: BpmUserModel) => {
-                const bpmUser = new BpmUserModel(response);
-                this.getBpmUserImage();
-                return bpmUser;
-            })
-        );
+        this.bpmUser$ = this.bpmUserService.getCurrentUserInfo();
     }
 
     loadIdentityUserInfo() {
-        this.identityUser$ = this.identityUserService.getCurrentUserInfo().pipe(
-            map((response: IdentityUserModel) => {
-                const identityUser = new IdentityUserModel(response);
-                return identityUser;
-            })
-        );
+        this.identityUser$ = this.identityUserService.getCurrentUserInfo();
     }
 
     stopClosing(event) {
         event.stopPropagation();
     }
 
-    private getEcmAvatar(avatarId: any ) {
-        this.ecmUserImage = this.ecmUserService.getUserProfileImage(avatarId);
+    getEcmAvatar(avatarId: any ) {
+        return this.ecmUserService.getUserProfileImage(avatarId);
     }
 
-    private getBpmUserImage() {
-        this.bpmUserImage = this.bpmUserService.getCurrentUserProfileImage();
+    getBpmUserImage() {
+        return this.bpmUserService.getCurrentUserProfileImage();
     }
 
     showOnRight() {
