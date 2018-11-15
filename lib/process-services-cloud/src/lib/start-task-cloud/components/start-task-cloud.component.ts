@@ -24,7 +24,7 @@ import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from
 import { StartTaskCloudService } from '../services/start-task-cloud.service';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 import {
-    LogService,
+    LogService, 
     UserPreferencesService
 } from '@alfresco/adf-core';
 import { UserCloudModel } from '../models/user-cloud.model';
