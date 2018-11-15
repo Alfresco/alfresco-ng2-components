@@ -17,21 +17,38 @@
 
 import { Injectable } from '@angular/core';
 import { RenditionEntry, RenditionPaging } from 'alfresco-js-api';
-import { Observable, from, interval } from 'rxjs';
+import { Observable, from, interval, empty } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { concatMap, switchMap, takeWhile } from 'rxjs/operators';
+import { concatMap, switchMap, takeWhile, map } from 'rxjs/operators';
 
-/**
- * @deprecated
- * RenditionsService
- * (this service is deprecated in 2.2.0 and will be removed in future revisions)
- */
 @Injectable({
     providedIn: 'root'
 })
 export class RenditionsService {
 
     constructor(private apiService: AlfrescoApiService) {
+    }
+
+    getAvailableRenditionForNode(nodeId: string): Observable<RenditionEntry> {
+        return from(this.apiService.renditionsApi.getRenditions(nodeId)).pipe(
+            map((availableRenditions: RenditionPaging) => {
+                let renditionsAvailable: RenditionEntry[] = availableRenditions.list.entries.filter(
+                    (rendition) => (rendition.entry.id === 'pdf' || rendition.entry.id === 'imgpreview'));
+                let existingRendition = renditionsAvailable.find((rend) => rend.entry.status === 'CREATED');
+                return existingRendition ? existingRendition : renditionsAvailable[0];
+            }));
+    }
+
+    generateRenditionForNode(nodeId: string): Observable<any> {
+        return this.getAvailableRenditionForNode(nodeId).pipe(
+            map((rendition: RenditionEntry) => {
+                if (rendition.entry.status !== 'CREATED') {
+                    return from(this.apiService.renditionsApi.createRendition(nodeId, { id: rendition.entry.id }));
+                } else {
+                    return empty();
+                }
+            })
+        );
     }
 
     /** @deprecated */

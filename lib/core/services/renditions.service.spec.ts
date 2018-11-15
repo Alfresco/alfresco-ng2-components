@@ -16,12 +16,13 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { fakeRendition, fakeRenditionCreated, fakeRenditionsList } from '../mock/renditionsService.mock';
+import { fakeRendition, fakeRenditionCreated, fakeRenditionsList, fakeRenditionsListWithACreated } from '../mock/renditionsService.mock';
 import { RenditionsService } from './renditions.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { RenditionEntry } from 'alfresco-js-api';
 
 declare let jasmine: any;
 
@@ -44,6 +45,34 @@ describe('RenditionsService', () => {
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
+    });
+
+    it('Should return the image rendition for the file if no rendition is already available', (done) => {
+        service.getAvailableRenditionForNode('fake-node-id').subscribe((res: RenditionEntry) => {
+            expect(res.entry.status).toBe('NOT_CREATED');
+            expect(res.entry.id).toBe('imgpreview');
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeRenditionsList)
+        });
+    });
+
+    it('Should return the available rendition for the file', (done) => {
+        service.getAvailableRenditionForNode('fake-node-id').subscribe((res: RenditionEntry) => {
+            expect(res.entry.status).toBe('CREATED');
+            expect(res.entry.id).toBe('pdf');
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeRenditionsListWithACreated)
+        });
     });
 
     it('Get rendition list service should return the list', (done) => {
