@@ -24,6 +24,7 @@
             "@alfresco/adf-process-services-cloud": ["./process-services-cloud/"],
             "@alfresco/adf-process-services": ["./process-services/"],
             "@alfresco/adf-content-services": ["./content-services/"],
+            "@alfresco/adf-extensions": ["./extensions/"],
             "@alfresco/adf-core": ["./core/"],
             "@alfresco/adf-insights": ["./analytics"],
             "alfresco-js-api": ["../node_modules/alfresco-js-api/"],
