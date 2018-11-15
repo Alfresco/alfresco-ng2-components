@@ -4,11 +4,12 @@
         <input
             matInput [formControl]="from" [errorStateMatcher]="matcher"
             placeholder="{{ 'SEARCH.FILTER.RANGE.FROM' | translate }}"
-            autocomplete="off">
-        <mat-error *ngIf="from.hasError('pattern') || from.hasError('min')">
+            autocomplete="off"
+            data-automation-id="number-range-from-input">
+        <mat-error *ngIf="from.hasError('pattern') || from.hasError('min')" data-automation-id="number-range-from-error-invalid">
             {{ 'SEARCH.FILTER.VALIDATION.INVALID-FORMAT' | translate }}
         </mat-error>
-        <mat-error *ngIf="from.hasError('required')">
+        <mat-error *ngIf="from.hasError('required')" data-automation-id="number-range-from-error-required">
             {{ 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' | translate }}
         </mat-error>
     </mat-form-field>
@@ -17,21 +18,22 @@
         <input
             matInput [formControl]="to" [errorStateMatcher]="matcher"
             placeholder="{{ 'SEARCH.FILTER.RANGE.TO' | translate }}"
-            autocomplete="off">
-        <mat-error *ngIf="to.hasError('pattern') || to.hasError('min')">
+            autocomplete="off"
+            data-automation-id="number-range-to-input">
+        <mat-error *ngIf="to.hasError('pattern') || to.hasError('min')" data-automation-id="number-range-to-error-invalid">
             {{ 'SEARCH.FILTER.VALIDATION.INVALID-FORMAT' | translate }}
         </mat-error>
-        <mat-error *ngIf="to.hasError('required')">
+        <mat-error *ngIf="to.hasError('required')" data-automation-id="number-range-to-error-required">
             {{ 'SEARCH.FILTER.VALIDATION.REQUIRED-VALUE' | translate }}
         </mat-error>
     </mat-form-field>
 
 
     <div class="facet-buttons">
-        <button mat-button color="primary" type="button" (click)="reset()">
+        <button mat-button color="primary" type="button" (click)="reset()" data-automation-id="number-range-btn-clear">
             {{ 'SEARCH.FILTER.ACTIONS.CLEAR' | translate }}
         </button>
-        <button mat-button color="primary" type="submit" [disabled]="!form.valid">
+        <button mat-button color="primary" type="submit" [disabled]="!form.valid" data-automation-id="number-range-btn-apply">
             {{ 'SEARCH.FILTER.ACTIONS.APPLY' | translate }}
         </button>
     </div>

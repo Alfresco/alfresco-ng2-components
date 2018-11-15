@@ -87,13 +87,9 @@ export class SearchResultsPage {
         Util.waitUntilElementIsClickable(this.sortingArrow);
         this.sortingArrow.click();
 
-        let selectedSortingOption = element(by.xpath(``));
+        let selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', sortType));
         Util.waitUntilElementIsClickable(selectedSortingOption);
-        browser.executeScript(`document.evaluate('//span [contains(text(), "${sortType}")]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();`);
-
-        browser.controlFlow().execute(async () => {
-            await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-        });
+        selectedSortingOption.click();
 
         this.sortByOrder(sortOrder);
     }
@@ -121,6 +117,10 @@ export class SearchResultsPage {
 
     sortByCreated(sortOrder) {
         this.sortBy(sortOrder, 'Created');
+    }
+
+    sortBySize(sortOrder) {
+        this.sortBy(sortOrder, 'Size');
     }
 
     sortAndCheckListIsOrderedByName(sortOrder) {

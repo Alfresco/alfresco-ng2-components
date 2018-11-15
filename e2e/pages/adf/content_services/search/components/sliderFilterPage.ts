@@ -14,28 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { SliderPage } from '../../../material/sliderPage';
+import { by } from 'protractor';
 
-import Util = require('../../../../../util/util');
-import { protractor, by } from 'protractor';
-
-export class SearchTextPage {
+export class SliderFilterPage {
 
     filter;
-    inputBy = by.css('input');
+    slider;
 
     constructor(filter) {
         this.filter = filter;
+        this.slider = new SliderPage(this.filter.element(by.css('mat-slider')));
     }
 
-    getNamePlaceholder() {
-        Util.waitUntilElementIsVisible(this.filter);
-        return this.filter.element(this.inputBy).getAttribute('placeholder');
+    setSliderToValue(value) {
+        this.slider.setToValue(value);
+        return this;
     }
 
-    searchByName(name) {
-        Util.waitUntilElementIsVisible(this.filter);
-        this.filter.element(this.inputBy).clear();
-        this.filter.element(this.inputBy).sendKeys(name).sendKeys(protractor.Key.ENTER);
+    checkSliderIsDisplayed() {
+        this.slider.checkIsDisplayed();
+        return this;
     }
-
 }
