@@ -39,25 +39,25 @@ jobs:
           - rm -rf tmp && (./scripts/smart-build.sh || exit 1;);
           - (npm run build:dist || exit 1;);
         - stage: Unit test
-          env: STAGE=core
+          name: core
           script:  (./scripts/npm-build-all.sh -si -sb -t "core" --skip-lint || exit 1;);
         - stage: Unit test
-          env: STAGE=extensions
+          name: extensions
           script:  (./scripts/npm-build-all.sh -si -sb -t "extensions" --skip-lint || exit 1;);
         - stage: Unit test
-          env: STAGE=process-services
+          name: process-services
           script: (./scripts/npm-build-all.sh -si -sb -t "process-services" --skip-lint|| exit 1;);
         - stage: Unit test
-          env: STAGE=insights
+          name: insights
           script:  (./scripts/npm-build-all.sh -si -sb -t "insights" --skip-lint || exit 1;);
         - stage: Unit test
-          env: STAGE=content-services
+          name: content-services
           script:  (./scripts/npm-build-all.sh -si -sb -t "content-services" --skip-lint|| exit 1;);
         - stage: Unit test
-          env: STAGE=process-services-cloud
+          name: process-services-cloud
           script: (./scripts/npm-build-all.sh -si -sb -t "process-services-cloud" --skip-lint|| exit 1;);
         - stage: Unit test
-          env: STAGE=demo-shell
+          name: demo-shell
           script:   if ([ "$TRAVIS_BRANCH" = "master" ]); then
                             (./scripts/start.sh -t -ss || exit 1;);
                        else
