@@ -196,9 +196,9 @@ The component is a wrapper of the data-table component with a custom action i.e
             </data-column>
             <data-column key="email" class="full-width">
               <ng-template let-entry="$implicit">
-                <div class="people-full-name">{{ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ') }}</div>
-                <div class="people-email">{{ entry.row.obj.email }}</div>
-                <div class="people-edit-label">can edit</div>
+                <div class="adf-people-full-name">{{ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ') }}</div>
+                <div class="adf-people-email">{{ entry.row.obj.email }}</div>
+                <div class="adf-people-edit-label">can edit</div>
               </ng-template>
             </data-column>
           </data-columns>

@@ -87,7 +87,7 @@ var ProcessFiltersPage = function () {
     };
 
     this.checkFilterIsHighlighted = function (filterName) {
-        var processNameHighlighted = element(by.css("mat-list-item.active span[data-automation-id='" + filterName + "_filter']"));
+        var processNameHighlighted = element(by.css("mat-list-item.adf-active span[data-automation-id='" + filterName + "_filter']"));
         Util.waitUntilElementIsVisible(processNameHighlighted);
     };
 

@@ -16,7 +16,7 @@
  */
 
 import FormFields = require('../formFields');
-import { element, by } from 'protractor';
+import { element, by, protractor } from 'protractor';
 import Util = require('../../../../util/util');
 
 export class DateWidget {
@@ -38,6 +38,7 @@ export class DateWidget {
     }
 
     setDateInput(fieldId, value) {
+        this.removeFromDatetimeWidget(fieldId);
         return this.formFields.setValueInInputById(fieldId, value);
     }
 
@@ -57,5 +58,16 @@ export class DateWidget {
         let errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
         Util.waitUntilElementIsVisible(errorMessage);
         return errorMessage.getText();
+    }
+
+    removeFromDatetimeWidget(fieldId) {
+        Util.waitUntilElementIsVisible(this.formFields.getWidget(fieldId));
+
+        let dateWidgetInput = element(by.id(fieldId));
+        dateWidgetInput.getAttribute('value').then((result) => {
+            for (let i = result.length; i >= 0; i--) {
+                dateWidgetInput.sendKeys(protractor.Key.BACK_SPACE);
+            }
+        });
     }
 }

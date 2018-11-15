@@ -42,15 +42,15 @@ export class TaskDetailsPage {
     involvePeopleButton = element(by.css('div[class*="add-people"]'));
     addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
     addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
-    emailInvolvedUser = by.xpath('following-sibling::div[@class="people-email ng-star-inserted"]');
-    editActionInvolvedUser = by.xpath('following-sibling::div[@class="people-edit-label ng-star-inserted"]');
+    emailInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-email ng-star-inserted"]');
+    editActionInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-edit-label ng-star-inserted"]');
     involvedUserPic = by.xpath('ancestor::div/ancestor::div/preceding-sibling::div//div[@class="adf-people-search-people-pic ng-star-inserted"]');
     taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
     taskDetailsSection = element(by.css('div[data-automation-id="adf-tasks-details"]'));
     taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
     completeTask = element(by.css('button[id="adf-no-form-complete-button"]'));
     completeFormTask = element(by.css('button[id="adf-form-complete"]'));
-    taskDetailsTitle = element(by.css('h2[class="activiti-task-details__header"] span'));
+    taskDetailsTitle = element(by.css('h2[class="adf-activiti-task-details__header"] span'));
     auditLogButton = element(by.css('button[adf-task-audit]'));
     noPeopleInvolved = element(by.id('no-people-label'));
     cancelInvolvePeopleButton = element(by.id('close-people-search'));
