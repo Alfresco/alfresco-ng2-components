@@ -3,7 +3,6 @@
 @import './theming';
 
 @import '../card-view/card-view.module';
-@import '../collapsable/accordion-group.component';
 @import '../datatable/components/datatable/datatable.component';
 @import '../form/components/widgets/container/container.widget';
 @import '../form/components/widgets/dynamic-table/dynamic-table.widget';
@@ -37,7 +36,6 @@
     @include adf-colors-theme($theme);
     @include adf-default-class-theme($theme);
     @include adf-card-view-module-theme($theme);
-    @include adf-accordion-theme($theme);
     @include adf-datatable-theme($theme);
     @include adf-form-container-widget-theme($theme);
     @include adf-dynamic-table-theme($theme);
