@@ -21,6 +21,7 @@ var ProcessDetailsPage = function () {
 
     //Process Details
     var processTitle = element(by.css("mat-card-title[class='mat-card-title']"));
+    var processDetailsMessage = element(by.css('adf-process-instance-details div[class="ng-star-inserted"]'));
     var processStatusField = element(by.css("span[data-automation-id='card-textitem-value-status']"));
     var processEndDateField = element(by.css("span[data-automation-id='card-dateitem-ended']"));
     var processCategoryField = element(by.css("span[data-automation-id='card-textitem-value-category']"));
@@ -66,6 +67,11 @@ var ProcessDetailsPage = function () {
     this.checkProcessTitleIsDisplayed = function () {
         Util.waitUntilElementIsVisible(processTitle);
         return processTitle.getText();
+    };
+
+    this.checkProcessDetailsMessage = function () {
+        Util.waitUntilElementIsVisible(processDetailsMessage);
+        return processDetailsMessage.getText();
     };
 
     this.getProcessStatus = function () {
