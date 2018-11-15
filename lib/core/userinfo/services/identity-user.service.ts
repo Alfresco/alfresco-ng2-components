@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { IdentityUserModel } from '../models/identity-user.model';
-import { JwtHelperService } from './jwt-helper.service';
+import { JwtHelperService } from './../../services/jwt-helper.service';
 
 @Injectable({
     providedIn: 'root'
@@ -29,7 +29,7 @@ export class IdentityUserService {
     static USER_EMAIL = 'email';
     static USER_ACCESS_TOKEN = 'access_token';
 
-    constructor() {}
+    constructor(private helper: JwtHelperService) {}
 
     getCurrentUserInfo(): Observable<IdentityUserModel> {
         const fullName = this.getValueFromToken<string>(IdentityUserService.USER_NAME);
@@ -43,7 +43,7 @@ export class IdentityUserService {
         let value;
         const token = localStorage.getItem(IdentityUserService.USER_ACCESS_TOKEN);
         if (token) {
-            const tokenPayload = JwtHelperService.decodeToken(token);
+            const tokenPayload = this.helper.decodeToken(token);
             value = tokenPayload[key];
         }
         return <T> value;

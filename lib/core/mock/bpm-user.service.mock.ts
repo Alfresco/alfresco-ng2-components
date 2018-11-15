@@ -29,7 +29,7 @@ export let fakeBpmUserNoImage = {
     lastUpdate: 'fake-update-date',
     latestSyncTimeStamp: 'fake-timestamp',
     password: 'fake-password',
-    pictureId: null,
+    pictureId: undefined,
     status: 'fake-status',
     tenantId: 'fake-tenant-id',
     tenantName: 'fake-tenant-name',

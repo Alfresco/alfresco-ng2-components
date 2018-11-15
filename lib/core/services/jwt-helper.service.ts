@@ -15,11 +15,16 @@
  * limitations under the License.
  */
 
+import { Injectable } from '@angular/core';
+
+@Injectable({
+    providedIn: 'root'
+})
 export class JwtHelperService {
 
     constructor() {}
 
-    static decodeToken(token) {
+    decodeToken(token) {
         let parts = token.split('.');
 
         if (parts.length !== 3) {
@@ -34,7 +39,7 @@ export class JwtHelperService {
         return JSON.parse(decoded);
     }
 
-    static urlBase64Decode(token) {
+    private urlBase64Decode(token) {
         let output = token.replace(/-/g, '+').replace(/_/g, '/');
         switch (output.length % 4) {
             case 0: {
