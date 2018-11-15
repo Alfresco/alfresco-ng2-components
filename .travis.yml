@@ -70,6 +70,7 @@ jobs:
                 ng test process-services --watch=false || exit 1;
             fi
         - stage: Unit test
+          name: insights
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "insights$" ]];
