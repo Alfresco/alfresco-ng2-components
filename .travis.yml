@@ -47,22 +47,51 @@ jobs:
           - npm run build:dist || exit 1
         - stage: Unit test
           name: core
-          script:  (./scripts/npm-build-all.sh -si -sb -t "core" --skip-lint || exit 1;);
+          script:
+            AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
+            if [[ $AFFECTED_LIBS =~ "core$" ]];
+            then
+                ng test core --watch=false || exit 1;
+            fi
         - stage: Unit test
           name: extensions
-          script:  (./scripts/npm-build-all.sh -si -sb -t "extensions" --skip-lint || exit 1;);
+          script:
+            AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
+            if [[ $AFFECTED_LIBS =~ "extensions$" ]];
+            then
+                ng test extensions --watch=false || exit 1;
+            fi
         - stage: Unit test
           name: process-services
-          script: (./scripts/npm-build-all.sh -si -sb -t "process-services" --skip-lint|| exit 1;);
+          script:
+            AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
+            if [[ $AFFECTED_LIBS =~ "process-services$" ]];
+            then
+                ng test process-services --watch=false || exit 1;
+            fi
         - stage: Unit test
-          name: insights
-          script:  (./scripts/npm-build-all.sh -si -sb -t "insights" --skip-lint || exit 1;);
+          script:
+            AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
+            if [[ $AFFECTED_LIBS =~ "insights$" ]];
+            then
+                ng test insights --watch=false || exit 1;
+            fi
         - stage: Unit test
           name: content-services
-          script:  (./scripts/npm-build-all.sh -si -sb -t "content-services" --skip-lint|| exit 1;);
+          script:
+            AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
+            if [[ $AFFECTED_LIBS =~ "content-services$" ]];
+            then
+                ng test content-services --watch=false || exit 1;
+            fi
         - stage: Unit test
           name: process-services-cloud
-          script: (./scripts/npm-build-all.sh -si -sb -t "process-services-cloud" --skip-lint|| exit 1;);
+          script:
+            AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
+            if [[ $AFFECTED_LIBS =~ "process-services-cloud$" ]];
+            then
+                ng test process-services-cloud --watch=false || exit 1;
+            fi
         - stage: Unit test
           name: demo-shell
           script:   if ([ "$TRAVIS_BRANCH" = "master" ]); then
