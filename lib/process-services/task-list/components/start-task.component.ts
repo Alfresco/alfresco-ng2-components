@@ -115,7 +115,7 @@ export class StartTaskComponent implements OnInit {
     setTaskDetails(form) {
         this.taskDetailsModel.name = form.name;
         this.taskDetailsModel.description = form.description;
-        this.taskDetailsModel.formKey = form.formKey.toString();
+        this.taskDetailsModel.formKey = form.formKey ? form.formKey.toString() : null;
     }
 
     isFormValid() {
