@@ -236,7 +236,6 @@ describe('StartTaskComponent', () => {
             component.taskForm.controls['name'].setValue('fakeName');
             component.taskForm.controls['formKey'].setValue(1204);
             component.appId = 42;
-            component.taskDetailsModel = new TaskDetailsModel(taskDetailsMock);
             component.assigneeId = testUser.id;
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
