@@ -9,6 +9,7 @@ branches:
   only:
   - master
   - development
+  - dev-mvitale-ADF-travis-cache
 
 stages:
   - name: Warm Up Cache
@@ -122,40 +123,45 @@ jobs:
         - stage: e2e Test # Test core
           name: core
           script:
+            AFFECTED_E2E="$(./scripts/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e")";
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
-            if [[ $AFFECTED_LIBS =~ "core$" ]];
+            if [[ $AFFECTED_LIBS =~ "core$" || $AFFECTED_E2E = "e2e" ]];
             then
                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder core --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
         - stage: e2e Test # Test process-services
           name: process-services
           script:
+            AFFECTED_E2E="$(./scripts/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e")";
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
-            if [[ $AFFECTED_LIBS =~ "process-services$" ]];
+            if [[ $AFFECTED_LIBS =~ "process-services$" || $AFFECTED_E2E = "e2e" ]];
             then
                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder process-services --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
         - stage: e2e Test # Test content-services
           name: content-services
           script:
+            AFFECTED_E2E="$(./scripts/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e")";
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
-            if [[ $AFFECTED_LIBS =~ "content-services$" ]];
+            if [[ $AFFECTED_LIBS =~ "content-services$" || $AFFECTED_E2E = "e2e" ]];
             then
                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder content-services --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
         - stage: e2e Test # Test process-services-cloud
           name: process-services-cloud
           script:
+            AFFECTED_E2E="$(./scripts/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e")";
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
-            if [[ $AFFECTED_LIBS =~ "process-services-cloud$" ]];
+            if [[ $AFFECTED_LIBS =~ "process-services-cloud$" || $AFFECTED_E2E = "e2e" ]];
             then
                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder process-services-cloud --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
         - stage: e2e Test # Test insights
           name: insights
           script:
+            AFFECTED_E2E="$(./scripts/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e")";
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
-            if [[ $AFFECTED_LIBS =~ "process-services-cloud$" ]];
+            if [[ $AFFECTED_LIBS =~ "process-services-cloud$" || $AFFECTED_E2E = "e2e" ]];
             then
                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder insights --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
