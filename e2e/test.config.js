@@ -4,6 +4,7 @@
  */
 
 var HOST = process.env.URL_HOST_ADF;
+const HOST_SSO = process.env.URL_HOST_SSO_ADF;
 var USERNAME = process.env.USERNAME_ADF;
 var PASSWORD = process.env.PASSWORD_ADF;
 var EMAIL = process.env.EMAIL_ADF;
@@ -48,7 +49,10 @@ module.exports = {
         /**
          * main admin password
          */
-        adminPassword: PASSWORD
+        adminPassword: PASSWORD,
+
+        hostSso: "http://" + HOST_SSO
+
     },
 
     adf_acs: {

@@ -32,6 +32,11 @@ before_install:
     - sh -e /etc/init.d/xvfb start
     - sleep 3 # give xvfb some time to start
 
+branches:
+  only:
+  - master
+  - development
+
 jobs:
     include:
         - stage: Warm Up Cache
@@ -125,7 +130,7 @@ jobs:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "core$" ]];
             then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder core --skip-lint --use-dist --timeout 7000 || exit 1;);
+                (./scripts/test-e2e-lib.sh -host localhost:4200 --host_sso "$E2E_HOST_SSO" -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder core --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
         - stage: e2e Test # Test process-services
           name: process-services

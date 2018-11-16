@@ -110,3 +110,77 @@ export let fakeRenditionsList = {
         ]
     }
 };
+
+export let fakeRenditionsListWithACreated = {
+    list: {
+        pagination: {
+            count: 6,
+            hasMoreItems: false,
+            totalItems: 6,
+            skipCount: 0,
+            maxItems: 100
+        },
+        entries: [
+            {
+                entry: {
+                    id: 'avatar',
+                    content: {
+                        mimeType: 'image/png',
+                        mimeTypeName: 'PNG Image'
+                    },
+                    status: 'NOT_CREATED'
+                }
+            },
+            {
+                entry: {
+                    id: 'avatar32',
+                    content: {
+                        mimeType: 'image/png',
+                        mimeTypeName: 'PNG Image'
+                    },
+                    status: 'NOT_CREATED'
+                }
+            },
+            {
+                entry: {
+                    id: 'doclib',
+                    content: {
+                        mimeType: 'image/png',
+                        mimeTypeName: 'PNG Image'
+                    },
+                    status: 'NOT_CREATED'
+                }
+            },
+            {
+                entry: {
+                    id: 'imgpreview',
+                    content: {
+                        mimeType: 'image/jpeg',
+                        mimeTypeName: 'JPEG Image'
+                    },
+                    status: 'NOT_CREATED'
+                }
+            },
+            {
+                entry: {
+                    id: 'medium',
+                    content: {
+                        mimeType: 'image/jpeg',
+                        mimeTypeName: 'JPEG Image'
+                    },
+                    status: 'NOT_CREATED'
+                }
+            },
+            {
+                entry: {
+                    id: 'pdf',
+                    content: {
+                        mimeType: 'application/pdf',
+                        mimeTypeName: 'Adobe PDF Document'
+                    },
+                    status: 'CREATED'
+                }
+            }
+        ]
+    }
+};
