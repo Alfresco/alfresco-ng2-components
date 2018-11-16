@@ -26,7 +26,7 @@ import { from, Observable, throwError } from 'rxjs';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../models/task-details-cloud.model';
 import { map, catchError } from 'rxjs/operators';
-import { UserCloudModel } from '../models/user-cloud.model';
+import { IdentityUserModel } from '../../../../../core/userinfo/models/identity-user.model';
 
 @Injectable()
 export class StartTaskCloudService {
@@ -58,7 +58,7 @@ export class StartTaskCloudService {
             );
     }
 
-    getUsers(): Observable<UserCloudModel[]> {
+    getUsers(): Observable<IdentityUserModel[]> {
         const url = this.buildUserUrl();
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
@@ -68,7 +68,7 @@ export class StartTaskCloudService {
                     headerParams, formParams, bodyParam, authNames,
                     contentTypes, accepts, Object, null, null)
                 ).pipe(
-                    map((response: UserCloudModel[]) => {
+                    map((response: IdentityUserModel[]) => {
                         return response;
                     }),
                 catchError(err => this.handleError(err))
@@ -101,7 +101,7 @@ export class StartTaskCloudService {
     }
 
     private buildRolesUrl(userId: string): any {
-        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/users/${userId}/role-mappings/realm`;
+        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/users/${userId}/role-mappings/realm/composite`;
     }
 
     private buildRequestBody(taskDetails: any) {

@@ -24,10 +24,11 @@ import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from
 import { StartTaskCloudService } from '../services/start-task-cloud.service';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 import {
-    LogService, 
+    LogService,
     UserPreferencesService
 } from '@alfresco/adf-core';
-import { UserCloudModel } from '../models/user-cloud.model';
+import { IdentityUserService } from '../../../../../core/userinfo';
+import { IdentityUserModel } from '../../../../../core/userinfo/models/identity-user.model';
 
 @Component({
   selector: 'adf-cloud-start-task',
@@ -81,6 +82,8 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     taskForm: FormGroup;
 
+    currentUser: IdentityUserModel;
+
     private localeSub: Subscription;
     private createTaskSub: Subscription;
 
@@ -88,6 +91,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
                 private dateAdapter: DateAdapter<Moment>,
                 private preferences: UserPreferencesService,
                 private formBuilder: FormBuilder,
+                private identityUserService: IdentityUserService,
                 private logService: LogService) {
     }
 
@@ -95,6 +99,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.localeSub = this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
+        this.loadCurrentUser();
         this.buildForm();
     }
 
@@ -116,13 +121,17 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         });
     }
 
+    private async loadCurrentUser() {
+        this.currentUser = await this.identityUserService.getCurrentUserInfo().toPromise();
+    }
+
     public saveTask() {
         this.submitted = true;
-        let newTask = new TaskDetailsCloudModel(this.taskForm.value);
+        const newTask = Object.assign(this.taskForm.value);
         newTask.appName = this.getAppName();
         newTask.dueDate = this.getDueDate();
         newTask.assignee = this.getAssigneeName();
-        this.createNewTask(newTask);
+        this.createNewTask(new TaskDetailsCloudModel(newTask));
     }
 
     private createNewTask(newTask: TaskDetailsCloudModel) {
@@ -152,7 +161,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     }
 
     private getAssigneeName(): string {
-        return this.assigneeName ? this.assigneeName : '';
+        return this.assigneeName ? this.assigneeName : this.currentUser.username;
     }
 
     onDateChanged(newDateValue) {
@@ -166,7 +175,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         }
     }
 
-    onAssigneeSelect(assignee: UserCloudModel) {
+    onAssigneeSelect(assignee: IdentityUserModel) {
         this.assigneeName = assignee ? assignee.username : '';
     }
 

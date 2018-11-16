@@ -30,7 +30,7 @@ import {
     LogService,
     StorageService
 } from '@alfresco/adf-core';
-import { UserCloudModel } from '../models/user-cloud.model';
+import { IdentityUserModel } from '../../../../../core/userinfo/models/identity-user.model';
 import { RoleCloudModel } from '../models/role-cloud.model';
 import { mockRoles } from './../mock/user-cloud.mock';
 
@@ -80,7 +80,7 @@ describe('StartTaskCloudService', () => {
     it('should able to fetch users ', (done) => {
         spyOn(service, 'getUsers').and.returnValue(of(mockUsers));
         service.getUsers().subscribe(
-            (res: UserCloudModel[]) => {
+            (res: IdentityUserModel[]) => {
                 expect(res).toBeDefined();
                 expect(res[0].id).toEqual('fake-id-1');
                 expect(res[0].username).toEqual('first-name-1 last-name-1');

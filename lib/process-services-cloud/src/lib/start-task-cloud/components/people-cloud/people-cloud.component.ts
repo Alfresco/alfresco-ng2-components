@@ -20,8 +20,8 @@ import { StartTaskCloudService } from './../../services/start-task-cloud.service
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { RoleCloudModel } from '../../models/role-cloud.model';
-import { UserCloudModel } from '../../models/user-cloud.model';
 import { FullNamePipe } from '@alfresco/adf-core';
+import { IdentityUserModel } from '../../../../../../core/userinfo/models/identity-user.model';
 import { IdentityUserService } from '../../../../../../core/userinfo/services/identity-user.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
@@ -54,7 +54,7 @@ export class PeopleCloudComponent implements OnInit {
 
     /** Emitted when a user is selected. */
     @Output()
-    selectedUser: EventEmitter<UserCloudModel> = new EventEmitter<UserCloudModel>();
+    selectedUser: EventEmitter<IdentityUserModel> = new EventEmitter<IdentityUserModel>();
 
     /** Emitted when an error occurs. */
     @Output()
@@ -94,12 +94,12 @@ export class PeopleCloudComponent implements OnInit {
         this.users = await this.filterUsers(users);
     }
 
-    private async filterUsers(users: UserCloudModel[]) {
+    private async filterUsers(users: IdentityUserModel[]) {
         let filteredUsers: any[] = [];
-        
-        for(let i=0; i<users.length; i++) {
+
+        for (let i = 0; i < users.length; i++) {
             const roles = await this.taskService.getRolesByUserId(users[i].id).toPromise();
-            for(let j=0; j<roles.length; j++) {
+            for (let j = 0; j < roles.length; j++) {
                 if (this.isValidUser(users[i]) && this.hasRole(roles[j])) {
                     filteredUsers.push(users[i]);
                 }
@@ -114,14 +114,14 @@ export class PeopleCloudComponent implements OnInit {
 
     private isValidUser(user): boolean {
         let valid = true;
-        if(!this.showCurrentUser && this.currentUser.username === user.username) {
+        if (!this.showCurrentUser && this.currentUser.username === user.username) {
             valid = false;
         }
         return valid;
     }
 
-    private searchUsers(users: UserCloudModel[], searchedWord: string) {
-        let filteredUsers: UserCloudModel[];
+    private searchUsers(users: IdentityUserModel[], searchedWord: string) {
+        let filteredUsers: IdentityUserModel[];
         filteredUsers = this.removeDuplicates(users).filter((user) => this.findUserBySearchedWord(user.username, searchedWord));
         this.dataError = filteredUsers.length <= 0 ? true : false;
         return of(filteredUsers);
@@ -131,7 +131,7 @@ export class PeopleCloudComponent implements OnInit {
         return username.toLowerCase().indexOf(searchedWord.toString().toLowerCase()) !== -1;
     }
 
-    private removeDuplicates(users: UserCloudModel[]): UserCloudModel[] {
+    private removeDuplicates(users: IdentityUserModel[]): IdentityUserModel[] {
         const userMap = new Map();
         users.forEach(user => {
             if (!userMap.has(user.id)) {
@@ -141,7 +141,7 @@ export class PeopleCloudComponent implements OnInit {
         return Array.from(userMap.values());
     }
 
-    onSelect(selectedUser: UserCloudModel) {
+    onSelect(selectedUser: IdentityUserModel) {
         this.selectedUser.emit(selectedUser);
         this.dataError = false;
     }

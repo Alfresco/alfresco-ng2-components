@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
 import {
     AlfrescoApiService,
     AppConfigService,
@@ -32,12 +32,15 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from './../../testing/process-service-cloud.testing.module';
 import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
 import { mockRoles } from '../mock/user-cloud.mock';
+import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
+import { IdentityUserModel } from '../../../../../core/userinfo/models/identity-user.model';
 
 describe('StartTaskCloudComponent', () => {
 
     let component: StartTaskCloudComponent;
     let fixture: ComponentFixture<StartTaskCloudComponent>;
     let service: StartTaskCloudService;
+    let identityService: IdentityUserService;
     let element: HTMLElement;
     let createNewTaskSpy: jasmine.Spy;
     let getRolesByUserIdSpy: jasmine.Spy;
@@ -55,9 +58,11 @@ describe('StartTaskCloudComponent', () => {
         element = fixture.nativeElement;
 
         service = TestBed.get(StartTaskCloudService);
+        identityService = TestBed.get(IdentityUserService);
         createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(taskDetailsMock));
         getRolesByUserIdSpy = spyOn(service, 'getRolesByUserId').and.returnValue(of(mockRoles));
         getUserSpy = spyOn(service, 'getUsers').and.returnValue(of(mockUsers));
+        spyOn(identityService, 'getCurrentUserInfo').and.returnValue(of(new IdentityUserModel({username: 'currentUser'})));
         fixture.detectChanges();
     }));
 
@@ -152,6 +157,18 @@ describe('StartTaskCloudComponent', () => {
                     name: 'fakeName',
                     assignee: 'fake-assignee'
                 });
+            });
+        }));
+
+        it('should assign task to the logged in user when assignee is not selected', async(() => {
+            component.taskForm.controls['name'].setValue('fakeName');
+            fixture.detectChanges();
+            let createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            createTaskButton.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const taskRequest = new TaskDetailsCloudModel({ name: 'fakeName', assignee: 'currentUser'});
+                expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest);
             });
         }));
     });

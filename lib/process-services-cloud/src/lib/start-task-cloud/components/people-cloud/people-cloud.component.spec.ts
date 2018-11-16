@@ -24,6 +24,7 @@ import { LogService, setupTestBed, IdentityUserService } from '@alfresco/adf-cor
 import { fakeUsers, mockRoles } from '../../mock/user-cloud.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
+import { IdentityUserModel } from '../../../../../../core/userinfo/models/identity-user.model';
 
 describe('PeopleCloudComponent', () => {
     let component: PeopleCloudComponent;
@@ -109,7 +110,7 @@ describe('PeopleCloudComponent', () => {
     it('should emit selectedUser if option is valid', async() => {
         fixture.detectChanges();
         let selectEmitSpy = spyOn(component.selectedUser, 'emit');
-        component.onSelect({ username: 'username'});
+        component.onSelect(<IdentityUserModel> { username: 'username'});
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(selectEmitSpy).toHaveBeenCalled();
