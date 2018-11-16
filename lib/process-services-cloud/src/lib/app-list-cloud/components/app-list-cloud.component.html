@@ -1,3 +1,4 @@
+<h1>Great</h1>
 <div class="menu-container" *ngIf="apps$ | async as appsList; else loading">
     <ng-container *ngIf="appsList.length > 0; else noApps">
         <div *ngIf="isGrid(); else appList" fxLayout="row wrap">
