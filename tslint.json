@@ -20,7 +20,8 @@
     "ban": [
       true,
       "eval",
-      "fdescribe"
+      "fdescribe",
+      "fit"
     ],
     "class-name": true,
     "comment-format": [
