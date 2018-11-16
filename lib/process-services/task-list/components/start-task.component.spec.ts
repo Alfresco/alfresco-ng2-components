@@ -66,6 +66,11 @@ describe('StartTaskComponent', () => {
         fixture.detectChanges();
     }));
 
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
+    });
+
     it('should create instance of StartTaskComponent', () => {
         expect(component instanceof StartTaskComponent).toBe(true, 'should create StartTaskComponent');
     });
@@ -231,7 +236,6 @@ describe('StartTaskComponent', () => {
             component.taskForm.controls['name'].setValue('fakeName');
             component.taskForm.controls['formKey'].setValue(1204);
             component.appId = 42;
-            component.taskDetailsModel = new TaskDetailsModel(taskDetailsMock);
             component.assigneeId = testUser.id;
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
