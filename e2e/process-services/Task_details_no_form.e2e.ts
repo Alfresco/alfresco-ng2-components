@@ -22,7 +22,6 @@ import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import CONSTANTS = require('../util/constants');
 
 import Tenant = require('../models/APS/Tenant');
-import Task = require('../models/APS/Task');
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');

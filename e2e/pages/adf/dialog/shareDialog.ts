@@ -17,7 +17,6 @@
 
 import { element, by } from 'protractor';
 import Util = require('../../../util/util');
-import moment = require('moment');
 import { FormControllersPage } from '../material/formControllersPage';
 
 export class ShareDialog {

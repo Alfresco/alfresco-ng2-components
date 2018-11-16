@@ -44,7 +44,7 @@
                         <div 
                             matTooltip="{{ query.label | translate }} ({{ query.count }})"
                             matTooltipPosition="right"
-                            class="facet-label">
+                            class="adf-facet-label">
                             {{ query.label | translate }} ({{ query.count }})
                         </div>
                     </mat-checkbox>
@@ -104,7 +104,7 @@
                     <div 
                         matTooltip="{{ bucket.display || bucket.label | translate }}"
                         matTooltipPosition="right"
-                        class="facet-label">
+                        class="adf-facet-label">
                         {{ bucket.display || bucket.label | translate }} 
                         <span *ngIf="bucket.count!==null">(</span>
                         {{ bucket.count }}

@@ -144,8 +144,8 @@ describe('SidenavLayoutComponent', () => {
 
         describe('adf-sidenav-layout-header', () => {
 
-            const outerHeaderSelector = By.css('.sidenav-layout > #header-test'),
-                innerHeaderSelector = By.css('.sidenav-layout [data-automation-id="adf-layout-container"] #header-test');
+            const outerHeaderSelector = By.css('.adf-sidenav-layout > #header-test'),
+                innerHeaderSelector = By.css('.adf-sidenav-layout [data-automation-id="adf-layout-container"] #header-test');
 
             it('should contain the transcluded header template outside of the layout-container', () => {
                 mediaQueryList.matches = false;

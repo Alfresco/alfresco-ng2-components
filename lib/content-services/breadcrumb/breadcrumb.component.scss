@@ -69,7 +69,7 @@
                     visibility: hidden;
                 }
 
-                &-arrow.focus {
+                &-arrow.adf-focus {
                     border: none;
                 }
             }
@@ -102,7 +102,9 @@
             &.adf-active {
                 flex: 1 1 auto;
                 color: mat-color($foreground, text, 0.87);
+                /* stylelint-disable */
                 min-width: initial;
+                /* stylelint-enable */
                 width: auto;
 		    }
 

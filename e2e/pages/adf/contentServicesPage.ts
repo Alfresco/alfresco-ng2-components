@@ -53,7 +53,7 @@ export class ContentServicesPage {
     documentListSpinner = element(by.css('mat-progress-spinner'));
     emptyFolder = element(by.css('.adf-empty-folder-this-space-is-empty'));
     emptyFolderImage = element(by.css('.adf-empty-folder-image'));
-    emptyRecent = element(by.css('.adf-container-recent .empty-list__title'));
+    emptyRecent = element(by.css('.adf-container-recent .adf-empty-list__title'));
     gridViewButton = element(by.css('button[data-automation-id="document-list-grid-view"]'));
     cardViewContainer = element(by.css('div.adf-document-list-container div.adf-data-table-card'));
     copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));

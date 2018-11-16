@@ -23,17 +23,12 @@ import { AttachmentListPage } from '../pages/adf/process_services/attachmentList
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
-import Task = require('../models/APS/Task');
 import Tenant = require('../models/APS/Tenant');
 
-import TaskModel = require('../models/APS/TaskModel');
 import FileModel = require('../models/ACS/fileModel');
-import FormModel = require('../models/APS/FormModel');
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-
-import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -42,8 +37,6 @@ import { UsersActions } from '../actions/users.actions';
 import CONSTANTS = require('../util/constants');
 
 describe('Start Task - Custom App', () => {
-
-    let TASK_DATA_FORMAT = 'mmm dd yyyy';
 
     let loginPage = new LoginPage();
     let navigationBarPage = new NavigationBarPage();

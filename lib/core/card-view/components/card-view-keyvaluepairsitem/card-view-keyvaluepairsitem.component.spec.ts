@@ -72,8 +72,8 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            const table = fixture.debugElement.query(By.css('.card-view__key-value-pairs__read-only'));
-            const form = fixture.debugElement.query(By.css('.card-view__key-value-pairs'));
+            const table = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs__read-only'));
+            const form = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs'));
 
             expect(table).not.toBeNull();
             expect(form).toBeNull();
@@ -83,13 +83,13 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            const addButton = fixture.debugElement.query(By.css('.card-view__key-value-pairs__add-btn'));
+            const addButton = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs__add-btn'));
             addButton.triggerEventHandler('click', null);
             fixture.detectChanges();
 
             expect(JSON.stringify(component.values)).toBe(JSON.stringify(mockEmptyData));
 
-            const content = fixture.debugElement.query(By.css('.card-view__key-value-pairs'));
+            const content = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs'));
             expect(content).not.toBeNull();
 
             let nameInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-name-input-0"]`));
@@ -104,16 +104,16 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            const addButton = fixture.debugElement.query(By.css('.card-view__key-value-pairs__add-btn'));
+            const addButton = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs__add-btn'));
             addButton.triggerEventHandler('click', null);
             fixture.detectChanges();
 
-            const removeButton = fixture.debugElement.query(By.css('.card-view__key-value-pairs__remove-btn'));
+            const removeButton = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs__remove-btn'));
             removeButton.triggerEventHandler('click', null);
             fixture.detectChanges();
 
             expect(component.values.length).toBe(0);
-            const content = fixture.debugElement.query(By.css('.card-view__key-value-pairs'));
+            const content = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs'));
             expect(content).toBeNull();
 
             expect(cardViewUpdateService.update).toHaveBeenCalled();
@@ -125,7 +125,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            const addButton = fixture.debugElement.query(By.css('.card-view__key-value-pairs__add-btn'));
+            const addButton = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs__add-btn'));
             addButton.triggerEventHandler('click', null);
             fixture.detectChanges();
 
@@ -153,7 +153,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            const addButton = fixture.debugElement.query(By.css('.card-view__key-value-pairs__add-btn'));
+            const addButton = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs__add-btn'));
             addButton.triggerEventHandler('click', null);
             fixture.detectChanges();
 
