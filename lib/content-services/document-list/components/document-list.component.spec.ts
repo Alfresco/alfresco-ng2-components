@@ -989,16 +989,14 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('123');
     });
 
-    it('should emit folderChange event when loadFolderNodesByFolderNodeId is called', (done) => {
-        const error = { message: '{ "error": { "statusCode": 501 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeWithCreatePermission));
-        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.reject(error));
+    it('should emit folderChange event when a folder node is clicked', (done) => {
+        spyOn(documentList, 'reload').and.stub();
 
         documentList.folderChange.subscribe((folderNode) => {
-            expect(folderNode.value.id).toBe('70e1cc6a-6918-468a-b84a-1048093b06fd');
+            expect(folderNode.value.id).toBe('fake-node');
             done();
         });
-        documentList.loadFolderByNodeId('123');
+        documentList.onNodeDblClick({ entry: { id: 'fake-node', isFolder: true } });
     });
 
     it('should set no permission when getFolderNode fails with 403', (done) => {
