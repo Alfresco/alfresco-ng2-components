@@ -9,6 +9,7 @@ branches:
   only:
   - master
   - development
+  - dev-mvitale-ADF-travis-cache
 
 stages:
   - name: Warm Up Cache
