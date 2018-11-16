@@ -10,7 +10,8 @@
            [matAutocomplete]="auto">
     <mat-autocomplete autoActiveFirstOption class="adf-people-cloud-list"
                       #auto="matAutocomplete"
-                      (optionSelected)="onSelect($event.option.value)">
+                      (optionSelected)="onSelect($event.option.value)"
+                      [displayWith]="getDisplayName">
         <mat-option *ngFor="let user of users$ | async; let i = index" [value]="user">
             <div class="adf-people-cloud-row" id="adf-people-cloud-user-{{i}}">
                 <div [outerHTML]="user | usernameInitials:'adf-people-widget-pic'"></div>

@@ -20,7 +20,7 @@ import { By } from '@angular/platform-browser';
 import { PeopleCloudComponent } from './people-cloud.component';
 import { StartTaskCloudTestingModule } from '../../testing/start-task-cloud.testing.module';
 import { StartTaskCloudService } from '../../services/start-task-cloud.service';
-import { LogService, setupTestBed } from '@alfresco/adf-core';
+import { LogService, setupTestBed, IdentityUserService } from '@alfresco/adf-core';
 import { fakeUsers, mockRoles } from '../../mock/user-cloud.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
@@ -30,6 +30,7 @@ describe('PeopleCloudComponent', () => {
     let fixture: ComponentFixture<PeopleCloudComponent>;
     let element: HTMLElement;
     let service: StartTaskCloudService;
+    let identityService: IdentityUserService;
     let getRolesByUserIdSpy: jasmine.Spy;
     let getUserSpy: jasmine.Spy;
 
@@ -43,9 +44,9 @@ describe('PeopleCloudComponent', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         service = TestBed.get(StartTaskCloudService);
+        identityService = TestBed.get(IdentityUserService);
         getRolesByUserIdSpy = spyOn(service, 'getRolesByUserId').and.returnValue(of(mockRoles));
         getUserSpy = spyOn(service, 'getUsers').and.returnValue(of(fakeUsers));
-        fixture.detectChanges();
     });
 
     it('should create PeopleCloudComponent', () => {
@@ -57,10 +58,22 @@ describe('PeopleCloudComponent', () => {
         expect(getUserSpy).toHaveBeenCalled();
     });
 
-    it('should able to fetch roles by user id', () => {
+    it('should able to fetch roles by user id', async(() => {
         fixture.detectChanges();
-        expect(getRolesByUserIdSpy).toHaveBeenCalled();
-    });
+        fixture.whenStable().then(() => {
+            expect(getRolesByUserIdSpy).toHaveBeenCalled();
+        });
+    }));
+
+    it('should not list the current logged in user when showCurrentUser is false', async(() => {
+        spyOn(identityService, 'getCurrentUserInfo').and.returnValue(of(fakeUsers[1]));
+        component.showCurrentUser = false;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const currentUser = component.users.find(user => user.username === fakeUsers[1].username);
+            expect(currentUser).toBeUndefined();
+        });
+    }));
 
     it('should show the users if the typed result match', async(() => {
         component.users$ = of(fakeUsers);

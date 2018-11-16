@@ -17,11 +17,12 @@
 
 import { FormControl } from '@angular/forms';
 import { StartTaskCloudService } from './../../services/start-task-cloud.service';
-import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { RoleCloudModel } from '../../models/role-cloud.model';
 import { UserCloudModel } from '../../models/user-cloud.model';
-import { LogService } from '@alfresco/adf-core';
+import { FullNamePipe } from '@alfresco/adf-core';
+import { IdentityUserService } from '../../../../../../core/userinfo/services/identity-user.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -37,6 +38,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
             ])
         ])
     ],
+    providers: [FullNamePipe],
     encapsulation: ViewEncapsulation.None
 })
 
@@ -45,6 +47,10 @@ export class PeopleCloudComponent implements OnInit {
     static ACTIVITI_ADMIN = 'ACTIVITI_ADMIN';
     static ACTIVITI_USER = 'ACTIVITI_USER';
     static ACTIVITI_MODELER = 'ACTIVITI_MODELER';
+
+    /** Show current user in the list or not. */
+    @Input()
+    showCurrentUser: boolean = true;
 
     /** Emitted when a user is selected. */
     @Output()
@@ -64,8 +70,10 @@ export class PeopleCloudComponent implements OnInit {
 
     dataError = false;
 
+    currentUser: any;
+
     constructor(private taskService: StartTaskCloudService,
-                private logService: LogService) { }
+                private identityService: IdentityUserService) { }
 
     ngOnInit() {
         this.loadUsers();
@@ -74,37 +82,29 @@ export class PeopleCloudComponent implements OnInit {
 
     initSearch() {
         this.searchUser.valueChanges.subscribe((searchedWord) => {
-            this.users$ = this.filterUsers(this.users, searchedWord);
+            this.users$ = this.searchUsers(this.users, searchedWord);
         });
     }
 
-    private loadUsers() {
-        this.taskService.getUsers().subscribe((users: any) => {
-            this.users = this.filterUsersByRole(users);
-            },
-            (error) => {
-                this.error.emit(error);
-                this.logService.error('An error occurred while fetching users');
-            }
-        );
+    private async loadUsers() {
+        if (!this.showCurrentUser) {
+            this.currentUser = await this.identityService.getCurrentUserInfo().toPromise();
+        }
+        const users = await this.taskService.getUsers().toPromise();
+        this.users = await this.filterUsers(users);
     }
 
-    private filterUsersByRole(users: UserCloudModel[]): UserCloudModel[] {
+    private async filterUsers(users: UserCloudModel[]) {
         let filteredUsers: any[] = [];
-        users.forEach(user => {
-            this.taskService.getRolesByUserId(user.id).subscribe((roles: RoleCloudModel[]) => {
-                roles.forEach(role => {
-                    if (this.hasRole(role)) {
-                        filteredUsers.push(user);
-                    }
-                });
-            },
-            (error) => {
-                this.error.emit(error);
-                this.logService.error('An error occurred while fetching roles');
+        
+        for(let i=0; i<users.length; i++) {
+            const roles = await this.taskService.getRolesByUserId(users[i].id).toPromise();
+            for(let j=0; j<roles.length; j++) {
+                if (this.isValidUser(users[i]) && this.hasRole(roles[j])) {
+                    filteredUsers.push(users[i]);
                 }
-            );
-        });
+            }
+        }
         return filteredUsers;
     }
 
@@ -112,7 +112,15 @@ export class PeopleCloudComponent implements OnInit {
         return (role.name === PeopleCloudComponent.ACTIVITI_ADMIN) || (role.name === PeopleCloudComponent.ACTIVITI_MODELER) || (role.name === PeopleCloudComponent.ACTIVITI_USER);
     }
 
-    private filterUsers(users: UserCloudModel[], searchedWord: string) {
+    private isValidUser(user): boolean {
+        let valid = true;
+        if(!this.showCurrentUser && this.currentUser.username === user.username) {
+            valid = false;
+        }
+        return valid;
+    }
+
+    private searchUsers(users: UserCloudModel[], searchedWord: string) {
         let filteredUsers: UserCloudModel[];
         filteredUsers = this.removeDuplicates(users).filter((user) => this.findUserBySearchedWord(user.username, searchedWord));
         this.dataError = filteredUsers.length <= 0 ? true : false;
@@ -136,6 +144,10 @@ export class PeopleCloudComponent implements OnInit {
     onSelect(selectedUser: UserCloudModel) {
         this.selectedUser.emit(selectedUser);
         this.dataError = false;
+    }
+
+    getDisplayName(user): string {
+        return FullNamePipe.prototype.transform(user);
     }
 
 }
