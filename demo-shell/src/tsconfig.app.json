@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "module": "es2015",
-    "baseUrl": "",
+    "baseUrl": ".",
     "types": [],
     "paths": {
       "@alfresco/adf-extensions": [
@@ -12,6 +12,21 @@
       "@alfresco/adf-extensions/*": [
         "../../lib/dist/extensions/*"
       ],
+      "@alfresco/adf-core": [
+        "../../lib/core"
+      ],
+      "@alfresco/adf-process-services-cloud": [
+        "../../lib/process-services-cloud"
+      ],
+      "@alfresco/adf-content-services": [
+        "../../lib/content-services"
+      ],
+      "@alfresco/adf-process-services": [
+        "../../lib/process-services"
+      ],
+      "@alfresco/adf-insights": [
+        "../../lib/insights"
+      ]
     }
   },
   "exclude": [
