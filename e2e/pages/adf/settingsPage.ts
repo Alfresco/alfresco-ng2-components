@@ -43,6 +43,11 @@ export class SettingsPage {
     ecmText = element(by.css('input[data-automation-id*="ecmHost"]'));
     bpmText = element(by.css('input[data-automation-id*="bpmHost"]'));
     authHostText = element(by.css('input[id="oauthHost"]'));
+    ssoRadioButton = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
+    silentLoginToggleLabel = element(by.css('mat-slide-toggle[name="silentLogin"] label'));
+    silentLoginToggleElement = element(by.css('mat-slide-toggle[name="silentLogin"]'));
+    implicitFlowLabel = element(by.css('mat-slide-toggle[name="implicitFlow"] label'));
+    implicitFlowElement = element(by.css('mat-slide-toggle[name="implicitFlow"]'));
     applyButton = element(by.css('button[data-automation-id*="host-button"]'));
 
     goToSettingsPage() {
@@ -96,9 +101,63 @@ export class SettingsPage {
         return this;
     }
 
-    clickApply() {
+    async clickSsoRadioButton () {
+        Util.waitUntilElementIsVisible(this.ssoRadioButton);
+        await this.ssoRadioButton.click();
+    }
+
+    async setProviderBpmSso (processServiceURL, authHost, silentLogin = true, implicitFlow = true ) {
+        this.goToSettingsPage();
+        this.setProvider(this.bpm.option, this.bpm.text);
+        Util.waitUntilElementIsVisible(this.bpmText);
+        Util.waitUntilElementIsNotOnPage(this.ecmText);
+        await this.clickSsoRadioButton();
+        await this.setProcessServicesURL(processServiceURL);
+        await this.setAuthHost(authHost);
+        await this.setSilentLogin(silentLogin);
+        await this.setImplicitFlow(implicitFlow);
+        await this.clickApply();
+    }
+
+    async setProcessServicesURL (processServiceURL) {
+        Util.waitUntilElementIsVisible(this.bpmText);
+        await this.bpmText.clear();
+        await this.bpmText.sendKeys(processServiceURL);
+    }
+
+    async setAuthHost (authHostURL) {
+        Util.waitUntilElementIsVisible(this.authHostText);
+        await this.authHostText.clear();
+        await this.authHostText.sendKeys(authHostURL);
+    }
+
+    async clickApply () {
         Util.waitUntilElementIsVisible(this.applyButton);
-        this.applyButton.click();
+        await this.applyButton.click();
+    }
+
+    async setSilentLogin (enableToggle) {
+        await Util.waitUntilElementIsVisible(this.silentLoginToggleElement);
+
+        const isChecked = (await this.silentLoginToggleElement.getAttribute('class')).includes('mat-checked');
+
+        if (isChecked && !enableToggle || !isChecked && enableToggle) {
+            return this.silentLoginToggleLabel.click();
+        }
+
+        return Promise.resolve();
+    }
+
+    async setImplicitFlow (enableToggle) {
+        await Util.waitUntilElementIsVisible(this.implicitFlowElement);
+
+        const isChecked = (await this.implicitFlowElement.getAttribute('class')).includes('mat-checked');
+
+        if (isChecked && !enableToggle || !isChecked && enableToggle) {
+            return this.implicitFlowLabel.click();
+        }
+
+        return Promise.resolve();
     }
 
     checkProviderDropdownIsDisplayed() {
