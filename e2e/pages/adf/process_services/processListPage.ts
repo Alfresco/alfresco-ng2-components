@@ -22,35 +22,11 @@ import { element, by } from 'protractor';
 export class ProcessListPage {
 
     processListTitle = element(by.css('p[class="adf-empty-content__title"]'));
-    processDetailsMessage = element(by.css('adf-process-instance-details div[class="ng-star-inserted"]'));
-    openProcessDropdownElement = element(by.id('adf-select-process-dropdown'));
-    selectProcessDropdownElement = element.all(by.css('span[class="mat-option-text"]'));
-    startProcessButton = element(by.css('button[data-automation-id="btn-start"]'));
     processInstanceList = element(by.css('adf-process-instance-list'));
 
     checkProcessListTitleIsDisplayed() {
         Util.waitUntilElementIsVisible(this.processListTitle);
         return this.processListTitle.getText();
-    }
-
-    checkProcessDetailsMessage() {
-        Util.waitUntilElementIsVisible(this.processListTitle);
-        return this.processDetailsMessage.getText();
-    }
-
-    openProcessDropdown() {
-        Util.waitUntilElementIsVisible(this.openProcessDropdownElement);
-        return this.openProcessDropdownElement.click();
-    }
-
-    selectProcessDropdown(index) {
-        Util.waitUntilElementIsVisible(this.selectProcessDropdownElement);
-        return this.selectProcessDropdownElement.get(index).click();
-    }
-
-    startProcess() {
-        Util.waitUntilElementIsVisible(this.startProcessButton);
-        return this.startProcessButton.click();
     }
 
     checkProcessListIsDisplayed() {

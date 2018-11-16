@@ -41,6 +41,7 @@ exports.Files = {
         title: "App_with_processes",
         description: "Description for app",
         process_se_name: "process_with_se",
+        process_wse_name: "process_without_se",
         task_name: "Task Test 2"
     },
 
