@@ -7,10 +7,10 @@
     "types": [],
     "paths": {
       "@alfresco/adf-extensions": [
-        "../../lib/extensions"
+        "../../lib/dist/extensions"
       ],
       "@alfresco/adf-extensions/*": [
-        "../../lib/extensions/*"
+        "../../lib/dist/extensions/*"
       ],
       "@alfresco/adf-core": [
         "../../lib/core"
