@@ -146,7 +146,7 @@ describe('Upload - User permission', () => {
             contentServicesPage.checkContentIsNotDisplayed(folder.name);
         });
 
-        fit('[C279915] Should not be allowed to upload a file in folder with consumer permissions', () => {
+        it('[C279915] Should not be allowed to upload a file in folder with consumer permissions', () => {
             contentServicesPage.uploadFile(emptyFile.location).checkContentIsDisplayed(emptyFile.name);
 
             uploadDialog.fileIsUploaded(emptyFile.name);
