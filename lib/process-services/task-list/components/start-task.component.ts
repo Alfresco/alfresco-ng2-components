@@ -90,15 +90,14 @@ export class StartTaskComponent implements OnInit {
             this.taskDetailsModel.name = this.name;
         }
 
+        this.validateMaxTaskNameLength();
+
         this.field = new FormFieldModel(new FormModel(), { id: this.assigneeId, value: this.assigneeId, placeholder: 'Assignee' });
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
 
-        this.taskDetailsModel.name = this.name;
-
         this.loadFormsTask();
-        this.validateMaxTaskNameLength();
         this.buildForm();
     }
 
