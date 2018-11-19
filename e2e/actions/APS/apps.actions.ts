@@ -24,18 +24,22 @@ import remote = require('selenium-webdriver/remote');
 export class AppsActions {
 
     async importPublishDeployApp(alfrescoJsApi, appFileLocation) {
-        browser.setFileDetector(new remote.FileDetector());
-
-        let pathFile = path.join(TestConfig.main.rootPath + appFileLocation);
-        let file = fs.createReadStream(pathFile);
-
-        let appCreated = await alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
+        let appCreated = await this.importApp(alfrescoJsApi, appFileLocation);
 
         let publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
 
         await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
         return appCreated;
+    }
+
+    async importApp(alfrescoJsApi, appFileLocation) {
+        browser.setFileDetector(new remote.FileDetector());
+
+        let pathFile = path.join(TestConfig.main.rootPath + appFileLocation);
+        let file = fs.createReadStream(pathFile);
+
+        return await alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
     }
 
     async publishDeployApp(alfrescoJsApi, appId) {

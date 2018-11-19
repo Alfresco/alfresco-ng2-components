@@ -29,7 +29,7 @@ var TasksListPage = function () {
         return dataTable;
     };
 
-    this.checkTaskListIsLoaded = function () {
+    this.checkTaskListIsLoaded = function() {
         Util.waitUntilElementIsVisible(taskList);
         return this;
     };

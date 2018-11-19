@@ -43,6 +43,25 @@ export class UsersActions {
         return user;
     }
 
+    async getApsUserByEmail(alfrescoJsApi, email) {
+
+        let users = await alfrescoJsApi.activiti.adminUsersApi.getUsers();
+
+        let user = users.data.filter((currentUser) => {
+            return currentUser.email === email;
+        });
+
+        return user;
+    }
+
+    async createApsUserWithName(alfrescoJsApi, tenantId, email, firstName, lastName) {
+        let user = new User({ tenantId: tenantId , email: email, firstName: firstName, lastName: lastName});
+
+        await alfrescoJsApi.activiti.adminUsersApi.createNewUser(user);
+
+        return user;
+    }
+
     async cleanupTenant(alfrescoJsApi, tenantId) {
         return alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
     }

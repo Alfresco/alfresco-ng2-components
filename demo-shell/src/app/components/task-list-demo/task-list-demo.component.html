@@ -6,7 +6,7 @@
             <input
                 matInput
                 class="form-control"
-                [formControl]="taskAppId">
+                [formControl]="taskAppId" data-automation-id="appId input">
             <mat-error *ngIf="taskAppId.hasError('pattern')">
                 {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.APP_ID_TYPE_ERROR' | translate }}
             </mat-error>
@@ -17,7 +17,7 @@
             <input
                 matInput
                 class="form-control"
-                [formControl]="taskName">
+                [formControl]="taskName" data-automation-id="task name">
         </mat-form-field>
 
         <mat-form-field>
@@ -25,14 +25,14 @@
             <input
                 matInput
                 class="form-control"
-                [formControl]="taskId">
+                [formControl]="taskId" data-automation-id="task id">
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Start</mat-label>
             <input
                 matInput
-                class="form-control"
+                class="form-control" data-automation-id="start"
                 matTooltip="{{ 'TASK_LIST_DEMO.TOOLTIP_MESSAGE.START_INPUT' | translate }}"
                 [formControl]="taskStart">
             <mat-error *ngIf="taskStart.hasError('pattern')">
@@ -45,7 +45,7 @@
             <input
                 matInput
                 class="form-control"
-                [formControl]="taskProcessDefinitionId">
+                [formControl]="taskProcessDefinitionId" data-automation-id="process definition id">
             <mat-hint>E.g. SimpleProcess:1:2</mat-hint>
         </mat-form-field>
 
@@ -54,16 +54,16 @@
             <input
                 matInput
                 class="form-control"
-                [formControl]="taskProcessInstanceId">
+                [formControl]="taskProcessInstanceId" data-automation-id="process instance id">
             <mat-hint>E.g. 12345</mat-hint>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field data-automation-id="items per page">
             <mat-label>Items per page</mat-label>
             <input
                 matInput
                 class="form-control"
-                [formControl]="taskSize">
+                [formControl]="taskSize" data-automation-id="items per page">
             <mat-error *ngIf="taskSize.hasError('min')">
                 {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.NUMBER_GREATER_THAN' | translate: { value: minValue } }}
             </mat-error>
@@ -72,12 +72,12 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field data-automation-id="page">
             <mat-label>Page</mat-label>
             <input
                 matInput
                 class="form-control"
-                [formControl]="taskPage">
+                [formControl]="taskPage" data-automation-id="page">
             <mat-error *ngIf="taskPage.hasError('min')">
                 {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.NUMBER_GREATER_THAN' | translate: { value: minValue } }}
             </mat-error>
@@ -89,14 +89,14 @@
         <mat-form-field>
             <mat-label>Due After</mat-label>
             <input matInput class="form-control" [matDatepicker]="pickerAfter" placeholder="Choose a date"
-                   [formControl]="taskDueAfter">
+                   [formControl]="taskDueAfter" data-automation-id="due after">
             <mat-datepicker-toggle matSuffix [for]="pickerAfter"></mat-datepicker-toggle>
             <mat-datepicker #pickerAfter></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Due Before</mat-label>
             <input matInput class="form-control" [matDatepicker]="pickerBefore" placeholder="Choose a date"
-                   [formControl]="taskDueBefore">
+                   [formControl]="taskDueBefore" data-automation-id="due before">
             <mat-datepicker-toggle matSuffix [for]="pickerBefore"></mat-datepicker-toggle>
             <mat-datepicker #pickerBefore></mat-datepicker>
         </mat-form-field>
@@ -123,22 +123,22 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field data-automation-id="state">
             <mat-label>State</mat-label>
             <mat-select
                 class="form-control"
-                [formControl]="taskState">
+                [formControl]="taskState" data-automation-id="selected state">
                 <mat-option *ngFor="let stateOption of stateOptions" [value]="stateOption.value">{{
                     stateOption.title }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field data-automation-id="sort">
             <mat-label>Sort</mat-label>
             <mat-select
                 class="form-control"
-                [formControl]="taskSort">
+                [formControl]="taskSort" data-automation-id="selected sort">
                 <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOption.value">{{ sortOption.title
                     }}
                 </mat-option>

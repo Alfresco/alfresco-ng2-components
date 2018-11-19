@@ -364,7 +364,7 @@ describe('Document List Component', () => {
         done();
     });
 
-    it('[C268119] "ygj" letters should be rendered properly', async (done) => {
+    it('[C268119] - ygj letters rendering in document list', async (done) => {
         acsUser = new AcsUserModel();
         /* cspell:disable-next-line */
         let folderName = 'ggggggjjjjjjjjjjjjyyyyyy';
@@ -399,7 +399,7 @@ describe('Document List Component', () => {
         done();
     });
 
-    it('[C269086] Should display "Islocked" field for files', async (done) => {
+    it('[C269086] Should display Islocked field for files', async (done) => {
         let testFileA = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
             'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
