@@ -156,6 +156,11 @@ jobs:
             then
                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder process-services-cloud --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
+          env: STAGE=content-services
+          script: node ./scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder content-services --skip-lint --use-dist --timeout 7000
+        - stage: e2e Test # Test process-services
+          env: STAGE=process-services-cloud
+          script: node ./scripts/download-build-in-cs.js --username "$E2E_USERNAME" --password "$E2E_PASSWORD" --host "$E2E_HOST" --folder $TRAVIS_BUILD_NUMBER; ./scripts/test-e2e-lib.sh -host localhost:4200 --host_sso "$E2E_HOST_SSO" -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder process-services-cloud --skip-lint --use-dist --timeout 7000
         - stage: e2e Test # Test insights
           name: insights
           script:
