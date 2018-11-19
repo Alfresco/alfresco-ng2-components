@@ -24,7 +24,7 @@ export class JwtHelperService {
 
     constructor() {}
 
-    decodeToken(token) {
+    decodeToken(token): Object {
         let parts = token.split('.');
 
         if (parts.length !== 3) {
@@ -39,7 +39,7 @@ export class JwtHelperService {
         return JSON.parse(decoded);
     }
 
-    private urlBase64Decode(token) {
+    private urlBase64Decode(token): string {
         let output = token.replace(/-/g, '+').replace(/_/g, '/');
         switch (output.length % 4) {
             case 0: {
