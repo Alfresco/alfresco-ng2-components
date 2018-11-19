@@ -24,8 +24,12 @@ import { ActionRef } from '../config/action.extensions';
 
 describe('ExtensionService', () => {
     const blankConfig: ExtensionConfig = {
+        $id: 'test',
         $name: 'test.config',
-        $version: '1.0.0'
+        $version: '1.0.0',
+        $vendor: 'Alfresco',
+        $license: 'MIT',
+        $runtime: '2.6.1'
     };
 
     let loader: ExtensionLoaderService;

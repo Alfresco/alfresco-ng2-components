@@ -1,0 +1,15 @@
+{
+  "$schema": "./extension.schema.json",
+  "$id": "app.1.0.0",
+  "$name": "app",
+  "$version": "1.0.0",
+  "$vendor": "Alfresco",
+  "$license": "Apache-2.0",
+  "$runtime": "2.7.0",
+  "$description": "base application extensions",
+  "$references": [
+    "plugin1.json",
+    "plugin2.json"
+  ],
+  "$dependencies": []
+}
