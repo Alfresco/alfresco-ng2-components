@@ -79,6 +79,16 @@ exports.getCrtDateInFormat = function (dateFormat) {
 };
 
 /**
+ * Get specific date after current date in specific format
+ *
+ * @return {string}
+ * @method getCrtDateInFormat
+ */
+exports.getSpecificDateAfterCrtDateInFormat = function (dateFormat, days) {
+    return moment(new Date()).add(days, 'days').format(dateFormat);
+};
+
+/**
  * Generates a random string.
  *
  * @param length {int} If this parameter is not provided the length is set to 8 by default.

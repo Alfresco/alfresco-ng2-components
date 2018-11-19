@@ -172,7 +172,7 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsPresent('Content');
     });
 
-    it('[C260182] Should show all the aspects if the default configuration contains the asterisk symbol' , () => {
+    it('[C260182] Should show all the aspects if the default configuration contains the star symbol' , () => {
 
         configEditorPage.enterConfiguration('{' +
             '    "presets": {' +
