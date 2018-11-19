@@ -199,7 +199,7 @@ describe('Task', () => {
         });
     });
 
-    fdescribe('Custom Filters', () => {
+    describe('Custom Filters', () => {
 
         let loginPage = new LoginPage();
         let navigationBarPage = new NavigationBarPage();
