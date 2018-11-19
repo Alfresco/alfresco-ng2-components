@@ -1,11 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-11-19
 ---
 
 # Process Details component
 
-Displays detailed information on a specified process instance
+Displays detailed information about a specified process instance
 
 ## Basic Usage
 
