@@ -19,7 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
-import moment from 'moment-es6';
+import * as moment from 'moment';
 
 @Component({
     templateUrl: './task-list-demo.component.html',
