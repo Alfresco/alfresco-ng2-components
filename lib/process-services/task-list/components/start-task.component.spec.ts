@@ -155,7 +155,7 @@ describe('StartTaskComponent', () => {
             let successSpy = spyOn(component.success, 'emit');
             component.appId = 42;
             component.startTaskModel = new StartTaskModel(startTaskMock);
-            component.formKey = 1204;
+            component.formKey = '1204';
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
@@ -216,7 +216,7 @@ describe('StartTaskComponent', () => {
             let successSpy = spyOn(component.success, 'emit');
             component.appId = 42;
             component.startTaskModel = new StartTaskModel(startTaskMock);
-            component.formKey = 1204;
+            component.formKey = '1204';
             component.assigneeId = testUser.id;
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
@@ -232,7 +232,7 @@ describe('StartTaskComponent', () => {
         it('should not assign task when no assignee is selected', () => {
             let successSpy = spyOn(component.success, 'emit');
             component.appId = 42;
-            component.formKey = 1204;
+            component.formKey = '1204';
             component.assigneeId = null;
             component.startTaskModel = new StartTaskModel(startTaskMock);
             fixture.detectChanges();
@@ -250,7 +250,7 @@ describe('StartTaskComponent', () => {
             let successSpy = spyOn(component.success, 'emit');
             component.appId = 42;
             component.startTaskModel = new StartTaskModel(startTaskMock);
-            component.formKey = 1204;
+            component.formKey = '1204';
             component.getAssigneeId(testUser.id);
             fixture.detectChanges();
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');

@@ -44,6 +44,7 @@ import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
 import { BehaviorSubject } from 'rxjs';
 import { ProcessListModel } from '../models/process-list.model';
+import moment from 'moment-es6';
 
 @Component({
     selector: 'adf-process-instance-list',
@@ -53,6 +54,7 @@ import { ProcessListModel } from '../models/process-list.model';
 export class ProcessInstanceListComponent extends DataTableSchema  implements OnChanges, AfterContentInit, PaginatedComponent {
 
     static PRESET_KEY = 'adf-process-list.presets';
+    public FORMAT_DATE: string = 'll';
 
     @ContentChild(EmptyCustomContentDirective) emptyCustomContent: EmptyCustomContentDirective;
 
@@ -208,10 +210,10 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
 
     private load(requestNode: ProcessFilterParamRepresentationModel) {
         this.isLoading = true;
-        this.processService.getProcessInstances(requestNode, this.processDefinitionKey)
+        this.processService.getProcesses(requestNode, this.processDefinitionKey)
             .subscribe(
                 (response) => {
-                    this.rows = this.optimizeNames(response.data);
+                    this.rows = this.optimizeProcessDetails(response.data);
                     this.selectFirst();
                     this.success.emit(response);
                     this.isLoading = false;
@@ -283,9 +285,12 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
      * Optimize name field
      * @param instances
      */
-    private optimizeNames(instances: any[]): any[] {
+    private optimizeProcessDetails(instances: any[]): any[] {
         instances = instances.map(instance => {
             instance.name = this.getProcessNameOrDescription(instance, 'medium');
+            if (instance.started) {
+                instance.started = moment(instance.started).format(this.FORMAT_DATE);
+            }
             return instance;
         });
         return instances;
