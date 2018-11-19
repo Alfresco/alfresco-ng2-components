@@ -4,13 +4,15 @@ import { AppListCloudModule } from './app-list-cloud/app-list-cloud.module';
 import { TaskListCloudModule } from './task-list-cloud/task-list-cloud.module';
 import { TaskCloudModule } from './task-cloud/task-cloud.module';
 import { ProcessListCloudModule } from './process-list-cloud/process-list-cloud.module';
+import { ProcesCloudModule } from './process-cloud/process-cloud.module';
 
 @NgModule({
     imports: [
         AppListCloudModule,
         TaskListCloudModule,
         TaskCloudModule,
-        ProcessListCloudModule
+        ProcessListCloudModule,
+        ProcesCloudModule
     ],
     providers: [
         {
@@ -23,6 +25,11 @@ import { ProcessListCloudModule } from './process-list-cloud/process-list-cloud.
         }
     ],
     declarations: [],
-    exports: [AppListCloudModule, TaskListCloudModule, TaskCloudModule, ProcessListCloudModule]
+    exports: [
+        AppListCloudModule,
+        TaskListCloudModule,
+        TaskCloudModule,
+        ProcessListCloudModule,
+        ProcesCloudModule]
 })
 export class ProcessServicesCloudModule { }
