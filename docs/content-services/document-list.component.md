@@ -99,6 +99,9 @@ Displays the documents from a repository.
 The properties `currentFolderId`, `folderNode` and `node` set the initial folder shown by
 the Document List. They cannot be used together, so choose the one that suits your use case
 best.
+Document list will automatically show special icons for : `Smart Folder`, `Link to a Folder` and `Folder with rules` as showed in the picture below : 
+
+![Document List Folders](../docassets/images/document-list-special-folder-icon.png)
 
 ### DOM Events
 

@@ -15,23 +15,27 @@
  * limitations under the License.
  */
 
-import { ProcessInstance } from './process-instance.model';
+import AppPublish = require('../../models/APS/AppPublish');
 
-export class ProcessListModel {
-    size: number;
-    total: number;
-    start: number;
-    length: number;
-    data: ProcessInstance [];
+export class AppsRuntimeActions {
 
-    constructor(obj?: any) {
-        if (obj) {
-            this.size = obj.size || null;
-            this.total = obj.total || null;
-            this.start = obj.start || null;
-            this.length = obj.length || null;
-            this.data = obj.data || [];
+    async getRuntimeAppByName(alfrescoJsApi, appName) {
+
+        let runtimeApps = await this.getRuntimeAppDefinitions(alfrescoJsApi);
+        let desiredApp;
+
+        for (let i = 0; i < runtimeApps.data.length; i++) {
+            if (runtimeApps.data[i].name === appName) {
+                desiredApp = runtimeApps.data[i];
+            }
         }
+
+        return desiredApp;
+    }
+
+    async getRuntimeAppDefinitions(alfrescoJsApi) {
+
+        return await alfrescoJsApi.activiti.appsRuntimeApi.getAppDefinitions();
     }
 
 }
