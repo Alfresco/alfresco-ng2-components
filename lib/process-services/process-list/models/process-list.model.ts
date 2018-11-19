@@ -17,11 +17,21 @@
 
 import { ProcessInstance } from './process-instance.model';
 
-export interface ProcessListModel {
+export class ProcessListModel {
     size: number;
     total: number;
     start: number;
     length: number;
     data: ProcessInstance [];
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.size = obj.size || null;
+            this.total = obj.total || null;
+            this.start = obj.start || null;
+            this.length = obj.length || null;
+            this.data = obj.data || [];
+        }
+    }
 
 }

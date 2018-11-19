@@ -63,7 +63,7 @@ export class StartTaskComponent implements OnInit {
 
     assigneeId: number;
 
-    formKey: number;
+    formKey: string;
 
     taskId: string;
 
@@ -124,10 +124,10 @@ export class StartTaskComponent implements OnInit {
         this.assigneeId = userId;
     }
 
-    private attachForm(taskId: string, formKey: number): Observable<any> {
+    private attachForm(taskId: string, formKey: string): Observable<any> {
         let response = of();
         if (taskId && formKey) {
-            response = this.taskService.attachFormToATask(taskId, formKey);
+            response = this.taskService.attachFormToATask(taskId, parseInt(formKey, 10));
         }
         return response;
     }
