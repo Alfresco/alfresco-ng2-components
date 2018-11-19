@@ -26,6 +26,7 @@ export class NavigationBarPage {
     taskListButton = element(by.css("a[data-automation-id='Task List']"));
     configEditorButton = element(by.css('a[data-automation-id="Configuration Editor"]'));
     processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
+    processCloudButton = element(by.css('a[data-automation-id="Process Cloud"]'));
     loginButton = element(by.css('a[data-automation-id="Login"]'));
     trashcanButton = element(by.css('a[data-automation-id="Trashcan"]'));
     userProfileButton = element(by.css('button[data-automation-id="adf-user-profile"]'));
@@ -47,6 +48,12 @@ export class NavigationBarPage {
     clickTaskListButton() {
         Util.waitUntilElementIsVisible(this.taskListButton);
         this.taskListButton.click();
+    }
+
+    clickProcessCloudButton() {
+        Util.waitUntilElementIsVisible(this.processCloudButton);
+        this.processCloudButton.click();
+
     }
 
     clickConfigEditorButton() {
