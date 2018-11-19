@@ -57,6 +57,7 @@ class CustomTaskListComponent {
 
 class EmptyTemplateComponent {
 }
+
 describe('ProcessListCloudComponent', () => {
     let component: ProcessListCloudComponent;
     let fixture: ComponentFixture<ProcessListCloudComponent>;
