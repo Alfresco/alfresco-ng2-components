@@ -275,7 +275,7 @@ describe('Task', () => {
             });
         });
 
-        fit('[C286447] Should display the task filter icon when a custom filter is added', () => {
+        it('[C286447] Should display the task filter icon when a custom filter is added', () => {
             browser.controlFlow().execute(async () => {
                 let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'New Task Filter with icon';
