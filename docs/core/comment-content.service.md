@@ -1,7 +1,7 @@
 ---
 Added: v2.3.0
 Status: Active
-Last reviewed: 2018-04-12
+Last reviewed: 2018-11-19
 ---
 
 # Comment Content service

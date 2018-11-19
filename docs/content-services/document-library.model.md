@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-11-19
 ---
 
 # Document Library model
@@ -32,7 +33,7 @@ class NodeMinimalEntry implements MinimalNodeEntity {
     entry: NodeMinimal;
 }
 
-class NodeMinimal implements MinimalNodeEntryEntity {
+export class NodeMinimal implements MinimalNodeEntryEntity {
     id: string;
     parentId: string;
     name: string;
@@ -46,6 +47,7 @@ class NodeMinimal implements MinimalNodeEntryEntity {
     content: ContentInfo;
     path: PathInfoEntity;
     properties: NodeProperties = {};
+    aspectNames: string[];
 }
 
 interface NodeProperties {
@@ -109,12 +111,7 @@ class PathElementEntity {
 }
 ```
 
-<!-- Don't edit the See also section. Edit seeAlsoGraph.json and run config/generateSeeAlso.js -->
-
-<!-- seealso start -->
-
 ## See also
 
 -   [Document list component](document-list.component.md)
 -   [Nodes api service](../core/nodes-api.service.md)
-    <!-- seealso end -->

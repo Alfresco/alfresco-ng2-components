@@ -1,12 +1,23 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-16
+Last reviewed: 2018-11-19
 ---
 
 # Task Filters component
 
 Shows all available filters.
+
+## Contents
+
+-   [Basic Usage](#basic-usage)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Filtering APS task filters](#filtering-aps-task-filters)
+    -   [How to create an accordion menu with the task filter](#how-to-create-an-accordion-menu-with-the-task-filter)
+-   [See also](#see-also)
 
 ## Basic Usage
 
