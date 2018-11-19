@@ -4,6 +4,7 @@ bundles
 workspace.xml
 .idea/
 dist/
+tmp
 e2e-output/
 e2e/downloads/
 ng2-components/coverage/
