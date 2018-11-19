@@ -54,7 +54,7 @@ Forms defined in APS have the following default mappings for the form fields:
 | Hyperlink | hyperlink | [`HyperlinkWidgetComponent`](../../lib/core/form/components/widgets/hyperlink/hyperlink.widget.ts) |
 | Header | group | [`ContainerWidgetComponent`](../../lib/core/form/components/widgets/container/container.widget.ts) |
 | Attach File | upload | AttachWidgetComponent or [`UploadWidgetComponent`](../../lib/core/form/components/widgets/upload/upload.widget.ts) (based on metadata) |
-| Display value | readonly | DisplayValueWidgetComponent |
-| Display text | readonly-text | [`DisplayTextWidgetComponentComponent`](../../lib/core/form/components/widgets/display-text/display-text.widget.ts) |
+| Display value | readonly | [`TextWidgetComponent`] (../../lib/core/form/components/widgets/text/text.widget.ts) |
+| Display text | readonly-text | [`DisplayTextWidgetComponent`](../../lib/core/form/components/widgets/display-text/display-text.widget.ts) |
 | N/A | container | [`ContainerWidgetComponent`](../../lib/core/form/components/widgets/container/container.widget.ts) (layout component) |
 | N/A | N/A | [`UnknownWidgetComponent`](../../lib/core/form/components/widgets/unknown/unknown.widget.ts) |
