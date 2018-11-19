@@ -38,7 +38,7 @@ export class AttachFormComponent implements OnInit, OnChanges {
 
     /** Identifier of the form to attach. */
     @Input()
-    formKey: string;
+    formKey;
 
     /** Emitted when the "Cancel" button is clicked. */
     @Output()
@@ -54,9 +54,9 @@ export class AttachFormComponent implements OnInit, OnChanges {
 
     forms: Form[];
 
-    formId: string;
+    formId: number;
     disableSubmit: boolean = true;
-    selectedFormId: string;
+    selectedFormId: number;
 
     attachFormControl: FormControl;
 
@@ -125,7 +125,7 @@ export class AttachFormComponent implements OnInit, OnChanges {
             });
     }
 
-    private attachForm(taskId: string, formId: string) {
+    private attachForm(taskId: string, formId: number) {
         if (taskId && formId) {
             this.taskService.attachFormToATask(taskId, formId)
                 .subscribe(() => {

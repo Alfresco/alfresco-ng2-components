@@ -127,7 +127,7 @@ export class StartTaskComponent implements OnInit {
     private attachForm(taskId: string, formKey: string): Observable<any> {
         let response = of();
         if (taskId && formKey) {
-            response = this.taskService.attachFormToATask(taskId, formKey);
+            response = this.taskService.attachFormToATask(taskId, parseInt(formKey, 10));
         }
         return response;
     }
