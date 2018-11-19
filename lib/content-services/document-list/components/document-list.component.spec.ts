@@ -720,6 +720,18 @@ describe('DocumentList', () => {
         expect(documentList.performNavigation(null)).toBeFalsy();
     });
 
+    it('should perform navigation through corret linked folder', () => {
+        let linkFolder = new FolderNode();
+        linkFolder.entry.id = 'link-folder';
+        linkFolder.entry.nodeType = 'app:folderlink';
+        linkFolder.entry.properties['cm:destination'] = 'normal-folder';
+
+        spyOn(documentList, 'loadFolder').and.stub();
+
+        expect(documentList.performNavigation(linkFolder)).toBeTruthy();
+        expect(documentList.currentFolderId).toBe('normal-folder');
+    });
+
     it('should require valid node for file preview', () => {
         let file = new FileNode();
         file.entry = null;
@@ -975,6 +987,16 @@ describe('DocumentList', () => {
         });
 
         documentList.loadFolderByNodeId('123');
+    });
+
+    it('should emit folderChange event when a folder node is clicked', (done) => {
+        spyOn(documentList, 'reload').and.stub();
+
+        documentList.folderChange.subscribe((folderNode) => {
+            expect(folderNode.value.id).toBe('fake-node');
+            done();
+        });
+        documentList.onNodeDblClick({ entry: { id: 'fake-node', isFolder: true } });
     });
 
     it('should set no permission when getFolderNode fails with 403', (done) => {
