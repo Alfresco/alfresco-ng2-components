@@ -60,6 +60,7 @@
   "dependencies": {
     "@alfresco/adf-content-services": "2.7.0-beta5",
     "@alfresco/adf-core": "2.7.0-beta5",
+    "@alfresco/adf-extensions": "^2.7.0-beta5",
     "@alfresco/adf-insights": "2.7.0-beta5",
     "@alfresco/adf-process-services": "2.7.0-beta5",
     "@alfresco/adf-process-services-cloud": "2.7.0-beta5",

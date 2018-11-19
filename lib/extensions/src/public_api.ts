@@ -32,5 +32,6 @@ export * from './lib/services/extension.service';
 export * from './lib/store/states/navigation.state';
 export * from './lib/store/states/profile.state';
 export * from './lib/store/states/selection.state';
+export * from './lib/store/states/repository.state';
 
 export * from './lib/extensions.module';

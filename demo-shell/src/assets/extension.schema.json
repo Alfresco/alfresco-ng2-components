@@ -1,0 +1,752 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Alfresco/alfresco-content-app/blob/development/extension.schema.json",
+  "title": "ACA Extension Schema",
+  "description": "Provides a validation schema for ACA extensions",
+
+  "definitions": {
+    "ruleRef": {
+      "type": "object",
+      "required": ["id", "type"],
+      "properties": {
+        "id": {
+          "description": "Unique rule definition id",
+          "type": "string"
+        },
+        "type": {
+          "description": "Rule evaluator type",
+          "type": "string"
+        },
+        "parameters": {
+          "description": "Rule evaluator parameters",
+          "type": "array",
+          "items": { "$ref": "#/definitions/ruleParameter" },
+          "minItems": 1
+        }
+      }
+    },
+    "ruleParameter": {
+      "type": "object",
+      "required": ["type", "value"],
+      "properties": {
+        "type": {
+          "description": "Rule parameter type",
+          "type": "string"
+        },
+        "value": {
+          "description": "Rule parameter value",
+          "type": "string"
+        },
+        "parameters": {
+          "description": "Parameters",
+          "type": "array",
+          "items": { "$ref": "#/definitions/ruleParameter" },
+          "minItems": 1
+        }
+      }
+    },
+    "routeRef": {
+      "type": "object",
+      "required": ["id", "path", "component"],
+      "properties": {
+        "id": {
+          "description": "Unique route reference identifier.",
+          "type": "string"
+        },
+        "path": {
+          "description": "Route path to register.",
+          "type": "string"
+        },
+        "component": {
+          "description": "Unique identifier for the Component to use with the route.",
+          "type": "string"
+        },
+        "layout": {
+          "description": "Unique identifier for the custom layout component to use.",
+          "type": "string"
+        },
+        "auth": {
+          "description": "List of the authentication guards to use with the route.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minLength": 1,
+          "uniqueItems": true
+        },
+        "data": {
+          "description": "Custom data to pass to the activated route so that your components can access it",
+          "type": "object"
+        }
+      }
+    },
+    "actionRef": {
+      "type": "object",
+      "required": ["id", "type"],
+      "properties": {
+        "id": {
+          "description": "Unique action identifier",
+          "type": "string"
+        },
+        "type": {
+          "description": "Action type",
+          "type": "string"
+        },
+        "payload": {
+          "description": "Action payload value (string or expression)",
+          "type": "string"
+        }
+      }
+    },
+    "contentActionRef": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "description": "Unique action identifier.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Element type",
+          "type": "string",
+          "enum": ["default", "button", "separator", "menu", "custom"]
+        },
+        "title": {
+          "description": "Element title",
+          "type": "string"
+        },
+        "description": {
+          "description": "Element description, used for the tooltips.",
+          "type": "string"
+        },
+        "description-disabled": {
+          "description": "Description to use when element is in the disabled state.",
+          "type": "string"
+        },
+        "order": {
+          "description": "Element order",
+          "type": "number"
+        },
+        "icon": {
+          "description": "Element icon",
+          "type": "string"
+        },
+        "disabled": {
+          "description": "Toggles disabled state",
+          "type": "boolean"
+        },
+        "component": {
+          "description": "Custom component id (requires type to be 'custom')",
+          "type": "string"
+        },
+        "children": {
+          "description": "Child entries for the container types.",
+          "type": "array",
+          "items": { "$ref": "#/definitions/contentActionRef" },
+          "minItems": 1
+        },
+        "actions": {
+          "description": "Element actions",
+          "type": "object",
+          "properties": {
+            "click": {
+              "description": "Action reference for the click handler",
+              "type": "string"
+            }
+          }
+        },
+        "rules": {
+          "description": "Element rules",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Rule to evaluate the enabled state",
+              "type": "string"
+            },
+            "visible": {
+              "description": "Rule to evaluate the visibility state",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "navBarLinkRef": {
+      "type": "object",
+      "required": ["id", "icon", "title"],
+      "properties": {
+        "id": {
+          "description": "Unique identifier",
+          "type": "string"
+        },
+        "icon": {
+          "description": "Element icon",
+          "type": "string"
+        },
+        "title": {
+          "description": "Element title",
+          "type": "string"
+        },
+        "route": {
+          "description": "Route reference identifier",
+          "type": "string"
+        },
+        "description": {
+          "description": "Element description or tooltip",
+          "type": "string"
+        },
+        "order": {
+          "description": "Element order",
+          "type": "number"
+        },
+        "children": {
+          "description": "Navigation children items",
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "id",
+                  "title",
+                  "route"
+                ],
+                "properties": {
+                  "id": {
+                    "description": "Unique identifier",
+                    "type": "string"
+                  },
+                  "title": {
+                    "description": "Element title",
+                    "type": "string"
+                  },
+                  "route": {
+                    "description": "Route reference identifier",
+                    "type": "string"
+                  }
+                },
+                "not": {
+                  "required": ["children"]
+                }
+              }
+            ]
+           },
+          "minItems": 1
+        },
+        "rules": {
+          "description": "Element rules",
+          "type": "object",
+          "properties": {
+            "visible": {
+              "description": "Rule to evaluate the visibility state",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "required": ["route"],
+          "not": {
+            "required": ["children"]
+          }
+        },
+        {
+          "required": ["children"],
+          "not": {
+            "required": ["route"]
+          }
+        }
+      ]
+    },
+    "navBarGroupRef": {
+      "type": "object",
+      "required": ["id", "items"],
+      "properties": {
+        "id": {
+          "description": "Unique identifier for the navigation group",
+          "type": "string"
+        },
+        "items": {
+          "description": "Navigation group items",
+          "type": "array",
+          "items": { "$ref": "#/definitions/navBarLinkRef" },
+          "minItems": 1
+        },
+        "order": {
+          "description": "Group order",
+          "type": "number"
+        },
+        "rules": {
+          "description": "Element rules",
+          "type": "object",
+          "properties": {
+            "visible": {
+              "description": "Rule to evaluate the visibility state",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "sidebarTabRef": {
+      "type": "object",
+      "required": ["id", "component"],
+      "properties": {
+        "id": {
+          "description": "Unique identifier for the navigation group",
+          "type": "string"
+        },
+        "title": {
+          "description": "Element title",
+          "type": "string"
+        },
+        "component": {
+          "description": "Component id",
+          "type": "string"
+        },
+        "icon": {
+          "description": "Material icon name",
+          "type": "string"
+        },
+        "disabled": {
+          "description": "Toggles disabled state",
+          "type": "boolean"
+        },
+        "order": {
+          "description": "Element order",
+          "type": "number"
+        },
+        "rules": {
+          "description": "Element rules",
+          "type": "object",
+          "properties": {
+            "visible": {
+              "description": "Rule to evaluate the visibility state",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "viewerExtensionRef": {
+      "type": "object",
+      "required": ["id", "component", "fileExtension"],
+      "properties": {
+        "id": {
+          "description": "Unique identifier for the navigation group",
+          "type": "string"
+        },
+        "component": {
+          "description": "Component id",
+          "type": "string"
+        },
+        "fileExtension": {
+          "description": "Target file extension",
+          "type": "string"
+        },
+        "order": {
+          "description": "Group order",
+          "type": "number"
+        },
+        "disabled": {
+          "description": "Toggles the disabled state",
+          "type": "boolean"
+        }
+      }
+    },
+    "content-metadata-aspect": {
+      "description": "Content metadata aspect definition",
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier"
+        }
+      },
+      "patternProperties": {
+        ".*": {
+          "oneOf": [
+            {
+              "description": "Wildcard for every property",
+              "type": "string",
+              "pattern": "^\\*$"
+            },
+            {
+              "description": "Properties array",
+              "type": "array",
+              "items": {
+                "description": "Property name",
+                "type": "string"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "content-metadata-layout-group": {
+      "description": "Content metadata's layout groups definition",
+      "type": "array",
+      "items": [
+        {
+          "description": "Content metadata's one layout group definition",
+          "type": "object",
+          "required": ["id"],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Unique identifier"
+            },
+            "title": {
+              "type": "string",
+              "description": "Content metadata's one layout group definition's title"
+            },
+            "items": {
+              "type": "array",
+              "description": "Content metadata's one layout group definition's items",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "aspect",
+                      "properties"
+                    ],
+                    "properties": {
+                      "id": {
+                        "description": "Unique identifier",
+                        "type": "string"
+                      },
+                      "aspect": {
+                        "description": "Aspect group",
+                        "type": "string"
+                      },
+                      "properties": {
+                        "description": "Wildcard character",
+                        "type": "string",
+                        "pattern": "^\\*$"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "aspect",
+                      "properties"
+                    ],
+                    "properties": {
+                      "id": {
+                        "description": "Unique identifier",
+                        "type": "string"
+                      },
+                      "aspect": {
+                        "description": "Aspect group",
+                        "type": "string"
+                      },
+                      "properties": {
+                        "description": "list of aspect properties",
+                        "type": "array"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "type",
+                      "properties"
+                    ],
+                    "properties": {
+                      "id": {
+                        "description": "Unique identifier",
+                        "type": "string"
+                      },
+                      "type": {
+                        "description": "Type group",
+                        "type": "string"
+                      },
+                      "properties": {
+                        "description": "Wildcard character",
+                        "type": "string",
+                        "pattern": "^\\*$"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "type",
+                      "properties"
+                    ],
+                    "properties": {
+                      "id": {
+                        "description": "Unique identifier",
+                        "type": "string"
+                      },
+                      "type": {
+                        "description": "Type group",
+                        "type": "string"
+                      },
+                      "properties": {
+                        "description": "list of type properties",
+                        "type": "array"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "disabled"
+                    ],
+                    "properties": {
+                      "id": {
+                        "description": "Unique identifier",
+                        "type": "string"
+                      },
+                      "disabled": {
+                        "description": "Toggles disabled state",
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "documentListPresetRef": {
+      "type": "object",
+      "required": ["id", "key", "type"],
+      "properties": {
+        "id": {
+          "description": "Unique identifier.",
+          "type": "string"
+        },
+        "key": {
+          "description": "Property key",
+          "type": "string"
+        },
+        "type": {
+          "description": "Column type",
+          "type": "string",
+          "enum": ["text", "image", "date", "fileSize"]
+        },
+        "title": {
+          "description": "Column title",
+          "type": "string"
+        },
+        "format": {
+          "description": "Column format",
+          "type": "string"
+        },
+        "class": {
+          "description": "CSS class name",
+          "type": "string"
+        },
+        "sortable": {
+          "description": "Toggles sortable state of the column",
+          "type": "boolean"
+        },
+        "template": {
+          "description": "Column template id",
+          "type": "string"
+        },
+        "desktopOnly": {
+          "description": "Display column only for large screens",
+          "type": "boolean"
+        }
+      }
+    }
+  },
+
+  "type": "object",
+  "required": ["$name", "$version"],
+  "properties": {
+    "$name": {
+      "description": "Extension name",
+      "type": "string"
+    },
+    "$version": {
+      "description": "Extension version",
+      "type": "string"
+    },
+    "$description": {
+      "description": "Brief description on what the extension does"
+    },
+    "$references": {
+      "description": "References to external files",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "rules": {
+      "description": "List of rule definitions",
+      "type": "array",
+      "items": { "$ref": "#/definitions/ruleRef" },
+      "minItems": 1
+    },
+    "routes": {
+      "description": "List of custom application routes",
+      "type": "array",
+      "items": { "$ref": "#/definitions/routeRef" },
+      "minItems": 1
+    },
+    "actions": {
+      "description": "List of action definitions",
+      "type": "array",
+      "items": { "$ref": "#/definitions/actionRef" },
+      "minItems": 1
+    },
+    "features": {
+      "description": "Application-specific features and extensions",
+      "type": "object",
+      "properties": {
+        "header": {
+          "description": "Application header extensions",
+          "type": "array",
+          "items": { "$ref": "#/definitions/contentActionRef" },
+          "minItems": 1
+        },
+        "create": {
+          "description": "The [New] menu component extensions",
+          "type": "array",
+          "items": { "$ref": "#/definitions/contentActionRef" },
+          "minItems": 1
+        },
+        "viewer": {
+          "description": "Viewer component extensions",
+          "type": "object",
+          "properties": {
+            "openWith": {
+              "description": "The [Open With] menu extensions",
+              "type": "array",
+              "items": { "$ref": "#/definitions/contentActionRef" },
+              "minItems": 1
+            },
+            "toolbarMoreMenu": {
+              "description": "Toolbar entries from the More actions menu",
+              "type": "array",
+              "items": { "$ref": "#/definitions/contentActionRef" },
+              "minItems": 1
+            },
+            "toolbarActions": {
+              "description": "Toolbar entries from outside the More menu",
+              "type": "array",
+              "items": { "$ref": "#/definitions/contentActionRef" },
+              "minItems": 1
+            },
+            "content": {
+              "description": "Viewer content extensions",
+              "type": "array",
+              "items": { "$ref": "#/definitions/viewerExtensionRef" },
+              "minItems": 1
+            }
+          }
+        },
+        "navbar": {
+          "description": "Navigation bar extensions",
+          "type": "array",
+          "items": { "$ref": "#/definitions/navBarGroupRef" },
+          "minItems": 1
+        },
+        "sidebar": {
+          "description": "Sidebar extensions",
+          "type": "array",
+          "items": { "$ref": "#/definitions/sidebarTabRef" },
+          "minItems": 1
+        },
+        "toolbar": {
+          "description": "Toolbar entries",
+          "type": "array",
+          "items": { "$ref": "#/definitions/contentActionRef" },
+          "minItems": 1
+        },
+        "contextMenu": {
+          "description": "Context menu entries",
+          "type": "array",
+          "items": { "$ref": "#/definitions/contentActionRef" },
+          "minItems": 1
+        },
+        "content-metadata-presets": {
+          "description": "Configuration for the presets for content metadata component",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier"
+              }
+            },
+            "patternProperties": {
+              ".*": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^\\*$",
+                    "description": "Wildcard for every aspect"
+                  },
+                  { "$ref": "#/definitions/content-metadata-aspect" },
+                  { "$ref": "#/definitions/content-metadata-layout-group" }
+                ]
+              }
+            }
+          }
+        },
+        "documentList": {
+          "description": "Document list extensions",
+          "type": "object",
+          "properties": {
+            "files": {
+              "description": "Files document list preset",
+              "type": "array",
+              "items": { "$ref": "#/definitions/documentListPresetRef" },
+              "minItems": 1
+            },
+            "libraries": {
+              "description": "Libraries document list preset",
+              "type": "array",
+              "items": { "$ref": "#/definitions/documentListPresetRef" },
+              "minItems": 1
+            },
+            "shared": {
+              "description": "Shared Files document list preset",
+              "type": "array",
+              "items": { "$ref": "#/definitions/documentListPresetRef" },
+              "minItems": 1
+            },
+            "recent": {
+              "description": "Recent Files document list preset",
+              "type": "array",
+              "items": { "$ref": "#/definitions/documentListPresetRef" },
+              "minItems": 1
+            },
+            "favorites": {
+              "description": "Favorites document list preset",
+              "type": "array",
+              "items": { "$ref": "#/definitions/documentListPresetRef" },
+              "minItems": 1
+            },
+            "trashcan": {
+              "description": "Trashcan document list preset",
+              "type": "array",
+              "items": { "$ref": "#/definitions/documentListPresetRef" },
+              "minItems": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}
