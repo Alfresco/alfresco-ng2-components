@@ -71,3 +71,29 @@ export class SmartFolderNode extends NodeMinimalEntry {
         this.entry.aspectNames = ['smf:systemConfigSmartFolder'];
     }
 }
+
+export class RuleFolderNode extends NodeMinimalEntry {
+    constructor(name?: string) {
+        super();
+        this.entry = new NodeMinimal();
+        this.entry.id = 'rule-folder-id';
+        this.entry.isFile = false;
+        this.entry.isFolder = true;
+        this.entry.name = name;
+        this.entry.path = new PathInfoEntity();
+        this.entry.aspectNames = ['rule:rules'];
+    }
+}
+
+export class LinkFolderNode extends NodeMinimalEntry {
+    constructor(name?: string) {
+        super();
+        this.entry = new NodeMinimal();
+        this.entry.id = 'link-folder-id';
+        this.entry.isFile = false;
+        this.entry.isFolder = true;
+        this.entry.nodeType = 'app:folderlink';
+        this.entry.name = name;
+        this.entry.path = new PathInfoEntity();
+    }
+}

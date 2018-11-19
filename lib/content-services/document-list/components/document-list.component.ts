@@ -539,9 +539,18 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     updateFolderData(node: MinimalNodeEntity): void {
         this.resetNewFolderPagination();
-        this.currentFolderId = node.entry.id;
+        this.currentFolderId = this.getNodeFolderDestinationId(node);
+        this.folderChange.emit(new NodeEntryEvent({ id: this.currentFolderId }));
         this.reload();
-        this.folderChange.emit(new NodeEntryEvent(node.entry));
+    }
+
+    private getNodeFolderDestinationId(node: MinimalNodeEntity) {
+        return this.isLinkFolder(node) ? node.entry.properties['cm:destination'] : node.entry.id;
+    }
+
+    private isLinkFolder(node: MinimalNodeEntity) {
+        return node.entry.nodeType === 'app:folderlink' && node.entry.properties &&
+            node.entry.properties['cm:destination'];
     }
 
     updateCustomSourceData(nodeId: string): void {
