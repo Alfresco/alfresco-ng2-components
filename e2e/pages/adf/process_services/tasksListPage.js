@@ -37,11 +37,7 @@ var TasksListPage = function () {
     this.getNoTasksFoundMessage = function() {
         Util.waitUntilElementIsVisible(noTasksFound);
         return noTasksFound.getText();
-<<<<<<< HEAD
     };
-=======
-    }
->>>>>>> Refactored taskListDemoPage
 
 };
 
