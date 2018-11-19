@@ -30,11 +30,13 @@ import { LogService, AlfrescoApiService } from '@alfresco/adf-core';
 export class DownloadZipDialogComponent implements OnInit {
 
     // flag for async threads
-    private cancelled = false;
+    cancelled = false;
+    downloadId: string;
 
     constructor(private apiService: AlfrescoApiService,
                 private dialogRef: MatDialogRef<DownloadZipDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) private data: any,
+                @Inject(MAT_DIALOG_DATA)
+                public data: any,
                 private logService: LogService) {
     }
 
@@ -50,6 +52,7 @@ export class DownloadZipDialogComponent implements OnInit {
 
     cancelDownload() {
         this.cancelled = true;
+        this.apiService.getInstance().core.downloadsApi.cancelDownload(this.downloadId);
         this.dialogRef.close(false);
     }
 
@@ -69,6 +72,7 @@ export class DownloadZipDialogComponent implements OnInit {
                     this.apiService.getInstance().core.nodesApi.getNode(data.entry.id).then((downloadNode: MinimalNodeEntity) => {
                         this.logService.log(downloadNode);
                         const fileName = downloadNode.entry.name;
+                        this.downloadId = data.entry.id;
                         this.waitAndDownload(data.entry.id, url, fileName);
                     });
                 }
