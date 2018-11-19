@@ -17,41 +17,27 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule } from '@alfresco/adf-core';
 
 import { MaterialModule } from '../material.module';
-import { FolderDialogComponent } from './folder.dialog';
-import { NodeLockDialogComponent } from './node-lock.dialog';
-import { ConfirmDialogComponent } from './confirm.dialog';
-import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
-import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
+import { DownloadZipDialogComponent } from './download-zip.dialog';
+import { TranslateModule } from '@ngx-translate/core';
+import { PipeModule } from '../pipes/pipe.module';
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
-        CoreModule.forChild(),
-        FormsModule,
-        ReactiveFormsModule,
-        MatMomentDatetimeModule,
-        MatDatetimepickerModule
+        TranslateModule.forChild(),
+        PipeModule
     ],
     declarations: [
-        FolderDialogComponent,
-        NodeLockDialogComponent,
-        ConfirmDialogComponent
+        DownloadZipDialogComponent
     ],
     exports: [
-        FolderDialogComponent,
-        NodeLockDialogComponent,
-        ConfirmDialogComponent
+        DownloadZipDialogComponent
     ],
     entryComponents: [
-        FolderDialogComponent,
-        NodeLockDialogComponent,
-        ConfirmDialogComponent
+        DownloadZipDialogComponent
     ]
 })
-
 export class DialogModule {}

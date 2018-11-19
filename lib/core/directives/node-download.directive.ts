@@ -18,8 +18,7 @@
 import { Directive, Input, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoApiService } from '@alfresco/adf-core';
-
+import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { DownloadZipDialogComponent } from '../dialogs/download-zip.dialog';
 
 @Directive({

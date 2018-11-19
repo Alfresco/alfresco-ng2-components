@@ -19,7 +19,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 
-import { NodeDownloadDirective } from './node-download.directive';
 import { NodeLockDirective } from './node-lock.directive';
 
 @NgModule({
@@ -28,11 +27,9 @@ import { NodeLockDirective } from './node-lock.directive';
         MaterialModule
     ],
     declarations: [
-        NodeDownloadDirective,
         NodeLockDirective
     ],
     exports: [
-        NodeDownloadDirective,
         NodeLockDirective
     ]
 })

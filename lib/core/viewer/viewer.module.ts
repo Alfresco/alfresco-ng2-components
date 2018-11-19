@@ -39,6 +39,7 @@ import { ViewerToolbarComponent } from './components/viewer-toolbar.component';
 import { ViewerComponent } from './components/viewer.component';
 import { ViewerExtensionDirective } from './directives/viewer-extension.directive';
 import { ViewerToolbarActionsComponent } from './components/viewer-toolbar-actions.component';
+import { DirectiveModule } from '../directives';
 
 @NgModule({
     imports: [
@@ -49,7 +50,8 @@ import { ViewerToolbarActionsComponent } from './components/viewer-toolbar-actio
         ReactiveFormsModule,
         ToolbarModule,
         PipeModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        DirectiveModule
     ],
     declarations: [
         PdfPasswordDialogComponent,

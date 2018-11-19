@@ -73,10 +73,10 @@
                 <button
                     id="adf-viewer-download"
                     *ngIf="allowDownload"
+                    [adfNodeDownload]="nodes"
                     mat-icon-button
                     title="{{ 'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate }}"
-                    data-automation-id="adf-toolbar-download"
-                    (click)="downloadContent()">
+                    data-automation-id="adf-toolbar-download">
                     <mat-icon>file_download</mat-icon>
                 </button>
 

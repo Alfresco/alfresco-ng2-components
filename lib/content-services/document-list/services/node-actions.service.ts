@@ -18,12 +18,11 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { MinimalNodeEntryEntity, MinimalNodeEntity } from 'alfresco-js-api';
 import { Subject } from 'rxjs';
-import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
+import { AlfrescoApiService, ContentService, NodeDownloadDirective } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material';
 
 import { DocumentListService } from './document-list.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
-import { NodeDownloadDirective } from '../../directives/node-download.directive';
 
 @Injectable({
     providedIn: 'root'

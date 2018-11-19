@@ -16,11 +16,6 @@
  */
 
 import {
-    AlfrescoApiService,
-    LogService
-} from '@alfresco/adf-core';
-
-import {
     NodePaging,
     PersonEntry,
     SitePaging,
@@ -32,6 +27,8 @@ import {
 } from 'alfresco-js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
+import { LogService } from '../../services/log.service';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 
 @Injectable({
     providedIn: 'root'
@@ -42,26 +39,26 @@ export class DownloadZipService {
                 private logService: LogService) {
     }
 
-    createDownload(nodeIds) {
-        const promise = this.apiService.getInstance().core.downloadsApi.createDownload({ nodeIds });
+    // createDownload(nodeIds) {
+    //     const promise = this.apiService.getInstance().core.downloadsApi.createDownload({ nodeIds });
 
-        promise.on('progress', progress => this.logService.log('Progress', progress));
-        promise.on('error', error => this.logService.error('Error', error));
-        promise.on('abort', data => this.logService.log('Abort', data));
+    //     promise.on('progress', progress => this.logService.log('Progress', progress));
+    //     promise.on('error', error => this.logService.error('Error', error));
+    //     promise.on('abort', data => this.logService.log('Abort', data));
 
-        promise.on('success', (data: DownloadEntry) => {
-            if (data && data.entry && data.entry.id) {
-                const url = this.apiService.getInstance().content.getContentUrl(data.entry.id, true);
+    //     promise.on('success', (data: DownloadEntry) => {
+    //         if (data && data.entry && data.entry.id) {
+    //             const url = this.apiService.getInstance().content.getContentUrl(data.entry.id, true);
 
-                this.apiService.getInstance().core.nodesApi.getNode(data.entry.id).then((downloadNode: MinimalNodeEntity) => {
-                    this.logService.log(downloadNode);
-                    const fileName = downloadNode.entry.name;
-                    this.downloadId = data.entry.id;
-                    this.waitAndDownload(data.entry.id, url, fileName);
-                });
-            }
-        });
-    }
+    //             this.apiService.getInstance().core.nodesApi.getNode(data.entry.id).then((downloadNode: MinimalNodeEntity) => {
+    //                 this.logService.log(downloadNode);
+    //                 const fileName = downloadNode.entry.name;
+    //                 this.downloadId = data.entry.id;
+    //                 this.waitAndDownload(data.entry.id, url, fileName);
+    //             });
+    //         }
+    //     });
+    // }
 
     getDownloadUrl(nodeId: string): string {
         return this.apiService.getInstance().content.getContentUrl(nodeId, true);

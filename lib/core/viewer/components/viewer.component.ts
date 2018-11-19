@@ -21,7 +21,7 @@ import {
     Input, OnChanges, Output, SimpleChanges, TemplateRef,
     ViewEncapsulation, OnInit, OnDestroy
 } from '@angular/core';
-import { MinimalNodeEntryEntity, RenditionEntry } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, RenditionEntry, MinimalNodeEntity } from 'alfresco-js-api';
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
@@ -244,7 +244,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     viewerType = 'unknown';
     isLoading = false;
-    node: MinimalNodeEntryEntity;
+    nodes: MinimalNodeEntity[] = [];
 
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
     externalExtensions: string[] = [];
@@ -330,6 +330,12 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                     (error) => {
                         this.isLoading = false;
                         this.logService.error('This node does not exist');
+                    }
+                );
+
+                this.apiService.getInstance().nodes.getNode(this.nodeId).then(
+                    (node) => {
+                        this.setDownloadNode(node);
                     }
                 );
             } else if (this.sharedLinkId) {
@@ -608,24 +614,24 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    downloadContent() {
-        if (this.allowDownload && this.downloadUrl && this.fileName) {
-            const args = new BaseEvent();
-            this.download.next(args);
+    // downloadContent() {
+    //     if (this.allowDownload && this.downloadUrl && this.fileName) {
+    //         const args = new BaseEvent();
+    //         this.download.next(args);
 
-            if (!args.defaultPrevented) {
-                const link = document.createElement('a');
+    //         // if (!args.defaultPrevented) {
+    //         //     const link = document.createElement('a');
 
-                link.style.display = 'none';
-                link.download = this.fileName;
-                link.href = this.downloadUrl;
+    //         //     link.style.display = 'none';
+    //         //     link.download = this.fileName;
+    //         //     link.href = this.downloadUrl;
 
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-        }
-    }
+    //         //     document.body.appendChild(link);
+    //         //     link.click();
+    //         //     document.body.removeChild(link);
+    //         // }
+    //     }
+    // }
 
     printContent() {
         if (this.allowPrint) {
@@ -766,6 +772,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private generateCacheBusterNumber() {
         this.cacheBusterNumber = Date.now();
+    }
+
+    setDownloadNode(node: MinimalNodeEntity) {
+        this.nodes = [node];
     }
 
 }
