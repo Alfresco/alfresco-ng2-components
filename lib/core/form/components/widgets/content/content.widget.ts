@@ -31,21 +31,27 @@ import { FormService } from './../../../services/form.service';
 })
 export class ContentWidgetComponent implements OnChanges {
 
+    /** ID of the content to show. */
     @Input()
     id: string;
 
+    /** Toggles visibility of the content preview. */
     @Input()
     showDocumentContent: boolean = true;
 
+    /** Emitted when the preview is clicked. */
     @Output()
     contentClick = new EventEmitter();
 
+    /** Emitted when the content thumbnail has loaded. */
     @Output()
     thumbnailLoaded: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when the content has loaded. */
     @Output()
     contentLoaded: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 

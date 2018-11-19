@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-05-04
+Last reviewed: 2018-11-19
 ---
 
 # Rating service

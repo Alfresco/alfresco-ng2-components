@@ -26,6 +26,10 @@ Supports localisation.
     -   _key:_ `string|Array<string>`  - Key to translate
     -   _interpolateParams:_ `Object`  - (Optional) String(s) to be interpolated into the main message
     -   **Returns** `string|any` - Translated text
+-   **loadTranslation**(lang: `string`, fallback?: `string`)<br/>
+    Loads the translation file for the specified language.
+    -   _lang:_ `string`  - Language whose translation file you want
+    -   _fallback:_ `string`  - (Optional) Language to use if the preferred one isn't available
 -   **onTranslationChanged**(lang: `string`)<br/>
     Triggers a notification callback when the translation language changes.
     -   _lang:_ `string`  - The new language code

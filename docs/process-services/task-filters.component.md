@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-06-07
+Last reviewed: 2018-11-19
 ---
 
 # Task Filters component
@@ -34,7 +34,7 @@ Shows all available filters.
 | appId | `number` |  | Display filters available to the current user for the application with the specified ID. |
 | appName | `string` |  | Display filters available to the current user for the application with the specified name. |
 | filterParam | [`FilterParamsModel`](../../lib/process-services/task-list/models/filter.model.ts) |  | Parameters to use for the task filter. If there is no match then the default filter (the first one the list) is selected. |
-| showIcon| `boolean` | true | Toggles display of the filter's icon. |
+| showIcon | `boolean` |  | Toggles display of the filter's icon. |
 
 ### Events
 
