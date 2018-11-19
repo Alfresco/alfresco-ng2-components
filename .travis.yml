@@ -105,8 +105,6 @@ jobs:
                        else
                             (./scripts/start.sh -dev -t -ss -vjsapi alpha || exit 1;);
                     fi
-        #- stage: Packaging test
-        #  script:  (npm run build-lib || exit 1;) && node ./scripts/upload-build-lib-in-cs.js -u "$E2E_USERNAME"  -p "$E2E_PASSWORD" --host "$E2E_HOST" -f $TRAVIS_BUILD_NUMBER
         - stage: Update children projects dependency #Update generator-ng2-alfresco-app
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n generator-ng2-alfresco-app
@@ -122,8 +120,6 @@ jobs:
         - stage: Update children projects dependency # Test Update alfresco-modeler-app
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-modeler-app
-        #- stage: Create Shell dist
-        #  script: rm -rf ./node_modules/@alfresco; node ./scripts/download-build-lib-in-cs.js -u "$E2E_USERNAME"  -p "$E2E_PASSWORD" --host "$E2E_HOST" -f $TRAVIS_BUILD_NUMBER || exit 1; npm run build:dist || exit 1;
         - stage: e2e Test # Test core
           name: core
           script:
@@ -169,41 +165,10 @@ jobs:
             then
                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder insights --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
-#        - stage: Test Update version 2.0.0
-#          if: branch = development
-#          env: STAGE=test-BC
-#          script: ./scripts/test-e2e-bc.sh -b $TRAVIS_BUILD_NUMBER
-#        - stage: Test Update version 2.0.0
-#          env: STAGE=test-export
-#          script: npm run test-export
         - stage: Create Docker PR
           script: (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1)
         - stage: Deploy Docker PR
           script: node --no-deprecation ./scripts/pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "docker:$REPO_DOCKER/adf/demo-shell:$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1
-
-# jobs:
-#   include:
-#     - stage: Publish alpha to NPM
-#       before_install: skip
-#       install: skip
-#       script: skip
-#       deploy:
-#         provider: script
-#         script: (./scripts/update-version.sh -v $(./scripts/next_version.sh)-$(git rev-parse HEAD) -vj $(npm view alfresco-js-api@alpha version) -gnu) && (./scripts/npm-publish.sh -r $NPM_REGISTRY_ADDRESS -token $NPM_REGISTRY_TOKEN -t alpha --sleep 20 || exit 1;);
-#         on:
-#           branch: development
-#         skip_cleanup: true
-#     - stage: Publish beta to NPM
-#       before_install: skip
-#       install: skip
-#       script: skip
-#       deploy:
-#         provider: script
-#         script: (./scripts/update-version.sh -v $TRAVIS_TAG -gnu) && (./scripts/npm-publish.sh -r $NPM_REGISTRY_ADDRESS -token $NPM_REGISTRY_TOKEN -t beta --sleep 20 || exit 1;);
-#         on:
-#           tags: true
-#         skip_cleanup: true
-
 
 # Send coverage data to codecov
 after_success:
