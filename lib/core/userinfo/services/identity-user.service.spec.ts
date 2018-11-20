@@ -1,3 +1,4 @@
+import { mockToken } from './../../mock/jwt-helper.service.spec';
 /*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
@@ -19,7 +20,6 @@ import { TestBed } from '@angular/core/testing';
 import { IdentityUserService } from '../services/identity-user.service';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
-import { of } from 'rxjs';
 
 describe('IdentityUserService', () => {
 
@@ -35,14 +35,25 @@ describe('IdentityUserService', () => {
         service = TestBed.get(IdentityUserService);
     });
 
+    beforeEach(() => {
+        let store = {};
+
+        spyOn(localStorage, 'getItem').and.callFake( (key: string): String => {
+         return store[key] || null;
+        });
+        spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string =>  {
+          return store[key] = <string> value;
+        });
+    });
+
     it('should able to fetch identity user info from Jwt token', (done) => {
-        spyOn(service, 'getCurrentUserInfo').and.returnValue(of({firstName: 'fake-first-name', lastName: 'fake-last-name', email: 'fake@gmail.com'}));
+        localStorage.setItem('access_token', mockToken);
         service.getCurrentUserInfo().subscribe(
             (user) => {
                 expect(user).toBeDefined();
-                expect(user.firstName).toEqual('fake-first-name');
-                expect(user.lastName).toEqual('fake-last-name');
-                expect(user.email).toEqual('fake@gmail.com');
+                expect(user.firstName).toEqual('John');
+                expect(user.lastName).toEqual('Doe');
+                expect(user.email).toEqual('johnDoe@gmail.com');
                 done();
             });
     });
