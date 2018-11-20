@@ -1,12 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-10
+Last reviewed: 2018-11-20
 ---
 
 # Node Permission directive
 
-Selectively disables an HTML element or Angular component
+Selectively disables an HTML element or Angular component.
 
 ## Contents
 
@@ -95,7 +95,9 @@ for example). You can also use it in much the same way as you would with an HTML
 ```
 
 To enable your own component to work with this directive, you need to implement the
-[`NodePermissionSubject`](../../lib/core/directives/node-permission.directive.ts) interface and also define it as an EXTENDIBLE_COMPONENT parent component,
+[`NodePermissionSubject`](../../lib/core/directives/node-permission.directive.ts) interface and also define it as an
+[`EXTENDIBLE_COMPONENT`](../../lib/core/interface/injection.tokens.ts)
+parent component,
 as described in the following sections.
 
 ### Implementing the NodePermissionSubject interface
@@ -118,7 +120,9 @@ The directive will look up the component in the dependency injection tree,
 up to the `@Host()` component. The host component is typically the component that requests
 the dependency. However, when this component is projected into a parent component, the
 parent becomes the host. This means you must provide your component with forward referencing
-as the `EXTENDIBLE_COMPONENT` and also provide your component as a `viewProvider`:
+as the
+[`EXTENDIBLE_COMPONENT`](../../lib/core/interface/injection.tokens.ts)
+and also provide your component as a `viewProvider`:
 
 ```js
 import { EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';

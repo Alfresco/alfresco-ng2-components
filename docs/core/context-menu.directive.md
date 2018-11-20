@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-10
+Last reviewed: 2018-11-20
 ---
 
 # Context Menu directive
@@ -53,4 +53,5 @@ export class MyComponent implements OnInit {
 
 ## Details
 
-See **Demo Shell** or **DocumentList** implementation for more details and use cases.
+See the [Demo Shell](../../demo-shell/README.md)
+or [Document List component](../content-services/document-list.component.md) implementation for more details and use cases.

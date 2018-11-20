@@ -1,12 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-09-14
+Last reviewed: 2018-11-20
 ---
 
 # Attach Form component
 
-This component can be used when there is no form attached to a task and we want to add one.
+This component can be used when there is no form attached to a task and you want to add one.
 
 ## Basic Usage
 

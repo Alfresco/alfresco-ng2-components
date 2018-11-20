@@ -1,7 +1,7 @@
 ---
 Added: v2.2.0
 Status: Active
-Last reviewed: 2018-04-10
+Last reviewed: 2018-11-20
 ---
 
 # Node Lock directive
@@ -26,15 +26,18 @@ Locks a node.
 
 ## Details
 
-When the decorated element (eg, div) is clicked, a dialog is shown to let you lock
+When the user clicks the decorated element (eg, div), a dialog is shown to let them lock
 or unlock a file (a folder cannot be locked).
 
-There are two types of lock: indefinite lock and time lock.
-If the time is not selected the user will lock the file it until will not unlock it
-When a file is locked it can be locked and unlocked by default only by the user that creates the lock but you can also allow the other file owners to modify it 
+There are two types of lock that the user can choose from the dialog: indefinite lock and time lock. The time lock will expire at the specified time
+but the indefinite lock remains in place until the user cancels it.
+
+When a file is locked it can be locked and unlocked by default only by the user that creates the lock but you can also allow the other file owners to modify it:
+
 ![adf-lock](../docassets/images/lock-directive.png)
 
-This calls the `openLockNodeDialog` method from the
-[Content Node Dialog service](content-node-dialog.service.md) method when clicked,
-and disables the target button if the provided node is not a file or the user doesn't
+This directive calls the `openLockNodeDialog` method from the
+[Content Node Dialog service](content-node-dialog.service.md)
+when clicked.
+It disables the target button if the provided node is not a file or the user doesn't
 have permissions.

@@ -32,7 +32,7 @@ export abstract class DynamicComponentMapper {
     protected types: { [key: string]: DynamicComponentResolveFunction } = {};
 
     /**
-     * Gets the currently active ComponentTypeResolver function for a field type.
+     * Gets the currently active DynamicComponentResolveFunction for a field type.
      * @param type The type whose resolver you want
      * @param defaultValue Default type returned for types that are not yet mapped
      * @returns Resolver function
@@ -45,7 +45,7 @@ export abstract class DynamicComponentMapper {
     }
 
     /**
-     * Sets or optionally replaces a ComponentTypeResolver function for a field type.
+     * Sets or optionally replaces a DynamicComponentResolveFunction for a field type.
      * @param type The type whose resolver you want to set
      * @param resolver The new resolver function
      * @param override The new resolver will only replace an existing one if this parameter is true
