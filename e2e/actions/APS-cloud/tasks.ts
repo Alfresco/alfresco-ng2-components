@@ -29,20 +29,15 @@ export class Tasks {
     }
 
     async createStandaloneTask(taskName, appName) {
-        //const path = '/' + appName + '-rb/v1/tasks';//trebuie rb?
-        const path = 'aps2dev.envalfresco.com/simple-app-rb/v1/tasks';
+        const path = '/' + appName + '-rb/v1/tasks';
         const method = 'POST';
+
         const queryParams = {}, postBody = {
             'name': taskName,
             "payloadType":"CreateTaskPayload"
         };
-        let data;
 
-        try {
-            data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-        } catch (e) {
-            console.log("Errorrrrr: ", e);
-        }
+        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
         return data;
     }
 

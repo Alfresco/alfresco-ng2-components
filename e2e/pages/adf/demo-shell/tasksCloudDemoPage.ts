@@ -10,7 +10,7 @@ export class TasksCloudDemoPage {
     cancelledTasks = element(by.css('span[data-automation-id="Cancelled Tasks_filter"]'));
     completedTasks = element(by.css('span[data-automation-id="Completed Tasks_filter"]'));
     suspendedTasks = element(by.css('span[data-automation-id="Suspended Tasks_filter"]'));
-    activeFilter = element(by.css("mat-list-item[class*='active']"));
+    activeFilter = element(by.css("mat-list-item[class*='active'] span"));
 
     taskFiltersCloudComponent(filter) {
         return new TaskFiltersCloudComponent(filter);

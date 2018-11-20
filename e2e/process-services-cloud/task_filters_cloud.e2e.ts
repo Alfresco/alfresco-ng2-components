@@ -46,13 +46,14 @@ describe('Task filters cloud', () => {
         const loginApsPage = new LoginAPSPage();
         const navigationBarPage = new NavigationBarPage();
         let appListCloudComponent = new AppListCloudComponent();
-        const path = '/auth/realms/springboot';
-        let silentLogin;
-
-
         let tasksCloudDemoPage = new TasksCloudDemoPage();
         const tasksService: Tasks = new Tasks();
-        let service: StartTaskCloudService;
+
+        const path = '/auth/realms/springboot';
+        let silentLogin;
+        const newTask = 'newTask';
+        const simpleApp = 'simple-app';
+        const user = 'devopsuser', password = 'password';
 
 
         // let loginPage = new LoginPage();
@@ -81,7 +82,7 @@ describe('Task filters cloud', () => {
         beforeEach(async (done) => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
-            await appListCloudComponent.goToApp('simple-app');
+            await appListCloudComponent.goToApp(simpleApp);
             done();
         });
 
@@ -93,32 +94,25 @@ describe('Task filters cloud', () => {
         });
 
         fit('[C260330] Should display Task Filter List when app is in Task Tab', async() => {
-            // creaza task cu call: createStandalone-task
-            //let bla = await tasksService.createStandaloneTask('blaaaa', 'simple-app');
-            
-            service = new StartTaskCloudService();
-            let bla = await service.createNewTask();
 
-            //tasksPage.createNewTask().addName('Test').clickStartButton();
-            //taskFiltersDemoPage.myTasksFilter().clickTaskFilter();
-            //tasksListPage.getDataTable().checkContentIsDisplayed('Test');
-            //expect(taskFiltersDemoPage.checkActiveFilterActive()).toBe('My Tasks');
-            //expect(taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
+            await tasksService.init(user, password);
+            await tasksService.createStandaloneTask(newTask, simpleApp);
 
-            //taskFiltersDemoPage.queuedTasksFilter().clickTaskFilter();
-            //expect(taskFiltersDemoPage.checkActiveFilterActive()).toBe('Queued Tasks');
+            tasksCloudDemoPage.suspendedTasksFilter().clickTaskFilter();
+            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Suspended Tasks');
             //tasksListPage.getDataTable().checkContentIsNotDisplayed('Test');
-            //expect(taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
 
-            //taskFiltersDemoPage.involvedTasksFilter().clickTaskFilter();
-            //expect(taskFiltersDemoPage.checkActiveFilterActive()).toBe('Involved Tasks');
+            tasksCloudDemoPage.cancelledTasksFilter().clickTaskFilter();
+            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Cancelled Tasks');
             //tasksListPage.getDataTable().checkContentIsDisplayed('Test');
-            //expect(taskDetailsPage.checkTaskDetailsDisplayed()).toBeDefined();
 
-            //taskFiltersDemoPage.completedTasksFilter().clickTaskFilter();
-            //expect(taskFiltersDemoPage.checkActiveFilterActive()).toBe('Completed Tasks');
+            tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
+            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Completed Tasks');
             //tasksListPage.getDataTable().checkContentIsNotDisplayed('Test');
-            //expect(taskDetailsPage.checkTaskDetailsEmpty()).toBeDefined();
+
+            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+            //tasksListPage.getDataTable().checkContentIsDisplayed('Test');
+            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('My Tasks');
         });
 
         /*it('[C260348] Should display task in Complete Tasks List when task is completed', () => {
