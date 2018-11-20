@@ -16,7 +16,7 @@
  */
 
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { TreeViewDataSource } from '../data/tree-view-datasource';
 import { TreeViewService } from '../services/tree-view.service';
@@ -28,7 +28,7 @@ import { NodeEntry } from 'alfresco-js-api';
     styleUrls: ['tree-view.component.scss']
 })
 
-export class TreeViewComponent implements OnInit, OnChanges {
+export class TreeViewComponent implements OnChanges {
 
     /** Identifier of the node to display. */
     @Input()
@@ -38,6 +38,9 @@ export class TreeViewComponent implements OnInit, OnChanges {
     @Output()
     nodeClicked: EventEmitter<NodeEntry> = new EventEmitter();
 
+    @Output()
+    error: EventEmitter<any> = new EventEmitter();
+
     treeControl: FlatTreeControl<TreeBaseNode>;
     dataSource: TreeViewDataSource;
 
@@ -46,16 +49,12 @@ export class TreeViewComponent implements OnInit, OnChanges {
         this.dataSource = new TreeViewDataSource(this.treeControl, this.treeViewService);
     }
 
-    ngOnInit() {
-        if (this.nodeId) {
-            this.loadTreeNode();
-        }
-    }
-
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['nodeId'].currentValue &&
+        if (changes['nodeId'] && changes['nodeId'].currentValue &&
             changes['nodeId'].currentValue !== changes['nodeId'].previousValue) {
             this.loadTreeNode();
+        } else {
+            this.dataSource.data = [];
         }
     }
 
@@ -74,6 +73,8 @@ export class TreeViewComponent implements OnInit, OnChanges {
             .subscribe(
                 (treeNode: TreeBaseNode[]) => {
                     this.dataSource.data = treeNode;
-                });
+                },
+                (error) => this.error.emit(error)
+            );
     }
 }

@@ -28,6 +28,8 @@ export class TreeViewDataSource {
 
     treeNodes: TreeBaseNode[];
     dataChange = new BehaviorSubject<TreeBaseNode[]>([]);
+    childrenSubscription = null;
+    changeSubscription = null;
 
     get data(): TreeBaseNode[] {
         return this.treeNodes;
@@ -44,7 +46,7 @@ export class TreeViewDataSource {
     }
 
     connect(collectionViewer: CollectionViewer): Observable<TreeBaseNode[]> {
-        this.treeControl.expansionModel.onChange!.subscribe(change => {
+        this.changeSubscription = this.treeControl.expansionModel.onChange.subscribe(change => {
             if ((change as SelectionChange<TreeBaseNode>).added &&
                 (change as SelectionChange<TreeBaseNode>).added.length > 0) {
                 this.expandTreeNodes(change as SelectionChange<TreeBaseNode>);
@@ -53,6 +55,15 @@ export class TreeViewDataSource {
             }
         });
         return merge(collectionViewer.viewChange, this.dataChange).pipe(map(() => this.data));
+    }
+
+    disconnect() {
+        if (this.childrenSubscription) {
+            this.childrenSubscription.unsubscribe();
+        }
+        if (this.changeSubscription) {
+            this.changeSubscription.unsubscribe();
+        }
     }
 
     private expandTreeNodes(change: SelectionChange<TreeBaseNode>) {
@@ -64,19 +75,20 @@ export class TreeViewDataSource {
     }
 
     private expandNode(node: TreeBaseNode) {
-        this.treeViewService.getTreeNodes(node.nodeId).subscribe((children) => {
-            const index = this.data.indexOf(node);
-            if (!children || index < 0) {
-                node.expandable = false;
-                return;
-            }
-            const nodes = children.map(actualNode => {
-                actualNode.level = node.level + 1;
-                return actualNode;
+        this.childrenSubscription = this.treeViewService.getTreeNodes(node.nodeId)
+            .subscribe((children) => {
+                const index = this.data.indexOf(node);
+                if (!children || index < 0) {
+                    node.expandable = false;
+                    return;
+                }
+                const nodes = children.map(actualNode => {
+                    actualNode.level = node.level + 1;
+                    return actualNode;
+                });
+                this.data.splice(index + 1, 0, ...nodes);
+                this.dataChange.next(this.data);
             });
-            this.data.splice(index + 1, 0, ...nodes);
-            this.dataChange.next(this.data);
-        });
     }
 
     toggleNode(node: TreeBaseNode) {

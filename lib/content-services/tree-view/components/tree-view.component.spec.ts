@@ -20,11 +20,12 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { TreeViewComponent } from './tree-view.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TreeViewService } from '../services/tree-view.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { NodeEntry } from 'alfresco-js-api';
-
-describe('TreeViewComponent', () => {
+import { SimpleChange } from '@angular/core';
+/*tslint:disable*/
+fdescribe('TreeViewComponent', () => {
 
     let fixture: ComponentFixture<TreeViewComponent>;
     let element: HTMLElement;
@@ -73,6 +74,8 @@ describe('TreeViewComponent', () => {
             component = fixture.componentInstance;
             spyOn(treeService, 'getTreeNodes').and.callFake((nodeId) => returnRootOrChildrenNode(nodeId));
             component.nodeId = '9999999';
+            const changeNodeId = new SimpleChange(null, '9999999', true);
+            component.ngOnChanges({ 'nodeId': changeNodeId });
             fixture.detectChanges();
         }));
 
@@ -92,6 +95,24 @@ describe('TreeViewComponent', () => {
             fixture.whenStable().then(() => {
                 expect(element.querySelector('#fake-child-name-tree-child-node')).not.toBeNull();
                 expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
+            });
+        }));
+
+        it('should show only the correct subfolders when the nodeId is changed', async(() => {
+            component.nodeId = 'fake-second-id';
+            const changeNodeId = new SimpleChange('9999999', 'fake-second-id', true);
+            component.ngOnChanges({ 'nodeId': changeNodeId });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                let rootFolderButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#button-fake-next-child-name');
+                expect(rootFolderButton).not.toBeNull();
+                rootFolderButton.click();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('#fake-child-name-tree-child-node')).not.toBeNull();
+                    expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
+                    expect(element.querySelectorAll('mat-tree-node').length).toBe(4);
+                });
             });
         }));
 
@@ -177,5 +198,29 @@ describe('TreeViewComponent', () => {
                 expect(emptyElement.querySelector('#adf-tree-view-missing-node')).not.toBeNull();
             });
         }));
+    });
+
+    describe('When invalid nodeId is given', () => {
+
+        beforeEach(async(() => {
+            fixture = TestBed.createComponent(TreeViewComponent);
+            treeService = TestBed.get(TreeViewService);
+            spyOn(treeService, 'getTreeNodes').and.callFake((nodeId) => throwError('Invalid Node Id'));
+            fixture.componentInstance.nodeId = 'Poopoovic';
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+        });
+
+        it('should raise an error event when invalid nodeId is provided', (done) => {
+            fixture.componentInstance.error.subscribe((error) => {
+                expect(error).toBe('Invalid Node Id');
+                done();
+            });
+            const changeNodeId = new SimpleChange(null, 'Poopoovic', true);
+            fixture.componentInstance.ngOnChanges({ 'nodeId': changeNodeId });
+            fixture.detectChanges();
+        });
     });
 });

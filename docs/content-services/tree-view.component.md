@@ -30,3 +30,4 @@ Shows the folder and subfolders of a node as a tree view.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | nodeClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` | Emitted when a node in the tree view is clicked. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an invalid node id is given. |
