@@ -19,7 +19,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { TaskListCloudComponent, TaskListCloudSortingModel } from '@alfresco/adf-process-services-cloud';
 import { UserPreferencesService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -56,13 +56,12 @@ export class TaskListCloudDemoComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private router: Router,
         private userPreference: UserPreferencesService) {
     }
 
     ngOnInit() {
         this.isFilterLoaded = false;
-        this.route.params.subscribe(params => {
+        this.route.parent.params.subscribe(params => {
             this.applicationName = params.applicationName;
         });
 
@@ -93,7 +92,7 @@ export class TaskListCloudDemoComponent implements OnInit {
 
         this.route.queryParams
             .subscribe(params => {
-                if (params.status) {
+                if (params.filterName) {
                     this.status = params.status;
                     this.sort = params.sort;
                     this.sortDirection = params.order;
@@ -103,16 +102,6 @@ export class TaskListCloudDemoComponent implements OnInit {
                     this.sortFormControl.setValue(this.sort);
                 }
             });
-    }
-
-    onFilterSelected(filter) {
-        const queryParams = {
-            status: filter.query.state,
-            filterName: filter.name,
-            sort: filter.query.sort,
-            order: filter.query.order
-        };
-        this.router.navigate([`/cloud/${this.applicationName}/tasks/`], {queryParams: queryParams});
     }
 
     onChangePageSize(event) {

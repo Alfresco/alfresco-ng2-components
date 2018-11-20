@@ -15,52 +15,87 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild } from '@angular/core';
-import { UserPreferencesService } from '@alfresco/adf-core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { ProcessListCloudComponent } from '@alfresco/adf-process-services-cloud';
+import { ActivatedRoute } from '@angular/router';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-process-list-example',
     templateUrl: './process-list-cloud-example.component.html',
     styleUrls: ['./process-list-cloud-example.component.scss']
 })
-export class ProcessListCloudExampleComponent {
+export class ProcessListCloudExampleComponent implements OnInit {
 
     @ViewChild('processCloud')
     processCloud: ProcessListCloudComponent;
 
-    currentAppName: string = '';
+    sortFormControl: FormControl;
+    sortDirectionFormControl: FormControl;
+
+    applicationName: string = '';
+    isFilterLoaded:  boolean;
+
     status: string = '';
+    filterName: string;
     filterId: string = '';
+    sort: string = '';
     sortArray: any = [];
     sortField: string;
     sortDirection: string;
 
-    constructor(private userPreference: UserPreferencesService) {
+    columns = [
+        {key: 'id', label: 'ID'},
+        {key: 'name', label: 'NAME'},
+        {key: 'status', label: 'STATUS'},
+        {key: 'startDate', label: 'START DATE'}
+      ];
+
+    constructor(private route: ActivatedRoute) {
     }
 
-    onAppClick(appClicked: any) {
-        this.currentAppName = appClicked.name;
-    }
+    ngOnInit() {
+        this.isFilterLoaded = false;
+        this.route.parent.params.subscribe(params => {
+            this.applicationName = params.applicationName;
+        });
 
-    onClick() {
-        this.currentAppName = '';
-    }
+        this.sortFormControl = new FormControl('');
 
-    onChangePageSize(event) {
-        this.userPreference.paginationSize = event.maxItems;
-    }
+        this.sortFormControl.valueChanges.subscribe(
+            (sortValue) => {
+                this.sort = sortValue;
 
-    onFilterButtonClick($event) {
-        let newSortParam: any = {
-            orderBy: this.sortField,
-            direction: this.sortDirection };
-        this.sortArray.push(newSortParam);
-        this.processCloud.reload();
-    }
+                this.sortArray = [{
+                    orderBy: this.sort,
+                    direction: this.sortDirection
+                }];
+            }
+        );
+        this.sortDirectionFormControl = new FormControl('');
 
-    onClearFilters() {
-        this.sortArray = [];
-        this.processCloud.reload();
+        this.sortDirectionFormControl.valueChanges.subscribe(
+            (sortDirectionValue) => {
+                this.sortDirection = sortDirectionValue;
+
+                this.sortArray = [{
+                    orderBy: this.sort,
+                    direction: this.sortDirection
+                }];
+            }
+        );
+
+        this.route.queryParams
+            .subscribe(params => {
+                if (params.filterName) {
+                    this.status = params.status;
+                    this.sort = params.sort;
+                    this.sortDirection = params.order;
+                    this.filterName = params.filterName;
+                    this.isFilterLoaded = true;
+                    this.sortDirectionFormControl.setValue(this.sortDirection);
+                    this.sortFormControl.setValue(this.sort);
+                }
+            });
     }
 }

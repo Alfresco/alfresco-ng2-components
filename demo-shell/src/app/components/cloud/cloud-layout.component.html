@@ -1,0 +1,34 @@
+<div fxFill fxLayout>
+<adf-sidenav-layout fxFlex [sidenavMin]="70" [sidenavMax]="270" [stepOver]="780">
+    <adf-sidenav-layout-header>
+        <ng-template>
+            Breadcrumbs
+        </ng-template>
+    </adf-sidenav-layout-header>
+  <adf-sidenav-layout-navigation>
+    <ng-template>
+        <div fxFill>
+        Task Filters
+        <adf-cloud-task-filters
+            [appName]="applicationName"
+            [showIcons]="true"
+            (filterClick)="onTaskFilterSelected($event)">
+        </adf-cloud-task-filters>
+
+        Process Filters
+        <adf-cloud-process-filters
+            [appName]="applicationName"
+            [showIcons]="true"
+            (filterClick)="onProcessFilterSelected($event)">
+        </adf-cloud-process-filters>
+      </div>
+    </ng-template>
+  </adf-sidenav-layout-navigation>
+
+  <adf-sidenav-layout-content>
+      <ng-template>
+            <router-outlet></router-outlet>
+      </ng-template>
+  </adf-sidenav-layout-content>
+</adf-sidenav-layout>
+</div>

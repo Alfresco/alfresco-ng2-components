@@ -68,6 +68,7 @@ import { CloudComponent } from './components/cloud/cloud.component';
 import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
 import { ProcessListCloudExampleComponent } from './components/cloud/process-list-cloud-example.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
+import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
 
 @NgModule({
     imports: [
@@ -92,6 +93,7 @@ import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample
         AppComponent,
         LoginComponent,
         CloudComponent,
+        CloudLayoutComponent,
         LogoutComponent,
         AppLayoutComponent,
         HomeComponent,
