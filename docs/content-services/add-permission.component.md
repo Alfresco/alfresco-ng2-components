@@ -1,7 +1,7 @@
 ---
 Added: v2.4.0
 Status: Active
-Last reviewed: 2018-05-03
+Last reviewed: 2018-11-19
 ---
 
 # Add Permission Component

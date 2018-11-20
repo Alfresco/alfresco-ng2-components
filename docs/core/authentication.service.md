@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-09-13
+Last reviewed: 2018-11-19
 ---
 
 # Authentication Service
@@ -12,9 +12,16 @@ Provides authentication to ACS and APS.
 
 ### Methods
 
--   **getBpmLoggedUser**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<UserRepresentation>`<br/>
+-   **addTokenToHeader**(headersArg?: `HttpHeaders`): [`Observable`](http://reactivex.io/documentation/observable.html)`<HttpHeaders>`<br/>
+    Adds the auth token to an HTTP header using the 'bearer' scheme.
+    -   _headersArg:_ `HttpHeaders`  - (Optional) Header that will receive the token
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<HttpHeaders>` - The new header with the token added
+-   **getBearerExcludedUrls**(): `string[]`<br/>
+    Gets the set of URLs that the token bearer is excluded from.
+    -   **Returns** `string[]` - Array of URL strings
+-   **getBpmLoggedUser**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-activiti-rest-api/docs/UserRepresentation.md)`>`<br/>
     Gets information about the user currently logged into APS.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<UserRepresentation>` - User information
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-activiti-rest-api/docs/UserRepresentation.md)`>` - User information
 -   **getBpmUsername**(): `string`<br/>
     Gets the BPM username
     -   **Returns** `string` - The BPM username
@@ -34,6 +41,9 @@ Provides authentication to ACS and APS.
 -   **getTicketEcmBase64**(): `string|null`<br/>
     Gets the BPM ticket from the Storage in Base 64 format.
     -   **Returns** `string|null` - The ticket or `null` if none was found
+-   **getToken**(): `string`<br/>
+    Gets the auth token.
+    -   **Returns** `string` - Auth token string
 -   **handleError**(error: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Prints an error message in the console browser
     -   _error:_ `any`  - Error message

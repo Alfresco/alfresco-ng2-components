@@ -1,7 +1,7 @@
 ---
 Added: v2.3.0
 Status: Active
-Last reviewed: 2018-09-13
+Last reviewed: 2018-11-16
 ---
 
 # Custom Resources service
@@ -33,7 +33,7 @@ Manages Document List information that is specific to a user.
 -   **isSupportedSource**(folderId: `string`): `boolean`<br/>
     Is the folder ID a "-my", "-root-", or "-shared-" alias?
     -   _folderId:_ `string`  - Folder ID name to check
-    -   **Returns** `boolean` - True if the ID is one of the suppored sources, false otherwise
+    -   **Returns** `boolean` - True if the ID is one of the supported sources, false otherwise
 -   **loadFavorites**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts), includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
     Gets favorite files for the current user.
     -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
@@ -55,7 +55,7 @@ Manages Document List information that is specific to a user.
     -   _includeFields:_ `string[]`  - List of data field names to include in the results
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of shared links
 -   **loadSites**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
-    Gets all sites in the respository.
+    Gets all sites in the repository.
     -   _pagination:_ [`PaginationModel`](../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of sites
 -   **loadTrashcan**(pagination: [`PaginationModel`](../../lib/core/models/pagination.model.ts), includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DeletedNodesPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/DeletedNodesPaging.md)`>`<br/>
