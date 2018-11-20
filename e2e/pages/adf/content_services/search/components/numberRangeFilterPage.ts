@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 import Util = require('../../../../../util/util');
-import { by, browser, protractor } from 'protractor';
+import { by, protractor, browser } from 'protractor';
 
 export class NumberRangeFilterPage {
 
@@ -41,12 +41,6 @@ export class NumberRangeFilterPage {
         });
         return this;
     }
-    checkFromFieldIsEmpty() {
-        browser.controlFlow().execute(async () => {
-            await expect(this.getFromNumber()).toEqual('');
-        });
-        return this;
-    }
     getFromNumber() {
         return this.filter.element(this.fromInput).getAttribute('value');
     }
@@ -57,18 +51,20 @@ export class NumberRangeFilterPage {
         this.filter.element(this.fromInput).sendKeys(protractor.Key.ENTER);
         return this;
     }
+    getFromErrorRequired() {
+        Util.waitUntilElementIsVisible(this.filter.element(this.fromErrorRequired));
+        return this.filter.element(this.fromErrorRequired).getText();
+    }
     checkFromErrorRequiredIsDisplayed() {
         Util.waitUntilElementIsVisible(this.filter.element(this.fromErrorRequired));
-        browser.controlFlow().execute(async () => {
-            await expect(this.filter.element(this.fromErrorRequired).getText()).toEqual('Required value');
-        });
         return this;
+    }
+    getFromErrorInvalid() {
+        Util.waitUntilElementIsVisible(this.filter.element(this.fromErrorInvalid));
+        return this.filter.element(this.fromErrorInvalid).getText();
     }
     checkFromErrorInvalidIsDisplayed() {
         Util.waitUntilElementIsVisible(this.filter.element(this.fromErrorInvalid));
-        browser.controlFlow().execute(async () => {
-            await expect(this.filter.element(this.fromErrorInvalid).getText()).toEqual('Invalid Format');
-        });
         return this;
     }
     checkFromFieldIsDisplayed() {
@@ -84,12 +80,6 @@ export class NumberRangeFilterPage {
         });
         return this;
     }
-    checkToFieldIsEmpty() {
-        browser.controlFlow().execute(async () => {
-            await expect(this.getToNumber()).toEqual('');
-        });
-        return this;
-    }
     getToNumber() {
         return this.filter.element(this.toInput).getAttribute('value');
     }
@@ -100,23 +90,20 @@ export class NumberRangeFilterPage {
         this.filter.element(this.toInput).sendKeys(protractor.Key.ENTER);
         return this;
     }
-    clickToField() {
-        Util.waitUntilElementIsClickable(this.filter.element(this.toInput));
-        this.filter.element(this.toInput).click();
-        return this;
+    getToErrorRequired() {
+        Util.waitUntilElementIsVisible(this.filter.element(this.toErrorRequired));
+        return this.filter.element(this.toErrorRequired).getText();
     }
     checkToErrorRequiredIsDisplayed() {
         Util.waitUntilElementIsVisible(this.filter.element(this.toErrorRequired));
-        browser.controlFlow().execute(async () => {
-            await expect(this.filter.element(this.toErrorRequired).getText()).toEqual('Required value');
-        });
         return this;
+    }
+    getToErrorInvalid() {
+        Util.waitUntilElementIsVisible(this.filter.element(this.toErrorInvalid));
+        return this.filter.element(this.toErrorInvalid).getText();
     }
     checkToErrorInvalidIsDisplayed() {
         Util.waitUntilElementIsVisible(this.filter.element(this.toErrorInvalid));
-        browser.controlFlow().execute(async () => {
-            await expect(this.filter.element(this.toErrorInvalid).getText()).toEqual('Invalid Format');
-        });
         return this;
     }
     checkToFieldIsDisplayed() {
@@ -133,16 +120,7 @@ export class NumberRangeFilterPage {
         return this;
     }
     checkApplyButtonIsEnabled() {
-        browser.controlFlow().execute(async () => {
-            await expect(this.filter.element(this.applyButton).isEnabled()).toBe(true);
-        });
-        return this;
-    }
-    checkApplyButtonIsDisabled() {
-        browser.controlFlow().execute(async () => {
-            await expect(this.filter.element(this.applyButton).isEnabled()).toBe(false);
-        });
-        return this;
+        return this.filter.element(this.applyButton).isEnabled();
     }
     clickClearButton() {
         Util.waitUntilElementIsClickable(this.filter.element(this.clearButton));

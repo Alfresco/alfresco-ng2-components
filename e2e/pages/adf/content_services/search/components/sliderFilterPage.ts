@@ -14,26 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { SliderPage } from '../../../material/sliderPage';
-import { by } from 'protractor';
+
+import { browser, by, protractor } from 'protractor';
+import Util = require('../../../../../util/util');
 
 export class SliderFilterPage {
 
     filter;
-    slider;
+    slider = by.css('mat-slider');
 
     constructor(filter) {
         this.filter = filter;
-        this.slider = new SliderPage(this.filter.element(by.css('mat-slider')));
     }
 
     setSliderToValue(value) {
-        this.slider.setToValue(value);
+        this.clickSlider();
+        browser.controlFlow().execute(async () => {
+            let actualValue;
+            do {
+                actualValue = await this.filter.element(this.slider).getAttribute('aria-valuenow');
+                if (actualValue < value) {
+                    await browser.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
+                } else if (actualValue > value) {
+                    await browser.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
+                }
+            }while (Number(actualValue) !== value);
+        });
+        return this;
+    }
+
+    clickSlider() {
+        Util.waitUntilElementIsClickable(this.filter.element(this.slider));
+        this.filter.element(this.slider).click();
         return this;
     }
 
     checkSliderIsDisplayed() {
-        this.slider.checkIsDisplayed();
+        Util.waitUntilElementIsVisible(this.filter.element(this.slider));
         return this;
     }
 }

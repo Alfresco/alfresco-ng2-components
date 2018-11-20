@@ -105,6 +105,10 @@ export class SearchFiltersPage {
         this.searchCategoriesPage.clickFilterHeader(this.fileSizeFilter);
         return this;
     }
+    checkFileSizeFilterIsCollapsed() {
+        this.searchCategoriesPage.checkFilterIsCollapsed(this.fileSizeFilter);
+        return this;
+    }
 
     clickFileTypeFilterHeader() {
         this.searchCategoriesPage.clickFilterHeader(this.fileTypeFilter);
