@@ -6,6 +6,7 @@ eval GNU=false
 eval DIFFERENT_JS_API=false
 eval AUTO=false
 eval TOTAL_BUILD=true;
+eval SEMANTIC="minor";
 
 eval projects=( "core"
     "content-services"
@@ -25,6 +26,9 @@ show_help() {
     echo "-vj or -versionjsapi  to use a different version of js-api"
     echo "-components execute the change version only in the components "
     echo "-v or -version  version to update"
+    echo "-major increase the major number and reset minor and patch"
+    echo "-minor increase the minor number and reset the patch number"
+    echo "-patch increase the patch number"
     echo "-nextalpha update next alpha version of js-api and lib automatically"
     echo "-nextbeta update next beta version of js-api and lib automatically"
     echo "-alpha update last alpha version of js-api and lib automatically"
@@ -50,8 +54,8 @@ last_alpha_mode() {
 }
 
 next_alpha_mode() {
-    echo "====== Auto find next ALPHA version ====="
-    VERSION=$(./next_version.sh -minor -alpha)
+    echo "====== Auto find next ALPHA version ===== ${SEMANTIC} "
+    VERSION=$(./next_version.sh -${SEMANTIC} -alpha)
 
     echo "====== version lib ${VERSION} ====="
 
@@ -62,8 +66,8 @@ next_alpha_mode() {
 }
 
 next_beta_mode() {
-    echo "====== Auto find next BETA version ====="
-    VERSION=$(./next_version.sh -minor -beta)
+    echo "====== Auto find next BETA version ===== ${SEMANTIC}"
+    VERSION=$(./next_version.sh -${SEMANTIC} -beta)
 
     echo "====== version lib ${VERSION} ====="
 
@@ -88,6 +92,11 @@ last_beta_mode() {
 gnu_mode() {
     echo "====== GNU MODE ====="
     GNU=true
+}
+
+semantic_set() {
+    echo "====== semantic MODE $1 ====="
+    SEMANTIC=$1
 }
 
 version_change() {
@@ -166,6 +175,19 @@ update_component_js_version(){
    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
 
 }
+
+args=("$@")
+
+while [[ $1  == -* ]]; do
+    case "$1" in
+      -major)  semantic_set "major"; shift;;
+      -minor)  semantic_set "minor"; shift;;
+      -patch) semantic_set "patch"; shift;;
+      -*) shift;;
+    esac
+done
+
+set -- "${args[@]}"
 
 while [[ $1  == -* ]]; do
     case "$1" in

@@ -68,6 +68,7 @@ import { CloudComponent } from './components/cloud/cloud.component';
 import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
 import { ProcessListCloudExampleComponent } from './components/cloud/process-list-cloud-example.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
+import { AppExtensionsModule } from './extensions/extensions.module';
 
 @NgModule({
     imports: [
@@ -86,7 +87,8 @@ import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample
         ThemePickerModule,
         ChartsModule,
         MonacoEditorModule.forRoot(),
-        ProcessServicesCloudModule
+        ProcessServicesCloudModule,
+        AppExtensionsModule.forRoot()
     ],
     declarations: [
         AppComponent,

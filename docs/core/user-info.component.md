@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-11-19
 ---
 
 # User Info component
@@ -28,5 +29,6 @@ Shows user information.
 
 ## Details
 
-This will show a round icon with user and on click some user information.
+The component shows a round icon for the user and will show extra information about
+the user when clicked.
 If user is logged in with both ACS and APS, the ACS image will be shown.

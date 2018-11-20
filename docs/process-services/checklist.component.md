@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-11-19
 ---
 
 # Checklist Component
@@ -13,7 +14,7 @@ Shows the checklist task functionality.
 <adf-checklist 
     [readOnly]="false" 
     [taskId]="taskId" 
-    [assignee]="taskAssignee.id" 
+    [assignee]="taskAssignee.id">
 </adf-checklist>
 ```
 

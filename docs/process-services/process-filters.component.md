@@ -44,9 +44,9 @@ Collection of criteria used to filter process instances, which may be customized
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<UserProcessInstanceFilterRepresentation>` | Emitted when the user selects a filter from the list. |
-| filterSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<ProcessInstanceFilterRepresentation>` | Emitted when a process filter is selected. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<ProcessInstanceFilterRepresentation[]>` | Emitted when the list of filters has been successfully loaded from the server. |
+| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-activiti-rest-api/docs/UserProcessInstanceFilterRepresentation.md)`>` | Emitted when the user selects a filter from the list. |
+| filterSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md)`>` | Emitted when a process filter is selected. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md)`[]>` | Emitted when the list of filters has been successfully loaded from the server. |
 
 ## Details
 
@@ -92,4 +92,3 @@ page for an example of how to do set this up.
 ## See also
 
 -   [Process Filter service](process-filter.service.md)
--   [Filter model](filter.model.md)

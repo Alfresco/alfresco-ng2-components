@@ -1,6 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-11-19
 ---
 
 # People Component
@@ -45,12 +46,12 @@ Displays users involved with a specified task
 
 ### How to customize the people component behavior
 
-The [people component](../process-services/people.component.md) provide two methods to customize the behavior:
+The [people component](../process-services/people.component.md) provides two options to customize its behavior:
 
--   involveUserAndCloseSearch: The selected user is going to be added and the search section closed
--   involveUserWithoutCloseSearch: The selected user is going to be added without close the search section
+-   _involveUserAndCloseSearch_: The selected user gets added and then the search section is closed
+-   _involveUserWithoutCloseSearch_: The selected user gets added without closing the search section
 
-In this way will be easy customize the [people component](../process-services/people.component.md) to involve the user with the single or double click event:
+This makes it easy to customize the [people component](../process-services/people.component.md) to involve the user via a single or double click event:
 
 ### Involve People single click and close search
 

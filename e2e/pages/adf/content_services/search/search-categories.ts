@@ -19,6 +19,7 @@ import Util = require('../../../../util/util');
 import { element, by } from 'protractor';
 import { SearchTextPage } from './components/search-text';
 import { SearchCheckListPage } from './components/search-checkList';
+import { SearchRadioPage } from './components/search-radio';
 import { DateRangeFilterPage } from './components/dateRangeFilterPage';
 
 export class SearchCategoriesPage {
@@ -29,6 +30,10 @@ export class SearchCategoriesPage {
 
     textFiltersPage(filter) {
         return new SearchTextPage(filter);
+    }
+
+    radioFiltersPage(filter) {
+        return new SearchRadioPage(filter);
     }
 
     dateRangeFilter(filter) {

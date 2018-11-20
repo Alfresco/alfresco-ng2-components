@@ -1,23 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-06-07
+Last reviewed: 2018-11-16
 ---
 
 # Task Filters component
 
 Shows all available filters.
-
-## Contents
-
--   [Basic Usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [Filtering APS task filters](#filtering-aps-task-filters)
-    -   [How to create an accordion menu with the task filter](#how-to-create-an-accordion-menu-with-the-task-filter)
--   [See also](#see-also)
 
 ## Basic Usage
 
@@ -34,7 +23,7 @@ Shows all available filters.
 | appId | `number` |  | Display filters available to the current user for the application with the specified ID. |
 | appName | `string` |  | Display filters available to the current user for the application with the specified name. |
 | filterParam | [`FilterParamsModel`](../../lib/process-services/task-list/models/filter.model.ts) |  | Parameters to use for the task filter. If there is no match then the default filter (the first one the list) is selected. |
-| showIcon| `boolean` | true | Toggles display of the filter's icon. |
+| showIcon | `boolean` |  | Toggles display of the filter's icon. |
 
 ### Events
 
@@ -70,7 +59,3 @@ as the value of `filterParam` as shown in the table below:
 The task filter often works well as an item in an accordion menu. See the
 [Accordion component](../core/accordion.component.md)
 page for an example of how to set this up.
-
-## See also
-
--   [Filter model](filter.model.md)
