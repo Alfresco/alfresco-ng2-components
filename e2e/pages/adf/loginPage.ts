@@ -73,7 +73,12 @@ export class LoginPage {
     clearUsername() {
         Util.waitUntilElementIsVisible(this.txtUsername);
         this.txtUsername.click();
-        return this.txtUsername.clear();
+        this.txtUsername.getAttribute('value').then((value) => {
+            for (let i = value.length; i >= 0; i--) {
+                this.txtUsername.sendKeys(protractor.Key.BACK_SPACE);
+            }
+        });
+        return this;
     }
 
     clearPassword() {
@@ -85,32 +90,24 @@ export class LoginPage {
         });
     }
 
-    checkUsernameTooltip(message) {
+    getUsernameTooltip() {
         Util.waitUntilElementIsVisible(this.usernameTooltip);
-        browser.controlFlow().execute(async () => {
-            await expect(this.loginTooltip.getText()).toEqual(message);
-        });
+        return this.usernameTooltip.getText();
     }
 
-    checkPasswordTooltip(message) {
+    getPasswordTooltip() {
         Util.waitUntilElementIsVisible(this.passwordTooltip);
-        browser.controlFlow().execute(async () => {
-            await expect(this.loginTooltip.getText()).toEqual(message);
-        });
+        return this.passwordTooltip.getText();
     }
 
-    checkLoginError(message) {
+    getLoginError() {
         Util.waitUntilElementIsVisible(this.loginTooltip);
-        browser.controlFlow().execute(async () => {
-            await expect(this.loginTooltip.getText()).toEqual(message);
-        });
+        return this.loginTooltip.getText();
     }
 
     checkLoginImgURL(url) {
         Util.waitUntilElementIsVisible(this.logoImg);
-        browser.controlFlow().execute(async () => {
-            await expect(this.logoImg.getAttribute('src')).toEqual(url);
-        });
+        return this.logoImg.getAttribute('src');
     }
 
     checkUsernameInactive() {
@@ -141,9 +138,7 @@ export class LoginPage {
 
     checkSignInButtonIsEnabled() {
         Util.waitUntilElementIsVisible(this.signInButton);
-        browser.controlFlow().execute(async () => {
-            await expect(this.signInButton.isEnabled()).toBe(true);
-        });
+        return this.signInButton.isEnabled();
     }
 
     loginToProcessServicesUsingUserModel(userModel) {
@@ -172,13 +167,6 @@ export class LoginPage {
         this.waitForElements();
     }
 
-    checkSignInButtonIsDisabled() {
-        Util.waitUntilElementIsVisible(this.signInButton);
-        browser.controlFlow().execute(async () => {
-            await expect(this.signInButton.isEnabled()).toBe(false);
-        });
-    }
-
     clickSignInButton() {
         Util.waitUntilElementIsVisible(this.signInButton);
         this.signInButton.click();
@@ -194,10 +182,8 @@ export class LoginPage {
         this.hidePasswordElement.click();
     }
 
-    checkPasswordIsShown(password) {
-        this.txtPassword.getAttribute('value').then(async (text) => {
-            await expect(text).toEqual(password);
-        });
+    getShownPassword() {
+        return this.txtPassword.getAttribute('value');
     }
 
     checkPasswordIsHidden() {

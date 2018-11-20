@@ -116,6 +116,19 @@ describe('Viewer', () => {
         done();
     });
 
+    it('[C272813] Should be redirected to site when opening and closing a file in a site', () => {
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        navigationBarPage.goToSite(site);
+        contentServicesPage.checkAcsContainer();
+
+        viewerPage.viewFile(pngFileUploaded.entry.name);
+
+        viewerPage.checkImgViewerIsDisplayed();
+
+        viewerPage.clickCloseButton();
+    });
+
     describe('Archive Folder Uploaded', () => {
         let uploadedArchives;
         let archiveFolderUploaded;
@@ -419,16 +432,5 @@ describe('Viewer', () => {
                 viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
             });
         });
-    });
-
-    it('[C272813] Should be redirected to site when opening and closing a file in a site', () => {
-        navigationBarPage.goToSite(site);
-        contentServicesPage.checkAcsContainer();
-
-        viewerPage.viewFile(pngFileUploaded.entry.name);
-
-        viewerPage.checkImgViewerIsDisplayed();
-
-        viewerPage.clickCloseButton();
     });
 });
