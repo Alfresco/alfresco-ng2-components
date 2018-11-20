@@ -17,7 +17,7 @@
 
 import { LoginAPSPage } from '../pages/adf/loginApsPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
-import { ProcessServicesCloudPage } from '../pages/adf/process_services_cloud/processServiceCloudPage';
+import { AppListCloudComponent } from '../pages/adf/process_services_cloud/appListCloudComponent';
 import TestConfig = require('../test.config');
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/NavigationBarPage';
@@ -27,7 +27,7 @@ describe('Applications list', () => {
     const settingsPage = new SettingsPage();
     const loginApsPage = new LoginAPSPage();
     const navigationBarPage = new NavigationBarPage();
-    const processServiceCloudPage = new ProcessServicesCloudPage();
+    const appListCloudComponent = new AppListCloudComponent();
     const path = '/auth/realms/springboot';
     const appName = 'task-app';
 
@@ -38,10 +38,10 @@ describe('Applications list', () => {
         await loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await navigationBarPage.clickProcessCloudButton();
 
-        processServiceCloudPage.checkApsContainer();
+        appListCloudComponent.checkApsContainer();
 
-        processServiceCloudPage.checkAppIsDisplayed(appName);
-        processServiceCloudPage.goToApp(appName);
+        appListCloudComponent.checkAppIsDisplayed(appName);
+        appListCloudComponent.goToApp(appName);
 
     });
 

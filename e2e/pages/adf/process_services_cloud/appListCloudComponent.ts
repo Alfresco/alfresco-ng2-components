@@ -16,35 +16,21 @@
  */
 
 import Util = require('../../../util/util');
-import { AppNavigationBarPage } from '../../../pages/adf/process_services/appNavigationBarPage';
 
 import { element, by } from 'protractor';
 
-export class ProcessServicesCloudPage {
+export class AppListCloudComponent {
 
-    apsAppsContainer = element(by.className('menu-container'));
-    processServices = element(by.css('a[data-automation-id="Process Services"]'));
-    taskApp = element(by.css('mat-card[title="Task App"]'));
-    iconTypeLocator = by.css('mat-icon[class*="card-logo-icon"]');
-    descriptionLocator = by.css('mat-card-subtitle[class*="subtitle"]');
-    processInstanceList = element(by.css('adf-process-instance-list'));
+    apsAppsContainer = element(by.css('adf-cloud-app-list'));
 
     checkApsContainer() {
         Util.waitUntilElementIsVisible(this.apsAppsContainer);
-    }
-
-    goToProcessServices() {
-        Util.waitUntilElementIsVisible(this.processServices);
-        this.processServices.click();
-        this.checkApsContainer();
-        return this;
     }
 
     goToApp(applicationName) {
         let app = element(by.css('mat-card[title="' + applicationName + '"]'));
         Util.waitUntilElementIsVisible(app);
         app.click();
-        return new AppNavigationBarPage();
     }
 
     checkAppIsNotDisplayed(applicationName) {
@@ -55,10 +41,6 @@ export class ProcessServicesCloudPage {
     checkAppIsDisplayed(applicationName) {
         let app = element(by.css('mat-card[title="' + applicationName + '"]'));
         return Util.waitUntilElementIsVisible(app);
-    }
-
-    checkProcessListIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.processInstanceList);
     }
 
 }
