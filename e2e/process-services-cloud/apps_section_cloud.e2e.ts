@@ -20,7 +20,7 @@ import { SettingsPage } from '../pages/adf/settingsPage';
 import { AppListCloudComponent } from '../pages/adf/process_services_cloud/appListCloudComponent';
 import TestConfig = require('../test.config');
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/NavigationBarPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('Applications list', () => {
 
