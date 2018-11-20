@@ -103,7 +103,7 @@ export class ProcessFilterCloudService {
             query: new ProcessInstanceQueryModel(
                 {
                     appName: appName,
-                    sort: 'createdDate',
+                    sort: 'startDate',
                     order: 'DESC'
                 }
             )
@@ -122,7 +122,7 @@ export class ProcessFilterCloudService {
             query: new ProcessInstanceQueryModel(
                 {
                     appName: appName,
-                    sort: 'createdDate',
+                    sort: 'startDate',
                     state: 'RUNNING',
                     order: 'DESC'
                 }
@@ -142,7 +142,7 @@ export class ProcessFilterCloudService {
             query: new ProcessInstanceQueryModel(
                 {
                     appName: appName,
-                    sort: 'createdDate',
+                    sort: 'startDate',
                     state: 'COMPLETED',
                     order: 'DESC'
                 }
