@@ -136,4 +136,8 @@ export class TaskListCloudDemoComponent implements OnInit {
         this.showStartProcess = false;
     }
 
+    onStartProcessCancelled() {
+        this.showStartProcess = false;
+    }
+
 }
