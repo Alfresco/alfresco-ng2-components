@@ -30,6 +30,8 @@ import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigatio
 import { AppSettingsToggles } from '../pages/adf/process_services/dialog/appSettingsToggles';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/tasksCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process_cloud/appListCloudComponent';
+import { StartTaskCloudService } from '../actions/APS-cloud/start-task-cloud.service';
+import { TaskDetailsCloudModel } from '../actions/APS-cloud/task-details-cloud.model';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { Tasks } from '../actions/APS-cloud/tasks';
@@ -50,6 +52,7 @@ describe('Task filters cloud', () => {
 
         let tasksCloudDemoPage = new TasksCloudDemoPage();
         const tasksService: Tasks = new Tasks();
+        let service: StartTaskCloudService;
 
 
         // let loginPage = new LoginPage();
@@ -91,7 +94,10 @@ describe('Task filters cloud', () => {
 
         fit('[C260330] Should display Task Filter List when app is in Task Tab', async() => {
             // creaza task cu call: createStandalone-task
-            let bla = await tasksService.createStandaloneTask('blaaaa', 'simple-app');
+            //let bla = await tasksService.createStandaloneTask('blaaaa', 'simple-app');
+            
+            service = new StartTaskCloudService();
+            let bla = await service.createNewTask();
 
             //tasksPage.createNewTask().addName('Test').clickStartButton();
             //taskFiltersDemoPage.myTasksFilter().clickTaskFilter();

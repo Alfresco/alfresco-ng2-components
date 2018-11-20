@@ -29,7 +29,8 @@ export class Tasks {
     }
 
     async createStandaloneTask(taskName, appName) {
-        const path = '/' + appName + '-rb/v1/tasks';//trebuie rb?
+        //const path = '/' + appName + '-rb/v1/tasks';//trebuie rb?
+        const path = 'aps2dev.envalfresco.com/simple-app-rb/v1/tasks';
         const method = 'POST';
         const queryParams = {}, postBody = {
             'name': taskName,

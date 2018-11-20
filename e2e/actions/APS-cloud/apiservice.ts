@@ -58,6 +58,7 @@ export class ApiService {
         try {
             wwww = await this.apiService.bpmClient.callCustomApi(uri, method, pathParams, queryParams, null, formParams, postBody,
                 authNames, contentTypes, accepts, {});
+            console.log("WWWWWWWWW: ", wwww.entry);
         } catch (error) {
             console.log(",jhgfdghjk ", error);
             throw (error);
@@ -65,7 +66,6 @@ export class ApiService {
         }
 
 
-        console.log("WWWWWWWWW: ", wwww);
         return wwww;
     }
 
