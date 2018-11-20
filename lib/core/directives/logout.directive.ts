@@ -24,11 +24,11 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class LogoutDirective implements OnInit {
 
-    /** Uri to be redirect after the logout default value login */
+    /** URI to redirect to after logging out. */
     @Input()
     redirectUri: string = '/login';
 
-    /** Enable redirect after logout */
+    /** Enable redirecting after logout */
     @Input()
     enableRedirect: boolean = true;
 

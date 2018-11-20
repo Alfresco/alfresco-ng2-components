@@ -277,14 +277,27 @@ export class AuthenticationService {
         return throwError(error || 'Server error');
     }
 
+    /**
+     * Gets the set of URLs that the token bearer is excluded from.
+     * @returns Array of URL strings
+     */
     getBearerExcludedUrls(): string[] {
         return this.bearerExcludedUrls;
     }
 
+    /**
+     * Gets the auth token.
+     * @returns Auth token string
+     */
     getToken(): string {
         return localStorage.getItem('access_token');
     }
 
+    /**
+     * Adds the auth token to an HTTP header using the 'bearer' scheme.
+     * @param headersArg Header that will receive the token
+     * @returns The new header with the token added
+     */
     addTokenToHeader(headersArg?: HttpHeaders): Observable<HttpHeaders> {
         return new Observable((observer: Observer<any>) => {
             let headers = headersArg;

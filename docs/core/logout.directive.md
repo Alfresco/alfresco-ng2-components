@@ -13,13 +13,14 @@ Logs the user out when the decorated element is clicked.
 <button adf-logout>Logout</button>
 ```
 
+## Class members
+
 ### Properties
 
 | Name | Type | Default value | Description |
-| -- | -- | -- | -- |
-| redirectUri | `string` |  'login' | Uri to be redirect after the logout |
-| enableRedirect | `boolean` |  'true' | enable/disable redirect after logout |
-
+| ---- | ---- | ------------- | ----------- |
+| enableRedirect | `boolean` | true | Enable redirecting after logout |
+| redirectUri | `string` | "/login" | URI to redirect to after logging out. |
 
 ## See also
 
