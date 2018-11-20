@@ -24,8 +24,8 @@ import { of, throwError } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { NodeEntry } from 'alfresco-js-api';
 import { SimpleChange } from '@angular/core';
-/*tslint:disable*/
-fdescribe('TreeViewComponent', () => {
+
+describe('TreeViewComponent', () => {
 
     let fixture: ComponentFixture<TreeViewComponent>;
     let element: HTMLElement;
