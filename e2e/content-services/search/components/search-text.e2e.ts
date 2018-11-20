@@ -30,7 +30,8 @@ import { SearchResultsPage } from '../../../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../../../pages/adf/searchFiltersPage';
 import { ConfigEditorPage } from '../../../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
-import path = require('path');
+
+import { SearchConfiguration } from '../search.config';
 
 describe('Search component - Text widget', () => {
 
@@ -43,7 +44,7 @@ describe('Search component - Text widget', () => {
     let searchResultPage = new SearchResultsPage();
 
     let acsUser = new AcsUserModel();
-    let newFolderModel = new FolderModel({ 'name': 'newFolder' , 'description': 'newDescription' });
+    let newFolderModel = new FolderModel({'name': 'newFolder', 'description': 'newDescription'});
 
     beforeAll(async (done) => {
 
@@ -62,9 +63,9 @@ describe('Search component - Text widget', () => {
             'name': newFolderModel.name,
             'nodeType': 'cm:folder',
             'properties':
-            {
-                'cm:description': newFolderModel.description
-            }
+                {
+                    'cm:description': newFolderModel.description
+                }
         }, {}, {});
 
         await browser.driver.sleep(10000);
@@ -82,42 +83,51 @@ describe('Search component - Text widget', () => {
         expect(searchFiltersPage.textFiltersPage().getNamePlaceholder()).toEqual('Enter the name');
     });
 
-    it('[C289330] Should be able to change the Field setting', () => {
-        browser.get(TestConfig.adf.url + '/search;q=*');
-        searchResultPage.tableIsLoaded();
+    describe('configuration change', () => {
 
-        searchFiltersPage.checkCheckListFilterIsDisplayed();
-        searchFiltersPage.clickCheckListFilter();
-        searchFiltersPage.checkListFiltersPage().clickCheckListOption('Folder');
+        let jsonFile;
 
-        searchFiltersPage.checkNameFilterIsDisplayed();
-        searchFiltersPage.textFiltersPage().searchByName(newFolderModel.name);
-        searchResultPage.checkContentIsDisplayed(newFolderModel.name);
+        beforeAll(() => {
+            let searchConfiguration = new SearchConfiguration();
+            jsonFile = searchConfiguration.getConfiguration();
+        });
 
-        searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
-        searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
+        it('[C289330] Should be able to change the Field setting', () => {
+            browser.get(TestConfig.adf.url + '/search;q=*');
+            searchResultPage.tableIsLoaded();
 
-        let json = JSON.parse(require('fs').readFileSync(path.join(TestConfig.main.rootPath, '/content-services/search/search.config.json'), 'utf8'));
-        json.categories[0].component.settings.field = 'cm:description';
+            searchFiltersPage.checkCheckListFilterIsDisplayed();
+            searchFiltersPage.clickCheckListFilter();
+            searchFiltersPage.checkListFiltersPage().clickCheckListOption('Folder');
 
-        navigationBarPage.clickConfigEditorButton();
-        configEditorPage.clickSearchConfiguration();
-        configEditorPage.clickClearButton();
-        configEditorPage.enterBigConfigurationText(JSON.stringify(json));
-        configEditorPage.clickSaveButton();
+            searchFiltersPage.checkNameFilterIsDisplayed();
+            searchFiltersPage.textFiltersPage().searchByName(newFolderModel.name);
+            searchResultPage.checkContentIsDisplayed(newFolderModel.name);
 
-        searchDialog.clickOnSearchIcon().enterTextAndPressEnter('*');
-        searchResultPage.tableIsLoaded();
+            searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
+            searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
 
-        searchFiltersPage.checkCheckListFilterIsDisplayed();
-        searchFiltersPage.clickCheckListFilter();
-        searchFiltersPage.checkListFiltersPage().clickCheckListOption('Folder');
+            jsonFile.categories[0].component.settings.field = 'cm:description';
 
-        searchFiltersPage.checkNameFilterIsDisplayed();
-        searchFiltersPage.textFiltersPage().searchByName(newFolderModel.name);
-        searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
+            navigationBarPage.clickConfigEditorButton();
+            configEditorPage.clickSearchConfiguration();
+            configEditorPage.clickClearButton();
+            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
+            configEditorPage.clickSaveButton();
 
-        searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
-        searchResultPage.checkContentIsDisplayed(newFolderModel.name);
+            searchDialog.clickOnSearchIcon().enterTextAndPressEnter('*');
+            searchResultPage.tableIsLoaded();
+
+            searchFiltersPage.checkCheckListFilterIsDisplayed();
+            searchFiltersPage.clickCheckListFilter();
+            searchFiltersPage.checkListFiltersPage().clickCheckListOption('Folder');
+
+            searchFiltersPage.checkNameFilterIsDisplayed();
+            searchFiltersPage.textFiltersPage().searchByName(newFolderModel.name);
+            searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
+
+            searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
+            searchResultPage.checkContentIsDisplayed(newFolderModel.name);
+        });
     });
 });
