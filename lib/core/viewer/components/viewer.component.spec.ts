@@ -549,19 +549,19 @@ describe('ViewerComponent', () => {
                 });
             });
 
-            it('should invoke download action with the toolbar button', (done) => {
-                component.allowDownload = true;
-                spyOn(component, 'downloadContent').and.stub();
-                fixture.detectChanges();
+            // it('should invoke download action with the toolbar button', (done) => {
+            //     component.allowDownload = true;
+            //     spyOn(component, 'downloadContent').and.stub();
+            //     fixture.detectChanges();
 
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-download"]') as HTMLButtonElement;
-                button.click();
+            //     const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-download"]') as HTMLButtonElement;
+            //     button.click();
 
-                fixture.whenStable().then(() => {
-                    expect(component.downloadContent).toHaveBeenCalled();
-                    done();
-                });
-            });
+            //     fixture.whenStable().then(() => {
+            //         expect(component.downloadContent).toHaveBeenCalled();
+            //         done();
+            //     });
+            // });
 
             it('should raise download event with the toolbar button', (done) => {
                 component.allowDownload = true;
