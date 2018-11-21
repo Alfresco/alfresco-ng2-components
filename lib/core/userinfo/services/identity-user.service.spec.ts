@@ -1,4 +1,3 @@
-import { mockToken } from './../../mock/jwt-helper.service.spec';
 /*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
@@ -20,6 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { IdentityUserService } from '../services/identity-user.service';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
+import { mockToken } from './../../mock/jwt-helper.service.spec';
 
 describe('IdentityUserService', () => {
 
