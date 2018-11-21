@@ -88,7 +88,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(newTask);
         });
 
-        // failling due to ACTIVITI-2463
+        // failing due to ACTIVITI-2463
         xit('[C289955] Should display task in Complete Tasks List when task is completed', async() => {
             await tasksService.init(user, password);
             let task = await tasksService.createStandaloneTask(completedTask, simpleApp);
