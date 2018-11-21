@@ -1,5 +1,8 @@
 <h2>TASK LIST CLOUD DEMO</h2>
-<adf-cloud-task-filters [appName]="'my-app'" [showIcons]="true" (filterClick)="onFilterSelected($event)">
+<adf-cloud-task-filters
+    [appName]="'my-app'"
+    [showIcons]="true"
+    (filterClick)="onFilterSelected($event)">
 </adf-cloud-task-filters>
 
 <mat-accordion>
@@ -42,7 +45,7 @@
                 <mat-select [formControl]="sortFormControl">
                     <mat-option [value]="''">Select a column</mat-option>
                     <mat-option *ngFor="let column of columns" [value]="column.key">
-                        {{column.label}}
+                    {{column.label}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -62,8 +65,12 @@
     </mat-expansion-panel>
 </mat-accordion>
 <div>
-    <adf-cloud-task-list *ngIf="isFilterLoaded" #taskCloud [applicationName]="applicationName" [status]="status"
-        [landingTaskId]="selectTask" [sorting]="sortArray" (rowClick)="onRowClick($event)">
+    <adf-cloud-task-list *ngIf="isFilterLoaded" #taskCloud
+                         [applicationName]="applicationName"
+                         [status]="status"
+                         [landingTaskId]="selectTask"
+                         [sorting]="sortArray"
+                         (rowClick)="onRowClick($event)">
         <data-columns>
             <data-column key="entry.id" title="Id"></data-column>
             <data-column key="entry.name" title="Name"></data-column>
@@ -73,28 +80,7 @@
             <data-column key="entry.createdDate" title="Created Date"></data-column>
         </data-columns>
     </adf-cloud-task-list>
-    <adf-pagination [target]="taskCloud" (changePageSize)="onChangePageSize($event)">
+    <adf-pagination [target]="taskCloud"
+                    (changePageSize)="onChangePageSize($event)">
     </adf-pagination>
-</div>
-
-<div class="adf-start-process-button">
-    <adf-sidebar-action-menu [expanded]="true" title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
-        <mat-icon sidebar-menu-title-icon>arrow_drop_down</mat-icon>
-        <div sidebar-menu-options>
-            <button mat-menu-item data-automation-id="btn-start-process" (click)="onStartProcess()">
-                <mat-icon>assessment</mat-icon>
-                <span>{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.NEW_PROCESS' | translate}}</span>
-            </button>
-        </div>
-    </adf-sidebar-action-menu>
-</div>
-
-
-<div *ngIf="showStartProcess">
-    <adf-cloud-start-process 
-        [appName]="applicationName" 
-        [name]="defaultProcessName" 
-        (start)="onProcessStarted()" 
-        (cancel)="onStartProcessCancelled()">
-    </adf-cloud-start-process>
 </div>
