@@ -27,7 +27,6 @@ export * from './info-drawer/index';
 export * from './data-column/index';
 export * from './datatable/index';
 export * from './context-menu/index';
-export * from './collapsable/index';
 export * from './card-view/index';
 export * from './app-config/index';
 export * from './form/index';

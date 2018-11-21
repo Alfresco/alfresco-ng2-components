@@ -26,7 +26,6 @@ import { MaterialModule } from './material.module';
 import { AboutModule } from './about/about.module';
 import { AppConfigModule } from './app-config/app-config.module';
 import { CardViewModule } from './card-view/card-view.module';
-import { CollapsableModule } from './collapsable/collapsable.module';
 import { ContextMenuModule } from './context-menu/context-menu.module';
 import { DataColumnModule } from './data-column/data-column.module';
 import { DataTableModule } from './datatable/datatable.module';
@@ -79,7 +78,6 @@ export function createTranslateLoader(http: HttpClient) {
         ToolbarModule,
         ContextMenuModule,
         CardViewModule,
-        CollapsableModule,
         FormModule,
         CommentsModule,
         LoginModule,
@@ -117,7 +115,6 @@ export function createTranslateLoader(http: HttpClient) {
         ToolbarModule,
         ContextMenuModule,
         CardViewModule,
-        CollapsableModule,
         FormModule,
         CommentsModule,
         LoginModule,
@@ -153,7 +150,6 @@ export class CoreModuleLazy {
         ToolbarModule,
         ContextMenuModule,
         CardViewModule,
-        CollapsableModule,
         FormModule,
         CommentsModule,
         LoginModule,
@@ -191,7 +187,6 @@ export class CoreModuleLazy {
         ToolbarModule,
         ContextMenuModule,
         CardViewModule,
-        CollapsableModule,
         FormModule,
         CommentsModule,
         LoginModule,
