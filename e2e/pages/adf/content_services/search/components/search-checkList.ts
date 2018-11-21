@@ -24,6 +24,7 @@ export class SearchCheckListPage {
     inputBy = by.css('div[class*="mat-expansion-panel-content"] input');
     showMoreBy = by.css('button[title="Show more"]');
     showLessBy = by.css('button[title="Show less"]');
+    clearAllButton = by.css('button');
 
     constructor(filter) {
         this.filter = filter;
@@ -89,6 +90,11 @@ export class SearchCheckListPage {
         return this;
     }
 
+    checkShowMoreButtonIsNotDisplayed() {
+        Util.waitUntilElementIsNotVisible(this.filter.element(this.showMoreBy));
+        return this;
+    }
+
     clickShowMoreButtonUntilIsNotDisplayed() {
         this.filter.element(this.showMoreBy).isDisplayed().then(async (visible) => {
             if (visible) {
@@ -123,6 +129,53 @@ export class SearchCheckListPage {
         });
 
         return bucketNumber;
+    }
+
+    checkCheckListOptionIsDisplayed(option) {
+        Util.waitUntilElementIsVisible(this.filter);
+        let result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}']`));
+        return Util.waitUntilElementIsVisible(result);
+    }
+
+    checkCheckListOptionIsNotSelected(option) {
+        Util.waitUntilElementIsVisible(this.filter);
+        let result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`));
+        return Util.waitUntilElementIsNotVisible(result);
+    }
+
+    checkCheckListOptionIsSelected(option) {
+        Util.waitUntilElementIsVisible(this.filter);
+        let result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'][class*='checked']`));
+        return Util.waitUntilElementIsVisible(result);
+    }
+
+    checkClearAllButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.filter);
+        let result = this.filter.element(this.clearAllButton);
+        return Util.waitUntilElementIsVisible(result);
+    }
+
+    clickClearAllButton() {
+        Util.waitUntilElementIsVisible(this.filter);
+        let result = this.filter.element(this.clearAllButton);
+        Util.waitUntilElementIsVisible(result);
+        return result.click();
+    }
+
+    getCheckListOptionsNumberOnPage() {
+        Util.waitUntilElementIsVisible(this.filter);
+        let checkListOptions = this.filter.all(by.css('div[class="checklist"] mat-checkbox'));
+        return checkListOptions.count();
+    }
+
+    clickShowMoreButton() {
+        Util.waitUntilElementIsVisible(this.filter.element(this.showMoreBy));
+        return this.filter.element(this.showMoreBy).click();
+    }
+
+    clickShowLessButton() {
+        Util.waitUntilElementIsVisible(this.filter.element(this.showLessBy));
+        return this.filter.element(this.showLessBy).click();
     }
 
 }

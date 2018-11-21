@@ -31,7 +31,6 @@ export class SearchFiltersPage {
     checkListFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]'));
     createdDateRangeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Created Date (range)"]'));
     typeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type"]'));
-    createdDateRangeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Created Date (range)"]'));
 
     checkSearchFiltersIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchFilters);
@@ -105,6 +104,10 @@ export class SearchFiltersPage {
     checkFileSizeFilterIsCollapsed() {
         this.searchCategoriesPage.checkFilterIsCollapsed(this.fileSizeFilter);
         return this;
+    }
+
+    checkCheckListFilterIsCollapsed() {
+        this.searchCategoriesPage.checkFilterIsCollapsed(this.checkListFilter);
     }
 
     checkCreatedRangeFilterIsDisplayed() {
