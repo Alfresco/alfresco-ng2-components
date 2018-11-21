@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-var Util = require('../../../util/util');
-var DataTablePage = require('../dataTablePage');
+import Util = require('../../../util/util');
+import DataTablePage = require('../dataTablePage');
 import { element, by } from 'protractor';
 
 export class TaskListCloudComponent {
 
-    taskList = element(by.css("adf-tasklist"));
+    taskList = element(by.css('adf-tasklist'));
     noTasksFound = element(by.css("p[class='adf-empty-content__title']"));
 
     dataTable = new DataTablePage(this.taskList);

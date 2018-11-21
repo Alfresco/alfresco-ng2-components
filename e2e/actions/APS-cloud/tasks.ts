@@ -34,7 +34,7 @@ export class Tasks {
 
         const queryParams = {}, postBody = {
             'name': taskName,
-            "payloadType":"CreateTaskPayload"
+            'payloadType': 'CreateTaskPayload'
         };
 
         const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
@@ -45,7 +45,7 @@ export class Tasks {
         const path = '/' + appName + '-rb/v1/tasks/' + taskId + '/complete';
         const method = 'POST';
 
-        const queryParams = {}, postBody = {"payloadType":"CompleteTaskPayload"};
+        const queryParams = {}, postBody = {'payloadType': 'CompleteTaskPayload'};
 
         const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
         return data;
