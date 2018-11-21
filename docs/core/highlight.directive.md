@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-10
+Last reviewed: 2018-11-20
 ---
 
 # Highlight directive
@@ -43,7 +43,7 @@ of that term in its content. For example:
 </div>
 ```
 
-...will result in the word "dance" being highlighted. Note that you must also
+This will result in the word "dance" being highlighted. Note that you must also
 specify `adf-highlight-selector`, a CSS selector that specifies which
 elements can have their contents highlighted.
 

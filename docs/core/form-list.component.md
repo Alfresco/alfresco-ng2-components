@@ -1,11 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
+Last reviewed: 2018-11-20
 ---
 
 # Form List Component
 
-Shows APS forms as a list.
+Shows forms as a list.
 
 ## Basic Usage
 

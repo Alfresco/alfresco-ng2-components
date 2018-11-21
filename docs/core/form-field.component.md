@@ -1,12 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-05-08
+Last reviewed: 2018-11-20
 ---
 
 # Form field component
 
-A form field in an APS form.
+Represents a UI field in a form.
 
 ## Basic Usage
 
@@ -26,7 +26,7 @@ based on the field type or the metadata information.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| field | [`FormFieldModel`](../core/form-field.model.md) | null | Contains all the necessary data needed to determine what UI Widget to use when rendering the field in the form. You would typically not create this data manually but instead create the form in APS and export it to get to all the [`FormFieldModel`](../core/form-field.model.md) definitions. |
+| field | [`FormFieldModel`](../core/form-field.model.md) | null | Contains all the necessary data needed to determine what UI [`Widget`](../../e2e/pages/adf/process_services/widgets/widget.ts) to use when rendering the field in the form. You would typically not create this data manually but instead create the form in APS and export it to get to all the `FormFieldModel` definitions. |
 
 ## Details
 
@@ -37,8 +37,8 @@ uses `<adf-form-field>` components to render the form fields.
 
 Forms defined in APS have the following default mappings for the form fields:
 
-| APS [`Form`](../../lib/process-services/task-list/models/form.model.ts) Designer Widget | Field Type | Component Type |
-| --------------------------------------------------------------------------------------- | ---------- | -------------- |
+| _APS [Form](../../lib/process-services/task-list/models/form.model.ts) Designer_ [`Widget`](../../e2e/pages/adf/process_services/widgets/widget.ts) | Field Type | Component Type |
+| --------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------------- |
 | Text | text | [`TextWidgetComponent`](../../lib/core/form/components/widgets/text/text.widget.ts) |
 | Multi-line text | multi-line-text | [`MultilineTextWidgetComponentComponent`](../../lib/core/form/components/widgets/multiline-text/multiline-text.widget.ts) |
 | Number | integer | [`NumberWidgetComponent`](../../lib/core/form/components/widgets/number/number.widget.ts) |
@@ -54,7 +54,7 @@ Forms defined in APS have the following default mappings for the form fields:
 | Hyperlink | hyperlink | [`HyperlinkWidgetComponent`](../../lib/core/form/components/widgets/hyperlink/hyperlink.widget.ts) |
 | Header | group | [`ContainerWidgetComponent`](../../lib/core/form/components/widgets/container/container.widget.ts) |
 | Attach File | upload | AttachWidgetComponent or [`UploadWidgetComponent`](../../lib/core/form/components/widgets/upload/upload.widget.ts) (based on metadata) |
-| Display value | readonly | [`TextWidgetComponent`] (../../lib/core/form/components/widgets/text/text.widget.ts) |
+| Display value | readonly | [`TextWidgetComponent`](../../lib/core/form/components/widgets/text/text.widget.ts) |
 | Display text | readonly-text | [`DisplayTextWidgetComponent`](../../lib/core/form/components/widgets/display-text/display-text.widget.ts) |
 | N/A | container | [`ContainerWidgetComponent`](../../lib/core/form/components/widgets/container/container.widget.ts) (layout component) |
 | N/A | N/A | [`UnknownWidgetComponent`](../../lib/core/form/components/widgets/unknown/unknown.widget.ts) |

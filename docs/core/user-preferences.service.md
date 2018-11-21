@@ -1,12 +1,12 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-09-14
+Last reviewed: 2018-11-20
 ---
 
 # User Preferences Service
 
-Stores preferences for components.
+Stores preferences for the app and for individual components.
 
 ## Class members
 
@@ -99,7 +99,7 @@ The service also provides quick access to a set of the "known" properties used a
 
 ## User Preference onChange Stream
 
-Whenever a property is set with the user preference service, an `onChange` event is sent with the
+Whenever a property is set with the [user preferences service,](../core/user-preferences.service.md) an `onChange` event is sent with the
 whole set of user properties. This is useful when a component needs to react to a property change:
 
 ```ts

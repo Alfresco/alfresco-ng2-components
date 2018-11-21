@@ -1,7 +1,7 @@
 ---
 Added: v2.3.0
 Status: Active
-Last reviewed: 2018-09-13
+Last reviewed: 2018-11-20
 ---
 
 # Permission List Component
