@@ -1,10 +1,19 @@
 <div>TREE VIEW TEST</div>
 <mat-form-field class="example-full-width">
-    <input matInput placeholder="Node Id" [(ngModel)]="nodeIdSample">
+    <input matInput placeholder="Node Id"
+                [(ngModel)]="nodeIdSample"
+                (ngModelChange)="reset()">
 </mat-form-field>
 <span>
     CLICKED NODE: {{clickedNodeName}}
 </span>
 
-<adf-tree-view-list [nodeId]="nodeIdSample" (nodeClicked)="onClick($event)">
+<adf-tree-view-list *ngIf="!errorMessage; else erroOccurred"
+        [nodeId]="nodeIdSample"
+        (nodeClicked)="onClick($event)"
+        (error)="onErrorOccurred($event)">
 </adf-tree-view-list>
+<ng-template #erroOccurred>
+    <span>An Error Occurred </span>
+    <span>{{errorMessage}}</span>
+</ng-template>

@@ -25,10 +25,21 @@ import { Component } from '@angular/core';
 export class TreeViewSampleComponent {
 
     clickedNodeName: string = '';
+    errorMessage = '';
 
     nodeIdSample: string = '-my-';
 
     onClick(node) {
         this.clickedNodeName = node.entry.name;
+    }
+
+    reset() {
+        this.clickedNodeName = '';
+        this.errorMessage = '';
+    }
+
+    onErrorOccurred(error) {
+        this.clickedNodeName = '';
+        this.errorMessage = error;
     }
 }
