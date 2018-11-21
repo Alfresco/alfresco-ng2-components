@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-import { LogService, StorageService } from '@alfresco/adf-core';
+import { StorageService, JwtHelperService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin } from 'rxjs';
-import { FilterRepresentationModel, QueryModel } from '../models/filter-cloud.model';
+import { Observable } from 'rxjs';
+import { TaskFilterCloudRepresentationModel, QueryModel } from '../models/filter-cloud.model';
 
 @Injectable()
 export class TaskFilterCloudService {
 
-    constructor(private logService: LogService,
-                private storage: StorageService) {
+    constructor(private storage: StorageService, private jwtService: JwtHelperService) {
     }
 
     /**
@@ -32,34 +31,14 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of default filters just created
      */
-    public createDefaultFilters(appName: string): Observable<FilterRepresentationModel[]> {
-        let involvedTasksFilter = this.getInvolvedTasksFilterInstance(appName);
-        let involvedObservable = this.addFilter(involvedTasksFilter);
-
+    public createDefaultFilters(appName: string): Observable<TaskFilterCloudRepresentationModel[]> {
         let myTasksFilter = this.getMyTasksFilterInstance(appName);
-        let myTaskObservable = this.addFilter(myTasksFilter);
-
-        let queuedTasksFilter = this.getQueuedTasksFilterInstance(appName);
-        let queuedObservable = this.addFilter(queuedTasksFilter);
+        this.addFilter(myTasksFilter);
 
         let completedTasksFilter = this.getCompletedTasksFilterInstance(appName);
-        let completeObservable = this.addFilter(completedTasksFilter);
+        this.addFilter(completedTasksFilter);
 
-        return new Observable((observer) => {
-            forkJoin(
-                involvedObservable,
-                myTaskObservable,
-                queuedObservable,
-                completeObservable
-            ).subscribe(
-                (filters) => {
-                    observer.next(filters);
-                    observer.complete();
-                },
-                (err: any) => {
-                    this.logService.error(err);
-                });
-        });
+        return this.getTaskListFilters(appName);
     }
 
     /**
@@ -67,7 +46,7 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of task filter details
      */
-    getTaskListFilters(appName?: string): Observable<FilterRepresentationModel[]> {
+    getTaskListFilters(appName?: string): Observable<TaskFilterCloudRepresentationModel[]> {
         let key = 'task-filters-' + appName;
         const filters = JSON.parse(this.storage.getItem(key) || '[]');
         return new Observable(function(observer) {
@@ -81,7 +60,7 @@ export class TaskFilterCloudService {
      * @param filter The new filter to add
      * @returns Details of task filter just added
      */
-    addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
+    addFilter(filter: TaskFilterCloudRepresentationModel): Observable<TaskFilterCloudRepresentationModel> {
         const key = 'task-filters-' + filter.query.appName || '0';
         let filters = JSON.parse(this.storage.getItem(key) || '[]');
 
@@ -95,25 +74,18 @@ export class TaskFilterCloudService {
         });
     }
 
-    /**
-     * Creates and returns a filter for "Involved" task instances.
-     * @param appName Name of the target app
-     * @returns The newly created filter
-     */
-    getInvolvedTasksFilterInstance(appName: string): FilterRepresentationModel {
-        return new FilterRepresentationModel({
-            name: 'Cancelled Tasks',
-            icon: 'view_headline',
-            query: new QueryModel(
-                {
-                    appName: appName,
-                    sort: 'id',
-                    state: 'CANCELLED',
-                    assignment: 'involved',
-                    order: 'DESC'
-                }
-            )
-        });
+    getUsername(): string {
+        return this.getValueFromToken<string>('preferred_username');
+    }
+
+    getValueFromToken<T>(key: string): T {
+        let value;
+        const token = localStorage.getItem('access_token');
+        if (token) {
+            const tokenPayload = this.jwtService.decodeToken(token);
+            value = tokenPayload[key];
+        }
+        return <T> value;
     }
 
     /**
@@ -121,38 +93,19 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getMyTasksFilterInstance(appName: string): FilterRepresentationModel {
-        return new FilterRepresentationModel({
+    getMyTasksFilterInstance(appName: string): TaskFilterCloudRepresentationModel {
+        const username = this.getUsername();
+        return new TaskFilterCloudRepresentationModel({
+            id: Math.random().toString(36).substr(2, 9),
             name: 'My Tasks',
             icon: 'inbox',
             query: new QueryModel(
                 {
                     appName: appName,
+                    state: 'ASSIGNED',
+                    assignment: username,
                     sort: 'id',
-                    state: 'CREATED',
-                    assignment: 'assignee',
                     order: 'ASC'
-                }
-            )
-        });
-    }
-
-    /**
-     * Creates and returns a filter for "Queued Tasks" task instances.
-     * @param appName Name of the target app
-     * @returns The newly created filter
-     */
-    getQueuedTasksFilterInstance(appName: string): FilterRepresentationModel {
-        return new FilterRepresentationModel({
-            name: 'Suspended Tasks',
-            icon: 'adjust',
-            query: new QueryModel(
-                {
-                    appName: appName,
-                    sort: 'createdDate',
-                    state: 'SUSPENDED',
-                    assignment: 'candidate',
-                    order: 'DESC'
                 }
             )
         });
@@ -163,16 +116,17 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getCompletedTasksFilterInstance(appName: string): FilterRepresentationModel {
-        return new FilterRepresentationModel({
+    getCompletedTasksFilterInstance(appName: string): TaskFilterCloudRepresentationModel {
+        return new TaskFilterCloudRepresentationModel({
+            id: Math.random().toString(36).substr(2, 9),
             name: 'Completed Tasks',
             icon: 'done',
             query: new QueryModel(
                 {
                     appName: appName,
-                    sort: 'createdDate',
                     state: 'COMPLETED',
-                    assignment: 'involved',
+                    assignment: '',
+                    sort: 'id',
                     order: 'ASC'
                 }
             )

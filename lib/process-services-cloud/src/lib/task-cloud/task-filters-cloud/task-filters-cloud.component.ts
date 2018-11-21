@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
-import { FilterRepresentationModel } from '../models/filter-cloud.model';
+import { TaskFilterCloudRepresentationModel, FilterParamsModel } from '../models/filter-cloud.model';
 @Component({
     selector: 'adf-cloud-task-filters',
     templateUrl: './task-filters-cloud.component.html',
@@ -30,13 +30,13 @@ export class TaskFiltersCloudComponent implements OnChanges {
     appName: string;
 
     @Input()
-    filterParam: FilterRepresentationModel;
+    filterParam: FilterParamsModel;
 
     @Input()
     showIcons: boolean = false;
 
     @Output()
-    filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
+    filterClick: EventEmitter<TaskFilterCloudRepresentationModel> = new EventEmitter<TaskFilterCloudRepresentationModel>();
 
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
@@ -44,11 +44,11 @@ export class TaskFiltersCloudComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    filters$: Observable<FilterRepresentationModel[]>;
+    filters$: Observable<TaskFilterCloudRepresentationModel[]>;
 
-    currentFilter: FilterRepresentationModel;
+    currentFilter: TaskFilterCloudRepresentationModel;
 
-    filters: FilterRepresentationModel [] = [];
+    filters: TaskFilterCloudRepresentationModel [] = [];
 
     constructor(private taskFilterCloudService: TaskFilterCloudService) {
     }
@@ -70,7 +70,7 @@ export class TaskFiltersCloudComponent implements OnChanges {
         this.filters$ = this.taskFilterCloudService.getTaskListFilters(appName);
 
         this.filters$.subscribe(
-            (res: FilterRepresentationModel[]) => {
+            (res: TaskFilterCloudRepresentationModel[]) => {
                 if (res.length === 0) {
                     this.createFilters(appName);
                 } else {
@@ -93,7 +93,7 @@ export class TaskFiltersCloudComponent implements OnChanges {
         this.filters$ =  this.taskFilterCloudService.createDefaultFilters(appName);
 
         this.filters$.subscribe(
-            (resDefault: FilterRepresentationModel[]) => {
+            (resDefault: TaskFilterCloudRepresentationModel[]) => {
                 this.resetFilter();
                 this.filters = resDefault;
             },
@@ -106,7 +106,7 @@ export class TaskFiltersCloudComponent implements OnChanges {
     /**
      * Pass the selected filter as next
      */
-    public selectFilter(newFilter: FilterRepresentationModel) {
+    public selectFilter(newFilter: FilterParamsModel) {
         if (newFilter) {
             this.currentFilter = this.filters.find((filter) =>
                 (newFilter.name &&
@@ -118,7 +118,7 @@ export class TaskFiltersCloudComponent implements OnChanges {
         }
     }
 
-    public selectFilterAndEmit(newFilter: FilterRepresentationModel) {
+    public selectFilterAndEmit(newFilter: FilterParamsModel) {
         this.selectFilter(newFilter);
         this.filterClick.emit(this.currentFilter);
     }
@@ -135,7 +135,7 @@ export class TaskFiltersCloudComponent implements OnChanges {
     /**
      * Return the current task
      */
-    getCurrentFilter(): FilterRepresentationModel {
+    getCurrentFilter(): TaskFilterCloudRepresentationModel {
         return this.currentFilter;
     }
 

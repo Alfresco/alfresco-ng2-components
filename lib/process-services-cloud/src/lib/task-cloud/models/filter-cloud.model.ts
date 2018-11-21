@@ -33,20 +33,35 @@ export class QueryModel {
         }
     }
 }
-export class FilterRepresentationModel {
+export class TaskFilterCloudRepresentationModel  {
+    id: string;
     name: string;
     icon: string;
     query: QueryModel;
 
     constructor(obj?: any) {
         if (obj) {
-            this.name = obj.name || null;
-            this.icon = obj.icon || null;
+            this.id = obj.id;
+            this.name = obj.name;
+            this.icon = obj.icon;
             this.query = new QueryModel(obj.query);
         }
     }
 
     hasFilter() {
         return !!this.query;
+    }
+}
+export class FilterParamsModel {
+    id: number;
+    name: string;
+    index: number;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.id = obj.id || null;
+            this.name = obj.name || null;
+            this.index = obj.index;
+        }
     }
 }
