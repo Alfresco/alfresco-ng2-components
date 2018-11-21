@@ -19,14 +19,14 @@ import {
     Component, EventEmitter, Input, OnChanges, OnInit,
     Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
-import { ProcessInstanceVariableCloud } from '../models/process-instance-variable-cloud.model';
 import { ProcessDefinitionRepresentationCloud } from '../models/process-definition-cloud.model';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessCloudService } from './../services/process-cloud.service';
 
-import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder } from '@angular/forms';
+import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-cloud-start-process',
@@ -36,23 +36,23 @@ import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 })
 export class StartProcessCloudComponent implements OnChanges, OnInit {
 
+    @ViewChild(MatAutocompleteTrigger)
+    inputAutocomplete: MatAutocompleteTrigger;
+
     @Input()
     appName: string;
-
-    @Input()
-    processDefinitionName: string;
-
-    @Input()
-    variables: ProcessInstanceVariableCloud;
 
     @Input()
     name: string = '';
 
     @Input()
-    showSelectProcessDropdown: boolean = true;
+    processDefinitionName: string;
 
     @Input()
-    processFilterSelector: boolean = true;
+    variables: Map<string, object>[];
+
+    @Input()
+    showSelectProcessDropdown: boolean = true;
 
     @Output()
     start: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
@@ -63,19 +63,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     @Output()
     error: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
 
-    @ViewChild(MatAutocompleteTrigger)
-    inputAutocomplete: MatAutocompleteTrigger;
-
-    processDefinitions: ProcessDefinitionRepresentationCloud[] = [];
-
+    processDefinitionList: ProcessDefinitionRepresentationCloud[] = [];
     errorMessageId: string = '';
-
     processForm: FormGroup;
-
     processPayloadCloud = new ProcessPayloadCloud();
-
-    filteredProcesses: ProcessDefinitionRepresentationCloud[];
-
+    filteredProcesses: ProcessDefinitionRepresentationCloud[] = [];
     isLoading = false;
 
     constructor(private processCloudService: ProcessCloudService,
@@ -84,82 +76,75 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     ngOnInit() {
         this.processForm = this.formBuilder.group({
-            processName: new FormControl(this.name, Validators.required),
-            processDefinition: new FormControl('', Validators.required)
+            processInstanceName: new FormControl(this.name, Validators.required),
+            processDefinition: new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
         });
 
-        this.processForm.valueChanges.subscribe((formValues) => {
-            if (this.processForm.valid) {
-                this.createProcessInstance(formValues);
-            }
-        });
+        this.processInstanceName.valueChanges
+            .pipe(debounceTime(300))
+            .subscribe((processInstanceName) => {
+                if (this.processForm.valid) {
+                    this.processPayloadCloud.processInstanceName = processInstanceName;
+                }
+            });
 
-        this.loadStartProcess();
-
-        this.processPayloadCloud.variables = this.variables;
+        this.processDefinition.valueChanges
+            .pipe(debounceTime(300))
+            .subscribe((processDefinitionName) => {
+                this.processPayloadCloud.processDefinitionKey = null;
+                if (this.processDefinition.valid) {
+                    this.setProcessDefinitionOnForm(processDefinitionName);
+                }
+            });
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['appName'] && changes['appName'].currentValue) {
             this.appName = changes['appName'].currentValue;
-        }
-
-        this.loadStartProcess();
-    }
-
-    createProcessInstance(formValues) {
-        this.processPayloadCloud.processInstanceName = formValues.processName;
-        this.filteredProcesses = this.filter(formValues.processDefinition);
-    }
-
-    validateForm(): boolean {
-        return this.processForm.valid && this.processPayloadCloud.processDefinitionKey !== null;
-    }
-
-    private filter(value: string): ProcessDefinitionRepresentationCloud[] {
-        if (value !== null && value !== undefined) {
-            const filterValue = value.toLowerCase();
-            let filteredProcesses = this.processDefinitions.filter(option => option.name.toLowerCase().includes(filterValue));
-
-            if (this.processFilterSelector) {
-                this.processPayloadCloud.processDefinitionKey = this.getSelectedProcess(filterValue).key;
-            }
-            return filteredProcesses;
+            this.loadProcessDefinitions();
         }
     }
 
-    getSelectedProcess(selectedProcess) {
-        let processSelected = this.processDefinitions.find(process => process.name.toLowerCase() === selectedProcess);
-
-        if (!processSelected) {
-            processSelected = new ProcessDefinitionRepresentationCloud();
-        }
-        return processSelected;
+    setProcessDefinitionOnForm(processDefinitionName: string) {
+        this.filteredProcesses = this.getProcessDefinitionList(processDefinitionName);
+        const selectedProcess = this.selectProcessIfExists(processDefinitionName);
+        this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
     }
 
-    public loadStartProcess() {
+    private getProcessDefinitionList(processDefinitionName: string): ProcessDefinitionRepresentationCloud[] {
+        return this.processDefinitionList.filter(option => option.name.toLowerCase().includes(processDefinitionName.toLowerCase()));
+    }
+
+    private selectProcessIfExists(processDefinitionName: string): ProcessDefinitionRepresentationCloud {
+        let matchedProcess = this.processDefinitionList.find((option) => option.name.toLowerCase() === processDefinitionName.toLowerCase());
+        if (!matchedProcess) {
+            matchedProcess = new ProcessDefinitionRepresentationCloud();
+        }
+
+        return matchedProcess;
+    }
+
+    private selectProcessIfExistsOrSelectFirst(processDefinitionName: string): ProcessDefinitionRepresentationCloud {
+        const matchedProcess = processDefinitionName ? this.selectProcessIfExists(processDefinitionName) : this.processDefinitionList[0];
+        return matchedProcess;
+    }
+
+    private selectDefaultProcessDefinition() {
+        let selectedProcess = this.selectProcessIfExistsOrSelectFirst(this.processDefinitionName);
+        if (selectedProcess) {
+            this.processForm.controls['processDefinition'].setValue(selectedProcess.name);
+            this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
+        }
+    }
+
+    public loadProcessDefinitions() {
         this.resetErrorMessage();
 
         this.processCloudService.getProcessDefinitions(this.appName).subscribe(
             (processDefinitionRepresentations: ProcessDefinitionRepresentationCloud[]) => {
-                this.processDefinitions = processDefinitionRepresentations;
-
-                if (!this.isProcessDefinitionsEmpty()) {
-
-                    let selectedProcess;
-
-                    if (this.processDefinitions.length === 1) {
-                        selectedProcess = this.processDefinitions[0];
-                    } else if (this.processDefinitionName) {
-                        selectedProcess = this.processDefinitions.find((currentProcessDefinition) => {
-                            return currentProcessDefinition.name === this.processDefinitionName;
-                        });
-                    }
-
-                    if (selectedProcess) {
-                        this.processForm.controls['processDefinition'].setValue(selectedProcess.name);
-                        this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
-                    }
+                this.processDefinitionList = processDefinitionRepresentations;
+                if (processDefinitionRepresentations.length > 0) {
+                    this.selectDefaultProcessDefinition();
                 }
             },
             () => {
@@ -168,11 +153,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     isProcessDefinitionsEmpty(): boolean {
-        return this.processDefinitions.length === 0;
+        return this.processDefinitionList.length === 0;
     }
 
-    public startProcess() {
-
+    startProcess() {
         this.isLoading = true;
 
         if (this.variables) {
@@ -192,7 +176,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         );
     }
 
-    public cancelStartProcess() {
+    cancelStartProcess() {
         this.cancel.emit();
     }
 
@@ -200,9 +184,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.errorMessageId = '';
     }
 
-    private resetMatAutocomplete() {
+    private resetProcessDefinitionList() {
         this.processForm.controls['processDefinition'].setValue('');
-        this.filter('');
+        this.filteredProcesses = this.processDefinitionList;
     }
 
     displayFn(process: any) {
@@ -218,15 +202,31 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     displayDropdown(event) {
         event.stopPropagation();
         if (!this.inputAutocomplete.panelOpen) {
-            this.resetMatAutocomplete();
+            this.resetProcessDefinitionList();
             this.inputAutocomplete.openPanel();
         } else {
             this.inputAutocomplete.closePanel();
         }
     }
 
-    get processName(): AbstractControl {
-        return this.processForm.get('processName');
+    processDefinitionNameValidator(): ValidatorFn {
+        return (control: AbstractControl): { [key: string]: any } | null => {
+            const processDefinitionFieldValue = control.value;
+            let processDefinitionNameError = false;
+
+            if (processDefinitionFieldValue) {
+                const processDefinition = this.selectProcessIfExists(processDefinitionFieldValue);
+                if (!processDefinition.key) {
+                    processDefinitionNameError = true;
+                }
+            }
+
+            return processDefinitionNameError ? { 'invalid name': true } : null;
+        };
+    }
+
+    get processInstanceName(): AbstractControl {
+        return this.processForm.get('processInstanceName');
     }
 
     get processDefinition(): AbstractControl {
