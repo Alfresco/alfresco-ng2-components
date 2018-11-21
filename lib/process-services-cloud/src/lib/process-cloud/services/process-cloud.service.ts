@@ -29,6 +29,7 @@ import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 export class ProcessCloudService {
 
     contextRoot: string;
+    requiredType = ['application/json'];
 
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private appConfigService: AppConfigService,
@@ -49,8 +50,9 @@ export class ProcessCloudService {
             return from(this.alfrescoApiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, null, null,
-                    null, null, null, ['application/json'],
-                    ['application/json'], Object, null, null)
+                    null, null, null,
+                    this.requiredType, this.requiredType,
+                    Object, null, null)
             ).pipe(
                 map(this.extractProcessDefinitions),
                 catchError(err => this.handleProcessError(err))
@@ -81,24 +83,15 @@ export class ProcessCloudService {
         let queryUrl = `${this.contextRoot}/${appName}-rb/v1/process-instances`;
 
         return from(this.alfrescoApiService.getInstance()
-        .oauth2Auth.callCustomApi(
-            queryUrl,
-            'POST',
-            null,
-            null,
-            null,
-            null,
-            requestPayload,
-            null,
-            ['application/json'],
-            ['application/json'],
-            Object,
-            null,
-            null)
-        ).pipe(
-            map((processInstance) => new ProcessInstanceCloud(processInstance)),
-            catchError(err => this.handleProcessError(err))
-        );
+            .oauth2Auth.callCustomApi(queryUrl, 'POST',
+                null, null, null,
+                null, requestPayload, null,
+                this.requiredType, this.requiredType,
+                Object, null, null)
+            ).pipe(
+                map((processInstance) => new ProcessInstanceCloud(processInstance)),
+                catchError(err => this.handleProcessError(err))
+            );
     }
 
     private handleProcessError(error: any) {
