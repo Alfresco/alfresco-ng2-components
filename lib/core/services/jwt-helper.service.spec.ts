@@ -1,4 +1,3 @@
-import { mockToken } from './../mock/jwt-helper.service.spec';
 /*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
@@ -18,6 +17,7 @@ import { mockToken } from './../mock/jwt-helper.service.spec';
 
 import { TestBed } from '@angular/core/testing';
 import { JwtHelperService } from './jwt-helper.service';
+import { mockToken } from './../mock/jwt-helper.service.spec';
 
 describe('JwtHelperService', () => {
 
