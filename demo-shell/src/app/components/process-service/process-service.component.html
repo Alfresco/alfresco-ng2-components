@@ -3,7 +3,7 @@
     <mat-tab id="tasks-header" href="#tasks" label="{{'PS-TAB.TASKS-TAB' | translate}}">
         <div class="page-content" *ngIf="showTaskTab">
             <div class="adf-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
-                <div class="adf-grid-item adf-tasks-menu" fxFlex.gt-md="225px">
+                <div class="adf-grid-item adf-tasks-menu" fxFlex.gt-md="265px">
                     <div class="adf-list-buttons">
                         <adf-sidebar-action-menu [expanded]="true" [width]="205"
                                                  title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
@@ -16,19 +16,22 @@
                             </div>
                         </adf-sidebar-action-menu>
                     </div>
-                    <adf-accordion>
-                        <adf-accordion-group [heading]="'Tasks'" [isSelected]="true" [isOpen]="true"
-                                             [headingIcon]="'assignment'">
-                            <adf-task-filters
-                                [filterParam]="filterSelected"
-                                [appId]="appId"
-                                [showIcon]="showTaskFilterIcon"
-                                (filterClick)="onTaskFilterClick($event)"
-                                (success)="onSuccessTaskFilterList($event)"
-                                #activitiFilter>
+                    <mat-accordion class="adf-accordion-panel" [displayMode]="flat">
+                        <mat-expansion-panel class="mat-elevation-z0" [expanded]="true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <mat-icon>assignment</mat-icon>
+                                    <div class="adf-accordion-title-padding">Tasks</div>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <adf-task-filters [filterParam]="filterSelected"
+                                              [appId]="appId"
+                                              [showIcon]="showTaskFilterIcon"
+                                              (filterClick)="onTaskFilterClick($event)"
+                                              (success)="onSuccessTaskFilterList($event)" #activitiFilter>
                             </adf-task-filters>
-                        </adf-accordion-group>
-                    </adf-accordion>
+                        </mat-expansion-panel>
+                    </mat-accordion>
                 </div>
                 <div class="adf-grid-item adf-tasks-list" fxFlex.gt-md="380px"
                      [ngClass.gt-md]="{'small-pagination': true}"
@@ -126,20 +129,25 @@
                             </div>
                         </adf-sidebar-action-menu>
                     </div>
-                    <adf-accordion>
-                        <adf-accordion-group [heading]="'Processes'" [isSelected]="true" [isOpen]="true"
-                                             [headingIcon]="'assessment'">
+                    <mat-accordion class="adf-accordion-panel" [displayMode]="flat">
+                        <mat-expansion-panel class="mat-elevation-z0" [expanded]="true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <mat-icon>assessment</mat-icon>
+                                    <div class="adf-accordion-title-padding">Processes</div>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
                             <adf-process-instance-filters
-                                #activitiProcessFilter
-                                [appId]="appId"
-                                [filterParam]="filterSelected"
-                                [showIcon]="showProcessFilterIcon"
-                                (filterClick)="onProcessFilterChange($event)"
-                                (filterSelected)="onProcessFilterChange($event)"
-                                (success)="onSuccessProcessFilterList($event)">
+                                    #activitiProcessFilter
+                                    [appId]="appId"
+                                    [filterParam]="filterSelected"
+                                    [showIcon]="showProcessFilterIcon"
+                                    (filterClick)="onProcessFilterChange($event)"
+                                    (filterSelected)="onProcessFilterChange($event)"
+                                    (success)="onSuccessProcessFilterList($event)">
                             </adf-process-instance-filters>
-                        </adf-accordion-group>
-                    </adf-accordion>
+                        </mat-expansion-panel>
+                    </mat-accordion>
                 </div>
                 <div class="adf-grid-item adf-processes-list adf-list" fxFlex.gt-md="380px"
                      [ngClass.gt-md]="{'small-pagination': true}"

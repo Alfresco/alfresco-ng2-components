@@ -27,7 +27,7 @@ var ProcessFiltersPage = function () {
     var createProcessButton = element(by.css(".adf-processes-menu button[data-automation-id='create-button'] > span"));
     var newProcessButton = element(by.css("div > button[data-automation-id='btn-start-process']"));
     var processesPage = element(by.css("div[class='adf-grid'] > div[class='adf-grid-item adf-processes-menu']"));
-    var accordionMenu = element(by.css(".adf-processes-menu adf-accordion"));
+    var accordionMenu = element(by.css(".adf-processes-menu mat-accordion"));
     var buttonWindow = element(by.css("div > button[data-automation-id='btn-start-process'] > div"));
     var noContentMessage = element.all(by.css("p[class='adf-empty-content__title']")).first();
     var rows = by.css("adf-process-instance-list div[class='adf-datatable-body'] div[class*='adf-datatable-row']");
