@@ -34,6 +34,9 @@
       ],
       "@alfresco/adf-process-services-cloud": [
         "../../lib/process-services-cloud"
+      ],
+      "@alfresco/adf-extensions": [
+        "../../lib/extensions"
       ]
     }
   },
