@@ -48,7 +48,7 @@ jobs:
           - npm install
           - ./scripts/lint.sh || exit 1
           - npm run spellcheck || exit 1
-          - rm -rf tmp && (./scripts/smart-build.sh -b $TRAVIS_BRANCH || exit 1;);
+          - (./scripts/smart-build.sh -b $TRAVIS_BRANCH || exit 1;);
           - npm run build:dist || exit 1
         - stage: Unit test
           name: core

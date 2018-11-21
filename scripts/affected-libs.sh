@@ -43,6 +43,7 @@ if [ ! -f $DIRECTORY/deps.txt ]; then
     npm run affected:libs -- $HEAD_SHA_BRANCH "HEAD" > $DIRECTORY/deps.txt
 fi
 
+cat $DIRECTORY/deps.txt
 #echo "extensions" > deps.txt
 
 #clean file
