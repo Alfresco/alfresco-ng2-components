@@ -35,24 +35,29 @@ import { SearchConfiguration } from '../search.config';
 
 describe('Search Number Range Filter', () => {
 
-    let loginPage = new LoginPage();
-    let searchDialog = new SearchDialog();
-    let searchFilters = new SearchFiltersPage();
-    let sizeRangeFilter = searchFilters.sizeRangeFilterPage();
-    let searchResults = new SearchResultsPage();
-    let navigationBar = new NavigationBarPage();
-    let configEditor = new ConfigEditorPage();
-    let dataTable = new DataTablePage();
+    const loginPage = new LoginPage();
+    const searchDialog = new SearchDialog();
+    const searchFilters = new SearchFiltersPage();
+    const sizeRangeFilter = searchFilters.sizeRangeFilterPage();
+    const searchResults = new SearchResultsPage();
+    const navigationBar = new NavigationBarPage();
+    const configEditor = new ConfigEditorPage();
+    const dataTable = new DataTablePage();
 
-    let acsUser = new AcsUserModel();
+    const acsUser = new AcsUserModel();
 
-    let fileModel = new FileModel({
+    const file2BytesModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name,
         'location': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_location
     });
 
-    let file;
-    let uploadActions = new UploadActions();
+    const file0BytesModel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+    });
+
+    let file2Bytes, file0Bytes;
+    const uploadActions = new UploadActions();
 
     beforeAll(async (done) => {
 
@@ -67,7 +72,8 @@ describe('Search Number Range Filter', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        file = await uploadActions.uploadFile(this.alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
+        file2Bytes = await uploadActions.uploadFile(this.alfrescoJsApi, file2BytesModel.location, file2BytesModel.name, '-my-');
+        file0Bytes = await uploadActions.uploadFile(this.alfrescoJsApi, file0BytesModel.location, file0BytesModel.name, '-my-');
         await browser.driver.sleep(15000);
 
         loginPage.loginToContentServices(acsUser.id, acsUser.password);
@@ -81,7 +87,8 @@ describe('Search Number Range Filter', () => {
 
     afterAll(async (done) => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, file.entry.id);
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, file2Bytes.entry.id);
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, file0Bytes.entry.id);
         done();
     });
 
@@ -100,8 +107,9 @@ describe('Search Number Range Filter', () => {
         sizeRangeFilter.checkFromFieldIsDisplayed()
             .checkToFieldIsDisplayed()
             .checkApplyButtonIsDisplayed()
-            .checkClearButtonIsDisplayed()
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(false); });
+            .checkClearButtonIsDisplayed();
+
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
     });
 
     it('[C276922] Should be keep value when Number Range widget is collapsed', () => {
@@ -112,41 +120,41 @@ describe('Search Number Range Filter', () => {
             .checkSizeRangeFilterIsCollapsed()
             .clickSizeRangeFilterHeader()
             .checkSizeRangeFilterIsExpanded();
-        sizeRangeFilter.getFromNumber().then(async (fromNumber) => { await expect(fromNumber).toEqual(`${size}`); });
-        sizeRangeFilter.getToNumber().then(async (toNumber) => { await expect(toNumber).toEqual(`${size}`); });
+        expect(sizeRangeFilter.getFromNumber()).toEqual(`${size}`);
+        expect(sizeRangeFilter.getToNumber()).toEqual(`${size}`);
     });
 
     it('[C276924] Should display error message when input had an invalid format', () => {
         sizeRangeFilter.checkFromFieldIsDisplayed()
             .putFromNumber('a').putToNumber('A')
             .checkFromErrorInvalidIsDisplayed().checkToErrorInvalidIsDisplayed();
-        sizeRangeFilter.getFromErrorInvalid().then(async (error) => { await expect(error).toEqual('Invalid Format'); });
-        sizeRangeFilter.getToErrorInvalid().then(async (error) => { await expect(error).toEqual('Invalid Format'); });
-        sizeRangeFilter.checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(false); });
+
+        expect(sizeRangeFilter.getFromErrorInvalid()).toEqual('Invalid Format');
+        expect(sizeRangeFilter.getToErrorInvalid()).toEqual('Invalid Format');
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
 
         sizeRangeFilter.putFromNumber('@').putToNumber('£')
             .checkFromErrorInvalidIsDisplayed().checkToErrorInvalidIsDisplayed();
-        sizeRangeFilter.getFromErrorInvalid().then(async (error) => { await expect(error).toEqual('Invalid Format'); });
-        sizeRangeFilter.getToErrorInvalid().then(async (error) => { await expect(error).toEqual('Invalid Format'); });
-        sizeRangeFilter.checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(false); });
+        expect(sizeRangeFilter.getFromErrorInvalid()).toEqual('Invalid Format');
+        expect(sizeRangeFilter.getToErrorInvalid()).toEqual('Invalid Format');
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
 
         sizeRangeFilter.putFromNumber('4.5').putToNumber('4,5')
             .checkFromErrorInvalidIsDisplayed().checkToErrorInvalidIsDisplayed();
-        sizeRangeFilter.getFromErrorInvalid().then(async (error) => { await expect(error).toEqual('Invalid Format'); });
-        sizeRangeFilter.getToErrorInvalid().then(async (error) => { await expect(error).toEqual('Invalid Format'); });
-        sizeRangeFilter.checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(false); });
+        expect(sizeRangeFilter.getFromErrorInvalid()).toEqual('Invalid Format');
+        expect(sizeRangeFilter.getToErrorInvalid()).toEqual('Invalid Format');
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
 
-        sizeRangeFilter.putFromNumber('01').putToNumber('-1')
-            .checkFromErrorInvalidIsDisplayed().checkToErrorInvalidIsDisplayed();
-        sizeRangeFilter.getFromErrorInvalid().then(async (error) => { await expect(error).toEqual('Invalid Format'); });
-        sizeRangeFilter.getToErrorInvalid().then(async (error) => { await expect(error).toEqual('Invalid Format'); });
-        sizeRangeFilter.checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(false); });
+        sizeRangeFilter.putFromNumber('01').putToNumber('-1');
+        expect(sizeRangeFilter.getFromErrorInvalid()).toEqual('Invalid Format');
+        expect(sizeRangeFilter.getToErrorInvalid()).toEqual('Invalid Format');
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
 
         sizeRangeFilter.clearFromField().clearToField()
             .checkFromErrorRequiredIsDisplayed().checkToErrorRequiredIsDisplayed();
-        sizeRangeFilter.getFromErrorRequired().then(async (error) => { await expect(error).toEqual('Required value'); });
-        sizeRangeFilter.getToErrorRequired().then(async (error) => { await expect(error).toEqual('Required value'); });
-        sizeRangeFilter.checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(false); });
+        expect(sizeRangeFilter.getFromErrorRequired()).toEqual('Required value');
+        expect(sizeRangeFilter.getToErrorRequired()).toEqual('Required value');
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
     });
 
     it('[C276943] Should be able to put a big value in To field', () => {
@@ -154,8 +162,9 @@ describe('Search Number Range Filter', () => {
         let fromSize = 0;
         sizeRangeFilter.checkToFieldIsDisplayed()
             .putToNumber(toSize)
-            .putFromNumber(fromSize)
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+            .putFromNumber(fromSize);
+
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         sizeRangeFilter.clickApplyButton();
         searchResults.tableIsLoaded();
@@ -163,7 +172,6 @@ describe('Search Number Range Filter', () => {
 
         browser.controlFlow().execute(async () => {
             let firstResult = await dataTable.getNodeIdFirstElement();
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes <= toSize).toBe(true);
             });
@@ -180,15 +188,15 @@ describe('Search Number Range Filter', () => {
 
         sizeRangeFilter.checkFromFieldIsDisplayed()
             .putFromNumber(fromSize)
-            .putToNumber(toSize)
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+            .putToNumber(toSize);
+
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         sizeRangeFilter.clickApplyButton();
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
             let firstResult = await dataTable.getNodeIdFirstElement();
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes <= toSize).toBe(true);
             });
@@ -196,16 +204,15 @@ describe('Search Number Range Filter', () => {
 
         searchFilters.checkNameFilterIsDisplayed()
             .checkNameFilterIsExpanded();
-        nameFilter.searchByName('a*');
+        nameFilter.searchByName('z*');
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
             let firstResult = await dataTable.getNodeIdFirstElement();
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes <= toSize).toBe(true);
                 let name = node.entry.name;
-                await expect(/a*/i.test(name)).toBe(true);
+                await expect(/z*/i.test(name)).toBe(true);
             });
         });
     });
@@ -218,12 +225,12 @@ describe('Search Number Range Filter', () => {
         searchFilters.checkSizeSliderFilterIsDisplayed()
             .clickSizeSliderFilterHeader()
             .checkSizeSliderFilterIsExpanded();
-        sizeSliderFilter.checkSliderIsDisplayed().setSliderToValue(sliderSize);
+        sizeSliderFilter.checkSliderIsDisplayed().setValue(sliderSize);
 
         sizeRangeFilter.checkFromFieldIsDisplayed()
             .putFromNumber(0)
-            .putToNumber(toSize)
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+            .putToNumber(toSize);
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         sizeRangeFilter.clickApplyButton();
         searchResults.sortBySize(false);
@@ -231,15 +238,14 @@ describe('Search Number Range Filter', () => {
 
         browser.controlFlow().execute(async () => {
             let firstResult = await dataTable.getNodeIdFirstElement();
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes <= sliderSize).toBe(true);
             });
         });
 
         sizeRangeFilter.checkFromFieldIsDisplayed()
-            .putFromNumber(1)
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+            .putFromNumber(1);
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         sizeRangeFilter.clickApplyButton();
         searchResults.sortBySize(true);
@@ -247,7 +253,6 @@ describe('Search Number Range Filter', () => {
 
         browser.controlFlow().execute(async () => {
             let firstResult = await dataTable.getNodeIdFirstElement();
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes >= 1).toBe(true);
                 await expect(node.entry.content.sizeInBytes <= sliderSize).toBe(true);
@@ -255,8 +260,8 @@ describe('Search Number Range Filter', () => {
         });
 
         sizeRangeFilter.checkFromFieldIsDisplayed()
-            .putFromNumber(19)
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+            .putFromNumber(19);
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         sizeRangeFilter.clickApplyButton();
         searchResults.checkNoResultMessageIsDisplayed();
@@ -265,8 +270,8 @@ describe('Search Number Range Filter', () => {
     it('[C276951] Should not display folders when Size range is applied', () => {
         sizeRangeFilter.checkToFieldIsDisplayed()
             .putToNumber(99999999)
-            .putFromNumber(0)
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+            .putFromNumber(0);
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         sizeRangeFilter.clickApplyButton();
         searchResults.tableIsLoaded();
@@ -284,8 +289,8 @@ describe('Search Number Range Filter', () => {
     it('[C276952] Should only display empty files when size range is set from 0 to 1', () => {
         sizeRangeFilter.checkToFieldIsDisplayed()
             .putToNumber(1)
-            .putFromNumber(0)
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+            .putFromNumber(0);
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         sizeRangeFilter.clickApplyButton();
         searchResults.tableIsLoaded();
@@ -293,7 +298,6 @@ describe('Search Number Range Filter', () => {
 
         browser.controlFlow().execute(async () => {
             let firstResult = await dataTable.getNodeIdFirstElement();
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes).toEqual(0);
             });
@@ -302,14 +306,14 @@ describe('Search Number Range Filter', () => {
 
     it('[C277092] Should disable apply button when from field value equal/is bigger than to field value', () => {
         sizeRangeFilter.checkFromFieldIsDisplayed()
-            .putFromNumber(10)
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(false); });
+            .putFromNumber(10);
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
 
-        sizeRangeFilter.putToNumber('5')
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(false); });
+        sizeRangeFilter.putToNumber('5');
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
 
-        sizeRangeFilter.putToNumber('10')
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(false); });
+        sizeRangeFilter.putToNumber('10');
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(false);
     });
 
     it('[C289930] Should be able to clear values in number range fields', () => {
@@ -317,27 +321,26 @@ describe('Search Number Range Filter', () => {
             .clickClearButton().checkNoErrorMessageIsDisplayed()
             .putFromNumber(0).putToNumber(1).clickClearButton();
 
-        sizeRangeFilter.getFromNumber().then(async (fromNumber) => { await expect(fromNumber).toEqual(''); });
-        sizeRangeFilter.getToNumber().then(async (toNumber) => { await expect(toNumber).toEqual(''); });
+        expect(sizeRangeFilter.getFromNumber()).toEqual('');
+        expect(sizeRangeFilter.getToNumber()).toEqual('');
 
         sizeRangeFilter.putFromNumber(0).putToNumber(1).clickApplyButton();
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
             let firstResult = await dataTable.getNodeIdFirstElement();
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes <= 1).toBe(true);
             });
         });
 
         sizeRangeFilter.clickClearButton();
-        sizeRangeFilter.getFromNumber().then(async (fromNumber) => { await expect(fromNumber).toEqual(''); });
-        sizeRangeFilter.getToNumber().then(async (toNumber) => { await expect(toNumber).toEqual(''); });
+
+        expect(sizeRangeFilter.getFromNumber()).toEqual('');
+        expect(sizeRangeFilter.getToNumber()).toEqual('');
 
         browser.controlFlow().execute(async () => {
             let firstResult = await dataTable.getNodeIdFirstElement();
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes >= 1).toBe(true);
             });
@@ -347,43 +350,43 @@ describe('Search Number Range Filter', () => {
     it('[C277137] Number Range should be inclusive', () => {
         sizeRangeFilter.checkToFieldIsDisplayed()
             .putToNumber(2)
-            .putFromNumber(1)
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+            .putFromNumber(1);
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         sizeRangeFilter.clickApplyButton();
 
         searchResults.tableIsLoaded();
-        searchResults.checkContentIsDisplayed(fileModel.name);
+        searchResults.checkContentIsDisplayed(file2BytesModel.name);
 
         sizeRangeFilter.checkToFieldIsDisplayed()
             .putToNumber(1)
-            .putFromNumber(0)
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+            .putFromNumber(0);
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         sizeRangeFilter.clickApplyButton();
 
         searchResults.tableIsLoaded();
-        searchResults.checkContentIsNotDisplayed(fileModel.name);
+        searchResults.checkContentIsNotDisplayed(file2BytesModel.name);
 
         sizeRangeFilter.checkToFieldIsDisplayed()
             .putToNumber(3)
-            .putFromNumber(2)
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+            .putFromNumber(2);
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         sizeRangeFilter.clickApplyButton();
 
         searchResults.tableIsLoaded();
-        searchResults.checkContentIsDisplayed(fileModel.name);
+        searchResults.checkContentIsDisplayed(file2BytesModel.name);
 
         sizeRangeFilter.checkToFieldIsDisplayed()
             .putToNumber(4)
-            .putFromNumber(3)
-            .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+            .putFromNumber(3);
+        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         sizeRangeFilter.clickApplyButton();
 
         searchResults.tableIsLoaded();
-        searchResults.checkContentIsNotDisplayed(fileModel.name);
+        searchResults.checkContentIsNotDisplayed(file2BytesModel.name);
     });
 
     describe('Configuration change', () => {
@@ -410,13 +413,13 @@ describe('Search Number Range Filter', () => {
                 .clickSizeRangeFilterHeader()
                 .checkSizeRangeFilterIsExpanded();
 
-            let toYear = 2030;
-            let fromYear = 2018;
+            let fromYear = (new Date()).getFullYear();
+            let toYear = fromYear + 1;
 
             sizeRangeFilter.checkToFieldIsDisplayed()
                 .putToNumber(toYear)
-                .putFromNumber(fromYear)
-                .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+                .putFromNumber(fromYear);
+            expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
             sizeRangeFilter.clickApplyButton();
             searchResults.tableIsLoaded();
@@ -424,9 +427,8 @@ describe('Search Number Range Filter', () => {
 
             browser.controlFlow().execute(async () => {
                 let firstResult = await dataTable.getNodeIdFirstElement();
-                await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
                 await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                    await expect((node.entry.createdAt.getYear() + 1900) <= toYear).toBe(true);
+                    await expect((node.entry.createdAt.getFullYear()) <= toYear).toBe(true);
                 });
             });
 
@@ -434,9 +436,8 @@ describe('Search Number Range Filter', () => {
 
             browser.controlFlow().execute(async () => {
                 let firstResult = await dataTable.getNodeIdFirstElement();
-                await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
                 await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                    await expect((node.entry.createdAt.getYear() + 1900) >= fromYear).toBe(true);
+                    await expect((node.entry.createdAt.getFullYear()) >= fromYear).toBe(true);
                 });
             });
         });
@@ -459,23 +460,23 @@ describe('Search Number Range Filter', () => {
 
             sizeRangeFilter.checkToFieldIsDisplayed()
                 .putToNumber(2)
-                .putFromNumber(1)
-                .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+                .putFromNumber(1);
+            expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
             sizeRangeFilter.clickApplyButton();
 
             searchResults.tableIsLoaded();
-            searchResults.checkContentIsNotDisplayed(fileModel.name);
+            searchResults.checkContentIsNotDisplayed(file2BytesModel.name);
 
             sizeRangeFilter.checkToFieldIsDisplayed()
                 .putToNumber(3)
-                .putFromNumber(1)
-                .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+                .putFromNumber(1);
+            expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
             sizeRangeFilter.clickApplyButton();
 
             searchResults.tableIsLoaded();
-            searchResults.checkContentIsDisplayed(fileModel.name);
+            searchResults.checkContentIsDisplayed(file2BytesModel.name);
         });
 
         it('[C277140] Should be able to set From field to be exclusive', () => {
@@ -496,23 +497,23 @@ describe('Search Number Range Filter', () => {
 
             sizeRangeFilter.checkToFieldIsDisplayed()
                 .putToNumber(3)
-                .putFromNumber(1)
-                .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+                .putFromNumber(1);
+            expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
             sizeRangeFilter.clickApplyButton();
 
             searchResults.tableIsLoaded();
-            searchResults.checkContentIsDisplayed(fileModel.name);
+            searchResults.checkContentIsDisplayed(file2BytesModel.name);
 
             sizeRangeFilter.checkToFieldIsDisplayed()
                 .putToNumber(3)
-                .putFromNumber(2)
-                .checkApplyButtonIsEnabled().then(async (enabled) => { await expect(enabled).toBe(true); });
+                .putFromNumber(2);
+            expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
             sizeRangeFilter.clickApplyButton();
 
             searchResults.tableIsLoaded();
-            searchResults.checkContentIsNotDisplayed(fileModel.name);
+            searchResults.checkContentIsNotDisplayed(file2BytesModel.name);
         });
     });
 });

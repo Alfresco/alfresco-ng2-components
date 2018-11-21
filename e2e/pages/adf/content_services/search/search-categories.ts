@@ -22,7 +22,7 @@ import { SearchCheckListPage } from './components/search-checkList';
 import { SearchRadioPage } from './components/search-radio';
 import { DateRangeFilterPage } from './components/dateRangeFilterPage';
 import { NumberRangeFilterPage } from './components/numberRangeFilterPage';
-import { SliderFilterPage } from './components/sliderFilterPage';
+import { SearchSliderPage } from './components/search-slider.page';
 
 export class SearchCategoriesPage {
 
@@ -47,7 +47,7 @@ export class SearchCategoriesPage {
     }
 
     sliderFilter(filter) {
-        return new SliderFilterPage(filter);
+        return new SearchSliderPage(filter);
     }
 
     checkFilterIsDisplayed(filter) {

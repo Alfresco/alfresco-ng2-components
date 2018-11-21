@@ -18,7 +18,7 @@
 import { browser, by, protractor } from 'protractor';
 import Util = require('../../../../../util/util');
 
-export class SliderFilterPage {
+export class SearchSliderPage {
 
     filter;
     slider = by.css('mat-slider');
@@ -27,7 +27,7 @@ export class SliderFilterPage {
         this.filter = filter;
     }
 
-    setSliderToValue(value) {
+    setValue(value) {
         this.clickSlider();
         browser.controlFlow().execute(async () => {
             let actualValue;
