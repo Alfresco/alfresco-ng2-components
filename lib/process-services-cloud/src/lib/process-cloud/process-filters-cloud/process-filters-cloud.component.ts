@@ -26,21 +26,27 @@ import { ProcessInstanceFilterRepresentationModel } from '../models/process-filt
 })
 export class ProcessFiltersCloudComponent implements OnChanges {
 
+    /** (required) The application name */
     @Input()
     appName: string;
 
+    /** (optional) The filter to be selected by default */
     @Input()
     filterParam: ProcessInstanceFilterRepresentationModel;
 
+    /** (optional) The flag hides/shows icon against each filter */
     @Input()
     showIcons: boolean = false;
 
+    /** Emitted when a filter is selected/clicked */
     @Output()
     filterClick: EventEmitter<ProcessInstanceFilterRepresentationModel> = new EventEmitter<ProcessInstanceFilterRepresentationModel>();
 
+    /** Emitted when filters are loaded successfully */
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when any error occurs while loading the filters */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
