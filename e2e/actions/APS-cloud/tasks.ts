@@ -41,4 +41,24 @@ export class Tasks {
         return data;
     }
 
+    async completeTask(taskId, appName) {
+        const path = '/' + appName + '-rb/v1/tasks/' + taskId + '/complete';
+        const method = 'POST';
+
+        const queryParams = {}, postBody = {"payloadType":"CompleteTaskPayload"};
+
+        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+        return data;
+    }
+
+    async claimTask(taskId, appName) {
+        const path = '/' + appName + '-rb/v1/tasks/' + taskId + '/claim';
+        const method = 'POST';
+
+        const queryParams = {}, postBody = {};
+
+        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+        return data;
+    }
+
 }
