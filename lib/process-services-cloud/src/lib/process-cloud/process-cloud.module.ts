@@ -23,4 +23,4 @@ import { HttpClientModule } from '@angular/common/http';
     exports: [ProcessFiltersCloudComponent],
     providers: [ProcessFilterCloudService, LogService, StorageService]
 })
-export class ProcesCloudModule { }
+export class ProcessCloudModule { }
