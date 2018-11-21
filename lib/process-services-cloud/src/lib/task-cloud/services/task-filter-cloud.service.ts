@@ -47,7 +47,8 @@ export class TaskFilterCloudService {
      * @returns Observable of task filter details
      */
     getTaskListFilters(appName?: string): Observable<TaskFilterCloudRepresentationModel[]> {
-        let key = 'task-filters-' + appName;
+        const username = this.getUsername();
+        let key = `task-filters-${appName}-${username}`;
         const filters = JSON.parse(this.storage.getItem(key) || '[]');
         return new Observable(function(observer) {
             observer.next(filters);
@@ -61,7 +62,8 @@ export class TaskFilterCloudService {
      * @returns Details of task filter just added
      */
     addFilter(filter: TaskFilterCloudRepresentationModel): Observable<TaskFilterCloudRepresentationModel> {
-        const key = 'task-filters-' + filter.query.appName || '0';
+        const username = this.getUsername();
+        const key = `task-filters-${filter.query.appName}-${username}`;
         let filters = JSON.parse(this.storage.getItem(key) || '[]');
 
         filters.push(filter);
