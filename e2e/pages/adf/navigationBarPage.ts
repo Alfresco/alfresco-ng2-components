@@ -17,7 +17,7 @@
 
 import Util = require('../../util/util');
 import TestConfig = require('../../test.config');
-import { element, by } from 'protractor';
+import { element, by, browser } from 'protractor';
 import { ProcessServicesPage } from './process_services/processServicesPage';
 
 export class NavigationBarPage {
@@ -39,6 +39,7 @@ export class NavigationBarPage {
     headerDataButton = element(by.css('a[data-automation-id="Header Data"]'));
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = element(by.css('a[data-automation-id="Form"]'));
+    treeViewButton = element(by.css('a[data-automation-id="Tree View"]'));
 
     clickContentServicesButton() {
         Util.waitUntilElementIsVisible(this.contentServicesButton);
@@ -156,8 +157,8 @@ export class NavigationBarPage {
         return this.formButton.click();
     };
 
-    checkLogoTooltip(logoTooltip) {
-        let logoTooltip = element(by.css('a[title="' + logoTooltip + '"]'));
+    checkLogoTooltip(logoTooltipTitle) {
+        let logoTooltip = element(by.css('a[title="' + logoTooltipTitle + '"]'));
         Util.waitUntilElementIsVisible(logoTooltip);
     }
 
@@ -171,6 +172,11 @@ export class NavigationBarPage {
     }
 
     checkContentServicesButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(contentServicesButton);
+        Util.waitUntilElementIsVisible(this.contentServicesButton);
+    }
+
+    clickTreeViewButton() {
+        Util.waitUntilElementIsVisible(this.treeViewButton);
+        this.treeViewButton.click();
     }
 }
