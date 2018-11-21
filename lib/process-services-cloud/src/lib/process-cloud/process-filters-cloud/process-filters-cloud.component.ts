@@ -93,7 +93,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     }
 
     /**
-     * Create default filters by appId
+     * Create default filters by appName
      */
     createFilters(appName?: string) {
         this.filters$ =  this.processFilterCloudService.createDefaultFilters(appName);
@@ -153,7 +153,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     }
 
     /**
-     * Reset the filters properties
+     * Reset the filters
      */
     private resetFilter() {
         this.filters = [];
