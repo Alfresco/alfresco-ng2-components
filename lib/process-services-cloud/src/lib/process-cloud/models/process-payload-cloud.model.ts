@@ -15,21 +15,18 @@
  * limitations under the License.
  */
 
-import { ProcessInstanceVariableCloud } from './process-instance-variable-cloud.model';
-
 export class ProcessPayloadCloud {
-
     processDefinitionKey: string;
     processInstanceName: string;
     businessKey: string;
-    variables: ProcessInstanceVariableCloud;
+    variables: Map<string, object>[];
     payloadType: string;
 
     constructor(obj?: any) {
-        this.processDefinitionKey = obj && obj.processDefinitionKey !== undefined ? obj.processDefinitionKey : null;
-        this.processInstanceName = obj && obj.processInstanceName !== undefined ? obj.processInstanceName : null;
-        this.businessKey = obj && obj.businessKey !== undefined ? obj.businessKey : null;
-        this.variables = obj && obj.variables !== undefined ? obj.variables : null;
-        this.payloadType = obj && obj.valueUrl !== undefined ? obj.payloadType : null;
+        this.processDefinitionKey = obj && obj.processDefinitionKey ? obj.processDefinitionKey : null;
+        this.processInstanceName = obj && obj.processInstanceName ? obj.processInstanceName : null;
+        this.businessKey = obj && obj.businessKey ? obj.businessKey : null;
+        this.variables = obj && obj.variables ? obj.variables : null;
+        this.payloadType = obj && obj.valueUrl ? obj.payloadType : null;
     }
 }

@@ -19,11 +19,11 @@ export class ProcessInstanceCloud {
     appName: string;
     id: string;
     name: string;
-    startDate?: Date;
-    initiator?: string;
-    status?: string;
-    processDefinitionId?: string;
-    processDefinitionKey?: string;
+    startDate: Date;
+    initiator: string;
+    status: string;
+    processDefinitionId: string;
+    processDefinitionKey: string;
 
     constructor(obj?: any) {
         this.appName = obj && obj.appName || null;
