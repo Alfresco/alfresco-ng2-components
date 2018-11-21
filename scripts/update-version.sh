@@ -19,6 +19,8 @@ cd `dirname $0`
 
 prefix="@alfresco\/adf-"
 
+projectslength=${#projects[@]}
+
 show_help() {
     echo "Usage: update-version.sh"
     echo ""
@@ -42,8 +44,9 @@ skip_js() {
 }
 
 last_alpha_mode() {
-    echo "====== Auto find last ALPHA version ====="
-    VERSION=$(npm view @alfresco/adf-core@alpha version)
+    length=`expr $projectslength - 1`
+    echo "====== Auto find last ALPHA version of ${projects[${length}]} ====="
+    VERSION=$(npm view @alfresco/adf-${projects[${length}]}@alpha version)
 
     echo "====== version lib ${VERSION} ====="
 
@@ -218,8 +221,6 @@ then
 fi
 
 cd "$DIR/../"
-
-projectslength=${#projects[@]}
 
 echo "====== UPDATE COMPONENTS ======"
 
