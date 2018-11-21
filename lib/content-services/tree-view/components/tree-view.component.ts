@@ -38,6 +38,7 @@ export class TreeViewComponent implements OnChanges {
     @Output()
     nodeClicked: EventEmitter<NodeEntry> = new EventEmitter();
 
+    /** Emitted when an invalid node id is given. */
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
