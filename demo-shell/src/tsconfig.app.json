@@ -18,6 +18,9 @@
       "@alfresco/adf-content-services": [
         "../../lib/content-services"
       ],
+      "@alfresco/adf-extensions": [
+        "../../lib/extensions"
+      ],
       "@alfresco/adf-process-services": [
         "../../lib/process-services"
       ],
