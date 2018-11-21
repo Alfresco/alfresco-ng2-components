@@ -1,19 +1,19 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-05-08
+Last reviewed: 2018-11-20
 ---
 
 # Form Rendering service
 
-Maps an APS form field type string onto the corresponding form [widget component](../insights/widget.component.md) type.
+Maps a form field type string onto the corresponding form [widget component](../insights/widget.component.md) type.
 
 ## Class members
 
 ### Methods
 
 -   **getComponentTypeResolver**(type: `string`, defaultValue: `Type<__type>` = `this.defaultValue`): `DynamicComponentResolveFunction`<br/>
-    Gets the currently active ComponentTypeResolver function for a field type.
+    Gets the currently active DynamicComponentResolveFunction for a field type.
     -   _type:_ `string`  - The type whose resolver you want
     -   _defaultValue:_ `Type<__type>`  - Default type returned for types that are not yet mapped
     -   **Returns** `DynamicComponentResolveFunction` - Resolver function
@@ -23,32 +23,32 @@ Maps an APS form field type string onto the corresponding form [widget component
     -   _defaultValue:_ `Type<__type>`  - Default type returned for field types that are not yet mapped.
     -   **Returns** `Type<__type>` - Component type
 -   **setComponentTypeResolver**(type: `string`, resolver: `DynamicComponentResolveFunction`, override: `boolean` = `true`)<br/>
-    Sets or optionally replaces a ComponentTypeResolver function for a field type.
+    Sets or optionally replaces a DynamicComponentResolveFunction for a field type.
     -   _type:_ `string`  - The type whose resolver you want to set
     -   _resolver:_ `DynamicComponentResolveFunction`  - The new resolver function
     -   _override:_ `boolean`  - The new resolver will only replace an existing one if this parameter is true
 
 ## Details
 
-The [`Form`](../../lib/process-services/task-list/models/form.model.ts) Field component uses this service to choose which widget to use to render an instance of a
+The [`Form`](../../lib/process-services/task-list/models/form.model.ts) Field component uses this service to choose which [widget](../../e2e/pages/adf/process_services/widgets/widget.ts) to use to render an instance of a
 form field. The [`Form`](../../lib/process-services/task-list/models/form.model.ts) Field model stores the field type name as a string (see the table below).
 The [`Form`](../../lib/process-services/task-list/models/form.model.ts) Rendering service maintains a mapping between each type name and
-a corresponding ComponentTypeResolver function. The function takes a [`FormFieldModel`](../core/form-field.model.md) object as its argument and
-uses the data from the object to determine which widget should be used to render the field.
+a corresponding `DynamicComponentResolveFunction`. The function takes a [`FormFieldModel`](../core/form-field.model.md) object as its argument and
+uses the data from the object to determine which [widget](../../e2e/pages/adf/process_services/widgets/widget.ts) should be used to render the field.
 
-In some cases, the field type string alone is enough to determine the widget type and so the function
+In some cases, the field type string alone is enough to determine the [widget](../../e2e/pages/adf/process_services/widgets/widget.ts) type and so the function
 just returns the type directly:
 
 ```ts
-let customResolver: ComponentTypeResolver = () => CustomWidgetComponent;
+let customResolver: DynamicComponentResolveFunction = () => CustomWidgetComponent;
 formRenderingService.setComponentTypeResolver('text', customResolver, true);
 ```
 
-In other cases, the function may need to choose the widget dynamically based on
+In other cases, the function may need to choose the [widget](../../e2e/pages/adf/process_services/widgets/widget.ts) dynamically based on
 specific values in the form data:
 
 ```ts
-let customResolver: ComponentTypeResolver = (field: FormFieldModel): Type<{}> => {
+let customResolver: DynamicComponentResolveFunction = (field: FormFieldModel): Type<{}> => {
     if (field) {
         let params = field.params;
     }
@@ -94,7 +94,7 @@ if you set the `override` parameter to 'true':
 formRenderingService.setComponentTypeResolver('text', newResolver, true);
 ```
 
-You would typically use this to replace an existing widget with your own custom version that
+You would typically use this to replace an existing [widget](../../e2e/pages/adf/process_services/widgets/widget.ts) with your own custom version that
 implements a modified layout or responds differently when the data is entered. See the
 [Form Extensibility and Customisation](../user-guide/extensibility.md) guide for further details and examples
 of this technique.

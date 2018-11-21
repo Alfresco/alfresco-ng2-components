@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-05-08
+Last reviewed: 2018-11-20
 ---
 
 # File Uploading Dialog Component

@@ -1,7 +1,7 @@
 ---
 Added: v2.3.0
 Status: Active
-Last reviewed: 2018-09-14
+Last reviewed: 2018-11-20
 ---
 
 # Sidenav Layout component
@@ -102,9 +102,11 @@ The contents of the 3 regions can be injected through Angular's template transcl
 in the usage example above.
 
 Desktop layout (screen width greater than the `stepOver` value):
+
 ![Sidenav on desktop](../docassets/images/sidenav-layout.png)
 
 Mobile layout (screen width less than the `stepOver` value):
+
 ![Sidenav on mobile](../docassets/images/sidenav-layout-mobile.png)
 
 ### Template context

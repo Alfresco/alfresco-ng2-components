@@ -1,10 +1,10 @@
 ---
 Added: v2.5.0
-Status: Experimental
-Last reviewed: 2018-08-07
+Status: Active
+Last reviewed: 2018-11-20
 ---
 
-# Header component 
+# Header component
 
 Reusable header for Alfresco applications.
 
@@ -31,26 +31,25 @@ body of the element:
 </adf-layout-header>
 ```
 
-
 ## Class members
 
 ### Properties
 
-| Name | Type | Description |
-| -- | -- | -- |
-| title | `string` |  Title of the application
-| logo | `string` | Path to an image file for the application logo.
-| redirectUrl | `string` \| `any[]` | The router link for the application logo.
-| tooltip | `string` | The tooltip text for the application logo.
-| color | `string` | Background color for the header. It can be any hex color code or the Material theme colors: 'primary', 'accent' or 'warn'.
-| showSidenavToggle | `boolean` | Signals if the sidenav button will be displayed in the header or not. By default is true.
-| position | `string` | 'start' | The side that the drawer is attached to 'start' or 'end' page |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| color | `string` |  | Background color for the header. It can be any hex color code or one of the Material theme colors: 'primary', 'accent' or 'warn'. |
+| logo | `string` |  | Path to an image file for the application logo. |
+| position | `string` | "start" | The side of the page that the drawer is attached to (can be 'start' or 'end') |
+| redirectUrl | `string \| any[]` | "/" | The router link for the application logo, when clicked. |
+| showSidenavToggle | `boolean` | true | Toggles whether the sidenav button will be displayed in the header or not. |
+| title | `string` |  | Title of the application. |
+| tooltip | `string` |  | The tooltip text for the application logo. |
 
 ### Events
 
 | Name | Type | Description |
-| -- | -- | -- |
-| clicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when click on sidenav button
+| ---- | ---- | ----------- |
+| clicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the sidenav button is clicked. |
 
 ## Details
 

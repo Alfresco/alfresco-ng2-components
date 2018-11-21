@@ -1,7 +1,7 @@
 ---
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-06-08
+Last reviewed: 2018-11-20
 ---
 
 # Content Action component
@@ -104,7 +104,7 @@ export class MyView {
 ## Details
 
 The document actions are rendered on a dropdown menu for each items of content. You can use the
-`target` property to choose whether the action applies to folders, documents or both. (By default the actions are applied to both)
+`target` property to choose whether the action applies to folders, documents or both. (By default the actions are applied to both).
 
 A number of built-in actions are defined to handle common use cases:
 
@@ -161,7 +161,7 @@ type, and other details of the item just deleted:
 
 #### System handler
 
-This action simply execute one of the built-in actions described above:
+This action simply executes one of the built-in actions described above:
 
 ```html
 <adf-document-list [contentActions]="true"...>
@@ -212,7 +212,7 @@ If you specify both a system handler and your own custom handler with
 `(execute)="myCustomActionAfterDelete($event)"`, your handler will run after the system handler
 completes successfully. A system operation is considered successful if there are no permission
 or network-related errors for the system request. You can avoid permission errors simply
-by disablingan item for users who don't have permission to use it (set `disableWithNoPermission="true"`). 
+by disabling an item for users who don't have permission to use it (set `disableWithNoPermission="true"`). 
 
 ```html
 <adf-document-list ...>
@@ -366,7 +366,7 @@ The code above checks the node name and evaluates to `true` only if the correspo
 node is called "For Sale.docx". 
 
 Note that if you want to preserve `this` context within the evaluator function then
-the property should be declared as a lambda function:
+you should declare it as a lambda function:
 
 ```ts
 funcName = (parameters): boolean => {
@@ -377,10 +377,10 @@ funcName = (parameters): boolean => {
 
 ### Conditional disabled state
 
-Similar to `visible` property, it is possible to control the `disabled` state with the following scenarios:
+As with the `visible` property, you can control the `disabled` state with the following options:
 
 -   direct value of `boolean` type
--   binding to a property of the `Function` type that evaluates condition and returns `boolean` value
+-   binding to a property of the `Function` type that evaluates a condition and returns a `boolean` value
 
 #### Using direct value of boolean type
 
@@ -418,10 +418,10 @@ export class MyComponent {
 }
 ```
 
-Code above checks the node name, and evaluates to `true` only if corresponding node is called "custom". 
+The code above checks the node name, and evaluates to `true` only if the corresponding node is called "custom". 
 
-Please note that if you want to preserve `this` context within the evaluator function,
-its property should be declared as a lambda one:
+Note that if you want to preserve the `this` context within the evaluator function,
+you should declare it as a lambda function:
 
 ```ts
 funcName = (parameters): boolean => {
@@ -440,11 +440,11 @@ for details and examples.
 
 ### Error, Permission and Success callbacks
 
-Defining error, permission and success callbacks are pretty much the same as doing it for the delete permission handling.
+You can define error, permission and success callbacks in much the same way as for the delete permission handling.
 
--   The error handler callback gets the error object which was raised
--   The success callback's only parameter is the translatable success message string (could be used for showing in snackbar for example)
--   The permissionEvent callback is the same as described above with the delete action
+-   The error handler callback gets the error object that was raised
+-   The success callback's only parameter is the translatable success message string (which could be shown in a snackbar, for example)
+-   The `permissionEvent` callback is the same as described above for the delete action
 
 ![Copy/move document action](../docassets/images/document-action-copymove.png)
 

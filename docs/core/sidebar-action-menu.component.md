@@ -1,7 +1,7 @@
 ---
 Added: v2.1.0
 Status: Active
-Last reviewed: 2018-09-14
+Last reviewed: 2018-11-20
 ---
 
 # Sidebar action menu component
