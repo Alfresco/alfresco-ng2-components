@@ -15,16 +15,17 @@
  * limitations under the License.
  */
 
-import { LogService, StorageService } from '@alfresco/adf-core';
+import { StorageService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ProcessInstanceFilterRepresentationModel, ProcessInstanceQueryModel } from '../models/process-filter-cloud.model';
 
 @Injectable()
 export class ProcessFilterCloudService {
 
-    constructor(private logService: LogService,
-                private storage: StorageService) {
+    private filters = <ProcessInstanceFilterRepresentationModel[]> [];
+
+    constructor(private storage: StorageService) {
     }
 
     /**
@@ -34,28 +35,13 @@ export class ProcessFilterCloudService {
      */
     public createDefaultFilters(appName: string): Observable<ProcessInstanceFilterRepresentationModel[]> {
         const allProcessesFilter = this.getAllProcessesFilterInstance(appName);
-        const allProcessesObservable = this.addFilter(allProcessesFilter);
-
+        this.addFilter(allProcessesFilter);
         const runningProcessesFilter = this.getRunningProcessesFilterInstance(appName);
-        const runningProcessesObservable = this.addFilter(runningProcessesFilter);
-
+        this.addFilter(runningProcessesFilter);
         const completedProcessesFilter = this.getCompletedProcessesFilterInstance(appName);
-        const completedProcessesObservable = this.addFilter(completedProcessesFilter);
+        this.addFilter(completedProcessesFilter);
 
-        return new Observable(observer => {
-            forkJoin(
-                allProcessesObservable,
-                runningProcessesObservable,
-                completedProcessesObservable
-            ).subscribe(
-                (filters) => {
-                    observer.next(filters);
-                    observer.complete();
-                },
-                (err: any) => {
-                    this.logService.error(err);
-                });
-        });
+        return of(this.filters);
     }
 
     /**
@@ -77,18 +63,14 @@ export class ProcessFilterCloudService {
      * @param filter The new filter to add
      * @returns Details of process filter just added
      */
-    addFilter(filter: ProcessInstanceFilterRepresentationModel): Observable<ProcessInstanceFilterRepresentationModel> {
+    addFilter(filter: ProcessInstanceFilterRepresentationModel) {
         const key = 'process-filters-' + filter.query.appName || '0';
-        let filters = JSON.parse(this.storage.getItem(key) || '[]');
+        const storedFilters = JSON.parse(this.storage.getItem(key) || '[]');
 
-        filters.push(filter);
+        storedFilters.push(filter);
+        this.storage.setItem(key, JSON.stringify(storedFilters));
 
-        this.storage.setItem(key, JSON.stringify(filters));
-
-        return new Observable(function(observer) {
-            observer.next(filter);
-            observer.complete();
-        });
+        this.filters.push(filter);
     }
 
     /**
