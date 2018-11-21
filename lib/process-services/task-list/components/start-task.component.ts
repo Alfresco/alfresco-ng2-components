@@ -60,16 +60,12 @@ export class StartTaskComponent implements OnInit {
     error: EventEmitter<any> = new EventEmitter<any>();
 
     taskDetailsModel: TaskDetailsModel = new TaskDetailsModel();
-
     forms$: Observable<Form[]>;
-
     assigneeId: number;
-
     field: FormFieldModel;
-
     taskForm: FormGroup;
-
     dateError: boolean = false;
+    maxTaskNameLength: number = this.MAX_LENGTH;
 
     /**
      * Constructor
