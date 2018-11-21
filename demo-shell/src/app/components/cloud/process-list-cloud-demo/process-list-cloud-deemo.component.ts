@@ -21,11 +21,11 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 
 @Component({
-    selector: 'app-process-list-example',
-    templateUrl: './process-list-cloud-example.component.html',
-    styleUrls: ['./process-list-cloud-example.component.scss']
+    selector: 'app-process-list-demo',
+    templateUrl: './process-list-cloud-demo.component.html',
+    styleUrls: ['./process-list-cloud-demo.component.scss']
 })
-export class ProcessListCloudExampleComponent implements OnInit {
+export class ProcessListCloudDemoComponent implements OnInit {
 
     @ViewChild('processCloud')
     processCloud: ProcessListCloudComponent;

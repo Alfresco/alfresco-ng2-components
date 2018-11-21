@@ -41,10 +41,10 @@ import { DemoPermissionComponent } from './components/permissions/demo-permissio
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { AppComponent } from './app.component';
 import { CloudComponent } from './components/cloud/cloud.component';
-import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
-import { ProcessListCloudExampleComponent } from './components/cloud/process-list-cloud-example.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
+import { TaskListCloudDemoComponent } from './components/cloud/task-list-cloud-demo/task-list-cloud-demo.component';
+import { ProcessListCloudDemoComponent } from './components/cloud/process-list-cloud-demo/process-list-cloud-deemo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -157,7 +157,7 @@ export const appRoutes: Routes = [
                                     },
                                     {
                                         path: 'processes',
-                                        component: ProcessListCloudExampleComponent
+                                        component: ProcessListCloudDemoComponent
                                     }
                                 ]
                             }

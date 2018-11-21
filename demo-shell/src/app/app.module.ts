@@ -65,11 +65,11 @@ import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
 import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
 import { CloudComponent } from './components/cloud/cloud.component';
-import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
-import { ProcessListCloudExampleComponent } from './components/cloud/process-list-cloud-example.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
 import { CloudBreadcrumbsComponent } from './components/cloud/cloud-breadcrumb-component';
+import { TaskListCloudDemoComponent } from './components/cloud/task-list-cloud-demo/task-list-cloud-demo.component';
+import { ProcessListCloudDemoComponent } from './components/cloud/process-list-cloud-demo/process-list-cloud-deemo.component';
 
 @NgModule({
     imports: [
@@ -122,7 +122,7 @@ import { CloudBreadcrumbsComponent } from './components/cloud/cloud-breadcrumb-c
         FormLoadingComponent,
         ReportIssueComponent,
         TaskListCloudDemoComponent,
-        ProcessListCloudExampleComponent,
+        ProcessListCloudDemoComponent,
         TreeViewSampleComponent
     ],
     providers: [
