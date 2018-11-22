@@ -23,6 +23,7 @@ import { ContentService } from '../../services/content.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { EcmUserModel } from '../models/ecm-user.model';
+import { PersonEntry } from 'alfresco-js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -42,7 +43,9 @@ export class EcmUserService {
     getUserInfo(userName: string): Observable<EcmUserModel> {
         return from(this.apiService.getInstance().core.peopleApi.getPerson(userName))
             .pipe(
-                map(data => <EcmUserModel> data['entry']),
+                map((personEntry: PersonEntry) => {
+                    return new EcmUserModel(personEntry.entry);
+                }),
                 catchError(err => this.handleError(err))
             );
     }

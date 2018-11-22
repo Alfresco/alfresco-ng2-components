@@ -32,3 +32,4 @@ Shows user information.
 The component shows a round icon for the user and will show extra information about
 the user when clicked.
 If user is logged in with both ACS and APS, the ACS image will be shown.
+In case of SSO authentication, the information related to the user like firstname, lastname will be fetched using the Keycloak Api

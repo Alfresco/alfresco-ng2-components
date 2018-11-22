@@ -15,12 +15,17 @@
  * limitations under the License.
  */
 
-export * from './components/user-info.component';
-export * from './services/bpm-user.service';
-export * from './services/ecm-user.service';
-export * from './services/identity-user.service';
-export * from './models/bpm-user.model';
-export * from './models/ecm-user.model';
-export * from './models/identity-user.model';
+export class IdentityUserModel {
 
-export * from './userinfo.module';
+    firstName: string;
+    lastName: string;
+    email: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.firstName = obj.firstName || null;
+            this.lastName = obj.lastName || null;
+            this.email = obj.email || null;
+        }
+    }
+}

@@ -22,6 +22,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { map, catchError } from 'rxjs/operators';
+import { UserRepresentation } from 'alfresco-js-api';
 
 /**
  *
@@ -44,7 +45,9 @@ export class BpmUserService {
     getCurrentUserInfo(): Observable<BpmUserModel> {
         return from(this.apiService.getInstance().activiti.profileApi.getProfile())
             .pipe(
-                map((data) => <BpmUserModel> data),
+                map((data: UserRepresentation) => {
+                    return new BpmUserModel(data);
+                }),
                 catchError(err => this.handleError(err))
             );
     }
