@@ -32,13 +32,13 @@ Lists all available process filters and allows to select a filter.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | (required) The application name |
-| filterParam | `ProcessInstanceFilterRepresentationModel` |  | (optional) The filter to be selected by default |
+| filterParam | `ProcessFilterRepresentationModel` |  | (optional) The filter to be selected by default |
 | showIcons | `boolean` | false | (optional) The flag hides/shows icon against each filter |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceFilterRepresentationModel`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-filter-cloud.model.ts)`>` | Emitted when a filter is selected/clicked. |
+| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterRepresentationModel`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-filter-cloud.model.ts)`>` | Emitted when a filter is selected/clicked. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when filters are loaded successfully. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs while loading the filters. |

@@ -17,13 +17,11 @@
 
 import { StorageService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { ProcessInstanceFilterRepresentationModel, ProcessInstanceQueryModel } from '../models/process-filter-cloud.model';
+import { Observable } from 'rxjs';
+import { ProcessFilterRepresentationModel, ProcessQueryModel } from '../models/process-filter-cloud.model';
 
 @Injectable()
 export class ProcessFilterCloudService {
-
-    private filters = <ProcessInstanceFilterRepresentationModel[]> [];
 
     constructor(private storage: StorageService) {
     }
@@ -33,15 +31,15 @@ export class ProcessFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of default filters just created
      */
-    public createDefaultFilters(appName: string): Observable<ProcessInstanceFilterRepresentationModel[]> {
-        const allProcessesFilter = this.getAllProcessesFilterInstance(appName);
+    public createDefaultFilters(appName: string): Observable<ProcessFilterRepresentationModel[]> {
+        const allProcessesFilter = this.getAllProcessesFilter(appName);
         this.addFilter(allProcessesFilter);
-        const runningProcessesFilter = this.getRunningProcessesFilterInstance(appName);
+        const runningProcessesFilter = this.getRunningProcessesFilter(appName);
         this.addFilter(runningProcessesFilter);
-        const completedProcessesFilter = this.getCompletedProcessesFilterInstance(appName);
+        const completedProcessesFilter = this.getCompletedProcessesFilter(appName);
         this.addFilter(completedProcessesFilter);
 
-        return of(this.filters);
+        return this.getProcessFilters(appName);
     }
 
     /**
@@ -49,7 +47,7 @@ export class ProcessFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of process filter details
      */
-    getProcessInstanceFilters(appName?: string): Observable<ProcessInstanceFilterRepresentationModel[]> {
+    getProcessFilters(appName: string): Observable<ProcessFilterRepresentationModel[]> {
         let key = 'process-filters-' + appName;
         const filters = JSON.parse(this.storage.getItem(key) || '[]');
         return new Observable(function(observer) {
@@ -63,14 +61,12 @@ export class ProcessFilterCloudService {
      * @param filter The new filter to add
      * @returns Details of process filter just added
      */
-    addFilter(filter: ProcessInstanceFilterRepresentationModel) {
+    addFilter(filter: ProcessFilterRepresentationModel) {
         const key = 'process-filters-' + filter.query.appName || '0';
         const storedFilters = JSON.parse(this.storage.getItem(key) || '[]');
 
         storedFilters.push(filter);
         this.storage.setItem(key, JSON.stringify(storedFilters));
-
-        this.filters.push(filter);
     }
 
     /**
@@ -78,11 +74,11 @@ export class ProcessFilterCloudService {
      * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getAllProcessesFilterInstance(appName: string): ProcessInstanceFilterRepresentationModel {
-        return new ProcessInstanceFilterRepresentationModel({
+    getAllProcessesFilter(appName: string): ProcessFilterRepresentationModel {
+        return new ProcessFilterRepresentationModel({
             name: 'All Processes',
             icon: 'adjust',
-            query: new ProcessInstanceQueryModel(
+            query: new ProcessQueryModel(
                 {
                     appName: appName,
                     sort: 'startDate',
@@ -97,11 +93,11 @@ export class ProcessFilterCloudService {
      * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getRunningProcessesFilterInstance(appName: string): ProcessInstanceFilterRepresentationModel {
-        return new ProcessInstanceFilterRepresentationModel({
+    getRunningProcessesFilter(appName: string): ProcessFilterRepresentationModel {
+        return new ProcessFilterRepresentationModel({
             name: 'Running Processes',
             icon: 'inbox',
-            query: new ProcessInstanceQueryModel(
+            query: new ProcessQueryModel(
                 {
                     appName: appName,
                     sort: 'startDate',
@@ -117,11 +113,11 @@ export class ProcessFilterCloudService {
      * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getCompletedProcessesFilterInstance(appName: string): ProcessInstanceFilterRepresentationModel {
-        return new ProcessInstanceFilterRepresentationModel({
+    getCompletedProcessesFilter(appName: string): ProcessFilterRepresentationModel {
+        return new ProcessFilterRepresentationModel({
             name: 'Completed Processes',
             icon: 'done',
-            query: new ProcessInstanceQueryModel(
+            query: new ProcessQueryModel(
                 {
                     appName: appName,
                     sort: 'startDate',

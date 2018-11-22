@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export class ProcessInstanceQueryModel {
+export class ProcessQueryModel {
     processDefinitionId: string;
     appName: string;
     state: string;
@@ -33,20 +33,35 @@ export class ProcessInstanceQueryModel {
         }
     }
 }
-export class ProcessInstanceFilterRepresentationModel {
+export class ProcessFilterRepresentationModel {
+    id: string;
     name: string;
     icon: string;
-    query: ProcessInstanceQueryModel;
+    query: ProcessQueryModel;
 
     constructor(obj?: any) {
         if (obj) {
+            this.id = Math.random().toString(36).substring(2, 9);
             this.name = obj.name || null;
             this.icon = obj.icon || null;
-            this.query = new ProcessInstanceQueryModel(obj.query);
+            this.query = new ProcessQueryModel(obj.query);
         }
     }
 
     hasFilter() {
         return !!this.query;
+    }
+}
+
+export class ProcessFilterParamModel {
+    id: string;
+    name: string;
+    index: number;
+    constructor(obj?: any) {
+        if (obj) {
+            this.id = obj.id || null;
+            this.name = obj.name || null;
+            this.index = obj.index || null;
+        }
     }
 }
