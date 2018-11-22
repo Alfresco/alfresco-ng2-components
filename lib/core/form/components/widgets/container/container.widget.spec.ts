@@ -104,7 +104,7 @@ describe('ContainerWidgetComponent', () => {
     it('should send an event when a value is changed in the form', (done) => {
         let fakeForm = new FormModel();
         let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
-        widget.fieldChanged.subscribe(field => {
+        widget.fieldChanged.subscribe((field) => {
             expect(field).not.toBe(null);
             expect(field.id).toBe('fakeField');
             expect(field.value).toBe('fakeValue');

@@ -44,7 +44,7 @@ export class TabsWidgetComponent implements AfterContentChecked {
     }
 
     filterVisibleTabs() {
-        this.visibleTabs = this.tabs.filter(tab => {
+        this.visibleTabs = this.tabs.filter((tab) => {
             return tab.isVisible;
         });
     }

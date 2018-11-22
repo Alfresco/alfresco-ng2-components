@@ -81,7 +81,7 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.subscriptions.push(
-            this.contextMenuService.show.subscribe(e => this.showMenu(e.event, e.obj)),
+            this.contextMenuService.show.subscribe((mouseEvent) => this.showMenu(mouseEvent.event, mouseEvent.obj)),
 
             this.menuTrigger.onMenuOpen.subscribe(() => {
                 const container = this.overlayContainer.getContainerElement();
@@ -107,7 +107,7 @@ export class ContextMenuHolderComponent implements OnInit, OnDestroy {
             this.contextMenuListenerFn();
         }
 
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
         this.subscriptions = [];
 
         this.menuElement = null;

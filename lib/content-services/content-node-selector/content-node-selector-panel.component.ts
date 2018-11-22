@@ -259,7 +259,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
 
         if (this.customResourcesService.hasCorrespondingNodeIds(this.siteId)) {
             this.customResourcesService.getCorrespondingNodeIds(this.siteId)
-                .subscribe(nodeIds => {
+                .subscribe((nodeIds) => {
                         this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize, nodeIds)
                             .subscribe(this.showSearchResults.bind(this));
                     },
@@ -380,7 +380,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
             };
 
             this.apiService.nodesApi.getNode(node.guid, options)
-                .then(documentLibrary => {
+                .then((documentLibrary) => {
                     this.documentList.performCustomSourceNavigation(documentLibrary);
                 });
         }

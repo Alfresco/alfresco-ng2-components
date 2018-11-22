@@ -105,8 +105,8 @@ export function reduceEmptyMenus(
 export function mergeObjects(...objects): any {
     const result = {};
 
-    objects.forEach(source => {
-        Object.keys(source).forEach(prop => {
+    objects.forEach((source) => {
+        Object.keys(source).forEach((prop) => {
             if (!prop.startsWith('$')) {
                 if (prop in result && Array.isArray(result[prop])) {
                     // result[prop] = result[prop].concat(source[prop]);
@@ -127,7 +127,7 @@ export function mergeArrays(left: any[], right: any[]): any[] {
     const result = [];
     const map = {};
 
-    (left || []).forEach(entry => {
+    (left || []).forEach((entry) => {
         const element = entry;
         if (element && element.hasOwnProperty('id')) {
             map[element.id] = element;
@@ -136,7 +136,7 @@ export function mergeArrays(left: any[], right: any[]): any[] {
         }
     });
 
-    (right || []).forEach(entry => {
+    (right || []).forEach((entry) => {
         const element = entry;
         if (element && element.hasOwnProperty('id') && map[element.id]) {
             const merged = mergeObjects(map[element.id], element);

@@ -298,7 +298,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                 const customResourcesService = TestBed.get(CustomResourcesService);
                 getCorrespondingNodeIdsSpy = spyOn(customResourcesService, 'getCorrespondingNodeIds').and
-                    .callFake(id => {
+                    .callFake((id) => {
                         if (id === '-sites-') {
                             return of(['123456testId', '09876543testId']);
                         }

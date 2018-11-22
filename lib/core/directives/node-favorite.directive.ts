@@ -75,10 +75,10 @@ export class NodeFavoriteDirective implements OnChanges {
 
             forkJoin(batch).subscribe(
                 () => {
-                    this.favorites.map(selected => selected.entry.isFavorite = false);
+                    this.favorites.map((selected) => selected.entry.isFavorite = false);
                     this.toggle.emit();
                 },
-                error => this.error.emit(error)
+                (error) => this.error.emit(error)
             );
         }
 
@@ -89,10 +89,10 @@ export class NodeFavoriteDirective implements OnChanges {
             from(this.alfrescoApiService.favoritesApi.addFavorite('-me-', <any> body))
                 .subscribe(
                     () => {
-                        notFavorite.map(selected => selected.entry.isFavorite = true);
+                        notFavorite.map((selected) => selected.entry.isFavorite = true);
                         this.toggle.emit();
                     },
-                    error => this.error.emit(error)
+                    (error) => this.error.emit(error)
                 );
         }
     }
@@ -106,7 +106,7 @@ export class NodeFavoriteDirective implements OnChanges {
         const result = this.diff(selection, this.favorites);
         const batch = this.getProcessBatch(result);
 
-        forkJoin(batch).subscribe(data => {
+        forkJoin(batch).subscribe((data) => {
             this.favorites.push(...data);
         });
     }
@@ -186,14 +186,14 @@ export class NodeFavoriteDirective implements OnChanges {
     }
 
     private diff(list, patch): any[] {
-        const ids = patch.map(item => item.entry.id);
+        const ids = patch.map((item) => item.entry.id);
 
-        return list.filter(item => ids.includes(item.entry.id) ? null : item);
+        return list.filter((item) => ids.includes(item.entry.id) ? null : item);
     }
 
     private reduce(patch, comparator): any[] {
-        const ids = comparator.map(item => item.entry.id);
+        const ids = comparator.map((item) => item.entry.id);
 
-        return patch.filter(item => ids.includes(item.entry.id) ? item : null);
+        return patch.filter((item) => ids.includes(item.entry.id) ? item : null);
     }
 }

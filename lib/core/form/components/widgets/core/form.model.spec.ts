@@ -49,7 +49,7 @@ describe('FormModel', () => {
         };
         let form = new FormModel(json);
 
-        Object.keys(json).forEach(key => {
+        Object.keys(json).forEach((key) => {
             expect(form[key]).toEqual(form[key]);
         });
     });

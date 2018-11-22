@@ -50,7 +50,7 @@ export abstract class CardViewBaseItemModel {
         }
 
         return this.validators
-            .map(validator => validator.isValid(newValue))
+            .map((validator) => validator.isValid(newValue))
             .reduce((isValidUntilNow, isValid) => isValidUntilNow && isValid, true);
     }
 
@@ -59,6 +59,6 @@ export abstract class CardViewBaseItemModel {
             return [];
         }
 
-        return this.validators.filter(validator => !validator.isValid(value)).map(validator => validator.message);
+        return this.validators.filter((validator) => !validator.isValid(value)).map((validator) => validator.message);
     }
 }

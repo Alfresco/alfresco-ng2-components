@@ -51,7 +51,7 @@ export class DynamicTableModel extends FormWidgetModel {
             return;
         }
 
-        this.rows.forEach(row => row.selected = false);
+        this.rows.forEach((row) => row.selected = false);
 
         this._selectedRow = value;
 
@@ -68,11 +68,11 @@ export class DynamicTableModel extends FormWidgetModel {
             const columns = this.getColumns(field);
             if (columns) {
                 this.columns = columns;
-                this.visibleColumns = this.columns.filter(col => col.visible);
+                this.visibleColumns = this.columns.filter((col) => col.visible);
             }
 
             if (field.json.value) {
-                this.rows = field.json.value.map(obj => <DynamicTableRow> {selected: false, value: obj});
+                this.rows = field.json.value.map((obj) => <DynamicTableRow> {selected: false, value: obj});
             }
         }
 
@@ -91,7 +91,7 @@ export class DynamicTableModel extends FormWidgetModel {
             }
 
             if (definitions) {
-                return definitions.map(obj => <DynamicTableColumn> obj);
+                return definitions.map((obj) => <DynamicTableColumn> obj);
             }
         }
         return null;
@@ -99,7 +99,7 @@ export class DynamicTableModel extends FormWidgetModel {
 
     flushValue() {
         if (this.field) {
-            this.field.value = this.rows.map(r => r.value);
+            this.field.value = this.rows.map((r) => r.value);
             this.field.updateForm();
         }
     }

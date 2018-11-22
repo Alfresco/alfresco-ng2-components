@@ -95,7 +95,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                     this.componentRef = this.container.createComponent(factory);
                     let instance = <WidgetComponent> this.componentRef.instance;
                     instance.field = this.field;
-                    instance.fieldChanged.subscribe(field => {
+                    instance.fieldChanged.subscribe((field) => {
                         if (field && this.field.form) {
                             this.visibilityService.refreshVisibility(field.form);
                             field.form.onFormFieldChanged(field);
@@ -154,7 +154,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
         }
 
         let module: ModuleWithComponentFactories<any> = compiler.compileModuleAndAllComponentsSync(RuntimeComponentModule);
-        return module.componentFactories.find(x => x.componentType === decoratedCmp);
+        return module.componentFactories.find((x) => x.componentType === decoratedCmp);
     }
 
     focusToggle() {

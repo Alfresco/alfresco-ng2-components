@@ -71,9 +71,9 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges {
     constructor(private activitiProcess: ProcessService,
                 private logService: LogService,
                 private dialog: MatDialog) {
-        this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer)
+        this.task$ = new Observable<TaskDetailsModel>((observer) => this.taskObserver = observer)
             .pipe(share());
-        this.completedTask$ = new Observable<TaskDetailsModel>(observer => this.completedTaskObserver = observer)
+        this.completedTask$ = new Observable<TaskDetailsModel>((observer) => this.completedTaskObserver = observer)
             .pipe(share());
     }
 

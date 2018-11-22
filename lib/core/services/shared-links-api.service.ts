@@ -50,7 +50,7 @@ export class SharedLinksApiService {
         const promise = this.sharedLinksApi.findSharedLinks(queryOptions);
 
         return from(promise).pipe(
-            catchError(err => of(err))
+            catchError((err) => of(err))
         );
     }
 
@@ -64,7 +64,7 @@ export class SharedLinksApiService {
         const promise = this.sharedLinksApi.addSharedLink({ nodeId: nodeId });
 
         return from(promise).pipe(
-            catchError(err => of(err))
+            catchError((err) => of(err))
         );
     }
 
@@ -77,7 +77,7 @@ export class SharedLinksApiService {
         const promise = this.sharedLinksApi.deleteSharedLink(sharedId);
 
         return from(promise).pipe(
-            catchError(err => of(err))
+            catchError((err) => of(err))
         );
     }
 }

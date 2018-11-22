@@ -58,7 +58,7 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
                     this.field.options = result || [];
                     this.field.updateForm();
                 },
-                err => this.handleError(err)
+                (err) => this.handleError(err)
             );
     }
 
@@ -73,7 +73,7 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
                     this.field.options = result || [];
                     this.field.updateForm();
                 },
-                err => this.handleError(err)
+                (err) => this.handleError(err)
             );
     }
 

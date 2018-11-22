@@ -59,7 +59,7 @@ export class PeopleSearchComponent implements OnInit {
         this.filteredResults$ = this.results
             .pipe(
                 map((users) => {
-                    return users.filter(user => user.id !== this.selectedUser.id);
+                    return users.filter((user) => user.id !== this.selectedUser.id);
                 })
             );
         this.performSearch = this.performSearchCallback.bind(this);

@@ -26,16 +26,16 @@ export class FileUtils {
     static flatten(folder: any): Promise<FileInfo[]> {
         let reader = folder.createReader();
         let files: FileInfo[] = [];
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             let iterations = [];
             (function traverse() {
                 reader.readEntries((entries) => {
                     if (!entries.length) {
-                        Promise.all(iterations).then(result => resolve(files));
+                        Promise.all(iterations).then(() => resolve(files));
                     } else {
-                        iterations.push(Promise.all(entries.map(entry => {
+                        iterations.push(Promise.all(entries.map((entry) => {
                             if (entry.isFile) {
-                                return new Promise(resolveFile => {
+                                return new Promise((resolveFile) => {
                                     entry.file(function (file: File) {
                                         files.push({
                                             entry: entry,
@@ -46,7 +46,7 @@ export class FileUtils {
                                     });
                                 });
                             } else {
-                                return FileUtils.flatten(entry).then(result => {
+                                return FileUtils.flatten(entry).then((result) => {
                                     files.push(...result);
                                 });
                             }

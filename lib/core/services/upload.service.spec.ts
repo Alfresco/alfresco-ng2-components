@@ -98,7 +98,7 @@ describe('UploadService', () => {
     it('should make XHR done request after the file is added in the queue', (done) => {
         let emitter = new EventEmitter();
 
-        let emitterDisposable = emitter.subscribe(e => {
+        let emitterDisposable = emitter.subscribe((e) => {
             expect(e.value).toBe('File uploaded');
             emitterDisposable.unsubscribe();
             done();
@@ -124,7 +124,7 @@ describe('UploadService', () => {
     it('should make XHR error request after an error occur', (done) => {
         let emitter = new EventEmitter();
 
-        let emitterDisposable = emitter.subscribe(e => {
+        let emitterDisposable = emitter.subscribe((e) => {
             expect(e.value).toBe('Error file uploaded');
             emitterDisposable.unsubscribe();
             done();
@@ -148,7 +148,7 @@ describe('UploadService', () => {
     it('should make XHR abort request after the xhr abort is called', (done) => {
         let emitter = new EventEmitter();
 
-        let emitterDisposable = emitter.subscribe(e => {
+        let emitterDisposable = emitter.subscribe((e) => {
             expect(e.value).toEqual('File aborted');
             emitterDisposable.unsubscribe();
             done();
@@ -200,7 +200,7 @@ describe('UploadService', () => {
     it('should use custom root folder ID given to the service', (done) => {
         let emitter = new EventEmitter();
 
-        let emitterDisposable = emitter.subscribe(e => {
+        let emitterDisposable = emitter.subscribe((e) => {
             expect(e.value).toBe('File uploaded');
             emitterDisposable.unsubscribe();
             done();
@@ -259,11 +259,11 @@ describe('UploadService', () => {
     it('should start downloading the next one if a file of the list is aborted', (done) => {
         let emitter = new EventEmitter();
 
-        service.fileUploadAborted.subscribe(e => {
+        service.fileUploadAborted.subscribe((e) => {
             expect(e).not.toBeNull();
         });
 
-        service.fileUploadCancelled.subscribe(e => {
+        service.fileUploadCancelled.subscribe((e) => {
             expect(e).not.toBeNull();
             done();
         });

@@ -85,8 +85,8 @@ describe('PdfThumbListComponent', () => {
         fixture.nativeElement.scrollTop = 0;
         fixture.detectChanges();
 
-        const renderedIds = component.renderItems.map(item => item.id);
-        const rangeIds = viewerMock._pages.slice(0, 6).map(item => item.id);
+        const renderedIds = component.renderItems.map((item) => item.id);
+        const rangeIds = viewerMock._pages.slice(0, 6).map((item) => item.id);
 
         expect(renderedIds).toEqual(rangeIds);
     });
@@ -96,8 +96,8 @@ describe('PdfThumbListComponent', () => {
         fixture.nativeElement.scrollTop = 700;
         fixture.detectChanges();
 
-        const renderedIds = component.renderItems.map(item => item.id);
-        const rangeIds = viewerMock._pages.slice(5, 12).map(item => item.id);
+        const renderedIds = component.renderItems.map((item) => item.id);
+        const rangeIds = viewerMock._pages.slice(5, 12).map((item) => item.id);
 
         expect(renderedIds).toEqual(rangeIds);
     });
@@ -105,13 +105,13 @@ describe('PdfThumbListComponent', () => {
     it('should render items containing current document page', () => {
         fixture.detectChanges();
 
-        const renderedIds = component.renderItems.map(item => item.id);
+        const renderedIds = component.renderItems.map((item) => item.id);
 
         expect(renderedIds).not.toContain(10);
 
         component.scrollInto(10);
 
-        const newRenderedIds = component.renderItems.map(item => item.id);
+        const newRenderedIds = component.renderItems.map((item) => item.id);
 
         expect(newRenderedIds).toContain(10);
     });
@@ -120,14 +120,14 @@ describe('PdfThumbListComponent', () => {
         fixture.nativeElement.scrollTop = 1700;
         fixture.detectChanges();
 
-        const renderedIds = component.renderItems.map(item => item.id);
+        const renderedIds = component.renderItems.map((item) => item.id);
 
         expect(renderedIds).toContain(12);
 
         /* cspell:disable-next-line */
         viewerMock.eventBus.dispatch('pagechange', { pageNumber: 12 });
 
-        const newRenderedIds = component.renderItems.map(item => item.id);
+        const newRenderedIds = component.renderItems.map((item) => item.id);
 
         expect(newRenderedIds).toContain(12);
     });

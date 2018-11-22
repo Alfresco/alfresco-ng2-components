@@ -78,7 +78,7 @@ describe('NodeRestoreDirective', () => {
         }));
 
         translationService = TestBed.get(TranslationService);
-        spyOn(translationService, 'instant').and.callFake(key => { return key; });
+        spyOn(translationService, 'instant').and.callFake((key) => { return key; });
     });
 
     it('should not restore when selection is empty', () => {

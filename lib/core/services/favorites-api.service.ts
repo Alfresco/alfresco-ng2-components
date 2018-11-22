@@ -84,7 +84,7 @@ export class FavoritesApiService {
             .then(this.remapFavoritesData);
 
         return from(promise).pipe(
-            catchError(err => of(err))
+            catchError((err) => of(err))
         );
     }
 }

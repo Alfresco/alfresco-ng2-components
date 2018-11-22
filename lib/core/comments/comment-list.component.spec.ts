@@ -135,7 +135,7 @@ describe('CommentListComponent', () => {
     it('should emit row click event', async(() => {
         commentList.comments = [Object.assign({}, processCommentOne)];
 
-        commentList.clickRow.subscribe(selectedComment => {
+        commentList.clickRow.subscribe((selectedComment) => {
             expect(selectedComment.id).toEqual(1);
             expect(selectedComment.message).toEqual('Test Comment');
             expect(selectedComment.createdBy).toEqual(testUser);
@@ -156,7 +156,7 @@ describe('CommentListComponent', () => {
         commentList.selectedComment = commentOne;
         commentList.comments = [commentOne, commentTwo];
 
-        commentList.clickRow.subscribe(selectedComment => {
+        commentList.clickRow.subscribe((selectedComment) => {
             fixture.detectChanges();
             let commentSelectedList = fixture.nativeElement.querySelectorAll('.is-selected');
             expect(commentSelectedList.length).toBe(1);

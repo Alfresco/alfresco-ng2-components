@@ -197,7 +197,7 @@ export class SearchTriggerDirective implements ControlValueAccessor, OnDestroy {
                 }),
                 takeUntil(this.onDestroy$)
             )
-            .subscribe(event => this.setValueAndClose(event));
+            .subscribe((event) => this.setValueAndClose(event));
     }
 
     private setTriggerValue(value: any): void {

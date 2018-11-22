@@ -546,10 +546,10 @@ describe('DataTable', () => {
         expect(dataTable.data).toBe(data);
     });
 
-    it('should emit row click event', done => {
+    it('should emit row click event', (done) => {
         let row = <DataRow> {};
 
-        dataTable.rowClick.subscribe(e => {
+        dataTable.rowClick.subscribe((e) => {
             expect(e.value).toBe(row);
             done();
         });
@@ -744,12 +744,12 @@ describe('DataTable', () => {
         dataTable.ngAfterContentInit();
         dataTable.onSelectAllClick(<MatCheckboxChange> { checked: true });
 
-        expect(dataTable.selection.every(entry => entry.isSelected));
+        expect(dataTable.selection.every((entry) => entry.isSelected));
 
         data.setRows([]);
         fixture.detectChanges();
 
-        expect(dataTable.selection.every(entry => !entry.isSelected));
+        expect(dataTable.selection.every((entry) => !entry.isSelected));
     });
 
     it('should update rows on "select all" click', () => {

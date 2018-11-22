@@ -111,7 +111,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
             this.activitiContentService.getTaskRelatedContent(taskId).subscribe(
                 (res: any) => {
                     let attachList = [];
-                    res.data.forEach(content => {
+                    res.data.forEach((content) => {
                         attachList.push({
                             id: content.id,
                             name: content.name,
@@ -135,7 +135,7 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
         if (contentId) {
             this.activitiContentService.deleteRelatedContent(contentId).subscribe(
                 (res: any) => {
-                    this.attachments = this.attachments.filter(content => {
+                    this.attachments = this.attachments.filter((content) => {
                         return content.id !== contentId;
                     });
                 },

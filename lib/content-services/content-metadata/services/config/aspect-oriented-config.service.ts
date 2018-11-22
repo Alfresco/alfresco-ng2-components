@@ -36,7 +36,7 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
                 const newGroup = this.getOrganisedPropertyGroup(propertyGroups, aspectName);
                 return groupAccumulator.concat(newGroup);
             }, [])
-            .filter(organisedPropertyGroup => organisedPropertyGroup.properties.length > 0);
+            .filter((organisedPropertyGroup) => organisedPropertyGroup.properties.length > 0);
     }
 
     private getOrganisedPropertyGroup(propertyGroups, aspectName) {
@@ -52,7 +52,7 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
             } else {
                 properties = (<string[]> aspectProperties)
                     .map((propertyName) => getProperty(propertyGroups, aspectName, propertyName))
-                    .filter(props => props !== undefined);
+                    .filter((props) => props !== undefined);
             }
 
             newGroup = [ { title: group.title, properties } ];

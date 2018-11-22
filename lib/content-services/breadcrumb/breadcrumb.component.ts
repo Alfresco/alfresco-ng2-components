@@ -153,7 +153,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
         let result: number = -1;
 
         if (route && route.length > 0 && nodeId) {
-            result = route.findIndex(el => el.id === nodeId);
+            result = route.findIndex((el) => el.id === nodeId);
         }
 
         return result;

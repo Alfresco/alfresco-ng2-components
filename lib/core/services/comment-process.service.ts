@@ -49,7 +49,7 @@ export class CommentProcessService {
                         createdBy: response.createdBy
                     });
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -69,7 +69,7 @@ export class CommentProcessService {
                     });
                     return comments;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -89,7 +89,7 @@ export class CommentProcessService {
                     });
                     return comments;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -111,7 +111,7 @@ export class CommentProcessService {
                     createdBy: response.createdBy
                 });
             }),
-            catchError(err => this.handleError(err))
+            catchError((err) => this.handleError(err))
         );
     }
 

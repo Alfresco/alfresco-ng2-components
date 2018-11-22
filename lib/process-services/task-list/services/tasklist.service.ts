@@ -73,9 +73,9 @@ export class TaskListService {
         return from(this.callApiTasksFiltered(requestNodeForFilter))
             .pipe(
                 map((res: any) => {
-                    return res.data.find(element => element.id === taskId) ? filterModel : null;
+                    return res.data.find((element) => element.id === taskId) ? filterModel : null;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -87,7 +87,7 @@ export class TaskListService {
     getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
         return from<TaskListModel>(this.callApiTasksFiltered(requestNode))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -153,7 +153,7 @@ export class TaskListService {
                 map((details: any) => {
                     return new TaskDetailsModel(details);
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -172,7 +172,7 @@ export class TaskListService {
                     });
                     return checklists;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -196,7 +196,7 @@ export class TaskListService {
                     });
                     return forms;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -209,7 +209,7 @@ export class TaskListService {
     attachFormToATask(taskId: string, formId: number): Observable<any> {
         return from(this.apiService.taskApi.attachForm(taskId, { 'formId': formId }))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -224,7 +224,7 @@ export class TaskListService {
                 map((response: TaskDetailsModel) => {
                     return new TaskDetailsModel(response);
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -236,7 +236,7 @@ export class TaskListService {
     deleteTask(taskId: string): Observable<TaskDetailsModel> {
         return from<TaskDetailsModel>(this.callApiDeleteTask(taskId))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -248,7 +248,7 @@ export class TaskListService {
     deleteForm(taskId: string): Observable<TaskDetailsModel> {
         return from<TaskDetailsModel>(this.callApiDeleteForm(taskId))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -260,7 +260,7 @@ export class TaskListService {
     completeTask(taskId: string) {
         return from(this.apiService.taskApi.completeTask(taskId))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -276,7 +276,7 @@ export class TaskListService {
                 map((res: any) => {
                     return res;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -291,7 +291,7 @@ export class TaskListService {
                 map((response: TaskDetailsModel) => {
                     return new TaskDetailsModel(response);
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -308,7 +308,7 @@ export class TaskListService {
                 map((response: TaskDetailsModel) => {
                     return new TaskDetailsModel(response);
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -325,7 +325,7 @@ export class TaskListService {
                 map((response: TaskDetailsModel) => {
                     return new TaskDetailsModel(response);
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -337,7 +337,7 @@ export class TaskListService {
     claimTask(taskId: string): Observable<TaskDetailsModel> {
         return from<TaskDetailsModel>(this.apiService.taskApi.claimTask(taskId))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -349,7 +349,7 @@ export class TaskListService {
     unclaimTask(taskId: string): Observable<TaskDetailsModel> {
         return from<TaskDetailsModel>(this.apiService.taskApi.unclaimTask(taskId))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -362,8 +362,8 @@ export class TaskListService {
     updateTask(taskId: any, updated): Observable<TaskDetailsModel> {
         return from(this.apiService.taskApi.updateTask(taskId, updated))
             .pipe(
-                map(result => <TaskDetailsModel> result),
-                catchError(err => this.handleError(err))
+                map((result) => <TaskDetailsModel> result),
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -375,8 +375,8 @@ export class TaskListService {
     fetchTaskAuditPdfById(taskId: string): Observable<Blob> {
         return from(this.apiService.taskApi.getTaskAuditPdf(taskId))
             .pipe(
-                map(data => <Blob> data),
-                catchError(err => this.handleError(err))
+                map((data) => <Blob> data),
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -388,7 +388,7 @@ export class TaskListService {
     fetchTaskAuditJsonById(taskId: string): Observable<any> {
         return from(this.apiService.taskApi.getTaskAuditJson(taskId))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

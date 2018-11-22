@@ -113,7 +113,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
             this.isLoading = true;
             this.activitiContentService.getProcessRelatedContent(processInstanceId).subscribe(
                 (res: any) => {
-                    res.data.forEach(content => {
+                    res.data.forEach((content) => {
                         this.attachments.push({
                             id: content.id,
                             name: content.name,
@@ -136,7 +136,7 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         if (contentId) {
             this.activitiContentService.deleteRelatedContent(contentId).subscribe(
                 (res: any) => {
-                    this.attachments = this.attachments.filter(content => {
+                    this.attachments = this.attachments.filter((content) => {
                         return content.id !== contentId;
                     });
                 },

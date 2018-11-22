@@ -30,14 +30,14 @@ export class DiagramsService {
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {
         return from(this.apiService.getInstance().activiti.modelJsonBpmnApi.getModelJSON(processDefinitionId))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
     getRunningProcessDefinitionModel(processInstanceId: string): Observable<any> {
         return from(this.apiService.getInstance().activiti.modelJsonBpmnApi.getModelJSONForProcessDefinition(processInstanceId))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

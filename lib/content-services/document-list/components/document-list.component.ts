@@ -286,7 +286,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private getLayoutPreset(name: string = 'default'): DataColumn[] {
-        return (this.layoutPresets[name] || this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
+        return (this.layoutPresets[name] || this.layoutPresets['default']).map((col) => new ObjectDataColumn(col));
     }
 
     get pagination(): BehaviorSubject<PaginationModel> {
@@ -352,7 +352,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
 
         this.subscriptions.push(
-            this.contextActionHandler.subscribe(val => this.contextActionCallback(val))
+            this.contextActionHandler.subscribe((val) => this.contextActionCallback(val))
         );
 
         this.enforceSingleClickNavigationForMobile();
@@ -373,7 +373,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         let schema: DataColumn[] = [];
 
         if (this.hasCustomLayout) {
-            schema = this.columnList.columns.map(c => <DataColumn> c);
+            schema = this.columnList.columns.map((c) => <DataColumn> c);
         }
 
         if (!this.data) {
@@ -422,7 +422,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             } else if (changes.rowFilter && changes.rowFilter.currentValue !== changes.rowFilter.previousValue) {
                 this.data.setFilter(changes.rowFilter.currentValue);
                 if (this.currentFolderId) {
-                    this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pagination.getValue()).catch(err => this.error.emit(err));
+                    this.loadFolderNodesByFolderNodeId(this.currentFolderId, this.pagination.getValue()).catch((err) => this.error.emit(err));
                 }
             } else if (changes.imageResolver) {
                 this.data.setImageResolver(changes.imageResolver.currentValue);
@@ -461,21 +461,21 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (target) {
                 const actions = this.rowMenuCache[node.entry.id];
                 if (actions) {
-                    actions.forEach(action => {
+                    actions.forEach((action) => {
                         this.refreshAction(action, node);
                     });
                     return actions;
                 }
 
                 let actionsByTarget = this.actions
-                    .filter(entry => {
+                    .filter((entry) => {
                         const isVisible = (typeof entry.visible === 'function')
                             ? entry.visible(node)
                             : entry.visible;
 
                         return isVisible && entry.target.toLowerCase() === target;
                     })
-                    .map(action => new ContentActionModel(action));
+                    .map((action) => new ContentActionModel(action));
 
                 actionsByTarget.forEach((action) => {
                     this.refreshAction(action, node);
@@ -604,7 +604,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
         if (this.folderNode) {
             return this.loadFolderNodesByFolderNodeId(this.folderNode.id, this.pagination.getValue())
-                .catch(err => this.handleError(err));
+                .catch((err) => this.handleError(err));
         } else {
             this.loadFolderByNodeId(this.currentFolderId);
         }
@@ -616,7 +616,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.customResourcesService.loadFolderByNodeId(nodeId, this.pagination.getValue(), this.includeFields)
                 .subscribe((page: NodePaging) => {
                     this.onPageLoaded(page);
-                }, err => {
+                }, (err) => {
                     this.error.emit(err);
                 });
         } else {
@@ -625,8 +625,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 .subscribe((node: MinimalNodeEntryEntity) => {
                     this.folderNode = node;
                     return this.loadFolderNodesByFolderNodeId(node.id, this.pagination.getValue())
-                        .catch(err => this.handleError(err));
-                }, err => {
+                        .catch((err) => this.handleError(err));
+                }, (err) => {
                     this.handleError(err);
                 });
         }
@@ -642,12 +642,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                     rootFolderId: id
                 }, this.includeFields)
                 .subscribe(
-                    nodePaging => {
+                    (nodePaging) => {
                         this.data.loadPage(<NodePaging> nodePaging, this.pagination.getValue().merge);
                         this.setLoadingState(false);
                         this.onDataReady(nodePaging);
                         resolve(true);
-                    }, err => {
+                    }, (err) => {
                         this.handleError(err);
                     });
         });
@@ -740,7 +740,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     onNodeSelect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
-        this.selection = event.selection.map(entry => entry.node);
+        this.selection = event.selection.map((entry) => entry.node);
         const domEvent = new CustomEvent('node-select', {
             detail: {
                 node: event.row.node,
@@ -752,7 +752,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     onNodeUnselect(event: { row: ShareDataRow, selection: Array<ShareDataRow> }) {
-        this.selection = event.selection.map(entry => entry.node);
+        this.selection = event.selection.map((entry) => entry.node);
         const domEvent = new CustomEvent('node-unselect', {
             detail: {
                 node: event.row.node,
@@ -844,7 +844,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach(s => s.unsubscribe());
+        this.subscriptions.forEach((s) => s.unsubscribe());
         this.subscriptions = [];
     }
 

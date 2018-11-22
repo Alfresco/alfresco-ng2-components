@@ -68,7 +68,7 @@ export class UploadDirective implements OnInit, OnDestroy {
 
             this.upload.type = 'file';
             this.upload.style.display = 'none';
-            this.upload.addEventListener('change', e => this.onSelectFiles(e));
+            this.upload.addEventListener('change', (e) => this.onSelectFiles(e));
 
             if (this.multiple) {
                 this.upload.setAttribute('multiple', '');
@@ -142,7 +142,7 @@ export class UploadDirective implements OnInit, OnDestroy {
 
             const dataTransfer = this.getDataTransfer(event);
             if (dataTransfer) {
-                this.getFilesDropped(dataTransfer).then(files => {
+                this.getFilesDropped(dataTransfer).then((files) => {
                     this.onUploadFiles(files);
                 });
 
@@ -193,7 +193,7 @@ export class UploadDirective implements OnInit, OnDestroy {
      * @param dataTransfer DataTransfer object
      */
     getFilesDropped(dataTransfer: DataTransfer): Promise<FileInfo[]> {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             const iterations = [];
 
             if (dataTransfer) {
@@ -210,8 +210,8 @@ export class UploadDirective implements OnInit, OnDestroy {
                                         relativeFolder: '/'
                                     }));
                                 } else if (item.isDirectory) {
-                                    iterations.push(new Promise(resolveFolder => {
-                                        FileUtils.flatten(item).then(files => resolveFolder(files));
+                                    iterations.push(new Promise((resolveFolder) => {
+                                        FileUtils.flatten(item).then((files) => resolveFolder(files));
                                     }));
                                 }
                             }
@@ -227,7 +227,7 @@ export class UploadDirective implements OnInit, OnDestroy {
                     // safari or FF
                     let files = FileUtils
                         .toFileArray(dataTransfer.files)
-                        .map(file => <FileInfo> {
+                        .map((file) => <FileInfo> {
                             entry: null,
                             file: file,
                             relativeFolder: '/'
@@ -237,7 +237,7 @@ export class UploadDirective implements OnInit, OnDestroy {
                 }
             }
 
-            Promise.all(iterations).then(result => {
+            Promise.all(iterations).then((result) => {
                 resolve(result.reduce((a, b) => a.concat(b), []));
             });
         });
@@ -251,7 +251,7 @@ export class UploadDirective implements OnInit, OnDestroy {
         if (this.isClickMode()) {
             const input = (<HTMLInputElement> e.currentTarget);
             const files = FileUtils.toFileArray(input.files);
-            this.onUploadFiles(files.map(file => <FileInfo> {
+            this.onUploadFiles(files.map((file) => <FileInfo> {
                 entry: null,
                 file: file,
                 relativeFolder: '/'

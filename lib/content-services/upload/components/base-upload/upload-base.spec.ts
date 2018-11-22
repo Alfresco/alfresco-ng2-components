@@ -71,7 +71,7 @@ describe('UploadBase', () => {
 
     describe('beginUpload', () => {
 
-        it('should raise event', done => {
+        it('should raise event', (done) => {
             spyOn(uploadService, 'addToQueue').and.stub();
             spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
 
@@ -86,7 +86,7 @@ describe('UploadBase', () => {
             spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
 
             let prevented = false;
-            component.beginUpload.subscribe(event => {
+            component.beginUpload.subscribe((event) => {
                 event.preventDefault();
                 prevented = true;
             });
@@ -105,7 +105,7 @@ describe('UploadBase', () => {
 
             let prevented = false;
             let uploadEvent: UploadFilesEvent;
-            component.beginUpload.subscribe(event => {
+            component.beginUpload.subscribe((event) => {
                 uploadEvent = event;
                 event.preventDefault();
                 prevented = true;
@@ -132,7 +132,7 @@ describe('UploadBase', () => {
             spyOn(uploadService, 'uploadFilesInTheQueue').and.stub();
 
             let uploadEvent: UploadFilesEvent;
-            component.beginUpload.subscribe(event => {
+            component.beginUpload.subscribe((event) => {
                 uploadEvent = event;
                 event.preventDefault();
             });

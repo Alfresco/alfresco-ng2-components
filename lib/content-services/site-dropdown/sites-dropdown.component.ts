@@ -105,7 +105,7 @@ export class DropdownSitesComponent implements OnInit {
                 }
             }
 
-            this.selected = this.siteList.list.entries.find(site => site.entry.id === this.value);
+            this.selected = this.siteList.list.entries.find((site) => site.entry.id === this.value);
         },
         (error) => {
             this.logService.error(error);

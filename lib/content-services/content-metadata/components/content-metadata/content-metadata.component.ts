@@ -79,11 +79,11 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 switchMap(this.saveNode.bind(this))
             )
             .subscribe(
-                updatedNode => {
+                (updatedNode) => {
                     Object.assign(this.node, updatedNode);
                     this.alfrescoApiService.nodeUpdated.next(this.node);
                 },
-                error => this.logService.error(error)
+                (error) => this.logService.error(error)
             );
 
         this.loadProperties(this.node);

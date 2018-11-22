@@ -48,7 +48,7 @@ export class TaskFilterService {
         let completedTasksFilter = this.getCompletedTasksFilterInstance(appId);
         let completeObservable = this.addFilter(completedTasksFilter);
 
-        return new Observable(observer => {
+        return new Observable((observer) => {
             forkJoin(
                 involvedObservable,
                 myTaskObservable,
@@ -97,7 +97,7 @@ export class TaskFilterService {
                     });
                     return filters;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -109,8 +109,8 @@ export class TaskFilterService {
      */
     getTaskFilterById(filterId: number, appId?: number): Observable<FilterRepresentationModel> {
         return from(this.callApiTaskFilters(appId)).pipe(
-            map(response => response.data.find(filter => filter.id === filterId)),
-            catchError(err => this.handleError(err))
+            map((response) => response.data.find((filter) => filter.id === filterId)),
+            catchError((err) => this.handleError(err))
         );
     }
 
@@ -122,8 +122,8 @@ export class TaskFilterService {
      */
     getTaskFilterByName(taskName: string, appId?: number): Observable<FilterRepresentationModel> {
         return from(this.callApiTaskFilters(appId)).pipe(
-            map(response => response.data.find(filter => filter.name === taskName)),
-            catchError(err => this.handleError(err))
+            map((response) => response.data.find((filter) => filter.name === taskName)),
+            catchError((err) => this.handleError(err))
         );
     }
 
@@ -138,7 +138,7 @@ export class TaskFilterService {
                 map((response: FilterRepresentationModel) => {
                     return response;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

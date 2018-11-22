@@ -71,7 +71,7 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
         this.subscriptions = [];
     }
 

@@ -36,22 +36,22 @@ export class EcmModelService {
     }
 
     public createEcmTypeForActivitiForm(formName: string, form: FormModel): Observable<any> {
-        return new Observable(observer => {
+        return new Observable((observer) => {
             this.searchActivitiEcmModel().subscribe(
-                model => {
+                (model) => {
                     if (!model) {
-                        this.createActivitiEcmModel(formName, form).subscribe(typeForm => {
+                        this.createActivitiEcmModel(formName, form).subscribe((typeForm) => {
                             observer.next(typeForm);
                             observer.complete();
                         });
                     } else {
-                        this.saveFomType(formName, form).subscribe(typeForm => {
+                        this.saveFomType(formName, form).subscribe((typeForm) => {
                             observer.next(typeForm);
                             observer.complete();
                         });
                     }
                 },
-                err => this.handleError(err)
+                (err) => this.handleError(err)
             );
         });
 
@@ -59,38 +59,38 @@ export class EcmModelService {
 
     searchActivitiEcmModel() {
         return this.getEcmModels().pipe(map(function (ecmModels: any) {
-            return ecmModels.list.entries.find(model => model.entry.name === EcmModelService.MODEL_NAME);
+            return ecmModels.list.entries.find((model) => model.entry.name === EcmModelService.MODEL_NAME);
         }));
     }
 
     createActivitiEcmModel(formName: string, form: FormModel): Observable<any> {
-        return new Observable(observer => {
+        return new Observable((observer) => {
             this.createEcmModel(EcmModelService.MODEL_NAME, EcmModelService.MODEL_NAMESPACE).subscribe(
-                model => {
+                (model) => {
                     this.logService.info('model created', model);
                     this.activeEcmModel(EcmModelService.MODEL_NAME).subscribe(
-                        modelActive => {
+                        (modelActive) => {
                             this.logService.info('model active', modelActive);
-                            this.createEcmTypeWithProperties(formName, form).subscribe(typeCreated => {
+                            this.createEcmTypeWithProperties(formName, form).subscribe((typeCreated) => {
                                 observer.next(typeCreated);
                                 observer.complete();
                             });
                         },
-                        err => this.handleError(err)
+                        (err) => this.handleError(err)
                     );
                 },
-                err => this.handleError(err)
+                (err) => this.handleError(err)
             );
         });
     }
 
     saveFomType(formName: string, form: FormModel): Observable<any> {
-        return new Observable(observer => {
+        return new Observable((observer) => {
             this.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
-                ecmType => {
+                (ecmType) => {
                     this.logService.info('custom types', ecmType);
                     if (!ecmType) {
-                        this.createEcmTypeWithProperties(formName, form).subscribe(typeCreated => {
+                        this.createEcmTypeWithProperties(formName, form).subscribe((typeCreated) => {
                             observer.next(typeCreated);
                             observer.complete();
                         });
@@ -99,31 +99,31 @@ export class EcmModelService {
                         observer.complete();
                     }
                 },
-                err => this.handleError(err)
+                (err) => this.handleError(err)
             );
         });
     }
 
     public createEcmTypeWithProperties(formName: string, form: FormModel): Observable<any> {
-        return new Observable(observer => {
+        return new Observable((observer) => {
             this.createEcmType(formName, EcmModelService.MODEL_NAME, EcmModelService.TYPE_MODEL).subscribe(
-                typeCreated => {
+                (typeCreated) => {
                     this.logService.info('type Created', typeCreated);
                     this.addPropertyToAType(EcmModelService.MODEL_NAME, formName, form).subscribe(
-                        propertyAdded => {
+                        (propertyAdded) => {
                             this.logService.info('property Added', propertyAdded);
                             observer.next(typeCreated);
                             observer.complete();
                         },
-                        err => this.handleError(err));
+                        (err) => this.handleError(err));
                 },
-                err => this.handleError(err));
+                (err) => this.handleError(err));
         });
     }
 
     public searchEcmType(typeName: string, modelName: string): Observable<any> {
         return this.getEcmType(modelName).pipe(map(function (customTypes: any) {
-            return customTypes.list.entries.find(type => type.entry.prefixedName === typeName || type.entry.title === typeName);
+            return customTypes.list.entries.find((type) => type.entry.prefixedName === typeName || type.entry.title === typeName);
         }));
     }
 
@@ -131,7 +131,7 @@ export class EcmModelService {
         return from(this.apiService.getInstance().core.customModelApi.activateCustomModel(modelName))
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -139,7 +139,7 @@ export class EcmModelService {
         return from(this.apiService.getInstance().core.customModelApi.createCustomModel('DRAFT', '', modelName, modelName, nameSpace))
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -147,7 +147,7 @@ export class EcmModelService {
         return from(this.apiService.getInstance().core.customModelApi.getAllCustomModel())
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -155,7 +155,7 @@ export class EcmModelService {
         return from(this.apiService.getInstance().core.customModelApi.getAllCustomType(modelName))
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -165,7 +165,7 @@ export class EcmModelService {
         return from(this.apiService.getInstance().core.customModelApi.createCustomType(modelName, name, parentType, typeName, ''))
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -192,7 +192,7 @@ export class EcmModelService {
         return from(this.apiService.getInstance().core.customModelApi.addPropertyToType(modelName, name, properties))
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
 
     }

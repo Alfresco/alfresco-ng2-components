@@ -48,7 +48,7 @@ export class CommentContentService {
                         createdBy: response.entry.createdBy
                     });
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -72,7 +72,7 @@ export class CommentContentService {
                     });
                     return comments;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

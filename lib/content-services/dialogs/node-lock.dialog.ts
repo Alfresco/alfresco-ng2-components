@@ -85,10 +85,10 @@ export class NodeLockDialogComponent implements OnInit {
 
     submit(): void {
         this.toggleLock()
-            .then(node => {
+            .then((node) => {
                 this.data.node.isLocked = this.form.value.isLocked;
                 this.dialog.close(node.entry);
             })
-            .catch(error => this.data.onError(error));
+            .catch((error) => this.data.onError(error));
     }
 }

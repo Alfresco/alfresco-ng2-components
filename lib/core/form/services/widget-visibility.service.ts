@@ -38,11 +38,11 @@ export class WidgetVisibilityService {
 
     public refreshVisibility(form: FormModel) {
         if (form && form.tabs && form.tabs.length > 0) {
-            form.tabs.map(tabModel => this.refreshEntityVisibility(tabModel));
+            form.tabs.map((tabModel) => this.refreshEntityVisibility(tabModel));
         }
 
         if (form) {
-            form.getFormFields().map(field => this.refreshEntityVisibility(field));
+            form.getFormFields().map((field) => this.refreshEntityVisibility(field));
         }
     }
 
@@ -150,7 +150,7 @@ export class WidgetVisibilityService {
         if (field.value && field.value.name) {
             value = field.value.name;
         } else if (field.options) {
-            let option = field.options.find(opt => opt.id === field.value);
+            let option = field.options.find((opt) => opt.id === field.value);
             if (option) {
                 value = this.getValueFromOption(fieldId, option);
             }
@@ -188,14 +188,14 @@ export class WidgetVisibilityService {
 
     private getFormVariableValue(form: FormModel, name: string) {
         if (form.json.variables) {
-            let formVariable = form.json.variables.find(formVar => formVar.name === name);
+            let formVariable = form.json.variables.find((formVar) => formVar.name === name);
             return formVariable ? formVariable.value : formVariable;
         }
     }
 
     private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]) {
         if (this.processVarList) {
-            let processVariable = this.processVarList.find(variable => variable.id === name);
+            let processVariable = this.processVarList.find((variable) => variable.id === name);
             return processVariable ? processVariable.value : processVariable;
         }
     }
@@ -248,12 +248,12 @@ export class WidgetVisibilityService {
     getTaskProcessVariable(taskId: string): Observable<TaskProcessVariableModel[]> {
         return from(this.apiService.getInstance().activiti.taskFormsApi.getTaskFormVariables(taskId))
             .pipe(
-                map(res => {
+                map((res) => {
                     let jsonRes = this.toJson(res);
                     this.processVarList = <TaskProcessVariableModel[]> jsonRes;
                     return jsonRes;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
