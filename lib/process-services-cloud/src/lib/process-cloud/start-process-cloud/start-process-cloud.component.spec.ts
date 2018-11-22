@@ -330,7 +330,7 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should throw error event when process cannot be started', async(() => {
-            let errorSpy = spyOn(component.error, 'error');
+            let errorSpy = spyOn(component.error, 'emit');
             let error = { message: 'My error' };
             startProcessSpy = startProcessSpy.and.returnValue(throwError(error));
             component.processPayloadCloud = fakeProcessPayload;

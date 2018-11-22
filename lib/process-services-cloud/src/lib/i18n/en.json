@@ -44,7 +44,7 @@
         "NONE": "No task lists found"
       }
     },
-    "START_PROCESS": {
+    "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Start Process",
       "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
       "FORM": {

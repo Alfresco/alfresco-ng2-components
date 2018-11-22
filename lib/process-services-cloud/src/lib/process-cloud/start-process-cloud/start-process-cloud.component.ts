@@ -99,7 +99,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['appName'] && changes['appName'].currentValue) {
+        if (changes['appName'] && changes['appName'].currentValue !== changes['appName'].previousValue) {
             this.appName = changes['appName'].currentValue;
             this.loadProcessDefinitions();
         }
@@ -107,7 +107,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     setProcessDefinitionOnForm(processDefinitionName: string) {
         this.filteredProcesses = this.getProcessDefinitionList(processDefinitionName);
-        const selectedProcess = this.selectProcessIfExists(processDefinitionName);
+        const selectedProcess = this.getProcessIfExists(processDefinitionName);
         this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
     }
 
@@ -115,7 +115,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         return this.processDefinitionList.filter(option => option.name.toLowerCase().includes(processDefinitionName.toLowerCase()));
     }
 
-    private selectProcessIfExists(processDefinitionName: string): ProcessDefinitionRepresentationCloud {
+    private getProcessIfExists(processDefinitionName: string): ProcessDefinitionRepresentationCloud {
         let matchedProcess = this.processDefinitionList.find((option) => option.name.toLowerCase() === processDefinitionName.toLowerCase());
         if (!matchedProcess) {
             matchedProcess = new ProcessDefinitionRepresentationCloud();
@@ -124,13 +124,13 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         return matchedProcess;
     }
 
-    private selectProcessIfExistsOrSelectFirst(processDefinitionName: string): ProcessDefinitionRepresentationCloud {
-        const matchedProcess = processDefinitionName ? this.selectProcessIfExists(processDefinitionName) : this.processDefinitionList[0];
+    private getProcessIfExistsOrSelectFirst(processDefinitionName: string): ProcessDefinitionRepresentationCloud {
+        const matchedProcess = processDefinitionName ? this.getProcessIfExists(processDefinitionName) : this.processDefinitionList[0];
         return matchedProcess;
     }
 
     private selectDefaultProcessDefinition() {
-        let selectedProcess = this.selectProcessIfExistsOrSelectFirst(this.processDefinitionName);
+        let selectedProcess = this.getProcessIfExistsOrSelectFirst(this.processDefinitionName);
         if (selectedProcess) {
             this.processForm.controls['processDefinition'].setValue(selectedProcess.name);
             this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
@@ -148,7 +148,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                 }
             },
             () => {
-                this.errorMessageId = 'ADF_PROCESS_LIST_CLOUD.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
+                this.errorMessageId = 'ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
             });
     }
 
@@ -169,8 +169,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                 this.isLoading = false;
             },
             (err) => {
-                this.errorMessageId = 'ADF_PROCESS_LIST_CLOUD.START_PROCESS.ERROR.START';
-                this.error.error(err);
+                this.errorMessageId = 'ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.ERROR.START';
+                this.error.emit(err);
                 this.isLoading = false;
             }
         );
@@ -189,7 +189,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.filteredProcesses = this.processDefinitionList;
     }
 
-    displayFn(process: any) {
+    displayProcessNameOnDropdown(process: any) {
         if (process) {
             let processName = process;
             if (typeof process !== 'string') {
@@ -215,7 +215,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             let processDefinitionNameError = false;
 
             if (processDefinitionFieldValue) {
-                const processDefinition = this.selectProcessIfExists(processDefinitionFieldValue);
+                const processDefinition = this.getProcessIfExists(processDefinitionFieldValue);
                 if (!processDefinition.key) {
                     processDefinitionNameError = true;
                 }

@@ -29,7 +29,9 @@ import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 export class ProcessCloudService {
 
     contextRoot: string;
-    requiredType = ['application/json'];
+    contentTypes = ['application/json'];
+    accepts = ['application/json'];
+    returnType = Object;
 
     constructor(private alfrescoApiService: AlfrescoApiService,
                 private appConfigService: AppConfigService,
@@ -51,21 +53,16 @@ export class ProcessCloudService {
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, null, null,
                     null, null, null,
-                    this.requiredType, this.requiredType,
-                    Object, null, null)
+                    this.contentTypes, this.accepts,
+                    this.returnType, null, null)
             ).pipe(
-                map(this.extractProcessDefinitions),
+                map(res => res.list.entries.map(processDefs => new ProcessDefinitionRepresentationCloud(processDefs.entry))),
                 catchError(err => this.handleProcessError(err))
             );
         } else {
             this.logService.error('AppName is mandatory for querying task');
             return throwError('AppName not configured');
         }
-    }
-
-    private extractProcessDefinitions(res: any) {
-        let processDefinitions = res.list.entries.map(processDefs => new ProcessDefinitionRepresentationCloud(processDefs.entry));
-        return processDefinitions || [{}];
     }
 
     /**
@@ -86,8 +83,8 @@ export class ProcessCloudService {
             .oauth2Auth.callCustomApi(queryUrl, 'POST',
                 null, null, null,
                 null, requestPayload, null,
-                this.requiredType, this.requiredType,
-                Object, null, null)
+                this.contentTypes, this.accepts,
+                this.returnType, null, null)
             ).pipe(
                 map((processInstance) => new ProcessInstanceCloud(processInstance)),
                 catchError(err => this.handleProcessError(err))
