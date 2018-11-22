@@ -36,7 +36,7 @@ describe('Applications list', () => {
         await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path);
         browser.ignoreSynchronization = true;
         await loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        await navigationBarPage.clickProcessCloudButton();
+        await navigationBarPage.navigateToProcessServicesCloudPage();
 
         appListCloudComponent.checkApsContainer();
 
