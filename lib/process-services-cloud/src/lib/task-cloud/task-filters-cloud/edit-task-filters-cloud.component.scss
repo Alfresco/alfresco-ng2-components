@@ -1,0 +1,3 @@
+@mixin adf-cloud-edit-task-filters-theme($theme) {
+    $primary: map-get($theme, primary);
+}

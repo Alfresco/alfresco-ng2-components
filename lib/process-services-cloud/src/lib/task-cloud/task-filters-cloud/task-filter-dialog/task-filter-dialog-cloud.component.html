@@ -1,0 +1,16 @@
+<div class="adf-task-filter-dialog">
+    <span mat-dialog-title>Save filter as</span>
+    <mat-card>
+        <mat-card-content>
+        <form [formGroup]="filter">
+            <mat-form-field fxFlex [floatLabel]="'auto'">
+                <input matInput placeholder="Filter name" formControlName="name">
+            </mat-form-field>
+        </form>
+        </mat-card-content>
+        <mat-card-actions fxLayout="row" fxLayoutAlign="end end">
+            <button mat-button (click)="onSaveClick()" [disabled]="!isValid()">SAVE</button>
+            <button mat-button (click)="onCancelClick()">CANCEL</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

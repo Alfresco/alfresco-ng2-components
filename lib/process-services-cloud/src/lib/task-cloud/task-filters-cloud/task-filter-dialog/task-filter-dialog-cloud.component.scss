@@ -1,0 +1,13 @@
+@mixin adf-cloud-task-filter-dialog-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .adf-task-filter-dialog {
+        .mat-card {
+        padding: 0px;
+        box-shadow: none !important;
+        .mat-card-content {
+            margin-bottom: 0px;
+        }
+    }
+    }
+}
