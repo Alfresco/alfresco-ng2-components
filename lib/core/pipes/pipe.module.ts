@@ -25,6 +25,7 @@ import { HighlightPipe } from './text-highlight.pipe';
 import { TimeAgoPipe } from './time-ago.pipe';
 import { InitialUsernamePipe } from './user-initial.pipe';
 import { FullNamePipe } from './full-name.pipe';
+import { FormatSpacePipe } from './format-space.pipe';
 
 @NgModule({
     imports: [
@@ -37,7 +38,8 @@ import { FullNamePipe } from './full-name.pipe';
         MimeTypeIconPipe,
         InitialUsernamePipe,
         FullNamePipe,
-        NodeNameTooltipPipe
+        NodeNameTooltipPipe,
+        FormatSpacePipe
     ],
     providers: [
         FileSizePipe,
@@ -45,7 +47,8 @@ import { FullNamePipe } from './full-name.pipe';
         TimeAgoPipe,
         MimeTypeIconPipe,
         InitialUsernamePipe,
-        NodeNameTooltipPipe
+        NodeNameTooltipPipe,
+        FormatSpacePipe
     ],
     exports: [
         FileSizePipe,
@@ -54,7 +57,8 @@ import { FullNamePipe } from './full-name.pipe';
         MimeTypeIconPipe,
         InitialUsernamePipe,
         FullNamePipe,
-        NodeNameTooltipPipe
+        NodeNameTooltipPipe,
+        FormatSpacePipe
     ]
 })
 export class PipeModule {
