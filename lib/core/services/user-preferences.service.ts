@@ -182,8 +182,8 @@ export class UserPreferencesService {
      * Gets the default locale.
      * @returns Default locale language code
      */
-    public getDefaultLocale(): string {
-        return this.appConfig.get<string>('locale') || this.translate.getBrowserLang() || 'en';
+    getDefaultLocale(): string {
+        return this.appConfig.get<string>('locale') || this.translate.getBrowserCultureLang() || 'en';
     }
 
 }
