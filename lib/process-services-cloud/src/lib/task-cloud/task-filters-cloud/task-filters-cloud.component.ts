@@ -103,12 +103,11 @@ export class TaskFiltersCloudComponent implements OnChanges {
         );
     }
 
-    /**
-     * Pass the selected filter as next
-     */
     public selectFilter(newFilter: FilterParamsModel) {
         if (newFilter) {
-            this.currentFilter = this.filters.find((filter) =>
+            this.currentFilter = this.filters.find( (filter, index) =>
+                newFilter.index === index ||
+                newFilter.id === filter.id ||
                 (newFilter.name &&
                     (newFilter.name.toLocaleLowerCase() === filter.name.toLocaleLowerCase())
                 ));

@@ -53,7 +53,7 @@ export class TaskFilterCloudRepresentationModel  {
     }
 }
 export class FilterParamsModel {
-    id: number;
+    id: string;
     name: string;
     index: number;
 
