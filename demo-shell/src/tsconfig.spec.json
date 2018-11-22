@@ -5,48 +5,7 @@
     "types": [
       "jasmine",
       "node"
-    ],
-    "paths": {
-      "alfresco-js-api": [
-        "../../node_modules/alfresco-js-api/dist/alfresco-js-api.js"
-      ],
-      "rxjs/*": [
-        "../../node_modules/rxjs/*"
-      ],
-      "@angular/*": [
-        "../../node_modules/@angular/*"
-      ],
-      "@alfresco/adf-core": [
-        "../../lib/core"
-      ],
-      "@alfresco/adf-content-services": [
-        "../../lib/content-services"
-      ],
-      "@alfresco/adf-process-services": [
-        "../../lib/process-services"
-      ],
-      "@alfresco/adf-process-services-cloud": [
-        "../../lib/process-services-cloud"
-      ],
-      "@alfresco/adf-process-services-cloud/*": [
-        "../../lib/process-services-cloud/*"
-      ],
-      "@alfresco/adf-insights": [
-        "../../lib/insights"
-      ]
-    }
-  },
-  "exclude": [
-    "**/e2e/*.ts",
-    "**/*.e2e-spec.ts",
-    "**/*.po.ts",
-    "**/integration/*.*",
-    "**/lib/*.*",
-    "node_modules",
-    "tmp"
-  ],
-  "angularCompilerOptions": {
-    "skipTemplateCodegen": false
+    ]
   },
   "files": [
     "test.ts",
