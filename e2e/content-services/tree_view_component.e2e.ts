@@ -110,6 +110,18 @@ describe('Tree View Component', () => {
         treeViewPage.addNodeId(secondTreeFolder.entry.id);
 
         treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.thirdFolder);
+
+        treeViewPage.addNodeId('ThisIdDoesNotExist');
+        treeViewPage.checkErrorMessageIsDisplayed();
+
+        treeViewPage.addNodeId(nodeNames.parentFolder);
+
+        treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.folder);
+        treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.secondFolder);
+
+        treeViewPage.clickNode(nodeNames.secondFolder);
+
+        treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.thirdFolder);
     });
 
 });

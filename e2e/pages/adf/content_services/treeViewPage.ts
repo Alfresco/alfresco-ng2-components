@@ -74,7 +74,14 @@ export class TreeViewPage {
 
     addNodeId(nodeId) {
         Util.waitUntilElementIsVisible(this.nodeIdInput);
+        this.nodeIdInput.click();
         this.nodeIdInput.clear();
-        return this.nodeIdInput.sendKeys(nodeId);
+        this.nodeIdInput.sendKeys(nodeId + ' ');
+        this.nodeIdInput.sendKeys(protractor.Key.BACK_SPACE);
+    }
+
+    checkErrorMessageIsDisplayed() {
+        let clickedNode = element(by.cssContainingText('span', 'An Error Occurred '));
+        return Util.waitUntilElementIsVisible(clickedNode);
     }
 }
