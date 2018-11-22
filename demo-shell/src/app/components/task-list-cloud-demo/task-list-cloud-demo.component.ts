@@ -33,7 +33,7 @@ export class TaskListCloudDemoComponent implements OnInit {
     taskCloud: TaskListCloudComponent;
 
     sortFormControl: FormControl;
-    sortDirectionFormControl: FormControl; 
+    sortDirectionFormControl: FormControl;
 
     appDefinitionList: Observable<any>;
     applicationName: string = '';
