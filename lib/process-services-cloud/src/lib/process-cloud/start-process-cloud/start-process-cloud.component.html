@@ -1,0 +1,70 @@
+<mat-card class="adf-start-process">
+
+    <mat-card-title>{{'ADF_PROCESS_LIST_CLOUD.START_PROCESS.FORM.TITLE' | translate}}
+    </mat-card-title>
+
+    <mat-card-content *ngIf="!isProcessDefinitionsEmpty(); else emptyProcessDefinitionsList">
+        <mat-card-subtitle id="error-message" *ngIf="errorMessageId">
+            {{ errorMessageId | translate }}
+        </mat-card-subtitle>
+
+        <form [formGroup]="processForm">
+            <mat-form-field class="adf-process-input-container">
+                <mat-label>{{ 'ADF_PROCESS_LIST_CLOUD.START_PROCESS.FORM.LABEL.NAME' | translate }}</mat-label>
+                <input 
+                    matInput
+                    formControlName="processInstanceName" 
+                    id="processName">
+                <mat-error *ngIf="processInstanceName.hasError('required')">
+                    {{ 'ADF_PROCESS_LIST_CLOUD.START_PROCESS.ERROR.PROCESS_NAME_REQUIRED' | translate }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="adf-process-input-container">
+                <mat-label>{{ 'ADF_PROCESS_LIST_CLOUD.START_PROCESS.FORM.LABEL.TYPE' | translate }}</mat-label>
+                <input 
+                    #inputAutocomplete
+                    matInput 
+                    formControlName="processDefinition" 
+                    [matAutocomplete]="auto" 
+                    id="processDefinitionName">
+                <div class="adf-process-input-autocomplete">
+                    <mat-autocomplete #auto="matAutocomplete" id="processDefinitionOptions" [displayWith]="displayFn">
+                        <mat-option *ngFor="let processDef of filteredProcesses" [value]="processDef.name">
+                            {{ processDef.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <button id="adf-select-process-dropdown" *ngIf="showSelectProcessDropdown" mat-icon-button (click)="displayDropdown($event)">
+                        <mat-icon>arrow_drop_down</mat-icon>
+                    </button>
+                </div>
+                <mat-error *ngIf="processDefinition.hasError('required')">
+                        {{ 'ADF_PROCESS_LIST_CLOUD.START_PROCESS.ERROR.PROCESS_DEFINITION_REQUIRED' | translate }}
+                    </mat-error>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+
+    <ng-template #emptyProcessDefinitionsList>
+        <mat-card-content>
+            <mat-card-subtitle class="error-message" id="no-process-message">
+                {{ 'ADF_PROCESS_LIST_CLOUD.START_PROCESS.NO_PROCESS_DEFINITIONS' | translate | uppercase}}
+            </mat-card-subtitle>
+        </mat-card-content>
+    </ng-template>
+    
+    <mat-card-actions>
+        <button mat-button (click)="cancelStartProcess()" id="cancel_process">
+            {{ 'ADF_PROCESS_LIST_CLOUD.START_PROCESS.FORM.ACTION.CANCEL' | translate | uppercase}}
+        </button>
+        <button 
+            color="primary" 
+            mat-button 
+            [disabled]="!processForm.valid || isLoading" 
+            (click)="startProcess()" 
+            data-automation-id="btn-start"
+            id="button-start" class="btn-start">
+            {{'ADF_PROCESS_LIST_CLOUD.START_PROCESS.FORM.ACTION.START' | translate | uppercase}}
+        </button>
+    </mat-card-actions>
+</mat-card>

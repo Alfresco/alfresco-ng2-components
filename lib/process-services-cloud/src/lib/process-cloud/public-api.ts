@@ -16,6 +16,14 @@
  */
 
 export * from './process-filters-cloud/process-filters-cloud.component';
+export * from './start-process-cloud/start-process-cloud.component';
+
+export * from './models/process-filter-cloud.model';
+export * from './models/process-definition-cloud.model';
+export * from './models/process-instance-cloud.model';
+export * from './models/process-instance-variable-cloud.model';
+export * from './models/process-payload-cloud.model';
+
 export * from './process-filters-cloud/edit-process-filter-cloud.component';
 export * from './models/process-filter-cloud.model';
 export * from './services/process-filter-cloud.service';
