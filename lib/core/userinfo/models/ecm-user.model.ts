@@ -22,7 +22,6 @@ export class EcmUserModel implements Person {
     id: string;
     firstName: string;
     lastName: string;
-    fullNameDisplay: string;
     description: string;
     avatarId: string;
     email: string;
@@ -43,7 +42,6 @@ export class EcmUserModel implements Person {
         this.id = obj && obj.id || null;
         this.firstName = obj && obj.firstName;
         this.lastName = obj && obj.lastName;
-        this.fullNameDisplay = obj ? this.formatValue(obj.firstName).trim() + ' ' + this.formatValue(obj.lastName).trim() : null;
         this.description = obj && obj.description || null;
         this.avatarId = obj && obj.avatarId || null;
         this.email = obj && obj.email || null;
@@ -59,9 +57,5 @@ export class EcmUserModel implements Person {
         this.userStatus = obj && obj.userStatus;
         this.enabled = obj && obj.enabled;
         this.emailNotificationsEnabled = obj && obj.emailNotificationsEnabled;
-    }
-
-    private formatValue(value: string) {
-        return value && value !== 'null' ? value : '';
     }
 }

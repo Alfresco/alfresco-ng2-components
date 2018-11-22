@@ -15,12 +15,8 @@
  * limitations under the License.
  */
 
-export * from './components/user-info.component';
-export * from './services/bpm-user.service';
-export * from './services/ecm-user.service';
-export * from './services/identity-user.service';
-export * from './models/bpm-user.model';
-export * from './models/ecm-user.model';
-export * from './models/identity-user.model';
-
-export * from './userinfo.module';
+export let mockToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.'
+    + 'eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJqb2huRG9lQGdtYWlsLmNvbSI'
+    + 'sImdpdmVuX25hbWUiOiJKb2huIERvZSIsImp0aSI6IjY1ZGMzZTEyLWJhNGUtNDQ'
+    + '2Mi1iZjAyLTBlZGQ2MTYwM2M2NCIsImlhdCI6MTU0MjcyMTYxMywiZXhwIjoxNTQyNzI3NzY5fQ'
+    + '.cUxMzfiJeLwh9Er2CBn_y8ehQgSm_s2-NHehx-SRZKg';

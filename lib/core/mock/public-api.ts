@@ -36,3 +36,4 @@ export * from './form/formDefinitionVisibility.mock';
 export * from './form/start-form.component.mock';
 export * from './form/form.service.mock';
 export * from './form/widget-visibility.service.mock';
+export * from './jwt-helper.service.spec';

@@ -50,3 +50,4 @@ export * from './search-configuration.service';
 export * from './comment-content.service';
 export * from './login-dialog.service';
 export * from './external-alfresco-api.service';
+export * from './jwt-helper.service';

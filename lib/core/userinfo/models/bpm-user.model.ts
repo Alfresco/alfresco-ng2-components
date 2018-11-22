@@ -27,7 +27,6 @@ export class BpmUserModel implements UserRepresentation {
     firstName: string;
     lastName: string;
     fullname: string;
-    fullNameDisplay: string;
     groups: any;
     id: number;
     lastUpdate: Date;
@@ -51,7 +50,6 @@ export class BpmUserModel implements UserRepresentation {
             this.firstName = obj.firstName;
             this.lastName = obj.lastName;
             this.fullname = obj.fullname;
-            this.fullNameDisplay = obj ? this.formatValue(obj.firstName).trim() + ' ' + this.formatValue(obj.lastName).trim() : null;
             this.groups = obj.groups;
             this.id = obj.id;
             this.lastUpdate = obj.lastUpdate;
@@ -64,9 +62,5 @@ export class BpmUserModel implements UserRepresentation {
             this.tenantPictureId = obj.tenantPictureId;
             this.type = obj.type;
         }
-    }
-
-    private formatValue(value: string): string {
-        return value && value !== 'null' ? value : '';
     }
 }
