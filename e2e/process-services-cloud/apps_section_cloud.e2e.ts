@@ -17,7 +17,7 @@
 
 import { LoginAPSPage } from '../pages/adf/loginApsPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
-import { AppListCloudComponent } from '../pages/adf/process_services_cloud/appListCloudComponent';
+import { AppListCloudComponent } from '../pages/adf/process_cloud/appListCloudComponent';
 import TestConfig = require('../test.config');
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';

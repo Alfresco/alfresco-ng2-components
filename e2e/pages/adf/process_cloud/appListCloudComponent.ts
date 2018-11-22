@@ -16,14 +16,12 @@
  */
 
 import Util = require('../../../util/util');
+
 import { element, by } from 'protractor';
 
 export class AppListCloudComponent {
 
     apsAppsContainer = element(by.css('adf-cloud-app-list'));
-    taskApp = element(by.css('mat-card[title="Task App"]'));
-    iconTypeLocator = by.css('mat-icon[class*="card-logo-icon"]');
-    descriptionLocator = by.css('mat-card-subtitle[class*="subtitle"]');
 
     checkApsContainer() {
         Util.waitUntilElementIsVisible(this.apsAppsContainer);
@@ -32,35 +30,7 @@ export class AppListCloudComponent {
     goToApp(applicationName) {
         let app = element(by.css('mat-card[title="' + applicationName + '"]'));
         Util.waitUntilElementIsVisible(app);
-        return app.click();
-    }
-
-    goToTaskApp() {
-        Util.waitUntilElementIsVisible(this.taskApp);
-        this.taskApp.click();
-        return new AppNavigationBarPage();
-    }
-
-    getAppIconType(applicationName) {
-        let app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        Util.waitUntilElementIsVisible(app);
-        let iconType = app.element(this.iconTypeLocator);
-        Util.waitUntilElementIsVisible(iconType);
-        return iconType.getText();
-    }
-
-    getBackgroundColor(applicationName) {
-        let app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        Util.waitUntilElementIsVisible(app);
-        return app.getCssValue('background-color');
-    }
-
-    getDescription(applicationName) {
-        let app = element(by.css('mat-card[title="' + applicationName + '"]'));
-        Util.waitUntilElementIsVisible(app);
-        let description = app.element(this.descriptionLocator);
-        Util.waitUntilElementIsVisible(description);
-        return description.getText();
+        app.click();
     }
 
     checkAppIsNotDisplayed(applicationName) {
