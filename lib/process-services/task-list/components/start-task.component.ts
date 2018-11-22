@@ -45,8 +45,6 @@ export class StartTaskComponent implements OnInit {
     @Input()
     appId: number;
 
-    maxTaskNameLength: number = this.MAX_LENGTH;
-
     @Input()
     name: string = '';
 
