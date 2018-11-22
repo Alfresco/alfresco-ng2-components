@@ -6,7 +6,7 @@
     $foreground: map-get($theme, foreground);
     $text-color-primary: mat-color($foreground, text);
 
-    adf-login .adf-login-content  {
+    .adf-panel-login-dialog-component .adf-login-content  {
         .mat-card-actions,
         .adf-login-button,
         .adf-login__remember-me,
