@@ -59,4 +59,5 @@ A filter can be selected by using any of the `ProcessFilterParamModel` property.
 | ---- | ---- | ----------- |
 | id | string | The id of the filter |
 | name | string | The name of the filter |
+| key | string | The key of the filter |
 | index | string | The zero-based position of the filter in the array |

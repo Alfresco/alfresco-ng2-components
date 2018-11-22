@@ -19,6 +19,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { Observable } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterRepresentationModel, ProcessFilterParamModel } from '../models/process-filter-cloud.model';
+import { TranslationService } from '@alfresco/adf-core';
 @Component({
     selector: 'adf-cloud-process-filters',
     templateUrl: './process-filters-cloud.component.html',
@@ -56,21 +57,24 @@ export class ProcessFiltersCloudComponent implements OnChanges {
 
     filters: ProcessFilterRepresentationModel [] = [];
 
-    constructor(private processFilterCloudService: ProcessFilterCloudService) {
-    }
+    constructor(
+        private processFilterCloudService: ProcessFilterCloudService,
+        private translate: TranslationService ) { }
 
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
         const filter = changes['filterParam'];
         if (appName && appName.currentValue) {
             this.getFilters(appName.currentValue);
-        } else if (filter && filter.currentValue !== filter.previousValue) {
-            this.selectFilter(filter.currentValue);
+        }
+
+        if (filter && filter.currentValue !== filter.previousValue) {
+            this.selectFilterAndEmit(filter.currentValue);
         }
     }
 
     /**
-     * Return the filter list filtered by appName
+     * Fetch the filter list based on appName
      */
     getFilters(appName: string) {
         this.filters$ = this.processFilterCloudService.getProcessFilters(appName);
@@ -112,14 +116,13 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     /**
      * Pass the selected filter as next
      */
-    public selectFilter(newFilter: ProcessFilterParamModel) {
-        if (newFilter) {
+    public selectFilter(filterParam: ProcessFilterParamModel) {
+        if (filterParam) {
             this.currentFilter = this.filters.find((filter, index) =>
-                newFilter.id === filter.id ||
-                (newFilter.name &&
-                    (newFilter.name.toLocaleLowerCase() === filter.name.toLocaleLowerCase())
-                ) ||
-                newFilter.index === index
+                filterParam.id === filter.id ||
+                (filterParam.name && this.checkFilterNamesEquality(filterParam.name, filter.name)) ||
+                (filterParam.key && (filterParam.key === filter.key)) ||
+                filterParam.index === index
             );
         }
         if (!this.currentFilter) {
@@ -127,6 +130,19 @@ export class ProcessFiltersCloudComponent implements OnChanges {
         }
     }
 
+    /**
+     * Check equality of the filter names by translating the given name strings
+     */
+    private checkFilterNamesEquality(name1: string, name2: string ): boolean {
+        const translatedName1 = this.translate.instant(name1);
+        const translatedName2 = this.translate.instant(name2);
+
+        return translatedName1.toLocaleLowerCase() === translatedName2.toLocaleLowerCase();
+    }
+
+    /**
+     * Select and emit the given filter
+     */
     public selectFilterAndEmit(newFilter: ProcessFilterParamModel) {
         this.selectFilter(newFilter);
         this.filterClick.emit(this.currentFilter);

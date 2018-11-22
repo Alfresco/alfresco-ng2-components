@@ -36,13 +36,15 @@ export class ProcessQueryModel {
 export class ProcessFilterRepresentationModel {
     id: string;
     name: string;
+    key: string;
     icon: string;
     query: ProcessQueryModel;
 
     constructor(obj?: any) {
         if (obj) {
-            this.id = Math.random().toString(36).substring(2, 9);
+            this.id = obj.id || Math.random().toString(36).substring(2, 9);
             this.name = obj.name || null;
+            this.key = obj.key || null;
             this.icon = obj.icon || null;
             this.query = new ProcessQueryModel(obj.query);
         }
@@ -56,11 +58,13 @@ export class ProcessFilterRepresentationModel {
 export class ProcessFilterParamModel {
     id: string;
     name: string;
+    key: string;
     index: number;
     constructor(obj?: any) {
         if (obj) {
             this.id = obj.id || null;
             this.name = obj.name || null;
+            this.key = obj.key || null;
             this.index = obj.index || null;
         }
     }

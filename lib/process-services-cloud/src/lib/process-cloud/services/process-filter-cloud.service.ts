@@ -76,7 +76,8 @@ export class ProcessFilterCloudService {
      */
     getAllProcessesFilter(appName: string): ProcessFilterRepresentationModel {
         return new ProcessFilterRepresentationModel({
-            name: 'All Processes',
+            name: 'PROCESS_FILTERS_CLOUD.ALL_PROCESSES',
+            key: 'all-processes',
             icon: 'adjust',
             query: new ProcessQueryModel(
                 {
@@ -95,8 +96,9 @@ export class ProcessFilterCloudService {
      */
     getRunningProcessesFilter(appName: string): ProcessFilterRepresentationModel {
         return new ProcessFilterRepresentationModel({
-            name: 'Running Processes',
+            name: 'PROCESS_FILTERS_CLOUD.RUNNING_PROCESSES',
             icon: 'inbox',
+            key: 'running-processes',
             query: new ProcessQueryModel(
                 {
                     appName: appName,
@@ -115,8 +117,9 @@ export class ProcessFilterCloudService {
      */
     getCompletedProcessesFilter(appName: string): ProcessFilterRepresentationModel {
         return new ProcessFilterRepresentationModel({
-            name: 'Completed Processes',
+            name: 'PROCESS_FILTERS_CLOUD.COMPLETED_PROCESSES',
             icon: 'done',
+            key: 'completed-processes',
             query: new ProcessQueryModel(
                 {
                     appName: appName,
