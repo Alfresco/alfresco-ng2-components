@@ -55,10 +55,10 @@ export class TaskFilterCloudRepresentationModel  {
     }
 }
 export class FilterParamsModel {
-    id: string;
-    name: string;
-    key: string;
-    index: number;
+    id?: string;
+    name?: string;
+    key?: string;
+    index?: number;
 
     constructor(obj?: any) {
         if (obj) {
