@@ -99,7 +99,8 @@ export class TaskFilterCloudService {
         const username = this.getUsername();
         return new TaskFilterCloudRepresentationModel({
             id: Math.random().toString(36).substr(2, 9),
-            name: 'My Tasks',
+            name: 'ADF_CLOUD_TASK_FILTERS.MY_TASKS',
+            key: 'my-tasks',
             icon: 'inbox',
             query: new QueryModel(
                 {
@@ -121,7 +122,8 @@ export class TaskFilterCloudService {
     getCompletedTasksFilterInstance(appName: string): TaskFilterCloudRepresentationModel {
         return new TaskFilterCloudRepresentationModel({
             id: Math.random().toString(36).substr(2, 9),
-            name: 'Completed Tasks',
+            name: 'ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS',
+            key: 'completed-tasks',
             icon: 'done',
             query: new QueryModel(
                 {

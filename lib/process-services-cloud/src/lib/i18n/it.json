@@ -1,0 +1,13 @@
+{
+  "ADF_CLOUD_TASK_PROCESS_LIST": {
+    "MESSAGES": {
+      "TITLE": "Nessun processo trovato",
+      "SUBTITLE":"Crea un nuovo processo",
+      "NONE": "Nessun filtro per processo selezionato."
+    }
+  },
+  "ADF_CLOUD_TASK_FILTERS": {
+    "MY_TASKS": "Miei compiti",
+    "COMPLETED_TASKS": "Compiti completati"
+  }
+}

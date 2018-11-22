@@ -51,6 +51,7 @@ as the value of `filterParam` as shown in the table below:
 | ---- | ---- | ----------- |
 | id | string | The id of the task filter |
 | name | string | The name of the task filter, lowercase is checked |
+| key | string | The key of the task filter |
 | index | string | The zero-based position of the filter in the array. |
 
 ### How to create an accordion menu with the task filter cloud

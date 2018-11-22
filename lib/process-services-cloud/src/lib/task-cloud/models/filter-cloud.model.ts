@@ -36,6 +36,7 @@ export class QueryModel {
 export class TaskFilterCloudRepresentationModel  {
     id: string;
     name: string;
+    key: string;
     icon: string;
     query: QueryModel;
 
@@ -43,6 +44,7 @@ export class TaskFilterCloudRepresentationModel  {
         if (obj) {
             this.id = obj.id;
             this.name = obj.name;
+            this.key = obj.key;
             this.icon = obj.icon;
             this.query = new QueryModel(obj.query);
         }
@@ -55,12 +57,14 @@ export class TaskFilterCloudRepresentationModel  {
 export class FilterParamsModel {
     id: string;
     name: string;
+    key: string;
     index: number;
 
     constructor(obj?: any) {
         if (obj) {
             this.id = obj.id || null;
             this.name = obj.name || null;
+            this.key = obj.key || null;
             this.index = obj.index;
         }
     }

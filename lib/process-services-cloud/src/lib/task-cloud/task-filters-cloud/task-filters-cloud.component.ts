@@ -19,6 +19,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterCloudRepresentationModel, FilterParamsModel } from '../models/filter-cloud.model';
+import { TranslationService } from '@alfresco/adf-core';
 @Component({
     selector: 'adf-cloud-task-filters',
     templateUrl: './task-filters-cloud.component.html',
@@ -50,13 +51,13 @@ export class TaskFiltersCloudComponent implements OnChanges {
 
     filters: TaskFilterCloudRepresentationModel [] = [];
 
-    constructor(private taskFilterCloudService: TaskFilterCloudService) {
+    constructor(private taskFilterCloudService: TaskFilterCloudService, private translationService: TranslationService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
         const filter = changes['filterParam'];
-        if (appName && appName.currentValue) {
+        if (appName && appName.currentValue !== appName.previousValue) {
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilter(filter.currentValue);
@@ -105,11 +106,12 @@ export class TaskFiltersCloudComponent implements OnChanges {
 
     public selectFilter(newFilter: FilterParamsModel) {
         if (newFilter) {
-            this.currentFilter = this.filters.find( (filter, index) =>
+            this.currentFilter = this.filters.find( (filter: TaskFilterCloudRepresentationModel, index) =>
                 newFilter.index === index ||
+                newFilter.key === filter.key ||
                 newFilter.id === filter.id ||
                 (newFilter.name &&
-                    (newFilter.name.toLocaleLowerCase() === filter.name.toLocaleLowerCase())
+                    (newFilter.name.toLocaleLowerCase() === this.translationService.instant(filter.name).toLocaleLowerCase())
                 ));
         }
         if (!this.currentFilter) {
