@@ -30,7 +30,8 @@ import { StartTaskCloudModule } from './start-task-cloud/start-task-cloud.module
         TaskListCloudModule,
         TaskCloudModule,
         ProcessListCloudModule,
-        ProcessCloudModule
+        ProcessCloudModule,
+        StartTaskCloudModule
     ],
     providers: [
         {
@@ -42,7 +43,6 @@ import { StartTaskCloudModule } from './start-task-cloud/start-task-cloud.module
             }
         }
     ],
-    declarations: [],
     exports: [
         AppListCloudModule,
         TaskListCloudModule,

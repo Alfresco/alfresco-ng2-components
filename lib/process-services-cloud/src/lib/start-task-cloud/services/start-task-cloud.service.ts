@@ -20,13 +20,13 @@ import { Injectable } from '@angular/core';
 import {
     AlfrescoApiService,
     AppConfigService,
-    LogService
+    LogService,
+    IdentityUserModel
 } from '@alfresco/adf-core';
 import { from, Observable, throwError } from 'rxjs';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
 import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../models/task-details-cloud.model';
 import { map, catchError } from 'rxjs/operators';
-import { IdentityUserModel } from '../../../../../core/userinfo/models/identity-user.model';
 
 @Injectable()
 export class StartTaskCloudService {
@@ -54,7 +54,7 @@ export class StartTaskCloudService {
                     map((response: StartTaskCloudResponseModel) => {
                         return new TaskDetailsCloudModel(response.entry);
                     }),
-                    catchError(err => this.handleError(err))
+                    catchError((err) => this.handleError(err))
             );
     }
 
@@ -71,7 +71,7 @@ export class StartTaskCloudService {
                     map((response: IdentityUserModel[]) => {
                         return response;
                     }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -88,7 +88,7 @@ export class StartTaskCloudService {
                     map((response: RoleCloudModel[]) => {
                         return response;
                     }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

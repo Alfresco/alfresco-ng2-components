@@ -20,11 +20,10 @@ import { By } from '@angular/platform-browser';
 import { PeopleCloudComponent } from './people-cloud.component';
 import { StartTaskCloudTestingModule } from '../../testing/start-task-cloud.testing.module';
 import { StartTaskCloudService } from '../../services/start-task-cloud.service';
-import { LogService, setupTestBed, IdentityUserService } from '@alfresco/adf-core';
+import { LogService, setupTestBed, IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
 import { fakeUsers, mockRoles } from '../../mock/user-cloud.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { IdentityUserModel } from '../../../../../../core/userinfo/models/identity-user.model';
 
 describe('PeopleCloudComponent', () => {
     let component: PeopleCloudComponent;
@@ -71,7 +70,9 @@ describe('PeopleCloudComponent', () => {
         component.showCurrentUser = false;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const currentUser = component.users.find(user => user.username === fakeUsers[1].username);
+            const currentUser = component.users.find((user) => {
+                return user.username === fakeUsers[1].username;
+            });
             expect(currentUser).toBeUndefined();
         });
     }));
@@ -110,7 +111,7 @@ describe('PeopleCloudComponent', () => {
     it('should emit selectedUser if option is valid', async() => {
         fixture.detectChanges();
         let selectEmitSpy = spyOn(component.selectedUser, 'emit');
-        component.onSelect(<IdentityUserModel> { username: 'username'});
+        component.onSelect(new IdentityUserModel({ username: 'username'}));
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(selectEmitSpy).toHaveBeenCalled();
@@ -133,7 +134,7 @@ describe('PeopleCloudComponent', () => {
             fixture.detectChanges();
             const errorMessage = element.querySelector('.adf-start-task-cloud-error-message');
             expect(element.querySelector('.adf-start-task-cloud-error')).not.toBeNull();
-            expect(errorMessage.textContent).toContain('START-TASK-CLOUD.ERROR.MESSAGE');
+            expect(errorMessage.textContent).toContain('START_TASK_CLOUD.ERROR.MESSAGE');
         });
     }));
 

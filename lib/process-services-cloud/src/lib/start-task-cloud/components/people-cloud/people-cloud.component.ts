@@ -20,9 +20,7 @@ import { StartTaskCloudService } from './../../services/start-task-cloud.service
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { RoleCloudModel } from '../../models/role-cloud.model';
-import { FullNamePipe } from '@alfresco/adf-core';
-import { IdentityUserModel } from '../../../../../../core/userinfo/models/identity-user.model';
-import { IdentityUserService } from '../../../../../../core/userinfo/services/identity-user.service';
+import { FullNamePipe, IdentityUserModel, IdentityUserService } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -122,7 +120,9 @@ export class PeopleCloudComponent implements OnInit {
 
     private searchUsers(users: IdentityUserModel[], searchedWord: string) {
         let filteredUsers: IdentityUserModel[];
-        filteredUsers = this.removeDuplicates(users).filter((user) => this.findUserBySearchedWord(user.username, searchedWord));
+        filteredUsers = this.removeDuplicates(users).filter((user) => {
+            return this.findUserBySearchedWord(user.username, searchedWord);
+        });
         this.dataError = filteredUsers.length <= 0 ? true : false;
         return of(filteredUsers);
     }
@@ -133,7 +133,7 @@ export class PeopleCloudComponent implements OnInit {
 
     private removeDuplicates(users: IdentityUserModel[]): IdentityUserModel[] {
         const userMap = new Map();
-        users.forEach(user => {
+        users.forEach((user) => {
             if (!userMap.has(user.id)) {
                 userMap.set(user.id, user);
             }

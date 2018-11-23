@@ -25,10 +25,10 @@ import { StartTaskCloudService } from '../services/start-task-cloud.service';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 import {
     LogService,
-    UserPreferencesService
+    UserPreferencesService,
+    IdentityUserService,
+    IdentityUserModel
 } from '@alfresco/adf-core';
-import { IdentityUserService } from '../../../../../core/userinfo';
-import { IdentityUserModel } from '../../../../../core/userinfo/models/identity-user.model';
 
 @Component({
   selector: 'adf-cloud-start-task',

@@ -22,7 +22,8 @@ import {
     AppConfigService,
     LogService,
     StorageService,
-    UserPreferencesService
+    UserPreferencesService,
+    IdentityUserModel
 } from '@alfresco/adf-core';
 import { StartTaskCloudService } from '../services/start-task-cloud.service';
 import { StartTaskCloudComponent } from './start-task-cloud.component';
@@ -33,7 +34,6 @@ import { ProcessServiceCloudTestingModule } from './../../testing/process-servic
 import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
 import { mockRoles } from '../mock/user-cloud.mock';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
-import { IdentityUserModel } from '../../../../../core/userinfo/models/identity-user.model';
 
 describe('StartTaskCloudComponent', () => {
 

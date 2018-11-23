@@ -28,9 +28,9 @@ import {
     AlfrescoApiService,
     AppConfigService,
     LogService,
-    StorageService
+    StorageService,
+    IdentityUserModel
 } from '@alfresco/adf-core';
-import { IdentityUserModel } from '../../../../../core/userinfo/models/identity-user.model';
 import { RoleCloudModel } from '../models/role-cloud.model';
 import { mockRoles } from './../mock/user-cloud.mock';
 
@@ -68,8 +68,10 @@ describe('StartTaskCloudService', () => {
         spyOn(service, 'createNewTask').and.returnValue(throwError(errorResponse));
         service.createNewTask(taskDetailsMock)
             .subscribe(
-                users => fail('expected an error, not applications'),
-                error => {
+                () => {
+                    fail('expected an error, not applications');
+                },
+                (error) => {
                     expect(error.status).toEqual(404);
                     expect(error.statusText).toEqual('Not Found');
                     expect(error.error).toEqual('Mock Error');
@@ -102,8 +104,10 @@ describe('StartTaskCloudService', () => {
         spyOn(service, 'getUsers').and.returnValue(throwError(errorResponse));
         service.getUsers()
             .subscribe(
-                users => fail('expected an error, not users'),
-                error => {
+                () => {
+                    fail('expected an error, not users');
+                },
+                (error) => {
                     expect(error.status).toEqual(404);
                     expect(error.statusText).toEqual('Not Found');
                     expect(error.error).toEqual('Mock Error');
@@ -133,8 +137,10 @@ describe('StartTaskCloudService', () => {
         spyOn(service, 'getRolesByUserId').and.returnValue(throwError(errorResponse));
         service.getRolesByUserId('mock-user-id')
             .subscribe(
-                users => fail('expected an error, not users'),
-                error => {
+                () => {
+                    fail('expected an error, not users');
+                },
+                (error) => {
                     expect(error.status).toEqual(404);
                     expect(error.statusText).toEqual('Not Found');
                     expect(error.error).toEqual('Mock Error');
