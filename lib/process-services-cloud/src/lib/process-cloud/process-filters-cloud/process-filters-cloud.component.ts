@@ -66,9 +66,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
         const filter = changes['filterParam'];
         if (appName && appName.currentValue) {
             this.getFilters(appName.currentValue);
-        }
-
-        if (filter && filter.currentValue !== filter.previousValue) {
+        } else if (filter && filter.currentValue !== filter.previousValue) {
             this.selectFilterAndEmit(filter.currentValue);
         }
     }
@@ -146,6 +144,13 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     public selectFilterAndEmit(newFilter: ProcessFilterParamModel) {
         this.selectFilter(newFilter);
         this.filterClick.emit(this.currentFilter);
+    }
+
+    /**
+     * Select filter with the id
+     */
+    public selectFilterById(id: string) {
+        this.selectFilterAndEmit(<ProcessFilterParamModel> {id: id});
     }
 
     /**
