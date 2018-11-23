@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-export let mockToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.'
-    + 'eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJqb2huRG9lQGdtYWlsLmNvbSI'
-    + 'sImdpdmVuX25hbWUiOiJKb2huIERvZSIsImp0aSI6IjY1ZGMzZTEyLWJhNGUtNDQ'
-    + '2Mi1iZjAyLTBlZGQ2MTYwM2M2NCIsImlhdCI6MTU0MjcyMTYxMywiZXhwIjoxNTQyNzI3NzY5fQ'
-    + '.cUxMzfiJeLwh9Er2CBn_y8ehQgSm_s2-NHehx-SRZKg';
+export let mockToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIx' +
+        'MjM0NTY3ODkwIiwiZW1haWwiOiJqb2huRG9lQGdtYWlsLmNvbSIsImdpdmVuX25h' +
+        'bWUiOiJKb2huIERvZSIsInByZWZlcnJlZF91c2VybmFtZSI6ImpvaG5Eb2UxIiwi' +
+        'anRpIjoiNjVkYzNlMTItYmE0ZS00NDYyLWJmMDItMGVkZDYxNjAzYzY0IiwiaWF0' +
+        'IjoxNTQyNzIxNjEzLCJleHAiOjE1NDI3Mjc3Njl9.W-KUqsy5IBVgG0RhZTvTUXY' +
+        '1no5wE9lghKXGFNgFbuA';

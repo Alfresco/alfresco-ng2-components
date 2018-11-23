@@ -17,15 +17,19 @@
 
 export class IdentityUserModel {
 
+    id: string;
     firstName: string;
     lastName: string;
     email: string;
+    username: string;
 
     constructor(obj?: any) {
         if (obj) {
+            this.id = obj.id || null;
             this.firstName = obj.firstName || null;
             this.lastName = obj.lastName || null;
             this.email = obj.email || null;
+            this.username = obj.username || null;
         }
     }
 }
