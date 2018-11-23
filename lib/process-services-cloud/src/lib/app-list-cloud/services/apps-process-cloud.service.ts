@@ -58,7 +58,7 @@ export class AppsProcessCloudService {
                         });
                 }
                 ),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

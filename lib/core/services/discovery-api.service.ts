@@ -36,8 +36,8 @@ export class DiscoveryApiService {
     public getEcmProductInfo(): Observable<EcmProductVersionModel> {
         return from(this.apiService.getInstance().discovery.discoveryApi.getRepositoryInformation())
             .pipe(
-                map(res => new EcmProductVersionModel(res)),
-                catchError(err => throwError(err))
+                map((res) => new EcmProductVersionModel(res)),
+                catchError((err) => throwError(err))
             );
     }
 
@@ -48,8 +48,8 @@ export class DiscoveryApiService {
     public getBpmProductInfo(): Observable<BpmProductVersionModel> {
         return from(this.apiService.getInstance().activiti.aboutApi.getAppVersion())
             .pipe(
-                map(res => new BpmProductVersionModel(res)),
-                catchError(err => throwError(err))
+                map((res) => new BpmProductVersionModel(res)),
+                catchError((err) => throwError(err))
             );
     }
 }

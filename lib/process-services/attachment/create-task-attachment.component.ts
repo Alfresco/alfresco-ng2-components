@@ -51,7 +51,7 @@ export class AttachmentComponent implements OnChanges {
     }
 
     onFileUpload(event: any) {
-        let filesList: File[] = event.detail.files.map(obj => obj.file);
+        let filesList: File[] = event.detail.files.map((obj) => obj.file);
 
         for (let fileInfoObj of filesList) {
             let file: File = fileInfoObj;

@@ -70,7 +70,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     private getSelectedValue(): string {
         const options: any[] = this.settings['options'] || [];
         if (options && options.length > 0) {
-            let selected = options.find(opt => opt.default);
+            let selected = options.find((opt) => opt.default);
             if (!selected) {
                 selected = options[0];
             }

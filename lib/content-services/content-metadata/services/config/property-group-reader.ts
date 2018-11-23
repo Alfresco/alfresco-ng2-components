@@ -22,7 +22,7 @@ const emptyGroup = {
 };
 
 function convertObjectToArray(object: any): Property[] {
-    return Object.keys(object).map(key => object[key]);
+    return Object.keys(object).map((key) => object[key]);
 }
 
 export function getGroup(propertyGroups: PropertyGroupContainer, groupName: string): PropertyGroup | undefined {

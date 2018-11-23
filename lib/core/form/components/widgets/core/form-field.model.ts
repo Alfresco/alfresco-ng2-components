@@ -271,7 +271,7 @@ export class FormFieldModel extends FormWidgetModel {
                 if (json.fields.hasOwnProperty(currentField)) {
                     let col = new ContainerColumnModel();
 
-                    let fields: FormFieldModel[] = (json.fields[currentField] || []).map(f => new FormFieldModel(form, f));
+                    let fields: FormFieldModel[] = (json.fields[currentField] || []).map((f) => new FormFieldModel(form, f));
                     col.fields = fields;
                     col.rowspan = json.fields[currentField].length;
 
@@ -315,7 +315,7 @@ export class FormFieldModel extends FormWidgetModel {
             // Activiti has a bug with default radio button value where initial selection passed as `name` value
             // so try resolving current one with a fallback to first entry via name or id
             // TODO: needs to be reported and fixed at Activiti side
-            let entry: FormFieldOption[] = this.options.filter(opt =>
+            let entry: FormFieldOption[] = this.options.filter((opt) =>
                 opt.id === value || opt.name === value || (value && (opt.id === value.id || opt.name === value.name)));
             if (entry.length > 0) {
                 value = entry[0].id;
@@ -357,7 +357,7 @@ export class FormFieldModel extends FormWidgetModel {
                 if (this.value === 'empty' || this.value === '') {
                     this.form.values[this.id] = {};
                 } else {
-                    let entry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
+                    let entry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
                     if (entry.length > 0) {
                         this.form.values[this.id] = entry[0];
                     }
@@ -368,20 +368,20 @@ export class FormFieldModel extends FormWidgetModel {
                  This is needed due to Activiti issue related to reading radio button values as value string
                  but saving back as object: { id: <id>, name: <name> }
                  */
-                let rbEntry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
+                let rbEntry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value);
                 if (rbEntry.length > 0) {
                     this.form.values[this.id] = rbEntry[0];
                 }
                 break;
             case FormFieldTypes.UPLOAD:
                 if (this.value && this.value.length > 0) {
-                    this.form.values[this.id] = this.value.map(elem => elem.id).join(',');
+                    this.form.values[this.id] = this.value.map((elem) => elem.id).join(',');
                 } else {
                     this.form.values[this.id] = null;
                 }
                 break;
             case FormFieldTypes.TYPEAHEAD:
-                let taEntry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value || opt.name === this.value);
+                let taEntry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value || opt.name === this.value);
                 if (taEntry.length > 0) {
                     this.form.values[this.id] = taEntry[0];
                 } else if (this.options.length > 0) {
@@ -435,7 +435,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     getOptionName(): string {
-        let option: FormFieldOption = this.options.find(opt => opt.id === this.value);
+        let option: FormFieldOption = this.options.find((opt) => opt.id === this.value);
         return option ? option.name : null;
     }
 

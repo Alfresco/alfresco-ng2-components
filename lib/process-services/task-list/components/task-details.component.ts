@@ -195,7 +195,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
 
         this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
         this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
-        this.peopleSearch = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer)
+        this.peopleSearch = new Observable<UserProcessModel[]>((observer) => this.peopleSearchObserver = observer)
             .pipe(share());
         this.authService.getBpmLoggedUser().subscribe((user: UserRepresentation) => {
             this.currentLoggedUser = user;
@@ -469,7 +469,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges {
             .subscribe((users) => {
                 users = users.filter((user) => user.id !== this.taskDetails.assignee.id);
                 this.peopleSearchObserver.next(users);
-            }, error => this.logService.error('Could not load users'));
+            }, (error) => this.logService.error('Could not load users'));
     }
 
     onCloseSearch() {

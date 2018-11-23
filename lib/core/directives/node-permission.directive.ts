@@ -119,7 +119,7 @@ export class NodePermissionDirective implements OnChanges {
      */
     hasPermission(nodes: MinimalNodeEntity[], permission: string): boolean {
         if (nodes && nodes.length > 0) {
-            return nodes.every(node => this.contentService.hasPermission(node.entry, permission));
+            return nodes.every((node) => this.contentService.hasPermission(node.entry, permission));
         }
 
         return false;

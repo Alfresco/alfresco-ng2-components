@@ -156,7 +156,7 @@ export class ThumbnailService {
     };
 
     constructor(public contentService: ContentService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-        Object.keys(this.mimeTypeIcons).forEach(key => {
+        Object.keys(this.mimeTypeIcons).forEach((key) => {
             matIconRegistry.addSvgIcon(key, sanitizer.bypassSecurityTrustResourceUrl(this.mimeTypeIcons[key]));
         });
     }

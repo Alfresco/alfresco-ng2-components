@@ -34,7 +34,7 @@ export class IndifferentConfigService implements ContentMetadataConfig {
                     properties = propertyGroup.properties;
 
                 return Object.assign({}, propertyGroup, {
-                    properties: Object.keys(properties).map(propertyName => properties[propertyName])
+                    properties: Object.keys(properties).map((propertyName) => properties[propertyName])
                 });
             });
     }

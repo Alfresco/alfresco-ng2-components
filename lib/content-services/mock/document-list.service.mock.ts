@@ -42,14 +42,14 @@ export class DocumentListServiceMock extends DocumentListService {
         if (this.getFolderReject) {
             return throwError(this.getFolderRejectError);
         }
-        return new Observable(observer => {
+        return new Observable((observer) => {
             observer.next(this.getFolderResult);
             observer.complete();
         });
     }
 
     deleteNode(nodeId: string) {
-        return new Observable(observer => {
+        return new Observable((observer) => {
             observer.next();
             observer.complete();
         });

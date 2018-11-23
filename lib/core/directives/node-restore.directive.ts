@@ -71,7 +71,7 @@ export class NodeRestoreDirective {
         if (selection.length && nodesWithPath.length) {
 
             this.restoreNodesBatch(nodesWithPath).pipe(
-                tap(restoredNodes => {
+                tap((restoredNodes) => {
                     const status = this.processStatus(restoredNodes);
 
                     this.restoreProcessStatus.fail.push(...status.fail);
@@ -79,7 +79,7 @@ export class NodeRestoreDirective {
                 }),
                 mergeMap(() => this.getDeletedNodes())
             )
-            .subscribe(deletedNodesList => {
+            .subscribe((deletedNodesList) => {
                 const { entries: nodeList } = deletedNodesList.list;
                 const { fail: restoreErrorNodes } = this.restoreProcessStatus;
                 const selectedNodes = this.diff(restoreErrorNodes, selection, false);
@@ -136,9 +136,9 @@ export class NodeRestoreDirective {
     }
 
     private diff(selection, list, fromList = true): any {
-        const ids = selection.map(item => item.entry.id);
+        const ids = selection.map((item) => item.entry.id);
 
-        return list.filter(item => {
+        return list.filter((item) => {
             if (fromList) {
                 return ids.includes(item.entry.id) ? item : null;
             } else {

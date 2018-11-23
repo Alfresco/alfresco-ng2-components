@@ -48,7 +48,7 @@ export class ActivitiContentService {
         return from(apiService.activiti.alfrescoApi.getContentInFolder(accountShortId, folderId))
             .pipe(
                 map(this.toJsonArray),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -67,7 +67,7 @@ export class ActivitiContentService {
         return from(apiService.activiti.alfrescoApi.getRepositories(opts))
             .pipe(
                 map(this.toJsonArray),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -89,7 +89,7 @@ export class ActivitiContentService {
         }))
         .pipe(
             map(this.toJson),
-            catchError(err => this.handleError(err))
+            catchError((err) => this.handleError(err))
         );
     }
 
@@ -106,7 +106,7 @@ export class ActivitiContentService {
         return from(apiService.activiti.contentApi.createTemporaryRelatedContent(params))
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

@@ -205,7 +205,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     private uploadFileFromCS(fileNodeList: any[], accountId: string, siteId?: string) {
         const filesSaved = [];
         from(fileNodeList).pipe(
-            mergeMap(node =>
+            mergeMap((node) =>
                 zip(
                     of(node.content.mimeType),
                     this.activitiContentService.applyAlfrescoNode(node, siteId, accountId),

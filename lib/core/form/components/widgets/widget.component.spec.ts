@@ -68,7 +68,7 @@ describe('WidgetComponent', () => {
         let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
         widget.field = fakeField;
 
-        widget.fieldChanged.subscribe(field => {
+        widget.fieldChanged.subscribe((field) => {
             expect(field).not.toBe(null);
             expect(field.id).toBe('fakeField');
             expect(field.value).toBe('fakeValue');
@@ -81,7 +81,7 @@ describe('WidgetComponent', () => {
     it('should send an event when a field is changed', (done) => {
         let fakeForm = new FormModel();
         let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
-        widget.fieldChanged.subscribe(field => {
+        widget.fieldChanged.subscribe((field) => {
             expect(field).not.toBe(null);
             expect(field.id).toBe('fakeField');
             expect(field.value).toBe('fakeValue');

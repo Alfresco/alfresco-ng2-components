@@ -224,7 +224,7 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
                         totalItems: response.total
                     });
                 },
-                error => {
+                (error) => {
                     this.error.emit(error);
                     this.isLoading = false;
                 });
@@ -286,7 +286,7 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
      * @param instances
      */
     private optimizeProcessDetails(instances: any[]): any[] {
-        instances = instances.map(instance => {
+        instances = instances.map((instance) => {
             instance.name = this.getProcessNameOrDescription(instance, 'medium');
             if (instance.started) {
                 instance.started = moment(instance.started).format(this.FORMAT_DATE);

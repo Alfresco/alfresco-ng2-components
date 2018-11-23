@@ -99,7 +99,7 @@ export class FormModel {
 
             this.processVariables = json.processVariables;
 
-            this.tabs = (json.tabs || []).map(t => {
+            this.tabs = (json.tabs || []).map((t) => {
                 let model = new TabModel(this, t);
                 tabCache[model.id] = model;
                 return model;
@@ -138,7 +138,7 @@ export class FormModel {
                     isSystem: true
                 });
 
-                let customOutcomes = (json.outcomes || []).map(obj => new FormOutcomeModel(this, obj));
+                let customOutcomes = (json.outcomes || []).map((obj) => new FormOutcomeModel(this, obj));
 
                 this.outcomes = [saveOutcome].concat(
                     customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]
@@ -157,7 +157,7 @@ export class FormModel {
     }
 
     getFieldById(fieldId: string): FormFieldModel {
-        return this.getFormFields().find(field => field.id === fieldId);
+        return this.getFormFields().find((field) => field.id === fieldId);
     }
 
     // TODO: consider evaluating and caching once the form is loaded

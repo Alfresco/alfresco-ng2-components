@@ -107,7 +107,7 @@ describe('FolderActionsService', () => {
 
     it('should delete the folder node if there is the delete permission', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>(observer => {
+            return new Observable<any>((observer) => {
                 observer.next();
                 observer.complete();
             });
@@ -125,7 +125,7 @@ describe('FolderActionsService', () => {
 
     it('should not delete the folder node if there is no delete permission', (done) => {
         spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>(observer => {
+            return new Observable<any>((observer) => {
                 observer.next();
                 observer.complete();
             });
@@ -146,7 +146,7 @@ describe('FolderActionsService', () => {
 
     it('should call the error on the returned Observable if there is no delete permission', (done) => {
         spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>(observer => {
+            return new Observable<any>((observer) => {
                 observer.next();
                 observer.complete();
             });
@@ -168,7 +168,7 @@ describe('FolderActionsService', () => {
 
     it('should delete the folder node if there is the delete and others permission ', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>(observer => {
+            return new Observable<any>((observer) => {
                 observer.next();
                 observer.complete();
             });
@@ -185,7 +185,7 @@ describe('FolderActionsService', () => {
 
     it('should support deletion only folder node', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>(observer => {
+            return new Observable<any>((observer) => {
                 observer.next();
                 observer.complete();
             });
@@ -205,7 +205,7 @@ describe('FolderActionsService', () => {
 
     it('should require node id to delete', () => {
         spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>(observer => {
+            return new Observable<any>((observer) => {
                 observer.next();
                 observer.complete();
             });
@@ -220,7 +220,7 @@ describe('FolderActionsService', () => {
 
     it('should reload target upon node deletion', (done) => {
         spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>(observer => {
+            return new Observable<any>((observer) => {
                 observer.next();
                 observer.complete();
             });
@@ -244,7 +244,7 @@ describe('FolderActionsService', () => {
 
     it('should emit success event upon node deletion', (done) => {
         spyOn(documentListService, 'deleteNode').and.callFake(() => {
-            return new Observable<any>(observer => {
+            return new Observable<any>((observer) => {
                 observer.next();
                 observer.complete();
             });

@@ -58,9 +58,9 @@ export class DownloadZipDialogComponent implements OnInit {
 
             const promise: any = this.apiService.getInstance().core.downloadsApi.createDownload({ nodeIds });
 
-            promise.on('progress', progress => this.logService.log('Progress', progress));
-            promise.on('error', error => this.logService.error('Error', error));
-            promise.on('abort', data => this.logService.log('Abort', data));
+            promise.on('progress', (progress) => this.logService.log('Progress', progress));
+            promise.on('error', (error) => this.logService.error('Error', error));
+            promise.on('abort', (data) => this.logService.log('Abort', data));
 
             promise.on('success', (data: DownloadEntry) => {
                 if (data && data.entry && data.entry.id) {

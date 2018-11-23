@@ -108,7 +108,7 @@ export class AuthenticationService {
                         ticket: response
                     };
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -150,11 +150,11 @@ export class AuthenticationService {
     logout() {
         return from(this.callApiLogout())
             .pipe(
-                tap(response => {
+                tap((response) => {
                     this.onLogout.next(response);
                     return response;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

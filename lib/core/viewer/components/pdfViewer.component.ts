@@ -417,7 +417,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
                 disableClose: true,
                 data: { reason }
             })
-            .afterClosed().subscribe(password => {
+            .afterClosed().subscribe((password) => {
             if (password) {
                 callback(password);
             }

@@ -51,7 +51,7 @@ export class DeletedNodesApiService {
         const promise = this.nodesApi.getDeletedNodes(queryOptions);
 
         return from(promise).pipe(
-            catchError(err => of(err))
+            catchError((err) => of(err))
         );
     }
 }

@@ -251,7 +251,7 @@ describe('Test PdfViewer component', () => {
         let componentBlobTestComponent: BlobTestComponent;
         let elementBlobTestComponent: HTMLElement;
 
-        beforeEach(done => {
+        beforeEach((done) => {
             fixtureBlobTestComponent = TestBed.createComponent(BlobTestComponent);
             componentBlobTestComponent = fixtureBlobTestComponent.componentInstance;
             elementBlobTestComponent = fixtureBlobTestComponent.nativeElement;

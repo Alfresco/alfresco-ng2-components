@@ -117,7 +117,7 @@ export class VersionListComponent implements OnChanges {
                 minWidth: '250px'
             });
 
-            dialogRef.afterClosed().subscribe(result => {
+            dialogRef.afterClosed().subscribe((result) => {
                 if (result === true) {
                     this.alfrescoApi.versionsApi
                         .deleteVersion(this.node.id, versionId)

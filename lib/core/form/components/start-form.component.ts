@@ -82,7 +82,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
 
     ngOnInit() {
         this.subscriptions.push(
-            this.formService.formContentClicked.subscribe(content => {
+            this.formService.formContentClicked.subscribe((content) => {
                 this.formContentClicked.emit(content);
             }),
             this.formService.validateForm.subscribe((validateFormEvent: ValidateFormEvent) => {
@@ -94,7 +94,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
         this.subscriptions = [];
     }
 
@@ -120,7 +120,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
                 this.formService
                     .getStartFormInstance(processId)
                     .subscribe(
-                        form => {
+                        (form) => {
                             this.formName = form.name;
                             if (instance.variables) {
                                 form.processVariables = instance.variables;
@@ -131,7 +131,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
                             this.form.readOnly = this.readOnlyForm;
                             this.onFormLoaded(this.form);
                         },
-                        error => this.handleError(error)
+                        (error) => this.handleError(error)
                     );
             });
     }
@@ -140,7 +140,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
         this.formService
             .getStartFormDefinition(processId)
             .subscribe(
-                form => {
+                (form) => {
                     this.formName = form.processDefinitionName;
                     this.form = this.parseForm(form);
                     this.visibilityService.refreshVisibility(this.form);
@@ -148,7 +148,7 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
                     this.form.readOnly = this.readOnlyForm;
                     this.onFormLoaded(this.form);
                 },
-                error => this.handleError(error)
+                (error) => this.handleError(error)
             );
     }
 

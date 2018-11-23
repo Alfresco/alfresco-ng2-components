@@ -43,7 +43,7 @@ export class DialogSelectAppTestComponent {
             width: '630px'
         });
 
-        this.dialogRef.afterClosed().subscribe(selectedProcess => {
+        this.dialogRef.afterClosed().subscribe((selectedProcess) => {
             this.processId = selectedProcess.id;
         });
     }

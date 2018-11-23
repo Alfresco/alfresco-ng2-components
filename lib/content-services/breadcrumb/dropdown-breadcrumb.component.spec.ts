@@ -140,7 +140,7 @@ describe('DropdownBreadcrumb', () => {
             openSelect();
 
             fixture.whenStable().then(() => {
-                component.navigate.subscribe(val => {
+                component.navigate.subscribe((val) => {
                     expect(val).toEqual({ id: '1', name: 'Stark Industries' });
                     done();
                 });

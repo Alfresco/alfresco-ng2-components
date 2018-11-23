@@ -88,7 +88,7 @@ export class DocumentListService {
      */
     copyNode(nodeId: string, targetParentId: string) {
         return from(this.apiService.getInstance().nodes.copyNode(nodeId, { targetParentId })).pipe(
-            catchError(err => this.handleError(err))
+            catchError((err) => this.handleError(err))
         );
     }
 
@@ -101,7 +101,7 @@ export class DocumentListService {
      */
     moveNode(nodeId: string, targetParentId: string) {
         return from(this.apiService.getInstance().nodes.moveNode(nodeId, { targetParentId })).pipe(
-            catchError(err => this.handleError(err))
+            catchError((err) => this.handleError(err))
         );
     }
 
@@ -114,7 +114,7 @@ export class DocumentListService {
     createFolder(name: string, parentId: string): Observable<MinimalNodeEntity> {
         return from(this.apiService.getInstance().nodes.createFolder(name, '/', parentId))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -128,7 +128,7 @@ export class DocumentListService {
     getFolder(folder: string, opts?: any, includeFields: string[] = []): Observable<NodePaging> {
         return from(this.getNodesPromise(folder, opts, includeFields))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

@@ -76,7 +76,7 @@ export class UploadFolderWidgetComponent extends WidgetComponent implements OnIn
 
         if (files && files.length > 0) {
             from(files)
-                .pipe(mergeMap(file => this.uploadRawContent(file)))
+                .pipe(mergeMap((file) => this.uploadRawContent(file)))
                 .subscribe(
                     (res) => {
                         filesSaved.push(res);

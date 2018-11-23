@@ -48,13 +48,13 @@ export class ContentMetadataService {
             const config = this.contentMetadataConfigFactory.get(presetName),
                 groupNames = node.aspectNames
                     .concat(node.nodeType)
-                    .filter(groupName => config.isGroupAllowed(groupName));
+                    .filter((groupName) => config.isGroupAllowed(groupName));
 
             if (groupNames.length > 0) {
                 groupedProperties = this.propertyDescriptorsService.load(groupNames).pipe(
-                    map(groups => config.reorganiseByConfig(groups)),
-                    map(groups => this.setTitleToNameIfNotSet(groups)),
-                    map(groups => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties))
+                    map((groups) => config.reorganiseByConfig(groups)),
+                    map((groups) => this.setTitleToNameIfNotSet(groups)),
+                    map((groups) => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties))
                 );
             }
         }
@@ -63,7 +63,7 @@ export class ContentMetadataService {
     }
 
     setTitleToNameIfNotSet(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
-        propertyGroups.map(propertyGroup => {
+        propertyGroups.map((propertyGroup) => {
             propertyGroup.title = propertyGroup.title || propertyGroup.name;
         });
         return propertyGroups;

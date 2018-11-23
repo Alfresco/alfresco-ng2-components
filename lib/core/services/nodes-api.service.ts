@@ -55,7 +55,7 @@ export class NodesApiService {
             .then(this.getEntryFromEntity);
 
         return from(promise).pipe(
-            catchError(err => throwError(err))
+            catchError((err) => throwError(err))
         );
     }
 
@@ -76,7 +76,7 @@ export class NodesApiService {
             .getNodeChildren(nodeId, queryOptions);
 
         return from(promise).pipe(
-            catchError(err => throwError(err))
+            catchError((err) => throwError(err))
         );
     }
 
@@ -93,7 +93,7 @@ export class NodesApiService {
             .then(this.getEntryFromEntity);
 
         return from(promise).pipe(
-            catchError(err => throwError(err))
+            catchError((err) => throwError(err))
         );
     }
 
@@ -127,7 +127,7 @@ export class NodesApiService {
             .then(this.getEntryFromEntity);
 
         return from(promise).pipe(
-            catchError(err => throwError(err))
+            catchError((err) => throwError(err))
         );
     }
 
@@ -141,7 +141,7 @@ export class NodesApiService {
         const promise = this.nodesApi.deleteNode(nodeId, options);
 
         return from(promise).pipe(
-            catchError(err => throwError(err))
+            catchError((err) => throwError(err))
         );
     }
 
@@ -156,7 +156,7 @@ export class NodesApiService {
             .then(this.getEntryFromEntity);
 
         return from(promise).pipe(
-            catchError(err => throwError(err))
+            catchError((err) => throwError(err))
         );
     }
 }

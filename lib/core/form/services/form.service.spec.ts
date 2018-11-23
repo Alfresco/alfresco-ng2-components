@@ -94,7 +94,7 @@ describe('Form service', () => {
         let simpleResponseBody = { id: 1, modelType: 'test' };
 
         it('should fetch and parse process definitions', (done) => {
-            service.getProcessDefinitions().subscribe(result => {
+            service.getProcessDefinitions().subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/process-definitions')).toBeTruthy();
                 expect(result).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
                 done();
@@ -108,7 +108,7 @@ describe('Form service', () => {
         });
 
         it('should fetch and parse tasks', (done) => {
-            service.getTasks().subscribe(result => {
+            service.getTasks().subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/tasks/query')).toBeTruthy();
                 expect(result).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
                 done();
@@ -122,7 +122,7 @@ describe('Form service', () => {
         });
 
         it('should fetch and parse the task by id', (done) => {
-            service.getTask('1').subscribe(result => {
+            service.getTask('1').subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/tasks/1')).toBeTruthy();
                 expect(result.id).toEqual('1');
                 done();
@@ -182,7 +182,7 @@ describe('Form service', () => {
         });
 
         it('should get task form by id', (done) => {
-            service.getTaskForm('1').subscribe(result => {
+            service.getTaskForm('1').subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/task-forms/1')).toBeTruthy();
                 expect(result.id).toEqual(1);
                 done();
@@ -196,7 +196,7 @@ describe('Form service', () => {
         });
 
         it('should get form definition by id', (done) => {
-            service.getFormDefinitionById('1').subscribe(result => {
+            service.getFormDefinitionById('1').subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/form-models/1')).toBeTruthy();
                 expect(result.id).toEqual(1);
                 done();
@@ -218,7 +218,7 @@ describe('Form service', () => {
                 ]
             };
 
-            service.getFormDefinitionByName(formName).subscribe(result => {
+            service.getFormDefinitionByName(formName).subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith(`models?filter=myReusableForms&filterText=${formName}&modelType=2`)).toBeTruthy();
                 expect(result).toEqual(formId);
                 done();
@@ -241,7 +241,7 @@ describe('Form service', () => {
             });
             processApiSpy.getProcessDefinitionStartForm.and.returnValue(Promise.resolve({ id: '1' }));
 
-            service.getStartFormDefinition('myprocess:1').subscribe(result => {
+            service.getStartFormDefinition('myprocess:1').subscribe((result) => {
                 expect(processApiSpy.getProcessDefinitionStartForm).toHaveBeenCalledWith('myprocess:1');
                 done();
             });
@@ -309,7 +309,7 @@ describe('Form service', () => {
         });
 
         it('should get all the forms with modelType=2', (done) => {
-            service.getForms().subscribe(result => {
+            service.getForms().subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('models?modelType=2')).toBeTruthy();
                 expect(result.length).toEqual(2);
                 done();
@@ -330,7 +330,7 @@ describe('Form service', () => {
         it('should search for Form with modelType=2', (done) => {
             let response = { data: [{ id: 1, name: 'findMe' }, { id: 2, name: 'testForm' }] };
 
-            service.searchFrom('findMe').subscribe(result => {
+            service.searchFrom('findMe').subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('models?modelType=2')).toBeTruthy();
                 expect(result.name).toEqual('findMe');
                 expect(result.id).toEqual(1);
@@ -345,7 +345,7 @@ describe('Form service', () => {
         });
 
         it('should create a Form with modelType=2', (done) => {
-            service.createForm('testName').subscribe(result => {
+            service.createForm('testName').subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/models')).toBeTruthy();
                 expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).modelType).toEqual(2);
                 expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual('testName');
@@ -365,7 +365,7 @@ describe('Form service', () => {
             let data = [{ name: 'name' }, { name: 'email' }];
             let formDefinitionModel = new FormDefinitionModel(formId, name, 'testUserName', '2016-09-05T14:41:19.049Z', data);
 
-            service.addFieldsToAForm(formId, formDefinitionModel).subscribe(result => {
+            service.addFieldsToAForm(formId, formDefinitionModel).subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/form-models/' + formId)).toBeTruthy();
                 expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).formRepresentation.name).toEqual(name);
                 done();
@@ -382,7 +382,7 @@ describe('Form service', () => {
             spyOn(service, 'getUserProfileImageApi').and.returnValue('/app/rest/users/2002/picture');
             let fakeFilter: string = 'whatever';
 
-            service.getWorkflowUsers(fakeFilter).subscribe(result => {
+            service.getWorkflowUsers(fakeFilter).subscribe((result) => {
                 expect(result).toBeDefined();
                 expect(result.length).toBe(3);
                 expect(result[0].id).toBe(2002);
@@ -400,7 +400,7 @@ describe('Form service', () => {
         it('should return list of groups', (done) => {
             let fakeFilter: string = 'whatever';
 
-            service.getWorkflowGroups(fakeFilter).subscribe(result => {
+            service.getWorkflowGroups(fakeFilter).subscribe((result) => {
                 expect(result).toBeDefined();
                 expect(result.length).toBe(2);
                 expect(result[0].id).toBe('2004');
@@ -433,7 +433,7 @@ describe('Form service', () => {
 
             stubAddFieldsToAForm();
 
-            service.createFormFromANode(nameForm).subscribe(result => {
+            service.createFormFromANode(nameForm).subscribe((result) => {
                 expect(result.id).toEqual(formId);
                 done();
             });

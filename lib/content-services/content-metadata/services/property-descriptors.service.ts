@@ -30,8 +30,8 @@ export class PropertyDescriptorsService {
 
     load(groupNames: string[]): Observable<PropertyGroupContainer> {
         const groupFetchStreams = groupNames
-            .map(groupName => groupName.replace(':', '_'))
-            .map(groupName => defer( () => this.alfrescoApiService.classesApi.getClass(groupName)) );
+            .map((groupName) => groupName.replace(':', '_'))
+            .map((groupName) => defer( () => this.alfrescoApiService.classesApi.getClass(groupName)) );
 
         return forkJoin(groupFetchStreams).pipe(
             map(this.convertToObject)

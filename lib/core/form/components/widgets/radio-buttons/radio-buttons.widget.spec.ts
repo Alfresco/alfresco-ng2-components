@@ -59,7 +59,7 @@ describe('RadioButtonsWidgetComponent', () => {
             restUrl: '<url>'
         });
 
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable(observer => {
+        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next(null);
             observer.complete();
         }));
@@ -82,7 +82,7 @@ describe('RadioButtonsWidgetComponent', () => {
         let field = widget.field;
         spyOn(field, 'updateForm').and.stub();
 
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable(observer => {
+        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next(null);
             observer.complete();
         }));
@@ -102,7 +102,7 @@ describe('RadioButtonsWidgetComponent', () => {
             id: fieldId,
             restUrl: '<url>'
         });
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable(observer => {
+        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next(null);
             observer.complete();
         }));
@@ -179,7 +179,7 @@ describe('RadioButtonsWidgetComponent', () => {
                 expect(element.querySelector('#radio-id')).not.toBeNull();
                 expect(option).not.toBeNull();
                 option.click();
-                widget.fieldChanged.subscribe(field => {
+                widget.fieldChanged.subscribe((field) => {
                     expect(element.querySelector('#radio-id')).toBeNull();
                     expect(element.querySelector('#radio-id-opt-1-input')).toBeNull();
                 });

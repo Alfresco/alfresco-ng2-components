@@ -22,7 +22,7 @@ export class ResponseFacetQueryList extends SearchFilterList<FacetQuery> {
     constructor(items: FacetQuery[] = [], translationService, pageSize: number = 5) {
         super(
             items
-                .filter(item => {
+                .filter((item) => {
                     return item.count > 0;
                 }),
             pageSize
