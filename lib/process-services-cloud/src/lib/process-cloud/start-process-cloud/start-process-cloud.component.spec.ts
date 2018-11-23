@@ -153,7 +153,7 @@ describe('StartProcessCloudComponent', () => {
 
             fixture.whenStable().then(() => {
                 let errorEl = fixture.nativeElement.querySelector('#error-message');
-                expect(errorEl.innerText.trim()).toBe('ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
+                expect(errorEl.innerText.trim()).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
             });
         }));
 
@@ -166,7 +166,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.whenStable().then(() => {
                 const noProcessElement = fixture.nativeElement.querySelector('#no-process-message');
                 expect(noProcessElement).not.toBeNull('Expected no available process message to be present');
-                expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.NO_PROCESS_DEFINITIONS');
+                expect(noProcessElement.innerText.trim()).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.NO_PROCESS_DEFINITIONS');
             });
         }));
 
@@ -349,7 +349,7 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 let errorEl = fixture.nativeElement.querySelector('#error-message');
-                expect(errorEl.innerText.trim()).toBe('ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.ERROR.START');
+                expect(errorEl.innerText.trim()).toBe('ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START');
             });
         }));
 

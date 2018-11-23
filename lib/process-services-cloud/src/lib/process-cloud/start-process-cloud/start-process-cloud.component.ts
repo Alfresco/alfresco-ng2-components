@@ -148,7 +148,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                 }
             },
             () => {
-                this.errorMessageId = 'ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
+                this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
             });
     }
 
@@ -169,8 +169,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
                 this.isLoading = false;
             },
             (err) => {
-                this.errorMessageId = 'ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.ERROR.START';
-                this.error.emit(err);
+                this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START';
+                this.error.error(err);
                 this.isLoading = false;
             }
         );

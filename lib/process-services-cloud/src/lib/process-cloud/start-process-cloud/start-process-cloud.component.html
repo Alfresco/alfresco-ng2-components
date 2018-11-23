@@ -1,6 +1,6 @@
 <mat-card class="adf-start-process">
 
-    <mat-card-title>{{'ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.FORM.TITLE' | translate}}
+    <mat-card-title>{{'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.TITLE' | translate}}
     </mat-card-title>
 
     <mat-card-content *ngIf="!isProcessDefinitionsEmpty(); else emptyProcessDefinitionsList">
@@ -10,18 +10,18 @@
 
         <form [formGroup]="processForm">
             <mat-form-field class="adf-process-input-container">
-                <mat-label>{{ 'ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.FORM.LABEL.NAME' | translate }}</mat-label>
+                <mat-label>{{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.LABEL.NAME' | translate }}</mat-label>
                 <input 
                     matInput
                     formControlName="processInstanceName" 
                     id="processName">
                 <mat-error *ngIf="processInstanceName.hasError('required')">
-                    {{ 'ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.ERROR.PROCESS_NAME_REQUIRED' | translate }}
+                    {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.PROCESS_NAME_REQUIRED' | translate }}
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field class="adf-process-input-container">
-                <mat-label>{{ 'ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.FORM.LABEL.TYPE' | translate }}</mat-label>
+                <mat-label>{{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.LABEL.TYPE' | translate }}</mat-label>
                 <input 
                     #inputAutocomplete
                     matInput 
@@ -39,7 +39,7 @@
                     </button>
                 </div>
                 <mat-error *ngIf="processDefinition.hasError('required')">
-                        {{ 'ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.ERROR.PROCESS_DEFINITION_REQUIRED' | translate }}
+                        {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.PROCESS_DEFINITION_REQUIRED' | translate }}
                     </mat-error>
             </mat-form-field>
         </form>
@@ -48,14 +48,14 @@
     <ng-template #emptyProcessDefinitionsList>
         <mat-card-content>
             <mat-card-subtitle class="error-message" id="no-process-message">
-                {{ 'ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.NO_PROCESS_DEFINITIONS' | translate | uppercase}}
+                {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.NO_PROCESS_DEFINITIONS' | translate | uppercase}}
             </mat-card-subtitle>
         </mat-card-content>
     </ng-template>
     
     <mat-card-actions>
         <button mat-button (click)="cancelStartProcess()" id="cancel_process">
-            {{ 'ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.FORM.ACTION.CANCEL' | translate | uppercase}}
+            {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.CANCEL' | translate | uppercase}}
         </button>
         <button 
             color="primary" 
@@ -64,7 +64,7 @@
             (click)="startProcess()" 
             data-automation-id="btn-start"
             id="button-start" class="btn-start">
-            {{'ADF_PROCESS_LIST_CLOUD.ADF_CLOUD_START_PROCESS.FORM.ACTION.START' | translate | uppercase}}
+            {{'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.START' | translate | uppercase}}
         </button>
     </mat-card-actions>
 </mat-card>
