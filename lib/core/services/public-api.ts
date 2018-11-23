@@ -29,7 +29,6 @@ export * from './cookie.service';
 export * from './renditions.service';
 export * from './notification.service';
 export * from './log.service';
-export * from './jwt-helper.service';
 export * from './translation.service';
 export * from './translate-loader.service';
 export * from './thumbnail.service';
