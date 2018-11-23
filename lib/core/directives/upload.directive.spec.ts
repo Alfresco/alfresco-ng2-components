@@ -115,7 +115,7 @@ describe('UploadDirective', () => {
             <FileInfo> {},
             <FileInfo> {}
         ]));
-        spyOn(nativeElement, 'dispatchEvent').and.callFake(_ => {
+        spyOn(nativeElement, 'dispatchEvent').and.callFake((_) => {
             done();
         });
         directive.onDrop(event);
@@ -130,7 +130,7 @@ describe('UploadDirective', () => {
         spyOn(directive, 'getDataTransfer').and.returnValue({});
         spyOn(directive, 'getFilesDropped').and.returnValue(Promise.resolve(files));
 
-        spyOn(nativeElement, 'dispatchEvent').and.callFake(e => {
+        spyOn(nativeElement, 'dispatchEvent').and.callFake((e) => {
             expect(e.detail.files.length).toBe(1);
             expect(e.detail.files[0]).toBe(files[0]);
             done();

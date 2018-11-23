@@ -51,7 +51,7 @@ export class SearchSortingPickerComponent implements OnInit {
 
     private findOptionByKey(key: string): SearchSortingDefinition {
         if (key) {
-            return this.options.find(opt => opt.key === key);
+            return this.options.find((opt) => opt.key === key);
         }
         return null;
     }

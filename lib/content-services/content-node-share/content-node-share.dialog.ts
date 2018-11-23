@@ -140,7 +140,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                 minWidth: '250px',
                 closeOnNavigation: true
             })
-            .beforeClose().subscribe(deleteSharedLink => {
+            .beforeClose().subscribe((deleteSharedLink) => {
                 if (deleteSharedLink) {
                     this.deleteSharedLink(this.sharedId);
                 } else {

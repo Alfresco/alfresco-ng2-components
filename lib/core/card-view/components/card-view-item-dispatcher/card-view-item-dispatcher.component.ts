@@ -63,7 +63,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
             'ngOnDestroy'
         ];
 
-        dynamicLifeCycleMethods.forEach(method => {
+        dynamicLifeCycleMethods.forEach((method) => {
             this[method] = this.proxy.bind(this, method);
         });
     }
@@ -75,7 +75,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         }
 
         Object.keys(changes)
-            .map(changeName => [changeName, changes[changeName]])
+            .map((changeName) => [changeName, changes[changeName]])
             .forEach(([inputParamName, simpleChange]: [string, SimpleChange]) => {
                 this.componentReference.instance[inputParamName] = simpleChange.currentValue;
             });

@@ -76,7 +76,7 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
 
         if (files && files.length > 0) {
             from(files)
-                .pipe(mergeMap(file => this.uploadRawContent(file)))
+                .pipe(mergeMap((file) => this.uploadRawContent(file)))
                 .subscribe(
                     (res) => filesSaved.push(res),
                     () => this.logService.error('Error uploading file. See console output for more details.'),

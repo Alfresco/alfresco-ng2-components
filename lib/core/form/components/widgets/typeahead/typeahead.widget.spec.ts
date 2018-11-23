@@ -45,8 +45,8 @@ describe('TypeaheadWidgetComponent', () => {
 
     beforeEach(() => {
         translationService = TestBed.get(TranslateService);
-        spyOn(translationService, 'instant').and.callFake(key => { return key; });
-        spyOn(translationService, 'get').and.callFake(key => { return of(key); });
+        spyOn(translationService, 'instant').and.callFake((key) => { return key; });
+        spyOn(translationService, 'get').and.callFake((key) => { return of(key); });
 
         formService = new FormService(null, null, null);
         widget = new TypeaheadWidgetComponent(formService, null);
@@ -67,7 +67,7 @@ describe('TypeaheadWidgetComponent', () => {
             restUrl: 'whateverURL'
         });
 
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable(observer => {
+        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next(null);
             observer.complete();
         }));
@@ -137,7 +137,7 @@ describe('TypeaheadWidgetComponent', () => {
     });
 
     it('should setup initial value', () => {
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable(observer => {
+        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next([
                 { id: '1', name: 'One' },
                 { id: '2', name: 'Two' }
@@ -153,7 +153,7 @@ describe('TypeaheadWidgetComponent', () => {
     });
 
     it('should not setup initial value due to missing option', () => {
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable(observer => {
+        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next([
                 { id: '1', name: 'One' },
                 { id: '2', name: 'Two' }
@@ -175,7 +175,7 @@ describe('TypeaheadWidgetComponent', () => {
             { id: '2', name: 'Two' }
         ];
 
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable(observer => {
+        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next(options);
             observer.complete();
         }));
@@ -185,7 +185,7 @@ describe('TypeaheadWidgetComponent', () => {
     });
 
     it('should update form upon options setup', () => {
-        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable(observer => {
+        spyOn(formService, 'getRestFieldValues').and.returnValue(new Observable((observer) => {
             observer.next([]);
             observer.complete();
         }));

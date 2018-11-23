@@ -78,7 +78,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     @Input('class')
     set classList(classList: string) {
         if (classList && classList.length) {
-            classList.split(' ').forEach(className => this._classList[className.trim()] = true);
+            classList.split(' ').forEach((className) => this._classList[className.trim()] = true);
             this._elementRef.nativeElement.className = '';
         }
     }
@@ -119,8 +119,8 @@ export class SearchComponent implements AfterContentInit, OnChanges {
             });
 
         searchService.dataLoaded.subscribe(
-            data => this.onSearchDataLoaded(data),
-            error => this.onSearchDataError(error)
+            (data) => this.onSearchDataLoaded(data),
+            (error) => this.onSearchDataError(error)
         );
     }
 
@@ -162,13 +162,13 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         if (searchTerm) {
             if (this.queryBody) {
                 this.searchService.searchByQueryBody(this.queryBody).subscribe(
-                    result => this.onSearchDataLoaded(result),
-                    err => this.onSearchDataError(err)
+                    (result) => this.onSearchDataLoaded(result),
+                    (err) => this.onSearchDataError(err)
                 );
             } else {
                 this.searchService.search(searchTerm, this.maxResults, this.skipResults).subscribe(
-                    result => this.onSearchDataLoaded(result),
-                    err => this.onSearchDataError(err)
+                    (result) => this.onSearchDataLoaded(result),
+                    (err) => this.onSearchDataError(err)
                 );
             }
         } else {

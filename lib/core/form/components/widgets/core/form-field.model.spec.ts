@@ -58,7 +58,7 @@ describe('FormFieldModel', () => {
             value: '<value>'
         };
         let field = new FormFieldModel(new FormModel(), json);
-        Object.keys(json).forEach(key => {
+        Object.keys(json).forEach((key) => {
             expect(field[key]).toBe(json[key]);
         });
     });
@@ -346,7 +346,7 @@ describe('FormFieldModel', () => {
     it('should not update form with display-only field value', () => {
         let form = new FormModel();
 
-        FormFieldTypes.READONLY_TYPES.forEach(typeName => {
+        FormFieldTypes.READONLY_TYPES.forEach((typeName) => {
             let field = new FormFieldModel(form, {
                 id: typeName,
                 type: typeName

@@ -123,7 +123,7 @@ export class ChecklistComponent implements OnChanges {
     public delete(taskId: string) {
         this.activitiTaskList.deleteTask(taskId).subscribe(
             () => {
-                this.checklist = this.checklist.filter(check => check.id !== taskId);
+                this.checklist = this.checklist.filter((check) => check.id !== taskId);
                 this.checklistTaskDeleted.emit(taskId);
             },
             (error) => {

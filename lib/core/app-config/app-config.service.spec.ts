@@ -126,7 +126,7 @@ describe('AppConfigService', () => {
     });
 
     it('should load external settings', () => {
-        appConfigService.load().then(config => {
+        appConfigService.load().then((config) => {
             expect(config).toEqual(mockResponse);
         });
     });

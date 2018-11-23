@@ -93,14 +93,14 @@ export class ViewUtilService {
         const type: string = this.getViewerTypeByMimeType(mimeType);
 
         this.getRendition(nodeId, ViewUtilService.ContentGroup.PDF)
-        .then(value => {
+        .then((value) => {
             const url: string = this.getRenditionUrl(nodeId, type, (value ? true : false));
             const printType = (type === ViewUtilService.ContentGroup.PDF
                 || type === ViewUtilService.ContentGroup.TEXT)
                 ? ViewUtilService.ContentGroup.PDF : type;
             this.printFile(url, printType);
         })
-        .catch(err => {
+        .catch((err) => {
             this.logService.error('Error with Printing');
             this.logService.error(err);
         });
@@ -143,12 +143,12 @@ export class ViewUtilService {
     }
 
     wait(ms: number): Promise<any> {
-        return new Promise(resolve => setTimeout(resolve, ms));
+        return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
     async getRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
         const supported = await this.apiService.renditionsApi.getRenditions(nodeId);
-        let rendition = supported.list.entries.find(obj => obj.entry.id.toLowerCase() === renditionId);
+        let rendition = supported.list.entries.find((obj) => obj.entry.id.toLowerCase() === renditionId);
 
         if (rendition) {
             const status = rendition.entry.status.toString();
@@ -162,7 +162,7 @@ export class ViewUtilService {
                 }
             }
         }
-        return new Promise(resolve => resolve(rendition));
+        return new Promise((resolve) => resolve(rendition));
     }
 
 }

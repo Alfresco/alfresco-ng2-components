@@ -101,7 +101,7 @@ describe('VersionManagerComponent', () => {
         fixture.detectChanges();
 
         const emittedData = { value: { entry: node }};
-        component.uploadSuccess.subscribe(event => {
+        component.uploadSuccess.subscribe((event) => {
             expect(event).toBe(node);
         });
         component.onUploadSuccess(emittedData);

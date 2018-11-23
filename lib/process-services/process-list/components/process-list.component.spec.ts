@@ -232,7 +232,7 @@ describe('ProcessInstanceListComponent', () => {
         });
         let rowEvent = new DataRowEvent(row, null);
 
-        component.rowClick.subscribe(taskId => {
+        component.rowClick.subscribe((taskId) => {
             expect(taskId).toEqual('999');
             expect(component.getCurrentId()).toEqual('999');
             done();

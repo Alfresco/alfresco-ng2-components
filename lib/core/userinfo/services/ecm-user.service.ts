@@ -46,7 +46,7 @@ export class EcmUserService {
                 map((personEntry: PersonEntry) => {
                     return new EcmUserModel(personEntry.entry);
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

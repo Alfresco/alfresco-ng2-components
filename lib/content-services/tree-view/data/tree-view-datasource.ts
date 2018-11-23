@@ -46,7 +46,7 @@ export class TreeViewDataSource {
     }
 
     connect(collectionViewer: CollectionViewer): Observable<TreeBaseNode[]> {
-        this.changeSubscription = this.treeControl.expansionModel.onChange.subscribe(change => {
+        this.changeSubscription = this.treeControl.expansionModel.onChange.subscribe((change) => {
             if ((change as SelectionChange<TreeBaseNode>).added &&
                 (change as SelectionChange<TreeBaseNode>).added.length > 0) {
                 this.expandTreeNodes(change as SelectionChange<TreeBaseNode>);
@@ -67,11 +67,11 @@ export class TreeViewDataSource {
     }
 
     private expandTreeNodes(change: SelectionChange<TreeBaseNode>) {
-        change.added.forEach(node => this.expandNode(node));
+        change.added.forEach((node) => this.expandNode(node));
     }
 
     private reduceTreeNodes(change: SelectionChange<TreeBaseNode>) {
-        change.removed.slice().reverse().forEach(node => this.toggleNode(node));
+        change.removed.slice().reverse().forEach((node) => this.toggleNode(node));
     }
 
     private expandNode(node: TreeBaseNode) {
@@ -82,7 +82,7 @@ export class TreeViewDataSource {
                     node.expandable = false;
                     return;
                 }
-                const nodes = children.map(actualNode => {
+                const nodes = children.map((actualNode) => {
                     actualNode.level = node.level + 1;
                     return actualNode;
                 });

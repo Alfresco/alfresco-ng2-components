@@ -88,7 +88,7 @@ describe('FolderCreateDirective', () => {
         node = { entry: { id: 'nodeId' } };
 
         dialogRefMock = {
-            afterClosed: val =>  of(val),
+            afterClosed: (val) =>  of(val),
             componentInstance: {
                 error: new Subject<any>(),
                 success: new Subject<MinimalNodeEntryEntity>()

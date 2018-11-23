@@ -50,7 +50,7 @@ export class PropertyGroupTranslatorService {
     }
 
     public translateToCardViewGroups(propertyGroups: OrganisedPropertyGroup[], propertyValues): CardViewGroup[] {
-        return propertyGroups.map(propertyGroup => {
+        return propertyGroups.map((propertyGroup) => {
             const translatedPropertyGroup: any = Object.assign({}, propertyGroup);
             translatedPropertyGroup.properties = this.translateArray(propertyGroup.properties, propertyValues);
             return translatedPropertyGroup;
@@ -58,7 +58,7 @@ export class PropertyGroupTranslatorService {
     }
 
     private translateArray(properties: Property[], propertyValues: any): CardViewItem[] {
-        return properties.map(property => {
+        return properties.map((property) => {
             return this.translate(property, propertyValues);
         });
     }

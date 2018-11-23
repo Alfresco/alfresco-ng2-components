@@ -222,7 +222,7 @@ describe('SearchQueryBuilder', () => {
         spyOn(builder, 'buildQuery').and.returnValue(query);
 
         let eventArgs;
-        builder.updated.subscribe(args => eventArgs = args);
+        builder.updated.subscribe((args) => eventArgs = args);
 
         await builder.execute();
         expect(eventArgs).toBe(query);
@@ -237,7 +237,7 @@ describe('SearchQueryBuilder', () => {
         spyOn(builder, 'buildQuery').and.returnValue({});
 
         let eventArgs;
-        builder.executed.subscribe(args => eventArgs = args);
+        builder.executed.subscribe((args) => eventArgs = args);
 
         await builder.execute();
         expect(eventArgs).toBe(data);

@@ -65,16 +65,16 @@ export abstract class DataTableSchema {
     public getSchemaFromHtml(columnList: DataColumnListComponent): any {
         let schema = [];
         if (columnList && columnList.columns && columnList.columns.length > 0) {
-            schema = columnList.columns.map(c => <DataColumn> c);
+            schema = columnList.columns.map((c) => <DataColumn> c);
         }
         return schema;
     }
 
    public getSchemaFromConfig(presetColumn: string): DataColumn[] {
-        return presetColumn ? (this.layoutPresets[presetColumn]).map(col => new ObjectDataColumn(col)) : [];
+        return presetColumn ? (this.layoutPresets[presetColumn]).map((col) => new ObjectDataColumn(col)) : [];
     }
 
     private getDefaultLayoutPreset(): DataColumn[] {
-        return (this.layoutPresets['default']).map(col => new ObjectDataColumn(col));
+        return (this.layoutPresets['default']).map((col) => new ObjectDataColumn(col));
     }
 }

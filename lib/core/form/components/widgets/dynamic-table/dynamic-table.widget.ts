@@ -195,7 +195,7 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
 
         if (typeof obj === 'object' && obj !== null && obj !== undefined) {
             result = Object.assign({}, obj);
-            Object.keys(obj).forEach(key => {
+            Object.keys(obj).forEach((key) => {
                 if (typeof obj[key] === 'object') {
                     result[key] = this.copyObject(obj[key]);
                 }

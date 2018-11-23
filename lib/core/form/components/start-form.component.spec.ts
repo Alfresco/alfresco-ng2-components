@@ -147,7 +147,7 @@ describe('StartFormComponent', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 const formFields = component.form.getFormFields();
-                const labelField = formFields.find(field => field.id === 'mocktext');
+                const labelField = formFields.find((field) => field.id === 'mocktext');
                 const textWidget = fixture.debugElement.nativeElement.querySelector('text-widget');
                 const textWidgetLabel = fixture.debugElement.nativeElement.querySelector('.adf-label');
                 expect(labelField.type).toBe('text');
@@ -165,7 +165,7 @@ describe('StartFormComponent', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 const formFields = component.form.getFormFields();
-                const labelField = formFields.find(field => field.id === 'radio-but');
+                const labelField = formFields.find((field) => field.id === 'radio-but');
                 const radioButtonWidget = fixture.debugElement.nativeElement.querySelector('radio-buttons-widget');
                 const radioButtonWidgetLabel = fixture.debugElement.nativeElement.querySelector('.adf-input');
                 expect(labelField.type).toBe('radio-buttons');
@@ -183,7 +183,7 @@ describe('StartFormComponent', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 const formFields = component.form.getFormFields();
-                const labelField = formFields.find(field => field.id === 'amount');
+                const labelField = formFields.find((field) => field.id === 'amount');
                 const amountWidget = fixture.debugElement.nativeElement.querySelector('amount-widget');
                 const amountWidgetLabel = fixture.debugElement.nativeElement.querySelector('.adf-input');
                 expect(labelField.type).toBe('amount');
@@ -201,7 +201,7 @@ describe('StartFormComponent', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 const formFields = component.form.getFormFields();
-                const labelField = formFields.find(field => field.id === 'number');
+                const labelField = formFields.find((field) => field.id === 'number');
                 const numberWidget = fixture.debugElement.nativeElement.querySelector('number-widget');
                 expect(labelField.type).toBe('integer');
                 expect(numberWidget).toBeDefined();
@@ -217,7 +217,7 @@ describe('StartFormComponent', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 const formFields = component.form.getFormFields();
-                const labelField = formFields.find(field => field.id === 'mockTypeDropDown');
+                const labelField = formFields.find((field) => field.id === 'mockTypeDropDown');
                 const dropDownWidget = fixture.debugElement.nativeElement.querySelector('dropdown-widget');
                 const selectElement = fixture.debugElement.nativeElement.querySelector('.adf-dropdown-widget>mat-select .mat-select-trigger');
                 selectElement.click();
@@ -240,7 +240,7 @@ describe('StartFormComponent', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 const formFields = component.form.getFormFields();
-                const labelField = formFields.find(field => field.id === 'date');
+                const labelField = formFields.find((field) => field.id === 'date');
                 const dateWidget = fixture.debugElement.nativeElement.querySelector('dropdown-widget');
                 const dateLabelElement = fixture.debugElement.nativeElement.querySelector('#data-widget .mat-form-field-infix> .adf-label');
                 expect(dateWidget).toBeDefined();
@@ -256,11 +256,11 @@ describe('StartFormComponent', () => {
             component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2, true) });
             const formFields = component.form.getFormFields();
 
-            const labelField = formFields.find(field => field.id === 'billdate');
+            const labelField = formFields.find((field) => field.id === 'billdate');
             expect(labelField.type).toBe('date');
 
             const formFields1 = component.form.getFormFields();
-            const labelField1 = formFields1.find(field => field.id === 'claimtype');
+            const labelField1 = formFields1.find((field) => field.id === 'claimtype');
             expect(labelField1.type).toBe('dropdown');
         });
 
@@ -272,7 +272,7 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const formFields = component.form.getFormFields();
-                const labelField = formFields.find(field => field.id === 'claimtype');
+                const labelField = formFields.find((field) => field.id === 'claimtype');
                 expect(labelField.type).toBe('dropdown');
                 expect(labelField.options[0].name).toBe('Chooseone...');
                 expect(labelField.options[1].name).toBe('Cashless');
@@ -333,8 +333,8 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const formTabs = component.form.tabs;
-                const tabField1 = formTabs.find(tab => tab.id === 'form1');
-                const tabField2 = formTabs.find(tab => tab.id === 'form2');
+                const tabField1 = formTabs.find((tab) => tab.id === 'form1');
+                const tabField2 = formTabs.find((tab) => tab.id === 'form2');
                 const tabsWidgetElement = fixture.debugElement.nativeElement.querySelector('tabs-widget');
                 expect(tabField1.name).toBe('Tab 1');
                 expect(tabField2.name).toBe('Tab 2');

@@ -41,7 +41,7 @@ export class TagService {
      */
     getTagsByNodeId(nodeId: string): any {
         return from(this.apiService.getInstance().core.tagsApi.getNodeTags(nodeId)).pipe(
-            catchError(err => this.handleError(err))
+            catchError((err) => this.handleError(err))
         );
     }
 
@@ -52,7 +52,7 @@ export class TagService {
      */
     getAllTheTags(opts?: any): Observable<TagPaging> {
         return from(this.apiService.getInstance().core.tagsApi.getTags(opts))
-            .pipe(catchError(err => this.handleError(err)));
+            .pipe(catchError((err) => this.handleError(err)));
     }
 
     /**

@@ -35,7 +35,7 @@ export class ProcessUploadService extends UploadService {
         let processInstanceId = file.options.parentId;
         let promise = this.apiService.getInstance().activiti.contentApi.createRelatedContentOnProcessInstance(processInstanceId, file.file, opts);
 
-        promise.catch(err => this.handleError(err));
+        promise.catch((err) => this.handleError(err));
 
         return promise;
     }

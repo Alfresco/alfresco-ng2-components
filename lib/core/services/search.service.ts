@@ -41,7 +41,7 @@ export class SearchService {
         });
 
         return from(promise).pipe(
-            catchError(err => this.handleError(err))
+            catchError((err) => this.handleError(err))
         );
     }
 
@@ -54,7 +54,7 @@ export class SearchService {
         });
 
         return from(promise).pipe(
-            catchError(err => this.handleError(err))
+            catchError((err) => this.handleError(err))
         );
     }
 
@@ -66,7 +66,7 @@ export class SearchService {
         });
 
         return from(promise).pipe(
-            catchError(err => this.handleError(err))
+            catchError((err) => this.handleError(err))
         );
     }
 

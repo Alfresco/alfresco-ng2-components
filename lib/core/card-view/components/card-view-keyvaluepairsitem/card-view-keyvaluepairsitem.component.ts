@@ -65,7 +65,7 @@ export class CardViewKeyValuePairsItemComponent implements OnChanges {
     }
 
     save(remove?: boolean): void {
-        const validValues = this.values.filter(i => i.name.length && i.value.length);
+        const validValues = this.values.filter((i) => i.name.length && i.value.length);
 
         if (remove || validValues.length) {
             this.cardViewUpdateService.update(this.property, validValues);

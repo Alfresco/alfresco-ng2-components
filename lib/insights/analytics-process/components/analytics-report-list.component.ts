@@ -59,7 +59,7 @@ export class AnalyticsReportListComponent implements OnInit {
     reports: ReportParametersModel[] = [];
 
     constructor(private analyticsService: AnalyticsService) {
-        this.report$ = new Observable<ReportParametersModel>(observer => this.reportObserver = observer)
+        this.report$ = new Observable<ReportParametersModel>((observer) => this.reportObserver = observer)
             .pipe(share());
     }
 
@@ -154,7 +154,7 @@ export class AnalyticsReportListComponent implements OnInit {
     }
 
     public selectReportByReportId(reportId) {
-        let reportFound = this.reports.find(report => report.id === reportId);
+        let reportFound = this.reports.find((report) => report.id === reportId);
         if (reportFound) {
             this.currentReport = reportFound;
             this.reportClick.emit(reportFound);

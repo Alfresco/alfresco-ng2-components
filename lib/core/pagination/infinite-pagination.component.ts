@@ -78,7 +78,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     ngOnInit() {
         if (this.target) {
-            this.paginationSubscription = this.target.pagination.subscribe(pagination => {
+            this.paginationSubscription = this.target.pagination.subscribe((pagination) => {
                 this.isLoading = false;
                 this.pagination = pagination;
                 this.pageSize = this.userPreferencesService.paginationSize || this.pageSize;

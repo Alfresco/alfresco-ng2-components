@@ -40,7 +40,7 @@ export class PeopleContentService {
         const promise = this.peopleApi.getPerson(personId);
 
         return from(promise).pipe(
-            catchError(err => of(err))
+            catchError((err) => of(err))
         );
     }
 

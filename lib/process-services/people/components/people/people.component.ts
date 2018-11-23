@@ -51,7 +51,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     peopleSearch$: Observable<UserProcessModel[]>;
 
     constructor(private logService: LogService, public peopleProcessService: PeopleProcessService) {
-        this.peopleSearch$ = new Observable<UserProcessModel[]>(observer => this.peopleSearchObserver = observer)
+        this.peopleSearch$ = new Observable<UserProcessModel[]>((observer) => this.peopleSearchObserver = observer)
             .pipe(
                 share()
             );
@@ -79,14 +79,14 @@ export class PeopleComponent implements OnInit, AfterViewInit {
         this.peopleProcessService.getWorkflowUsers(this.taskId, searchedWord)
             .subscribe((users) => {
                 this.peopleSearchObserver.next(users);
-            }, error => this.logService.error(error));
+            }, (error) => this.logService.error(error));
     }
 
     involveUser(user: UserProcessModel) {
         this.peopleProcessService.involveUserWithTask(this.taskId, user.id.toString())
             .subscribe(() => {
                 this.people = [...this.people, user];
-            }, error => this.logService.error('Impossible to involve user with task'));
+            }, (error) => this.logService.error('Impossible to involve user with task'));
     }
 
     removeInvolvedUser(user: UserProcessModel) {
@@ -95,7 +95,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
                 this.people = this.people.filter((involvedUser) => {
                     return involvedUser.id !== user.id;
                 });
-            }, error => this.logService.error('Impossible to remove involved user from task'));
+            }, (error) => this.logService.error('Impossible to remove involved user from task'));
     }
 
     getDisplayUser(firstName: string, lastName: string, delimiter: string = '-'): string {

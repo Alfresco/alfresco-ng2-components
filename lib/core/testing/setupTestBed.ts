@@ -30,7 +30,7 @@ const preventAngularFromResetting = () => (TestBed.resetTestingModule = () => Te
 const allowAngularToReset = () => (TestBed.resetTestingModule = resetTestingModule);
 
 export const setupTestBed = (moduleDef: TestModuleMetadata) => {
-    beforeAll(done =>
+    beforeAll((done) =>
         (async () => {
             localStorage.clear();
             sessionStorage.clear();

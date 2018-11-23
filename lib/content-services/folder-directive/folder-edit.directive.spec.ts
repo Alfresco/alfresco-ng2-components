@@ -71,7 +71,7 @@ describe('FolderEditDirective', () => {
         node = { entry: { id: 'folderId' } };
 
         dialogRefMock = {
-            afterClosed: val =>  of(val),
+            afterClosed: (val) =>  of(val),
             componentInstance: {
                 error: new Subject<any>(),
                 success: new Subject<MinimalNodeEntryEntity>()

@@ -53,7 +53,7 @@ export class AnalyticsService {
                     });
                     return reports;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -65,9 +65,9 @@ export class AnalyticsService {
         return from(this.apiService.getInstance().activiti.reportApi.getReportList())
             .pipe(
                 map((response: any) => {
-                    return response.find(report => report.name === reportName);
+                    return response.find((report) => report.name === reportName);
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -85,7 +85,7 @@ export class AnalyticsService {
                 map((res: any) => {
                     return new ReportParametersModel(res);
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -103,7 +103,7 @@ export class AnalyticsService {
         } else if (type === 'task' && reportId && processDefinitionId) {
             return this.getTasksByProcessDefinitionId(reportId, processDefinitionId);
         } else {
-            return new Observable(observer => {
+            return new Observable((observer) => {
                 observer.next(null);
                 observer.complete();
             });
@@ -117,7 +117,7 @@ export class AnalyticsService {
         paramOptions.push(new ParameterValueModel({ id: 'Active', name: 'Active' }));
         paramOptions.push(new ParameterValueModel({ id: 'Complete', name: 'Complete' }));
 
-        return new Observable(observer => {
+        return new Observable((observer) => {
             observer.next(paramOptions);
             observer.complete();
         });
@@ -132,7 +132,7 @@ export class AnalyticsService {
         paramOptions.push(new ParameterValueModel({ id: 'byMonth', name: 'By month' }));
         paramOptions.push(new ParameterValueModel({ id: 'byYear', name: 'By year' }));
 
-        return new Observable(observer => {
+        return new Observable((observer) => {
             observer.next(paramOptions);
             observer.complete();
         });
@@ -145,7 +145,7 @@ export class AnalyticsService {
         paramOptions.push(new ParameterValueModel({ id: 'totalTime', name: 'Total time spent in a process step' }));
         paramOptions.push(new ParameterValueModel({ id: 'avgTime', name: 'Average time spent in a process step' }));
 
-        return new Observable(observer => {
+        return new Observable((observer) => {
             observer.next(paramOptions);
             observer.complete();
         });
@@ -161,7 +161,7 @@ export class AnalyticsService {
                     });
                     return paramOptions;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -176,7 +176,7 @@ export class AnalyticsService {
                     });
                     return paramOptions;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -190,7 +190,7 @@ export class AnalyticsService {
                     });
                     return paramOptions;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -217,7 +217,7 @@ export class AnalyticsService {
 
                     return elements;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -225,7 +225,7 @@ export class AnalyticsService {
         return from(this.apiService.getInstance().activiti.reportApi.createDefaultReports())
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -233,7 +233,7 @@ export class AnalyticsService {
         return from(this.apiService.getInstance().activiti.reportApi.updateReport(reportId, name))
             .pipe(
                 map(() => this.logService.info('upload')),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -244,7 +244,7 @@ export class AnalyticsService {
                     this.logService.info('export');
                     return res;
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -254,7 +254,7 @@ export class AnalyticsService {
                 map(() => {
                     this.logService.info('save');
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -264,7 +264,7 @@ export class AnalyticsService {
                 map(() => {
                     this.logService.info('delete');
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

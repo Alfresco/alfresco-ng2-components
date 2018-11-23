@@ -127,7 +127,7 @@ export class AppConfigService {
      * @returns Notification when loading is complete
      */
     load(): Promise<any> {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             const configUrl = `app.config.json?v=${Date.now()}`;
 
             this.http.get(configUrl).subscribe(

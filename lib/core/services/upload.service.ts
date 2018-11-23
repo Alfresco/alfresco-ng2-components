@@ -79,7 +79,7 @@ export class UploadService {
      * @returns Array of files that were not blocked from upload by the ignore list
      */
     addToQueue(...files: FileModel[]): FileModel[] {
-        const allowedFiles = files.filter(currentFile => this.filterElement(currentFile));
+        const allowedFiles = files.filter((currentFile) => this.filterElement(currentFile));
         this.queue = this.queue.concat(allowedFiles);
         this.queueChanged.next(this.queue);
         return allowedFiles;
@@ -107,7 +107,7 @@ export class UploadService {
      */
     uploadFilesInTheQueue(emitter?: EventEmitter<any>): void {
         if (!this.activeTask) {
-            let file = this.queue.find(currentFile => currentFile.status === FileUploadStatus.Pending);
+            let file = this.queue.find((currentFile) => currentFile.status === FileUploadStatus.Pending);
             if (file) {
                 this.onUploadStarting(file);
 
@@ -135,7 +135,7 @@ export class UploadService {
      * @param files One or more separate parameters or an array of files specifying uploads to cancel
      */
     cancelUpload(...files: FileModel[]) {
-        files.forEach(file => {
+        files.forEach((file) => {
             const promise = this.cache[file.id];
 
             if (promise) {
@@ -212,19 +212,19 @@ export class UploadService {
                     emitter.emit({ value: 'File aborted' });
                 }
             })
-            .on('error', err => {
+            .on('error', (err) => {
                 this.onUploadError(file, err);
                 if (emitter) {
                     emitter.emit({ value: 'Error file uploaded' });
                 }
             })
-            .on('success', data => {
+            .on('success', (data) => {
                 this.onUploadComplete(file, data);
                 if (emitter) {
                     emitter.emit({ value: data });
                 }
             })
-            .catch(err => {
+            .catch((err) => {
                 throw err;
             });
 

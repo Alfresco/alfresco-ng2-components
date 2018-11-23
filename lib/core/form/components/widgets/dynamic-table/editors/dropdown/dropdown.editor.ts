@@ -77,7 +77,7 @@ export class DropdownEditorComponent implements OnInit {
                     this.options = this.column.options;
                     this.value = this.table.getCellValue(this.row, this.column);
                 },
-                err => this.handleError(err)
+                (err) => this.handleError(err)
             );
     }
 
@@ -94,13 +94,13 @@ export class DropdownEditorComponent implements OnInit {
                     this.options = this.column.options;
                     this.value = this.table.getCellValue(this.row, this.column);
                 },
-                err => this.handleError(err)
+                (err) => this.handleError(err)
             );
     }
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
         let value: any = (<HTMLInputElement> event).value;
-        value = column.options.find(opt => opt.name === value);
+        value = column.options.find((opt) => opt.name === value);
         row.value[column.id] = value;
     }
 

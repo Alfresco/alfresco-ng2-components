@@ -51,7 +51,7 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
     private flattenItems(items) {
         return items.reduce((accumulator, item) => {
             const properties = Array.isArray(item.properties) ? item.properties : [item.properties];
-            const flattenedProperties = properties.map(propertyName => {
+            const flattenedProperties = properties.map((propertyName) => {
                 return {
                     groupName: item.aspect || item.type,
                     propertyName
@@ -64,7 +64,7 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
 
     private getMatchingGroups(groupName: string): LayoutOrientedConfigItem[] {
         return this.config
-            .map(layoutBlock => layoutBlock.items)
+            .map((layoutBlock) => layoutBlock.items)
             .reduce((accumulator, items) => accumulator.concat(items), [])
             .filter((item) => item.aspect === groupName || item.type === groupName);
     }

@@ -64,7 +64,7 @@ export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
             let value = searchTerm.email ? this.getDisplayName(searchTerm) : searchTerm;
             return this.formService.getWorkflowUsers(value, this.groupId)
                 .pipe(
-                    catchError(err => {
+                    catchError((err) => {
                         this.errorMsg = err.message;
                         return of();
                     })

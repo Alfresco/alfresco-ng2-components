@@ -560,7 +560,7 @@ describe('DocumentList', () => {
 
     it('should emit nodeClick event', (done) => {
         let node = new FileNode();
-        let disposableClick = documentList.nodeClick.subscribe(e => {
+        let disposableClick = documentList.nodeClick.subscribe((e) => {
             expect(e.value).toBe(node);
             disposableClick.unsubscribe();
             done();
@@ -650,7 +650,7 @@ describe('DocumentList', () => {
 
     it('should emit file preview event on single click', (done) => {
         let file = new FileNode();
-        let disposablePreview = documentList.preview.subscribe(e => {
+        let disposablePreview = documentList.preview.subscribe((e) => {
             expect(e.value).toBe(file);
             disposablePreview.unsubscribe();
             done();
@@ -661,7 +661,7 @@ describe('DocumentList', () => {
 
     it('should emit file preview event on double click', (done) => {
         let file = new FileNode();
-        let disposablePreview = documentList.preview.subscribe(e => {
+        let disposablePreview = documentList.preview.subscribe((e) => {
             expect(e.value).toBe(file);
             disposablePreview.unsubscribe();
             done();
@@ -738,7 +738,7 @@ describe('DocumentList', () => {
         let called = false;
 
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
-        documentList.preview.subscribe(val => called = true);
+        documentList.preview.subscribe((val) => called = true);
 
         documentList.onNodeClick(file);
         expect(called).toBeFalsy();
@@ -966,7 +966,7 @@ describe('DocumentList', () => {
         const error = { message: '{ "error": { "statusCode": 501 } }' };
         spyOn(documentListService, 'getFolderNode').and.returnValue(throwError(error));
 
-        let disposableError = documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe(error);
             disposableError.unsubscribe();
             done();
@@ -980,7 +980,7 @@ describe('DocumentList', () => {
         spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeWithCreatePermission));
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.reject(error));
 
-        let disposableError = documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe(error);
             disposableError.unsubscribe();
             done();
@@ -1003,7 +1003,7 @@ describe('DocumentList', () => {
         const error = { message: '{ "error": { "statusCode": 403 } }' };
         spyOn(documentListService, 'getFolderNode').and.returnValue(throwError(error));
 
-        let disposableError = documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe(error);
             expect(documentList.noPermission).toBe(true);
             disposableError.unsubscribe();
@@ -1060,7 +1060,7 @@ describe('DocumentList', () => {
         documentList.currentFolderId = 'node-id';
         expect(documentList.canNavigateFolder(node)).toBeTruthy();
 
-        sources.forEach(source => {
+        sources.forEach((source) => {
             documentList.currentFolderId = source;
             expect(documentList.canNavigateFolder(node)).toBeFalsy();
         });
@@ -1076,7 +1076,7 @@ describe('DocumentList', () => {
     it('should emit error when fetch trashcan fails', (done) => {
         spyOn(apiService.nodesApi, 'getDeletedNodes').and.returnValue(Promise.reject('error'));
 
-        let disposableError = documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
             disposableError.unsubscribe();
             done();
@@ -1097,7 +1097,7 @@ describe('DocumentList', () => {
         spyOn(apiService.getInstance().core.sharedlinksApi, 'findSharedLinks')
             .and.returnValue(Promise.reject('error'));
 
-        let disposableError = documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
             disposableError.unsubscribe();
             done();
@@ -1116,7 +1116,7 @@ describe('DocumentList', () => {
     it('should emit error when fetch sites fails', (done) => {
         spyGetSites.and.returnValue(Promise.reject('error'));
 
-        let disposableError = documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
             disposableError.unsubscribe();
             done();
@@ -1129,7 +1129,7 @@ describe('DocumentList', () => {
         fixture.detectChanges();
 
         let disposableReady = documentList.ready.subscribe((page) => {
-            const entriesWithoutName = page.list.entries.filter(item => !item.entry.name);
+            const entriesWithoutName = page.list.entries.filter((item) => !item.entry.name);
             expect(entriesWithoutName.length).toBe(0);
             disposableReady.unsubscribe();
             done();
@@ -1142,7 +1142,7 @@ describe('DocumentList', () => {
         fixture.detectChanges();
 
         let disposableReady = documentList.ready.subscribe((page) => {
-            const wrongName = page.list.entries.filter(item => (item.entry.name !== item.entry.title));
+            const wrongName = page.list.entries.filter((item) => (item.entry.name !== item.entry.title));
             expect(wrongName.length).toBe(0);
             disposableReady.unsubscribe();
             done();
@@ -1163,7 +1163,7 @@ describe('DocumentList', () => {
         spyOn(apiService.getInstance().core.peopleApi, 'getSiteMembership')
             .and.returnValue(Promise.reject('error'));
 
-        let disposableError = documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
             disposableError.unsubscribe();
             done();
@@ -1181,7 +1181,7 @@ describe('DocumentList', () => {
         expect(peopleApi.getSiteMembership).toHaveBeenCalled();
 
         let disposableReady = documentList.ready.subscribe((page) => {
-            const entriesWithoutName = page.list.entries.filter(item => !item.entry.name);
+            const entriesWithoutName = page.list.entries.filter((item) => !item.entry.name);
             expect(entriesWithoutName.length).toBe(0);
             disposableReady.unsubscribe();
             done();
@@ -1197,7 +1197,7 @@ describe('DocumentList', () => {
         expect(peopleApi.getSiteMembership).toHaveBeenCalled();
 
         let disposableReady = documentList.ready.subscribe((page) => {
-            const wrongName = page.list.entries.filter(item => (item.entry.name !== item.entry.title));
+            const wrongName = page.list.entries.filter((item) => (item.entry.name !== item.entry.title));
             expect(wrongName.length).toBe(0);
             disposableReady.unsubscribe();
             done();
@@ -1215,7 +1215,7 @@ describe('DocumentList', () => {
     it('should emit error when fetch favorites fails', (done) => {
         spyFavorite.and.returnValue(Promise.reject('error'));
 
-        let disposableError = documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
             disposableError.unsubscribe();
             done();
@@ -1237,7 +1237,7 @@ describe('DocumentList', () => {
     it('should emit error when fetch recent fails on getPerson call', (done) => {
         spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.reject('error'));
 
-        let disposableError = documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
             disposableError.unsubscribe();
             done();
@@ -1249,7 +1249,7 @@ describe('DocumentList', () => {
     xit('should emit error when fetch recent fails on search call', (done) => {
         spyOn(customResourcesService, 'loadFolderByNodeId').and.returnValue(throwError('error'));
 
-        let disposableError = documentList.error.subscribe(val => {
+        let disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
             disposableError.unsubscribe();
             done();

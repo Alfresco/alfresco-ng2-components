@@ -65,7 +65,7 @@ describe('ExtensionService', () => {
         service.setup(blankConfig);
 
         const evaluators = ['core.every', 'core.some', 'core.not'];
-        evaluators.forEach(key => {
+        evaluators.forEach((key) => {
             expect(service.getEvaluator(key)).toBeDefined(`Evaluator ${key} is missing`);
         });
     });

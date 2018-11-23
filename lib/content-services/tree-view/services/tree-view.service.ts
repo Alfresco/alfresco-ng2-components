@@ -36,7 +36,7 @@ export class TreeViewService {
                 map((nodePage: NodePaging) => {
                     return nodePage.list.entries.filter((node) => node.entry.isFolder ? node : null);
                 }),
-                map((nodes: NodeEntry[]) => nodes.map(node => new TreeBaseNode(node)))
+                map((nodes: NodeEntry[]) => nodes.map((node) => new TreeBaseNode(node)))
             );
     }
 

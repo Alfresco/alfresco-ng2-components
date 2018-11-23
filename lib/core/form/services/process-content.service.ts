@@ -45,7 +45,7 @@ export class ProcessContentService {
      */
     createTemporaryRawRelatedContent(file: any): Observable<RelatedContentRepresentation> {
         return from(this.contentApi.createTemporaryRawRelatedContent(file))
-            .pipe(catchError(err => this.handleError(err)));
+            .pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -55,7 +55,7 @@ export class ProcessContentService {
      */
     getFileContent(contentId: number): Observable<RelatedContentRepresentation> {
         return from(this.contentApi.getContent(contentId))
-            .pipe(catchError(err => this.handleError(err)));
+            .pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -65,7 +65,7 @@ export class ProcessContentService {
      */
     getFileRawContent(contentId: number): Observable<Blob> {
         return from(this.contentApi.getRawContent(contentId))
-            .pipe(catchError(err => this.handleError(err)));
+            .pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -74,7 +74,7 @@ export class ProcessContentService {
      * @returns Binary data of the content preview
      */
     getContentPreview(contentId: number): Observable<Blob> {
-        return new Observable(observer => {
+        return new Observable((observer) => {
             this.contentApi.getContentPreview(contentId).then(
                 (result) => {
                     observer.next(result);
@@ -112,7 +112,7 @@ export class ProcessContentService {
      */
     getContentThumbnail(contentId: number): Observable<Blob> {
         return from(this.contentApi.getContentThumbnail(contentId))
-            .pipe(catchError(err => this.handleError(err)));
+            .pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -122,7 +122,7 @@ export class ProcessContentService {
      */
     getTaskRelatedContent(taskId: string): Observable<any> {
         return from(this.contentApi.getRelatedContentForTask(taskId))
-            .pipe(catchError(err => this.handleError(err)));
+            .pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -132,7 +132,7 @@ export class ProcessContentService {
      */
     getProcessRelatedContent(processId: string): Observable<any> {
         return from(this.contentApi.getRelatedContentForProcessInstance(processId))
-            .pipe(catchError(err => this.handleError(err)));
+            .pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -142,7 +142,7 @@ export class ProcessContentService {
      */
     deleteRelatedContent(contentId: number): Observable<any> {
         return from(this.contentApi.deleteContent(contentId))
-            .pipe(catchError(err => this.handleError(err)));
+            .pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -154,7 +154,7 @@ export class ProcessContentService {
      */
     createProcessRelatedContent(processInstanceId: string, content: any, opts?: any): Observable<any> {
         return from(this.contentApi.createRelatedContentOnProcessInstance(processInstanceId, content, opts))
-            .pipe(catchError(err => this.handleError(err)));
+            .pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -166,7 +166,7 @@ export class ProcessContentService {
      */
     createTaskRelatedContent(taskId: string, file: any, opts?: any) {
         return from(this.contentApi.createRelatedContentOnTask(taskId, file, opts))
-            .pipe(catchError(err => this.handleError(err)));
+            .pipe(catchError((err) => this.handleError(err)));
     }
 
     /**

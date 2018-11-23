@@ -48,7 +48,7 @@ export class BpmUserService {
                 map((data: UserRepresentation) => {
                     return new BpmUserModel(data);
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

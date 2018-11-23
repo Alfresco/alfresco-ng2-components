@@ -43,7 +43,7 @@ export class SitesService {
         const queryOptions = Object.assign({}, defaultOptions, opts);
         return from(this.apiService.getInstance().core.sitesApi.getSites(queryOptions))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -56,7 +56,7 @@ export class SitesService {
     getSite(siteId: string, opts?: any): Observable<SiteEntry> {
         return from(this.apiService.getInstance().core.sitesApi.getSite(siteId, opts))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -71,7 +71,7 @@ export class SitesService {
         options.permanent = permanentFlag;
         return from(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, options))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

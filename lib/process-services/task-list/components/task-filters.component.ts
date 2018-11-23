@@ -130,7 +130,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
      */
     getFiltersByAppName(appName: string) {
         this.appsProcessService.getDeployedApplicationsByName(appName).subscribe(
-            application => {
+            (application) => {
                 this.getFiltersByAppId(application.id);
             },
             (err) => {

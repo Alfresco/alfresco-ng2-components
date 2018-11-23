@@ -146,7 +146,7 @@ describe('ProcessContentService', () => {
     it('should return the unsupported content when the file is an image', (done) => {
         let contentId: number = 888;
 
-        service.getFileContent(contentId).subscribe(result => {
+        service.getFileContent(contentId).subscribe((result) => {
             expect(result.id).toEqual(contentId);
             expect(result.name).toEqual('fake-name.jpg');
             expect(result.simpleType).toEqual('image');
@@ -164,7 +164,7 @@ describe('ProcessContentService', () => {
     it('should return the supported content when the file is a pdf', (done) => {
         let contentId: number = 999;
 
-        service.getFileContent(contentId).subscribe(result => {
+        service.getFileContent(contentId).subscribe((result) => {
             expect(result.id).toEqual(contentId);
             expect(result.name).toEqual('fake-name.pdf');
             expect(result.simpleType).toEqual('pdf');
@@ -189,7 +189,7 @@ describe('ProcessContentService', () => {
         let contentId: number = 999;
         let blob = createFakeBlob();
         spyOn(service, 'getContentThumbnail').and.returnValue(of(blob));
-        service.getContentThumbnail(contentId).subscribe(result => {
+        service.getContentThumbnail(contentId).subscribe((result) => {
             expect(result).toEqual(jasmine.any(Blob));
             expect(result.size).toEqual(48);
             expect(result.type).toEqual('image/png');

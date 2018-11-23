@@ -145,7 +145,7 @@ describe('FolderDialogComponent', () => {
 
         it('should not call dialog to close if submit fails', () => {
             spyOn(nodesApi, 'updateNode').and.returnValue(throwError('error'));
-            spyOn(component, 'handleError').and.callFake(val => val);
+            spyOn(component, 'handleError').and.callFake((val) => val);
 
             component.submit();
 
@@ -254,7 +254,7 @@ describe('FolderDialogComponent', () => {
 
         it('should not call dialog to close if submit fails', () => {
             spyOn(nodesApi, 'createFolder').and.returnValue(throwError('error'));
-            spyOn(component, 'handleError').and.callFake(val => val);
+            spyOn(component, 'handleError').and.callFake((val) => val);
 
             component.form.controls['name'].setValue('name');
             component.form.controls['description'].setValue('description');

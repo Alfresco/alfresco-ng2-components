@@ -85,17 +85,17 @@ export class ExtensionService {
     }
 
     getRouteById(id: string): RouteRef {
-        return this.routes.find(route => route.id === id);
+        return this.routes.find((route) => route.id === id);
     }
 
     getAuthGuards(ids: string[]): Array<Type<{}>> {
         return (ids || [])
-            .map(id => this.authGuards[id])
-            .filter(guard => guard);
+            .map((id) => this.authGuards[id])
+            .filter((guard) => guard);
     }
 
     getActionById(id: string): ActionRef {
-        return this.actions.find(action => action.id === id);
+        return this.actions.find((action) => action.id === id);
     }
 
     getEvaluator(key: string): RuleEvaluator {
@@ -130,7 +130,7 @@ export class ExtensionService {
     }
 
     getRuleById(id: string): RuleRef {
-        return this.rules.find(ref => ref.id === id);
+        return this.rules.find((ref) => ref.id === id);
     }
 
     runExpression(value: string, context?: any) {

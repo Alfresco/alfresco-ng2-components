@@ -157,7 +157,7 @@ export class ContentService {
     getNodeContent(nodeId: string): Observable<any> {
         return from(this.apiService.getInstance().core.nodesApi.getFileContent(nodeId))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -171,7 +171,7 @@ export class ContentService {
     createFolder(relativePath: string, name: string, parentId?: string): Observable<NodeEntry> {
         return from(this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId))
             .pipe(
-                tap(data => {
+                tap((data) => {
                     this.folderCreated.next(<FolderCreatedEvent> {
                         relativePath: relativePath,
                         name: name,
@@ -179,7 +179,7 @@ export class ContentService {
                         node: data
                     });
                 }),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -204,9 +204,9 @@ export class ContentService {
 
         if (this.hasAllowableOperations(node)) {
             if (permission && permission.startsWith('!')) {
-                hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission.replace('!', '')) ? false : true;
+                hasPermission = node.allowableOperations.find((currentPermission) => currentPermission === permission.replace('!', '')) ? false : true;
             } else {
-                hasPermission = node.allowableOperations.find(currentPermission => currentPermission === permission) ? true : false;
+                hasPermission = node.allowableOperations.find((currentPermission) => currentPermission === permission) ? true : false;
             }
 
         } else {

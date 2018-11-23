@@ -95,7 +95,7 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
         this.subscriptions = [];
     }
 
@@ -156,7 +156,7 @@ export abstract class UploadBase implements OnInit, OnDestroy {
 
         const allowedExtensions = this.acceptedFilesType
             .split(',')
-            .map(ext => ext.replace(/^\./, ''));
+            .map((ext) => ext.replace(/^\./, ''));
 
         if (allowedExtensions.indexOf(file.extension) !== -1) {
             return true;

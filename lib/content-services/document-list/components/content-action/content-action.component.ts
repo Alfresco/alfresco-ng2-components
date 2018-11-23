@@ -129,7 +129,7 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
         this.subscriptions = [];
 
         if (this.documentActionModel) {
@@ -188,13 +188,13 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
             if (target === ContentActionTarget.Document) {
                 if (this.documentActions) {
                     this.subscriptions.push(
-                        this.documentActions.permissionEvent.subscribe(permission => {
+                        this.documentActions.permissionEvent.subscribe((permission) => {
                             this.permissionEvent.emit(permission);
                         }),
-                        this.documentActions.error.subscribe(errors => {
+                        this.documentActions.error.subscribe((errors) => {
                             this.error.emit(errors);
                         }),
-                        this.documentActions.success.subscribe(message => {
+                        this.documentActions.success.subscribe((message) => {
                             this.success.emit(message);
                         })
                     );
@@ -207,13 +207,13 @@ export class ContentActionComponent implements OnInit, OnChanges, OnDestroy {
             if (target === ContentActionTarget.Folder) {
                 if (this.folderActions) {
                     this.subscriptions.push(
-                        this.folderActions.permissionEvent.subscribe(permission => {
+                        this.folderActions.permissionEvent.subscribe((permission) => {
                             this.permissionEvent.emit(permission);
                         }),
-                        this.folderActions.error.subscribe(errors => {
+                        this.folderActions.error.subscribe((errors) => {
                             this.error.emit(errors);
                         }),
-                        this.folderActions.success.subscribe(message => {
+                        this.folderActions.success.subscribe((message) => {
                             this.success.emit(message);
                         })
                     );

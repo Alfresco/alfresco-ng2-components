@@ -119,8 +119,8 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 if (field.buckets) {
                     this.selectedBuckets.push(
                         ...this.queryBuilder.getUserFacetBuckets(field.field)
-                            .filter(bucket => bucket.checked)
-                            .map(bucket => {
+                            .filter((bucket) => bucket.checked)
+                            .map((bucket) => {
                                 return { field, bucket };
                             })
                     );
@@ -133,7 +133,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private updateSelectedFields() {
         if (this.responseFacetQueries) {
-            this.selectedFacetQueries = this.responseFacetQueries.items.filter(item => item.checked);
+            this.selectedFacetQueries = this.responseFacetQueries.items.filter((item) => item.checked);
             this.canResetSelectedQueries = this.selectedFacetQueries.length > 0;
         } else {
             this.selectedFacetQueries = [];
@@ -183,7 +183,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     canResetSelectedBuckets(field: FacetField): boolean {
         if (field && field.buckets) {
-            return field.buckets.items.some(bucket => bucket.checked);
+            return field.buckets.items.some((bucket) => bucket.checked);
         }
         return false;
     }
@@ -215,10 +215,10 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         if (!this.responseFacetFields) {
             const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
 
-            this.responseFacetFields = configFacetFields.map(field => {
-                const responseField = (context.facetsFields || []).find(response => response.label === field.label);
-                const buckets: FacetFieldBucket[] = ((responseField && responseField.buckets) || []).map(bucket => {
-                    const selectedBucket = this.selectedBuckets.find(facetBucket =>
+            this.responseFacetFields = configFacetFields.map((field) => {
+                const responseField = (context.facetsFields || []).find((response) => response.label === field.label);
+                const buckets: FacetFieldBucket[] = ((responseField && responseField.buckets) || []).map((bucket) => {
+                    const selectedBucket = this.selectedBuckets.find((facetBucket) =>
                         facetBucket.bucket.label === bucket.label && facetBucket.field.field === field.field);
 
                     return <FacetFieldBucket> {
@@ -249,13 +249,13 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         } else {
 
             this.responseFacetFields = this.responseFacetFields
-                .map(field => {
+                .map((field) => {
 
-                    let responseField = (context.facetsFields || []).find(response => response.label === field.label);
+                    let responseField = (context.facetsFields || []).find((response) => response.label === field.label);
 
                     (field && field.buckets && field.buckets.items || [])
-                        .map(bucket => {
-                            const responseBucket = ((responseField && responseField.buckets) || []).find(respBucket => respBucket.label === bucket.label);
+                        .map((bucket) => {
+                            const responseBucket = ((responseField && responseField.buckets) || []).find((respBucket) => respBucket.label === bucket.label);
 
                             bucket.count = responseBucket ? responseBucket.count : 0;
                             return bucket;
@@ -271,10 +271,10 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         if (this.queryBuilder.config.facetQueries) {
             const bkpResponseFacetQueries =  Object.assign({}, this.responseFacetQueries);
             const facetQueries = (this.queryBuilder.config.facetQueries.queries || [])
-                .map(query => {
+                .map((query) => {
 
                     const queryResult = responseQueries[query.label];
-                    const bkpQuery = (bkpResponseFacetQueries.items || []).find(item => item.label === query.label);
+                    const bkpQuery = (bkpResponseFacetQueries.items || []).find((item) => item.label === query.label);
 
                     if (bkpQuery) {
                         bkpQuery.count = queryResult.count;
@@ -304,7 +304,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private getFacetQueryMap(context: any): { [key: string]: any } {
         const result = {};
 
-        (context.facetQueries || []).forEach(query => {
+        (context.facetQueries || []).forEach((query) => {
             result[query.label] = query;
         });
 

@@ -35,7 +35,7 @@ export class TaskUploadService extends UploadService {
         let taskId = file.options.parentId;
         let promise = this.apiService.getInstance().activiti.contentApi.createRelatedContentOnTask(taskId, file.file, opts);
 
-        promise.catch(err => this.handleError(err));
+        promise.catch((err) => this.handleError(err));
 
         return promise;
     }
