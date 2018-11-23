@@ -121,6 +121,7 @@ export class SearchResultsPage {
 
     sortBySize(sortOrder) {
         this.sortBy(sortOrder, 'Size');
+        return this;
     }
 
     sortAndCheckListIsOrderedByName(sortOrder) {
