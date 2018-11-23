@@ -23,6 +23,7 @@ export class TreeViewPage {
     treeViewTitle = element(by.cssContainingText('app-tree-view div', 'TREE VIEW TEST'));
     nodeIdInput = element(by.css('input[placeholder="Node Id"]'));
     noNodeMessage = element(by.id('adf-tree-view-missing-node'));
+    nodesOnPage = element.all(by.css('mat-tree-node'));
 
     checkTreeViewTitleIsDisplayed() {
         return Util.waitUntilElementIsVisible(this.treeViewTitle);
@@ -83,5 +84,9 @@ export class TreeViewPage {
     checkErrorMessageIsDisplayed() {
         let clickedNode = element(by.cssContainingText('span', 'An Error Occurred '));
         return Util.waitUntilElementIsVisible(clickedNode);
+    }
+
+    getTotalNodes() {
+        return this.nodesOnPage.count();
     }
 }

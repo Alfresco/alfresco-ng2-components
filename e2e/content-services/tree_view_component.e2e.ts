@@ -35,13 +35,14 @@ describe('Tree View Component', () => {
     let acsUser = new AcsUserModel();
     let uploadActions = new UploadActions();
 
-    let treeFolder, secondTreeFolder;
+    let treeFolder, secondTreeFolder, thirdTreeFolder;
 
     let nodeNames = {
         folder: 'Folder1',
         secondFolder: 'Folder2',
         thirdFolder: 'Folder3',
-        parentFolder: '-my-'
+        parentFolder: '-my-',
+        document: 'MyFile'
     };
 
     beforeAll(async (done) => {
@@ -59,7 +60,8 @@ describe('Tree View Component', () => {
 
         treeFolder = await this.alfrescoJsApi.nodes.addNode(nodeNames.parentFolder, {name: nodeNames.folder, nodeType: 'cm:folder'});
         secondTreeFolder = await this.alfrescoJsApi.nodes.addNode(nodeNames.parentFolder, {name: nodeNames.secondFolder, nodeType: 'cm:folder'});
-        await this.alfrescoJsApi.nodes.addNode(secondTreeFolder.entry.id, {name: nodeNames.thirdFolder, nodeType: 'cm:folder'});
+        thirdTreeFolder = await this.alfrescoJsApi.nodes.addNode(secondTreeFolder.entry.id, {name: nodeNames.thirdFolder, nodeType: 'cm:folder'});
+        await this.alfrescoJsApi.nodes.addNode(thirdTreeFolder.entry.id, {name: nodeNames.document, nodeType: 'cm:content'});
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -122,6 +124,16 @@ describe('Tree View Component', () => {
         treeViewPage.clickNode(nodeNames.secondFolder);
 
         treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.thirdFolder);
+    });
+
+    it('[C290071] Should not be able to display files', () => {
+        treeViewPage.addNodeId(secondTreeFolder.entry.id);
+
+        treeViewPage.checkNodeIsDisplayedAsClosed(nodeNames.thirdFolder);
+
+        treeViewPage.clickNode(nodeNames.thirdFolder);
+
+        expect(treeViewPage.getTotalNodes()).toEqual(1);
     });
 
 });
