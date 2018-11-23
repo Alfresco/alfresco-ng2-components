@@ -124,13 +124,13 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         return matchedProcess;
     }
 
-    private getProcessIfExistsOrSelectFirst(processDefinitionName: string): ProcessDefinitionRepresentationCloud {
+    private getProcessDefinitionByName(processDefinitionName: string): ProcessDefinitionRepresentationCloud {
         const matchedProcess = processDefinitionName ? this.getProcessIfExists(processDefinitionName) : this.processDefinitionList[0];
         return matchedProcess;
     }
 
     private selectDefaultProcessDefinition() {
-        let selectedProcess = this.getProcessIfExistsOrSelectFirst(this.processDefinitionName);
+        let selectedProcess = this.getProcessDefinitionByName(this.processDefinitionName);
         if (selectedProcess) {
             this.processForm.controls['processDefinition'].setValue(selectedProcess.name);
             this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
