@@ -56,8 +56,8 @@ export class ProcessCloudService {
                     this.contentTypes, this.accepts,
                     this.returnType, null, null)
             ).pipe(
-                map(res => res.list.entries.map(processDefs => new ProcessDefinitionRepresentationCloud(processDefs.entry))),
-                catchError(err => this.handleProcessError(err))
+                map((res) => res.list.entries.map((processDefs) => new ProcessDefinitionRepresentationCloud(processDefs.entry))),
+                catchError((err) => this.handleProcessError(err))
             );
         } else {
             this.logService.error('AppName is mandatory for querying task');
@@ -87,7 +87,7 @@ export class ProcessCloudService {
                 this.returnType, null, null)
             ).pipe(
                 map((processInstance) => new ProcessInstanceCloud(processInstance)),
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 

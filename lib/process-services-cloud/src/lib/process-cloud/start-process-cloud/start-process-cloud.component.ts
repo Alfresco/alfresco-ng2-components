@@ -112,7 +112,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     }
 
     private getProcessDefinitionList(processDefinitionName: string): ProcessDefinitionRepresentationCloud[] {
-        return this.processDefinitionList.filter(option => option.name.toLowerCase().includes(processDefinitionName.toLowerCase()));
+        return this.processDefinitionList.filter((option) => option.name.toLowerCase().includes(processDefinitionName.toLowerCase()));
     }
 
     private getProcessIfExists(processDefinitionName: string): ProcessDefinitionRepresentationCloud {
