@@ -107,8 +107,10 @@ export class TaskListCloudDemoComponent implements OnInit {
 
     onFilterSelected(filter) {
         const queryParams = {
-            status: filter.query.state,
+            id: filter.id,
             filterName: filter.name,
+            status: filter.query.state,
+            assignee: filter.query.assignment,
             sort: filter.query.sort,
             order: filter.query.order
         };
