@@ -28,14 +28,16 @@ export class IdentityUserService {
     static USER_NAME = 'given_name';
     static USER_EMAIL = 'email';
     static USER_ACCESS_TOKEN = 'access_token';
+    static USER_PREFERRED_USERNAME = 'preferred_username';
 
     constructor(private helper: JwtHelperService) {}
 
     getCurrentUserInfo(): Observable<IdentityUserModel> {
         const fullName = this.getValueFromToken<string>(IdentityUserService.USER_NAME);
         const email = this.getValueFromToken<string>(IdentityUserService.USER_EMAIL);
+        const username = this.getValueFromToken<string>(IdentityUserService.USER_PREFERRED_USERNAME);
         const nameParts = fullName.split(' ');
-        const user = { firstName: nameParts[0], lastName: nameParts[1], email: email };
+        const user = { firstName: nameParts[0], lastName: nameParts[1], email: email, username: username };
         return of(new IdentityUserModel(user));
     }
 
