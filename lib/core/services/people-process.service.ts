@@ -43,7 +43,7 @@ export class PeopleProcessService {
         return from(this.getWorkflowUserApi(option))
             .pipe(
                 map((response: any) => <UserProcessModel[]> response.data || []),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -66,7 +66,7 @@ export class PeopleProcessService {
         let node = {userId: idToInvolve};
         return from<UserProcessModel[]>(this.involveUserToTaskApi(taskId, node))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -80,7 +80,7 @@ export class PeopleProcessService {
         let node = {userId: idToRemove};
         return from<UserProcessModel[]>(this.removeInvolvedUserFromTaskApi(taskId, node))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

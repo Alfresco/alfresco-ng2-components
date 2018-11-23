@@ -66,7 +66,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
             }
 
             if (field.type === FormFieldTypes.RADIO_BUTTONS) {
-                let option = field.options.find(opt => opt.id === field.value);
+                let option = field.options.find((opt) => opt.id === field.value);
                 return !!option;
             }
 
@@ -497,7 +497,7 @@ export class FixedValueFieldValidator implements FormFieldValidator {
     }
 
     hasValidName(field: FormFieldModel) {
-        return field.options.find(item => item.name && item.name.toLocaleLowerCase() === field.value.toLocaleLowerCase()) ? true : false;
+        return field.options.find((item) => item.name && item.name.toLocaleLowerCase() === field.value.toLocaleLowerCase()) ? true : false;
     }
 
     hasValidId(field: FormFieldModel) {

@@ -62,8 +62,8 @@ describe('AppsProcessCloudService', () => {
         spyOn(service, 'getDeployedApplicationsByStatus').and.returnValue(throwError(errorResponse));
         service.getDeployedApplicationsByStatus('fake')
             .subscribe(
-                users => fail('expected an error, not applications'),
-                error => {
+                (users) => fail('expected an error, not applications'),
+                (error) => {
                     expect(error.status).toEqual(404);
                     expect(error.statusText).toEqual('Not Found');
                     expect(error.error).toEqual('Mock Error');

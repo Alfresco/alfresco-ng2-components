@@ -182,7 +182,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         if (differs) {
             this.differ = differs.find([]).create(null);
         }
-        this.click$ = new Observable<DataRowEvent>(observer => this.clickObserver = observer)
+        this.click$ = new Observable<DataRowEvent>((observer) => this.clickObserver = observer)
             .pipe(share());
     }
 
@@ -245,7 +245,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     convertToRowsData(rows: any []): ObjectDataRow[] {
-        return rows.map(row => new ObjectDataRow(row, row.isSelected));
+        return rows.map((row) => new ObjectDataRow(row, row.isSelected));
     }
 
     convertToDataSorting(sorting: any[]): DataSorting {
@@ -263,8 +263,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                         debounceTime(250)
                     )
                 ),
-                map(list => list),
-                filter(x => x.length === 1)
+                map((list) => list),
+                filter((x) => x.length === 1)
             );
 
         this.singleClickStreamSub = singleClickStream.subscribe((obj: DataRowEvent[]) => {
@@ -288,8 +288,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                         debounceTime(250)
                     )
                 ),
-                map(list => list),
-                filter(x => x.length >= 2)
+                map((list) => list),
+                filter((x) => x.length >= 2)
             );
 
         this.multiClickStreamSub = multiClickStream.subscribe((obj: DataRowEvent[]) => {
@@ -359,7 +359,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     public getSchemaFromHtml(): any {
         let schema = [];
         if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
-            schema = this.columnList.columns.map(c => <DataColumn> c);
+            schema = this.columnList.columns.map((c) => <DataColumn> c);
         }
         return schema;
     }
@@ -412,7 +412,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         if (this.data) {
             const rows = this.data.getRows();
             if (rows && rows.length > 0) {
-                rows.forEach(r => r.isSelected = false);
+                rows.forEach((r) => r.isSelected = false);
             }
             this.selection = [];
         }
@@ -631,7 +631,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     getSortableColumns() {
-        return this.data.getColumns().filter(column => {
+        return this.data.getColumns().filter((column) => {
             return column.sortable === true;
         });
     }
@@ -669,7 +669,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     ngOnDestroy() {
         this.unsubscribeClickStream();
 
-        this.subscriptions.forEach(s => s.unsubscribe());
+        this.subscriptions.forEach((s) => s.unsubscribe());
         this.subscriptions = [];
 
         if (this.dataRowsChanged) {

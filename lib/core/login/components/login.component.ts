@@ -171,7 +171,7 @@ export class LoginComponent implements OnInit {
             this.initFormFieldsDefault();
             this.initFormFieldsMessagesDefault();
         }
-        this.form.valueChanges.subscribe(data => this.onValueChanged(data));
+        this.form.valueChanges.subscribe((data) => this.onValueChanged(data));
     }
 
     submit() {

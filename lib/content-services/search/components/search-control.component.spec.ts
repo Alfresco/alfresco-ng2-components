@@ -120,7 +120,7 @@ describe('SearchControlComponent', () => {
                 of({ entry: { list: [] } })
             );
 
-            let searchDisposable = component.searchChange.subscribe(value => {
+            let searchDisposable = component.searchChange.subscribe((value) => {
                 expect(value).toBe('customSearchTerm');
                 searchDisposable.unsubscribe();
                 done();
@@ -161,7 +161,7 @@ describe('SearchControlComponent', () => {
         it('should still fire an event when user inputs a search term less than 3 characters', (done) => {
             searchServiceSpy.and.returnValue(of(JSON.parse(JSON.stringify(results))));
 
-            let searchDisposable = component.searchChange.subscribe(value => {
+            let searchDisposable = component.searchChange.subscribe((value) => {
                 expect(value).toBe('cu');
                 searchDisposable.unsubscribe();
             });

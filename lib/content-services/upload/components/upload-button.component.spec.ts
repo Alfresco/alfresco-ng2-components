@@ -167,7 +167,7 @@ describe('UploadButtonComponent', () => {
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });
         fixture.detectChanges();
 
-        component.success.subscribe(e => {
+        component.success.subscribe((e) => {
             expect(e.value).toEqual('File uploaded');
             done();
         });

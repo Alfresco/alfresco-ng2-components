@@ -62,7 +62,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
                     this.field.options = options.concat((result || []));
                     this.field.updateForm();
                 },
-                err => this.handleError(err)
+                (err) => this.handleError(err)
             );
     }
 
@@ -81,7 +81,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
                     this.field.options = options.concat((result || []));
                     this.field.updateForm();
                 },
-                err => this.handleError(err)
+                (err) => this.handleError(err)
             );
     }
 

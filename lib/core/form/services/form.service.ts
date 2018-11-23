@@ -118,20 +118,20 @@ export class FormService {
      * @returns The new form
      */
     createFormFromANode(formName: string): Observable<any> {
-        return new Observable(observer => {
+        return new Observable((observer) => {
             this.createForm(formName).subscribe(
-                form => {
+                (form) => {
                     this.ecmModelService.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
-                        customType => {
+                        (customType) => {
                             let formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
-                            this.addFieldsToAForm(form.id, formDefinitionModel).subscribe(formData => {
+                            this.addFieldsToAForm(form.id, formDefinitionModel).subscribe((formData) => {
                                 observer.next(formData);
                                 observer.complete();
-                            }, err => this.handleError(err));
+                            }, (err) => this.handleError(err));
                         },
-                        err => this.handleError(err));
+                        (err) => this.handleError(err));
                 },
-                err => this.handleError(err));
+                (err) => this.handleError(err));
         });
     }
 
@@ -193,9 +193,9 @@ export class FormService {
         )
         .pipe(
             map(function (forms: any) {
-                return forms.data.find(formData => formData.name === name);
+                return forms.data.find((formData) => formData.name === name);
             }),
-            catchError(err => this.handleError(err))
+            catchError((err) => this.handleError(err))
         );
     }
 
@@ -211,7 +211,7 @@ export class FormService {
         return from(this.modelsApi.getModels(opts))
             .pipe(
                 map(this.toJsonArray),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -223,7 +223,7 @@ export class FormService {
         return from(this.processApi.getProcessDefinitions({}))
             .pipe(
                 map(this.toJsonArray),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -236,7 +236,7 @@ export class FormService {
         return from(this.processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId))
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -248,7 +248,7 @@ export class FormService {
         return from(this.taskApi.listTasks({}))
             .pipe(
                 map(this.toJsonArray),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -261,7 +261,7 @@ export class FormService {
         return from(this.taskApi.getTask(taskId))
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -276,7 +276,7 @@ export class FormService {
 
         return from(this.taskApi.saveTaskForm(taskId, body))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -296,7 +296,7 @@ export class FormService {
 
         return from(this.taskApi.completeTaskForm(taskId, body))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -309,7 +309,7 @@ export class FormService {
         return from(this.taskApi.getTaskForm(taskId))
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -322,7 +322,7 @@ export class FormService {
         return from(this.editorApi.getForm(formId))
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -341,7 +341,7 @@ export class FormService {
         return from(this.modelsApi.getModels(opts))
             .pipe(
                 map(this.getFormId),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -354,7 +354,7 @@ export class FormService {
         return from(this.processApi.getProcessInstanceStartForm(processId))
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -367,7 +367,7 @@ export class FormService {
         return from(this.processApi.getProcessInstance(processId))
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -380,7 +380,7 @@ export class FormService {
         return from(this.processApi.getProcessDefinitionStartForm(processId))
             .pipe(
                 map(this.toJson),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -393,7 +393,7 @@ export class FormService {
     getRestFieldValues(taskId: string, field: string): Observable<any> {
         return from(this.taskApi.getRestFieldValues(taskId, field))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -406,7 +406,7 @@ export class FormService {
     getRestFieldValuesByProcessId(processDefinitionId: string, field: string): Observable<any> {
         return from(this.processApi.getRestFieldValues(processDefinitionId, field))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -420,7 +420,7 @@ export class FormService {
     getRestFieldValuesColumnByProcessId(processDefinitionId: string, field: string, column?: string): Observable<any> {
         return from(this.processApi.getRestTableFieldValues(processDefinitionId, field, column))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -434,7 +434,7 @@ export class FormService {
     getRestFieldValuesColumn(taskId: string, field: string, column?: string): Observable<any> {
         return from(this.taskApi.getRestFieldValuesColumn(taskId, field, column))
             .pipe(
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -467,7 +467,7 @@ export class FormService {
                 }),
                 combineAll(),
                 defaultIfEmpty([]),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 
@@ -485,7 +485,7 @@ export class FormService {
         return from(this.groupsApi.getGroups(option))
             .pipe(
                 map((response: any) => <GroupModel[]> response.data || []),
-                catchError(err => this.handleError(err))
+                catchError((err) => this.handleError(err))
             );
     }
 

@@ -107,7 +107,7 @@ describe('DocumentListService', () => {
 
     it('should create a folder in the path', () => {
         service.createFolder('fake-name', 'fake-path').subscribe(
-            res => {
+            (res) => {
                 expect(res).toBeDefined();
                 expect(res.entry).toBeDefined();
                 expect(res.entry.isFolder).toBeTruthy();
@@ -125,10 +125,10 @@ describe('DocumentListService', () => {
 
     it('should emit an error when the folder already exist', () => {
         service.createFolder('fake-name', 'fake-path').subscribe(
-            res => {
+            (res) => {
 
             },
-            err => {
+            (err) => {
                 expect(err).toBeDefined();
                 expect(err.status).toEqual(409);
                 expect(err.response).toBeDefined();
@@ -144,7 +144,7 @@ describe('DocumentListService', () => {
 
     it('should return the folder info', () => {
         service.getFolder('/fake-root/fake-name').subscribe(
-            res => {
+            (res) => {
                 expect(res).toBeDefined();
                 expect(res.list).toBeDefined();
                 expect(res.list.entries).toBeDefined();
@@ -210,7 +210,7 @@ describe('DocumentListService', () => {
 
     it('should delete the folder', () => {
         service.deleteNode('fake-id').subscribe(
-            res => {
+            (res) => {
                 expect(res).toBeNull();
             }
         );

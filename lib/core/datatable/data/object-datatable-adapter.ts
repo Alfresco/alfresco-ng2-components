@@ -61,18 +61,18 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         this._columns = [];
 
         if (data && data.length > 0) {
-            this._rows = data.map(item => {
+            this._rows = data.map((item) => {
                 return new ObjectDataRow(item);
             });
         }
 
         if (schema && schema.length > 0) {
-            this._columns = schema.map(item => {
+            this._columns = schema.map((item) => {
                 return new ObjectDataColumn(item);
             });
 
             // Sort by first sortable or just first column
-            let sortable = this._columns.filter(c => c.sortable);
+            let sortable = this._columns.filter((column) => column.sortable);
             if (sortable.length > 0) {
                 this.sort(sortable[0].key, 'asc');
             }

@@ -78,7 +78,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
     }
 
     flushValue() {
-        let option = this.groups.find(item => item.name.toLocaleLowerCase() === this.value.toLocaleLowerCase());
+        let option = this.groups.find((item) => item.name.toLocaleLowerCase() === this.value.toLocaleLowerCase());
 
         if (option) {
             this.field.value = option;

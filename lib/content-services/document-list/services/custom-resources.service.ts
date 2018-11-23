@@ -50,7 +50,7 @@ export class CustomResourcesService {
      * @returns List of nodes for the recently used files
      */
     getRecentFiles(personId: string, pagination: PaginationModel): Observable<NodePaging> {
-        return new Observable(observer => {
+        return new Observable((observer) => {
             this.apiService.peopleApi.getPerson(personId)
                 .then((person: PersonEntry) => {
                         const username = person.entry.id;
@@ -89,7 +89,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).pipe(catchError(err => this.handleError(err)));
+        }).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -108,7 +108,7 @@ export class CustomResourcesService {
             include: includeFieldsRequest
         };
 
-        return new Observable(observer => {
+        return new Observable((observer) => {
             this.apiService.favoritesApi.getFavorites('-me-', options)
                 .then((result: NodePaging) => {
                         let page: NodePaging = {
@@ -135,7 +135,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).pipe(catchError(err => this.handleError(err)));
+        }).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -150,7 +150,7 @@ export class CustomResourcesService {
             skipCount: pagination.skipCount
         };
 
-        return new Observable(observer => {
+        return new Observable((observer) => {
             this.apiService.peopleApi.getSiteMembership('-me-', options)
                 .then((result: SitePaging) => {
                         let page: NodePaging = {
@@ -174,7 +174,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).pipe(catchError(err => this.handleError(err)));
+        }).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -189,7 +189,7 @@ export class CustomResourcesService {
             skipCount: pagination.skipCount
         };
 
-        return new Observable(observer => {
+        return new Observable((observer) => {
             this.apiService.sitesApi.getSites(options)
                 .then((page: NodePaging) => {
                         page.list.entries.map(
@@ -205,7 +205,7 @@ export class CustomResourcesService {
                         observer.error(err);
                         observer.complete();
                     });
-        }).pipe(catchError(err => this.handleError(err)));
+        }).pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -224,7 +224,7 @@ export class CustomResourcesService {
         };
 
         return from(this.apiService.nodesApi.getDeletedNodes(options))
-            .pipe(catchError(err => this.handleError(err)));
+            .pipe(catchError((err) => this.handleError(err)));
 
     }
 
@@ -244,7 +244,7 @@ export class CustomResourcesService {
         };
 
         return from(this.apiService.sharedLinksApi.findSharedLinks(options))
-            .pipe(catchError(err => this.handleError(err)));
+            .pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
@@ -314,7 +314,7 @@ export class CustomResourcesService {
         if (this.isCustomSource(nodeId)) {
 
             return this.loadFolderByNodeId(nodeId, pagination, [])
-                .pipe(map(result => result.list.entries.map((node: any) => {
+                .pipe(map((result) => result.list.entries.map((node: any) => {
                     if (nodeId === '-sharedlinks-') {
                         return node.entry.nodeId;
 
@@ -331,7 +331,7 @@ export class CustomResourcesService {
         } else if (nodeId) {
             // cases when nodeId is '-my-', '-root-' or '-shared-'
             return from(this.apiService.nodesApi.getNode(nodeId)
-                .then(node => [node.entry.id]));
+                .then((node) => [node.entry.id]));
         }
 
         return of([]);

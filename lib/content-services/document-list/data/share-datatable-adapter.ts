@@ -241,7 +241,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (page && page.list) {
             let data = page.list.entries;
             if (data && data.length > 0) {
-                rows = data.map(item => new ShareDataRow(item, this.documentListService, this.permissionsStyle, this.thumbnailService));
+                rows = data.map((item) => new ShareDataRow(item, this.documentListService, this.permissionsStyle, this.thumbnailService));
 
                 if (this.filter) {
                     rows = rows.filter(this.filter);
@@ -254,7 +254,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                         if (sorting) {
                             this.sortRows(rows, sorting);
                         } else {
-                            let sortable = this.columns.filter(c => c.sortable);
+                            let sortable = this.columns.filter((c) => c.sortable);
                             if (sortable.length > 0) {
                                 this.sort(sortable[0].key, 'asc');
                             } else {

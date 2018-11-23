@@ -347,7 +347,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
      * @param instances
      */
     private optimizeTaskDetails(instances: any[]): any[] {
-        instances = instances.map(task => {
+        instances = instances.map((task) => {
             if (!task.name) {
                 task.name = 'No name';
             }

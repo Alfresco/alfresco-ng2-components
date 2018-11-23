@@ -48,7 +48,7 @@ describe('PeopleListComponent', () => {
         let row = new ObjectDataRow(fakeUser);
         let rowEvent = new DataRowEvent(row, null);
 
-        peopleListComponent.clickRow.subscribe(selectedUser => {
+        peopleListComponent.clickRow.subscribe((selectedUser) => {
             expect(selectedUser.id).toEqual(1);
             expect(selectedUser.email).toEqual('fake@mail.com');
             expect(peopleListComponent.user.id).toEqual(1);

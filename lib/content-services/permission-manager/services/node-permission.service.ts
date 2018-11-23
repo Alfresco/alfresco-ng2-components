@@ -78,7 +78,7 @@ export class NodePermissionService {
      */
     updateNodePermissions(nodeId: string, permissionList: MinimalNodeEntity[]): Observable<MinimalNodeEntryEntity> {
        return this.nodeService.getNode(nodeId).pipe(
-           switchMap(node => {
+           switchMap((node) => {
                 return this.getNodeRoles(node).pipe(
                     switchMap((nodeRoles) => of({node, nodeRoles}) )
                 );

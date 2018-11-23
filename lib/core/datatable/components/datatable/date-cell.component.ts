@@ -56,7 +56,7 @@ export class DateCellComponent extends DataTableCellComponent {
         if (userPreferenceService) {
             userPreferenceService
                 .select(UserPreferenceValues.Locale)
-                .subscribe(locale => {
+                .subscribe((locale) => {
                     this.currentLocale = locale;
                 });
         }

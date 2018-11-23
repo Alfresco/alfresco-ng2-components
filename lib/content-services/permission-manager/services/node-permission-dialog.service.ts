@@ -84,10 +84,10 @@ export class NodePermissionDialogService {
     updateNodePermissionByDialog(nodeId?: string, title?: string): Observable<MinimalNodeEntryEntity> {
         return this.contentService.getNode(nodeId, { include: ['allowableOperations'] })
             .pipe(
-                switchMap(node => {
+                switchMap((node) => {
                     return this.openAddPermissionDialog(node.entry, title)
                         .pipe(
-                            switchMap(selection => {
+                            switchMap((selection) => {
                                 return this.nodePermissionService.updateNodePermissions(nodeId, selection);
                             })
                         );

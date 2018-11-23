@@ -112,7 +112,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     ngOnInit() {
         this.dropDownSub = this.onDropdownChanged.subscribe((field) => {
-            let paramDependOn: ReportParameterDetailsModel = this.reportParameters.definition.parameters.find(p => p.dependsOn === field.id);
+            let paramDependOn: ReportParameterDetailsModel = this.reportParameters.definition.parameters.find((p) => p.dependsOn === field.id);
             if (paramDependOn) {
                 this.retrieveParameterOptions(this.reportParameters.definition.parameters, this.appId, this.reportId, field.value);
             }
@@ -191,8 +191,8 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
             }
         });
         this.reportForm = this.formBuilder.group(formBuilderGroup);
-        this.reportForm.valueChanges.subscribe(data => this.onValueChanged(data));
-        this.reportForm.statusChanges.subscribe(data => this.onStatusChanged(data));
+        this.reportForm.valueChanges.subscribe((data) => this.onValueChanged(data));
+        this.reportForm.statusChanges.subscribe((data) => this.onStatusChanged(data));
     }
 
     public getReportParams(reportId: string) {
@@ -368,7 +368,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     deleteReport(reportId: string) {
         this.analyticsService.deleteReport(reportId).subscribe(() => {
             this.deleteReportSuccess.emit(reportId);
-        }, error => this.logService.error(error));
+        }, (error) => this.logService.error(error));
     }
 
     ngAfterContentChecked() {

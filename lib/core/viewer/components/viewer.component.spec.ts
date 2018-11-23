@@ -569,7 +569,7 @@ describe('ViewerComponent', () => {
                 component.fileName = 'fileName';
                 fixture.detectChanges();
 
-                component.download.subscribe(e => {
+                component.download.subscribe((e) => {
                     expect(e).not.toBeNull();
                     done();
                 });
@@ -617,7 +617,7 @@ describe('ViewerComponent', () => {
                 component.allowPrint = true;
                 fixture.detectChanges();
 
-                component.print.subscribe(e => {
+                component.print.subscribe((e) => {
                     expect(e).not.toBeNull();
                     done();
                 });
@@ -665,7 +665,7 @@ describe('ViewerComponent', () => {
                 component.allowShare = true;
                 fixture.detectChanges();
 
-                component.share.subscribe(e => {
+                component.share.subscribe((e) => {
                     expect(e).not.toBeNull();
                     done();
                 });

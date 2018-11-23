@@ -48,7 +48,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
             case 'short':
                 return this.localeData.monthsShort();
             case 'narrow':
-                return this.localeData.monthsShort().map(month => month[0]);
+                return this.localeData.monthsShort().map((month) => month[0]);
             default :
                 return;
         }

@@ -60,7 +60,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     }
 
     reset() {
-        this.options.items.forEach(opt => {
+        this.options.items.forEach((opt) => {
             opt.checked = false;
         });
 
@@ -77,8 +77,8 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
 
     flush() {
         const checkedValues = this.options.items
-            .filter(option => option.checked)
-            .map(option => option.value);
+            .filter((option) => option.checked)
+            .map((option) => option.value);
 
         const query = checkedValues.join(` ${this.operator} `);
 

@@ -47,14 +47,14 @@ export class ProcessService {
             .pipe(
                 map((res: any) => {
                     if (processDefinitionKey) {
-                        const filtered = res.data.filter(process => process.processDefinitionKey === processDefinitionKey);
+                        const filtered = res.data.filter((process) => process.processDefinitionKey === processDefinitionKey);
                         res.data = filtered;
                         return res;
                     } else {
                         return res;
                     }
                 }),
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 
@@ -73,7 +73,7 @@ export class ProcessService {
     fetchProcessAuditPdfById(processId: string): Observable<Blob> {
         return from<Blob>(this.alfrescoApiService.getInstance().activiti.processApi.getProcessAuditPdf(processId))
             .pipe(
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 
@@ -85,7 +85,7 @@ export class ProcessService {
     fetchProcessAuditJsonById(processId: string): Observable<any> {
         return from(this.alfrescoApiService.getInstance().activiti.processApi.getProcessAuditJson(processId))
             .pipe(
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 
@@ -97,7 +97,7 @@ export class ProcessService {
     getProcess(processInstanceId: string): Observable<ProcessInstance> {
         return from(this.alfrescoApiService.getInstance().activiti.processApi.getProcessInstance(processInstanceId))
             .pipe(
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 
@@ -117,11 +117,11 @@ export class ProcessService {
         return from(this.alfrescoApiService.getInstance().activiti.taskApi.listTasks(taskOpts))
             .pipe(
                 map(this.extractData),
-                map(tasks => tasks.map((task: any) => {
+                map((tasks) => tasks.map((task: any) => {
                     task.created = moment(task.created, 'YYYY-MM-DD').format();
                     return task;
                 })),
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 
@@ -142,8 +142,8 @@ export class ProcessService {
         )
             .pipe(
                 map(this.extractData),
-                map(processDefs => processDefs.map((pd) => new ProcessDefinitionRepresentation(pd))),
-                catchError(err => this.handleProcessError(err))
+                map((processDefs) => processDefs.map((pd) => new ProcessDefinitionRepresentation(pd))),
+                catchError((err) => this.handleProcessError(err))
             );
     }
 
@@ -175,7 +175,7 @@ export class ProcessService {
         )
             .pipe(
                 map((pd) => new ProcessInstance(pd)),
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 
@@ -189,7 +189,7 @@ export class ProcessService {
             this.alfrescoApiService.getInstance().activiti.processApi.deleteProcessInstance(processInstanceId)
         )
             .pipe(
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 
@@ -204,7 +204,7 @@ export class ProcessService {
         )
             .pipe(
                 map((processVars: any[]) => processVars.map((pd) => new ProcessInstanceVariable(pd))),
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 
@@ -219,7 +219,7 @@ export class ProcessService {
             this.alfrescoApiService.getInstance().activiti.processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processInstanceId, variables)
         )
             .pipe(
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 
@@ -234,7 +234,7 @@ export class ProcessService {
             this.alfrescoApiService.getInstance().activiti.processInstanceVariablesApi.deleteProcessInstanceVariable(processInstanceId, variableName)
         )
             .pipe(
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 

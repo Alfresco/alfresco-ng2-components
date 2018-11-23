@@ -50,8 +50,8 @@ export class ObjectUtils {
     static merge(...objects): any {
         let result = {};
 
-        objects.forEach(source => {
-            Object.keys(source).forEach(prop => {
+        objects.forEach((source) => {
+            Object.keys(source).forEach((prop) => {
                 if (prop in result && Array.isArray(result[prop])) {
                     result[prop] = result[prop].concat(source[prop]);
                 } else if (prop in result && typeof result[prop] === 'object') {

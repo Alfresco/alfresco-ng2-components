@@ -74,7 +74,7 @@ export class AppsListComponent implements OnInit, AfterContentInit {
     constructor(
         private appsProcessService: AppsProcessService,
         private translationService: TranslationService) {
-            this.apps$ = new Observable<AppDefinitionRepresentationModel>(observer => this.appsObserver = observer)
+            this.apps$ = new Observable<AppDefinitionRepresentationModel>((observer) => this.appsObserver = observer)
                 .pipe(share());
     }
 

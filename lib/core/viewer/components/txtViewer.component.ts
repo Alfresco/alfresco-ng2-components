@@ -58,7 +58,7 @@ export class TxtViewerComponent implements OnChanges {
 
     private getUrlContent(url: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.http.get(url, { responseType: 'text' }).subscribe(res => {
+            this.http.get(url, { responseType: 'text' }).subscribe((res) => {
                 this.content = res;
                 resolve();
             }, (event) => {

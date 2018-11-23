@@ -40,7 +40,7 @@ describe('FunctionalGroupWidgetComponent', () => {
         widget.field.value = group;
 
         spyOn(formService, 'getWorkflowGroups').and.returnValue(
-            new Observable(observer => {
+            new Observable((observer) => {
                 observer.next(null);
                 observer.complete();
             })
@@ -128,7 +128,7 @@ describe('FunctionalGroupWidgetComponent', () => {
             new GroupModel()
         ];
         spyOn(formService, 'getWorkflowGroups').and.returnValue(
-            new Observable(observer => {
+            new Observable((observer) => {
                 observer.next(groups);
                 observer.complete();
             })
@@ -148,7 +148,7 @@ describe('FunctionalGroupWidgetComponent', () => {
             new GroupModel()
         ];
         spyOn(formService, 'getWorkflowGroups').and.returnValue(
-            new Observable(observer => {
+            new Observable((observer) => {
                 observer.next(groups);
                 observer.complete();
             })
@@ -165,7 +165,7 @@ describe('FunctionalGroupWidgetComponent', () => {
 
     it('should hide popup when fetching empty group list', () => {
         spyOn(formService, 'getWorkflowGroups').and.returnValue(
-            new Observable(observer => {
+            new Observable((observer) => {
                 observer.next(null);
                 observer.complete();
             })

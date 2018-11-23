@@ -200,7 +200,7 @@ describe('ContentAction', () => {
     it('should use custom "execute" emitter', (done) => {
         let emitter = new EventEmitter();
 
-        emitter.subscribe(e => {
+        emitter.subscribe((e) => {
             expect(e.value).toBe('<obj>');
             done();
         });

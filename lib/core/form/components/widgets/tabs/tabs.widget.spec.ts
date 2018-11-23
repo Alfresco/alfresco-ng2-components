@@ -57,7 +57,7 @@ describe('TabsWidgetComponent', () => {
 
     it('should emit tab changed event', (done) => {
         let field = new FormFieldModel(null);
-        widget.formTabChanged.subscribe(tab => {
+        widget.formTabChanged.subscribe((tab) => {
             expect(tab).toBe(field);
             done();
         });

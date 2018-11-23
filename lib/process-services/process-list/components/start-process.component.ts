@@ -115,10 +115,10 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
 
         this.loadStartProcess();
 
-        this.processNameInput.valueChanges.subscribe(name => this.name = name);
+        this.processNameInput.valueChanges.subscribe((name) => this.name = name);
         this.filteredProcesses = this.processDefinitionInput.valueChanges
             .pipe(
-                map(value => this._filter(value))
+                map((value) => this._filter(value))
             );
     }
 
@@ -137,7 +137,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     private _filter(value: string): ProcessDefinitionRepresentation[] {
         if (value !== null && value !== undefined) {
             const filterValue = value.toLowerCase();
-            let filteredProcess = this.processDefinitions.filter(option => option.name.toLowerCase().includes(filterValue));
+            let filteredProcess = this.processDefinitions.filter((option) => option.name.toLowerCase().includes(filterValue));
 
             if (this.processFilterSelector) {
                 this.selectedProcessDef = this.getSelectedProcess(filterValue);
@@ -147,7 +147,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     }
 
     getSelectedProcess(selectedProcess) {
-        let processSelected = this.processDefinitions.find(process => process.name.toLowerCase() === selectedProcess);
+        let processSelected = this.processDefinitions.find((process) => process.name.toLowerCase() === selectedProcess);
 
         if (!processSelected) {
             processSelected = new ProcessDefinitionRepresentation();

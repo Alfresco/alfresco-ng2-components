@@ -54,6 +54,7 @@ describe('IdentityUserService', () => {
                 expect(user.firstName).toEqual('John');
                 expect(user.lastName).toEqual('Doe');
                 expect(user.email).toEqual('johnDoe@gmail.com');
+                expect(user.username).toEqual('johnDoe1');
                 done();
             });
     });

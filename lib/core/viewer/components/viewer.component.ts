@@ -288,12 +288,12 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     ngOnInit() {
         this.subscriptions.push(
-            this.apiService.nodeUpdated.subscribe(node => this.onNodeUpdated(node))
+            this.apiService.nodeUpdated.subscribe((node) => this.onNodeUpdated(node))
         );
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
         this.subscriptions = [];
     }
 
@@ -335,7 +335,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             } else if (this.sharedLinkId) {
 
                 this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(
-                    details => {
+                    (details) => {
                         this.setUpSharedLinkFile(details);
                         this.isLoading = false;
                     },
@@ -710,10 +710,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
         const supported = await this.apiService.renditionsApi.getRenditions(nodeId);
 
-        let rendition = supported.list.entries.find(obj => obj.entry.id.toLowerCase() === renditionId);
+        let rendition = supported.list.entries.find((obj) => obj.entry.id.toLowerCase() === renditionId);
         if (!rendition) {
             renditionId = 'imgpreview';
-            rendition = supported.list.entries.find(obj => obj.entry.id.toLowerCase() === renditionId);
+            rendition = supported.list.entries.find((obj) => obj.entry.id.toLowerCase() === renditionId);
         }
 
         if (rendition) {

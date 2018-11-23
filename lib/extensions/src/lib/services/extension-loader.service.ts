@@ -28,11 +28,12 @@ import { RuleRef } from '../config/rule.extensions';
     providedIn: 'root'
 })
 export class ExtensionLoaderService {
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+    }
 
     load(configPath: string, pluginsPath: string): Promise<ExtensionConfig> {
-        return new Promise<any>(resolve => {
-            this.loadConfig(configPath, 0).then(result => {
+        return new Promise<any>((resolve) => {
+            this.loadConfig(configPath, 0).then((result) => {
                 let config = result.config;
 
                 const override = sessionStorage.getItem('app.extension.config');
@@ -45,11 +46,11 @@ export class ExtensionLoaderService {
                         this.loadConfig(`${pluginsPath}/${name}`, idx)
                     );
 
-                    Promise.all(plugins).then(results => {
+                    Promise.all(plugins).then((results) => {
                         const configs = results
-                            .filter(entry => entry)
+                            .filter((entry) => entry)
                             .sort(sortByOrder)
-                            .map(entry => entry.config);
+                            .map((entry) => entry.config);
 
                         if (configs.length > 0) {
                             config = mergeObjects(config, ...configs);
@@ -58,7 +59,7 @@ export class ExtensionLoaderService {
                         config = {
                             ...config,
                             ...this.getMetadata(result.config),
-                            $references: configs.map(ext => this.getMetadata(ext))
+                            $references: configs.map((ext) => this.getMetadata(ext))
                         };
 
                         resolve(config);
@@ -75,8 +76,8 @@ export class ExtensionLoaderService {
 
         Object
             .keys(config)
-            .filter(key => key.startsWith('$'))
-            .forEach(key => {
+            .filter((key) => key.startsWith('$'))
+            .forEach((key) => {
                 result[key] = config[key];
             });
 
@@ -87,15 +88,15 @@ export class ExtensionLoaderService {
         url: string,
         order: number
     ): Promise<{ order: number; config: ExtensionConfig }> {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             this.http.get<ExtensionConfig>(url).subscribe(
-                config => {
+                (config) => {
                     resolve({
                         order,
                         config
                     });
                 },
-                error => {
+                () => {
                     resolve(null);
                 }
             );

@@ -38,7 +38,7 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     registerProvider(name: string, path: string) {
-        let registered = this.providers.find(provider => provider.name === name);
+        let registered = this.providers.find((provider) => provider.name === name);
         if (registered) {
             registered.path = path;
         } else {
@@ -47,7 +47,7 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     providerRegistered(name: string): boolean {
-        return this.providers.find(x => x.name === name) ? true : false;
+        return this.providers.find((x) => x.name === name) ? true : false;
     }
 
     getComponentToFetch(lang: string): Array<Observable<any>> {
@@ -83,7 +83,7 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     isComponentInQueue(lang: string, name: string) {
-        return (this.queue[lang] || []).find(x => x === name) ? true : false;
+        return (this.queue[lang] || []).find((x) => x === name) ? true : false;
     }
 
     getFullTranslationJSON(lang: string): any {
@@ -100,7 +100,7 @@ export class TranslateLoaderService implements TranslateLoader {
                 }
                 return a.name.localeCompare(b.name);
             })
-            .forEach(model => {
+            .forEach((model) => {
                 if (model.json && model.json[lang]) {
                     result = ObjectUtils.merge(result, model.json[lang]);
                 }
@@ -112,9 +112,9 @@ export class TranslateLoaderService implements TranslateLoader {
     getTranslation(lang: string): Observable<any> {
         let hasFailures = false;
         const batch = [
-            ...this.getComponentToFetch(lang).map(observable => {
+            ...this.getComponentToFetch(lang).map((observable) => {
                 return observable.pipe(
-                    catchError(error => {
+                    catchError((error) => {
                         console.warn(error);
                         hasFailures = true;
                         return of(error);
@@ -123,7 +123,7 @@ export class TranslateLoaderService implements TranslateLoader {
             })
         ];
 
-        return new Observable(observer => {
+        return new Observable((observer) => {
 
             if (batch.length > 0) {
                 forkJoin(batch).subscribe(

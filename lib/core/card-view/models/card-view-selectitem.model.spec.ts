@@ -38,7 +38,7 @@ describe('CardViewSelectItemModel', () => {
         it('should return the value if it is present', async(() => {
             const itemModel = new CardViewSelectItemModel(properties);
 
-            itemModel.displayValue.subscribe(value => {
+            itemModel.displayValue.subscribe((value) => {
                 expect(value).toBe(mockData[1].label);
             });
         }));

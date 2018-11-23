@@ -45,7 +45,7 @@ export class ProcessFilterService {
                     });
                     return filters;
                 }),
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 
@@ -59,9 +59,9 @@ export class ProcessFilterService {
         return from(this.callApiProcessFilters(appId))
             .pipe(
                 map((response: any) => {
-                    return response.data.find(filter => filter.id === filterId);
+                    return response.data.find((filter) => filter.id === filterId);
                 }),
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 
@@ -75,9 +75,9 @@ export class ProcessFilterService {
         return from(this.callApiProcessFilters(appId))
             .pipe(
                 map((response: any) => {
-                    return response.data.find(filter => filter.name === filterName);
+                    return response.data.find((filter) => filter.name === filterName);
                 }),
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 
@@ -96,7 +96,7 @@ export class ProcessFilterService {
         let allFilter = this.getAllFilterInstance(appId);
         let allObservable = this.addProcessFilter(allFilter);
 
-        return new Observable(observer => {
+        return new Observable((observer) => {
             forkJoin(
                 runningObservable,
                 completedObservable,
@@ -181,7 +181,7 @@ export class ProcessFilterService {
                 map((response: FilterProcessRepresentationModel) => {
                     return response;
                 }),
-                catchError(err => this.handleProcessError(err))
+                catchError((err) => this.handleProcessError(err))
             );
     }
 

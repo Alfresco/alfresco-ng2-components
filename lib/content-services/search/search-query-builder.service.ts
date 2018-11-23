@@ -69,7 +69,7 @@ export class SearchQueryBuilderService {
         const template = this.appConfig.get<SearchConfiguration>('search');
         if (template) {
             this.config = JSON.parse(JSON.stringify(template));
-            this.categories = (this.config.categories || []).filter(category => category.enabled);
+            this.categories = (this.config.categories || []).filter((category) => category.enabled);
             this.filterQueries = this.config.filterQueries || [];
             this.userFacetBuckets = {};
             this.userFacetQueries = [];
@@ -81,7 +81,7 @@ export class SearchQueryBuilderService {
 
     addUserFacetQuery(query: FacetQuery) {
         if (query) {
-            const existing = this.userFacetQueries.find(facetQuery => facetQuery.label === query.label);
+            const existing = this.userFacetQueries.find((facetQuery) => facetQuery.label === query.label);
             if (existing) {
                 existing.query = query.query;
             } else {
@@ -93,14 +93,14 @@ export class SearchQueryBuilderService {
     removeUserFacetQuery(query: FacetQuery) {
         if (query) {
             this.userFacetQueries = this.userFacetQueries
-                .filter(facetQuery => facetQuery.label !== query.label);
+                .filter((facetQuery) => facetQuery.label !== query.label);
         }
     }
 
     addUserFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
         if (field && field.field && bucket) {
             const buckets = this.userFacetBuckets[field.field] || [];
-            const existing = buckets.find(facetBucket => facetBucket.label === bucket.label);
+            const existing = buckets.find((facetBucket) => facetBucket.label === bucket.label);
             if (!existing) {
                 buckets.push(bucket);
             }
@@ -116,13 +116,13 @@ export class SearchQueryBuilderService {
         if (field && field.field && bucket) {
             const buckets = this.userFacetBuckets[field.field] || [];
             this.userFacetBuckets[field.field] = buckets
-                .filter(facetBucket => facetBucket.label !== bucket.label);
+                .filter((facetBucket) => facetBucket.label !== bucket.label);
         }
     }
 
     addFilterQuery(query: string): void {
         if (query) {
-            const existing = this.filterQueries.find(filterQuery => filterQuery.query === query);
+            const existing = this.filterQueries.find((filterQuery) => filterQuery.query === query);
             if (!existing) {
                 this.filterQueries.push({ query: query });
             }
@@ -132,13 +132,13 @@ export class SearchQueryBuilderService {
     removeFilterQuery(query: string): void {
         if (query) {
             this.filterQueries = this.filterQueries
-                .filter(filterQuery => filterQuery.query !== query);
+                .filter((filterQuery) => filterQuery.query !== query);
         }
     }
 
     getFacetQuery(label: string): FacetQuery {
         if (label && this.hasFacetQueries) {
-            const result = this.config.facetQueries.queries.find(query => query.label === label);
+            const result = this.config.facetQueries.queries.find((query) => query.label === label);
             if (result) {
                 return { ...result };
             }
@@ -149,7 +149,7 @@ export class SearchQueryBuilderService {
     getFacetField(label: string): FacetField {
         if (label) {
             const fields = this.config.facetFields.fields || [];
-            const result = fields.find(field => field.label === label);
+            const result = fields.find((field) => field.label === label);
             if (result) {
                 return { ...result };
             }
@@ -233,7 +233,7 @@ export class SearchQueryBuilderService {
     }
 
     protected get sort(): RequestSortDefinitionInner[] {
-        return this.sorting.map(def => {
+        return this.sorting.map((def) => {
             return {
                 type: def.type,
                 field: def.field,
@@ -244,7 +244,7 @@ export class SearchQueryBuilderService {
 
     protected get facetQueries(): FacetQuery[] {
         if (this.hasFacetQueries) {
-            return this.config.facetQueries.queries.map(query => {
+            return this.config.facetQueries.queries.map((query) => {
                 return <FacetQuery> { ...query };
             });
         }
@@ -255,7 +255,7 @@ export class SearchQueryBuilderService {
     protected getFinalQuery(): string {
         let query = '';
 
-        this.categories.forEach(facet => {
+        this.categories.forEach((facet) => {
             const customQuery = this.queryFragments[facet.id];
             if (customQuery) {
                 if (query.length > 0) {
@@ -266,20 +266,20 @@ export class SearchQueryBuilderService {
         });
 
         let result = [this.userQuery, query]
-            .filter(entry => entry)
+            .filter((entry) => entry)
             .join(' AND ');
 
         if (this.userFacetQueries && this.userFacetQueries.length > 0) {
             const combined = this.userFacetQueries
-                .map(userQuery => userQuery.query)
+                .map((userQuery) => userQuery.query)
                 .join(' OR ');
             result += ` AND (${combined})`;
         }
 
         if (this.userFacetBuckets) {
-            Object.keys(this.userFacetBuckets).forEach(key => {
+            Object.keys(this.userFacetBuckets).forEach((key) => {
                 const subQuery = (this.userFacetBuckets[key] || [])
-                    .map(bucket => bucket.filterQuery)
+                    .map((bucket) => bucket.filterQuery)
                     .join(' OR ');
                 if (subQuery) {
                     if (result.length > 0) {
@@ -298,7 +298,7 @@ export class SearchQueryBuilderService {
 
         if (facetFields && facetFields.length > 0) {
             return {
-                facets: facetFields.map(facet => <RequestFacetField> {
+                facets: facetFields.map((facet) => <RequestFacetField> {
                     field: facet.field,
                     mincount: facet.mincount,
                     label: facet.label,
