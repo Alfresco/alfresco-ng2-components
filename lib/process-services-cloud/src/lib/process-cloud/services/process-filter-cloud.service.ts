@@ -62,7 +62,7 @@ export class ProcessFilterCloudService {
      * @returns Details of process filter just added
      */
     addFilter(filter: ProcessFilterRepresentationModel) {
-        const key = 'process-filters-' + filter.query.appName || '0';
+        const key = 'process-filters-' + filter.query.appName;
         const storedFilters = JSON.parse(this.storage.getItem(key) || '[]');
 
         storedFilters.push(filter);
@@ -76,7 +76,7 @@ export class ProcessFilterCloudService {
      */
     getAllProcessesFilter(appName: string): ProcessFilterRepresentationModel {
         return new ProcessFilterRepresentationModel({
-            name: 'PROCESS_FILTERS_CLOUD.ALL_PROCESSES',
+            name: 'PROCESS_CLOUD.FILTERS.ALL_PROCESSES',
             key: 'all-processes',
             icon: 'adjust',
             query: new ProcessQueryModel(
@@ -96,7 +96,7 @@ export class ProcessFilterCloudService {
      */
     getRunningProcessesFilter(appName: string): ProcessFilterRepresentationModel {
         return new ProcessFilterRepresentationModel({
-            name: 'PROCESS_FILTERS_CLOUD.RUNNING_PROCESSES',
+            name: 'PROCESS_CLOUD.FILTERS.RUNNING_PROCESSES',
             icon: 'inbox',
             key: 'running-processes',
             query: new ProcessQueryModel(
@@ -117,7 +117,7 @@ export class ProcessFilterCloudService {
      */
     getCompletedProcessesFilter(appName: string): ProcessFilterRepresentationModel {
         return new ProcessFilterRepresentationModel({
-            name: 'PROCESS_FILTERS_CLOUD.COMPLETED_PROCESSES',
+            name: 'PROCESS_CLOUD.FILTERS.COMPLETED_PROCESSES',
             icon: 'done',
             key: 'completed-processes',
             query: new ProcessQueryModel(

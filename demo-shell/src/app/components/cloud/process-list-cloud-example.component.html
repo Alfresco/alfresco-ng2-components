@@ -1,4 +1,4 @@
-<div>PROCESS LIST CLOUD</div>
+<h3>{{'PROCESS_LIST_CLOUD.TITLE' | translate}}</h3>
 <adf-cloud-process-filters
     [appName]="currentAppName"
     [showIcons]="true"
@@ -13,14 +13,14 @@
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    {{filterName}}
+                    {{filterName | translate}}
                 </mat-panel-title>
                 <mat-panel-description>
                     Customise your filter
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
-                <mat-form-field style="margin: 8px;">
+                <mat-form-field>
                     <mat-select placeholder="Status" [(ngModel)]="status">
                         <mat-option value="">
                             ALL

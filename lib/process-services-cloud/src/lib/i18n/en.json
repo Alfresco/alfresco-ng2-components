@@ -10,10 +10,12 @@
     "MY_TASKS": "My Tasks",
     "COMPLETED_TASKS": "Completed Tasks"
   },
-  "PROCESS_FILTERS_CLOUD": {
-    "ALL_PROCESSES": "All Processes",
-    "RUNNING_PROCESSES": "Running Processes",
-    "COMPLETED_PROCESSES": "Completed Processes"
+  "PROCESS_CLOUD": {
+    "FILTERS": {
+      "ALL_PROCESSES": "All Processes",
+      "RUNNING_PROCESSES": "Running Processes",
+      "COMPLETED_PROCESSES": "Completed Processes"
+    }
   }
 
 }

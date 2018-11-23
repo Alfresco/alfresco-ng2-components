@@ -118,12 +118,12 @@ export class ProcessFiltersCloudComponent implements OnChanges {
      */
     public selectFilter(filterParam: ProcessFilterParamModel) {
         if (filterParam) {
-            this.currentFilter = this.filters.find((filter, index) =>
-                filterParam.id === filter.id ||
+            this.currentFilter = this.filters.find((filter, index) => {
+                return filterParam.id === filter.id ||
                 (filterParam.name && this.checkFilterNamesEquality(filterParam.name, filter.name)) ||
                 (filterParam.key && (filterParam.key === filter.key)) ||
-                filterParam.index === index
-            );
+                filterParam.index === index;
+            });
         }
         if (!this.currentFilter) {
             this.selectDefaultProcessFilter();
