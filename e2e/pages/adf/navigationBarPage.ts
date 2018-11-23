@@ -19,6 +19,7 @@ import Util = require('../../util/util');
 import TestConfig = require('../../test.config');
 import { element, by } from 'protractor';
 import { ProcessServicesPage } from './process_services/processServicesPage';
+import { AppListCloudComponent } from './process_cloud/appListCloudComponent';
 
 export class NavigationBarPage {
 
@@ -26,7 +27,7 @@ export class NavigationBarPage {
     taskListButton = element(by.css("a[data-automation-id='Task List']"));
     configEditorButton = element(by.css('a[data-automation-id="Configuration Editor"]'));
     processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
-    processCloudButton = element(by.css('a[data-automation-id="Process Cloud"]'));
+    processServicesCloudButton = element(by.css('a[data-automation-id="Process Cloud"]'));
     loginButton = element(by.css('a[data-automation-id="Login"]'));
     trashcanButton = element(by.css('a[data-automation-id="Trashcan"]'));
     userProfileButton = element(by.css('button[data-automation-id="adf-user-profile"]'));
@@ -50,12 +51,6 @@ export class NavigationBarPage {
         this.taskListButton.click();
     }
 
-    clickProcessCloudButton() {
-        Util.waitUntilElementIsVisible(this.processCloudButton);
-        this.processCloudButton.click();
-
-    }
-
     clickConfigEditorButton() {
         Util.waitUntilElementIsVisible(this.configEditorButton);
         this.configEditorButton.click();
@@ -65,6 +60,12 @@ export class NavigationBarPage {
         Util.waitUntilElementIsVisible(this.processServicesButton);
         this.processServicesButton.click();
         return new ProcessServicesPage();
+    }
+
+    navigateToProcessServicesCloudPage() {
+        Util.waitUntilElementIsVisible(this.processServicesCloudButton);
+        this.processServicesCloudButton.click();
+        return new AppListCloudComponent();
     }
 
     clickLoginButton() {
@@ -171,6 +172,6 @@ export class NavigationBarPage {
     }
 
     checkContentServicesButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(contentServicesButton);
+        Util.waitUntilElementIsVisible(this.contentServicesButton);
     }
 }
