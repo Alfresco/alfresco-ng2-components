@@ -24,7 +24,7 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { DownloadZipService } from '../services/download-zip.service';
 import { Observable } from 'rxjs';
 
-fdescribe('DownloadZipDialogComponent', () => {
+describe('DownloadZipDialogComponent', () => {
 
     let fixture: ComponentFixture<DownloadZipDialogComponent>;
     let component: DownloadZipDialogComponent;
@@ -40,31 +40,14 @@ fdescribe('DownloadZipDialogComponent', () => {
         ]
     };
 
-    let doneDownloadEntry = {
-        entry: {
-            bytesAdded : 0,
-            filesAdded: 0,
-            id: '5bfb0907',
-            status: 'DONE',
-            totalBytes: 0,
-            totalFiles: 0
-        }
-    };
-
     let pendingDownloadEntry = {
         entry: {
-            bytesAdded : 0,
+            bytesAdded: 0,
             filesAdded: 0,
             id: '5bfb0907',
             status: 'PENDING',
             totalBytes: 0,
             totalFiles: 0
-        }
-    };
-
-    let nodeEntity = {
-        entry: {
-            name: 'fileName'
         }
     };
 
@@ -88,175 +71,79 @@ fdescribe('DownloadZipDialogComponent', () => {
         fixture.destroy();
     });
 
-    describe('DownloadZipDialogComponent', () => {
+    it('should call downloadZip when it is not cancelled', () => {
+        component.cancelled = false;
+        spyOn(component, 'downloadZip');
 
-        let getContentUrlSpy;
-        let createDownloadSpy;
-        let getNodeSpy;
-        let getDownload;
-        let cancelDownload;
+        component.ngOnInit();
 
-        beforeEach(() => {
-            getContentUrlSpy = spyOn(downloadZipService, 'getContentUrl').and.returnValue('http://www.google.com/');
-            createDownloadSpy = spyOn(downloadZipService, 'getContentUrl').and.returnValue(Observable.create(pendingDownloadEntry));
-            spyOn(downloadZipService, 'getNode').and.returnValue(Observable.create(nodeEntity));
-            spyOn(downloadZipService, 'getDownload').and.returnValue(Observable.create(doneDownloadEntry));
-            spyOn(downloadZipService, 'cancelDownload');
-        });
-
-        it('should call downloadZip when it is not cancelled', () => {
-            component.cancelled = false;
-            spyOn(component, 'downloadZip');
-
-            component.ngOnInit();
-
-            expect(component.downloadZip).toHaveBeenCalledWith(['123']);
-        });
-
-        it('should not call downloadZip when it is cancelled', () => {
-            component.cancelled = true;
-            spyOn(component, 'downloadZip');
-
-            component.ngOnInit();
-
-            expect(component.downloadZip).not.toHaveBeenCalled();
-        });
-
-        it('should not call downloadZip when it contains zero nodeIds', () => {
-            component.data = {
-                nodeIds: []
-            };
-            spyOn(component, 'downloadZip');
-
-            component.ngOnInit();
-
-            expect(component.downloadZip).not.toHaveBeenCalled();
-        });
-
-        it('should call cancelDownload when CANCEL button is clicked', () => {
-            fixture.detectChanges();
-            spyOn(component, 'cancelDownload').and.callThrough();
-
-            const cancelButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#cancel-button');
-            cancelButton.click();
-
-            expect(component.cancelDownload).toHaveBeenCalled();
-        });
-
-        it('should call createDownload when component is initialize', () => {
-            spyOn(downloadZipService, 'createDownload');
-            fixture.detectChanges();
-            expect(createDownloadSpy).toHaveBeenCalled();
-        });
-
-        it('should close dialog when download is completed', () => {
-            fixture.detectChanges();
-            expect(dialogRef.close).toHaveBeenCalled();
-        });
-
-        it('should close dialog when download is cancelled', () => {
-            fixture.detectChanges();
-            component.download('url', 'filename');
-            spyOn(downloadZipService, 'cancelDownload');
-            component.cancelDownload();
-            expect(dialogRef.close).toHaveBeenCalled();
-        });
-
-        it('should interrupt download when cancel button is clicked', () => {
-            spyOn(component, 'downloadZip');
-            spyOn(component, 'download');
-            spyOn(component, 'cancelDownload').and.callThrough();
-
-            fixture.detectChanges();
-
-            expect(component.downloadZip).toHaveBeenCalled();
-
-            const cancelButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#cancel-button');
-            cancelButton.click();
-
-            expect(component.cancelDownload).toHaveBeenCalled();
-            expect(component.download).not.toHaveBeenCalled();
-        });
+        expect(component.downloadZip).toHaveBeenCalledWith(['123']);
     });
 
-    xdescribe('DownloadZipDialogComponent', () => {
+    it('should not call downloadZip when it is cancelled', () => {
+        component.cancelled = true;
+        spyOn(component, 'downloadZip');
 
-        beforeEach(() => {
+        component.ngOnInit();
 
-        });
+        expect(component.downloadZip).not.toHaveBeenCalled();
+    });
 
-        it('should call downloadZip when it is not cancelled', () => {
-            component.cancelled = false;
-            spyOn(component, 'downloadZip');
+    it('should not call downloadZip when it contains zero nodeIds', () => {
+        component.data = {
+            nodeIds: []
+        };
+        spyOn(component, 'downloadZip');
 
-            component.ngOnInit();
+        component.ngOnInit();
 
-            expect(component.downloadZip).toHaveBeenCalledWith(['123']);
-        });
+        expect(component.downloadZip).not.toHaveBeenCalled();
+    });
 
-        it('should not call downloadZip when it is cancelled', () => {
-            component.cancelled = true;
-            spyOn(component, 'downloadZip');
+    it('should call cancelDownload when CANCEL button is clicked', () => {
+        fixture.detectChanges();
+        spyOn(component, 'cancelDownload').and.callThrough();
 
-            component.ngOnInit();
+        const cancelButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#cancel-button');
+        cancelButton.click();
 
-            expect(component.downloadZip).not.toHaveBeenCalled();
-        });
+        expect(component.cancelDownload).toHaveBeenCalled();
+    });
 
-        it('should not call downloadZip when it contains zero nodeIds', () => {
-            component.data = {
-                nodeIds: []
-            };
-            spyOn(component, 'downloadZip');
+    it('should call createDownload when component is initialize', () => {
+        const createDownloadSpy = spyOn(downloadZipService, 'createDownload').and.returnValue(Observable.create(pendingDownloadEntry));
+        fixture.detectChanges();
+        expect(createDownloadSpy).toHaveBeenCalled();
+    });
 
-            component.ngOnInit();
+    it('should close dialog when download is completed', () => {
+        component.download('fakeUrl', 'fileName');
+        spyOn(downloadZipService, 'cancelDownload');
+        fixture.detectChanges();
+        expect(dialogRef.close).toHaveBeenCalled();
+    });
 
-            expect(component.downloadZip).not.toHaveBeenCalled();
-        });
+    it('should close dialog when download is cancelled', () => {
+        fixture.detectChanges();
+        component.download('url', 'filename');
+        spyOn(downloadZipService, 'cancelDownload');
+        component.cancelDownload();
+        expect(dialogRef.close).toHaveBeenCalled();
+    });
 
-        it('should call cancelDownload when CANCEL button is clicked', () => {
-            fixture.detectChanges();
-            spyOn(component, 'cancelDownload').and.callThrough();
+    it('should interrupt download when cancel button is clicked', () => {
+        spyOn(component, 'downloadZip');
+        spyOn(component, 'download');
+        spyOn(component, 'cancelDownload').and.callThrough();
 
-            const cancelButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#cancel-button');
-            cancelButton.click();
+        fixture.detectChanges();
 
-            expect(component.cancelDownload).toHaveBeenCalled();
-        });
+        expect(component.downloadZip).toHaveBeenCalled();
 
-        it('should call createDownload when component is initialize', () => {
-            spyOn(downloadZipService, 'createDownload');
-            fixture.detectChanges();
-            expect(downloadZipService.createDownload).toHaveBeenCalled();
-        });
+        const cancelButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#cancel-button');
+        cancelButton.click();
 
-        it('should close dialog when download is completed', () => {
-            fixture.detectChanges();
-            expect(dialogRef.close).toHaveBeenCalled();
-        });
-
-        it('should close dialog when download is cancelled', () => {
-            fixture.detectChanges();
-            component.download('url', 'filename');
-            spyOn(downloadZipService, 'cancelDownload');
-            component.cancelDownload();
-            expect(dialogRef.close).toHaveBeenCalled();
-        });
-
-        it('should interrupt download when cancel button is clicked', () => {
-            spyOn(component, 'downloadZip');
-            spyOn(component, 'download');
-            spyOn(component, 'cancelDownload').and.callThrough();
-
-            fixture.detectChanges();
-
-            expect(component.downloadZip).toHaveBeenCalled();
-
-            const cancelButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#cancel-button');
-            cancelButton.click();
-
-            expect(component.cancelDownload).toHaveBeenCalled();
-            expect(component.download).not.toHaveBeenCalled();
-        });
+        expect(component.cancelDownload).toHaveBeenCalled();
+        expect(component.download).not.toHaveBeenCalled();
     });
 });

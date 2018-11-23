@@ -345,7 +345,10 @@ describe('ViewerComponent', () => {
             const nodeDetails = { name: displayName, id: '12' };
             const contentUrl = '/content/url/path';
             const alfrescoApiInstanceMock = {
-                nodes: { getNodeInfo: () => Promise.resolve(nodeDetails) },
+                nodes: {
+                    getNodeInfo: () => Promise.resolve(nodeDetails),
+                    getNode: () => Promise.resolve({ id: 'fake-node' })
+                },
                 content: { getContentUrl: () => contentUrl }
             };
 
@@ -369,6 +372,8 @@ describe('ViewerComponent', () => {
             Promise.resolve({ name: 'file1', content: {} }),
             Promise.resolve({ name: 'file2', content: {} })
         );
+
+        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValue(Promise.resolve({ id: 'fake-node' }));
 
         component.urlFile = null;
         component.displayName = null;
@@ -549,35 +554,6 @@ describe('ViewerComponent', () => {
                 });
             });
 
-            // it('should invoke download action with the toolbar button', (done) => {
-            //     component.allowDownload = true;
-            //     spyOn(component, 'downloadContent').and.stub();
-            //     fixture.detectChanges();
-
-            //     const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-download"]') as HTMLButtonElement;
-            //     button.click();
-
-            //     fixture.whenStable().then(() => {
-            //         expect(component.downloadContent).toHaveBeenCalled();
-            //         done();
-            //     });
-            // });
-
-            it('should raise download event with the toolbar button', (done) => {
-                component.allowDownload = true;
-                component.downloadUrl  = 'URL';
-                component.fileName = 'fileName';
-                fixture.detectChanges();
-
-                component.download.subscribe((e) => {
-                    expect(e).not.toBeNull();
-                    done();
-                });
-
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-download"]') as HTMLButtonElement;
-                button.click();
-            });
-
             it('should render default print button', (done) => {
                 component.allowPrint = true;
                 fixture.detectChanges();
@@ -672,6 +648,31 @@ describe('ViewerComponent', () => {
 
                 const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-share"]') as HTMLButtonElement;
                 button.click();
+            });
+
+            it('should get and assign node for download', (done) => {
+                const node = { id: 'fake-node' };
+                component.fileNodeId = '12';
+                component.urlFile = '';
+                const displayName = 'the-name';
+                const nodeDetails = { name: displayName, id: '12', content: { mimeType: 'txt' } };
+                const contentUrl = '/content/url/path';
+                const alfrescoApiInstanceMock = {
+                    nodes: {
+                        getNodeInfo: () => Promise.resolve(nodeDetails),
+                        getNode: () => Promise.resolve(node)
+                    },
+                    content: { getContentUrl: () => contentUrl }
+                };
+                spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
+                const setDownloadNodeSpy = spyOn(component, 'setDownloadNode');
+
+                component.ngOnChanges(null);
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(setDownloadNodeSpy).toHaveBeenCalledWith(node);
+                    done();
+                });
             });
 
         });
@@ -923,7 +924,10 @@ describe('ViewerComponent', () => {
             const nodeDetails = { name: displayName, id: '12', content: { mimeType: 'txt' } };
             const contentUrl = '/content/url/path';
             const alfrescoApiInstanceMock = {
-                nodes: { getNodeInfo: () => Promise.resolve(nodeDetails) },
+                nodes: {
+                    getNodeInfo: () => Promise.resolve(nodeDetails),
+                    getNode: () => Promise.resolve({ id: 'fake-node' })
+                },
                 content: { getContentUrl: () => contentUrl }
             };
 
@@ -998,7 +1002,6 @@ describe('ViewerComponent', () => {
             component.enterFullScreen();
             expect(domElement.msRequestFullscreen).toHaveBeenCalled();
         });
-
     });
 
 });
