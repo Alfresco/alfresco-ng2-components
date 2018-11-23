@@ -1,10 +1,13 @@
 {
-  "TEST_KEY": "MY TEST",
-  "ADF-PROCESS-LIST-CLOUD": {
+  "ADF_CLOUD_PROCESS_LIST": {
     "MESSAGES": {
       "TITLE": "No Processes Found",
       "SUBTITLE":"Create a new process that you want to easily find later",
       "NONE": "No process instance filter selected."
     }
+  },
+  "ADF_CLOUD_TASK_FILTERS": {
+    "MY_TASKS": "My Tasks",
+    "COMPLETED_TASKS": "Completed Tasks"
   }
 }
