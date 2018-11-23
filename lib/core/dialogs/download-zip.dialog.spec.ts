@@ -22,7 +22,7 @@ import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { DownloadZipService } from '../services/download-zip.service';
-import { Observable } from 'rxjs';
+import { of } from 'rxjs';
 
 describe('DownloadZipDialogComponent', () => {
 
@@ -104,14 +104,14 @@ describe('DownloadZipDialogComponent', () => {
         fixture.detectChanges();
         spyOn(component, 'cancelDownload').and.callThrough();
 
-        const cancelButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#cancel-button');
+        const cancelButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#cancel-button');
         cancelButton.click();
 
         expect(component.cancelDownload).toHaveBeenCalled();
     });
 
     it('should call createDownload when component is initialize', () => {
-        const createDownloadSpy = spyOn(downloadZipService, 'createDownload').and.returnValue(Observable.create(pendingDownloadEntry));
+        const createDownloadSpy = spyOn(downloadZipService, 'createDownload').and.returnValue(of(pendingDownloadEntry));
         fixture.detectChanges();
         expect(createDownloadSpy).toHaveBeenCalled();
     });
@@ -140,7 +140,7 @@ describe('DownloadZipDialogComponent', () => {
 
         expect(component.downloadZip).toHaveBeenCalled();
 
-        const cancelButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#cancel-button');
+        const cancelButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#cancel-button');
         cancelButton.click();
 
         expect(component.cancelDownload).toHaveBeenCalled();

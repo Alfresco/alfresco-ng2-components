@@ -33,7 +33,7 @@ export class DownloadZipService {
 
     createDownload(payload: DownloadBodyCreate): Observable<DownloadEntry> {
         return from(this.apiService.getInstance().core.downloadsApi.createDownload(payload)).pipe(
-            catchError(err => this.handleError(err))
+            catchError((err) => this.handleError(err))
         );
     }
 
