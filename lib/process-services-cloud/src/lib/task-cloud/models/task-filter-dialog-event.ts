@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import { FilterRepresentationModel } from './filter-cloud.model';
-
 export class TaskFilterDialogEvent {
 
     static ACTION_SAVE = 'SAVE';
     static ACTION_CANCEL = 'CANCEL';
-    filter: FilterRepresentationModel;
+
+    name: string;
+    icon: string;
     action: string;
 
     constructor(obj?: any) {
         this.action = obj.action;
-        this.filter = obj.filter;
+        this.name = obj.name;
+        this.icon = obj.icon;
     }
 
     isSave(): boolean {

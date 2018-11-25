@@ -22,6 +22,7 @@ import { TaskFilterDialogCloudComponent } from './task-filter-dialog/task-filter
 import { QueryModel } from './../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { FilterRepresentationModel } from '../models/filter-cloud.model';
+import { TaskFilterDialogEvent } from '../models/task-filter-dialog-event';
 
 @Component({
   selector: 'adf-cloud-edit-task-filters',
@@ -57,7 +58,7 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
         {key: 'processDefinitionId', label: 'PROCESS DEFINITION ID'}
       ];
 
-    statuses = ['ALL', 'CREATED', 'CANCELLED', 'ASSIGNED', 'SUSPENDED', 'COMPLETED', 'DELETED'];
+    states = ['ALL', 'CREATED', 'CANCELLED', 'ASSIGNED', 'SUSPENDED', 'COMPLETED', 'DELETED'];
 
     directions = ['ASC', 'DESC'];
 
@@ -70,11 +71,12 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         const taskFilter = changes['taskFilter'];
         if (taskFilter && taskFilter.currentValue) {
+            this.taskFilter = taskFilter.currentValue;
             this.buildForm();
         }
     }
 
-    buildForm(): void {
+    buildForm() {
         this.editTaskFilter = this.formBuilder.group({
             state: this.taskFilter.query.state,
             assignment: this.taskFilter.query.assignment,
@@ -88,8 +90,8 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
         this.editTaskFilter.valueChanges.subscribe(() => {
             const editedFilter = <FilterRepresentationModel> { name: this.taskFilter.name, query: new QueryModel(this.editTaskFilter.value) };
             if (JSON.stringify(editedFilter).toLowerCase() === JSON.stringify(this.taskFilter).toLowerCase()) {
-                // this.isSave = false;
-                // this.isDelete = true;
+                this.isSave = false;
+                this.isDelete = true;
                 this.filterChange.emit(this.taskFilter);
             } else {
                 this.isSave = true;
@@ -110,7 +112,7 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
             minWidth: '30%'
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result && result.actions === 'SAVE') {
+            if (result && result.action === TaskFilterDialogEvent.ACTION_SAVE) {
                 this.editedFilter.name = result.name;
                 this.editedFilter.icon = result.icon;
                 this.saveFilter(this.editedFilter);

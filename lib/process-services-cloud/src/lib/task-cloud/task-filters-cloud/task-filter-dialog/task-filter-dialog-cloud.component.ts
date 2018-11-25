@@ -30,7 +30,7 @@ export class TaskFilterDialogCloudComponent implements OnInit {
 
     defaultIcon = 'inbox';
 
-    filter: FormGroup;
+    filterForm: FormGroup;
 
     constructor(
         private fb: FormBuilder,
@@ -39,28 +39,28 @@ export class TaskFilterDialogCloudComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.filter = this.fb.group({
+        this.filterForm = this.fb.group({
             name: [this.data.name, Validators.required]
         });
     }
 
-    onSaveClick(): void {
-        this.dialogRef.close({
-            actions: TaskFilterDialogEvent.ACTION_SAVE,
+    onSaveClick() {
+        this.dialogRef.close(new TaskFilterDialogEvent({
+            action: TaskFilterDialogEvent.ACTION_SAVE,
             icon: this.defaultIcon,
             name: this.nameController.value
-        });
+        }));
     }
 
-    onCancelClick(): void {
+    onCancelClick() {
         this.dialogRef.close();
     }
 
     get nameController(): AbstractControl {
-        return this.filter.get('name');
+        return this.filterForm.get('name');
     }
 
-    isValid() {
-        return this.filter.valid;
+    isValid(): boolean {
+        return this.filterForm.valid;
     }
 }
