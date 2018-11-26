@@ -61,7 +61,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
         });
 
-        it('[C290009] Should display default filters and created task', async() => {
+        xit('[C290009] Should display default filters and created task', async() => {
             await tasksService.init(user, password);
             await tasksService.createStandaloneTask(newTask, simpleApp);
 
@@ -91,7 +91,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTask);
         });
 
-        it('[C289957] Should display task filter results when task filter is selected', async () => {
+        xit('[C289957] Should display task filter results when task filter is selected', async () => {
             await tasksService.init(user, password);
             let task = await tasksService.createStandaloneTask(myTask, simpleApp);
 
