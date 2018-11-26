@@ -19,8 +19,7 @@ import { FormControl } from '@angular/forms';
 import { StartTaskCloudService } from './../../services/start-task-cloud.service';
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { RoleCloudModel } from '../../models/role-cloud.model';
-import { FullNamePipe, IdentityUserModel, IdentityUserService } from '@alfresco/adf-core';
+import { FullNamePipe, IdentityUserModel } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -42,9 +41,9 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 
 export class PeopleCloudComponent implements OnInit {
 
-    static ACTIVITI_ADMIN = 'ACTIVITI_ADMIN';
-    static ACTIVITI_USER = 'ACTIVITI_USER';
-    static ACTIVITI_MODELER = 'ACTIVITI_MODELER';
+    static ROLE_ACTIVITI_ADMIN = 'ACTIVITI_ADMIN';
+    static ROLE_ACTIVITI_USER = 'ACTIVITI_USER';
+    static ROLE_ACTIVITI_MODELER = 'ACTIVITI_MODELER';
 
     /** Show current user in the list or not. */
     @Input()
@@ -58,20 +57,19 @@ export class PeopleCloudComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    users$: Observable<any[]>;
+    users$: Observable<IdentityUserModel[]>;
 
     searchUser: FormControl = new FormControl();
 
     _subscriptAnimationState: string = 'enter';
 
-    users: any[] = [];
+    users: IdentityUserModel[] = [];
 
     dataError = false;
 
-    currentUser: any;
+    currentUser: IdentityUserModel;
 
-    constructor(private taskService: StartTaskCloudService,
-                private identityService: IdentityUserService) { }
+    constructor(private startTaskCloudService: StartTaskCloudService) { }
 
     ngOnInit() {
         this.loadUsers();
@@ -79,66 +77,26 @@ export class PeopleCloudComponent implements OnInit {
     }
 
     initSearch() {
-        this.searchUser.valueChanges.subscribe((searchedWord) => {
-            this.users$ = this.searchUsers(this.users, searchedWord);
+        this.searchUser.valueChanges.subscribe((keyword) => {
+            this.users$ = this.searchUsers(keyword);
         });
     }
 
     private async loadUsers() {
-        if (!this.showCurrentUser) {
-            this.currentUser = await this.identityService.getCurrentUserInfo().toPromise();
+        const roles = [PeopleCloudComponent.ROLE_ACTIVITI_ADMIN, PeopleCloudComponent.ROLE_ACTIVITI_MODELER, PeopleCloudComponent.ROLE_ACTIVITI_USER];
+        if (this.showCurrentUser) {
+            this.users = await this.startTaskCloudService.getUsersByRolesWithCurrentUser(roles);
+        } else {
+            this.users = await this.startTaskCloudService.getUsersByRolesWithoutCurrentUser(roles);
         }
-        const users = await this.taskService.getUsers().toPromise();
-        this.users = await this.filterUsers(users);
     }
 
-    private async filterUsers(users: IdentityUserModel[]) {
-        let filteredUsers: any[] = [];
-
-        for (let i = 0; i < users.length; i++) {
-            const roles = await this.taskService.getRolesByUserId(users[i].id).toPromise();
-            for (let j = 0; j < roles.length; j++) {
-                if (this.isValidUser(users[i]) && this.hasRole(roles[j])) {
-                    filteredUsers.push(users[i]);
-                }
-            }
-        }
-        return filteredUsers;
-    }
-
-    private hasRole(role: RoleCloudModel): boolean {
-        return (role.name === PeopleCloudComponent.ACTIVITI_ADMIN) || (role.name === PeopleCloudComponent.ACTIVITI_MODELER) || (role.name === PeopleCloudComponent.ACTIVITI_USER);
-    }
-
-    private isValidUser(user): boolean {
-        let valid = true;
-        if (!this.showCurrentUser && this.currentUser.username === user.username) {
-            valid = false;
-        }
-        return valid;
-    }
-
-    private searchUsers(users: IdentityUserModel[], searchedWord: string) {
-        let filteredUsers: IdentityUserModel[];
-        filteredUsers = this.removeDuplicates(users).filter((user) => {
-            return this.findUserBySearchedWord(user.username, searchedWord);
+    private searchUsers(keyword: string): Observable<IdentityUserModel[]> {
+        const filteredUsers = this.users.filter((user) => {
+            return user.username.toLowerCase().indexOf(keyword.toString().toLowerCase()) !== -1;
         });
-        this.dataError = filteredUsers.length <= 0 ? true : false;
+        this.dataError = filteredUsers.length === 0;
         return of(filteredUsers);
-    }
-
-    findUserBySearchedWord(username: string, searchedWord: string): boolean {
-        return username.toLowerCase().indexOf(searchedWord.toString().toLowerCase()) !== -1;
-    }
-
-    private removeDuplicates(users: IdentityUserModel[]): IdentityUserModel[] {
-        const userMap = new Map();
-        users.forEach((user) => {
-            if (!userMap.has(user.id)) {
-                userMap.set(user.id, user);
-            }
-        });
-        return Array.from(userMap.values());
     }
 
     onSelect(selectedUser: IdentityUserModel) {

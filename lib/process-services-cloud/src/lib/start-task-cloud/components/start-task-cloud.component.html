@@ -78,7 +78,7 @@
             </button>
             <button
                 color="primary"
-                type="submit" [disabled]="!taskForm.valid || submitted"
+                type="submit" [disabled]="dateError || !taskForm.valid || submitted"
                 mat-button
                 id="button-start">
                 {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}

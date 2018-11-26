@@ -21,7 +21,8 @@ import {
     AlfrescoApiService,
     AppConfigService,
     LogService,
-    IdentityUserModel
+    IdentityUserModel,
+    IdentityUserService
 } from '@alfresco/adf-core';
 import { from, Observable, throwError } from 'rxjs';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
@@ -34,6 +35,7 @@ export class StartTaskCloudService {
     constructor(
         private apiService: AlfrescoApiService,
         private appConfigService: AppConfigService,
+        private identityUserService: IdentityUserService,
         private logService: LogService
     ) {}
 
@@ -75,7 +77,7 @@ export class StartTaskCloudService {
             );
     }
 
-    getRolesByUserId(userId: string): Observable<RoleCloudModel[]> {
+    getUserRoles(userId: string): Observable<RoleCloudModel[]> {
         const url = this.buildRolesUrl(userId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
@@ -90,6 +92,54 @@ export class StartTaskCloudService {
                     }),
                 catchError((err) => this.handleError(err))
             );
+    }
+
+    async getUsersByRolesWithCurrentUser(roleNames: string[]): Promise<IdentityUserModel[]> {
+        const filteredUsers: IdentityUserModel[] = [];
+        if (roleNames && roleNames.length > 0) {
+            const users = await this.getUsers().toPromise();
+
+            for (let i = 0; i < users.length; i++) {
+                const hasAnyRole = await this.userHasAnyRole(users[i].id, roleNames);
+                if (hasAnyRole) {
+                    filteredUsers.push(users[i]);
+                }
+            }
+        }
+
+        return filteredUsers;
+    }
+
+    async getUsersByRolesWithoutCurrentUser(roleNames: string[]): Promise<IdentityUserModel[]> {
+        const filteredUsers: IdentityUserModel[] = [];
+        if (roleNames && roleNames.length > 0) {
+            const currentUser = await this.identityUserService.getCurrentUserInfo().toPromise();
+            let users = await this.getUsers().toPromise();
+
+            users = users.filter((user) => { return user.username !== currentUser.username; });
+
+            for (let i = 0; i < users.length; i++) {
+                const hasAnyRole = await this.userHasAnyRole(users[i].id, roleNames);
+                if (hasAnyRole) {
+                    filteredUsers.push(users[i]);
+                }
+            }
+        }
+
+        return filteredUsers;
+    }
+
+    private async userHasAnyRole(userId: string, roleNames: string[]): Promise<boolean> {
+        const userRoles = await this.getUserRoles(userId).toPromise();
+        const hasAnyRole = roleNames.some((roleName) => {
+            const filteredRoles = userRoles.filter((userRole) => {
+                return userRole.name.toLocaleLowerCase() === roleName.toLocaleLowerCase();
+            });
+
+            return filteredRoles.length > 0;
+        });
+
+        return hasAnyRole;
     }
 
     private buildCreateTaskUrl(appName: string): any {

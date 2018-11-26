@@ -45,7 +45,7 @@ describe('PeopleCloudComponent', () => {
         element = fixture.nativeElement;
         service = TestBed.get(StartTaskCloudService);
         identityService = TestBed.get(IdentityUserService);
-        getRolesByUserIdSpy = spyOn(service, 'getRolesByUserId').and.returnValue(of(mockRoles));
+        getRolesByUserIdSpy = spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
         getUserSpy = spyOn(service, 'getUsers').and.returnValue(of(fakeUsers));
     });
 
@@ -78,7 +78,7 @@ describe('PeopleCloudComponent', () => {
     }));
 
     it('should show the users if the typed result match', async(() => {
-        component.users$ = of(fakeUsers);
+        component.users$ = of(<IdentityUserModel[]> fakeUsers);
         fixture.detectChanges();
         let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();

@@ -42,7 +42,9 @@ import {
 
 export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
-    public FORMAT_DATE: string = 'DD/MM/YYYY';
+    static MAX_NAME_LENGTH = 255;
+
+    public DATE_FORMAT: string = 'DD/MM/YYYY';
 
     /** (required) Name of the app. */
     @Input()
@@ -50,7 +52,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     /** Maximum length of the task name. */
     @Input()
-    maxNameLength: number = 255;
+    maxNameLength: number = StartTaskCloudComponent.MAX_NAME_LENGTH;
 
     /** Name of the task. */
     @Input()
@@ -115,10 +117,15 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     buildForm() {
         this.taskForm = this.formBuilder.group({
-            name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxNameLength)]),
+            name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength())]),
             priority: new FormControl(),
-            description: ''
+            description: new FormControl()
         });
+    }
+
+    private getMaxNameLength(): number {
+        return this.maxNameLength > StartTaskCloudComponent.MAX_NAME_LENGTH ?
+             StartTaskCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
     }
 
     private async loadCurrentUser() {
@@ -168,7 +175,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.dateError = false;
 
         if (newDateValue) {
-            let momentDate = moment(newDateValue, this.FORMAT_DATE, true);
+            let momentDate = moment(newDateValue, this.DATE_FORMAT, true);
             if (!momentDate.isValid()) {
                 this.dateError = true;
             }

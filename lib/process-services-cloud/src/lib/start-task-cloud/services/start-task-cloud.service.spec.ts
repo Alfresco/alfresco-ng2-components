@@ -116,8 +116,8 @@ describe('StartTaskCloudService', () => {
     });
 
     it('should able to fetch roles by userId', (done) => {
-        spyOn(service, 'getRolesByUserId').and.returnValue(of(mockRoles));
-        service.getRolesByUserId('mock-user-id').subscribe(
+        spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
+        service.getUserRoles('mock-user-id').subscribe(
             (res: RoleCloudModel[]) => {
                 expect(res).toBeDefined();
                 expect(res[0].name).toEqual('MOCK-ADMIN-ROLE');
@@ -134,8 +134,8 @@ describe('StartTaskCloudService', () => {
             status: 404, statusText: 'Not Found'
         });
 
-        spyOn(service, 'getRolesByUserId').and.returnValue(throwError(errorResponse));
-        service.getRolesByUserId('mock-user-id')
+        spyOn(service, 'getUserRoles').and.returnValue(throwError(errorResponse));
+        service.getUserRoles('mock-user-id')
             .subscribe(
                 () => {
                     fail('expected an error, not users');
