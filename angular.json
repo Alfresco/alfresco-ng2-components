@@ -533,7 +533,7 @@
     },
     "core": {
       "root": "lib/core",
-      "sourceRoot": "lib/core/src",
+      "sourceRoot": "lib/core",
       "projectType": "library",
       "prefix": "adf",
       "architect": {
