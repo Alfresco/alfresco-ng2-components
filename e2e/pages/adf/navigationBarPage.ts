@@ -42,6 +42,7 @@ export class NavigationBarPage {
     headerDataButton = element(by.css('a[data-automation-id="Header Data"]'));
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = element(by.css('a[data-automation-id="Form"]'));
+    treeViewButton = element(by.css('a[data-automation-id="Tree View"]'));
     processListButton = element(by.css('a[data-automation-id="Process List"]'));
 	treeViewButton = element(by.css('a[data-automation-id="Tree View"]'));
     iconsButton = element(by.css('a[data-automation-id="Icons"]'));
@@ -205,4 +206,9 @@ export class NavigationBarPage {
         Util.waitUntilElementIsVisible(this.processListButton);
         return this.processListButton.click();
     };
+
+    clickTreeViewButton() {
+        Util.waitUntilElementIsVisible(this.treeViewButton);
+        this.treeViewButton.click();
+    }
 }
