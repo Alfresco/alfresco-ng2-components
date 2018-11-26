@@ -14,8 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export interface RoleCloudModel {
+export class IdentityRoleModel {
 
-    id?: string;
-    name?: string;
+    id: string;
+    name: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.id = obj.id || null;
+            this.name = obj.name || null;
+        }
+    }
 }

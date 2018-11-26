@@ -16,10 +16,9 @@
  */
 
 import { FormControl } from '@angular/forms';
-import { StartTaskCloudService } from './../../services/start-task-cloud.service';
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { FullNamePipe, IdentityUserModel } from '@alfresco/adf-core';
+import { FullNamePipe, IdentityUserModel, IdentityUserService } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -69,7 +68,7 @@ export class PeopleCloudComponent implements OnInit {
 
     currentUser: IdentityUserModel;
 
-    constructor(private startTaskCloudService: StartTaskCloudService) { }
+    constructor(private identityUserService: IdentityUserService) { }
 
     ngOnInit() {
         this.loadUsers();
@@ -85,9 +84,9 @@ export class PeopleCloudComponent implements OnInit {
     private async loadUsers() {
         const roles = [PeopleCloudComponent.ROLE_ACTIVITI_ADMIN, PeopleCloudComponent.ROLE_ACTIVITI_MODELER, PeopleCloudComponent.ROLE_ACTIVITI_USER];
         if (this.showCurrentUser) {
-            this.users = await this.startTaskCloudService.getUsersByRolesWithCurrentUser(roles);
+            this.users = await this.identityUserService.getUsersByRolesWithCurrentUser(roles);
         } else {
-            this.users = await this.startTaskCloudService.getUsersByRolesWithoutCurrentUser(roles);
+            this.users = await this.identityUserService.getUsersByRolesWithoutCurrentUser(roles);
         }
     }
 

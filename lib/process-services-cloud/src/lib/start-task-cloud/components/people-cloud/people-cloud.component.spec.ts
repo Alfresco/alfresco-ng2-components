@@ -19,7 +19,6 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PeopleCloudComponent } from './people-cloud.component';
 import { StartTaskCloudTestingModule } from '../../testing/start-task-cloud.testing.module';
-import { StartTaskCloudService } from '../../services/start-task-cloud.service';
 import { LogService, setupTestBed, IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
 import { fakeUsers, mockRoles } from '../../mock/user-cloud.mock';
 import { of } from 'rxjs';
@@ -29,24 +28,22 @@ describe('PeopleCloudComponent', () => {
     let component: PeopleCloudComponent;
     let fixture: ComponentFixture<PeopleCloudComponent>;
     let element: HTMLElement;
-    let service: StartTaskCloudService;
     let identityService: IdentityUserService;
     let getRolesByUserIdSpy: jasmine.Spy;
     let getUserSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
-        providers: [StartTaskCloudService, LogService]
+        providers: [IdentityUserService, LogService]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
-        service = TestBed.get(StartTaskCloudService);
         identityService = TestBed.get(IdentityUserService);
-        getRolesByUserIdSpy = spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
-        getUserSpy = spyOn(service, 'getUsers').and.returnValue(of(fakeUsers));
+        getRolesByUserIdSpy = spyOn(identityService, 'getUserRoles').and.returnValue(of(mockRoles));
+        getUserSpy = spyOn(identityService, 'getUsers').and.returnValue(of(fakeUsers));
     });
 
     it('should create PeopleCloudComponent', () => {
