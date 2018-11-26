@@ -34,6 +34,8 @@ export class UserInfoDialog {
     apsImage = element(by.css('img[id="bpm-user-detail-image"]'));
     acsImage = element(by.css('img[id="ecm-user-detail-image"]'));
     initialImage = element.all(by.css('div[id="user-initials-image"]')).first();
+    userInfoSsoTitle = element(by.className('adf-userinfo-title'));
+    ssoEmail = element(by.id('identity-email'));
 
     dialogIsDisplayed() {
         Util.waitUntilElementIsVisible(this.dialog);
@@ -101,6 +103,21 @@ export class UserInfoDialog {
     getProcessTenant() {
         Util.waitUntilElementIsVisible(this.processTenant);
         return this.processTenant.getText();
+    }
+
+    getSsoHeaderTitle () {
+        Util.waitUntilElementIsVisible(this.userInfoSsoTitle);
+        return this.userInfoSsoTitle.getText();
+    }
+
+    getSsoTitle() {
+        Util.waitUntilElementIsVisible(this.userInfoSsoTitle);
+        return this.userInfoSsoTitle.getText();
+    }
+
+    getSsoEmail() {
+        Util.waitUntilElementIsVisible(this.ssoEmail);
+        return this.ssoEmail.getText();
     }
 
     closeUserProfile() {
