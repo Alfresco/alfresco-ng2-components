@@ -26,6 +26,8 @@ Creates/Starts a new task for the specified app
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | (required) The id of the app. |
+| maxTaskNameLength | `number` | 255 | Maximum task name length |
+| defaultTaskName | `string` |  | Default Task Name |
 
 ### Events
 

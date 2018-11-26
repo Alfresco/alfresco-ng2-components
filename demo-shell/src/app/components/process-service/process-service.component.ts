@@ -137,6 +137,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     defaultProcessDefinitionName: string;
     defaultProcessName: string;
+    defaultTaskName: string;
 
     activeTab: number = this.tabs.tasks; // tasks|processes|reports
 
@@ -175,6 +176,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
         this.defaultProcessDefinitionName = this.appConfig.get<string>('adf-start-process.processDefinitionName');
+        this.defaultTaskName = this.appConfig.get<string>('adf-start-task.name');
 
         // Uncomment this line to replace all 'text' field editors with custom component
         // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);

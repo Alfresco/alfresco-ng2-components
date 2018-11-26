@@ -23,10 +23,10 @@ import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { Observable, of } from 'rxjs';
 import { Form } from '../models/form.model';
-import { StartTaskModel } from '../models/start-task.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { switchMap, defaultIfEmpty } from 'rxjs/operators';
+import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'adf-start-task',
@@ -40,36 +40,31 @@ import { switchMap, defaultIfEmpty } from 'rxjs/operators';
 export class StartTaskComponent implements OnInit {
 
     public FORMAT_DATE: string = 'DD/MM/YYYY';
+    MAX_LENGTH: number = 255;
 
-    /** (required) The id of the app. */
     @Input()
     appId: number;
 
-    /** Emitted when the task is successfully created. */
+    @Input()
+    name: string = '';
+
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
-    /** Emitted when the cancel button is clicked by the user. */
     @Output()
     cancel: EventEmitter<void> = new EventEmitter<void>();
 
-    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    startTaskModel: StartTaskModel = new StartTaskModel();
-
-    forms: Form[];
-
+    taskDetailsModel: TaskDetailsModel = new TaskDetailsModel();
+    forms$: Observable<Form[]>;
     assigneeId: number;
-
-    formKey: string;
-
-    taskId: string;
-
-    dateError: boolean;
-
     field: FormFieldModel;
+    taskForm: FormGroup;
+    dateError: boolean = false;
+    maxTaskNameLength: number = this.MAX_LENGTH;
+    loading = false;
 
     /**
      * Constructor
@@ -80,44 +75,74 @@ export class StartTaskComponent implements OnInit {
     constructor(private taskService: TaskListService,
                 private dateAdapter: DateAdapter<Moment>,
                 private preferences: UserPreferencesService,
+                private formBuilder: FormBuilder,
                 private logService: LogService) {
     }
 
     ngOnInit() {
-        this.field = new FormFieldModel(new FormModel(), {id: this.assigneeId, value: this.assigneeId, placeholder: 'Assignee'});
+        if (this.name) {
+            this.taskDetailsModel.name = this.name;
+        }
+
+        this.validateMaxTaskNameLength();
+
+        this.field = new FormFieldModel(new FormModel(), { id: this.assigneeId, value: this.assigneeId, placeholder: 'Assignee' });
         this.preferences.locale$.subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
+
         this.loadFormsTask();
+        this.buildForm();
     }
 
-    public start(): void {
-        if (this.startTaskModel.name) {
-            if (this.appId) {
-                this.startTaskModel.category = this.appId.toString();
-            }
-            this.taskService.createNewTask(new TaskDetailsModel(this.startTaskModel))
-                .pipe(
-                    switchMap((createRes: any) =>
-                        this.attachForm(createRes.id, this.formKey).pipe(
-                            defaultIfEmpty(createRes),
-                            switchMap((attachRes: any) =>
-                                this.assignTaskByUserId(createRes.id, this.assigneeId).pipe(
-                                    defaultIfEmpty(attachRes ? attachRes : createRes)
-                                )
+    buildForm() {
+        this.taskForm = this.formBuilder.group({
+            name: new FormControl(this.taskDetailsModel.name, [Validators.required, Validators.maxLength(this.maxTaskNameLength)]),
+            description: new FormControl(''),
+            formKey: new FormControl('')
+        });
+
+        this.taskForm.valueChanges.subscribe((taskFormValues) => this.setTaskDetails(taskFormValues));
+    }
+
+    setTaskDetails(form) {
+        this.taskDetailsModel.name = form.name;
+        this.taskDetailsModel.description = form.description;
+        this.taskDetailsModel.formKey = form.formKey ? form.formKey.toString() : null;
+    }
+
+    isFormValid() {
+        return this.taskForm.valid && !this.dateError && !this.loading;
+    }
+
+    public saveTask(): void {
+        this.loading = true;
+        if (this.appId) {
+            this.taskDetailsModel.category = this.appId.toString();
+        }
+        this.taskService.createNewTask(this.taskDetailsModel)
+            .pipe(
+                switchMap((createRes: any) =>
+                    this.attachForm(createRes.id, this.taskDetailsModel.formKey).pipe(
+                        defaultIfEmpty(createRes),
+                        switchMap((attachRes: any) =>
+                            this.assignTaskByUserId(createRes.id, this.assigneeId).pipe(
+                                defaultIfEmpty(attachRes ? attachRes : createRes)
                             )
                         )
                     )
                 )
-                .subscribe(
-                    (res: any) => {
-                        this.success.emit(res);
-                    },
-                    (err) => {
-                        this.error.emit(err);
-                        this.logService.error('An error occurred while creating new task');
-                    });
-        }
+            )
+            .subscribe(
+                (res: any) => {
+                    this.loading = false;
+                    this.success.emit(res);
+                },
+                (err) => {
+                    this.loading = false;
+                    this.error.emit(err);
+                    this.logService.error('An error occurred while creating new task');
+                });
     }
 
     getAssigneeId(userId) {
@@ -145,13 +170,7 @@ export class StartTaskComponent implements OnInit {
     }
 
     private loadFormsTask(): void {
-        this.taskService.getFormList().subscribe((res: Form[]) => {
-                this.forms = res;
-            },
-            (err) => {
-                this.error.emit(err);
-                this.logService.error('An error occurred while trying to get the forms');
-            });
+        this.forms$ = this.taskService.getFormList();
     }
 
     public isUserNameEmpty(user: UserProcessModel): boolean {
@@ -168,20 +187,45 @@ export class StartTaskComponent implements OnInit {
         return firstName + delimiter + lastName;
     }
 
-    onDateChanged(newDateValue): void {
+    onDateChanged(newDateValue: any) {
         this.dateError = false;
 
         if (newDateValue) {
-            let momentDate = moment(newDateValue, this.FORMAT_DATE, true);
-            if (!momentDate.isValid()) {
-                this.dateError = true;
+            let momentDate;
+
+            if (typeof newDateValue === 'string') {
+                momentDate = moment(newDateValue, this.FORMAT_DATE, true);
+            } else {
+                momentDate = newDateValue;
             }
+
+            if (momentDate.isValid()) {
+                this.taskDetailsModel.dueDate = momentDate.toDate();
+            } else {
+                this.dateError = true;
+                this.taskDetailsModel.dueDate = null;
+            }
+        } else {
+            this.taskDetailsModel.dueDate = null;
         }
     }
 
-    clearDateInput() {
-        const emptyValue = '';
-        this.startTaskModel.dueDate = emptyValue;
-        this.onDateChanged(emptyValue);
+    private validateMaxTaskNameLength() {
+        if (this.maxTaskNameLength > this.MAX_LENGTH) {
+            this.maxTaskNameLength = this.MAX_LENGTH;
+            this.logService.log(`the task name length cannot be greater than ${this.MAX_LENGTH}`);
+        }
+    }
+
+    get nameController(): AbstractControl {
+        return this.taskForm.get('name');
+    }
+
+    get descriptionController(): AbstractControl {
+        return this.taskForm.get('description');
+    }
+
+    get formKeyController(): AbstractControl {
+        return this.taskForm.get('formKey');
     }
 }
