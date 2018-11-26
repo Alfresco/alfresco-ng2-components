@@ -22,7 +22,7 @@ import { EditTaskFiltersCloudComponent } from './edit-task-filters-cloud.compone
 import { setupTestBed } from '@alfresco/adf-core';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { FilterRepresentationModel } from '../models/filter-cloud.model';
+import { TaskFilterCloudRepresentationModel } from '../models/filter-cloud.model';
 import { TaskCloudModule } from './../task-cloud.module';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -32,7 +32,7 @@ describe('EditTaskFiltersCloudComponent', () => {
     let taskFilterService: TaskFilterCloudService;
     let fixture: ComponentFixture<EditTaskFiltersCloudComponent>;
 
-    let fakeFilter = new FilterRepresentationModel({
+    let fakeFilter = new TaskFilterCloudRepresentationModel({
         name: 'FakeInvolvedTasks',
         icon: 'adjust',
         id: 10,
@@ -93,18 +93,18 @@ describe('EditTaskFiltersCloudComponent', () => {
         it('should defined editTaskFilter form ', async(() => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(component.editTaskFilter).toBeDefined();
+                expect(component.editTaskFilterForm).toBeDefined();
             });
         }));
 
         it('should create editTaskFilter form with given input ', async(() => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const stateController = component.editTaskFilter.get('state');
-                const sortController = component.editTaskFilter.get('sort');
-                const orderController = component.editTaskFilter.get('order');
-                const assignmentController = component.editTaskFilter.get('assignment');
-                expect(component.editTaskFilter).toBeDefined();
+                const stateController = component.editTaskFilterForm.get('state');
+                const sortController = component.editTaskFilterForm.get('sort');
+                const orderController = component.editTaskFilterForm.get('order');
+                const assignmentController = component.editTaskFilterForm.get('assignment');
+                expect(component.editTaskFilterForm).toBeDefined();
                 expect(stateController).toBeDefined();
                 expect(sortController).toBeDefined();
                 expect(orderController).toBeDefined();
@@ -134,6 +134,18 @@ describe('EditTaskFiltersCloudComponent', () => {
                 fixture.detectChanges();
                 let deleteButton = fixture.debugElement.nativeElement.querySelector('#adf-delete-id');
                 expect(deleteButton.disabled).toBe(false);
+            });
+        }));
+
+        it('should able delete the filter', async(() => {
+            const deleteSpy = spyOn(taskFilterService, 'deleteFilter').and.callThrough();
+            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let deleteButton = fixture.debugElement.nativeElement.querySelector('#adf-delete-id');
+                deleteButton.click();
+                expect(deleteSpy).toHaveBeenCalled();
             });
         }));
 
@@ -170,6 +182,25 @@ describe('EditTaskFiltersCloudComponent', () => {
                 inquiryOptions[3].nativeElement.click();
                 fixture.detectChanges();
                 expect(saveButton.disabled).toBe(false);
+            });
+        });
+
+        it('should able to save edited task filter', async () => {
+            const addFilterSpy = spyOn(taskFilterService, 'addFilter').and.callThrough();
+            fixture.detectChanges();
+            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            const trigger = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
+            trigger.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-id');
+                const inquiryOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                inquiryOptions[3].nativeElement.click();
+                fixture.detectChanges();
+                saveButton.click();
+                expect(saveButton.disabled).toBe(false);
+                expect(addFilterSpy).toHaveBeenCalled();
             });
         });
 

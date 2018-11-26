@@ -22,5 +22,28 @@
       "DATE": "Date format DD/MM/YYYY",
       "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max."
     }
+  },
+  "ADF_CLOUD_EDIT_TASK_FILTER": {
+    "TITLE": "Customize your filter",
+    "STATUS": "Select a status",
+    "ASSIGNMENT": "ASSIGNMENT",
+    "COLUMN": "Select a column",
+    "DIRECTION": "Select a direction",
+    "TOOL_TIP": {
+      "SAVE": "Save filter",
+      "SAVE_AS": "Save filter as",
+      "DELETE": "Delete filter"
+    },
+    "LABEL": {
+      "STATUS": "Status",
+      "ASSIGNMENT": "Assignment",
+      "COLUMN": "Column",
+      "DIRECTION": "Direction"
+    },
+    "DIALOG": {
+      "TITLE": "Save filter as",
+      "SAVE": "SAVE",
+      "CANCEL": "CANCEL"
+    }
   }
 }

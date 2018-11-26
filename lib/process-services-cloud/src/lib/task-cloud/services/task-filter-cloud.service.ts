@@ -76,6 +76,21 @@ export class TaskFilterCloudService {
         });
     }
 
+    /**
+     * Adds a new task filter
+     * @param filter The new filter to add
+     * @returns Details of task filter just added
+     */
+    deleteFilter(filter: TaskFilterCloudRepresentationModel) {
+        const username = this.getUsername();
+        const key = `task-filters-${filter.query.appName}-${username}`;
+        if (key) {
+            let filters = JSON.parse(this.storage.getItem(key) || '[]');
+            filters.splice(filters.indexOf(filter), 1);
+            this.storage.setItem(key, JSON.stringify(filters));
+        }
+    }
+
     getUsername(): string {
         return this.getValueFromToken<string>('preferred_username');
     }

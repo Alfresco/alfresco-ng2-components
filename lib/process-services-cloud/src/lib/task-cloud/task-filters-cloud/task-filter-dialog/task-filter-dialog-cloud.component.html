@@ -1,5 +1,5 @@
 <div class="adf-task-filter-dialog">
-    <span mat-dialog-title>Save filter as</span>
+    <span mat-dialog-title>{{ 'EDIT_TASK_FILTER.DIALOG.TITLE' | translate}}</span>
     <mat-card>
         <mat-card-content>
         <form [formGroup]="filterForm">
@@ -9,8 +9,12 @@
         </form>
         </mat-card-content>
         <mat-card-actions fxLayout="row" fxLayoutAlign="end end">
-            <button mat-button (click)="onSaveClick()" id="adf-save-button-id" [disabled]="!isValid()">SAVE AS</button>
-            <button mat-button (click)="onCancelClick()" id="adf-delete-button-id">CANCEL</button>
+            <button mat-button (click)="onSaveClick()" id="adf-save-button-id" [disabled]="!isValid()">
+                {{ 'EDIT_TASK_FILTER.DIALOG.SAVE' | translate}}
+            </button>
+            <button mat-button (click)="onCancelClick()" id="adf-delete-button-id">
+                {{ 'EDIT_TASK_FILTER.DIALOG.CANCEL' | translate}}
+            </button>
         </mat-card-actions>
     </mat-card>
 </div>

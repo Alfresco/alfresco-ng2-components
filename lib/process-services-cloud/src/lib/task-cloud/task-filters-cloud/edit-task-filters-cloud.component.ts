@@ -21,8 +21,9 @@ import { MatDialog } from '@angular/material';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog/task-filter-dialog-cloud.component';
 import { QueryModel } from './../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
-import { FilterRepresentationModel } from '../models/filter-cloud.model';
+import { TaskFilterCloudRepresentationModel } from '../models/filter-cloud.model';
 import { TaskFilterDialogEvent } from '../models/task-filter-dialog-event';
+import { TranslationService } from '@alfresco/adf-core';
 
 @Component({
   selector: 'adf-cloud-edit-task-filters',
@@ -32,7 +33,7 @@ import { TaskFilterDialogEvent } from '../models/task-filter-dialog-event';
 export class EditTaskFiltersCloudComponent implements OnChanges {
 
     @Input()
-    taskFilter: FilterRepresentationModel;
+    taskFilter: TaskFilterCloudRepresentationModel;
 
     @Output()
     save: EventEmitter<any> = new EventEmitter();
@@ -41,14 +42,15 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
     delete: EventEmitter<any> = new EventEmitter();
 
     @Output()
-    filterChange: EventEmitter<FilterRepresentationModel> = new EventEmitter();
+    filterChange: EventEmitter<TaskFilterCloudRepresentationModel> = new EventEmitter();
 
     @Output()
-    success: EventEmitter<FilterRepresentationModel> = new EventEmitter();
+    success: EventEmitter<TaskFilterCloudRepresentationModel> = new EventEmitter();
 
     isDelete = true;
     isSave = false;
-    editedFilter: FilterRepresentationModel;
+    filterName = '';
+    editedTaskFilter: TaskFilterCloudRepresentationModel;
 
     columns = [
         {key: 'id', label: 'ID'},
@@ -62,22 +64,23 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
 
     directions = ['ASC', 'DESC'];
 
-    editTaskFilter: FormGroup;
+    editTaskFilterForm: FormGroup;
 
     constructor(
         private formBuilder: FormBuilder,
+        private translateService: TranslationService,
         public dialog: MatDialog, private taskFilterCloudService: TaskFilterCloudService) { }
 
     ngOnChanges(changes: SimpleChanges) {
         const taskFilter = changes['taskFilter'];
         if (taskFilter && taskFilter.currentValue) {
-            this.taskFilter = taskFilter.currentValue;
+            this.disableSaveButton();
             this.buildForm();
         }
     }
 
     buildForm() {
-        this.editTaskFilter = this.formBuilder.group({
+        this.editTaskFilterForm = this.formBuilder.group({
             state: this.taskFilter.query.state,
             assignment: this.taskFilter.query.assignment,
             sort: this.taskFilter.query.sort,
@@ -87,49 +90,71 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
     }
 
     onFilterChange() {
-        this.editTaskFilter.valueChanges.subscribe(() => {
-            const editedFilter = <FilterRepresentationModel> { name: this.taskFilter.name, query: new QueryModel(this.editTaskFilter.value) };
-            if (JSON.stringify(editedFilter).toLowerCase() === JSON.stringify(this.taskFilter).toLowerCase()) {
-                this.isSave = false;
-                this.isDelete = true;
+        this.editTaskFilterForm.valueChanges.subscribe(() => {
+            const editedQuery = new QueryModel(this.editTaskFilterForm.value);
+            editedQuery.appName = this.taskFilter.query.appName;
+            editedQuery.assignment = this.taskFilter.query.assignment;
+            if (JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(this.taskFilter.query).toLowerCase()) {
+                this.disableSaveButton();
                 this.filterChange.emit(this.taskFilter);
             } else {
-                this.isSave = true;
-                this.isDelete = false;
-                this.editedFilter = new FilterRepresentationModel(editedFilter);
-                this.editedFilter.query.appName = this.taskFilter.query.appName;
-                this.filterChange.emit(editedFilter);
+                this.enableSaveButton();
+                this.editedTaskFilter = new TaskFilterCloudRepresentationModel(
+                    {
+                        id: this.taskFilter.id,
+                        name: this.taskFilter.name,
+                        key: this.taskFilter.key,
+                        icon: this.taskFilter.icon,
+                        query: editedQuery
+                    });
+                this.filterChange.emit(this.editedTaskFilter);
             }
         });
     }
 
     onSaveAs() {
+        this.translateFilterName();
         const dialogRef = this.dialog.open(TaskFilterDialogCloudComponent, {
             data: {
-                name: this.taskFilter.name
+                name: this.filterName
             },
             height: 'auto',
             minWidth: '30%'
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result && result.action === TaskFilterDialogEvent.ACTION_SAVE) {
-                this.editedFilter.name = result.name;
-                this.editedFilter.icon = result.icon;
-                this.saveFilter(this.editedFilter);
-            } else {
-                this.onDelete();
+                this.editedTaskFilter.name = result.name;
+                this.editedTaskFilter.icon = result.icon;
+                this.editedTaskFilter.id = Math.random().toString(36).substr(2, 9),
+                this.saveFilter(this.editedTaskFilter);
             }
         });
     }
 
-    saveFilter(filter: FilterRepresentationModel) {
+    saveFilter(filter: TaskFilterCloudRepresentationModel) {
         this.taskFilterCloudService.addFilter(filter);
         this.success.emit(filter);
+        this.disableSaveButton();
+    }
+
+    translateFilterName() {
+        this.translateService.get(this.taskFilter.name).subscribe((message) => {
+            this.filterName = message;
+        });
+    }
+
+    disableSaveButton() {
         this.isSave = false;
         this.isDelete = true;
     }
 
+    enableSaveButton() {
+        this.isSave = true;
+        this.isDelete = false;
+    }
+
     onDelete() {
-        // TODO
+        this.taskFilterCloudService.deleteFilter(this.taskFilter);
+        this.delete.emit();
     }
 }
