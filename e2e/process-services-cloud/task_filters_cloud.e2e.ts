@@ -16,16 +16,13 @@
  */
 
 import TestConfig = require('../test.config');
-import resources = require('../util/resources');
 
 import { LoginAPSPage } from '../pages/adf/loginApsPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import TasksListPage = require('../pages/adf/process_services/tasksListPage');
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/tasksCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process_cloud/appListCloudComponent';
 
-import AlfrescoApi = require('alfresco-js-api-node');
 import { Tasks } from '../actions/APS-cloud/tasks';
 import { browser } from 'protractor';
 
@@ -61,23 +58,12 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290011] Should display default filters when an app is deployed', () => {
-            tasksCloudDemoPage.cancelledTasksFilter().checkTaskFilterIsDisplayed();
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            tasksCloudDemoPage.suspendedTasksFilter().checkTaskFilterIsDisplayed();
-            tasksCloudDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed();
         });
 
         it('[C290009] Should display default filters and created task', async() => {
             await tasksService.init(user, password);
             await tasksService.createStandaloneTask(newTask, simpleApp);
-
-            tasksCloudDemoPage.suspendedTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Suspended Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(newTask);
-
-            tasksCloudDemoPage.cancelledTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Cancelled Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(newTask);
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Completed Tasks');
@@ -98,14 +84,6 @@ describe('Task filters cloud', () => {
 
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('My Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTask);
-
-            tasksCloudDemoPage.cancelledTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Cancelled Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTask);
-
-            tasksCloudDemoPage.suspendedTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Suspended Tasks');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTask);
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();

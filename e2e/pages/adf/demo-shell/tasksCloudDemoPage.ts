@@ -23,10 +23,8 @@ import { element, by } from 'protractor';
 
 export class TasksCloudDemoPage {
 
-    myTasks = element(by.css('span[data-automation-id="My Tasks_filter"]'));
-    cancelledTasks = element(by.css('span[data-automation-id="Cancelled Tasks_filter"]'));
-    completedTasks = element(by.css('span[data-automation-id="Completed Tasks_filter"]'));
-    suspendedTasks = element(by.css('span[data-automation-id="Suspended Tasks_filter"]'));
+    myTasks = element(by.css('span[data-automation-id="my-tasks-filter"]'));
+    completedTasks = element(by.css('span[data-automation-id="completed-tasks-filter"]'));
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
 
     taskFiltersCloudComponent(filter) {
@@ -41,16 +39,8 @@ export class TasksCloudDemoPage {
         return new TaskFiltersCloudComponent(this.myTasks);
     }
 
-    cancelledTasksFilter() {
-        return new TaskFiltersCloudComponent(this.cancelledTasks);
-    }
-
     completedTasksFilter() {
         return new TaskFiltersCloudComponent(this.completedTasks);
-    }
-
-    suspendedTasksFilter() {
-        return new TaskFiltersCloudComponent(this.suspendedTasks);
     }
 
     customTaskFilter(filterName) {

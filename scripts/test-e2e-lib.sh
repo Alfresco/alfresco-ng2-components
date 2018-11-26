@@ -153,7 +153,7 @@ if [[  $DEVELOPMENT == "true" ]]; then
     echo "====== Run against local development  ====="
     npm run e2e-lib || exit 1
 else
-    webdriver-manager update --gecko=false --versions.chrome=2.38
+    webdriver-manager update --gecko=false --versions.chrome=2.44
     if [[  $LITESERVER == "true" ]]; then
         echo "====== Run dist in lite-server ====="
         ls demo-shell/dist
