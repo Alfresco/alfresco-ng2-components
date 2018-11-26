@@ -304,7 +304,7 @@ describe('TaskFiltersCloudComponent', () => {
 
         fixture.detectChanges();
         spyOn(component, 'selectFilterAndEmit').and.stub();
-        let filterButton = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="FakeMyTasks1_filter"]');
+        let filterButton = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="fake-my-tast1-filter"]');
         filterButton.click();
         expect(component.selectFilterAndEmit).toHaveBeenCalledWith({id: fakeGlobalFilter[1].id});
     }));
