@@ -57,8 +57,7 @@ class CustomTaskListComponent {
 
 class EmptyTemplateComponent {
 }
-/*tslint:disable*/
-fdescribe('ProcessListCloudComponent', () => {
+describe('ProcessListCloudComponent', () => {
     let component: ProcessListCloudComponent;
     let fixture: ComponentFixture<ProcessListCloudComponent>;
     let appConfig: AppConfigService;
