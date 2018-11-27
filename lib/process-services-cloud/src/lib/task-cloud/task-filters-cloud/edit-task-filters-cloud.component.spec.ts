@@ -20,7 +20,6 @@ import { async } from '@angular/core/testing';
 
 import { EditTaskFiltersCloudComponent } from './edit-task-filters-cloud.component';
 import { setupTestBed } from '@alfresco/adf-core';
-import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TaskFilterCloudRepresentationModel } from '../models/filter-cloud.model';
 import { TaskCloudModule } from './../task-cloud.module';
@@ -29,27 +28,23 @@ import { By } from '@angular/platform-browser';
 
 describe('EditTaskFiltersCloudComponent', () => {
     let component: EditTaskFiltersCloudComponent;
-    let taskFilterService: TaskFilterCloudService;
     let fixture: ComponentFixture<EditTaskFiltersCloudComponent>;
 
     let fakeFilter = new TaskFilterCloudRepresentationModel({
         name: 'FakeInvolvedTasks',
         icon: 'adjust',
         id: 10,
-        query: { state: 'CREATED', assignment: 'fake-involved', order: 'ASC', sort: 'id' }
+        query: { state: 'CREATED', appName: 'app-name', processDefinitionId: 'process-def-id', assignment: 'fake-involved', order: 'ASC', sort: 'id' }
     });
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, TaskCloudModule],
-        providers: [TaskFilterCloudService]
+        imports: [ProcessServiceCloudTestingModule, TaskCloudModule]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(EditTaskFiltersCloudComponent);
         component = fixture.componentInstance;
-        taskFilterService = TestBed.get(TaskFilterCloudService);
-        spyOn(taskFilterService, 'addFilter');
-        fixture.detectChanges();
+        component.taskFilter = fakeFilter;
     });
 
     it('should create EditTaskFiltersCloudComponent', () => {
@@ -79,7 +74,7 @@ describe('EditTaskFiltersCloudComponent', () => {
         expect(title).toBeDefined();
         expect(subTitle).toBeDefined();
         expect(title.innerText).toEqual('FakeInvolvedTasks');
-        expect(subTitle.innerText).toEqual('Customize your filter');
+        expect(subTitle.innerText).toEqual('EDIT_TASK_FILTER.TITLE');
     });
 
     describe('EditTaskFilter form', () => {
@@ -117,12 +112,22 @@ describe('EditTaskFiltersCloudComponent', () => {
             });
         }));
 
-        it('should disable save as button if the task filter did not change', async(() => {
+        it('should disable save button if the task filter did not change', async(() => {
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 let saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-id');
+                expect(saveButton.disabled).toBe(true);
+            });
+        }));
+
+        it('should disable saveAs button if the task filter did not change', async(() => {
+            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-as-id');
                 expect(saveButton.disabled).toBe(true);
             });
         }));
@@ -138,14 +143,12 @@ describe('EditTaskFiltersCloudComponent', () => {
         }));
 
         it('should able delete the filter', async(() => {
-            const deleteSpy = spyOn(taskFilterService, 'deleteFilter').and.callThrough();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 let deleteButton = fixture.debugElement.nativeElement.querySelector('#adf-delete-id');
                 deleteButton.click();
-                expect(deleteSpy).toHaveBeenCalled();
             });
         }));
 
@@ -163,13 +166,12 @@ describe('EditTaskFiltersCloudComponent', () => {
                 expect(sortElement).toBeDefined();
                 expect(orderElement).toBeDefined();
                 expect(stateElement.innerText.trim()).toBe('CREATED');
-                expect(assignmentElement.innerText.trim()).toBe('fake-involved');
                 expect(sortElement.innerText.trim()).toBe('ID');
                 expect(orderElement.innerText.trim()).toBe('ASC');
             });
         }));
 
-        it('should enable saveAs button if the task filter changed', async () => {
+        it('should enable save button if the task filter changed', async () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -182,25 +184,6 @@ describe('EditTaskFiltersCloudComponent', () => {
                 inquiryOptions[3].nativeElement.click();
                 fixture.detectChanges();
                 expect(saveButton.disabled).toBe(false);
-            });
-        });
-
-        it('should able to save edited task filter', async () => {
-            const addFilterSpy = spyOn(taskFilterService, 'addFilter').and.callThrough();
-            fixture.detectChanges();
-            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
-            const trigger = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
-            trigger.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-id');
-                const inquiryOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                inquiryOptions[3].nativeElement.click();
-                fixture.detectChanges();
-                saveButton.click();
-                expect(saveButton.disabled).toBe(false);
-                expect(addFilterSpy).toHaveBeenCalled();
             });
         });
 
@@ -216,7 +199,7 @@ describe('EditTaskFiltersCloudComponent', () => {
                 const inquiryOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 inquiryOptions[3].nativeElement.click();
                 fixture.detectChanges();
-                expect(deleteButton.disabled).toBe(false);
+                expect(deleteButton.disabled).toBe(true);
             });
         });
 
@@ -256,6 +239,68 @@ describe('EditTaskFiltersCloudComponent', () => {
             fixture.whenStable().then(() => {
                 const inquiryOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 expect(inquiryOptions.length).toEqual(3);
+            });
+        });
+    });
+
+    describe('edit filter actions', () => {
+
+        beforeEach(() => {
+            let change = new SimpleChange(undefined, fakeFilter, true);
+            component.ngOnChanges({ 'taskFilter': change });
+        });
+
+        it('should emit save event on click save button', async () => {
+            let saveSpy: jasmine.Spy = spyOn(component.action, 'emit');
+            fixture.detectChanges();
+            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            const trigger = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
+            trigger.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-id');
+                const inquiryOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                inquiryOptions[3].nativeElement.click();
+                fixture.detectChanges();
+                saveButton.click();
+                fixture.detectChanges();
+                expect(saveSpy).toHaveBeenCalled();
+            });
+        });
+
+        it('should emit delete event on click of delete button', async () => {
+            let deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
+            fixture.detectChanges();
+            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            const trigger = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
+            trigger.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                let deleteButton = fixture.debugElement.nativeElement.querySelector('#adf-delete-id');
+                deleteButton.click();
+                fixture.detectChanges();
+                expect(deleteSpy).toHaveBeenCalled();
+            });
+        });
+
+        it('should emit saveAs event on click saveAs button', async () => {
+            let saveAsSpy: jasmine.Spy = spyOn(component.action, 'emit');
+            fixture.detectChanges();
+            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            const trigger = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
+            trigger.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-as-id');
+                const inquiryOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                inquiryOptions[3].nativeElement.click();
+                fixture.detectChanges();
+                saveButton.click();
+                fixture.detectChanges();
+                expect(saveAsSpy).toHaveBeenCalled();
             });
         });
     });

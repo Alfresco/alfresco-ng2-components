@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-import { TaskFilterCloudRepresentationModel } from '../models/filter-cloud.model';
+import { FilterRepresentationModel, AppDefinitionRepresentationModel } from '../models/filter-cloud.model';
 
-// export let fakeFilters = {
-//     size: 2, total: 2, start: 0,
-//     data: [
-//         new AppDefinitionRepresentationModel(
-//             {
-//                 id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
-//                 filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved' }
-//             }
-//         ),
-//         {
-//             id: 2, name: 'FakeMyTasks', recent: false, icon: 'glyphicon-align-left',
-//             filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-assignee' }
-//         }
-//     ]
-// };
+export let fakeFilters = {
+    size: 2, total: 2, start: 0,
+    data: [
+        new AppDefinitionRepresentationModel(
+            {
+                id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
+                filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved' }
+            }
+        ),
+        {
+            id: 2, name: 'FakeMyTasks', recent: false, icon: 'glyphicon-align-left',
+            filter: { sort: 'created-desc', name: '', state: 'open', assignment: 'fake-assignee' }
+        }
+    ]
+};
 
 export let fakeAppFilter = {
     size: 1, total: 1, start: 0,
@@ -139,7 +139,7 @@ export let fakeTasksChecklist = {
     ]
 };
 
-export let fakeRepresentationFilter1: TaskFilterCloudRepresentationModel = new TaskFilterCloudRepresentationModel({
+export let fakeRepresentationFilter1: FilterRepresentationModel = new FilterRepresentationModel({
     appId: 1,
     name: 'CONTAIN FILTER',
     recent: true,
@@ -156,7 +156,7 @@ export let fakeRepresentationFilter1: TaskFilterCloudRepresentationModel = new T
     }
 });
 
-export let fakeRepresentationFilter2: TaskFilterCloudRepresentationModel = new TaskFilterCloudRepresentationModel({
+export let fakeRepresentationFilter2: FilterRepresentationModel = new FilterRepresentationModel({
     appId: 2,
     name: 'NO TASK FILTER',
     recent: false,

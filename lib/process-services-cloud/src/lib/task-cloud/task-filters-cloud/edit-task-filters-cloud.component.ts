@@ -40,8 +40,6 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
     @Output()
     action: EventEmitter<FilterActionType> = new EventEmitter();
 
-    toggleAction = false;
-
     columns = [
         {key: 'id', label: 'ID'},
         {key: 'name', label: 'NAME'},
@@ -53,7 +51,8 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
     states = ['ALL', 'CREATED', 'CANCELLED', 'ASSIGNED', 'SUSPENDED', 'COMPLETED', 'DELETED'];
 
     directions = ['ASC', 'DESC'];
-
+    isSaveEnable = true;
+    isDeleteEnable = true;
     editTaskFilterForm: FormGroup;
 
     constructor(private formBuilder: FormBuilder) {}
@@ -75,23 +74,34 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
             order: this.taskFilter.query.order
         });
         this.onFilterChange();
+        this.isSaveButtonEnabled();
+        this.isDeleteButtonEnabled();
     }
 
     onFilterChange() {
         this.editTaskFilterForm.valueChanges.subscribe((formValues: QueryModel) => {
             const editedQuery = new QueryModel(formValues);
-            if (JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(this.taskFilter.query).toLowerCase()) {
-                this.toggleFilterAction();
-                this.filterChange.emit(this.taskFilter.query);
-            } else {
-                this.toggleFilterAction();
-                this.filterChange.emit(editedQuery);
-            }
+            this.filterChange.emit(editedQuery);
         });
     }
 
-    toggleFilterAction() {
-        this.toggleAction = !this.toggleAction;
+    isSaveButtonEnabled() {
+        this.editTaskFilterForm.valueChanges.subscribe((formValues: QueryModel) => {
+            const editedQuery = new QueryModel(formValues);
+            this.isSaveEnable = this.compareFilter(editedQuery, this.taskFilter.query);
+        });
+    }
+
+    isDeleteButtonEnabled() {
+        this.editTaskFilterForm.valueChanges.subscribe((formValues: QueryModel) => {
+            const editedQuery = new QueryModel(formValues);
+            this.isDeleteEnable = this.compareFilter(editedQuery, this.taskFilter.query);
+        });
+    }
+
+    compareFilter(editedQuery, currentQuery)  {
+        return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
+
     }
 
     onSave() {

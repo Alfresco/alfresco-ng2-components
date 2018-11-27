@@ -85,7 +85,7 @@ export class TaskFilterCloudService {
         const key = `task-filters-${filter.query.appName}-${username}`;
         if (key) {
             let filters = JSON.parse(this.storage.getItem(key) || '[]');
-            let itemIndex = filters.findIndex(flt => flt.id === filter.id);
+            let itemIndex = filters.findIndex((flt: TaskFilterCloudRepresentationModel) => flt.id === filter.id);
             filters[itemIndex] = filter;
             this.storage.setItem(key, JSON.stringify(filters));
         }
