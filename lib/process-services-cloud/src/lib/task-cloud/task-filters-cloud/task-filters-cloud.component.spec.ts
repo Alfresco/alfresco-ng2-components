@@ -33,18 +33,21 @@ describe('TaskFiltersCloudComponent', () => {
     let fakeGlobalFilter = [
         new TaskFilterCloudRepresentationModel({
             name: 'FakeInvolvedTasks',
+            key: 'fake-involved-tasks',
             icon: 'adjust',
             id: 10,
             filter: {state: 'open', assignment: 'fake-involved'}
         }),
         new TaskFilterCloudRepresentationModel({
         name: 'FakeMyTasks1',
+        key: 'fake-my-tast1',
         icon: 'done',
         id: 11,
         filter: {state: 'open', assignment: 'fake-assignee'}
         }),
         new TaskFilterCloudRepresentationModel({
             name: 'FakeMyTasks2',
+            key: 'fake-my-tast2',
             icon: 'inbox',
             id: 12,
             filter: {state: 'open', assignment: 'fake-assignee'}
@@ -301,7 +304,7 @@ describe('TaskFiltersCloudComponent', () => {
 
         fixture.detectChanges();
         spyOn(component, 'selectFilterAndEmit').and.stub();
-        let filterButton = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="FakeMyTasks1_filter"]');
+        let filterButton = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="fake-my-tast1-filter"]');
         filterButton.click();
         expect(component.selectFilterAndEmit).toHaveBeenCalledWith({id: fakeGlobalFilter[1].id});
     }));
@@ -316,26 +319,41 @@ describe('TaskFiltersCloudComponent', () => {
         expect(component.getFilters).toHaveBeenCalledWith(appName);
     });
 
-    it('should not reload filters by appName null on binding changes', () => {
-        spyOn(component, 'getFilters').and.stub();
-        const appName = null;
-
-        let change = new SimpleChange(undefined, appName, true);
-        component.ngOnChanges({ 'appName': change });
-
-        expect(component.getFilters).not.toHaveBeenCalledWith(appName);
-    });
-
     it('should change current filter when filterParam (name) changes', () => {
         component.filters = fakeGlobalFilter;
         component.currentFilter = null;
 
-        fixture.whenStable().then(() => {
-            expect(component.currentFilter.name).toEqual(fakeGlobalFilter[2].name);
-        });
-
-        const change = new SimpleChange(null, { name: fakeGlobalFilter[2].name }, true);
+        const change = new SimpleChange(null, { name: fakeGlobalFilter[1].name }, true);
         component.ngOnChanges({ 'filterParam': change });
+
+        fixture.whenStable().then(() => {
+            expect(component.currentFilter.name).toEqual(fakeGlobalFilter[1].name);
+        });
+    });
+
+    it('should change current filter when filterParam (key) changes', () => {
+        component.filters = fakeGlobalFilter;
+        component.currentFilter = null;
+
+        const change = new SimpleChange(null, { key: fakeGlobalFilter[2].key }, true);
+        component.ngOnChanges({ 'filterParam': change });
+
+        fixture.whenStable().then(() => {
+            expect(component.currentFilter.key).toEqual(fakeGlobalFilter[2].key);
+        });
+    });
+
+    it('should change current filter when filterParam (index) changes', () => {
+        component.filters = fakeGlobalFilter;
+        component.currentFilter = null;
+        const position = 1;
+
+        const change = new SimpleChange(null, { index: position }, true);
+        component.ngOnChanges({ 'filterParam': change });
+
+        fixture.whenStable().then(() => {
+            expect(component.currentFilter.name).toEqual(fakeGlobalFilter[position].name);
+        });
     });
 
     it('should reload filters by app name on binding changes', () => {
@@ -354,6 +372,6 @@ describe('TaskFiltersCloudComponent', () => {
 
         expect(component.currentFilter).toBeUndefined();
         component.selectFilter(filter);
-        expect(component.getCurrentFilter()).toBe(fakeGlobalFilter[1]);
+        expect(component.getCurrentFilter()).toBe(fakeGlobalFilter[0]);
     });
 });
