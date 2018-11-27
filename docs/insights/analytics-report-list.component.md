@@ -1,9 +1,10 @@
 ---
+Title: APS Analytics List Component
 Added: v2.0.0
 Status: Active
 ---
 
-# Activiti Analytics List Component
+# APS Analytics List Component
 
 Shows a list of all available reports
 

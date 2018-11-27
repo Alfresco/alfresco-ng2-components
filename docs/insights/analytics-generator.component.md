@@ -1,4 +1,5 @@
 ---
+Title: Analytics Generator Component
 Added: v2.0.0
 Status: Active
 ---
