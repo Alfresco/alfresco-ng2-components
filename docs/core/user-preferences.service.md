@@ -1,4 +1,5 @@
 ---
+Title: User Preferences Service
 Added: v2.0.0
 Status: Active
 Last reviewed: 2018-11-20

@@ -1,4 +1,5 @@
 ---
+Title: Info Drawer Tab component
 Added: v2.4.0
 Status: Active
 Last reviewed: 2018-06-08

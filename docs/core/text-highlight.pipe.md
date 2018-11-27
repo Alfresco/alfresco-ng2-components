@@ -1,4 +1,5 @@
 ---
+Title: Text Highlight pipe
 Added: v2.0.0
 Status: Active
 ---

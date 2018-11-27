@@ -1,4 +1,5 @@
 ---
+Title: Search Configuration interface
 Added: v2.1.0
 Status: Active
 ---

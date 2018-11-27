@@ -1,4 +1,5 @@
 ---
+Title: Mime Type Icon pipe
 Added: v2.0.0
 Status: Active
 ---

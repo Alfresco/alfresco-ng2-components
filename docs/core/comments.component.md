@@ -1,4 +1,5 @@
 ---
+Title: Comments Component
 Added: v2.0.0
 Status: Active
 ---
