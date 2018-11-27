@@ -287,5 +287,31 @@
       "DUPLICATE-PERMISSION": "Én eller flere av tillatelsene du har angitt, er allerede til stede: {{list}}",
       "NOT-ALLOWED": "Du har ikke lov til å endre tillatelser"
     }
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "Opprett bibliotek",
+      "CREATE": "Opprett",
+      "CANCEL": "Avbryt",
+      "FORM": {
+        "DESCRIPTION": "Beskrivelse",
+        "SITE_ID": "Biblioteks-ID",
+        "NAME": "Navn"
+      }
+    },
+    "VISIBILITY": {
+      "PRIVATE": "Privat",
+      "PUBLIC": "Offentlig",
+      "MODERATED": "Moderert"
+    },
+    "ERRORS": {
+      "GENERIC": "Vi støtte på et problem",
+      "EXISTENT_SITE": "Denne biblioteks-ID-en er ikke tilgjengelig. Prøv et annet bibliotek.",
+      "CONFLICT": "Denne biblioteks-ID-en er alt brukt. Sjekk papirkurven.",
+      "ID_TOO_LONG": "Bruk 72 tegn eller mindre i URL-navnet",
+      "DESCRIPTION_TOO_LONG": "Bruk 512 tegn eller mindre i beskrivelsen",
+      "TITLE_TOO_LONG": "Bruk 256 tegn eller mindre i tittelen",
+      "ILLEGAL_CHARACTERS": "Bruk kun tall og bokstaver"
+    }
   }
 }

@@ -287,5 +287,31 @@
       "DUPLICATE-PERMISSION": "Uno o più autorizzazioni impostate sono già presenti: {{list}}",
       "NOT-ALLOWED": "Non è consentito modificare le autorizzazioni"
     }
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "Crea libreria",
+      "CREATE": "Crea",
+      "CANCEL": "Annulla",
+      "FORM": {
+        "DESCRIPTION": "Descrizione",
+        "SITE_ID": "ID libreria",
+        "NAME": "Nome"
+      }
+    },
+    "VISIBILITY": {
+      "PRIVATE": "Privato",
+      "PUBLIC": "Pubblico",
+      "MODERATED": "Moderato"
+    },
+    "ERRORS": {
+      "GENERIC": "Si è verificato un errore",
+      "EXISTENT_SITE": "L'ID libreria specificato non è disponibile. Provare con un'altra libreria.",
+      "CONFLICT": "L'ID libreria specificato è già in uso. Verificare il cestino.",
+      "ID_TOO_LONG": "Utilizzare 72 caratteri o meno per il nome URL",
+      "DESCRIPTION_TOO_LONG": "Utilizzare 512 o meno per la descrizione",
+      "TITLE_TOO_LONG": "Utilizzare 256 caratteri o meno per il titolo",
+      "ILLEGAL_CHARACTERS": "Utilizzare solo lettere e numeri"
+    }
   }
 }
