@@ -34,16 +34,10 @@ export class Identity {
     const user = await this.getUserInfoByUsername(username);
     await this.resetPassword(user[0].id, password);
     user[0].password = password;
-    const roleName = 'identity';
-    let role;
-
-    try {
-      role = await this.getRoleByName(roleName);
-    } catch (e) {
-      console.log('getRoleByName', e);
-    }
-
-    await this.assignRole(user[0].id, role.id, roleName);
+    // todo: this will be uncomment when the get role by name will be fixed
+    // const roleName = 'identity';
+    // const role = await this.getRoleByName(roleName);
+    // await this.assignRole(user[0].id, role.id, roleName);
     return user;
   }
 
