@@ -7,10 +7,11 @@
         placeholder="{{ 'LIBRARY.DIALOG.FORM.NAME' | translate }}"
         required
         matInput
+        autofocus
         formControlName="title"
         autocomplete="off"
       />
-      
+
       <mat-hint *ngIf="libraryTitleExists">{{
         'LIBRARY.HINTS.SITE_TITLE_EXISTS' | translate
       }}</mat-hint>
