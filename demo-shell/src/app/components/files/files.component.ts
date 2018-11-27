@@ -35,7 +35,8 @@ import {
     DocumentListComponent,
     PermissionStyleModel,
     UploadFilesEvent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    LibraryDialogComponent
 } from '@alfresco/adf-content-services';
 
 import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
@@ -571,5 +572,18 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     getFileFiltering() {
         return this.acceptedFilesTypeShow ? this.acceptedFilesType : '*';
+    }
+
+    createLibrary() {
+        const dialogInstance: any = this.dialog.open(LibraryDialogComponent, {
+            width: '400px'
+        });
+
+        dialogInstance.componentInstance.error.subscribe(message => {
+            this.notificationService.openSnackMessage(
+                message,
+                6000
+            );
+        });
     }
 }

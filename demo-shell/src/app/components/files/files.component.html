@@ -84,6 +84,12 @@
                         matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}">
                         <mat-icon>create_new_folder</mat-icon>
                     </button>
+                    <button
+                        mat-icon-button
+                        matTooltip="{{ 'APP.CREATE_LIBRARY' | translate }}"
+                        (click)="createLibrary()">
+                        <mat-icon>library_add</mat-icon>
+                    </button>
                     <button mat-icon-button
                             [disabled]="!canEditFolder(documentList.selection)"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}"

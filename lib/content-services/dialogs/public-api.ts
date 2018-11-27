@@ -21,3 +21,4 @@ export * from './node-lock.dialog';
 export * from './confirm.dialog';
 
 export * from './dialog.module';
+export * from './library/library.dialog';

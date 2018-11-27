@@ -1,5 +1,6 @@
 {
   "APP": {
+    "CREATE_LIBRARY": "Create Lbrary",
     "INFO_DRAWER": {
       "TITLE": "Details",
       "COMMENTS": "Comments",
