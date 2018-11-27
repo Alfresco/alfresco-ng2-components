@@ -57,8 +57,7 @@ class CustomTaskListComponent {
 
 class EmptyTemplateComponent {
 }
-/*tslint:disable*/
-fdescribe('ProcessListCloudComponent', () => {
+describe('ProcessListCloudComponent', () => {
     let component: ProcessListCloudComponent;
     let fixture: ComponentFixture<ProcessListCloudComponent>;
     let appConfig: AppConfigService;
@@ -174,7 +173,7 @@ fdescribe('ProcessListCloudComponent', () => {
             }
         });
         let rowEvent = new DataRowEvent(row, null);
-        component.rowClick.subscribe(taskId => {
+        component.rowClick.subscribe( (taskId) => {
             expect(taskId).toEqual('999');
             expect(component.getCurrentId()).toEqual('999');
             done();
