@@ -34,32 +34,30 @@ describe('User Info - SSO', () => {
     let silentLogin, identityUser ;
 
     beforeAll(async () => {
-        // await identityService.init(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
-        await identityService.init('superadminuser', 'password');
+        await identityService.init(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
         identityUser = await identityService.createIdentityUser();
         // const a  = identityService.assignRole(identityUser.id, roleId, roleName)
-
-        // console.log(a);
-        // browser.ignoreSynchronization = true;
-
-    });
-
-    it('[C290066] Should display UserInfo when login using SSO', async () => {
-
         silentLogin = false;
         await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
         await loginApsPage.clickOnSSOButton();
         browser.ignoreSynchronization = true;
+    });
+
+    it('[C290066] Should display UserInfo when login using SSO', async () => {
+
         await loginApsPage.loginAPS(identityUser['0'].username, identityUser['0'].password);
         navigationBarPage.navigateToProcessServicesCloudPage();
         navigationBarPage.clickUserProfile();
+        // expects must be updated when the issue [ADF-3791] will be fixed
+        expect(userInfoDialog.getSsoHeaderTitle()).toEqual(identityUser['0'].firstName);
+        expect(userInfoDialog.getSsoTitle()).toEqual(identityUser['0'].firstName);
+        expect(userInfoDialog.getSsoEmail()).toEqual(identityUser['0'].email);
+        userInfoDialog.closeUserProfile();
 
-        // expect(userInfoDialog.getSsoHeaderTitle()).toEqual('ADF');
-        // expect(userInfoDialog.getSsoTitle()).toEqual('ADF');
-        // expect(userInfoDialog.getSsoEmail()).toEqual(TestConfig.adf.adminEmail);
+    });
 
-        // userInfoDialog.closeUserProfile();
-
+    afterAll (async () => {
+        await identityService.deleteIdentityUser(identityUser[0].id);
     });
 
 });
