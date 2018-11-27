@@ -1,4 +1,5 @@
 ---
+Title: Search filter service
 Added: v2.4.0
 Status: Active
 Last reviewed: 2018-06-12

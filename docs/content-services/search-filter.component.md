@@ -1,4 +1,5 @@
 ---
+Title: Search Filter component
 Added: v2.3.0
 Status: Active
 Last reviewed: 2018-06-12

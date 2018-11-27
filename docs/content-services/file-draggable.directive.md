@@ -1,4 +1,5 @@
 ---
+Title: File Draggable directive
 Added: v2.0.0
 Status: Active
 Last reviewed: 2018-04-10

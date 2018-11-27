@@ -1,4 +1,5 @@
 ---
+Title: Node Lock directive
 Added: v2.2.0
 Status: Active
 Last reviewed: 2018-11-20
