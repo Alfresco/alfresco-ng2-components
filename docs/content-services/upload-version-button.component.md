@@ -1,4 +1,5 @@
 ---
+Title: Upload Version Button Component (Workaround)
 Added: v2.3.0
 Status: Experimental
 Last reviewed: 2018-03-23

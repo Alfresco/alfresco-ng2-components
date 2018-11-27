@@ -1,4 +1,5 @@
 ---
+Title: Document Library model
 Added: v2.0.0
 Status: Active
 ---

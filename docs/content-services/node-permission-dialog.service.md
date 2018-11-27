@@ -1,4 +1,5 @@
 ---
+Title: Node permission dialog service
 Added: v2.4.0
 Status: Active
 Last reviewed: 2018-09-13

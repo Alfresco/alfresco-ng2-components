@@ -1,4 +1,5 @@
 ---
+Title: Version Manager Component
 Added: v2.0.0
 Status: Experimental
 Last reviewed: 2018-04-13

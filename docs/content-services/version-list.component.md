@@ -1,4 +1,5 @@
 ---
+Title: Version List component
 Added: v2.0.0
 Status: Experimental
 Last reviewed: 2018-05-08
