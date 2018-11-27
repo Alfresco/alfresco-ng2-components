@@ -1,4 +1,5 @@
 ---
+Title: App List Cloud Component
 Added: v3.0.0
 Status: Active
 Last reviewed: 2018-18-10
