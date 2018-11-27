@@ -69,3 +69,10 @@ export class FilterParamsModel {
         }
     }
 }
+
+export class FilterActionType {
+    actionType: string;
+    constructor(action: string) {
+        this.actionType = action;
+    }
+}

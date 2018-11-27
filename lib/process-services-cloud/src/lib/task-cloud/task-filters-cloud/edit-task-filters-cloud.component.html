@@ -23,6 +23,20 @@
                         id="adf-task-filter-assignment-id"
                         placeholder="{{'EDIT_TASK_FILTER.LABEL.ASSIGNMENT' | translate}}"/>
                 </mat-form-field>
+                <mat-form-field *ngIf="false" [floatLabel]="'auto'" fxFlex>
+                    <input matInput
+                        formControlName="appName"
+                        type="text"
+                        id="adf-task-filter-appName-id"
+                        placeholder="{{'EDIT_TASK_FILTER.LABEL.APP_NAME' | translate}}"/>
+                </mat-form-field>
+                <mat-form-field *ngIf="false" [floatLabel]="'auto'" fxFlex>
+                    <input matInput
+                        formControlName="processDefinitionId"
+                        type="text"
+                        id="adf-task-filter-processDefId-id"
+                        placeholder="{{'EDIT_TASK_FILTER.LABEL.PROCESS_DEF_ID' | translate}}"/>
+                </mat-form-field>
                 <mat-form-field [floatLabel]="'auto'" fxFlex>
                     <mat-select placeholder="{{'EDIT_TASK_FILTER.LABEL.COLUMN' | translate}}" formControlName="sort" id="adf-task-filter-sort-id">
                         <mat-option [value]="''">{{ 'EDIT_TASK_FILTER.COLUMN' | translate}}</mat-option>
@@ -40,11 +54,14 @@
                     </mat-select>
                 </mat-form-field>
                 <div>
-                    <button mat-icon-button matTooltip="{{'EDIT_TASK_FILTER.TOOL_TIP.SAVE_AS' | translate}}" id="adf-save-id" [disabled]="!isSave" (click)="onSaveAs()">
+                    <button mat-icon-button matTooltip="{{'EDIT_TASK_FILTER.TOOL_TIP.SAVE' | translate}}" id="adf-save-id" [disabled]="!toggleAction" (click)="onSave()">
                         <mat-icon>save</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="{{'EDIT_TASK_FILTER.TOOL_TIP.DELETE' | translate}}" id="adf-delete-id" [disabled]="!isDelete" (click)="onDelete()">
+                    <button mat-icon-button matTooltip="{{'EDIT_TASK_FILTER.TOOL_TIP.DELETE' | translate}}" id="adf-delete-id" [disabled]="toggleAction" (click)="onDelete()">
                         <mat-icon>delete</mat-icon>
+                    </button>
+                    <button mat-icon-button matTooltip="{{'EDIT_TASK_FILTER.TOOL_TIP.SAVE_AS' | translate}}" id="adf-save-as-id" [disabled]="!toggleAction" (click)="onSaveAs()">
+                        <mat-icon>save_alt</mat-icon>
                     </button>
                 </div>
             </div>
