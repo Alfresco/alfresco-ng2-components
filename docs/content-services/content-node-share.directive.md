@@ -1,4 +1,5 @@
 ---
+Title: Node Public File Share Directive
 Added: v2.3.0
 Status: Active
 Last reviewed: 2018-09-13

@@ -1,4 +1,5 @@
 ---
+Title: Search Sorting Picker Component
 Added: v2.3.0
 Status: Active
 ---
