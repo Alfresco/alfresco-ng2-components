@@ -1,4 +1,5 @@
 ---
+Title: Process Instance Comments component
 Added: v2.0.0
 Status: Active
 ---

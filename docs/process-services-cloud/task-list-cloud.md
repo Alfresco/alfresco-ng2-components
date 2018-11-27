@@ -1,10 +1,11 @@
 ---
-Added: v2.0.0
+Title: Task List Cloud component
+Added: v3.0.0
 Status: Active
 Last reviewed: 2018-04-16
 ---
 
-# Task List component
+# Task List Cloud component
 
 Renders a list containing all the tasks matched by the parameters specified.
 

@@ -1,11 +1,12 @@
 ---
+Title: Select App Component
 Added: v2.0.0
 Status: Active
 ---
 
-# Select app Component
+# Select App Component
 
-Show all available apps and return the selected app.
+Shows all available apps and returns the selected app.
 
 ![select-apps-dialog](../docassets/images/select-apps-dialog.png)
 
