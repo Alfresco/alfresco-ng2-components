@@ -1,0 +1,84 @@
+<h2 mat-dialog-title>{{ createTitle | translate }}</h2>
+
+<mat-dialog-content>
+  <form novalidate [formGroup]="form" (submit)="submit()">
+    <mat-form-field>
+      <input
+        placeholder="{{ 'LIBRARY.DIALOG.FORM.NAME' | translate }}"
+        required
+        matInput
+        formControlName="title"
+        autocomplete="off"
+      />
+      
+      <mat-hint *ngIf="libraryTitleExists">{{
+        'LIBRARY.HINTS.SITE_TITLE_EXISTS' | translate
+      }}</mat-hint>
+      <mat-error *ngIf="form.controls['title'].hasError('maxlength')">
+        {{ 'LIBRARY.ERRORS.TITLE_TOO_LONG' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        required
+        placeholder="{{ 'LIBRARY.DIALOG.FORM.SITE_ID' | translate }}"
+        matInput
+        formControlName="id"
+        autocomplete="off"
+      />
+
+      <mat-error *ngIf="form.controls['id'].errors?.message">
+        {{ form.controls['id'].errors?.message | translate }}
+      </mat-error>
+
+      <mat-error *ngIf="form.controls['id'].hasError('maxlength')">
+        {{ 'LIBRARY.ERRORS.ID_TOO_LONG' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea
+        matInput
+        placeholder="{{ 'LIBRARY.DIALOG.FORM.DESCRIPTION' | translate }}"
+        rows="3"
+        formControlName="description"
+      ></textarea>
+
+      <mat-error *ngIf="form.controls['description'].hasError('maxlength')">
+        {{ 'LIBRARY.ERRORS.DESCRIPTION_TOO_LONG' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-radio-group
+      [ngModelOptions]="{ standalone: true }"
+      [(ngModel)]="visibilityOption"
+      (change)="visibilityChangeHandler($event)"
+    >
+      <mat-radio-button
+        color="primary"
+        [disabled]="option.disabled"
+        *ngFor="let option of visibilityOptions"
+        [value]="option.value"
+        [checked]="visibilityOption.value === option.value"
+      >
+        {{ option.label | translate }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="actions-buttons">
+  <button mat-button mat-dialog-close>
+    {{ 'LIBRARY.DIALOG.CANCEL' | translate }}
+  </button>
+
+  <button
+    color="primary"
+    mat-button
+    (click)="submit()"
+    [disabled]="!form.valid"
+  >
+    {{ 'LIBRARY.DIALOG.CREATE' | translate }}
+  </button>
+</mat-dialog-actions>

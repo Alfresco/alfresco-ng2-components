@@ -292,5 +292,41 @@
   },
   "ADF-TREE-VIEW": {
     "MISSING-ID": "No nodeId provided!"
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "Create Library",
+      "CREATE": "Create",
+      "UPDATE": "Update",
+      "EDIT": "Edit",
+      "CANCEL": "Cancel",
+      "FORM": {
+        "DESCRIPTION": "Description",
+        "SITE_ID": "Library ID",
+        "NAME": "Name",
+        "VISIBILITY": "Visibility"
+      }
+    },
+    "VISIBILITY": {
+      "PRIVATE": "Private",
+      "PUBLIC": "Public",
+      "MODERATED": "Moderated"
+    },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "Library name already in use"
+    },
+    "ERRORS": {
+      "GENERIC": "We hit a problem",
+      "EXISTENT_SITE": "This Library ID isn't available. Try a different Library ID.",
+      "CONFLICT": "This Library ID is already used. Check the trashcan.",
+      "ID_TOO_LONG": "Use 72 characters or less for the URL name",
+      "DESCRIPTION_TOO_LONG": "Use 512 characters or less for description",
+      "TITLE_TOO_LONG": "Use 256 characters or less for title",
+      "ILLEGAL_CHARACTERS": "Use numbers and letters only",
+      "LIBRARY_UPDATE_ERROR": "There was an error updating library properties"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Library properties updated"
+    }
   }
 }
