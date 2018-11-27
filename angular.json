@@ -575,7 +575,7 @@
     },
     "content-services": {
       "root": "lib/content-services",
-      "sourceRoot": "lib/content-services/src",
+      "sourceRoot": "lib/content-services",
       "projectType": "library",
       "prefix": "adf",
       "architect": {
