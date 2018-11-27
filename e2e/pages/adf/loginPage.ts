@@ -138,7 +138,7 @@ export class LoginPage {
 
     getSignInButtonIsEnabled() {
         Util.waitUntilElementIsVisible(this.signInButton);
-        return this.signInButton.isEnabled()
+        return this.signInButton.isEnabled();
     }
 
     loginToProcessServicesUsingUserModel(userModel) {
