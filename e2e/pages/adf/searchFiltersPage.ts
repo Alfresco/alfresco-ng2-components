@@ -31,9 +31,15 @@ export class SearchFiltersPage {
     checkListFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]'));
     createdDateRangeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Created Date (range)"]'));
     typeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type"]'));
+    sizeRangeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Content Size (range)"]'));
+    sizeSliderFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Content Size"]'));
 
     checkSearchFiltersIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchFilters);
+    }
+
+    sizeRangeFilterPage() {
+        return this.searchCategoriesPage.numberRangeFilter(this.sizeRangeFilter);
     }
 
     createdDateRangeFilterPage() {
@@ -56,6 +62,10 @@ export class SearchFiltersPage {
         return this.searchCategoriesPage.checkListFiltersPage(this.fileTypeFilter);
     }
 
+    sizeSliderFilterPage() {
+        return this.searchCategoriesPage.sliderFilter(this.sizeSliderFilter);
+    }
+
     checkFileTypeFilterIsDisplayed() {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.fileTypeFilter);
         return this;
@@ -68,6 +78,11 @@ export class SearchFiltersPage {
 
     checkCheckListFilterIsDisplayed() {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.checkListFilter);
+        return this;
+    }
+
+    checkNameFilterIsExpanded() {
+        this.searchCategoriesPage.checkFilterIsExpanded(this.nameFilter);
         return this;
     }
 
@@ -90,6 +105,10 @@ export class SearchFiltersPage {
         this.searchCategoriesPage.clickFilterHeader(this.fileSizeFilter);
         return this;
     }
+    checkFileSizeFilterIsCollapsed() {
+        this.searchCategoriesPage.checkFilterIsCollapsed(this.fileSizeFilter);
+        return this;
+    }
 
     clickFileTypeFilterHeader() {
         this.searchCategoriesPage.clickFilterHeader(this.fileTypeFilter);
@@ -108,6 +127,11 @@ export class SearchFiltersPage {
 
     checkCheckListFilterIsCollapsed() {
         this.searchCategoriesPage.checkFilterIsCollapsed(this.checkListFilter);
+    }
+
+    checkCheckListFilterIsExpanded() {
+        this.searchCategoriesPage.checkFilterIsExpanded(this.checkListFilter);
+        return this;
     }
 
     checkCreatedRangeFilterIsDisplayed() {
@@ -149,4 +173,42 @@ export class SearchFiltersPage {
         return this;
     }
 
+    checkSizeRangeFilterIsDisplayed() {
+        this.searchCategoriesPage.checkFilterIsDisplayed(this.createdDateRangeFilter);
+        return this;
+    }
+
+    clickSizeRangeFilterHeader() {
+        this.searchCategoriesPage.clickFilterHeader(this.sizeRangeFilter);
+        return this;
+    }
+
+    checkSizeRangeFilterIsExpanded() {
+        this.searchCategoriesPage.checkFilterIsExpanded(this.sizeRangeFilter);
+        return this;
+    }
+
+    checkSizeRangeFilterIsCollapsed() {
+        this.searchCategoriesPage.checkFilterIsCollapsed(this.sizeRangeFilter);
+        return this;
+    }
+
+    checkSizeSliderFilterIsDisplayed() {
+        this.searchCategoriesPage.checkFilterIsDisplayed(this.sizeSliderFilter);
+        return this;
+    }
+    clickSizeSliderFilterHeader() {
+        this.searchCategoriesPage.clickFilterHeader(this.sizeSliderFilter);
+        return this;
+    }
+
+    checkSizeSliderFilterIsExpanded() {
+        this.searchCategoriesPage.checkFilterIsExpanded(this.sizeSliderFilter);
+        return this;
+    }
+
+    checkSizeSliderFilterIsCollapsed() {
+        this.searchCategoriesPage.checkFilterIsCollapsed(this.sizeSliderFilter);
+        return this;
+    }
 }

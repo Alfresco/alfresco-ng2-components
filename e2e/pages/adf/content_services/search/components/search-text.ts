@@ -16,7 +16,7 @@
  */
 
 import Util = require('../../../../../util/util');
-import { element, by } from 'protractor';
+import { protractor, by } from 'protractor';
 
 export class SearchTextPage {
 
