@@ -1,4 +1,5 @@
 ---
+Title: Empty list component
 Added: v2.0.0
 Status: Active
 ---

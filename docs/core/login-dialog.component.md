@@ -1,4 +1,5 @@
 ---
+Title: Login Dialog component
 Added: v2.6.0
 Status: Active
 Last reviewed: 2018-10-02

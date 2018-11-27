@@ -1,4 +1,5 @@
 ---
+Title: Header component
 Added: v2.5.0
 Status: Active
 Last reviewed: 2018-11-20

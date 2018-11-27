@@ -1,3 +1,9 @@
+---
+Title: Search Api service
+Added: v2.0.0
+Status: Active
+---
+
 # Search Api service
 
 Accesses the Content Services Search API.

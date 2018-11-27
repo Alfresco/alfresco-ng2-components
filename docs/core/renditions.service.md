@@ -1,4 +1,5 @@
 ---
+Title: Renditions service
 Added: v2.0.0
 Status: Deprecated
 ---

@@ -1,4 +1,5 @@
 ---
+Title: Search Configuration service
 Added: v2.1.0
 Status: Active
 Last reviewed: 2018-09-13

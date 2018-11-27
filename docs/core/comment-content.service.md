@@ -1,4 +1,5 @@
 ---
+Title: Comment Content service
 Added: v2.3.0
 Status: Active
 Last reviewed: 2018-04-12

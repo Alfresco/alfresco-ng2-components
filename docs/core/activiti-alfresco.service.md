@@ -1,9 +1,10 @@
 ---
+Title: APS Alfresco Content Service
 Added: v2.0.0
 Status: Active
 ---
 
-# Activiti Alfresco Content Service
+# APS Alfresco Content Service
 
 Gets Alfresco Repository folder content based on a Repository account configured in Alfresco Process Services (APS).
 
@@ -12,8 +13,8 @@ This service can also be used to link Alfresco content as related content in APS
 Content such as documents and other files can be attached to Process Instances 
 and Task Instances as related content.
 
-<aside class="warning">
-At the moment you must provide the `ActivitiAlfrescoContentService` class from your `NgModule` for it to work:
+**Note:** At the moment you must provide the `ActivitiAlfrescoContentService` class from your `NgModule` for it to work:
+
 ```ts
 @NgModule({
 ...
@@ -21,7 +22,6 @@ At the moment you must provide the `ActivitiAlfrescoContentService` class from y
 })
 ```
 And also import it in the way shown below.
-</aside>
 
 ## Importing
 
@@ -124,7 +124,3 @@ The response contained in `link` looks like in this sample:
         source: "alfresco-2"
         sourceId: "da196918-1324-4e97-9d26-d28f1837a0b6@sample-workspace"
         thumbnailStatus: "queued"
-
-<!-- seealso start -->
-
-<!-- seealso end -->
