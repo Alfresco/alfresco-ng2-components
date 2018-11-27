@@ -150,7 +150,7 @@ export const appRoutes: Routes = [
                 ]
             },
             {
-                path: 'process-cloud',
+                path: 'process-list-cloud',
                 component: ProcessListCloudExampleComponent
             },
             {
