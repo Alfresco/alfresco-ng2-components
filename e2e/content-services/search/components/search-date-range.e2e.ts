@@ -30,7 +30,7 @@ import TestConfig = require('../../../test.config');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { browser } from 'protractor';
 
-describe('Search Filters', () => {
+describe('Search Date Range Filter', () => {
 
     let loginPage = new LoginPage();
     let searchDialog = new SearchDialog();
@@ -138,13 +138,11 @@ describe('Search Filters', () => {
         browser.controlFlow().execute(async () => {
             let firstResult = await dataTable.getNodeIdFirstElement();
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then((node) => {
+            await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 let nodeCreation = new Date(node.entry.createdAt);
                 nodeCreation.setHours(0, 0, 0, 0);
-                browser.controlFlow().execute(async () => {
-                    await expect(nodeCreation.getTime() >= fromDate.getTime()).toBe(true);
-                    await expect(nodeCreation.getTime() <= toDate.getTime()).toBe(true);
-                });
+                await expect(nodeCreation.getTime() >= fromDate.getTime()).toBe(true);
+                await expect(nodeCreation.getTime() <= toDate.getTime()).toBe(true);
             });
         });
 
@@ -152,13 +150,11 @@ describe('Search Filters', () => {
         browser.controlFlow().execute(async () => {
             let firstResult = await dataTable.getNodeIdFirstElement();
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then((node) => {
+            await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 let nodeCreation = new Date(node.entry.createdAt);
                 nodeCreation.setHours(0, 0, 0, 0);
-                browser.controlFlow().execute(async () => {
-                    await expect(nodeCreation.getTime() >= fromDate.getTime()).toBe(true);
-                    await expect(nodeCreation.getTime() <= toDate.getTime()).toBe(true);
-                });
+                await expect(nodeCreation.getTime() >= fromDate.getTime()).toBe(true);
+                await expect(nodeCreation.getTime() <= toDate.getTime()).toBe(true);
             });
         });
     });
