@@ -1,4 +1,5 @@
 ---
+Title: Error Content Component
 Added: v2.4.0
 Status: Active
 Last reviewed: 2018-09-13

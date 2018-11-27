@@ -1,12 +1,13 @@
 ---
-Added: v2.0.0
+Title: Format Space pipe
+Added: v3.0.0
 Status: Active
-Last reviewed: 2018-11-19
+Last reviewed: 2018-11-27
 ---
 
 # Format Space pipe
 
-Replace all the white space in a string into a character given.
+Replaces all the white space in a string with a supplied character.
 
 ## Basic Usage
 
@@ -22,7 +23,11 @@ Replace all the white space in a string into a character given.
 
 ## Details
 
-The pipe will replace all the white space between the string into `_` by default and will transform the string in lowercase (ex. `test a pipe` => `test_a_pipe`).
-It is possible specify a different character for the replacing by passing the character you want in input.
-It is possible avoid the transformation into lowercase by passing `false` for the `lowercase` option.
+The pipe replaces each run of whitespace characters in the string with a single character
+(which is the underscore by default) and transforms the string to lowercase (eg, `test a pipe`
+becomes `test_a_pipe`).
+
+You can specify a different replacement character by passing it as a pipe parameter.
+You can also pass `false` to the `lowercase` parameter to skip the conversion to lowercase
+and just replace the whitespace.
 

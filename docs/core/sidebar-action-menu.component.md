@@ -1,4 +1,5 @@
 ---
+Title: Sidebar action menu component
 Added: v2.1.0
 Status: Active
 Last reviewed: 2018-11-20

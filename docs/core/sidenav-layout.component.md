@@ -1,4 +1,5 @@
 ---
+Title: Sidenav Layout component
 Added: v2.3.0
 Status: Active
 Last reviewed: 2018-11-20

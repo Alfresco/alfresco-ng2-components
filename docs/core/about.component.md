@@ -1,4 +1,5 @@
 ---
+Title: About Component
 Added: v2.4.0
 Status: Experimental
 Last reviewed: 2018-11-14

@@ -1,4 +1,5 @@
 ---
+Title: Host settings component
 Added: v2.0.0
 Status: Internal
 Last reviewed: 2018-09-13
