@@ -26,7 +26,6 @@ import { TranslateLoaderService, LogService, StorageService } from '@alfresco/ad
 import { TaskFilterCloudService } from './services/task-filter-cloud.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EditTaskFiltersCloudComponent } from './task-filters-cloud/edit-task-filters-cloud.component';
-import { TaskFilterDialogCloudComponent } from './task-filters-cloud/task-filter-dialog/task-filter-dialog-cloud.component';
 @NgModule({
     imports: [
         FormsModule,
@@ -42,9 +41,8 @@ import { TaskFilterDialogCloudComponent } from './task-filters-cloud/task-filter
         }),
         MaterialModule
     ],
-    declarations: [TaskFiltersCloudComponent, EditTaskFiltersCloudComponent, TaskFilterDialogCloudComponent],
-    entryComponents: [TaskFilterDialogCloudComponent],
-    exports: [TaskFiltersCloudComponent, EditTaskFiltersCloudComponent, TaskFilterDialogCloudComponent],
+    declarations: [TaskFiltersCloudComponent, EditTaskFiltersCloudComponent],
+    exports: [TaskFiltersCloudComponent, EditTaskFiltersCloudComponent],
     providers: [TaskFilterCloudService, LogService, StorageService]
 })
 export class TaskCloudModule { }

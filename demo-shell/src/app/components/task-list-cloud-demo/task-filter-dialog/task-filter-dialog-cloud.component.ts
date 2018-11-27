@@ -18,16 +18,16 @@
 import { Component, Inject } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { TaskFilterDialogEvent } from '../../models/task-filter-dialog-event';
 import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'adf-cloud-task-filter-dialog',
+  selector: 'app-task-filter-edit-cloud',
   templateUrl: './task-filter-dialog-cloud.component.html',
   styleUrls: ['./task-filter-dialog-cloud.component.scss']
 })
 export class TaskFilterDialogCloudComponent implements OnInit {
 
+    public static ACTION_SAVE = 'SAVE';
     defaultIcon = 'inbox';
 
     filterForm: FormGroup;
@@ -45,11 +45,11 @@ export class TaskFilterDialogCloudComponent implements OnInit {
     }
 
     onSaveClick() {
-        this.dialogRef.close(new TaskFilterDialogEvent({
-            action: TaskFilterDialogEvent.ACTION_SAVE,
+        this.dialogRef.close({
+            action: TaskFilterDialogCloudComponent.ACTION_SAVE,
             icon: this.defaultIcon,
             name: this.nameController.value
-        }));
+        });
     }
 
     onCancelClick() {

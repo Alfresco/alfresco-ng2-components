@@ -77,9 +77,23 @@ export class TaskFilterCloudService {
     }
 
     /**
-     * Adds a new task filter
-     * @param filter The new filter to add
-     * @returns Details of task filter just added
+     *  Update task filter
+     * @param filter The new filter to update
+     */
+    updateFilter(filter: TaskFilterCloudRepresentationModel) {
+        const username = this.getUsername();
+        const key = `task-filters-${filter.query.appName}-${username}`;
+        if (key) {
+            let filters = JSON.parse(this.storage.getItem(key) || '[]');
+            let itemIndex = filters.findIndex(flt => flt.id === filter.id);
+            filters[itemIndex] = filter;
+            this.storage.setItem(key, JSON.stringify(filters));
+        }
+    }
+
+    /**
+     *  Delete task filter
+     * @param filter The new filter to delete
      */
     deleteFilter(filter: TaskFilterCloudRepresentationModel) {
         const username = this.getUsername();

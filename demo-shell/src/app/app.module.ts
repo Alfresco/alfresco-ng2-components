@@ -69,6 +69,7 @@ import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/ta
 import { ProcessListCloudExampleComponent } from './components/cloud/process-list-cloud-example.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { AppExtensionsModule } from './extensions/extensions.module';
+import { TaskFilterDialogCloudComponent } from './components/task-list-cloud-demo/task-filter-dialog/task-filter-dialog-cloud.component';
 
 @NgModule({
     imports: [
@@ -120,6 +121,7 @@ import { AppExtensionsModule } from './extensions/extensions.module';
         FormLoadingComponent,
         ReportIssueComponent,
         TaskListCloudDemoComponent,
+        TaskFilterDialogCloudComponent,
         ProcessListCloudExampleComponent,
         TreeViewSampleComponent,
         TaskListCloudDemoComponent
@@ -150,7 +152,8 @@ import { AppExtensionsModule } from './extensions/extensions.module';
     ],
     entryComponents: [
         VersionManagerDialogAdapterComponent,
-        MetadataDialogAdapterComponent
+        MetadataDialogAdapterComponent,
+        TaskFilterDialogCloudComponent
     ],
     bootstrap: [AppComponent]
 })
