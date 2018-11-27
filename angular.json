@@ -680,9 +680,7 @@
           "options": {
             "main": "lib/process-services-cloud/src/test.ts",
             "tsConfig": "lib/process-services-cloud/tsconfig.spec.json",
-            "karmaConfig": "lib/process-services-cloud/karma.conf.js",
-            "codeCoverage": true,
-            "sourceMap": true
+            "karmaConfig": "lib/process-services-cloud/karma.conf.js"
           }
         },
         "lint": {
