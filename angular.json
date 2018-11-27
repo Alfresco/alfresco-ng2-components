@@ -617,7 +617,7 @@
     },
     "process-services": {
       "root": "lib/process-services",
-      "sourceRoot": "lib/process-services/src",
+      "sourceRoot": "lib/process-services",
       "projectType": "library",
       "prefix": "adf",
       "architect": {
