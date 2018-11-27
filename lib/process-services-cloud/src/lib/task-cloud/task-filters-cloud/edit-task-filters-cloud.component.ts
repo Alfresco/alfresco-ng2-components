@@ -51,7 +51,7 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
     states = ['ALL', 'CREATED', 'CANCELLED', 'ASSIGNED', 'SUSPENDED', 'COMPLETED', 'DELETED'];
 
     directions = ['ASC', 'DESC'];
-    isSaveEnable = true;
+    formHasBeenChanged = false;
     isDeleteEnable = true;
     editTaskFilterForm: FormGroup;
 
@@ -65,6 +65,7 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
     }
 
     buildForm() {
+        this.formHasBeenChanged = false;
         this.editTaskFilterForm = this.formBuilder.group({
             state: this.taskFilter.query.state,
             appName: this.taskFilter.query.appName,
@@ -74,8 +75,7 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
             order: this.taskFilter.query.order
         });
         this.onFilterChange();
-        this.isSaveButtonEnabled();
-        this.isDeleteButtonEnabled();
+        this.checkFormHasBeenChanged();
     }
 
     onFilterChange() {
@@ -85,23 +85,15 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
         });
     }
 
-    isSaveButtonEnabled() {
+    checkFormHasBeenChanged() {
         this.editTaskFilterForm.valueChanges.subscribe((formValues: QueryModel) => {
             const editedQuery = new QueryModel(formValues);
-            this.isSaveEnable = this.compareFilter(editedQuery, this.taskFilter.query);
+            this.formHasBeenChanged = !this.compareFilter(editedQuery, this.taskFilter.query);
         });
     }
 
-    isDeleteButtonEnabled() {
-        this.editTaskFilterForm.valueChanges.subscribe((formValues: QueryModel) => {
-            const editedQuery = new QueryModel(formValues);
-            this.isDeleteEnable = this.compareFilter(editedQuery, this.taskFilter.query);
-        });
-    }
-
-    compareFilter(editedQuery, currentQuery)  {
+    compareFilter(editedQuery, currentQuery): boolean  {
         return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
-
     }
 
     onSave() {
