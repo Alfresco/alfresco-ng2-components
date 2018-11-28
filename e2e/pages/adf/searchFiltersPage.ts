@@ -197,6 +197,7 @@ export class SearchFiltersPage {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.sizeSliderFilter);
         return this;
     }
+
     clickSizeSliderFilterHeader() {
         this.searchCategoriesPage.clickFilterHeader(this.sizeSliderFilter);
         return this;

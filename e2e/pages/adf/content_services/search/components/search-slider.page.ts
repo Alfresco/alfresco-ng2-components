@@ -21,36 +21,57 @@ import Util = require('../../../../../util/util');
 export class SearchSliderPage {
 
     filter;
-    slider = by.css('mat-slider');
+    slider = by.css('mat-slider[data-automation-id="slider-range"]');
+    clearButton = by.css('button[data-automation-id="slider-btn-clear"]');
+    sliderWithThumbLabel = by.css('mat-slider[data-automation-id="slider-range"][class*="mat-slider-thumb-label-showing"]');
 
     constructor(filter) {
         this.filter = filter;
     }
 
-    setValue(value) {
-        this.clickSlider();
-        browser.controlFlow().execute(async () => {
-            let actualValue;
-            do {
-                actualValue = await this.filter.element(this.slider).getAttribute('aria-valuenow');
-                if (actualValue < value) {
-                    await browser.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
-                } else if (actualValue > value) {
-                    await browser.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
-                }
-            }while (Number(actualValue) !== value);
-        });
-        return this;
+    getMaxValue() {
+        return this.filter.element(this.slider).getAttribute('aria-valuemax');
     }
 
-    clickSlider() {
-        Util.waitUntilElementIsClickable(this.filter.element(this.slider));
-        this.filter.element(this.slider).click();
+    getMinValue() {
+        return this.filter.element(this.slider).getAttribute('aria-valuemin');
+    }
+
+    getValue() {
+        return this.filter.element(this.slider).getAttribute('aria-valuenow');
+    }
+
+    setValue(value) {
+
+        browser.actions().dragAndDrop(
+            this.filter.element(this.slider).element(by.css('div[class="mat-slider-thumb"]')),
+            {x: value * 10, y: 0}
+        ).perform();
         return this;
     }
 
     checkSliderIsDisplayed() {
         Util.waitUntilElementIsVisible(this.filter.element(this.slider));
+        return this;
+    }
+
+    checkSliderWithThumbLabelIsNotDisplayed() {
+        Util.waitUntilElementIsNotVisible(this.filter.element(this.sliderWithThumbLabel));
+        return this;
+    }
+
+    clickClearButton() {
+        Util.waitUntilElementIsClickable(this.filter.element(this.clearButton));
+        this.filter.element(this.clearButton).click();
+        return this;
+    }
+
+    checkClearButtonIsEnabled() {
+        return this.filter.element(this.clearButton).isEnabled();
+    }
+
+    checkClearButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.filter.element(this.clearButton));
         return this;
     }
 }
