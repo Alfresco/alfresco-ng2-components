@@ -170,7 +170,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             },
             (err) => {
                 this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START';
-                this.error.error(err);
+                this.error.emit(err);
                 this.isLoading = false;
             }
         );
