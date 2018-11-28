@@ -31,10 +31,10 @@ export class ContentServicesPage {
     uploadBorder = element(by.id('document-list-container'));
     tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
     contentServices = element(by.css('a[data-automation-id="Content Services"]'));
-    currentFolder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
-    createFolderButton = element(by.cssContainingText('mat-icon', 'create_new_folder'));
-    activeBreadcrumb = element(by.css('div[class*="adf-active"]'));
-    tooltip = by.css('div[class*="--text adf-full-width"] span');
+    currentFolder = element(by.css('div[class*="adf-breadcrumb-item active"] div'));
+    createFolderButton = element(by.css('button[data-automation-id="create-new-folder"]'));
+    activeBreadcrumb = element(by.css('div[class*="active"]'));
+    tooltip = by.css('div[class*="--text full-width"] span');
     uploadFileButton = element(by.css('input[data-automation-id="upload-single-file"]'));
     uploadMultipleFileButton = element(by.css('input[data-automation-id="upload-multiple-files"]'));
     uploadFolderButton = element(by.css('input[data-automation-id="uploadFolder"]'));

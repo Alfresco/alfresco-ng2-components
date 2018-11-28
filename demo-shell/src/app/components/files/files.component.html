@@ -75,6 +75,7 @@
                         <mat-icon *ngIf="displayMode === 'gallery'" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.LISTVIEW' | translate }}">list</mat-icon>
                     </button>
                     <button
+                        data-automation-id="create-new-folder"
                         mat-icon-button
                         [disabled]="!canCreateContent(documentList.folderNode)"
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}"

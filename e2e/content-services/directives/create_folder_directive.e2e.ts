@@ -125,13 +125,13 @@ describe('Create folder directive', function () {
     });
 
     it('[C260159] Should not be possible create a folder with banned character', () => {
-        let bannedChar = ['* ', '<', '>', '\\', '/', '?', ':', '|'];
+        const bannedChars = ['* ', '<', '>', '\\', '/', '?', ':', '|'];
 
         contentServicesPage.clickOnCreateNewFolder();
 
-        bannedChar.forEach((currentChar) => {
-            createFolderDialog.addFolderName(currentChar);
+        for (const symbol of bannedChars) {
+            createFolderDialog.addFolderName(symbol);
             createFolderDialog.checkCreateBtnIsDisabled();
-        });
+        }
     });
 });

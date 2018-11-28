@@ -31,7 +31,8 @@ var CreateFolderDialog = function () {
     };
 
     this.checkCreateBtnIsDisabled = function () {
-        Util.waitUntilElementIsVisible(createButton.getAttribute("disabled"));
+        Util.waitUntilElementIsVisible(createButton);
+        expect(createButton.getAttribute("disabled")).toEqual("true");
         return this;
     };
 
