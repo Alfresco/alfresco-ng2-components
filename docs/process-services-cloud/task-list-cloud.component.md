@@ -2,7 +2,7 @@
 Title: Task List Cloud component
 Added: v3.0.0
 Status: Active
-Last reviewed: 2018-04-16
+Last reviewed: 2018-11-28
 ---
 
 # Task List Cloud component
@@ -51,22 +51,21 @@ when the task list is empty:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| applicationName | `string` |  | The name of the application. |
-| assignee | `string` |  | The assigee of the process. Possible values are: "assignee" (the current user is the assignee), candidate (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value(the current user is involved). |
-| createdDate | `Date` |  | filter the tasks for the date when the task should have been created |
-| dueDate | `Date` |  | Filter the tasks. Display only tasks with dueDate equal to the one insterted. |
-| id | `string` |  | Filter the tasks. Display only tasks with id equal to the one insterted. |
-| name | `string` |  | Filter the tasks. Display only tasks with name equal to the one insterted. |
-| parentTaskId | `string` |  | Filter the tasks. Display only tasks with parentTaskId equal to the one insterted. |
-| processDefinitionId | `string` |  | Filter the tasks. Display only tasks with processDefinitionId equal to the one insterted. |
-| processInstanceId | `string` |  | Filter the tasks. Display only tasks with processInstanceId equal to the one insterted. |
-| status | `string` |  | Filter the tasks. Display only tasks with status equal to the one insterted. |
-| processDefinitionId | `string` |  | Filter the tasks. Display only tasks with processDefinitionId equal to the one insterted. |
+| applicationName | `string` | "" | The name of the application. |
+| assignee | `string` | "" | The assignee of the process. Possible values are: "assignee" (the current user is the assignee), "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value (the current user is involved). |
+| createdDate | `string` | "" | Filter the tasks. Display only tasks created on the supplied date. |
+| dueDate | `string` | "" | Filter the tasks. Display only tasks with dueDate equal to the supplied date. |
+| id | `string` | "" | Filter the tasks. Display only tasks with id equal to the supplied value. |
 | landingTaskId | `string` |  | Define which task id should be selected after reloading. If the task id doesn't exist or nothing is passed then the first task will be selected. |
-| selectFirstRow | `boolean` | true | Toggles default selection of the first row |
-| selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| multiselect | `boolean` | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
-| sorting | `[TaskListCloudSortingModel]` |  | This array of `TaskListCloudSortingModel` specify how the sorting on our table should be provided. This parameters are for BE sorting. |
+| multiselect | `boolean` | false | Toggles multiple row selection, rendering a checkbox at the beginning of each row. |
+| name | `string` | "" | Filter the tasks. Display only tasks with the supplied name. |
+| parentTaskId | `string` | "" | Filter the tasks. Display only tasks with parentTaskId equal to the supplied value. |
+| processDefinitionId | `string` | "" | Filter the tasks. Display only tasks with processDefinitionId equal to the supplied value. |
+| processInstanceId | `string` | "" | Filter the tasks. Display only tasks with processInstanceId equal to the supplied value. |
+| selectFirstRow | `boolean` | true | Toggles default selection of the first row. |
+| selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use the Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| sorting | [`TaskListCloudSortingModel`](../../lib/process-services-cloud/src/lib/task-list-cloud/models/task-list-sorting.model.ts)`[]` |  | Specifies how the table should be sorted. The parameters are for BE sorting. |
+| status | `string` | "" | Filter the tasks. Display only tasks with status equal to the supplied value. |
 
 ### Events
 
@@ -79,7 +78,7 @@ when the task list is empty:
 
 ## Details
 
-This component displays lists of tasks related to the application name insterted. Extra filtering can be provided by applying extra input parameters
+This component displays lists of tasks related to the application name insterted. Extra filtering can be provided by applying extra input parameters.
 
 ### Setting the column schema
 
@@ -164,7 +163,7 @@ You can use an HTML-based schema and an `app.config.json` custom schema declarat
 
 ### Setting Sorting Order for the list
 
-you can pass sorting order as shown in the example below:
+You can specify a sorting order as shown in the example below:
 
 ```ts
 let sorting = { orderBy: 'created', direction: 'desc' };
