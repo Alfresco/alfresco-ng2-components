@@ -60,7 +60,7 @@ import { ProcessFilterDialogCloudComponent } from './process-filters-cloud/proce
     	StartProcessCloudComponent
     ],
     providers: [
-    	ProcessFilterCloudService
+        ProcessFilterCloudService,
         ProcessCloudService,
         LogService,
         StorageService
