@@ -58,8 +58,9 @@ describe('Create folder directive', function () {
         done();
     });
 
-    afterEach(() => {
-        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    afterEach(async (done) => {
+        await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+        done();
     });
 
     it('[C260154] Should not create the folder if cancel button is clicked', () => {
