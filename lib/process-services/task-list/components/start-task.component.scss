@@ -71,7 +71,7 @@
             }
         }
 
-        #people-widget-content {
+        .adf-people-widget-content {
             .mat-form-field {
                 width: 100%;
             }
@@ -146,7 +146,7 @@
 
                 .adf-label {
                     color: mat-color($warn);
-                    &:after {
+                    &::after {
                         background-color: mat-color($warn);
                     }
                 }

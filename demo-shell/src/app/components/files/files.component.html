@@ -1,4 +1,4 @@
-<div class="container">
+<div class="adf-container">
 
     <mat-accordion *ngIf="showRecentFiles" class="adf-container-recent">
         <mat-expansion-panel  hideToggle="true">
@@ -18,9 +18,9 @@
                 selectionMode="null">
                 <empty-folder-content>
                     <ng-template>
-                        <div class="empty-list__block">
+                        <div class="adf-empty-list__block">
                             <mat-icon>history</mat-icon>
-                            <p class="empty-list__title">{{ 'DOCUMENT_LIST.RECENT.EMPTY_STATE.TITLE' | translate}}</p>
+                            <p class="adf-empty-list__title">{{ 'DOCUMENT_LIST.RECENT.EMPTY_STATE.TITLE' | translate}}</p>
                         </div>
                     </ng-template>
                 </empty-folder-content>
@@ -33,7 +33,7 @@
         </adf-sites-dropdown>
     </div>
 
-    <div id="document-list-container" class="document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">
+    <div id="document-list-container" class="adf-document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">
         <adf-upload-drag-area fxFlex="1 1 auto"
                               [disabled]="disableDragArea"
                               [acceptedFilesType]="getFileFiltering()"
@@ -42,22 +42,22 @@
                               [adf-node-permission]="'create'"
                               [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []"
                               (beginUpload)="onBeginUpload($event)">
-            <div *ngIf="errorMessage" class="error-message">
+            <div *ngIf="errorMessage" class="adf-error-message">
                 <button (click)="resetError()" mat-icon-button>
                     <mat-icon>highlight_off</mat-icon>
                 </button>
-                <span class="error-message--text">{{errorMessage}}</span>
+                <span class="adf-error-message--text">{{errorMessage}}</span>
             </div>
             <adf-toolbar *ngIf="!disableDragArea" [color]="toolbarColor" class="adf-files-toolbar">
                 <adf-toolbar-title fxFlex="0 1 auto">
                     <adf-breadcrumb fxShow fxHide.lt-sm="true"
-                                    class="files-breadcrumb"
+                                    class="adf-files-breadcrumb"
                                     root="APP.PERSONAL-FILES"
                                     [target]="documentList"
                                     [folderNode]="documentList.folderNode">
                     </adf-breadcrumb>
                     <adf-dropdown-breadcrumb fxHide fxShow.lt-sm="true"
-                                             class="files-breadcrumb"
+                                             class="adf-files-breadcrumb"
                                              [target]="documentList"
                                              [folderNode]="documentList.folderNode">
                     </adf-dropdown-breadcrumb>
@@ -215,7 +215,7 @@
                 (permissionError)="handlePermissionError($event)">
                 <no-permission-content *ngIf="enableCustomPermissionMessage">
                     <ng-template>
-                    <h1>Cris you don't have permissions</h1>
+                        <h1>You don't have permissions</h1>
                     </ng-template>
                 </no-permission-content>
                 <empty-folder-content *ngIf="disableDragArea">
@@ -230,15 +230,15 @@
                         key="$thumbnail"
                         type="image"
                         [sortable]="false"
-                        class="image-table-cell"
-                        [class.cell-thumbnail]="thumbnails">
+                        class="adf-image-table-cell"
+                        [class.adf-cell-thumbnail]="thumbnails">
                     </data-column>
                     <data-column
                         *ngIf="showNameColumn"
                         key="name"
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         [formatTooltip]="getNodeNameTooltip"
-                        class="full-width ellipsis-cell">
+                        class="adf-full-width adf-ellipsis-cell">
                     </data-column>
                     <!-- Location column demo -->
                     <!--
@@ -259,19 +259,19 @@
                     <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
                         key="id"
-                        class="full-width ellipsis-cell">
+                        class="adf-full-width adf-ellipsis-cell">
                         <ng-template let-entry="$implicit">
                             <alfresco-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></alfresco-tag-node-list>
                         </ng-template>
                     </data-column>
                     -->
                     <data-column
-                        class="full-width ellipsis-cell"
+                        class="adf-full-width adf-ellipsis-cell"
                         title="{{'DOCUMENT_LIST.COLUMNS.NODE_ID' | translate}}"
                         key="id">
                     </data-column>
                     <data-column
-                        class="desktop-only"
+                        class="adf-desktop-only"
                         title="{{'DOCUMENT_LIST.COLUMNS.IS_LOCKED' | translate}}"
                         key="id">
                         <ng-template let-entry="$implicit">
@@ -284,14 +284,14 @@
                     <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
                         key="createdByUser.displayName"
-                        class="desktop-only">
+                        class="adf-desktop-only">
                     </data-column>
                     <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED' | translate}}"
                         key="createdAt"
                         type="date"
                         [format]="enableMediumTimeFormat ? 'medium' : 'timeAgo'"
-                        class="desktop-only">
+                        class="adf-desktop-only">
                     </data-column>
 
                 </data-columns>
@@ -457,7 +457,7 @@
 
     <p>Current folder ID: {{ documentList.currentFolderId }}</p>
 
-    <div class="p-10">
+    <div class="adf-p-10">
         Selected Nodes:
         <ul>
             <li *ngFor="let node of documentList.selection">
@@ -466,7 +466,7 @@
         </ul>
     </div>
 
-    <div class="container">
+    <div class="adf-container">
         <section>
             <mat-slide-toggle color="primary" [(ngModel)]="showNameColumn">
                 Show Name Column
@@ -620,7 +620,7 @@
         </section>
     </div>
 
-    <div class="p-10">
+    <div class="adf-p-10">
         <p>
             {{'DOCUMENT_LIST.MULTISELECT_DESCRIPTION' | translate}}
         </p>

@@ -3,19 +3,19 @@
     $foreground: map-get($theme, foreground);
     $header-border: 1px solid mat-color($foreground, divider);
 
-    .assignment-header {
+    .adf-assignment-header {
         border-bottom: $header-border;
         padding: 6px 20px;
     }
 
-    .assigment-count {
+    .adf-assignment-count {
         float: left;
-        padding: 10px 0px;
+        padding: 10px 0;
         font-weight: bolder;
         opacity: 0.54;
     }
 
-    .add-people {
+    .adf-add-people {
         float: right;
         padding: 8px;
         height: 26px;
@@ -26,16 +26,16 @@
         }
     }
 
-    .assignment-top-container.mat-card {
+    .adf-assignment-top-container.mat-card {
         border-top: $header-border;
-        margin: 0px;
-        padding: 0px;
+        margin: 0;
+        padding: 0;
         display: flex;
         flex-flow: row wrap;
         align-items: stretch;
     }
 
-    .assignment-top-container-content {
+    .adf-assignment-top-container-content {
         display: flex;
         flex-flow: column;
         align-items: stretch;
@@ -43,14 +43,14 @@
         max-width: 100%;
     }
 
-    .assignment-container {
+    .adf-assignment-container {
         padding: 10px 20px;
         border-bottom: $header-border;
         max-width: 100%;
     }
 
-    .assignment-list-container {
-        padding: 0px;
+    .adf-assignment-list-container {
+        padding: 0;
     }
 
 
@@ -60,17 +60,17 @@
             display: none;
         }
 
-        .adf-data-table .adf-data-table-cell .cell-container {
+        .adf-data-table .adf-data-table-cell .adf-cell-container {
             flex-direction: column;
             align-items: left;
         }
 
-        .people-email {
+        .adf-people-email {
             opacity: 0.54;
         }
     }
 
-    .people-img {
+    .adf-people-img {
         border-radius: 90%;
         width: 40px;
         height: 40px;

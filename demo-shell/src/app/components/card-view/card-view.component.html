@@ -1,21 +1,21 @@
-<div class="main-content">
+<div class="adf-main-content">
     <h1>CardView Component</h1>
 
-    <mat-card class="card-view">
+    <mat-card class="adf-card-view">
         <adf-card-view
             [properties]="properties"
             [editable]="true">
         </adf-card-view>
     </mat-card>
 
-    <div class="console" #console>
+    <div class="adf-console" #console>
         <h3>Changes log:</h3>
         <p *ngFor="let log of logs">{{ log }}</p>
     </div>
 
 </div>
 
-<p class="toggle">
+<p class="adf-toggle">
     <mat-slide-toggle
         id="adf-toggle-editable"
         [color]="'primary'"

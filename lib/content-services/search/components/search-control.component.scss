@@ -45,7 +45,6 @@
             transform-origin: top left;
             transform:translateX(-40px);
             position: absolute;
-            max-width: 235px;
             max-height: 400px;
             margin-left: 45px;
             margin-top: -22px;
@@ -71,7 +70,7 @@
         }
     }
 
-    .highlight {
+    .adf-highlight {
         color: mat-color($primary, 900);
     }
 }

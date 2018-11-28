@@ -25,7 +25,7 @@
 
             <ng-container *ngIf="isALL() || isECM()">
                 <mat-card-content>
-                    <mat-form-field class="full-width" floatLabel="{{'CORE.HOST_SETTINGS.CS-HOST' | translate }}">
+                    <mat-form-field class="adf-full-width" floatLabel="{{'CORE.HOST_SETTINGS.CS-HOST' | translate }}">
                         <mat-label>{{'CORE.HOST_SETTINGS.CS-HOST' | translate }}</mat-label>
                         <input matInput [formControl]="ecmHost" data-automation-id="ecmHost" type="text" tabindex="2"
                                id="ecmHost" placeholder="http(s)://host|ip:port(/path)">
@@ -42,7 +42,7 @@
 
             <ng-container *ngIf="isALL() || isBPM()">
                 <mat-card-content>
-                    <mat-form-field class="full-width" floatLabel="{{'CORE.HOST_SETTINGS.BP-HOST' | translate }}">
+                    <mat-form-field class="adf-full-width" floatLabel="{{'CORE.HOST_SETTINGS.BP-HOST' | translate }}">
                         <mat-label>{{'CORE.HOST_SETTINGS.BP-HOST' | translate }}</mat-label>
                         <input matInput [formControl]="bpmHost" data-automation-id="bpmHost" type="text" tabindex="2"
                                id="bpmHost" placeholder="http(s)://host|ip:port(/path)">
@@ -58,7 +58,7 @@
 
             <ng-container *ngIf="isOAUTH()">
                 <div formGroupName="oauthConfig">
-                    <mat-form-field class="full-width" floatLabel="Auth Host">
+                    <mat-form-field class="adf-full-width" floatLabel="Auth Host">
                         <mat-label>Auth Host</mat-label>
                         <input matInput name="host" id="oauthHost" formControlName="host"
                                placeholder="http(s)://host|ip:port(/path)">
@@ -69,7 +69,7 @@
                             {{ 'CORE.HOST_SETTINGS.REQUIRED'| translate }}
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="full-width" floatLabel="Client Id">
+                    <mat-form-field class="adf-full-width" floatLabel="Client Id">
                         <mat-label>{{ 'CORE.HOST_SETTINGS.CLIENT'| translate }}d</mat-label>
                         <input matInput name="clientId" id="clientId" formControlName="clientId"
                                placeholder="Client Id">
@@ -78,7 +78,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field class="full-width" floatLabel="Scope">
+                    <mat-form-field class="adf-full-width" floatLabel="Scope">
                         <mat-label>{{ 'CORE.HOST_SETTINGS.SCOPE'| translate }}</mat-label>
                         <input matInput name="{{ 'CORE.HOST_SETTINGS.SCOPE'| translate }}"
                                formControlName="scope" placeholder="Scope Id">
@@ -88,17 +88,17 @@
                     </mat-form-field>
 
                     <label for="silentLogin">{{ 'CORE.HOST_SETTINGS.SILENT'| translate }}</label>
-                    <mat-slide-toggle class="full-width" name="silentLogin" [color]="'primary'"
+                    <mat-slide-toggle class="adf-full-width" name="silentLogin" [color]="'primary'"
                                       formControlName="silentLogin">
                     </mat-slide-toggle>
 
                     <label for="implicitFlow">{{ 'CORE.HOST_SETTINGS.IMPLICIT-FLOW'| translate }}</label>
-                    <mat-slide-toggle class="full-width" name="implicitFlow" [color]="'primary'"
+                    <mat-slide-toggle class="adf-full-width" name="implicitFlow" [color]="'primary'"
                                       formControlName="implicitFlow">
                     </mat-slide-toggle>
 
 
-                    <mat-form-field class="full-width" floatLabel="Redirect Uri">
+                    <mat-form-field class="adf-full-width" floatLabel="Redirect Uri">
                         <mat-label>{{ 'CORE.HOST_SETTINGS.REDIRECT'| translate }}</mat-label>
                         <input matInput placeholder="{{ 'CORE.HOST_SETTINGS.REDIRECT'| translate }}"
                                name="redirectUri" formControlName="redirectUri">
@@ -107,7 +107,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field class="full-width" floatLabel="Redirect Uri Logout">
+                    <mat-form-field class="adf-full-width" floatLabel="Redirect Uri Logout">
                         <mat-label>{{ 'CORE.HOST_SETTINGS.REDIRECT_LOGOUT'| translate }}</mat-label>
                         <input matInput placeholder="{{ 'CORE.HOST_SETTINGS.REDIRECT_LOGOUT'| translate }}"
                                name="redirectUriLogout" formControlName="redirectUriLogout">

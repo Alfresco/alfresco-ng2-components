@@ -159,7 +159,7 @@ describe('Test PdfViewer component', () => {
         });
     });
     it('should Loader be present', () => {
-        expect(element.querySelector('.loader-container')).not.toBeNull();
+        expect(element.querySelector('.adf-loader-container')).not.toBeNull();
     });
 
     describe('Required values', () => {
@@ -204,8 +204,8 @@ describe('Test PdfViewer component', () => {
         it('should Canvas be present', (done) => {
             fixtureUrlTestComponent.detectChanges();
             fixtureUrlTestComponent.whenStable().then(() => {
-                expect(elementUrlTestComponent.querySelector('.pdfViewer')).not.toBeNull();
-                expect(elementUrlTestComponent.querySelector('.viewer-pdf-viewer')).not.toBeNull();
+                expect(elementUrlTestComponent.querySelector('.adf-pdfViewer')).not.toBeNull();
+                expect(elementUrlTestComponent.querySelector('.adf-viewer-pdf-viewer')).not.toBeNull();
                 done();
             });
         }, 5000);
@@ -273,8 +273,8 @@ describe('Test PdfViewer component', () => {
             fixtureBlobTestComponent.detectChanges();
 
             fixtureBlobTestComponent.whenStable().then(() => {
-                expect(elementBlobTestComponent.querySelector('.pdfViewer')).not.toBeNull();
-                expect(elementBlobTestComponent.querySelector('.viewer-pdf-viewer')).not.toBeNull();
+                expect(elementBlobTestComponent.querySelector('.adf-pdfViewer')).not.toBeNull();
+                expect(elementBlobTestComponent.querySelector('.adf-viewer-pdf-viewer')).not.toBeNull();
                 done();
             });
         });
@@ -294,8 +294,8 @@ describe('Test PdfViewer component', () => {
 
             fixtureBlobTestComponent.whenStable().then(() => {
                 /* cspell:disable-next-line */
-                expect(elementBlobTestComponent.querySelector('.viewer-pagenumber-input')).toBeDefined();
-                expect(elementBlobTestComponent.querySelector('.viewer-total-pages')).toBeDefined();
+                expect(elementBlobTestComponent.querySelector('.adf-viewer-pagenumber-input')).toBeDefined();
+                expect(elementBlobTestComponent.querySelector('.adf-viewer-total-pages')).toBeDefined();
 
                 expect(elementBlobTestComponent.querySelector('#viewer-previous-page-button')).not.toBeNull();
                 expect(elementBlobTestComponent.querySelector('#viewer-next-page-button')).not.toBeNull();

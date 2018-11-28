@@ -34,7 +34,7 @@
     <adf-toolbar>
         <adf-toolbar-title>
             <ng-container *ngIf="!showBreadcrumbs()">
-                <span class="search-results-label">{{ 'NODE_SELECTOR.SEARCH_RESULTS' | translate }}</span>
+                <span class="adf-search-results-label">{{ 'NODE_SELECTOR.SEARCH_RESULTS' | translate }}</span>
             </ng-container>
             <adf-dropdown-breadcrumb *ngIf="showBreadcrumbs()"
                 class="adf-content-node-selector-content-breadcrumb"
@@ -77,7 +77,7 @@
 
             <data-columns>
                 <data-column key="$thumbnail" type="image"></data-column>
-                <data-column key="name" type="text" class="full-width ellipsis-cell">
+                <data-column key="name" type="text" class="adf-full-width adf-ellipsis-cell">
                     <ng-template let-context>
                         <adf-name-location-cell [row]="context.row"></adf-name-location-cell>
                     </ng-template>

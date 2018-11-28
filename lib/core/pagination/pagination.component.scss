@@ -4,7 +4,7 @@
 
     $adf-pagination--height: 48px;
     $adf-pagination--icon-button-size: 32px;
-    $adf-pagination--border: 1px solid  mat-color($foreground, text, .07);
+    $adf-pagination--border: 1px solid  mat-color($foreground, text, 0.07);
 
     .adf-pagination {
         display: flex;

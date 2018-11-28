@@ -1,6 +1,6 @@
 <div class="adf-checklist-control">
     <mat-chip-list data-automation-id="checklist-label">
-        <span class="activiti-label">{{ 'ADF_TASK_LIST.DETAILS.LABELS.CHECKLIST' | translate }}</span>
+        <span class="adf-activiti-label">{{ 'ADF_TASK_LIST.DETAILS.LABELS.CHECKLIST' | translate }}</span>
         <mat-chip class="adf-process-badge" color="accent" selected="true">{{checklist?.length}}</mat-chip>
     </mat-chip-list>
 
@@ -22,7 +22,7 @@
     </mat-chip-list>
 
 </div>
-<div *ngIf="checklist?.length === 0" id="checklist-none-message">
+<div *ngIf="checklist?.length === 0" id="checklist-none-message" class="adf-checklist-none-message">
     {{ 'ADF_TASK_LIST.DETAILS.CHECKLIST.NONE' | translate }}
 </div>
 

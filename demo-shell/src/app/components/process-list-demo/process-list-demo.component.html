@@ -1,11 +1,10 @@
-<div class="process-list-inputs">
+<div class="adf-process-list-inputs">
 
     <form [formGroup]="processListForm">
         <mat-form-field>
             <mat-label>App Id</mat-label>
             <input
                 matInput
-                class="form-control"
                 [formControl]="processAppId">
             <mat-error *ngIf="processAppId.hasError('required')">
                 {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.APP_ID_REQUIRED_ERROR' | translate }}
@@ -31,7 +30,6 @@
             <mat-label>ProcessDefinitionId</mat-label>
             <input
                 matInput
-                class="form-control"
                 [formControl]="processDefinitionId">
             <mat-hint>SimpleProcess:1:2</mat-hint>
         </mat-form-field>
@@ -39,7 +37,6 @@
         <mat-form-field>
             <mat-label>State</mat-label>
             <mat-select
-                class="form-control"
                 [formControl]="processState">
                 <mat-option *ngFor="let stateOption of stateOptions" [value]="stateOption.value">{{ stateOption.title }}</mat-option>
             </mat-select>
@@ -48,7 +45,6 @@
         <mat-form-field>
             <mat-label>Sort</mat-label>
             <mat-select
-                class="form-control"
                 [formControl]="processSort">
                 <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOption.value">{{ sortOption.title }}</mat-option>
             </mat-select>
@@ -59,7 +55,6 @@
             <mat-label>Items per page</mat-label>
             <input
                 matInput
-                class="form-control"
                 [formControl]="processSize">
             <mat-error *ngIf="processSize.hasError('min')">
                 {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.NUMBER_GREATER_THAN' | translate: { value: minValue } }}
@@ -73,7 +68,6 @@
             <mat-label>Page</mat-label>
             <input
                 matInput
-                class="form-control"
                 [formControl]="processPage">
             <mat-error *ngIf="processPage.hasError('min')">
                 {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.NUMBER_GREATER_THAN' | translate: { value: minValue } }}

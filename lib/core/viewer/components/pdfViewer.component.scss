@@ -10,7 +10,7 @@
         width: 100%;
         margin: 0;
 
-        .loader-container {
+        .adf-loader-container {
             display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
             display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
             display: -webkit-flex;     /* NEW - Chrome */
@@ -29,7 +29,7 @@
             background-color: rgba(0, 0, 0, 0.12);
         }
 
-        .thumbnails-template {
+        .adf-thumbnails-template {
             &__container {
                 display: flex;
                 flex-direction: column;
@@ -46,14 +46,16 @@
         }
 
         &__container {
-            display: flex; height: 100%;
+            display: flex;
+ height: 100%;
         }
 
         &__content {
-            flex: 1 1 auto; position: relative;
+            flex: 1 1 auto;
+ position: relative;
         }
 
-        .loader-item {
+        .adf-loader-item {
             margin: auto;
             max-height:100px;
             max-width:300px;

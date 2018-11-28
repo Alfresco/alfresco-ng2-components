@@ -45,7 +45,7 @@ var ProcessDetailsPage = function () {
     //Tasks
     var activeTask = element(by.css('div[data-automation-id="active-tasks"]'));
     var completedTask = element(by.css('div[data-automation-id="completed-tasks"]'));
-    var taskTitle = element(by.css("h2[class='activiti-task-details__header']"));
+    var taskTitle = element(by.css("h2[class='adf-activiti-task-details__header']"));
 
     this.checkDetailsAreDisplayed = function () {
         Util.waitUntilElementIsVisible(processStatusField);

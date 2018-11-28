@@ -50,12 +50,16 @@
                 }
 
                 outline: none;
-                transition: transform 280ms cubic-bezier(.4,0,.2,1), box-shadow 280ms cubic-bezier(.4,0,.2,1);
+                transition:
+                    transform 280ms cubic-bezier(0.4, 0, 0.2, 1),
+                    box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
                 min-height: 200px;
                 padding: 0 !important;
 
                 &:hover {
-                    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12), 0 5px 5px -3px rgba(0, 0, 0, .2);
+                    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                                0 3px 14px 2px rgba(0, 0, 0, 0.12),
+                                0 5px 5px -3px rgba(0, 0, 0, 0.2);
                     cursor: pointer;
                     transform: scale(1.015);
                 }
@@ -103,14 +107,14 @@
                     z-index: 9999;
                     padding: 16px;
 
-                    .line-clamp {
-                        @include line-clamp(1.25, 3);
+                    .adf-line-clamp {
+                        @include adf-line-clamp(1.25, 3);
                     }
                 }
 
                 &-actions {
-                    padding: 0 16px 16px 16px !important;
-                    border-top: 1px solid rgba(0,0,0,.1);
+                    padding: 0 16px 16px !important;
+                    border-top: 1px solid rgba(0, 0, 0, 0.1);
                     min-height: 48px;
                     box-sizing: border-box;
 
@@ -119,8 +123,8 @@
                     }
 
                     &.mat-card-actions {
-                        margin-left: 0px;
-                        margin-right: 0px;
+                        margin-left: 0;
+                        margin-right: 0;
 
                         &:last-child {
                             margin-bottom: 0 !important;

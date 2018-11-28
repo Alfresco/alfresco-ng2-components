@@ -92,7 +92,7 @@ describe('AnalyticsReportListComponent', () => {
 
             component.success.subscribe(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('#report-list-0 .activiti-filters__entry-icon').innerHTML).toBe('assignment');
+                expect(element.querySelector('#report-list-0 .adf-activiti-filters__entry-icon').innerHTML).toBe('assignment');
                 expect(element.querySelector('#report-list-0 > span').innerHTML).toBe('Fake Test Process definition heat map');
                 expect(element.querySelector('#report-list-1 > span').innerHTML).toBe('Fake Test Process definition overview');
                 expect(element.querySelector('#report-list-2 > span').innerHTML).toBe('Fake Test Process instances overview');
@@ -108,7 +108,7 @@ describe('AnalyticsReportListComponent', () => {
 
             component.success.subscribe(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('#report-list-0 .activiti-filters__entry-icon').innerHTML).toBe('assignment');
+                expect(element.querySelector('#report-list-0 .adf-activiti-filters__entry-icon').innerHTML).toBe('assignment');
                 expect(element.querySelector('#report-list-0 > span').innerHTML).toBe('Fake Test Process definition heat map');
                 expect(element.querySelector('#report-list-1 > span').innerHTML).toBe('Fake Test Process definition overview');
                 expect(element.querySelector('#report-list-2 > span').innerHTML).toBe('Fake Test Process instances overview');

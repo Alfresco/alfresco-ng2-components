@@ -2,7 +2,7 @@
     <mat-list-item *ngFor="let comment of comments"
                   (click)="selectComment(comment)"
                   class="adf-comment-list-item"
-                  [class.is-selected]="comment.isSelected"
+                  [class.adf-is-selected]="comment.isSelected"
                   id="adf-comment-{{comment?.id}}">
         <div id="comment-user-icon" class="adf-comment-img-container">
             <div

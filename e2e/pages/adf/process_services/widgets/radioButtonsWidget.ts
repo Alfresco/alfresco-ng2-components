@@ -21,12 +21,12 @@ import { by, element } from 'protractor';
 
 export class RadioButtonsWidget {
 
-    selectedOption = by.css('mat-radio-button[ng-reflect-checked="false"]');
+    selectedOption = by.css('mat-radio-button[ng-pristine]');
 
     formFields = new FormFields();
 
     getSpecificOptionLabel(fieldId, optionNumber) {
-        let optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"] div[class*="content"]');
+        let optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"] div[class*="adf-content"]');
 
         let option = this.formFields.getWidget(fieldId).element(optionLocator);
         Util.waitUntilElementIsVisible(option);
@@ -34,7 +34,7 @@ export class RadioButtonsWidget {
     }
 
     selectOption(fieldId, optionNumber) {
-        let optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"] div[class*="content"]`);
+        let optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"] div[class*="adf-content"]`);
 
         let option = this.formFields.getWidget(fieldId).element(optionLocator);
         Util.waitUntilElementIsVisible(option);

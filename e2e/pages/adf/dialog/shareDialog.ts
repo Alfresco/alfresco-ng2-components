@@ -17,7 +17,6 @@
 
 import { element, by } from 'protractor';
 import Util = require('../../../util/util');
-import moment = require('moment');
 import { FormControllersPage } from '../material/formControllersPage';
 
 export class ShareDialog {
@@ -32,7 +31,7 @@ export class ShareDialog {
     shareLink = element(by.css('[data-automation-id="adf-share-link"]'));
     closeButton = element(by.css('button[data-automation-id="adf-share-dialog-close"]'));
     snackBar = element(by.css('simple-snack-bar'));
-    copySharedLinkButton = element(by.css('.input-action'));
+    copySharedLinkButton = element(by.css('.adf-input-action'));
     timeDatePickerButton = element(by.css('mat-datetimepicker-toggle button'));
     dayPicker = element(by.css('mat-datetimepicker-month-view'));
     clockPicker = element(by.css('mat-datetimepicker-clock'));

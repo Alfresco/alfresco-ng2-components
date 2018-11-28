@@ -4,7 +4,7 @@
             {{'APP_LAYOUT.SEARCH_SERVICE_APPROACH' | translate}}
     </mat-checkbox>
 
-    <div id="container-for-custom-input" class="search-extended-input-containers">
+    <div id="container-for-custom-input" class="adf-search-extended-input-containers">
         <mat-form-field>
             <label>{{'APP_LAYOUT.WORD_TO_SEARCH' | translate}}</label>
             <input type="text" matInput
@@ -14,12 +14,12 @@
     <div>
       <adf-search #auto="searchAutocomplete"
                   [queryBody]="generateQueryBody(searchedWord)"
-                  class="example-card-search-container">
+                  class="adf-example-card-search-container">
           <ng-template let-data>
-            <mat-card class="example-card"
+            <mat-card class="adf-example-card"
                  *ngFor="let item of data?.list?.entries; let idx = index" (click)="onClick(item)">
                 <mat-card-header>
-                    <div mat-card-avatar class="example-header-image"></div>
+                    <div mat-card-avatar class="adf-example-header-image"></div>
                     <mat-card-title>{{ item?.entry.name }}</mat-card-title>
                     <mat-card-subtitle>{{ item?.entry.createdAt }}</mat-card-subtitle>
                 </mat-card-header>
@@ -30,7 +30,7 @@
                     </p>
                 </mat-card-content>
             </mat-card>
-            <mat-card class="example-card" id="search_no_result" *ngIf="data?.list?.entries.length === 0">
+            <mat-card class="adf-example-card" id="search_no_result" *ngIf="data?.list?.entries.length === 0">
                 <p mat-line class="adf-search-fixed-text">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchedWord} }}</p>
             </mat-card>
         </ng-template>

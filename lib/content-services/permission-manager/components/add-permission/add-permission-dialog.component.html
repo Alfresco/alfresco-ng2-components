@@ -9,7 +9,7 @@
 <mat-dialog-actions>
     <button mat-button mat-dialog-close id="add-permission-dialog-close-button">{{'PERMISSION_MANAGER.ADD-PERMISSION.CLOSE-ACTION' | translate}}</button>
     <button mat-button id="add-permission-dialog-confirm-button" [mat-dialog-close]="true"
-            class="choose-action"
+            class="adf-choose-action"
             [disabled]="currentSelection?.length === 0"
             (click)="onAddClicked()">{{'PERMISSION_MANAGER.ADD-PERMISSION.ADD-ACTION' | translate}}</button>
 </mat-dialog-actions>

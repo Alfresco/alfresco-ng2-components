@@ -6,16 +6,16 @@
 
     .adf-analytics-report-list {
 
-        .activiti-filters__entry {
+        .adf-activiti-filters__entry {
             cursor: pointer;
         }
 
-        .activiti-filters__entry-icon {
+        .adf-activiti-filters__entry-icon {
             position: relative;
             top: 5px;
         }
 
-        .activiti-filters__label {
+        .adf-activiti-filters__label {
             white-space: nowrap;
             overflow: hidden;
         }
@@ -24,11 +24,11 @@
             line-height: 48px;
         }
 
-        .activiti-filters__entry.active {
+        .adf-activiti-filters__entry.adf-active {
             color:  mat-color($primary);
         }
 
-        .activiti-filters__entry.active .activiti-filters__entry-icon {
+        .adf-activiti-filters__entry.adf-active .adf-activiti-filters__entry-icon {
             color:  mat-color($primary);
         }
 
@@ -70,7 +70,7 @@
                 padding: 16px;
                 z-index: 7;
 
-                .application-title {
+                .adf-application-title {
                     font-size: 24px;
                     margin: 0;
                 }

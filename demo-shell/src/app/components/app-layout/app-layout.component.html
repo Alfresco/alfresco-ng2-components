@@ -3,7 +3,7 @@
                     [position]="position">
 
     <adf-sidenav-layout-header>
-        <ng-template let-toggleMenu=" toggleMenu">
+        <ng-template let-toggleMenu="toggleMenu">
 
             <adf-layout-header id="adf-header"
                                [title]="title | translate"
@@ -45,13 +45,13 @@
                 <a mat-list-item *ngFor="let link of links" [attr.data-automation-id]="link.title | translate"
                    [routerLink]="link.href" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
                    class="adf-sidenav-link">
-                    <mat-icon matListIcon class="sidenav-menu-icon">{{link.icon}}</mat-icon>
-                    <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">{{link.title | translate }}</div>
+                    <mat-icon matListIcon class="adf-sidenav-menu-icon">{{link.icon}}</mat-icon>
+                    <div class="adf-sidenav-menu-label" *ngIf="!isMenuMinimized()">{{link.title | translate }}</div>
                 </a>
                 <a mat-list-item adf-logout [enableRedirect]="enableRedirect" redirectUri="/logout"
                    class="adf-sidenav-link">
-                    <mat-icon matListIcon class="sidenav-menu-icon">exit_to_app</mat-icon>
-                    <div class="sidenav-menu-label" *ngIf="!isMenuMinimized()">Logout</div>
+                    <mat-icon matListIcon class="adf-sidenav-menu-icon">exit_to_app</mat-icon>
+                    <div class="adf-sidenav-menu-label" *ngIf="!isMenuMinimized()">Logout</div>
                 </a>
             </mat-nav-list>
 

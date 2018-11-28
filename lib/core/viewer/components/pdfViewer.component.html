@@ -1,8 +1,8 @@
 <div class="adf-pdf-viewer__container">
     <ng-container *ngIf="showThumbnails">
         <div class="adf-pdf-viewer__thumbnails">
-            <div class="thumbnails-template__container">
-                <div class="thumbnails-template__buttons">
+            <div class="adf-thumbnails-template__container">
+                <div class="adf-thumbnails-template__buttons">
                     <button mat-icon-button data-automation-id='adf-thumbnails-close' (click)="toggleThumbnails()">
                         <mat-icon>close</mat-icon>
                     </button>
@@ -20,10 +20,10 @@
     </ng-container>
 
     <div class="adf-pdf-viewer__content">
-        <div id="viewer-pdf-viewer" class="viewer-pdf-viewer" (window:resize)="onResize()">
-            <div id="viewer-viewerPdf" class="pdfViewer">
-                <div id="loader-container" class="loader-container">
-                    <div class="loader-item">
+        <div id="viewer-pdf-viewer" class="adf-viewer-pdf-viewer" (window:resize)="onResize()">
+            <div id="viewer-viewerPdf" class="adf-pdfViewer">
+                <div id="loader-container" class="adf-loader-container">
+                    <div class="adf-loader-item">
                         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
                     </div >
                 </div>

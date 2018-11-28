@@ -28,7 +28,7 @@
             }
         }
 
-        .ie11FixerParent {
+        .adf-ie11FixerParent {
             margin-top: 16px;
             min-width: 320px;
 
@@ -42,23 +42,23 @@
         }
 
         // IE11 vertical centering
-        .ie11FixerChild {
+        .adf-ie11FixerChild {
             width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center
+            align-items: center;
         }
 
-        .show {
+        .adf-show {
             display: block !important;
         }
 
-        .hide {
+        .adf-hide {
             display: none !important;
         }
 
-        .icon-inline {
+        .adf-icon-inline {
             position: absolute;
             display: block;
             top: 31%;
@@ -73,7 +73,7 @@
             box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
             width: 450px;
             min-width: 320px;
-            padding: 21px 64px 34px 64px;
+            padding: 21px 64px 34px;
             box-sizing: border-box;
         }
 
@@ -94,16 +94,16 @@
             justify-content: flex-start;
 
             color: mat-color($warn);
-            padding: 0px;
+            padding: 0;
             margin-bottom: 4px;
             font-size: 13px;
         }
 
-        .adf-error-message .error-icon {
+        .adf-error-message .adf-error-icon {
             margin-right: 10px;
         }
 
-        .mat-card-header-text{
+        .mat-card-header-text {
             margin: 0 auto;
         }
 
@@ -114,7 +114,7 @@
         }
 
         .adf-alfresco-logo {
-            padding: 24px 16px 24px 16px;
+            padding: 24px 16px;
         }
 
         .adf-alfresco-logo img {
@@ -132,20 +132,20 @@
             color: rgb(255, 255, 255);
         }
 
-        .adf-login-button.isChecking {
+        .adf-login-button.adf-isChecking {
             background-color: #e0f7fa;
         }
 
-        .adf-login-button.isChecking .adf-login-button-label {
+        .adf-login-button.adf-isChecking .adf-login-button-label {
             color: #00bcd4;
         }
 
-        .adf-login-button.isWelcome {
+        .adf-login-button.adf-isWelcome {
             background-color: #00bcd4;
             color: #ffffff;
         }
 
-        .adf-login-button.isWelcome .welcome-icon {
+        .adf-login-button.adf-isWelcome .adf-welcome-icon {
             margin: 5px 0 0 10px;
         }
 
@@ -167,18 +167,18 @@
             justify-content: center;
         }
 
-        .adf-login-spinner-container{
+        .adf-login-spinner-container {
             margin-left: 15px;
             margin-top: 5px;
         }
 
-        #checking-spinner > svg > circle{
+        .adf-login-checking-spinner > svg > circle {
             stroke-width: 16% !important;
 
         }
 
         .adf-login-controls {
-            padding: 0 0 26px 0;
+            padding: 0 0 26px;
             overflow: visible;
             width: 100%;
         }
@@ -206,7 +206,7 @@
             text-decoration: none;
         }
 
-        .is-active {
+        .adf-is-active {
             background-color: transparent;
             font-size: 12px;
             font-weight: normal;
@@ -214,7 +214,7 @@
             color: mat-color($warn);
         }
 
-        .copyright {
+        .adf-copyright {
             min-width: 320px;
             text-align: center;
             padding: 16px 0;
@@ -227,12 +227,12 @@
         }
 
         .adf-login__field .mat-form-field-wrapper {
-            margin: 1em 0 0 0;
+            margin: 1em 0 0;
             font-size: 16px;
         }
 
         .adf-login__field input:-webkit-autofill {
-            -webkit-box-shadow: 0 0 0px 1000px mat-color($background, dialog) inset;
+            -webkit-box-shadow: 0 0 0 1000px mat-color($background, dialog) inset;
             -webkit-text-fill-color: $text-color-primary !important;
         }
 
@@ -269,12 +269,12 @@
             padding-bottom: 18px;
         }
 
-        .adf-login-rememberme {
+        .adf-login-remember-me {
             color: $text-color-primary !important;
         }
 
         .adf-login-action-container {
-            border-top: 1px solid rgba(0, 0, 0, .1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
             margin-top: 23px;
         }
     }

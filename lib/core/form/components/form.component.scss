@@ -15,7 +15,7 @@
             }
 
             & .mat-card-header-text {
-                margin: 0px !important;
+                margin: 0 !important;
             }
 
             & .mat-tab-body-content {
@@ -36,7 +36,7 @@
             }
 
             & .mat-form-field-wrapper {
-                margin: 0px 12px 0px 0px;
+                margin: 0 12px 0 0;
             }
         }
 
@@ -48,12 +48,12 @@
             padding: 10px;
         }
 
-        &-form-debug-container .debug-toggle-text {
+        &-form-debug-container .adf-debug-toggle-text {
             padding-left: 15px;
             cursor: pointer;
         }
 
-        &-form-debug-container .debug-toggle-text:hover {
+        &-form-debug-container .adf-debug-toggle-text:hover {
             font-weight: bold;
         }
 
@@ -69,7 +69,7 @@
             top: 39px;
             color: mat-color($accent);
 
-            & .invalid-color {
+            & .adf-invalid-color {
                 color: mat-color($warn);
              }
         }
@@ -79,7 +79,7 @@
         }
 
         &-task-title {
-            text-align: center
+            text-align: center;
         }
 
         &-label {

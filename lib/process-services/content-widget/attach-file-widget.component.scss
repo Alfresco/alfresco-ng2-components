@@ -31,11 +31,11 @@
         z-index: -1;
     }
 
-    &-attach-widget__image-logo{
+    &-attach-widget__image-logo {
         padding-left: 5px;
     }
 
-    &-attach-widget-repo-button{
+    &-attach-widget-repo-button {
         padding-left: 10px;
 
         .mat-button-wrapper {
@@ -66,7 +66,7 @@
 
     &-attach-files-row {
         .mat-line {
-            margin-bottom: 0px;
+            margin-bottom: 0;
         }
     }
 

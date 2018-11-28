@@ -5,8 +5,8 @@
         class="adf-breadcrumb-dropdown-trigger"
         (click)="open()">
         <div class="adf-breadcrumb-dropdown-trigger-icon">
-            <mat-icon [class.isRoot]="!hasPreviousNodes()">folder</mat-icon>
-            <mat-icon [class.isRoot]="!hasPreviousNodes()" class="adf-breadcrumb-dropdown-trigger-arrow">arrow_drop_down</mat-icon>
+            <mat-icon [class.adf-isRoot]="!hasPreviousNodes()">folder</mat-icon>
+            <mat-icon [class.adf-isRoot]="!hasPreviousNodes()" class="adf-breadcrumb-dropdown-trigger-arrow">arrow_drop_down</mat-icon>
         </div>
     </button>
 
@@ -26,7 +26,7 @@
     </mat-select>
 
     <div *ngFor="let item of lastNodes; let last = last"
-        [class.active]="last"
+        [class.adf-active]="last"
         [ngSwitch]="last"
         title="{{ item.name | translate }}"
         class="adf-breadcrumb-item"
@@ -49,7 +49,7 @@
 </nav>
 
 <nav *ngIf="!folderNode && hasRoot" data-automation-id="breadcrumb" role="navigation">
-    <div class="adf-breadcrumb-item active" role="listitem">
+    <div class="adf-breadcrumb-item adf-active" role="listitem">
         <div class="adf-breadcrumb-item-current">
             {{ root | translate }}
         </div>

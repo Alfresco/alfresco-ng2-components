@@ -10,7 +10,7 @@
         height: 32px;
     }
 
-    .document-list_empty_template {
+    .adf-document-list_empty_template {
         text-align: center;
         margin-top: 20px;
         margin-bottom: 20px;
@@ -38,7 +38,7 @@
         }
     }
 
-    .document-list__this-space-is-empty {
+    .adf-document-list__this-space-is-empty {
         height: 32px;
         opacity: 0.26;
         font-size: 24px;
@@ -47,7 +47,7 @@
         color: mat-color($foreground, text);
     }
 
-    .document-list__drag-drop {
+    .adf-document-list__drag-drop {
         height: 56px;
         opacity: 0.54;
         font-size: 56px;
@@ -57,17 +57,17 @@
         margin-top: 40px;
     }
 
-    .document-list__any-files-here-to-add {
+    .adf-document-list__any-files-here-to-add {
         height: 24px;
         opacity: 0.54;
         font-size: 16px;
         line-height: 1.5;
         letter-spacing: -0.4px;
-        color: mat-color($foreground, text)0;
+        color: mat-color($foreground, text) 0;
         margin-top: 17px;
     }
 
-    .document-list__empty_doc_lib {
+    .adf-document-list__empty_doc_lib {
         width: 565px;
         height: 161px;
         object-fit: contain;
@@ -160,8 +160,8 @@
             img {
                 height: 100px;
             }
-            
-            :first-child .cell-container .cell-value {
+
+            :first-child .adf-cell-container .adf-cell-value {
                 display: flex;
                 width: 265px;
                 flex: 0 0 auto;

@@ -5,7 +5,7 @@
         class="adf-dropdown-breadcrumb-trigger"
         (click)="open()"
         data-automation-id="dropdown-breadcrumb-trigger">
-        <mat-icon [class.isRoot]="!hasPreviousNodes()">folder</mat-icon>
+        <mat-icon [class.adf-isRoot]="!hasPreviousNodes()">folder</mat-icon>
     </button>
     <mat-icon class="adf-dropdown-breadcrumb-item-chevron">chevron_right</mat-icon>
 
@@ -28,6 +28,6 @@
 
     <span
         class="adf-current-folder"
-        [class.isRoot]="!hasPreviousNodes()"
+        [class.adf-isRoot]="!hasPreviousNodes()"
         data-automation-id="current-folder">{{ currentNode.name }}</span>
 </ng-container>

@@ -19,13 +19,13 @@
             word-wrap: break-word;
         }
 
-        &-diagram-tooltip.is-active {
+        &-diagram-tooltip.adf-is-active {
             animation: tooltipAnimation 200ms cubic-bezier(0, 0, 0.2, 1) forwards;
         }
 
         &-diagram-tooltip-header {
             background-color: rgba(43, 65, 79, 0.95);
-            color: #FFF;
+            color: #fff;
             padding: 8px;
             font-weight: bold;
             min-width: 200px;

@@ -8,7 +8,7 @@
     $dynamic-table-header-color: mat-color($foreground, text) !default;
     $dynamic-table-header-sorted-color: mat-color($foreground, text) !default;
     $dynamic-table-header-sorted-icon-hover-color: mat-color($foreground, disabled-text) !default;
-    $dynamic-table-divider-color: mat-color($foreground, text, .07) !default;
+    $dynamic-table-divider-color: mat-color($foreground, text, 0.07) !default;
     $dynamic-table-hover-color: #eeeeee !default;
     $dynamic-table-selection-color: #e0f7fa !default;
     $dynamic-table-dividers: 1px solid $dynamic-table-divider-color !default;
@@ -56,7 +56,7 @@
                         background-color: $dynamic-table-hover-color;
                     }
 
-                    &.is-selected, &.is-selected:hover {
+                    &.adf-is-selected, &.adf-is-selected:hover {
                         background-color: $dynamic-table-selection-color;
                     }
 
@@ -92,12 +92,12 @@
                 padding-top: $dynamic-table-cell-top;
                 box-sizing: border-box;
 
-                @include no-select;
+                @include adf-no-select;
                 cursor: default;
             }
 
             th {
-                @include no-select;
+                @include adf-no-select;
                 cursor: pointer;
                 position: relative;
                 vertical-align: bottom;
@@ -111,8 +111,8 @@
                 padding-bottom: 8px;
                 box-sizing: border-box;
 
-                &.sortable {
-                    @include no-select;
+                &.adf-sortable {
+                    @include adf-no-select;
                     &:hover {
                         cursor: pointer;
                     }
@@ -121,22 +121,22 @@
                 &.adf-dynamic-table__header--sorted-asc,
                 &.adf-dynamic-table__header--sorted-desc {
                     color: $dynamic-table-header-sorted-color;
-                    &:before {
+                    &::before {
                         @include typo-icon;
                         font-size: $dynamic-table-header-sort-icon-size;
-                        content: "\e5d8";
+                        content: '\e5d8';
                         margin-right: 5px;
                         vertical-align: sub;
                     }
                     &:hover {
                         cursor: pointer;
-                        &:before {
+                        &::before {
                             color: $dynamic-table-header-sorted-icon-hover-color;
                         }
                     }
                 }
-                &.adf-dynamic-table__header--sorted-desc:before {
-                    content: "\e5db";
+                &.adf-dynamic-table__header--sorted-desc::before {
+                    content: '\e5db';
                 }
             }
 
@@ -162,7 +162,7 @@
                 }
             }
 
-            .full-width {
+            .adf-full-width {
                 width: 100%;
             }
         }

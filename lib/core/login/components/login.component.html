@@ -1,6 +1,6 @@
 <div class="adf-login-content" [style.background-image]="'url(' + backgroundImageUrl + ')'">
-    <div class="ie11FixerParent">
-        <div class="ie11FixerChild">
+    <div class="adf-ie11FixerParent">
+        <div class="adf-ie11FixerChild">
 
             <mat-card class="adf-login-card-wide">
                 <form id="adf-login-form" [formGroup]="form" (submit)="onSubmit(form.value)" autocomplete="off">
@@ -25,15 +25,15 @@
                             <!--ERRORS AREA-->
                             <div class="adf-error-container">
                                 <div *ngIf="isError" id="login-error" data-automation-id="login-error"
-                                     class="error  adf-error-message">
-                                    <mat-icon class="error-icon">warning</mat-icon>
-                                    <span class="login-error-message">{{errorMsg | translate }}</span>
+                                     class="adf-error  adf-error-message">
+                                    <mat-icon class="adf-error-icon">warning</mat-icon>
+                                    <span class="adf-login-error-message">{{errorMsg | translate }}</span>
                                 </div>
                             </div>
 
                             <!--USERNAME FIELD-->
                             <div class="adf-login__field"
-                                 [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}">
+                                 [ngClass]="{'adf-is-invalid': isErrorStyle(form.controls.username)}">
                                 <mat-form-field class="adf-full-width" floatPlaceholder="never" color="primary">
                                     <input matInput placeholder="{{'LOGIN.LABEL.USERNAME' | translate }}"
                                            type="text"
@@ -82,8 +82,8 @@
                             <button type="submit" id="login-button" tabindex="4"
                                     class="adf-login-button"
                                     mat-raised-button color="primary"
-                                    [class.isChecking]="actualLoginStep === LoginSteps.Checking"
-                                    [class.isWelcome]="actualLoginStep === LoginSteps.Welcome"
+                                    [class.adf-isChecking]="actualLoginStep === LoginSteps.Checking"
+                                    [class.adf-isWelcome]="actualLoginStep === LoginSteps.Welcome"
                                     data-automation-id="login-button" [disabled]="!form.valid">
 
                                 <span *ngIf="actualLoginStep === LoginSteps.Landing" class="adf-login-button-label">{{ 'LOGIN.BUTTON.LOGIN' | translate }}</span>
@@ -101,15 +101,14 @@
 
                                 <div *ngIf="actualLoginStep === LoginSteps.Welcome" class="adf-interactive-login-label">
                                     <span class="adf-login-button-label">{{ 'LOGIN.BUTTON.WELCOME' | translate }}</span>
-                                    <mat-icon class="welcome-icon">done</mat-icon>
+                                    <mat-icon class="adf-welcome-icon">done</mat-icon>
                                 </div>
 
                             </button>
                             <div *ngIf="showRememberMe" class="adf-login__remember-me">
-                                <mat-checkbox id="adf-login-remember" color="primary" class="adf-login-rememberme"
+                                <mat-checkbox id="adf-login-remember" color="primary" class="adf-login-remember-me"
                                               [checked]="rememberMe"
-                                              (change)="rememberMe = !rememberMe">{{ 'LOGIN.LABEL.REMEMBER' | translate
-                                    }}
+                                              (change)="rememberMe = !rememberMe">{{ 'LOGIN.LABEL.REMEMBER' | translate }}
                                 </mat-checkbox>
                             </div>
                         </div>
@@ -147,7 +146,7 @@
                 </form>
             </mat-card>
 
-            <div class="copyright" data-automation-id="login-copyright">
+            <div class="adf-copyright" data-automation-id="login-copyright">
                 {{ copyrightText }}
             </div>
 

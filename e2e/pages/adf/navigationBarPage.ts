@@ -35,7 +35,7 @@ export class NavigationBarPage {
     themeButton = element(by.css('button[data-automation-id="theme menu"]'));
     themeMenuContent = element(by.css('div[class*="mat-menu-panel"]'));
     logoutButton = element(by.css('a[adf-logout]'));
-    cardViewButton = element(by.cssContainingText('.sidenav-menu-label', 'CardView'));
+    cardViewButton = element(by.cssContainingText('.adf-sidenav-menu-label', 'CardView'));
     languageMenuButton = element(by.css('button[data-automation-id="language-menu-button"]'));
     appTitle = element(by.css('.adf-app-title'));
     headerDataButton = element(by.css('a[data-automation-id="Header Data"]'));
