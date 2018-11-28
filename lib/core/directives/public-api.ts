@@ -21,6 +21,7 @@ export * from './node-delete.directive';
 export * from './node-favorite.directive';
 export * from './node-permission.directive';
 export * from './node-restore.directive';
+export * from './node-download.directive';
 export * from './upload.directive';
 
 export * from './directive.module';

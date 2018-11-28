@@ -76,7 +76,7 @@
                     mat-icon-button
                     title="{{ 'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate }}"
                     data-automation-id="adf-toolbar-download"
-                    (click)="downloadContent()">
+                    [adfNodeDownload]="nodes">
                     <mat-icon>file_download</mat-icon>
                 </button>
 

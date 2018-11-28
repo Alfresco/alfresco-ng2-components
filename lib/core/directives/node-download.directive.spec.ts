@@ -19,10 +19,12 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { Component, DebugElement } from '@angular/core';
-import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
-
-import { DialogModule } from '../dialogs/dialog.module';
+import { setupTestBed } from '../testing/setupTestBed';
+import { AlfrescoApiService } from '../services/alfresco-api.service';
+import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { NodeDownloadDirective } from './node-download.directive';
+import { AppConfigService } from 'index';
+import { AppConfigServiceMock } from 'mock';
 
 @Component({
     template: '<div [adfNodeDownload]="selection"></div>'
@@ -42,12 +44,10 @@ describe('NodeDownloadDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            DialogModule
         ],
         providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
-            // { provide: AppConfigService, useValue: AppConfigServiceMock },
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
+            { provide: AppConfigService, useValue: AppConfigServiceMock }
         ],
         declarations: [
             TestComponent,
