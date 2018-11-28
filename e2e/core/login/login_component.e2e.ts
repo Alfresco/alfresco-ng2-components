@@ -70,69 +70,83 @@ describe('Login component', () => {
         done();
     });
 
+    it('[C276746] Should display the right information in user-info when a different users logs in', () => {
+        loginPage.loginToContentServicesUsingUserModel(userA);
+        navigationBarPage.clickUserProfile();
+        expect(userInfoDialog.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
+        expect(userInfoDialog.getContentEmail()).toEqual(userA.email);
+
+        loginPage.loginToContentServicesUsingUserModel(userB);
+        navigationBarPage.clickUserProfile();
+        expect(userInfoDialog.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
+        expect(userInfoDialog.getContentEmail()).toEqual(userB.email);
+    });
+
     it('[C260036] Should require username', () => {
         loginPage.goToLoginPage();
         loginPage.checkUsernameInactive();
-        loginPage.checkSignInButtonIsDisabled();
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.enterUsername('A');
-        loginPage.checkUsernameTooltip(errorMessages.username);
+        expect(loginPage.getUsernameTooltip()).toEqual(errorMessages.username);
         loginPage.clearUsername();
-        loginPage.checkUsernameTooltip(errorMessages.required);
+        expect(loginPage.getUsernameTooltip()).toEqual(errorMessages.required);
         loginPage.checkUsernameHighlighted();
-        loginPage.checkSignInButtonIsDisabled();
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
     });
 
     it('[C260043] Should require password', () => {
         loginPage.goToLoginPage();
         loginPage.checkPasswordInactive();
-        loginPage.checkSignInButtonIsDisabled();
+        loginPage.checkUsernameInactive();
         loginPage.enterPassword('A');
         loginPage.checkPasswordTooltipIsNotVisible();
         loginPage.clearPassword();
-        loginPage.checkPasswordTooltip(errorMessages.password);
+        expect(loginPage.getPasswordTooltip()).toEqual(errorMessages.password);
         loginPage.checkPasswordHighlighted();
-        loginPage.checkSignInButtonIsDisabled();
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
     });
 
     it('[C260044] Username should be at least 2 characters long', () => {
         loginPage.goToLoginPage();
-        loginPage.checkSignInButtonIsDisabled();
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.enterUsername('A');
-        loginPage.checkUsernameTooltip(errorMessages.username);
+        expect(loginPage.getUsernameTooltip()).toEqual(errorMessages.username);
         loginPage.enterUsername('AB');
         loginPage.checkUsernameTooltipIsNotVisible();
-        loginPage.checkSignInButtonIsDisabled();
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.clearUsername();
     });
 
     it('[C260045] Should enable login button after entering a valid username and a password', () => {
         loginPage.goToLoginPage();
         loginPage.enterUsername(adminUserModel.id);
-        loginPage.checkSignInButtonIsDisabled();
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.enterPassword('a');
-        loginPage.checkSignInButtonIsEnabled();
-        loginPage.clearUsername(adminUserModel.id);
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(true);
+        loginPage.clearUsername();
         loginPage.clearPassword();
     });
 
     it('[C260046] Should NOT be possible to login with an invalid username/password', () => {
         loginPage.goToLoginPage();
-        loginPage.checkSignInButtonIsDisabled();
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.enterUsername('test');
         loginPage.enterPassword('test');
-        loginPage.checkSignInButtonIsEnabled();
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(true);
         loginPage.clickSignInButton();
-        loginPage.checkLoginError(errorMessages.invalid_credentials);
+        expect(loginPage.getLoginError()).toEqual(errorMessages.invalid_credentials);
         loginPage.clearUsername();
         loginPage.clearPassword();
     });
 
     it('[C260047] Password should be crypted', () => {
         loginPage.goToLoginPage();
-        loginPage.checkSignInButtonIsDisabled();
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.enterPassword('test');
         loginPage.showPassword();
-        loginPage.checkPasswordIsShown('test');
+        loginPage.getShownPassword().then(async (tooltip) => {
+            await expect(tooltip).toEqual('test');
+        });
         loginPage.hidePassword();
         loginPage.checkPasswordIsHidden();
         loginPage.clearPassword();
@@ -152,7 +166,7 @@ describe('Login component', () => {
 
     it('[C260049] Should be possible to login to Process Services with Content Services disabled', () => {
         loginPage.goToLoginPage();
-        loginPage.checkSignInButtonIsDisabled();
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         settingsPage.setProviderBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         navigationBarPage.navigateToProcessServicesPage();
@@ -163,7 +177,7 @@ describe('Login component', () => {
 
     it('[C260050] Should be possible to login to Content Services with Process Services disabled', () => {
         loginPage.goToLoginPage();
-        loginPage.checkSignInButtonIsDisabled();
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         settingsPage.setProviderEcm();
         loginPage.login(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
         navigationBarPage.clickContentServicesButton();
@@ -174,7 +188,7 @@ describe('Login component', () => {
 
     it('[C260051] Should be able to login to both Content Services and Process Services', () => {
         settingsPage.setProviderEcmBpm();
-        loginPage.checkSignInButtonIsDisabled();
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
         navigationBarPage.navigateToProcessServicesPage();
@@ -188,8 +202,8 @@ describe('Login component', () => {
     it('[C277754] Should the user be redirect to the login page when the Content Service session expire', () => {
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
-        browser.executeScript('window.localStorage.removeItem("ticket-ECM");').then(() => {
-            browser.get(TestConfig.adf.url + '/files');
+        browser.executeScript('window.localStorage.removeItem("ticket-ECM");').then(async () => {
+            await browser.get(TestConfig.adf.url + '/files');
             loginPage.waitForElements();
         });
 
@@ -206,8 +220,8 @@ describe('Login component', () => {
     it('[C279931] Should the user be redirect to the login page when the Process Service session expire', () => {
         settingsPage.setProviderEcmBpm();
         loginPage.login(adminUserModel.id, adminUserModel.password);
-        browser.executeScript('window.localStorage.removeItem("ticket-BPM");').then(() => {
-            browser.get(TestConfig.adf.url + '/activiti');
+        browser.executeScript('window.localStorage.removeItem("ticket-BPM");').then(async () => {
+            await browser.get(TestConfig.adf.url + '/activiti');
             loginPage.waitForElements();
         });
     });
@@ -228,18 +242,6 @@ describe('Login component', () => {
                 contentServicesPage.checkAcsContainer();
             });
         });
-    });
-
-    it('[C276746] Should display the right information in user-info when a different users logs in', () => {
-        loginPage.loginToContentServicesUsingUserModel(userA);
-        navigationBarPage.clickUserProfile();
-        expect(userInfoDialog.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
-        expect(userInfoDialog.getContentEmail()).toEqual(userA.email);
-
-        loginPage.loginToContentServicesUsingUserModel(userB);
-        navigationBarPage.clickUserProfile();
-        expect(userInfoDialog.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
-        expect(userInfoDialog.getContentEmail()).toEqual(userB.email);
     });
 
     it('[C279933] Should be possible change the login component logo when logoImageUrl is changed', () => {

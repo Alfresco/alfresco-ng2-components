@@ -30,6 +30,7 @@ export class NavigationBarPage {
     processServicesCloudButton = element(by.css('a[data-automation-id="Process Cloud"]'));
     loginButton = element(by.css('a[data-automation-id="Login"]'));
     trashcanButton = element(by.css('a[data-automation-id="Trashcan"]'));
+    overlayViewerButton = element(by.css('a[data-automation-id="Overlay Viewer"]'));
     userProfileButton = element(by.css('button[data-automation-id="adf-user-profile"]'));
     themeButton = element(by.css('button[data-automation-id="theme menu"]'));
     themeMenuContent = element(by.css('div[class*="mat-menu-panel"]'));
@@ -77,6 +78,12 @@ export class NavigationBarPage {
     clickTrashcanButton() {
         Util.waitUntilElementIsVisible(this.trashcanButton);
         this.trashcanButton.click();
+    }
+
+    clickOverlayViewerButton() {
+        Util.waitUntilElementIsVisible(this.overlayViewerButton);
+        this.overlayViewerButton.click();
+        return this;
     }
 
     clickUserProfile() {

@@ -56,12 +56,10 @@ export class ViewerPage {
     passwordError = element(by.css('mat-error[data-automation-id="adf-password-dialog-error"]'));
     infoSideBar = element(by.id('adf-right-sidebar'));
     leftSideBar = element(by.id('adf-left-sidebar'));
-    pageCanvas = element.all(by.css('div[class="canvasWrapper"]')).first();
     viewer = element(by.css('adf-viewer'));
     pdfViewer = element(by.css('adf-pdf-viewer'));
     imgViewer = element(by.css('adf-img-viewer'));
     activeTab = element(by.css('div[class*="mat-tab-label-active"]'));
-    uploadNewVersionButton = element(by.css('input[data-automation-id="upload-single-file"]'));
     toolbarSwitch = element(by.id('adf-switch-toolbar'));
     toolbar = element(by.id('adf-viewer-toolbar'));
     datatableHeader = element(by.css('div.adf-datatable-header'));
@@ -71,6 +69,8 @@ export class ViewerPage {
     openWith = element(by.id('adf-viewer-openwith'));
 
     customNameSwitch = element(by.id('adf-switch-custoname'));
+    customToolbarToggle = element(by.id('adf-toggle-custom-toolbar'));
+    customToolbar = element(by.css('adf-viewer-toolbar[data-automation-id="adf-viewer-custom-toolbar"]'));
 
     showRightSidebarSwitch = element(by.id('adf-switch-showrightsidebar'));
     showLeftSidebarSwitch = element(by.id('adf-switch-showleftsidebar'));
@@ -93,24 +93,6 @@ export class ViewerPage {
     uploadButton = element(by.id('adf-viewer-upload'));
     timeButton = element(by.id('adf-viewer-time'));
     bugButton = element(by.id('adf-viewer-bug'));
-
-    canvasHeight() {
-        let deferred = protractor.promise.defer();
-        this.pageCanvas.getAttribute('style').then(function (value) {
-            let canvasHeight = value.split('height: ')[1].split('px')[0];
-            deferred.fulfill(canvasHeight);
-        });
-        return deferred.promise;
-    }
-
-    canvasWidth() {
-        let deferred = protractor.promise.defer();
-        this.pageCanvas.getAttribute('style').then(function (value) {
-            let canvasWidth = value.split('width: ')[1].split('px')[0];
-            deferred.fulfill(canvasWidth);
-        });
-        return deferred.promise;
-    }
 
     viewFile(fileName) {
         let fileView = element.all(by.xpath('//div[@id="document-list-container"]//div[@filename="' + fileName + '"]')).first();
@@ -176,7 +158,9 @@ export class ViewerPage {
     checkCurrentThumbnailIsSelected() {
         let selectedThumbnail = element(by.css('adf-pdf-thumb[class="pdf-thumbnails__thumb ng-star-inserted pdf-thumbnails__thumb--selected"] > img'));
         this.pageSelectorInput.getAttribute('value').then(function (pageNumber) {
-            expect('Page ' + pageNumber).toEqual(selectedThumbnail.getAttribute('title'));
+            browser.controlFlow().execute(async () => {
+                expect('Page ' + pageNumber).toEqual(await selectedThumbnail.getAttribute('title'));
+            });
         });
     }
 
@@ -236,10 +220,6 @@ export class ViewerPage {
 
     checkZoomInButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.zoomInButton);
-    }
-
-    checkZoomInButtonIsDisplayed(timeout) {
-        Util.waitUntilElementIsVisible(this.zoomInButton, timeout);
     }
 
     checkZoomInButtonIsNotDisplayed() {
@@ -339,6 +319,17 @@ export class ViewerPage {
         return this.infoButton.click();
     }
 
+    clickOnTab(tabName) {
+        this.tabsPage.clickTabByTitle(tabName);
+        return this;
+    }
+
+    checkTabIsActive(tabName) {
+        let tab = element(by.cssContainingText('.adf-info-drawer-layout-content div.mat-tab-labels div.mat-tab-label-active .mat-tab-label-content', tabName));
+        Util.waitUntilElementIsVisible(tab);
+        return this;
+    }
+
     clickLeftSidebarButton() {
         Util.waitUntilElementIsVisible(this.leftSideBarButton);
         return this.leftSideBarButton.click();
@@ -431,22 +422,6 @@ export class ViewerPage {
     getActiveTab() {
         Util.waitUntilElementIsVisible(this.activeTab);
         return this.activeTab.getText();
-    }
-
-    clickOnVersionsTab() {
-        clickRightChevronToGetToTab('Versions');
-        tabsPage.clickTabByTitle('Versions');
-        return this;
-    }
-
-    checkUploadVersionsButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.uploadNewVersionButton);
-        return this;
-    }
-
-    checkVersionIsDisplayed(version) {
-        Util.waitUntilElementIsVisible(element(by.cssContainingText('h4[class*="adf-version-list-item-name"]', version)));
-        return this;
     }
 
     clickOnCommentsTab() {
@@ -600,6 +575,21 @@ export class ViewerPage {
         this.formControllersPage.enableToggle(this.moreActionsSwitch);
     }
 
+    disableCustomToolbar() {
+        this.formControllersPage.disableToggle(this.customToolbarToggle);
+        return this;
+    }
+
+    enableCustomToolbar() {
+        this.formControllersPage.enableToggle(this.customToolbarToggle);
+        return this;
+    }
+
+    checkCustomToolbarIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.customToolbar);
+        return this;
+    }
+
     disableCustomName() {
         this.formControllersPage.disableToggle(this.customNameSwitch);
     }
@@ -624,6 +614,21 @@ export class ViewerPage {
         textField.sendKeys('');
         textField.clear();
         textField.sendKeys(text);
+        return this;
+    }
+
+    disableOverlay() {
+        this.formControllersPage.disableToggle(element(by.id('adf-viewer-overlay')));
+        return this;
+    }
+
+    checkOverlayViewerIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.viewer.element(by.css('div[class*="adf-viewer-overlay-container"]')));
+        return this;
+    }
+
+    checkInlineViewerIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.viewer.element(by.css('div[class*="adf-viewer-inline-container"]')));
         return this;
     }
 }
