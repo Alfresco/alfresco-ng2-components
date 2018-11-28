@@ -2,7 +2,7 @@
     .mat-radio-group {
         display: flex;
         flex-direction: column;
-        margin: 0 0 20px 0;
+        margin: 0 0 20px;
     }
 
     .mat-radio-group .mat-radio-button {
@@ -17,7 +17,7 @@
         padding-top: 20px;
     }
 
-    .actions-buttons {
+    .adf-action-buttons {
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
