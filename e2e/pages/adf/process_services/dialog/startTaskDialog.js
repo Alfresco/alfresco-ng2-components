@@ -31,6 +31,7 @@ var StartTaskDialog = function () {
 
     this.addName = function (userName) {
         Util.waitUntilElementIsVisible(name);
+        name.clear();
         name.sendKeys(userName);
         return this;
     };
