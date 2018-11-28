@@ -71,7 +71,6 @@ describe('Create folder directive', function () {
         createFolderDialog.clickOnCancelButton();
 
         contentServicesPage.checkContentIsNotDisplayed(folderName);
-        createFolderDialog.clickOnCancelButton();
     });
 
     it('[C260155] Should enable the Create button only when a folder name is present', () => {
@@ -83,7 +82,6 @@ describe('Create folder directive', function () {
         createFolderDialog.addFolderName(folderName);
 
         createFolderDialog.checkCreateBtnIsEnabled();
-        createFolderDialog.clickOnCancelButton();
     });
 
     it('[C260156] Should not be possible create two folder with the same name', () => {
@@ -125,7 +123,6 @@ describe('Create folder directive', function () {
         contentListPage.metadataContent(folderName);
 
         expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('this is the description');
-        createFolderDialog.clickOnCancelButton();
     });
 
     it('[C260159] Should not be possible create a folder with banned character', () => {
@@ -137,7 +134,5 @@ describe('Create folder directive', function () {
             createFolderDialog.addFolderName(symbol);
             createFolderDialog.checkCreateBtnIsDisabled();
         }
-
-        createFolderDialog.clickOnCancelButton();
     });
 });
