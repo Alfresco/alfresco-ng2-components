@@ -446,9 +446,9 @@ describe('Document List Component', () => {
         afterAll(async (done) => {
             Promise.all(folderCreated.map((folder) =>
                 uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, folder.entry.id)
-            )).then(
-                done()
-            );
+            )).then(() => {
+                done();
+            });
         });
 
         it('[C277093] Should sort files with Items per page set to default', async (done) => {
@@ -567,7 +567,7 @@ describe('Document List Component', () => {
             CREATED: 'Created'
         };
 
-        let funnyUser = {};
+        let funnyUser;
 
         let pdfFile = new FileModel({
             'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
