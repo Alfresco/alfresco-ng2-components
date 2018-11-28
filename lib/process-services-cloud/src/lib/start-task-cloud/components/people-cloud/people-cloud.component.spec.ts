@@ -20,7 +20,7 @@ import { By } from '@angular/platform-browser';
 import { PeopleCloudComponent } from './people-cloud.component';
 import { StartTaskCloudTestingModule } from '../../testing/start-task-cloud.testing.module';
 import { LogService, setupTestBed, IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
-import { fakeUsers, mockRoles } from '../../mock/user-cloud.mock';
+import { mockUsers, mockRoles } from '../../mock/user-cloud.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 
@@ -43,7 +43,7 @@ describe('PeopleCloudComponent', () => {
         element = fixture.nativeElement;
         identityService = TestBed.get(IdentityUserService);
         getRolesByUserIdSpy = spyOn(identityService, 'getUserRoles').and.returnValue(of(mockRoles));
-        getUserSpy = spyOn(identityService, 'getUsers').and.returnValue(of(fakeUsers));
+        getUserSpy = spyOn(identityService, 'getUsers').and.returnValue(of(mockUsers));
     });
 
     it('should create PeopleCloudComponent', () => {
@@ -63,19 +63,19 @@ describe('PeopleCloudComponent', () => {
     }));
 
     it('should not list the current logged in user when showCurrentUser is false', async(() => {
-        spyOn(identityService, 'getCurrentUserInfo').and.returnValue(of(fakeUsers[1]));
+        spyOn(identityService, 'getCurrentUserInfo').and.returnValue(of(mockUsers[1]));
         component.showCurrentUser = false;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             const currentUser = component.users.find((user) => {
-                return user.username === fakeUsers[1].username;
+                return user.username === mockUsers[1].username;
             });
             expect(currentUser).toBeUndefined();
         });
     }));
 
     it('should show the users if the typed result match', async(() => {
-        component.users$ = of(<IdentityUserModel[]> fakeUsers);
+        component.users$ = of(<IdentityUserModel[]> mockUsers);
         fixture.detectChanges();
         let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
