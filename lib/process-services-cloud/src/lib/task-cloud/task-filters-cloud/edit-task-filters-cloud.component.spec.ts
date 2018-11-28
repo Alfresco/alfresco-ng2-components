@@ -85,7 +85,7 @@ describe('EditTaskFiltersCloudComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should defined editTaskFilter form ', async(() => {
+        it('should define editTaskFilter form ', async(() => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(component.editTaskFilterForm).toBeDefined();

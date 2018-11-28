@@ -88,11 +88,11 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
     checkFormHasBeenChanged() {
         this.editTaskFilterForm.valueChanges.subscribe((formValues: QueryModel) => {
             const editedQuery = new QueryModel(formValues);
-            this.formHasBeenChanged = !this.compareFilter(editedQuery, this.taskFilter.query);
+            this.formHasBeenChanged = !this.compareFilters(editedQuery, this.taskFilter.query);
         });
     }
 
-    compareFilter(editedQuery, currentQuery): boolean  {
+    compareFilters(editedQuery, currentQuery): boolean  {
         return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }
 
