@@ -9,7 +9,7 @@
             <mat-card-title>
                 <h4>
                     <div *ngIf="showValidationIcon" class="adf-form-validation-button">
-                        <i id="adf-valid-form-icon" class="material-icons" *ngIf="form.isValid; else no_valid_form">check_circle</i>
+                        <i id="adf-valid-form-icon" class="adf-material-icons" *ngIf="form.isValid; else no_valid_form">check_circle</i>
                         <ng-template #no_valid_form>
                             <i id="adf-invalid-form-icon" class="material-icons adf-invalid-color">error</i>
                         </ng-template>
