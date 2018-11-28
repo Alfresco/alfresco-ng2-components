@@ -41,49 +41,76 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @ContentChild(EmptyCustomContentDirective)
     emptyCustomContent: EmptyCustomContentDirective;
 
+    /** The name of the application. */
     @Input()
     applicationName: string = '';
 
+    /**
+     * The assignee of the process. Possible values are: "assignee" (the current user is the assignee),
+     * "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group
+     * where the current user is a member, no value (the current user is involved).
+     */
     @Input()
     assignee: string = '';
 
+    /** Filter the tasks. Display only tasks created on the supplied date. */
     @Input()
     createdDate: string = '';
 
+    /** Filter the tasks. Display only tasks with dueDate equal to the supplied date. */
     @Input()
     dueDate: string = '';
 
+    /** Filter the tasks. Display only tasks with id equal to the supplied value. */
     @Input()
     id: string = '';
 
+    /** Filter the tasks. Display only tasks with the supplied name. */
     @Input()
     name: string = '';
 
+    /** Filter the tasks. Display only tasks with parentTaskId equal to the supplied value. */
     @Input()
     parentTaskId: string = '';
 
+    /** Filter the tasks. Display only tasks with processDefinitionId equal to the supplied value. */
     @Input()
     processDefinitionId: string = '';
 
+    /** Filter the tasks. Display only tasks with processInstanceId equal to the supplied value. */
     @Input()
     processInstanceId: string = '';
 
+    /** Filter the tasks. Display only tasks with status equal to the supplied value. */
     @Input()
     status: string = '';
 
+    /** Toggles default selection of the first row. */
     @Input()
     selectFirstRow: boolean = true;
 
+    /**
+     * Define which task id should be selected after reloading. If the task id doesn't
+     * exist or nothing is passed then the first task will be selected.
+     */
     @Input()
     landingTaskId: string;
 
+    /**
+     * Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
+     * you can use the Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for
+     * multiple rows.
+     */
     @Input()
     selectionMode: string = 'single'; // none|single|multiple
 
-    /** Toggles multiple row selection, renders checkboxes at the beginning of each row */
+    /** Toggles multiple row selection, rendering a checkbox at the beginning of each row. */
     @Input()
     multiselect: boolean = false;
 
+    /**
+     * Specifies how the table should be sorted. The parameters are for BE sorting.
+     */
     @Input()
     sorting: TaskListCloudSortingModel[];
 
