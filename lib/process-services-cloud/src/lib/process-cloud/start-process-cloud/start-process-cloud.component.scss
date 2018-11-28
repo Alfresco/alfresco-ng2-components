@@ -14,7 +14,7 @@
         }
         mat-select {
             width: 100%;
-            padding: 16px 0px 0px 0px;
+            padding: 16px 0 0;
         }
         mat-card-actions {
             text-align: right;
@@ -39,7 +39,7 @@
     &-start-form-container {
         .mat-card {
             box-shadow: none !important;
-            padding: 0px !important;
+            padding: 0 !important;
         }
     }
     &-start-form-actions {
