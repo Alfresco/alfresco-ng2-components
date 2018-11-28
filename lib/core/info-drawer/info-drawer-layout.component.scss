@@ -3,7 +3,7 @@
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
     $adf-info-drawer-layout-background-color: mat-color($background, background) !default;
-    $adf-info-drawer-layout-title-color: mat-color($foreground, text, .54) !default;
+    $adf-info-drawer-layout-title-color: mat-color($foreground, text, 0.54) !default;
     $adf-info-drawer-layout-title-font-size: 20px !default;
 
     .adf {
@@ -21,13 +21,13 @@
             }
 
             &-header {
-                padding: 13px 0px 0px 23px;
+                padding: 13px 0 0 23px;
                 display: flex;
                 justify-content: space-between;
                 margin-bottom: 40px;
 
                 &-buttons {
-                    padding-right:18px; 
+                    padding-right:18px;
                     mat-icon {
                         cursor: pointer;
                     }

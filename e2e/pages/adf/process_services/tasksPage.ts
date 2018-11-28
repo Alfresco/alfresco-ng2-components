@@ -32,7 +32,7 @@ export class TasksPage {
     addChecklistButton = element(by.css('button[class*="adf-add-to-checklist-button"]'));
     rowByRowName = by.xpath('ancestor::mat-chip');
     checklistContainer = by.css('div[class*="checklist-menu"]');
-    taskTitle = 'h2[class="activiti-task-details__header"] span';
+    taskTitle = 'h2[class="adf-activiti-task-details__header"] span';
     rows = by.css('div[class*="adf-datatable-body"] div[class*="adf-datatable-row"] div[class*="adf-data-table-cell"]');
     completeButtonNoForm = element(by.id('adf-no-form-complete-button'));
     checklistDialog = element(by.id('checklist-dialog'));

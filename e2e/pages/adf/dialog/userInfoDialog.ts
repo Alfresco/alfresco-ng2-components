@@ -17,6 +17,7 @@
 
 import Util = require('../../../util/util');
 import { TabsPage } from '../material/tabsPage';
+import { element, by, browser, protractor } from 'protractor';
 
 export class UserInfoDialog {
 
@@ -62,6 +63,7 @@ export class UserInfoDialog {
     }
 
     getContentHeaderTitle() {
+        Util.waitUntilElementIsVisible(this.dialog);
         Util.waitUntilElementIsVisible(this.userInfoEcmHeaderTitle);
         return this.userInfoEcmHeaderTitle.getText();
     }

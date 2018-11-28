@@ -2,12 +2,12 @@
     $minimumDocumentListWidth: 900px;
     $foreground: map-get($theme, foreground);
 
-    .container {
+    .adf-container {
         margin: 10px !important;
     }
 
     @media screen and ($mat-xsmall) {
-        .container {
+        .adf-container {
             margin: 0;
         }
 
@@ -16,11 +16,11 @@
         }
     }
 
-    .error-message {
+    .adf-error-message {
         text-align: left;
     }
 
-    .error-message--text {
+    .adf-error-message--text {
         color: #d50000;
     }
 
@@ -28,11 +28,11 @@
         height: 900px;
     }
 
-    adf-document-list ::ng-deep adf-datatable tr.document-list__create {
+    adf-document-list ::ng-deep adf-datatable tr.adf-document-list__create {
         background: green !important;
     }
 
-    adf-document-list ::ng-deep adf-datatable tr.document-list__disable {
+    adf-document-list ::ng-deep adf-datatable tr.adf-document-list__disable {
         background: red !important;
     }
 
@@ -79,7 +79,7 @@
             &-icon {
                 display: block;
                 font-size: 48px;
-                margin: 0 auto 32px auto;
+                margin: 0 auto 32px;
             }
         }
 
@@ -118,7 +118,7 @@
             margin-left: 20px;
         }
 
-        .empty-list__block {
+        .adf-empty-list__block {
             height: 100%;
             padding: 0;
             margin: 0;
@@ -152,10 +152,11 @@
             }
         }
 
-        adf-file-uploading-dialog ::ng-deep .upload-dialog {
+        adf-file-uploading-dialog ::ng-deep .adf-upload-dialog {
             width: 80%;
 
-            & ::ng-deep adf-file-uploading-list ::ng-deep adf-file-uploading-list-row .adf-file-uploading-row__group {
+            & ::ng-deep adf-file-uploading-list ::ng-deep adf-file-uploading-list-row
+            .adf-file-uploading-row__group {
                 min-width: 0;
             }
         }

@@ -77,7 +77,7 @@ describe('PdfThumbListComponent', () => {
         fixture.nativeElement.style.display = 'block';
         fixture.nativeElement.style.height = '700px';
         fixture.nativeElement.style.overflow = 'scroll';
-        fixture.debugElement.query(By.css('.pdf-thumbnails__content'))
+        fixture.debugElement.query(By.css('.adf-pdf-thumbnails__content'))
             .nativeElement.style.height = '2000px';
     }));
 

@@ -156,7 +156,7 @@ export class ViewerPage {
     }
 
     checkCurrentThumbnailIsSelected() {
-        let selectedThumbnail = element(by.css('adf-pdf-thumb[class="pdf-thumbnails__thumb ng-star-inserted pdf-thumbnails__thumb--selected"] > img'));
+        let selectedThumbnail = element(by.css('adf-pdf-thumb[class="adf-pdf-thumbnails__thumb ng-star-inserted adf-pdf-thumbnails__thumb--selected"] > img'));
         this.pageSelectorInput.getAttribute('value').then(function (pageNumber) {
             browser.controlFlow().execute(async () => {
                 expect('Page ' + pageNumber).toEqual(await selectedThumbnail.getAttribute('title'));

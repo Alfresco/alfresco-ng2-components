@@ -3,7 +3,7 @@
     $primaryColor: mat-color($primary, 100);
     $rippleColor: mat-color($primary, 300);
 
-    .is-selected {
+    .adf-is-selected {
         background: mat-color($primary, 100);
     }
 
@@ -19,7 +19,9 @@
         }
 
         &-comment-list-item {
+            /* stylelint-disable */
            white-space: initial;
+           /* stylelint-enable */
            display: table-row-group;
            padding-top: 12px;
            overflow: hidden;
@@ -28,7 +30,9 @@
            background-position: center;
 
            &:hover {
-            background: $primaryColor radial-gradient(circle, transparent 1%, $primaryColor 1%) center/15000%;
+            background: $primaryColor
+            radial-gradient(circle, transparent 1%, $primaryColor 1%)
+            center/15000%;
            }
            &:active {
             background-color: $rippleColor;
@@ -61,7 +65,9 @@
             width: calc(100% - 10px);
             padding: 2px 10px;
             font-style: italic;
+            /* stylelint-disable */
             white-space: initial !important;
+            /* stylelint-enable */
             font-size: 14px;
             letter-spacing: -0.2px;
             line-height: 1.43;

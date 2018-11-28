@@ -1,12 +1,12 @@
 <adf-form-list [forms]="formList" (row-dblclick)="onRowDblClick($event)">
 </adf-form-list>
-<div class="form-container" *ngIf="!isEmptyForm()">
+<div class="adf-form-container" *ngIf="!isEmptyForm()">
     <adf-form #adfForm [form]="form" [data]="restoredData" [showValidationIcon]="showValidationIcon">
     </adf-form>
 </div>
 <button mat-button (click)="store()" color="primary">{{'FORM-LIST.STORE' | translate }}</button>
 <button mat-button (click)="restore()" color="primary">{{'FORM-LIST.RESTORE' | translate }}</button>
-<section class="form-list-margin">
+<section class="adf-form-list-margin">
     <mat-slide-toggle color="primary" [(ngModel)]="showValidationIcon">
         Show Validation Icon
     </mat-slide-toggle>

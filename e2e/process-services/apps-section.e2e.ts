@@ -41,7 +41,6 @@ describe('Modify applications', () => {
     let apps = new AppsActions();
     let modelActions = new ModelsActions();
     let firstApp, appVersionToBeDeleted;
-    let model;
 
     beforeAll(async (done) => {
         let users = new UsersActions();

@@ -158,7 +158,7 @@ describe('CommentListComponent', () => {
 
         commentList.clickRow.subscribe((selectedComment) => {
             fixture.detectChanges();
-            let commentSelectedList = fixture.nativeElement.querySelectorAll('.is-selected');
+            let commentSelectedList = fixture.nativeElement.querySelectorAll('.adf-is-selected');
             expect(commentSelectedList.length).toBe(1);
             expect(commentSelectedList[0].textContent).toContain('2nd Test Comment');
         });

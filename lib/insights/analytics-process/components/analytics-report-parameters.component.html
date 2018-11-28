@@ -1,4 +1,4 @@
-<div [class.hide]="hideComponent">
+<div [class.adf-hide]="hideComponent">
     <div class="adf-report-report-container">
         <div *ngIf="reportParameters">
             <form [formGroup]="reportForm" novalidate>
@@ -43,7 +43,7 @@
                     </adf-buttons-action-menu>
                 </adf-toolbar>
                 <div *ngFor="let field of reportParameters.definition.parameters"
-                        [class.is-hide]="isParametersHide()">
+                        [class.adf-is-hide]="isParametersHide()">
                     <div [ngSwitch]="field.type">
                         <div *ngSwitchCase="'integer'">
                             <br>
@@ -100,11 +100,11 @@
                     <div id="report-dialog" class="adf-report-dialog">
                         <h5 matDialogTitle id="report-dialog-title">{{action}} report</h5>
                         <div mat-dialog-content>
-                            <div *ngIf="isSaveAction()" id="save-title-submessage" class="export-message">
+                            <div *ngIf="isSaveAction()" id="save-title-submessage" class="adf-export-message">
                                 {{'DIALOG.SAVE_MESSAGE' | translate}}
                             </div>
-                            <div class="save-export-input">
-                                <mat-form-field class="example-full-width" floatPlaceholder="always">
+                            <div class="adf-save-export-input">
+                                <mat-form-field class="adf-example-full-width" floatPlaceholder="always">
                                     <input matInput
                                         type="text"
                                         id="repName"

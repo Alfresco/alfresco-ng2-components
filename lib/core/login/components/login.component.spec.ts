@@ -50,7 +50,7 @@ describe('LoginComponent', () => {
 
     const getLoginErrorMessage = () => {
         let errorMessage = undefined;
-        let errorElement = element.querySelector('#login-error .login-error-message');
+        let errorElement = element.querySelector('#login-error .adf-login-error-message');
 
         if (errorElement) {
             return errorElement.innerText;

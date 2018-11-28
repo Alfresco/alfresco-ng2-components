@@ -9,7 +9,7 @@
     $data-table-header-color: mat-color($foreground, text) !default;
     $data-table-header-sorted-color: mat-color($foreground, text) !default;
     $data-table-header-sorted-icon-hover-color: mat-color($foreground, disabled-text) !default;
-    $data-table-divider-color: mat-color($foreground, text, .07) !default;
+    $data-table-divider-color: mat-color($foreground, text, 0.07) !default;
     $data-table-hover-color: mat-color($background, 'hover') !default;
     $data-table-selection-color: mat-color($background, 'selected-button') !default;
     $data-table-dividers: 1px solid $data-table-divider-color !default;
@@ -63,7 +63,7 @@
                 margin-bottom: 0;
             }
 
-            .is-selected {
+            .adf-is-selected {
                 background: mat-color($primary, 100);
                 padding-bottom: 31px;
             }
@@ -104,7 +104,7 @@
                 overflow: hidden;
                 outline: none;
 
-                &:before {
+                &::before {
                     margin-left: 10px;
                     text-align: left;
                     content: attr(title);
@@ -117,15 +117,16 @@
                 }
 
             }
-            .alfresco-datatable__actions-cell {
+
+            .adf-datatable__actions-cell {
                 position: absolute;
                 height: 42px !important;
                 width: 42px !important;
-                right: 0px;
+                right: 0;
                 text-align: right;
             }
 
-            .image-table-cell {
+            .adf-image-table-cell {
                 margin: 8px;
                 padding: 4px;
                 overflow: visible;
@@ -133,12 +134,12 @@
                 border-bottom-width: 1px;
                 border-bottom-style: solid;
 
-                .cell-container {
+                .adf-cell-container {
                     float: left;
                     width: 42px;
                 }
 
-                &:after {
+                &::after {
                     margin: 2px;
                     content: attr(filename);
                     float: left;
@@ -167,7 +168,7 @@
         width: 100%;
         position: relative;
         border: $data-table-dividers;
-        border-collapse: collapse;
+        // border-collapse: collapse;
         white-space: nowrap;
         font-size: $data-table-font-size;
         background-color: mat-color($background, card);
@@ -216,7 +217,7 @@
                     background-color: $data-table-hover-color;
                 }
 
-                &.is-selected, &.is-selected:hover {
+                &.adf-is-selected, &.adf-is-selected:hover {
                     background-color: $data-table-selection-color;
                 }
 
@@ -264,16 +265,15 @@
             padding-top: $data-table-cell-top;
             box-sizing: border-box;
 
-            @include no-select;
+            @include adf-no-select;
         }
 
         .adf-datatable-table-cell-header {
-            @include no-select;
+            @include adf-no-select;
             cursor: pointer;
             position: relative;
             vertical-align: bottom;
             text-overflow: ellipsis;
-            font-size: 14px;
             font-weight: bold;
             line-height: 24px;
             letter-spacing: 0;
@@ -284,8 +284,8 @@
             box-sizing: border-box;
             white-space: nowrap;
 
-            &.sortable {
-                @include no-select;
+            &.adf-sortable {
+                @include adf-no-select;
                 &:hover {
                     cursor: pointer;
                 }
@@ -294,16 +294,16 @@
             &.adf-data-table__header--sorted-asc,
             &.adf-data-table__header--sorted-desc {
                 color: $data-table-header-sorted-color;
-                &:before {
+                &::before {
                     @include typo-icon;
                     font-size: $data-table-header-sort-icon-size;
-                    content: "\e5d8";
+                    content: '\e5d8';
                     margin-right: 5px;
                     vertical-align: sub;
                 }
             }
-            &.adf-data-table__header--sorted-desc:before {
-                content: "\e5db";
+            &.adf-data-table__header--sorted-desc::before {
+                content: '\e5db';
             }
         }
 
@@ -329,7 +329,7 @@
                 width: 10px;
                 text-align: left;
 
-                .cell-value {
+                .adf-cell-value {
                     height: 24px;
                 }
 
@@ -338,7 +338,7 @@
                 }
             }
 
-            .cell-container {
+            .adf-cell-container {
                 display: flex;
                 align-items: center;
             }
@@ -350,13 +350,13 @@
                 color: mat-color($foreground, text);
 
                 &:hover {
-                    color: #2196F3;
+                    color: #2196f3;
                     text-decoration: underline;
                 }
             }
         }
 
-        .full-width {
+        .adf-full-width {
             width: 100%;
         }
 
@@ -392,12 +392,12 @@
             }
         }
 
-        .ellipsis-cell {
-            .cell-container {
+        .adf-ellipsis-cell {
+            .adf-cell-container {
                 height: 100%;
             }
 
-            .cell-container > * {
+            .adf-cell-container > * {
                 display: block;
                 position: absolute;
                 max-width: calc(100% - 2em);
@@ -408,7 +408,7 @@
             }
 
             /* visible content */
-            .cell-value {
+            .adf-cell-value {
                 display: block;
                 position: absolute;
                 max-width: calc(100% - 2em);
@@ -420,13 +420,13 @@
 
             /* query for Microsoft IE 11*/
             @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-                .cell-value {
+                .adf-cell-value {
                     top: 100%;
                 }
             }
 
             /* cell stretching content */
-            & > div:after {
+            & > div::after {
                 content: attr(title);
                 overflow: hidden;
                 height: 0;
@@ -435,7 +435,7 @@
         }
 
         /* [Accessibility] For screen reader only */
-        .sr-only {
+        .adf-sr-only {
             position: absolute;
             width: 1px;
             height: 1px;
@@ -447,19 +447,19 @@
         }
 
         /* Utils */
-        .hidden {
+        .adf-hidden {
             display: none;
         }
 
         /* mobile phone */
         @media all and (max-width: 768px) {
-            .desktop-only {
+            .adf-desktop-only {
                 display: none;
             }
         }
 
         @media (max-device-width: 768px) {
-            .desktop-only {
+            .adf-desktop-only {
                 display: none;
             }
         }

@@ -1,4 +1,4 @@
-<div class="main-content">
+<div class="adf-main-content">
     <h1>Notification Service</h1>
 
     <ul>
@@ -32,24 +32,24 @@
 
     <form [formGroup]="configForm">
         <mat-form-field>
-            <mat-select class="form-control" formControlName="direction" placeholder="Direction" data-automation-id="notification-direction">
+            <mat-select formControlName="direction" placeholder="Direction" data-automation-id="notification-direction">
                     <mat-option *ngFor="let direction of directions" [value]="direction.value">
                         {{ direction.title }}
                     </mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field>
-            <input matInput type="number" class="form-control" formControlName="duration"  [value]="defaultDuration" placeholder="Duration" data-automation-id="notification-duration">
+            <input matInput type="number" formControlName="duration"  [value]="defaultDuration" placeholder="Duration" data-automation-id="notification-duration">
         </mat-form-field>
         <mat-form-field>
-            <mat-select class="form-control" formControlName="horizontalPosition" placeholder="Horizontal Position" data-automation-id="notification-horizontal-position">
+            <mat-select formControlName="horizontalPosition" placeholder="Horizontal Position" data-automation-id="notification-horizontal-position">
                 <mat-option *ngFor="let horizontalPosition of horizontalPositions" [value]="horizontalPosition.value">
                     {{ horizontalPosition.title }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field>
-            <mat-select class="form-control" formControlName="verticalPosition" placeholder="Vertical Position" data-automation-id="notification-vertical-position">
+            <mat-select formControlName="verticalPosition" placeholder="Vertical Position" data-automation-id="notification-vertical-position">
                 <mat-option *ngFor="let verticalPosition of verticalPositions" [value]="verticalPosition.value">{{ verticalPosition.title }}</mat-option>
             </mat-select>
         </mat-form-field>

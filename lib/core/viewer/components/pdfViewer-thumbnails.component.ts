@@ -24,7 +24,7 @@ import {
     selector: 'adf-pdf-thumbnails',
     templateUrl: './pdfViewer-thumbnails.component.html',
     styleUrls: ['./pdfViewer-thumbnails.component.scss'],
-    host: { 'class': 'pdf-thumbnails' },
+    host: { 'class': 'adf-pdf-thumbnails' },
     encapsulation: ViewEncapsulation.None
 })
 export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {

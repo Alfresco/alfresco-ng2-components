@@ -4,7 +4,7 @@
         [checked]="option.checked"
         [attr.data-automation-id]="'checkbox-' + (option.name)"
         (change)="changeHandler($event, option)"
-        class="facet-filter">
+        class="adf-facet-filter">
         <div 
             matTooltip="{{ option.name | translate }}"
             matTooltipPosition="right"
@@ -15,13 +15,13 @@
     </mat-checkbox>
 </div>
 
-<div class="facet-buttons" *ngIf="options.fitsPage">
+<div class="adf-facet-buttons" *ngIf="options.fitsPage">
     <button mat-button color="primary" (click)="reset()">
         {{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}
     </button>
 </div>
 
-<div class="facet-buttons" *ngIf="!options.fitsPage">
+<div class="adf-facet-buttons" *ngIf="!options.fitsPage">
     <button mat-icon-button
         title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}"
         (click)="reset()">

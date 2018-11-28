@@ -8,7 +8,7 @@
     <h2>1. Standalone (fixed size)</h2>
     <small>Component is used in the fixed-width layout</small>
 
-    <div class="breadcrumb-container-restricted">
+    <div class="adf-breadcrumb-container-restricted">
         <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
         </adf-breadcrumb>
     </div>
@@ -57,7 +57,7 @@
         Buttons do nothing and are present for layout purposes.
     </small>
 
-    <adf-toolbar class="full-content-toolbar">
+    <adf-toolbar class="adf-full-content-toolbar">
         <adf-toolbar-title fxFlex="0 1 auto">
             <adf-breadcrumb root="APP.PERSONAL-FILES" [target]="documentList" [folderNode]="documentList.folderNode">
             </adf-breadcrumb>
@@ -76,7 +76,7 @@
         </div>
     </adf-toolbar>
 
-    <div class="content">
+    <div class="adf-content">
         <adf-document-list #documentList currentFolderId="-my-">
         </adf-document-list>
     </div>

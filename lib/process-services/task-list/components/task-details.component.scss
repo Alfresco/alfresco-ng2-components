@@ -2,18 +2,18 @@
     width: 100%;
 }
 
-.error-dialog h3 {
+.adf-error-dialog h3 {
     margin: 16px 0;
 }
 
-.activiti-task-details__header {
+.adf-activiti-task-details__header {
     align-self: flex-end;
     display: flex;
     font-size: 24px;
     font-weight: 300;
     line-height: normal;
     overflow: hidden;
-    margin: 8px 0 16px 0;
+    margin: 8px 0 16px;
     cursor: pointer;
     user-select: none;
     -moz-user-select: none;
@@ -21,16 +21,17 @@
     -ms-user-select: none;
 }
 
-.activiti-task-details__action-button {
+.adf-activiti-task-details__action-button {
     text-transform: uppercase;
 }
 
-.assignment-container {
+.adf-assignment-container {
     padding: 10px 20px;
     width: auto;
 }
 
-adf-task-header.assign-edit-view ::ng-deep adf-card-view ::ng-deep .adf-property[data-automation-id="header-assignee"] {
+adf-task-header.adf-assign-edit-view ::ng-deep adf-card-view ::ng-deep
+.adf-property[data-automation-id='header-assignee'] {
     display: none;
 }
 
@@ -63,7 +64,7 @@ adf-task-header.assign-edit-view ::ng-deep adf-card-view ::ng-deep .adf-property
         &-sidebar {
             &-drawer {
                 @media screen and (max-width: 1279px) {
-                    margin-left: 0px;
+                    margin-left: 0;
                 }
             }
 

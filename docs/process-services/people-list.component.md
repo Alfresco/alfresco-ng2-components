@@ -62,7 +62,7 @@ In the component template use the [people list component](../process-services/pe
     </data-column>
     <data-column key="email" class="full-width">
       <ng-template let-entry="$implicit">
-        <div class="people-email">{{ entry.row.obj.email }}</div>
+        <div class="adf-people-email">{{ entry.row.obj.email }}</div>
       </ng-template>
     </data-column>
   </data-columns>

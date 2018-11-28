@@ -5,23 +5,23 @@
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
 
-    .dropdown-widget {
+    .adf-dropdown-widget {
         width: 100%;
     }
 
-    .dropdown-widget__select {
+    .adf-dropdown-widget__select {
         width: 100%;
     }
 
-    .dropdown-widget__invalid .dropdown-widget__select {
+    .adf-dropdown-widget__invalid .adf-dropdown-widget__select {
         border-color: mat-color($warn);
     }
 
-    .dropdown-widget__invalid .dropdown-widget__label {
+    .adf-dropdown-widget__invalid .adf-dropdown-widget__label {
         color: mat-color($warn);
     }
 
-    .dropdown-widget__invalid .dropdown-widget__label:after {
+    .adf-dropdown-widget__invalid .adf-dropdown-widget__label::after {
         background-color: mat-color($warn);
     }
 
@@ -56,7 +56,7 @@
         width: 100%;
     }
 
-    .is-hide {
+    .adf-is-hide {
         height: 0;
         overflow: hidden;
         transition: height 0.5s;
@@ -72,29 +72,29 @@
         }
     }
 
-    .report-container-setting {
+    .adf-report-container-setting {
         padding-left: 10px;
     }
 
-    .option_button_details {
+    .adf-option_button_details {
         padding-top: 20px;
     }
 
-    .export-message {
+    .adf-export-message {
         background-color: mat-color($background, background);
     }
 
-    .save-export-input {
+    .adf-save-export-input {
         width: 100%;
     }
 
-    .delete-parameter {
+    .adf-delete-parameter {
         position: absolute;
         margin-left: 60%;
         padding-top: 5px;
     }
 
-    .hide {
+    .adf-hide {
         display: none;
     }
 

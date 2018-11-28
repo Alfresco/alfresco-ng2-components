@@ -66,12 +66,14 @@ export class NotificationPage {
 
     enterMessageField(text) {
         Util.waitUntilElementIsVisible(this.messageField);
-        this.messageField.clear().sendKeys(text);
+        this.messageField.clear();
+        this.messageField.sendKeys(text);
     }
 
     enterDurationField(time) {
         Util.waitUntilElementIsVisible(this.durationField);
-        this.durationField.clear().sendKeys(time);
+        this.durationField.clear();
+        this.durationField.sendKeys(time);
     }
 
     selectHorizontalPosition(selectedItem) {

@@ -21,7 +21,7 @@
             <mat-expansion-panel-header>
                 <mat-panel-title>{{ facetQueriesLabel | translate }}</mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="facet-result-filter">
+            <div class="adf-facet-result-filter">
                 <mat-form-field>
                     <input
                         matInput
@@ -35,7 +35,7 @@
                     </button>
                 </mat-form-field>
             </div>
-            <div class="checklist">
+            <div class="adf-checklist">
                 <ng-container *ngFor="let query of responseFacetQueries">
                     <mat-checkbox
                         [checked]="query.checked"
@@ -44,13 +44,13 @@
                         <div 
                             matTooltip="{{ query.label | translate }} ({{ query.count }})"
                             matTooltipPosition="right"
-                            class="facet-label">
+                            class="adf-facet-label">
                             {{ query.label | translate }} ({{ query.count }})
                         </div>
                     </mat-checkbox>
                 </ng-container>
             </div>
-            <div class="facet-buttons">
+            <div class="adf-facet-buttons">
                 <button mat-icon-button
                     *ngIf="canResetSelectedQueries"
                     title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}"
@@ -80,7 +80,7 @@
                 <mat-panel-title>{{ field.label | translate }}</mat-panel-title>
             </mat-expansion-panel-header>
 
-            <div class="facet-result-filter">
+            <div class="adf-facet-result-filter">
                 <mat-form-field>
                     <input
                         matInput
@@ -95,7 +95,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="checklist">
+            <div class="adf-checklist">
                 <mat-checkbox
                     *ngFor="let bucket of field.buckets"
                     [checked]="bucket.checked"
@@ -104,7 +104,7 @@
                     <div 
                         matTooltip="{{ bucket.display || bucket.label | translate }}"
                         matTooltipPosition="right"
-                        class="facet-label">
+                        class="adf-facet-label">
                         {{ bucket.display || bucket.label | translate }} 
                         <span *ngIf="bucket.count!==null">(</span>
                         {{ bucket.count }}
@@ -113,7 +113,7 @@
                 </mat-checkbox>
             </div>
 
-            <div class="facet-buttons" *ngIf="field.buckets.fitsPage">
+            <div class="adf-facet-buttons" *ngIf="field.buckets.fitsPage">
                 <button *ngIf="canResetSelectedBuckets(field)"
                     mat-button
                     color="primary"
@@ -122,7 +122,7 @@
                 </button>
             </div>
 
-            <div class="facet-buttons" *ngIf="!field.buckets.fitsPage">
+            <div class="adf-facet-buttons" *ngIf="!field.buckets.fitsPage">
                 <button mat-icon-button
                     *ngIf="canResetSelectedBuckets(field)"
                     title="{{ 'SEARCH.FILTER.ACTIONS.CLEAR-ALL' | translate }}"

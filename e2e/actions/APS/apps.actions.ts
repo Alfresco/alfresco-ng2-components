@@ -20,6 +20,7 @@ import fs = require('fs');
 import TestConfig = require('../../test.config');
 import AppPublish = require('../../models/APS/AppPublish');
 import remote = require('selenium-webdriver/remote');
+import { browser } from 'protractor';
 
 export class AppsActions {
 

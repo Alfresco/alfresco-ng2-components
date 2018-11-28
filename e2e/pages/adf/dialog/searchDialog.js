@@ -122,9 +122,7 @@ var SearchDialog = function () {
     this.clearText = function () {
         Util.waitUntilElementIsVisible(searchBar);
         var deferred = protractor.promise.defer();
-        searchBar.clear().then(function () {
-            searchBar.sendKeys(protractor.Key.ESCAPE);
-        });
+        searchBar.clear();
         return deferred.promise;
     };
 };

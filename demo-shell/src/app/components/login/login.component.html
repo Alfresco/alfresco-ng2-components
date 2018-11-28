@@ -1,7 +1,7 @@
 <!--BPM, ECN AND CSRF TOGGLE-->
 
-<div class="settings">
-    <p class="toggle">
+<div class="adf-settings">
+    <p class="adf-toggle">
         <mat-slide-toggle
             id="switch3"
             [color]="'primary'"
@@ -10,7 +10,7 @@
             CSRF
         </mat-slide-toggle>
     </p>
-    <p class="toggle">
+    <p class="adf-toggle">
         <mat-slide-toggle
             id="switch4"
             [color]="'primary'"
@@ -19,7 +19,7 @@
             {{ 'LOGIN.LOGIN_FOOTER'| translate }}
         </mat-slide-toggle>
     </p>
-    <p class="toggle">
+    <p class="adf-toggle">
         <mat-slide-toggle
             id="adf-toggle-show-rememberme"
             [color]="'primary'"
@@ -28,7 +28,7 @@
             {{ 'LOGIN.SHOW_REMEMBERME'| translate }}
         </mat-slide-toggle>
     </p>
-    <p class="toggle">
+    <p class="adf-toggle">
         <mat-slide-toggle
             id="adf-toggle-show-successRoute"
             [color]="'primary'"
@@ -37,7 +37,7 @@
             {{ 'LOGIN.SHOW_SUCCESS_ROUTE'| translate }}
         </mat-slide-toggle>
     </p>
-    <p class="toggle">
+    <p class="adf-toggle">
         <ng-container *ngIf="customSuccessRoute">
             <mat-form-field floatPlaceholder="float">
                 <input matInput
@@ -48,7 +48,7 @@
         </ng-container>
     </p>
 
-    <p class="toggle">
+    <p class="adf-toggle">
         <mat-slide-toggle
             id="adf-toggle-logo"
             [color]="'primary'"
@@ -57,7 +57,7 @@
             {{ 'LOGIN.CUSTOM_LOGO'| translate }}
         </mat-slide-toggle>
     </p>
-    <p class="toggle">
+    <p class="adf-toggle">
         <ng-container *ngIf="customLogoImage">
             <mat-form-field floatPlaceholder="float">
                 <input matInput
@@ -72,7 +72,7 @@
 
 <!--SETTING BUTTON-->
 
-<a mat-fab class="setting-button" data-automation-id="settings" href="" routerLink="/settings" color="accent">
+<a mat-fab class="adf-setting-button" data-automation-id="settings" href="" routerLink="/settings" color="accent">
     <mat-icon>settings</mat-icon>
 </a>
 
@@ -88,7 +88,7 @@
     copyrightText="{{ 'application.copyright' | adfAppConfig }}"
     (success)="onLogin($event)"
     (error)="onError($event)">
-    <div class="mobile-settings">
+    <div class="adf-mobile-settings">
         <p>
             <mat-slide-toggle
                 id="switch3-mobile"
@@ -107,7 +107,7 @@
                 {{ 'LOGIN.LOGIN_FOOTER'| translate }}
             </mat-slide-toggle>
         </p>
-        <button type="button" mat-raised-button color="accent" class="mobile-setting-button" routerLink="/settings"
+        <button type="button" mat-raised-button color="accent" class="adf-mobile-setting-button" routerLink="/settings"
                 data-automation-id="settings">{{ 'APP_LAYOUT.SETTINGS'| translate }}
         </button>
 

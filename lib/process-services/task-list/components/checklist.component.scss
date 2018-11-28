@@ -2,7 +2,7 @@
     width: 100%;
 }
 
-.activiti-label {
+.adf-activiti-label {
     font-weight: bolder;
 }
 
@@ -20,11 +20,11 @@
     outline: none;
 }
 
-.adf-checklist-menu-container{
+.adf-checklist-menu-container {
     margin-top: 10px;
 }
 
-#checklist-none-message {
+.adf-checklist-none-message {
     margin-top: 10px;
 }
 
@@ -32,7 +32,7 @@
     display: flex;
     justify-content: space-between;
 
-    .activiti-label {
+    .adfactiviti-label {
         margin-top: 6px;
         margin-right: 10px;
     }

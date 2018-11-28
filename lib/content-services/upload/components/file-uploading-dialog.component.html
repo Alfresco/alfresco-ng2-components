@@ -1,10 +1,10 @@
 <div *ngIf="isDialogActive"
-     class="upload-dialog"
+     class="adf-upload-dialog"
      id="upload-dialog"
-     [class.upload-dialog--minimized]="isDialogMinimized"
-     [class.upload-dialog--position-left]="position === 'left'"
-     [class.upload-dialog--position-right]="position === 'right'">
-    <header class="upload-dialog__header">
+     [class.adf-upload-dialog--minimized]="isDialogMinimized"
+     [class.adf-upload-dialog--position-left]="position === 'left'"
+     [class.adf-upload-dialog--position-right]="position === 'right'">
+    <header class="adf-upload-dialog__header">
         <button
             mat-button
             color="secondary"
@@ -18,7 +18,7 @@
         </button>
 
         <span
-            class="upload-dialog__title"
+            class="adf-upload-dialog__title"
             *ngIf="!uploadList.isUploadCompleted() && !uploadList.isUploadCancelled()">
             {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_PROGRESS'
                 | translate: {
@@ -29,7 +29,7 @@
         </span>
 
         <span
-            class="upload-dialog__title"
+            class="adf-upload-dialog__title"
             *ngIf="uploadList.isUploadCompleted()">
             {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_COMPLETED'
                 | translate: {
@@ -40,13 +40,13 @@
         </span>
 
         <span
-            class="upload-dialog__title"
+            class="adf-upload-dialog__title"
             *ngIf="uploadList.isUploadCancelled()">
             {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_CANCELED' | translate }}
         </span>
     </header>
 
-    <section class="upload-dialog__info"
+    <section class="adf-upload-dialog__info"
         *ngIf="totalErrors">
         {{
             (totalErrors > 1
@@ -56,10 +56,10 @@
         }}
     </section>
 
-    <section class="upload-dialog__content"
-        [class.upload-dialog--padding]="isConfirmation">
+    <section class="adf-upload-dialog__content"
+        [class.adf-upload-dialog--padding]="isConfirmation">
         <adf-file-uploading-list
-            [class.upload-dialog--hide]="isConfirmation"
+            [class.adf-upload-dialog--hide]="isConfirmation"
             #uploadList
             [files]="filesUploadingList">
                 <ng-template let-file="$implicit">
@@ -72,19 +72,19 @@
         </adf-file-uploading-list>
 
         <div
-            class="upload-dialog__confirmation"
-            [class.upload-dialog--hide]="!isConfirmation">
-                <p class="upload-dialog__confirmation--title">
+            class="adf-upload-dialog__confirmation"
+            [class.adf-upload-dialog--hide]="!isConfirmation">
+                <p class="adf-upload-dialog__confirmation--title">
                     {{ 'ADF_FILE_UPLOAD.CONFIRMATION.MESSAGE.TITLE' | translate }}
                 </p>
 
-                <p class="upload-dialog__confirmation--text">
+                <p class="adf-upload-dialog__confirmation--text">
                     {{ 'ADF_FILE_UPLOAD.CONFIRMATION.MESSAGE.TEXT' | translate }}
                 </p>
         </div>
     </section>
 
-    <footer class="upload-dialog__actions"
+    <footer class="adf-upload-dialog__actions"
             *ngIf="!isConfirmation">
         <button
             id="adf-upload-dialog-cancel-all"
@@ -105,7 +105,7 @@
         </button>
     </footer>
 
-    <footer class="upload-dialog__actions"
+    <footer class="adf-upload-dialog__actions"
             *ngIf="isConfirmation">
         <button
             id="adf-upload-dialog-cancel"

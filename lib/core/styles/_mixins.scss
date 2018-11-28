@@ -1,6 +1,6 @@
-@import "variables";
+@import 'variables';
 
-@mixin no-select {
+@mixin adf-no-select {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -29,7 +29,7 @@
     transition-timing-function: $animation-curve-default;
 }
 
-@mixin line-clamp($line-height: 1.25, $lines: 3) {
+@mixin adf-line-clamp($line-height: 1.25, $lines: 3) {
     position: relative;
     line-height: $line-height;
     padding: 0 !important;

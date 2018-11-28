@@ -32,6 +32,7 @@ import dateFormat = require('dateformat');
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
+import { browser } from 'protractor';
 
 describe('Task Details component', () => {
 
@@ -268,6 +269,7 @@ describe('Task Details component', () => {
         });
 
         let checklistTask = new TaskModel(allTasks.data[0]);
+        let taskModel = new TaskModel(allTasks.data[0]);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(checklistTask.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(checklistTask.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(checklistTask.getId());
@@ -311,6 +313,7 @@ describe('Task Details component', () => {
         });
 
         let checklistTask = new TaskModel(allTasks.data[0]);
+        let taskModel = new TaskModel(allTasks.data[0]);
         taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(checklistTask.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(checklistTask.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(checklistTask.getId());

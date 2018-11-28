@@ -1,11 +1,10 @@
-<div class="task-list-demo-inputs">
+<div class="adf-task-list-demo-inputs">
 
     <form [formGroup]="taskListForm">
         <mat-form-field>
             <mat-label>App Id</mat-label>
             <input
                 matInput
-                class="form-control"
                 [formControl]="taskAppId" data-automation-id="appId input">
             <mat-error *ngIf="taskAppId.hasError('pattern')">
                 {{ 'TASK_LIST_DEMO.ERROR_MESSAGE.APP_ID_TYPE_ERROR' | translate }}
@@ -16,7 +15,6 @@
             <mat-label>Task Name</mat-label>
             <input
                 matInput
-                class="form-control"
                 [formControl]="taskName" data-automation-id="task name">
         </mat-form-field>
 
@@ -24,7 +22,6 @@
             <mat-label>Task Id</mat-label>
             <input
                 matInput
-                class="form-control"
                 [formControl]="taskId" data-automation-id="task id">
         </mat-form-field>
 
@@ -32,7 +29,7 @@
             <mat-label>Start</mat-label>
             <input
                 matInput
-                class="form-control" data-automation-id="start"
+                data-automation-id="start"
                 matTooltip="{{ 'TASK_LIST_DEMO.TOOLTIP_MESSAGE.START_INPUT' | translate }}"
                 [formControl]="taskStart">
             <mat-error *ngIf="taskStart.hasError('pattern')">
@@ -104,7 +101,6 @@
         <mat-form-field>
             <mat-label>Process Instance</mat-label>
             <mat-select
-                class="form-control"
                 [formControl]="taskIncludeProcessInstance">
                 <mat-option *ngFor="let includeProcessInstanceOption of includeProcessInstanceOptions"
                             [value]="includeProcessInstanceOption.value">{{ includeProcessInstanceOption.title }}
@@ -115,7 +111,6 @@
         <mat-form-field>
             <mat-label>Assignment</mat-label>
             <mat-select
-                class="form-control"
                 [formControl]="taskAssignment">
                 <mat-option *ngFor="let assignmentOption of assignmentOptions" [value]="assignmentOption.value">{{
                     assignmentOption.title }}
@@ -126,7 +121,6 @@
         <mat-form-field data-automation-id="state">
             <mat-label>State</mat-label>
             <mat-select
-                class="form-control"
                 [formControl]="taskState" data-automation-id="selected state">
                 <mat-option *ngFor="let stateOption of stateOptions" [value]="stateOption.value">{{
                     stateOption.title }}
@@ -137,7 +131,6 @@
         <mat-form-field data-automation-id="sort">
             <mat-label>Sort</mat-label>
             <mat-select
-                class="form-control"
                 [formControl]="taskSort" data-automation-id="selected sort">
                 <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOption.value">{{ sortOption.title
                     }}
@@ -169,7 +162,7 @@
         #taskList>
         <data-columns>
             <data-column key="id" title="Id"></data-column>
-            <data-column key="assignee" title="Assignee" class="full-width name-column">
+            <data-column key="assignee" title="Assignee" class="adf-full-width adf-name-column">
                 <ng-template let-entry="$implicit">
                     <div>{{entry.row.obj.assignee | fullName}}</div>
                 </ng-template>

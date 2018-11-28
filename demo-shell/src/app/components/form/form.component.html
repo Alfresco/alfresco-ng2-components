@@ -2,7 +2,7 @@
 
     <mat-tab-group>
         <mat-tab label="Form">
-            <div class="form-container">
+            <div class="adf-form-container">
                 <adf-form
                     [showRefreshButton]="false"
                     [form]="form"
@@ -10,7 +10,7 @@
                 </adf-form>
             </div>
 
-            <div class="console" #console>
+            <div class="adf-console" #console>
                 <h3>Error log:</h3>
                 <p *ngFor="let error of errorFields">Error {{ error.name }} {{error.validationSummary.message |
                     translate}}</p>
@@ -24,7 +24,7 @@
                 [(ngModel)]="formConfig"
                 (onInit)="onInitFormEditor($event)">
             </ngx-monaco-editor>
-            <div class="form-editor-buttons">
+            <div class="adf-form-editor-buttons">
                 <button mat-raised-button id="adf-form-config-save" (click)="onSaveFormConfig()" color="primary">Save
                     form config
                 </button>
@@ -32,7 +32,7 @@
                     form config
                 </button>
             </div>
-            <div class="upload-config-button">
+            <div class="adf-upload-config-button">
                 <a mat-raised-button color="primary" >
                     <mat-icon>file_upload</mat-icon>
                     <label for="upload-config-file">Upload JSON File</label>

@@ -458,9 +458,9 @@ describe('ProcessInstanceListComponent', () => {
     template: `
     <adf-process-instance-list #processlistComponentInstance>
         <data-columns>
-            <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
-            <data-column key="created" title="ADF_PROCESS_LIST.PROPERTIES.END_DATE" class="hidden"></data-column>
-            <data-column key="startedBy" title="ADF_PROCESS_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
+            <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column"></data-column>
+            <data-column key="created" title="ADF_PROCESS_LIST.PROPERTIES.END_DATE" class="adf-hidden"></data-column>
+            <data-column key="startedBy" title="ADF_PROCESS_LIST.PROPERTIES.CREATED" class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell">
                 <ng-template let-entry="$implicit">
                     <div>{{entry.row.obj.startedBy | fullName}}</div>
                 </ng-template>

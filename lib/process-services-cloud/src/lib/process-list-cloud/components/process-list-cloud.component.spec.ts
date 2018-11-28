@@ -30,9 +30,9 @@ import { ProcessListCloudModule } from '../process-list-cloud.module';
     template: `
     <adf-cloud-process-list #processListCloud>
         <data-columns>
-            <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
-            <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
-            <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
+            <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column"></data-column>
+            <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
+            <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell">
                 <ng-template let-entry="$implicit">
                     <div>{{getFullName(entry.row.obj.startedBy)}}</div>
                 </ng-template>
@@ -57,6 +57,7 @@ class CustomTaskListComponent {
 
 class EmptyTemplateComponent {
 }
+
 describe('ProcessListCloudComponent', () => {
     let component: ProcessListCloudComponent;
     let fixture: ComponentFixture<ProcessListCloudComponent>;
@@ -173,7 +174,7 @@ describe('ProcessListCloudComponent', () => {
             }
         });
         let rowEvent = new DataRowEvent(row, null);
-        component.rowClick.subscribe( (taskId) => {
+        component.rowClick.subscribe((taskId) => {
             expect(taskId).toEqual('999');
             expect(component.getCurrentId()).toEqual('999');
             done();
