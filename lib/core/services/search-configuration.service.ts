@@ -37,7 +37,7 @@ export class SearchConfigurationService implements SearchConfigurationInterface 
     public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody {
         let defaultQueryBody: QueryBody = {
             query: {
-                query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
+                query: searchTerm ? `'${searchTerm}*' OR name:'${searchTerm}*'` : searchTerm
             },
             include: ['path', 'allowableOperations'],
             paging: {
