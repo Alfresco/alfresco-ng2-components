@@ -28,11 +28,11 @@ import {
 import { StartTaskCloudService } from '../services/start-task-cloud.service';
 import { StartTaskCloudComponent } from './start-task-cloud.component';
 import { of, throwError } from 'rxjs';
-import { taskDetailsMock, mockUsers } from '../mock/task-details.mock';
+import { taskDetailsMock } from '../mock/task-details.mock';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from './../../testing/process-service-cloud.testing.module';
 import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
-import { mockRoles } from '../mock/user-cloud.mock';
+import { mockRoles, mockUsers } from '../mock/user-cloud.mock';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 
 describe('StartTaskCloudComponent', () => {
