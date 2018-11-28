@@ -22,8 +22,8 @@ Shows all available filters.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | Display filters available to the current user for the application with the specified name. |
-| filterParam | [`FilterParamsModel`](../../lib/process-services-cloud/src/lib/task-cloud/models/filter-cloud.model.ts) |  | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one the list) is selected. |
-| showIcon | `boolean` |  | Toggles display of the filter's icon. |
+| filterParam | [`FilterParamsModel`](../../lib/process-services/task-list/models/filter.model.ts) |  | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one in the list) is selected. |
+| showIcons | `boolean` | false | Toggles display of the filter's icons. |
 
 ### Events
 
@@ -45,7 +45,7 @@ Use the `filterParam` property to restrict the range of filters that are shown:
 </adf-cloud-task-filters>
 ```
 
-You can use properties from [`FilterParamsModel`](../../lib/process-services-cloud/src/lib/task-cloud/models/filter-cloud.model.ts)
+You can use properties from [`FilterParamsModel`](../../lib/process-services/task-list/models/filter.model.ts)
 as the value of `filterParam` as shown in the table below:
 
 | Name | Type | Description |

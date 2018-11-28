@@ -26,22 +26,30 @@ import { TranslationService } from '@alfresco/adf-core';
     styleUrls: ['task-filters-cloud.component.scss']
 })
 export class TaskFiltersCloudComponent implements OnChanges {
-
+    /** Display filters available to the current user for the application with the specified name. */
     @Input()
     appName: string;
 
+    /**
+     * Parameters to use for the task filter cloud. If there is no match then the default filter
+     * (the first one in the list) is selected.
+     */
     @Input()
     filterParam: FilterParamsModel;
 
+    /** Toggles display of the filter's icons. */
     @Input()
     showIcons: boolean = false;
 
+    /** Emitted when a filter in the list is clicked. */
     @Output()
     filterClick: EventEmitter<TaskFilterCloudRepresentationModel> = new EventEmitter<TaskFilterCloudRepresentationModel>();
 
+    /** Emitted when the list is loaded. */
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when an error occurs during loading. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
