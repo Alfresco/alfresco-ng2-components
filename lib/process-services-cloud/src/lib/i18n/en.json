@@ -15,7 +15,7 @@
     "RUNNING_PROCESSES": "Running Processes",
     "COMPLETED_PROCESSES": "Completed Processes"
   },
-  "START_TASK_CLOUD": {
+  "ADF_CLOUD_START_TASK": {
     "ERROR": {
       "MESSAGE": "Enter a different value",
       "REQUIRED": "Field required",

@@ -131,7 +131,7 @@ describe('PeopleCloudComponent', () => {
             fixture.detectChanges();
             const errorMessage = element.querySelector('.adf-start-task-cloud-error-message');
             expect(element.querySelector('.adf-start-task-cloud-error')).not.toBeNull();
-            expect(errorMessage.textContent).toContain('START_TASK_CLOUD.ERROR.MESSAGE');
+            expect(errorMessage.textContent).toContain('ADF_CLOUD_START_TASK.ERROR.MESSAGE');
         });
     }));
 

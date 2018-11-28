@@ -14,10 +14,10 @@
                         class="form-control"
                         formControlName="name">
                     <mat-error *ngIf="nameController.hasError('required')">
-                        {{ 'START_TASK_CLOUD.ERROR.REQUIRED' | translate }}
+                        {{ 'ADF_CLOUD_START_TASK.ERROR.REQUIRED' | translate }}
                     </mat-error>
                     <mat-error *ngIf="nameController.hasError('maxlength')">
-                        {{ 'START_TASK_CLOUD.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxNameLength } }}
+                        {{ 'ADF_CLOUD_START_TASK.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxNameLength } }}
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -55,7 +55,7 @@
                         </mat-datepicker>
                     <div class="adf-error-text-container">
                         <div *ngIf="dateError">
-                            <div class="adf-error-text">{{'START_TASK_CLOUD.ERROR.DATE' | translate}}</div>
+                            <div class="adf-error-text">{{'ADF_CLOUD_START_TASK.ERROR.DATE' | translate}}</div>
                             <mat-icon class="adf-error-icon">warning</mat-icon>
                         </div>
                     </div>
