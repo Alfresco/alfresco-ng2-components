@@ -25,7 +25,7 @@ import { JwtHelperService } from './../../services/jwt-helper.service';
 })
 export class IdentityUserService {
 
-    static USER_NAME = 'given_name';
+    static USER_NAME = 'name';
     static USER_EMAIL = 'email';
     static USER_ACCESS_TOKEN = 'access_token';
     static USER_PREFERRED_USERNAME = 'preferred_username';
