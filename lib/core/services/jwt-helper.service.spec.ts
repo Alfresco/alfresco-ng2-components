@@ -39,7 +39,7 @@ describe('JwtHelperService', () => {
         const result = jwtHelperService.decodeToken(mockToken);
         expect(result).toBeDefined();
         expect(result).not.toBeNull('');
-        expect(result['given_name']).toBe('John Doe');
+        expect(result['name']).toBe('John Doe');
         expect(result['email']).toBe('johnDoe@gmail.com');
     });
 });
