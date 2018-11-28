@@ -22,7 +22,7 @@ import { map } from 'rxjs/operators';
 import { IdentityUserModel } from '../models/identity-user.model';
 import { JwtHelperService } from '../../services/jwt-helper.service';
 import { AppConfigService } from '../../app-config/app-config.service';
-import { AlfrescoApiService } from '../../services';
+import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { IdentityRoleModel } from '../models/identity-role.model';
 
 @Injectable({
