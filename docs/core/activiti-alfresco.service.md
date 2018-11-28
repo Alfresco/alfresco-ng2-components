@@ -36,7 +36,7 @@ export class SomePageComponent implements OnInit {
 
 ## Methods
 
-#### getAlfrescoNodes(accountId: string, folderId: string): Observable&lt;[ExternalContent]>
+#### `getAlfrescoNodes(accountId: string, folderId: string): Observable<ExternalContent>`
 
 Get all the nodes under passed in folder node ID (e.g. 3062d73b-fe47-4040-89d2-79efae63869c) for passed in 
 Alfresco Repository account ID as configured in APS: 
@@ -77,7 +77,7 @@ The response contained in `nodes` is an array with properties for each object li
         simpleType: "folder"
         title: "Event More Stuff"
 
-#### linkAlfrescoNode(accountId: string, node: ExternalContent, siteId: string): Observable<ExternalContentLink>
+#### `linkAlfrescoNode(accountId: string, node: ExternalContent, siteId: string): Observable<ExternalContentLink>`
 
 Link Alfresco content as related content in APS by passing in Alfresco node identifying the content, the Share site
 that contains the content, and the Alfresco Repository account ID as configured in APS:
