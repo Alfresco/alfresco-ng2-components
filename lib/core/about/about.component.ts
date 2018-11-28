@@ -23,7 +23,6 @@ import { DiscoveryApiService } from '../services/discovery-api.service';
 import { ObjectDataTableAdapter } from '../datatable/data/object-datatable-adapter';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 
-
 @Component({
     selector: 'adf-about',
     templateUrl: './about.component.html',
