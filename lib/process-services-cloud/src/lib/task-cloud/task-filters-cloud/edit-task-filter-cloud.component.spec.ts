@@ -15,20 +15,19 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { SimpleChange } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
-import { EditTaskFiltersCloudComponent } from './edit-task-filters-cloud.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TaskFilterCloudRepresentationModel } from '../models/filter-cloud.model';
 import { TaskCloudModule } from './../task-cloud.module';
-import { SimpleChange } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { EditTaskFilterCloudComponent } from './edit-task-filter-cloud.component';
 
-describe('EditTaskFiltersCloudComponent', () => {
-    let component: EditTaskFiltersCloudComponent;
-    let fixture: ComponentFixture<EditTaskFiltersCloudComponent>;
+describe('EditTaskFilterCloudComponent', () => {
+    let component: EditTaskFilterCloudComponent;
+    let fixture: ComponentFixture<EditTaskFilterCloudComponent>;
 
     let fakeFilter = new TaskFilterCloudRepresentationModel({
         name: 'FakeInvolvedTasks',
@@ -42,13 +41,13 @@ describe('EditTaskFiltersCloudComponent', () => {
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(EditTaskFiltersCloudComponent);
+        fixture = TestBed.createComponent(EditTaskFilterCloudComponent);
         component = fixture.componentInstance;
         component.taskFilter = fakeFilter;
     });
 
-    it('should create EditTaskFiltersCloudComponent', () => {
-        expect(component instanceof EditTaskFiltersCloudComponent).toBeTruthy();
+    it('should create EditTaskFilterCloudComponent', () => {
+        expect(component instanceof EditTaskFilterCloudComponent).toBeTruthy();
     });
 
     it('should get the taskFilter as a input', async(() => {
@@ -74,7 +73,7 @@ describe('EditTaskFiltersCloudComponent', () => {
         expect(title).toBeDefined();
         expect(subTitle).toBeDefined();
         expect(title.innerText).toEqual('FakeInvolvedTasks');
-        expect(subTitle.innerText).toEqual('EDIT_TASK_FILTER.TITLE');
+        expect(subTitle.innerText).toEqual('ADF_CLOUD_EDIT_TASK_FILTER.TITLE');
     });
 
     describe('EditTaskFilter form', () => {
@@ -187,7 +186,7 @@ describe('EditTaskFiltersCloudComponent', () => {
             });
         });
 
-        it('should disable delete button if the task filter changed', async () => {
+        it('should be enable delete button if the task filter changed', async () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -199,7 +198,7 @@ describe('EditTaskFiltersCloudComponent', () => {
                 const inquiryOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 inquiryOptions[3].nativeElement.click();
                 fixture.detectChanges();
-                expect(deleteButton.disabled).toBe(true);
+                expect(deleteButton.disabled).toBe(false);
             });
         });
 

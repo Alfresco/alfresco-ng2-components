@@ -274,7 +274,7 @@
   "PROCESS_LIST_CLOUD": {
     "TITLE": "PROCESS LIST CLOUD DEMO"
   },
-  "EDIT_TASK_FILTER": {
+  "EDIT_TASK_FILTER_CLOUD": {
     "DIALOG": {
       "TITLE": "Save Filter",
       "SAVE": "SAVE",

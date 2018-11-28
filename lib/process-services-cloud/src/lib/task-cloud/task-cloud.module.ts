@@ -25,7 +25,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateLoaderService, LogService, StorageService } from '@alfresco/adf-core';
 import { TaskFilterCloudService } from './services/task-filter-cloud.service';
 import { HttpClientModule } from '@angular/common/http';
-import { EditTaskFiltersCloudComponent } from './task-filters-cloud/edit-task-filters-cloud.component';
+import { EditTaskFilterCloudComponent } from './task-filters-cloud/edit-task-filter-cloud.component';
 @NgModule({
     imports: [
         FormsModule,
@@ -41,8 +41,8 @@ import { EditTaskFiltersCloudComponent } from './task-filters-cloud/edit-task-fi
         }),
         MaterialModule
     ],
-    declarations: [TaskFiltersCloudComponent, EditTaskFiltersCloudComponent],
-    exports: [TaskFiltersCloudComponent, EditTaskFiltersCloudComponent],
+    declarations: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent],
+    exports: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent],
     providers: [TaskFilterCloudService, LogService, StorageService]
 })
 export class TaskCloudModule { }

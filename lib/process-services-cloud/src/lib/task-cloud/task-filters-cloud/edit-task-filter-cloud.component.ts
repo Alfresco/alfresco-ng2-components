@@ -21,22 +21,25 @@ import { QueryModel, FilterActionType } from './../models/filter-cloud.model';
 import { TaskFilterCloudRepresentationModel } from '../models/filter-cloud.model';
 
 @Component({
-  selector: 'adf-cloud-edit-task-filters',
-  templateUrl: './edit-task-filters-cloud.component.html',
-  styleUrls: ['./edit-task-filters-cloud.component.scss']
+  selector: 'adf-cloud-edit-task-filter',
+  templateUrl: './edit-task-filter-cloud.component.html',
+  styleUrls: ['./edit-task-filter-cloud.component.scss']
 })
-export class EditTaskFiltersCloudComponent implements OnChanges {
+export class EditTaskFilterCloudComponent implements OnChanges {
 
     public static ACTION_SAVE = 'SAVE';
     public static ACTION_SAVE_AS = 'SAVE_AS';
     public static ACTION_DELETE = 'DELETE';
 
+    /** (**required**) Full details of the task filter to display information about. */
     @Input()
     taskFilter: TaskFilterCloudRepresentationModel;
 
+    /** Emitted when an task filter property changes. */
     @Output()
     filterChange: EventEmitter<QueryModel> = new EventEmitter();
 
+    /** Emitted when an filter action occurs i.e Save, SaveAs, Delete. */
     @Output()
     action: EventEmitter<FilterActionType> = new EventEmitter();
 
@@ -52,13 +55,16 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
 
     directions = ['ASC', 'DESC'];
     formHasBeenChanged = false;
-    isDeleteEnable = true;
     editTaskFilterForm: FormGroup;
 
     constructor(private formBuilder: FormBuilder) {}
 
     ngOnChanges(changes: SimpleChanges) {
         const taskFilter = changes['taskFilter'];
+        if (taskFilter && !taskFilter.currentValue) {
+            this.reset();
+            return;
+        }
         if (taskFilter && taskFilter.currentValue) {
             this.buildForm();
         }
@@ -75,36 +81,41 @@ export class EditTaskFiltersCloudComponent implements OnChanges {
             order: this.taskFilter.query.order
         });
         this.onFilterChange();
-        this.checkFormHasBeenChanged();
     }
 
+    /**
+     * Check for edit task filter form changes
+     */
     onFilterChange() {
         this.editTaskFilterForm.valueChanges.subscribe((formValues: QueryModel) => {
-            const editedQuery = new QueryModel(formValues);
-            this.filterChange.emit(editedQuery);
+            this.formHasBeenChanged = !this.compareFilters(new QueryModel(formValues), this.taskFilter.query);
+            this.filterChange.emit(formValues);
         });
     }
 
-    checkFormHasBeenChanged() {
-        this.editTaskFilterForm.valueChanges.subscribe((formValues: QueryModel) => {
-            const editedQuery = new QueryModel(formValues);
-            this.formHasBeenChanged = !this.compareFilters(editedQuery, this.taskFilter.query);
-        });
-    }
-
+    /**
+     * Check if both filters are same
+     */
     compareFilters(editedQuery, currentQuery): boolean  {
         return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }
 
     onSave() {
-        this.action.emit(new FilterActionType(EditTaskFiltersCloudComponent.ACTION_SAVE));
+        this.action.emit(new FilterActionType(EditTaskFilterCloudComponent.ACTION_SAVE));
     }
 
     onSaveAs() {
-        this.action.emit(new FilterActionType(EditTaskFiltersCloudComponent.ACTION_SAVE_AS));
+        this.action.emit(new FilterActionType(EditTaskFilterCloudComponent.ACTION_SAVE_AS));
     }
 
     onDelete() {
-        this.action.emit(new FilterActionType(EditTaskFiltersCloudComponent.ACTION_DELETE));
+        this.action.emit(new FilterActionType(EditTaskFilterCloudComponent.ACTION_DELETE));
+    }
+
+    /**
+     * Reset the task filter
+     */
+    reset() {
+        this.taskFilter = null;
     }
 }
