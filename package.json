@@ -5,7 +5,6 @@
   "author": "Alfresco Software, Ltd.",
   "main": "./index.js",
   "scripts": {
-    "precommit": "npm run lint-lib -- --fix && npm run stylelint --  --fix",
     "docbuild": "node node_modules/typedoc/bin/typedoc --tsconfig tsconfig.json --json docs/docs.json --exclude '**/*.spec.ts' --ignoreCompilerErrors && node tools/doc/buildYamlSourceInfo.js docs/docs.json && node ./tools/doc/docProcessor.js",
     "prepublishOnly": "npm run build-lib",
     "markdownlint": "markdownlint ./docs",
@@ -210,5 +209,10 @@
     "node": ">=6.0.0"
   },
   "module": "./index.js",
-  "typings": "./index.d.ts"
+  "typings": "./index.d.ts",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-lib -- --fix && npm run stylelint --  --fix"
+    }
+  }
 }
