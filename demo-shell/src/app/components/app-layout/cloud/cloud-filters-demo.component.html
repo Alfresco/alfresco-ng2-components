@@ -1,0 +1,21 @@
+<mat-accordion>
+  <mat-expansion-panel [expanded]="true" (opened)="panelOpenStateTask = true" (closed)="panelOpenStateTask = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Task Filters
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <adf-cloud-task-filters *ngIf="panelOpenStateTask" [appName]="appName" [showIcons]="true" (filterClick)="onTaskFilterSelected($event)">
+      </adf-cloud-task-filters>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel (opened)="panelOpenStateProcess = true" (closed)="panelOpenStateProcess = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+          Process Filters
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <adf-cloud-process-filters *ngIf="panelOpenStateProcess" [appName]="appName" [showIcons]="true" (filterClick)="onProcessFilterSelected($event)">
+      </adf-cloud-process-filters>
+  </mat-expansion-panel>
+</mat-accordion>
