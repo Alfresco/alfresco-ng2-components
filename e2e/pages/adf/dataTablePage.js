@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
+const { element, by, browser } = require('protractor')
 
 var TestConfig = require('../../test.config');
 var Util = require('../../util/util');
