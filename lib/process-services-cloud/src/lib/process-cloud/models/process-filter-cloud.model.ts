@@ -69,3 +69,10 @@ export class ProcessFilterParamModel {
         }
     }
 }
+
+export class FilterActionType {
+    actionType: string;
+    constructor(action: string) {
+        this.actionType = action;
+    }
+}

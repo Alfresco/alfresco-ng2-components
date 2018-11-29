@@ -17,14 +17,19 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProcessFiltersCloudComponent } from './process-filters-cloud/process-filters-cloud.component';
 import { MaterialModule } from '../material.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateLoaderService, LogService, StorageService } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from './services/process-filter-cloud.service';
 import { HttpClientModule } from '@angular/common/http';
+import { EditProcessFilterCloudComponent } from './process-filters-cloud/edit-process-filter-cloud.component';
 @NgModule({
     imports: [
+        FormsModule,
+        ReactiveFormsModule,
         HttpClientModule,
         CommonModule,
         TranslateModule.forRoot({
@@ -33,11 +38,12 @@ import { HttpClientModule } from '@angular/common/http';
                 useClass: TranslateLoaderService
             }
         }),
+        FlexLayoutModule,
         MaterialModule
     ],
-    declarations: [ProcessFiltersCloudComponent],
+    declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent],
 
-    exports: [ProcessFiltersCloudComponent],
+    exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent],
     providers: [ProcessFilterCloudService, LogService, StorageService]
 })
 export class ProcessCloudModule { }

@@ -16,5 +16,6 @@
  */
 
 export * from './process-filters-cloud/process-filters-cloud.component';
+export * from './process-filters-cloud/edit-process-filter-cloud.component';
 export * from './models/process-filter-cloud.model';
 export * from './process-cloud.module';
