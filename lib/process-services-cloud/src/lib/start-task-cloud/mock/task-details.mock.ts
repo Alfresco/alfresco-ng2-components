@@ -14,16 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AppListCloudModule } from './app-list-cloud.module';
 
-describe('AppListCloudModule', () => {
-  let appListCloudModule: AppListCloudModule;
+import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 
-  beforeEach(() => {
-    appListCloudModule = new AppListCloudModule();
-  });
-
-  it('should create an instance', () => {
-    expect(appListCloudModule).toBeTruthy();
-  });
-});
+export let taskDetailsMock = new TaskDetailsCloudModel({ assignee: 'fake-assigne', name: 'fake-name' });

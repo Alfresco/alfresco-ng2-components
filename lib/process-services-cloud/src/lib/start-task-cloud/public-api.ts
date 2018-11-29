@@ -14,16 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AppListCloudModule } from './app-list-cloud.module';
 
-describe('AppListCloudModule', () => {
-  let appListCloudModule: AppListCloudModule;
-
-  beforeEach(() => {
-    appListCloudModule = new AppListCloudModule();
-  });
-
-  it('should create an instance', () => {
-    expect(appListCloudModule).toBeTruthy();
-  });
-});
+export * from './models/task-details-cloud.model';
+export * from './services/start-task-cloud.service';
+export * from './components/start-task-cloud.component';
+export * from './components/people-cloud/people-cloud.component';
+export * from './start-task-cloud.module';

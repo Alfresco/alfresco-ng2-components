@@ -14,5 +14,13 @@
     "ALL_PROCESSES": "All Processes",
     "RUNNING_PROCESSES": "Running Processes",
     "COMPLETED_PROCESSES": "Completed Processes"
+  },
+  "ADF_CLOUD_START_TASK": {
+    "ERROR": {
+      "MESSAGE": "Enter a different value",
+      "REQUIRED": "Field required",
+      "DATE": "Date format DD/MM/YYYY",
+      "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max."
+    }
   }
 }

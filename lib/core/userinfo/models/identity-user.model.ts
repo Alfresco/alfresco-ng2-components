@@ -16,7 +16,6 @@
  */
 
 export class IdentityUserModel {
-
     id: string;
     firstName: string;
     lastName: string;

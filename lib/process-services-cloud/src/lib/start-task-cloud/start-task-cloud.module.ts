@@ -17,27 +17,39 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProcessListCloudComponent } from './components/process-list-cloud.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateLoaderService, DataTableModule, TemplateModule } from '@alfresco/adf-core';
-import { ProcessListCloudService } from './services/process-list-cloud.service';
+import { TemplateModule, TranslateLoaderService, FormModule, PipeModule } from '@alfresco/adf-core';
+import { StartTaskCloudComponent } from './components/start-task-cloud.component';
+import { StartTaskCloudService } from './services/start-task-cloud.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PeopleCloudComponent } from './components/people-cloud/people-cloud.component';
 
 @NgModule({
     imports: [
-        CommonModule,
-        TranslateModule.forRoot({
+      CommonModule,
+      PipeModule,
+      TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
                 useClass: TranslateLoaderService
             }
         }),
+        TemplateModule,
+        FlexLayoutModule,
         MaterialModule,
-        DataTableModule,
-        TemplateModule
+        FormsModule,
+        ReactiveFormsModule,
+        FormModule
     ],
-    declarations: [ProcessListCloudComponent],
-    exports: [ProcessListCloudComponent],
-    providers: [ProcessListCloudService]
+    declarations: [StartTaskCloudComponent, PeopleCloudComponent],
+    providers: [
+        StartTaskCloudService
+     ],
+    exports: [
+        StartTaskCloudComponent,
+        PeopleCloudComponent
+    ]
 })
-export class ProcessListCloudModule { }
+export class StartTaskCloudModule { }

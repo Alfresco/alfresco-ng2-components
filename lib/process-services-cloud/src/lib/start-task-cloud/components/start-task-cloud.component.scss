@@ -1,0 +1,34 @@
+@mixin adf-start-task-cloud-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $foreground: map-get($theme, foreground);
+    $header-border: 1px solid mat-color($foreground, divider);
+
+    .adf-cloud-start-task-heading {
+        border-bottom: $header-border;
+        margin-bottom: 10px;
+        .mat-card-title {
+            font-weight: bold;
+            font-size: 18px;
+        }
+    }
+
+    .adf-cloud-start-task-footer {
+        padding: 4px;
+        font-size: 18px;
+        border-top: 1px solid #eee;
+    }
+
+    adf-cloud-start-task {
+        .adf {
+
+            &-cloud-start-task-footer {
+                .mat-button {
+                    text-transform: uppercase !important;
+                }
+            }
+        }
+    }
+}
+

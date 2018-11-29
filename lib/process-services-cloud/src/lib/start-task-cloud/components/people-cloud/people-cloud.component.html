@@ -1,0 +1,29 @@
+<form>
+<mat-form-field class="adf-people-cloud">
+    <mat-label id="assignee-id">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE' | translate}}</mat-label>
+    <input #inputValue
+           matInput
+           class="adf-cloud-input"
+           data-automation-id="adf-people-cloud-search-input"
+           type="text"
+           [formControl]="searchUser"
+           [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption class="adf-people-cloud-list"
+                      #auto="matAutocomplete"
+                      (optionSelected)="onSelect($event.option.value)"
+                      [displayWith]="getDisplayName">
+        <mat-option *ngFor="let user of users$ | async; let i = index" [value]="user">
+            <div class="adf-people-cloud-row" id="adf-people-cloud-user-{{i}}">
+                <div [outerHTML]="user | usernameInitials:'adf-people-widget-pic'"></div>
+                <span class="adf-people-label-name"> {{user | fullName}}</span>
+            </div>
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+<div class="adf-start-task-cloud-error">
+    <div *ngIf="dataError" fxLayout="row" fxLayoutAlign="start start" [@transitionMessages]="_subscriptAnimationState">
+        <div class="adf-start-task-cloud-error-message">{{ 'ADF_CLOUD_START_TASK.ERROR.MESSAGE' | translate }}</div>
+        <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
+    </div>
+</div>
+</form>

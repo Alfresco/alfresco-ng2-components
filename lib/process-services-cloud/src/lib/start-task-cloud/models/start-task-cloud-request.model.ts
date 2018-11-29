@@ -14,16 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AppListCloudModule } from './app-list-cloud.module';
+export class StartTaskCloudRequestModel {
 
-describe('AppListCloudModule', () => {
-  let appListCloudModule: AppListCloudModule;
+    name: string;
+    description: string;
+    assignee: string;
+    priority: string;
+    dueDate: Date;
+    payloadType: string;
 
-  beforeEach(() => {
-    appListCloudModule = new AppListCloudModule();
-  });
-
-  it('should create an instance', () => {
-    expect(appListCloudModule).toBeTruthy();
-  });
-});
+    constructor(obj?: any) {
+        if (obj) {
+            this.name = obj.name || null;
+            this.description = obj.description || null;
+            this.assignee = obj.assignee || null;
+            this.priority = obj.priority || null;
+            this.dueDate = obj.dueDate || null;
+            this.payloadType = 'CreateTaskPayload';
+        }
+    }
+}

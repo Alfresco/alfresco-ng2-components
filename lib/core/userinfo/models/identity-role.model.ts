@@ -14,16 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AppListCloudModule } from './app-list-cloud.module';
+export class IdentityRoleModel {
 
-describe('AppListCloudModule', () => {
-  let appListCloudModule: AppListCloudModule;
+    id: string;
+    name: string;
 
-  beforeEach(() => {
-    appListCloudModule = new AppListCloudModule();
-  });
-
-  it('should create an instance', () => {
-    expect(appListCloudModule).toBeTruthy();
-  });
-});
+    constructor(obj?: any) {
+        if (obj) {
+            this.id = obj.id || null;
+            this.name = obj.name || null;
+        }
+    }
+}

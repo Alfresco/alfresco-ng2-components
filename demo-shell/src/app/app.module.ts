@@ -121,7 +121,8 @@ import { AppExtensionsModule } from './extensions/extensions.module';
         ReportIssueComponent,
         TaskListCloudDemoComponent,
         ProcessListCloudExampleComponent,
-        TreeViewSampleComponent
+        TreeViewSampleComponent,
+        TaskListCloudDemoComponent
     ],
     providers: [
         {
