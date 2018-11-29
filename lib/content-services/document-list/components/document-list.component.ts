@@ -235,6 +235,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     actions: ContentActionModel[] = [];
     emptyFolderTemplate: TemplateRef<any>;
     noPermissionTemplate: TemplateRef<any>;
+    loadingTemplate: TemplateRef<any>;
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
     noPermission: boolean = false;

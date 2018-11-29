@@ -16,7 +16,6 @@
  */
 
 import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular/core';
-import { DataTableComponent } from '../components/datatable/datatable.component';
 
 @Directive({
     selector: 'loading-content-template'

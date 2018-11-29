@@ -19,7 +19,7 @@ import { NgModule } from '@angular/core';
 import { DocumentListComponent } from './document-list.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreModule, LoadingContentTemplateDirective } from '@alfresco/adf-core';
 import { ContentModule } from '@alfresco/adf-content-services';
 
 const routes: Routes = [
@@ -36,6 +36,12 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         ContentModule.forChild()
     ],
-    declarations: [DocumentListComponent]
+    declarations: [
+        DocumentListComponent,
+        LoadingContentTemplateDirective
+    ],
+    exports: [
+        LoadingContentTemplateDirective
+    ]
 })
 export class AppDocumentListComponentModule {}
