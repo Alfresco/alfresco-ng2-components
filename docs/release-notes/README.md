@@ -1,4 +1,8 @@
-# Release notes index
+---
+Title: Release notes
+---
+
+# Release notes
 
 Below are links to the release notes for all released versions of ADF back to v1.6.1.
 The first **General available** release was v2.0.0.

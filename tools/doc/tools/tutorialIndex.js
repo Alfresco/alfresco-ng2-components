@@ -22,10 +22,10 @@ function aggPhase(aggData) {
     var template = ejs.compile(templateSource);
     var mdText = template(indexDocData);
     mdText = mdText.replace(/^ +\|/mg, "|");
-    var newSection = remark().data("settings", { paddedTable: false, gfm: false }).parse(mdText.trim()).children;
+    var newSection = remark().use(frontMatter, ["yaml"]).data("settings", { paddedTable: false, gfm: false }).parse(mdText.trim()).children;
     var tutIndexFile = path.resolve(tutFolder, "README.md");
     var tutIndexText = fs.readFileSync(tutIndexFile, "utf8");
-    var tutIndexMD = remark().data("settings", { paddedTable: false, gfm: false }).parse(tutIndexText);
+    var tutIndexMD = remark().use(frontMatter, ["yaml"]).data("settings", { paddedTable: false, gfm: false }).parse(tutIndexText);
     replaceSection(tutIndexMD, "Tutorials", function (before, section, after) {
         newSection.unshift(before);
         newSection.push(after);

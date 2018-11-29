@@ -1,16 +1,9 @@
-# ADF Tutorials
+---
+Title: Tutorials
+Github only: true
+---
 
-Learn about ADF step-by-step with the tutorials listed below.
-You may find it helpful to follow them in sequence because some of the
-later tutorials build on knowledge introduced in the earlier ones.
-
-The tutorials are graded as follows:
-
--   **Beginner:** Suitable for users with no previous knowledge of ADF.
--   **Intermediate:** For users who want to add to their knowledge of the basics.
--   **Advanced:** For experienced users who want to learn about features in depth.
-
-## Tutorials
+# Tutorials
 
 | Name | Level | Abstract |
 | -- | -- | -- |

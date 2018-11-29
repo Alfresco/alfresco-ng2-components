@@ -79,7 +79,7 @@ function getFileData(tree, pathname, aggData) {
 
 function aggPhase(aggData) {
     var histFileText = fs.readFileSync(histFilePath, "utf8");
-    var histFileTree = remark().data("settings", {paddedTable: false, gfm: false}).parse(histFileText);
+    var histFileTree = remark().use(frontMatter, ["yaml"]).data("settings", {paddedTable: false, gfm: false}).parse(histFileText);
 
     var keys = Object.keys(aggData.versions);
     keys.sort((a, b) => {
@@ -122,7 +122,7 @@ function aggPhase(aggData) {
         var mdText = template(versionTemplateData);
         mdText = mdText.replace(/^ +-/mg, "-");
 
-        var newSection = remark().data("settings", {paddedTable: false, gfm: false}).parse(mdText.trim()).children;
+        var newSection = remark().use(frontMatter, ["yaml"]).data("settings", {paddedTable: false, gfm: false}).parse(mdText.trim()).children;
 
         var versSectionName = version.replace(/\./g, "");;
 
