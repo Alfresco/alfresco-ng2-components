@@ -115,7 +115,7 @@ export class TaskListDemoComponent implements OnInit {
             .pipe(
                 debounceTime(500)
             )
-            .subscribe(taskFilter => {
+            .subscribe((taskFilter) => {
                 if (this.isFormValid()) {
                     this.filterTasks(taskFilter);
                 }

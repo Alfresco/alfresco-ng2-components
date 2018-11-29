@@ -34,7 +34,7 @@ export class FormNodeViewerComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.sub = this.route.params.subscribe(params => {
+        this.sub = this.route.params.subscribe((params) => {
             this.nodeId = params['id'];
         });
     }

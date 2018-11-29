@@ -17,6 +17,7 @@
 
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Params } from '@angular/router/src/shared';
 
 @Component({
     selector: 'app-show-diagram',
@@ -30,7 +31,7 @@ export class ShowDiagramComponent {
 
     constructor(private route: ActivatedRoute,
                 private router: Router) {
-        this.route.params.subscribe(params => {
+        this.route.params.subscribe((params: Params) => {
             this.processDefinitionId = params['processDefinitionId'];
             this.appId = params['appId'];
         });

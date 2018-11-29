@@ -62,7 +62,7 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges, OnDestroy
     ngOnInit() {
         this.subscriptions.push(
             this.uploadService.fileUploadComplete.subscribe(
-                value => this.onFileUploadComplete(value.data)
+                (value) => this.onFileUploadComplete(value.data)
             )
         );
     }
@@ -77,7 +77,7 @@ export class ProcessAttachmentsComponent implements OnInit, OnChanges, OnDestroy
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
         this.subscriptions = [];
     }
 

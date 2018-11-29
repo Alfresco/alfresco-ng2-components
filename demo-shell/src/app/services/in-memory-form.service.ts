@@ -56,9 +56,9 @@ export class InMemoryFormService extends FormService {
         // return super.getRestFieldValues(taskId, fieldId);
 
         this.logService.log(`getRestFieldValues: ${taskId} => ${field}`);
-        return new Observable<FormFieldOption[]>(observer => {
+        return new Observable<FormFieldOption[]>((observer) => {
             const currentField = this.data.rest.fields.find(
-                f => f.taskId === taskId && f.fieldId === field
+                (f) => f.taskId === taskId && f.fieldId === field
             );
             if ( currentField ) {
                 const values: FormFieldOption[] = currentField.values || [];
@@ -91,9 +91,9 @@ export class InMemoryFormService extends FormService {
         //  return super.getRestFieldValuesByProcessId(processDefinitionId, fieldId);
 
         this.logService.log(`getRestFieldValuesByProcessId: ${processDefinitionId} => ${fieldId}`);
-        return new Observable<FormFieldOption[]>(observer => {
+        return new Observable<FormFieldOption[]>((observer) => {
             const field = this.data.rest.fields.find(
-                f => f.processId === processDefinitionId && f.fieldId === fieldId
+                (currentField) => currentField.processId === processDefinitionId && currentField.fieldId === fieldId
             );
             const values: FormFieldOption[] = field.values || [];
             this.logService.log(values);

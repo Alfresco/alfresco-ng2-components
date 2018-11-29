@@ -16,10 +16,16 @@
  */
 
 import { Component, Input, OnChanges, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { TaskListService, TaskAttachmentListComponent, TaskDetailsModel, TaskUploadService } from '@alfresco/adf-process-services';
+import {
+    TaskListService,
+    TaskAttachmentListComponent,
+    TaskDetailsModel,
+    TaskUploadService
+} from '@alfresco/adf-process-services';
 import { UploadService, AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { PreviewService } from '../../services/preview.service';
 import { Subscription } from 'rxjs';
+import { FileUploadCompleteEvent } from '../../../../../lib/core/events/file.event';
 
 export function taskUploadServiceFactory(api: AlfrescoApiService, config: AppConfigService) {
     return new TaskUploadService(api, config);
@@ -53,12 +59,13 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
     constructor(
         private uploadService: UploadService,
         private activitiTaskList: TaskListService,
-        private preview: PreviewService) {}
+        private preview: PreviewService) {
+    }
 
     ngOnInit() {
         this.subscriptions.push(
             this.uploadService.fileUploadComplete.subscribe(
-                value => this.onFileUploadComplete(value.data)
+                (fileUploadCompleteEvent: FileUploadCompleteEvent) => this.onFileUploadComplete(fileUploadCompleteEvent.data)
             )
         );
     }
@@ -73,7 +80,7 @@ export class TaskAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
         this.subscriptions = [];
     }
 

@@ -129,7 +129,7 @@ export class ThemePickerComponent {
     }
 
     private _getCurrentThemeFromHref(href: string): DocsSiteTheme {
-        return this.themes.find(theme => theme.href === href);
+        return this.themes.find((theme) => theme.href === href);
     }
 }
 

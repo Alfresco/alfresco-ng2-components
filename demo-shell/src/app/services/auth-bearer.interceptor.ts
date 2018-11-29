@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2018 Alfresco Software, Ltd.
+ * Copyright 2016 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ export class AuthBearerInterceptor implements HttpInterceptor {
 
   private loadExcludedUrlsRegex(): void {
     const excludedUrls: string[] = this.authService.getBearerExcludedUrls();
-    this.excludedUrlsRegex = excludedUrls.map(urlPattern => new RegExp(urlPattern, 'gi')) || [];
+    this.excludedUrlsRegex = excludedUrls.map((urlPattern) => new RegExp(urlPattern, 'gi')) || [];
 
   }
 
@@ -51,11 +51,11 @@ export class AuthBearerInterceptor implements HttpInterceptor {
     }
 
     const urlRequest = req.url;
-    const shallPass: boolean = !!this.excludedUrlsRegex.find(regex => regex.test(urlRequest));
+    const shallPass: boolean = !!this.excludedUrlsRegex.find((regex) => regex.test(urlRequest));
     if (shallPass) {
       return next.handle(req)
         .pipe(
-          catchError(error => {
+          catchError((error) => {
             return observableThrowError(error);
           })
         );
@@ -63,11 +63,11 @@ export class AuthBearerInterceptor implements HttpInterceptor {
 
     return this.authService.addTokenToHeader(req.headers)
       .pipe(
-        mergeMap(headersWithBearer => {
+        mergeMap((headersWithBearer) => {
         const kcReq = req.clone({ headers: headersWithBearer });
         return next.handle(kcReq)
           .pipe(
-            catchError(error => {
+            catchError((error) => {
                 return observableThrowError(error);
             })
           );

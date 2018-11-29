@@ -112,7 +112,7 @@ describe('Unshare file', () => {
     });
 
     describe('with permission', () => {
-        afterAll(async done => {
+        afterAll(async (done) => {
             await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, nodeId);
             done();
         });
@@ -160,7 +160,7 @@ describe('Unshare file', () => {
     });
 
     describe('without permission', () => {
-        afterAll(async done => {
+        afterAll(async (done) => {
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.sitesApi.deleteSite(siteName, { permanent: true });
             done();

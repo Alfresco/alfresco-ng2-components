@@ -29,7 +29,7 @@ export class FilteredDataAdapter extends ObjectDataTableAdapter {
         const filter = (this.filterValue || '').trim().toLowerCase();
 
         if (this.filterKey && filter) {
-            rows = rows.filter(row => {
+            rows = rows.filter((row) => {
                 const value = row.getValue(this.filterKey);
                 if (value !== undefined && value !== null) {
                     const stringValue: string = value.toString().trim().toLowerCase();
@@ -162,7 +162,7 @@ export class DataTableComponent {
                 icon: this._imageUrl
             }
         ];
-        const rows = objects.map(obj => new ObjectDataRow(obj));
+        const rows = objects.map((obj) => new ObjectDataRow(obj));
         this.data.setRows(rows);
     }
 
@@ -171,7 +171,7 @@ export class DataTableComponent {
             { type: 'text', key: 'id', title: 'Id', sortable: true },
             { type: 'text', key: 'name', title: 'Name', sortable: true, cssClass: 'full-width name-column' }
         ];
-        const columns = schema.map(col => new ObjectDataColumn(col));
+        const columns = schema.map((col) => new ObjectDataColumn(col));
         this.data.setColumns(columns);
     }
 

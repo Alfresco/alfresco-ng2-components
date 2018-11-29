@@ -102,7 +102,7 @@ export class SearchCheckListPage {
 
                 this.clickShowMoreButtonUntilIsNotDisplayed();
             }
-        }, err => {
+        }, (err) => {
         });
         return this;
     }
@@ -114,7 +114,7 @@ export class SearchCheckListPage {
 
                 this.clickShowLessButtonUntilIsNotDisplayed();
             }
-        }, err => {
+        }, (err) => {
         });
         return this;
     }
