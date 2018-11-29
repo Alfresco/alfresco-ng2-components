@@ -1,3 +1,8 @@
+---
+Title: Component docs
+Github only: true
+---
+
 # Component Docs Index
 
 Below is an index of the documentation for ADF. The [User Guide](#user-guide)

@@ -1,4 +1,9 @@
-# ADF Process Services Cloud
+---
+Title: Process Services Cloud API
+Github only: true
+---
+
+# Process Services Cloud API
 
 Contains components related to Process Services Cloud.
 See the library's

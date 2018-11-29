@@ -1,4 +1,9 @@
-# ADF Process Services
+---
+Title: Process Services API
+Github only: true
+---
+
+# Process Services API
 
 Contains components related to Process Services.
 See the library's

@@ -1,3 +1,7 @@
+---
+Title: Version index
+---
+
 # Version Index
 
 Below are the details of all released versions of ADF since general

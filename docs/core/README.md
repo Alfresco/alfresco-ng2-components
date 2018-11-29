@@ -1,4 +1,9 @@
-# ADF Core
+---
+Title: Core API
+Github only: true
+---
+
+# Core API
 
 Contains a variety of components used throughout ADF.
 See the library's

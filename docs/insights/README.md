@@ -1,4 +1,9 @@
-# ADF Insights
+---
+Title: Insights API
+Github only: true
+---
+
+# Insights API
 
 Contains components for Process Services analytics and diagrams.
 See the library's

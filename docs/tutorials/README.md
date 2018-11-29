@@ -1,4 +1,9 @@
-# ADF Tutorials
+---
+Title: Tutorials
+Github only: true
+---
+
+# Tutorials
 
 Learn about ADF step-by-step with the tutorials listed below.
 You may find it helpful to follow them in sequence because some of the

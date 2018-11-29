@@ -1,3 +1,8 @@
+---
+Title: User guide
+Github only: true
+---
+
 # User guide
 
 The user guide explains subjects and techniques in depth. Click

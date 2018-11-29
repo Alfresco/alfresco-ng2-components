@@ -1,4 +1,9 @@
-# ADF Content Services
+---
+Title: Content Services API
+Github only: true
+---
+
+# Content Services API
 
 Contains components related to Content Services.
 See the library's
