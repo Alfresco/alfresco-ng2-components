@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class ProcessDefinitionRepresentationCloud {
+export class ProcessDefinitionCloud {
     id: string;
     appName: string;
     key: string;

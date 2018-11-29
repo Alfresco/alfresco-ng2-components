@@ -19,14 +19,14 @@ import {
     Component, EventEmitter, Input, OnChanges, OnInit,
     Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
-import { ProcessDefinitionRepresentationCloud } from '../models/process-definition-cloud.model';
+
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessCloudService } from './../services/process-cloud.service';
-
 import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { debounceTime } from 'rxjs/operators';
+import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
 
 @Component({
     selector: 'adf-cloud-start-process',
@@ -63,11 +63,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     @Output()
     error: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
 
-    processDefinitionList: ProcessDefinitionRepresentationCloud[] = [];
+    processDefinitionList: ProcessDefinitionCloud[] = [];
     errorMessageId: string = '';
     processForm: FormGroup;
     processPayloadCloud = new ProcessPayloadCloud();
-    filteredProcesses: ProcessDefinitionRepresentationCloud[] = [];
+    filteredProcesses: ProcessDefinitionCloud[] = [];
     isLoading = false;
 
     constructor(private processCloudService: ProcessCloudService,
@@ -111,20 +111,20 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
     }
 
-    private getProcessDefinitionList(processDefinitionName: string): ProcessDefinitionRepresentationCloud[] {
+    private getProcessDefinitionList(processDefinitionName: string): ProcessDefinitionCloud[] {
         return this.processDefinitionList.filter((option) => option.name.toLowerCase().includes(processDefinitionName.toLowerCase()));
     }
 
-    private getProcessIfExists(processDefinitionName: string): ProcessDefinitionRepresentationCloud {
+    private getProcessIfExists(processDefinitionName: string): ProcessDefinitionCloud {
         let matchedProcess = this.processDefinitionList.find((option) => option.name.toLowerCase() === processDefinitionName.toLowerCase());
         if (!matchedProcess) {
-            matchedProcess = new ProcessDefinitionRepresentationCloud();
+            matchedProcess = new ProcessDefinitionCloud();
         }
 
         return matchedProcess;
     }
 
-    private getProcessDefinitionByName(processDefinitionName: string): ProcessDefinitionRepresentationCloud {
+    private getProcessDefinitionByName(processDefinitionName: string): ProcessDefinitionCloud {
         const matchedProcess = processDefinitionName ? this.getProcessIfExists(processDefinitionName) : this.processDefinitionList[0];
         return matchedProcess;
     }
@@ -141,7 +141,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
         this.resetErrorMessage();
 
         this.processCloudService.getProcessDefinitions(this.appName).subscribe(
-            (processDefinitionRepresentations: ProcessDefinitionRepresentationCloud[]) => {
+            (processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
                 this.processDefinitionList = processDefinitionRepresentations;
                 if (processDefinitionRepresentations.length > 0) {
                     this.selectDefaultProcessDefinition();

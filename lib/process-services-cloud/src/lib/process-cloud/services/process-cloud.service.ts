@@ -19,9 +19,9 @@ import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { ProcessDefinitionRepresentationCloud } from '../models/process-definition-cloud.model';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
+import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
 
 @Injectable({
     providedIn: 'root'
@@ -44,7 +44,7 @@ export class ProcessCloudService {
      * @param appId ID of a target app
      * @returns Array of process definitions
      */
-    getProcessDefinitions(appName: string): Observable<ProcessDefinitionRepresentationCloud[]> {
+    getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
 
         if (appName) {
             let queryUrl = `${this.contextRoot}/${appName}-rb/v1/process-definitions`;
@@ -56,7 +56,7 @@ export class ProcessCloudService {
                     this.contentTypes, this.accepts,
                     this.returnType, null, null)
             ).pipe(
-                map((res) => res.list.entries.map((processDefs) => new ProcessDefinitionRepresentationCloud(processDefs.entry))),
+                map((res) => res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry))),
                 catchError((err) => this.handleProcessError(err))
             );
         } else {
