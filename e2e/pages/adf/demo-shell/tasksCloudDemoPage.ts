@@ -19,13 +19,17 @@ import { Util } from '../../../util/util';
 
 import { TaskFiltersCloudComponent } from '../process_cloud/taskFiltersCloudComponent';
 import { TaskListCloudComponent } from '../process_cloud/taskListCloudComponent';
-import { element, by } from 'protractor';
+import { element, by, ElementArrayFinder } from 'protractor';
 
 export class TasksCloudDemoPage {
 
-    myTasks = element(by.css('span[data-automation-id="my-tasks-filter"]'));
-    completedTasks = element(by.css('span[data-automation-id="completed-tasks-filter"]'));
+    myTasks = element(by.css('span[data-automation-id="ADF_CLOUD_TASK_FILTERS.MY_TASKS_filter"]'));
+    completedTasks = element(by.css('span[data-automation-id="ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS_filter"]'));
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
+
+    customFiltersButton = element(by.css('.mat-expansion-panel-header-description'));
+    filters: ElementArrayFinder = element.all(by.css('mat-form-field mat-select'));
+    filtersSection = element(by.css('.task-cloud-demo-select'));
 
     taskFiltersCloudComponent(filter) {
         return new TaskFiltersCloudComponent(filter);
@@ -50,5 +54,21 @@ export class TasksCloudDemoPage {
     checkActiveFilterActive () {
         Util.waitUntilElementIsVisible(this.activeFilter);
         return this.activeFilter.getText();
+    }
+
+    customFilter () {
+        return new TaskFiltersCloudComponent(this.customFiltersButton);
+    }
+
+    statusFilter() {
+        const filter = this.filters.get(0);
+        Util.waitUntilElementIsVisible(filter);
+        return new TaskFiltersCloudComponent(filter);
+    }
+
+    statusOption(status) {
+        const option = element(by.cssContainingText('.mat-select-content .mat-option-text', status));
+        Util.waitUntilElementIsVisible(option);
+        return new TaskFiltersCloudComponent(option);
     }
 }

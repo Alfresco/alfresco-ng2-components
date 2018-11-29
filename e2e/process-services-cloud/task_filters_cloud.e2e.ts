@@ -22,7 +22,6 @@ import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/tasksCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process_cloud/appListCloudComponent';
-
 import { Tasks } from '../actions/APS-cloud/tasks';
 
 describe('Task filters cloud', () => {
@@ -39,6 +38,7 @@ describe('Task filters cloud', () => {
         let silentLogin;
         const newTask = 'newTask', completedTask = 'completedTask1', myTask = 'myTask';
         const simpleApp = 'simple-app';
+        const user = 'superadminuser', password = 'password';
 
         beforeAll(() => {
             silentLogin = false;
@@ -59,9 +59,9 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed();
         });
 
-        xit('[C290009] Should display default filters and created task', () => {
-            tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            tasksService.createStandaloneTask(newTask, simpleApp);
+        it('[C290009] Should display default filters and created task', async() => {
+            await tasksService.init(user, password);
+            await tasksService.createStandaloneTask(newTask, simpleApp);
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Completed Tasks');
@@ -69,13 +69,18 @@ describe('Task filters cloud', () => {
 
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('My Tasks');
+
+            tasksCloudDemoPage.customFilter().clickCustomFilters();
+            tasksCloudDemoPage.statusFilter().clickFilterDropDown();
+
+            tasksCloudDemoPage.statusOption('CREATED').setOption();
+
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(newTask);
         });
 
-        // failing due to ACTIVITI-2463
-        xit('[C289955] Should display task in Complete Tasks List when task is completed', () => {
-            tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            let task = tasksService.createStandaloneTask(completedTask, simpleApp);
+        it('[C289955] Should display task in Complete Tasks List when task is completed', async() => {
+            await tasksService.init(user, password);
+            let task = await tasksService.createStandaloneTask(completedTask, simpleApp);
 
             tasksService.claimTask(task.entry.id, simpleApp);
             tasksService.completeTask(task.entry.id, simpleApp);
@@ -86,17 +91,10 @@ describe('Task filters cloud', () => {
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Completed Tasks');
+
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTask);
         });
 
-        xit('[C289957] Should display task filter results when task filter is selected', () => {
-            tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            let task = tasksService.createStandaloneTask(myTask, simpleApp);
-
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('My Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(myTask);
-        });
     });
 
 });
