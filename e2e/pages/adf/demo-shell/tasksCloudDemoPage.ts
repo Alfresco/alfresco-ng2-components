@@ -23,8 +23,8 @@ import { element, by, ElementArrayFinder } from 'protractor';
 
 export class TasksCloudDemoPage {
 
-    myTasks = element(by.css('span[data-automation-id="ADF_CLOUD_TASK_FILTERS.MY_TASKS_filter"]'));
-    completedTasks = element(by.css('span[data-automation-id="ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS_filter"]'));
+    myTasks = element(by.css('span[data-automation-id="my-tasks-filter"]'));
+    completedTasks = element(by.css('span[data-automation-id="completed-tasks-filter"]'));
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
 
     customFiltersButton = element(by.css('.mat-expansion-panel-header-description'));

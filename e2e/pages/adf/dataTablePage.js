@@ -310,19 +310,19 @@ var DataTablePage = function (rootElement = element(by.css("adf-datatable"))) {
     };
 
     this.checkContentIsDisplayed = function(content) {
-        var row = by.cssContainingText("[class='adf-datatable-cell-value']", content);
+        var row = by.cssContainingText("span", content);
         Util.waitUntilElementIsVisible(tableBody.all(row).first());
         return this;
     };
 
     this.checkContentIsNotDisplayed = function(content) {
-        var row = by.cssContainingText("[class='adf-datatable-cell-value']", content);
+        var row = by.cssContainingText("span", content);
         Util.waitUntilElementIsNotOnPage(tableBody.all(row).first());
         return this;
     };
 
     this.selectRowByContentName = function(content) {
-        var row = by.cssContainingText("[class='adf-datatable-cell-value']", content);
+        var row = by.cssContainingText("span", content);
         Util.waitUntilElementIsVisible(tableBody.element(row));
         tableBody.element(row).click();
         return this;
