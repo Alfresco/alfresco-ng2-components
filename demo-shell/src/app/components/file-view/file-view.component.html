@@ -4,7 +4,7 @@
         <adf-info-drawer [title]="'APP.INFO_DRAWER.TITLE' | translate">
 
             <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.COMMENTS' | translate">
-                <adf-comments [nodeId]="nodeId"></adf-comments>
+                <adf-comments [nodeId]="nodeId" [readOnly]="isCommentEnabled"></adf-comments>
             </adf-info-drawer-tab>
 
             <adf-info-drawer-tab [label]="'APP.INFO_DRAWER.PROPERTIES' | translate">
