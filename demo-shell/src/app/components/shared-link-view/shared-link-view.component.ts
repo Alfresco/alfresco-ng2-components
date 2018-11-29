@@ -33,7 +33,7 @@ export class SharedLinkViewComponent implements OnInit {
     constructor(private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
-        this.route.params.subscribe(params => {
+        this.route.params.subscribe((params) => {
             this.sharedLinkId = params.id;
         });
     }

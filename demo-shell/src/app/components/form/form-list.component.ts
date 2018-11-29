@@ -17,6 +17,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { FormComponent, FormModel, FormService, LogService } from '@alfresco/adf-core';
+import { FormOutcomeEvent } from '../../../../../lib/core/form/components/widgets/core';
 
 @Component({
     selector: 'app-form-list',
@@ -40,9 +41,9 @@ export class FormListComponent {
 
     constructor(private formService: FormService, private logService: LogService) {
         // Prevent default outcome actions
-        formService.executeOutcome.subscribe(e => {
-            e.preventDefault();
-            this.logService.log(e.outcome);
+        formService.executeOutcome.subscribe((formOutcomeEvent: FormOutcomeEvent) => {
+            formOutcomeEvent.preventDefault();
+            this.logService.log(formOutcomeEvent.outcome);
         });
     }
 

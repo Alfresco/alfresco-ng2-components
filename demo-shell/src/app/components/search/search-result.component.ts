@@ -61,7 +61,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
                 this.isLoading = true;
             }),
 
-            this.queryBuilder.executed.subscribe(data => {
+            this.queryBuilder.executed.subscribe((data) => {
                 this.queryBuilder.paging.skipCount = 0;
 
                 this.onSearchResultLoaded(data);
@@ -91,13 +91,13 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         }
 
         const fields = this.config.get<string[]>('search.app:fields', ['cm:name']);
-        const query = fields.map(field => `${field}:"${userInput}*"`).join(' OR ');
+        const query = fields.map((field) => `${field}:"${userInput}*"`).join(' OR ');
 
         return query;
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
         this.subscriptions = [];
     }
 

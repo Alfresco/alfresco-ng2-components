@@ -200,7 +200,7 @@ export class TagPage {
 
                 this.clickShowMoreButtonUntilNotDisplayed();
             }
-        }, err => {
+        }, (err) => {
         });
     }
 
@@ -211,7 +211,7 @@ export class TagPage {
 
                 this.clickShowLessButtonUntilNotDisplayed();
             }
-        }, err => {
+        }, (err) => {
         });
     }
 }

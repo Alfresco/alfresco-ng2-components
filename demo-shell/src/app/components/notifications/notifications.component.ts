@@ -69,7 +69,7 @@ export class NotificationsComponent implements OnInit {
         });
 
         this.configForm.valueChanges
-            .subscribe(configFormValues =>
+            .subscribe((configFormValues) =>
                 this.setSnackBarConfig(configFormValues)
             );
 

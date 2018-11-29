@@ -12,7 +12,7 @@
     "build-lib": "./scripts/ng-packagr.sh",
     "bundlesize-check": "bundlesize",
     "lint-lib": "./node_modules/.bin/tslint -p ./lib/tsconfig.json -c ./lib/tslint.json",
-    "lint-e2e": "./node_modules/.bin/tslint  -p ./e2e/tsconfig.e2e.json -c ./tslint.json",
+    "lint-e2e": "./node_modules/.bin/tslint -p ./e2e/tsconfig.e2e.json -c ./tslint.json",
     "test-export": "ts-node ./tools/export-check/exportCheck.ts ./lib/core/public-api.ts ./lib/process-services/public-api.ts ./lib/content-services/public-api.ts ./lib/insights/public-api.ts ./lib/process-services-cloud/public-api.ts",
     "ng": "ng",
     "affected:libs": "./node_modules/.bin/nx affected:libs",

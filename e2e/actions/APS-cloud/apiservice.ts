@@ -56,7 +56,7 @@ export class ApiService {
 
         return this.apiService.bpmClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
             authNames, contentTypes, accepts, {})
-            .catch(error => {
+            .catch((error) => {
                 throw (error);
             });
     }

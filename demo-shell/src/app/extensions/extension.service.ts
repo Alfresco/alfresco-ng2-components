@@ -49,8 +49,8 @@ export class AppExtensionService {
         console.log('loaded extension config', config);
 
         const references = (config.$references || [])
-            .filter(entry => typeof entry === 'object')
-            .map(entry => <ExtensionRef> entry);
+            .filter((entry) => typeof entry === 'object')
+            .map((entry) => <ExtensionRef> entry);
         this._references.next(references);
     }
 }
