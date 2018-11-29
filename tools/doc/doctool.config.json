@@ -19,7 +19,7 @@
             "toc"
         ],
         "dev": [
-            "toc"
+            "sourceLinker"
         ]
     },
     "statusIcons": {
