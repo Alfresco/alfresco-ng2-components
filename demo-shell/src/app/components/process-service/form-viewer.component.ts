@@ -18,6 +18,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Params } from '@angular/router/src/shared';
 
 @Component({
     selector: 'app-form-viewer',
@@ -34,7 +35,7 @@ export class FormViewerComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.sub = this.route.params.subscribe(params => {
+        this.sub = this.route.params.subscribe((params: Params) => {
             this.taskId = params['id'];
         });
     }

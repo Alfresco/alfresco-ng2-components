@@ -163,6 +163,7 @@
         "format": "PascalCase"
       }
     ],
+    "arrow-parens": true,
     "ordered-imports": false,
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,

@@ -38,7 +38,7 @@ export class TrashcanComponent {
     ) {
         this.preference
             .select(UserPreferenceValues.Locale)
-            .subscribe(locale => {
+            .subscribe((locale) => {
                 this.currentLocale = locale;
             });
     }

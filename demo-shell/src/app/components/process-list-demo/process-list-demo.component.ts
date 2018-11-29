@@ -87,7 +87,7 @@ export class ProcessListDemoComponent implements OnInit {
             .pipe(
                 debounceTime(500)
             )
-            .subscribe(processFilter => {
+            .subscribe((processFilter) => {
                 if (this.isFormValid()) {
                     this.filterProcesses(processFilter);
                 }

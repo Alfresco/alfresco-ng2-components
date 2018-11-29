@@ -256,11 +256,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         // this.disableDragArea = false;
         this.uploadService.fileUploadComplete.asObservable()
             .pipe(debounceTime(300))
-            .subscribe(value => this.onFileUploadEvent(value));
+            .subscribe((value) => this.onFileUploadEvent(value));
         this.uploadService.fileUploadDeleted.subscribe((value) => this.onFileUploadEvent(value));
-        this.contentService.folderCreated.subscribe(value => this.onFolderCreated(value));
-        this.onCreateFolder = this.contentService.folderCreate.subscribe(value => this.onFolderAction(value));
-        this.onEditFolder = this.contentService.folderEdit.subscribe(value => this.onFolderAction(value));
+        this.contentService.folderCreated.subscribe((value) => this.onFolderCreated(value));
+        this.onCreateFolder = this.contentService.folderCreate.subscribe((value) => this.onFolderAction(value));
+        this.onEditFolder = this.contentService.folderEdit.subscribe((value) => this.onFolderAction(value));
 
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
         // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
@@ -483,7 +483,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             panelClass: 'adf-version-manager-dialog'
         });
 
-        dialogRef.afterClosed().subscribe(selectedProcess => {
+        dialogRef.afterClosed().subscribe((selectedProcess) => {
             this.processId = selectedProcess.id;
         });
 
@@ -549,7 +549,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                     minWidth: '250px'
                 });
 
-                dialogRef.afterClosed().subscribe(result => {
+                dialogRef.afterClosed().subscribe((result) => {
                     if (result === true) {
                         event.resumeUpload();
                     }

@@ -87,14 +87,14 @@ export class AppLayoutComponent implements OnInit {
             this.expandedSidenav = expand;
         }
 
-        this.headerService.hideMenu.subscribe(show => this.showMenu = show);
-        this.headerService.color.subscribe(color => this.color = color);
-        this.headerService.title.subscribe(title => this.title = title);
-        this.headerService.logo.subscribe(path => this.logo = path);
-        this.headerService.redirectUrl.subscribe(redirectUrl => this.redirectUrl = redirectUrl);
-        this.headerService.tooltip.subscribe(tooltip => this.tooltip = tooltip);
-        this.headerService.position.subscribe(position => this.position = position);
-        this.headerService.hideSidenav.subscribe(hideSidenav => this.hideSidenav = hideSidenav);
+        this.headerService.hideMenu.subscribe((show) => this.showMenu = show);
+        this.headerService.color.subscribe((color) => this.color = color);
+        this.headerService.title.subscribe((title) => this.title = title);
+        this.headerService.logo.subscribe((path) => this.logo = path);
+        this.headerService.redirectUrl.subscribe((redirectUrl) => this.redirectUrl = redirectUrl);
+        this.headerService.tooltip.subscribe((tooltip) => this.tooltip = tooltip);
+        this.headerService.position.subscribe((position) => this.position = position);
+        this.headerService.hideSidenav.subscribe((hideSidenav) => this.hideSidenav = hideSidenav);
     }
 
     constructor(

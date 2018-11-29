@@ -185,11 +185,11 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
 
         this.subscriptions.push(
-            formService.formLoaded.subscribe((e: FormEvent) => {
-                this.logService.log(`Form loaded: ${e.form.id}`);
+            formService.formLoaded.subscribe((formEvent: FormEvent) => {
+                this.logService.log(`Form loaded: ${formEvent.form.id}`);
             }),
-            formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
-                this.logService.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
+            formService.formFieldValueChanged.subscribe((formFieldEvent: FormFieldEvent) => {
+                this.logService.log(`Field value changed. Form: ${formFieldEvent.form.id}, Field: ${formFieldEvent.field.id}, Value: ${formFieldEvent.field.value}`);
             }),
             this.preferenceService.select(UserPreferenceValues.PaginationSize).subscribe((pageSize) => {
                 this.paginationPageSize = pageSize;
@@ -205,7 +205,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 }
             ),
 
-            formService.formContentClicked.subscribe(content => {
+            formService.formContentClicked.subscribe((content) => {
                 this.showContentPreview(content);
             }),
 
@@ -229,7 +229,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         }
         this.showProcessTab = this.activeTab === this.tabs.processes;
         this.showTaskTab = this.activeTab === this.tabs.tasks;
-        this.route.params.subscribe(params => {
+        this.route.params.subscribe((params) => {
             const applicationId = params['appId'];
 
             this.filterSelected = params['filterId'] ? { id: +params['filterId'] } : { index: 0 };
@@ -247,7 +247,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach(subscription => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
         this.subscriptions = [];
     }
 
@@ -460,7 +460,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     loadStencilScriptsInPageFromProcessService() {
-        this.apiService.getInstance().activiti.scriptFileApi.getControllers().then(response => {
+        this.apiService.getInstance().activiti.scriptFileApi.getControllers().then((response) => {
             if (response) {
                 const stencilScript = document.createElement('script');
                 stencilScript.type = 'text/javascript';

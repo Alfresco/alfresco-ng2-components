@@ -65,7 +65,7 @@ export class TaskListCloudDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.params.subscribe(params => {
+        this.route.params.subscribe((params) => {
             this.applicationName = params.applicationName;
         });
 
@@ -95,7 +95,7 @@ export class TaskListCloudDemoComponent implements OnInit {
         );
 
         this.route.queryParams
-            .subscribe(params => {
+            .subscribe((params) => {
                 if (params.status) {
                     this.status = params.status;
                     this.sort = params.sort;
