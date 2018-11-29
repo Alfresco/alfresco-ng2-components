@@ -1,0 +1,81 @@
+<div fxLayout="column" fxFill fxLayoutGap="2px">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{filterName | translate}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    Customise your filter
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div fxLayout="row" fxLayoutGap="10px">
+                <mat-form-field>
+                    <mat-select placeholder="Status" [(ngModel)]="status">
+                        <mat-option value="">
+                            ALL
+                        </mat-option>
+                        <mat-option value="CREATED">
+                            CREATED
+                        </mat-option>
+                        <mat-option value="CANCELLED">
+                            CANCELLED
+                        </mat-option>
+                        <mat-option value="ASSIGNED">
+                            ASSIGNED
+                        </mat-option>
+                        <mat-option value="SUSPENDED">
+                            SUSPENDED
+                        </mat-option>
+                        <mat-option value="COMPLETED">
+                            COMPLETED
+                        </mat-option>
+                        <mat-option value="DELETED">
+                            DELETED
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select [formControl]="sortFormControl">
+                        <mat-option [value]="''">Select a column</mat-option>
+                        <mat-option *ngFor="let column of columns" [value]="column.key">
+                        {{column.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select [formControl]="sortDirectionFormControl">
+                        <mat-option [value]="''">Select a direction</mat-option>
+                        <mat-option value="ASC">
+                            ASC
+                        </mat-option>
+                        <mat-option value="DESC">
+                            DESC
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+    <div fxLayout="column" fxFlex fxLayoutAlign="space-between" *ngIf="isFilterLoaded && this.applicationName">
+        <adf-cloud-task-list fxFlex class="adf-cloud-layout-overflow" #taskCloud
+                            [applicationName]="applicationName"
+                            [status]="status"
+                            [landingTaskId]="selectTask"
+                            [sorting]="sortArray"
+                            (rowClick)="onRowClick($event)">
+            <data-columns>
+                <data-column key="entry.id" title="Id"></data-column>
+                <data-column key="entry.name" title="Name"></data-column>
+                <data-column key="entry.status" title="Status"></data-column>
+                <data-column key="entry.processDefinitionId" title="Process Definition Id"></data-column>
+                <data-column key="entry.priority" title="Priority"></data-column>
+                <data-column key="entry.createdDate" title="Created Date"  type="date" format="timeAgo"></data-column>
+            </data-columns>
+        </adf-cloud-task-list>
+        <adf-pagination [target]="taskCloud"
+                        (changePageSize)="onChangePageSize($event)">
+        </adf-pagination>
+    </div>
+</div>
