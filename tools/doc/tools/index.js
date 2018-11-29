@@ -3,6 +3,7 @@ var path = require("path");
 
 var remark = require("remark");
 var stringify = require("remark-stringify");
+var frontMatter = require("remark-frontmatter");
 var zone = require("mdast-zone");
 var yaml = require("js-yaml");
 
@@ -103,7 +104,7 @@ function aggPhase(aggData) {
     var sections = prepareIndexSections(aggData);
 
     var indexFileText = fs.readFileSync(indexMdFilePath, "utf8");
-    var indexFileTree = remark().parse(indexFileText);
+    var indexFileTree = remark().use(frontMatter, ["yaml"]).parse(indexFileText);
 
     for (var l = 0; l < adfLibNames.length; l++) {
 
@@ -122,7 +123,7 @@ function aggPhase(aggData) {
 
         var subIndexFilePath = path.resolve(docsFolderPath, libName, "README.md");
         var subIndexText = fs.readFileSync(subIndexFilePath, "utf8");
-        var subIndexTree = remark().parse(subIndexText);
+        var subIndexTree = remark().use(frontMatter, ["yaml"]).parse(subIndexText);
 
         zone(subIndexTree, libName, (startComment, oldSection, endComment) => {
             md.unshift(startComment);
@@ -130,7 +131,7 @@ function aggPhase(aggData) {
             return md;
         });
 
-        subIndexText = remark().data("settings", {paddedTable: false}).stringify(subIndexTree);
+        subIndexText = remark().use(frontMatter, ["yaml"]).data("settings", {paddedTable: false}).stringify(subIndexTree);
         fs.writeFileSync(subIndexFilePath, subIndexText);
     }
 
@@ -142,13 +143,13 @@ function aggPhase(aggData) {
         ]
     });
 
-    fs.writeFileSync(path.resolve("docs", "README.md"), remark().data("settings", {paddedTable: false}).stringify(indexFileTree));
+    fs.writeFileSync(path.resolve("docs", "README.md"), remark().use(frontMatter, ["yaml"]).data("settings", {paddedTable: false}).stringify(indexFileTree));
 
     guideSection = buildGuideSection(guideSummaryFileName, true);
 
     subIndexFilePath = path.resolve(docsFolderPath, "user-guide", "README.md");
     subIndexText = fs.readFileSync(subIndexFilePath, "utf8");
-    subIndexTree = remark().parse(subIndexText);
+    subIndexTree = remark().use(frontMatter, ["yaml"]).parse(subIndexText);
 
     zone(subIndexTree, "guide", (startComment, oldSection, endComment) => {
         return [
@@ -156,7 +157,7 @@ function aggPhase(aggData) {
         ]
     });
 
-    subIndexText = remark().data("settings", {paddedTable: false}).stringify(subIndexTree);
+    subIndexText = remark().use(frontMatter, ["yaml"]).data("settings", {paddedTable: false}).stringify(subIndexTree);
     fs.writeFileSync(subIndexFilePath, subIndexText);
 
     //fs.writeFileSync(indexMdFilePath, remark().stringify(indexFileTree));

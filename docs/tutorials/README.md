@@ -5,18 +5,6 @@ Github only: true
 
 # Tutorials
 
-Learn about ADF step-by-step with the tutorials listed below.
-You may find it helpful to follow them in sequence because some of the
-later tutorials build on knowledge introduced in the earlier ones.
-
-The tutorials are graded as follows:
-
--   **Beginner:** Suitable for users with no previous knowledge of ADF.
--   **Intermediate:** For users who want to add to their knowledge of the basics.
--   **Advanced:** For experienced users who want to learn about features in depth.
-
-## Tutorials
-
 | Name | Level | Abstract |
 | -- | -- | -- |
 | [**Creating your first ADF application**](creating-your-first-adf-application.md) | Basic | This tutorial shows you how to set up your development environment and create an ADF application. |
