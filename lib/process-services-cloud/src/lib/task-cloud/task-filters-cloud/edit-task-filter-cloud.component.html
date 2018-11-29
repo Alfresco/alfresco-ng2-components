@@ -10,9 +10,8 @@
             <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
                 <mat-form-field [floatLabel]="'auto'" fxFlex>
                     <mat-select placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS' | translate}}" formControlName="state" id="adf-task-filter-state-id">
-                        <mat-option [value]="''">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.STATUS' | translate}}</mat-option>
-                        <mat-option *ngFor="let taskState of states" [value]="taskState">
-                            {{ taskState }}
+                        <mat-option *ngFor="let state of status" [value]="state.value">
+                            {{ state.label }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

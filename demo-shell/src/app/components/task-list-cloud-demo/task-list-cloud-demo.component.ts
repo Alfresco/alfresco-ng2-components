@@ -16,12 +16,20 @@
  */
 
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { TaskListCloudComponent, TaskListCloudSortingModel } from '@alfresco/adf-process-services-cloud';
-import { UserPreferencesService } from '@alfresco/adf-core';
+import {
+    TaskListCloudComponent,
+    TaskFiltersCloudComponent,
+    TaskListCloudSortingModel,
+    TaskFilterCloudRepresentationModel,
+    TaskFilterCloudService,
+    EditTaskFilterCloudComponent,
+    QueryModel
+} from '@alfresco/adf-process-services-cloud';
+import { UserPreferencesService, TranslationService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material';
+import { TaskFilterDialogCloudComponent } from './task-filter-dialog/task-filter-dialog-cloud.component';
 
 @Component({
     selector: 'app-task-list-cloud-demo',
@@ -33,91 +41,46 @@ export class TaskListCloudDemoComponent implements OnInit {
     @ViewChild('taskCloud')
     taskCloud: TaskListCloudComponent;
 
-    sortFormControl: FormControl;
-    sortDirectionFormControl: FormControl;
+    @ViewChild('taskFiltersCloud')
+    taskFiltersCloud: TaskFiltersCloudComponent;
 
     appDefinitionList: Observable<any>;
     applicationName;
     status: string = '';
-    sort: string = '';
-    isFilterLoaded = false;
     showStartTask = false;
-    sortDirection: string = 'ASC';
-    filterName: string;
     clickedRow: string = '';
-    selectTask: string = '';
     filterTaskParam;
-    sortArray: TaskListCloudSortingModel [];
+    sortArray: TaskListCloudSortingModel[];
+    editedQuery: QueryModel;
 
-    columns = [
-        {key: 'id', label: 'ID'},
-        {key: 'name', label: 'NAME'},
-        {key: 'createdDate', label: 'Created Date'},
-        {key: 'priority', label: 'PRIORITY'},
-        {key: 'processDefinitionId', label: 'PROCESS DEFINITION ID'}
-      ];
+    currentFilter: TaskFilterCloudRepresentationModel;
 
     constructor(
-        public dialog: MatDialog,
         private route: ActivatedRoute,
         private router: Router,
-        private userPreference: UserPreferencesService) {
-    }
+        private translateService: TranslationService,
+        private userPreference: UserPreferencesService,
+        public dialog: MatDialog,
+        private taskFilterCloudService: TaskFilterCloudService
+    ) {}
 
     ngOnInit() {
         this.route.params.subscribe((params) => {
             this.applicationName = params.applicationName;
         });
 
-        this.sortFormControl = new FormControl('');
-
-        this.sortFormControl.valueChanges.subscribe(
-            (sortValue) => {
-                this.sort = sortValue;
-
-                this.sortArray = [{
-                    orderBy: this.sort,
-                    direction: this.sortDirection
-                }];
-            }
-        );
-        this.sortDirectionFormControl = new FormControl('');
-
-        this.sortDirectionFormControl.valueChanges.subscribe(
-            (sortDirectionValue) => {
-                this.sortDirection = sortDirectionValue;
-
-                this.sortArray = [{
-                    orderBy: this.sort,
-                    direction: this.sortDirection
-                }];
-            }
-        );
-
-        this.route.queryParams
-            .subscribe((params) => {
-                if (params.status) {
-                    this.status = params.status;
-                    this.sort = params.sort;
-                    this.sortDirection = params.order;
-                    this.filterName = params.filterName;
-                    this.isFilterLoaded = true;
-                    this.sortDirectionFormControl.setValue(this.sortDirection);
-                    this.sortFormControl.setValue(this.sort);
-                }
-            });
+        this.route.queryParams.subscribe( (params) => {
+            this.editedQuery = Object.assign({}, new QueryModel(params));
+            this.editedQuery.appName = this.applicationName;
+        });
     }
 
     onFilterSelected(filter) {
-        const queryParams = {
-            id: filter.id,
-            filterName: filter.name,
-            status: filter.query.state,
-            assignee: filter.query.assignment,
-            sort: filter.query.sort,
-            order: filter.query.order
-        };
-        this.router.navigate([`/cloud/${this.applicationName}/tasks/`], {queryParams: queryParams});
+        const queryParams = this.createQueryParams(filter);
+        this.createFilterRepresentationModel(filter);
+        this.router.navigate([`/cloud/${this.applicationName}/tasks/`], {
+            queryParams: queryParams
+        });
     }
 
     onStartTask() {
@@ -133,11 +96,82 @@ export class TaskListCloudDemoComponent implements OnInit {
         this.showStartTask = false;
     }
 
+    onFilterChange(query: any) {
+        this.editedQuery = Object.assign({}, query);
+        this.sortArray = [new TaskListCloudSortingModel({ orderBy: this.editedQuery.sort, direction: this.editedQuery.order})];
+    }
+
+    onSuccess(filter: TaskFilterCloudRepresentationModel) {
+        const queryParams = this.createQueryParams(filter);
+        this.createFilterRepresentationModel(filter);
+        this.router.navigate([`/cloud/${this.applicationName}/tasks/`], {
+            queryParams: queryParams
+        });
+    }
+
+    createFilterRepresentationModel(filter) {
+        this.currentFilter = new TaskFilterCloudRepresentationModel(filter);
+    }
+
+    createQueryParams(filter) {
+        return {
+            id: filter.id,
+            name: filter.name,
+            state: filter.query.state,
+            assignment: filter.query.assignment,
+            sort: filter.query.sort,
+            order: filter.query.order
+        };
+    }
+
     onChangePageSize(event) {
         this.userPreference.paginationSize = event.maxItems;
     }
 
     onRowClick($event) {
         this.clickedRow = $event;
+    }
+
+    onEditActions(event: any) {
+        if (event.actionType === EditTaskFilterCloudComponent.ACTION_SAVE) {
+            this.save(this.editedQuery);
+        } else if (event.actionType === EditTaskFilterCloudComponent.ACTION_SAVE_AS) {
+            this.saveAs();
+        } else if (event.actionType === EditTaskFilterCloudComponent.ACTION_DELETE) {
+            this.deleteFilter();
+        }
+    }
+     saveAs() {
+        const dialogRef = this.dialog.open(TaskFilterDialogCloudComponent, {
+            data: {
+                name: this.translateService.instant(this.currentFilter.name)
+            },
+            height: 'auto',
+            minWidth: '30%'
+        });
+        dialogRef.afterClosed().subscribe( (result) => {
+            if (result && result.action === TaskFilterDialogCloudComponent.ACTION_SAVE) {
+                const filter = new TaskFilterCloudRepresentationModel(
+                    {
+                        name: result.name,
+                        icon: result.icon,
+                        id: Math.random().toString(36).substr(2, 9),
+                        key: 'custom-' + result.name,
+                        query: this.editedQuery
+                    }
+                );
+                this.taskFilterCloudService.addFilter(filter);
+                this.taskFiltersCloud.getFilters(this.applicationName);
+            }
+        });
+    }
+     save(newQuery: QueryModel) {
+        this.currentFilter.query = newQuery;
+        this.taskFilterCloudService.updateFilter(this.currentFilter);
+        this.taskFiltersCloud.getFilters(this.applicationName);
+    }
+     deleteFilter() {
+        this.taskFilterCloudService.deleteFilter(this.currentFilter);
+        this.taskFiltersCloud.getFilters(this.applicationName);
     }
 }

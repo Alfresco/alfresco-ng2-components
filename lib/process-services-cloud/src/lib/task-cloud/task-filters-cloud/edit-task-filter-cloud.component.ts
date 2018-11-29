@@ -51,7 +51,15 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         {key: 'processDefinitionId', label: 'PROCESS DEFINITION ID'}
       ];
 
-    states = ['ALL', 'CREATED', 'CANCELLED', 'ASSIGNED', 'SUSPENDED', 'COMPLETED', 'DELETED'];
+    status = [
+        {label: 'ALL', value: ''},
+        {label: 'CREATED', value: 'CREATED'},
+        {label: 'CANCELLED', value: 'CANCELLED'},
+        {label: 'ASSIGNED', value: 'ASSIGNED'},
+        {label: 'SUSPENDED', value: 'SUSPENDED'},
+        {label: 'COMPLETED', value: 'COMPLETED'},
+        {label: 'DELETED', value: 'DELETED'}
+    ];
 
     directions = ['ASC', 'DESC'];
     formHasBeenChanged = false;

@@ -18,71 +18,25 @@
     </adf-cloud-start-task>
 </div>
 <div *ngIf="!showStartTask">
-    <adf-cloud-task-filters [appName]="applicationName" [filterParam]="filterTaskParam" [showIcons]="true" (filterClick)="onFilterSelected($event)">
+    <adf-cloud-task-filters  #taskFiltersCloud
+     [appName]="applicationName"
+     [showIcons]="true"
+     (filterClick)="onFilterSelected($event)">
     </adf-cloud-task-filters>
 
-<mat-accordion>
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                {{filterName | translate}}
-            </mat-panel-title>
-            <mat-panel-description>
-                Customise your filter
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div class="adf-task-cloud-demo-select">
-            <mat-form-field style="margin: 8px;">
-                <mat-select placeholder="Status" [(ngModel)]="status">
-                    <mat-option value="">
-                        ALL
-                    </mat-option>
-                    <mat-option value="CREATED">
-                        CREATED
-                    </mat-option>
-                    <mat-option value="CANCELLED">
-                        CANCELLED
-                    </mat-option>
-                    <mat-option value="ASSIGNED">
-                        ASSIGNED
-                    </mat-option>
-                    <mat-option value="SUSPENDED">
-                        SUSPENDED
-                    </mat-option>
-                    <mat-option value="COMPLETED">
-                        COMPLETED
-                    </mat-option>
-                    <mat-option value="DELETED">
-                        DELETED
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-select [formControl]="sortFormControl">
-                    <mat-option [value]="''">Select a column</mat-option>
-                    <mat-option *ngFor="let column of columns" [value]="column.key">
-                    {{column.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-select [formControl]="sortDirectionFormControl">
-                    <mat-option [value]="''">Select a direction</mat-option>
-                    <mat-option value="ASC">
-                        ASC
-                    </mat-option>
-                    <mat-option value="DESC">
-                        DESC
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+    <adf-cloud-edit-task-filter
+        [taskFilter]="currentFilter"
+        (filterChange)="onFilterChange($event)"
+        (action)="onEditActions($event)">
+    </adf-cloud-edit-task-filter>
 
-        </mat-expansion-panel>
-    </mat-accordion>
-    <div *ngIf="isFilterLoaded">
-        <adf-cloud-task-list #taskCloud [applicationName]="applicationName" [status]="status"
-            [landingTaskId]="selectTask" [sorting]="sortArray" (rowClick)="onRowClick($event)">
+    <div *ngIf="editedQuery">
+        <adf-cloud-task-list #taskCloud
+            [applicationName]="editedQuery.appName"
+            [status]="editedQuery.state"
+            [assignee]="editedQuery.assignment"
+            [sorting]="sortArray"
+            (rowClick)="onRowClick($event)">
             <data-columns>
                 <data-column key="entry.id" title="Id"></data-column>
                 <data-column key="entry.name" title="Name" class="full-width name-column ellipsis-cell"></data-column>
