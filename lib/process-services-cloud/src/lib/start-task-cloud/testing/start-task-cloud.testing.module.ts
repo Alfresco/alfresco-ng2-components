@@ -16,28 +16,34 @@
  */
 
 import { NgModule } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
-import { ProcessListCloudComponent } from './components/process-list-cloud.component';
-import { MaterialModule } from '../material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MaterialModule } from '../../material.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateLoaderService, DataTableModule, TemplateModule } from '@alfresco/adf-core';
-import { ProcessListCloudService } from './services/process-list-cloud.service';
+import { TemplateModule, TranslateLoaderService, FormModule, PipeModule } from '@alfresco/adf-core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { StartTaskCloudModule } from '../start-task-cloud.module';
 
 @NgModule({
     imports: [
         CommonModule,
+        NoopAnimationsModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
                 useClass: TranslateLoaderService
             }
         }),
+        TemplateModule,
+        FlexLayoutModule,
         MaterialModule,
-        DataTableModule,
-        TemplateModule
-    ],
-    declarations: [ProcessListCloudComponent],
-    exports: [ProcessListCloudComponent],
-    providers: [ProcessListCloudService]
+        FormsModule,
+        ReactiveFormsModule,
+        FormModule,
+        PipeModule,
+        StartTaskCloudModule
+    ]
 })
-export class ProcessListCloudModule { }
+export class StartTaskCloudTestingModule { }

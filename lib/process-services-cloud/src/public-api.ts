@@ -20,3 +20,4 @@ export * from './lib/app-list-cloud/public-api';
 export * from './lib/task-list-cloud/public-api';
 export * from './lib/task-cloud/public-api';
 export * from './lib/process-list-cloud/public_api';
+export * from './lib/start-task-cloud/public-api';

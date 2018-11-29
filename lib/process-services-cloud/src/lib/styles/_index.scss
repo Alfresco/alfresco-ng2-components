@@ -2,10 +2,15 @@
 @import './../app-list-cloud/components/app-list-cloud.component';
 @import './../task-cloud/task-filters-cloud/task-filters-cloud.component.scss';
 @import './../process-list-cloud/components/process-list-cloud.component.scss';
+@import './../start-task-cloud/components/start-task-cloud.component';
+@import './../start-task-cloud/components/people-cloud/people-cloud.component';
+
 
 @mixin adf-process-services-cloud-theme($theme) {
     @include adf-cloud-app-list-theme($theme);
     @include adf-cloud-app-details-theme($theme);
     @include adf-cloud-task-filters-theme($theme);
     @include adf-process-filters-cloud-theme($theme);
+    @include adf-start-task-cloud-theme($theme);
+    @include adf-cloud-people-theme($theme);
 }

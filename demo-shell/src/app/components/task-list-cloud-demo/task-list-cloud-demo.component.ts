@@ -21,6 +21,7 @@ import { UserPreferencesService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'app-task-list-cloud-demo',
@@ -36,14 +37,16 @@ export class TaskListCloudDemoComponent implements OnInit {
     sortDirectionFormControl: FormControl;
 
     appDefinitionList: Observable<any>;
-    applicationName: string = '';
+    applicationName;
     status: string = '';
     sort: string = '';
     isFilterLoaded = false;
+    showStartTask = false;
     sortDirection: string = 'ASC';
     filterName: string;
     clickedRow: string = '';
     selectTask: string = '';
+    filterTaskParam;
     sortArray: TaskListCloudSortingModel [];
 
     columns = [
@@ -55,13 +58,13 @@ export class TaskListCloudDemoComponent implements OnInit {
       ];
 
     constructor(
+        public dialog: MatDialog,
         private route: ActivatedRoute,
         private router: Router,
         private userPreference: UserPreferencesService) {
     }
 
     ngOnInit() {
-        this.isFilterLoaded = false;
         this.route.params.subscribe(params => {
             this.applicationName = params.applicationName;
         });
@@ -117,6 +120,19 @@ export class TaskListCloudDemoComponent implements OnInit {
         this.router.navigate([`/cloud/${this.applicationName}/tasks/`], {queryParams: queryParams});
     }
 
+    onStartTask() {
+        this.showStartTask = true;
+    }
+
+    onStartTaskSuccess() {
+        this.showStartTask = false;
+        this.filterTaskParam = { name: 'My tasks'};
+    }
+
+    onCancelStartTask() {
+        this.showStartTask = false;
+    }
+
     onChangePageSize(event) {
         this.userPreference.paginationSize = event.maxItems;
     }
@@ -124,5 +140,4 @@ export class TaskListCloudDemoComponent implements OnInit {
     onRowClick($event) {
         this.clickedRow = $event;
     }
-
 }

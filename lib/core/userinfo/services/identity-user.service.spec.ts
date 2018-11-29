@@ -16,12 +16,30 @@
  */
 
 import { TestBed } from '@angular/core/testing';
+import { HttpErrorResponse } from '@angular/common/http';
+import { throwError, of } from 'rxjs';
 import { IdentityUserService } from '../services/identity-user.service';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
 import { mockToken } from './../../mock/jwt-helper.service.spec';
+import { IdentityUserModel } from '../models/identity-user.model';
+import { IdentityRoleModel } from '../models/identity-role.model';
 
 describe('IdentityUserService', () => {
+
+    const mockUsers = [
+        { id: 'fake-id-1', username: 'first-name-1 last-name-1', firstName: 'first-name-1', lastName: 'last-name-1', email: 'abc@xyz.com' },
+        { id: 'fake-id-2', username: 'first-name-2 last-name-2', firstName: 'first-name-2', lastName: 'last-name-2', email: 'abcd@xyz.com'},
+        { id: 'fake-id-3', username: 'first-name-3 last-name-3', firstName: 'first-name-3', lastName: 'last-name-3', email: 'abcde@xyz.com' }
+    ];
+
+    const mockRoles = [
+        { id: 'id-1', name: 'MOCK-ADMIN-ROLE'},
+        { id: 'id-2', name: 'MOCK-USER-ROLE'},
+        { id: 'id-3', name: 'MOCK_MODELER-ROLE' },
+        { id: 'id-4', name: 'MOCK-ROLE-1' },
+        { id: 'id-5', name: 'MOCK-ROLE-2'}
+    ];
 
     let service: IdentityUserService;
 
@@ -46,7 +64,7 @@ describe('IdentityUserService', () => {
         });
     });
 
-    it('should able to fetch identity user info from Jwt token', (done) => {
+    it('should fetch identity user info from Jwt token', (done) => {
         localStorage.setItem('access_token', mockToken);
         service.getCurrentUserInfo().subscribe(
             (user) => {
@@ -57,5 +75,150 @@ describe('IdentityUserService', () => {
                 expect(user.username).toEqual('johnDoe1');
                 done();
             });
+    });
+
+    it('should fetch users ', (done) => {
+        spyOn(service, 'getUsers').and.returnValue(of(mockUsers));
+        service.getUsers().subscribe(
+            (res: IdentityUserModel[]) => {
+                expect(res).toBeDefined();
+                expect(res[0].id).toEqual('fake-id-1');
+                expect(res[0].username).toEqual('first-name-1 last-name-1');
+                expect(res[1].id).toEqual('fake-id-2');
+                expect(res[1].username).toEqual('first-name-2 last-name-2');
+                expect(res[2].id).toEqual('fake-id-3');
+                expect(res[2].username).toEqual('first-name-3 last-name-3');
+                done();
+            }
+        );
+    });
+
+    it('Should not fetch users if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'getUsers').and.returnValue(throwError(errorResponse));
+        service.getUsers()
+            .subscribe(
+                () => {
+                    fail('expected an error, not users');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should fetch roles by userId', (done) => {
+        spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
+        service.getUserRoles('mock-user-id').subscribe(
+            (res: IdentityRoleModel[]) => {
+                expect(res).toBeDefined();
+                expect(res[0].name).toEqual('MOCK-ADMIN-ROLE');
+                expect(res[1].name).toEqual('MOCK-USER-ROLE');
+                expect(res[4].name).toEqual('MOCK-ROLE-2');
+                done();
+            }
+        );
+    });
+
+    it('Should not fetch roles if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'getUserRoles').and.returnValue(throwError(errorResponse));
+
+        service.getUserRoles('mock-user-id')
+            .subscribe(
+                () => {
+                    fail('expected an error, not users');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should fetch users by roles', (done) => {
+        spyOn(service, 'getUsers').and.returnValue(of(mockUsers));
+        spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
+
+        service.getUsersByRolesWithCurrentUser([mockRoles[0].name]).then(
+            (res: IdentityUserModel[]) => {
+                expect(res).toBeDefined();
+                expect(res[0].id).toEqual('fake-id-1');
+                expect(res[0].username).toEqual('first-name-1 last-name-1');
+                expect(res[1].id).toEqual('fake-id-2');
+                expect(res[1].username).toEqual('first-name-2 last-name-2');
+                expect(res[2].id).toEqual('fake-id-3');
+                expect(res[2].username).toEqual('first-name-3 last-name-3');
+                done();
+            }
+        );
+    });
+
+    it('Should not fetch users by roles if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'getUsers').and.returnValue(throwError(errorResponse));
+
+        service.getUsersByRolesWithCurrentUser([mockRoles[0].name])
+            .catch(
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should fetch users by roles without current user', (done) => {
+        spyOn(service, 'getUsers').and.returnValue(of(mockUsers));
+        spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
+        spyOn(service, 'getCurrentUserInfo').and.returnValue(of(mockUsers[0]));
+
+        service.getUsersByRolesWithoutCurrentUser([mockRoles[0].name]).then(
+            (res: IdentityUserModel[]) => {
+                expect(res).toBeDefined();
+                expect(res[0].id).toEqual('fake-id-2');
+                expect(res[0].username).toEqual('first-name-2 last-name-2');
+                expect(res[1].id).toEqual('fake-id-3');
+                expect(res[1].username).toEqual('first-name-3 last-name-3');
+                done();
+            }
+        );
+    });
+
+    it('Should not fetch users by roles without current user if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'getCurrentUserInfo').and.returnValue(throwError(errorResponse));
+
+        service.getUsersByRolesWithoutCurrentUser([mockRoles[0].name])
+            .catch(
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
     });
 });
