@@ -114,6 +114,7 @@
       }
     },
     "START_TASK": {
+      "DEFAULT_NAME": "My Default Task",
       "BUTTON": "CREATE TASK",
       "FORM": {
         "TITLE": "Start Task",
@@ -130,8 +131,10 @@
           "START": "Start",
           "CANCEL": "Cancel"
         },
-        "DATE": {
-          "ERROR": "Date format DD/MM/YYYY"
+        "ERROR": {
+          "REQUIRED": "Field required",
+          "DATE": "Date format DD/MM/YYYY",
+          "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max."
         }
       }
     },
