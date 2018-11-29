@@ -236,7 +236,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     viewerType = 'unknown';
     isLoading = false;
-    nodes: MinimalNodeEntity[] = [];
+    node: MinimalNodeEntity;
 
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
     externalExtensions: string[] = [];
@@ -327,7 +327,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
                 this.apiService.nodesApi.getNode(this.nodeId).then(
                     (node) => {
-                        this.setDownloadNode(node);
+                        this.node = node;
                     }
                 );
             } else if (this.sharedLinkId) {
@@ -742,9 +742,5 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private generateCacheBusterNumber() {
         this.cacheBusterNumber = Date.now();
-    }
-
-    setDownloadNode(node: MinimalNodeEntity) {
-        this.nodes = [node];
     }
 }

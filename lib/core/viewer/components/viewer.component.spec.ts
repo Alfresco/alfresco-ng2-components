@@ -665,12 +665,11 @@ describe('ViewerComponent', () => {
                     content: { getContentUrl: () => contentUrl }
                 };
                 spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
-                const setDownloadNodeSpy = spyOn(component, 'setDownloadNode');
 
                 component.ngOnChanges(null);
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(setDownloadNodeSpy).toHaveBeenCalledWith(node);
+                    expect(component.node).toHaveBeenCalledWith(node);
                     done();
                 });
             });

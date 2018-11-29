@@ -29,7 +29,7 @@ export class NodeDownloadDirective {
     /** Nodes to download. */
     // tslint:disable-next-line:no-input-rename
     @Input('adfNodeDownload')
-    nodes: MinimalNodeEntity[];
+    nodes: MinimalNodeEntity | MinimalNodeEntity[];
 
     @HostListener('click')
     onClick() {
@@ -46,15 +46,19 @@ export class NodeDownloadDirective {
      * Packs result into a .ZIP archive if there is more than one node selected.
      * @param selection Multiple selected nodes to download
      */
-    downloadNodes(selection: Array<MinimalNodeEntity>) {
-        if (!selection || selection.length === 0) {
+    downloadNodes(selection: MinimalNodeEntity | Array<MinimalNodeEntity>) {
+
+        if (!this.isSelectionValid(selection)) {
             return;
         }
-
-        if (selection.length === 1) {
-            this.downloadNode(selection[0]);
+        if (selection instanceof Array) {
+            if (selection.length === 1) {
+                this.downloadNode(selection[0]);
+            } else {
+                this.downloadZip(selection);
+            }
         } else {
-            this.downloadZip(selection);
+            this.downloadNode(selection);
         }
     }
 
@@ -80,6 +84,10 @@ export class NodeDownloadDirective {
                 this.downloadFile(node);
             }
         }
+    }
+
+    private isSelectionValid(selection: MinimalNodeEntity | Array<MinimalNodeEntity>) {
+        return selection || (selection instanceof Array && selection.length > 0);
     }
 
     private downloadFile(node: MinimalNodeEntity) {
