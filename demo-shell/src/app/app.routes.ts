@@ -44,6 +44,10 @@ import { CloudComponent } from './components/cloud/cloud.component';
 import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
 import { ProcessListCloudExampleComponent } from './components/cloud/process-list-cloud-example.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
+import { CloudLayoutComponent } from './components/app-layout/cloud/cloud-layout.component';
+import { ProcessesCloudDemoComponent } from './components/app-layout/cloud/processes-cloud-demo.component';
+import { AppsCloudDemoComponent } from './components/app-layout/cloud/apps-cloud-demo.component';
+import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-cloud-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -148,6 +152,34 @@ export const appRoutes: Routes = [
                         path: ':applicationName/tasks',
                         component: TaskListCloudDemoComponent,
                         canActivate: [AuthGuard]
+                    }
+                ]
+            },
+            {
+                path: 'cloud-layout',
+                children: [
+                    {
+                        path: '',
+                        component: AppsCloudDemoComponent
+                    },
+                    {
+                        path: ':applicationName',
+                        children: [
+                            {
+                                path: '',
+                                component: CloudLayoutComponent,
+                                children: [
+                                    {
+                                        path: 'tasks',
+                                        component: TasksCloudDemoComponent
+                                    },
+                                    {
+                                        path: 'processes',
+                                        component: ProcessesCloudDemoComponent
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             },

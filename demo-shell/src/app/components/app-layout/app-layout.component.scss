@@ -103,4 +103,13 @@
     }
 
     @media screen and ($mat-xsmall) {}
+
+    mat-sidenav-content > div {
+        display: flex;
+        height: 100%;
+
+        > div {
+            flex: auto;
+        }
+    }
 }

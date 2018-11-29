@@ -41,6 +41,7 @@ export class AppLayoutComponent implements OnInit {
         { href: '/task-list', icon: 'assignment', title: 'APP_LAYOUT.TASK_LIST' },
         { href: '/process-list', icon: 'assignment', title: 'APP_LAYOUT.PROCESS_LIST' },
         { href: '/cloud', icon: 'cloud', title: 'APP_LAYOUT.PROCESS_CLOUD' },
+        { href: '/cloud-layout', icon: 'cloud_done', title: 'APP_LAYOUT.CLOUD_LAYOUT' },
         { href: '/process-list-cloud', icon: 'cloud', title: 'APP_LAYOUT.PROCESS_LIST_CLOUD' },
         { href: '/activiti', icon: 'device_hub', title: 'APP_LAYOUT.PROCESS_SERVICES' },
         { href: '/login', icon: 'vpn_key', title: 'APP_LAYOUT.LOGIN' },
