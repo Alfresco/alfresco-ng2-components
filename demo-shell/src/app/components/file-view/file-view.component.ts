@@ -17,7 +17,7 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { ContentService, PermissionsEnum, NodesApiService } from '@alfresco/adf-core';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
@@ -52,20 +52,23 @@ export class FileViewComponent implements OnInit {
     showLeftSidebar = null;
     showRightSidebar = false;
     customToolbar = false;
+    isCommentEnabled = true;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
                 private snackBar: MatSnackBar,
-                private apiService: AlfrescoApiService) {
+                private nodeApiService: NodesApiService,
+                private contentServices: ContentService) {
     }
 
     ngOnInit() {
         this.route.params.subscribe(params => {
             const id = params.nodeId;
             if (id) {
-                this.apiService.getInstance().nodes.getNodeInfo(id).then(
+                this.nodeApiService.getNode(id).subscribe(
                     (node) => {
                         if (node && node.isFile) {
+                            this.isCommentEnabled = !this.contentServices.hasPermission(node, PermissionsEnum.UPDATE);
                             this.nodeId = id;
                             return;
                         }
