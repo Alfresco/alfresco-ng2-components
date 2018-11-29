@@ -60,7 +60,7 @@ export class TasksCloudDemoComponent implements OnInit {
 
     ngOnInit() {
         this.isFilterLoaded = false;
-        this.route.parent.params.subscribe(params => {
+        this.route.parent.params.subscribe((params) => {
             this.applicationName = params.applicationName;
         });
 
@@ -90,7 +90,7 @@ export class TasksCloudDemoComponent implements OnInit {
         );
 
         this.route.queryParams
-            .subscribe(params => {
+            .subscribe((params) => {
                 if (params.filterName) {
                     this.status = params.status ? params.status : '';
                     this.sort = params.sort;
