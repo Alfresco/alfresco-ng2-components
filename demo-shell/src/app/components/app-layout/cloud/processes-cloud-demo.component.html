@@ -1,0 +1,66 @@
+    <div fxLayout="column" fxFill fxLayoutGap="2px">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{filterName | translate}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    Customise your filter
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div fxLayout="row" fxLayoutGap="10px">
+                <mat-form-field>
+                    <mat-select placeholder="Status" [(ngModel)]="status">
+                        <mat-option value="">
+                            ALL
+                        </mat-option>
+                        <mat-option value="RUNNING">
+                            RUNNING
+                        </mat-option>
+                    <mat-option value="COMPLETED">
+                            COMPLETED
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select [formControl]="sortFormControl">
+                        <mat-option [value]="''">Select a column</mat-option>
+                        <mat-option *ngFor="let column of columns" [value]="column.key">
+                        {{column.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select [formControl]="sortDirectionFormControl">
+                        <mat-option [value]="''">Select a direction</mat-option>
+                        <mat-option value="ASC">
+                            ASC
+                        </mat-option>
+                        <mat-option value="DESC">
+                            DESC
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+    <div fxLayout="column" fxFlex fxLayoutAlign="space-between">
+        <adf-cloud-process-list fxFlex class="adf-cloud-layout-overflow"
+                                [applicationName]="applicationName"
+                                [status]="status"
+                                [sorting]="sortArray"
+                                [id]="filterId"
+                                #processCloud>
+            <data-columns>
+                <data-column key="entry.id" title="Id"></data-column>
+                <data-column key="entry.name" title="Name"></data-column>
+                <data-column key="entry.status" title="Status"></data-column>
+                <data-column key="entry.startDate" title="Start Date" type="date" format="timeAgo"></data-column>
+            </data-columns>
+        </adf-cloud-process-list>
+        <adf-pagination [target]="processCloud" (changePageSize)="onChangePageSize($event)">
+        </adf-pagination>
+    </div>
+</div>
