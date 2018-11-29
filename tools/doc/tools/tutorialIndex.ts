@@ -30,11 +30,11 @@ function aggPhase(aggData) {
     let mdText = template(indexDocData);
     mdText = mdText.replace(/^ +\|/mg, "|");
 
-    let newSection = remark().data("settings", {paddedTable: false, gfm: false}).parse(mdText.trim()).children;
+    let newSection = remark().use(frontMatter, ["yaml"]).data("settings", {paddedTable: false, gfm: false}).parse(mdText.trim()).children;
 
     let tutIndexFile = path.resolve(tutFolder, "README.md");
     let tutIndexText = fs.readFileSync(tutIndexFile, "utf8");
-    let tutIndexMD = remark().data("settings", {paddedTable: false, gfm: false}).parse(tutIndexText);
+    let tutIndexMD = remark().use(frontMatter, ["yaml"]).data("settings", {paddedTable: false, gfm: false}).parse(tutIndexText);
 
     replaceSection(tutIndexMD, "Tutorials", (before, section, after) => {
         newSection.unshift(before);
