@@ -15,24 +15,41 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ProcessFilterRepresentationModel, ProcessQueryModel, FilterActionType } from '../models/process-filter-cloud.model';
+import { ProcessQueryModel, FilterActionType } from '../models/process-filter-cloud.model';
 
 @Component({
   selector: 'adf-cloud-edit-process-filter',
   templateUrl: './edit-process-filter-cloud.component.html',
   styleUrls: ['./edit-process-filter-cloud.component.scss']
 })
-export class EditProcessFilterCloudComponent implements OnChanges {
+export class EditProcessFilterCloudComponent implements OnInit {
 
     public static ACTION_SAVE = 'SAVE';
     public static ACTION_SAVE_AS = 'SAVE_AS';
     public static ACTION_DELETE = 'DELETE';
 
-    /** (**required**) Full details of the task filter to display information about. */
     @Input()
-    processFilter: ProcessFilterRepresentationModel;
+    name: string;
+
+    @Input()
+    appName: string;
+
+    @Input()
+    processDefinitionId: string;
+
+    @Input()
+    state: string;
+
+    @Input()
+    sort: string;
+
+    @Input()
+    assignment: string;
+
+    @Input()
+    order: string;
 
     /** Emitted when an task filter property changes. */
     @Output()
@@ -45,50 +62,40 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     columns = [
         {key: 'id', label: 'ID'},
         {key: 'name', label: 'NAME'},
-        {key: 'createdDate', label: 'Created Date'},
-        {key: 'priority', label: 'PRIORITY'},
-        {key: 'processDefinitionId', label: 'PROCESS DEFINITION ID'}
+        {key: 'status', label: 'STATUS'},
+        {key: 'startDate', label: 'START DATE'}
       ];
 
-    states = ['ALL', 'CREATED', 'CANCELLED', 'ASSIGNED', 'SUSPENDED', 'COMPLETED', 'DELETED'];
+    states = ['ALL', 'RUNNING', 'COMPLETED'];
 
     directions = ['ASC', 'DESC'];
     formHasBeenChanged = false;
-    isDeleteEnable = true;
     editProcessFilterForm: FormGroup;
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(private formBuilder: FormBuilder) { this.buildForm(); }
 
-    ngOnChanges(changes: SimpleChanges) {
-        const processFilter = changes['processFilter'];
-        if (processFilter && !processFilter.currentValue) {
-            this.reset();
-            return;
-        }
-        if (processFilter && processFilter.currentValue) {
-            this.buildForm();
-        }
+    ngOnInit() {
+        this.buildForm();
     }
 
     buildForm() {
         this.formHasBeenChanged = false;
         this.editProcessFilterForm = this.formBuilder.group({
-            state: this.processFilter.query.state,
-            appName: this.processFilter.query.appName,
-            processDefinitionId: this.processFilter.query.processDefinitionId,
-            assignment: this.processFilter.query.assignment,
-            sort: this.processFilter.query.sort,
-            order: this.processFilter.query.order
+            appName: this.appName,
+            processDefinitionId: this.processDefinitionId,
+            state: this.state,
+            assignment: this.assignment,
+            sort: this.sort,
+            order: this.order
         });
         this.onFilterChange();
     }
 
     /**
-     * Check for edit task filter form changes
+     * Check for edit process filter form changes
      */
     onFilterChange() {
         this.editProcessFilterForm.valueChanges.subscribe((formValues: ProcessQueryModel) => {
-            this.formHasBeenChanged = !this.compareFilters(new ProcessQueryModel(formValues), this.processFilter.query);
             this.filterChange.emit(formValues);
         });
     }
@@ -111,12 +118,4 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     onDelete() {
         this.action.emit(new FilterActionType(EditProcessFilterCloudComponent.ACTION_DELETE));
     }
-
-    /**
-     * Reset the task filter
-     */
-    reset() {
-        this.processFilter = null;
-    }
-
 }

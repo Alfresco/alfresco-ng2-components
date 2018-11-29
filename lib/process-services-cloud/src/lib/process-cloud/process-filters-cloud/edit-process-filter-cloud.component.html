@@ -1,16 +1,16 @@
-<mat-accordion *ngIf="processFilter">
+<mat-accordion>
     <mat-expansion-panel>
         <mat-expansion-panel-header id="adf-edit-process-filter-expansion-header">
-            <mat-panel-title id="adf-edit-process-filter-title-id">{{processFilter.name | translate}}</mat-panel-title>
+            <mat-panel-title *ngIf="name" id="adf-edit-process-filter-title-id">{{name | translate}}</mat-panel-title>
             <mat-panel-description id="adf-edit-process-filter-sub-title-id">
-                {{ 'ADF_CLOUD_EDIT_TASK_FILTER.TITLE' | translate}}
+                {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}
             </mat-panel-description>
         </mat-expansion-panel-header>
         <form [formGroup]="editProcessFilterForm">
             <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
                 <mat-form-field [floatLabel]="'auto'" fxFlex>
-                    <mat-select placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS' | translate}}" formControlName="state" id="adf-process-filter-state-id">
-                        <mat-option [value]="''">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.STATUS' | translate}}</mat-option>
+                    <mat-select placeholder="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STATUS' | translate}}" formControlName="state" id="adf-process-filter-state-id">
+                        <mat-option [value]="''">{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.STATUS' | translate}}</mat-option>
                         <mat-option *ngFor="let taskState of states" [value]="taskState">
                             {{ taskState }}
                         </mat-option>
@@ -21,24 +21,24 @@
                         formControlName="assignment"
                         type="text"
                         id="adf-process-filter-assignment-id"
-                        placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT' | translate}}"/>
+                        placeholder="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.ASSIGNMENT' | translate}}"/>
                 </mat-form-field>
                 <mat-form-field *ngIf="false" [floatLabel]="'auto'" fxFlex>
                     <input matInput
                         formControlName="appName"
                         type="text"
                         id="adf-process-filter-appname-id"
-                        placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.APP_NAME' | translate}}"/>
+                        placeholder="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_NAME' | translate}}"/>
                 </mat-form-field>
                 <mat-form-field *ngIf="false" [floatLabel]="'auto'" fxFlex>
                     <input matInput
                         formControlName="processDefinitionId"
                         type="text"
                         id="adf-process-filter-process-definition-id"
-                        placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_DEF_ID' | translate}}"/>
+                        placeholder="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_ID' | translate}}"/>
                 </mat-form-field>
                 <mat-form-field [floatLabel]="'auto'" fxFlex>
-                    <mat-select placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COLUMN' | translate}}" formControlName="sort" id="adf-process-filter-sort-id">
+                    <mat-select placeholder="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COLUMN' | translate}}" formControlName="sort" id="adf-process-filter-sort-id">
                         <mat-option [value]="''">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.COLUMN' | translate}}</mat-option>
                         <mat-option *ngFor="let column of columns" [value]="column.key">
                             {{ column.label }}
@@ -46,21 +46,21 @@
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field [floatLabel]="'auto'" fxFlex>
-                    <mat-select placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DIRECTION' | translate}}" formControlName="order" id="adf-process-filter-order-id">
-                        <mat-option [value]="''">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.DIRECTION' | translate}}</mat-option>
+                    <mat-select placeholder="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DIRECTION' | translate}}" formControlName="order" id="adf-process-filter-order-id">
+                        <mat-option [value]="''">{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.DIRECTION' | translate}}</mat-option>
                         <mat-option *ngFor="let direction of directions" [value]="direction">
                             {{ direction }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <div>
-                    <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE' | translate}}" id="adf-save-id" [disabled]="!formHasBeenChanged" (click)="onSave()">
+                    <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE' | translate}}" id="adf-save-id" (click)="onSave()">
                         <mat-icon>save</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.DELETE' | translate}}" id="adf-delete-id" (click)="onDelete()">
+                    <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.DELETE' | translate}}" id="adf-delete-id" (click)="onDelete()">
                         <mat-icon>delete</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE_AS' | translate}}" id="adf-save-as-id" [disabled]="!formHasBeenChanged" (click)="onSaveAs()">
+                    <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE_AS' | translate}}" id="adf-save-as-id" (click)="onSaveAs()">
                         <mat-icon>save_alt</mat-icon>
                     </button>
                 </div>
