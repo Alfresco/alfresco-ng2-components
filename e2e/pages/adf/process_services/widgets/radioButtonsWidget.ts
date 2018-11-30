@@ -26,7 +26,7 @@ export class RadioButtonsWidget {
     formFields = new FormFields();
 
     getSpecificOptionLabel(fieldId, optionNumber) {
-        let optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"] div[class*="adf-content"]');
+        let optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"]');
 
         let option = this.formFields.getWidget(fieldId).element(optionLocator);
         Util.waitUntilElementIsVisible(option);
@@ -47,7 +47,7 @@ export class RadioButtonsWidget {
     }
 
     getRadioWidgetLabel(fieldId) {
-        let label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
+        let label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         Util.waitUntilElementIsVisible(label);
         return label.getText();
     }

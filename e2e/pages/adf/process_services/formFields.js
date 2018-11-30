@@ -40,7 +40,7 @@ var FormFields = function () {
     };
 
     this.checkWidgetIsVisible = function (fieldId) {
-        var fieldElement = element(by.css("adf-form-field div[id='field-"+fieldId+"-container']"));
+        var fieldElement = element.all(by.css("adf-form-field div[id='field-"+fieldId+"-container']")).first();
         Util.waitUntilElementIsVisible(fieldElement);
     }
 
@@ -62,7 +62,7 @@ var FormFields = function () {
     };
 
     this.getFieldLabel = function (fieldId, labelLocatorParam) {
-        var label = this.getWidget(fieldId).element(labelLocatorParam || labelLocator);
+        var label = this.getWidget(fieldId).all(labelLocatorParam || labelLocator).first();
         Util.waitUntilElementIsVisible(label);
         return label.getText();
     };

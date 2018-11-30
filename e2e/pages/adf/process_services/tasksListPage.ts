@@ -22,7 +22,7 @@ import { by, element } from 'protractor';
 export class TasksListPage {
 
     taskList = element(by.css('adf-tasklist'));
-    noTasksFound = element(by.css('p[class="adf-empty-content__title"]'));
+    noTasksFound = element.all(by.css("p[class='adf-empty-content__title']")).first();
     dataTable = new DataTablePage(this.taskList);
 
     getDataTable() {

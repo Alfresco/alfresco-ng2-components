@@ -32,7 +32,7 @@ export class DateWidget {
     }
 
     getDateLabel(fieldId) {
-        let label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
+        let label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         Util.waitUntilElementIsVisible(label);
         return label.getText();
     }

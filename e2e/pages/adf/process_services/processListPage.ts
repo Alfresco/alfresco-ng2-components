@@ -21,7 +21,7 @@ import { element, by } from 'protractor';
 
 export class ProcessListPage {
 
-    processListTitle = element(by.css('p[class="adf-empty-content__title"]'));
+    processListTitle = element.all(by.css("p[class='adf-empty-content__title']")).first();
     processInstanceList = element(by.css('adf-process-instance-list'));
 
     checkProcessListTitleIsDisplayed() {
