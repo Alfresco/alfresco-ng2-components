@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-08-10
 ---
 
-# Search radio component
+# [Search radio component](../../lib/content-services/search/components/search-radio/search-radio.component.ts "Defined in search-radio.component.ts")
 
 Implements a radio button list widget for the [Search Filter component](../content-services/search-filter.component.md).
 

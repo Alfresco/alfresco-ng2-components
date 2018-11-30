@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Permission List Component
+# [Permission List Component](../../lib/content-services/permission-manager/components/permission-list/permission-list.component.ts "Defined in permission-list.component.ts")
 
 Shows node permissions as a table.
 

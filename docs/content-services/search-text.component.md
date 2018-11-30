@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# Search text component
+# [Search text component](../../lib/content-services/search/components/search-text/search-text.component.ts "Defined in search-text.component.ts")
 
 Implements a text input widget for the [Search Filter component](../content-services/search-filter.component.md).
 

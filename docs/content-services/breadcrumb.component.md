@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# Breadcrumb Component
+# [Breadcrumb Component](../../lib/content-services/breadcrumb/breadcrumb.component.ts "Defined in breadcrumb.component.ts")
 
 Indicates the current position within a navigation hierarchy.
 

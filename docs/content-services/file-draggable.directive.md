@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-04-10
 ---
 
-# File Draggable directive
+# [File Draggable directive](../../lib/content-services/upload/directives/file-draggable.directive.ts "Defined in file-draggable.directive.ts")
 
 Provides drag-and-drop features for an element such as a `div`.
 

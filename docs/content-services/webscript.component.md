@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# Webscript component
+# [Webscript component](../../lib/content-services/webscript/webscript.component.ts "Defined in webscript.component.ts")
 
 Provides access to Webscript features.
 

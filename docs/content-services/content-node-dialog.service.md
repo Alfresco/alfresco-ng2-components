@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# Content Node Dialog service
+# [Content Node Dialog service](../../lib/content-services/content-node-selector/content-node-dialog.service.ts "Defined in content-node-dialog.service.ts")
 
 Displays and manages dialogs for selecting content to open, copy or upload.
 

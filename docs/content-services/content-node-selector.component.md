@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-04-18
 ---
 
-# Content Node Selector component
+# [Content Node Selector component](../../lib/content-services/content-node-selector/content-node-selector.component.ts "Defined in content-node-selector.component.ts")
 
 Allows a user to select items from a Content Services repository.
 

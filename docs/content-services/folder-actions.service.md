@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Folder Actions service
+# [Folder Actions service](../../lib/content-services/document-list/services/folder-actions.service.ts "Defined in folder-actions.service.ts")
 
 Implements the folder menu actions for the [Document List component](../content-services/document-list.component.md).
 

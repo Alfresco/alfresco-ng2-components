@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Add Permission Dialog Component
+# [Add Permission Dialog Component](../../lib/content-services/permission-manager/components/add-permission/add-permission-dialog.component.ts "Defined in add-permission-dialog.component.ts")
 
 Displays a dialog to search for people or groups to add to the current node permissions.
 

@@ -43,7 +43,7 @@ function searchItemsRecursively(item) {
 
 
 function interestedIn(itemKind) {
-    return itemKind === 128;
+    return (itemKind === 128) || (itemKind === 256);
 }
 
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# Search control component
+# [Search control component](../../lib/content-services/search/components/search-control.component.ts "Defined in search-control.component.ts")
 
 Displays a input text that shows find-as-you-type suggestions.
 

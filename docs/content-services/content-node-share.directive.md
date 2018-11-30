@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-09-13
 ---
 
-# Node Public File Share Directive
+# [Node Public File Share Directive](../../lib/content-services/content-node-share/content-node-share.directive.ts "Defined in content-node-share.directive.ts")
 
 Creates and manages public shared links for files.
 

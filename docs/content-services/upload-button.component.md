@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-09-13
 ---
 
-# Upload Button Component
+# [Upload Button Component](../../lib/content-services/upload/components/upload-button.component.ts "Defined in upload-button.component.ts")
 
 Activates a file upload.
 

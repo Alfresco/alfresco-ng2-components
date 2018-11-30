@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# Tag List component
+# [Tag List component](../../lib/content-services/tag/tag-list.component.ts "Defined in tag-list.component.ts")
 
 Shows tags for an item.
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Folder Create directive
+# [Folder Create directive](../../lib/content-services/folder-directive/folder-create.directive.ts "Defined in folder-create.directive.ts")
 
 Creates folders.
 

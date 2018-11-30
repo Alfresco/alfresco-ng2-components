@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Node Download directive
+# [Node Download directive](../../lib/content-services/directives/node-download.directive.ts "Defined in node-download.directive.ts")
 
 Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive.
 

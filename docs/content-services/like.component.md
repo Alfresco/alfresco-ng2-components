@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# Like component
+# [Like component](../../lib/content-services/social/like.component.ts "Defined in like.component.ts")
 
 Allows a user to add "likes" to an item.
 

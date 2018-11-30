@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# Tree View component
+# [Tree View component](../../lib/content-services/tree-view/components/tree-view.component.ts "Defined in tree-view.component.ts")
 
 Shows the folder and subfolders of a node as a tree view.
 

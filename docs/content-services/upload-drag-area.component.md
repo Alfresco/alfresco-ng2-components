@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-09-13
 ---
 
-# Upload Drag Area Component
+# [Upload Drag Area Component](../../lib/content-services/upload/components/upload-drag-area.component.ts "Defined in upload-drag-area.component.ts")
 
 Adds a drag and drop area to upload files to ACS.
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-12
 ---
 
-# Search Query Builder service
+# [Search Query Builder service](../../lib/content-services/search/search-query-builder.service.ts "Defined in search-query-builder.service.ts")
 
 Stores information from all the custom search and faceted search widgets, compiles and runs the final search query.
 

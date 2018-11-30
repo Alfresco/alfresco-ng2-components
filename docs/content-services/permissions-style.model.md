@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# Permission Style model
+# [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts "Defined in permissions-style.model.ts")
 
 Sets custom CSS styles for rows of a Document List according to the item's permissions.
 
