@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-04-10
 ---
 
-# Folder Edit directive
+# [Folder Edit directive](../../lib/content-services/folder-directive/folder-edit.directive.ts "Defined in folder-edit.directive.ts")
 
 Allows folders to be edited.
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# Search slider component
+# [Search slider component](../../lib/content-services/search/components/search-slider/search-slider.component.ts "Defined in search-slider.component.ts")
 
 Implements a numeric slider widget for the [Search Filter component](../content-services/search-filter.component.md).
 

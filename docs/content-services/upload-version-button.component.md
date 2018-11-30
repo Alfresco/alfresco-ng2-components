@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2018-03-23
 ---
 
-# Upload Version Button Component (Workaround)
+# [Upload Version Button Component (Workaround)](../../lib/content-services/upload/components/upload-version-button.component.ts "Defined in upload-version-button.component.ts")
 
 Activates a file version upload.
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# Add Permission Component
+# [Add Permission Component](../../lib/content-services/permission-manager/components/add-permission/add-permission.component.ts "Defined in add-permission.component.ts")
 
 Searches for people or groups to add to the current node permissions.
 

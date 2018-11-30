@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-09-13
 ---
 
-# Document List service
+# [Document List service](../../lib/content-services/document-list/services/document-list.service.ts "Defined in document-list.service.ts")
 
 Implements node operations used by the [Document List component](../content-services/document-list.component.md).
 

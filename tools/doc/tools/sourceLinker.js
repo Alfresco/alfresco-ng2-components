@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var unist_util_select_1 = require("unist-util-select");
 var ngHelpers = require("../ngHelpers");
-var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe)|(service)|(widget))/;
+var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(interface)|(model)|(pipe)|(service)|(widget))/;
 function processDocs(mdCache, aggData, errorMessages) {
     var pathnames = Object.keys(mdCache);
     pathnames.forEach(function (pathname) {
@@ -11,7 +11,6 @@ function processDocs(mdCache, aggData, errorMessages) {
         if (!fileBaseName.match(angFilenameRegex)) {
             return;
         }
-        console.log("Processing " + fileBaseName);
         var tree = mdCache[pathname].mdOutTree;
         var className = ngHelpers.ngNameToClassName(fileBaseName, aggData.config.typeNameExceptions);
         var classInfo = aggData.classInfo[className];

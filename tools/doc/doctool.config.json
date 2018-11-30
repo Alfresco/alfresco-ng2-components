@@ -51,8 +51,10 @@
         "UserRepresentation": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-activiti-rest-api/docs/UserRepresentation.md"
     },
     "typeNameExceptions": {
+        "content-node-share.directive": "NodeSharedDirective",
         "content.widget": "ContentWidgetComponent",
         "datatable.component": "DataTableComponent",
+        "document-library.model": "NodePaging",
         "tasklist.service": "TaskListService",
         "text-mask.component": "InputMaskDirective",
         "card-item-types.service": "CardItemTypeService",
@@ -60,7 +62,8 @@
         "header.component": "HeaderLayoutComponent",
         "process-list.component": "ProcessInstanceListComponent",
         "inherited-button.directive": "InheritPermissionDirective",
-        "node-share.directive": "NodeSharedDirective",
+        "permissions-style.model": "PermissionStyleModel",
+        "search-widget.interface": "SearchWidget",
         "sites-dropdown.component": "DropdownSitesComponent",
         "start-process.component": "StartProcessInstanceComponent"
     },

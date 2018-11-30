@@ -5,7 +5,7 @@ import { select } from "unist-util-select";
 import * as ngHelpers from "../ngHelpers";
 
 
-const angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe)|(service)|(widget))/;
+const angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(interface)|(model)|(pipe)|(service)|(widget))/;
 
 
 export function processDocs(mdCache, aggData, errorMessages) {
@@ -18,7 +18,6 @@ export function processDocs(mdCache, aggData, errorMessages) {
             return;
         }
 
-        console.log(`Processing ${fileBaseName}`);
         let tree = mdCache[pathname].mdOutTree;
         let className = ngHelpers.ngNameToClassName(fileBaseName, aggData.config.typeNameExceptions);
         let classInfo = aggData.classInfo[className];

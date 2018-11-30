@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# Search check list component
+# [Search check list component](../../lib/content-services/search/components/search-check-list/search-check-list.component.ts "Defined in search-check-list.component.ts")
 
 Implements a checklist widget for the [Search Filter component](../content-services/search-filter.component.md).
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# Dropdown Breadcrumb Component
+# [Dropdown Breadcrumb Component](../../lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts "Defined in dropdown-breadcrumb.component.ts")
 
 Indicates the current position within a navigation hierarchy using a dropdown menu.
 

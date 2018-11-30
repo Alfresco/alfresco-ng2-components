@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# File Uploading Dialog Component
+# [File Uploading Dialog Component](../../lib/content-services/upload/components/file-uploading-dialog.component.ts "Defined in file-uploading-dialog.component.ts")
 
 Shows a dialog listing all the files uploaded with the Upload Button or Drag Area components.
 

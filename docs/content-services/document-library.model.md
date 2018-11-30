@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# Document Library model
+# [Document Library model](../../lib/content-services/document-list/models/document-library.model.ts "Defined in document-library.model.ts")
 
 Defines classes for use with the Content Services node API.
 
