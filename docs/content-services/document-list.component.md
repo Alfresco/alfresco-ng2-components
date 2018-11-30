@@ -37,6 +37,7 @@ Displays the documents from a repository.
     -   [Custom image resolver](#custom-image-resolver)
     -   [Custom 'empty folder' template](#custom-empty-folder-template)
     -   [Custom 'permission denied' template](#custom-permission-denied-template)
+    -   [Custom 'content loading' template](#custom-permission-denied-template)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -847,6 +848,29 @@ You can change this by defining your own custom HTML template:
 This will give the following output:
 
 ![Custom no permission](../docassets/images/no-permission-custom.png)
+
+### Custom 'content loading' template
+
+By default, the Document List shows the following content when it is loading:
+
+![Default no permission](../docassets/images/default-loading-template.png)
+
+You can change this by defining your own custom HTML template:
+
+```html
+<adf-document-list ...>
+    <content-loading>
+        <ng-template>
+            This is a custom loading template
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ng-template>
+    </content-loading>
+</adf-document-list>
+```
+
+This will give the following output:
+
+![Custom no permission](../docassets/images/custom-loading-template.png)
 
 ## See also
 
