@@ -36,6 +36,7 @@ import { LibraryStatusColumnComponent } from './components/library-status-column
 import { LibraryRoleColumnComponent } from './components/library-role-column/library-role-column.component';
 import { LibraryNameColumnComponent } from './components/library-name-column/library-name-column.component';
 import { NameColumnComponent } from './components/name-column/name-column.component';
+import { ContentLoadingDirective } from './components/content-loading/content-loading.directive';
 
 @NgModule({
     imports: [
@@ -57,7 +58,8 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
         ContentActionComponent,
         ContentActionListComponent,
         EmptyFolderContentDirective,
-        NoPermissionContentDirective
+        NoPermissionContentDirective,
+        ContentLoadingDirective
     ],
     exports: [
         DocumentListComponent,
@@ -69,6 +71,7 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
         NameColumnComponent,
         ContentColumnListComponent,
         ContentActionComponent,
+        ContentLoadingDirective,
         ContentActionListComponent,
         EmptyFolderContentDirective,
         NoPermissionContentDirective

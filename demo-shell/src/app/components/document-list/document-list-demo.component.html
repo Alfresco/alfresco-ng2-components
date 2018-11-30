@@ -1,0 +1,17 @@
+<h1>Document List Demo Page</h1>
+
+<h3>Default Loading Template</h3>
+<adf-document-list currentFolderId="-my-" #defaultDocumentList>
+</adf-document-list>
+
+<h3>Custom Loading Template</h3>
+<adf-document-list currentFolderId="-my-" #customDocumentList>
+
+    <content-loading>
+        <ng-template>
+            This is a custom loading template
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ng-template>
+    </content-loading>
+
+</adf-document-list>

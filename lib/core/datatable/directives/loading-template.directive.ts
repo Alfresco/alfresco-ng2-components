@@ -16,22 +16,22 @@
  */
 
 import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular/core';
+import { DataTableComponent } from '../components/datatable/datatable.component';
 
 @Directive({
     selector: 'loading-content-template'
 })
-
 export class LoadingContentTemplateDirective implements AfterContentInit {
 
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(private component: any) {
+    constructor(private dataTable: DataTableComponent) {
     }
 
     ngAfterContentInit() {
-        if (this.component) {
-            this.component.loadingTemplate = this.template;
+        if (this.dataTable) {
+            this.dataTable.loadingTemplate = this.template;
         }
     }
 

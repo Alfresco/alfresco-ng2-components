@@ -50,7 +50,7 @@
         </no-permission-template>
     </div>
 
-    <div>
+    <div *ngIf="!isLoadingContentTemplateDefined()">
         <loading-content-template>
             <ng-template>
                 <div class="adf-document-list-loading-container">

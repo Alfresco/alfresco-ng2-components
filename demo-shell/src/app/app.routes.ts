@@ -46,7 +46,7 @@ import { AppsCloudDemoComponent } from './components/app-layout/cloud/apps-cloud
 import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-cloud-demo.component';
 import { StartTaskCloudDemoComponent } from './components/app-layout/cloud/start-task-cloud-demo.component';
 import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
-import { DocumentListComponent } from './components/document-list/document-list.component';
+import { DocumentListDemoComponent } from './components/document-list/document-list-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -343,7 +343,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'document-list',
-                component: DocumentListComponent
+                component: DocumentListDemoComponent
             },
             {
                 path: 'error/:id',

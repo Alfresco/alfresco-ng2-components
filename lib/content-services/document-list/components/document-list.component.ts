@@ -327,6 +327,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return false;
     }
 
+    isLoadingContentTemplateDefined(): boolean {
+        if (this.dataTable) {
+            if (this.loadingTemplate) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     isMobile(): boolean {
         return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
