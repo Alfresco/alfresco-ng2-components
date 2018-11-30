@@ -1,4 +1,4 @@
-    <div fxLayout="column" fxFill fxLayoutGap="2px">
+<div fxLayout="column" fxFill fxLayoutGap="2px">
     <mat-accordion>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -52,6 +52,7 @@
                                 [status]="status"
                                 [sorting]="sortArray"
                                 [id]="filterId"
+                                (rowClick)="onRowClick($event)"
                                 #processCloud>
             <data-columns>
                 <data-column key="entry.id" title="Id"></data-column>

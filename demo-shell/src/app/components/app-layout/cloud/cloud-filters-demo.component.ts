@@ -34,6 +34,9 @@ export class CloudFiltersDemoComponent {
   @Output()
   processFilterSelect: EventEmitter<any> = new EventEmitter<any>();
 
+  panelOpenStateTask: boolean;
+  panelOpenStateProcess: boolean;
+
   onTaskFilterSelected(filter) {
     this.taskFilterSelect.emit(filter);
   }

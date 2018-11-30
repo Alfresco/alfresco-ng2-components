@@ -58,19 +58,16 @@
 
         </mat-expansion-panel>
     </mat-accordion>
-    <div fxLayout="column" fxFlex fxLayoutAlign="space-between" *ngIf="isFilterLoaded && this.applicationName">
+    <div fxLayout="column" fxFlex fxLayoutAlign="space-between">
         <adf-cloud-task-list fxFlex class="adf-cloud-layout-overflow" #taskCloud
                             [applicationName]="applicationName"
                             [status]="status"
-                            [landingTaskId]="selectTask"
                             [sorting]="sortArray"
                             (rowClick)="onRowClick($event)">
             <data-columns>
                 <data-column key="entry.id" title="Id"></data-column>
                 <data-column key="entry.name" title="Name"></data-column>
                 <data-column key="entry.status" title="Status"></data-column>
-                <data-column key="entry.processDefinitionId" title="Process Definition Id"></data-column>
-                <data-column key="entry.priority" title="Priority"></data-column>
                 <data-column key="entry.createdDate" title="Created Date"  type="date" format="timeAgo"></data-column>
             </data-columns>
         </adf-cloud-task-list>

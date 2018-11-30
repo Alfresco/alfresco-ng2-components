@@ -41,8 +41,7 @@ export class TasksCloudDemoComponent implements OnInit {
     isFilterLoaded = false;
     sortDirection: string = 'ASC';
     filterName: string;
-    clickedRow: string = '';
-    selectTask: string = '';
+    selectedRow: any;
     sortArray: TaskListCloudSortingModel [];
 
     columns = [
@@ -108,6 +107,6 @@ export class TasksCloudDemoComponent implements OnInit {
     }
 
     onRowClick($event) {
-        this.clickedRow = $event;
+        this.selectedRow = $event;
     }
 }

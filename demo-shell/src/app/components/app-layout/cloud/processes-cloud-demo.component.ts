@@ -19,6 +19,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { ProcessListCloudComponent } from '@alfresco/adf-process-services-cloud';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { UserPreferencesService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: './processes-cloud-demo.component.html',
@@ -42,6 +43,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     sortArray: any = [];
     sortField: string;
     sortDirection: string;
+    selectedRow: any;
 
     columns = [
         {key: 'id', label: 'ID'},
@@ -50,7 +52,8 @@ export class ProcessesCloudDemoComponent implements OnInit {
         {key: 'startDate', label: 'START DATE'}
       ];
 
-    constructor(private route: ActivatedRoute) {
+    constructor(private route: ActivatedRoute,
+                private userPreference: UserPreferencesService) {
     }
 
     ngOnInit() {
@@ -96,5 +99,13 @@ export class ProcessesCloudDemoComponent implements OnInit {
                     this.sortFormControl.setValue(this.sort);
                 }
             });
+    }
+
+    onChangePageSize(event) {
+        this.userPreference.paginationSize = event.maxItems;
+    }
+
+    onRowClick($event) {
+        this.selectedRow = $event;
     }
 }
