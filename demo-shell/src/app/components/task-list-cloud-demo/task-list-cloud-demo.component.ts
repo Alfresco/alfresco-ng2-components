@@ -85,7 +85,6 @@ export class TaskListCloudDemoComponent implements OnInit {
         this.sortArray = [new TaskListCloudSortingModel({ orderBy: this.editedQuery.sort, direction: this.editedQuery.order})];
     }
 
-
     onStartTask() {
         this.showStartTask = true;
     }

@@ -24,10 +24,16 @@ import { ProcessServiceCloudTestingModule } from '../../testing/process-service-
 import { TaskFilterCloudRepresentationModel } from '../models/filter-cloud.model';
 import { TaskCloudModule } from './../task-cloud.module';
 import { EditTaskFilterCloudComponent } from './edit-task-filter-cloud.component';
+import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
+import { MatDialog } from '@angular/material';
+import { of } from 'rxjs';
+import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
 
 describe('EditTaskFilterCloudComponent', () => {
     let component: EditTaskFilterCloudComponent;
+    let service: TaskFilterCloudService;
     let fixture: ComponentFixture<EditTaskFilterCloudComponent>;
+    let dialog: MatDialog;
 
     let fakeFilter = new TaskFilterCloudRepresentationModel({
         name: 'FakeInvolvedTasks',
@@ -37,22 +43,31 @@ describe('EditTaskFilterCloudComponent', () => {
     });
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, TaskCloudModule]
+        imports: [ProcessServiceCloudTestingModule, TaskCloudModule],
+        providers: [MatDialog]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(EditTaskFilterCloudComponent);
         component = fixture.componentInstance;
-        component.taskFilter = fakeFilter;
+        service = TestBed.get(TaskFilterCloudService);
+        dialog = TestBed.get(MatDialog);
+        spyOn(dialog, 'open').and.returnValue({ afterClosed() { return of({
+            action: TaskFilterDialogCloudComponent.ACTION_SAVE,
+            icon: 'icon',
+            name: 'fake-name'
+        }); }});
+        spyOn(service, 'getTaskFilterById').and.returnValue(fakeFilter);
     });
 
     it('should create EditTaskFilterCloudComponent', () => {
         expect(component instanceof EditTaskFilterCloudComponent).toBeTruthy();
     });
 
-    it('should get the taskFilter as a input', async(() => {
-        let change = new SimpleChange(undefined, fakeFilter, true);
-        component.ngOnChanges({ 'taskFilter': change });
+    it('should fetch task filter by taskId', async(() => {
+        let change = new SimpleChange(undefined, '10', true);
+        component.ngOnChanges({ 'id': change });
+        fixture.detectChanges();
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -65,8 +80,9 @@ describe('EditTaskFilterCloudComponent', () => {
     }));
 
     it('should display filter name as title', () => {
-        let change = new SimpleChange(undefined, fakeFilter, true);
-        component.ngOnChanges({ 'taskFilter': change });
+        let change = new SimpleChange(undefined, '10', true);
+        component.ngOnChanges({ 'id': change });
+        fixture.detectChanges();
         fixture.detectChanges();
         const title = fixture.debugElement.nativeElement.querySelector('#adf-edit-task-filter-title-id');
         const subTitle = fixture.debugElement.nativeElement.querySelector('#adf-edit-task-filter-sub-title-id');
@@ -79,8 +95,8 @@ describe('EditTaskFilterCloudComponent', () => {
     describe('EditTaskFilter form', () => {
 
         beforeEach(() => {
-            let change = new SimpleChange(undefined, fakeFilter, true);
-            component.ngOnChanges({ 'taskFilter': change });
+            let change = new SimpleChange(undefined, '10', true);
+            component.ngOnChanges({ 'id': change });
             fixture.detectChanges();
         });
 
@@ -245,11 +261,12 @@ describe('EditTaskFilterCloudComponent', () => {
     describe('edit filter actions', () => {
 
         beforeEach(() => {
-            let change = new SimpleChange(undefined, fakeFilter, true);
-            component.ngOnChanges({ 'taskFilter': change });
+            let change = new SimpleChange(undefined, '10', true);
+            component.ngOnChanges({ 'id': change });
         });
 
-        it('should emit save event on click save button', async () => {
+        it('should emit save event and save the filter on click save button', async () => {
+            const saveFilterSpy = spyOn(service, 'updateFilter').and.returnValue(fakeFilter);
             let saveSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
@@ -264,11 +281,13 @@ describe('EditTaskFilterCloudComponent', () => {
                 fixture.detectChanges();
                 saveButton.click();
                 fixture.detectChanges();
+                expect(saveFilterSpy).toHaveBeenCalled();
                 expect(saveSpy).toHaveBeenCalled();
             });
         });
 
-        it('should emit delete event on click of delete button', async () => {
+        it('should emit delete event and delete filter on click of delete button', async () => {
+            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.callThrough();
             let deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
@@ -280,11 +299,13 @@ describe('EditTaskFilterCloudComponent', () => {
                 let deleteButton = fixture.debugElement.nativeElement.querySelector('#adf-delete-id');
                 deleteButton.click();
                 fixture.detectChanges();
+                expect(deleteFilterSpy).toHaveBeenCalled();
                 expect(deleteSpy).toHaveBeenCalled();
             });
         });
 
-        it('should emit saveAs event on click saveAs button', async () => {
+        it('should emit saveAs event and add filter on click saveAs button', async () => {
+            const saveAsFilterSpy = spyOn(service, 'addFilter').and.callThrough();
             let saveAsSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
@@ -299,7 +320,9 @@ describe('EditTaskFilterCloudComponent', () => {
                 fixture.detectChanges();
                 saveButton.click();
                 fixture.detectChanges();
+                expect(saveAsFilterSpy).toHaveBeenCalled();
                 expect(saveAsSpy).toHaveBeenCalled();
+                expect(dialog.open).toHaveBeenCalled();
             });
         });
     });
