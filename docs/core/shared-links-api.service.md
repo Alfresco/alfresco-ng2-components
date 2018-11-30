@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# Shared Links Api service
+# [Shared Links Api service](../../lib/core/services/shared-links-api.service.ts "Defined in shared-links-api.service.ts")
 
 Finds shared links to Content Services items.
 
@@ -16,7 +16,7 @@ Finds shared links to Content Services items.
 -   **createSharedLinks**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<SharedLinkEntry>`<br/>
     Creates a shared link available to the current user.
     -   _nodeId:_ `string`  - ID of the node to link to
-    -   _options:_ `any`  - Options supported by JSAPI
+    -   _options:_ `any`  - Options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<SharedLinkEntry>` - The shared link just created
 -   **deleteSharedLink**(sharedId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<SharedLinkEntry>`<br/>
     Deletes a shared link.
@@ -24,7 +24,7 @@ Finds shared links to Content Services items.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<SharedLinkEntry>` - Null response notifying when the operation is complete
 -   **getSharedLinks**(options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
     Gets shared links available to the current user.
-    -   _options:_ `any`  - Options supported by JSAPI
+    -   _options:_ `any`  - Options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of shared links
 
 ## Details

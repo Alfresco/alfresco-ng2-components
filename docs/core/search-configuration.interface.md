@@ -4,7 +4,7 @@ Added: v2.1.0
 Status: Active
 ---
 
-# Search Configuration interface
+# [Search Configuration interface](../../lib/core/interface/search-configuration.interface.ts "Defined in search-configuration.interface.ts")
 
 Provides fine control of parameters to a search.
 
@@ -85,7 +85,7 @@ described below.
         })
     ```
 
-    You also need to add the [`SearchService`](../../lib/core/services/search.service.ts) as a provider to avoid overriding the module instance. This component will have his own instance of the [`SearchService`](../../lib/core/services/search.service.ts) that will use the class you have provided
+    You also need to add the [`SearchService`](../core/search.service.md) as a provider to avoid overriding the module instance. This component will have his own instance of the [`SearchService`](../core/search.service.md) that will use the class you have provided
     as its configuration.
 
 ## See also

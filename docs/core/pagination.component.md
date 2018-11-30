@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Pagination Component
+# [Pagination Component](../../lib/core/pagination/pagination.component.ts "Defined in pagination.component.ts")
 
 Adds pagination to the component it is used with.
 
@@ -44,7 +44,7 @@ Adds pagination to the component it is used with.
 | ---- | ---- | ------------- | ----------- |
 | pagination | [`PaginationModel`](../../lib/core/models/pagination.model.ts) |  | [Pagination](../../lib/content-services/document-list/models/document-library.model.ts) object. |
 | supportedPageSizes | `number[]` |  | An array of page sizes. |
-| target | `PaginatedComponent` |  | Component that provides custom pagination support. |
+| target | [`PaginatedComponent`](../../lib/core/pagination/paginated-component.interface.ts) |  | Component that provides custom pagination support. |
 
 ### Events
 

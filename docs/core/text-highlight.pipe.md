@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# Text Highlight pipe
+# [Text Highlight pipe](../../lib/core/pipes/text-highlight.pipe.ts "Defined in text-highlight.pipe.ts")
 
 Adds highlighting to words or sections of text that match a search string.
 

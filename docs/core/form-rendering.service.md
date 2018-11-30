@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Form Rendering service
+# [Form Rendering service](../../lib/core/form/services/form-rendering.service.ts "Defined in form-rendering.service.ts")
 
 Maps a form field type string onto the corresponding form [widget component](../insights/widget.component.md) type.
 
@@ -18,9 +18,9 @@ Maps a form field type string onto the corresponding form [widget component](../
     -   _type:_ `string`  - The type whose resolver you want
     -   _defaultValue:_ `Type<__type>`  - Default type returned for types that are not yet mapped
     -   **Returns** `DynamicComponentResolveFunction` - Resolver function
--   **resolveComponentType**(model: `DynamicComponentModel`, defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
+-   **resolveComponentType**(model: [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts), defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
     Finds the component type that is needed to render a form field.
-    -   _model:_ `DynamicComponentModel`  - [Form](../../lib/process-services/task-list/models/form.model.ts) field model for the field to render
+    -   _model:_ [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../lib/process-services/task-list/models/form.model.ts) field model for the field to render
     -   _defaultValue:_ `Type<__type>`  - Default type returned for field types that are not yet mapped.
     -   **Returns** `Type<__type>` - Component type
 -   **setComponentTypeResolver**(type: `string`, resolver: `DynamicComponentResolveFunction`, override: `boolean` = `true`)<br/>

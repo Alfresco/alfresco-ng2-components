@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Thumbnail service
+# [Thumbnail service](../../lib/core/services/thumbnail.service.ts "Defined in thumbnail.service.ts")
 
 Retrieves an SVG thumbnail image to represent a document type.
 

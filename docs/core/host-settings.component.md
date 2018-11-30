@@ -5,7 +5,7 @@ Status: Internal
 Last reviewed: 2018-09-13
 ---
 
-# Host settings component
+# [Host settings component](../../lib/core/settings/host-settings.component.ts "Defined in host-settings.component.ts")
 
 Validates the URLs for ACS and APS and saves them in the user's local storage
 

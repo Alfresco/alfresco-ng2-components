@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Upload Directive
+# [Upload Directive](../../lib/core/directives/upload.directive.ts "Defined in upload.directive.ts")
 
 Uploads content in response to file drag and drop.
 

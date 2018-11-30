@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Node Service
+# [Node Service](../../lib/core/form/services/node.service.ts "Defined in node.service.ts")
 
 Gets Alfresco Repository node metadata and creates nodes with metadata. 
 
@@ -24,7 +24,7 @@ Gets Alfresco Repository node metadata and creates nodes with metadata.
     Create a new Node from form metadata.
     -   _nodeType:_ `string`  - Node type
     -   _nameSpace:_ `any`  - Namespace for properties
-    -   _data:_ `any`  - Property data to store in the node under namespace
+    -   _data:_ `any`  - [Property](../../lib/content-services/content-metadata/interfaces/property.interface.ts) data to store in the node under namespace
     -   _path:_ `string`  - Path to the node
     -   _name:_ `string`  - (Optional) Node name
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - The created node

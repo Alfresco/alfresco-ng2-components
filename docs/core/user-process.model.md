@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# User Process model
+# [User Process model](../../lib/core/models/user-process.model.ts "Defined in user-process.model.ts")
 
 Represents a Process Services user.
 

@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2018-11-14
 ---
 
-# About Component
+# [About Component](../../lib/core/about/about.component.ts "Defined in about.component.ts")
 
 Shows a general version and status overview of the installed ADF library.
 

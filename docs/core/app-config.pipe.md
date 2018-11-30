@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-05-24
 ---
 
-# App Config Pipe
+# [App Config Pipe](../../lib/core/app-config/app-config.pipe.ts "Defined in app-config.pipe.ts")
 
 Retrieves values from the application configuration file directly.
 

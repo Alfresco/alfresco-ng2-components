@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Node Permission directive
+# [Node Permission directive](../../lib/core/directives/node-permission.directive.ts "Defined in node-permission.directive.ts")
 
 Selectively disables an HTML element or Angular component.
 

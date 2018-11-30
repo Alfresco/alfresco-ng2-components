@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# Node Name Tooltip pipe
+# [Node Name Tooltip pipe](../../lib/core/pipes/node-name-tooltip.pipe.ts "Defined in node-name-tooltip.pipe.ts")
 
 Formats the tooltip for a Node.
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# Authentication Service
+# [Authentication Service](../../lib/core/services/authentication.service.ts "Defined in authentication.service.ts")
 
 Provides authentication to ACS and APS.
 

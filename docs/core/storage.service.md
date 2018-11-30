@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# Storage service
+# [Storage service](../../lib/core/services/storage.service.ts "Defined in storage.service.ts")
 
 Stores items in the form of key-value pairs.
 

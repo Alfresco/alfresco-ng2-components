@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Sidenav Layout component
+# [Sidenav Layout component](../../lib/core/layout/components/sidenav-layout/sidenav-layout.component.ts "Defined in sidenav-layout.component.ts")
 
 Displays the standard three-region ADF application layout.
 

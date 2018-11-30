@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-09-13
 ---
 
-# App Config service
+# [App Config service](../../lib/core/app-config/app-config.service.ts "Defined in app-config.service.ts")
 
 Supports app configuration settings, stored server side.
 

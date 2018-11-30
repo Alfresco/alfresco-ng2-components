@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Form field component
+# [Form field component](../../lib/core/form/components/form-field/form-field.component.ts "Defined in form-field.component.ts")
 
 Represents a UI field in a form.
 
@@ -38,8 +38,8 @@ uses `<adf-form-field>` components to render the form fields.
 
 Forms defined in APS have the following default mappings for the form fields:
 
-| _APS [Form](../../lib/process-services/task-list/models/form.model.ts) Designer_ [`Widget`](../../e2e/pages/adf/process_services/widgets/widget.ts) | Field Type | Component Type |
-| --------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------------- |
+| _APS [`Form`](../../lib/process-services/task-list/models/form.model.ts) Designer_ [`Widget`](../../e2e/pages/adf/process_services/widgets/widget.ts) | Field Type | Component Type |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------------- |
 | Text | text | [`TextWidgetComponent`](../../lib/core/form/components/widgets/text/text.widget.ts) |
 | Multi-line text | multi-line-text | [`MultilineTextWidgetComponentComponent`](../../lib/core/form/components/widgets/multiline-text/multiline-text.widget.ts) |
 | Number | integer | [`NumberWidgetComponent`](../../lib/core/form/components/widgets/number/number.widget.ts) |

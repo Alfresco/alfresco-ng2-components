@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Viewer component
+# [Viewer component](../../lib/core/viewer/components/viewer.component.ts "Defined in viewer.component.ts")
 
 Displays content from an ACS repository.
 

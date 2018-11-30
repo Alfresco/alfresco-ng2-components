@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# Toolbar Divider Component
+# [Toolbar Divider Component](../../lib/core/toolbar/toolbar-divider.component.ts "Defined in toolbar-divider.component.ts")
 
 Divides groups of elements in a Toolbar with a visual separator.
 

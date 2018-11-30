@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Sidebar action menu component
+# [Sidebar action menu component](../../lib/core/layout/components/sidebar-action/sidebar-action-menu.component.ts "Defined in sidebar-action-menu.component.ts")
 
 Displays a sidebar-action menu information panel.
 

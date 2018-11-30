@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# Product Version model
+# [Product Version model](../../lib/core/models/product-version.model.ts "Defined in product-version.model.ts")
 
 Contains version and license information classes for Alfresco products.
 

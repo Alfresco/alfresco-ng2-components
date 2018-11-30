@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-03-20
 ---
 
-# Form Field model
+# [Form Field model](../../lib/core/form/components/widgets/core/form-field.model.ts "Defined in form-field.model.ts")
 
 Contains the value and metadata for a field of a [`Form`](../../lib/process-services/task-list/models/form.model.ts) component.
 
@@ -30,7 +30,7 @@ Contains the value and metadata for a field of a [`Form`](../../lib/process-serv
 | minValue | string |  | Minimum allowed value (eg, for number or date) |
 | maxValue | string |  | Minimum allowed value (eg, for number or date) |
 | regexPattern | string |  | Regular expression that text data should match |
-| options | FormFieldOption\[] | \[] | Option items for a dropdown menu |
+| options | [`FormFieldOption`](../../lib/core/form/components/widgets/core/form-field-option.ts)\[] | \[] | Option items for a dropdown menu |
 | restUrl | string |  | URL for a REST call to populate a dropdown menu |
 | restResponsePath | string |  | Path within REST response JSON to the array of dropdown data |
 | restIdProperty | string |  | JSON property name to use for the `id` property of a dropdown item |
@@ -38,7 +38,7 @@ Contains the value and metadata for a field of a [`Form`](../../lib/process-serv
 | hasEmptyValue | boolean |  | Is the field's value empty? (eg, dropdown with no item selected) |
 | className | string |  | CSS class name for the field |
 | optionType | string |  |  |
-| params | FormFieldMetadata | {} |  |
+| params | [`FormFieldMetadata`](../../lib/core/form/components/widgets/core/form-field-metadata.ts) | {} |  |
 | hyperlinkUrl | string |  | URL for Hyperlink widgets |
 | displayText | string |  | Displayed text for Hyperlink widgets |
 | isVisible | boolean | true | Is the field shown on the form? |
@@ -49,7 +49,7 @@ Contains the value and metadata for a field of a [`Form`](../../lib/process-serv
 | numberOfColumns | number | 1 | Number of columns defined by a container field |
 | fields | [`FormFieldModel`](../core/form-field.model.md)\[] | \[] | Fields contained within a container field |
 | columns | [`ContainerColumnModel`](../../lib/core/form/components/widgets/core/container-column.model.ts)\[] | \[] | Column definitions for a container field |
-| emptyOption | FormFieldOption |  | Dropdown menu item to use when no option is chosen |
+| emptyOption | [`FormFieldOption`](../../lib/core/form/components/widgets/core/form-field-option.ts) |  | Dropdown menu item to use when no option is chosen |
 | validationSummary | string |  | Error/information message added during field validation (see [`FormFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts) interface) |
 
 ## Details

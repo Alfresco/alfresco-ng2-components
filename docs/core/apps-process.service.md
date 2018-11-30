@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-16
 ---
 
-# Apps Process service
+# [Apps Process service](../../lib/core/services/apps-process.service.ts "Defined in apps-process.service.ts")
 
 Gets details of the Process Services apps that are deployed for the user.
 
