@@ -19,7 +19,10 @@ import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { QueryModel, FilterActionType } from './../models/filter-cloud.model';
 import { TaskFilterCloudRepresentationModel } from '../models/filter-cloud.model';
-
+import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
+import { MatDialog } from '@angular/material';
+import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
+import { TranslationService } from '@alfresco/adf-core';
 @Component({
   selector: 'adf-cloud-edit-task-filter',
   templateUrl: './edit-task-filter-cloud.component.html',
@@ -31,9 +34,14 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     public static ACTION_SAVE_AS = 'SAVE_AS';
     public static ACTION_DELETE = 'DELETE';
 
-    /** (**required**) Full details of the task filter to display information about. */
     @Input()
+    appName: string;
+
+    @Input()
+    id: string;
+
     taskFilter: TaskFilterCloudRepresentationModel;
+    changedTaskFilter: TaskFilterCloudRepresentationModel;
 
     /** Emitted when an task filter property changes. */
     @Output()
@@ -65,15 +73,16 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     formHasBeenChanged = false;
     editTaskFilterForm: FormGroup;
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        public dialog: MatDialog,
+        private translateService: TranslationService,
+        private taskFilterCloudService: TaskFilterCloudService) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        const taskFilter = changes['taskFilter'];
-        if (taskFilter && !taskFilter.currentValue) {
-            this.reset();
-            return;
-        }
-        if (taskFilter && taskFilter.currentValue) {
+        const id = changes['id'];
+        if (id && id.currentValue !== id.previousValue) {
+            this.retrieveTaskFilter();
             this.buildForm();
         }
     }
@@ -91,12 +100,18 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         this.onFilterChange();
     }
 
+    retrieveTaskFilter() {
+        this.taskFilter = this.taskFilterCloudService.getTaskFilterById(this.appName, this.id);
+    }
+
     /**
      * Check for edit task filter form changes
      */
     onFilterChange() {
         this.editTaskFilterForm.valueChanges.subscribe((formValues: QueryModel) => {
             this.formHasBeenChanged = !this.compareFilters(new QueryModel(formValues), this.taskFilter.query);
+            this.changedTaskFilter = Object.assign({}, this.taskFilter);
+            this.changedTaskFilter.query = formValues;
             this.filterChange.emit(formValues);
         });
     }
@@ -109,20 +124,51 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     }
 
     onSave() {
-        this.action.emit(new FilterActionType(EditTaskFilterCloudComponent.ACTION_SAVE));
-    }
-
-    onSaveAs() {
-        this.action.emit(new FilterActionType(EditTaskFilterCloudComponent.ACTION_SAVE_AS));
+        this.taskFilterCloudService.updateFilter(this.changedTaskFilter);
+        this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_SAVE, id: this.changedTaskFilter.id});
     }
 
     onDelete() {
-        this.action.emit(new FilterActionType(EditTaskFilterCloudComponent.ACTION_DELETE));
+        this.taskFilterCloudService.deleteFilter(this.taskFilter);
+        this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_DELETE, id: this.taskFilter.id});
     }
 
-    /**
-     * Reset the task filter
-     */
+    onSaveAs() {
+        const dialogRef = this.dialog.open(TaskFilterDialogCloudComponent, {
+            data: {
+                name: this.translateService.instant(this.taskFilter.name)
+            },
+            height: 'auto',
+            minWidth: '30%'
+        });
+        dialogRef.afterClosed().subscribe( (result) => {
+            if (result && result.action === TaskFilterDialogCloudComponent.ACTION_SAVE) {
+                const filterId = Math.random().toString(36).substr(2, 9);
+                const filterKey = this.getSanitizeFilterName(result.name);
+                const filter = new TaskFilterCloudRepresentationModel(
+                    {
+                        name: result.name,
+                        icon: result.icon,
+                        id: filterId,
+                        key: 'custom-' + filterKey,
+                        query: this.changedTaskFilter.query
+                    }
+                );
+                this.taskFilterCloudService.addFilter(filter);
+                this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_SAVE_AS, id: filter.id});
+            }
+        });
+    }
+
+    getSanitizeFilterName(filterName) {
+        const nameWithHyphen = this.replaceSpaceWithHyphen(filterName.trim());
+        return nameWithHyphen.toLowerCase();
+    }
+
+    replaceSpaceWithHyphen(name) {
+        const regExt = new RegExp(' ', 'g');
+        return name.replace(regExt, '-');
+    }
     reset() {
         this.taskFilter = null;
     }

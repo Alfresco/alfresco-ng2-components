@@ -19,7 +19,6 @@ import { StorageService, JwtHelperService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudRepresentationModel, QueryModel } from '../models/filter-cloud.model';
-
 @Injectable()
 export class TaskFilterCloudService {
 
@@ -54,6 +53,14 @@ export class TaskFilterCloudService {
             observer.next(filters);
             observer.complete();
         });
+    }
+
+    getTaskFilterById(appName: string, id: string): TaskFilterCloudRepresentationModel {
+        const username = this.getUsername();
+        let key = `task-filters-${appName}-${username}`;
+        let filters = [];
+        filters = JSON.parse(this.storage.getItem(key)) || [];
+        return filters.filter((filterTmp: TaskFilterCloudRepresentationModel) => id === filterTmp.id)[0];
     }
 
     /**
@@ -100,7 +107,7 @@ export class TaskFilterCloudService {
         const key = `task-filters-${filter.query.appName}-${username}`;
         if (key) {
             let filters = JSON.parse(this.storage.getItem(key) || '[]');
-            filters.splice(filters.indexOf(filter), 1);
+            filters = filters.filter((item) => item.id !== filter.id);
             this.storage.setItem(key, JSON.stringify(filters));
         }
     }

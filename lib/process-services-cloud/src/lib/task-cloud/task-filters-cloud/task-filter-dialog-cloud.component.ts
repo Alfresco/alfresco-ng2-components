@@ -21,7 +21,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-task-filter-edit-cloud',
+  selector: 'adf-cloud-task-filter-dialog',
   templateUrl: './task-filter-dialog-cloud.component.html',
   styleUrls: ['./task-filter-dialog-cloud.component.scss']
 })

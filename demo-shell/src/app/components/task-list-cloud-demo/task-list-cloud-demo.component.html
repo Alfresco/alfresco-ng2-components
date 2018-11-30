@@ -20,12 +20,14 @@
 <div *ngIf="!showStartTask">
     <adf-cloud-task-filters  #taskFiltersCloud
      [appName]="applicationName"
+     [filterParam]="filterTaskParam"
      [showIcons]="true"
      (filterClick)="onFilterSelected($event)">
     </adf-cloud-task-filters>
 
     <adf-cloud-edit-task-filter
-        [taskFilter]="currentFilter"
+        [appName]="applicationName"
+        [id]="currentFilter.id"
         (filterChange)="onFilterChange($event)"
         (action)="onEditActions($event)">
     </adf-cloud-edit-task-filter>

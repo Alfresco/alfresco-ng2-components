@@ -69,10 +69,7 @@ export class FilterParamsModel {
         }
     }
 }
-
-export class FilterActionType {
+export interface FilterActionType {
     actionType: string;
-    constructor(action: string) {
-        this.actionType = action;
-    }
+    id: string;
 }
