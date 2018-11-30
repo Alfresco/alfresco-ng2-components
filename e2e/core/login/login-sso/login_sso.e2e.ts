@@ -19,7 +19,7 @@ import { LoginAPSPage } from '../../../pages/adf/loginApsPage';
 import { SettingsPage } from '../../../pages/adf/settingsPage';
 import TestConfig = require('../../../test.config');
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../../../pages/adf/NavigationBarPage';
+import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 
 describe('Login component - SSO', () => {
 

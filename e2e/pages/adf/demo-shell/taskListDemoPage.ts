@@ -16,12 +16,13 @@
  */
 
 import Util = require('../../../util/util');
-import { TaskListPage } from '../process_services/tasksListPage';
+import { TasksListPage } from '../process_services/tasksListPage';
 import PaginationPage = require('../paginationPage');
 import { element, by } from 'protractor';
 
 export class TaskListDemoPage {
 
+    taskListPage: TasksListPage = new TasksListPage();
     appId = element(by.css("input[data-automation-id='appId input']"));
     itemsPerPage = element(by.css("input[data-automation-id='items per page']"));
     itemsPerPageForm = element(by.css("mat-form-field[data-automation-id='items per page']"));
@@ -39,10 +40,11 @@ export class TaskListDemoPage {
     sortDropDownArrow = element(by.css("mat-form-field[data-automation-id='sort'] div[class*='arrow']"));
     sortSelector = element(by.css("div[class*='mat-select-content']"));
     processDefinitionIdColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Process Definition Id'] span");
-    processInstanceIdColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Process Instance Id'] span");
+    processInstanceIdColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='a" +
+        "df-datatable-row'] div[title='Process Instance Id'] span");
 
-    taskList() {
-        return new TaskListPage();
+    taskList(): TasksListPage {
+        return this.taskListPage;
     }
 
     paginationPage() {

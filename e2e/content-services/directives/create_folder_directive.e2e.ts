@@ -63,6 +63,12 @@ describe('Create folder directive', function () {
         done();
     });
 
+    afterEach(async (done) => {
+        await browser.actions().sendKeys(Key.ESCAPE).perform();
+        browser.refresh();
+        done();
+    });
+
     it('[C260154] Should not create the folder if cancel button is clicked', () => {
         let folderName = 'cancelFolder';
         contentServicesPage.clickOnCreateNewFolder();
