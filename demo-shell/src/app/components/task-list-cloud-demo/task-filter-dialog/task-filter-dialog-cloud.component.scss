@@ -1,10 +1,9 @@
-.adf-task-filter-dialog {
-    .mat-card {
-        padding: 0px;
-        box-shadow: none !important;
+.adf-task-filter-dialog .mat-card {
+    padding: 0px;
+    box-shadow: none;
+}
 
-        .mat-card-content {
-            margin-bottom: 0px;
-        }
-    }
+.adf-task-filter-dialog .mat-card-content{
+    padding: 0px;
+    box-shadow: none;
 }
