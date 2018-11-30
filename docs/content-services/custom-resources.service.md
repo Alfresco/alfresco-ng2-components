@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-16
 ---
 
-# Custom Resources service
+# [Custom Resources service](../../lib/content-services/document-list/services/custom-resources.service.ts "Defined in custom-resources.service.ts")
 
 Manages Document List information that is specific to a user.
 

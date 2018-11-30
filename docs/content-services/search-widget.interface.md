@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-12
 ---
 
-# Search widget interface
+# [Search widget interface](../../lib/content-services/search/search-widget.interface.ts "Defined in search-widget.interface.ts")
 
 Specifies required properties for [Search filter component](../content-services/search-filter.component.md) widgets.
 

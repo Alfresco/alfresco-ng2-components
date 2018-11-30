@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-08-07
 ---
 
-# Content Metadata Card component
+# [Content Metadata Card component](../../lib/content-services/content-metadata/components/content-metadata/content-metadata.component.ts "Defined in content-metadata.component.ts")
 
 Displays and edits metadata related to a node.
 

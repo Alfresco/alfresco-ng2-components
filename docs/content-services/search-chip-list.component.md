@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-09-14
 ---
 
-# Search Chip List Component
+# [Search Chip List Component](../../lib/content-services/search/components/search-chip-list/search-chip-list.component.ts "Defined in search-chip-list.component.ts")
 
 Displays search criteria as a set of "chips".
 

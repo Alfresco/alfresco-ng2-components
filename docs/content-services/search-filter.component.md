@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-12
 ---
 
-# Search Filter component
+# [Search Filter component](../../lib/content-services/search/components/search-filter/search-filter.component.ts "Defined in search-filter.component.ts")
 
 Represents a main container component for custom search and faceted search settings.
 

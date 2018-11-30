@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Content Action component
+# [Content Action component](../../lib/content-services/document-list/components/content-action/content-action.component.ts "Defined in content-action.component.ts")
 
 Adds options to a Document List actions menu for a particular content type.
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# Tag Node List component
+# [Tag Node List component](../../lib/content-services/tag/tag-node-list.component.ts "Defined in tag-node-list.component.ts")
 
 Shows tags for a node.
 

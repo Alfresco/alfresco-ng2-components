@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# Add Permission Panel Component
+# [Add Permission Panel Component](../../lib/content-services/permission-manager/components/add-permission/add-permission-panel.component.ts "Defined in add-permission-panel.component.ts")
 
 Searches for people or groups to add to the current node permissions.
 

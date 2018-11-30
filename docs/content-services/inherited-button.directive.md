@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Inherit Permission directive
+# [Inherit Permission directive](../../lib/content-services/permission-manager/components/inherited-button.directive.ts "Defined in inherited-button.directive.ts")
 
 Update the current node by adding/removing the inherited permissions.
 

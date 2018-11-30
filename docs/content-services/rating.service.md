@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-05-04
 ---
 
-# Rating service
+# [Rating service](../../lib/content-services/social/services/rating.service.ts "Defined in rating.service.ts")
 
 Manages ratings for items in Content Services.
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# Content Node Selector Panel component
+# [Content Node Selector Panel component](../../lib/content-services/content-node-selector/content-node-selector-panel.component.ts "Defined in content-node-selector-panel.component.ts")
 
 Opens a Content Node Selector in its own dialog window.
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-12
 ---
 
-# Document List component
+# [Document List component](../../lib/content-services/document-list/components/document-list.component.ts "Defined in document-list.component.ts")
 
 Displays the documents from a repository.
 
