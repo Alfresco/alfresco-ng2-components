@@ -179,10 +179,6 @@ export class NavigationBarPage {
         browser.get(TestConfig.adf.url + `/files/${site.entry.guid}/display/list`);
     }
 
-    checkContentServicesButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.contentServicesButton);
-    }
-
     clickTreeViewButton() {
         Util.waitUntilElementIsVisible(this.treeViewButton);
         this.treeViewButton.click();

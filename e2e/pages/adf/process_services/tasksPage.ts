@@ -18,11 +18,11 @@
 import Util = require('../../../util/util');
 import StartTaskDialog = require('./dialog/startTaskDialog');
 import FormFields = require('./formFields');
-import {  TaskDetailsPage } from './taskDetailsPage';
+import { TaskDetailsPage } from './taskDetailsPage';
 
 import FiltersPage = require('./filtersPage');
 import ChecklistDialog = require('./dialog/createChecklistDialog');
-import TasksListPage = require('./tasksListPage');
+import { TasksListPage } from './tasksListPage';
 import { element, by } from 'protractor';
 
 export class TasksPage {

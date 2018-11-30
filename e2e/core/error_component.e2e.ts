@@ -19,7 +19,7 @@ import { LoginPage } from '../pages/adf/loginPage';
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import TestConfig = require('../test.config');
 import AlfrescoApi = require('alfresco-js-api-node');
-import ErrorPage = require('../pages/adf/errorPage');
+import { ErrorPage } from '../pages/adf/errorPage';
 import { browser } from '../../node_modules/protractor';
 
 describe('Error Component', () => {

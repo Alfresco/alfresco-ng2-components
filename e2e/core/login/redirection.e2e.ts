@@ -40,14 +40,17 @@ describe('Login component - Redirect', () => {
     let contentServicesPage = new ContentServicesPage();
     let loginPage = new LoginPage();
     let user = new AcsUserModel();
+    let userFolderOwner = new AcsUserModel();
     let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
     });
+    let uploadedFolder;
+    let uploadActions = new UploadActions();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ALL',
+            provider: 'ECM',
             hostEcm: TestConfig.adf.url,
             hostBpm: TestConfig.adf.url
         });
@@ -55,6 +58,11 @@ describe('Login component - Redirect', () => {
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(user);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(userFolderOwner);
+
+        await this.alfrescoJsApi.login(user.id, user.password);
+
+        uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, 'protecteFolder' + Util.generateRandomString(), '-my-');
 
         done();
     });
@@ -100,16 +108,10 @@ describe('Login component - Redirect', () => {
     });
 
     it('[C260088] Should be re-redirect to the request URL after login when try to access to a protect URL ', () => {
-        let uploadActions = new UploadActions();
-
-        let uploadedFolder;
-        let folderName = Util.generateRandomString();
-
         settingsPage.setProviderEcm();
         loginPage.login(user.id, user.password);
 
         browser.controlFlow().execute(async () => {
-            uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
 
             navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 

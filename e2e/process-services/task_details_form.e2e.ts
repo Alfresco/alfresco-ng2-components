@@ -20,8 +20,8 @@ import Util = require('../util/util');
 import CONSTANTS = require('../util/constants');
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import TasksListPage = require('../pages/adf/process_services/tasksListPage');
+
+import { TasksListPage } from '../pages/adf/process_services/tasksListPage';
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
 import FiltersPage = require('../pages/adf/process_services/filtersPage');
 
@@ -32,18 +32,27 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Task Details - Form', () => {
     let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
     let tasksListPage = new TasksListPage();
     let taskDetailsPage = new TaskDetailsPage();
     let filtersPage = new FiltersPage();
     let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
 
-    beforeAll(async(done) => {
+    beforeAll(async (done) => {
         let users = new UsersActions();
-        let attachedFormModel = {'name': Util.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0};
+        let attachedFormModel = {
+            'name': Util.generateRandomString(),
+            'description': '',
+            'modelType': 2,
+            'stencilSet': 0
+        };
         let otherTaskModel = new TaskModel();
-        let otherAttachedFormModel = {'name': Util.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0};
-        let newFormModel = {'name': Util.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0};
+        let otherAttachedFormModel = {
+            'name': Util.generateRandomString(),
+            'description': '',
+            'modelType': 2,
+            'stencilSet': 0
+        };
+        let newFormModel = { 'name': Util.generateRandomString(), 'description': '', 'modelType': 2, 'stencilSet': 0 };
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -64,7 +73,7 @@ describe('Task Details - Form', () => {
 
         otherAttachedForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(otherAttachedFormModel);
 
-        await this.alfrescoJsApi.activiti.taskApi.attachForm(otherEmptyTask.id, {'formId': otherAttachedForm.id});
+        await this.alfrescoJsApi.activiti.taskApi.attachForm(otherEmptyTask.id, { 'formId': otherAttachedForm.id });
 
         otherTask = await this.alfrescoJsApi.activiti.taskApi.getTask(otherEmptyTask.id);
 
@@ -78,7 +87,7 @@ describe('Task Details - Form', () => {
 
         let emptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(taskModel);
 
-        await this.alfrescoJsApi.activiti.taskApi.attachForm(emptyTask.id, {'formId': attachedForm.id});
+        await this.alfrescoJsApi.activiti.taskApi.attachForm(emptyTask.id, { 'formId': attachedForm.id });
 
         task = await this.alfrescoJsApi.activiti.taskApi.getTask(emptyTask.id);
 

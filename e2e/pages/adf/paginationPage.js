@@ -27,7 +27,6 @@ var PaginationPage = function () {
     var totalPages = element(by.css("span[class='adf-pagination__total-pages']"));
     var paginationRange = element(by.css("span[class='adf-pagination__range']"));
     var nextPageButton = element(by.css("button[class*='adf-pagination__next-button']"));
-    var previousPageButton = element(by.css("button[class*='adf-pagination__previous-button']"));
     var nextButtonDisabled = element(by.css("button[class*='adf-pagination__next-button'][disabled]"));
     var previousButtonDisabled = element(by.css("button[class*='adf-pagination__previous-button'][disabled]"));
     var pageDropDown = element(by.css("div[class*='adf-pagination__actualinfo-block'] button"));

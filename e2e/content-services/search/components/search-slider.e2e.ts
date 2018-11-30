@@ -157,7 +157,7 @@ describe('Search Number Range Filter', () => {
             navigationBar.clickConfigEditorButton();
             configEditor.clickSearchConfiguration();
             configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+            configEditor.enterConfiguration(JSON.stringify(jsonFile)).clickSaveButton();
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -177,7 +177,7 @@ describe('Search Number Range Filter', () => {
             navigationBar.clickConfigEditorButton();
             configEditor.clickSearchConfiguration();
             configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+            configEditor.enterConfiguration(JSON.stringify(jsonFile)).clickSaveButton();
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -199,7 +199,7 @@ describe('Search Number Range Filter', () => {
             navigationBar.clickConfigEditorButton();
             configEditor.clickSearchConfiguration();
             configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+            configEditor.enterConfiguration(JSON.stringify(jsonFile)).clickSaveButton();
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -221,7 +221,7 @@ describe('Search Number Range Filter', () => {
             navigationBar.clickConfigEditorButton();
             configEditor.clickSearchConfiguration();
             configEditor.clickClearButton();
-            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+            configEditor.enterConfiguration(JSON.stringify(jsonFile)).clickSaveButton();
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()

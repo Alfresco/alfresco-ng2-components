@@ -28,7 +28,7 @@ import TestConfig = require('../../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 
-import { browser, protractor } from 'protractor';
+import { browser, Key } from 'protractor';
 
 describe('Create folder directive', function () {
 
@@ -58,8 +58,8 @@ describe('Create folder directive', function () {
         done();
     });
 
-    afterEach(async (done) => {
-        await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    beforeEach(async (done) => {
+        await browser.actions().sendKeys(Key.ESCAPE).perform();
         done();
     });
 

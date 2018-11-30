@@ -71,13 +71,13 @@ describe('Aspect oriented config', () => {
         done();
     });
 
-    beforeEach(async(done) => {
+    beforeEach(async (done) => {
         navigationBarPage.clickConfigEditorButton();
         configEditorPage.clickClearButton();
         done();
     });
 
-    afterEach(async(done) => {
+    afterEach(async (done) => {
         viewerPage.clickCloseButton();
         contentServicesPage.checkAcsContainer();
         browser.refresh();
@@ -96,7 +96,8 @@ describe('Aspect oriented config', () => {
             '                }' +
             '            ]' +
             '        }]' +
-            '    }');
+            '    }' +
+            '  }');
 
         configEditorPage.clickSaveButton();
 
@@ -148,7 +149,7 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsNotPresent('exists');
     });
 
-    it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided' , () => {
+    it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided', () => {
 
         configEditorPage.enterConfiguration('{ }');
 
@@ -172,7 +173,7 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsPresent('Content');
     });
 
-    it('[C260182] Should show all the aspects if the default configuration contains the star symbol' , () => {
+    it('[C260182] Should show all the aspects if the default configuration contains the star symbol', () => {
 
         configEditorPage.enterConfiguration('{' +
             '    "presets": {' +
@@ -201,7 +202,7 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsPresent('Content');
     });
 
-    it('[C268899] Should be possible use a Translation key as Title of a metadata group' , () => {
+    it('[C268899] Should be possible use a Translation key as Title of a metadata group', () => {
 
         configEditorPage.enterConfiguration('{' +
             '  "presets": {' +
@@ -251,7 +252,7 @@ describe('Aspect oriented config', () => {
 
     });
 
-    it('[C279968] Should be possible use a custom preset' , () => {
+    it('[C279968] Should be possible use a custom preset', () => {
 
         configEditorPage.enterConfiguration('{' +
             '    "presets": {' +

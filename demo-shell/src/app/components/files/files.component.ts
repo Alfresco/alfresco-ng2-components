@@ -579,7 +579,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             width: '400px'
         });
 
-        dialogInstance.componentInstance.error.subscribe(message => {
+        dialogInstance.componentInstance.error.subscribe((message) => {
             this.notificationService.openSnackMessage(
                 message,
                 6000

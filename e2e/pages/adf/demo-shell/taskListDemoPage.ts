@@ -16,8 +16,7 @@
  */
 
 import Util = require('../../../util/util');
-import DataTable = require('../dataTablePage');
-import TaskListPage = require('../process_services/tasksListPage');
+import { TaskListPage } from '../process_services/tasksListPage';
 import PaginationPage = require('../paginationPage');
 import { element, by } from 'protractor';
 
@@ -178,9 +177,9 @@ export class TaskListDemoPage {
         return this.dueBefore.getAttribute('value');
     }
 
-    clearText(input) { 
+    clearText(input) {
         Util.waitUntilElementIsVisible(input);
-        return input.clear(); 
+        return input.clear();
     }
 
     clickResetButton() {
