@@ -174,13 +174,13 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const trigger = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
-            trigger.click();
+            const stateElement = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
+            stateElement.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-id');
-                const inquiryOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                inquiryOptions[3].nativeElement.click();
+                const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                options[3].nativeElement.click();
                 fixture.detectChanges();
                 expect(saveButton.disabled).toBe(false);
             });
@@ -190,13 +190,13 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const trigger = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
-            trigger.click();
+            const stateElement = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
+            stateElement.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 let deleteButton = fixture.debugElement.nativeElement.querySelector('#adf-delete-id');
-                const inquiryOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                inquiryOptions[3].nativeElement.click();
+                const statusOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                statusOptions[3].nativeElement.click();
                 fixture.detectChanges();
                 expect(deleteButton.disabled).toBe(false);
             });
@@ -206,12 +206,12 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const trigger = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
-            trigger.click();
+            const stateElement = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
+            stateElement.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const inquiryOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                expect(inquiryOptions.length).toEqual(8);
+                const statusOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                expect(statusOptions.length).toEqual(7);
             });
         });
 
@@ -219,12 +219,12 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const trigger = fixture.debugElement.query(By.css('#adf-task-filter-sort-id .mat-select-trigger')).nativeElement;
-            trigger.click();
+            const sortElement = fixture.debugElement.query(By.css('#adf-task-filter-sort-id .mat-select-trigger')).nativeElement;
+            sortElement.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const inquiryOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                expect(inquiryOptions.length).toEqual(6);
+                const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                expect(sortOptions.length).toEqual(5);
             });
         });
 
@@ -232,12 +232,12 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const trigger = fixture.debugElement.query(By.css('#adf-task-filter-order-id .mat-select-trigger')).nativeElement;
-            trigger.click();
+            const orderElement = fixture.debugElement.query(By.css('#adf-task-filter-order-id .mat-select-trigger')).nativeElement;
+            orderElement.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const inquiryOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                expect(inquiryOptions.length).toEqual(3);
+                const orderOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                expect(orderOptions.length).toEqual(2);
             });
         });
     });
@@ -254,13 +254,13 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const trigger = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
-            trigger.click();
+            const stateElement = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
+            stateElement.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-id');
-                const inquiryOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                inquiryOptions[3].nativeElement.click();
+                const stateOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                stateOptions[3].nativeElement.click();
                 fixture.detectChanges();
                 saveButton.click();
                 fixture.detectChanges();
@@ -273,8 +273,8 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const trigger = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
-            trigger.click();
+            const stateElement = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
+            stateElement.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 let deleteButton = fixture.debugElement.nativeElement.querySelector('#adf-delete-id');
@@ -289,13 +289,13 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const trigger = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
-            trigger.click();
+            const stateElement = fixture.debugElement.query(By.css('#adf-task-filter-state-id .mat-select-trigger')).nativeElement;
+            stateElement.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-as-id');
-                const inquiryOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                inquiryOptions[3].nativeElement.click();
+                const stateOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                stateOptions[3].nativeElement.click();
                 fixture.detectChanges();
                 saveButton.click();
                 fixture.detectChanges();

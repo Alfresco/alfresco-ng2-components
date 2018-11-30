@@ -38,7 +38,6 @@
                 </mat-form-field>
                 <mat-form-field [floatLabel]="'auto'" fxFlex>
                     <mat-select placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COLUMN' | translate}}" formControlName="sort" id="adf-task-filter-sort-id">
-                        <mat-option [value]="''">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.COLUMN' | translate}}</mat-option>
                         <mat-option *ngFor="let column of columns" [value]="column.key">
                             {{ column.label }}
                         </mat-option>
@@ -46,7 +45,6 @@
                 </mat-form-field>
                 <mat-form-field [floatLabel]="'auto'" fxFlex>
                     <mat-select placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DIRECTION' | translate}}" formControlName="order" id="adf-task-filter-order-id">
-                        <mat-option [value]="''">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.DIRECTION' | translate}}</mat-option>
                         <mat-option *ngFor="let direction of directions" [value]="direction">
                             {{ direction }}
                         </mat-option>
