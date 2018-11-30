@@ -3,7 +3,7 @@
     <form [formGroup]="processListForm">
         <mat-form-field>
             <mat-label>App Id</mat-label>
-            <input
+            <input data-automation-id="app-id"
                 matInput
                 [formControl]="processAppId">
             <mat-error *ngIf="processAppId.hasError('required')">
@@ -19,7 +19,7 @@
 
         <mat-form-field>
             <mat-label>ProcessInstanceId</mat-label>
-            <input
+            <input data-automation-id="process-instance-id"
                 matInput
                 class="form-control"
                 [formControl]="processInstanceId">
@@ -28,7 +28,7 @@
 
         <mat-form-field>
             <mat-label>ProcessDefinitionId</mat-label>
-            <input
+            <input data-automation-id="process-definition-id"
                 matInput
                 [formControl]="processDefinitionId">
             <mat-hint>SimpleProcess:1:2</mat-hint>
