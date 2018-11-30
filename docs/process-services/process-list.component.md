@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-05-24
 ---
 
-# Process Instance List
+# [Process Instance List](../../lib/process-services/process-list/components/process-list.component.ts "Defined in process-list.component.ts")
 
 Renders a list containing all the process instances matched by the parameters specified.
 

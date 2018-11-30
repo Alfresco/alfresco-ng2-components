@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-16
 ---
 
-# Task Filters component
+# [Task Filters component](../../lib/process-services/task-list/components/task-filters.component.ts "Defined in task-filters.component.ts")
 
 Shows all available filters.
 
@@ -54,9 +54,3 @@ as the value of `filterParam` as shown in the table below:
 | id | string | The id of the task filter |
 | name | string | The name of the task filter, lowercase is checked |
 | index | string | The zero-based position of the filter in the array. |
-
-### How to create an accordion menu with the task filter
-
-The task filter often works well as an item in an accordion menu. See the
-[Accordion component](../core/accordion.component.md)
-page for an example of how to set this up.

@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# Create Process Attachment component
+# [Create Process Attachment component](../../lib/process-services/attachment/create-process-attachment.component.ts "Defined in create-process-attachment.component.ts")
 
 Displays Upload Component (Drag and Click) to upload the attachment to a specified process instance
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-04-16
 ---
 
-# Task List component
+# [Task List component](../../lib/process-services/task-list/components/task-list.component.ts "Defined in task-list.component.ts")
 
 Renders a list containing all the tasks matched by the parameters specified.
 

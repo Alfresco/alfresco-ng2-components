@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Process Filter Service
+# [Process Filter Service](../../lib/process-services/process-list/services/process-filter.service.ts "Defined in process-filter.service.ts")
 
 Manage Process Filters, which are pre-configured Process Instance queries. 
 

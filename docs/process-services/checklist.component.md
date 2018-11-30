@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# Checklist Component
+# [Checklist Component](../../lib/process-services/task-list/components/checklist.component.ts "Defined in checklist.component.ts")
 
 Shows the checklist task functionality.
 
