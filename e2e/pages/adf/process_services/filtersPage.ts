@@ -25,7 +25,7 @@ export class FiltersPage {
     nameColumn = by.css('div[class*="adf-datatable-body"] div[class*="adf-datatable-row"] div[class*="--text"] span');
     contentList = new ContentList();
 
-    getActiveFilter = function () {
+    getActiveFilter() {
         Util.waitUntilElementIsVisible(this.activeFilter);
         return this.activeFilter.getText();
     }
