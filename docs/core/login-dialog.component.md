@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-10-02
 ---
 
-# Login Dialog component
+# [Login Dialog component](../../lib/core/login/components/login-dialog.component.ts "Defined in login-dialog.component.ts")
 
 Allows a user to perform a login via a dialog.
 

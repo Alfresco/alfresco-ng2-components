@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# Bpm User model
+# [Bpm User model](../../lib/core/userinfo/models/bpm-user.model.ts "Defined in bpm-user.model.ts")
 
 Contains information about a Process Services user.
 
@@ -12,7 +12,7 @@ Contains information about a Process Services user.
 
 Instances of this class are returned by the methods of the
 [Bpm User service](bpm-user.service.md). It implements the
-`UserRepresentation` interface, which is defined in the
+[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-activiti-rest-api/docs/UserRepresentation.md) interface, which is defined in the
 [Alfresco JS API](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/UserRepresentation.md).
 
 Note that the Typescript class for this model is in active development;

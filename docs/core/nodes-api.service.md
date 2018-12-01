@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Nodes Api service
+# [Nodes Api service](../../lib/core/services/nodes-api.service.ts "Defined in nodes-api.service.ts")
 
 Accesses and manipulates ACS document nodes using their node IDs.
 

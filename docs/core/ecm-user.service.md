@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# Ecm User service
+# [Ecm User service](../../lib/core/userinfo/services/ecm-user.service.ts "Defined in ecm-user.service.ts")
 
 Gets information about a Content Services user.
 

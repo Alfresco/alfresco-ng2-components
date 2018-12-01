@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# Page Title service
+# [Page Title service](../../lib/core/services/page-title.service.ts "Defined in page-title.service.ts")
 
 Sets the page title.
 

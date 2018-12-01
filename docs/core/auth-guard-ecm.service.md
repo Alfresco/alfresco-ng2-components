@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Auth Guard Ecm service
+# [Auth Guard Ecm service](../../lib/core/services/auth-guard-ecm.service.ts "Defined in auth-guard-ecm.service.ts")
 
 Adds authentication with Content Services to a route within the app.
 

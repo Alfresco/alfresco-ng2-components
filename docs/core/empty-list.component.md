@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# Empty list component
+# [Empty list component](../../lib/core/datatable/components/datatable/empty-list.component.ts "Defined in empty-list.component.ts")
 
 Displays a message indicating that a list is empty.
 
@@ -41,15 +41,6 @@ sub-components:
 
 ## Class members
 
-### Properties
-
-| Name | Type | Default value | Description |
-| ---- | ---- | ------- | ----------- |
-| emptyListImageUrl | `string` | "empty_doc_lib.svg" | The default image used as the background |
-| emptyMsg | `string` | "This list is empty" | The default title message |
-| dragDropMsg | `string` | "Drag and drop" | The default drag and drop message |
-| additionalMsg | `string` | "Drag and drop" | The default additional message |
-
 ## Details
 
 This component provides a custom display to show when a [Datatable component](datatable.component.md) has
@@ -57,4 +48,4 @@ no content.
 
 ## See also
 
-- [Datatable component](datatable.component.md)
+-   [Datatable component](datatable.component.md)

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-04-06
 ---
 
-# People Content service
+# [People Content service](../../lib/core/services/people-content.service.ts "Defined in people-content.service.ts")
 
 Gets information about a Content Services user.  
 

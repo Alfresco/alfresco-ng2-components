@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-04-12
 ---
 
-# Comment Content service
+# [Comment Content service](../../lib/core/services/comment-content.service.ts "Defined in comment-content.service.ts")
 
 Adds and retrieves comments for nodes in Content Services.
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-09
 ---
 
-# Language Menu component
+# [Language Menu component](../../lib/core/language-menu/language-menu.component.ts "Defined in language-menu.component.ts")
 
 Displays all the languages that are present in "app.config.json" and the default (EN).
 

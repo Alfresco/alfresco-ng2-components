@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-05-09
 ---
 
-# Card View component
+# [Card View component](../../lib/core/card-view/components/card-view/card-view.component.ts "Defined in card-view.component.ts")
 
 Displays a configurable property list renderer.
 
@@ -98,7 +98,7 @@ Defining properties from Typescript:
 | ---- | ---- | ------------- | ----------- |
 | displayEmpty | `boolean` | true | Toggles whether or not to show empty items in non-editable mode. |
 | editable | `boolean` |  | Toggles whether or not the items can be edited. |
-| properties | `CardViewItem[]` |  | (**required**) Items to show in the card view. |
+| properties | [`CardViewItem`](../../lib/core/card-view/interfaces/card-view-item.interface.ts)`[]` |  | (**required**) Items to show in the card view. |
 
 ## Details
 
@@ -139,7 +139,7 @@ You can optionally set up the card view so that its properties can be edited. Yo
 the editing of properties at two levels:
 
 -   **Global level** - _via the editable parameter of the card-view.component_
--   **Property level** -  _in each property via the editable attribute_
+-   **[`Property`](../../lib/content-services/content-metadata/interfaces/property.interface.ts) level** -  _in each property via the editable attribute_
 
 If you set the global editable parameter to false, no properties can be edited regardless of their
 individual `editable` settings.
@@ -175,7 +175,7 @@ const textItemProperty = new CardViewTextItemModel(options);
 | clickable | boolean | false | Toggles whether the property responds to clicks |
 | icon | string |  | The material icon to show beside the item if it is clickable |
 | multiline | boolean | false | Single or multiline text |
-| pipes | CardViewTextItemPipeProperty\[] | \[] | Pipes to be applied to the text before display |
+| pipes | [`CardViewTextItemPipeProperty`](../../lib/core/card-view/interfaces/card-view-textitem-pipe-property.interface.ts)\[] | \[] | Pipes to be applied to the text before display |
 
 ##### Using pipes with a Card Text Item
 
@@ -330,7 +330,7 @@ const selectItemProperty = new CardViewSelectItemModel(options);
 | key\* | string |  | Identifying key (important when editing the item) |
 | editable | boolean | false | Toggles whether the item is editable |
 | value | string |  | The original data value for the item |
-| options$\* | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;CardViewSelectItemOption\[]> |  | The original data value for the item |
+| options$\* | [`Observable`](http://reactivex.io/documentation/observable.html)&lt;[`CardViewSelectItemOption`](../../lib/core/card-view/interfaces/card-view-selectitem-properties.interface.ts)\[]> |  | The original data value for the item |
 
 ## See also
 

@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# Comments Component
+# [Comments Component](../../lib/core/comments/comments.component.ts "Defined in comments.component.ts")
 
 Displays comments from users involved in a specified task or content and allows an involved user to add a comment to a task or a content.
 

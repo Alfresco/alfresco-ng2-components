@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-05-04
 ---
 
-# Favorites Api service
+# [Favorites Api service](../../lib/core/services/favorites-api.service.ts "Defined in favorites-api.service.ts")
 
 Gets a list of items a user has marked as their favorites.
 
@@ -16,7 +16,7 @@ Gets a list of items a user has marked as their favorites.
 -   **getFavorites**(personId: `string`, options?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
     Gets the favorites for a user.
     -   _personId:_ `string`  - ID of the user
-    -   _options:_ `any`  - (Optional) Options supported by JSAPI
+    -   _options:_ `any`  - (Optional) Options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of favorites
 -   **remapFavoriteEntries**(entries: `any[]`): `any[]`<br/>
 

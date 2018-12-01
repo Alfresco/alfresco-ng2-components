@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# Buttons Menu Component
+# [Buttons Menu Component](../../lib/core/buttons-menu/buttons-menu.component.ts "Defined in buttons-menu.component.ts")
 
 Displays buttons on a responsive menu. 
 
@@ -39,7 +39,7 @@ They also make use of the Angular material directive `mat-menu-item`.
         <span> label </span>
 </button>
 ```
- 
+
 ## Details
 
 This component is fully responsive and it will display one of two different layouts
@@ -55,4 +55,3 @@ depending on the screen size:
 
 The component has a property called `isMenuEmpty` that you can access from code. If this is
 set to true then the component will not show an empty menu with no buttons defined.
-

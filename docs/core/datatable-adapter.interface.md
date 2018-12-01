@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# DataTableAdapter interface
+# [DataTableAdapter interface](../../lib/core/datatable/data/datatable-adapter.ts "Defined in datatable-adapter.ts")
 
 Defines how table data is supplied to [DataTable](datatable.component.md)
 and [Tasklist](../process-services/task-list.component.md) components.
@@ -13,7 +13,7 @@ and [Tasklist](../process-services/task-list.component.md) components.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| selectedRow | DataRow | The data for the currently selected row. |
+| selectedRow | [`DataRow`](../../lib/core/datatable/data/data-row.model.ts) | The data for the currently selected row. |
 
 ## Events
 
@@ -31,10 +31,10 @@ Get/set the values for display in the table using an array of rows.
 [`setColumns(columns: Array<DataColumn>): void;`](../../lib/core/datatable/data/data-column.model.ts)<br/>
 Get/set an array of column specifications.
 
-`getValue(row: `[`DataRow,`](../../lib/core/datatable/data/data-row.model.ts)` col: DataColumn): any;`<br/>
+`getValue(row:`[`DataRow,`](../../lib/core/datatable/data/data-row.model.ts)`col: DataColumn): any;`<br/>
 Get the data value from a specific table cell.
 
-`getSorting(): `[`DataSorting`](../../lib/core/datatable/data/data-sorting.model.ts)`;`<br/>
+`getSorting():`[`DataSorting`](../../lib/core/datatable/data/data-sorting.model.ts)`;`<br/>
 `setSorting(sorting: DataSorting): void;`<br/>
 Get/set the sorting key and direction (ascending or descending).
 

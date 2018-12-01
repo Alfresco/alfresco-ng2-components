@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Sites service
+# [Sites service](../../lib/core/services/sites.service.ts "Defined in sites.service.ts")
 
 Accesses and manipulates sites from a Content Services repository.
 
@@ -42,8 +42,6 @@ Accesses and manipulates sites from a Content Services repository.
 ## Details
 
 You can use `getSites` to get a list of all sites in the repository.
-The sites are returned as [`Observable`](http://reactivex.io/documentation/observable.html)`<SiteModel[]>` (see
-[Site Model](site.model.md) for more information about this class).
 If you are only interested in a single site and you have its ID, you
 can use `getSite` to access it. Alternatively, you can use `getSiteContent`
 or `getSiteMembers` to extract just the `contents` and `members` properties
@@ -59,7 +57,3 @@ options. See the Alfresco JS API docs about
 and
 [getSite](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitesApi.md#getSite)
 for more information about the available options.
-
-## See also
-
--   [Site model](site.model.md)

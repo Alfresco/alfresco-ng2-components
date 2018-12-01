@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# Card View Update service
+# [Card View Update service](../../lib/core/card-view/services/card-view-update.service.ts "Defined in card-view-update.service.ts")
 
 Reports edits and clicks within fields of a [Card View component](../core/card-view.component.md).
 

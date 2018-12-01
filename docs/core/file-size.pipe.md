@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# File Size pipe
+# [File Size pipe](../../lib/core/pipes/file-size.pipe.ts "Defined in file-size.pipe.ts")
 
 Converts a number of bytes to the equivalent in KB, MB, etc.
 
