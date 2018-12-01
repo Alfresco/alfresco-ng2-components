@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import CreateFolderDialog = require('../../pages/adf/dialog/createFolderDialog');
+import { CreateFolderDialog } from '../../pages/adf/dialog/createFolderDialog';
 import { NotificationPage } from '../../pages/adf/notificationPage';
 import MetadataViewPage = require('../../pages/adf/metadataViewPage');
 import ContentListPage = require('../../pages/adf/dialog/contentList');

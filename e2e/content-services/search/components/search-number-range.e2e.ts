@@ -403,7 +403,7 @@ describe('Search Number Range Filter', () => {
             navigationBar.clickConfigEditorButton();
             configEditor.clickSearchConfiguration();
             configEditor.clickClearButton();
-            configEditor.enterConfiguration(JSON.stringify(jsonFile)).clickSaveButton();
+            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -448,7 +448,7 @@ describe('Search Number Range Filter', () => {
             navigationBar.clickConfigEditorButton();
             configEditor.clickSearchConfiguration();
             configEditor.clickClearButton();
-            configEditor.enterConfiguration(JSON.stringify(jsonFile)).clickSaveButton();
+            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -485,7 +485,7 @@ describe('Search Number Range Filter', () => {
             navigationBar.clickConfigEditorButton();
             configEditor.clickSearchConfiguration();
             configEditor.clickClearButton();
-            configEditor.enterConfiguration(JSON.stringify(jsonFile)).clickSaveButton();
+            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
 
             searchDialog.checkSearchIconIsVisible()
                 .clickOnSearchIcon()

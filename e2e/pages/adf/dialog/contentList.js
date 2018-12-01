@@ -24,6 +24,7 @@ var ContentList = function () {
     var versionManagerAction = element(by.css("button[data-automation-id*='VERSIONS']"));
     var moveContent = element(by.css("button[data-automation-id*='MOVE']"));
     var copyContent = element(by.css("button[data-automation-id*='COPY']"));
+    var lockContent = element(by.css("button[data-automation-id='DOCUMENT_LIST.ACTIONS.LOCK']"));
     var downloadContent = element(by.css("button[data-automation-id*='DOWNLOAD']"));
     var actionMenu = element(by.css("div[role='menu']"));
     var optionButton = by.css("button[data-automation-id*='action_menu_']");
@@ -45,7 +46,7 @@ var ContentList = function () {
     };
 
     this.getRowsName = function (content) {
-        var row = element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + content + "']")).first();
+        var row = element.all(by.css(`#document-list-container  div[filename="${content}"]`)).first();
         Util.waitUntilElementIsVisible(row);
         return row;
     };
@@ -115,6 +116,11 @@ var ContentList = function () {
     this.copyContent = function (content) {
         this.clickOnActionMenu(content);
         copyContent.click();
+    };
+
+    this.lockContent = function (content) {
+        this.clickOnActionMenu(content);
+        lockContent.click();
     };
 
     this.waitForContentOptions = function () {
@@ -309,14 +315,8 @@ var ContentList = function () {
     };
 
     this.checkContentIsNotDisplayed = function (filename) {
-        Util.waitUntilElementIsNotVisible(element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + filename + "']")).first());
+        Util.waitUntilElementIsNotVisible(element.all(by.css(`#document-list-container  div[filename="${filename}"]`)).first());
         return this;
-    };
-
-    this.getNodeIdByFilename = function (filename) {
-        var nodeIdColumn = element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + filename + "' and @title='Node id']"));
-        var text = nodeIdColumn.getText();
-        return text;
     };
 
     this.getAllNodeIdInList = async function (filename) {
@@ -365,13 +365,6 @@ var ContentList = function () {
         let row = this.getRowByRowName(rowName);
         browser.actions().keyDown(protractor.Key.COMMAND).click(row).perform();
         this.checkRowIsSelected(rowName);
-        return this;
-    };
-
-    this.clickContentLockIcon = function (content) {
-        var lockIcon = element(by.css('div[filename="' + content + '"] button'));
-        Util.waitUntilElementIsClickable(lockIcon);
-        lockIcon.click();
         return this;
     };
 

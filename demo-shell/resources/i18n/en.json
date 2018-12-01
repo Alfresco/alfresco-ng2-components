@@ -147,6 +147,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Manage versions",
+      "LOCK": "Lock",
       "METADATA": "Info",
       "DOWNLOAD": "Download",
       "PERMISSION": "Permission",

@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
+import TestConfig = require('../../test.config');
 import Util = require('../../util/util');
 import ContentList = require('./dialog/contentList');
-import CreateFolderDialog = require('./dialog/createFolderDialog');
-import TestConfig = require('../../test.config');
+import { CreateFolderDialog } from './dialog/createFolderDialog';
 import { NavigationBarPage } from './navigationBarPage';
 import { by, element, protractor, $$, browser } from 'protractor';
 
@@ -31,7 +31,7 @@ export class ContentServicesPage {
     uploadBorder = element(by.id('document-list-container'));
     tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
     contentServices = element(by.css('a[data-automation-id="Content Services"]'));
-    currentFolder = element(by.css('div[class*="adf-breadcrumb-item active"] div'));
+    currentFolder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
     createFolderButton = element(by.css('button[data-automation-id="create-new-folder"]'));
     activeBreadcrumb = element(by.css('div[class*="active"]'));
     uploadFileButton = element(by.css('input[data-automation-id="upload-single-file"]'));

@@ -128,7 +128,7 @@ describe('Lock File', () => {
         });
 
         it('[C286604] Should be able to open Lock file option by clicking the lock image', () => {
-            contentList.clickContentLockIcon(pngFileModel.name);
+            contentList.lockContent(pngFileModel.name);
 
             lockFilePage.checkLockFileCheckboxIsDisplayed();
             lockFilePage.checkCancelButtonIsDisplayed();
@@ -136,7 +136,7 @@ describe('Lock File', () => {
         });
 
         it('[C286625] Should be able to click Cancel to cancel lock file operation', () => {
-            contentList.clickContentLockIcon(pngFileModel.name);
+            contentList.lockContent(pngFileModel.name);
 
             lockFilePage.checkLockFileCheckboxIsDisplayed();
             lockFilePage.clickCancelButton();
@@ -145,7 +145,7 @@ describe('Lock File', () => {
         });
 
         it('[C286603] Should be able to click on Lock file checkbox and lock a file', () => {
-            contentList.clickContentLockIcon(pngFileToLock.name);
+            contentList.lockContent(pngFileToLock.name);
 
             lockFilePage.checkLockFileCheckboxIsDisplayed();
             lockFilePage.clickLockFileCheckbox();
@@ -155,14 +155,14 @@ describe('Lock File', () => {
         });
 
         it('[C286618] Should be able to uncheck Lock file checkbox and unlock a file', () => {
-            contentList.clickContentLockIcon(pngFileModel.name);
+            contentList.lockContent(pngFileModel.name);
 
             lockFilePage.checkLockFileCheckboxIsDisplayed();
             lockFilePage.clickLockFileCheckbox();
             lockFilePage.clickSaveButton();
 
             contentList.checkLockedIcon(pngFileModel.name);
-            contentList.clickContentLockIcon(pngFileModel.name);
+            contentList.lockContent(pngFileModel.name);
 
             lockFilePage.clickLockFileCheckbox();
             lockFilePage.clickSaveButton();
@@ -197,7 +197,7 @@ describe('Lock File', () => {
         });
 
         it('[C286610] Should not be able to delete a locked file', async () => {
-            await contentList.clickContentLockIcon(pngFileModel.name);
+            await contentList.lockContent(pngFileModel.name);
 
             await lockFilePage.checkLockFileCheckboxIsDisplayed();
             await lockFilePage.clickLockFileCheckbox();
@@ -213,7 +213,7 @@ describe('Lock File', () => {
         });
 
         it('[C286611] Should not be able to rename a locked file', async () => {
-            await contentList.clickContentLockIcon(pngFileModel.name);
+            await contentList.lockContent(pngFileModel.name);
 
             await lockFilePage.checkLockFileCheckboxIsDisplayed();
             await lockFilePage.clickLockFileCheckbox();
@@ -229,7 +229,7 @@ describe('Lock File', () => {
         });
 
         it('[C286612] Should not be able to move a locked file', async () => {
-            await contentList.clickContentLockIcon(pngFileModel.name);
+            await contentList.lockContent(pngFileModel.name);
 
             await lockFilePage.checkLockFileCheckboxIsDisplayed();
             await lockFilePage.clickLockFileCheckbox();
@@ -244,7 +244,7 @@ describe('Lock File', () => {
         });
 
         it('[C286613] Should not be able to update a new version on a locked file', async () => {
-            await contentList.clickContentLockIcon(pngFileModel.name);
+            await contentList.lockContent(pngFileModel.name);
 
             await lockFilePage.checkLockFileCheckboxIsDisplayed();
             await lockFilePage.clickLockFileCheckbox();
@@ -292,7 +292,7 @@ describe('Lock File', () => {
         });
 
         it('[C286614] Owner of the locked file should be able to rename if "Allow owner to modify" is checked', async () => {
-            await contentList.clickContentLockIcon(pngFileModel.name);
+            await contentList.lockContent(pngFileModel.name);
 
             await lockFilePage.checkLockFileCheckboxIsDisplayed();
             await lockFilePage.clickLockFileCheckbox();
@@ -305,7 +305,7 @@ describe('Lock File', () => {
         });
 
         it('[C286615] Owner of the locked file should be able to update a new version if "Allow owner to modify" is checked', async () => {
-            await contentList.clickContentLockIcon(pngFileModel.name);
+            await contentList.lockContent(pngFileModel.name);
 
             await lockFilePage.checkLockFileCheckboxIsDisplayed();
             await lockFilePage.clickLockFileCheckbox();
@@ -318,7 +318,7 @@ describe('Lock File', () => {
         });
 
         it('[C286616] Owner of the locked file should be able to move if "Allow owner to modify" is checked', async () => {
-            await contentList.clickContentLockIcon(pngFileModel.name);
+            await contentList.lockContent(pngFileModel.name);
 
             await lockFilePage.checkLockFileCheckboxIsDisplayed();
             await lockFilePage.clickLockFileCheckbox();
@@ -339,7 +339,7 @@ describe('Lock File', () => {
 
             navigationBarPage.openContentServicesFolder(documentLibrary);
 
-            await contentList.clickContentLockIcon(pngFileToLock.name);
+            await contentList.lockContent(pngFileToLock.name);
 
             await lockFilePage.checkLockFileCheckboxIsDisplayed();
             await lockFilePage.clickLockFileCheckbox();

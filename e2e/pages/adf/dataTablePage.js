@@ -336,11 +336,11 @@ var DataTablePage = function (rootElement = element(by.css("adf-datatable"))) {
     };
 
     this.checkRowIsDisplayedByName = function (name) {
-        Util.waitUntilElementIsVisible(element(by.css("div[filename='"+name+"']")));
+        Util.waitUntilElementIsVisible(element.all(by.css("div[filename='"+name+"']")).first());
     };
 
     this.checkRowIsNotDisplayedByName = function (taskName) {
-        Util.waitUntilElementIsNotOnPage(element(by.css("div[filename='"+taskName+"']")));
+        Util.waitUntilElementIsNotOnPage(element.all(by.css("div[filename='"+taskName+"']")).first());
     };
 
     this.getNumberOfRowsDisplayedWithSameName = function (taskName) {

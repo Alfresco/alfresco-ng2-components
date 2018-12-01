@@ -379,7 +379,6 @@
                         target="document" 
                         *ngIf="authenticationService.isBpmLoggedIn()"
                         icon="play_arrow"
-                        target="document" 
                         title="DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION"
                         (execute)="startProcessAction($event)">
                     </content-action>
@@ -388,7 +387,7 @@
                         icon="lock"
                         permission="lock"
                         handler="lock"
-                        title="Lock">
+                        title="DOCUMENT_LIST.ACTIONS.LOCK">
                     </content-action>
                 </content-actions>
             </adf-document-list>

@@ -20,7 +20,7 @@ import StartTaskDialog = require('./dialog/startTaskDialog');
 import FormFields = require('./formFields');
 import { TaskDetailsPage } from './taskDetailsPage';
 
-import FiltersPage = require('./filtersPage');
+import { FiltersPage } from './filtersPage';
 import ChecklistDialog = require('./dialog/createChecklistDialog');
 import { TasksListPage } from './tasksListPage';
 import { element, by } from 'protractor';
