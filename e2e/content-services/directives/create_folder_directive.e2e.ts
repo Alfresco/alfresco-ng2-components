@@ -65,7 +65,6 @@ describe('Create folder directive', function () {
 
     afterEach(async (done) => {
         await browser.actions().sendKeys(Key.ESCAPE).perform();
-        browser.refresh();
         done();
     });
 

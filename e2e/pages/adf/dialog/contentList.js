@@ -46,7 +46,7 @@ var ContentList = function () {
     };
 
     this.getRowsName = function (content) {
-        var row = element.all(by.css(`#document-list-container  div[filename="${content}"]`)).first();
+        var row = element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + content + "']")).first();
         Util.waitUntilElementIsVisible(row);
         return row;
     };
@@ -315,8 +315,14 @@ var ContentList = function () {
     };
 
     this.checkContentIsNotDisplayed = function (filename) {
-        Util.waitUntilElementIsNotVisible(element.all(by.css(`#document-list-container  div[filename="${filename}"]`)).first());
+        Util.waitUntilElementIsNotVisible(element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + filename + "']")).first());
         return this;
+    };
+
+    this.getNodeIdByFilename = function (filename) {
+        var nodeIdColumn = element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + filename + "' and @title='Node id']"));
+        var text = nodeIdColumn.getText();
+        return text;
     };
 
     this.getAllNodeIdInList = async function (filename) {

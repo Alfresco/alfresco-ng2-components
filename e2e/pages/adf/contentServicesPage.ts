@@ -254,6 +254,7 @@ export class ContentServicesPage {
     createNewFolder(folder) {
         this.clickOnCreateNewFolder();
         this.createFolderDialog.addFolderName(folder);
+        browser.sleep(500);
         this.createFolderDialog.clickOnCreateButton();
         return this;
     }

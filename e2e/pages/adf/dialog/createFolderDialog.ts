@@ -50,7 +50,7 @@ export class CreateFolderDialog {
     addFolderName(folderName) {
         Util.waitUntilElementIsVisible(this.folderNameField);
         this.folderNameField.clear();
-        this.folderDescriptionField.sendKeys(folderName);
+        this.folderNameField.sendKeys(folderName);
         browser.driver.sleep(500);
         return this;
     }
