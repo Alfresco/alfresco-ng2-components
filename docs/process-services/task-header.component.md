@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Task Header component
+# [Task Header component](../../lib/process-services/task-list/components/task-header.component.ts "Defined in task-header.component.ts")
 
 Shows all the information related to a task.
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# Apps List Component
+# [Apps List Component](../../lib/process-services/app-list/apps-list.component.ts "Defined in apps-list.component.ts")
 
 Shows all available apps.
 

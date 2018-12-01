@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Start Process component
+# [Start Process component](../../lib/process-services/process-list/components/start-process.component.ts "Defined in start-process.component.ts")
 
 Starts a process.
 

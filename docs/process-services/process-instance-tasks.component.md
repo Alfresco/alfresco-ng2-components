@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# Process Instance Tasks component
+# [Process Instance Tasks component](../../lib/process-services/process-list/components/process-instance-tasks.component.ts "Defined in process-instance-tasks.component.ts")
 
 Lists both the active and completed tasks associated with a particular process instance
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# People list component
+# [People list component](../../lib/process-services/people/components/people-list/people-list.component.ts "Defined in people-list.component.ts")
 
 Shows a list of users (people).
 

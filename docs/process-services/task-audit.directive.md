@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# Task Audit Directive
+# [Task Audit Directive](../../lib/process-services/task-list/components/task-audit.directive.ts "Defined in task-audit.directive.ts")
 
 Fetches the Task Audit information in PDF or JSON format.
 

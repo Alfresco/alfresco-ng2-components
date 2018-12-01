@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-07
 ---
 
-# Task Filter Service
+# [Task Filter Service](../../lib/process-services/task-list/services/task-filter.service.ts "Defined in task-filter.service.ts")
 
 Manage Task Filters, which are pre-configured Task Instance queries. 
 
