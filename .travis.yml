@@ -1,5 +1,6 @@
 git:
   depth: 3
+  quiet: true
 language: node_js
 dist: trusty
 sudo: required

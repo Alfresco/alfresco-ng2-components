@@ -133,6 +133,7 @@ var ContentList = function () {
     this.clickOnActionMenu = function (content) {
         this.getRowByRowName(content).element(optionButton).click();
         Util.waitUntilElementIsVisible(actionMenu);
+        browser.sleep(500);
         return this;
     };
 
