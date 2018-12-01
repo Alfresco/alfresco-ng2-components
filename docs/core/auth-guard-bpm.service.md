@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Auth Guard Bpm service
+# [Auth Guard Bpm service](../../lib/core/services/auth-guard-bpm.service.ts "Defined in auth-guard-bpm.service.ts")
 
 Adds authentication with Process Services to a route within the app.
 

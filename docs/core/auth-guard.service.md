@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Auth Guard service
+# [Auth Guard service](../../lib/core/services/auth-guard.service.ts "Defined in auth-guard.service.ts")
 
 Adds authentication to a route within the app.
 

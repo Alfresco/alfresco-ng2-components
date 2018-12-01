@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-09-13
 ---
 
-# Error Content Component
+# [Error Content Component](../../lib/core/templates/error-content/error-content.component.ts "Defined in error-content.component.ts")
 
 Displays info about a specific error.
 

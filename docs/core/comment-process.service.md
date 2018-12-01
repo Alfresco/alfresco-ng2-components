@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# Comment Process service
+# [Comment Process service](../../lib/core/services/comment-process.service.ts "Defined in comment-process.service.ts")
 
 Adds and retrieves comments for task and process instances in Process Services.
 

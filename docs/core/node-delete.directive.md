@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Node Delete directive
+# [Node Delete directive](../../lib/core/directives/node-delete.directive.ts "Defined in node-delete.directive.ts")
 
 Deletes multiple files and folders.
 

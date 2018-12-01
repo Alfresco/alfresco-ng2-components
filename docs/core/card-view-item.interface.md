@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-05-08
 ---
 
-# Card View Item interface
+# [Card View Item interface](../../lib/core/card-view/interfaces/card-view-item.interface.ts "Defined in card-view-item.interface.ts")
 
 Defines the implementation of an item in a [Card View component](../core/card-view.component.md).
 

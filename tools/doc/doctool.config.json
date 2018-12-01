@@ -5,6 +5,7 @@
             "versionIndex",
             "tutorialIndex",
             "tsInfo",
+            "sourceLinker",
             "typeLinker",
             "toc"
         ],
@@ -15,6 +16,7 @@
         ],
         "enhance": [
             "tsInfo",
+            "sourceLinker",
             "typeLinker",
             "toc"
         ],
@@ -51,21 +53,31 @@
         "UserRepresentation": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-activiti-rest-api/docs/UserRepresentation.md"
     },
     "typeNameExceptions": {
+        "activiti-alfresco.service": "ActivitiContentService",
+        "auth-guard-bpm.service": "AuthGuardBpm",
+        "auth-guard-ecm.service": "AuthGuardEcm",
+        "auth-guard.service": "AuthGuard",
+        "card-item-types.service": "CardItemTypeService",
+        "card-view-item.interface": "CardViewItem",
         "content-node-share.directive": "NodeSharedDirective",
         "content.widget": "ContentWidgetComponent",
+        "create-task-attachment.component": "AttachmentComponent",
+        "datatable-adapter.interface": "DataTableAdapter",
         "datatable.component": "DataTableComponent",
         "document-library.model": "NodePaging",
-        "tasklist.service": "TaskListService",
-        "text-mask.component": "InputMaskDirective",
-        "card-item-types.service": "CardItemTypeService",
-        "create-task-attachment.component": "AttachmentComponent",
+        "form-field-validator.interface": "FormFieldValidator",
         "header.component": "HeaderLayoutComponent",
-        "process-list.component": "ProcessInstanceListComponent",
         "inherited-button.directive": "InheritPermissionDirective",
         "permissions-style.model": "PermissionStyleModel",
+        "process-list.component": "ProcessInstanceListComponent",
+        "product-version.model": "BpmProductVersionModel",
         "search-widget.interface": "SearchWidget",
         "sites-dropdown.component": "DropdownSitesComponent",
-        "start-process.component": "StartProcessInstanceComponent"
+        "start-process.component": "StartProcessInstanceComponent",
+        "tasklist.service": "TaskListService",
+        "text-highlight.pipe": "HighlightPipe",
+        "text-mask.component": "InputMaskDirective",
+        "user-initial.pipe": "InitialUsernamePipe"
     },
     "undocStoplist": [
         "model",

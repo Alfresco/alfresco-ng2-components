@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Login component
+# [Login component](../../lib/core/login/components/login.component.ts "Defined in login.component.ts")
 
 Authenticates to Alfresco Content Services and Alfresco Process Services.
 

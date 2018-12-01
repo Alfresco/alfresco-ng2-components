@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Form List Component
+# [Form List Component](../../lib/core/form/components/form-list.component.ts "Defined in form-list.component.ts")
 
 Shows forms as a list.
 

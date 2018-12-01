@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Content service
+# [Content service](../../lib/core/services/content.service.ts "Defined in content.service.ts")
 
 Accesses app-generated data objects via URLs and file downloads.
 

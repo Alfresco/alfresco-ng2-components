@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# Sorting Picker Component
+# [Sorting Picker Component](../../lib/core/sorting-picker/sorting-picker.component.ts "Defined in sorting-picker.component.ts")
 
 Selects from a set of predefined sorting definitions and directions.
 

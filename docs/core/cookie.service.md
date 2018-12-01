@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Cookie service
+# [Cookie service](../../lib/core/services/cookie.service.ts "Defined in cookie.service.ts")
 
 Stores key-value data items as browser cookies.
 

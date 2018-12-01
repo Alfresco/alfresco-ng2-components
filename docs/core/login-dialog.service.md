@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-10-02
 ---
 
-# Login Dialog service
+# [Login Dialog service](../../lib/core/services/login-dialog.service.ts "Defined in login-dialog.service.ts")
 
 Manages login dialogs.
 
@@ -27,5 +27,5 @@ dialog directly from HTML.
 
 ## See also
 
-- [Login dialog component](login-dialog.component.md)
-- [Login component](login.component.md)
+-   [Login dialog component](login-dialog.component.md)
+-   [Login component](login.component.md)

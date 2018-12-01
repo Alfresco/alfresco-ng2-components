@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-09-13
 ---
 
-# Search Configuration service
+# [Search Configuration service](../../lib/core/services/search-configuration.service.ts "Defined in search-configuration.service.ts")
 
 Provides fine control of parameters to a search.
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-04-05
 ---
 
-# Deleted Nodes Api service
+# [Deleted Nodes Api service](../../lib/core/services/deleted-nodes-api.service.ts "Defined in deleted-nodes-api.service.ts")
 
 Gets a list of Content Services nodes currently in the trash.
 

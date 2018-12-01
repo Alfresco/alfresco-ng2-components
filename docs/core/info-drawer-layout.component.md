@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# Info drawer layout component
+# [Info drawer layout component](../../lib/core/info-drawer/info-drawer-layout.component.ts "Defined in info-drawer-layout.component.ts")
 
 Displays a sidebar-style information panel.
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Header component
+# [Header component](../../lib/core/layout/components/header/header.component.ts "Defined in header.component.ts")
 
 Reusable header for Alfresco applications.
 

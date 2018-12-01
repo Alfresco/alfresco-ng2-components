@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-10-02
 ---
 
-# Login Dialog Panel component
+# [Login Dialog Panel component](../../lib/core/login/components/login-dialog-panel.component.ts "Defined in login-dialog-panel.component.ts")
 
 Shows and manages a login dialog.
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# Time Ago pipe
+# [Time Ago pipe](../../lib/core/pipes/time-ago.pipe.ts "Defined in time-ago.pipe.ts")
 
 Converts a recent past date into a number of days ago.
 

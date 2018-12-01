@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# Log Service
+# [Log Service](../../lib/core/services/log.service.ts "Defined in log.service.ts")
 
 Provides log functionality.
 

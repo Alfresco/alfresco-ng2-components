@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# Process Content Service
+# [Process Content Service](../../lib/core/form/services/process-content.service.ts "Defined in process-content.service.ts")
 
 Manipulates content related to a Process Instance or Task Instance in APS.
 
@@ -16,14 +16,14 @@ Manipulates content related to a Process Instance or Task Instance in APS.
     Associates an uploaded file with a process instance.
     -   _processInstanceId:_ `string`  - ID of the target process instance
     -   _content:_ `any`  - File to associate
-    -   _opts:_ `any`  - (Optional) Options supported by JSAPI
+    -   _opts:_ `any`  - (Optional) Options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Details of created content
--   **createTaskRelatedContent**(taskId: `string`, file: `any`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **createTaskRelatedContent**(taskId: `string`, file: `any`, opts?: `any`): `any`<br/>
     Associates an uploaded file with a task instance.
     -   _taskId:_ `string`  - ID of the target task
     -   _file:_ `any`  - File to associate
-    -   _opts:_ `any`  - (Optional) Options supported by JSAPI
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Details of created content
+    -   _opts:_ `any`  - (Optional) Options supported by JS-API
+    -   **Returns** `any` - Details of created content
 -   **createTemporaryRawRelatedContent**(file: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RelatedContentRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md)`>`<br/>
     Create temporary related content from an uploaded file.
     -   _file:_ `any`  - File to use for content

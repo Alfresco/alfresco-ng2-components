@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-08
 ---
 
-# Info Drawer Tab component
+# [Info Drawer Tab component](../../lib/core/info-drawer/info-drawer.component.ts "Defined in info-drawer.component.ts")
 
 Renders tabs in a [Info drawer component](../core/info-drawer.component.md).
 
@@ -53,7 +53,7 @@ Render tab with icon instead of labels:
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | icon | `string` | null | Icon to render for the tab. |
-| label | `string` | "Main tab" | The title of the tab. |
+| label | `string` | "" | The title of the tab. |
 
 ## Details
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# Comment list component
+# [Comment list component](../../lib/core/comments/comment-list.component.ts "Defined in comment-list.component.ts")
 
 Shows a list of comments.
 

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# Text Mask directive
+# [Text Mask directive](../../lib/core/form/components/widgets/text/text-mask.component.ts "Defined in text-mask.component.ts")
 
 Implements text field input masks.
 

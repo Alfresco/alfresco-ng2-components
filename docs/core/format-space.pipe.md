@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-27
 ---
 
-# Format Space pipe
+# [Format Space pipe](../../lib/core/pipes/format-space.pipe.ts "Defined in format-space.pipe.ts")
 
 Replaces all the white space in a string with a supplied character.
 
@@ -30,4 +30,3 @@ becomes `test_a_pipe`).
 You can specify a different replacement character by passing it as a pipe parameter.
 You can also pass `false` to the `lowercase` parameter to skip the conversion to lowercase
 and just replace the whitespace.
-
