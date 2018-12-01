@@ -21,6 +21,7 @@ import CONSTANTS = require('../util/constants');
 
 import { LoginPage } from '../pages/adf/loginPage';
 
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksListPage } from '../pages/adf/process_services/tasksListPage';
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
 import FiltersPage = require('../pages/adf/process_services/filtersPage');
