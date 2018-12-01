@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Start Task Component
+# [Start Task Component](../../lib/process-services/task-list/components/start-task.component.ts "Defined in start-task.component.ts")
 
 Creates/Starts a new task for the specified app
 

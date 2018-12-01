@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# Task Details component
+# [Task Details component](../../lib/process-services/task-list/components/task-details.component.ts "Defined in task-details.component.ts")
 
 Shows the details of the task ID passed in as input.
 

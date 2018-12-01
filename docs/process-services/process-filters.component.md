@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-09-14
 ---
 
-# Process Filters Component
+# [Process Filters Component](../../lib/process-services/process-list/components/process-filters.component.ts "Defined in process-filters.component.ts")
 
 Collection of criteria used to filter process instances, which may be customized by users.
 
@@ -18,7 +18,6 @@ Collection of criteria used to filter process instances, which may be customized
 -   [Details](#details)
     -   [How filter the activiti process filters](#how-filter-the-activiti-process-filters)
     -   [FilterParamsModel](#filterparamsmodel)
-    -   [How to create an accordion menu with the processes filter](#how-to-create-an-accordion-menu-with-the-processes-filter)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -84,11 +83,6 @@ You can use inside the filterParam one of the properties defined by [`FilterPara
 | id | string | The id of the task filter. |
 | name | string | The name of the task filter, lowercase is checked. |
 | index | number | Zero-based position of the filter in the array. |
-
-### How to create an accordion menu with the processes filter
-
-The process filter often works well as an item in an accordion menu. See the [Accordion component](../core/accordion.component.md)
-page for an example of how to do set this up.
 
 ## See also
 
