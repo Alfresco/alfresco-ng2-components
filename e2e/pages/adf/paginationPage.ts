@@ -20,23 +20,23 @@ import { browser, by, element, protractor } from 'protractor';
 
 export class PaginationPage {
 
-    itemsPerPageDropdown = element(by.css("div[class*='adf-pagination__perpage-block'] button"));
-    pageSelectorDropDown = element(by.css("div[class*='adf-pagination__page-selector']"));
-    pageSelectorArrow = element(by.css("button[aria-label='Current page selector']"));
-    itemsPerPage = element(by.css("span[class='adf-pagination__max-items']"));
-    currentPage = element(by.css("span[class='adf-pagination__current-page']"));
-    totalPages = element(by.css("span[class='adf-pagination__total-pages']"));
-    paginationRange = element(by.css("span[class='adf-pagination__range']"));
-    nextPageButton = element(by.css("button[class*='adf-pagination__next-button']"));
-    nextButtonDisabled = element(by.css("button[class*='adf-pagination__next-button'][disabled]"));
-    previousButtonDisabled = element(by.css("button[class*='adf-pagination__previous-button'][disabled]"));
-    pageDropDown = element(by.css("div[class*='adf-pagination__actualinfo-block'] button"));
-    pageDropDownOptions = by.css("div[class*='mat-menu-content'] button");
-    paginationSection = element(by.css("adf-pagination"));
-    paginationSectionEmpty = element(by.css("adf-pagination[class*='adf-pagination__empty']"));
+    itemsPerPageDropdown = element(by.css('div[class*="adf-pagination__perpage-block"] button'));
+    pageSelectorDropDown = element(by.css('div[class*="adf-pagination__page-selector"]'));
+    pageSelectorArrow = element(by.css('button[aria-label="Current page selector"]'));
+    itemsPerPage = element(by.css('span[class="adf-pagination__max-items"]'));
+    currentPage = element(by.css('span[class="adf-pagination__current-page"]'));
+    totalPages = element(by.css('span[class="adf-pagination__total-pages"]'));
+    paginationRange = element(by.css('span[class="adf-pagination__range"]'));
+    nextPageButton = element(by.css('button[class*="adf-pagination__next-button"]'));
+    nextButtonDisabled = element(by.css('button[class*="adf-pagination__next-button"][disabled]'));
+    previousButtonDisabled = element(by.css('button[class*="adf-pagination__previous-button"][disabled]'));
+    pageDropDown = element(by.css('div[class*="adf-pagination__actualinfo-block"] button'));
+    pageDropDownOptions = by.css('div[class*="mat-menu-content"] button');
+    paginationSection = element(by.css('adf-pagination'));
+    paginationSectionEmpty = element(by.css('adf-pagination[class*="adf-pagination__empty"]'));
     totalFiles = element(by.css('span[class="adf-pagination__range"]'));
 
-    selectItemsPerPage(item) {
+    selectItemsPerPage(numberOfItem: string) {
         Util.waitUntilElementIsVisible(this.itemsPerPageDropdown);
         Util.waitUntilElementIsClickable(this.itemsPerPageDropdown);
         browser.actions().mouseMove(this.itemsPerPageDropdown).perform();
@@ -47,7 +47,7 @@ export class PaginationPage {
         });
         Util.waitUntilElementIsVisible(this.pageSelectorDropDown);
 
-        let itemsPerPage = element.all(by.cssContainingText(".mat-menu-item", item)).first();
+        let itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
         Util.waitUntilElementIsClickable(itemsPerPage);
         Util.waitUntilElementIsVisible(itemsPerPage);
         itemsPerPage.click();
@@ -105,9 +105,9 @@ export class PaginationPage {
         return this.pageDropDown.click();
     }
 
-    clickOnPageDropdownOption(item) {
+    clickOnPageDropdownOption(numberOfItemPerPage: string) {
         Util.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
-        let option = element(by.cssContainingText("div[class*='mat-menu-content'] button", item));
+        let option = element(by.cssContainingText('div[class*="mat-menu-content"] button', numberOfItemPerPage));
         Util.waitUntilElementIsVisible(option);
         option.click();
         return this;
@@ -117,8 +117,8 @@ export class PaginationPage {
         let deferred = protractor.promise.defer();
         Util.waitUntilElementIsVisible(element.all(this.pageDropDownOptions).first());
         let initialList = [];
-        element.all(this.pageDropDownOptions).each(function (element) {
-            element.getText().then(function (text) {
+        element.all(this.pageDropDownOptions).each(function (currentOption) {
+            currentOption.getText().then(function (text) {
                 if (text !== '') {
                     initialList.push(text);
                 }
