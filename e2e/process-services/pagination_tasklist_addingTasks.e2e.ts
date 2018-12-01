@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
-import PaginationPage = require('../pages/adf/paginationPage');
+import { PaginationPage } from '../pages/adf/paginationPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import CONSTANTS = require('../util/constants');

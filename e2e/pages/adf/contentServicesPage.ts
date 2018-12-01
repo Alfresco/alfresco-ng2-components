@@ -34,7 +34,6 @@ export class ContentServicesPage {
     currentFolder = element(by.css('div[class*="adf-breadcrumb-item active"] div'));
     createFolderButton = element(by.css('button[data-automation-id="create-new-folder"]'));
     activeBreadcrumb = element(by.css('div[class*="active"]'));
-    tooltip = by.css('div[class*="--text full-width"] span');
     uploadFileButton = element(by.css('input[data-automation-id="upload-single-file"]'));
     uploadMultipleFileButton = element(by.css('input[data-automation-id="upload-multiple-files"]'));
     uploadFolderButton = element(by.css('input[data-automation-id="uploadFolder"]'));
@@ -82,7 +81,7 @@ export class ContentServicesPage {
     checkElementsSortedByNameAsc(elements) {
         browser.controlFlow().execute(async () => {
             let numberOfElements = await this.numberOfResultsDisplayed();
-            for (let i = 0; i < (numberOfElements - 1) ; i++ ) {
+            for (let i = 0; i < (numberOfElements - 1); i++) {
                 expect(JSON.stringify(elements[i]) <= JSON.stringify(elements[i + 1])).toEqual(true);
             }
         });
@@ -92,7 +91,7 @@ export class ContentServicesPage {
     checkElementsSortedByNameDesc(elements) {
         browser.controlFlow().execute(async () => {
             let numberOfElements = await this.numberOfResultsDisplayed();
-            for (let i = 0; i < (numberOfElements - 1) ; i++ ) {
+            for (let i = 0; i < (numberOfElements - 1); i++) {
                 expect(JSON.stringify(elements[i]) >= JSON.stringify(elements[i + 1])).toEqual(true);
             }
         });
@@ -173,12 +172,8 @@ export class ContentServicesPage {
         return deferred.promise;
     }
 
-    getTooltip(content) {
-        return this.contentList.getRowByRowName(content).element(this.tooltip).getAttribute('title');
-    }
-
-    getBreadcrumbTooltip(content) {
-        return element(by.css('nav[data-automation-id="breadcrumb"] div[title="' + content + '"]')).getAttribute('title');
+    getBreadcrumbTooltip(nodeName: string) {
+        return element(by.css('nav[data-automation-id="breadcrumb"] div[title="' + nodeName + '"]')).getAttribute('title');
     }
 
     getAllRowsNameColumn() {

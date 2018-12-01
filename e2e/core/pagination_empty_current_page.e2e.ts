@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
-import PaginationPage = require('../pages/adf/paginationPage');
+import { PaginationPage } from '../pages/adf/paginationPage';
 
 import AcsUserModel = require('../models/ACS/acsUserModel');
 import FolderModel = require('../models/ACS/folderModel');

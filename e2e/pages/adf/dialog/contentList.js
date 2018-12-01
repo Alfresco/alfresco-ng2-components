@@ -40,6 +40,10 @@ var ContentList = function () {
     var table = element(by.css("div[class*='upload-border']"));
     var tableBody = element.all(by.css("adf-document-list div[class='adf-datatable-body']")).first();
 
+    this.getTooltip = function (nodeName) {
+        return this.getRowByRowName(nodeName).element(by.css(`span[title="${nodeName}"]`)).getAttribute('title');
+    };
+
     this.getRowsName = function (content) {
         var row = element.all(by.xpath("//div[@id='document-list-container']//div[@filename='" + content + "']")).first();
         Util.waitUntilElementIsVisible(row);
@@ -318,7 +322,7 @@ var ContentList = function () {
     this.getAllNodeIdInList = async function (filename) {
         var nodeIdColumns = await element.all(by.xpath("//div[@id='document-list-container']//div[@title='Node id']"));
         return await nodeIdColumns.map(async (currentElement) => {
-            return await currentElement.getText().then((nodeText)=>{
+            return await currentElement.getText().then((nodeText) => {
                 return nodeText;
             });
         });
@@ -365,20 +369,20 @@ var ContentList = function () {
     };
 
     this.clickContentLockIcon = function (content) {
-        var lockIcon = element(by.css('div[filename="'+ content +'"] button'));
+        var lockIcon = element(by.css('div[filename="' + content + '"] button'));
         Util.waitUntilElementIsClickable(lockIcon);
         lockIcon.click();
         return this;
     };
 
     this.checkLockedIcon = function (content) {
-        var lockIcon = element(by.cssContainingText('div[filename="'+ content +'"] mat-icon', 'lock'));
+        var lockIcon = element(by.cssContainingText('div[filename="' + content + '"] mat-icon', 'lock'));
         Util.waitUntilElementIsVisible(lockIcon);
         return this;
     };
 
     this.checkUnlockedIcon = function (content) {
-        var lockIcon = element(by.cssContainingText('div[filename="'+ content +'"] mat-icon', 'lock_open'));
+        var lockIcon = element(by.cssContainingText('div[filename="' + content + '"] mat-icon', 'lock_open'));
         Util.waitUntilElementIsVisible(lockIcon);
         return this;
     };

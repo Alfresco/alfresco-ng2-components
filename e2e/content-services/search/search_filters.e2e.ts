@@ -18,9 +18,8 @@
 import { LoginPage } from '../../pages/adf/loginPage';
 import SearchDialog = require('../../pages/adf/dialog/searchDialog');
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
-import PaginationPage = require('../../pages/adf/paginationPage');
+import { PaginationPage } from '../../pages/adf/paginationPage';
 import ContentList = require('../../pages/adf/dialog/contentList');
-import { SearchCategoriesPage } from '../../pages/adf/content_services/search/search-categories';
 
 import AcsUserModel = require('../../models/ACS/acsUserModel');
 import FileModel = require('../../models/ACS/fileModel');
@@ -38,7 +37,6 @@ describe('Search Filters', () => {
     let loginPage = new LoginPage();
     let searchDialog = new SearchDialog();
     let searchFiltersPage = new SearchFiltersPage();
-    const searchCategoriesPage = new SearchCategoriesPage();
     let uploadActions = new UploadActions();
     let paginationPage = new PaginationPage();
     let contentList = new ContentList();
@@ -58,7 +56,7 @@ describe('Search Filters', () => {
 
     let fileUploaded, fileTypePng;
 
-    let filter = {type: 'TYPE-PNG Image'};
+    let filter = { type: 'TYPE-PNG Image' };
 
     beforeAll(async (done) => {
 
@@ -131,7 +129,7 @@ describe('Search Filters', () => {
             .checkFileSizeFilterIsCollapsed();
     });
 
-    it('[C287796] Should be able to display the correct bucket number after selecting a filter',  () => {
+    it('[C287796] Should be able to display the correct bucket number after selecting a filter', () => {
         browser.get(TestConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.fileTypeCheckListFiltersPage().clickCheckListOption('PNG Image');

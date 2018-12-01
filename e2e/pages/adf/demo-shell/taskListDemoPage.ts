@@ -17,7 +17,7 @@
 
 import Util = require('../../../util/util');
 import { TasksListPage } from '../process_services/tasksListPage';
-import PaginationPage = require('../paginationPage');
+import { PaginationPage } from '../paginationPage';
 import { element, by } from 'protractor';
 
 export class TaskListDemoPage {
@@ -162,21 +162,11 @@ export class TaskListDemoPage {
         return this;
     }
 
-    getDueAfter() {
-        Util.waitUntilElementIsVisible(this.dueAfter);
-        return this.dueAfter.getAttribute('value');
-    }
-
     typeDueBefore(input) {
         Util.waitUntilElementIsVisible(this.dueBefore);
         this.clearText(this.dueBefore);
         this.dueBefore.sendKeys(input);
         return this;
-    }
-
-    getDueBefore() {
-        Util.waitUntilElementIsVisible(this.dueBefore);
-        return this.dueBefore.getAttribute('value');
     }
 
     clearText(input) {

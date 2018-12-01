@@ -34,7 +34,7 @@ export class RadioButtonsWidget {
     }
 
     selectOption(fieldId, optionNumber) {
-        let optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"] div[class*="adf-content"]`);
+        let optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"]`);
 
         let option = this.formFields.getWidget(fieldId).element(optionLocator);
         Util.waitUntilElementIsVisible(option);
