@@ -20,7 +20,7 @@ import { SearchFiltersPage } from '../../../pages/adf/searchFiltersPage';
 import ContentList = require('../../../pages/adf/dialog/contentList');
 import { ConfigEditorPage } from '../../../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
-import SearchDialog = require('../../../pages/adf/dialog/searchDialog');
+import { SearchDialog } from '../../../pages/adf/dialog/searchDialog';
 
 import AcsUserModel = require('../../../models/ACS/acsUserModel');
 

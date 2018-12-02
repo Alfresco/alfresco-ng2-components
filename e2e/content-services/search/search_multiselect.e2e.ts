@@ -25,7 +25,7 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
-import SearchDialog = require('../../pages/adf/dialog/searchDialog');
+import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 

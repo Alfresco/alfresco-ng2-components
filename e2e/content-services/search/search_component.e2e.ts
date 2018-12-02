@@ -18,7 +18,7 @@
 import { browser } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
-import SearchDialog = require('../../pages/adf/dialog/searchDialog');
+import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import filePreviewPage = require('../../pages/adf/filePreviewPage');
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
@@ -96,8 +96,6 @@ describe('Search component - Search Bar', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.goToDocumentList();
-
         done();
     });
 
@@ -112,28 +110,57 @@ describe('Search component - Search Bar', () => {
         done();
     });
 
+    beforeEach(() => {
+        contentServicesPage.goToDocumentList();
+    });
+
     it('[C272798] Search bar should be visible', () => {
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible();
-        searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().checkSearchIconIsVisible();
-        searchDialog.clickOnSearchIcon().checkSearchBarIsNotVisible().checkSearchIconIsVisible();
+        searchDialog
+            .checkSearchBarIsNotVisible()
+            .checkSearchIconIsVisible();
+
+        searchDialog
+            .clickOnSearchIcon()
+            .checkSearchBarIsVisible()
+            .checkSearchIconIsVisible();
+
+        searchDialog
+            .clickOnSearchIcon()
+            .checkSearchBarIsNotVisible()
+            .checkSearchIconIsVisible();
     });
 
     it('[C272799] Should be possible to hide search bar after input', () => {
-        searchDialog.checkSearchIconIsVisible().clickOnSearchIcon().enterText(firstFolderModel.shortName);
-        searchDialog.clickOnSearchIcon().checkSearchBarIsNotVisible().checkSearchIconIsVisible();
+        searchDialog
+            .checkSearchIconIsVisible()
+            .clickOnSearchIcon()
+            .enterText(firstFolderModel.shortName);
+
+        searchDialog
+            .clickOnSearchIcon()
+            .checkSearchBarIsNotVisible()
+            .checkSearchIconIsVisible();
+
         contentServicesPage.checkAcsContainer();
     });
 
     it('[C260255] Should display message when searching for an inexistent file', () => {
-        searchDialog.checkSearchBarIsNotVisible().clickOnSearchIcon().checkNoResultMessageIsNotDisplayed()
-            .enterText(search.inactive.name).checkNoResultMessageIsDisplayed();
+        searchDialog
+            .checkSearchBarIsNotVisible()
+            .clickOnSearchIcon()
+            .checkNoResultMessageIsNotDisplayed()
+            .enterText(search.inactive.name)
+            .checkNoResultMessageIsDisplayed();
+
         searchDialog.clearText();
         searchDialog.checkSearchBarIsNotVisible();
     });
 
     it('[C260256] Should display file/folder in search suggestion when typing first characters', () => {
-        contentServicesPage.goToDocumentList();
-        searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterText(firstFolderModel.shortName);
+        searchDialog
+            .clickOnSearchIcon()
+            .checkSearchBarIsVisible()
+            .enterText(firstFolderModel.shortName);
 
         searchDialog.resultTableContainsRow(firstFolderModel.name);
 
@@ -157,8 +184,11 @@ describe('Search component - Search Bar', () => {
     });
 
     it('[C272800] Should display file/folder in search suggestion when typing name', () => {
-        contentServicesPage.goToDocumentList();
-        searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterText(firstFolderModel.name);
+        searchDialog
+            .clickOnSearchIcon()
+            .checkSearchBarIsVisible()
+            .enterText(firstFolderModel.name);
+
         searchDialog.resultTableContainsRow(firstFolderModel.name);
 
         expect(searchDialog.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.name);
@@ -180,17 +210,29 @@ describe('Search component - Search Bar', () => {
     });
 
     it('[C260257] Should display content when clicking on folder from search suggestions', () => {
-        searchDialog.clickOnSearchIcon().enterText(firstFolderModel.shortName);
+        searchDialog
+            .clickOnSearchIcon()
+            .checkSearchBarIsVisible()
+            .enterText(firstFolderModel.shortName);
+
         searchDialog.resultTableContainsRow(firstFolderModel.name);
         searchDialog.clickOnSpecificRow(firstFolderModel.name);
-        contentServicesPage.checkAcsContainer().waitForTableBody();
+
+        contentServicesPage
+            .checkAcsContainer()
+            .waitForTableBody();
 
         expect(contentServicesPage.currentFolderName()).toEqual(firstFolderModel.name);
 
         contentServicesPage.goToDocumentList();
 
-        searchDialog.checkSearchIconIsVisible().clickOnSearchIcon().checkSearchBarIsVisible();
-        searchDialog.enterText(firstFileModel.name).resultTableContainsRow(firstFileModel.name);
+        searchDialog
+            .checkSearchIconIsVisible()
+            .clickOnSearchIcon()
+            .checkSearchBarIsVisible()
+            .enterText(firstFileModel.name)
+            .resultTableContainsRow(firstFileModel.name);
+
         searchDialog.clickOnSpecificRow(firstFileModel.name);
         expect(filePreviewPage.getPDFTitleFromSearch()).toEqual(firstFileModel.name);
 
@@ -198,31 +240,40 @@ describe('Search component - Search Bar', () => {
     });
 
     it('[C272801] Should display message when searching for non-existent folder', () => {
-        searchDialog.checkSearchIconIsVisible().clickOnSearchIcon();
-        searchDialog.enterTextAndPressEnter(search.inactive.name);
+        searchDialog
+            .checkSearchIconIsVisible()
+            .clickOnSearchIcon()
+            .checkSearchBarIsVisible()
+            .enterTextAndPressEnter(search.inactive.name);
+
         searchResultPage.checkNoResultMessageIsDisplayed();
-        contentServicesPage.goToDocumentList();
     });
 
     it('[C272802] Should be able to find an existent folder in search results', () => {
-        searchDialog.clickOnSearchIcon();
-        browser.driver.sleep(1000);
-        searchDialog.enterTextAndPressEnter(firstFolderModel.name);
+        searchDialog
+            .checkSearchIconIsVisible()
+            .clickOnSearchIcon()
+            .checkSearchBarIsVisible()
+            .enterTextAndPressEnter(firstFolderModel.name);
+
         searchResultPage.checkContentIsDisplayed(firstFolderModel.name);
     });
 
     it('[C260258] Should be able to find an existent file in search results', () => {
-        contentServicesPage.goToDocumentList();
-        searchDialog.clickOnSearchIcon();
-        searchDialog.enterTextAndPressEnter(firstFileModel.name);
+        searchDialog
+            .checkSearchIconIsVisible()
+            .clickOnSearchIcon()
+            .checkSearchBarIsVisible()
+            .enterTextAndPressEnter(firstFileModel.name);
+
         searchResultPage.checkContentIsDisplayed(firstFileModel.name);
     });
 
     it('[C91321] Should be able to use down arrow key when navigating throw suggestions', () => {
-        contentServicesPage.goToDocumentList();
-
         searchDialog
+            .checkSearchIconIsVisible()
             .clickOnSearchIcon()
+            .checkSearchBarIsVisible()
             .enterText(secondFolder.shortName)
             .pressDownArrowAndEnter();
 
@@ -230,18 +281,18 @@ describe('Search component - Search Bar', () => {
         expect(contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
     });
 
-    it('[C260254] Search bar should get closed when changing browser tab', () => {
-        contentServicesPage.goToDocumentList();
-
+    xit('[C260254] Search bar should get closed when changing browser tab', () => {
         searchDialog
+            .checkSearchIconIsVisible()
             .clickOnSearchIcon()
+            .checkSearchBarIsVisible()
             .enterText(secondFolder.shortName);
 
         searchDialog.resultTableContainsRow(secondFolder.name);
 
         Util.openNewTabInBrowser();
-        browser.sleep(500);
         Util.switchToWindowHandler(0);
+
         browser.sleep(500);
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible();
     });

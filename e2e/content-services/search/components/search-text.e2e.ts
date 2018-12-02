@@ -25,7 +25,7 @@ import TestConfig = require('../../../test.config');
 import AlfrescoApi = require('alfresco-js-api-node');
 
 import { LoginPage } from '../../../pages/adf/loginPage';
-import SearchDialog = require('../../../pages/adf/dialog/searchDialog');
+import { SearchDialog } from '../../../pages/adf/dialog/searchDialog';
 import { SearchResultsPage } from '../../../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../../../pages/adf/searchFiltersPage';
 import { ConfigEditorPage } from '../../../pages/adf/configEditorPage';

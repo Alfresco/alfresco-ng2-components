@@ -16,7 +16,7 @@
  */
 
 import { LoginPage } from '../../../pages/adf/loginPage';
-import SearchDialog = require('../../../pages/adf/dialog/searchDialog');
+import { SearchDialog } from '../../../pages/adf/dialog/searchDialog';
 import DataTablePage = require('../../../pages/adf/dataTablePage');
 import { SearchResultsPage } from '../../../pages/adf/searchResultsPage';
 import { DatePickerPage } from '../../../pages/adf/material/datePickerPage';

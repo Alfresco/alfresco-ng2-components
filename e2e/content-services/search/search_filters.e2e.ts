@@ -16,7 +16,7 @@
  */
 
 import { LoginPage } from '../../pages/adf/loginPage';
-import SearchDialog = require('../../pages/adf/dialog/searchDialog');
+import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { PaginationPage } from '../../pages/adf/paginationPage';
 import ContentList = require('../../pages/adf/dialog/contentList');

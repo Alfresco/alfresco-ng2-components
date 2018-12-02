@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
 
-import SearchDialog = require('../../pages/adf/dialog/searchDialog');
+import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import filePreviewPage = require('../../pages/adf/filePreviewPage');
