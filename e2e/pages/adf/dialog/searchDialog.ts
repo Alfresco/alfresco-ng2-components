@@ -22,7 +22,7 @@ export class SearchDialog {
 
     searchIcon = element(by.css(`button[class*='adf-search-button']`));
     searchBar = element(by.css(`adf-search-control div[style*='translateX(0%)'] input`));
-    searchBarNotExpanded = element(by.css(`adf-search-control div[style*='translateX(81%)']`));
+    searchBarNotExpanded = element(by.css(`adf-search-control div[style*='translateX(81%)'] input`));
     noResultMessage = element(by.css(`p[class*='adf-search-fixed-text']`));
     rowsAuthor = by.css(`div[class='mat-list-text'] p[class*='adf-search-fixed-text']`);
     completeName = by.css(`h4[class*='adf-search-fixed-text']`);

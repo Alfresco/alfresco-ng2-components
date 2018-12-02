@@ -131,14 +131,24 @@ describe('Create folder directive', function () {
     });
 
     it('[C260159] Should not be possible create a folder with banned character', () => {
-        const bannedChars = ['* ', '<', '>', '\\', '/', '?', ':', '|'];
-
+        browser.refresh();
         contentServicesPage.clickOnCreateNewFolder();
 
-        bannedChars.forEach((currentChar) => {
-            browser.sleep(300);
-            createFolderDialog.addFolderName(currentChar);
-            createFolderDialog.checkCreateBtnIsDisabled();
-        });
+        createFolderDialog.addFolderName('*');
+        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.addFolderName('<');
+        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.addFolderName('>');
+        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.addFolderName('\\');
+        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.addFolderName('/');
+        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.addFolderName('?');
+        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.addFolderName(':');
+        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.addFolderName('|');
+        createFolderDialog.checkCreateBtnIsDisabled();
     });
 });
