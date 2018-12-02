@@ -348,8 +348,8 @@ describe('Lock File', () => {
             await lockFilePage.clickAllowOwnerCheckbox();
             await lockFilePage.clickSaveButton();
 
-            contentList.deleteContent(pngFileToBeLocked.name);
-            contentList.checkContentIsNotDisplayed(pngFileToBeLocked.name);
+            contentList.deleteContent(pngFileToBeLocked.entry.name);
+            contentList.checkContentIsNotDisplayed(pngFileToBeLocked.entry.name);
         });
 
     });
