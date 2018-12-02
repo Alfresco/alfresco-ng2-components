@@ -135,9 +135,10 @@ describe('Create folder directive', function () {
 
         contentServicesPage.clickOnCreateNewFolder();
 
-        for (const symbol of bannedChars) {
-            createFolderDialog.addFolderName(symbol);
+        bannedChars.forEach((currentChar) => {
+            browser.sleep(300);
+            createFolderDialog.addFolderName(currentChar);
             createFolderDialog.checkCreateBtnIsDisabled();
-        }
+        });
     });
 });
