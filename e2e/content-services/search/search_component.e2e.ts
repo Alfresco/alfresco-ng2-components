@@ -240,8 +240,9 @@ describe('Search component - Search Bar', () => {
         searchDialog.resultTableContainsRow(secondFolder.name);
 
         Util.openNewTabInBrowser();
+        browser.sleep(500);
         Util.switchToWindowHandler(0);
-
+        browser.sleep(500);
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible();
     });
 });

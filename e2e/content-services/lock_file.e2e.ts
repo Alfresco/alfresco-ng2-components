@@ -262,8 +262,10 @@ describe('Lock File', () => {
 
     describe('Locked file with owner permissions', () => {
 
+        let pngFileToBeLocked;
+
         beforeAll(async (done) => {
-            let pngFileToBeLocked = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileToLock.location, pngFileToLock.name, documentLibrary);
+            pngFileToBeLocked = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileToLock.location, pngFileToLock.name, documentLibrary);
 
             lockedFileNodeId = pngFileToBeLocked.entry.id;
 
@@ -346,14 +348,8 @@ describe('Lock File', () => {
             await lockFilePage.clickAllowOwnerCheckbox();
             await lockFilePage.clickSaveButton();
 
-            await this.alfrescoJsApi.core.nodesApi.deleteNode(lockedFileNodeId);
-
-            try {
-                await this.alfrescoJsApi.core.nodesApi.getNode(lockedFileNodeId);
-
-            } catch (error) {
-                expect(error.status).toEqual(404);
-            }
+            contentList.deleteContent(pngFileToBeLocked.name);
+            contentList.checkContentIsNotDisplayed(pngFileToBeLocked.name);
         });
 
     });

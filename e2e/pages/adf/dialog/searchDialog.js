@@ -51,6 +51,7 @@ var SearchDialog = function () {
     };
 
     this.checkSearchBarIsNotVisible = function () {
+        browser.sleep(500);
         Util.waitUntilElementIsVisible(searchBarNotExpanded);
         return this;
     };
