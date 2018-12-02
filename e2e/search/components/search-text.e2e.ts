@@ -17,19 +17,19 @@
 
 import { browser } from 'protractor';
 
-import AcsUserModel = require('../../../models/ACS/acsUserModel');
-import FolderModel = require('../../../models/ACS/folderModel');
+import AcsUserModel = require('../../models/ACS/acsUserModel');
+import FolderModel = require('../../models/ACS/folderModel');
 
-import TestConfig = require('../../../test.config');
+import TestConfig = require('../../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 
-import { LoginPage } from '../../../pages/adf/loginPage';
-import { SearchDialog } from '../../../pages/adf/dialog/searchDialog';
-import { SearchResultsPage } from '../../../pages/adf/searchResultsPage';
-import { SearchFiltersPage } from '../../../pages/adf/searchFiltersPage';
-import { ConfigEditorPage } from '../../../pages/adf/configEditorPage';
-import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
+import { LoginPage } from '../../pages/adf/loginPage';
+import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
+import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
+import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
+import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import { SearchConfiguration } from '../search.config';
 

@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../pages/adf/loginPage';
-import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
-import { PaginationPage } from '../../pages/adf/paginationPage';
-import ContentList = require('../../pages/adf/dialog/contentList');
+import { LoginPage } from '../pages/adf/loginPage';
+import { SearchDialog } from '../pages/adf/dialog/searchDialog';
+import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
+import { PaginationPage } from '../pages/adf/paginationPage';
+import ContentList = require('../pages/adf/dialog/contentList');
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-import FileModel = require('../../models/ACS/fileModel');
+import AcsUserModel = require('../models/ACS/acsUserModel');
+import FileModel = require('../models/ACS/fileModel');
 
-import TestConfig = require('../../test.config');
-import Util = require('../../util/util');
-import resources = require('../../util/resources');
+import TestConfig = require('../test.config');
+import Util = require('../util/util');
+import resources = require('../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import { UploadActions } from '../../actions/ACS/upload.actions';
+import { UploadActions } from '../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 
 describe('Search Filters', () => {

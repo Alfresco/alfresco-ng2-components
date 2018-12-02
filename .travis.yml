@@ -151,6 +151,15 @@ jobs:
             then
                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder content-services --skip-lint --use-dist --timeout 7000 || exit 1;);
             fi
+        - stage: e2e Test # Test search
+          name: search
+          script:
+            AFFECTED_E2E="$(./scripts/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e")";
+            AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
+            if [[ $AFFECTED_LIBS =~ "content-services$" || $AFFECTED_E2E = "e2e" ]];
+            then
+                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder search --skip-lint --use-dist --timeout 7000 || exit 1;);
+            fi
         - stage: e2e Test # Test process-services-cloud
           name: process-services-cloud
           script:

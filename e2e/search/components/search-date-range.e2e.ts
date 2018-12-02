@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '../../../pages/adf/loginPage';
-import { SearchDialog } from '../../../pages/adf/dialog/searchDialog';
-import DataTablePage = require('../../../pages/adf/dataTablePage');
-import { SearchResultsPage } from '../../../pages/adf/searchResultsPage';
-import { DatePickerPage } from '../../../pages/adf/material/datePickerPage';
-import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../../../pages/adf/configEditorPage';
-import { SearchFiltersPage } from '../../../pages/adf/searchFiltersPage';
+import { LoginPage } from '../../pages/adf/loginPage';
+import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
+import DataTablePage = require('../../pages/adf/dataTablePage');
+import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
+import { DatePickerPage } from '../../pages/adf/material/datePickerPage';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
+import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 import { SearchConfiguration } from '../search.config';
 
-import TestConfig = require('../../../test.config');
+import TestConfig = require('../../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { browser } from 'protractor';

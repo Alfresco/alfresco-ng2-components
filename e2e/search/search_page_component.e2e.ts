@@ -17,23 +17,23 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage } from '../../pages/adf/loginPage';
+import { LoginPage } from '../pages/adf/loginPage';
 
-import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
-import filePreviewPage = require('../../pages/adf/filePreviewPage');
+import { SearchDialog } from '../pages/adf/dialog/searchDialog';
+import { ContentServicesPage } from '../pages/adf/contentServicesPage';
+import { SearchResultsPage } from '../pages/adf/searchResultsPage';
+import filePreviewPage = require('../pages/adf/filePreviewPage');
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-import FolderModel = require('../../models/ACS/folderModel');
-import FileModel = require('../../models/ACS/fileModel');
+import AcsUserModel = require('../models/ACS/acsUserModel');
+import FolderModel = require('../models/ACS/folderModel');
+import FileModel = require('../models/ACS/fileModel');
 
-import TestConfig = require('../../test.config');
-import Util = require('../../util/util');
-import resources = require('../../util/resources');
+import TestConfig = require('../test.config');
+import Util = require('../util/util');
+import resources = require('../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import { UploadActions } from '../../actions/ACS/upload.actions';
+import { UploadActions } from '../actions/ACS/upload.actions';
 
 describe('Search component - Search Page', () => {
     let search = {
