@@ -86,8 +86,8 @@ describe('Search component - Search Page', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await uploadActions.uploadFolder(this.alfrescoJsApi, emptyFolderModel.name, '-my-');
-        let newFolderModelUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
+        await uploadActions.createFolder(this.alfrescoJsApi, emptyFolderModel.name, '-my-');
+        let newFolderModelUploaded = await uploadActions.createFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, newFolderModelUploaded.entry.id);
 
@@ -97,7 +97,7 @@ describe('Search component - Search Page', () => {
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, adminFileNames, newFolderModelUploaded.entry.id);
 
-        browser.driver.sleep(12000);
+        browser.driver.sleep(15000);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -181,15 +181,18 @@ describe('Search component - Search Page', () => {
 
     describe('Sorting', () => {
 
+        beforeEach(() => {
+            searchDialog
+                .clickOnSearchIcon()
+                .enterTextAndPressEnter(search.active.base);
+        });
+
         afterEach(async (done) => {
             await browser.refresh();
             done();
         });
 
         it('[C272803] Should be able to sort results by name (Ascending)', () => {
-            searchDialog
-                .clickOnSearchIcon()
-                .enterTextAndPressEnter(search.active.base);
 
             searchResultPage.checkContentIsDisplayed(search.active.secondFile);
             searchResultPage.sortAndCheckListIsOrderedByName(true).then((result) => {
@@ -198,9 +201,6 @@ describe('Search component - Search Page', () => {
         });
 
         it('[C272804] Should be able to sort results by name (Descending)', () => {
-            searchDialog
-                .clickOnSearchIcon()
-                .enterTextAndPressEnter(search.active.base);
 
             searchResultPage.checkContentIsDisplayed(search.active.secondFile);
             searchResultPage.sortAndCheckListIsOrderedByName(false).then((result) => {
@@ -209,32 +209,23 @@ describe('Search component - Search Page', () => {
         });
 
         it('[C272805] Should be able to sort results by author (Ascending)', () => {
-            searchDialog
-                .clickOnSearchIcon()
-                .enterTextAndPressEnter(search.active.base);
 
             searchResultPage.checkContentIsDisplayed(search.active.secondFile);
 
-            searchResultPage.sortAndCheckListIsOrderedByAuthor(true).then((result) => {
+            searchResultPage.sortAndCheckListIsOrderedByAuthor(this.alfrescoJsApi, true).then((result) => {
                 expect(result).toEqual(true);
             });
         });
 
         it('[C272806] Should be able to sort results by author (Descending)', () => {
-            searchDialog
-                .clickOnSearchIcon()
-                .enterTextAndPressEnter(search.active.base);
 
             searchResultPage.checkContentIsDisplayed(search.active.secondFile);
-            searchResultPage.sortAndCheckListIsOrderedByAuthor(false).then((result) => {
+            searchResultPage.sortAndCheckListIsOrderedByAuthor(this.alfrescoJsApi, false).then((result) => {
                 expect(result).toEqual(true);
             });
         });
 
         it('[C272807] Should be able to sort results by date (Ascending)', () => {
-            searchDialog
-                .clickOnSearchIcon()
-                .enterTextAndPressEnter(search.active.base);
 
             searchResultPage.checkContentIsDisplayed(search.active.secondFile);
             searchResultPage.sortAndCheckListIsOrderedByCreated(true).then((result) => {
@@ -243,9 +234,6 @@ describe('Search component - Search Page', () => {
         });
 
         it('[C260260] Should be able to sort results by date (Descending)', () => {
-            searchDialog
-                .clickOnSearchIcon()
-                .enterTextAndPressEnter(search.active.base);
 
             searchResultPage.checkContentIsDisplayed(search.active.secondFile);
             searchResultPage.sortAndCheckListIsOrderedByCreated(false).then((result) => {

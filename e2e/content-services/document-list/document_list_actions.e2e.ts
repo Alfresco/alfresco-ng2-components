@@ -66,7 +66,7 @@ describe('Document List Component - Actions', () => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             pdfUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
             testFileNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
-            uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+            uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -153,8 +153,8 @@ describe('Document List Component - Actions', () => {
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-            uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
-            secondUploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, secondFolderName, '-my-');
+            uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
+            secondUploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, secondFolderName, '-my-');
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();

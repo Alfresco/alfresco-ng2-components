@@ -76,8 +76,8 @@ describe('Document List - Pagination', function () {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let folderThreeUploadedModel = await uploadActions.uploadFolder(this.alfrescoJsApi, folderThreeModel.name, '-my-');
-        let newFolderUploadedModel = await uploadActions.uploadFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
+        let folderThreeUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, folderThreeModel.name, '-my-');
+        let newFolderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, newFolderUploadedModel.entry.id);
 
@@ -265,34 +265,34 @@ describe('Document List - Pagination', function () {
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
-        contentServicesPage.getElementsDisplayed().then(function (list) {
-            contentServicesPage.checkElementsSortedByNameAsc(list);
+        contentServicesPage.getElementsDisplayedName().then(function (list) {
+            contentServicesPage.checkElementsSortedAsc(list);
         });
 
         contentServicesPage.sortByName(false);
-        contentServicesPage.getElementsDisplayed().then(function (list) {
-            contentServicesPage.checkElementsSortedByNameDesc(list);
+        contentServicesPage.getElementsDisplayedName().then(function (list) {
+            contentServicesPage.checkElementsSortedDesc(list);
         });
 
         paginationPage.selectItemsPerPage(itemsPerPage.five);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
-        contentServicesPage.getElementsDisplayed().then(function (list) {
-            contentServicesPage.checkElementsSortedByNameDesc(list);
+        contentServicesPage.getElementsDisplayedName().then(function (list) {
+            contentServicesPage.checkElementsSortedDesc(list);
         });
 
         paginationPage.clickOnNextPage();
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
-        contentServicesPage.getElementsDisplayed().then(function (list) {
-            contentServicesPage.checkElementsSortedByNameDesc(list);
+        contentServicesPage.getElementsDisplayedName().then(function (list) {
+            contentServicesPage.checkElementsSortedDesc(list);
         });
 
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
-        contentServicesPage.getElementsDisplayed().then(function (list) {
-            contentServicesPage.checkElementsSortedByNameDesc(list);
+        contentServicesPage.getElementsDisplayedName().then(function (list) {
+            contentServicesPage.checkElementsSortedDesc(list);
         });
     });
 

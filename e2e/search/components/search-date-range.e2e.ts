@@ -211,7 +211,7 @@ describe('Search Date Range Filter', () => {
             navigationBar.clickConfigEditorButton();
             configEditor.clickSearchConfiguration();
             configEditor.clickClearButton();
-            configEditor.enterConfiguration(JSON.stringify(jsonFile));
+            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
             configEditor.clickSaveButton();
 
             searchDialog.clickOnSearchIcon().enterTextAndPressEnter('*');

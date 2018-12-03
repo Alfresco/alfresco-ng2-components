@@ -16,6 +16,7 @@
  */
 
 import { Util } from '../../../util/util';
+import { by } from 'protractor';
 
 export class FormControllersPage {
 
@@ -23,8 +24,8 @@ export class FormControllersPage {
         Util.waitUntilElementIsVisible(toggle);
         toggle.getAttribute('class').then((check) => {
             if (check.indexOf('mat-checked') < 0) {
-                Util.waitUntilElementIsClickable(toggle.element(by.css('div')));
-                toggle.element(by.css('div')).click();
+                Util.waitUntilElementIsClickable(toggle.all(by.css('div')).first());
+                toggle.all(by.css('div')).first().click();
             }
         });
     }

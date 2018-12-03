@@ -20,6 +20,7 @@ import { Util } from '../../util/util';
 import { ContentListPage } from './dialog/contentListPage';
 import { CreateFolderDialog } from './dialog/createFolderDialog';
 import { NavigationBarPage } from './navigationBarPage';
+import { NodeActions } from '../../actions/ACS/node.actions';
 import { by, element, protractor, $$, browser } from 'protractor';
 
 import path = require('path');
@@ -28,6 +29,7 @@ export class ContentServicesPage {
 
     contentList = new ContentListPage();
     createFolderDialog = new CreateFolderDialog();
+    nodeActions = new NodeActions();
     uploadBorder = element(by.id('document-list-container'));
     tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
     contentServices = element(by.css('a[data-automation-id="Content Services"]'));
@@ -59,13 +61,88 @@ export class ContentServicesPage {
     searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
 
-    getElementsDisplayed() {
+    getElementsDisplayedCreated() {
         let deferred = protractor.promise.defer();
-        let fileNameLocator = by.css("div[id*='document-list-container'] div[class*='adf-datatable-row'] div[title='Display name'] span[class='adf-datatable-cell-value']");
+        let fileCreatedLocator = this.contentList.getColumnLocator('Created');
+        Util.waitUntilElementIsVisible(element.all(fileCreatedLocator).first());
+        let initialList = [];
+
+        element.all(fileCreatedLocator).each((item) => {
+            item.getAttribute('title').then((dateText) => {
+                if (dateText !== '') {
+                    let date = new Date(dateText);
+                    initialList.push(date);
+                }
+            });
+        }).then(function () {
+            deferred.fulfill(initialList);
+        });
+
+        return deferred.promise;
+    }
+
+    getElementsDisplayedSize() {
+        let deferred = protractor.promise.defer();
+        let fileSizeLocator = this.contentList.getColumnLocator('Size');
+        Util.waitUntilElementIsVisible(element.all(fileSizeLocator).first());
+        let initialList = [];
+
+        element.all(fileSizeLocator).each(function (item) {
+            item.getAttribute('title').then((sizeText) => {
+                if (sizeText !== '') {
+                    let size = Number(sizeText);
+                    initialList.push(size);
+                }
+            });
+        }).then(function () {
+            deferred.fulfill(initialList);
+        });
+
+        return deferred.promise;
+    }
+
+    getElementsDisplayedAuthor(alfrescoJsApi) {
+        let deferred = protractor.promise.defer();
+        this.nodeActions.getNodesDisplayed(alfrescoJsApi).then((nodes) => {
+            let initialList = [];
+
+            nodes.forEach((item) => {
+                if (item.entry.createdByUser.id !== '') {
+                    initialList.push(item.entry.createdByUser.id);
+                }
+            });
+            deferred.fulfill(initialList);
+        });
+
+        return deferred.promise;
+    }
+
+    getElementsDisplayedName() {
+        let deferred = protractor.promise.defer();
+        let fileNameLocator = this.contentList.getColumnLocator('Display name');
         Util.waitUntilElementIsVisible(element.all(fileNameLocator).first());
         let initialList = [];
 
-        element.all(fileNameLocator).each(function (item) {
+        element.all(fileNameLocator).each((item) => {
+            item.getText().then(function (name) {
+                if (name !== '') {
+                    initialList.push(name);
+                }
+            });
+        }).then(function () {
+            deferred.fulfill(initialList);
+        });
+
+        return deferred.promise;
+    }
+
+    getElementsDisplayedId() {
+        let deferred = protractor.promise.defer();
+        let fileIdLocator = this.contentList.getColumnLocator('Node id');
+        Util.waitUntilElementIsVisible(element.all(fileIdLocator).first());
+        let initialList = [];
+
+        element.all(fileIdLocator).each((item) => {
             item.getText().then(function (text) {
                 if (text !== '') {
                     initialList.push(text);
@@ -78,24 +155,28 @@ export class ContentServicesPage {
         return deferred.promise;
     }
 
-    checkElementsSortedByNameAsc(elements) {
-        browser.controlFlow().execute(async () => {
-            let numberOfElements = await this.numberOfResultsDisplayed();
-            for (let i = 0; i < (numberOfElements - 1); i++) {
-                expect(JSON.stringify(elements[i]) <= JSON.stringify(elements[i + 1])).toEqual(true);
+    checkElementsSortedAsc(elements) {
+        let sorted = true;
+        let i = 0;
+        while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
+            if (JSON.stringify(elements[i]) > JSON.stringify(elements[i + 1])) {
+                sorted = false;
             }
-        });
-        return this;
+            i++;
+        }
+        return sorted;
     }
 
-    checkElementsSortedByNameDesc(elements) {
-        browser.controlFlow().execute(async () => {
-            let numberOfElements = await this.numberOfResultsDisplayed();
-            for (let i = 0; i < (numberOfElements - 1); i++) {
-                expect(JSON.stringify(elements[i]) >= JSON.stringify(elements[i + 1])).toEqual(true);
+    checkElementsSortedDesc(elements) {
+        let sorted = true;
+        let i = 0;
+        while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
+            if (elements[i] < elements[i + 1]) {
+                sorted = false;
             }
-        });
-        return this;
+            i++;
+        }
+        return sorted;
     }
 
     getContentList() {

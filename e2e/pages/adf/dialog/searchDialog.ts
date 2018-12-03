@@ -21,8 +21,8 @@ import { browser, by, element, protractor } from 'protractor';
 export class SearchDialog {
 
     searchIcon = element(by.css(`button[class*='adf-search-button']`));
-    searchBar = element(by.css(`adf-search-control div[style*='translateX(0%)'] input`));
-    searchBarNotExpanded = element(by.css(`adf-search-control div[style*='translateX(81%)'] input`));
+    searchBar = element(by.css(`adf-search-control input`));
+    searchBarExpanded = element(by.css(`adf-search-control mat-form-field[class*="mat-focused"] input`));
     noResultMessage = element(by.css(`p[class*='adf-search-fixed-text']`));
     rowsAuthor = by.css(`div[class='mat-list-text'] p[class*='adf-search-fixed-text']`);
     completeName = by.css(`h4[class*='adf-search-fixed-text']`);
@@ -51,12 +51,13 @@ export class SearchDialog {
     }
 
     checkSearchBarIsNotVisible() {
-        browser.sleep(400);
-        Util.waitUntilElementIsVisible(this.searchBarNotExpanded);
+        Util.waitUntilElementIsVisible(this.searchBar);
+        Util.waitUntilElementIsNotVisible(this.searchBarExpanded);
         return this;
     }
 
     checkNoResultMessageIsDisplayed() {
+        browser.driver.sleep(500);
         Util.waitUntilElementIsVisible(this.noResultMessage);
         return this;
     }

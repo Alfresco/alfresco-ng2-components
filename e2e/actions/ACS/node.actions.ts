@@ -25,4 +25,16 @@ export class NodeActions {
         });
     }
 
+    async getNodesDisplayed(alfrescoJsApi, idList, numberOfElements) {
+
+        let promises = [];
+        let nodeList;
+
+        for (let i = 0; i < (numberOfElements - 1) ; i++ ) {
+            promises.push(alfrescoJsApi.core.nodesApi.getNode(idList[i]));
+        }
+        nodeList = await Promise.all(promises);
+        return nodeList;
+    }
+
 }
