@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { TaskFilterCloudRepresentationModel } from '../models/filter-cloud.model';
+import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { TaskCloudModule } from './../task-cloud.module';
 import { EditTaskFilterCloudComponent } from './edit-task-filter-cloud.component';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
@@ -35,11 +35,16 @@ describe('EditTaskFilterCloudComponent', () => {
     let fixture: ComponentFixture<EditTaskFilterCloudComponent>;
     let dialog: MatDialog;
 
-    let fakeFilter = new TaskFilterCloudRepresentationModel({
+    let fakeFilter = new TaskFilterCloudModel({
         name: 'FakeInvolvedTasks',
         icon: 'adjust',
         id: 10,
-        query: { state: 'CREATED', appName: 'app-name', processDefinitionId: 'process-def-id', assignment: 'fake-involved', order: 'ASC', sort: 'id' }
+        state: 'CREATED',
+        appName: 'app-name',
+        processDefinitionId: 'process-def-id',
+        assignment: 'fake-involved',
+        order: 'ASC',
+        sort: 'id'
     });
 
     setupTestBed({
@@ -68,14 +73,12 @@ describe('EditTaskFilterCloudComponent', () => {
         let change = new SimpleChange(undefined, '10', true);
         component.ngOnChanges({ 'id': change });
         fixture.detectChanges();
-        fixture.detectChanges();
         fixture.whenStable().then(() => {
-            fixture.detectChanges();
             expect(component.taskFilter.name).toEqual('FakeInvolvedTasks');
             expect(component.taskFilter.icon).toEqual('adjust');
-            expect(component.taskFilter.query.state).toEqual('CREATED');
-            expect(component.taskFilter.query.order).toEqual('ASC');
-            expect(component.taskFilter.query.sort).toEqual('id');
+            expect(component.taskFilter.state).toEqual('CREATED');
+            expect(component.taskFilter.order).toEqual('ASC');
+            expect(component.taskFilter.sort).toEqual('id');
         });
     }));
 
@@ -102,7 +105,6 @@ describe('EditTaskFilterCloudComponent', () => {
 
         it('should define editTaskFilter form ', async(() => {
             fixture.whenStable().then(() => {
-                fixture.detectChanges();
                 expect(component.editTaskFilterForm).toBeDefined();
             });
         }));
