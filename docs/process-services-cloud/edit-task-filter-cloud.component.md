@@ -38,7 +38,7 @@ Shows Task Filter Details.
 
 ### Editing APS2 task filter
 
-Use the task filter id property to edit task filter properties:
+Use the application name and task filter id property to edit task filter properties:
 
 ```html
 <adf-cloud-edit-task-filter
