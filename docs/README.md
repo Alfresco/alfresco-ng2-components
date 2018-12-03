@@ -30,12 +30,12 @@ See the [Tutorials index](tutorials/README.md) for the full list.
 ## Contents
 
 -   [User Guide](#user-guide)
--   [Core](#adf-core)
--   [Content Services API](#adf-content-services)
--   [Process Services API](#adf-process-services)
--   [Process Services Cloud API](#adf-process-services-cloud)
--   [Extensions API](#extensions)
--   [Insights API](#adf-insights)
+-   [Core](#core-api)
+-   [Content Services API](#content-services-api)
+-   [Process Services API](#process-services-api)
+-   [Process Services Cloud API](#process-services-cloud-api)
+-   [Extensions API](#extensions-api)
+-   [Insights API](#insights-api)
 
 ## User guide
 
@@ -395,7 +395,7 @@ for more information about installing and using the source code.
 
 Contains components related to the Extensions functionality.
 See the library's
-[README file](../../lib/extensions/README.md)
+[README file](../lib/extensions/README.md)
 for more information about installing and using the source code.
 
 <!--extensions start-->
