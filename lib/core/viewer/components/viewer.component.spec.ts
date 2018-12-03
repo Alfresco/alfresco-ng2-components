@@ -669,7 +669,7 @@ describe('ViewerComponent', () => {
                 component.ngOnChanges(null);
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(component.node).toHaveBeenCalledWith(node);
+                    expect(component.node).toBe(node);
                     done();
                 });
             });
