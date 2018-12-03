@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
-import ContentList = require('../../pages/adf/dialog/contentList');
+import { ContentList } from '../../pages/adf/dialog/contentList';
 import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';

@@ -18,8 +18,8 @@
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { PaginationPage } from '../pages/adf/paginationPage';
-import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
-import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');
+import { ProcessFiltersPage } from '../pages/adf/process_services/processFiltersPage';
+import { ProcessDetailsPage } from '../pages/adf/process_services/processDetailsPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');

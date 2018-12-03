@@ -19,7 +19,7 @@ import { LoginPage } from '../pages/adf/loginPage';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
 import { PaginationPage } from '../pages/adf/paginationPage';
-import ContentList = require('../pages/adf/dialog/contentList');
+import { ContentList } from '../pages/adf/dialog/contentList';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';

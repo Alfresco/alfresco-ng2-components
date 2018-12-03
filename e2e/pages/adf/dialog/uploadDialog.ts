@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Util} from '../../../util/util';
+import { Util } from '../../../util/util';
 
 export class UploadDialog {
 
@@ -93,7 +93,7 @@ export class UploadDialog {
     fileIsNotDisplayedInDialog(content) {
         Util.waitUntilElementIsNotVisible(element(by.css(`div[class*='uploading-row'] span[title="${content}"]`)));
         return this;
-    };
+    }
 
     cancelUploads() {
         Util.waitUntilElementIsVisible(this.cancelUploadsElement);
@@ -125,7 +125,7 @@ export class UploadDialog {
             deferred.fulfill(text);
         });
         return deferred.promise;
-    };
+    }
 
     getConfirmationDialogTitleText() {
         Util.waitUntilElementIsVisible(this.canUploadConfirmationTitle);
@@ -155,7 +155,7 @@ export class UploadDialog {
         Util.waitUntilElementIsVisible(this.confirmationDialogNoButton);
         this.confirmationDialogNoButton.click();
         return this;
-    };
+    }
 
     numberOfCurrentFilesUploaded() {
         let deferred = protractor.promise.defer();

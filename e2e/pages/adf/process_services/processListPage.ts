@@ -16,7 +16,6 @@
  */
 
 import { Util } from '../../../util/util';
-
 import { element, by } from 'protractor';
 
 export class ProcessListPage {

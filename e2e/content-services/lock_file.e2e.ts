@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import ContentList = require('../pages/adf/dialog/contentList');
+import { ContentList } from '../pages/adf/dialog/contentList';
 
 import { LockFilePage } from '../pages/adf/lockFilePage';
 
