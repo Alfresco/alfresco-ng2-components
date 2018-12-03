@@ -12,7 +12,10 @@ Shows Task Filter Details.
 ## Basic Usage
 
 ```html
-<adf-cloud-edit-task-filter [taskFilter]="filter"></adf-cloud-edit-task-filter>
+<adf-cloud-edit-task-filter 
+    [id]="taskFilterId"
+    [appName]="applicationName">
+</adf-cloud-edit-task-filter>
 ```
 
 ## Class members
@@ -21,24 +24,26 @@ Shows Task Filter Details.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| taskFilter |  [`TaskFilterCloudRepresentationModel`](../../lib/process-services-cloud/src/lib/task-cloud/models/filter-cloud.model.ts) |  | The Task filter to edit.|
+| id | `string` | "" | The id of the Task filter. |
+| appName | `string` | "" | The name of the application. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudRepresentationModel`](../../lib/process-services-cloud/src/lib/task-cloud/models/filter-cloud.model.ts)`>` | Emitted when a filter properties changed. |
+| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`QueryModel`](../../lib/process-services-cloud/src/lib/task-cloud/models/filter-cloud.model.ts)`>` | Emitted when a filter properties changed. |
 | action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterActionType`](../../lib/process-services-cloud/src/lib/task-cloud/models/filter-cloud.model.ts)`>` | Emitted when the task filter action clicked (i.e, save, saveAs, Delete). |
 
 ## Details
 
 ### Editing APS2 task filter
 
-Use the `TaskFilterCloudRepresentationModel` property to edit task filter properties:
+Use the application name and task filter id property to edit task filter properties:
 
 ```html
 <adf-cloud-edit-task-filter
-    [taskFilter]="filter">
+    [id]="taskFilterId"
+    [appName]="applicationName">
 </adf-cloud-edit-task-filter>
 ```
 
