@@ -4,7 +4,7 @@ Status: Active
 Last reviewed: 2018-21-11
 ---
 
-# [Process Filter Cloud Component](../../lib/process-services-cloud/src/lib/process-cloud/process-filters-cloud/process-filters-cloud.component.ts "Defined in process-filters-cloud.component.ts")
+# [Process Filters Cloud Component](../../lib/process-services-cloud/src/lib/process-cloud/process-filters-cloud/process-filters-cloud.component.ts "Defined in process-filters-cloud.component.ts")
 
 Lists all available process filters and allows to select a filter.
 
