@@ -54,6 +54,8 @@ exports.config = {
         specsToRun
     ],
 
+    useAllAngular2AppRoots: true,
+
     capabilities: {
         browserName: 'chrome',
 

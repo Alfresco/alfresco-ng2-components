@@ -344,20 +344,9 @@ exports.waitUntilElementIsVisible = function (elementToCheck, timeout) {
 };
 
 exports.waitUntilElementIsPresent = function (elementToCheck, timeout) {
-    var waitTimeout = timeout || DEFAULT_TIMEOUT;
+    let waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    var isPresent = false;
-    return browser.wait(() => {
-        elementToCheck.isPresent().then(
-            () => {
-                isPresent = true;
-            },
-            (err) => {
-                isPresent = false;
-            }
-        );
-        return isPresent;
-    }, waitTimeout, 'Element is not present ' + elementToCheck.locator());
+    return  browser.wait(until.presenceOf(elementToCheck), waitTimeout, 'Element is not present ' );
 };
 
 /**
@@ -366,7 +355,7 @@ exports.waitUntilElementIsPresent = function (elementToCheck, timeout) {
 exports.clickElement = function (elementToClick, timeout) {
     var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    waitUntilElementIsVisible(elementToClick, timeout);
+    waitUntilElementIsVisible(elementToClick, waitTimeout);
     elementToClick.click();
 };
 
@@ -376,7 +365,7 @@ exports.clickElement = function (elementToClick, timeout) {
 exports.typeElement = function (elementToType, valueToType, timeout) {
     var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    waitUntilElementIsVisible(elementToType, timeout);
+    waitUntilElementIsVisible(elementToType, waitTimeout);
     elementToType.clear().sendKeys(valueToType);
 };
 
@@ -447,7 +436,7 @@ exports.waitUntilElementIsNotOnPage = function (elementToCheck, timeout) {
 exports.waitUntilElementIsOnPage = function (elementToCheck, timeout) {
     var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    return browser.wait(browser.wait(until.visibilityOf(elementToCheck)), timeout);
+    return browser.wait(browser.wait(until.visibilityOf(elementToCheck)), waitTimeout);
 };
 
 /*

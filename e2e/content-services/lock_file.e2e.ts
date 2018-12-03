@@ -336,23 +336,21 @@ describe('Lock File', () => {
 
         });
 
-        it('[C286617] Owner of the locked file should be able to delete if Allow owner to modify is checked', async () => {
-            browser.refresh();
+        it('[C286617] Owner of the locked file should be able to delete if Allow owner to modify is checked', () => {
             loginPage.loginToContentServicesUsingUserModel(adminUser);
 
             navigationBarPage.openContentServicesFolder(documentLibrary);
 
-            await contentList.lockContent(pngFileToLock.name);
+            contentList.lockContent(pngFileToLock.name);
 
-            await lockFilePage.checkLockFileCheckboxIsDisplayed();
-            await lockFilePage.clickLockFileCheckbox();
-            await lockFilePage.clickAllowOwnerCheckbox();
-            await lockFilePage.clickSaveButton();
+            lockFilePage.checkLockFileCheckboxIsDisplayed();
+            lockFilePage.clickLockFileCheckbox();
+            lockFilePage.clickAllowOwnerCheckbox();
+            lockFilePage.clickSaveButton();
 
             contentList.deleteContent(pngFileToBeLocked.entry.name);
             contentList.checkContentIsNotDisplayed(pngFileToBeLocked.entry.name);
         });
 
     });
-
 });
