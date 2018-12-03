@@ -40,7 +40,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     @Input()
     id: string;
 
-    /** Emitted when an task filter property changes. */
+    /** Emitted when an process instance filter property changes. */
     @Output()
     filterChange: EventEmitter<ProcessQueryModel> = new EventEmitter();
 
@@ -85,11 +85,11 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     buildForm() {
         this.formHasBeenChanged = false;
         this.editProcessFilterForm = this.formBuilder.group({
-            processDefinitionId: this.processFilter.query.processDefinitionId,
-            appName: this.processFilter.query.appName,
             state: this.processFilter.query.state,
             sort: this.processFilter.query.sort,
-            order: this.processFilter.query.order
+            order: this.processFilter.query.order,
+            processDefinitionId: this.processFilter.query.processDefinitionId,
+            appName: this.processFilter.query.appName
         });
         this.onFilterChange();
     }
@@ -99,7 +99,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     }
 
     /**
-     * Check for edit process filter form changes
+     * Check for edit process instance filter form changes
      */
     onFilterChange() {
         this.editProcessFilterForm.valueChanges.subscribe((formValues: ProcessQueryModel) => {

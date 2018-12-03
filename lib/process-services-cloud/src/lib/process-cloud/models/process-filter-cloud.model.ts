@@ -70,13 +70,6 @@ export class ProcessFilterParamModel {
     }
 }
 
-export class FilterActionType {
-    actionType: string;
-    constructor(action: string) {
-        this.actionType = action;
-    }
-}
-
 export interface FilterActionType {
     actionType: string;
     id: string;

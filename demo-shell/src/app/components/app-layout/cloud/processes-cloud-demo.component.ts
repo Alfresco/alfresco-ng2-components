@@ -30,8 +30,8 @@ export class ProcessesCloudDemoComponent implements OnInit {
     @ViewChild('processCloud')
     processCloud: ProcessListCloudComponent;
 
-    sortFormControl: FormControl;
-    sortDirectionFormControl: FormControl;
+    @ViewChild('processFiltersCloud')
+    processFiltersCloud: ProcessFiltersCloudComponent;
 
     applicationName: string = '';
     isFilterLoaded:  boolean;
@@ -111,5 +111,34 @@ export class ProcessesCloudDemoComponent implements OnInit {
 
     onRowClick($event) {
         this.selectedRow = $event;
+    }
+
+    onFilterChange(query: any) {
+        this.editedQuery = Object.assign({}, query);
+        this.sortArray = [new ProcessListCloudSortingModel({ orderBy: this.editedQuery.sort, direction: this.editedQuery.order })];
+    }
+
+    onEditActions(event: any) {
+        if (event.actionType === EditProcessFilterCloudComponent.ACTION_SAVE) {
+            this.save(event.id);
+        } else if (event.actionType === EditProcessFilterCloudComponent.ACTION_SAVE_AS) {
+            this.saveAs(event.id);
+        } else if (event.actionType === EditProcessFilterCloudComponent.ACTION_DELETE) {
+            this.deleteFilter();
+        }
+    }
+
+    saveAs(filterId) {
+        this.processFiltersCloud.filterParam = <any> {id : filterId};
+        this.processFiltersCloud.getFilters(this.currentAppName);
+    }
+
+    save(filterId) {
+        this.processFiltersCloud.filterParam = <any> {id : filterId};
+        this.processFiltersCloud.getFilters(this.currentAppName);
+    }
+
+    deleteFilter() {
+        this.processFiltersCloud.getFilters(this.currentAppName);
     }
 }
