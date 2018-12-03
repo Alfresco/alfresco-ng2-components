@@ -51,6 +51,7 @@ export class SettingsPage {
     applyButton = element(by.css('button[data-automation-id*="host-button"]'));
 
     goToSettingsPage() {
+        browser.waitForAngularEnabled(true);
         browser.driver.get(this.settingsURL);
         Util.waitUntilElementIsVisible(this.providerDropdown);
         return this;

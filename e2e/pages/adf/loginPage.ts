@@ -161,9 +161,8 @@ export class LoginPage {
     }
 
     goToLoginPage() {
-        browser.controlFlow().execute(async () => {
-            await browser.driver.get(TestConfig.adf.url + TestConfig.adf.port + '/login');
-        });
+        browser.waitForAngularEnabled(true);
+        browser.driver.get(TestConfig.adf.url + TestConfig.adf.port + '/login');
         this.waitForElements();
     }
 

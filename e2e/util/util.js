@@ -307,7 +307,6 @@ exports.waitUntilElementIsVisible = function (elementToCheck, timeout) {
 
 exports.waitUntilElementIsPresent = function (elementToCheck, timeout) {
     let waitTimeout = timeout || DEFAULT_TIMEOUT;
-
     return browser.wait(until.presenceOf(elementToCheck), waitTimeout, 'Element is not present ' + elementToCheck.locator());
 };
 

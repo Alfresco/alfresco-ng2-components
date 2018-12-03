@@ -41,11 +41,6 @@ var DataTablePage = function (rootElement = element(by.css("adf-datatable"))) {
     var rows = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row']");
     var nameColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Name'] span");
 
-    this.goToDatatable = function () {
-        browser.driver.get(dataTableURL);
-        Util.waitUntilElementIsVisible(pageLoaded);
-    };
-
     this.getAllDisplayedRows = function () {
         return element.all(rows).count();
     };

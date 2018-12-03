@@ -24,6 +24,7 @@ import { AppListCloudComponent } from './process_cloud/appListCloudComponent';
 export class NavigationBarPage {
 
     contentServicesButton = element(by.css('a[data-automation-id="Content Services"]'));
+    dataTableButton = element(by.css('a[data-automation-id="Datatable"]'));
     taskListButton = element(by.css("a[data-automation-id='Task List']"));
     configEditorButton = element(by.css('a[data-automation-id="Configuration Editor"]'));
     processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
@@ -42,6 +43,11 @@ export class NavigationBarPage {
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = element(by.css('a[data-automation-id="Form"]'));
     treeViewButton = element(by.css('a[data-automation-id="Tree View"]'));
+
+   navigateToDatatable() {
+        Util.waitUntilElementIsVisible(this.dataTableButton);
+        this.dataTableButton.click();
+    }
 
     clickContentServicesButton() {
         Util.waitUntilElementIsVisible(this.contentServicesButton);

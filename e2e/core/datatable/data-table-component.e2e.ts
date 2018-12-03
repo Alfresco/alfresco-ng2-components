@@ -21,12 +21,14 @@ import AcsUserModel = require('../../models/ACS/acsUserModel');
 import TestConfig = require('../../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Datatable component', () => {
 
     let dataTablePage = new DataTablePage();
     let loginPage = new LoginPage();
     let acsUser = new AcsUserModel();
+    let navigationBarPage = new NavigationBarPage();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -40,7 +42,7 @@ describe('Datatable component', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        dataTablePage.goToDatatable();
+        navigationBarPage.navigateToDatatable();
 
         done();
     });
