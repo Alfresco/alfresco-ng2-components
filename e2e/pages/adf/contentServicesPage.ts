@@ -17,7 +17,7 @@
 
 import TestConfig = require('../../test.config');
 import { Util } from '../../util/util';
-import { ContentList } from './dialog/contentList';
+import { ContentListPage } from './dialog/contentListPage';
 import { CreateFolderDialog } from './dialog/createFolderDialog';
 import { NavigationBarPage } from './navigationBarPage';
 import { by, element, protractor, $$, browser } from 'protractor';
@@ -26,7 +26,7 @@ import path = require('path');
 
 export class ContentServicesPage {
 
-    contentList = new ContentList();
+    contentList = new ContentListPage();
     createFolderDialog = new CreateFolderDialog();
     uploadBorder = element(by.id('document-list-container'));
     tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();

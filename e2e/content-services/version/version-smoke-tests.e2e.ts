@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ContentListPage } from '../../pages/adf/dialog/contentList';
+import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';

@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ContentList } from '../pages/adf/dialog/contentList';
+import { ContentListPage } from '../pages/adf/dialog/contentListPage';
 
 import { LockFilePage } from '../pages/adf/lockFilePage';
 
@@ -38,7 +38,7 @@ describe('Lock File', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    const contentList = new ContentList();
+    const contentList = new ContentListPage();
     const lockFilePage = new LockFilePage();
 
     let adminUser = new AcsUserModel();

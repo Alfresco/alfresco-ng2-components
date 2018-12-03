@@ -21,7 +21,7 @@ import { LoginPage } from '../../pages/adf/loginPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ContentListPage } from '../../pages/adf/dialog/contentList';
+import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
 
 import resources = require('../../util/resources');

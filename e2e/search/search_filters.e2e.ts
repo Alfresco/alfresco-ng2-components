@@ -19,7 +19,7 @@ import { LoginPage } from '../pages/adf/loginPage';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
 import { PaginationPage } from '../pages/adf/paginationPage';
-import { ContentList } from '../pages/adf/dialog/contentList';
+import { ContentListPage } from '../pages/adf/dialog/contentListPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
@@ -39,7 +39,7 @@ describe('Search Filters', () => {
     let searchFiltersPage = new SearchFiltersPage();
     let uploadActions = new UploadActions();
     let paginationPage = new PaginationPage();
-    let contentList = new ContentList();
+    let contentList = new ContentListPage();
 
     let acsUser = new AcsUserModel();
 

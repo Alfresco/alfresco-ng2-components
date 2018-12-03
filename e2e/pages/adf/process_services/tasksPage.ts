@@ -16,12 +16,12 @@
  */
 
 import { Util } from '../../../util/util';
-import StartTaskDialog = require('./dialog/startTaskDialog');
+import { StartTaskDialog } from './dialog/startTaskDialog';
 import { FormFields } from './formFields';
 import { TaskDetailsPage } from './taskDetailsPage';
 
 import { FiltersPage } from './filtersPage';
-import ChecklistDialog = require('./dialog/createChecklistDialog');
+import { ChecklistDialog } from './dialog/createChecklistDialog';
 import { TasksListPage } from './tasksListPage';
 import { element, by } from 'protractor';
 

@@ -18,7 +18,7 @@
 import { browser, by, element } from 'protractor';
 import { Util } from '../../../util/util';
 
-export class ContentList {
+export class ContentListPage {
 
     deleteContent = element(by.css('button[data-automation-id*="DELETE"]'));
     metadataAction = element(by.css('button[data-automation-id*="METADATA"]'));

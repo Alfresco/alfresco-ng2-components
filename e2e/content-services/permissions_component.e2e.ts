@@ -21,7 +21,7 @@ import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import { ContentListPage } from '../pages/adf/dialog/contentList';
+import { ContentListPage } from '../pages/adf/dialog/contentListPage';
 import AlfrescoApi = require('alfresco-js-api-node');
 import { FileModel } from '../models/ACS/fileModel';
 import { UploadActions } from '../actions/ACS/upload.actions';

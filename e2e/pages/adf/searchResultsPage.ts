@@ -16,7 +16,7 @@
  */
 
 import { Util } from '../../util/util';
-import { ContentList } from './dialog/contentList';
+import { ContentListPage } from './dialog/contentListPage';
 import { DataTablePage } from './dataTablePage';
 import { element, by, protractor, browser } from 'protractor';
 
@@ -24,7 +24,7 @@ export class SearchResultsPage {
 
     noResultsMessage = element(by.css('div[class="adf-no-result-message"]'));
     noResultsMessageBy = by.css('div[class="adf-no-result-message"]');
-    contentList = new ContentList();
+    contentList = new ContentListPage();
     dataTable = new DataTablePage();
     sortArrowLocator = by.css('adf-sorting-picker button mat-icon');
     sortingArrow = element(by.css('adf-sorting-picker div[class="mat-select-arrow"]'));

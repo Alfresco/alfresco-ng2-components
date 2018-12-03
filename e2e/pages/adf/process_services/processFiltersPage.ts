@@ -16,7 +16,7 @@
  */
 
 import { Util } from '../../../util/util';
-import { ContentList } from '../dialog/contentList';
+import { ContentListPage } from '../dialog/contentListPage';
 import { element, by } from 'protractor';
 import { StartProcessPage } from './startProcessPage';
 
@@ -33,7 +33,7 @@ export class ProcessFiltersPage {
     noContentMessage = element.all(by.css('p[class="adf-empty-content__title"]')).first();
     rows = by.css('adf-process-instance-list div[class="adf-datatable-body"] div[class*="adf-datatable-row"]');
     tableBody = element.all(by.css('adf-datatable div[class="adf-datatable-body"]')).first();
-    contentList = new ContentList();
+    contentList = new ContentListPage();
     nameColumn = by.css('div[class*="adf-datatable-body"] div[class*="adf-datatable-row"] div[title="Name"] span');
     processIcon = by.xpath('ancestor::div[@class="mat-list-item-content"]/mat-icon');
 

@@ -17,13 +17,13 @@
 
 import { by, element } from 'protractor';
 import { Util } from '../../../util/util';
-import { ContentList } from '../dialog/contentList';
+import { ContentListPage } from '../dialog/contentListPage';
 
 export class FiltersPage {
 
     activeFilter = element(by.css('mat-list-item[class*="active"]'));
     nameColumn = by.css('div[class*="adf-datatable-body"] div[class*="adf-datatable-row"] div[class*="--text"] span');
-    contentList = new ContentList();
+    contentList = new ContentListPage();
 
     getActiveFilter() {
         Util.waitUntilElementIsVisible(this.activeFilter);
