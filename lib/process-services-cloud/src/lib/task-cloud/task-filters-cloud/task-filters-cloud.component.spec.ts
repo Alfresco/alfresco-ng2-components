@@ -309,7 +309,7 @@ describe('TaskFiltersCloudComponent', () => {
         spyOn(component, 'selectFilterAndEmit').and.stub();
         let filterButton = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="fake-my-tast1-filter"]');
         filterButton.click();
-        expect(component.selectFilterAndEmit).toHaveBeenCalledWith({id: fakeGlobalFilter[1].id});
+        expect(component.selectFilterAndEmit).toHaveBeenCalledWith(fakeGlobalFilter[1]);
     }));
 
     it('should reload filters by appName on binding changes', () => {
