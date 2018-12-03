@@ -16,8 +16,8 @@
  */
 
 import { by, element } from 'protractor';
-import Util = require('../../../util/util');
-import ContentList = require('../dialog/contentList');
+import { Util } from '../../../util/util';
+import { ContentList } from '../dialog/contentList';
 
 export class FiltersPage {
 

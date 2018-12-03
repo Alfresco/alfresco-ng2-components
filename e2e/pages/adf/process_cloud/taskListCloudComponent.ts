@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import Util = require('../../../util/util');
-import DataTablePage = require('../dataTablePage');
+import { Util } from '../../../util/util';
+import { DataTablePage } from '../dataTablePage';
 import { element, by } from 'protractor';
 
 export class TaskListCloudComponent {

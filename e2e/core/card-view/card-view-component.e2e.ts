@@ -19,22 +19,21 @@ import { element, by } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-
-import CardViewPage = require('../../pages/adf/metadataViewPage');
+import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../../actions/users.actions';
 import { AppsActions } from '../../actions/APS/apps.actions';
-import CardViewPageComponent = require('../../pages/adf/cardViewPageComponent');
-import Util = require('../../util/util');
+import { CardViewComponentPage } from '../../pages/adf/cardViewComponentPage';
+import { Util } from '../../util/util';
 
 describe('CardView Component', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    const cardViewPageComponent = new CardViewPageComponent();
-    const metadataViewPage = new CardViewPage();
+    const cardViewPageComponent = new CardViewComponentPage();
+    const metadataViewPage = new MetadataViewPage();
 
     const app = resources.Files.APP_WITH_PROCESSES;
 

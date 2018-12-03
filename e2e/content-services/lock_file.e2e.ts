@@ -21,11 +21,11 @@ import ContentList = require('../pages/adf/dialog/contentList');
 
 import { LockFilePage } from '../pages/adf/lockFilePage';
 
-import AcsUserModel = require('../models/ACS/acsUserModel');
-import FileModel = require('../models/ACS/fileModel');
+import { AcsUserModel } from '../models/ACS/acsUserModel';
+import { FileModel } from '../models/ACS/fileModel';
 
 import CONSTANTS = require('../util/constants');
-import Util = require('../util/util');
+import { Util } from '../util/util';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');

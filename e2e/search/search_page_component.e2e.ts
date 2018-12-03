@@ -22,14 +22,14 @@ import { LoginPage } from '../pages/adf/loginPage';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
-import filePreviewPage = require('../pages/adf/filePreviewPage');
+import { FilePreviewPage } from '../pages/adf/filePreviewPage';
 
-import AcsUserModel = require('../models/ACS/acsUserModel');
-import FolderModel = require('../models/ACS/folderModel');
-import FileModel = require('../models/ACS/fileModel');
+import { AcsUserModel } from '../models/ACS/acsUserModel';
+import { FolderModel } from '../models/ACS/folderModel';
+import { FileModel } from '../models/ACS/fileModel';
 
 import TestConfig = require('../test.config');
-import Util = require('../util/util');
+import { Util } from '../util/util';
 import resources = require('../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
@@ -53,6 +53,7 @@ describe('Search component - Search Page', () => {
     let contentServicesPage = new ContentServicesPage();
     let searchDialog = new SearchDialog();
     let searchResultPage = new SearchResultsPage();
+    let filePreviewPage = new FilePreviewPage();
 
     let acsUser = new AcsUserModel();
     let emptyFolderModel = new FolderModel({ 'name': 'search' + Util.generateRandomString() });

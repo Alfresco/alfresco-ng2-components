@@ -16,8 +16,8 @@
  */
 
 import { LoginPage } from '../../pages/adf/loginPage';
-import DataTablePage = require('../../pages/adf/dataTablePage');
-import AcsUserModel = require('../../models/ACS/acsUserModel');
+import { DataTablePage } from '../../pages/adf/dataTablePage';
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');

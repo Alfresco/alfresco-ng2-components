@@ -15,25 +15,25 @@
  * limitations under the License.
  */
 
-var Util = require('../../util/util');
+import { Util } from '../../util/util';
 
 /**
- * Create User JSON Object
+ * Create tenant JSON Object
  *
  * @param details - JSON object used to overwrite the default values
  * @constructor
  */
+export class User {
 
-var User = function (details) {
+    email = Util.generateRandomEmail();
+    firstName = Util.generateRandomString();
+    lastName = Util.generateRandomString();
+    password = Util.generatePasswordString();
+    type = 'enterprise';
+    tenantId = '1';
+    company = null;
 
-    this.email = Util.generateRandomEmail();
-    this.firstName = Util.generateRandomString();
-    this.lastName = Util.generateRandomString();
-    this.password = Util.generatePasswordString();
-    this.type = 'enterprise';
-    this.tenantId = "1";
-    this.company = null;
-
-    Object.assign(this, details);
-};
-module.exports = User;
+    constructor(details?: any) {
+        Object.assign(this, details);
+    }
+}

@@ -16,7 +16,7 @@
  */
 
 import TestConfig = require('../test.config');
-import Util = require('../util/util');
+import { Util } from '../util/util';
 import CONSTANTS = require('../util/constants');
 
 import { LoginPage } from '../pages/adf/loginPage';
@@ -26,7 +26,7 @@ import { TasksListPage } from '../pages/adf/process_services/tasksListPage';
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
 import { FiltersPage } from '../pages/adf/process_services/filtersPage';
 
-import TaskModel = require('../models/APS/StandaloneTask');
+import { TaskModel } from '../models/APS/StandaloneTask';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';

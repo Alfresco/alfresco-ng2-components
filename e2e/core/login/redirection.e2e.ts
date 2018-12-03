@@ -23,13 +23,13 @@ import { ProcessServicesPage } from '../../pages/adf/process_services/processSer
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import TestConfig = require('../../test.config');
-import AcsUserModel = require('../../models/ACS/acsUserModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
 import { SettingsPage } from '../../pages/adf/settingsPage';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 
 describe('Login component - Redirect', () => {

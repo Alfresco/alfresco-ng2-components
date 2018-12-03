@@ -16,7 +16,7 @@
  */
 
 import { browser, by, element } from 'protractor';
-import Util = require('../../../util/util');
+import { Util } from '../../../util/util';
 
 export class CreateFolderDialog {
     folderNameField = element(by.id('adf-folder-name-input'));

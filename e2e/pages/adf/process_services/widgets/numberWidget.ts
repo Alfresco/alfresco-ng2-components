@@ -16,8 +16,8 @@
  */
 
 import { element, by } from 'protractor';
-import Util = require('../../../../util/util');
-import FormFields = require('../formFields');
+import { Util } from '../../../../util/util';
+import { FormFields } from '../formFields';
 
 export class NumberWidget {
 

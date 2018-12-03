@@ -17,8 +17,8 @@
 
 import { browser } from 'protractor';
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-import FolderModel = require('../../models/ACS/folderModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { FolderModel } from '../../models/ACS/folderModel';
 
 import TestConfig = require('../../test.config');
 

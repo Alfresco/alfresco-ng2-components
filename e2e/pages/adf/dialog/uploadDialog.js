@@ -15,177 +15,174 @@
  * limitations under the License.
  */
 
+import {Util} from '../../../util/util';
 
-var Util = require('../../../util/util');
+export class UploadDialog {
 
-var UploadDialog = function () {
+    closeButton = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-close"]')));
+    dialog = element(by.css('div[id="upload-dialog"]'));
+    minimizedDialog = element(by.css('div[class*="upload-dialog--minimized"]'));
+    uploadedStatusIcon = by.css('mat-icon[class*="status--done"]');
+    cancelledStatusIcon = by.css('div[class*="status--cancelled"]');
+    errorStatusIcon = by.css('div[class*="status--error"]');
+    cancelWhileUploadingIcon = by.css('mat-icon[class*="adf-file-uploading-row__action adf-file-uploading-row__action--cancel"]');
+    rowByRowName = by.xpath('ancestor::adf-file-uploading-list-row');
+    title = element(by.css('span[class*="upload-dialog__title"]'));
+    minimizeButton = element(by.css('mat-icon[title="Minimize"]'));
+    maximizeButton = element(by.css('mat-icon[title="Maximize""]'));
+    sizeUploaded = by.css('span[class="adf-file-uploading-row__status"]');
+    canUploadConfirmationTitle = element(by.css('p[class="upload-dialog__confirmation--title""]'));
+    canUploadConfirmationDescription = element(by.css('p[class="upload-dialog__confirmation--text"]'));
+    confirmationDialogNoButton = element(by.partialButtonText('No'));
+    confirmationDialogYesButton = element(by.partialButtonText('Yes'));
+    cancelUploadsElement = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-cancel-all"]')));
 
-    var closeButton = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-close"]')));
-    var dialog = element(by.css("div[id='upload-dialog']"));
-    var minimizedDialog = element(by.css("div[class*='upload-dialog--minimized']"));
-    var uploadedStatusIcon = by.css("mat-icon[class*='status--done']");
-    var cancelledStatusIcon = by.css("div[class*='status--cancelled']");
-    var errorStatusIcon = by.css("div[class*='status--error']");
-    var cancelWhileUploadingIcon = by.css("mat-icon[class*='adf-file-uploading-row__action adf-file-uploading-row__action--cancel']");
-    var rowByRowName = by.xpath("ancestor::adf-file-uploading-list-row");
-    var title = element(by.css("span[class*='upload-dialog__title']"));
-    var minimizeButton = element(by.css("mat-icon[title='Minimize']"));
-    var maximizeButton = element(by.css("mat-icon[title='Maximize']"));
-    var sizeUploaded = by.css("span[class='adf-file-uploading-row__status']");
-    var canUploadConfirmationTitle = element(by.css("p[class='upload-dialog__confirmation--title']"));
-    var canUploadConfirmationDescription = element(by.css("p[class='upload-dialog__confirmation--text']"));
-    var confirmationDialogNoButton = element(by.partialButtonText("No"));
-    var confirmationDialogYesButton = element(by.partialButtonText("Yes"));
-    var cancelUploads = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-cancel-all"]')));
-
-    this.clickOnCloseButton = function () {
+    clickOnCloseButton() {
         this.checkCloseButtonIsDisplayed();
-        closeButton.click();
+        this.closeButton.click();
         return this;
-    };
+    }
 
-    this.checkCloseButtonIsDisplayed = function() {
-        Util.waitUntilElementIsVisible(closeButton);
+    checkCloseButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.closeButton);
         return this;
-    };
+    }
 
-    this.dialogIsDisplayed = function () {
-        Util.waitUntilElementIsVisible(dialog);
+    dialogIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.dialog);
         return this;
-    };
+    }
 
-    this.dialogIsMinimized = function () {
-        Util.waitUntilElementIsVisible(minimizedDialog);
+    dialogIsMinimized() {
+        Util.waitUntilElementIsVisible(this.minimizedDialog);
         return this;
-    };
+    }
 
-    this.dialogIsNotDisplayed = function () {
-        Util.waitUntilElementIsNotOnPage(dialog);
+    dialogIsNotDisplayed() {
+        Util.waitUntilElementIsNotOnPage(this.dialog);
         return this;
-    };
+    }
 
-    this.getRowsName = function (content) {
-        var row = element.all(by.css("div[class*='uploading-row'] span[title='" + content +"']")).first();
+    getRowsName(content) {
+        let row = element.all(by.css(`div[class*='uploading-row'] span[title="${content}"]`)).first();
         Util.waitUntilElementIsVisible(row);
         return row;
-    };
+    }
 
-    this.getRowByRowName = function (content) {
-        return this.getRowsName(content).element(rowByRowName);
-    };
+    getRowByRowName(content) {
+        return this.getRowsName(content).element(this.rowByRowName);
+    }
 
-    this.fileIsUploaded = function (content) {
-        Util.waitUntilElementIsVisible(this.getRowByRowName(content).element(uploadedStatusIcon));
+    fileIsUploaded(content) {
+        Util.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.uploadedStatusIcon));
         return this;
-    };
+    }
 
-    this.fileIsError = function (content) {
-        Util.waitUntilElementIsVisible(this.getRowByRowName(content).element(errorStatusIcon));
+    fileIsError(content) {
+        Util.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.errorStatusIcon));
         return this;
-    };
+    }
 
-    this.filesAreUploaded = function (content) {
-        for (var i=0; i<content.length; i++) {
+    filesAreUploaded(content) {
+        for (let i = 0; i < content.length; i++) {
             this.fileIsUploaded(content[i]);
         }
         return this;
-    };
+    }
 
-    this.fileIsNotDisplayedInDialog = function (content) {
-        Util.waitUntilElementIsNotVisible(element(by.css("div[class*='uploading-row'] span[title='" + content +"']")));
+    fileIsNotDisplayedInDialog(content) {
+        Util.waitUntilElementIsNotVisible(element(by.css(`div[class*='uploading-row'] span[title="${content}"]`)));
         return this;
     };
 
-     this.cancelUploads = function () {
-         Util.waitUntilElementIsVisible(cancelUploads);
-         cancelUploads.click();
-         return this;
-     };
-
-    this.fileIsCancelled = function (content) {
-        Util.waitUntilElementIsVisible(this.getRowByRowName(content).element(cancelledStatusIcon));
+    cancelUploads() {
+        Util.waitUntilElementIsVisible(this.cancelUploadsElement);
+        this.cancelUploadsElement.click();
         return this;
-    };
+    }
 
-    this.removeUploadedFile = function (content) {
-        Util.waitUntilElementIsVisible(this.getRowByRowName(content).element(uploadedStatusIcon));
-        this.getRowByRowName(content).element(uploadedStatusIcon).click();
+    fileIsCancelled(content) {
+        Util.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.cancelledStatusIcon));
         return this;
-    };
+    }
 
-    this.removeFileWhileUploading = function (content) {
-        browser.driver.actions().mouseMove(this.getRowByRowName(content).element(sizeUploaded)).perform();
-        this.getRowByRowName(content).element(cancelWhileUploadingIcon).click();
+    removeUploadedFile(content) {
+        Util.waitUntilElementIsVisible(this.getRowByRowName(content).element(this.uploadedStatusIcon));
+        this.getRowByRowName(content).element(this.uploadedStatusIcon).click();
         return this;
-    };
+    }
 
-    this.getTitleText = function () {
-        Util.waitUntilElementIsVisible(title);
-        var deferred = protractor.promise.defer();
-        title.getText().then( function (text) {
+    removeFileWhileUploading(content) {
+        browser.driver.actions().mouseMove(this.getRowByRowName(content).element(this.sizeUploaded)).perform();
+        this.getRowByRowName(content).element(this.cancelWhileUploadingIcon).click();
+        return this;
+    }
+
+    getTitleText() {
+        Util.waitUntilElementIsVisible(this.title);
+        let deferred = protractor.promise.defer();
+        this.title.getText().then(function (text) {
             deferred.fulfill(text);
         });
         return deferred.promise;
     };
 
-    this.getConfirmationDialogTitleText = function () {
-        Util.waitUntilElementIsVisible(canUploadConfirmationTitle);
-        var deferred = protractor.promise.defer();
-        canUploadConfirmationTitle.getText().then( function (text) {
+    getConfirmationDialogTitleText() {
+        Util.waitUntilElementIsVisible(this.canUploadConfirmationTitle);
+        let deferred = protractor.promise.defer();
+        this.canUploadConfirmationTitle.getText().then(function (text) {
             deferred.fulfill(text);
         });
         return deferred.promise;
-    };
+    }
 
-    this.getConfirmationDialogDescriptionText = function () {
-        Util.waitUntilElementIsVisible(canUploadConfirmationDescription);
-        var deferred = protractor.promise.defer();
-        canUploadConfirmationDescription.getText().then( function (text) {
+    getConfirmationDialogDescriptionText() {
+        Util.waitUntilElementIsVisible(this.canUploadConfirmationDescription);
+        let deferred = protractor.promise.defer();
+        this.canUploadConfirmationDescription.getText().then(function (text) {
             deferred.fulfill(text);
         });
         return deferred.promise;
-    };
+    }
 
-    this.clickOnConfirmationDialogYesButton = function () {
-        Util.waitUntilElementIsVisible(confirmationDialogYesButton);
-        confirmationDialogYesButton.click();
+    clickOnConfirmationDialogYesButton() {
+        Util.waitUntilElementIsVisible(this.confirmationDialogYesButton);
+        this.confirmationDialogYesButton.click();
+        return this;
+    }
+
+    clickOnConfirmationDialogNoButton() {
+        Util.waitUntilElementIsVisible(this.confirmationDialogNoButton);
+        this.confirmationDialogNoButton.click();
         return this;
     };
 
-    this.clickOnConfirmationDialogNoButton = function () {
-        Util.waitUntilElementIsVisible(confirmationDialogNoButton);
-        confirmationDialogNoButton.click();
-        return this;
-    };
-
-    this.numberOfCurrentFilesUploaded = function () {
-        var deferred = protractor.promise.defer();
+    numberOfCurrentFilesUploaded() {
+        let deferred = protractor.promise.defer();
         this.getTitleText().then(function (text) {
             deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[0]);
         });
         return deferred.promise;
-    };
+    }
 
-    this.numberOfInitialFilesUploaded = function () {
-        var deferred = protractor.promise.defer();
+    numberOfInitialFilesUploaded() {
+        let deferred = protractor.promise.defer();
         this.getTitleText().then(function (text) {
             deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[1]);
         });
         return deferred.promise;
-    };
+    }
 
-    this.minimizeUploadDialog = function () {
-        Util.waitUntilElementIsVisible(minimizeButton);
-        minimizeButton.click();
+    minimizeUploadDialog() {
+        Util.waitUntilElementIsVisible(this.minimizeButton);
+        this.minimizeButton.click();
         return this;
-    };
+    }
 
-    this.maximizeUploadDialog = function () {
-        Util.waitUntilElementIsVisible(maximizeButton);
-        maximizeButton.click();
+    maximizeUploadDialog() {
+        Util.waitUntilElementIsVisible(this.maximizeButton);
+        this.maximizeButton.click();
         return this;
-    };
+    }
 
-};
-module.exports = UploadDialog;
-
+}

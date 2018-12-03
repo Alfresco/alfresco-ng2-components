@@ -21,16 +21,16 @@ import { LoginPage } from '../../pages/adf/loginPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import ContentListPage = require('../../pages/adf/dialog/contentList');
+import { ContentListPage } from '../../pages/adf/dialog/contentList';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
 
 import resources = require('../../util/resources');
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 import CONSTANTS = require('../../util/constants');
 
-import FileModel = require('../../models/ACS/fileModel');
-import FolderModel = require('../../models/ACS/folderModel');
-import AcsUserModel = require('../../models/ACS/acsUserModel');
+import { FileModel } from '../../models/ACS/fileModel';
+import { FolderModel } from '../../models/ACS/folderModel';
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';

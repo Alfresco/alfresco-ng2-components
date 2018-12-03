@@ -16,12 +16,12 @@
  */
 
 import { element, by } from 'protractor';
-import Util = require('../../../util/util');
+import { Util } from '../../../util/util';
 import { FormControllersPage } from '../material/formControllersPage';
 
 export class ShareDialog {
-    formControllersPage = new FormControllersPage();
 
+    formControllersPage = new FormControllersPage();
     shareDialog = element(by.css('adf-share-dialog'));
     dialogTitle = element(by.css('[data-automation-id="adf-share-dialog-title"]'));
     shareToggle = element(by.css('[data-automation-id="adf-share-toggle"] label'));

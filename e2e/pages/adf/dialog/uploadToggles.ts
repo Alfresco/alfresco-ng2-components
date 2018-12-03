@@ -17,7 +17,7 @@
 
 import { FormControllersPage } from '../material/formControllersPage';
 
-import Util = require('../../../util/util');
+import { Util } from '../../../util/util';
 import { by, element, protractor } from 'protractor';
 
 export class UploadToggles {

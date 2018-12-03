@@ -25,12 +25,12 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { UserInfoDialog } from '../../pages/adf/dialog/userInfoDialog';
 
 import TestConfig = require('../../test.config');
-import AcsUserModel = require('../../models/ACS/acsUserModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
 import { SettingsPage } from '../../pages/adf/settingsPage';
 import AlfrescoApi = require('alfresco-js-api-node');
 
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 
 describe('Login component', () => {
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import Util = require('../../../util/util');
+import { Util } from '../../../util/util';
 import { element, by } from 'protractor';
 
 export class AttachFormPage {

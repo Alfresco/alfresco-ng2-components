@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import Util = require('../../../../util/util');
+import { Util } from '../../../../util/util';
 import { by, ElementFinder } from 'protractor';
 import { SearchTextPage } from './components/search-text';
 import { SearchCheckListPage } from './components/search-checkList';

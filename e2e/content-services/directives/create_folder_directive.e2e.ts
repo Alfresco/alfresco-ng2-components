@@ -20,9 +20,9 @@ import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { CreateFolderDialog } from '../../pages/adf/dialog/createFolderDialog';
 import { NotificationPage } from '../../pages/adf/notificationPage';
 import MetadataViewPage = require('../../pages/adf/metadataViewPage');
-import ContentListPage = require('../../pages/adf/dialog/contentList');
+import { ContentListPage } from '../../pages/adf/dialog/contentList';
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
 import TestConfig = require('../../test.config');
 

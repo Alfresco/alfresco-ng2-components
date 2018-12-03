@@ -21,7 +21,7 @@ import { TasksPage } from '../pages/adf/process_services/tasksPage';
 
 import CONSTANTS = require('../util/constants');
 
-import Tenant = require('../models/APS/Tenant');
+import { Tenant } from '../models/APS/Tenant';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -31,7 +31,7 @@ import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 
 import path = require('path');
-import Util = require('../util/util');
+import { Util } from '../util/util';
 
 describe('Task Audit', () => {
 

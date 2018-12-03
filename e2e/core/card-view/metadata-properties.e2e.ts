@@ -18,10 +18,10 @@
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
-import CardViewPage = require('../../pages/adf/metadataViewPage');
+import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-import FileModel = require('../../models/ACS/fileModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { FileModel } from '../../models/ACS/fileModel';
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
@@ -47,7 +47,7 @@ describe('CardView Component - properties', () => {
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
     let viewerPage = new ViewerPage();
-    let metadataViewPage = new CardViewPage();
+    let metadataViewPage = new MetadataViewPage();
 
     let acsUser = new AcsUserModel();
 

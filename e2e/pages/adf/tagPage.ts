@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import Util = require('../../util/util');
-import ContentList = require('./dialog/contentList');
+import { Util } from '../../util/util';
+import { ContentList } from './dialog/contentList';
 
 import { element, by, protractor, browser } from 'protractor';
 
@@ -66,7 +66,7 @@ export class TagPage {
     }
 
     deleteTagFromTagListByNodeId(name) {
-        let deleteChip = element(by.id('tag_chips_delete_' + name ));
+        let deleteChip = element(by.id('tag_chips_delete_' + name));
         Util.waitUntilElementIsVisible(deleteChip);
         deleteChip.click();
         return this;
@@ -157,12 +157,12 @@ export class TagPage {
     }
 
     checkDeleteTagFromTagListByNodeIdIsDisplayed(name) {
-        let deleteChip =  element(by.id('tag_chips_delete_' + name ));
+        let deleteChip = element(by.id('tag_chips_delete_' + name));
         return Util.waitUntilElementIsVisible(deleteChip);
     }
 
     checkDeleteTagFromTagListByNodeIdIsNotDisplayed(name) {
-        let deleteChip =  element(by.id('tag_chips_delete_' + name ));
+        let deleteChip = element(by.id('tag_chips_delete_' + name));
         return Util.waitUntilElementIsNotVisible(deleteChip);
     }
 

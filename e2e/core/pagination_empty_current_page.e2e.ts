@@ -18,12 +18,12 @@
 import { LoginPage } from '../pages/adf/loginPage';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { PaginationPage } from '../pages/adf/paginationPage';
+import { Util } from '../util/util';
 
-import AcsUserModel = require('../models/ACS/acsUserModel');
-import FolderModel = require('../models/ACS/folderModel');
+import { AcsUserModel } from '../models/ACS/acsUserModel';
+import { FolderModel } from '../models/ACS/folderModel';
 
 import TestConfig = require('../test.config');
-import Util = require('../util/util');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';

@@ -15,22 +15,39 @@
  * limitations under the License.
  */
 
-var Util = require('../../util/util');
+import { Util } from '../../util/util';
 
-var AcsUserModel = function (details) {
+export class FolderModel {
 
-    this.displayName = Util.generateRandomString();
-    this.id = Util.generateRandomString();
+    id = Util.generateRandomString();
+    name = Util.generateRandomString();
+    shortName = this.name;
+    tooltip = this.name;
+    location = '';
+    description = '';
 
-    this.getId = function () {
+    constructor(details?: any) {
+        Object.assign(this, details);
+    }
+
+    getName() {
+        return this.name;
+    }
+
+    getShortName() {
+        return this.shortName;
+    }
+
+    getTooltip() {
+        return this.tooltip;
+    }
+
+    getId() {
         return this.id;
-    };
+    }
 
-    this.getDisplayName = function () {
-        return this.displayName;
-    };
+    getLocation() {
+        return this.location;
+    }
 
-    Object.assign(this, details);
-
-};
-module.exports = AcsUserModel;
+}

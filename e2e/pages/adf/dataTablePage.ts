@@ -1,0 +1,271 @@
+/*!
+ * @license
+ * Copyright 2016 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { browser, by, element, protractor } from 'protractor';
+import { Util } from '../../util/util';
+import { ElementFinder } from 'protractor/built/element';
+
+export class DataTablePage {
+
+    rootElement: ElementFinder;
+    list: ElementFinder;
+    contents = element.all(by.css('div[class="adf-datatable-body"] span'));
+    multiSelect = element(by.css(`div[data-automation-id='multiselect'] label > div[class='mat-checkbox-inner-container']`));
+    selectionButton = element(by.css(`div[class='mat-select-arrow']`));
+    selectionDropDown = element(by.css(`div[class*='ng-trigger-transformPanel']`));
+    allSelectedRows = element.all(by.css(`div[class*='is-selected']`));
+    selectedRowNumber = element(by.css(`div[class*='is-selected'] div[data-automation-id*='text_']`));
+    selectAll = element(by.css(`div[class*='header'] label`));
+    addRowElement = element(by.xpath(`//span[contains(text(),'Add row')]/..`));
+    replaceRowsElement = element(by.xpath(`//span[contains(text(),'Replace rows')]/..`));
+    reset = element(by.xpath(`//span[contains(text(),'Reset to default')]/..`));
+    replaceColumnsElement = element(by.xpath(`//span[contains(text(),'Replace columns')]/..`));
+    createdOnColumn = element(by.css(`div[data-automation-id='auto_id_createdOn']`));
+    pageLoaded = element(by.css(`div[data-automation-id='auto_id_id']`));
+    tableBody = element.all(by.css(`div[class='adf-datatable-body']`)).first();
+    spinner = element(by.css('mat-progress-spinner'));
+    rows = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`);
+    nameColumn = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Name'] span`);
+
+    constructor(rootElement: ElementFinder = element(by.css('adf-datatable'))) {
+        this.rootElement = rootElement;
+        this.list = this.rootElement.all(by.css(`div[class*=adf-datatable-body] div[class*=adf-datatable-row]`));
+
+    }
+
+    getAllDisplayedRows() {
+        return element.all(this.rows).count();
+    }
+
+    getAllRowsNameColumn() {
+        return this.getAllRowsColumnValues(this.nameColumn);
+    }
+
+    getAllRowsColumnValues(locator) {
+        let deferred = protractor.promise.defer();
+        Util.waitUntilElementIsVisible(element.all(locator).first());
+        let initialList = [];
+
+        element.all(locator).each(function (currentElement) {
+            currentElement.getText().then(function (text) {
+                if (text !== '') {
+                    initialList.push(text);
+                }
+            });
+        }).then(function () {
+            deferred.fulfill(initialList);
+        });
+
+        return deferred.promise;
+    }
+
+    getRowByRowNumber(rowNumber) {
+        Util.waitUntilElementIsVisible(element(by.css(`div[data-automation-id='text_` + rowNumber + `']`)));
+        return element(by.css(`div[data-automation-id='text_` + rowNumber + `']`));
+    }
+
+    getRowCheckbox(rowNumber) {
+        return this.getRowByRowNumber(rowNumber).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
+    }
+
+    clickMultiSelect() {
+        Util.waitUntilElementIsVisible(this.multiSelect);
+        this.multiSelect.click();
+    }
+
+    clickReset() {
+        Util.waitUntilElementIsVisible(this.reset);
+        this.reset.click();
+    }
+
+    clickCheckbox(rowNumber) {
+        let checkbox = this.getRowByRowNumber(rowNumber).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
+        Util.waitUntilElementIsVisible(checkbox);
+        checkbox.click();
+    }
+
+    selectRow(rowNumber) {
+        return this.getRowByRowNumber(rowNumber).click();
+    }
+
+    selectRowWithKeyboard(rowNumber) {
+        let row = this.getRowByRowNumber(rowNumber);
+        browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
+    }
+
+    selectSelectionMode(selectionMode) {
+        let selectMode = element(by.cssContainingText(`span[class='mat-option-text']`, selectionMode));
+        this.selectionButton.click();
+        Util.waitUntilElementIsVisible(this.selectionDropDown);
+        selectMode.click();
+    }
+
+    checkRowIsSelected(rowNumber) {
+        let isRowSelected = this.getRowByRowNumber(rowNumber).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        Util.waitUntilElementIsVisible(isRowSelected);
+    }
+
+    checkRowIsNotSelected(rowNumber) {
+        let isRowSelected = this.getRowByRowNumber(rowNumber)
+            .element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row custom-row-style ng-star-inserted is-selected')]`));
+        Util.waitUntilElementIsNotOnPage(isRowSelected);
+    }
+
+    checkNoRowIsSelected() {
+        Util.waitUntilElementIsNotOnPage(this.selectedRowNumber);
+    }
+
+    checkAllRows() {
+        Util.waitUntilElementIsVisible(this.selectAll);
+        this.selectAll.click();
+    }
+
+    checkRowIsChecked(rowNumber) {
+        Util.waitUntilElementIsVisible(this.getRowCheckbox(rowNumber));
+    }
+
+    checkRowIsNotChecked(rowNumber) {
+        Util.waitUntilElementIsNotOnPage(this.getRowCheckbox(rowNumber));
+    }
+
+    addRow() {
+        Util.waitUntilElementIsVisible(this.addRowElement);
+        this.addRowElement.click();
+    }
+
+    getNumberOfRows() {
+        return this.list.count();
+    }
+
+    getNumberOfSelectedRows() {
+        return this.allSelectedRows.count();
+    }
+
+    replaceRows(id) {
+        let rowID = this.getRowByRowNumber(id);
+        Util.waitUntilElementIsVisible(rowID);
+        this.replaceRowsElement.click();
+        Util.waitUntilElementIsNotOnPage(rowID);
+    }
+
+    replaceColumns() {
+        Util.waitUntilElementIsVisible(this.replaceColumnsElement);
+        this.replaceColumnsElement.click();
+        Util.waitUntilElementIsNotOnPage(this.createdOnColumn);
+    }
+
+    getRowsName(content) {
+        let row = element(by.css(`div[data-automation-id*='` + content + `']`));
+        Util.waitUntilElementIsPresent(row);
+        return row;
+    }
+
+    doubleClickRow(rowName) {
+        let row = this.getRowByRowName(rowName);
+        Util.waitUntilElementIsVisible(row);
+        Util.waitUntilElementIsClickable(row);
+        row.click();
+        Util.waitUntilElementIsVisible(row.all(by.css(`div[class*='--image'] mat-icon[svgicon*='selected']`)).first());
+        browser.actions().sendKeys(protractor.Key.ENTER).perform();
+        return this;
+    }
+
+    getRowByRowName(content) {
+        let rowByRowName = by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]`);
+        Util.waitUntilElementIsPresent(this.getRowsName(content).element(rowByRowName));
+        return this.getRowsName(content).element(rowByRowName);
+    }
+
+    waitForTableBody() {
+        Util.waitUntilElementIsVisible(this.tableBody);
+    }
+
+    insertFilter(filterText) {
+        let inputFilter = element(by.xpath(`//*[@id=\`adf-datatable-filter-input\"]`));
+        inputFilter.clear();
+        return inputFilter.sendKeys(filterText);
+    }
+
+    getNodeIdFirstElement() {
+        let firstNode = element.all(by.css('adf-datatable div[title="Node id"] span')).first();
+        return firstNode.getText();
+    }
+
+    sortByColumn(sortOrder, locator) {
+        Util.waitUntilElementIsVisible(element(locator));
+        return element(locator).getAttribute('class').then(function (result) {
+            if (sortOrder === true) {
+                if (!result.includes('sorted-asc')) {
+                    if (result.includes('sorted-desc') || result.includes('sortable')) {
+                        element(locator).click();
+                    }
+                }
+            } else {
+                if (result.includes('sorted-asc')) {
+                    element(locator).click();
+                } else if (result.includes('sortable')) {
+                    element(locator).click();
+                    element(locator).click();
+                }
+            }
+
+            return Promise.resolve();
+        });
+    }
+
+    checkContentIsDisplayed(content) {
+        let row = by.cssContainingText(`span`, content);
+        Util.waitUntilElementIsVisible(this.tableBody.all(row).first());
+        return this;
+    }
+
+    checkContentIsNotDisplayed(content) {
+        let row = by.cssContainingText(`span`, content);
+        Util.waitUntilElementIsNotOnPage(this.tableBody.all(row).first());
+        return this;
+    }
+
+    selectRowByContentName(content) {
+        let row = by.cssContainingText(`span`, content);
+        Util.waitUntilElementIsVisible(this.tableBody.element(row));
+        this.tableBody.element(row).click();
+        return this;
+    }
+
+    contentInPosition(position) {
+        Util.waitUntilElementIsVisible(this.contents);
+        return this.contents.get(position - 1).getText();
+    }
+
+    checkSpinnerIsDisplayed() {
+        Util.waitUntilElementIsPresent(this.spinner);
+    }
+
+    checkRowIsDisplayedByName(filename) {
+        Util.waitUntilElementIsVisible(element.all(by.css(`div[filename="${filename}"]`)).first());
+    }
+
+    checkRowIsNotDisplayedByName(filename) {
+        Util.waitUntilElementIsNotOnPage(element.all(by.css(`div[filename="${filename}"]`)).first());
+    }
+
+    getNumberOfRowsDisplayedWithSameName(filename) {
+        Util.waitUntilElementIsVisible(element(by.css(`div[filename="${filename}"]`)));
+        return element.all(by.css(`div[title='Name'][filename="${filename}"]`)).count();
+    }
+
+}

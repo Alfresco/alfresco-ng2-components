@@ -23,9 +23,9 @@ import { AttachmentListPage } from '../pages/adf/process_services/attachmentList
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
-import Tenant = require('../models/APS/Tenant');
+import { Tenant } from '../models/APS/Tenant';
 
-import FileModel = require('../models/ACS/fileModel');
+import { FileModel } from '../models/ACS/fileModel';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');

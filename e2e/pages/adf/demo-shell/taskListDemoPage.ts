@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import Util = require('../../../util/util');
+import { Util } from '../../../util/util';
 import { TasksListPage } from '../process_services/tasksListPage';
 import { PaginationPage } from '../paginationPage';
 import { element, by } from 'protractor';

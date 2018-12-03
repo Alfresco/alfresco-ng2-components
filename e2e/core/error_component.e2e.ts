@@ -16,7 +16,7 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import AcsUserModel = require('../models/ACS/acsUserModel');
+import { AcsUserModel } from '../models/ACS/acsUserModel';
 import TestConfig = require('../test.config');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { ErrorPage } from '../pages/adf/errorPage';

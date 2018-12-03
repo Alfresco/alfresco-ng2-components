@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-import DataTablePage = require('../../pages/adf/dataTablePage');
+import { DataTablePage } from '../../pages/adf/dataTablePage';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
@@ -27,8 +27,8 @@ import TestConfig = require('../../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-import FileModel = require('../../models/ACS/fileModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { FileModel } from '../../models/ACS/fileModel';
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';

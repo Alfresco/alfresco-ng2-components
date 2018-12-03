@@ -15,23 +15,24 @@
  * limitations under the License.
  */
 
-var Util = require('../../util/util');
+import { Util } from '../../util/util';
 
 /**
- * Create Group Object
+ * Create tenant JSON Object
  *
- * @param details - Group object used to overwrite the default values
+ * @param details - JSON object used to overwrite the default values
  * @constructor
  */
+export class Tenant {
 
-var Group = function (details) {
+    active = true;
+    configuration = 'DefaultConfig';
+    domain = 'DefaultDomain';
+    maxUsers = 10;
+    name = Util.generateRandomString();
 
-    this.name = Util.generateRandomString();
-    this.type = "1";
-    this.parentGroupId = null;
-    this.tenantId = "1";
+    constructor(details?: any) {
+        Object.assign(this, details);
+    }
 
-    Object.assign(this, details);
-};
-
-module.exports = Group;
+}

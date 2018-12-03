@@ -16,10 +16,10 @@
  */
 
 import { LoginPage } from '../../pages/adf/loginPage';
-import DataTablePage = require('../../pages/adf/dataTablePage');
+import { DataTablePage } from '../../pages/adf/dataTablePage';
 import TestConfig = require('../../test.config');
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import AlfrescoApi = require('alfresco-js-api-node');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 

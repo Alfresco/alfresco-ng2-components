@@ -20,15 +20,15 @@ import { browser } from 'protractor';
 import { LoginPage } from '../pages/adf/loginPage';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
-import filePreviewPage = require('../pages/adf/filePreviewPage');
+import { FilePreviewPage } from '../pages/adf/filePreviewPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
 
-import AcsUserModel = require('../models/ACS/acsUserModel');
-import FileModel = require('../models/ACS/fileModel');
-import FolderModel = require('../models/ACS/folderModel');
+import { AcsUserModel } from '../models/ACS/acsUserModel';
+import { FileModel } from '../models/ACS/fileModel';
+import { FolderModel } from '../models/ACS/folderModel';
 
 import TestConfig = require('../test.config');
-import Util = require('../util/util');
+import { Util } from '../util/util';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
@@ -48,6 +48,7 @@ xdescribe('Search component - Search Bar', () => {
     let contentServicesPage = new ContentServicesPage();
     let searchDialog = new SearchDialog();
     let searchResultPage = new SearchResultsPage();
+    let filePreviewPage = new FilePreviewPage();
 
     let acsUser = new AcsUserModel();
 

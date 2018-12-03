@@ -22,7 +22,7 @@ import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
 import TestConfig = require('../../test.config');
 

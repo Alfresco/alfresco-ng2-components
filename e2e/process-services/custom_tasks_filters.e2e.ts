@@ -21,11 +21,11 @@ import { TaskListDemoPage } from '../pages/adf/demo-shell/taskListDemoPage';
 import { PaginationPage } from '../pages/adf/paginationPage';
 import moment = require('moment');
 
-import Tenant = require('../models/APS/Tenant');
+import { Tenant } from '../models/APS/Tenant';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import Util = require('../util/util');
+import { Util } from '../util/util';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';

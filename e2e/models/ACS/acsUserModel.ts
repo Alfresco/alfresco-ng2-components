@@ -15,42 +15,43 @@
  * limitations under the License.
  */
 
-var Util = require('../../util/util');
+import { Util } from '../../util/util';
 
-var AcsUserModel = function (details) {
+export class AcsUserModel {
 
-    this.firstName = Util.generateRandomString();
-    this.lastName = Util.generateRandomString();
-    this.password = Util.generateRandomString();
-    this.email = Util.generateRandomString();
-    this.id = Util.generateRandomString();
-    this.jobTitle = "N/A";
+    firstName = Util.generateRandomString();
+    lastName = Util.generateRandomString();
+    password = Util.generateRandomString();
+    email = Util.generateRandomString();
+    id = Util.generateRandomString();
+    jobTitle = 'N/A';
 
-    this.getFirstName = function () {
+    constructor(details?: any) {
+        Object.assign(this, details);
+    }
+
+    getFirstName = function () {
         return this.firstName;
     };
 
-    this.getLastName = function () {
+    getLastName = function () {
         return this.lastName;
     };
 
-    this.getPassword = function () {
+    getPassword = function () {
         return this.password;
     };
 
-    this.getEmail = function () {
+    getEmail = function () {
         return this.email;
     };
 
-    this.getId = function () {
+    getId = function () {
         return this.id;
     };
 
-    this.getJobTitle = function () {
+    getJobTitle = function () {
         return this.jobTitle;
     };
 
-    Object.assign(this, details);
-
-};
-module.exports = AcsUserModel;
+}

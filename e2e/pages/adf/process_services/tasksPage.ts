@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import Util = require('../../../util/util');
+import { Util } from '../../../util/util';
 import StartTaskDialog = require('./dialog/startTaskDialog');
-import FormFields = require('./formFields');
+import { FormFields } from './formFields';
 import { TaskDetailsPage } from './taskDetailsPage';
 
 import { FiltersPage } from './filtersPage';

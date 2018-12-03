@@ -24,7 +24,7 @@ import CONSTANTS = require('../util/constants');
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import Util = require('../util/util');
+import { Util } from '../util/util';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';

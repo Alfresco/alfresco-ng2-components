@@ -16,15 +16,15 @@
  */
 
 import CONSTANTS = require('../../util/constants');
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import ContentListPage = require('../../pages/adf/dialog/contentList');
+import { ContentListPage } from '../../pages/adf/dialog/contentList';
 import { ErrorPage } from '../../pages/adf/errorPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-import FileModel = require('../../models/ACS/fileModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { FileModel } from '../../models/ACS/fileModel';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');

@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-import DataTablePage = require('../../pages/adf/dataTablePage');
+import { DataTablePage } from '../../pages/adf/dataTablePage';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { DatePickerPage } from '../../pages/adf/material/datePickerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';

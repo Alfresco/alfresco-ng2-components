@@ -15,22 +15,22 @@
  * limitations under the License.
  */
 
-var Util = require('../../util/util');
+import { Util } from '../../util/util';
 
-/**
- * Create tenant JSON Object
- *
- * @param details - JSON object used to overwrite the default values
- * @constructor
- */
-var Tenant = function (details) {
-    this.active = true;
-    this.configuration = "DefaultConfig";
-    this.domain = "DefaultDomain";
-    this.maxUsers = 10;
-    this.name = Util.generateRandomString();
+export class CreatedByModel {
+    displayName = Util.generateRandomString();
+    id = Util.generateRandomString();
 
-    Object.assign(this, details);
-};
+    constructor(details?: any) {
+        Object.assign(this, details);
+    }
 
-module.exports = Tenant;
+    getId() {
+        return this.id;
+    }
+
+    getDisplayName() {
+        return this.displayName;
+    }
+
+}

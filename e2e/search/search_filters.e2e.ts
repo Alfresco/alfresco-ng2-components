@@ -21,11 +21,11 @@ import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
 import { PaginationPage } from '../pages/adf/paginationPage';
 import ContentList = require('../pages/adf/dialog/contentList');
 
-import AcsUserModel = require('../models/ACS/acsUserModel');
-import FileModel = require('../models/ACS/fileModel');
+import { AcsUserModel } from '../models/ACS/acsUserModel';
+import { FileModel } from '../models/ACS/fileModel';
 
 import TestConfig = require('../test.config');
-import Util = require('../util/util');
+import { Util } from '../util/util';
 import resources = require('../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');

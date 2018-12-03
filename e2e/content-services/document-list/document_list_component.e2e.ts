@@ -19,14 +19,14 @@ import { browser } from 'protractor';
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import AcsUserModel = require('../../models/ACS/acsUserModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { ErrorPage } from '../../pages/adf/errorPage';
-import FileModel = require('../../models/ACS/fileModel');
+import { FileModel } from '../../models/ACS/fileModel';
 import moment from 'moment-es6';
 
 describe('Document List Component', () => {

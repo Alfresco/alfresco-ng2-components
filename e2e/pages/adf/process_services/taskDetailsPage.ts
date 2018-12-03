@@ -16,7 +16,7 @@
  */
 
 import { AppSettingsToggles } from './dialog/appSettingsToggles';
-import Util = require('../../../util/util');
+import { Util } from '../../../util/util';
 import { element, by, protractor, browser } from 'protractor';
 import { TabsPage } from '../material/tabsPage';
 

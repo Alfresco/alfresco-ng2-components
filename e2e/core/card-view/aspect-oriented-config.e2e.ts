@@ -19,12 +19,12 @@ import { browser } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
-import CardViewPage = require('../../pages/adf/metadataViewPage');
+import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-import FileModel = require('../../models/ACS/fileModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { FileModel } from '../../models/ACS/fileModel';
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
@@ -37,7 +37,7 @@ describe('Aspect oriented config', () => {
 
     const loginPage = new LoginPage();
     const viewerPage = new ViewerPage();
-    const metadataViewPage = new CardViewPage();
+    const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
     const configEditorPage = new ConfigEditorPage();
     let contentServicesPage = new ContentServicesPage();

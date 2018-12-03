@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-var FileModel = require('./fileModel');
+import { Util } from '../../util/util';
 
-var FilesModel = function () {
+/**
+ * Create Json Object for standalone task
+ *
+ * @param details - JSON object used to overwrite the default values
+ * @constructor
+ */
+export class StandaloneTask {
 
-    var files = null;
+    name = Util.generateRandomString();
 
-    this.setFiles = function (arr) {
-        files = arr.map(function(item) {
-            return new FileModel(item.entry);
-        });
-    };
+    constructor(details?: any) {
+        Object.assign(this, details);
+    }
 
-    this.getFiles = function () {
-        return files;
-    };
-};
-module.exports = FilesModel;
+}

@@ -16,8 +16,8 @@
  */
 
 import TestConfig = require('../../test.config');
-import Util = require('../../util/util');
-import ContentList = require('./dialog/contentList');
+import { Util } from '../../util/util';
+import { ContentList } from './dialog/contentList';
 import { CreateFolderDialog } from './dialog/createFolderDialog';
 import { NavigationBarPage } from './navigationBarPage';
 import { by, element, protractor, $$, browser } from 'protractor';
