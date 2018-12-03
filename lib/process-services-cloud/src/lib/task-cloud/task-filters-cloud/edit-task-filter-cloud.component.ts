@@ -109,7 +109,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
      */
     onFilterChange() {
         this.editTaskFilterForm.valueChanges.subscribe((formValues: QueryModel) => {
-            this.formHasBeenChanged = !this.compareFilters(new QueryModel(formValues), this.taskFilter.query);
+            this.formHasBeenChanged = !this.compareFilters(formValues, this.taskFilter.query);
             this.changedTaskFilter = Object.assign({}, this.taskFilter);
             this.changedTaskFilter.query = formValues;
             this.filterChange.emit(formValues);
@@ -168,8 +168,5 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     replaceSpaceWithHyphen(name) {
         const regExt = new RegExp(' ', 'g');
         return name.replace(regExt, '-');
-    }
-    reset() {
-        this.taskFilter = null;
     }
 }
