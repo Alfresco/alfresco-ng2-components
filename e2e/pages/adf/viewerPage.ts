@@ -95,7 +95,7 @@ export class ViewerPage {
     bugButton = element(by.id('adf-viewer-bug'));
 
     viewFile(fileName) {
-        let fileView = element.all(by.xpath('//div[@id="document-list-container"]//div[@filename="' + fileName + '"]')).first();
+        let fileView = element.all(by.css(`#document-list-container div[filename="${fileName}"]`)).first();
         Util.waitUntilElementIsVisible(fileView);
         fileView.click();
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
