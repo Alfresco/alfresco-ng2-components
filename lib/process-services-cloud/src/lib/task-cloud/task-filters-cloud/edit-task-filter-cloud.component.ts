@@ -17,8 +17,7 @@
 
 import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { QueryModel, FilterActionType } from './../models/filter-cloud.model';
-import { TaskFilterCloudRepresentationModel } from '../models/filter-cloud.model';
+import { TaskFilterCloudModel, FilterActionType } from './../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { MatDialog } from '@angular/material';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
@@ -40,12 +39,12 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     @Input()
     id: string;
 
-    taskFilter: TaskFilterCloudRepresentationModel;
-    changedTaskFilter: TaskFilterCloudRepresentationModel;
+    taskFilter: TaskFilterCloudModel;
+    changedTaskFilter: TaskFilterCloudModel;
 
     /** Emitted when an task filter property changes. */
     @Output()
-    filterChange: EventEmitter<QueryModel> = new EventEmitter();
+    filterChange: EventEmitter<TaskFilterCloudModel> = new EventEmitter();
 
     /** Emitted when an filter action occurs i.e Save, SaveAs, Delete. */
     @Output()
@@ -90,12 +89,12 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     buildForm() {
         this.formHasBeenChanged = false;
         this.editTaskFilterForm = this.formBuilder.group({
-            state: this.taskFilter.query.state,
-            appName: this.taskFilter.query.appName,
-            processDefinitionId: this.taskFilter.query.processDefinitionId,
-            assignment: this.taskFilter.query.assignment,
-            sort: this.taskFilter.query.sort,
-            order: this.taskFilter.query.order
+            state: this.taskFilter.state,
+            appName: this.taskFilter.appName,
+            processDefinitionId: this.taskFilter.processDefinitionId,
+            assignment: this.taskFilter.assignment,
+            sort: this.taskFilter.sort,
+            order: this.taskFilter.order
         });
         this.onFilterChange();
     }
@@ -108,11 +107,10 @@ export class EditTaskFilterCloudComponent implements OnChanges {
      * Check for edit task filter form changes
      */
     onFilterChange() {
-        this.editTaskFilterForm.valueChanges.subscribe((formValues: QueryModel) => {
-            this.formHasBeenChanged = !this.compareFilters(formValues, this.taskFilter.query);
-            this.changedTaskFilter = Object.assign({}, this.taskFilter);
-            this.changedTaskFilter.query = formValues;
-            this.filterChange.emit(formValues);
+        this.editTaskFilterForm.valueChanges.subscribe((formValues: TaskFilterCloudModel) => {
+            this.changedTaskFilter = Object.assign({}, this.taskFilter, formValues);
+            this.formHasBeenChanged = !this.compareFilters(this.changedTaskFilter, this.taskFilter);
+            this.filterChange.emit(this.changedTaskFilter);
         });
     }
 
@@ -145,15 +143,13 @@ export class EditTaskFilterCloudComponent implements OnChanges {
             if (result && result.action === TaskFilterDialogCloudComponent.ACTION_SAVE) {
                 const filterId = Math.random().toString(36).substr(2, 9);
                 const filterKey = this.getSanitizeFilterName(result.name);
-                const filter = new TaskFilterCloudRepresentationModel(
-                    {
-                        name: result.name,
-                        icon: result.icon,
-                        id: filterId,
-                        key: 'custom-' + filterKey,
-                        query: this.changedTaskFilter.query
-                    }
-                );
+                const newFilter = {
+                                    name: result.name,
+                                    icon: result.icon,
+                                    id: filterId,
+                                    key: 'custom-' + filterKey
+                                };
+                const filter = Object.assign({}, this.changedTaskFilter, newFilter);
                 this.taskFilterCloudService.addFilter(filter);
                 this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_SAVE_AS, id: filter.id});
             }

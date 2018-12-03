@@ -14,9 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export class QueryModel {
-    processDefinitionId: string;
+
+export class TaskFilterCloudModel  {
+    id: string;
+    name: string;
+    key: string;
+    icon: string;
+    index: number;
     appName: string;
+    processDefinitionId: string;
     state: string;
     sort: string;
     assignment: string;
@@ -24,51 +30,21 @@ export class QueryModel {
 
     constructor(obj?: any) {
         if (obj) {
-            this.appName = obj.appName || null;
-            this.processDefinitionId = obj.processDefinitionId || null;
-            this.state = obj.state || null;
-            this.sort = obj.sort || null;
-            this.assignment = obj.assignment || null;
-            this.order = obj.order || null;
-        }
-    }
-}
-export class TaskFilterCloudRepresentationModel  {
-    id: string;
-    name: string;
-    key: string;
-    icon: string;
-    query: QueryModel;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id;
+            this.id = obj.id || Math.random().toString(36).substr(2, 9);
             this.name = obj.name;
             this.key = obj.key;
             this.icon = obj.icon;
-            this.query = new QueryModel(obj.query);
-        }
-    }
-
-    hasFilter() {
-        return !!this.query;
-    }
-}
-export class FilterParamsModel {
-    id?: string;
-    name?: string;
-    key?: string;
-    index?: number;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id || null;
-            this.name = obj.name || null;
-            this.key = obj.key || null;
             this.index = obj.index;
+            this.appName = obj.appName;
+            this.processDefinitionId = obj.processDefinitionId;
+            this.state = obj.state;
+            this.sort = obj.sort;
+            this.assignment = obj.assignment;
+            this.order = obj.order;
         }
     }
 }
+
 export interface FilterActionType {
     actionType: string;
     id: string;

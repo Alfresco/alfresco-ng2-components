@@ -18,7 +18,8 @@
 import { StorageService, JwtHelperService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TaskFilterCloudRepresentationModel, QueryModel } from '../models/filter-cloud.model';
+import { TaskFilterCloudModel } from '../models/filter-cloud.model';
+
 @Injectable()
 export class TaskFilterCloudService {
 
@@ -30,7 +31,7 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of default filters just created
      */
-    public createDefaultFilters(appName: string): Observable<TaskFilterCloudRepresentationModel[]> {
+    public createDefaultFilters(appName: string): Observable<TaskFilterCloudModel[]> {
         let myTasksFilter = this.getMyTasksFilterInstance(appName);
         this.addFilter(myTasksFilter);
 
@@ -45,7 +46,7 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of task filter details
      */
-    getTaskListFilters(appName?: string): Observable<TaskFilterCloudRepresentationModel[]> {
+    getTaskListFilters(appName?: string): Observable<TaskFilterCloudModel[]> {
         const username = this.getUsername();
         let key = `task-filters-${appName}-${username}`;
         const filters = JSON.parse(this.storage.getItem(key) || '[]');
@@ -55,12 +56,12 @@ export class TaskFilterCloudService {
         });
     }
 
-    getTaskFilterById(appName: string, id: string): TaskFilterCloudRepresentationModel {
+    getTaskFilterById(appName: string, id: string): TaskFilterCloudModel {
         const username = this.getUsername();
         let key = `task-filters-${appName}-${username}`;
         let filters = [];
         filters = JSON.parse(this.storage.getItem(key)) || [];
-        return filters.filter((filterTmp: TaskFilterCloudRepresentationModel) => id === filterTmp.id)[0];
+        return filters.filter((filterTmp: TaskFilterCloudModel) => id === filterTmp.id)[0];
     }
 
     /**
@@ -68,9 +69,9 @@ export class TaskFilterCloudService {
      * @param filter The new filter to add
      * @returns Details of task filter just added
      */
-    addFilter(filter: TaskFilterCloudRepresentationModel): Observable<TaskFilterCloudRepresentationModel> {
+    addFilter(filter: TaskFilterCloudModel): Observable<TaskFilterCloudModel> {
         const username = this.getUsername();
-        const key = `task-filters-${filter.query.appName}-${username}`;
+        const key = `task-filters-${filter.appName}-${username}`;
         let filters = JSON.parse(this.storage.getItem(key) || '[]');
 
         filters.push(filter);
@@ -87,12 +88,12 @@ export class TaskFilterCloudService {
      *  Update task filter
      * @param filter The new filter to update
      */
-    updateFilter(filter: TaskFilterCloudRepresentationModel) {
+    updateFilter(filter: TaskFilterCloudModel) {
         const username = this.getUsername();
-        const key = `task-filters-${filter.query.appName}-${username}`;
+        const key = `task-filters-${filter.appName}-${username}`;
         if (key) {
             let filters = JSON.parse(this.storage.getItem(key) || '[]');
-            let itemIndex = filters.findIndex((flt: TaskFilterCloudRepresentationModel) => flt.id === filter.id);
+            let itemIndex = filters.findIndex((flt: TaskFilterCloudModel) => flt.id === filter.id);
             filters[itemIndex] = filter;
             this.storage.setItem(key, JSON.stringify(filters));
         }
@@ -102,9 +103,9 @@ export class TaskFilterCloudService {
      *  Delete task filter
      * @param filter The new filter to delete
      */
-    deleteFilter(filter: TaskFilterCloudRepresentationModel) {
+    deleteFilter(filter: TaskFilterCloudModel) {
         const username = this.getUsername();
-        const key = `task-filters-${filter.query.appName}-${username}`;
+        const key = `task-filters-${filter.appName}-${username}`;
         if (key) {
             let filters = JSON.parse(this.storage.getItem(key) || '[]');
             filters = filters.filter((item) => item.id !== filter.id);
@@ -131,22 +132,17 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getMyTasksFilterInstance(appName: string): TaskFilterCloudRepresentationModel {
+    getMyTasksFilterInstance(appName: string): TaskFilterCloudModel {
         const username = this.getUsername();
-        return new TaskFilterCloudRepresentationModel({
-            id: Math.random().toString(36).substr(2, 9),
+        return new TaskFilterCloudModel({
             name: 'ADF_CLOUD_TASK_FILTERS.MY_TASKS',
             key: 'my-tasks',
             icon: 'inbox',
-            query: new QueryModel(
-                {
-                    appName: appName,
-                    state: 'ASSIGNED',
-                    assignment: username,
-                    sort: 'id',
-                    order: 'ASC'
-                }
-            )
+            appName: appName,
+            state: 'ASSIGNED',
+            assignment: username,
+            sort: 'id',
+            order: 'ASC'
         });
     }
 
@@ -155,21 +151,16 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getCompletedTasksFilterInstance(appName: string): TaskFilterCloudRepresentationModel {
-        return new TaskFilterCloudRepresentationModel({
-            id: Math.random().toString(36).substr(2, 9),
+    getCompletedTasksFilterInstance(appName: string): TaskFilterCloudModel {
+        return new TaskFilterCloudModel({
             name: 'ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS',
             key: 'completed-tasks',
             icon: 'done',
-            query: new QueryModel(
-                {
-                    appName: appName,
-                    state: 'COMPLETED',
-                    assignment: '',
-                    sort: 'id',
-                    order: 'ASC'
-                }
-            )
+            appName: appName,
+            state: 'COMPLETED',
+            assignment: '',
+            sort: 'id',
+            order: 'ASC'
         });
     }
 }
