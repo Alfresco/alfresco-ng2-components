@@ -32,11 +32,11 @@
         (action)="onEditActions($event)">
     </adf-cloud-edit-task-filter>
 
-    <div *ngIf="editedQuery">
+    <div *ngIf="editedFilter">
         <adf-cloud-task-list #taskCloud
-            [applicationName]="editedQuery.appName"
-            [status]="editedQuery.state"
-            [assignee]="editedQuery.assignment"
+            [applicationName]="editedFilter.appName"
+            [status]="editedFilter.state"
+            [assignee]="editedFilter.assignment"
             [sorting]="sortArray"
             (rowClick)="onRowClick($event)">
             <data-columns>
