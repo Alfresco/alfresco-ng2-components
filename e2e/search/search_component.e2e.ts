@@ -112,7 +112,6 @@ describe('Search component - Search Bar', () => {
 
     beforeEach(() => {
         contentServicesPage.goToDocumentList();
-        browser.refresh();
     });
 
     it('[C272798] Search bar should be visible', () => {

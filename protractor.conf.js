@@ -224,8 +224,6 @@ exports.config = {
                             'overwrite': true
                         });
                     } catch (error) {
-                        console.log('Folder screenshot already present');
-
                         folder = await
                         alfrescoJsApi.nodes.getNode('-my-', {
                             'relativePath': `Builds/${buildNumber()}/screenshot/retry-${retryCount}`,

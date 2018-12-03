@@ -32,6 +32,7 @@ import resources = require('../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
+import { browser } from 'protractor';
 
 describe('Lock File', () => {
 
@@ -293,7 +294,7 @@ describe('Lock File', () => {
 
         });
 
-        it('[C286614] Owner of the locked file should be able to rename if "Allow owner to modify" is checked', async () => {
+        it('[C286614] Owner of the locked file should be able to rename if Allow owner to modify is checked', async () => {
             await contentList.lockContent(pngFileModel.name);
 
             await lockFilePage.checkLockFileCheckboxIsDisplayed();
@@ -306,7 +307,7 @@ describe('Lock File', () => {
             expect(response.entry.name).toEqual('My new name');
         });
 
-        it('[C286615] Owner of the locked file should be able to update a new version if "Allow owner to modify" is checked', async () => {
+        it('[C286615] Owner of the locked file should be able to update a new version if Allow owner to modify is checked', async () => {
             await contentList.lockContent(pngFileModel.name);
 
             await lockFilePage.checkLockFileCheckboxIsDisplayed();
@@ -319,7 +320,7 @@ describe('Lock File', () => {
             expect(response.entry.modifiedAt).toBeGreaterThan(response.entry.createdAt);
         });
 
-        it('[C286616] Owner of the locked file should be able to move if "Allow owner to modify" is checked', async () => {
+        it('[C286616] Owner of the locked file should be able to move if Allow owner to modify is checked', async () => {
             await contentList.lockContent(pngFileModel.name);
 
             await lockFilePage.checkLockFileCheckboxIsDisplayed();
@@ -335,8 +336,8 @@ describe('Lock File', () => {
 
         });
 
-        it('[C286617] Owner of the locked file should be able to delete if "Allow owner to modify" is checked', async () => {
-
+        it('[C286617] Owner of the locked file should be able to delete if Allow owner to modify is checked', async () => {
+            browser.refresh();
             loginPage.loginToContentServicesUsingUserModel(adminUser);
 
             navigationBarPage.openContentServicesFolder(documentLibrary);
