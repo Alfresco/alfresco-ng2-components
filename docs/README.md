@@ -30,7 +30,7 @@ See the [Tutorials index](tutorials/README.md) for the full list.
 ## Contents
 
 -   [User Guide](#user-guide)
--   [Core](#core-api)
+-   [Core API](#core-api)
 -   [Content Services API](#content-services-api)
 -   [Process Services API](#process-services-api)
 -   [Process Services Cloud API](#process-services-cloud-api)
