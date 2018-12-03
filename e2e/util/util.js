@@ -38,18 +38,6 @@ exports.uploadParentFolder = function (filePath) {
     return path.resolve(path.join(parentFolder, filePath));
 };
 
-/**
- * Sleeps the main thread for time millieconds
- * @param time {int} Milliseconds to sleep
- * @param callback
- * @method sleep
- */
-exports.sleep = function (time, callback) {
-    var stop = new Date().getTime();
-    while (new Date().getTime() < stop + time) {
-    }
-    callback();
-};
 
 /**
  * Get current date in long format: Oct 24, 2016
@@ -298,32 +286,6 @@ exports.readFile = function (filePath, callback) {
     });
 };
 
-/**
- * Executes external script that simulates dragndrop
- * Waits for the form to open
- */
-exports.prepareFieldDndOnForm = function (script) {
-    // TODO
-    // Currently all fields are added to the second column
-    // Ability to add fields to first column is needed as well
-    // dnd simulation script may need to be modified for this to be possible
-    browser.driver.executeScript(script);
-    browser.waitForAngular();
-};
-
-/**
- * Wait for url
- */
-exports.waitUntilUrlIsShowed = function (urlToWait, timeout) {
-    var waitTimeout = timeout || DEFAULT_TIMEOUT;
-
-    browser.wait(() => {
-        return browser.getCurrentUrl().then(function (url) {
-            return (url.indexOf(TestConfig.main.host + urlToWait.toString()) !== -1);
-        }, waitTimeout, urlToWait + 'is not showed');
-    });
-};
-
 exports.waitUntilElementIsVisible = function (elementToCheck, timeout) {
     var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
@@ -346,7 +308,7 @@ exports.waitUntilElementIsVisible = function (elementToCheck, timeout) {
 exports.waitUntilElementIsPresent = function (elementToCheck, timeout) {
     let waitTimeout = timeout || DEFAULT_TIMEOUT;
 
-    return  browser.wait(until.presenceOf(elementToCheck), waitTimeout, 'Element is not present ' );
+    return browser.wait(until.presenceOf(elementToCheck), waitTimeout, 'Element is not present ' + elementToCheck.locator());
 };
 
 /**
@@ -358,17 +320,6 @@ exports.clickElement = function (elementToClick, timeout) {
     waitUntilElementIsVisible(elementToClick, waitTimeout);
     elementToClick.click();
 };
-
-/**
- * Type in  element
- */
-exports.typeElement = function (elementToType, valueToType, timeout) {
-    var waitTimeout = timeout || DEFAULT_TIMEOUT;
-
-    waitUntilElementIsVisible(elementToType, waitTimeout);
-    elementToType.clear().sendKeys(valueToType);
-};
-
 
 /*
  * Wait for element to have value
@@ -437,29 +388,6 @@ exports.waitUntilElementIsOnPage = function (elementToCheck, timeout) {
     var waitTimeout = timeout || DEFAULT_TIMEOUT;
 
     return browser.wait(browser.wait(until.visibilityOf(elementToCheck)), waitTimeout);
-};
-
-/*
- * Wait for top message 'form saved' etc to not be visible
- * @param URL is url navigating to
- */
-exports.waitUntilTopMessageIsNotVisible = function (URL) {
-    this.waitUntilUrlIsShowed(URL);
-    this.waitUntilElementIsNotVisible(element(by.css("div[ng-click='dismissAlert()'] > i[class='glyphicon glyphicon-ok']")));
-    this.waitUntilElementIsNotOnPage(element(by.css("div[class='alert fadein ng-animate info-remove ng-hide-add ng-hide info-remove-active ng-hide-add-active']")));
-    this.waitUntilElementIsNotOnPage(element(by.css("div[ng-click='dismissAlert()']")));
-};
-
-
-/*
- * Wait for top message 'process model contains error' etc to not be visible
- * @param URL is url navigating to
- */
-exports.waitUntilTopErrorMessageIsNotVisible = function (URL) {
-    this.waitUntilUrlIsShowed(URL);
-    this.waitUntilElementIsNotVisible(element(by.css("div[ng-click='dismissAlert()'] > i[class='glyphicon glyphicon-remove']")));
-    this.waitUntilElementIsNotOnPage(element(by.css("div[class='alert fadein ng-animate error-remove ng-hide-add ng-hide error-remove-active ng-hide-add-active']")));
-    this.waitUntilElementIsNotOnPage(element(by.css("div[ng-click='dismissAlert()']")));
 };
 
 /**

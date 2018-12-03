@@ -142,7 +142,7 @@ describe('Unshare file', () => {
             shareDialog.clickUnShareFile();
             shareDialog.confirmationDialogIsDisplayed();
             shareDialog.clickConfirmationDialogRemoveButton();
-            shareDialog.shareToggleButtonIsChecked();
+            shareDialog.dialogIsClosed();
         });
 
         it('[C280556] Should redirect to 404 when trying to access an unshared file', async () => {

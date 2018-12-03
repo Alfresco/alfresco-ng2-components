@@ -197,7 +197,6 @@ export class TagPage {
         this.showMoreButton.isDisplayed().then((visible) => {
             if (visible) {
                 this.showMoreButton.click();
-
                 this.clickShowMoreButtonUntilNotDisplayed();
             }
         }, (err) => {
