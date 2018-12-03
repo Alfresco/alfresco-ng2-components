@@ -31,7 +31,7 @@ Shows Task Filter Details.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`QueryModel`](../../lib/process-services-cloud/src/lib/task-cloud/models/filter-cloud.model.ts)`>` | Emitted when a filter properties changed. |
+| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../lib/process-services-cloud/src/lib/task-cloud/models/filter-cloud.model.ts)`>` | Emitted when a filter properties changed. |
 | action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterActionType`](../../lib/process-services-cloud/src/lib/task-cloud/models/filter-cloud.model.ts)`>` | Emitted when the task filter action clicked (i.e, save, saveAs, Delete). |
 
 ## Details
