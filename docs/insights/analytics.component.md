@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# APS Analytics Component
+# [APS Analytics Component](../../lib/insights/analytics-process/components/analytics.component.ts "Defined in analytics.component.ts")
 
 Shows the charts related to the reportId passed as input
 

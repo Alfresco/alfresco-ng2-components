@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# APS Analytics List Component
+# [APS Analytics List Component](../../lib/insights/analytics-process/components/analytics-report-list.component.ts "Defined in analytics-report-list.component.ts")
 
 Shows a list of all available reports
 
