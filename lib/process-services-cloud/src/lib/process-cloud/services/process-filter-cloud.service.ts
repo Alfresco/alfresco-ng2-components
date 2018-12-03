@@ -57,6 +57,19 @@ export class ProcessFilterCloudService {
     }
 
     /**
+     * Get process instance filter for given filter id
+     * @param appName Name of the target app
+     * @param id Id of the target process instance filter
+     * @returns Details of process filter
+     */
+    getProcessFilterById(appName: string, id: string): ProcessFilterRepresentationModel {
+        const key = 'process-filters-' + appName;
+        let filters = [];
+        filters = JSON.parse(this.storage.getItem(key)) || [];
+        return filters.filter((filterTmp: ProcessFilterRepresentationModel) => id === filterTmp.id)[0];
+    }
+
+    /**
      * Adds a new process instance filter
      * @param filter The new filter to add
      * @returns Details of process filter just added
@@ -67,6 +80,33 @@ export class ProcessFilterCloudService {
 
         storedFilters.push(filter);
         this.storage.setItem(key, JSON.stringify(storedFilters));
+    }
+
+    /**
+     *  Update task filter
+     * @param filter The new filter to update
+     */
+    updateFilter(filter: ProcessFilterRepresentationModel) {
+        const key = 'process-filters-' + filter.query.appName;
+        if (key) {
+            let filters = JSON.parse(this.storage.getItem(key) || '[]');
+            let itemIndex = filters.findIndex((flt: ProcessFilterRepresentationModel) => flt.id === filter.id);
+            filters[itemIndex] = filter;
+            this.storage.setItem(key, JSON.stringify(filters));
+        }
+    }
+
+    /**
+     *  Delete task filter
+     * @param filter The new filter to delete
+     */
+    deleteFilter(filter: ProcessFilterRepresentationModel) {
+        const key = 'process-filters-' + filter.query.appName;
+        if (key) {
+            let filters = JSON.parse(this.storage.getItem(key) || '[]');
+            filters = filters.filter((item) => item.id !== filter.id);
+            this.storage.setItem(key, JSON.stringify(filters));
+        }
     }
 
     /**
@@ -83,6 +123,7 @@ export class ProcessFilterCloudService {
                 {
                     appName: appName,
                     sort: 'startDate',
+                    state: '',
                     order: 'DESC'
                 }
             )

@@ -15,41 +15,30 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ProcessQueryModel, FilterActionType } from '../models/process-filter-cloud.model';
+import { ProcessQueryModel, FilterActionType, ProcessFilterRepresentationModel } from '../models/process-filter-cloud.model';
+import { TranslationService } from '@alfresco/adf-core';
+import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
+import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'adf-cloud-edit-process-filter',
   templateUrl: './edit-process-filter-cloud.component.html',
   styleUrls: ['./edit-process-filter-cloud.component.scss']
 })
-export class EditProcessFilterCloudComponent implements OnInit {
+export class EditProcessFilterCloudComponent implements OnChanges {
 
     public static ACTION_SAVE = 'SAVE';
     public static ACTION_SAVE_AS = 'SAVE_AS';
     public static ACTION_DELETE = 'DELETE';
 
     @Input()
-    name: string;
-
-    @Input()
     appName: string;
 
     @Input()
-    processDefinitionId: string;
-
-    @Input()
-    state: string;
-
-    @Input()
-    sort: string;
-
-    @Input()
-    assignment: string;
-
-    @Input()
-    order: string;
+    id: string;
 
     /** Emitted when an task filter property changes. */
     @Output()
@@ -57,7 +46,10 @@ export class EditProcessFilterCloudComponent implements OnInit {
 
     /** Emitted when an filter action occurs i.e Save, SaveAs, Delete. */
     @Output()
-    action: EventEmitter<any> = new EventEmitter();
+    action: EventEmitter<FilterActionType> = new EventEmitter();
+
+    processFilter: ProcessFilterRepresentationModel;
+    changedProcessFilter: ProcessFilterRepresentationModel;
 
     columns = [
         {key: 'id', label: 'ID'},
@@ -66,29 +58,44 @@ export class EditProcessFilterCloudComponent implements OnInit {
         {key: 'startDate', label: 'START DATE'}
       ];
 
-    states = ['ALL', 'RUNNING', 'COMPLETED'];
+    status = [
+        {label: 'ALL', value: ''},
+        {label: 'RUNNING', value: 'RUNNING'},
+        {label: 'COMPLETED', value: 'COMPLETED'}
+    ];
 
     directions = ['ASC', 'DESC'];
     formHasBeenChanged = false;
     editProcessFilterForm: FormGroup;
 
-    constructor(private formBuilder: FormBuilder) { this.buildForm(); }
+    constructor(
+        private formBuilder: FormBuilder,
+        public dialog: MatDialog,
+        private translateService: TranslationService,
+        private processFilterCloudService: ProcessFilterCloudService) {}
 
-    ngOnInit() {
-        this.buildForm();
+    ngOnChanges(changes: SimpleChanges) {
+        const id = changes['id'];
+        if (id && id.currentValue !== id.previousValue) {
+            this.retrieveTaskFilter();
+            this.buildForm();
+        }
     }
 
     buildForm() {
         this.formHasBeenChanged = false;
         this.editProcessFilterForm = this.formBuilder.group({
-            appName: this.appName,
-            processDefinitionId: this.processDefinitionId,
-            state: this.state,
-            assignment: this.assignment,
-            sort: this.sort,
-            order: this.order
+            processDefinitionId: this.processFilter.query.processDefinitionId,
+            appName: this.processFilter.query.appName,
+            state: this.processFilter.query.state,
+            sort: this.processFilter.query.sort,
+            order: this.processFilter.query.order
         });
         this.onFilterChange();
+    }
+
+    retrieveTaskFilter() {
+        this.processFilter = this.processFilterCloudService.getProcessFilterById(this.appName, this.id);
     }
 
     /**
@@ -96,6 +103,9 @@ export class EditProcessFilterCloudComponent implements OnInit {
      */
     onFilterChange() {
         this.editProcessFilterForm.valueChanges.subscribe((formValues: ProcessQueryModel) => {
+            this.formHasBeenChanged = !this.compareFilters(formValues, this.processFilter.query);
+            this.changedProcessFilter = Object.assign({}, this.processFilter);
+            this.changedProcessFilter.query = formValues;
             this.filterChange.emit(formValues);
         });
     }
@@ -103,19 +113,54 @@ export class EditProcessFilterCloudComponent implements OnInit {
     /**
      * Check if both filters are same
      */
-    compareFilters(editedQuery, currentQuery): boolean  {
+    compareFilters(editedQuery, currentQuery): boolean {
         return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }
 
     onSave() {
-        this.action.emit(new FilterActionType(EditProcessFilterCloudComponent.ACTION_SAVE));
-    }
-
-    onSaveAs() {
-        this.action.emit(new FilterActionType(EditProcessFilterCloudComponent.ACTION_SAVE_AS));
+        this.processFilterCloudService.updateFilter(this.changedProcessFilter);
+        this.action.emit({actionType: EditProcessFilterCloudComponent.ACTION_SAVE, id: this.changedProcessFilter.id});
     }
 
     onDelete() {
-        this.action.emit(new FilterActionType(EditProcessFilterCloudComponent.ACTION_DELETE));
+        this.processFilterCloudService.deleteFilter(this.processFilter);
+        this.action.emit({actionType: EditProcessFilterCloudComponent.ACTION_DELETE, id: this.processFilter.id});
+    }
+
+    onSaveAs() {
+        const dialogRef = this.dialog.open(ProcessFilterDialogCloudComponent, {
+            data: {
+                name: this.translateService.instant(this.processFilter.name)
+            },
+            height: 'auto',
+            minWidth: '30%'
+        });
+        dialogRef.afterClosed().subscribe( (result) => {
+            if (result && result.action === ProcessFilterDialogCloudComponent.ACTION_SAVE) {
+                const filterId = Math.random().toString(36).substr(2, 9);
+                const filterKey = this.getSanitizeFilterName(result.name);
+                const filter = new ProcessFilterRepresentationModel(
+                    {
+                        name: result.name,
+                        icon: result.icon,
+                        id: filterId,
+                        key: 'custom-' + filterKey,
+                        query: this.changedProcessFilter.query
+                    }
+                );
+                this.processFilterCloudService.addFilter(filter);
+                this.action.emit({actionType: EditProcessFilterCloudComponent.ACTION_SAVE_AS, id: filter.id});
+            }
+        });
+    }
+
+    getSanitizeFilterName(filterName) {
+        const nameWithHyphen = this.replaceSpaceWithHyphen(filterName.trim());
+        return nameWithHyphen.toLowerCase();
+    }
+
+    replaceSpaceWithHyphen(name) {
+        const regExt = new RegExp(' ', 'g');
+        return name.replace(regExt, '-');
     }
 }

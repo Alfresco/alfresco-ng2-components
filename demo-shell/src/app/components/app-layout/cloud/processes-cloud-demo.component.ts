@@ -45,6 +45,10 @@ export class ProcessesCloudDemoComponent implements OnInit {
     sortDirection: string;
     selectedRow: any;
 
+    editedQuery: ProcessQueryModel;
+
+    currentFilter: ProcessFilterRepresentationModel;
+
     columns = [
         {key: 'id', label: 'ID'},
         {key: 'name', label: 'NAME'},

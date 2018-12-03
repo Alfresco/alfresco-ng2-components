@@ -26,6 +26,7 @@ import { TranslateLoaderService, LogService, StorageService } from '@alfresco/ad
 import { ProcessFilterCloudService } from './services/process-filter-cloud.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EditProcessFilterCloudComponent } from './process-filters-cloud/edit-process-filter-cloud.component';
+import { ProcessFilterDialogCloudComponent } from './process-filters-cloud/process-filter-dialog-cloud.component';
 @NgModule({
     imports: [
         FormsModule,
@@ -41,9 +42,9 @@ import { EditProcessFilterCloudComponent } from './process-filters-cloud/edit-pr
         FlexLayoutModule,
         MaterialModule
     ],
-    declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent],
-
-    exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent],
+    declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
+    exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
+    entryComponents: [ProcessFilterDialogCloudComponent],
     providers: [ProcessFilterCloudService, LogService, StorageService]
 })
 export class ProcessCloudModule { }

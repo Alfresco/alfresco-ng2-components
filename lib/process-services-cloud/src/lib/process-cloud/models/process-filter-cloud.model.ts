@@ -76,3 +76,8 @@ export class FilterActionType {
         this.actionType = action;
     }
 }
+
+export interface FilterActionType {
+    actionType: string;
+    id: string;
+}

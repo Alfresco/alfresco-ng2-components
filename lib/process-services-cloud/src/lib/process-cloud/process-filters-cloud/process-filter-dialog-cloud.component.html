@@ -1,0 +1,22 @@
+<div class="adf-process-filter-dialog">
+    <span mat-dialog-title>
+         {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.DIALOG.TITLE' | translate}}
+    </span>
+    <mat-card>
+        <mat-card-content>
+        <form [formGroup]="filterForm">
+            <mat-form-field fxFlex [floatLabel]="'auto'" id="adf-filter-name-id">
+                <input matInput placeholder="Filter name" formControlName="name">
+            </mat-form-field>
+        </form>
+        </mat-card-content>
+        <mat-card-actions fxLayout="row" fxLayoutAlign="end end">
+            <button mat-button (click)="onSaveClick()" id="adf-save-button-id" [disabled]="!isValid()">
+                {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.DIALOG.SAVE' | translate}}
+            </button>
+            <button mat-button (click)="onCancelClick()" id="adf-delete-button-id">
+               {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.DIALOG.CANCEL' | translate}}
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>
