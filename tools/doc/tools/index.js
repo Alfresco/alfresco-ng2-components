@@ -28,7 +28,10 @@ var guideSummaryFileName = path.resolve(docsFolderPath, guideFolderName, "summar
 
 var maxBriefDescLength = 180;
 
-var adfLibNames = ["core", "content-services", "insights", "process-services", "process-services-cloud"];
+var adfLibNames = [
+    "core", "content-services", "insights",
+    "process-services", "process-services-cloud", "extensions"
+];
 
 var statusIcons;
 
