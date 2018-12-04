@@ -31,7 +31,7 @@ Shows Process Filter Details.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessQueryModel`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-filter-cloud.model.ts)`>` | Emitted when a filter properties changed. |
+| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterCloudModel`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-filter-cloud.model.ts)`>` | Emitted when a filter properties changed. |
 | action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterActionType`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-filter-cloud.model.ts)`>` | Emitted when the task filter action clicked (i.e, save, saveAs, Delete). |
 
 ## Details

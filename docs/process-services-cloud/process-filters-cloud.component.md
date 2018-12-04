@@ -24,13 +24,32 @@ Lists all available process filters and allows to select a filter.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | (required) The application name |
-| filterParam | [`ProcessFilterParamModel`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-filter-cloud.model.ts) |  | (optional) The filter to be selected by default |
+| filterParam | `ProcessFilterCloudModel` |  | (optional) The filter to be selected by default |
 | showIcons | `boolean` | false | (optional) The flag hides/shows icon against each filter |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs while loading the filters |
-| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterRepresentationModel`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-filter-cloud.model.ts)`>` | Emitted when a filter is selected/clicked |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when filters are loaded successfully |
+| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterCloudModel`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-filter-cloud.model.ts)`>` | Emitted when a filter is selected/clicked. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when filters are loaded successfully. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs while loading the filters. |
+
+### Details
+
+The `filterParam` input can be used to select a filter as mentioned below.
+
+```html
+<adf-cloud-process-filters
+    [filterParam]="{name:'Running Processes'}">
+</adf-cloud-process-filters>
+```
+
+A filter can be selected by using any of the `ProcessFilterCloudModel` property.
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| id | string | The id of the filter |
+| name | string | The name of the filter |
+| key | string | The key of the filter |
+| index | string | The zero-based position of the filter in the array |
