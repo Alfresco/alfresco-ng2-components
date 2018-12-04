@@ -14,31 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export class ProcessQueryModel {
-    processDefinitionId: string;
-    appName: string;
-    state: string;
-    sort: string;
-    assignment: string;
-    order: string;
 
-    constructor(obj?: any) {
-        if (obj) {
-            this.appName = obj.appName || null;
-            this.processDefinitionId = obj.processDefinitionId || null;
-            this.state = obj.state || null;
-            this.sort = obj.sort || null;
-            this.assignment = obj.assignment || null;
-            this.order = obj.order || null;
-        }
-    }
-}
-export class ProcessFilterRepresentationModel {
+export class ProcessFilterCloudModel {
     id: string;
     name: string;
     key: string;
     icon: string;
-    query: ProcessQueryModel;
+    index: number;
+    processDefinitionId: string;
+    appName: string;
+    state: string;
+    sort: string;
+    order: string;
 
     constructor(obj?: any) {
         if (obj) {
@@ -46,26 +33,12 @@ export class ProcessFilterRepresentationModel {
             this.name = obj.name || null;
             this.key = obj.key || null;
             this.icon = obj.icon || null;
-            this.query = new ProcessQueryModel(obj.query);
-        }
-    }
-
-    hasFilter() {
-        return !!this.query;
-    }
-}
-
-export class ProcessFilterParamModel {
-    id: string;
-    name: string;
-    key: string;
-    index: number;
-    constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id || null;
-            this.name = obj.name || null;
-            this.key = obj.key || null;
             this.index = obj.index || null;
+            this.appName = obj.appName || null;
+            this.processDefinitionId = obj.processDefinitionId || null;
+            this.state = obj.state || null;
+            this.sort = obj.sort || null;
+            this.order = obj.order || null;
         }
     }
 }

@@ -17,7 +17,7 @@
 
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ProcessQueryModel, FilterActionType, ProcessFilterRepresentationModel } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel, FilterActionType } from '../models/process-filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
@@ -42,14 +42,14 @@ export class EditProcessFilterCloudComponent implements OnChanges {
 
     /** Emitted when an process instance filter property changes. */
     @Output()
-    filterChange: EventEmitter<ProcessQueryModel> = new EventEmitter();
+    filterChange: EventEmitter<ProcessFilterCloudModel> = new EventEmitter();
 
     /** Emitted when an filter action occurs i.e Save, SaveAs, Delete. */
     @Output()
     action: EventEmitter<FilterActionType> = new EventEmitter();
 
-    processFilter: ProcessFilterRepresentationModel;
-    changedProcessFilter: ProcessFilterRepresentationModel;
+    processFilter: ProcessFilterCloudModel;
+    changedProcessFilter: ProcessFilterCloudModel;
 
     columns = [
         {key: 'id', label: 'ID'},
@@ -85,11 +85,11 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     buildForm() {
         this.formHasBeenChanged = false;
         this.editProcessFilterForm = this.formBuilder.group({
-            state: this.processFilter.query.state,
-            sort: this.processFilter.query.sort,
-            order: this.processFilter.query.order,
-            processDefinitionId: this.processFilter.query.processDefinitionId,
-            appName: this.processFilter.query.appName
+            state: this.processFilter.state ? this.processFilter.state : '',
+            sort: this.processFilter.sort,
+            order: this.processFilter.order,
+            processDefinitionId: this.processFilter.processDefinitionId,
+            appName: this.processFilter.appName
         });
         this.onFilterChange();
     }
@@ -102,11 +102,10 @@ export class EditProcessFilterCloudComponent implements OnChanges {
      * Check for edit process instance filter form changes
      */
     onFilterChange() {
-        this.editProcessFilterForm.valueChanges.subscribe((formValues: ProcessQueryModel) => {
-            this.formHasBeenChanged = !this.compareFilters(formValues, this.processFilter.query);
-            this.changedProcessFilter = Object.assign({}, this.processFilter);
-            this.changedProcessFilter.query = formValues;
-            this.filterChange.emit(formValues);
+        this.editProcessFilterForm.valueChanges.subscribe((formValues: ProcessFilterCloudModel) => {
+            this.changedProcessFilter = Object.assign({}, this.processFilter, formValues);
+            this.formHasBeenChanged = !this.compareFilters(this.changedProcessFilter, this.processFilter);
+            this.filterChange.emit(this.changedProcessFilter);
         });
     }
 
@@ -139,15 +138,13 @@ export class EditProcessFilterCloudComponent implements OnChanges {
             if (result && result.action === ProcessFilterDialogCloudComponent.ACTION_SAVE) {
                 const filterId = Math.random().toString(36).substr(2, 9);
                 const filterKey = this.getSanitizeFilterName(result.name);
-                const filter = new ProcessFilterRepresentationModel(
-                    {
+                const newFilter = {
                         name: result.name,
                         icon: result.icon,
                         id: filterId,
-                        key: 'custom-' + filterKey,
-                        query: this.changedProcessFilter.query
-                    }
-                );
+                        key: 'custom-' + filterKey
+                    };
+                const filter = Object.assign({}, this.changedProcessFilter, newFilter);
                 this.processFilterCloudService.addFilter(filter);
                 this.action.emit({actionType: EditProcessFilterCloudComponent.ACTION_SAVE_AS, id: filter.id});
             }
