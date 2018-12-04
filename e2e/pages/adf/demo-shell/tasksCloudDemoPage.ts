@@ -56,19 +56,26 @@ export class TasksCloudDemoPage {
         return this.activeFilter.getText();
     }
 
-    customFilter () {
-        return new TaskFiltersCloudComponent(this.customFiltersButton);
-    }
-
-    statusFilter() {
+    clickStatusFilter() {
         const filter = this.filters.get(0);
         Util.waitUntilElementIsVisible(filter);
-        return new TaskFiltersCloudComponent(filter);
+        this.clickFilterDropDown(filter);
+
     }
 
-    statusOption(status) {
-        const option = element(by.cssContainingText('.mat-select-content .mat-option-text', status));
+    selectOption(value) {
+        const option = element(by.cssContainingText('.mat-select-content .mat-option-text', value));
         Util.waitUntilElementIsVisible(option);
-        return new TaskFiltersCloudComponent(option);
+        option.click();
+    }
+
+    clickCustomFilters() {
+        Util.waitUntilElementIsVisible(this.customFiltersButton);
+        return this.customFiltersButton.click();
+    }
+
+    clickFilterDropDown(filter) {
+        Util.waitUntilElementIsVisible(filter);
+        return filter.click();
     }
 }

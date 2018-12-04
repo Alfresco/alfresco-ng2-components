@@ -49,21 +49,6 @@ export class TaskFiltersCloudComponent {
         return this.filter.click();
     }
 
-    clickCustomFilters() {
-        Util.waitUntilElementIsVisible(this.filter);
-        return this.filter.click();
-    }
-
-    clickFilterDropDown() {
-        Util.waitUntilElementIsVisible(this.filter);
-        return this.filter.click();
-    }
-
-    setOption() {
-        Util.waitUntilElementIsVisible(this.filter);
-        return this.filter.click();
-    }
-
     checkTaskFilterNotDisplayed() {
         Util.waitUntilElementIsNotVisible(this.filter);
         return this.filter;
