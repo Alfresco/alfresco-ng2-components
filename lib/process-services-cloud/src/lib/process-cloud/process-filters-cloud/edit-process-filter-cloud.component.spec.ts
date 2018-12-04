@@ -260,7 +260,7 @@ describe('EditProcessFilterCloudComponent', () => {
             component.ngOnChanges({ 'id': change });
         });
 
-        it('should emit save event and save the filter on click save button', async () => {
+        it('should emit save event and save the filter on click of save button', async () => {
             const saveFilterSpy = spyOn(service, 'updateFilter').and.returnValue(fakeFilter);
             let saveSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -272,7 +272,7 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.whenStable().then(() => {
                 const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-id');
                 const stateOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                stateOptions[3].nativeElement.click();
+                stateOptions[2].nativeElement.click();
                 fixture.detectChanges();
                 saveButton.click();
                 fixture.detectChanges();
@@ -299,7 +299,7 @@ describe('EditProcessFilterCloudComponent', () => {
             });
         });
 
-        it('should emit saveAs event and add filter on click saveAs button', async () => {
+        it('should emit saveAs event and add filter on click of saveAs button', async () => {
             const saveAsFilterSpy = spyOn(service, 'addFilter').and.callThrough();
             let saveAsSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -311,12 +311,30 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.whenStable().then(() => {
                 const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-as-id');
                 const stateOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                stateOptions[3].nativeElement.click();
+                stateOptions[2].nativeElement.click();
                 fixture.detectChanges();
                 saveButton.click();
                 fixture.detectChanges();
                 expect(saveAsFilterSpy).toHaveBeenCalled();
                 expect(saveAsSpy).toHaveBeenCalled();
+                expect(dialog.open).toHaveBeenCalled();
+            });
+        });
+
+        it('should able to open save dialog on click of saveAs button', async () => {
+            fixture.detectChanges();
+            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            const stateElement = fixture.debugElement.query(By.css('#adf-process-filter-state-id .mat-select-trigger')).nativeElement;
+            stateElement.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-as-id');
+                const stateOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                stateOptions[2].nativeElement.click();
+                fixture.detectChanges();
+                saveButton.click();
+                fixture.detectChanges();
                 expect(dialog.open).toHaveBeenCalled();
             });
         });

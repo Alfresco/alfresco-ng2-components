@@ -83,7 +83,7 @@ export class ProcessFilterCloudService {
     }
 
     /**
-     *  Update task filter
+     *  Update process instance filter
      * @param filter The new filter to update
      */
     updateFilter(filter: ProcessFilterRepresentationModel) {
@@ -97,7 +97,7 @@ export class ProcessFilterCloudService {
     }
 
     /**
-     *  Delete task filter
+     *  Delete process instance filter
      * @param filter The new filter to delete
      */
     deleteFilter(filter: ProcessFilterRepresentationModel) {
