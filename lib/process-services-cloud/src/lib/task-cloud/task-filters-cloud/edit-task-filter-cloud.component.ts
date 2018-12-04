@@ -117,7 +117,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     /**
      * Check if both filters are same
      */
-    compareFilters(editedQuery, currentQuery): boolean  {
+    compareFilters(editedQuery, currentQuery): boolean {
         return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }
 

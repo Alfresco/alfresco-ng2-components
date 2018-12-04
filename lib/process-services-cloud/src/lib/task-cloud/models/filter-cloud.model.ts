@@ -31,16 +31,16 @@ export class TaskFilterCloudModel  {
     constructor(obj?: any) {
         if (obj) {
             this.id = obj.id || Math.random().toString(36).substr(2, 9);
-            this.name = obj.name;
-            this.key = obj.key;
-            this.icon = obj.icon;
-            this.index = obj.index;
-            this.appName = obj.appName;
-            this.processDefinitionId = obj.processDefinitionId;
-            this.state = obj.state;
-            this.sort = obj.sort;
-            this.assignment = obj.assignment;
-            this.order = obj.order;
+            this.name = obj.name || null;
+            this.key = obj.key || null;
+            this.icon = obj.icon || null;
+            this.index = obj.index || null;
+            this.appName = obj.appName || null;
+            this.processDefinitionId = obj.processDefinitionId || null;
+            this.state = obj.state || null;
+            this.sort = obj.sort || null;
+            this.assignment = obj.assignment || null;
+            this.order = obj.order || null;
         }
     }
 }

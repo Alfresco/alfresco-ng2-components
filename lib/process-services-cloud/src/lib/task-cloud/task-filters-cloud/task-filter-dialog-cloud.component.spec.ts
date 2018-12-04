@@ -63,7 +63,7 @@ describe('TaskFilterDialogCloudComponent', () => {
     it('should display title', () => {
         fixture.detectChanges();
         let titleElement = fixture.debugElement.nativeElement.querySelector('#adf-task-filter-dialog-title');
-        expect(titleElement.textContent).toEqual(' EDIT_TASK_FILTER_CLOUD.DIALOG.TITLE ');
+        expect(titleElement.textContent).toEqual(' ADF_CLOUD_EDIT_TASK_FILTER.DIALOG.TITLE ');
     });
 
     it('should enable save button if form is valid', async(() => {
