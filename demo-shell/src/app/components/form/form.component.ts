@@ -89,7 +89,7 @@ export class FormComponent implements OnInit, OnDestroy {
         } catch (error) {
             this.notificationService.openSnackMessage(
                 'Wrong form configuration',
-                2000
+                4000
             );
         }
     }

@@ -347,7 +347,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     openSnackMessage(event: any) {
         this.notificationService.openSnackMessage(
             event,
-            6000
+            4000
         );
     }
 

@@ -29,9 +29,9 @@ export class UploadDialog {
     rowByRowName = by.xpath('ancestor::adf-file-uploading-list-row');
     title = element(by.css('span[class*="upload-dialog__title"]'));
     minimizeButton = element(by.css('mat-icon[title="Minimize"]'));
-    maximizeButton = element(by.css('mat-icon[title="Maximize""]'));
+    maximizeButton = element(by.css('mat-icon[title="Maximize"]'));
     sizeUploaded = by.css('span[class="adf-file-uploading-row__status"]');
-    canUploadConfirmationTitle = element(by.css('p[class="upload-dialog__confirmation--title""]'));
+    canUploadConfirmationTitle = element(by.css('p[class="upload-dialog__confirmation--title"]'));
     canUploadConfirmationDescription = element(by.css('p[class="upload-dialog__confirmation--text"]'));
     confirmationDialogNoButton = element(by.partialButtonText('No'));
     confirmationDialogYesButton = element(by.partialButtonText('Yes'));
