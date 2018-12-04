@@ -71,11 +71,6 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('My Tasks');
 
-            // tasksCloudDemoPage.customFilter().clickCustomFilters();
-            // tasksCloudDemoPage.statusFilter().clickFilterDropDown();
-
-            // tasksCloudDemoPage.statusOption('CREATED').setOption();
-
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(newTask);
         });
 
