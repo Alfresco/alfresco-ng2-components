@@ -22,6 +22,8 @@ import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { MatDialog } from '@angular/material';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
 import { TranslationService } from '@alfresco/adf-core';
+import { debounceTime } from 'rxjs/operators';
+
 @Component({
   selector: 'adf-cloud-edit-task-filter',
   templateUrl: './edit-task-filter-cloud.component.html',
@@ -107,8 +109,10 @@ export class EditTaskFilterCloudComponent implements OnChanges {
      * Check for edit task filter form changes
      */
     onFilterChange() {
-        this.editTaskFilterForm.valueChanges.subscribe((formValues: TaskFilterCloudModel) => {
-            this.changedTaskFilter = Object.assign({}, this.taskFilter, formValues);
+        this.editTaskFilterForm.valueChanges
+            .pipe(debounceTime(300))
+            .subscribe((formValues: TaskFilterCloudModel) => {
+            this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, formValues));
             this.formHasBeenChanged = !this.compareFilters(this.changedTaskFilter, this.taskFilter);
             this.filterChange.emit(this.changedTaskFilter);
         });
