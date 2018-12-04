@@ -50,7 +50,7 @@ export class StartProcessPage {
 
     deleteDefaultName(name) {
         Util.waitUntilElementIsVisible(this.processNameInput);
-        this.processNameInput.getAttribute('value').then(function (currentValue) {
+        this.processNameInput.getAttribute('value').then((currentValue) => {
             for (let i = currentValue.length; i >= 0; i--) {
                 if (currentValue === name) {
                     this.processNameInput.sendKeys(protractor.Key.BACK_SPACE);
@@ -139,7 +139,7 @@ export class StartProcessPage {
 
     checkSelectProcessPlaceholderIsDisplayed() {
         Util.waitUntilElementIsVisible(this.processDefinition);
-        let processPlaceholder = processDefinition.getAttribute('value').then((function (result) {
+        let processPlaceholder = processDefinition.getAttribute('value').then(((result) => {
             return result;
         }));
         return processPlaceholder;

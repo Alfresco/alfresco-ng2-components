@@ -44,7 +44,7 @@ export class NavigationBarPage {
     formButton = element(by.css('a[data-automation-id="Form"]'));
     treeViewButton = element(by.css('a[data-automation-id="Tree View"]'));
 
-   navigateToDatatable() {
+    navigateToDatatable() {
         Util.waitUntilElementIsVisible(this.dataTableButton);
         this.dataTableButton.click();
     }
@@ -166,10 +166,10 @@ export class NavigationBarPage {
         this.appTitle.click();
     }
 
-    clickFormButton = function () {
+    clickFormButton() {
         Util.waitUntilElementIsVisible(this.formButton);
         return this.formButton.click();
-    };
+    }
 
     checkLogoTooltip(logoTooltipTitle) {
         let logoTooltip = element(by.css('a[title="' + logoTooltipTitle + '"]'));

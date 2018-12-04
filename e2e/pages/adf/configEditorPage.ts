@@ -31,8 +31,6 @@ export class ConfigEditorPage {
         let textField = element(by.css('#adf-code-configuration-editor div.overflow-guard > textarea'));
         Util.waitUntilElementIsVisible(textField);
 
-      //  console.log(`this.monaco.editor.getModels()[0].setValue(`${text}`)`);
-
         browser.executeScript('this.monaco.editor.getModels()[0].setValue(`' + text + '`)');
         return this;
     }

@@ -276,7 +276,7 @@ export class MetadataViewPage {
      */
     disableDisplayEmpty() {
         Util.waitUntilElementIsVisible(this.displayEmptySwitch);
-        this.displayEmptySwitch.getAttribute('class').then(function (check) {
+        this.displayEmptySwitch.getAttribute('class').then((check) => {
             if (check === 'mat-slide-toggle mat-primary mat-checked') {
                 this.displayEmptySwitch.click();
                 expect(this.displayEmptySwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
@@ -289,7 +289,7 @@ export class MetadataViewPage {
      */
     enableDisplayEmpty() {
         Util.waitUntilElementIsVisible(this.displayEmptySwitch);
-        this.displayEmptySwitch.getAttribute('class').then(function (check) {
+        this.displayEmptySwitch.getAttribute('class').then((check) => {
             if (check === 'mat-slide-toggle mat-primary') {
                 this.displayEmptySwitch.click();
                 expect(this.displayEmptySwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
@@ -302,7 +302,7 @@ export class MetadataViewPage {
      */
     disableReadonly() {
         Util.waitUntilElementIsVisible(this.readonlySwitch);
-        this.readonlySwitch.getAttribute('class').then(function (check) {
+        this.readonlySwitch.getAttribute('class').then((check) => {
             if (check === 'mat-slide-toggle mat-primary mat-checked') {
                 this.readonlySwitch.click();
                 expect(this.readonlySwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
@@ -315,7 +315,7 @@ export class MetadataViewPage {
      */
     enableReadonly() {
         Util.waitUntilElementIsVisible(this.readonlySwitch);
-        this.readonlySwitch.getAttribute('class').then(function (check) {
+        this.readonlySwitch.getAttribute('class').then((check) => {
             if (check === 'mat-slide-toggle mat-primary') {
                 this.readonlySwitch.click();
                 expect(this.readonlySwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
@@ -328,7 +328,7 @@ export class MetadataViewPage {
      */
     disableMulti() {
         Util.waitUntilElementIsVisible(this.multiSwitch);
-        this.multiSwitch.getAttribute('class').then(function (check) {
+        this.multiSwitch.getAttribute('class').then((check) => {
             if (check === 'mat-slide-toggle mat-primary mat-checked') {
                 this.multiSwitch.click();
                 expect(this.multiSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
@@ -341,7 +341,7 @@ export class MetadataViewPage {
      */
     enableMulti() {
         Util.waitUntilElementIsVisible(this.multiSwitch);
-        this.multiSwitch.getAttribute('class').then(function (check) {
+        this.multiSwitch.getAttribute('class').then((check) => {
             if (check === 'mat-slide-toggle mat-primary') {
                 this.multiSwitch.click();
                 expect(this.multiSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
@@ -354,7 +354,7 @@ export class MetadataViewPage {
      */
     disablePreset() {
         Util.waitUntilElementIsVisible(this.presetSwitch);
-        this.presetSwitch.getAttribute('class').then(function (check) {
+        this.presetSwitch.getAttribute('class').then((check) => {
             if (check === 'mat-slide-toggle mat-primary mat-checked') {
                 this.presetSwitch.click();
                 expect(this.presetSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
@@ -367,7 +367,7 @@ export class MetadataViewPage {
      */
     enablePreset() {
         Util.waitUntilElementIsVisible(this.presetSwitch);
-        this.presetSwitch.getAttribute('class').then(function (check) {
+        this.presetSwitch.getAttribute('class').then((check) => {
             if (check === 'mat-slide-toggle mat-primary') {
                 this.presetSwitch.click();
                 expect(this.presetSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
@@ -380,7 +380,7 @@ export class MetadataViewPage {
      */
     disabledDefaultProperties() {
         Util.waitUntilElementIsVisible(this.defaultPropertiesSwitch);
-        this.defaultPropertiesSwitch.getAttribute('class').then(function (check) {
+        this.defaultPropertiesSwitch.getAttribute('class').then((check) => {
             if (check === 'mat-slide-toggle mat-primary mat-checked') {
                 this.defaultPropertiesSwitch.click();
                 expect(this.defaultPropertiesSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
@@ -393,7 +393,7 @@ export class MetadataViewPage {
      */
     enabledDefaultProperties() {
         Util.waitUntilElementIsVisible(this.defaultPropertiesSwitch);
-        this.defaultPropertiesSwitch.getAttribute('class').then(function (check) {
+        this.defaultPropertiesSwitch.getAttribute('class').then((check) => {
             if (check === 'mat-slide-toggle mat-primary') {
                 this.defaultPropertiesSwitch.click();
                 expect(this.defaultPropertiesSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');

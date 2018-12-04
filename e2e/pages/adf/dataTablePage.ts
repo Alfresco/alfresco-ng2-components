@@ -195,7 +195,7 @@ export class DataTablePage {
     }
 
     insertFilter(filterText) {
-        let inputFilter = element(by.xpath(`//*[@id=\`adf-datatable-filter-input\"]`));
+        let inputFilter = element(by.css(`#adf-datatable-filter-input`));
         inputFilter.clear();
         return inputFilter.sendKeys(filterText);
     }

@@ -121,7 +121,7 @@ export class UploadDialog {
     getTitleText() {
         Util.waitUntilElementIsVisible(this.title);
         let deferred = protractor.promise.defer();
-        this.title.getText().then(function (text) {
+        this.title.getText().then((text) => {
             deferred.fulfill(text);
         });
         return deferred.promise;
@@ -130,7 +130,7 @@ export class UploadDialog {
     getConfirmationDialogTitleText() {
         Util.waitUntilElementIsVisible(this.canUploadConfirmationTitle);
         let deferred = protractor.promise.defer();
-        this.canUploadConfirmationTitle.getText().then(function (text) {
+        this.canUploadConfirmationTitle.getText().then((text) => {
             deferred.fulfill(text);
         });
         return deferred.promise;
@@ -139,7 +139,7 @@ export class UploadDialog {
     getConfirmationDialogDescriptionText() {
         Util.waitUntilElementIsVisible(this.canUploadConfirmationDescription);
         let deferred = protractor.promise.defer();
-        this.canUploadConfirmationDescription.getText().then(function (text) {
+        this.canUploadConfirmationDescription.getText().then((text) => {
             deferred.fulfill(text);
         });
         return deferred.promise;
@@ -159,7 +159,7 @@ export class UploadDialog {
 
     numberOfCurrentFilesUploaded() {
         let deferred = protractor.promise.defer();
-        this.getTitleText().then(function (text) {
+        this.getTitleText().then((text) => {
             deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[0]);
         });
         return deferred.promise;
@@ -167,7 +167,7 @@ export class UploadDialog {
 
     numberOfInitialFilesUploaded() {
         let deferred = protractor.promise.defer();
-        this.getTitleText().then(function (text) {
+        this.getTitleText().then((text) => {
             deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[1]);
         });
         return deferred.promise;

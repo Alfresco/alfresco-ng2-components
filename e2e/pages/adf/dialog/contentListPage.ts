@@ -20,7 +20,7 @@ import { Util } from '../../../util/util';
 
 export class ContentListPage {
 
-    deleteContent = element(by.css('button[data-automation-id*="DELETE"]'));
+    deleteContentElement = element(by.css('button[data-automation-id*="DELETE"]'));
     metadataAction = element(by.css('button[data-automation-id*="METADATA"]'));
     versionManagerAction = element(by.css('button[data-automation-id*="VERSIONS"]'));
     moveContent = element(by.css('button[data-automation-id*="MOVE"]'));
@@ -87,7 +87,7 @@ export class ContentListPage {
     deleteContent(content) {
         this.clickOnActionMenu(content);
         this.waitForContentOptions();
-        this.deleteContent.click();
+        this.deleteContentElement.click();
     }
 
     checkDeleteIsDisabled(content) {
@@ -127,7 +127,7 @@ export class ContentListPage {
     waitForContentOptions() {
         Util.waitUntilElementIsVisible(this.copyContent);
         Util.waitUntilElementIsVisible(this.moveContent);
-        Util.waitUntilElementIsVisible(this.deleteContent);
+        Util.waitUntilElementIsVisible(this.deleteContentElement);
         Util.waitUntilElementIsVisible(this.downloadContent);
     }
 

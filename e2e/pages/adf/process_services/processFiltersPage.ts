@@ -138,7 +138,7 @@ export class ProcessFiltersPage {
     }
 
     checkProcessesSortedByNameAsc() {
-        this.getAllRowsNameColumn().then(function (list) {
+        this.getAllRowsNameColumn().then((list) => {
             for (let i = 1; i < list.length; i++) {
                 expect(JSON.stringify(list[i]) > JSON.stringify(list[i - 1])).toEqual(true);
             }
@@ -146,7 +146,7 @@ export class ProcessFiltersPage {
     }
 
     checkProcessesSortedByNameDesc() {
-        this.getAllRowsNameColumn().then(function (list) {
+        this.getAllRowsNameColumn().then((list) => {
             for (let i = 1; i < list.length; i++) {
                 expect(JSON.stringify(list[i]) < JSON.stringify(list[i - 1])).toEqual(true);
             }
