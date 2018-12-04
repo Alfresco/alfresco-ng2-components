@@ -4,6 +4,45 @@
       "TITLE": "No Processes Found",
       "SUBTITLE":"Create a new process that you want to easily find later",
       "NONE": "No process instance filter selected."
+    },
+    "PROPERTIES": {
+      "NAME": "Name",
+      "CREATED": "Created"
+    }
+  },
+  "ADF_CLOUD_TASK_LIST": {
+    "APPS": {
+      "TITLE": "No Applications Found",
+      "SUBTITLE":"Create a new application that you want to easily find later"
+    },
+    "START_TASK": {
+      "FORM": {
+        "TITLE": "Start Task",
+        "LABEL": {
+          "NAME": "Name",
+          "DESCRIPTION": "Description",
+          "ATTACHFORM": "Attach Form",
+          "ASSIGNEE": "Assignee",
+          "FORM": "Form",
+          "DATE": "Choose Date"
+        },
+        "ACTION": {
+          "START": "Start",
+          "CANCEL": "Cancel"
+        }
+      }
+    },
+    "PROPERTIES": {
+      "NAME": "Name",
+      "ASSIGNEE": "Assignee",
+      "CREATED": "Created"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "No Tasks Found",
+        "SUBTITLE":"Create a new task that you want to easily find later",
+        "NONE": "No task lists found"
+      }
     }
   },
   "ADF_CLOUD_TASK_FILTERS": {

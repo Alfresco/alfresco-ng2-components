@@ -1,13 +1,13 @@
 <mat-card>
     <mat-card-header fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="adf-cloud-start-task-heading">
-        <mat-card-title>{{'ADF_TASK_LIST.START_TASK.FORM.TITLE' | translate}}</mat-card-title>
+        <mat-card-title>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.TITLE' | translate}}</mat-card-title>
     </mat-card-header>
     <form [formGroup]="taskForm" fxLayout="column" (ngSubmit)="saveTask()">
 
     <mat-card-content>
             <div class="adf-task-name">
                 <mat-form-field fxFlex>
-                    <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME' | translate }}</mat-label>
+                    <mat-label>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.NAME' | translate }}</mat-label>
                     <input
                         matInput
                         id="name_id"
@@ -23,7 +23,7 @@
             </div>
             <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
                 <mat-form-field fxFlex>
-                    <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION' | translate}}</mat-label>
+                    <mat-label>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION' | translate}}</mat-label>
                     <textarea
                         matInput
                         class="form-control"
@@ -44,7 +44,7 @@
                         [matDatepicker]="taskDatePicker"
                         (keydown)="true"
                         (focusout)="onDateChanged($event.srcElement.value)"
-                        placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
+                        placeholder="{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
                         [(ngModel)]="dueDate"
                         [ngModelOptions]="{standalone: true}"
                         id="date_id">
@@ -74,14 +74,14 @@
                 type="button"
                 (click)="onCancel()"
                 id="button-cancel">
-                {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL'|translate}}
+                {{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.ACTION.CANCEL'|translate}}
             </button>
             <button
                 color="primary"
                 type="submit" [disabled]="dateError || !taskForm.valid || submitted"
                 mat-button
                 id="button-start">
-                {{'ADF_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}
+                {{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}
             </button>
         </div>
     </mat-card-actions>

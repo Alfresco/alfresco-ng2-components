@@ -20,13 +20,13 @@ export let processCloudPresetsDefaultModel = {
         {
             'key': 'name',
             'type': 'text',
-            'title': 'ADF_PROCESS_LIST.PROPERTIES.NAME',
+            'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME',
             'sortable': true
         },
         {
             'key': 'created',
             'type': 'text',
-            'title': 'ADF_PROCESS_LIST.PROPERTIES.CREATED',
+            'title': 'ADF_CLOUD_PROCESS_LIST.PROPERTIES.CREATED',
             'cssClass': 'hidden',
             'sortable': true
         }
