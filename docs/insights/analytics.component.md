@@ -8,7 +8,7 @@ Status: Active
 
 Shows the charts related to the reportId passed as input
 
-![Analytics-without-parameters](docassets/images/analytics-without-parameters.png)
+![Analytics-without-parameters](../docassets/images/analytics-without-parameters.png)
 
 ## Basic Usage
 
