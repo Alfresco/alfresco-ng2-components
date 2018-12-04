@@ -51,6 +51,7 @@ export class SearchDialog {
     }
 
     checkSearchBarIsNotVisible() {
+        browser.sleep(400);
         Util.waitUntilElementIsVisible(this.searchBarNotExpanded);
         return this;
     }

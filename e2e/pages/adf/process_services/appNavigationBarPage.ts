@@ -29,11 +29,13 @@ export class AppNavigationBarPage {
 
     clickTasksButton() {
         Util.waitUntilElementIsVisible(this.tasksButton);
-        return this.tasksButton.click();
+        this.tasksButton.click();
+        return browser.sleep(400);
     }
 
     clickProcessButton() {
-        return this.processButton.click();
+        this.processButton.click();
+        return browser.sleep(400);
     }
 
     clickTagButton() {
@@ -41,8 +43,8 @@ export class AppNavigationBarPage {
     }
 
     clickSettingsButton() {
-         this.settingsButton.click();
-         return browser.sleep(400);
+        this.settingsButton.click();
+        return browser.sleep(400);
     }
 
     clickReportsButton() {

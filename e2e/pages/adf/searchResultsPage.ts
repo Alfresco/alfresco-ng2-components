@@ -23,7 +23,7 @@ import { element, by, protractor, browser } from 'protractor';
 export class SearchResultsPage {
 
     noResultsMessage = element(by.css('div[class="adf-no-result-message"]'));
-    noResultsMessageBy = by.css('div[class="adf-no-result-message"]');
+    noResultsMessageBy = element(by.css('div[class="adf-no-result-message"]'));
     contentList = new ContentListPage();
     dataTable = new DataTablePage();
     sortArrowLocator = by.css('adf-sorting-picker button mat-icon');
@@ -55,8 +55,7 @@ export class SearchResultsPage {
     }
 
     checkNoResultMessageIsDisplayed() {
-        Util.waitUntilElementIsPresent(element(this.noResultsMessageBy));
-        Util.waitUntilElementIsVisible(element(this.noResultsMessageBy));
+        Util.waitUntilElementIsVisible(this.noResultsMessageBy);
         return this;
     }
 
