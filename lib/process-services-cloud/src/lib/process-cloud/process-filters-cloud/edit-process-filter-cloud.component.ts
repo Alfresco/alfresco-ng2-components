@@ -77,7 +77,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         const id = changes['id'];
         if (id && id.currentValue !== id.previousValue) {
-            this.retrieveTaskFilter();
+            this.retrieveProcessFilter();
             this.buildForm();
         }
     }
@@ -94,7 +94,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
         this.onFilterChange();
     }
 
-    retrieveTaskFilter() {
+    retrieveProcessFilter() {
         this.processFilter = this.processFilterCloudService.getProcessFilterById(this.appName, this.id);
     }
 
