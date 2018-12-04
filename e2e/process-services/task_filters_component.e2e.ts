@@ -291,6 +291,7 @@ describe('Task', () => {
 
             browser.refresh();
             appNavigationBarPage.clickSettingsButton();
+            browser.sleep(500);
             appSettingsToggles.enableTaskFiltersIcon();
             appNavigationBarPage.clickTasksButton();
 
@@ -384,6 +385,9 @@ describe('Task', () => {
 
             browser.refresh();
             appNavigationBarPage.clickSettingsButton();
+
+            browser.sleep(500);
+
             appSettingsToggles.enableTaskFiltersIcon();
             appNavigationBarPage.clickTasksButton();
 

@@ -23,9 +23,9 @@ export class ContentListPage {
     deleteContentElement = element(by.css('button[data-automation-id*="DELETE"]'));
     metadataAction = element(by.css('button[data-automation-id*="METADATA"]'));
     versionManagerAction = element(by.css('button[data-automation-id*="VERSIONS"]'));
-    moveContent = element(by.css('button[data-automation-id*="MOVE"]'));
-    copyContent = element(by.css('button[data-automation-id*="COPY"]'));
-    lockContent = element(by.css('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]'));
+    moveContentElement = element(by.css('button[data-automation-id*="MOVE"]'));
+    copyContentElement = element(by.css('button[data-automation-id*="COPY"]'));
+    lockContentElement = element(by.css('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]'));
     downloadContent = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
     actionMenu = element(by.css('div[role="menu"]'));
     optionButton = by.css('button[data-automation-id*="action_menu_"]');
@@ -111,22 +111,22 @@ export class ContentListPage {
 
     moveContent(content) {
         this.clickOnActionMenu(content);
-        this.moveContent.click();
+        this.moveContentElement.click();
     }
 
     copyContent(content) {
         this.clickOnActionMenu(content);
-        this.copyContent.click();
+        this.copyContentElement.click();
     }
 
     lockContent(content) {
         this.clickOnActionMenu(content);
-        this.lockContent.click();
+        this.lockContentElement.click();
     }
 
     waitForContentOptions() {
-        Util.waitUntilElementIsVisible(this.copyContent);
-        Util.waitUntilElementIsVisible(this.moveContent);
+        Util.waitUntilElementIsVisible(this.copyContentElement);
+        Util.waitUntilElementIsVisible(this.moveContentElement);
         Util.waitUntilElementIsVisible(this.deleteContentElement);
         Util.waitUntilElementIsVisible(this.downloadContent);
     }

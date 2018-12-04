@@ -21,6 +21,7 @@ var BROWSER_RUN = process.env.BROWSER_RUN;
 var FOLDER = process.env.FOLDER || '';
 var SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 var DIRECT_CONNECCT = SELENIUM_SERVER ? false : true;
+var MAXINSTANCES = process.env.MAXINSTANCES || 1;
 
 var specsToRun = './**/' + FOLDER + '**/*.e2e.ts';
 
@@ -60,7 +61,7 @@ exports.config = {
         browserName: 'chrome',
 
         shardTestFiles: true,
-        maxInstances: 5,
+        maxInstances: MAXINSTANCES,
         chromeOptions: {
             prefs: {
                 'credentials_enable_service': false,

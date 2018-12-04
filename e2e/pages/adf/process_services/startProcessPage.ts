@@ -139,7 +139,7 @@ export class StartProcessPage {
 
     checkSelectProcessPlaceholderIsDisplayed() {
         Util.waitUntilElementIsVisible(this.processDefinition);
-        let processPlaceholder = processDefinition.getAttribute('value').then(((result) => {
+        let processPlaceholder = this.processDefinition.getAttribute('value').then(((result) => {
             return result;
         }));
         return processPlaceholder;

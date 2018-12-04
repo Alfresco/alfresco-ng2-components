@@ -26,7 +26,7 @@ import { TasksListPage } from '../pages/adf/process_services/tasksListPage';
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
 import { FiltersPage } from '../pages/adf/process_services/filtersPage';
 
-import { TaskModel } from '../models/APS/StandaloneTask';
+import { StandaloneTask } from '../models/APS/StandaloneTask';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
@@ -46,7 +46,7 @@ describe('Task Details - Form', () => {
             'modelType': 2,
             'stencilSet': 0
         };
-        let otherTaskModel = new TaskModel();
+        let otherTaskModel = new StandaloneTask();
         let otherAttachedFormModel = {
             'name': Util.generateRandomString(),
             'description': '',
@@ -84,7 +84,7 @@ describe('Task Details - Form', () => {
     });
 
     beforeEach(async (done) => {
-        let taskModel = new TaskModel();
+        let taskModel = new StandaloneTask();
 
         let emptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(taskModel);
 

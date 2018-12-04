@@ -57,24 +57,24 @@ export class FormFields {
     }
 
     getFieldValue(fieldId, valueLocatorParam) {
-        let value = this.getWidget(fieldId).element(valueLocatorParam || valueLocator);
+        let value = this.getWidget(fieldId).element(valueLocatorParam || this.valueLocator);
         Util.waitUntilElementIsVisible(value);
         return value.getAttribute('value');
     }
 
     getFieldLabel(fieldId, labelLocatorParam) {
-        let label = this.getWidget(fieldId).all(labelLocatorParam || labelLocator).first();
+        let label = this.getWidget(fieldId).all(labelLocatorParam || this.labelLocator).first();
         Util.waitUntilElementIsVisible(label);
         return label.getText();
     }
 
     getFieldErrorMessage(fieldId) {
-        let error = this.getWidget(fieldId).element(errorMessage);
+        let error = this.getWidget(fieldId).element(this.errorMessage);
         return error.getText();
     }
 
     getFieldText(fieldId, labelLocatorParam) {
-        let label = getWidget(fieldId).element(labelLocatorParam || labelLocator);
+        let label = this.getWidget(fieldId).element(labelLocatorParam || this.labelLocator);
         Util.waitUntilElementIsVisible(label);
         return label.getText();
     }
@@ -133,7 +133,7 @@ export class FormFields {
         Util.waitUntilElementIsVisible(this.selectFormDropDownArrow);
         this.selectFormDropDownArrow.click();
         Util.waitUntilElementIsVisible(this.selectFormContent);
-        selectFormFromDropDown(formName);
+        this.selectFormFromDropDown(formName);
         return this;
     }
 

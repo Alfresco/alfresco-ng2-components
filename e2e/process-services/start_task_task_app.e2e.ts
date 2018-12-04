@@ -179,7 +179,7 @@ describe('Start Task - Task App', () => {
         taskPage.taskDetails().taskInfoDrawerIsDisplayed();
     });
 
-    it('[C260424] Should be able to see Spinner loading on task list when clicking on Tasks', () => {
+    xit('[C260424] Should be able to see Spinner loading on task list when clicking on Tasks', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
         taskPage.tasksListPage().getDataTable().checkSpinnerIsDisplayed();
     });

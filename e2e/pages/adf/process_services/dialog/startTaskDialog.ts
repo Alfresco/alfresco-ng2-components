@@ -30,8 +30,8 @@ export class StartTaskDialog {
     cancelButton = element(by.css('button[id="button-cancel"]'));
 
     addName(userName) {
-        Util.waitUntilElementIsVisible(name);
-        name.sendKeys(userName);
+        Util.waitUntilElementIsVisible(this.name);
+        this.name.sendKeys(userName);
         return this;
     }
 

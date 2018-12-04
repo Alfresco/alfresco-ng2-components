@@ -84,12 +84,12 @@ export class ProcessFiltersPage {
     selectFromProcessList(title) {
         let processName = element.all(by.css(`div[data-automation-id="text_${title}"]`)).first();
         Util.waitUntilElementIsVisible(processName);
-        this.processName.click();
+        processName.click();
     }
 
     checkFilterIsHighlighted(filterName) {
         let processNameHighlighted = element(by.css(`mat-list-item.adf-active span[data-automation-id='${filterName}_filter']`));
-        Util.waitUntilElementIsVisible(this.processNameHighlighted);
+        Util.waitUntilElementIsVisible(processNameHighlighted);
     }
 
     numberOfProcessRows() {
