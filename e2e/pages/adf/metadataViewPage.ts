@@ -16,7 +16,7 @@
  */
 
 import { Util } from '../../util/util';
-import { by, element } from 'protractor';
+import { browser, by, element } from 'protractor';
 
 export class MetadataViewPage {
 
@@ -128,6 +128,7 @@ export class MetadataViewPage {
 
     clickOnInformationButton() {
         this.informationButtonIsDisplayed();
+        browser.sleep(600);
         this.informationButton.click();
         return this;
     }

@@ -45,7 +45,7 @@ export class AnalyticsPage {
 
     clearReportTitle() {
         Util.waitUntilElementIsVisible(this.toolbarTitleInput);
-        this.toolbarTitleInput.getAttribute('value').then( (value) =>{
+        this.toolbarTitleInput.getAttribute('value').then((value) => {
             let i;
             for (i = value.length; i >= 0; i--) {
                 this.toolbarTitleInput.sendKeys(protractor.Key.BACK_SPACE);

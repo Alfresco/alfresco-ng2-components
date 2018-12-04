@@ -56,7 +56,7 @@ export class ContentServicesPage {
     gridViewButton = element(by.css('button[data-automation-id="document-list-grid-view"]'));
     cardViewContainer = element(by.css('div.adf-document-list-container div.adf-data-table-card'));
     copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
-    searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"'));
+    searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
 
     getElementsDisplayed() {
@@ -173,7 +173,7 @@ export class ContentServicesPage {
     }
 
     getBreadcrumbTooltip(nodeName: string) {
-        return element(by.css('nav[data-automation-id="breadcrumb"] div[title="' + nodeName + '"]')).getAttribute('title');
+        return element(by.css(`nav[data-automation-id="breadcrumb"] div[title="${nodeName}"]`)).getAttribute('title');
     }
 
     getAllRowsNameColumn() {
@@ -254,7 +254,7 @@ export class ContentServicesPage {
     createNewFolder(folder) {
         this.clickOnCreateNewFolder();
         this.createFolderDialog.addFolderName(folder);
-        browser.sleep(500);
+        browser.sleep(200);
         this.createFolderDialog.clickOnCreateButton();
         return this;
     }
@@ -347,7 +347,7 @@ export class ContentServicesPage {
     }
 
     checkItemInDocList(fileName) {
-        Util.waitUntilElementIsVisible(element(by.css('div[data-automation-id="text_' + fileName + '"]')));
+        Util.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="text_${fileName}"]`)));
     }
 
     enableInfiniteScrolling() {
@@ -372,7 +372,7 @@ export class ContentServicesPage {
     }
 
     enableThumbnails() {
-        let thumbnailSlide = element(by.css('#adf-thumbnails-upload-switch'));
+        let thumbnailSlide = element(by.id('adf-thumbnails-upload-switch'));
         Util.waitUntilElementIsVisible(thumbnailSlide);
         thumbnailSlide.click();
         return this;
@@ -423,7 +423,7 @@ export class ContentServicesPage {
     getColumnValueForRow(file, columnName) {
         let row = this.contentList.getRowByRowName(file);
         Util.waitUntilElementIsVisible(row);
-        let rowColumn = row.element(by.css('div[title="' + columnName + '"] span'));
+        let rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
         Util.waitUntilElementIsVisible(rowColumn);
         return rowColumn.getText();
     }

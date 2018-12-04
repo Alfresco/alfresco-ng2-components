@@ -41,7 +41,8 @@ export class AppNavigationBarPage {
     }
 
     clickSettingsButton() {
-        return this.settingsButton.click();
+         this.settingsButton.click();
+         return browser.sleep(400);
     }
 
     clickReportsButton() {

@@ -7,6 +7,7 @@ DEVELOPMENT=false
 EXECLINT=true
 LITESERVER=false
 EXEC_VERSION_JSAPI=false
+TIMEOUT=6000
 
 show_help() {
     echo "Usage: ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin"

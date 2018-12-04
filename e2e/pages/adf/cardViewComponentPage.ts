@@ -225,7 +225,7 @@ export class CardViewComponentPage {
 
     disableEdit() {
         Util.waitUntilElementIsVisible(this.editableSwitch);
-        this.editableSwitch.getAttribute('class').then( (check) =>{
+        this.editableSwitch.getAttribute('class').then((check) => {
             if (check === 'mat-slide-toggle mat-primary mat-checked') {
                 this.editableSwitch.click();
                 expect(this.editableSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');

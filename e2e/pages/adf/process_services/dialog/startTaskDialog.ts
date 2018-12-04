@@ -31,6 +31,7 @@ export class StartTaskDialog {
 
     addName(userName) {
         Util.waitUntilElementIsVisible(this.name);
+        this.name.clear();
         this.name.sendKeys(userName);
         return this;
     }

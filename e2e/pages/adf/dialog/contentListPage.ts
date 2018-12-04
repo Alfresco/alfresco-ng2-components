@@ -43,17 +43,16 @@ export class ContentListPage {
     tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
 
     getTooltip(nodeName) {
-        return this.getRowByRowName(nodeName).element(by.css(`span[title="${nodeName}"]`)).getAttribute('title');
+        return this.getRowByRowName(nodeName).element(by.css(`#document-list-container span[title="${nodeName}"]`)).getAttribute('title');
     }
 
     getRowsName(content) {
-        let row = element.all(by.xpath(`//span[@title='${content}']`)).first();
+        let row = element.all(by.css(`#document-list-container span[title='${content}']`)).first();
         Util.waitUntilElementIsVisible(row);
         return row;
     }
 
     getRowByRowName(content) {
-        Util.waitUntilElementIsOnPage(this.getRowsName(content).element(this.rowByRowName));
         Util.waitUntilElementIsVisible(this.getRowsName(content).element(this.rowByRowName));
         return this.getRowsName(content).element(this.rowByRowName);
     }
@@ -386,7 +385,7 @@ export class ContentListPage {
     }
 
     checkContentIsNotDisplayed(filename) {
-        Util.waitUntilElementIsNotVisible(element.all(by.xpath(`//span[@title='${filename}']`)).first());
+        Util.waitUntilElementIsNotVisible(element.all(by.css(`#document-list-container span[title='${filename}']`)).first());
         return this;
     }
 

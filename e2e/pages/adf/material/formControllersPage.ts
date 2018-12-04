@@ -23,7 +23,8 @@ export class FormControllersPage {
         Util.waitUntilElementIsVisible(toggle);
         toggle.getAttribute('class').then((check) => {
             if (check.indexOf('mat-checked') < 0) {
-                toggle.click();
+                Util.waitUntilElementIsClickable(toggle.element(by.css('div')));
+                toggle.element(by.css('div')).click();
             }
         });
     }
@@ -32,7 +33,8 @@ export class FormControllersPage {
         Util.waitUntilElementIsVisible(toggle);
         toggle.getAttribute('class').then((check) => {
             if (check.indexOf('mat-checked') >= 0) {
-                toggle.click();
+                Util.waitUntilElementIsClickable(toggle.element(by.css('div')));
+                toggle.element(by.css('div')).click();
             }
         });
     }
