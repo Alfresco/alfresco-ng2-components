@@ -26,7 +26,7 @@ import { of } from 'rxjs';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { EditProcessFilterCloudComponent } from './edit-process-filter-cloud.component';
 import { ProcessCloudModule } from '../process-cloud.module';
-import { ProcessFilterRepresentationModel } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 
 describe('EditProcessFilterCloudComponent', () => {
@@ -35,11 +35,16 @@ describe('EditProcessFilterCloudComponent', () => {
     let fixture: ComponentFixture<EditProcessFilterCloudComponent>;
     let dialog: MatDialog;
 
-    let fakeFilter = new ProcessFilterRepresentationModel({
+    let fakeFilter = new ProcessFilterCloudModel({
         name: 'FakeRunningProcess',
         icon: 'adjust',
         id: 10,
-        query: { state: 'RUNNING', appName: 'app-name', processDefinitionId: 'process-def-id', assignment: 'fake-involved', order: 'ASC', sort: 'id' }
+        state: 'RUNNING',
+        appName: 'app-name',
+        processDefinitionId: 'process-def-id',
+        assignment: 'fake-involved',
+        order: 'ASC',
+        sort: 'id'
     });
 
     setupTestBed({
@@ -73,9 +78,9 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
             expect(component.processFilter.name).toEqual('FakeRunningProcess');
             expect(component.processFilter.icon).toEqual('adjust');
-            expect(component.processFilter.query.state).toEqual('RUNNING');
-            expect(component.processFilter.query.order).toEqual('ASC');
-            expect(component.processFilter.query.sort).toEqual('id');
+            expect(component.processFilter.state).toEqual('RUNNING');
+            expect(component.processFilter.order).toEqual('ASC');
+            expect(component.processFilter.sort).toEqual('id');
         });
     }));
 
