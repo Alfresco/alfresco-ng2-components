@@ -28,7 +28,7 @@ Adds "infinite" pagination to the component it is used with.
 
 <adf-infinite-pagination 
     [target]="documentList"
-    [loading="documentList.infiniteLoading">
+    [loading]="documentList.infiniteLoading">
 </adf-infinite-pagination>
 ```
 
