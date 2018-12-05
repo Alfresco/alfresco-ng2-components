@@ -20,20 +20,20 @@ export let taskPresetsCloudDefaultModel = {
         {
             'key': 'name',
             'type': 'text',
-            'title': 'ADF_TASK_LIST.PROPERTIES.NAME',
+            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.NAME',
             'sortable': true
         },
         {
             'key': 'created',
             'type': 'text',
-            'title': 'ADF_TASK_LIST.PROPERTIES.CREATED',
+            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED',
             'cssClass': 'hidden',
             'sortable': true
         },
         {
             'key': 'assignee',
             'type': 'text',
-            'title': 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
+            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.ASSIGNEE',
             'cssClass': 'hidden',
             'sortable': true
         }

@@ -30,9 +30,9 @@ import { ProcessListCloudModule } from '../process-list-cloud.module';
     template: `
     <adf-cloud-process-list #processListCloud>
         <data-columns>
-            <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column"></data-column>
-            <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
-            <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell">
+            <data-column key="name" title="ADF_CLOUD_TASK_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column"></data-column>
+            <data-column key="created" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-hidden"></data-column>
+            <data-column key="startedBy" title="ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED" class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell">
                 <ng-template let-entry="$implicit">
                     <div>{{getFullName(entry.row.obj.startedBy)}}</div>
                 </ng-template>
@@ -83,13 +83,13 @@ describe('ProcessListCloudComponent', () => {
                         {
                             'key': 'fakeName',
                             'type': 'text',
-                            'title': 'ADF_TASK_LIST.PROPERTIES.FAKE',
+                            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
                             'sortable': true
                         },
                         {
                             'key': 'fakeTaskName',
                             'type': 'text',
-                            'title': 'ADF_TASK_LIST.PROPERTIES.TASK_FAKE',
+                            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
                             'sortable': true
                         }
                     ]
@@ -244,8 +244,8 @@ describe('ProcessListCloudComponent', () => {
         it('should fetch custom schemaColumn from html', () => {
             fixture.detectChanges();
             expect(componentCustom.processListCloud.columnList).toBeDefined();
-            expect(componentCustom.processListCloud.columns[0]['title']).toEqual('ADF_TASK_LIST.PROPERTIES.NAME');
-            expect(componentCustom.processListCloud.columns[1]['title']).toEqual('ADF_TASK_LIST.PROPERTIES.CREATED');
+            expect(componentCustom.processListCloud.columns[0]['title']).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.NAME');
+            expect(componentCustom.processListCloud.columns[1]['title']).toEqual('ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED');
             expect(componentCustom.processListCloud.columns.length).toEqual(3);
         });
     });

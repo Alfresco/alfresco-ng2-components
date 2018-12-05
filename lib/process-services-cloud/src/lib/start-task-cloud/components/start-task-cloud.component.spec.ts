@@ -178,7 +178,7 @@ describe('StartTaskCloudComponent', () => {
         fixture.detectChanges();
         expect(element.querySelector('#button-start')).toBeDefined();
         expect(element.querySelector('#button-start')).not.toBeNull();
-        expect(element.querySelector('#button-start').textContent).toContain('ADF_TASK_LIST.START_TASK.FORM.ACTION.START');
+        expect(element.querySelector('#button-start').textContent).toContain('ADF_CLOUD_TASK_LIST.START_TASK.FORM.ACTION.START');
     });
 
     it('should disable start button if name is empty', () => {
