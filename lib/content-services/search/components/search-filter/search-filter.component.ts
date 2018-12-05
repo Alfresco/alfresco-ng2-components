@@ -233,7 +233,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                     if (bucket && bucketList.filterText) {
                         const pattern = (bucketList.filterText || '').toLowerCase();
                         const label = (this.translationService.instant(bucket.display) || this.translationService.instant(bucket.label)).toLowerCase();
-                        return label.startsWith(pattern);
+                        return this.queryBuilder.config.filterWithContains ? label.indexOf(pattern) !== -1 : label.startsWith(pattern);
                     }
                     return true;
                 };

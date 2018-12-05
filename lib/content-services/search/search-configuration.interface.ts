@@ -26,6 +26,7 @@ export interface SearchConfiguration {
     fields?: Array<string>;
     categories: Array<SearchCategory>;
     filterQueries?: Array<FilterQuery>;
+    filterWithContains?: boolean;
     facetQueries?: {
         label?: string;
         pageSize?: number;
