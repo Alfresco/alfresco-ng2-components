@@ -3,14 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var fs = require("fs");
 var unist_util_select_1 = require("unist-util-select");
+var lev = require("fast-levenshtein");
 var ngHelpers = require("../ngHelpers");
-//const angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(interface)|(model)|(pipe)|(service)|(widget))/;
 var imageFolderPath = path.resolve('docs', 'docassets', 'images');
+// Using this value for the edit distance between Markdown image URLs
+// and filenames is enough to trap errors like missing out the 'images'
+// folder in the path. Keeping it low avoids crazy suggestions.
+var maxImagePathLevDistance = 7;
 function processDocs(mdCache, aggData, errorMessages) {
     var pathnames = Object.keys(mdCache);
     var classlessDocs = [];
     var linkRefs = {};
     var imageRefs = {};
+    var brokenImageRefs = {};
     var filters = makeFilepathFilters(aggData.config["fileCheckerFilter"]);
     pathnames.forEach(function (pathname) {
         var fileBaseName = path.basename(pathname, '.md');
@@ -26,22 +31,15 @@ function processDocs(mdCache, aggData, errorMessages) {
             var linkElems = unist_util_select_1.selectAll('link', tree);
             linkElems.forEach(function (linkElem) {
                 var normUrl = normaliseLinkPath(pathname, linkElem.url);
-                if (linkRefs[normUrl]) {
-                    linkRefs[normUrl].push(pathname);
-                }
-                else {
-                    linkRefs[normUrl] = [pathname];
-                }
+                multiSetAdd(linkRefs, normUrl, pathname);
             });
         }
         var imageElems = unist_util_select_1.selectAll('image', tree);
         imageElems.forEach(function (imageElem) {
             var normUrl = normaliseLinkPath(pathname, imageElem.url);
-            if (imageRefs[normUrl]) {
-                imageRefs[normUrl].push(pathname);
-            }
-            else {
-                imageRefs[normUrl] = [pathname];
+            multiSetAdd(imageRefs, normUrl, pathname);
+            if (!fs.existsSync(normUrl)) {
+                brokenImageRefs[normUrl] = pathname;
             }
         });
     });
@@ -56,12 +54,27 @@ function processDocs(mdCache, aggData, errorMessages) {
         }
         console.groupEnd();
     });
+    console.log();
     var imagePaths = getImagePaths(imageFolderPath);
     imagePaths.forEach(function (imagePath) {
         if (!imageRefs[imagePath]) {
             var relImagePath = imagePath.substring(imagePath.indexOf('docs'));
             console.log("Warning: no links to image file \"" + relImagePath + "\"");
         }
+    });
+    console.log();
+    var brokenImUrls = Object.keys(brokenImageRefs);
+    brokenImUrls.forEach(function (url) {
+        var relUrl = url.substring(url.indexOf('docs'));
+        var relDocPath = brokenImageRefs[url].substring(brokenImageRefs[url].indexOf('docs'));
+        console.group("Broken image link \"" + relUrl + "\" found in \"" + relDocPath);
+        imagePaths.forEach(function (imPath) {
+            if (lev.get(imPath, url) <= maxImagePathLevDistance) {
+                var relImPath = imPath.substring(imPath.indexOf('docs'));
+                console.log("Should it be \"" + relImPath + "\"?");
+            }
+        });
+        console.groupEnd();
     });
 }
 exports.processDocs = processDocs;
@@ -83,4 +96,12 @@ function filterFilepath(filters, filepath) {
         }
     }
     return false;
+}
+function multiSetAdd(container, key, value) {
+    if (container[key]) {
+        container[key].push(value);
+    }
+    else {
+        container[key] = [value];
+    }
 }
