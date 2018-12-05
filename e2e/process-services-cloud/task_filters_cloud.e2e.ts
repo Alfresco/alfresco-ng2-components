@@ -26,7 +26,7 @@ import { AppListCloudComponent } from '../pages/adf/process_cloud/appListCloudCo
 import { Tasks } from '../actions/APS-cloud/tasks';
 import { browser } from 'protractor';
 
-describe('Task filters cloud', () => {
+xdescribe('Task filters cloud', () => {
 
     describe('Filters', () => {
         const settingsPage = new SettingsPage();
@@ -40,7 +40,7 @@ describe('Task filters cloud', () => {
         let silentLogin;
         const newTask = 'newTask', completedTask = 'completedTask1', myTask = 'myTask';
         const simpleApp = 'simple-app';
-        const user = 'devopsuser', password = 'password';
+        const user = '', password = '';
 
         beforeAll(async () => {
             silentLogin = false;
