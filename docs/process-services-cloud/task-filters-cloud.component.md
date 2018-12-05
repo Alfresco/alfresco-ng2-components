@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-20-11
 ---
 
-# Task Filters Cloud component
+# [Task Filters Cloud component](../../lib/process-services-cloud/src/lib/task-cloud/task-filters-cloud/task-filters-cloud.component.ts "Defined in task-filters-cloud.component.ts")
 
 Shows all available filters.
 
@@ -54,8 +54,3 @@ as the value of `filterParam` as shown in the table below:
 | name | string | The name of the task filter, lowercase is checked |
 | key | string | The key of the task filter |
 | index | string | The zero-based position of the filter in the array. |
-
-### How to create an accordion menu with the task filter cloud
-
-The task filter cloud often works well as an item in an accordion menu. See the
-[Material Accordion component]((https://material.angular.io/components/expansion/overview#accordion))

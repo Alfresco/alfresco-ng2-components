@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# Diagram Component
+# [Diagram Component](../../lib/insights/diagram/components/diagram.component.ts "Defined in diagram.component.ts")
 
 Displays process diagrams.
 

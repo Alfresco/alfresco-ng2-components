@@ -5,9 +5,9 @@ Status: Active
 Last reviewed: 2018-03-29
 ---
 
-# Widget component
+# [Widget component](../../lib/insights/analytics-process/components/widgets/widget.component.ts "Defined in widget.component.ts")
 
-Base class for standard and custom widget classes.
+Base class for standard and custom [widget](../../e2e/pages/adf/process_services/widgets/widget.ts) classes.
 
 ## Basic Usage
 

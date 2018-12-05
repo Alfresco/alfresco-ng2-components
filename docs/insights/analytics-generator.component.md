@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# Analytics Generator Component
+# [Analytics Generator Component](../../lib/insights/analytics-process/components/analytics-generator.component.ts "Defined in analytics-generator.component.ts")
 
 Generates and shows charts
 
