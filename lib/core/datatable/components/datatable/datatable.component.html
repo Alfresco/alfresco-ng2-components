@@ -96,7 +96,7 @@
                                 </mat-icon>
                                 <ng-template #no_iconvalue>
                                     <mat-icon class="adf-datatable-selected"
-                                              *ngIf="row.isSelected; else no_selected_row" svgIcon="selected">
+                                              *ngIf="row.isSelected && !multiselect; else no_selected_row" svgIcon="selected">
                                     </mat-icon>
                                     <ng-template #no_selected_row>
                                         <img
