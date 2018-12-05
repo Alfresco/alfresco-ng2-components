@@ -16,12 +16,16 @@
  */
 
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { TaskListCloudComponent, TaskListCloudSortingModel } from '@alfresco/adf-process-services-cloud';
+import {
+    TaskListCloudComponent,
+    TaskFiltersCloudComponent,
+    TaskListCloudSortingModel,
+    TaskFilterCloudModel,
+    EditTaskFilterCloudComponent
+} from '@alfresco/adf-process-services-cloud';
 import { UserPreferencesService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'app-task-list-cloud-demo',
@@ -33,91 +37,48 @@ export class TaskListCloudDemoComponent implements OnInit {
     @ViewChild('taskCloud')
     taskCloud: TaskListCloudComponent;
 
-    sortFormControl: FormControl;
-    sortDirectionFormControl: FormControl;
+    @ViewChild('taskFiltersCloud')
+    taskFiltersCloud: TaskFiltersCloudComponent;
 
     appDefinitionList: Observable<any>;
     applicationName;
     status: string = '';
-    sort: string = '';
-    isFilterLoaded = false;
     showStartTask = false;
-    sortDirection: string = 'ASC';
-    filterName: string;
     clickedRow: string = '';
-    selectTask: string = '';
     filterTaskParam;
-    sortArray: TaskListCloudSortingModel [];
+    sortArray: TaskListCloudSortingModel[];
+    editedFilter: TaskFilterCloudModel;
 
-    columns = [
-        {key: 'id', label: 'ID'},
-        {key: 'name', label: 'NAME'},
-        {key: 'createdDate', label: 'Created Date'},
-        {key: 'priority', label: 'PRIORITY'},
-        {key: 'processDefinitionId', label: 'PROCESS DEFINITION ID'}
-      ];
+    currentFilter: TaskFilterCloudModel;
 
     constructor(
-        public dialog: MatDialog,
         private route: ActivatedRoute,
         private router: Router,
-        private userPreference: UserPreferencesService) {
-    }
+        private userPreference: UserPreferencesService
+    ) {}
 
     ngOnInit() {
         this.route.params.subscribe((params) => {
             this.applicationName = params.applicationName;
         });
 
-        this.sortFormControl = new FormControl('');
-
-        this.sortFormControl.valueChanges.subscribe(
-            (sortValue) => {
-                this.sort = sortValue;
-
-                this.sortArray = [{
-                    orderBy: this.sort,
-                    direction: this.sortDirection
-                }];
-            }
-        );
-        this.sortDirectionFormControl = new FormControl('');
-
-        this.sortDirectionFormControl.valueChanges.subscribe(
-            (sortDirectionValue) => {
-                this.sortDirection = sortDirectionValue;
-
-                this.sortArray = [{
-                    orderBy: this.sort,
-                    direction: this.sortDirection
-                }];
-            }
-        );
-
-        this.route.queryParams
-            .subscribe((params) => {
-                if (params.status) {
-                    this.status = params.status;
-                    this.sort = params.sort;
-                    this.sortDirection = params.order;
-                    this.filterName = params.filterName;
-                    this.isFilterLoaded = true;
-                    this.sortDirectionFormControl.setValue(this.sortDirection);
-                    this.sortFormControl.setValue(this.sort);
-                }
-            });
+        this.route.queryParams.subscribe( (params) => {
+            this.onFilterChange(params);
+        });
     }
 
-    onFilterSelected(filter) {
-        const queryParams = {
-            id: filter.id,
-            filterName: filter.name,
-            status: filter.query.state,
-            assignee: filter.query.assignment,
-            sort: filter.query.sort,
-            order: filter.query.order
-        };
-        this.router.navigate([`/cloud/${this.applicationName}/tasks/`], {queryParams: queryParams});
+    onFilterSelected(filter: TaskFilterCloudModel) {
+        this.currentFilter = Object.assign({}, filter);
+        this.sortArray = [new TaskListCloudSortingModel({ orderBy: this.currentFilter.sort, direction: this.currentFilter.order})];
+
+        this.router.navigate([`/cloud/${this.applicationName}/tasks/`], {
+            queryParams: this.currentFilter
+        });
+    }
+
+    onFilterChange(filter: any) {
+        this.editedFilter = Object.assign({}, this.currentFilter, filter);
+        this.sortArray = [new TaskListCloudSortingModel({ orderBy: this.editedFilter.sort, direction: this.editedFilter.order})];
     }
 
     onStartTask() {
@@ -139,5 +100,29 @@ export class TaskListCloudDemoComponent implements OnInit {
 
     onRowClick($event) {
         this.clickedRow = $event;
+    }
+
+    onEditActions(event: any) {
+        if (event.actionType === EditTaskFilterCloudComponent.ACTION_SAVE) {
+            this.save(event.id);
+        } else if (event.actionType === EditTaskFilterCloudComponent.ACTION_SAVE_AS) {
+            this.saveAs(event.id);
+        } else if (event.actionType === EditTaskFilterCloudComponent.ACTION_DELETE) {
+            this.deleteFilter();
+        }
+    }
+
+    saveAs(filterId) {
+        this.taskFiltersCloud.filterParam = <any> {id : filterId};
+        this.taskFiltersCloud.getFilters(this.applicationName);
+    }
+
+    save(filterId) {
+        this.taskFiltersCloud.filterParam = <any> {id : filterId};
+        this.taskFiltersCloud.getFilters(this.applicationName);
+    }
+
+    deleteFilter() {
+        this.taskFiltersCloud.getFilters(this.applicationName);
     }
 }
