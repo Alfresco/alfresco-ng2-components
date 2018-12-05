@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginAPSPage } from '../../../pages/adf/loginApsPage';
+import { LoginSSOPage } from '../../../pages/adf/loginSSOPage';
 import { SettingsPage } from '../../../pages/adf/settingsPage';
 import TestConfig = require('../../../test.config');
 import { browser } from 'protractor';
@@ -24,7 +24,7 @@ import { NavigationBarPage } from '../../../pages/adf/navigationBarPage';
 describe('Login component - SSO', () => {
 
     const settingsPage = new SettingsPage();
-    const loginApsPage = new LoginAPSPage();
+    const loginApsPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const path = '/auth/realms/springboot';
     let silentLogin;
@@ -33,19 +33,17 @@ describe('Login component - SSO', () => {
         navigationBarPage.clickLogoutButton();
         browser.executeScript('window.sessionStorage.clear();');
         browser.executeScript('window.localStorage.clear();');
-       });
-
-    it('[C261050] Should be possible login in the PS with SSO', async () => {
-        silentLogin = false;
-        await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
-        await loginApsPage.clickOnSSOButton();
-        browser.ignoreSynchronization = true;
-        await loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
     });
 
-    it ('[C280667] Should be redirect directly to keycloak without show the login page with silent login', async () => {
-        await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path);
-        browser.ignoreSynchronization = true;
-        await loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    it('[C261050] Should be possible login in the PS with SSO', () => {
+        silentLogin = false;
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
+        loginApsPage.clickOnSSOButton();
+        loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+    });
+
+    it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', () => {
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path);
+        loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
     });
 });

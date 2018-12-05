@@ -234,7 +234,6 @@ describe('Login component', () => {
 
         browser.getAllWindowHandles().then((handles) => {
 
-            browser.ignoreSynchronization = true;
             browser.switchTo().window(handles[1]).then(() => {
                 browser.get(TestConfig.adf.url + '/activiti');
                 processServicesPage.checkApsContainer();

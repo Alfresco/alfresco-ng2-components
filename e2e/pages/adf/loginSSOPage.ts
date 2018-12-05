@@ -16,41 +16,45 @@
  */
 
 import { Util } from '../../util/util';
-import { element, by } from 'protractor';
+import { element, by, browser, protractor } from 'protractor';
 
-export class LoginAPSPage {
+export class LoginSSOPage {
 
     ssoButton = element(by.css(`[data-automation-id="login-button-sso"]`));
     usernameField = element(by.id('username'));
     passwordField = element(by.id('password'));
     loginButton = element(by.id('kc-login'));
+    header = element(by.id('adf-header'));
 
-    async loginAPS (username, password) {
-        await this.enterUsername(username);
-        await this.enterPassword(password);
-        await this.clickLoginButton();
+    loginAPS(username, password) {
+        browser.ignoreSynchronization = true;
+        this.enterUsername(username);
+        this.enterPassword(password);
+        this.clickLoginButton();
+        browser.actions().sendKeys(protractor.Key.ENTER).perform();
+        return Util.waitUntilElementIsVisible(this.header);
     }
 
-    async clickOnSSOButton () {
+    clickOnSSOButton() {
         Util.waitUntilElementIsVisible(this.ssoButton);
-        await this.ssoButton.click();
+        this.ssoButton.click();
     }
 
-    async enterUsername (username) {
+    enterUsername(username) {
         Util.waitUntilElementIsVisible(this.usernameField);
-        await this.usernameField.clear();
-        await this.usernameField.sendKeys(username);
+        this.usernameField.clear();
+        this.usernameField.sendKeys(username);
     }
 
-    async enterPassword (password) {
+    enterPassword(password) {
         Util.waitUntilElementIsVisible(this.passwordField);
-        await this.passwordField.clear();
-        await this.passwordField.sendKeys(password);
+        this.passwordField.clear();
+        this.passwordField.sendKeys(password);
     }
 
-    async clickLoginButton () {
+    clickLoginButton() {
         Util.waitUntilElementIsVisible(this.loginButton);
-        await this.loginButton.click();
+        return this.loginButton.click();
     }
 
 }

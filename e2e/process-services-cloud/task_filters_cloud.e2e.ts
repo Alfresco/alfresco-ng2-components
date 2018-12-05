@@ -17,20 +17,19 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginAPSPage } from '../pages/adf/loginApsPage';
+import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/tasksCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process_cloud/appListCloudComponent';
 
 import { Tasks } from '../actions/APS-cloud/tasks';
-import { browser } from 'protractor';
 
-xdescribe('Task filters cloud', () => {
+describe('Task filters cloud', () => {
 
     describe('Filters', () => {
         const settingsPage = new SettingsPage();
-        const loginApsPage = new LoginAPSPage();
+        const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         let appListCloudComponent = new AppListCloudComponent();
         let tasksCloudDemoPage = new TasksCloudDemoPage();
@@ -41,18 +40,17 @@ xdescribe('Task filters cloud', () => {
         const newTask = 'newTask', completedTask = 'completedTask1', myTask = 'myTask';
         const simpleApp = 'simple-app';
 
-        beforeAll(async () => {
+        beforeAll(() => {
             silentLogin = false;
-            await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
-            await loginApsPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
-            await loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
+            loginSSOPage.clickOnSSOButton();
+            loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         });
 
-        beforeEach(async (done) => {
-            await navigationBarPage.navigateToProcessServicesCloudPage();
-            await appListCloudComponent.checkApsContainer();
-            await appListCloudComponent.goToApp(simpleApp);
+        beforeEach((done) => {
+            navigationBarPage.navigateToProcessServicesCloudPage();
+            appListCloudComponent.checkApsContainer();
+            appListCloudComponent.goToApp(simpleApp);
             done();
         });
 
@@ -60,9 +58,9 @@ xdescribe('Task filters cloud', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
         });
 
-        xit('[C290009] Should display default filters and created task', async() => {
-            await tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            await tasksService.createStandaloneTask(newTask, simpleApp);
+        xit('[C290009] Should display default filters and created task', () => {
+            tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            tasksService.createStandaloneTask(newTask, simpleApp);
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Completed Tasks');
@@ -74,12 +72,12 @@ xdescribe('Task filters cloud', () => {
         });
 
         // failing due to ACTIVITI-2463
-        xit('[C289955] Should display task in Complete Tasks List when task is completed', async() => {
-            await tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            let task = await tasksService.createStandaloneTask(completedTask, simpleApp);
+        xit('[C289955] Should display task in Complete Tasks List when task is completed', () => {
+            tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            let task = tasksService.createStandaloneTask(completedTask, simpleApp);
 
-            await tasksService.claimTask(task.entry.id, simpleApp);
-            await tasksService.completeTask(task.entry.id, simpleApp);
+            tasksService.claimTask(task.entry.id, simpleApp);
+            tasksService.completeTask(task.entry.id, simpleApp);
 
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('My Tasks');
@@ -90,9 +88,9 @@ xdescribe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTask);
         });
 
-        xit('[C289957] Should display task filter results when task filter is selected', async () => {
-            await tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            let task = await tasksService.createStandaloneTask(myTask, simpleApp);
+        xit('[C289957] Should display task filter results when task filter is selected', () => {
+            tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            let task = tasksService.createStandaloneTask(myTask, simpleApp);
 
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('My Tasks');

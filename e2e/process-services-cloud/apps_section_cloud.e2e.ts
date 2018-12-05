@@ -15,28 +15,27 @@
  * limitations under the License.
  */
 
-import { LoginAPSPage } from '../pages/adf/loginApsPage';
+import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { AppListCloudComponent } from '../pages/adf/process_cloud/appListCloudComponent';
 import TestConfig = require('../test.config');
-import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('Applications list', () => {
 
     const settingsPage = new SettingsPage();
-    const loginApsPage = new LoginAPSPage();
+    const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudComponent();
     const path = '/auth/realms/springboot';
     const appName = 'task-app';
 
-    it ('[C289910] Should the app be displayed on dashboard when is deployed on APS', async () => {
+    it('[C289910] Should the app be displayed on dashboard when is deployed on APS', () => {
 
-        await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path);
-        browser.ignoreSynchronization = true;
-        await loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        await navigationBarPage.navigateToProcessServicesCloudPage();
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path);
+        loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        navigationBarPage.navigateToProcessServicesCloudPage();
 
         appListCloudComponent.checkApsContainer();
 
