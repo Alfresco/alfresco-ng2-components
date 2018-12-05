@@ -21,7 +21,7 @@ import {
     MatChipsModule, MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule,
     MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
     MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
-    MatTooltipModule, MatMenuModule
+    MatTooltipModule, MatMenuModule, MatExpansionModule
 } from '@angular/material';
 
 export function modules() {
@@ -30,7 +30,7 @@ export function modules() {
         MatCheckboxModule, MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule,
         MatListModule, MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatTableModule,
         MatTabsModule, MatProgressSpinnerModule, MatNativeDateModule, MatRippleModule, MatTooltipModule,
-        MatChipsModule, MatMenuModule
+        MatChipsModule, MatMenuModule, MatExpansionModule
     ];
 }
 

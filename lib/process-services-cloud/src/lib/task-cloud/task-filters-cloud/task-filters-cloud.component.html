@@ -1,6 +1,6 @@
 <div class="menu-container">
   <mat-list class="adf-menu-list" *ngIf="filters$ | async as filterList; else loading">
-      <mat-list-item (click)="selectFilterAndEmit({id: filter.id})" *ngFor="let filter of filterList"
+      <mat-list-item (click)="selectFilterAndEmit(filter)" *ngFor="let filter of filterList"
                      class="adf-filters__entry" [class.adf-active]="currentFilter === filter">
           <mat-icon *ngIf="showIcons && filter.icon" matListIcon class="adf-filters__entry-icon">{{filter.icon}}
           </mat-icon>

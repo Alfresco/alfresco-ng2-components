@@ -22,7 +22,7 @@ Shows all available filters.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | Display filters available to the current user for the application with the specified name. |
-| filterParam | [`FilterParamsModel`](../../lib/process-services/task-list/models/filter.model.ts) |  | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one in the list) is selected. |
+| filterParam | [`TaskFilterCloudModel`](../../lib/process-services/task-list/models/filter.model.ts) |  | Parameters to use for the task filter cloud. If there is no match then the default filter (the first one in the list) is selected. |
 | showIcons | `boolean` | false | Toggles display of the filter's icons. |
 
 ### Events
@@ -30,7 +30,7 @@ Shows all available filters.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during loading. |
-| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudRepresentationModel`](../../lib/process-services-cloud/src/lib/task-cloud/models/filter-cloud.model.ts)`>` | Emitted when a filter in the list is clicked. |
+| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../lib/process-services-cloud/src/lib/task-cloud/models/filter-cloud.model.ts)`>` | Emitted when a filter in the list is clicked. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the list is loaded. |
 
 ## Details
@@ -45,7 +45,7 @@ Use the `filterParam` property to restrict the range of filters that are shown:
 </adf-cloud-task-filters>
 ```
 
-You can use properties from [`FilterParamsModel`](../../lib/process-services/task-list/models/filter.model.ts)
+You can use properties from [`TaskFilterCloudModel`](../../lib/process-services/task-list/models/filter.model.ts)
 as the value of `filterParam` as shown in the table below:
 
 | Name | Type | Description |
