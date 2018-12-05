@@ -108,5 +108,5 @@ Congratulations! You're now ready to start developing your first ADF application
 
 In the next tutorial you will explore how you can extend, use and configure ADF Components by customizing the login screen.
 
-* [Extend, use and configure ADF Components](customising-login.md)
+* [Extend, use and configure ADF Components](using-components.md)
  
