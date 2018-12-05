@@ -105,16 +105,13 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should define editProcessFilter form ', async(() => {
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(component.editProcessFilterForm).toBeDefined();
-            });
-        }));
+        it('should define editProcessFilter form', () => {
+            expect(component.editProcessFilterForm).toBeDefined();
+        });
 
         it('should create editProcessFilter form', async(() => {
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                fixture.detectChanges();
                 const stateController = component.editProcessFilterForm.get('state');
                 const sortController = component.editProcessFilterForm.get('sort');
                 const orderController = component.editProcessFilterForm.get('order');
@@ -129,65 +126,54 @@ describe('EditProcessFilterCloudComponent', () => {
             });
         }));
 
-        it('should disable save button if the process filter did not change', async(() => {
+        it('should disable save button if the process filter is not changed', async(() => {
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                fixture.detectChanges();
                 let saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-id');
                 expect(saveButton.disabled).toBe(true);
             });
         }));
 
-        it('should disable saveAs button if the process filter did not change', async(() => {
+        it('should disable saveAs button if the process filter is not changed', async(() => {
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                fixture.detectChanges();
                 let saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-as-id');
                 expect(saveButton.disabled).toBe(true);
             });
         }));
 
-        it('should enable delete button if the process filter did not change', async(() => {
+        it('should enable delete button by default', async(() => {
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                fixture.detectChanges();
                 let deleteButton = fixture.debugElement.nativeElement.querySelector('#adf-delete-id');
                 expect(deleteButton.disabled).toBe(false);
-            });
-        }));
-
-        it('should able delete the filter', async(() => {
-            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                let deleteButton = fixture.debugElement.nativeElement.querySelector('#adf-delete-id');
-                deleteButton.click();
             });
         }));
 
         it('should display current process filter details', async(() => {
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                fixture.detectChanges();
                 let stateElement = fixture.debugElement.nativeElement.querySelector('#adf-process-filter-state-id');
                 let sortElement = fixture.debugElement.nativeElement.querySelector('#adf-process-filter-sort-id');
                 let orderElement = fixture.debugElement.nativeElement.querySelector('#adf-process-filter-order-id');
                 expect(stateElement).toBeDefined();
                 expect(sortElement).toBeDefined();
                 expect(orderElement).toBeDefined();
-                expect(stateElement.innerText.trim()).toBe('RUNNING');
-                expect(sortElement.innerText.trim()).toBe('ID');
-                expect(orderElement.innerText.trim()).toBe('ASC');
+                expect(stateElement.innerText.trim()).toBe('ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STATUS');
+                expect(sortElement.innerText.trim()).toBe('ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COLUMN');
+                expect(orderElement.innerText.trim()).toBe('ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DIRECTION');
             });
         }));
 
-        it('should enable save button if the process filter changed', async () => {
-            fixture.detectChanges();
+        it('should enable save button if the process filter is changed', async(() => {
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             const stateElement = fixture.debugElement.query(By.css('#adf-process-filter-state-id .mat-select-trigger')).nativeElement;
@@ -196,29 +182,13 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.whenStable().then(() => {
                 const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-id');
                 const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                options[3].nativeElement.click();
+                options[2].nativeElement.click();
                 fixture.detectChanges();
                 expect(saveButton.disabled).toBe(false);
             });
-        });
+        }));
 
-        it('should be enable delete button if the process filter changed', async () => {
-            fixture.detectChanges();
-            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
-            const stateElement = fixture.debugElement.query(By.css('#adf-process-filter-state-id .mat-select-trigger')).nativeElement;
-            stateElement.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                let deleteButton = fixture.debugElement.nativeElement.querySelector('#adf-delete-id');
-                const statusOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                statusOptions[3].nativeElement.click();
-                fixture.detectChanges();
-                expect(deleteButton.disabled).toBe(false);
-            });
-        });
-
-        it('should display state drop down', async () => {
+        it('should display state drop down', async(() => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -229,9 +199,9 @@ describe('EditProcessFilterCloudComponent', () => {
                 const statusOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 expect(statusOptions.length).toEqual(3);
             });
-        });
+        }));
 
-        it('should display sort drop down', async () => {
+        it('should display sort drop down', async(() => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -242,9 +212,9 @@ describe('EditProcessFilterCloudComponent', () => {
                 const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 expect(sortOptions.length).toEqual(4);
             });
-        });
+        }));
 
-        it('should display order drop down', async () => {
+        it('should display order drop down', async(() => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -255,7 +225,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 const orderOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 expect(orderOptions.length).toEqual(2);
             });
-        });
+        }));
     });
 
     describe('edit filter actions', () => {
@@ -265,7 +235,7 @@ describe('EditProcessFilterCloudComponent', () => {
             component.ngOnChanges({ 'id': change });
         });
 
-        it('should emit save event and save the filter on click of save button', async () => {
+        it('should emit save event and save the filter on click save button', async(() => {
             const saveFilterSpy = spyOn(service, 'updateFilter').and.returnValue(fakeFilter);
             let saveSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -284,9 +254,9 @@ describe('EditProcessFilterCloudComponent', () => {
                 expect(saveFilterSpy).toHaveBeenCalled();
                 expect(saveSpy).toHaveBeenCalled();
             });
-        });
+        }));
 
-        it('should emit delete event and delete filter on click of delete button', async () => {
+        it('should emit delete event and delete the filter on click of delete button', async(() => {
             const deleteFilterSpy = spyOn(service, 'deleteFilter').and.callThrough();
             let deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -302,9 +272,9 @@ describe('EditProcessFilterCloudComponent', () => {
                 expect(deleteFilterSpy).toHaveBeenCalled();
                 expect(deleteSpy).toHaveBeenCalled();
             });
-        });
+        }));
 
-        it('should emit saveAs event and add filter on click of saveAs button', async () => {
+        it('should emit saveAs event and add filter on click of saveAs button', async(() => {
             const saveAsFilterSpy = spyOn(service, 'addFilter').and.callThrough();
             let saveAsSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -324,9 +294,9 @@ describe('EditProcessFilterCloudComponent', () => {
                 expect(saveAsSpy).toHaveBeenCalled();
                 expect(dialog.open).toHaveBeenCalled();
             });
-        });
+        }));
 
-        it('should able to open save dialog on click of saveAs button', async () => {
+        it('should able to open save dialog on click of saveAs button', async(() => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -342,6 +312,6 @@ describe('EditProcessFilterCloudComponent', () => {
                 fixture.detectChanges();
                 expect(dialog.open).toHaveBeenCalled();
             });
-        });
+        }));
     });
 });
