@@ -21,12 +21,12 @@ import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import DataTablePage = require('../../pages/adf/dataTablePage');
+import { DataTablePage } from '../../pages/adf/dataTablePage';
 
 import resources = require('../../util/resources');
 
-import FileModel = require('../../models/ACS/fileModel');
-import AcsUserModel = require('../../models/ACS/acsUserModel');
+import { FileModel } from '../../models/ACS/fileModel';
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';

@@ -19,18 +19,18 @@ import { by, element } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import ContentListPage = require('../../pages/adf/dialog/contentList');
+import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-import FileModel = require('../../models/ACS/fileModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { FileModel } from '../../models/ACS/fileModel';
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 import path = require('path');
 
 describe('Version component actions', () => {

@@ -19,5 +19,10 @@
     "MD033": false,
     "MD031": false
   },
-  "cSpell.words": ["mincount", "webscript"]
+  "stylelint.enable": true,
+  "css.validate": false,
+  "scss.validate": false,
+  "stylelint.config": {
+      "extends": "./stylelint-config"
+  }
 }

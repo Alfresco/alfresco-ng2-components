@@ -54,12 +54,13 @@ export class ConfigEditorComponent {
             this.invalidJson = true;
             this.notificationService.openSnackMessage(
                 'Wrong Code configuration ' + error,
-                4000
+                1000
             );
         } finally {
             if (!this.invalidJson) {
                 this.notificationService.openSnackMessage(
-                    'Saved'
+                    'Saved',
+                    1000
                 );
             }
         }

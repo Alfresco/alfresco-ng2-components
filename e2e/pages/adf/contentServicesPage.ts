@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import Util = require('../../util/util');
-import ContentList = require('./dialog/contentList');
-import CreateFolderDialog = require('./dialog/createFolderDialog');
 import TestConfig = require('../../test.config');
+import { Util } from '../../util/util';
+import { ContentListPage } from './dialog/contentListPage';
+import { CreateFolderDialog } from './dialog/createFolderDialog';
 import { NavigationBarPage } from './navigationBarPage';
 import { by, element, protractor, $$, browser } from 'protractor';
 
@@ -26,15 +26,14 @@ import path = require('path');
 
 export class ContentServicesPage {
 
-    contentList = new ContentList();
+    contentList = new ContentListPage();
     createFolderDialog = new CreateFolderDialog();
     uploadBorder = element(by.id('document-list-container'));
     tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
     contentServices = element(by.css('a[data-automation-id="Content Services"]'));
     currentFolder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
-    createFolderButton = element(by.cssContainingText('mat-icon', 'create_new_folder'));
-    activeBreadcrumb = element(by.css('div[class*="adf-active"]'));
-    tooltip = by.css('div[class*="--text adf-full-width"] span');
+    createFolderButton = element(by.css('button[data-automation-id="create-new-folder"]'));
+    activeBreadcrumb = element(by.css('div[class*="active"]'));
     uploadFileButton = element(by.css('input[data-automation-id="upload-single-file"]'));
     uploadMultipleFileButton = element(by.css('input[data-automation-id="upload-multiple-files"]'));
     uploadFolderButton = element(by.css('input[data-automation-id="uploadFolder"]'));
@@ -57,7 +56,7 @@ export class ContentServicesPage {
     gridViewButton = element(by.css('button[data-automation-id="document-list-grid-view"]'));
     cardViewContainer = element(by.css('div.adf-document-list-container div.adf-data-table-card'));
     copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
-    searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"'));
+    searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
 
     getElementsDisplayed() {
@@ -82,7 +81,7 @@ export class ContentServicesPage {
     checkElementsSortedByNameAsc(elements) {
         browser.controlFlow().execute(async () => {
             let numberOfElements = await this.numberOfResultsDisplayed();
-            for (let i = 0; i < (numberOfElements - 1) ; i++ ) {
+            for (let i = 0; i < (numberOfElements - 1); i++) {
                 expect(JSON.stringify(elements[i]) <= JSON.stringify(elements[i + 1])).toEqual(true);
             }
         });
@@ -92,7 +91,7 @@ export class ContentServicesPage {
     checkElementsSortedByNameDesc(elements) {
         browser.controlFlow().execute(async () => {
             let numberOfElements = await this.numberOfResultsDisplayed();
-            for (let i = 0; i < (numberOfElements - 1) ; i++ ) {
+            for (let i = 0; i < (numberOfElements - 1); i++) {
                 expect(JSON.stringify(elements[i]) >= JSON.stringify(elements[i + 1])).toEqual(true);
             }
         });
@@ -173,12 +172,8 @@ export class ContentServicesPage {
         return deferred.promise;
     }
 
-    getTooltip(content) {
-        return this.contentList.getRowByRowName(content).element(this.tooltip).getAttribute('title');
-    }
-
-    getBreadcrumbTooltip(content) {
-        return element(by.css('nav[data-automation-id="breadcrumb"] div[title="' + content + '"]')).getAttribute('title');
+    getBreadcrumbTooltip(nodeName: string) {
+        return element(by.css(`nav[data-automation-id="breadcrumb"] div[title="${nodeName}"]`)).getAttribute('title');
     }
 
     getAllRowsNameColumn() {
@@ -259,6 +254,7 @@ export class ContentServicesPage {
     createNewFolder(folder) {
         this.clickOnCreateNewFolder();
         this.createFolderDialog.addFolderName(folder);
+        browser.sleep(200);
         this.createFolderDialog.clickOnCreateButton();
         return this;
     }
@@ -351,7 +347,7 @@ export class ContentServicesPage {
     }
 
     checkItemInDocList(fileName) {
-        Util.waitUntilElementIsVisible(element(by.css('div[data-automation-id="text_' + fileName + '"]')));
+        Util.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="text_${fileName}"]`)));
     }
 
     enableInfiniteScrolling() {
@@ -376,7 +372,7 @@ export class ContentServicesPage {
     }
 
     enableThumbnails() {
-        let thumbnailSlide = element(by.css('#adf-thumbnails-upload-switch'));
+        let thumbnailSlide = element(by.id('adf-thumbnails-upload-switch'));
         Util.waitUntilElementIsVisible(thumbnailSlide);
         thumbnailSlide.click();
         return this;
@@ -427,7 +423,7 @@ export class ContentServicesPage {
     getColumnValueForRow(file, columnName) {
         let row = this.contentList.getRowByRowName(file);
         Util.waitUntilElementIsVisible(row);
-        let rowColumn = row.element(by.css('div[title="' + columnName + '"] span'));
+        let rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
         Util.waitUntilElementIsVisible(rowColumn);
         return rowColumn.getText();
     }

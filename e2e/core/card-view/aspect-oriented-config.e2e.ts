@@ -19,12 +19,12 @@ import { browser } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
-import CardViewPage = require('../../pages/adf/metadataViewPage');
+import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-import FileModel = require('../../models/ACS/fileModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { FileModel } from '../../models/ACS/fileModel';
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
@@ -37,7 +37,7 @@ describe('Aspect oriented config', () => {
 
     const loginPage = new LoginPage();
     const viewerPage = new ViewerPage();
-    const metadataViewPage = new CardViewPage();
+    const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
     const configEditorPage = new ConfigEditorPage();
     let contentServicesPage = new ContentServicesPage();
@@ -71,13 +71,13 @@ describe('Aspect oriented config', () => {
         done();
     });
 
-    beforeEach(async(done) => {
+    beforeEach(async (done) => {
         navigationBarPage.clickConfigEditorButton();
         configEditorPage.clickClearButton();
         done();
     });
 
-    afterEach(async(done) => {
+    afterEach(async (done) => {
         viewerPage.clickCloseButton();
         contentServicesPage.checkAcsContainer();
         browser.refresh();
@@ -96,7 +96,8 @@ describe('Aspect oriented config', () => {
             '                }' +
             '            ]' +
             '        }]' +
-            '    }');
+            '    }' +
+            '  }');
 
         configEditorPage.clickSaveButton();
 
@@ -148,7 +149,7 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsNotPresent('exists');
     });
 
-    it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided' , () => {
+    it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided', () => {
 
         configEditorPage.enterConfiguration('{ }');
 
@@ -172,7 +173,7 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsPresent('Content');
     });
 
-    it('[C260182] Should show all the aspects if the default configuration contains the star symbol' , () => {
+    it('[C260182] Should show all the aspects if the default configuration contains the star symbol', () => {
 
         configEditorPage.enterConfiguration('{' +
             '    "presets": {' +
@@ -201,7 +202,7 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsPresent('Content');
     });
 
-    it('[C268899] Should be possible use a Translation key as Title of a metadata group' , () => {
+    it('[C268899] Should be possible use a Translation key as Title of a metadata group', () => {
 
         configEditorPage.enterConfiguration('{' +
             '  "presets": {' +
@@ -251,7 +252,7 @@ describe('Aspect oriented config', () => {
 
     });
 
-    it('[C279968] Should be possible use a custom preset' , () => {
+    it('[C279968] Should be possible use a custom preset', () => {
 
         configEditorPage.enterConfiguration('{' +
             '    "presets": {' +

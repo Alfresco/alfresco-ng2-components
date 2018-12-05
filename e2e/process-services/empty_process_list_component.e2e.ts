@@ -20,10 +20,10 @@ import resources = require('../util/resources');
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
-import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
-import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');
+import { ProcessFiltersPage } from '../pages/adf/process_services/processFiltersPage';
+import { ProcessDetailsPage } from '../pages/adf/process_services/processDetailsPage';
 import { ProcessListPage } from '../pages/adf/process_services/processListPage';
-import StartProcessPage = require('../pages/adf/process_services/startProcessPage');
+import { StartProcessPage } from '../pages/adf/process_services/startProcessPage';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';

@@ -16,10 +16,10 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
+import { ProcessFiltersPage } from '../pages/adf/process_services/processFiltersPage';
 import { Widget } from '../pages/adf/process_services/widgets/widget';
-import StartProcess = require('../pages/adf/process_services/startProcessPage');
-import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');
+import { StartProcessPage } from '../pages/adf/process_services/startProcessPage';
+import { ProcessDetailsPage } from '../pages/adf/process_services/processDetailsPage';
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -41,7 +41,7 @@ describe('Form widgets - People', () => {
     let appModel;
     let alfrescoJsApi;
     let widget = new Widget();
-    let startProcess = new StartProcess();
+    let startProcess = new StartProcessPage();
     let processDetailsPage = new ProcessDetailsPage();
     let taskDetails = new TaskDetailsPage();
     let appNavigationBar = new AppNavigationBarPage();

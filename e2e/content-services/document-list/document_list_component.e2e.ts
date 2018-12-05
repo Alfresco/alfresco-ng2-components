@@ -19,14 +19,14 @@ import { browser } from 'protractor';
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-import AcsUserModel = require('../../models/ACS/acsUserModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
-import ErrorPage = require('../../pages/adf/errorPage');
-import FileModel = require('../../models/ACS/fileModel');
+import { ErrorPage } from '../../pages/adf/errorPage';
+import { FileModel } from '../../models/ACS/fileModel';
 import moment from 'moment-es6';
 
 describe('Document List Component', () => {
@@ -75,7 +75,7 @@ describe('Document List Component', () => {
             acsUser = new AcsUserModel();
             let siteName = `PRIVATE_TEST_SITE_${Util.generateRandomString(5)}`;
             let folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
-            let privateSiteBody = { visibility: 'PRIVATE' , title: siteName};
+            let privateSiteBody = { visibility: 'PRIVATE', title: siteName };
 
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -88,7 +88,7 @@ describe('Document List Component', () => {
             done();
         });
 
-        afterAll(async(done) => {
+        afterAll(async (done) => {
             await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
             done();
         });
@@ -303,7 +303,7 @@ describe('Document List Component', () => {
         });
     });
 
-    it('[C260121] Should show the spinner on content loading', async (done) => {
+    xit('[C260121] Should show the spinner on content loading', async (done) => {
         acsUser = new AcsUserModel();
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
@@ -511,17 +511,17 @@ describe('Document List Component', () => {
             done();
         });
 
-        beforeEach( () => {
+        beforeEach(() => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
         });
 
         it('[C260108] Should display tooltip for file\'s name', () => {
-            expect(contentServicesPage.getTooltip(pdfFile.name)).toEqual(pdfFile.name);
+            expect(contentServicesPage.getContentList().getTooltip(pdfFile.name)).toEqual(pdfFile.name);
         });
 
         it('[C260109] Should display tooltip for folder\'s name', () => {
-            expect(contentServicesPage.getTooltip(folderName)).toEqual(folderName);
+            expect(contentServicesPage.getContentList().getTooltip(folderName)).toEqual(folderName);
         });
 
         it('[C260119] Should have a specific thumbnail for folders', async (done) => {
@@ -560,7 +560,7 @@ describe('Document List Component', () => {
     describe('Gallery View', () => {
 
         let cardProperties = {
-            DISPLAY_NAME : 'Display name',
+            DISPLAY_NAME: 'Display name',
             SIZE: 'Size',
             LOCK: 'Lock',
             CREATED_BY: 'Created by',
@@ -600,7 +600,7 @@ describe('Document List Component', () => {
             done();
         });
 
-        beforeEach( () => {
+        beforeEach(() => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
             contentServicesPage.clickGridViewButton();

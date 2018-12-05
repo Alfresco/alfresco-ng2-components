@@ -16,16 +16,15 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import PaginationPage = require('../pages/adf/paginationPage');
+import { PaginationPage } from '../pages/adf/paginationPage';
 
 import CONSTANTS = require('../util/constants');
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import Util = require('../util/util');
+import { Util } from '../util/util';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -34,7 +33,6 @@ import { UsersActions } from '../actions/users.actions';
 describe('Task List Pagination - Sorting', () => {
 
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
     let taskPage = new TasksPage();
     let paginationPage = new PaginationPage();
 

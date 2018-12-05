@@ -20,11 +20,11 @@ import { browser } from 'protractor';
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
-import CardViewPage = require('../../pages/adf/metadataViewPage');
-import ContentListPage = require('../../pages/adf/dialog/contentList');
+import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
+import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-import FileModel = require('../../models/ACS/fileModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { FileModel } from '../../models/ACS/fileModel';
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
@@ -51,7 +51,7 @@ describe('Metadata component', () => {
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const viewerPage = new ViewerPage();
-    const metadataViewPage = new CardViewPage();
+    const metadataViewPage = new MetadataViewPage();
     const contentListPage = new ContentListPage();
 
     let acsUser = new AcsUserModel();

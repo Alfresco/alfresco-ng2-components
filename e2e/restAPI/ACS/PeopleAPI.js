@@ -25,7 +25,6 @@ var TestConfig = require('../../test.config');
 
 var peopleBaseUrl = 'people';
 
-
 function read(initialFile) {
     return new Promise(function (resolve, reject) {
         fs.readFile(initialFile, function (err, file) {

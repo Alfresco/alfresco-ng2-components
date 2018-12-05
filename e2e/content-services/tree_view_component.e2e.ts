@@ -19,7 +19,7 @@ import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TreeViewPage } from '../pages/adf/content_services/treeViewPage';
 
-import AcsUserModel = require('../models/ACS/acsUserModel');
+import { AcsUserModel } from '../models/ACS/acsUserModel';
 
 import TestConfig = require('../test.config');
 

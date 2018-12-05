@@ -7,6 +7,7 @@ DEVELOPMENT=false
 EXECLINT=true
 LITESERVER=false
 EXEC_VERSION_JSAPI=false
+TIMEOUT=7000
 
 show_help() {
     echo "Usage: ./scripts/test-e2e-lib.sh -host adf.domain.com -u admin -p admin -e admin"
@@ -25,6 +26,7 @@ show_help() {
     echo "-save  save the error screenshot in the remote env"
     echo "-timeout or --timeout override the timeout foe the wait utils"
     echo "-sl --skip-lint skip lint"
+    echo "-m --maxInstances max instances parallel for tests"
     echo "-vjsapi install different version from npm of JS-API defined in the package.json"
     echo "-h or --help"
 }
@@ -88,6 +90,10 @@ lite_server(){
     LITESERVER=true
 }
 
+max_instances(){
+    MAXINSTANCES=$1
+}
+
 version_js_api() {
     JSAPI_VERSION=$1
 
@@ -118,6 +124,7 @@ while [[ $1 == -* ]]; do
       -host|--host)  set_host $2; shift 2;;
       -host_sso|--host_sso)  set_host_sso $2; shift 2;;
       -sl|--skip-lint)  skip_lint; shift;;
+      -m|--maxInstances)  max_instances $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
     esac
@@ -138,6 +145,7 @@ export TIMEOUT=$TIMEOUT
 export FOLDER=$FOLDER'/'
 export SELENIUM_SERVER=$SELENIUM_SERVER
 export NAME_TEST=$NAME_TEST
+export MAXINSTANCES=$MAXINSTANCES
 
 
 if $EXEC_VERSION_JSAPI == true; then

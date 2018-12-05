@@ -16,8 +16,8 @@
  */
 
 import { element, by, protractor } from 'protractor';
-import Util = require('../../../../util/util');
-import FormFields = require('../formFields');
+import { Util } from '../../../../util/util';
+import { FormFields } from '../formFields';
 
 export class AmountWidget {
 
@@ -25,7 +25,7 @@ export class AmountWidget {
     formFields = new FormFields();
 
     getAmountFieldLabel(fieldId) {
-        let label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
+        let label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         Util.waitUntilElementIsVisible(label);
         return label.getText();
     }

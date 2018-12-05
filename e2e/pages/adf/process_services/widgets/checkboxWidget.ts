@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import FormFields = require('../formFields');
-import Util = require('../../../../util/util');
+import { FormFields } from '../formFields';
+import { Util } from '../../../../util/util';
 import { by, element } from 'protractor';
 
 export class CheckboxWidget {

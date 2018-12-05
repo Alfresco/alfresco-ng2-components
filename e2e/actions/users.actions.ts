@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import Tenant = require('../models/APS/Tenant');
-import User = require('../models/APS/User');
+import { Tenant } from '../models/APS/Tenant';
+import { User } from '../models/APS/User';
 import TestConfig = require('../test.config');
 import path = require('path');
 import fs = require('fs');

@@ -15,25 +15,25 @@
  * limitations under the License.
  */
 
-import Util = require('../util/util');
+import { Util } from '../util/util';
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
-import StartProcessPage = require('../pages/adf/process_services/startProcessPage');
-import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
+import { StartProcessPage } from '../pages/adf/process_services/startProcessPage';
+import { ProcessFiltersPage } from '../pages/adf/process_services/processFiltersPage';
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
-import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');
+import { ProcessDetailsPage } from '../pages/adf/process_services/processDetailsPage';
 import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { browser } from 'protractor';
 
-import User = require('../models/APS/User');
-import Tenant = require('../models/APS/Tenant');
+import { User } from '../models/APS/User';
+import { Tenant } from '../models/APS/Tenant';
 
-import FileModel = require('../models/ACS/fileModel');
+import { FileModel } from '../models/ACS/fileModel';
 import dateFormat = require('dateformat');
 
 import AlfrescoApi = require('alfresco-js-api-node');

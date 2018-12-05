@@ -18,14 +18,14 @@
 import { PermissionsPage } from '../pages/adf/permissionsPage';
 import { LoginPage } from '../pages/adf/loginPage';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
-import AcsUserModel = require('../models/ACS/acsUserModel');
+import { AcsUserModel } from '../models/ACS/acsUserModel';
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import ContentListPage = require('../pages/adf/dialog/contentList');
+import { ContentListPage } from '../pages/adf/dialog/contentListPage';
 import AlfrescoApi = require('alfresco-js-api-node');
-import FileModel = require('../models/ACS/fileModel');
+import { FileModel } from '../models/ACS/fileModel';
 import { UploadActions } from '../actions/ACS/upload.actions';
-import Util = require('../util/util');
+import { Util } from '../util/util';
 import { browser } from 'protractor';
 
 describe('Permissions Component', function () {

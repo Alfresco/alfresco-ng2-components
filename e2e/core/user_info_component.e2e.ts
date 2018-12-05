@@ -20,8 +20,8 @@ import { LoginPage } from '../pages/adf/loginPage';
 import { UserInfoDialog } from '../pages/adf/dialog/userInfoDialog';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
-import AcsUserModel = require('../models/ACS/acsUserModel');
-import FileModel = require('../models/ACS/fileModel');
+import { AcsUserModel } from '../models/ACS/acsUserModel';
+import { FileModel } from '../models/ACS/fileModel';
 
 import PeopleAPI = require('../restAPI/ACS/PeopleAPI');
 

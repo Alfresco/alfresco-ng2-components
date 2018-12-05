@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 import TestConfig = require('../../test.config');
 import { element, by, browser } from 'protractor';
 import { ProcessServicesPage } from './process_services/processServicesPage';
@@ -24,6 +24,7 @@ import { AppListCloudComponent } from './process_cloud/appListCloudComponent';
 export class NavigationBarPage {
 
     contentServicesButton = element(by.css('a[data-automation-id="Content Services"]'));
+    dataTableButton = element(by.css('a[data-automation-id="Datatable"]'));
     taskListButton = element(by.css("a[data-automation-id='Task List']"));
     configEditorButton = element(by.css('a[data-automation-id="Configuration Editor"]'));
     processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
@@ -42,6 +43,11 @@ export class NavigationBarPage {
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = element(by.css('a[data-automation-id="Form"]'));
     treeViewButton = element(by.css('a[data-automation-id="Tree View"]'));
+
+    navigateToDatatable() {
+        Util.waitUntilElementIsVisible(this.dataTableButton);
+        this.dataTableButton.click();
+    }
 
     clickContentServicesButton() {
         Util.waitUntilElementIsVisible(this.contentServicesButton);
@@ -160,10 +166,10 @@ export class NavigationBarPage {
         this.appTitle.click();
     }
 
-    clickFormButton = function () {
+    clickFormButton() {
         Util.waitUntilElementIsVisible(this.formButton);
         return this.formButton.click();
-    };
+    }
 
     checkLogoTooltip(logoTooltipTitle) {
         let logoTooltip = element(by.css('a[title="' + logoTooltipTitle + '"]'));
@@ -177,10 +183,6 @@ export class NavigationBarPage {
 
     goToSite(site) {
         browser.get(TestConfig.adf.url + `/files/${site.entry.guid}/display/list`);
-    }
-
-    checkContentServicesButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.contentServicesButton);
     }
 
     clickTreeViewButton() {

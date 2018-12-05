@@ -27,6 +27,7 @@ import { NodeLockDialogComponent } from './node-lock.dialog';
 import { ConfirmDialogComponent } from './confirm.dialog';
 import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
+import { LibraryDialogComponent } from './library/library.dialog';
 
 @NgModule({
     imports: [
@@ -42,19 +43,22 @@ import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
         DownloadZipDialogComponent,
         FolderDialogComponent,
         NodeLockDialogComponent,
-        ConfirmDialogComponent
+        ConfirmDialogComponent,
+        LibraryDialogComponent
     ],
     exports: [
         DownloadZipDialogComponent,
         FolderDialogComponent,
         NodeLockDialogComponent,
-        ConfirmDialogComponent
+        ConfirmDialogComponent,
+        LibraryDialogComponent
     ],
     entryComponents: [
         DownloadZipDialogComponent,
         FolderDialogComponent,
         NodeLockDialogComponent,
-        ConfirmDialogComponent
+        ConfirmDialogComponent,
+        LibraryDialogComponent
     ]
 })
 export class DialogModule {}

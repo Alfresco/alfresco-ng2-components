@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-import Util = require('../../../../../util/util');
-import { element, by } from 'protractor';
+import { Util } from '../../../../../util/util';
+import { element, by, ElementFinder } from 'protractor';
 
 export class SearchCheckListPage {
 
-    filter;
+    filter: ElementFinder;
     inputBy = by.css('div[class*="mat-expansion-panel-content"] input');
     showMoreBy = by.css('button[title="Show more"]');
     showLessBy = by.css('button[title="Show less"]');
     clearAllButton = by.css('button');
 
-    constructor(filter) {
+    constructor(filter: ElementFinder) {
         this.filter = filter;
     }
 
     clickCheckListOption(option) {
         Util.waitUntilElementIsVisible(this.filter);
-        let result = this.filter.element(by.css(`mat-checkbox[data-automation-id*='-${option}'] .mat-checkbox-inner-container`));
+        let result = this.filter.all(by.css(`mat-checkbox[data-automation-id*='-${option}'] .mat-checkbox-inner-container`)).first();
         Util.waitUntilElementIsVisible(result);
         Util.waitUntilElementIsClickable(result);
         result.click();
@@ -63,16 +63,16 @@ export class SearchCheckListPage {
     }
 
     checkSearchFilterInputIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.filter.element(this.inputBy));
+        Util.waitUntilElementIsVisible(this.filter.all(this.inputBy).first());
     }
 
     searchInFilter(option) {
-        let inputElement = this.filter.element(this.inputBy);
+        let inputElement = this.filter.all(this.inputBy).first();
         Util.waitUntilElementIsClickable(this.filter);
         Util.waitUntilElementIsClickable(inputElement);
 
         inputElement.clear();
-        this.filter.element(this.inputBy).sendKeys(option);
+        this.filter.all(this.inputBy).first().sendKeys(option);
     }
 
     checkShowLessButtonIsNotDisplayed() {

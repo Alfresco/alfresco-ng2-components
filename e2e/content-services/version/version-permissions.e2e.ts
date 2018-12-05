@@ -18,14 +18,14 @@
 import { element, by } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
-import ContentListPage = require('../../pages/adf/dialog/contentList');
+import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
-import UploadDialog = require('../../pages/adf/dialog/uploadDialog');
+import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { NotificationPage } from '../../pages/adf/notificationPage';
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-import FileModel = require('../../models/ACS/fileModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { FileModel } from '../../models/ACS/fileModel';
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
@@ -34,7 +34,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { NodeActions } from '../../actions/ACS/node.actions';
 
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 import CONSTANTS = require('../../util/constants');
 
 describe('Version component permissions', () => {

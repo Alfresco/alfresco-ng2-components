@@ -16,7 +16,7 @@
  */
 
 import { AppSettingsToggles } from './dialog/appSettingsToggles';
-import Util = require('../../../util/util');
+import { Util } from '../../../util/util';
 import { element, by, protractor, browser } from 'protractor';
 import { TabsPage } from '../material/tabsPage';
 
@@ -31,9 +31,9 @@ export class TaskDetailsPage {
     parentNameField = element(by.css('span[data-automation-id*="parentName"] span'));
     parentTaskIdField = element(by.css('span[data-automation-id*="parentTaskId"] span'));
     durationField = element(by.css('span[data-automation-id*="duration"] span'));
-    endDateField = element(by.css('span[data-automation-id*="endDate"] span'));
+    endDateField = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
     createdField = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
-    idField = element(by.css('span[data-automation-id*="id"] span'));
+    idField = element.all(by.css('span[data-automation-id*="id"] span')).first();
     descriptionField = element(by.css('span[data-automation-id*="description"] span'));
     dueDateField = element(by.css('span[data-automation-id*="dueDate"] span'));
     activitiesTitle = element(by.css('div[class*="adf-info-drawer-layout-header-title"] div'));
