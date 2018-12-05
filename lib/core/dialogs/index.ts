@@ -15,4 +15,4 @@
  * limitations under the License.
  */
 
-export * from './content-directive.module';
+export * from './public-api';

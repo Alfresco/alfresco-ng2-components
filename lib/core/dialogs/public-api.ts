@@ -15,4 +15,6 @@
  * limitations under the License.
  */
 
-export * from './content-directive.module';
+export * from './download-zip.dialog';
+
+export * from './dialog.module';

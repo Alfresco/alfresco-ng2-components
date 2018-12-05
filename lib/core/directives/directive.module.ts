@@ -26,6 +26,7 @@ import { NodeFavoriteDirective } from './node-favorite.directive';
 import { NodePermissionDirective } from './node-permission.directive';
 import { NodeRestoreDirective } from './node-restore.directive';
 import { UploadDirective } from './upload.directive';
+import { NodeDownloadDirective } from './node-download.directive';
 
 @NgModule({
     imports: [
@@ -39,6 +40,7 @@ import { UploadDirective } from './upload.directive';
         NodeFavoriteDirective,
         NodePermissionDirective,
         NodeRestoreDirective,
+        NodeDownloadDirective,
         UploadDirective
     ],
     exports: [
@@ -48,6 +50,7 @@ import { UploadDirective } from './upload.directive';
         NodeFavoriteDirective,
         NodePermissionDirective,
         NodeRestoreDirective,
+        NodeDownloadDirective,
         UploadDirective
     ]
 })
