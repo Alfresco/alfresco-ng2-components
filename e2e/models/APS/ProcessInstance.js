@@ -28,5 +28,4 @@ var ProcessInstance = function (details) {
 
     Object.assign(this, details);
 };
-
 module.exports = ProcessInstance;

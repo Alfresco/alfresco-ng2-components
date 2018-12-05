@@ -45,5 +45,4 @@ var TaskAssigneeModel = function (details) {
     Object.assign(this, details);
 
 };
-
 module.exports = TaskAssigneeModel;
