@@ -40,14 +40,13 @@ xdescribe('Task filters cloud', () => {
         let silentLogin;
         const newTask = 'newTask', completedTask = 'completedTask1', myTask = 'myTask';
         const simpleApp = 'simple-app';
-        const user = '', password = '';
 
         beforeAll(async () => {
             silentLogin = false;
             await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
             await loginApsPage.clickOnSSOButton();
             browser.ignoreSynchronization = true;
-            await loginApsPage.loginAPS(user, password);
+            await loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         });
 
         beforeEach(async (done) => {
@@ -62,7 +61,7 @@ xdescribe('Task filters cloud', () => {
         });
 
         xit('[C290009] Should display default filters and created task', async() => {
-            await tasksService.init(user, password);
+            await tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await tasksService.createStandaloneTask(newTask, simpleApp);
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
@@ -76,7 +75,7 @@ xdescribe('Task filters cloud', () => {
 
         // failing due to ACTIVITI-2463
         xit('[C289955] Should display task in Complete Tasks List when task is completed', async() => {
-            await tasksService.init(user, password);
+            await tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             let task = await tasksService.createStandaloneTask(completedTask, simpleApp);
 
             await tasksService.claimTask(task.entry.id, simpleApp);
@@ -92,7 +91,7 @@ xdescribe('Task filters cloud', () => {
         });
 
         xit('[C289957] Should display task filter results when task filter is selected', async () => {
-            await tasksService.init(user, password);
+            await tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             let task = await tasksService.createStandaloneTask(myTask, simpleApp);
 
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
