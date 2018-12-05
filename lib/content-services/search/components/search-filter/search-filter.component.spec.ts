@@ -40,7 +40,7 @@ describe('SearchFilterComponent', () => {
         const searchMock: any = {
             dataLoaded: new Subject()
         };
-        translationMock.instant = (key) => `translated${key}`;
+        translationMock.instant = (key) => `${key}_translated`;
         component = new SearchFilterComponent(queryBuilder, searchMock, translationMock);
         component.ngOnInit();
     });
@@ -215,6 +215,53 @@ describe('SearchFilterComponent', () => {
         component.onDataLoaded(data);
 
         expect(component.responseFacetFields.length).toEqual(2);
+    });
+
+    it('should filter response facet fields based on search filter config method', () => {
+        queryBuilder.config = {
+            categories: [],
+            facetFields: { fields: [
+                    { label: 'f1', field: 'f1' }
+                ]},
+            facetQueries: {
+                queries: []
+            },
+            filterWithContains: false
+        };
+
+        const initialFields: any = [
+            { label: 'f1', buckets: [
+                { label: 'firstLabel', display: 'firstLabel', count: 5 },
+                { label: 'secondLabel', display: 'secondLabel', count: 5 },
+                { label: 'thirdLabel', display: 'thirdLabel', count: 5 }
+                ]
+            }
+        ];
+
+        const data = {
+            list: {
+                context: {
+                    facetsFields: initialFields
+                }
+            }
+        };
+
+        component.onDataLoaded(data);
+        expect(component.responseFacetFields[0].buckets.visibleItems.length).toBe(3);
+
+        component.responseFacetFields[0].buckets.filterText = 'f';
+        expect(component.responseFacetFields[0].buckets.visibleItems.length).toBe(1);
+        expect(component.responseFacetFields[0].buckets.visibleItems[0].label).toEqual('firstLabel');
+
+        component.responseFacetFields[0].buckets.filterText = 'label';
+        expect(component.responseFacetFields[0].buckets.visibleItems.length).toBe(0);
+
+        // Set filter method to use contains and test again
+        queryBuilder.config.filterWithContains = true;
+        component.responseFacetFields[0].buckets.filterText = 'f';
+        expect(component.responseFacetFields[0].buckets.visibleItems.length).toBe(1);
+        component.responseFacetFields[0].buckets.filterText = 'label';
+        expect(component.responseFacetFields[0].buckets.visibleItems.length).toBe(3);
     });
 
     it('should fetch facet fields from response payload and show the bucket values', () => {

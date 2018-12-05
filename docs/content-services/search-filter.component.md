@@ -123,6 +123,16 @@ results:
 }
 ```
 
+You can choose to filter facet field results using 'contains' instead of 'starts with', by using the `filterWithContains` boolean (default is `false`):
+
+```json
+{
+    "search": {
+        "filterWithContains": true
+    }
+}
+```
+
 You can also provide a set of queries that are always executed alongside the user-defined
 settings:
 
