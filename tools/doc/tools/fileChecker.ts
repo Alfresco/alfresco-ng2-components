@@ -3,11 +3,18 @@ import * as fs from "fs";
 
 import { select, selectAll } from "unist-util-select";
 
+import * as lev from "fast-levenshtein";
+
 import * as ngHelpers from "../ngHelpers";
 
 
-//const angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(interface)|(model)|(pipe)|(service)|(widget))/;
 const imageFolderPath = path.resolve('docs', 'docassets', 'images');
+
+// Using this value for the edit distance between Markdown image URLs
+// and filenames is enough to trap errors like missing out the 'images'
+// folder in the path. Keeping it low avoids crazy suggestions.
+const maxImagePathLevDistance = 7;
+
 
 
 export function processDocs(mdCache, aggData, errorMessages) {
@@ -16,6 +23,7 @@ export function processDocs(mdCache, aggData, errorMessages) {
     let classlessDocs = [];
     let linkRefs = {};
     let imageRefs = {};
+    let brokenImageRefs = {};
 
     let filters = makeFilepathFilters(aggData.config["fileCheckerFilter"]);
 
@@ -35,12 +43,7 @@ export function processDocs(mdCache, aggData, errorMessages) {
             
             linkElems.forEach(linkElem => {
                 let normUrl = normaliseLinkPath(pathname, linkElem.url);
-
-                if (linkRefs[normUrl]) {
-                    linkRefs[normUrl].push(pathname);
-                } else {
-                    linkRefs[normUrl] = [ pathname ];
-                }
+                multiSetAdd(linkRefs, normUrl, pathname);
             });
         }
 
@@ -48,11 +51,10 @@ export function processDocs(mdCache, aggData, errorMessages) {
 
         imageElems.forEach(imageElem => {
             let normUrl = normaliseLinkPath(pathname, imageElem.url);
+            multiSetAdd(imageRefs, normUrl, pathname);
 
-            if (imageRefs[normUrl]) {
-                imageRefs[normUrl].push(pathname);
-            } else {
-                imageRefs[normUrl] = [ pathname ];
+            if (!fs.existsSync(normUrl)) {
+                brokenImageRefs[normUrl] = pathname;
             }
         });
     });
@@ -71,6 +73,8 @@ export function processDocs(mdCache, aggData, errorMessages) {
         console.groupEnd();
     });
 
+    console.log();
+
     let imagePaths = getImagePaths(imageFolderPath);
 
     imagePaths.forEach(imagePath => {
@@ -78,6 +82,25 @@ export function processDocs(mdCache, aggData, errorMessages) {
             let relImagePath = imagePath.substring(imagePath.indexOf('docs'));
             console.log(`Warning: no links to image file "${relImagePath}"`);
         }
+    });
+
+    console.log();
+
+    let brokenImUrls = Object.keys(brokenImageRefs);
+
+    brokenImUrls.forEach(url => {
+        let relUrl = url.substring(url.indexOf('docs'));
+        let relDocPath = brokenImageRefs[url].substring(brokenImageRefs[url].indexOf('docs'));
+        console.group(`Broken image link "${relUrl}" found in "${relDocPath}`);
+
+        imagePaths.forEach(imPath => {
+            if (lev.get(imPath, url) <= maxImagePathLevDistance) {
+                let relImPath = imPath.substring(imPath.indexOf('docs'));
+                console.log(`Should it be "${relImPath}"?`)
+            }
+        });
+
+        console.groupEnd();
     });
 }
 
@@ -106,4 +129,13 @@ function filterFilepath(filters: RegExp[], filepath: string): boolean {
         }
     }
     return false;
+}
+
+
+function multiSetAdd(container: {}, key: string, value: string) {
+    if (container[key]) {
+        container[key].push(value);
+    } else {
+        container[key] = [ value ];
+    }
 }
