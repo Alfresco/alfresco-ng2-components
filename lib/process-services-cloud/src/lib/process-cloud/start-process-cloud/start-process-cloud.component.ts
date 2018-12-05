@@ -39,27 +39,35 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
 
+    /** (required) Name of the app. */
     @Input()
     appName: string;
 
+    /** Name of the process. */
     @Input()
     name: string = '';
 
+    /** Name of the process definition. */
     @Input()
     processDefinitionName: string;
 
+    /** Variables to attach to the payload */
     @Input()
     variables: Map<string, object>[];
 
+    /** This flag displays/hides the process dropdown list */
     @Input()
     showSelectProcessDropdown: boolean = true;
 
+    /** Emitted when the starting process is successfully created. */
     @Output()
     start: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
 
+    /** Emitted when the starting process is cancelled */
     @Output()
     cancel: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
 
