@@ -4,7 +4,7 @@ Status: Active
 Last reviewed: 2018-23-10
 ---
 
-# Start Task Cloud Component
+# [Start Task Cloud Component](../../lib/process-services-cloud/src/lib/start-task-cloud/components/start-task-cloud.component.ts "Defined in start-task-cloud.component.ts")
 
 Creates/Starts new task for the specified app
 
@@ -24,9 +24,9 @@ Creates/Starts new task for the specified app
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appName | `string` |  | (required) The name of the app. |
-| name | `string` |  | Name of the task. |
-| maxNameLength | `number` | 255 | Maximum length of the task name. |
+| appName | `string` |  | (required) Name of the app. |
+| maxNameLength | `number` |  | Maximum length of the task name. |
+| name | `string` | "" | Name of the task. |
 
 ### Events
 

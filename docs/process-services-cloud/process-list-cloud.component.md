@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-09
 ---
 
-# Process Instance List Cloud component
+# [Process Instance List Cloud component](../../lib/process-services-cloud/src/lib/process-list-cloud/components/process-list-cloud.component.ts "Defined in process-list-cloud.component.ts")
 
 Renders a list containing all the process instances matched by the parameters specified.
 
