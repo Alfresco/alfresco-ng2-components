@@ -134,13 +134,13 @@ export let fakeCustomSchema =
         new ObjectDataColumn({
             'key': 'fakeName',
             'type': 'text',
-            'title': 'ADF_TASK_LIST.PROPERTIES.FAKE',
+            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.FAKE',
             'sortable': true
         }),
         new ObjectDataColumn({
             'key': 'fakeTaskName',
             'type': 'text',
-            'title': 'ADF_TASK_LIST.PROPERTIES.TASK_FAKE',
+            'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.TASK_FAKE',
             'sortable': true
         })
     ];

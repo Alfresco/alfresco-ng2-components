@@ -86,8 +86,8 @@ describe('AppListCloudComponent', () => {
         expect(defaultEmptyTemplate).toBeDefined();
         expect(defaultEmptyTemplate).not.toBeNull();
         expect(emptyContent).not.toBeNull();
-        expect(emptyTitle.innerText).toBe('ADF_TASK_LIST.APPS.TITLE');
-        expect(emptySubtitle.innerText).toBe('ADF_TASK_LIST.APPS.SUBTITLE');
+        expect(emptyTitle.innerText).toBe('ADF_CLOUD_TASK_LIST.APPS.TITLE');
+        expect(emptySubtitle.innerText).toBe('ADF_CLOUD_TASK_LIST.APPS.SUBTITLE');
         expect(getAppsSpy).toHaveBeenCalled();
     });
 
