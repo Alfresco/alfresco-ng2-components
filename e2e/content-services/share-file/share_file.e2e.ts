@@ -81,8 +81,8 @@ describe('Share file', () => {
     });
 
     describe('Shared link dialog', () => {
-        afterEach(async (done) => {
-            await browser.refresh();
+        afterEach( (done) => {
+            browser.refresh();
             done();
         });
 
@@ -141,9 +141,9 @@ describe('Share file', () => {
     });
 
     describe('Shared link preview', () => {
-        afterEach(async (done) => {
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            await contentServicesPage.navigateToDocumentList();
+        afterEach( (done) => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.navigateToDocumentList();
             done();
         });
 

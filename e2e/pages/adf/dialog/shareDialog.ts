@@ -116,15 +116,16 @@ export class ShareDialog {
     }
 
     setDefaultDay() {
-        const selector = '.mat-datetimepicker-calendar-body-active .mat-datetimepicker-calendar-body-cell-content';
+        const selector = '.mat-datetimepicker-calendar-body-cell:not(.mat-datetimepicker-calendar-body-disabled)';
         Util.waitUntilElementIsVisible(this.dayPicker);
-        let tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getDate().toString();
+        let tomorrow = new Date(new Date().getTime() + 48 * 60 * 60 * 1000).getDate().toString();
         this.dayPicker.element(by.cssContainingText(selector, tomorrow)).click();
     }
 
     setDefaultHour() {
         const selector = '.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)';
         Util.waitUntilElementIsVisible(this.clockPicker);
+        Util.waitUntilElementIsVisible(this.hoursPicker);
         this.hoursPicker.all(by.css(selector)).first().click();
     }
 
