@@ -22,9 +22,9 @@ stages:
   - name: Unit test
   - name: e2e Test
   - name: Create Docker PR
-    if: TRAVIS_PULL_REQUEST != false
+    if: $TRAVIS_PULL_REQUEST != false
   - name: Deploy Docker PR
-    if: TRAVIS_PULL_REQUEST != false
+    if: $TRAVIS_PULL_REQUEST != false
 
 addons:
     chrome: stable
