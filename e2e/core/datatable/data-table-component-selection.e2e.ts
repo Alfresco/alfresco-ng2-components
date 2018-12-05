@@ -16,17 +16,19 @@
  */
 
 import { LoginPage } from '../../pages/adf/loginPage';
-import DataTablePage = require('../../pages/adf/dataTablePage');
+import { DataTablePage } from '../../pages/adf/dataTablePage';
 import TestConfig = require('../../test.config');
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import AlfrescoApi = require('alfresco-js-api-node');
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Datatable component - selection', () => {
 
     let dataTablePage = new DataTablePage();
     let loginPage = new LoginPage();
     let acsUser = new AcsUserModel();
+    let navigationBarPage = new NavigationBarPage();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -40,7 +42,7 @@ describe('Datatable component - selection', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        dataTablePage.goToDatatable();
+        navigationBarPage.navigateToDatatable();
 
         done();
     });

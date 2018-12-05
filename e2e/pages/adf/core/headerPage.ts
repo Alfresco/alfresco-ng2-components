@@ -17,7 +17,7 @@
 
 import { element, by, protractor } from 'protractor';
 
-import Util = require('../../../util/util');
+import { Util } from '../../../util/util';
 
 export class HeaderPage {
 

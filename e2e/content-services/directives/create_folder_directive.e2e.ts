@@ -17,18 +17,15 @@
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import CreateFolderDialog = require('../../pages/adf/dialog/createFolderDialog');
+import { CreateFolderDialog } from '../../pages/adf/dialog/createFolderDialog';
 import { NotificationPage } from '../../pages/adf/notificationPage';
-import MetadataViewPage = require('../../pages/adf/metadataViewPage');
-import ContentListPage = require('../../pages/adf/dialog/contentList');
+import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
+import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
-
 import AlfrescoApi = require('alfresco-js-api-node');
-
-import { browser, protractor } from 'protractor';
+import { browser, Key } from 'protractor';
 
 describe('Create folder directive', function () {
 
@@ -58,8 +55,14 @@ describe('Create folder directive', function () {
         done();
     });
 
-    afterEach(() => {
-        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+    beforeEach(async (done) => {
+        await browser.actions().sendKeys(Key.ESCAPE).perform();
+        done();
+    });
+
+    afterEach(async (done) => {
+        await browser.actions().sendKeys(Key.ESCAPE).perform();
+        done();
     });
 
     it('[C260154] Should not create the folder if cancel button is clicked', () => {
@@ -125,13 +128,24 @@ describe('Create folder directive', function () {
     });
 
     it('[C260159] Should not be possible create a folder with banned character', () => {
-        let bannedChar = ['* ', '<', '>', '\\', '/', '?', ':', '|'];
-
+        browser.refresh();
         contentServicesPage.clickOnCreateNewFolder();
 
-        bannedChar.forEach((currentChar) => {
-            createFolderDialog.addFolderName(currentChar);
-            createFolderDialog.checkCreateBtnIsDisabled();
-        });
+        createFolderDialog.addFolderName('*');
+        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.addFolderName('<');
+        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.addFolderName('>');
+        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.addFolderName('\\');
+        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.addFolderName('/');
+        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.addFolderName('?');
+        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.addFolderName(':');
+        createFolderDialog.checkCreateBtnIsDisabled();
+        createFolderDialog.addFolderName('|');
+        createFolderDialog.checkCreateBtnIsDisabled();
     });
 });

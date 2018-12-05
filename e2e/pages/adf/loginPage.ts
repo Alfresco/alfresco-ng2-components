@@ -17,7 +17,7 @@
 
 import { FormControllersPage } from './material/formControllersPage';
 
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 import TestConfig = require('../../test.config');
 import { SettingsPage } from './settingsPage';
 import { element, by, protractor, browser } from 'protractor';
@@ -161,9 +161,8 @@ export class LoginPage {
     }
 
     goToLoginPage() {
-        browser.controlFlow().execute(async () => {
-            await browser.driver.get(TestConfig.adf.url + TestConfig.adf.port + '/login');
-        });
+        browser.waitForAngularEnabled(true);
+        browser.driver.get(TestConfig.adf.url + TestConfig.adf.port + '/login');
         this.waitForElements();
     }
 

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import AcsUserModel = require('../models/ACS/acsUserModel');
-import FileModel = require('../models/ACS/fileModel');
+import { AcsUserModel } from '../models/ACS/acsUserModel';
+import { FileModel } from '../models/ACS/fileModel';
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { TagPage } from '../pages/adf/tagPage';
@@ -28,7 +28,7 @@ import resources = require('../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
 
-import Util = require('../util/util');
+import { Util } from '../util/util';
 import { browser } from 'protractor';
 
 describe('Tag component', () => {

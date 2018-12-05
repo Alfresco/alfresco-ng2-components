@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import Util = require('../../../util/util');
-
+import { Util } from '../../../util/util';
 import { element, by } from 'protractor';
 
 export class ProcessListPage {
 
-    processListTitle = element(by.css('p[class="adf-empty-content__title"]'));
+    processListTitle = element.all(by.css("p[class='adf-empty-content__title']")).first();
     processInstanceList = element(by.css('adf-process-instance-list'));
 
     checkProcessListTitleIsDisplayed() {

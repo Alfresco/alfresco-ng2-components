@@ -23,8 +23,8 @@ import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 
 import resources = require('../../util/resources');
 
-import FileModel = require('../../models/ACS/fileModel');
-import AcsUserModel = require('../../models/ACS/acsUserModel');
+import { FileModel } from '../../models/ACS/fileModel';
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';

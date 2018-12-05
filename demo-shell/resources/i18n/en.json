@@ -1,5 +1,6 @@
 {
   "APP": {
+    "CREATE_LIBRARY": "Create Library",
     "INFO_DRAWER": {
       "TITLE": "Details",
       "COMMENTS": "Comments",
@@ -146,6 +147,7 @@
     },
     "ACTIONS": {
       "VERSIONS": "Manage versions",
+      "LOCK": "Lock",
       "METADATA": "Info",
       "DOWNLOAD": "Download",
       "PERMISSION": "Permission",

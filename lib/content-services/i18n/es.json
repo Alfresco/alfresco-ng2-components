@@ -287,5 +287,31 @@
       "DUPLICATE-PERMISSION": "Uno o más de los permisos que ha establecido ya existe: {{list}}",
       "NOT-ALLOWED": "No puede cambiar los permisos"
     }
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "Crear biblioteca",
+      "CREATE": "Crear",
+      "CANCEL": "Cancelar",
+      "FORM": {
+        "DESCRIPTION": "Descripción",
+        "SITE_ID": "ID de biblioteca",
+        "NAME": "Nombre"
+      }
+    },
+    "VISIBILITY": {
+      "PRIVATE": "Lista privada",
+      "PUBLIC": "Público",
+      "MODERATED": "Moderado"
+    },
+    "ERRORS": {
+      "GENERIC": "Se ha producido un error",
+      "EXISTENT_SITE": "La ID de biblioteca no está disponible. Pruebe una biblioteca diferente.",
+      "CONFLICT": "Esta ID de biblioteca ya está utilizada. Compruebe la papelera.",
+      "ID_TOO_LONG": "Utilice como máximo 72 caracteres para el nombre de la URL",
+      "DESCRIPTION_TOO_LONG": "Utilice como máximo 512 caracteres para la descripción",
+      "TITLE_TOO_LONG": "Utilice como máximo 256 caracteres para el título",
+      "ILLEGAL_CHARACTERS": "Use solo números y letras"
+    }
   }
 }

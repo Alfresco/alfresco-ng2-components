@@ -21,6 +21,8 @@ var BROWSER_RUN = process.env.BROWSER_RUN;
 var FOLDER = process.env.FOLDER || '';
 var SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 var DIRECT_CONNECCT = SELENIUM_SERVER ? false : true;
+var MAXINSTANCES = process.env.MAXINSTANCES || 1;
+var TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 
 var specsToRun = './**/' + FOLDER + '**/*.e2e.ts';
 
@@ -48,17 +50,19 @@ var buildNumber = () => {
 }
 
 exports.config = {
-    allScriptsTimeout: 60000,
+    allScriptsTimeout: TIMEOUT,
 
     specs: [
         specsToRun
     ],
 
+    useAllAngular2AppRoots: true,
+
     capabilities: {
         browserName: 'chrome',
 
         shardTestFiles: true,
-        maxInstances: 1,
+        maxInstances: MAXINSTANCES,
         chromeOptions: {
             prefs: {
                 'credentials_enable_service': false,
@@ -143,14 +147,14 @@ exports.config = {
     beforeLaunch: function () {
         var reportsFolder = `${projectRoot}/e2e-output/junit-report/`;
 
-        fs.exists(reportsFolder, function(exists, error) {
+        fs.exists(reportsFolder, function (exists, error) {
             if (exists) {
-                rimraf(reportsFolder, function(err) {
+                rimraf(reportsFolder, function (err) {
                     console.log('[ERROR] rimraf: ', err);
                 });
             }
 
-            if(error) {
+            if (error) {
                 console.log('[ERROR] fs', error);
             }
         });
@@ -190,13 +194,15 @@ exports.config = {
                     new htmlReporter().from(filePath, testConfigReport);
                     lastFileName = testConfigReport.outputFilename;
                 }
-            };
+            }
+            ;
 
             var lastHtmlFile = temporaryHtmlPath + lastFileName + '.html';
 
-            if(!(fs.lstatSync(lastHtmlFile).isDirectory())) {
+            if (!(fs.lstatSync(lastHtmlFile).isDirectory())) {
                 output = output + fs.readFileSync(lastHtmlFile);
-            };
+            }
+            ;
 
             var fileName = savePath + 'html/' + filenameReport + '.html';
 
@@ -216,23 +222,21 @@ exports.config = {
 
                     try {
                         folder = await
-                        alfrescoJsApi.nodes.addNode('-my-', {
-                            'name': `retry-${retryCount}`,
-                            'relativePath': `Builds/${buildNumber()}/screenshot`,
-                            'nodeType': 'cm:folder'
-                        }, {}, {
-                            'overwrite': true
-                        });
+                            alfrescoJsApi.nodes.addNode('-my-', {
+                                'name': `retry-${retryCount}`,
+                                'relativePath': `Builds/${buildNumber()}/screenshot`,
+                                'nodeType': 'cm:folder'
+                            }, {}, {
+                                'overwrite': true
+                            });
                     } catch (error) {
-                        console.log('Folder screenshot already present');
-
                         folder = await
-                        alfrescoJsApi.nodes.getNode('-my-', {
-                            'relativePath': `Builds/${buildNumber()}/screenshot/retry-${retryCount}`,
-                            'nodeType': 'cm:folder'
-                        }, {}, {
-                            'overwrite': true
-                        });
+                            alfrescoJsApi.nodes.getNode('-my-', {
+                                'relativePath': `Builds/${buildNumber()}/screenshot/retry-${retryCount}`,
+                                'nodeType': 'cm:folder'
+                            }, {}, {
+                                'overwrite': true
+                            });
                     }
 
                     for (const fileName of files) {
@@ -241,17 +245,17 @@ exports.config = {
                         let file = fs.createReadStream(pathFile);
 
                         await
-                        alfrescoJsApi.upload.uploadFile(
-                            file,
-                            '',
-                            folder.entry.id,
-                            null,
-                            {
-                                'name': file.name,
-                                'nodeType': 'cm:content',
-                                'autoRename': true
-                            }
-                        );
+                            alfrescoJsApi.upload.uploadFile(
+                                file,
+                                '',
+                                folder.entry.id,
+                                null,
+                                {
+                                    'name': file.name,
+                                    'nodeType': 'cm:content',
+                                    'autoRename': true
+                                }
+                            );
                     }
                 }
             }
@@ -263,37 +267,37 @@ exports.config = {
 
             try {
                 reportFolder = await
-                alfrescoJsApi.nodes.addNode('-my-', {
-                    'name': 'report',
-                    'relativePath': `Builds/${buildNumber()}`,
-                    'nodeType': 'cm:folder'
-                }, {}, {
-                    'overwrite': true
-                });
+                    alfrescoJsApi.nodes.addNode('-my-', {
+                        'name': 'report',
+                        'relativePath': `Builds/${buildNumber()}`,
+                        'nodeType': 'cm:folder'
+                    }, {}, {
+                        'overwrite': true
+                    });
             } catch (error) {
                 reportFolder = await
-                alfrescoJsApi.nodes.getNode('-my-', {
-                    'relativePath': `Builds/${buildNumber()}/report`,
-                    'nodeType': 'cm:folder'
-                }, {}, {
-                    'overwrite': true
-                });
+                    alfrescoJsApi.nodes.getNode('-my-', {
+                        'relativePath': `Builds/${buildNumber()}/report`,
+                        'nodeType': 'cm:folder'
+                    }, {}, {
+                        'overwrite': true
+                    });
 
             }
 
             try {
                 await
-                alfrescoJsApi.upload.uploadFile(
-                    reportFile,
-                    '',
-                    reportFolder.entry.id,
-                    null,
-                    {
-                        'name': reportFile.name,
-                        'nodeType': 'cm:content',
-                        'autoRename': true
-                    }
-                );
+                    alfrescoJsApi.upload.uploadFile(
+                        reportFile,
+                        '',
+                        reportFolder.entry.id,
+                        null,
+                        {
+                            'name': reportFile.name,
+                            'nodeType': 'cm:content',
+                            'autoRename': true
+                        }
+                    );
 
             } catch (error) {
                 console.log('error' + error);

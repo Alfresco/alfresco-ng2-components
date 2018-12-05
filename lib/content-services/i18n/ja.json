@@ -287,5 +287,31 @@
       "DUPLICATE-PERMISSION": "設定済みの権限が既にあります: {{list}}",
       "NOT-ALLOWED": "権限を変更することはできません"
     }
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "ライブラリの作成",
+      "CREATE": "作成",
+      "CANCEL": "キャンセル",
+      "FORM": {
+        "DESCRIPTION": "説明",
+        "SITE_ID": "ライブラリ ID",
+        "NAME": "名前"
+      }
+    },
+    "VISIBILITY": {
+      "PRIVATE": "非公開",
+      "PUBLIC": "公開",
+      "MODERATED": "条件付き公開"
+    },
+    "ERRORS": {
+      "GENERIC": "問題が発生しました",
+      "EXISTENT_SITE": "このライブラリ ID は使用できません。別のライブラリを使用してください。",
+      "CONFLICT": "このライブラリ ID は既に使われています。ごみ箱をチェックしてください。",
+      "ID_TOO_LONG": "URL 名は 72 文字以内で入力してください",
+      "DESCRIPTION_TOO_LONG": "説明は 512 文字以内で入力してください",
+      "TITLE_TOO_LONG": "タイトルは 256 文字以内で入力してください",
+      "ILLEGAL_CHARACTERS": "英数字だけを使用してください"
+    }
   }
 }

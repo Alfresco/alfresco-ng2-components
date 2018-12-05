@@ -16,7 +16,7 @@
  */
 
 import { element, by } from 'protractor';
-import Util = require('../../../util/util');
+import { Util } from '../../../util/util';
 
 export class TabsPage {
 

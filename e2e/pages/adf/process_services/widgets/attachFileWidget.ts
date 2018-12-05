@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import FormFields = require('../formFields');
+import { FormFields } from '../formFields';
 import TestConfig = require('../../../../test.config');
 import path = require('path');
-import Util = require('../../../../util/util');
+import { Util } from '../../../../util/util';
 import remote = require('selenium-webdriver/remote');
 import { element, by, browser } from 'protractor';
 

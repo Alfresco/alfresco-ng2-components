@@ -14,8 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import Util = require('../../../../../util/util');
-import { by, protractor, browser } from 'protractor';
+import { Util } from '../../../../../util/util';
+import { by, protractor } from 'protractor';
 
 export class NumberRangeFilterPage {
 

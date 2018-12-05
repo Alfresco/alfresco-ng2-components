@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import Util = require('../../util/util');
-import ContentList = require('./dialog/contentList');
+import { Util } from '../../util/util';
+import { ContentListPage } from './dialog/contentListPage';
 
 import { element, by, protractor, browser } from 'protractor';
 
@@ -66,7 +66,7 @@ export class TagPage {
     }
 
     deleteTagFromTagListByNodeId(name) {
-        let deleteChip = element(by.id('tag_chips_delete_' + name ));
+        let deleteChip = element(by.id('tag_chips_delete_' + name));
         Util.waitUntilElementIsVisible(deleteChip);
         deleteChip.click();
         return this;
@@ -134,7 +134,7 @@ export class TagPage {
 
     checkTagListIsOrderedAscending() {
         let deferred = protractor.promise.defer();
-        new ContentList().checkListIsSorted(false, this.tagListRowLocator).then((result) => {
+        new ContentListPage().checkListIsSorted(false, this.tagListRowLocator).then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -142,7 +142,7 @@ export class TagPage {
 
     checkTagListByNodeIdIsOrderedAscending() {
         let deferred = protractor.promise.defer();
-        new ContentList().checkListIsSorted(false, this.tagListByNodeIdRowLocator).then((result) => {
+        new ContentListPage().checkListIsSorted(false, this.tagListByNodeIdRowLocator).then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -150,19 +150,19 @@ export class TagPage {
 
     checkTagListContentServicesIsOrderedAscending() {
         let deferred = protractor.promise.defer();
-        new ContentList().checkListIsSorted(false, this.tagListContentServicesRowLocator).then((result) => {
+        new ContentListPage().checkListIsSorted(false, this.tagListContentServicesRowLocator).then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;
     }
 
     checkDeleteTagFromTagListByNodeIdIsDisplayed(name) {
-        let deleteChip =  element(by.id('tag_chips_delete_' + name ));
+        let deleteChip = element(by.id('tag_chips_delete_' + name));
         return Util.waitUntilElementIsVisible(deleteChip);
     }
 
     checkDeleteTagFromTagListByNodeIdIsNotDisplayed(name) {
-        let deleteChip =  element(by.id('tag_chips_delete_' + name ));
+        let deleteChip = element(by.id('tag_chips_delete_' + name));
         return Util.waitUntilElementIsNotVisible(deleteChip);
     }
 
@@ -197,7 +197,6 @@ export class TagPage {
         this.showMoreButton.isDisplayed().then((visible) => {
             if (visible) {
                 this.showMoreButton.click();
-
                 this.clickShowMoreButtonUntilNotDisplayed();
             }
         }, (err) => {

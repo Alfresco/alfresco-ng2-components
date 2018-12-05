@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import Util = require('../../../../util/util');
-import { by } from 'protractor';
+import { Util } from '../../../../util/util';
+import { by, ElementFinder } from 'protractor';
 import { SearchTextPage } from './components/search-text';
 import { SearchCheckListPage } from './components/search-checkList';
 import { SearchRadioPage } from './components/search-radio';
@@ -26,56 +26,56 @@ import { SearchSliderPage } from './components/search-slider.page';
 
 export class SearchCategoriesPage {
 
-    checkListFiltersPage(filter) {
+    checkListFiltersPage(filter: ElementFinder) {
         return new SearchCheckListPage(filter);
     }
 
-    textFiltersPage(filter) {
+    textFiltersPage(filter: ElementFinder) {
         return new SearchTextPage(filter);
     }
 
-    radioFiltersPage(filter) {
+    radioFiltersPage(filter: ElementFinder) {
         return new SearchRadioPage(filter);
     }
 
-    dateRangeFilter(filter) {
+    dateRangeFilter(filter: ElementFinder) {
         return new DateRangeFilterPage(filter);
     }
 
-    numberRangeFilter(filter) {
+    numberRangeFilter(filter: ElementFinder) {
         return new NumberRangeFilterPage(filter);
     }
 
-    sliderFilter(filter) {
+    sliderFilter(filter: ElementFinder) {
         return new SearchSliderPage(filter);
     }
 
-    checkFilterIsDisplayed(filter) {
+    checkFilterIsDisplayed(filter: ElementFinder) {
         Util.waitUntilElementIsVisible(filter);
         return this;
     }
 
-    clickFilter(filter) {
+    clickFilter(filter: ElementFinder) {
         Util.waitUntilElementIsVisible(filter);
         filter.element(by.css('mat-expansion-panel-header')).click();
         return this;
     }
 
-    clickFilterHeader(filter) {
+    clickFilterHeader(filter: ElementFinder) {
         let fileSizeFilterHeader = filter.element(by.css('mat-expansion-panel-header'));
         Util.waitUntilElementIsClickable(fileSizeFilterHeader);
         fileSizeFilterHeader.click();
         return this;
     }
 
-    checkFilterIsCollapsed(filter) {
+    checkFilterIsCollapsed(filter: ElementFinder) {
         filter.getAttribute('class').then((elementClass) => {
             expect(elementClass).not.toContain('mat-expanded');
         });
         return this;
     }
 
-    checkFilterIsExpanded(filter) {
+    checkFilterIsExpanded(filter: ElementFinder) {
         filter.getAttribute('class').then((elementClass) => {
             expect(elementClass).toContain('mat-expanded');
         });

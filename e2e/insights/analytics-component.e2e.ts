@@ -17,12 +17,12 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import AnalyticsPage = require('../pages/adf/process_services/analyticsPage');
+import { AnalyticsPage } from '../pages/adf/process_services/analyticsPage';
 import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import TestConfig = require('../test.config');
-import Tenant = require('../models/APS/Tenant');
-import User = require('../models/APS/User');
+import { Tenant } from '../models/APS/Tenant';
+import { User } from '../models/APS/User';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 

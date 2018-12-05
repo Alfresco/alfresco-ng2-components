@@ -287,5 +287,31 @@
       "DUPLICATE-PERMISSION": "Een of meerdere machtigingen die u hebt ingesteld zijn al aanwezig: {{list}}",
       "NOT-ALLOWED": "Het is u niet toegestaan om machtigingen te wijzigen"
     }
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "Bibliotheek maken",
+      "CREATE": "Maken",
+      "CANCEL": "Annuleren",
+      "FORM": {
+        "DESCRIPTION": "Beschrijving",
+        "SITE_ID": "Bibliotheek-id",
+        "NAME": "Naam"
+      }
+    },
+    "VISIBILITY": {
+      "PRIVATE": "Privé",
+      "PUBLIC": "Openbaar",
+      "MODERATED": "Onder toezicht"
+    },
+    "ERRORS": {
+      "GENERIC": "Er is een probleem opgetreden",
+      "EXISTENT_SITE": "Deze bibliotheek-id is niet beschikbaar. Probeer een andere bibliotheek.",
+      "CONFLICT": "Deze bibliotheek wordt al gebruikt. Controleer de prullenbak.",
+      "ID_TOO_LONG": "Gebruik 72 tekens of minder voor de URL-naam",
+      "DESCRIPTION_TOO_LONG": "Gebruik 512 tekens of minder voor de beschrijving",
+      "TITLE_TOO_LONG": "Gebruik 256 tekens of minder voor de titel",
+      "ILLEGAL_CHARACTERS": "Gebruik alleen cijfers en letters"
+    }
   }
 }

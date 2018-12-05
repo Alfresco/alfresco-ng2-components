@@ -21,10 +21,10 @@ import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
-import StartProcessPage = require('../pages/adf/process_services/startProcessPage');
-import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
+import { StartProcessPage } from '../pages/adf/process_services/startProcessPage';
+import { ProcessFiltersPage } from '../pages/adf/process_services/processFiltersPage';
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
-import ProcessDetailsPage = require('../pages/adf/process_services/processDetailsPage');
+import { ProcessDetailsPage } from '../pages/adf/process_services/processDetailsPage';
 import { ProcessListPage } from '../pages/adf/process_services/processListPage';
 
 import AlfrescoApi = require('alfresco-js-api-node');

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import FormFields = require('../formFields');
+import { FormFields } from '../formFields';
 import { element, by, protractor } from 'protractor';
-import Util = require('../../../../util/util');
+import { Util } from '../../../../util/util';
 
 export class DateWidget {
 
@@ -32,7 +32,7 @@ export class DateWidget {
     }
 
     getDateLabel(fieldId) {
-        let label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
+        let label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         Util.waitUntilElementIsVisible(label);
         return label.getText();
     }

@@ -1,0 +1,29 @@
+.adf-library-dialog {
+    .mat-radio-group {
+        display: flex;
+        flex-direction: column;
+        margin: 0 0 20px;
+    }
+
+    .mat-radio-group .mat-radio-button {
+        margin: 10px 0;
+    }
+
+    .mat-form-field {
+        width: 100%;
+    }
+
+    mat-form-field {
+        padding-top: 20px;
+    }
+
+    .adf-action-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+
+        .mat-button {
+            text-transform: uppercase;
+        }
+    }
+}

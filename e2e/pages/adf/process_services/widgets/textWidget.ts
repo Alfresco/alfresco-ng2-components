@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import FormFields = require('../formFields');
+import { FormFields } from '../formFields';
 import { by } from 'protractor';
 
 export class TextWidget {
