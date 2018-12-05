@@ -31,10 +31,10 @@ describe('User Info - SSO', () => {
     const userInfoDialog = new UserInfoDialog();
     const identityService: Identity = new Identity();
     const path = '/auth/realms/springboot';
-    let silentLogin, identityUser ;
+    let silentLogin, identityUser;
 
     beforeAll(async () => {
-        await identityService.init(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
+        await identityService.init(user, password);
         identityUser = await identityService.createIdentityUser();
         // const a  = identityService.assignRole(identityUser.id, roleId, roleName)
         silentLogin = false;
