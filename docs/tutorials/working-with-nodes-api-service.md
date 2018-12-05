@@ -161,7 +161,7 @@ myOnFolderNodeDoubleClick(nodeId) {
 Now, the user experience changes if you click on a folder node (but not a content node)
 in the browser's console you will see something like the following screenshot:
 
-![nodesapiservices_nodeList](../docassets/images/nodesapiservices_nodeList.png)
+![nodesapiservices_nodeList](../docassets/images/nodesapiservices_nodelist.png)
 
 ## Creating and deleting a subfolder
 
