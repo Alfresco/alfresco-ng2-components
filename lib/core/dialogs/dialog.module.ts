@@ -17,21 +17,27 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '../material.module';
 
-import { NodeLockDirective } from './node-lock.directive';
+import { MaterialModule } from '../material.module';
+import { DownloadZipDialogComponent } from './download-zip.dialog';
+import { TranslateModule } from '@ngx-translate/core';
+import { PipeModule } from '../pipes/pipe.module';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        TranslateModule.forChild(),
+        PipeModule
     ],
     declarations: [
-        NodeLockDirective
+        DownloadZipDialogComponent
     ],
     exports: [
-        NodeLockDirective
+        DownloadZipDialogComponent
+    ],
+    entryComponents: [
+        DownloadZipDialogComponent
     ]
 })
-export class ContentDirectiveModule {
-}
+export class DialogModule {}

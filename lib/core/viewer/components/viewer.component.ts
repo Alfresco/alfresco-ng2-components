@@ -21,7 +21,7 @@ import {
     Input, OnChanges, Output, SimpleChanges, TemplateRef,
     ViewEncapsulation, OnInit, OnDestroy
 } from '@angular/core';
-import { MinimalNodeEntryEntity, RenditionEntry } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, RenditionEntry, MinimalNodeEntity } from 'alfresco-js-api';
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
@@ -196,10 +196,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     fileName: string;
 
-    /** URL to download. */
-    @Input()
-    downloadUrl: string = null;
-
     /** Number of times the Viewer will retry fetching content Rendition.
      * There is a delay of at least one second between attempts.
      */
@@ -209,10 +205,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     /** Emitted when user clicks the 'Back' button. */
     @Output()
     goBack = new EventEmitter<BaseEvent<any>>();
-
-    /** Emitted when user clicks the 'Download' button. */
-    @Output()
-    download = new EventEmitter<BaseEvent<any>>();
 
     /** Emitted when user clicks the 'Print' button. */
     @Output()
@@ -244,7 +236,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     viewerType = 'unknown';
     isLoading = false;
-    node: MinimalNodeEntryEntity;
+    node: MinimalNodeEntity;
 
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
     externalExtensions: string[] = [];
@@ -332,6 +324,12 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                         this.logService.error('This node does not exist');
                     }
                 );
+
+                this.apiService.nodesApi.getNode(this.nodeId).then(
+                    (node) => {
+                        this.node = node;
+                    }
+                );
             } else if (this.sharedLinkId) {
 
                 this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(
@@ -366,7 +364,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.extension = this.getFileExtension(filenameFromUrl);
         this.urlFileContent = this.urlFile;
 
-        this.downloadUrl = this.urlFile;
         this.fileName = this.displayName;
 
         this.viewerType = this.urlFileViewer || this.getViewerTypeByExtension(this.extension);
@@ -393,7 +390,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.extension = this.getFileExtension(data.name);
 
         this.fileName = data.name;
-        this.downloadUrl = this.apiService.contentApi.getContentUrl(data.id, true);
 
         this.viewerType = this.getViewerTypeByExtension(this.extension);
         if (this.viewerType === 'unknown') {
@@ -419,7 +415,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.fileName = details.entry.name;
 
         this.urlFileContent = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, false);
-        this.downloadUrl = this.apiService.contentApi.getSharedLinkContentUrl(this.sharedLinkId, true);
 
         this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
         if (this.viewerType === 'unknown') {
@@ -608,25 +603,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    downloadContent() {
-        if (this.allowDownload && this.downloadUrl && this.fileName) {
-            const args = new BaseEvent();
-            this.download.next(args);
-
-            if (!args.defaultPrevented) {
-                const link = document.createElement('a');
-
-                link.style.display = 'none';
-                link.download = this.fileName;
-                link.href = this.downloadUrl;
-
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-        }
-    }
-
     printContent() {
         if (this.allowPrint) {
             const args = new BaseEvent();
@@ -767,5 +743,4 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private generateCacheBusterNumber() {
         this.cacheBusterNumber = Date.now();
     }
-
 }

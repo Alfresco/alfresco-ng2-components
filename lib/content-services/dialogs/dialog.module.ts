@@ -21,7 +21,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@alfresco/adf-core';
 
 import { MaterialModule } from '../material.module';
-import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { FolderDialogComponent } from './folder.dialog';
 import { NodeLockDialogComponent } from './node-lock.dialog';
 import { ConfirmDialogComponent } from './confirm.dialog';
@@ -40,21 +39,18 @@ import { LibraryDialogComponent } from './library/library.dialog';
         MatDatetimepickerModule
     ],
     declarations: [
-        DownloadZipDialogComponent,
         FolderDialogComponent,
         NodeLockDialogComponent,
         ConfirmDialogComponent,
         LibraryDialogComponent
     ],
     exports: [
-        DownloadZipDialogComponent,
         FolderDialogComponent,
         NodeLockDialogComponent,
         ConfirmDialogComponent,
         LibraryDialogComponent
     ],
     entryComponents: [
-        DownloadZipDialogComponent,
         FolderDialogComponent,
         NodeLockDialogComponent,
         ConfirmDialogComponent,

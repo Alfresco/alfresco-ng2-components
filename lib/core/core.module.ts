@@ -45,6 +45,7 @@ import { TemplateModule } from './templates/template.module';
 import { ClipboardModule } from './clipboard/clipboard.module';
 
 import { DirectiveModule } from './directives/directive.module';
+import { DialogModule } from './dialogs/dialog.module';
 import { PipeModule } from './pipes/pipe.module';
 
 import { AlfrescoApiService } from './services/alfresco-api.service';
@@ -66,6 +67,7 @@ export function createTranslateLoader(http: HttpClient) {
         PipeModule,
         CommonModule,
         DirectiveModule,
+        DialogModule,
         ClipboardModule,
         FormsModule,
         ReactiveFormsModule,
@@ -103,6 +105,7 @@ export function createTranslateLoader(http: HttpClient) {
         PipeModule,
         CommonModule,
         DirectiveModule,
+        DialogModule,
         ClipboardModule,
         FormsModule,
         ReactiveFormsModule,
@@ -139,6 +142,7 @@ export class CoreModuleLazy {
         PipeModule,
         CommonModule,
         DirectiveModule,
+        DialogModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
@@ -175,6 +179,7 @@ export class CoreModuleLazy {
         PipeModule,
         CommonModule,
         DirectiveModule,
+        DialogModule,
         ClipboardModule,
         FormsModule,
         ReactiveFormsModule,

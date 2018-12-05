@@ -18,7 +18,8 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DownloadEntry, MinimalNodeEntity } from 'alfresco-js-api';
-import { LogService, AlfrescoApiService } from '@alfresco/adf-core';
+import { LogService } from '../services/log.service';
+import { DownloadZipService } from '../services/download-zip.service';
 
 @Component({
     selector: 'adf-download-zip-dialog',
@@ -30,12 +31,14 @@ import { LogService, AlfrescoApiService } from '@alfresco/adf-core';
 export class DownloadZipDialogComponent implements OnInit {
 
     // flag for async threads
-    private cancelled = false;
+    cancelled = false;
+    downloadId: string;
 
-    constructor(private apiService: AlfrescoApiService,
-                private dialogRef: MatDialogRef<DownloadZipDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) private data: any,
-                private logService: LogService) {
+    constructor(private dialogRef: MatDialogRef<DownloadZipDialogComponent>,
+                @Inject(MAT_DIALOG_DATA)
+                public data: any,
+                private logService: LogService,
+                private downloadZipService: DownloadZipService) {
     }
 
     ngOnInit() {
@@ -50,25 +53,21 @@ export class DownloadZipDialogComponent implements OnInit {
 
     cancelDownload() {
         this.cancelled = true;
+        this.downloadZipService.cancelDownload(this.downloadId);
         this.dialogRef.close(false);
     }
 
     downloadZip(nodeIds: string[]) {
         if (nodeIds && nodeIds.length > 0) {
 
-            const promise: any = this.apiService.getInstance().core.downloadsApi.createDownload({ nodeIds });
-
-            promise.on('progress', (progress) => this.logService.log('Progress', progress));
-            promise.on('error', (error) => this.logService.error('Error', error));
-            promise.on('abort', (data) => this.logService.log('Abort', data));
-
-            promise.on('success', (data: DownloadEntry) => {
+            this.downloadZipService.createDownload({ nodeIds }).subscribe((data: DownloadEntry) => {
                 if (data && data.entry && data.entry.id) {
-                    const url = this.apiService.getInstance().content.getContentUrl(data.entry.id, true);
+                    const url = this.downloadZipService.getContentUrl(data.entry.id, true);
 
-                    this.apiService.getInstance().core.nodesApi.getNode(data.entry.id).then((downloadNode: MinimalNodeEntity) => {
+                    this.downloadZipService.getNode(data.entry.id).subscribe((downloadNode: MinimalNodeEntity) => {
                         this.logService.log(downloadNode);
                         const fileName = downloadNode.entry.name;
+                        this.downloadId = data.entry.id;
                         this.waitAndDownload(data.entry.id, url, fileName);
                     });
                 }
@@ -81,7 +80,7 @@ export class DownloadZipDialogComponent implements OnInit {
             return;
         }
 
-        this.apiService.getInstance().core.downloadsApi.getDownload(downloadId).then((downloadEntry: DownloadEntry) => {
+        this.downloadZipService.getDownload(downloadId).subscribe((downloadEntry: DownloadEntry) => {
             if (downloadEntry.entry) {
                 if (downloadEntry.entry.status === 'DONE') {
                     this.download(url, fileName);
