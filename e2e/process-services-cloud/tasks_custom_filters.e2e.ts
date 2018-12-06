@@ -214,7 +214,7 @@ describe('Task filters cloud', () => {
                 });
                 expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
             });
-
+            
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
                 let initialList = list.slice(0);
