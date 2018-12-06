@@ -43,7 +43,7 @@ export class ProcessFilterCloudModel {
     }
 }
 
-export interface FilterActionType {
+export interface ProcessFilterActionType {
     actionType: string;
     id: string;
 }

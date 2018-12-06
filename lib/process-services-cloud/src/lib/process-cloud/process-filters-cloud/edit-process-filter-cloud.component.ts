@@ -17,7 +17,7 @@
 
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ProcessFilterCloudModel, FilterActionType } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel, ProcessFilterActionType } from '../models/process-filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
@@ -34,9 +34,11 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     public static ACTION_SAVE_AS = 'SAVE_AS';
     public static ACTION_DELETE = 'DELETE';
 
+     /** The name of the application. */
     @Input()
     appName: string;
 
+    /** Id of the process instance filter. */
     @Input()
     id: string;
 
@@ -46,7 +48,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
 
     /** Emitted when an filter action occurs i.e Save, SaveAs, Delete. */
     @Output()
-    action: EventEmitter<FilterActionType> = new EventEmitter();
+    action: EventEmitter<ProcessFilterActionType> = new EventEmitter();
 
     processFilter: ProcessFilterCloudModel;
     changedProcessFilter: ProcessFilterCloudModel;
@@ -82,6 +84,9 @@ export class EditProcessFilterCloudComponent implements OnChanges {
         }
     }
 
+    /**
+     * Build process filter edit form
+     */
     buildForm() {
         this.formHasBeenChanged = false;
         this.editProcessFilterForm = this.formBuilder.group({
@@ -94,38 +99,51 @@ export class EditProcessFilterCloudComponent implements OnChanges {
         this.onFilterChange();
     }
 
+    /**
+     * Return process instance filter by application name and filter id
+     */
     retrieveProcessFilter() {
         this.processFilter = this.processFilterCloudService.getProcessFilterById(this.appName, this.id);
     }
 
     /**
-     * Check for edit process instance filter form changes
+     * Check process instance filter changes
      */
     onFilterChange() {
         this.editProcessFilterForm.valueChanges.subscribe((formValues: ProcessFilterCloudModel) => {
-            this.changedProcessFilter = Object.assign({}, this.processFilter, formValues);
+            this.changedProcessFilter = new ProcessFilterCloudModel(Object.assign({}, this.processFilter, formValues));
             this.formHasBeenChanged = !this.compareFilters(this.changedProcessFilter, this.processFilter);
             this.filterChange.emit(this.changedProcessFilter);
         });
     }
 
     /**
-     * Check if both filters are same
+     * Return true if both filters are same
+     * @param editedQuery, @param currentQuery
      */
-    compareFilters(editedQuery, currentQuery): boolean {
+    compareFilters(editedQuery: ProcessFilterCloudModel, currentQuery: ProcessFilterCloudModel): boolean {
         return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }
 
+    /**
+     * Save a process instance filter
+     */
     onSave() {
         this.processFilterCloudService.updateFilter(this.changedProcessFilter);
         this.action.emit({actionType: EditProcessFilterCloudComponent.ACTION_SAVE, id: this.changedProcessFilter.id});
     }
 
+    /**
+     * Delete a process instance filter
+     */
     onDelete() {
         this.processFilterCloudService.deleteFilter(this.processFilter);
         this.action.emit({actionType: EditProcessFilterCloudComponent.ACTION_DELETE, id: this.processFilter.id});
     }
 
+    /**
+     * Save As a process instance filter
+     */
     onSaveAs() {
         const dialogRef = this.dialog.open(ProcessFilterDialogCloudComponent, {
             data: {
@@ -151,12 +169,20 @@ export class EditProcessFilterCloudComponent implements OnChanges {
         });
     }
 
-    getSanitizeFilterName(filterName) {
+    /**
+     * Return filter name
+     * @param filterName
+     */
+    getSanitizeFilterName(filterName: string): string {
         const nameWithHyphen = this.replaceSpaceWithHyphen(filterName.trim());
         return nameWithHyphen.toLowerCase();
     }
 
-    replaceSpaceWithHyphen(name) {
+    /**
+     * Return name with hyphen
+     * @param name
+     */
+    replaceSpaceWithHyphen(name: string): string {
         const regExt = new RegExp(' ', 'g');
         return name.replace(regExt, '-');
     }
