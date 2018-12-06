@@ -75,6 +75,7 @@
                         <mat-icon *ngIf="displayMode === 'gallery'" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.LISTVIEW' | translate }}">list</mat-icon>
                     </button>
                     <button
+                        data-automation-id="create-new-folder"
                         mat-icon-button
                         [disabled]="!canCreateContent(documentList.folderNode)"
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}"
@@ -83,6 +84,12 @@
                         [adf-create-folder]="getDocumentListCurrentFolderId()"
                         matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}">
                         <mat-icon>create_new_folder</mat-icon>
+                    </button>
+                    <button
+                        mat-icon-button
+                        matTooltip="{{ 'APP.CREATE_LIBRARY' | translate }}"
+                        (click)="createLibrary()">
+                        <mat-icon>library_add</mat-icon>
                     </button>
                     <button mat-icon-button
                             [disabled]="!canEditFolder(documentList.selection)"
@@ -372,7 +379,6 @@
                         target="document" 
                         *ngIf="authenticationService.isBpmLoggedIn()"
                         icon="play_arrow"
-                        target="document" 
                         title="DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION"
                         (execute)="startProcessAction($event)">
                     </content-action>
@@ -381,7 +387,7 @@
                         icon="lock"
                         permission="lock"
                         handler="lock"
-                        title="Lock">
+                        title="DOCUMENT_LIST.ACTIONS.LOCK">
                     </content-action>
                 </content-actions>
             </adf-document-list>

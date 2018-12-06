@@ -1,4 +1,4 @@
-<div class="adf-search-container">
+<div class="adf-search-container" [attr.state]="subscriptAnimationState">
     <div *ngIf="isLoggedIn()" [@transitionMessages]="subscriptAnimationState"
          (@transitionMessages.done)="applySearchFocus($event)">
         <button mat-icon-button

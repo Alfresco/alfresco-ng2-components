@@ -17,7 +17,7 @@
 
 import { element, by } from 'protractor';
 
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 import { TabsPage } from './material/tabsPage';
 
 export class CommentsPage {

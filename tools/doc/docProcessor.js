@@ -24,7 +24,10 @@ var configFileName = "doctool.config.json";
 var defaultFolder = path.resolve("docs");
 var sourceInfoFolder = path.resolve("docs", "sourceinfo");
 
-var libFolders = ["core", "content-services", "process-services", "insights", "process-services-cloud"];
+var libFolders = [
+    "core", "content-services", "process-services",
+    "insights", "process-services-cloud", "extensions"
+];
 
 var excludePatterns = [
     "**/*.spec.ts"

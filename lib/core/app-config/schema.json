@@ -905,6 +905,9 @@
             }
           }
         },
+        "filterWithContains": {
+          "type": "boolean"
+        },
         "facetFields": {
           "type": "object",
           "required": [

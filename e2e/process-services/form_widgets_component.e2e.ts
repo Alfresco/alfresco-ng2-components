@@ -16,7 +16,6 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import { Widget } from '../pages/adf/process_services/widgets/widget';
 
@@ -41,7 +40,6 @@ describe('Form widgets', () => {
     let taskPage = new TasksPage();
     let newTask = 'First task';
     let loginPage = new LoginPage();
-    let processServicesPage = new ProcessServicesPage();
     let processUserModel;
     let appModel;
     let widget = new Widget();

@@ -16,15 +16,15 @@
  */
 
 import CONSTANTS = require('../../util/constants');
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import ContentListPage = require('../../pages/adf/dialog/contentList');
-import ErrorPage = require('../../pages/adf/errorPage');
+import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
+import { ErrorPage } from '../../pages/adf/errorPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-import FileModel = require('../../models/ACS/fileModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { FileModel } from '../../models/ACS/fileModel';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
@@ -51,7 +51,7 @@ describe('Unshare file', () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    beforeAll(async(done) => {
+    beforeAll(async (done) => {
         const site = {
             title: siteName,
             visibility: 'PRIVATE',
@@ -142,10 +142,10 @@ describe('Unshare file', () => {
             shareDialog.clickUnShareFile();
             shareDialog.confirmationDialogIsDisplayed();
             shareDialog.clickConfirmationDialogRemoveButton();
-            shareDialog.shareToggleButtonIsChecked();
+            shareDialog.dialogIsClosed();
         });
 
-        it('[C280556] Should redirect to 404 when trying to access an unshared file', async() => {
+        it('[C280556] Should redirect to 404 when trying to access an unshared file', async () => {
             contentListPage.clickRowToSelect(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();

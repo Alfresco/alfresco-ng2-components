@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import Util = require('../../../util/util');
-import StartTaskDialog = require('./dialog/startTaskDialog');
-import FormFields = require('./formFields');
-import {  TaskDetailsPage } from './taskDetailsPage';
+import { Util } from '../../../util/util';
+import { StartTaskDialog } from './dialog/startTaskDialog';
+import { FormFields } from './formFields';
+import { TaskDetailsPage } from './taskDetailsPage';
 
-import FiltersPage = require('./filtersPage');
-import ChecklistDialog = require('./dialog/createChecklistDialog');
-import TasksListPage = require('./tasksListPage');
+import { FiltersPage } from './filtersPage';
+import { ChecklistDialog } from './dialog/createChecklistDialog';
+import { TasksListPage } from './tasksListPage';
 import { element, by } from 'protractor';
 
 export class TasksPage {

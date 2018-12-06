@@ -15,39 +15,22 @@
  * limitations under the License.
  */
 
-import { by } from 'protractor';
-
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import {  TaskListDemoPage } from '../pages/adf/demo-shell/taskListDemoPage';
-import ProcessServicesPage = require('../pages/adf/process_services/processServicesPage');
-import PaginationPage = require('../pages/adf/paginationPage');
-import TasksPage = require('../pages/adf/process_services/tasksPage');
-import AppPublish = require('../models/APS/AppPublish');
-import CONSTANTS = require('../util/constants');
+import { TaskListDemoPage } from '../pages/adf/demo-shell/taskListDemoPage';
+import { PaginationPage } from '../pages/adf/paginationPage';
 import moment = require('moment');
 
-import Task = require('../models/APS/Task');
-import ProcessModel = require('../models/APS/UpdateProcessModel');
-import Tenant = require('../models/APS/Tenant');
-
-import TaskModel = require('../models/APS/TaskModel');
-import FileModel = require('../models/ACS/fileModel');
-import FormModel = require('../models/APS/FormModel');
+import { Tenant } from '../models/APS/Tenant';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import Util = require('../util/util');
-
-import dateFormat = require('dateformat');
+import { Util } from '../util/util';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';
 import { AppsRuntimeActions } from '../actions/APS/appsRuntime.actions';
 import { UsersActions } from '../actions/users.actions';
-
-import path = require('path');
-import fs = require('fs');
 
 describe('Start Task - Custom App', () => {
 
@@ -119,16 +102,21 @@ describe('Start Task - Custom App', () => {
         await apps.startProcess(this.alfrescoJsApi, secondAppModel);
 
         for (let i = 1; i < paginationTasksName.length; i++) {
-            await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': paginationTasksName[i]});
+            await this.alfrescoJsApi.activiti.taskApi.createNewTask({ 'name': paginationTasksName[i] });
         }
 
         for (let i = 0; i < 3; i++) {
-            completedTasks[i] = await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': completedTasksName[i],
-                'dueDate': Util.getSpecificDateAfterCrtDateInFormat('YYYY-MM-DDTHH:mm:ss.SSSZ', i + 2)});
+            completedTasks[i] = await this.alfrescoJsApi.activiti.taskApi.createNewTask({
+                'name': completedTasksName[i],
+                'dueDate': Util.getSpecificDateAfterCrtDateInFormat('YYYY-MM-DDTHH:mm:ss.SSSZ', i + 2)
+            });
             await this.alfrescoJsApi.activiti.taskActionsApi.completeTask(completedTasks[i].id);
         }
 
-        taskWithDueDate = await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': paginationTasksName[0], 'dueDate': currentDateStandardFormat});
+        taskWithDueDate = await this.alfrescoJsApi.activiti.taskApi.createNewTask({
+            'name': paginationTasksName[0],
+            'dueDate': currentDateStandardFormat
+        });
 
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 

@@ -19,7 +19,7 @@ import { LoginPage } from '../pages/adf/loginPage';
 import { TasksPage } from '../pages/adf/process_services/tasksPage';
 import { AttachFormPage } from '../pages/adf/process_services/attachFormPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import FormFields = require('../pages/adf/process_services/formFields');
+import { FormFields } from '../pages/adf/process_services/formFields';
 
 import CONSTANTS = require('../util/constants');
 
@@ -51,7 +51,7 @@ describe('Attach Form Component', () => {
         formFieldValue: 'Test value'
     };
 
-    beforeAll(async(done) => {
+    beforeAll(async (done) => {
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -61,7 +61,7 @@ describe('Attach Form Component', () => {
         done();
     });
 
-    beforeEach(async(done) => {
+    beforeEach(async (done) => {
         let users = new UsersActions();
         let appsActions = new AppsActions();
 
@@ -77,14 +77,14 @@ describe('Attach Form Component', () => {
 
         appId = appModel.id;
 
-        await this.alfrescoJsApi.activiti.taskApi.createNewTask({name: testNames.taskName});
+        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: testNames.taskName });
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 
         done();
     });
 
-    afterEach(async(done) => {
+    afterEach(async (done) => {
         await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);

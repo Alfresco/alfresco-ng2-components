@@ -17,11 +17,11 @@
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
-import CardViewPage = require('../../pages/adf/metadataViewPage');
+import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
-import AcsUserModel = require('../../models/ACS/acsUserModel');
-import FileModel = require('../../models/ACS/fileModel');
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { FileModel } from '../../models/ACS/fileModel';
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
@@ -29,7 +29,7 @@ import resources = require('../../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 import CONSTANTS = require('../../util/constants');
 
 describe('permissions', () => {
@@ -49,7 +49,7 @@ describe('permissions', () => {
 
     const loginPage = new LoginPage();
     const viewerPage = new ViewerPage();
-    const metadataViewPage = new CardViewPage();
+    const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
 
     let consumerUser = new AcsUserModel();

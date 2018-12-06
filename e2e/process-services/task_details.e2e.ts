@@ -19,7 +19,7 @@ import TestConfig = require('../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
-import Tenant = require('../models/APS/Tenant');
+import { Tenant } from '../models/APS/Tenant';
 import Task = require('../models/APS/Task');
 import TaskModel = require('../models/APS/TaskModel');
 import FormModel = require('../models/APS/FormModel');

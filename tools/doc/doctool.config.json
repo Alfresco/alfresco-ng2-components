@@ -21,7 +21,7 @@
             "toc"
         ],
         "dev": [
-            "sourceLinker"
+            "fileChecker"
         ]
     },
     "statusIcons": {
@@ -141,5 +141,12 @@
         "external-alfresco",
         "content-node-share",
         "tree-view"
+    ],
+    "fileCheckerFilter": [
+        "README",
+        "release-notes",
+        "tutorials",
+        "user-guide",
+        "versionIndex"
     ]
 }

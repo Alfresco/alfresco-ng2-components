@@ -5,7 +5,7 @@
 <mat-dialog-content>
     <br />
     <form [formGroup]="form" (submit)="submit()">
-        <mat-checkbox class="adf-lock-file-name" [formControl]="form.controls['isLocked']" ngDefaultControl>
+        <mat-checkbox  data-automation-id="adf-lock-node-checkbox" class="adf-lock-file-name" [formControl]="form.controls['isLocked']" ngDefaultControl>
             {{ 'CORE.FILE_DIALOG.FILE_LOCK_CHECKBOX' | translate }} <strong>"{{ nodeName }}"</strong>
         </mat-checkbox>
 

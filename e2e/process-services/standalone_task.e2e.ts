@@ -23,7 +23,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import CONSTANTS = require('../util/constants');
 
-import Tenant = require('../models/APS/Tenant');
+import { Tenant } from '../models/APS/Tenant';
 import Task = require('../models/APS/Task');
 
 import TestConfig = require('../test.config');

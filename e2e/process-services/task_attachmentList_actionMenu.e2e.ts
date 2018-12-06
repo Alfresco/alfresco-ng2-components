@@ -27,7 +27,7 @@ import CONSTANTS = require('../util/constants');
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import Util = require('../util/util');
+import { Util } from '../util/util';
 
 import path = require('path');
 import fs = require('fs');
@@ -35,7 +35,7 @@ import fs = require('fs');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
-import FileModel = require('../models/ACS/fileModel');
+import { FileModel } from '../models/ACS/fileModel';
 
 describe('Attachment list action menu for tasks', () => {
 

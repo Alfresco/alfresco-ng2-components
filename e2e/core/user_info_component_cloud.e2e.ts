@@ -31,7 +31,6 @@ describe('User Info - SSO', () => {
     const userInfoDialog = new UserInfoDialog();
     const identityService: Identity = new Identity();
     const path = '/auth/realms/springboot';
-    const user = 'superadminuser', password = 'password';
     let silentLogin, identityUser;
 
     beforeAll(async () => {

@@ -16,12 +16,12 @@
  */
 
 import { element, by } from 'protractor';
-import Util = require('../../../util/util');
+import { Util } from '../../../util/util';
 import { FormControllersPage } from '../material/formControllersPage';
 
 export class ShareDialog {
-    formControllersPage = new FormControllersPage();
 
+    formControllersPage = new FormControllersPage();
     shareDialog = element(by.css('adf-share-dialog'));
     dialogTitle = element(by.css('[data-automation-id="adf-share-dialog-title"]'));
     shareToggle = element(by.css('[data-automation-id="adf-share-toggle"] label'));
@@ -116,15 +116,16 @@ export class ShareDialog {
     }
 
     setDefaultDay() {
-        const selector = '.mat-datetimepicker-calendar-body-active .mat-datetimepicker-calendar-body-cell-content';
+        const selector = '.mat-datetimepicker-calendar-body-cell:not(.mat-datetimepicker-calendar-body-disabled)';
         Util.waitUntilElementIsVisible(this.dayPicker);
-        let tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getDate().toString();
+        let tomorrow = new Date(new Date().getTime() + 48 * 60 * 60 * 1000).getDate().toString();
         this.dayPicker.element(by.cssContainingText(selector, tomorrow)).click();
     }
 
     setDefaultHour() {
         const selector = '.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)';
         Util.waitUntilElementIsVisible(this.clockPicker);
+        Util.waitUntilElementIsVisible(this.hoursPicker);
         this.hoursPicker.all(by.css(selector)).first().click();
     }
 

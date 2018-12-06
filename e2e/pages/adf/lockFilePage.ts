@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 import { element, by } from 'protractor';
 
 export class LockFilePage {
@@ -23,7 +23,7 @@ export class LockFilePage {
     cancelButton =  element(by.css('button[aria-label="Close dialog"]'));
     saveButton = element(by.cssContainingText('button span', 'Save'));
     lockFileCheckboxText = element(by.cssContainingText('mat-checkbox label span', ' Lock file '));
-    lockFileCheckbox = element(by.css('mat-checkbox[class*="adf-lock-file-name"]'));
+    lockFileCheckbox = element(by.css('mat-checkbox[data-automation-id="adf-lock-node-checkbox"]'));
     allowOwnerCheckbox = element(by.cssContainingText('mat-checkbox[class*="adf-lock-file-name"] span', ' Allow the owner to modify this file '));
 
     checkLockFileCheckboxIsDisplayed() {

@@ -16,7 +16,7 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import ProcessFiltersPage = require('../pages/adf/process_services/processFiltersPage');
+import { ProcessFiltersPage } from '../pages/adf/process_services/processFiltersPage';
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import { DynamicTableWidget } from '../pages/adf/process_services/widgets/dynamicTableWidget';
 import { DropdownWidget } from '../pages/adf/process_services/widgets/dropdownWidget';

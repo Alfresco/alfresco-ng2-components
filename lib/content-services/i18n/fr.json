@@ -287,5 +287,31 @@
       "DUPLICATE-PERMISSION": "Un ou plusieurs droits d'accès définis existent déjà : {{list}}",
       "NOT-ALLOWED": "Vous n'avez pas le droit de modifier les droits d'accès"
     }
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "Créer une Bibliothèque",
+      "CREATE": "Créer",
+      "CANCEL": "Annuler",
+      "FORM": {
+        "DESCRIPTION": "Description",
+        "SITE_ID": "ID de Bibliothèque",
+        "NAME": "Nom"
+      }
+    },
+    "VISIBILITY": {
+      "PRIVATE": "Liste privée",
+      "PUBLIC": "Public",
+      "MODERATED": "Modéré"
+    },
+    "ERRORS": {
+      "GENERIC": "Une erreur est survenue",
+      "EXISTENT_SITE": "Cet ID de Bibliothèque est indisponible. Essayez avec une autre Bibliothèque.",
+      "CONFLICT": "Cet ID de Bibliothèque est déjà utilisé. Vérifiez la corbeille.",
+      "ID_TOO_LONG": "L'URL doit contenir 72 caractères maximum",
+      "DESCRIPTION_TOO_LONG": "La description doit contenir 512 caractères maximum",
+      "TITLE_TOO_LONG": "Le titre doit contenir 256 caractères maximum",
+      "ILLEGAL_CHARACTERS": "Utilisez uniquement des chiffres et des lettres"
+    }
   }
 }

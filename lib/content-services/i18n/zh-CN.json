@@ -287,5 +287,31 @@
       "DUPLICATE-PERMISSION": "您所设置的一个或多个权限已经存在：{{list}}",
       "NOT-ALLOWED": "不允许更改权限"
     }
+  },
+  "LIBRARY": {
+    "DIALOG": {
+      "CREATE_TITLE": "创建库",
+      "CREATE": "创建",
+      "CANCEL": "取消",
+      "FORM": {
+        "DESCRIPTION": "说明",
+        "SITE_ID": "库 ID",
+        "NAME": "名称"
+      }
+    },
+    "VISIBILITY": {
+      "PRIVATE": "私有",
+      "PUBLIC": "公共",
+      "MODERATED": "适中"
+    },
+    "ERRORS": {
+      "GENERIC": "我们遇到了问题",
+      "EXISTENT_SITE": "此库 ID 不可用。请尝试使用其他库。",
+      "CONFLICT": "此库 ID 已被使用。请检查回收站。",
+      "ID_TOO_LONG": "对 URL 名称使用 72 个字符或更少字符",
+      "DESCRIPTION_TOO_LONG": "对描述使用 512 个字符或更少字符",
+      "TITLE_TOO_LONG": "对标题使用 256 个字符或更少字符",
+      "ILLEGAL_CHARACTERS": "仅使用数字和字母"
+    }
   }
 }

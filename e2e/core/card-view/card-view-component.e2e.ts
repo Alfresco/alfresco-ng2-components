@@ -19,22 +19,21 @@ import { element, by } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
-
-import CardViewPage = require('../../pages/adf/metadataViewPage');
+import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../../actions/users.actions';
 import { AppsActions } from '../../actions/APS/apps.actions';
-import CardViewPageComponent = require('../../pages/adf/cardViewPageComponent');
-import Util = require('../../util/util');
+import { CardViewComponentPage } from '../../pages/adf/cardViewComponentPage';
+import { Util } from '../../util/util';
 
 describe('CardView Component', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    const cardViewPageComponent = new CardViewPageComponent();
-    const metadataViewPage = new CardViewPage();
+    const cardViewPageComponent = new CardViewComponentPage();
+    const metadataViewPage = new MetadataViewPage();
 
     const app = resources.Files.APP_WITH_PROCESSES;
 
@@ -69,7 +68,7 @@ describe('CardView Component', () => {
     describe('key-value pair ', () => {
 
         it('[C279938] Should the label be present', () => {
-            let label = element(by.xpath('div[data-automation-id="card-key-value-pairs-label-key-value-pairs"]'));
+            let label = element(by.css('div[data-automation-id="card-key-value-pairs-label-key-value-pairs"]'));
 
             Util.waitUntilElementIsPresent(label);
         });
@@ -91,7 +90,7 @@ describe('CardView Component', () => {
     describe('SelectBox', () => {
 
         it('[C279939] Should the label be present', () => {
-            let label = element(by.xpath('div[data-automation-id="card-select-label-select"]'));
+            let label = element(by.css('div[data-automation-id="card-select-label-select"]'));
 
             Util.waitUntilElementIsPresent(label);
         });
@@ -108,7 +107,7 @@ describe('CardView Component', () => {
     describe('Text', () => {
 
         it('[C279937] Should the label be present', () => {
-            let label = element(by.xpath('div[data-automation-id="card-textitem-label-name"]'));
+            let label = element(by.css('div[data-automation-id="card-textitem-label-name"]'));
 
             Util.waitUntilElementIsPresent(label);
         });
@@ -139,7 +138,7 @@ describe('CardView Component', () => {
     describe('Int', () => {
 
         it('[C279940] Should the label be present', () => {
-            let label = element(by.xpath('div[data-automation-id="card-textitem-label-int"]'));
+            let label = element(by.css('div[data-automation-id="card-textitem-label-int"]'));
 
             Util.waitUntilElementIsPresent(label);
         });
@@ -213,7 +212,7 @@ describe('CardView Component', () => {
     describe('Float', () => {
 
         it('[C279941] Should the label be present', () => {
-            let label = element(by.xpath('div[data-automation-id="card-textitem-label-float"]'));
+            let label = element(by.css('div[data-automation-id="card-textitem-label-float"]'));
 
             Util.waitUntilElementIsPresent(label);
         });
@@ -263,7 +262,7 @@ describe('CardView Component', () => {
     describe('Boolean', () => {
 
         it('[C279942] Should the label be present', () => {
-            let label = element(by.xpath('div[data-automation-id="card-boolean-label-boolean"]'));
+            let label = element(by.css('div[data-automation-id="card-boolean-label-boolean"]'));
 
             Util.waitUntilElementIsPresent(label);
         });
@@ -282,11 +281,11 @@ describe('CardView Component', () => {
     describe('Date and DateTime', () => {
 
         it('[C279961] Should the label be present', () => {
-            let labelDate = element(by.xpath('div[data-automation-id="card-dateitem-label-date"]'));
+            let labelDate = element(by.css('div[data-automation-id="card-dateitem-label-date"]'));
 
             Util.waitUntilElementIsPresent(labelDate);
 
-            let labelDatetime = element(by.xpath('div[data-automation-id="card-dateitem-label-datetime"]'));
+            let labelDatetime = element(by.css('div[data-automation-id="card-dateitem-label-datetime"]'));
 
             Util.waitUntilElementIsPresent(labelDatetime);
         });
@@ -301,11 +300,11 @@ describe('CardView Component', () => {
     it('[C279936] Should not be possible edit any parameter when editable property is false', () => {
         cardViewPageComponent.disableEdit();
 
-        let editIconText = element(by.xpath('mat-icon[data-automation-id="card-textitem-edit-icon-name"]'));
-        let editIconInt = element(by.xpath('mat-icon[data-automation-id="card-textitem-edit-icon-int"]'));
-        let editIconFloat = element(by.xpath('mat-icon[data-automation-id="card-textitem-edit-icon-float"]'));
-        let editIconKey = element(by.xpath('mat-icon[data-automation-id="card-key-value-pairs-button-key-value-pairs"]'));
-        let editIconData = element(by.xpath('mat-datetimepicker-toggle'));
+        let editIconText = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-name"]'));
+        let editIconInt = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-int"]'));
+        let editIconFloat = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-float"]'));
+        let editIconKey = element(by.css('mat-icon[data-automation-id="card-key-value-pairs-button-key-value-pairs"]'));
+        let editIconData = element(by.css('mat-datetimepicker-toggle'));
 
         Util.waitUntilElementIsNotVisible(editIconText);
         Util.waitUntilElementIsNotVisible(editIconInt);

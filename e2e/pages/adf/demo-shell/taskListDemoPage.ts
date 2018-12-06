@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import Util = require('../../../util/util');
-import DataTable = require('../dataTablePage');
-import TaskListPage = require('../process_services/tasksListPage');
-import PaginationPage = require('../paginationPage');
+import { Util } from '../../../util/util';
+import { TasksListPage } from '../process_services/tasksListPage';
+import { PaginationPage } from '../paginationPage';
 import { element, by } from 'protractor';
 
 export class TaskListDemoPage {
 
+    taskListPage: TasksListPage = new TasksListPage();
     appId = element(by.css("input[data-automation-id='appId input']"));
     itemsPerPage = element(by.css("input[data-automation-id='items per page']"));
     itemsPerPageForm = element(by.css("mat-form-field[data-automation-id='items per page']"));
@@ -40,10 +40,11 @@ export class TaskListDemoPage {
     sortDropDownArrow = element(by.css("mat-form-field[data-automation-id='sort'] div[class*='arrow']"));
     sortSelector = element(by.css("div[class*='mat-select-content']"));
     processDefinitionIdColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Process Definition Id'] span");
-    processInstanceIdColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Process Instance Id'] span");
+    processInstanceIdColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='a" +
+        "df-datatable-row'] div[title='Process Instance Id'] span");
 
-    taskList() {
-        return new TaskListPage();
+    taskList(): TasksListPage {
+        return this.taskListPage;
     }
 
     paginationPage() {
@@ -161,11 +162,6 @@ export class TaskListDemoPage {
         return this;
     }
 
-    getDueAfter() {
-        Util.waitUntilElementIsVisible(this.dueAfter);
-        return this.dueAfter.getAttribute('value');
-    }
-
     typeDueBefore(input) {
         Util.waitUntilElementIsVisible(this.dueBefore);
         this.clearText(this.dueBefore);
@@ -173,14 +169,9 @@ export class TaskListDemoPage {
         return this;
     }
 
-    getDueBefore() {
-        Util.waitUntilElementIsVisible(this.dueBefore);
-        return this.dueBefore.getAttribute('value');
-    }
-
-    clearText(input) { 
+    clearText(input) {
         Util.waitUntilElementIsVisible(input);
-        return input.clear(); 
+        return input.clear();
     }
 
     clickResetButton() {

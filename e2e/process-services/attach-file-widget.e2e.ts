@@ -22,7 +22,7 @@ import { TasksPage } from '../pages/adf/process_services/tasksPage';
 
 import CONSTANTS = require('../util/constants');
 
-import FileModel = require('../models/ACS/fileModel');
+import { FileModel } from '../models/ACS/fileModel';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');

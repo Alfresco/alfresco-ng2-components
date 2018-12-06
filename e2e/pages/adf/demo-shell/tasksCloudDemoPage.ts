@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import Util = require('../../../util/util');
+import { Util } from '../../../util/util';
 
 import { TaskFiltersCloudComponent } from '../process_cloud/taskFiltersCloudComponent';
 import { TaskListCloudComponent } from '../process_cloud/taskListCloudComponent';

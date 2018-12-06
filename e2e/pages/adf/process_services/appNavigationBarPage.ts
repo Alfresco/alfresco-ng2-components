@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import Util = require('../../../util/util');
+import { Util } from '../../../util/util';
 import { element, by } from 'protractor';
 
 export class AppNavigationBarPage {
@@ -29,11 +29,13 @@ export class AppNavigationBarPage {
 
     clickTasksButton() {
         Util.waitUntilElementIsVisible(this.tasksButton);
-        return this.tasksButton.click();
+        this.tasksButton.click();
+        return browser.sleep(400);
     }
 
     clickProcessButton() {
-        return this.processButton.click();
+        this.processButton.click();
+        return browser.sleep(400);
     }
 
     clickTagButton() {
@@ -41,7 +43,8 @@ export class AppNavigationBarPage {
     }
 
     clickSettingsButton() {
-        return this.settingsButton.click();
+        this.settingsButton.click();
+        return browser.sleep(400);
     }
 
     clickReportsButton() {

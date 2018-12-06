@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-28
 ---
 
-# Task List Cloud component
+# [Task List Cloud component](../../lib/process-services-cloud/src/lib/task-list-cloud/components/task-list-cloud.component.ts "Defined in task-list-cloud.component.ts")
 
 Renders a list containing all the tasks matched by the parameters specified.
 
