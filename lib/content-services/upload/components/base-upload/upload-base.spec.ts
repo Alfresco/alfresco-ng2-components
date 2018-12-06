@@ -233,6 +233,59 @@ describe('UploadBase', () => {
             addToQueueSpy = spyOn(uploadService, 'addToQueue');
         });
 
+        it('should filter out file, when file type having white space in the beginning', () => {
+            component.acceptedFilesType = ' .jpg';
+
+            component.uploadFiles(files);
+
+            const filesCalledWith = addToQueueSpy.calls.mostRecent().args;
+            expect(filesCalledWith.length).toBe(1, 'Files should contain only one element');
+            expect(filesCalledWith[0].name).toBe('phobos.jpg', 'png file should be filtered out');
+        });
+
+        it('should filter out file, when file types having white space in the beginning', () => {
+            component.acceptedFilesType = '.jpg, .png';
+
+            component.uploadFiles(files);
+
+            const filesCalledWith = addToQueueSpy.calls.mostRecent().args;
+            expect(filesCalledWith.length).toBe(2, 'Files should contain two elements');
+            expect(filesCalledWith[0].name).toBe('phobos.jpg');
+            expect(filesCalledWith[1].name).toBe('deimos.png');
+        });
+
+        it('should not filter out file, when file type having white space in the middle', () => {
+            component.acceptedFilesType = '.jpg, .p ng';
+
+            component.uploadFiles(files);
+
+            const filesCalledWith = addToQueueSpy.calls.mostRecent().args;
+            expect(filesCalledWith.length).toBe(1, 'Files should contain only one element');
+            expect(filesCalledWith[0].name).toBe('phobos.jpg', 'png file should be filtered out');
+        });
+
+        it('should filter out file, when file types having white space in the end', () => {
+            component.acceptedFilesType = '.jpg ,.png ';
+
+            component.uploadFiles(files);
+
+            const filesCalledWith = addToQueueSpy.calls.mostRecent().args;
+            expect(filesCalledWith.length).toBe(2, 'Files should contain two elements');
+            expect(filesCalledWith[0].name).toBe('phobos.jpg');
+            expect(filesCalledWith[1].name).toBe('deimos.png');
+        });
+
+        it('should filter out file, when file types not having space and dot', () => {
+            component.acceptedFilesType = 'jpg,png';
+
+            component.uploadFiles(files);
+
+            const filesCalledWith = addToQueueSpy.calls.mostRecent().args;
+            expect(filesCalledWith.length).toBe(2, 'Files should contain two elements');
+            expect(filesCalledWith[0].name).toBe('phobos.jpg');
+            expect(filesCalledWith[1].name).toBe('deimos.png');
+        });
+
         it('should filter out file, which is not part of the acceptedFilesType', () => {
             component.acceptedFilesType = '.jpg';
 
