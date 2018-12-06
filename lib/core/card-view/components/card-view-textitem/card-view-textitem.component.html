@@ -1,5 +1,5 @@
 <div [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label" *ngIf="showProperty() || isEditable()">{{ property.label | translate }}</div>
-<div class="adf-property-value">
+<div class="adf-property-value adf-textitem-ellipsis">
     <span *ngIf="!isEditable()">
         <span *ngIf="!isClickable(); else elseBlock" [attr.data-automation-id]="'card-textitem-value-' + property.key">
             <span *ngIf="showProperty()">{{ property.displayValue }}</span>
@@ -15,7 +15,7 @@
     </span>
     <span *ngIf="isEditable()">
         <div *ngIf="!inEdit" (click)="setEditMode(true)" class="adf-textitem-readonly" [attr.data-automation-id]="'card-textitem-edit-toggle-' + property.key" fxLayout="row" fxLayoutAlign="space-between center">
-            <span [attr.data-automation-id]="'card-textitem-value-' + property.key">
+            <span [attr.data-automation-id]="'card-textitem-value-' + property.key" class="adf-textitem-ellipsis">
                 <span *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
             </span>
             <mat-icon fxFlex="0 0 auto"
