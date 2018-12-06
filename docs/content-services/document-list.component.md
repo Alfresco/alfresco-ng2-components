@@ -71,7 +71,7 @@ Displays the documents from a repository.
 | maxItems | `number` |  | Default value is stored into user preference settings use it only if you are not using the pagination |
 | multiselect | `boolean` | false | Toggles multiselect mode |
 | navigate | `boolean` | true | Toggles navigation to folder content or file preview |
-| navigationMode | `string` |  | [User](../../e2e/models/APS/User.ts) interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
+| navigationMode | `string` |  | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
 | node | [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) | null | The Document list will show all the nodes contained in the [NodePaging](../../lib/content-services/document-list/models/document-library.model.ts) entity |
 | permissionsStyle | [`PermissionStyleModel`](../../lib/content-services/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
 | rowFilter | `any \| null` | null | Custom row filter |
