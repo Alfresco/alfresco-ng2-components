@@ -37,13 +37,8 @@ export class CloudLayoutComponent implements OnInit {
   }
 
   onTaskFilterSelected(filter) {
-    const queryParams = {
-      status: filter.query.state,
-      filterName: filter.name,
-      sort: filter.query.sort,
-      order: filter.query.order
-    };
-    this.router.navigate([`/cloud-layout/${this.applicationName}/tasks/`], { queryParams: queryParams });
+    const currentFilter = Object.assign({}, filter);
+    this.router.navigate([`/cloud-layout/${this.applicationName}/tasks/`], { queryParams: currentFilter });
   }
 
   onProcessFilterSelected(filter) {
