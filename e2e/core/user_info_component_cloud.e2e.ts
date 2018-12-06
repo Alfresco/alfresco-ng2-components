@@ -34,7 +34,7 @@ describe('User Info - SSO', () => {
     let silentLogin, identityUser;
 
     beforeAll(async () => {
-        await identityService.init('superadminuser', 'password');
+        await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         identityUser = await identityService.createIdentityUser();
         silentLogin = false;
         await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
