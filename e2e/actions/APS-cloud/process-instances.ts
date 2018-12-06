@@ -60,6 +60,7 @@ export class ProcessInstances {
         const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
         return data;
     }
+<<<<<<< HEAD
 
     async completeProcessInstance(processInstanceId, appName) {
         const path = '/' + appName + '-rb/v1/process-instances/' + processInstanceId + '/complete';
@@ -70,4 +71,6 @@ export class ProcessInstances {
         const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
         return data;
     }
+=======
+>>>>>>> Added tests for sorting tasks by state, order, sort.
 }

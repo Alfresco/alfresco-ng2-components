@@ -30,7 +30,9 @@ import { Tasks } from '../actions/APS-cloud/tasks';
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';
 import { Query } from '../actions/APS-cloud/query';
-import { Util } from '../util/util';
+
+import { browser } from 'protractor';
+import Util = require('../util/util');
 
 describe('Task filters cloud', () => {
 
@@ -59,7 +61,6 @@ describe('Task filters cloud', () => {
             silentLogin = false;
             await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
             await loginSSOPage.clickOnSSOButton();
-            browser.ignoreSynchronization = true;
             await loginSSOPage.loginAPS(user, password);
 
             await tasksService.init(user, password);
