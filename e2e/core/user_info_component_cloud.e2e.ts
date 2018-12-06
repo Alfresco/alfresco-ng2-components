@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginAPSPage } from '../pages/adf/loginApsPage';
+import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import TestConfig = require('../test.config');
 import { browser } from 'protractor';
@@ -26,7 +26,7 @@ import { Identity } from '../actions/APS-cloud/identity';
 describe('User Info - SSO', () => {
 
     const settingsPage = new SettingsPage();
-    const loginApsPage = new LoginAPSPage();
+    const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const userInfoDialog = new UserInfoDialog();
     const identityService: Identity = new Identity();
@@ -34,14 +34,13 @@ describe('User Info - SSO', () => {
     let silentLogin, identityUser;
 
     beforeAll(async () => {
-        await identityService.init(user, password);
+        await identityService.init('superadminuser', 'password');
         identityUser = await identityService.createIdentityUser();
-        // const a  = identityService.assignRole(identityUser.id, roleId, roleName)
         silentLogin = false;
         await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
-        await loginApsPage.clickOnSSOButton();
+        await loginSSOPage.clickOnSSOButton();
         browser.ignoreSynchronization = true;
-        await loginApsPage.loginAPS(identityUser['0'].username, identityUser['0'].password);
+        await loginSSOPage.loginAPS(identityUser['0'].username, identityUser['0'].password);
     });
 
     afterAll (async () => {

@@ -16,7 +16,7 @@
  */
 
 import { ApiService } from '../APS-cloud/apiservice';
-import Util = require('../../util/util');
+import { Util } from '../../util/util';
 
 export class Identity {
 
@@ -34,10 +34,6 @@ export class Identity {
     const user = await this.getUserInfoByUsername(username);
     await this.resetPassword(user[0].id, password);
     user[0].password = password;
-    // todo: this will be uncomment when the get role by name will be fixed
-    // const roleName = 'identity';
-    // const role = await this.getRoleByName(roleName);
-    // await this.assignRole(user[0].id, role.id, roleName);
     return user;
   }
 
