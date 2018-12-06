@@ -39,7 +39,6 @@ export class DataTablePage {
     tableBody = element.all(by.css(`div[class='adf-datatable-body']`)).first();
     spinner = element(by.css('mat-progress-spinner'));
     rows = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`);
-    nameColumn = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Name'] span`);
 
     constructor(rootElement: ElementFinder = element(by.css('adf-datatable'))) {
         this.rootElement = rootElement;
@@ -51,25 +50,14 @@ export class DataTablePage {
     }
 
     getAllRowsNameColumn() {
-        return this.getAllRowsColumnValues(this.nameColumn);
+        return this.getAllRowsColumnValues('Name');
     }
 
     getAllRowsColumnValues(locator) {
-        let deferred = protractor.promise.defer();
-        Util.waitUntilElementIsVisible(element.all(locator).first());
-        let initialList = [];
-
-        element.all(locator).each(function (currentElement) {
-            currentElement.getText().then(function (text) {
-                if (text !== '') {
-                    initialList.push(text);
-                }
-            });
-        }).then(function () {
-            deferred.fulfill(initialList);
-        });
-
-        return deferred.promise;
+        var columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='"+ column +"'] span");
+        Util.waitUntilElementIsVisible(element.all(columnLocator).first());
+        var initialList = await element.all(columnLocator).getText();
+        return initialList.filter(el => el);
     }
 
     getRowByRowNumber(rowNumber) {
