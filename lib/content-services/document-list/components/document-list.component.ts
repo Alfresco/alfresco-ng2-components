@@ -134,7 +134,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     sorting = ['name', 'asc'];
 
-    /** Defines sorting mode. Can be either `client` or `server`. */
+    /** Defines sorting mode. Can be either `client` (items in the list
+     * are sorted client-side) or `server` (the ordering supplied by the
+     * server is used without further client-side sorting).
+     * Note that the `server` option *does not* request the server to sort the data
+     * before delivering it.
+     */
     @Input()
     sortingMode = 'client';
 
