@@ -156,7 +156,7 @@ export abstract class UploadBase implements OnInit, OnDestroy {
 
         const allowedExtensions = this.acceptedFilesType
             .split(',')
-            .map((ext) => ext.replace(/^\./, ''));
+            .map((ext) => ext.trim().replace(/^\./, ''));
 
         if (allowedExtensions.indexOf(file.extension) !== -1) {
             return true;
