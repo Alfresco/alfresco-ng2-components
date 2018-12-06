@@ -34,7 +34,7 @@ export class CardViewComponentPage {
     checkbox = element(by.css(`mat-checkbox[data-automation-id='card-boolean-boolean']`));
     resetButton = element(by.css(`#adf-reset-card-log`));
     selectedValue = element(by.css('.mat-select-value-text span'));
-    listContent = element(by.className('mat-select-content'));
+    listContent = element(by.css('.mat-select-panel'));
     editableSwitch = element(by.id('adf-toggle-editable'));
 
     clickOnAddButton() {
@@ -214,8 +214,8 @@ export class CardViewComponentPage {
     }
 
     selectValueFromComboBox(index) {
-        this.getMatSelectValue(index).click();
-        Util.waitUntilElementIsVisible(this.consoleLog);
+        const value = this.getMatSelectValue(index).click();
+        Util.waitUntilElementIsVisible(value);
         return this;
     }
 
@@ -225,10 +225,11 @@ export class CardViewComponentPage {
 
     disableEdit() {
         Util.waitUntilElementIsVisible(this.editableSwitch);
+
         this.editableSwitch.getAttribute('class').then((check) => {
-            if (check === 'mat-slide-toggle mat-primary mat-checked') {
+            if (check.indexOf('mat-checked') > -1) {
                 this.editableSwitch.click();
-                expect(this.editableSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
+                expect(this.editableSwitch.getAttribute('class')).not.toContain('mat-checked');
             }
         });
     }
