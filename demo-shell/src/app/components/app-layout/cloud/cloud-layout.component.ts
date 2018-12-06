@@ -18,36 +18,40 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-cloud-layout',
-  templateUrl: './cloud-layout.component.html',
-  styleUrls: ['./cloud-layout.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-cloud-layout',
+    templateUrl: './cloud-layout.component.html',
+    styleUrls: ['./cloud-layout.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CloudLayoutComponent implements OnInit {
-  displayMenu = true;
-  applicationName: string;
+    displayMenu = true;
+    applicationName: string;
 
-  constructor(private router: Router, private route: ActivatedRoute) {
-  }
+    constructor(private router: Router, private route: ActivatedRoute) {
+    }
 
-  ngOnInit() {
-    this.route.params.subscribe((params) => {
-      this.applicationName = params.applicationName;
-    });
-  }
+    ngOnInit() {
+        this.route.params.subscribe((params) => {
+            this.applicationName = params.applicationName;
+        });
+    }
 
-  onTaskFilterSelected(filter) {
-    const currentFilter = Object.assign({}, filter);
-    this.router.navigate([`/cloud-layout/${this.applicationName}/tasks/`], { queryParams: currentFilter });
-  }
+    onTaskFilterSelected(filter) {
+        const currentFilter = Object.assign({}, filter);
+        this.router.navigate([`/cloud/${this.applicationName}/tasks/`], { queryParams: currentFilter });
+    }
 
-  onProcessFilterSelected(filter) {
-    const queryParams = {
-      status: filter.query.state,
-      filterName: filter.name,
-      sort: filter.query.sort,
-      order: filter.query.order
-    };
-    this.router.navigate([`/cloud-layout/${this.applicationName}/processes/`], { queryParams: queryParams });
-  }
+    onStartTask() {
+        this.router.navigate([`/cloud/${this.applicationName}/start-task/`]);
+    }
+
+    onProcessFilterSelected(filter) {
+        const queryParams = {
+            status: filter.query.state,
+            filterName: filter.name,
+            sort: filter.query.sort,
+            order: filter.query.order
+        };
+        this.router.navigate([`/cloud/${this.applicationName}/processes/`], { queryParams: queryParams });
+    }
 }

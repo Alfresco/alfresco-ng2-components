@@ -28,6 +28,6 @@ export class AppsCloudDemoComponent {
     }
 
     onAppClick(app) {
-        this.router.navigate([`/cloud-layout/${app.name}`]);
+        this.router.navigate([`/cloud/${app.name}`]);
     }
 }

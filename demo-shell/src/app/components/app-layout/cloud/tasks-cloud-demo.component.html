@@ -2,8 +2,7 @@
     <adf-cloud-edit-task-filter
         [appName]="applicationName"
         [id]="filterId"
-        (filterChange)="onFilterChange($event)"
-        (action)="onEditActions($event)">
+        (filterChange)="onFilterChange($event)">
     </adf-cloud-edit-task-filter>
 
     <div fxLayout="column" fxFlex fxLayoutAlign="space-between" *ngIf="editedFilter">

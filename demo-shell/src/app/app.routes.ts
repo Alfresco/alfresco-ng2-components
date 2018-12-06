@@ -40,14 +40,12 @@ import { FormLoadingComponent } from './components/form/form-loading.component';
 import { DemoPermissionComponent } from './components/permissions/demo-permissions.component';
 import { ReportIssueComponent } from './components/report-issue/report-issue.component';
 import { AppComponent } from './app.component';
-import { CloudComponent } from './components/cloud/cloud.component';
-import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
-import { ProcessListCloudExampleComponent } from './components/cloud/process-list-cloud-example.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { CloudLayoutComponent } from './components/app-layout/cloud/cloud-layout.component';
 import { ProcessesCloudDemoComponent } from './components/app-layout/cloud/processes-cloud-demo.component';
 import { AppsCloudDemoComponent } from './components/app-layout/cloud/apps-cloud-demo.component';
 import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-cloud-demo.component';
+import { StartTaskCloudDemoComponent } from './components/app-layout/cloud/start-task-cloud-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -145,21 +143,6 @@ export const appRoutes: Routes = [
                 children: [
                     {
                         path: '',
-                        component: CloudComponent,
-                        canActivate: [AuthGuard]
-                    },
-                    {
-                        path: ':applicationName/tasks',
-                        component: TaskListCloudDemoComponent,
-                        canActivate: [AuthGuard]
-                    }
-                ]
-            },
-            {
-                path: 'cloud-layout',
-                children: [
-                    {
-                        path: '',
                         component: AppsCloudDemoComponent
                     },
                     {
@@ -178,14 +161,14 @@ export const appRoutes: Routes = [
                                         component: ProcessesCloudDemoComponent
                                     }
                                 ]
+                            },
+                            {
+                                path: 'start-task',
+                                component: StartTaskCloudDemoComponent
                             }
                         ]
                     }
                 ]
-            },
-            {
-                path: 'process-list-cloud',
-                component: ProcessListCloudExampleComponent
             },
             {
                 path: 'node-selector',
