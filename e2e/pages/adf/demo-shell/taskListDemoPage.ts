@@ -36,9 +36,9 @@ export class TaskListDemoPage {
     dueAfter = element(by.css("input[data-automation-id='due after']"));
     taskId = element(by.css("input[data-automation-id='task id']"));
     stateDropDownArrow = element(by.css("mat-form-field[data-automation-id='state'] div[class*='arrow']"));
-    stateSelector = element(by.css("div[class*='mat-select-content']"));
+    stateSelector = element(by.css("div[class*='mat-select-panel']"));
     sortDropDownArrow = element(by.css("mat-form-field[data-automation-id='sort'] div[class*='arrow']"));
-    sortSelector = element(by.css("div[class*='mat-select-content']"));
+    sortSelector = element(by.css("div[class*='mat-select-panel']"));
     processDefinitionIdColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Process Definition Id'] span");
     processInstanceIdColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='a" +
         "df-datatable-row'] div[title='Process Instance Id'] span");
