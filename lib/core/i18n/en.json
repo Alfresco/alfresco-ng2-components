@@ -327,5 +327,32 @@
         "TEXT": "Back to home"
       }
     }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "Server settings",
+      "DESCRIPTION": "The values below are taken from the AppConfigService",
+      "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
+      "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
+    },
+    "VERSIONS": {
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "Edition",
+        "VERSION": "Version",
+        "LICENSE": "License",
+        "STATUS": "Status",
+        "MODULES": "Modules"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Source code",
+      "DESCRIPTION": "You are running the project based on the following commit:"
+    },
+    "PACKAGES": {
+      "TITLE": "Packages",
+      "DESCRIPTION": "Current project is using the following ADF libraries:"
+    }
   }
 }
