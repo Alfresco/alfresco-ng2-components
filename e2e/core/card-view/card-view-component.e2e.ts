@@ -22,10 +22,6 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 
 import TestConfig = require('../../test.config');
-import resources = require('../../util/resources');
-import AlfrescoApi = require('alfresco-js-api-node');
-import { UsersActions } from '../../actions/users.actions';
-import { AppsActions } from '../../actions/APS/apps.actions';
 import { CardViewComponentPage } from '../../pages/adf/cardViewComponentPage';
 import { Util } from '../../util/util';
 
@@ -35,27 +31,8 @@ describe('CardView Component', () => {
     const cardViewPageComponent = new CardViewComponentPage();
     const metadataViewPage = new MetadataViewPage();
 
-    const app = resources.Files.APP_WITH_PROCESSES;
-
     beforeAll(async (done) => {
-        const apps = new AppsActions();
-        const users = new UsersActions();
-
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: TestConfig.adf.url
-        });
-
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-        let user = await users.createTenantAndUser(this.alfrescoJsApi);
-
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
-
-        loginPage.loginToProcessServicesUsingUserModel(user);
-
+        loginPage.loginToContentServices(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         navigationBarPage.clickCardViewButton();
 
         done();

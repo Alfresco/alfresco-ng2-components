@@ -28,6 +28,7 @@ import resources = require('../../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
+import { check, uncheck } from '../../util/material';
 
 describe('CardView Component - properties', () => {
 
@@ -104,7 +105,7 @@ describe('CardView Component - properties', () => {
         metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
         metadataViewPage.checkPropertyIsNotVisible('properties.exif:model', 'textitem');
 
-        metadataViewPage.enableDisplayEmpty();
+        check(metadataViewPage.displayEmptySwitch);
 
         metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
         metadataViewPage.checkPropertyIsVisible('properties.exif:model', 'textitem');
@@ -117,7 +118,7 @@ describe('CardView Component - properties', () => {
         metadataViewPage.clickOnPropertiesTab();
         metadataViewPage.editIconIsDisplayed();
 
-        metadataViewPage.enableReadonly();
+        check(metadataViewPage.readonlySwitch);
 
         metadataViewPage.editIconIsNotDisplayed();
     });
@@ -143,7 +144,7 @@ describe('CardView Component - properties', () => {
         metadataViewPage.checkMetadataGroupIsExpand('EXIF');
         metadataViewPage.checkMetadataGroupIsNotExpand('properties');
 
-        metadataViewPage.enableMulti();
+        check(metadataViewPage.multiSwitch);
 
         metadataViewPage.clickMetadataGroup('properties');
 
@@ -158,13 +159,13 @@ describe('CardView Component - properties', () => {
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
 
-        metadataViewPage.disabledDefaultProperties();
+        uncheck(metadataViewPage.defaultPropertiesSwitch);
 
         metadataViewPage.checkMetadataGroupIsNotPresent('properties');
         metadataViewPage.checkMetadataGroupIsPresent('EXIF');
         metadataViewPage.checkMetadataGroupIsExpand('EXIF');
 
-        metadataViewPage.enabledDefaultProperties();
+        check(metadataViewPage.defaultPropertiesSwitch);
 
         metadataViewPage.checkMetadataGroupIsPresent('properties');
         metadataViewPage.checkMetadataGroupIsExpand('properties');
@@ -178,7 +179,7 @@ describe('CardView Component - properties', () => {
 
         metadataViewPage.informationButtonIsDisplayed();
 
-        metadataViewPage.disabledDefaultProperties();
+        uncheck(metadataViewPage.defaultPropertiesSwitch);
 
         metadataViewPage.informationButtonIsNotDisplayed();
     });

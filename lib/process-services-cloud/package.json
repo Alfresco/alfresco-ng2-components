@@ -14,6 +14,6 @@
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
-    "alfresco-js-api": "2.7.0-beta5"
+    "alfresco-js-api": ">=2.7.0-beta5"
   }
 }

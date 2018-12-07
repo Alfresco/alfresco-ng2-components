@@ -136,8 +136,9 @@ describe('UploadDragAreaComponent', () => {
             spyOn(uploadService, 'uploadFilesInTheQueue');
             fixture.detectChanges();
 
-            const file = <File> { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
-            let filesList = [file];
+            const file: any = { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
+            const filesList = [file];
+
             component.onFilesDropped(filesList);
 
             expect(uploadService.addToQueue).not.toHaveBeenCalled();
@@ -231,8 +232,10 @@ describe('UploadDragAreaComponent', () => {
             component.success = null;
             spyOn(uploadService, 'uploadFilesInTheQueue');
             fixture.detectChanges();
-            const file = <File> { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
-            let filesList = [file];
+
+            const file: any = { name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json' };
+            const filesList = [file];
+
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 addToQueueSpy.and.callFake((f: FileModel) => {

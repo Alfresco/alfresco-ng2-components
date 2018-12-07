@@ -37,7 +37,7 @@ export class UploadVersionButtonComponent extends UploadButtonComponent implemen
     node: MinimalNodeEntryEntity;
 
     protected createFileModel(file: File): FileModel {
-        const fileModel = super.createFileModel(file, this.rootFolderId, (file.webkitRelativePath || '').replace(/\/[^\/]*$/, ''), this.node.id);
+        const fileModel = super.createFileModel(file, this.rootFolderId, ((<any> file).webkitRelativePath || '').replace(/\/[^\/]*$/, ''), this.node.id);
 
         if (!this.isFileAcceptable(fileModel)) {
             const message = this.translationService.instant('FILE_UPLOAD.VERSION.MESSAGES.INCOMPATIBLE_VERSION');

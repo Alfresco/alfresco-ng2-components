@@ -34,10 +34,10 @@ export class FileModel {
     secondPageText = resources.Files.ADF_DOCUMENTS.PDF.second_page_text;
     lastPageNumber = resources.Files.ADF_DOCUMENTS.PDF.last_page_number;
     createdAt = '';
-    createdByUser = {};
-    modifiedByUser = {};
-    content = {};
-    properties = {};
+    createdByUser = new CreatedByModel();
+    modifiedByUser = new CreatedByModel();
+    content: ContentModel = {};
+    properties: ContentPropertiesModel = {};
 
     constructor(details?: any) {
         Object.assign(this, details);
@@ -89,19 +89,19 @@ export class FileModel {
         return this.lastPageNumber;
     }
 
-    getCreatedByUser() {
+    getCreatedByUser(): CreatedByModel {
         return this.createdByUser;
     }
 
-    getModifiedByUser() {
+    getModifiedByUser(): CreatedByModel {
         return this.modifiedByUser;
     }
 
-    getContent() {
+    getContent(): ContentModel {
         return this.content;
     }
 
-    getProperties() {
+    getProperties(): ContentPropertiesModel {
         return this.properties;
     }
 
