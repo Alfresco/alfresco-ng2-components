@@ -36,9 +36,8 @@ describe('Task filters cloud', () => {
 
         const path = '/auth/realms/springboot';
         let silentLogin;
-        const newTask = 'newTask', completedTask = 'completedTask1', myTask = 'myTask';
+        const newTask = 'newTask', completedTask = 'completedTask1';
         const simpleApp = 'simple-app';
-        const user = 'superadminuser', password = 'password';
 
         beforeAll(() => {
             silentLogin = false;
@@ -60,7 +59,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290009] Should display default filters and created task', async() => {
-            await tasksService.init(user, password);
+            await tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             let task =  await tasksService.createStandaloneTask(newTask, simpleApp);
             await tasksService.claimTask(task.entry.id, simpleApp);
 
@@ -75,7 +74,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C289955] Should display task in Complete Tasks List when task is completed', async() => {
-            await tasksService.init(user, password);
+            await tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             let task = await tasksService.createStandaloneTask(completedTask, simpleApp);
 
             tasksService.claimTask(task.entry.id, simpleApp);
