@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { browser, by, element, protractor } from 'protractor';
 import { Util } from '../../../util/util';
 
 export class ContentListPage {
@@ -333,22 +333,6 @@ export class ContentListPage {
         return this;
     }
 
-    tableIsLoaded() {
-        Util.waitUntilElementIsVisible(this.table);
-        return this;
-    }
-
-    checkIconColumn(file, extension) {
-        let row = this.getRowByRowName(file);
-        Util.waitUntilElementIsVisible(row.element(by.css(`div[class*='--image'] img[alt*="${extension}"]`)));
-    }
-
-    rightClickOnRowNamed(rowName) {
-        let row = this.getRowByRowName(rowName);
-        browser.actions().click(row, protractor.Button.RIGHT).perform();
-        Util.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
-    }
-
     checkContextActionIsVisible(actionName) {
         let actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
         Util.waitUntilElementIsVisible(actionButton);
@@ -389,17 +373,6 @@ export class ContentListPage {
         return this;
     }
 
-    getNodeIdByFilename(filename) {
-        let nodeIdColumn = element.all(by.xpath(`//div[@id='document-list-container']//div[@filename="${filename}" and @title='Node id']`));
-        let text = nodeIdColumn.getText();
-        return text;
-    }
-
-    checkEmptyFolderMessageIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.emptyFolderMessage);
-        return this;
-    }
-
     tableIsLoaded() {
         Util.waitUntilElementIsVisible(this.table);
         return this;
@@ -415,40 +388,4 @@ export class ContentListPage {
         browser.actions().click(row, protractor.Button.RIGHT).perform();
         Util.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
     }
-
-    checkContextActionIsVisible(actionName) {
-        let actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
-        Util.waitUntilElementIsVisible(actionButton);
-        Util.waitUntilElementIsClickable(actionButton);
-        return actionButton;
-    }
-
-    pressContextMenuActionNamed(actionName) {
-        let actionButton = this.checkContextActionIsVisible(actionName);
-        actionButton.click();
-    }
-
-    clickRowToSelect(rowName) {
-        let row = this.getRowByRowName(rowName);
-        browser.actions().keyDown(protractor.Key.COMMAND).click(row).perform();
-        this.checkRowIsSelected(rowName);
-        return this;
-    }
-
-    checkLockedIcon(content) {
-        let lockIcon = element(by.cssContainingText('div[filename="' + content + '"] mat-icon', 'lock'));
-        Util.waitUntilElementIsVisible(lockIcon);
-        return this;
-    }
-
-    checkUnlockedIcon(content) {
-        let lockIcon = element(by.cssContainingText('div[filename="' + content + '"] mat-icon', 'lock_open'));
-        Util.waitUntilElementIsVisible(lockIcon);
-        return this;
-    }
-
-    waitForTableBody() {
-        Util.waitUntilElementIsVisible(this.tableBody);
-    }
-
 }

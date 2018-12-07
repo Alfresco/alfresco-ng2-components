@@ -16,7 +16,7 @@
  */
 
 export interface FileInfo {
-    entry?: WebKitFileEntry;
+    entry?: any;
     file?: File;
     relativeFolder?: string;
 }

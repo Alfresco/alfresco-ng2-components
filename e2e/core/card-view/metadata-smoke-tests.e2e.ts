@@ -165,9 +165,9 @@ describe('Metadata component', () => {
         metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
         metadataViewPage.editPropertyIconIsDisplayed('properties.cm:description');
 
-        expect(metadataViewPage.getPropertyIconTooltip('name', 'edit')).toEqual('Edit');
-        expect(metadataViewPage.getPropertyIconTooltip('properties.cm:title', 'edit')).toEqual('Edit');
-        expect(metadataViewPage.getPropertyIconTooltip('properties.cm:description', 'edit')).toEqual('Edit');
+        expect(metadataViewPage.getPropertyIconTooltip('name')).toEqual('Edit');
+        expect(metadataViewPage.getPropertyIconTooltip('properties.cm:title')).toEqual('Edit');
+        expect(metadataViewPage.getPropertyIconTooltip('properties.cm:description')).toEqual('Edit');
 
         metadataViewPage.clickEditPropertyIcons('name');
         metadataViewPage.updatePropertyIconIsDisplayed('name');

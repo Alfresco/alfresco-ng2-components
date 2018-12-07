@@ -29,7 +29,7 @@ export class FormFields {
     completedTaskNoFormMessage = element(by.css('div[id*="completed-form-message"] p'));
     attachFormButton = element(by.id('adf-no-form-attach-form-button'));
     selectFormDropDownArrow = element.all(by.css('adf-attach-form div[class*="mat-select-arrow"]')).first();
-    selectFormContent = element(by.css('div[class*="mat-select-content"]'));
+    selectFormContent = element(by.css('div[class*="mat-select-panel"]'));
     completeButton = element(by.id('adf-form-complete'));
     errorMessage = by.css('.adf-error-text-container .adf-error-text');
 

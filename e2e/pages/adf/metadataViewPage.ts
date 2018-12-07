@@ -16,7 +16,7 @@
  */
 
 import { Util } from '../../util/util';
-import { browser, by, element } from 'protractor';
+import { browser, by, element, promise } from 'protractor';
 
 export class MetadataViewPage {
 
@@ -44,75 +44,75 @@ export class MetadataViewPage {
     presetSwitch = element(by.id('adf-toggle-custom-preset'));
     defaultPropertiesSwitch = element(by.id('adf-metadata-default-properties'));
 
-    getTitle() {
+    getTitle(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.title);
         return this.title.getText();
     }
 
-    getExpandedAspectName() {
+    getExpandedAspectName(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.expandedAspect);
         return this.expandedAspect.element(this.aspectTitle).getText();
     }
 
-    getName() {
+    getName(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.name);
         return this.name.getText();
     }
 
-    getCreator() {
+    getCreator(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.creator);
         return this.creator.getText();
     }
 
-    getCreatedDate() {
+    getCreatedDate(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.createdDate);
         return this.createdDate.getText();
     }
 
-    getModifier() {
+    getModifier(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.modifier);
         return this.modifier.getText();
     }
 
-    getModifiedDate() {
+    getModifiedDate(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.modifiedDate);
         return this.modifiedDate.getText();
     }
 
-    getMimetypeName() {
+    getMimetypeName(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.mimetypeName);
         return this.mimetypeName.getText();
     }
 
-    getSize() {
+    getSize(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.size);
         return this.size.getText();
     }
 
-    getDescription() {
+    getDescription(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.description);
         return this.description.getText();
     }
 
-    getAuthor() {
+    getAuthor(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.author);
         return this.author.getText();
     }
 
-    getTitleProperty() {
+    getTitleProperty(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.titleProperty);
         return this.titleProperty.getText();
     }
 
-    editIconIsDisplayed() {
+    editIconIsDisplayed(): promise.Promise<boolean> {
         return Util.waitUntilElementIsVisible(this.editIcon);
     }
 
-    editIconIsNotDisplayed() {
+    editIconIsNotDisplayed(): promise.Promise<any> {
         return Util.waitUntilElementIsNotVisible(this.editIcon);
     }
 
-    editIconClick() {
+    editIconClick(): promise.Promise<void> {
         Util.waitUntilElementIsVisible(this.editIcon);
         return this.editIcon.click();
     }
@@ -126,67 +126,67 @@ export class MetadataViewPage {
         Util.waitUntilElementIsNotVisible(this.informationButton);
     }
 
-    clickOnInformationButton() {
+    clickOnInformationButton(): MetadataViewPage {
         this.informationButtonIsDisplayed();
         browser.sleep(600);
         this.informationButton.click();
         return this;
     }
 
-    getInformationButtonText() {
+    getInformationButtonText(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.informationSpan);
         return this.informationSpan.getText();
     }
 
-    getInformationIconText() {
+    getInformationIconText(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.informationIcon);
         return this.informationIcon.getText();
     }
 
-    clickOnPropertiesTab() {
+    clickOnPropertiesTab(): MetadataViewPage {
         let propertiesTab = element(by.cssContainingText(`.adf-info-drawer-layout-content div.mat-tab-labels div .mat-tab-label-content`, `Properties`));
         Util.waitUntilElementIsVisible(propertiesTab);
         propertiesTab.click();
         return this;
     }
 
-    clickRightChevron() {
+    clickRightChevron(): MetadataViewPage {
         Util.waitUntilElementIsVisible(this.rightChevron);
         this.rightChevron.click();
         return this;
     }
 
-    getEditIconTooltip() {
+    getEditIconTooltip(): promise.Promise<string> {
         return this.editIcon.getAttribute('title');
     }
 
-    getInformationButtonTooltip() {
+    getInformationButtonTooltip(): promise.Promise<string> {
         return this.informationSpan.getAttribute('title');
     }
 
-    editPropertyIconIsDisplayed(propertyName) {
+    editPropertyIconIsDisplayed(propertyName: string) {
         let editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(editPropertyIcon);
     }
 
-    updatePropertyIconIsDisplayed(propertyName) {
+    updatePropertyIconIsDisplayed(propertyName: string) {
         let updatePropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(updatePropertyIcon);
     }
 
-    clickUpdatePropertyIcon(propertyName) {
+    clickUpdatePropertyIcon(propertyName: string): promise.Promise<void> {
         let updatePropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-update-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(updatePropertyIcon);
         return updatePropertyIcon.click();
     }
 
-    clickClearPropertyIcon(propertyName) {
+    clickClearPropertyIcon(propertyName: string): promise.Promise<void> {
         let clearPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(clearPropertyIcon);
         return clearPropertyIcon.click();
     }
 
-    enterPropertyText(propertyName, text) {
+    enterPropertyText(propertyName: string, text: string | number): MetadataViewPage {
         const textField = element(by.css('input[data-automation-id="card-textitem-editinput-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(textField);
         textField.sendKeys('');
@@ -195,7 +195,7 @@ export class MetadataViewPage {
         return this;
     }
 
-    enterPresetText(text) {
+    enterPresetText(text: string): MetadataViewPage {
         const presetField = element(by.css('input[data-automation-id="adf-text-custom-preset"]'));
         Util.waitUntilElementIsVisible(presetField);
         presetField.sendKeys('');
@@ -206,7 +206,7 @@ export class MetadataViewPage {
         return this;
     }
 
-    enterDescriptionText(text) {
+    enterDescriptionText(text: string): MetadataViewPage {
         const textField = element(by.css('textarea[data-automation-id="card-textitem-edittextarea-properties.cm:description"]'));
         Util.waitUntilElementIsVisible(textField);
         textField.sendKeys('');
@@ -215,199 +215,70 @@ export class MetadataViewPage {
         return this;
     }
 
-    getPropertyText(propertyName, type) {
-        let propertyType = !type ? 'textitem' : type;
+    getPropertyText(propertyName: string, type?: string): promise.Promise<string> {
+        const propertyType = type || 'textitem';
         const textField = element(by.css('span[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]'));
+
         Util.waitUntilElementIsVisible(textField);
         return textField.getText();
     }
 
-    clearPropertyIconIsDisplayed(propertyName) {
+    clearPropertyIconIsDisplayed(propertyName: string) {
         let clearPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(clearPropertyIcon);
     }
 
-    clickEditPropertyIcons(propertyName) {
+    clickEditPropertyIcons(propertyName: string) {
         let editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(editPropertyIcon);
         editPropertyIcon.click();
     }
 
-    getPropertyIconTooltip(propertyName) {
+    getPropertyIconTooltip(propertyName: string): promise.Promise<string> {
         let editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
         return editPropertyIcon.getAttribute('title');
     }
 
-    clickMetadataGroup(groupName) {
+    clickMetadataGroup(groupName: string) {
         let group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
         Util.waitUntilElementIsVisible(group);
         group.click();
     }
 
-    checkMetadataGroupIsPresent(groupName) {
+    checkMetadataGroupIsPresent(groupName: string): promise.Promise<boolean> {
         let group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
         return Util.waitUntilElementIsVisible(group);
     }
 
-    checkMetadataGroupIsNotPresent(groupName) {
+    checkMetadataGroupIsNotPresent(groupName: string): promise.Promise<any> {
         let group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"]'));
         return Util.waitUntilElementIsNotVisible(group);
     }
 
-    checkMetadataGroupIsExpand(groupName) {
+    checkMetadataGroupIsExpand(groupName: string) {
         let group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
         Util.waitUntilElementIsVisible(group);
         expect(group.getAttribute('class')).toContain('mat-expanded');
     }
 
-    checkMetadataGroupIsNotExpand(groupName) {
+    checkMetadataGroupIsNotExpand(groupName: string) {
         let group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header'));
         Util.waitUntilElementIsVisible(group);
         expect(group.getAttribute('class')).not.toContain('mat-expanded');
     }
 
-    getMetadataGroupTitle(groupName) {
+    getMetadataGroupTitle(groupName: string): promise.Promise<string> {
         let group = element(by.css('mat-expansion-panel[data-automation-id="adf-metadata-group-' + groupName + '"] > mat-expansion-panel-header > span > mat-panel-title'));
         Util.waitUntilElementIsVisible(group);
         return group.getText();
     }
 
-    /**
-     * disables displayEmpty
-     */
-    disableDisplayEmpty() {
-        Util.waitUntilElementIsVisible(this.displayEmptySwitch);
-        this.displayEmptySwitch.getAttribute('class').then((check) => {
-            if (check === 'mat-slide-toggle mat-primary mat-checked') {
-                this.displayEmptySwitch.click();
-                expect(this.displayEmptySwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
-            }
-        });
-    }
-
-    /**
-     * enables displayEmpty
-     */
-    enableDisplayEmpty() {
-        Util.waitUntilElementIsVisible(this.displayEmptySwitch);
-        this.displayEmptySwitch.getAttribute('class').then((check) => {
-            if (check === 'mat-slide-toggle mat-primary') {
-                this.displayEmptySwitch.click();
-                expect(this.displayEmptySwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
-            }
-        });
-    }
-
-    /**
-     * disables Readonly
-     */
-    disableReadonly() {
-        Util.waitUntilElementIsVisible(this.readonlySwitch);
-        this.readonlySwitch.getAttribute('class').then((check) => {
-            if (check === 'mat-slide-toggle mat-primary mat-checked') {
-                this.readonlySwitch.click();
-                expect(this.readonlySwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
-            }
-        });
-    }
-
-    /**
-     * enables Readonly
-     */
-    enableReadonly() {
-        Util.waitUntilElementIsVisible(this.readonlySwitch);
-        this.readonlySwitch.getAttribute('class').then((check) => {
-            if (check === 'mat-slide-toggle mat-primary') {
-                this.readonlySwitch.click();
-                expect(this.readonlySwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
-            }
-        });
-    }
-
-    /**
-     * disables multi
-     */
-    disableMulti() {
-        Util.waitUntilElementIsVisible(this.multiSwitch);
-        this.multiSwitch.getAttribute('class').then((check) => {
-            if (check === 'mat-slide-toggle mat-primary mat-checked') {
-                this.multiSwitch.click();
-                expect(this.multiSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
-            }
-        });
-    }
-
-    /**
-     * enables multi
-     */
-    enableMulti() {
-        Util.waitUntilElementIsVisible(this.multiSwitch);
-        this.multiSwitch.getAttribute('class').then((check) => {
-            if (check === 'mat-slide-toggle mat-primary') {
-                this.multiSwitch.click();
-                expect(this.multiSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
-            }
-        });
-    }
-
-    /**
-     * disables preset
-     */
-    disablePreset() {
-        Util.waitUntilElementIsVisible(this.presetSwitch);
-        this.presetSwitch.getAttribute('class').then((check) => {
-            if (check === 'mat-slide-toggle mat-primary mat-checked') {
-                this.presetSwitch.click();
-                expect(this.presetSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
-            }
-        });
-    }
-
-    /**
-     * enables preset
-     */
-    enablePreset() {
-        Util.waitUntilElementIsVisible(this.presetSwitch);
-        this.presetSwitch.getAttribute('class').then((check) => {
-            if (check === 'mat-slide-toggle mat-primary') {
-                this.presetSwitch.click();
-                expect(this.presetSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
-            }
-        });
-    }
-
-    /**
-     * disables preset
-     */
-    disabledDefaultProperties() {
-        Util.waitUntilElementIsVisible(this.defaultPropertiesSwitch);
-        this.defaultPropertiesSwitch.getAttribute('class').then((check) => {
-            if (check === 'mat-slide-toggle mat-primary mat-checked') {
-                this.defaultPropertiesSwitch.click();
-                expect(this.defaultPropertiesSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary');
-            }
-        });
-    }
-
-    /**
-     * enables preset
-     */
-    enabledDefaultProperties() {
-        Util.waitUntilElementIsVisible(this.defaultPropertiesSwitch);
-        this.defaultPropertiesSwitch.getAttribute('class').then((check) => {
-            if (check === 'mat-slide-toggle mat-primary') {
-                this.defaultPropertiesSwitch.click();
-                expect(this.defaultPropertiesSwitch.getAttribute('class')).toEqual('mat-slide-toggle mat-primary mat-checked');
-            }
-        });
-    }
-
-    checkPropertyIsVisible(propertyName, type) {
+    checkPropertyIsVisible(propertyName: string, type: string) {
         let property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
         Util.waitUntilElementIsVisible(property);
     }
 
-    checkPropertyIsNotVisible(propertyName, type) {
+    checkPropertyIsNotVisible(propertyName: string, type: string) {
         let property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
         Util.waitUntilElementIsNotVisible(property);
     }

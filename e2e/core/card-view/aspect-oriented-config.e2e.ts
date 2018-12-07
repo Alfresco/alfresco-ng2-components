@@ -32,6 +32,7 @@ import resources = require('../../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
+import { check } from '../../util/material';
 
 describe('Aspect oriented config', () => {
 
@@ -272,7 +273,7 @@ describe('Aspect oriented config', () => {
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
 
-        metadataViewPage.enablePreset();
+        check(metadataViewPage.presetSwitch);
 
         metadataViewPage.enterPresetText('custom-preset');
 
