@@ -17,6 +17,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: './start-task-cloud-demo.component.html',
@@ -26,7 +27,10 @@ export class StartTaskCloudDemoComponent implements OnInit {
 
     applicationName;
 
-    constructor(private route: ActivatedRoute, private router: Router) {
+    constructor(
+        private route: ActivatedRoute,
+        private notificationService: NotificationService,
+        private router: Router) {
     }
 
     ngOnInit() {
@@ -41,5 +45,12 @@ export class StartTaskCloudDemoComponent implements OnInit {
 
     onCancelStartTask() {
         this.router.navigate([`/cloud/${this.applicationName}`]);
+    }
+
+    openSnackMessage(event: any) {
+        this.notificationService.openSnackMessage(
+            event.response.body.message,
+            4000
+        );
     }
 }
