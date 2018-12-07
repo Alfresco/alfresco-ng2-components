@@ -53,10 +53,10 @@ export class DataTablePage {
         return this.getAllRowsColumnValues('Name');
     }
 
-    getAllRowsColumnValues(locator) {
-        var columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='"+ column +"'] span");
+    async getAllRowsColumnValues(locator) {
+        let columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='"+ column +"'] span");
         Util.waitUntilElementIsVisible(element.all(columnLocator).first());
-        var initialList = await element.all(columnLocator).getText();
+        let initialList = await element.all(columnLocator).getText();
         return initialList.filter(el => el);
     }
 

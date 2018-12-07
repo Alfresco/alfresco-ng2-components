@@ -18,7 +18,7 @@
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
-import { LoginAPSPage } from '../pages/adf/loginApsPage';
+import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import TasksListPage = require('../pages/adf/process_services/tasksListPage');
@@ -30,14 +30,13 @@ import { Tasks } from '../actions/APS-cloud/tasks';
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';
 import { Query } from '../actions/APS-cloud/query';
-import { browser } from 'protractor';
-import Util = require('../util/util');
+import { Util } from '../util/util';
 
 describe('Task filters cloud', () => {
 
     describe('Filters', () => {
         const settingsPage = new SettingsPage();
-        const loginApsPage = new LoginAPSPage();
+        const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         let appListCloudComponent = new AppListCloudComponent();
         let tasksCloudDemoPage = new TasksCloudDemoPage();
@@ -50,7 +49,7 @@ describe('Task filters cloud', () => {
         let silentLogin;
         const createdTaskName = Util.generateRandomString(), completedTaskName = Util.generateRandomString(),
             assignedTaskName = Util.generateRandomString(), deletedTaskName = Util.generateRandomString();
-        const simpleApp = 'simple-app';//schimba app; sa fie creat de userul asta;
+        const simpleApp = 'simple-app';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
         let createdTask, assignedTask, completedTask, deletedTask;
         let orderByNameAndPriority = ['cCreatedTask', 'dCreatedTask', 'eCreatedTask'];
@@ -59,9 +58,9 @@ describe('Task filters cloud', () => {
         beforeAll(async () => {
             silentLogin = false;
             await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
-            await loginApsPage.clickOnSSOButton();
+            await loginSSOPage.clickOnSSOButton();
             browser.ignoreSynchronization = true;
-            await loginApsPage.loginAPS(user, password);
+            await loginSSOPage.loginAPS(user, password);
 
             await tasksService.init(user, password);
             createdTask = await tasksService.createStandaloneTask(createdTaskName, simpleApp);
