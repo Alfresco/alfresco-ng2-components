@@ -37,14 +37,14 @@ describe('User Info - SSO', () => {
         await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         identityUser = await identityService.createIdentityUser();
         silentLogin = false;
-        await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
-        await loginSSOPage.clickOnSSOButton();
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
+        loginSSOPage.clickOnSSOButton();
         browser.ignoreSynchronization = true;
-        await loginSSOPage.loginAPS(identityUser['0'].username, identityUser['0'].password);
+        loginSSOPage.loginAPS(identityUser['0'].username, identityUser['0'].password);
     });
 
-    afterAll (async () => {
-        await identityService.deleteIdentityUser(identityUser[0].id);
+    afterAll (() => {
+        identityService.deleteIdentityUser(identityUser[0].id);
     });
 
     it('[C290066] Should display UserInfo when login using SSO', () => {
