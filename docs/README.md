@@ -108,6 +108,7 @@ for more information about installing and using the source code.
 | [Highlight directive](core/highlight.directive.md) | Adds highlighting to selected sections of an HTML element's content. | [Source](../lib/core/directives/highlight.directive.ts) |
 | [Logout directive](core/logout.directive.md) | Logs the user out when the decorated element is clicked. | [Source](../lib/core/directives/logout.directive.ts) |
 | [Node delete directive](core/node-delete.directive.md) | Deletes multiple files and folders. | [Source](../lib/core/directives/node-delete.directive.ts) |
+| [Node download directive](content-services/node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../lib/core/directives/node-download.directive.ts) |
 | [Node favorite directive](core/node-favorite.directive.md) | Selectively toggles nodes as favorites. | [Source](../lib/core/directives/node-favorite.directive.ts) |
 | [Node permission directive](core/node-permission.directive.md) | Selectively disables an HTML element or Angular component. | [Source](../lib/core/directives/node-permission.directive.ts) |
 | [Node restore directive](core/node-restore.directive.md) | Restores deleted nodes to their original location. | [Source](../lib/core/directives/node-restore.directive.ts) |
@@ -180,6 +181,7 @@ for more information about installing and using the source code.
 | [User preferences service](core/user-preferences.service.md) | Stores preferences for the app and for individual components. | [Source](../lib/core/services/user-preferences.service.ts) |
 | [Bpm user service](core/bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/userinfo/services/bpm-user.service.ts) |
 | [Ecm user service](core/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/userinfo/services/ecm-user.service.ts) |
+| _Download zip service_ | _Not currently documented_ | [Source](../lib/core/services/download-zip.service.ts) |
 | _Jwt helper service_ | _Not currently documented_ | [Source](../lib/core/services/jwt-helper.service.ts) |
 | _Identity user service_ | _Not currently documented_ | [Source](../lib/core/userinfo/services/identity-user.service.ts) |
 
@@ -252,12 +254,17 @@ for more information about installing and using the source code.
 | [Version manager component](content-services/version-manager.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays the version history of a node with the ability to upload a new version. | [Source](../lib/content-services/version-manager/version-manager.component.ts) |
 | [Webscript component](content-services/webscript.component.md) | Provides access to Webscript features. | [Source](../lib/content-services/webscript/webscript.component.ts) |
 
+## Dialogs
+
+| Name | Description | Source link |
+| ---- | ----------- | ----------- |
+| [Library dialog](content-services/library.dialog.md) | Creates a new Content Services document library/site. | [Source](../lib/content-services/dialogs/library/library.dialog.ts) |
+
 ## Directives
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Content node share directive](content-services/content-node-share.directive.md) | Creates and manages public shared links for files. | [Source](../lib/content-services/content-node-share/content-node-share.directive.ts) |
-| [Node download directive](content-services/node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../lib/content-services/directives/node-download.directive.ts) |
 | [Node lock directive](content-services/node-lock.directive.md) | Locks a node. | [Source](../lib/content-services/directives/node-lock.directive.ts) |
 | [Folder create directive](content-services/folder-create.directive.md) | Creates folders. | [Source](../lib/content-services/folder-directive/folder-create.directive.ts) |
 | [Folder edit directive](content-services/folder-edit.directive.md) | Allows folders to be edited. | [Source](../lib/content-services/folder-directive/folder-edit.directive.ts) |
@@ -368,12 +375,13 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [App list cloud component](process-services-cloud/app-list-cloud.component.md) | Shows all deployed cloud application instances. | [Source](../lib/process-services-cloud/src/lib/app-list-cloud/components/app-list-cloud.component.ts) |
+| [Process filters cloud component](process-services-cloud/process-filters-cloud.component.md) | Lists all available process filters and allows to select a filter. | [Source](../lib/process-services-cloud/src/lib/process-cloud/process-filters-cloud/process-filters-cloud.component.ts) |
 | [Process list cloud component](process-services-cloud/process-list-cloud.component.md) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../lib/process-services-cloud/src/lib/process-list-cloud/components/process-list-cloud.component.ts) |
 | [Start task cloud component](process-services-cloud/start-task-cloud.component.md) | Creates/Starts new task for the specified app | [Source](../lib/process-services-cloud/src/lib/start-task-cloud/components/start-task-cloud.component.ts) |
+| [Edit task filter cloud component](process-services-cloud/edit-task-filter-cloud.component.md) | Shows Task Filter Details. | [Source](../lib/process-services-cloud/src/lib/task-cloud/task-filters-cloud/edit-task-filter-cloud.component.ts) |
 | [Task filters cloud component](process-services-cloud/task-filters-cloud.component.md) | Shows all available filters. | [Source](../lib/process-services-cloud/src/lib/task-cloud/task-filters-cloud/task-filters-cloud.component.ts) |
 | [Task list cloud component](process-services-cloud/task-list-cloud.component.md) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services-cloud/src/lib/task-list-cloud/components/task-list-cloud.component.ts) |
 | _App details cloud component_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/app-list-cloud/components/app-details-cloud.component.ts) |
-| _Process filters cloud component_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/process-cloud/process-filters-cloud/process-filters-cloud.component.ts) |
 | _People cloud component_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/start-task-cloud/components/people-cloud/people-cloud.component.ts) |
 
 ## Services

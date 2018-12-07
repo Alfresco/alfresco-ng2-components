@@ -16,7 +16,7 @@ module.exports = {
     "processDocs": processDocs
 }
 
-var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe)|(service)|(widget))\.ts/;
+var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(dialog)|(directive)|(model)|(pipe)|(service)|(widget))\.ts/;
 var searchFolderOmitRegex = /(config)|(mock)|(i18n)|(assets)|(styles)/;
 
 var docsFolderPath = path.resolve("docs");
