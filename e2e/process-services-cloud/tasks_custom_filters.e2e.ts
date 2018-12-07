@@ -30,9 +30,7 @@ import { Tasks } from '../actions/APS-cloud/tasks';
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';
 import { Query } from '../actions/APS-cloud/query';
-
-import { browser } from 'protractor';
-import Util = require('../util/util');
+import { Util } from '../util/util';
 
 describe('Task filters cloud', () => {
 
@@ -215,7 +213,7 @@ describe('Task filters cloud', () => {
                 });
                 expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
             });
-            
+
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
                 let initialList = list.slice(0);
