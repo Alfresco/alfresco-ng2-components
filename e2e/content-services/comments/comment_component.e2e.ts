@@ -19,15 +19,19 @@ import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { CommentsPage } from '../../pages/adf/commentsPage';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
+import CONSTANTS = require('../../util/constants');
+import { Util } from '../../util/util';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
+import { browser } from 'protractor';
 
 describe('Comment Component', () => {
 
@@ -35,6 +39,7 @@ describe('Comment Component', () => {
     let contentServicesPage = new ContentServicesPage();
     let viewerPage = new ViewerPage();
     let commentsPage = new CommentsPage();
+    const navigationBar = new NavigationBarPage();
 
     let acsUser = new AcsUserModel();
 
@@ -168,5 +173,50 @@ describe('Comment Component', () => {
         expect(commentsPage.getMessage(0)).toEqual('First name: Last name:');
         expect(commentsPage.getUserName(0)).toEqual(userFullName);
         expect(commentsPage.getTime(0)).toMatch(/(ago|few)/);
+    });
+
+    describe('Consumer Permissions', () => {
+        let site, pngUploadedFile;
+
+        beforeAll(async (done) => {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            site = await this.alfrescoJsApi.core.sitesApi.createSite({
+                title: Util.generateRandomString(8),
+                visibility: 'PUBLIC'
+            });
+
+            await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+                id: acsUser.id,
+                role: CONSTANTS.CS_USER_ROLES.CONSUMER
+            });
+
+            pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, site.entry.guid);
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+            contentServicesPage.navigateToDocumentList();
+
+            done();
+        });
+
+        afterAll((done) => {
+            uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pngUploadedFile.entry.id);
+
+            done();
+        });
+
+        it('[C290147] Should NOT be able to add comments to a site file with Consumer permissions', () => {
+            navigationBar.goToSite(site);
+            contentServicesPage.checkAcsContainer();
+
+            viewerPage.viewFile(pngUploadedFile.entry.name);
+            viewerPage.checkInfoButtonIsDisplayed();
+            viewerPage.clickInfoButton();
+            viewerPage.checkInfoSideBarIsDisplayed();
+
+            commentsPage.checkCommentsTabIsSelected();
+            commentsPage.checkCommentInputIsNotDisplayed();
+        });
     });
 });
