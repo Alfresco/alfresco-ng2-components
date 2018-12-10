@@ -17,12 +17,12 @@
 
 import { browser, by, element, protractor } from 'protractor';
 import { Util } from '../../util/util';
-import { ElementFinder } from 'protractor/built/element';
+import { ElementFinder, ElementArrayFinder } from 'protractor/built/element';
 
 export class DataTablePage {
 
     rootElement: ElementFinder;
-    list: ElementFinder;
+    list: ElementArrayFinder;
     contents = element.all(by.css('div[class="adf-datatable-body"] span'));
     multiSelect = element(by.css(`div[data-automation-id='multiselect'] label > div[class='mat-checkbox-inner-container']`));
     selectionButton = element(by.css(`div[class='mat-select-arrow']`));
