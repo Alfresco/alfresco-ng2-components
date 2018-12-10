@@ -117,24 +117,24 @@ describe('UserPreferencesService', () => {
 
     it('should return as default locale the app.config locate as first', () => {
         appConfig.config.locale = 'fake-locate-config';
-        spyOn(translate, 'getBrowserLang').and.returnValue('fake-locate-browser');
+        spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locate-browser');
         expect(preferences.getDefaultLocale()).toBe('fake-locate-config');
     });
 
     it('should return as default locale the browser locale as second', () => {
-        spyOn(translate, 'getBrowserLang').and.returnValue('fake-locate-browser');
+        spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locate-browser');
         expect(preferences.getDefaultLocale()).toBe('fake-locate-browser');
     });
 
     it('should return as default locale the component property as third ', () => {
-        spyOn(translate, 'getBrowserLang').and.stub();
+        spyOn(translate, 'getBrowserCultureLang').and.stub();
         expect(preferences.getDefaultLocale()).toBe('en');
     });
 
     it('should return as locale the store locate', () => {
         preferences.locale = 'fake-store-locate';
         appConfig.config.locale = 'fake-locate-config';
-        spyOn(translate, 'getBrowserLang').and.returnValue('fake-locate-browser');
+        spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locate-browser');
         expect(preferences.locale).toBe('fake-store-locate');
     });
 
