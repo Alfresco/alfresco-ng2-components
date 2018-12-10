@@ -33,8 +33,13 @@ export class TranslateLoaderService implements TranslateLoader {
     private suffix: string = '.json';
     private providers: ComponentTranslationModel[] = [];
     private queue: string [][] = [];
+    private defaultLang: string = 'en';
 
     constructor(private http: HttpClient) {
+    }
+
+    setDefaultLang(value: string) {
+        this.defaultLang = value || 'en';
     }
 
     registerProvider(name: string, path: string) {
@@ -50,6 +55,27 @@ export class TranslateLoaderService implements TranslateLoader {
         return this.providers.find((x) => x.name === name) ? true : false;
     }
 
+    fetchLanguageFile(lang: string, component: ComponentTranslationModel): Observable<void> {
+        const translationUrl = `${component.path}/${this.prefix}/${lang}${this.suffix}?v=${Date.now()}`;
+
+        return this.http.get(translationUrl).pipe(
+            map((res: Response) => {
+                component.json[lang] = res;
+            }),
+            retry(3),
+            catchError(() => {
+                if (lang.includes('-')) {
+                    const [langId] = lang.split('-');
+
+                    if (langId && langId !== this.defaultLang) {
+                        return this.fetchLanguageFile(langId, component);
+                    }
+                }
+                return throwError(`Failed to load ${translationUrl}`);
+            })
+        );
+    }
+
     getComponentToFetch(lang: string): Array<Observable<any>> {
         const observableBatch = [];
         if (!this.queue[lang]) {
@@ -59,16 +85,8 @@ export class TranslateLoaderService implements TranslateLoader {
             if (!this.isComponentInQueue(lang, component.name)) {
                 this.queue[lang].push(component.name);
 
-                const translationUrl = `${component.path}/${this.prefix}/${lang}${this.suffix}?v=${Date.now()}`;
-
                 observableBatch.push(
-                    this.http.get(translationUrl).pipe(
-                        map((res: Response) => {
-                            component.json[lang] = res;
-                        }),
-                        retry(3),
-                        catchError(() => throwError(`Failed to load ${translationUrl}`))
-                    )
+                    this.fetchLanguageFile(lang, component)
                 );
             }
         });

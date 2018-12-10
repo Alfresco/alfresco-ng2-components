@@ -183,7 +183,7 @@ export class UserPreferencesService {
      * @returns Default locale language code
      */
     public getDefaultLocale(): string {
-        return this.appConfig.get<string>('locale') || this.translate.getBrowserLang() || 'en';
+        return this.appConfig.get<string>('locale') || this.translate.getBrowserCultureLang() || 'en';
     }
 
 }
