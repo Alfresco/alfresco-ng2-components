@@ -29,7 +29,7 @@ export class ProcessListDemoComponent implements OnInit {
 
     DEFAULT_SIZE = 20;
 
-    minValue = 1;
+    minValue = 0;
 
     processListForm: FormGroup;
 
@@ -74,7 +74,7 @@ export class ProcessListDemoComponent implements OnInit {
 
     buildForm() {
         this.processListForm = this.formBuilder.group({
-            processAppId: new FormControl(this.appId, [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
+            processAppId: new FormControl(this.appId, [Validators.pattern('^[0-9]*$'), Validators.min(this.minValue)]),
             processDefinitionId: new FormControl(''),
             processInstanceId: new FormControl(''),
             processState: new FormControl(''),
@@ -96,7 +96,11 @@ export class ProcessListDemoComponent implements OnInit {
     }
 
     filterProcesses(processFilter: any) {
-        this.appId = processFilter.processAppId;
+        if (processFilter.processAppId && processFilter.processAppId !== 0) {
+            this.appId = processFilter.processAppId;
+        } else {
+            this.appId = null;
+        }
         this.processDefId = processFilter.processDefinitionId;
         this.processInsId = processFilter.processInstanceId;
         this.state = processFilter.processState;
