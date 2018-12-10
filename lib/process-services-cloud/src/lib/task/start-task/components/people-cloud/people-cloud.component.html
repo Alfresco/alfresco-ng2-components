@@ -1,7 +1,24 @@
 <form>
 <mat-form-field class="adf-people-cloud">
-    <mat-label id="assignee-id">{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE' | translate}}</mat-label>
-    <input #inputValue
+    <mat-label id="assignee-id">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE' | translate}}</mat-label>
+    <mat-chip-list #userChipList *ngIf="isMultipleMode()">
+      <mat-chip
+        *ngFor="let user of selectedUsers$ | async"
+        (removed)="onRemove(user)">
+        {{user | fullName}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input
+        #userInput
+        matInput
+        [formControl]="searchUser"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="userChipList"
+        class="adf-cloud-input"
+        data-automation-id="adf-people-cloud-search-input">
+    </mat-chip-list>
+
+    <input *ngIf="!isMultipleMode()"
            matInput
            class="adf-cloud-input"
            data-automation-id="adf-people-cloud-search-input"
@@ -19,7 +36,7 @@
             </div>
         </mat-option>
     </mat-autocomplete>
-</mat-form-field>
+  </mat-form-field>
 <div class="adf-start-task-cloud-error">
     <div *ngIf="dataError" fxLayout="row" fxLayoutAlign="start start" [@transitionMessages]="_subscriptAnimationState">
         <div class="adf-start-task-cloud-error-message">{{ 'ADF_CLOUD_START_TASK.ERROR.MESSAGE' | translate }}</div>
