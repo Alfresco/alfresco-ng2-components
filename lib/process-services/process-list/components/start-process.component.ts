@@ -28,7 +28,7 @@ import { ProcessDefinitionRepresentation } from './../models/process-definition.
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material';
@@ -40,6 +40,8 @@ import { MatAutocompleteTrigger } from '@angular/material';
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessInstanceComponent implements OnChanges, OnInit {
+
+    MAX_LENGTH: number = 255;
 
     /** (optional) Limit the list of processes that can be started to those
      * contained in the specified app.
@@ -92,14 +94,12 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     inputAutocomplete: MatAutocompleteTrigger;
 
     processDefinitions: ProcessDefinitionRepresentation[] = [];
-
     selectedProcessDef: ProcessDefinitionRepresentation = new ProcessDefinitionRepresentation();
-
     errorMessageId: string = '';
-
     processNameInput: FormControl;
     processDefinitionInput: FormControl;
     filteredProcesses: Observable<ProcessDefinitionRepresentation[]>;
+    maxProcessNameLength: number = this.MAX_LENGTH;
 
     constructor(private activitiProcess: ProcessService,
                 private formRenderingService: FormRenderingService,
@@ -110,7 +110,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     }
 
     ngOnInit() {
-        this.processNameInput = new FormControl(this.name, Validators.required);
+        this.processNameInput = new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxProcessNameLength)]);
         this.processDefinitionInput = new FormControl();
 
         this.loadStartProcess();
@@ -252,7 +252,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
     }
 
     validateForm(): boolean {
-        return this.selectedProcessDef && this.selectedProcessDef.id && this.name && this.isStartFormMissingOrValid();
+        return this.selectedProcessDef && this.selectedProcessDef.id && this.processNameInput.valid && this.isStartFormMissingOrValid();
     }
 
     private resetSelectedProcessDefinition() {
@@ -302,5 +302,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit {
         } else {
             this.inputAutocomplete.closePanel();
         }
+    }
+
+    get nameController(): AbstractControl {
+        return this.processNameInput;
     }
 }

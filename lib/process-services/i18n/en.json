@@ -286,7 +286,8 @@
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
-        "START": "Couldn't start new process instance, check you have access."
+        "START": "Couldn't start new process instance, check you have access.",
+        "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max."
       }
     },
     "PROCESS-ATTACHMENT": {
