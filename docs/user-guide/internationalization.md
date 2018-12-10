@@ -249,7 +249,7 @@ The table below illustrates how the selection is made:
 | it | fr | jp | en | it |
 
 The translation service probes the browser culture first, for example `en-GB`.
-If the `en-GB.json` files does not exist, the service falls back to the language id: `en`.
+If the `en-GB.json` file does not exist, the service falls back to the language id: `en`.
 
 Once the locale language is determined, it is saved to the user preferences and this saved value
 will be used from that point on, regardless of the `app.config.json` and browser settings.
