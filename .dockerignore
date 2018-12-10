@@ -2,7 +2,6 @@
 .github
 .vscode
 assets
-demo-shell
 coverage
 docs
 e2e
@@ -13,3 +12,5 @@ src
 lib
 integration
 tools
+demo-shell/src/
+demo-shell/resources/
