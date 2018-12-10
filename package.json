@@ -112,7 +112,6 @@
     "@types/node": "6.0.90",
     "ajv-cli": "^3.0.0",
     "angular2-template-loader": "0.6.2",
-    "archiver": "^3.0.0",
     "astrolabe": "^0.3.6",
     "autoprefixer": "6.5.4",
     "bundlesize": "^0.15.3",
@@ -174,9 +173,8 @@
     "tslib": "^1.9.0",
     "tslint": "5.9.1",
     "typedoc": "^0.11.1",
-    "unist-util-select": "^2.0.0",
     "typescript": "^3.1.6",
-    "unzip-stream": "^0.3.0",
+    "unist-util-select": "^2.0.0",
     "url-join": "^4.0.0",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.0",
@@ -198,11 +196,15 @@
     },
     {
       "path": "./lib/dist/core/bundles/adf-core.umd.min.js",
-      "maxSize": "150 kb"
+      "maxSize": "110 kb"
     },
     {
       "path": "./lib/dist/process-services-cloud/bundles/adf-process-services-cloud.umd.min.js",
-      "maxSize": "50 kb"
+      "maxSize": "20 kb"
+    },
+    {
+      "path": "./lib/dist/extensions/bundles/adf-extensions.umd.min.js",
+      "maxSize": "5 kb"
     }
   ],
   "engines": {

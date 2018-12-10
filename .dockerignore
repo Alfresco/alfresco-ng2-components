@@ -1,12 +1,15 @@
 .git
 .github
 .vscode
+assets
+demo-shell
 coverage
 docs
 e2e
+e2e-output
 node_modules
 scripts
 src
 lib
 integration
-/demo-shell/config/
+tools

@@ -1,103 +1,41 @@
 var program = require('commander');
-var AlfrescoApi = require('alfresco-js-api-node');
-var http = require('http');
-
 var fs = require('fs');
 var path = require('path');
-var unzip = require('unzip-stream');
 
-replaceHrefInIndex = (folder, href) => {
-    fs.readFile(`demo-shell/${folder}/index.html`, 'utf8', function (err, data) {
+replaceHrefInIndex = (href) => {
+    fs.readFile(`demo-shell/${href}/index.html`, 'utf8', function (err, data) {
         if (err) {
             return console.log(err);
         }
 
         let result = data.replace(`base href="/"`, `base href=\"/${href}/\"`);
 
-        fs.writeFile(`demo-shell/${folder}/index.html`, result, 'utf8', function (err) {
+        fs.writeFile(`demo-shell/${href}/index.html`, result, 'utf8', function (err) {
             if (err) return console.log(err);
         });
     });
 };
 
-unzipRetry = (tentativeNumber, outputFolder, url) => {
-    let file = fs.createWriteStream('demo.zip');
-    http.get(`http://${url}`, (response) => {
-        response.pipe(file);
-        file.on('finish', async () => {
-
-            console.log('Unzip Demo ' + path.join(__dirname, '../demo.zip'));
-            setTimeout(() => {
-                fs.createReadStream(path.join(__dirname, '../demo.zip'))
-                    .pipe(unzip.Extract({path: path.join(__dirname, '../demo-shell')}))
-                    .on('error', () => {
-
-                        if (tentativeNumber <= 4) {
-                            tentativeNumber++;
-                            unzipRetry(tentativeNumber, outputFolder);
-                        }
-                    })
-                    .on('finish', () => {
-
-                        setTimeout(() => {
-                            let oldFolder = path.join(__dirname, `../demo-shell/demo.zip`);
-                            let newFolder = path.join(__dirname, `../demo-shell/${outputFolder}`);
-
-                            if (!fs.existsSync(path.join(__dirname, `../demo-shell/dist`))) {
-                                fs.mkdirSync(path.join(__dirname, `../demo-shell/dist`));
-                            }
-
-                            fs.rename(oldFolder, newFolder, () => {
-                                console.log('renamed complete ');
-                            });
-
-                            if (program.baseHref) {
-                                replaceHrefInIndex(outputFolder, program.baseHref);
-                            }
-                        }, 10000);
-
-                    })
-            }, 10000);
-
-        });
-    });
-};
 
 async function main() {
 
     program
         .version('0.1.0')
-        .option('-p, --password [type]', 'password')
-        .option('-u, --username  [type]', 'username')
         .option('--base-href  [type]', '')
-        .option('-f, --folder [type]', 'Name of the folder')
-        .option('-host, --host [type]', 'URL of the CS')
         .parse(process.argv);
 
-    let alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: program.host
+
+    let output = path.resolve(__dirname, '../demo-shell/', program.baseHref);
+    console.log('output ' + output);
+
+    fs.rename(path.resolve(__dirname, '../demo-shell/dist'),output,  (err)=> {
+        if (err) throw err;
+        console.log('renamed complete');
     });
 
-    await alfrescoJsApi.login(program.username, program.password);
-
-    let zipDemoNode;
-
-    try {
-        zipDemoNode = await alfrescoJsApi.nodes.getNode('-my-', {
-            'relativePath': `Builds/${program.folder}/demo.zip`
-        });
-    } catch (error) {
-        console.log('error:  ' + error);
-    }
-
-    const url = await alfrescoJsApi.content.getContentUrl(zipDemoNode.entry.id, true);
-
-    console.log('Download zip');
-
-    let outputFolder = program.baseHref ? path.join('dist', program.baseHref) : 'dist';
-
-    unzipRetry(0, outputFolder, url);
+    replaceHrefInIndex(program.baseHref);
 }
 
 main();
+
+
