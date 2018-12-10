@@ -22,6 +22,7 @@ import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { FilePreviewPage } from '../pages/adf/filePreviewPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
+import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
@@ -49,6 +50,7 @@ xdescribe('Search component - Search Bar', () => {
     let searchDialog = new SearchDialog();
     let searchResultPage = new SearchResultsPage();
     let filePreviewPage = new FilePreviewPage();
+    const searchFilters = new SearchFiltersPage();
 
     let acsUser = new AcsUserModel();
 
@@ -296,5 +298,12 @@ xdescribe('Search component - Search Bar', () => {
 
         browser.sleep(500);
         searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible();
+    });
+
+    it('[C290137] Should be able to search by \'%\'', () => {
+        searchDialog
+            .clickOnSearchIcon()
+            .enterTextAndPressEnter('%');
+        searchResultPage.tableIsLoaded();
     });
 });

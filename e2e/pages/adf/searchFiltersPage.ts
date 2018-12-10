@@ -120,11 +120,6 @@ export class SearchFiltersPage {
         return this;
     }
 
-    checkFileSizeFilterIsCollapsed() {
-        this.searchCategoriesPage.checkFilterIsCollapsed(this.fileSizeFilter);
-        return this;
-    }
-
     checkCheckListFilterIsCollapsed() {
         this.searchCategoriesPage.checkFilterIsCollapsed(this.checkListFilter);
     }
