@@ -56,6 +56,7 @@ describe('Task filters cloud', () => {
 
         it('[C290011] Should display default filters when an app is deployed', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            tasksCloudDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed();
         });
 
         xit('[C290009] Should display default filters and created task', () => {
