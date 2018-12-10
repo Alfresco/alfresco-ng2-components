@@ -58,11 +58,8 @@ describe('Process filters cloud', () => {
             let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             await processInstancesService.init(user, password);
             let processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
-            //await queryService.init(user, password);
-            //completedProcess = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);//trebuie facut query pe process
-            let bla = await processInstancesService.completeProcessInstance(processInstance.entry.id, simpleApp);
-
-            console.log("Blaaa: ", bla);
+            await queryService.init(user, password);
+            completedProcess = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
 
         });
 
