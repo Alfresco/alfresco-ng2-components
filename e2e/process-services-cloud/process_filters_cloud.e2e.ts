@@ -20,59 +20,66 @@ import TestConfig = require('../test.config');
 import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/tasksCloudDemoPage';
+import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/processCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process_cloud/appListCloudComponent';
 
+import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
+import { ProcessInstances } from '../actions/APS-cloud/process-instances';
+import { Query } from '../actions/APS-cloud/query';
 import { Tasks } from '../actions/APS-cloud/tasks';
 
-describe('Task filters cloud', () => {
+describe('Process filters cloud', () => {
 
-    describe('Task Filters', () => {
+    describe('Process Filters', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         let appListCloudComponent = new AppListCloudComponent();
-        let tasksCloudDemoPage = new TasksCloudDemoPage();
+        let processCloudDemoPage = new ProcessCloudDemoPage();
+
         const tasksService: Tasks = new Tasks();
+        const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
+        const processInstancesService: ProcessInstances = new ProcessInstances();
+        const queryService: Query = new Query();
 
         const path = '/auth/realms/springboot';
         let silentLogin;
-        const newTask = 'newTask', completedTask = 'completedTask1', myTask = 'myTask';
-        const simpleApp = 'simple-app';
+        let completedProcess, runningProcess ;
+        const simpleApp = 'adminapp';
+        const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
-        beforeAll(() => {
+        beforeAll(async () => {
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
             loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            loginSSOPage.loginAPS(user, password);
+
+            await processDefinitionService.init(user, password);
+            let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
+            await processInstancesService.init(user, password);
+            let processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            //await queryService.init(user, password);
+            //completedProcess = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);//trebuie facut query pe process
+            let bla = await processInstancesService.completeProcessInstance(processInstance.entry.id, simpleApp);
+
+            console.log("Blaaa: ", bla);
+
         });
 
         beforeEach((done) => {
-            navigationBarPage.navigateToProcessServicesCloudPage();
+            navigationBarPage.navigateToProcessServicesListCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
             done();
         });
 
-        it('[C290011] Should display default filters when an app is deployed', () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+        it('[C290021] Should be able to view default filters', () => {
+            processCloudDemoPage.completedProcessesFilter().checkProcessFilterIsDisplayed();
+            processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
+            processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
         });
 
-        xit('[C290009] Should display default filters and created task', () => {
-            tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            tasksService.createStandaloneTask(newTask, simpleApp);
-
-            tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Completed Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(newTask);
-
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('My Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(newTask);
-        });
-
-        // failing due to ACTIVITI-2463
-        xit('[C289955] Should display task in Complete Tasks List when task is completed', () => {
+        it('[C290043] Should display process in Running Processes List when process is started', () => {
             tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             let task = tasksService.createStandaloneTask(completedTask, simpleApp);
 
