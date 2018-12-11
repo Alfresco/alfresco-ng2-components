@@ -38,24 +38,21 @@ export class SortingPickerComponent {
     @Input()
     ascending = true;
 
-    /** Raised each time sorting key or direction gets changed. */
+    /** Raised each time sorting key gets changed. */
     @Output()
-    change = new EventEmitter<{ key: string, ascending: boolean }>();
+    valueChange = new EventEmitter<string>();
 
-    onChanged(event: MatSelectChange) {
+    /** Raised each time direction gets changed. */
+    @Output()
+    sortingChange = new EventEmitter<boolean>();
+
+    onOptionChanged(event: MatSelectChange) {
         this.selected = event.value;
-        this.raiseChangedEvent();
+        this.valueChange.emit(this.selected);
     }
 
     toggleSortDirection() {
         this.ascending = !this.ascending;
-        this.raiseChangedEvent();
-    }
-
-    private raiseChangedEvent() {
-        this.change.emit({
-            key: this.selected,
-            ascending: this.ascending
-        });
+        this.sortingChange.emit(this.ascending);
     }
 }

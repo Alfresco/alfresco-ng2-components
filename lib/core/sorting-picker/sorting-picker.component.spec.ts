@@ -27,23 +27,19 @@ describe('SortingPickerComponent', () => {
 
     it('should raise changed event on changing value', (done) => {
         component.selected = 'key1';
-        component.ascending = false;
 
-        component.change.subscribe((event: { key: string, ascending: boolean }) =>  {
-            expect(event.key).toBe('key2');
-            expect(event.ascending).toBeFalsy();
+        component.valueChange.subscribe((key: string) =>  {
+            expect(key).toBe('key2');
             done();
         });
-        component.onChanged(<any> { value: 'key2' });
+        component.onOptionChanged(<any> { value: 'key2' });
     });
 
     it('should raise changed event on changing direction', (done) => {
-        component.selected = 'key1';
         component.ascending = false;
 
-        component.change.subscribe((event: { key: string, ascending: boolean }) =>  {
-            expect(event.key).toBe('key1');
-            expect(event.ascending).toBeTruthy();
+        component.sortingChange.subscribe((ascending: boolean) =>  {
+            expect(ascending).toBeTruthy();
             done();
         });
         component.toggleSortDirection();
