@@ -18,7 +18,7 @@
 import { StorageService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProcessFilterRepresentationModel, ProcessQueryModel } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 
 @Injectable()
 export class ProcessFilterCloudService {
@@ -31,7 +31,7 @@ export class ProcessFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of default filters just created
      */
-    public createDefaultFilters(appName: string): Observable<ProcessFilterRepresentationModel[]> {
+    public createDefaultFilters(appName: string): Observable<ProcessFilterCloudModel[]> {
         const allProcessesFilter = this.getAllProcessesFilter(appName);
         this.addFilter(allProcessesFilter);
         const runningProcessesFilter = this.getRunningProcessesFilter(appName);
@@ -47,7 +47,7 @@ export class ProcessFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of process filter details
      */
-    getProcessFilters(appName: string): Observable<ProcessFilterRepresentationModel[]> {
+    getProcessFilters(appName: string): Observable<ProcessFilterCloudModel[]> {
         let key = 'process-filters-' + appName;
         const filters = JSON.parse(this.storage.getItem(key) || '[]');
         return new Observable(function(observer) {
@@ -57,12 +57,25 @@ export class ProcessFilterCloudService {
     }
 
     /**
+     * Get process instance filter for given filter id
+     * @param appName Name of the target app
+     * @param id Id of the target process instance filter
+     * @returns Details of process filter
+     */
+    getProcessFilterById(appName: string, id: string): ProcessFilterCloudModel {
+        const key = 'process-filters-' + appName;
+        let filters = [];
+        filters = JSON.parse(this.storage.getItem(key)) || [];
+        return filters.filter((filterTmp: ProcessFilterCloudModel) => id === filterTmp.id)[0];
+    }
+
+    /**
      * Adds a new process instance filter
      * @param filter The new filter to add
      * @returns Details of process filter just added
      */
-    addFilter(filter: ProcessFilterRepresentationModel) {
-        const key = 'process-filters-' + filter.query.appName;
+    addFilter(filter: ProcessFilterCloudModel) {
+        const key = 'process-filters-' + filter.appName;
         const storedFilters = JSON.parse(this.storage.getItem(key) || '[]');
 
         storedFilters.push(filter);
@@ -70,22 +83,46 @@ export class ProcessFilterCloudService {
     }
 
     /**
+     *  Update process instance filter
+     * @param filter The new filter to update
+     */
+    updateFilter(filter: ProcessFilterCloudModel) {
+        const key = 'process-filters-' + filter.appName;
+        if (key) {
+            let filters = JSON.parse(this.storage.getItem(key) || '[]');
+            let itemIndex = filters.findIndex((flt: ProcessFilterCloudModel) => flt.id === filter.id);
+            filters[itemIndex] = filter;
+            this.storage.setItem(key, JSON.stringify(filters));
+        }
+    }
+
+    /**
+     *  Delete process instance filter
+     * @param filter The new filter to delete
+     */
+    deleteFilter(filter: ProcessFilterCloudModel) {
+        const key = 'process-filters-' + filter.appName;
+        if (key) {
+            let filters = JSON.parse(this.storage.getItem(key) || '[]');
+            filters = filters.filter((item) => item.id !== filter.id);
+            this.storage.setItem(key, JSON.stringify(filters));
+        }
+    }
+
+    /**
      * Creates and returns a filter for "All" Process instances.
      * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getAllProcessesFilter(appName: string): ProcessFilterRepresentationModel {
-        return new ProcessFilterRepresentationModel({
+    getAllProcessesFilter(appName: string): ProcessFilterCloudModel {
+        return new ProcessFilterCloudModel({
             name: 'ADF_CLOUD_PROCESS_FILTERS.ALL_PROCESSES',
             key: 'all-processes',
             icon: 'adjust',
-            query: new ProcessQueryModel(
-                {
-                    appName: appName,
-                    sort: 'startDate',
-                    order: 'DESC'
-                }
-            )
+            appName: appName,
+            sort: 'startDate',
+            state: '',
+            order: 'DESC'
         });
     }
 
@@ -94,19 +131,15 @@ export class ProcessFilterCloudService {
      * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getRunningProcessesFilter(appName: string): ProcessFilterRepresentationModel {
-        return new ProcessFilterRepresentationModel({
+    getRunningProcessesFilter(appName: string): ProcessFilterCloudModel {
+        return new ProcessFilterCloudModel({
             name: 'ADF_CLOUD_PROCESS_FILTERS.RUNNING_PROCESSES',
             icon: 'inbox',
             key: 'running-processes',
-            query: new ProcessQueryModel(
-                {
-                    appName: appName,
-                    sort: 'startDate',
-                    state: 'RUNNING',
-                    order: 'DESC'
-                }
-            )
+            appName: appName,
+            sort: 'startDate',
+            state: 'RUNNING',
+            order: 'DESC'
         });
     }
 
@@ -115,19 +148,15 @@ export class ProcessFilterCloudService {
      * @param appName Name of the target app
      * @returns The newly created filter
      */
-    getCompletedProcessesFilter(appName: string): ProcessFilterRepresentationModel {
-        return new ProcessFilterRepresentationModel({
+    getCompletedProcessesFilter(appName: string): ProcessFilterCloudModel {
+        return new ProcessFilterCloudModel({
             name: 'ADF_CLOUD_PROCESS_FILTERS.COMPLETED_PROCESSES',
             icon: 'done',
             key: 'completed-processes',
-            query: new ProcessQueryModel(
-                {
-                    appName: appName,
-                    sort: 'startDate',
-                    state: 'COMPLETED',
-                    order: 'DESC'
-                }
-            )
+            appName: appName,
+            sort: 'startDate',
+            state: 'COMPLETED',
+            order: 'DESC'
         });
     }
 }
