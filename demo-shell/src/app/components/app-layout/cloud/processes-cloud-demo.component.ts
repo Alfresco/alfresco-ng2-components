@@ -25,7 +25,6 @@ import {
 } from '@alfresco/adf-process-services-cloud';
 
 import { ActivatedRoute } from '@angular/router';
-import { FormControl } from '@angular/forms';
 import { UserPreferencesService } from '@alfresco/adf-core';
 
 @Component({
