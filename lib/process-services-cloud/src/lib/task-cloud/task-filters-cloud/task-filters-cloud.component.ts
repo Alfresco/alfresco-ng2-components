@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
-import { TaskFilterCloudModel } from '../models/filter-cloud.model';
+import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
 @Component({
     selector: 'adf-cloud-task-filters',
@@ -35,7 +35,7 @@ export class TaskFiltersCloudComponent implements OnChanges {
      * (the first one in the list) is selected.
      */
     @Input()
-    filterParam: TaskFilterCloudModel;
+    filterParam: FilterParamsModel;
 
     /** Toggles display of the filter's icons. */
     @Input()
@@ -91,14 +91,14 @@ export class TaskFiltersCloudComponent implements OnChanges {
         );
     }
 
-    public selectFilter(newFilter: TaskFilterCloudModel) {
-        if (newFilter) {
+    public selectFilter(paramFilter: FilterParamsModel) {
+        if (paramFilter) {
             this.currentFilter = this.filters.find( (filter: TaskFilterCloudModel, index) =>
-                newFilter.index === index ||
-                newFilter.key === filter.key ||
-                newFilter.id === filter.id ||
-                (newFilter.name &&
-                    (newFilter.name.toLocaleLowerCase() === this.translationService.instant(filter.name).toLocaleLowerCase())
+                paramFilter.index === index ||
+                paramFilter.key === filter.key ||
+                paramFilter.id === filter.id ||
+                (paramFilter.name &&
+                    (paramFilter.name.toLocaleLowerCase() === this.translationService.instant(filter.name).toLocaleLowerCase())
                 ));
         }
         if (!this.currentFilter) {
@@ -106,8 +106,8 @@ export class TaskFiltersCloudComponent implements OnChanges {
         }
     }
 
-    public selectFilterAndEmit(newFilter: TaskFilterCloudModel) {
-        this.selectFilter(newFilter);
+    public selectFilterAndEmit(newParamFilter: FilterParamsModel) {
+        this.selectFilter(newParamFilter);
         this.filterClick.emit(this.currentFilter);
     }
 

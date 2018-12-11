@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { TaskCloudModule } from './../task-cloud.module';
@@ -32,6 +32,7 @@ import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.compo
 describe('EditTaskFilterCloudComponent', () => {
     let component: EditTaskFilterCloudComponent;
     let service: TaskFilterCloudService;
+    let identityService: IdentityUserService;
     let fixture: ComponentFixture<EditTaskFilterCloudComponent>;
     let dialog: MatDialog;
 
@@ -56,6 +57,7 @@ describe('EditTaskFilterCloudComponent', () => {
         fixture = TestBed.createComponent(EditTaskFilterCloudComponent);
         component = fixture.componentInstance;
         service = TestBed.get(TaskFilterCloudService);
+        identityService = TestBed.get(IdentityUserService);
         dialog = TestBed.get(MatDialog);
         spyOn(dialog, 'open').and.returnValue({ afterClosed() { return of({
             action: TaskFilterDialogCloudComponent.ACTION_SAVE,
@@ -223,6 +225,7 @@ describe('EditTaskFilterCloudComponent', () => {
         });
 
         it('should emit save event and save the filter on click save button', async(() => {
+            spyOn(identityService, 'getCurrentUserInfo').and.returnValue({username: 'currentUser'});
             const saveFilterSpy = spyOn(service, 'updateFilter').and.returnValue(fakeFilter);
             let saveSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -244,6 +247,7 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
 
         it('should emit delete event and delete the filter on click of delete button', async(() => {
+            spyOn(identityService, 'getCurrentUserInfo').and.returnValue({username: 'currentUser'});
             const deleteFilterSpy = spyOn(service, 'deleteFilter').and.callThrough();
             let deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -262,6 +266,7 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
 
         it('should emit saveAs event and add filter on click saveAs button', async(() => {
+            spyOn(identityService, 'getCurrentUserInfo').and.returnValue({username: 'currentUser'});
             const saveAsFilterSpy = spyOn(service, 'addFilter').and.callThrough();
             let saveAsSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -272,7 +277,7 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-as-id');
             const stateOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-            stateOptions[3].nativeElement.click();
+            stateOptions[2].nativeElement.click();
             fixture.detectChanges();
             saveButton.click();
             fixture.detectChanges();

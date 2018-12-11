@@ -23,7 +23,7 @@ import { IdentityUserModel } from './../models/identity-user.model';
 import { BpmUserService } from './../services/bpm-user.service';
 import { EcmUserService } from './../services/ecm-user.service';
 import { IdentityUserService } from '../services/identity-user.service';
-import { Observable } from 'rxjs';
+import { of, Observable } from 'rxjs';
 
 @Component({
     selector: 'adf-userinfo',
@@ -100,7 +100,7 @@ export class UserInfoComponent implements OnInit {
     }
 
     loadIdentityUserInfo() {
-        this.identityUser$ = this.identityUserService.getCurrentUserInfo();
+        this.identityUser$ = of(this.identityUserService.getCurrentUserInfo());
     }
 
     stopClosing(event) {

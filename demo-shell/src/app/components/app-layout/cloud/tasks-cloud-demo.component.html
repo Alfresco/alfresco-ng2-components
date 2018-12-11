@@ -2,6 +2,7 @@
     <adf-cloud-edit-task-filter
         [appName]="applicationName"
         [id]="filterId"
+        (action)="onTaskFilterAction($event)"
         (filterChange)="onFilterChange($event)">
     </adf-cloud-edit-task-filter>
 

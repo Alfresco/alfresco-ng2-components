@@ -3,7 +3,7 @@
         [appName]="applicationName"
         [id]="filterId"
         (filterChange)="onFilterChange($event)"
-        (action)="onEditActions($event)">
+        (action)="onProcessFilterAction($event)">
     </adf-cloud-edit-process-filter>
     <div fxLayout="column" fxFlex fxLayoutAlign="space-between" *ngIf="editedFilter">
         <adf-cloud-process-list fxFlex class="adf-cloud-layout-overflow"

@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { of, Observable, from } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IdentityUserModel } from '../models/identity-user.model';
@@ -40,13 +40,13 @@ export class IdentityUserService {
         private apiService: AlfrescoApiService,
         private appConfigService: AppConfigService) {}
 
-    getCurrentUserInfo(): Observable<IdentityUserModel> {
+    getCurrentUserInfo(): IdentityUserModel {
         const fullName = this.getValueFromToken<string>(IdentityUserService.USER_NAME);
         const email = this.getValueFromToken<string>(IdentityUserService.USER_EMAIL);
         const username = this.getValueFromToken<string>(IdentityUserService.USER_PREFERRED_USERNAME);
         const nameParts = fullName.split(' ');
         const user = { firstName: nameParts[0], lastName: nameParts[1], email: email, username: username };
-        return of(new IdentityUserModel(user));
+        return new IdentityUserModel(user);
     }
 
     getValueFromToken<T>(key: string): T {
@@ -110,7 +110,7 @@ export class IdentityUserService {
     async getUsersByRolesWithoutCurrentUser(roleNames: string[]): Promise<IdentityUserModel[]> {
         const filteredUsers: IdentityUserModel[] = [];
         if (roleNames && roleNames.length > 0) {
-            const currentUser = await this.getCurrentUserInfo().toPromise();
+            const currentUser = this.getCurrentUserInfo();
             let users = await this.getUsers().toPromise();
 
             users = users.filter((user) => { return user.username !== currentUser.username; });

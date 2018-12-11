@@ -15,15 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, ViewEncapsulation, Output, Input } from '@angular/core';
+import { Component, EventEmitter, ViewEncapsulation, Output, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { CloudLayoutService } from './services/cloud-layout.service';
 
 @Component({
-  selector: 'app-cloud-fillters-demo',
+  selector: 'app-cloud-filters-demo',
   templateUrl: './cloud-filters-demo.component.html',
   styleUrls: ['cloud-filters-demo.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CloudFiltersDemoComponent {
+export class CloudFiltersDemoComponent implements OnInit {
 
   @Input()
   appName: string;
@@ -37,12 +39,23 @@ export class CloudFiltersDemoComponent {
   panelOpenStateTask: boolean;
   panelOpenStateProcess: boolean;
 
+  currentTaskFilter$: Observable<any>;
+  currentProcessFilter$: Observable<any>;
+
+  constructor(private cloudLayoutService: CloudLayoutService) {
+  }
+
+  ngOnInit() {
+    this.currentTaskFilter$  = this.cloudLayoutService.getCurrentTaskFilterParam();
+    this.currentProcessFilter$  = this.cloudLayoutService.getCurrentProcessFilterParam();
+  }
+
   onTaskFilterSelected(filter) {
-    this.taskFilterSelect.emit(filter);
+    this.cloudLayoutService.setCurrentTaskFilterParam({id: filter.id});
   }
 
   onProcessFilterSelected(filter) {
-    this.processFilterSelect.emit(filter);
+    this.cloudLayoutService.setCurrentProcessFilterParam({id: filter.id});
   }
 
 }

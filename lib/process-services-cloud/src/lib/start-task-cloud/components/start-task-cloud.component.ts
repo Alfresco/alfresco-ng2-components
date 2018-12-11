@@ -128,8 +128,8 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
              StartTaskCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
     }
 
-    private async loadCurrentUser() {
-        this.currentUser = await this.identityUserService.getCurrentUserInfo().toPromise();
+    private loadCurrentUser() {
+        this.currentUser = this.identityUserService.getCurrentUserInfo();
     }
 
     public saveTask() {

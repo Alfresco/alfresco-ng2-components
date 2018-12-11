@@ -79,34 +79,13 @@ export class ProcessFiltersCloudComponent implements OnChanges {
 
         this.filters$.subscribe(
             (res: ProcessFilterCloudModel[]) => {
-                if (res.length === 0) {
-                    this.createFilters(appName);
-                } else {
-                    this.resetFilter();
-                    this.filters = res;
-                }
+                this.resetFilter();
+                this.filters = Object.assign([], res);
                 this.selectFilterAndEmit(this.filterParam);
                 this.success.emit(res);
             },
             (err: any) => {
                 this.error.emit(err);
-            }
-        );
-    }
-
-    /**
-     * Create default filters by appName
-     */
-    createFilters(appName?: string) {
-        this.filters$ = this.processFilterCloudService.createDefaultFilters(appName);
-
-        this.filters$.subscribe(
-            (resDefault: ProcessFilterCloudModel[]) => {
-                this.resetFilter();
-                this.filters = resDefault;
-            },
-            (errDefault: any) => {
-                this.error.emit(errDefault);
             }
         );
     }

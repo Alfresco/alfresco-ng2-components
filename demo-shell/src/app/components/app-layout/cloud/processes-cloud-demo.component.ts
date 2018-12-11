@@ -19,13 +19,13 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import {
     ProcessListCloudComponent,
     ProcessFilterCloudModel,
-    EditProcessFilterCloudComponent,
     ProcessListCloudSortingModel,
     ProcessFiltersCloudComponent
 } from '@alfresco/adf-process-services-cloud';
 
 import { ActivatedRoute } from '@angular/router';
 import { UserPreferencesService } from '@alfresco/adf-core';
+import { CloudLayoutService } from './services/cloud-layout.service';
 
 @Component({
     templateUrl: './processes-cloud-demo.component.html',
@@ -48,8 +48,10 @@ export class ProcessesCloudDemoComponent implements OnInit {
 
     editedFilter: ProcessFilterCloudModel;
 
-    constructor(private route: ActivatedRoute,
-                private userPreference: UserPreferencesService) {
+    constructor(
+        private route: ActivatedRoute,
+        private cloudLayoutService: CloudLayoutService,
+        private userPreference: UserPreferencesService) {
     }
 
     ngOnInit() {
@@ -78,27 +80,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
         this.sortArray = [new ProcessListCloudSortingModel({ orderBy: this.editedFilter.sort, direction: this.editedFilter.order })];
     }
 
-    onEditActions(event: any) {
-        if (event.actionType === EditProcessFilterCloudComponent.ACTION_SAVE) {
-            this.save(event.id);
-        } else if (event.actionType === EditProcessFilterCloudComponent.ACTION_SAVE_AS) {
-            this.saveAs(event.id);
-        } else if (event.actionType === EditProcessFilterCloudComponent.ACTION_DELETE) {
-            this.deleteFilter();
-        }
-    }
-
-    saveAs(filterId) {
-        this.processFiltersCloud.filterParam = <any> {id : filterId};
-        this.processFiltersCloud.getFilters(this.applicationName);
-    }
-
-    save(filterId) {
-        this.processFiltersCloud.filterParam = <any> {id : filterId};
-        this.processFiltersCloud.getFilters(this.applicationName);
-    }
-
-    deleteFilter() {
-        this.processFiltersCloud.getFilters(this.applicationName);
-    }
+    onProcessFilterAction(filter: any) {
+        this.cloudLayoutService.setCurrentProcessFilterParam({id: filter.id});
+     }
 }
