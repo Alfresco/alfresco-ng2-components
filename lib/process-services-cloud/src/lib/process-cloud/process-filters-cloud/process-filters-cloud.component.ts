@@ -127,6 +127,13 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     }
 
     /**
+     * Select filter with the id
+     */
+    public selectFilterById(id: string) {
+        this.selectFilterAndEmit(<ProcessFilterCloudModel> {id: id});
+    }
+
+    /**
      * Select as default process filter the first in the list
      */
     public selectDefaultProcessFilter() {
