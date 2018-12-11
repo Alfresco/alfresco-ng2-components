@@ -64,11 +64,16 @@ import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
 import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
-import { CloudComponent } from './components/cloud/cloud.component';
-import { TaskListCloudDemoComponent } from './components/task-list-cloud-demo/task-list-cloud-demo.component';
-import { ProcessListCloudExampleComponent } from './components/cloud/process-list-cloud-example.component';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { AppExtensionsModule } from './extensions/extensions.module';
+import { CloudLayoutComponent } from './components/app-layout/cloud/cloud-layout.component';
+import { AppsCloudDemoComponent } from './components/app-layout/cloud/apps-cloud-demo.component';
+import { ProcessesCloudDemoComponent } from './components/app-layout/cloud/processes-cloud-demo.component';
+import { StartTaskCloudDemoComponent } from './components/app-layout/cloud/start-task-cloud-demo.component';
+import { CloudBreadcrumbsComponent } from './components/app-layout/cloud/cloud-breadcrumb-component';
+import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-cloud-demo.component';
+import { CloudFiltersDemoComponent } from './components/app-layout/cloud/cloud-filters-demo.component';
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -92,7 +97,6 @@ import { AppExtensionsModule } from './extensions/extensions.module';
     declarations: [
         AppComponent,
         LoginComponent,
-        CloudComponent,
         LogoutComponent,
         AppLayoutComponent,
         HomeComponent,
@@ -118,10 +122,14 @@ import { AppExtensionsModule } from './extensions/extensions.module';
         DemoPermissionComponent,
         FormLoadingComponent,
         ReportIssueComponent,
-        TaskListCloudDemoComponent,
-        ProcessListCloudExampleComponent,
         TreeViewSampleComponent,
-        TaskListCloudDemoComponent
+        CloudLayoutComponent,
+        AppsCloudDemoComponent,
+        TasksCloudDemoComponent,
+        ProcessesCloudDemoComponent,
+        StartTaskCloudDemoComponent,
+        CloudBreadcrumbsComponent,
+        CloudFiltersDemoComponent
     ],
     providers: [
         {

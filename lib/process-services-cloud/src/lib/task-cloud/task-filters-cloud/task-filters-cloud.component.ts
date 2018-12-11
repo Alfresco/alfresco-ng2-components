@@ -80,34 +80,13 @@ export class TaskFiltersCloudComponent implements OnChanges {
 
         this.filters$.subscribe(
             (res: TaskFilterCloudModel[]) => {
-                if (res.length === 0) {
-                    this.createFilters(appName);
-                } else {
-                    this.resetFilter();
-                    this.filters = res;
-                }
+                this.resetFilter();
+                this.filters = Object.assign([], res);
                 this.selectFilterAndEmit(this.filterParam);
                 this.success.emit(res);
             },
             (err: any) => {
                 this.error.emit(err);
-            }
-        );
-    }
-
-    /**
-     * Create default filters by appId
-     */
-    createFilters(appName?: string) {
-        this.filters$ =  this.taskFilterCloudService.createDefaultFilters(appName);
-
-        this.filters$.subscribe(
-            (resDefault: TaskFilterCloudModel[]) => {
-                this.resetFilter();
-                this.filters = resDefault;
-            },
-            (errDefault: any) => {
-                this.error.emit(errDefault);
             }
         );
     }

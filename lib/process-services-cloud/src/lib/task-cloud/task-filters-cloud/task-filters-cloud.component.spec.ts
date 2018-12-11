@@ -67,14 +67,6 @@ describe('TaskFiltersCloudComponent', () => {
         resolve(fakeGlobalFilter);
     });
 
-    let fakeGlobalEmptyFilter = {
-        message: 'invalid data'
-    };
-
-    let fakeGlobalEmptyFilterPromise = new Promise(function (resolve, reject) {
-        resolve(fakeGlobalEmptyFilter);
-    });
-
     let mockErrorFilterList = {
         error: 'wrong request'
     };
@@ -205,21 +197,6 @@ describe('TaskFiltersCloudComponent', () => {
         });
 
     }));
-
-    it('should be able to fetch and select the default filters if the input filter is not valid', (done) => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalEmptyFilterPromise));
-        spyOn(component, 'createFilters').and.callThrough();
-
-        const appName = 'my-app-1';
-        let change = new SimpleChange(null, appName, true);
-        component.ngOnChanges({ 'appName': change });
-
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.createFilters).not.toHaveBeenCalled();
-            done();
-        });
-    });
 
     it('should select the task filter based on the input by name param', async(() => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);

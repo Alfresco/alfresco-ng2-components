@@ -17,13 +17,17 @@
 
 import { StorageService, JwtHelperService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
-
 @Injectable()
 export class TaskFilterCloudService {
 
+    private filtersSubject: BehaviorSubject<TaskFilterCloudModel[]>;
+    filters$: Observable<TaskFilterCloudModel[]>;
+
     constructor(private storage: StorageService, private jwtService: JwtHelperService) {
+        this.filtersSubject = new BehaviorSubject([]);
+        this.filters$ = this.filtersSubject.asObservable();
     }
 
     /**
@@ -31,14 +35,12 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of default filters just created
      */
-    public createDefaultFilters(appName: string): Observable<TaskFilterCloudModel[]> {
+    public createDefaultFilters(appName: string) {
         let myTasksFilter = this.getMyTasksFilterInstance(appName);
         this.addFilter(myTasksFilter);
 
         let completedTasksFilter = this.getCompletedTasksFilterInstance(appName);
         this.addFilter(completedTasksFilter);
-
-        return this.getTaskListFilters(appName);
     }
 
     /**
@@ -50,10 +52,13 @@ export class TaskFilterCloudService {
         const username = this.getUsername();
         let key = `task-filters-${appName}-${username}`;
         const filters = JSON.parse(this.storage.getItem(key) || '[]');
-        return new Observable(function(observer) {
-            observer.next(filters);
-            observer.complete();
-        });
+
+        if (filters.length === 0) {
+            this.createDefaultFilters(appName);
+        } else {
+            this.addFiltersToStream(filters);
+        }
+        return this.filters$;
     }
 
     getTaskFilterById(appName: string, id: string): TaskFilterCloudModel {
@@ -69,7 +74,7 @@ export class TaskFilterCloudService {
      * @param filter The new filter to add
      * @returns Details of task filter just added
      */
-    addFilter(filter: TaskFilterCloudModel): Observable<TaskFilterCloudModel> {
+    addFilter(filter: TaskFilterCloudModel) {
         const username = this.getUsername();
         const key = `task-filters-${filter.appName}-${username}`;
         let filters = JSON.parse(this.storage.getItem(key) || '[]');
@@ -78,10 +83,11 @@ export class TaskFilterCloudService {
 
         this.storage.setItem(key, JSON.stringify(filters));
 
-        return new Observable(function(observer) {
-            observer.next(filter);
-            observer.complete();
-        });
+        this.addFiltersToStream(filters);
+    }
+
+    private addFiltersToStream(filters: TaskFilterCloudModel []) {
+        this.filtersSubject.next(filters);
     }
 
     /**
@@ -107,9 +113,14 @@ export class TaskFilterCloudService {
         const username = this.getUsername();
         const key = `task-filters-${filter.appName}-${username}`;
         if (key) {
-            let filters = JSON.parse(this.storage.getItem(key) || '[]');
+            let filters: TaskFilterCloudModel[] = JSON.parse(this.storage.getItem(key) || '[]');
             filters = filters.filter((item) => item.id !== filter.id);
             this.storage.setItem(key, JSON.stringify(filters));
+            if (filters.length === 0) {
+                this.createDefaultFilters(filter.appName);
+            } else {
+                this.addFiltersToStream(filters);
+            }
         }
     }
 

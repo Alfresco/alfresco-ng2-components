@@ -273,7 +273,11 @@
       }
     }
   },
-  "PROCESS_LIST_CLOUD": {
-    "TITLE": "PROCESS LIST CLOUD DEMO"
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "CUSTOMIZE_FILTERS": "Customise your filter"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Customise your filter"
   }
 }

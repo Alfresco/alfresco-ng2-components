@@ -17,17 +17,17 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
 @Component({
-    selector: 'app-cloud',
-    templateUrl: './cloud.component.html',
-    styleUrls: ['./cloud.component.scss']
+    templateUrl: './apps-cloud-demo.component.html'
 })
-export class CloudComponent {
+
+export class AppsCloudDemoComponent {
 
     constructor(private router: Router) {
     }
 
     onAppClick(app) {
-        this.router.navigate([`/cloud/${app.name}/tasks/`]);
+        this.router.navigate([`/cloud/${app.name}`]);
     }
 }

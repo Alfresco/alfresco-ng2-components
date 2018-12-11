@@ -16,16 +16,16 @@
  */
 
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { UserPreferencesService } from '@alfresco/adf-core';
 import { ProcessListCloudComponent } from '@alfresco/adf-process-services-cloud';
+import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { UserPreferencesService } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'app-process-list-example',
-    templateUrl: './process-list-cloud-example.component.html',
-    styleUrls: ['./process-list-cloud-example.component.scss']
+    templateUrl: './processes-cloud-demo.component.html',
+    styleUrls: ['./processes-cloud-demo.component.scss']
 })
-export class ProcessListCloudExampleComponent implements OnInit {
+export class ProcessesCloudDemoComponent implements OnInit {
 
     @ViewChild('processCloud')
     processCloud: ProcessListCloudComponent;
@@ -33,14 +33,17 @@ export class ProcessListCloudExampleComponent implements OnInit {
     sortFormControl: FormControl;
     sortDirectionFormControl: FormControl;
 
-    currentAppName: string = '';
-    filterName: string = '';
+    applicationName: string = '';
+    isFilterLoaded:  boolean;
+
     status: string = '';
+    filterName: string;
     filterId: string = '';
     sort: string = '';
-    sortArray: any[];
+    sortArray: any = [];
     sortField: string;
     sortDirection: string;
+    selectedRow: any;
 
     columns = [
         {key: 'id', label: 'ID'},
@@ -49,10 +52,16 @@ export class ProcessListCloudExampleComponent implements OnInit {
         {key: 'startDate', label: 'START DATE'}
       ];
 
-    constructor(private userPreference: UserPreferencesService) {
+    constructor(private route: ActivatedRoute,
+                private userPreference: UserPreferencesService) {
     }
 
     ngOnInit() {
+        this.isFilterLoaded = false;
+        this.route.parent.params.subscribe((params) => {
+            this.applicationName = params.applicationName;
+        });
+
         this.sortFormControl = new FormControl('');
 
         this.sortFormControl.valueChanges.subscribe(
@@ -77,30 +86,26 @@ export class ProcessListCloudExampleComponent implements OnInit {
                 }];
             }
         );
-    }
 
-    onAppClick(appClicked: any) {
-        this.currentAppName = appClicked.name;
-    }
-
-    onClick() {
-        this.currentAppName = '';
+        this.route.queryParams
+            .subscribe((params) => {
+                if (params.filterName) {
+                    this.status = params.status ? params.status : '';
+                    this.sort = params.sort;
+                    this.sortDirection = params.order;
+                    this.filterName = params.filterName;
+                    this.isFilterLoaded = true;
+                    this.sortDirectionFormControl.setValue(this.sortDirection);
+                    this.sortFormControl.setValue(this.sort);
+                }
+            });
     }
 
     onChangePageSize(event) {
         this.userPreference.paginationSize = event.maxItems;
     }
 
-    onClearFilters() {
-        this.processCloud.reload();
-    }
-
-    onFilterSelected(filter) {
-        this.status = filter.query.state || '';
-        this.sort = filter.query.sort;
-        this.sortDirection = filter.query.order;
-        this.filterName = filter.name;
-        this.sortDirectionFormControl.setValue(this.sortDirection);
-        this.sortFormControl.setValue(this.sort);
+    onRowClick($event) {
+        this.selectedRow = $event;
     }
 }

@@ -1,0 +1,6 @@
+<adf-cloud-start-task
+    [appName]="applicationName"
+    (error)="openSnackMessage($event)"
+    (success)="onStartTaskSuccess()"
+    (cancel)="onCancelStartTask()">
+</adf-cloud-start-task>
