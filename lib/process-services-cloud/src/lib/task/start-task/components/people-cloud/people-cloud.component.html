@@ -1,7 +1,7 @@
 <form>
 <mat-form-field class="adf-people-cloud">
     <mat-label id="assignee-id">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE' | translate}}</mat-label>
-    <mat-chip-list #userChipList *ngIf="isMultipleMode()">
+    <mat-chip-list #userChipList *ngIf="isMultipleMode(); else singleSelection">
       <mat-chip
         *ngFor="let user of selectedUsers$ | async"
         (removed)="onRemove(user)">
@@ -18,13 +18,14 @@
         data-automation-id="adf-people-cloud-search-input">
     </mat-chip-list>
 
-    <input *ngIf="!isMultipleMode()"
-           matInput
+    <ng-template #singleSelection>
+    <input matInput
            class="adf-cloud-input"
            data-automation-id="adf-people-cloud-search-input"
            type="text"
            [formControl]="searchUser"
            [matAutocomplete]="auto">
+    </ng-template>
     <mat-autocomplete autoActiveFirstOption class="adf-people-cloud-list"
                       #auto="matAutocomplete"
                       (optionSelected)="onSelect($event.option.value)"
