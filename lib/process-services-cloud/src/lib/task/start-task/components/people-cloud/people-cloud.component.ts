@@ -51,12 +51,15 @@ export class PeopleCloudComponent implements OnInit {
     @Input()
     showCurrentUser: boolean = true;
 
+    /** Mode of the user selection (single/multiple) */
     @Input()
     mode: string = PeopleCloudComponent.MODE_SINGLE;
 
+    /** Roles of users to be listed */
     @Input()
     roles: string[];
 
+    /** Array of users to be pre-selected. Pre-select all users in multi selection mode and only the first user of the array in single selection mode */
     @Input()
     defaultUsers: IdentityUserModel[];
 
@@ -64,7 +67,7 @@ export class PeopleCloudComponent implements OnInit {
     @Output()
     selectUser: EventEmitter<IdentityUserModel> = new EventEmitter<IdentityUserModel>();
 
-    /** Emitted when a user is removed. */
+    /** Emitted when a selected user is removed in multi selection mode. */
     @Output()
     removeUser: EventEmitter<IdentityUserModel> = new EventEmitter<IdentityUserModel>();
 
