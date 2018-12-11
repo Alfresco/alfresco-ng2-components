@@ -59,9 +59,9 @@ describe('Process filters cloud', () => {
             await processInstancesService.init(user, password);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
 
-            let processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            completedProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
             await queryService.init(user, password);
-            let task = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
+            let task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, simpleApp);
             await tasksService.init(user, password);
             let claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
             await tasksService.completeTask(claimedTask.entry.id, simpleApp);
@@ -71,6 +71,7 @@ describe('Process filters cloud', () => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
+            processCloudDemoPage.clickOnProcessFilters();
             done();
         });
 
@@ -97,13 +98,21 @@ describe('Process filters cloud', () => {
             processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(runningProcess.entry.id);
         });
 
-        xit('[C289957] Should display task filter results when task filter is selected', () => {
-            tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            let task = tasksService.createStandaloneTask(myTask, simpleApp);
+        it('[C290044] Should display process in Completed Processes List when process is completed', () => {
+            processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
+            processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
+            expect(processCloudDemoPage.checkActiveFilterActive()).toBe('Running Processes');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedProcess.entry.id);
 
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('My Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(myTask);
+            processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
+            processCloudDemoPage.completedProcessesFilter().checkProcessFilterIsDisplayed();
+            expect(processCloudDemoPage.checkActiveFilterActive()).toBe('Completed Processes');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(completedProcess.entry.id);
+
+            processCloudDemoPage.allProcessesFilter().clickProcessFilter();
+            processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
+            expect(processCloudDemoPage.checkActiveFilterActive()).toBe('All Processes');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(completedProcess.entry.id);
         });
     });
 

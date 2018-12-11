@@ -1,5 +1,5 @@
 <mat-accordion>
-  <mat-expansion-panel [expanded]="true" (opened)="panelOpenStateTask = true" (closed)="panelOpenStateTask = false">
+  <mat-expansion-panel [expanded]="true" (opened)="panelOpenStateTask = true" (closed)="panelOpenStateTask = false" data-automation-id='Task Filters'>
     <mat-expansion-panel-header>
       <mat-panel-title>
         Task Filters
@@ -9,7 +9,7 @@
       </adf-cloud-task-filters>
   </mat-expansion-panel>
 
-  <mat-expansion-panel (opened)="panelOpenStateProcess = true" (closed)="panelOpenStateProcess = false">
+  <mat-expansion-panel (opened)="panelOpenStateProcess = true" (closed)="panelOpenStateProcess = false" data-automation-id='Process Filters'>
     <mat-expansion-panel-header>
       <mat-panel-title>
           Process Filters

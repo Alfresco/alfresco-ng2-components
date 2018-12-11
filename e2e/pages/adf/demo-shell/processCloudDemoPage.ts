@@ -27,15 +27,16 @@ export class ProcessCloudDemoPage {
     runningProcesses = element(by.css('span[data-automation-id="ADF_CLOUD_PROCESS_FILTERS.RUNNING_PROCESSES_filter"]'));
     completedProcesses = element(by.css('span[data-automation-id="ADF_CLOUD_PROCESS_FILTERS.COMPLETED_PROCESSES_filter"]'));
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
+    processFilters = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
 
-    processListCloudComponent = new ProcessListCloudComponent();
+    processListCloud = new ProcessListCloudComponent();
 
     processFiltersCloudComponent(filter) {
         return new ProcessFiltersCloudComponent(filter);
     }
 
     processListCloudComponent() {
-        return this.processListCloudComponent();
+        return this.processListCloud;
     }
 
     allProcessesFilter() {
@@ -57,5 +58,10 @@ export class ProcessCloudDemoPage {
     checkActiveFilterActive() {
         Util.waitUntilElementIsVisible(this.activeFilter);
         return this.activeFilter.getText();
+    }
+
+    clickOnProcessFilters() {
+        Util.waitUntilElementIsVisible(this.processFilters);
+        return this.processFilters.click();
     }
 }
