@@ -27,7 +27,6 @@ import { ProcessFilterCloudService } from './services/process-filter-cloud.servi
 import { HttpClientModule } from '@angular/common/http';
 import { StartProcessCloudComponent } from './start-process-cloud/start-process-cloud.component';
 import { ProcessCloudService } from './services/process-cloud.service';
-import { ReactiveFormsModule } from '@angular/forms';
 import { EditProcessFilterCloudComponent } from './process-filters-cloud/edit-process-filter-cloud.component';
 import { ProcessFilterDialogCloudComponent } from './process-filters-cloud/process-filter-dialog-cloud.component';
 @NgModule({
@@ -47,17 +46,17 @@ import { ProcessFilterDialogCloudComponent } from './process-filters-cloud/proce
         ReactiveFormsModule
     ],
     declarations: [
-    	ProcessFiltersCloudComponent,
-    	ProcessFilterDialogCloudComponent,
-    	EditProcessFilterCloudComponent,
-    	StartProcessCloudComponent
+        ProcessFiltersCloudComponent,
+        ProcessFilterDialogCloudComponent,
+        EditProcessFilterCloudComponent,
+        StartProcessCloudComponent
     ],
 
     exports: [
-    	ProcessFiltersCloudComponent,
-    	ProcessFilterDialogCloudComponent,
-    	EditProcessFilterCloudComponent,
-    	StartProcessCloudComponent
+        ProcessFiltersCloudComponent,
+        ProcessFilterDialogCloudComponent,
+        EditProcessFilterCloudComponent,
+        StartProcessCloudComponent
     ],
     providers: [
         ProcessFilterCloudService,
