@@ -21,6 +21,7 @@ import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/processCloudDemoPage';
+import { TasksCloudDemoPage } from '../pages/adf/demo-shell/tasksCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process_cloud/appListCloudComponent';
 
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
@@ -36,6 +37,7 @@ describe('Process filters cloud', () => {
         const navigationBarPage = new NavigationBarPage();
         let appListCloudComponent = new AppListCloudComponent();
         let processCloudDemoPage = new ProcessCloudDemoPage();
+        let tasksCloudDemoPage = new TasksCloudDemoPage();
 
         const tasksService: Tasks = new Tasks();
         const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
@@ -71,6 +73,7 @@ describe('Process filters cloud', () => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
+            tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             processCloudDemoPage.clickOnProcessFilters();
             done();
         });

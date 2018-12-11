@@ -46,6 +46,7 @@ export class ProcessFiltersCloudComponent {
 
     clickProcessFilter() {
         Util.waitUntilElementIsVisible(this.filter);
+        Util.waitUntilElementIsClickable(this.filter);
         return this.filter.click();
     }
 
