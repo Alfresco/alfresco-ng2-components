@@ -139,7 +139,17 @@ describe('InfinitePaginationComponent', () => {
 
             component.onLoadMore();
 
-            expect(testTarget.updatePagination).toHaveBeenCalledWith({ maxItems: 469, skipCount: 0, totalItems: 888, hasMoreItems: true, merge: true });
+            expect(testTarget.updatePagination).toHaveBeenCalledWith({ maxItems: 444 + 25, skipCount: 0, totalItems: 888, hasMoreItems: true, merge: true });
+        });
+
+        it('should call the target\'s updatePagination on invoking the onLoadMore with a specific pageSize', () => {
+            component.target = testTarget;
+            component.pageSize = 7;
+            fixture.detectChanges();
+
+            component.onLoadMore();
+
+            expect(testTarget.updatePagination).toHaveBeenCalledWith({ maxItems: 444 + component.pageSize, skipCount: 0, totalItems: 888, hasMoreItems: true, merge: true });
         });
 
         it('should unsubscribe from the target\'s pagination on onDestroy', () => {
