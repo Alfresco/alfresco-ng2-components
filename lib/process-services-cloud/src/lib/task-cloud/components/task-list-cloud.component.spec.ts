@@ -25,7 +25,8 @@ import { TaskListCloudComponent } from './task-list-cloud.component';
 import { fakeGlobalTask, fakeCustomSchema, fakeTaskCloudList } from '../mock/fakeTaskResponseMock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { TaskListCloudModule } from '../task-list-cloud.module';
+import { TaskCloudModule } from '../task-cloud.module';
+
 @Component({
     template: `
     <adf-cloud-task-list #taskListCloud>
@@ -63,7 +64,7 @@ describe('TaskListCloudComponent', () => {
 
     setupTestBed({
         imports: [
-            ProcessServiceCloudTestingModule, TaskListCloudModule
+            ProcessServiceCloudTestingModule, TaskCloudModule
         ],
         providers: [TaskListCloudService]
     });
@@ -287,7 +288,7 @@ describe('TaskListCloudComponent', () => {
         let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
 
         setupTestBed({
-            imports: [ProcessServiceCloudTestingModule, TaskListCloudModule],
+            imports: [ProcessServiceCloudTestingModule, TaskCloudModule],
             declarations: [EmptyTemplateComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA]
         });

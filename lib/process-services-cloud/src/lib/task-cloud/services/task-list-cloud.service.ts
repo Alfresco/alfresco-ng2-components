@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+import { TaskQueryCloudRequestModel } from '../models/filter-cloud.model';
 import { Observable, from, throwError } from 'rxjs';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 

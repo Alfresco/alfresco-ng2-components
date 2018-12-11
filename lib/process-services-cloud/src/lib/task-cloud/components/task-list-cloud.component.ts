@@ -21,11 +21,12 @@ import { AppConfigService, UserPreferencesService,
          PaginatedComponent, PaginationModel,
          DataRowEvent, EmptyCustomContentDirective } from '@alfresco/adf-core';
 import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
-import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+
 import { BehaviorSubject } from 'rxjs';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
+import { TaskQueryCloudRequestModel } from '../models/filter-cloud.model';
 
 @Component({
   selector: 'adf-cloud-task-list',

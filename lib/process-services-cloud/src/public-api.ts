@@ -17,7 +17,6 @@
 
 export * from './lib/process-services-cloud.module';
 export * from './lib/app-list-cloud/public-api';
-export * from './lib/task-list-cloud/public-api';
 export * from './lib/task-cloud/public-api';
 export * from './lib/process-cloud/public-api';
 export * from './lib/process-list-cloud/public_api';

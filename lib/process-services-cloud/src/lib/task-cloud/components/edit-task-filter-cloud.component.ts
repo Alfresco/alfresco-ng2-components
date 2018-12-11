@@ -17,7 +17,7 @@
 
 import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { TaskFilterCloudModel, FilterActionType } from './../models/filter-cloud.model';
+import { TaskFilterCloudModel, FilterActionType } from '../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { MatDialog } from '@angular/material';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
