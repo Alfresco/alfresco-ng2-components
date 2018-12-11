@@ -61,7 +61,7 @@ export class PeopleCloudComponent implements OnInit {
 
     /** Array of users to be pre-selected. Pre-select all users in multi selection mode and only the first user of the array in single selection mode */
     @Input()
-    preSelectedUsers: IdentityUserModel[];
+    preSelectUsers: IdentityUserModel[];
 
     /** Emitted when a user is selected. */
     @Output()
@@ -117,7 +117,7 @@ export class PeopleCloudComponent implements OnInit {
             this._users = await this.identityUserService.getUsersByRolesWithoutCurrentUser(roles);
         }
 
-        this.preSelectUsers();
+        this.loadPreSelectUsers();
     }
 
     private getApplicableRoles(): string[] {
@@ -137,9 +137,9 @@ export class PeopleCloudComponent implements OnInit {
         return of(filteredUsers);
     }
 
-    private preSelectUsers() {
-        if (this.preSelectedUsers && this.preSelectedUsers.length > 0) {
-            for (const preSelectedUser of this.preSelectedUsers) {
+    private loadPreSelectUsers() {
+        if (this.preSelectUsers && this.preSelectUsers.length > 0) {
+            for (const preSelectedUser of this.preSelectUsers) {
                 const newUser = this._users.find((user) => {
                     return user.id === preSelectedUser.id ||
                         (user.username && preSelectedUser.username && user.username.toLocaleLowerCase() === preSelectedUser.username.toLocaleLowerCase());
@@ -158,7 +158,7 @@ export class PeopleCloudComponent implements OnInit {
     }
 
     onSelect(user: IdentityUserModel) {
-        this.selectUser.emit(user);
+
         this.dataError = false;
 
         if (this.isMultipleMode()) {
@@ -167,10 +167,13 @@ export class PeopleCloudComponent implements OnInit {
             if (!isExistingUser) {
                 this._selectedUsers.push(user);
                 this.selectedUsers.next(this._selectedUsers);
+                this.selectUser.emit(user);
             }
 
             this.userInput.nativeElement.value = '';
             this.searchUser.setValue('');
+        } else {
+            this.selectUser.emit(user);
         }
     }
 
