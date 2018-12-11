@@ -1,0 +1,28 @@
+<div fxLayout="column" fxFill fxLayoutGap="2px">
+    <adf-cloud-edit-task-filter
+        [appName]="applicationName"
+        [id]="filterId"
+        (filterChange)="onFilterChange($event)">
+    </adf-cloud-edit-task-filter>
+
+    <div fxLayout="column" fxFlex fxLayoutAlign="space-between" *ngIf="editedFilter">
+        <adf-cloud-task-list #taskCloud
+            [applicationName]="editedFilter.appName"
+            [status]="editedFilter.state"
+            [assignee]="editedFilter.assignment"
+            [sorting]="sortArray"
+            (rowClick)="onRowClick($event)">
+            <data-columns>
+                <data-column key="entry.id" title="Id"></data-column>
+                <data-column key="entry.name" title="Name" class="full-width name-column ellipsis-cell"></data-column>
+                <data-column key="entry.status" title="Status"></data-column>
+                <data-column key="entry.processDefinitionId" title="Process Definition Id"></data-column>
+                <data-column key="entry.priority" title="Priority"></data-column>
+                <data-column key="entry.createdDate" type="date" title="Created Date" [format]="'timeAgo'"></data-column>
+            </data-columns>
+        </adf-cloud-task-list>
+        <adf-pagination [target]="taskCloud"
+                        (changePageSize)="onChangePageSize($event)">
+        </adf-pagination>
+    </div>
+</div>

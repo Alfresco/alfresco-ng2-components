@@ -1,0 +1,29 @@
+<div fxFill fxLayout>
+  <adf-sidenav-layout fxFlex [sidenavMin]="70" [sidenavMax]="270" [stepOver]="780">
+    <adf-sidenav-layout-header>
+      <ng-template>
+        <app-cloud-breadcrumbs></app-cloud-breadcrumbs>
+      </ng-template>
+    </adf-sidenav-layout-header>
+    <adf-sidenav-layout-navigation>
+      <ng-template>
+            <adf-sidebar-action-menu [expanded]="true" [width]="205"
+            title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
+            <mat-icon sidebar-menu-title-icon>arrow_drop_down</mat-icon>
+            <div sidebar-menu-options>
+            <button mat-menu-item data-automation-id="btn-start-task" (click)="onStartTask()">
+            <mat-icon>assessment</mat-icon>
+            <span>{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.NEW_TASK' | translate}}</span>
+            </button>
+            </div>
+            </adf-sidebar-action-menu>
+      <app-cloud-fillters-demo [appName]="applicationName" (taskFilterSelect)="onTaskFilterSelected($event)" (processFilterSelect)="onProcessFilterSelected($event)"></app-cloud-fillters-demo>
+      </ng-template>
+    </adf-sidenav-layout-navigation>
+    <adf-sidenav-layout-content>
+      <ng-template>
+        <router-outlet></router-outlet>
+      </ng-template>
+    </adf-sidenav-layout-content>
+  </adf-sidenav-layout>
+</div>
