@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { from, Observable } from 'rxjs';
-import { ProcessFilterRepresentationModel, ProcessFilterParamModel } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFiltersCloudComponent } from './process-filters-cloud.component';
 import { By } from '@angular/platform-browser';
@@ -31,24 +31,24 @@ describe('ProcessFiltersCloudComponent', () => {
     let processFilterService: ProcessFilterCloudService;
 
     let fakeGlobalFilter = [
-        new ProcessFilterRepresentationModel({
+        new ProcessFilterCloudModel({
             name: 'FakeAllProcesses',
             icon: 'adjust',
             id: '10',
-            query: {state: ''}
+            state: ''
         }),
-        new ProcessFilterRepresentationModel({
+        new ProcessFilterCloudModel({
             name: 'FakeRunningProcesses',
             icon: 'inbox',
             id: '11',
-            query: {state: 'RUNNING'}
+            state: 'RUNNING'
         }),
-        new ProcessFilterRepresentationModel({
+        new ProcessFilterCloudModel({
             name: 'FakeCompletedProcesses',
             key: 'completed-processes',
             icon: 'done',
             id: '12',
-            query: {state: 'COMPLETED'}
+            state: 'COMPLETED'
         })
     ];
 
@@ -205,7 +205,7 @@ describe('ProcessFiltersCloudComponent', () => {
     it('should select the filter based on the input by name param', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new ProcessFilterParamModel({ name: 'FakeRunningProcesses' });
+        component.filterParam = new ProcessFilterCloudModel({ name: 'FakeRunningProcesses' });
         const appName = 'my-app-1';
         let change = new SimpleChange(null, appName, true);
 
@@ -224,7 +224,7 @@ describe('ProcessFiltersCloudComponent', () => {
     it('should select the filter based on the input by key param', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new ProcessFilterParamModel({ key: 'completed-processes' });
+        component.filterParam = new ProcessFilterCloudModel({ key: 'completed-processes' });
         const appName = 'my-app-1';
         let change = new SimpleChange(null, appName, true);
 
@@ -244,7 +244,7 @@ describe('ProcessFiltersCloudComponent', () => {
     it('should select the default filter if filter input does not exist', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new ProcessFilterParamModel({ name: 'UnexistableFilter' });
+        component.filterParam = new ProcessFilterCloudModel({ name: 'UnexistableFilter' });
 
         const appName = 'my-app-1';
         let change = new SimpleChange(null, appName, true);
@@ -265,7 +265,7 @@ describe('ProcessFiltersCloudComponent', () => {
     it('should select the filter based on the input by index param', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new ProcessFilterParamModel({ index: 2 });
+        component.filterParam = new ProcessFilterCloudModel({ index: 2 });
 
         const appName = 'my-app-1';
         let change = new SimpleChange(null, appName, true);
@@ -285,7 +285,7 @@ describe('ProcessFiltersCloudComponent', () => {
     it('should select the filter based on the input by id param', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new ProcessFilterParamModel({ id: '12' });
+        component.filterParam = new ProcessFilterCloudModel({ id: '12' });
 
         const appName = 'my-app-1';
         let change = new SimpleChange(null, appName, true);
@@ -304,7 +304,7 @@ describe('ProcessFiltersCloudComponent', () => {
     it('should emit an event when a filter is selected', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new ProcessFilterParamModel({ id: '10' });
+        component.filterParam = new ProcessFilterCloudModel({ id: '10' });
 
         const appName = 'my-app-1';
         let change = new SimpleChange(null, appName, true);
@@ -369,7 +369,7 @@ describe('ProcessFiltersCloudComponent', () => {
         component.filters = fakeGlobalFilter;
 
         expect(component.currentFilter).toBeUndefined();
-        component.selectFilter(<ProcessFilterParamModel> {id: filter.id});
+        component.selectFilter(<ProcessFilterCloudModel> {id: filter.id});
         expect(component.getCurrentFilter()).toBe(filter);
     });
 });

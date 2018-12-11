@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
-import { ProcessFilterRepresentationModel, ProcessFilterParamModel } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
 @Component({
     selector: 'adf-cloud-process-filters',
@@ -33,7 +33,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
 
     /** (optional) The filter to be selected by default */
     @Input()
-    filterParam: ProcessFilterParamModel;
+    filterParam: ProcessFilterCloudModel;
 
     /** (optional) The flag hides/shows icon against each filter */
     @Input()
@@ -41,7 +41,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
 
     /** Emitted when a filter is selected/clicked */
     @Output()
-    filterClick: EventEmitter<ProcessFilterRepresentationModel> = new EventEmitter<ProcessFilterRepresentationModel>();
+    filterClick: EventEmitter<ProcessFilterCloudModel> = new EventEmitter<ProcessFilterCloudModel>();
 
     /** Emitted when filters are loaded successfully */
     @Output()
@@ -51,11 +51,11 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    filters$: Observable<ProcessFilterRepresentationModel[]>;
+    filters$: Observable<ProcessFilterCloudModel[]>;
 
-    currentFilter: ProcessFilterRepresentationModel;
+    currentFilter: ProcessFilterCloudModel;
 
-    filters: ProcessFilterRepresentationModel [] = [];
+    filters: ProcessFilterCloudModel [] = [];
 
     constructor(
         private processFilterCloudService: ProcessFilterCloudService,
@@ -78,7 +78,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
         this.filters$ = this.processFilterCloudService.getProcessFilters(appName);
 
         this.filters$.subscribe(
-            (res: ProcessFilterRepresentationModel[]) => {
+            (res: ProcessFilterCloudModel[]) => {
                 if (res.length === 0) {
                     this.createFilters(appName);
                 } else {
@@ -101,7 +101,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
         this.filters$ = this.processFilterCloudService.createDefaultFilters(appName);
 
         this.filters$.subscribe(
-            (resDefault: ProcessFilterRepresentationModel[]) => {
+            (resDefault: ProcessFilterCloudModel[]) => {
                 this.resetFilter();
                 this.filters = resDefault;
             },
@@ -114,7 +114,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     /**
      * Pass the selected filter as next
      */
-    public selectFilter(filterParam: ProcessFilterParamModel) {
+    public selectFilter(filterParam: ProcessFilterCloudModel) {
         if (filterParam) {
             this.currentFilter = this.filters.find((filter, index) => {
                 return filterParam.id === filter.id ||
@@ -141,7 +141,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     /**
      * Select and emit the given filter
      */
-    public selectFilterAndEmit(newFilter: ProcessFilterParamModel) {
+    public selectFilterAndEmit(newFilter: ProcessFilterCloudModel) {
         this.selectFilter(newFilter);
         this.filterClick.emit(this.currentFilter);
     }
@@ -150,7 +150,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
      * Select filter with the id
      */
     public selectFilterById(id: string) {
-        this.selectFilterAndEmit(<ProcessFilterParamModel> {id: id});
+        this.selectFilterAndEmit(<ProcessFilterCloudModel> {id: id});
     }
 
     /**
@@ -165,7 +165,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     /**
      * Return the current process
      */
-    getCurrentFilter(): ProcessFilterRepresentationModel {
+    getCurrentFilter(): ProcessFilterCloudModel {
         return this.currentFilter;
     }
 
