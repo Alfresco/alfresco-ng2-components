@@ -152,6 +152,7 @@
     "mdast-zone": "^3.0.1",
     "merge-stream": "1.0.1",
     "nconf": "^0.10.0",
+    "ncp": "^2.0.0",
     "ng-packagr": "4.4.0",
     "node-sass": "4.9.2",
     "protractor": "^5.4.0",
