@@ -16,7 +16,14 @@
  */
 
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { ProcessListCloudComponent } from '@alfresco/adf-process-services-cloud';
+import {
+    ProcessListCloudComponent,
+    ProcessFilterCloudModel,
+    EditProcessFilterCloudComponent,
+    ProcessListCloudSortingModel,
+    ProcessFiltersCloudComponent
+} from '@alfresco/adf-process-services-cloud';
+
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { UserPreferencesService } from '@alfresco/adf-core';
@@ -34,27 +41,13 @@ export class ProcessesCloudDemoComponent implements OnInit {
     processFiltersCloud: ProcessFiltersCloudComponent;
 
     applicationName: string = '';
-    isFilterLoaded:  boolean;
+    isFilterLoaded: boolean;
 
-    status: string = '';
-    filterName: string;
     filterId: string = '';
-    sort: string = '';
     sortArray: any = [];
-    sortField: string;
-    sortDirection: string;
     selectedRow: any;
 
-    editedQuery: ProcessQueryModel;
-
-    currentFilter: ProcessFilterRepresentationModel;
-
-    columns = [
-        {key: 'id', label: 'ID'},
-        {key: 'name', label: 'NAME'},
-        {key: 'status', label: 'STATUS'},
-        {key: 'startDate', label: 'START DATE'}
-      ];
+    editedFilter: ProcessFilterCloudModel;
 
     constructor(private route: ActivatedRoute,
                 private userPreference: UserPreferencesService) {
@@ -66,43 +59,11 @@ export class ProcessesCloudDemoComponent implements OnInit {
             this.applicationName = params.applicationName;
         });
 
-        this.sortFormControl = new FormControl('');
-
-        this.sortFormControl.valueChanges.subscribe(
-            (sortValue) => {
-                this.sort = sortValue;
-
-                this.sortArray = [{
-                    orderBy: this.sort,
-                    direction: this.sortDirection
-                }];
-            }
-        );
-        this.sortDirectionFormControl = new FormControl('');
-
-        this.sortDirectionFormControl.valueChanges.subscribe(
-            (sortDirectionValue) => {
-                this.sortDirection = sortDirectionValue;
-
-                this.sortArray = [{
-                    orderBy: this.sort,
-                    direction: this.sortDirection
-                }];
-            }
-        );
-
-        this.route.queryParams
-            .subscribe((params) => {
-                if (params.filterName) {
-                    this.status = params.status ? params.status : '';
-                    this.sort = params.sort;
-                    this.sortDirection = params.order;
-                    this.filterName = params.filterName;
-                    this.isFilterLoaded = true;
-                    this.sortDirectionFormControl.setValue(this.sortDirection);
-                    this.sortFormControl.setValue(this.sort);
-                }
-            });
+        this.route.queryParams.subscribe((params) => {
+            this.isFilterLoaded = true;
+            this.onFilterChange(params);
+            this.filterId = params.id;
+        });
     }
 
     onChangePageSize(event) {
@@ -114,8 +75,8 @@ export class ProcessesCloudDemoComponent implements OnInit {
     }
 
     onFilterChange(query: any) {
-        this.editedQuery = Object.assign({}, query);
-        this.sortArray = [new ProcessListCloudSortingModel({ orderBy: this.editedQuery.sort, direction: this.editedQuery.order })];
+        this.editedFilter = Object.assign({}, query);
+        this.sortArray = [new ProcessListCloudSortingModel({ orderBy: this.editedFilter.sort, direction: this.editedFilter.order })];
     }
 
     onEditActions(event: any) {
@@ -130,15 +91,15 @@ export class ProcessesCloudDemoComponent implements OnInit {
 
     saveAs(filterId) {
         this.processFiltersCloud.filterParam = <any> {id : filterId};
-        this.processFiltersCloud.getFilters(this.currentAppName);
+        this.processFiltersCloud.getFilters(this.applicationName);
     }
 
     save(filterId) {
         this.processFiltersCloud.filterParam = <any> {id : filterId};
-        this.processFiltersCloud.getFilters(this.currentAppName);
+        this.processFiltersCloud.getFilters(this.applicationName);
     }
 
     deleteFilter() {
-        this.processFiltersCloud.getFilters(this.currentAppName);
+        this.processFiltersCloud.getFilters(this.applicationName);
     }
 }
