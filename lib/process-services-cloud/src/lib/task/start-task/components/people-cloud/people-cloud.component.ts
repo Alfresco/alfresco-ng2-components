@@ -61,7 +61,7 @@ export class PeopleCloudComponent implements OnInit {
 
     /** Array of users to be pre-selected. Pre-select all users in multi selection mode and only the first user of the array in single selection mode */
     @Input()
-    defaultUsers: IdentityUserModel[];
+    preSelectedUsers: IdentityUserModel[];
 
     /** Emitted when a user is selected. */
     @Output()
@@ -117,7 +117,7 @@ export class PeopleCloudComponent implements OnInit {
             this._users = await this.identityUserService.getUsersByRolesWithoutCurrentUser(roles);
         }
 
-        this.loadDefaultUsers();
+        this.preSelectUsers();
     }
 
     private getApplicableRoles(): string[] {
@@ -137,12 +137,12 @@ export class PeopleCloudComponent implements OnInit {
         return of(filteredUsers);
     }
 
-    private loadDefaultUsers() {
-        if (this.defaultUsers && this.defaultUsers.length > 0) {
-            for (const defaultUser of this.defaultUsers) {
+    private preSelectUsers() {
+        if (this.preSelectedUsers && this.preSelectedUsers.length > 0) {
+            for (const preSelectedUser of this.preSelectedUsers) {
                 const newUser = this._users.find((user) => {
-                    return user.id === defaultUser.id ||
-                        (user.username && defaultUser.username && user.username.toLocaleLowerCase() === defaultUser.username.toLocaleLowerCase());
+                    return user.id === preSelectedUser.id ||
+                        (user.username && preSelectedUser.username && user.username.toLocaleLowerCase() === preSelectedUser.username.toLocaleLowerCase());
                 });
                 if (newUser) {
                     if (this.isMultipleMode()) {

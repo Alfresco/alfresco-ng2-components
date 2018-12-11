@@ -153,10 +153,10 @@ describe('PeopleCloudComponent', () => {
         });
     }));
 
-    it('should pre-select all defaultUsers when mode=multiple', async(() => {
+    it('should pre-select all preSelectedUsers when mode=multiple', async(() => {
         spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
         component.mode = 'multiple';
-        component.defaultUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
+        component.preSelectedUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -165,10 +165,9 @@ describe('PeopleCloudComponent', () => {
         });
     }));
 
-    it('should not pre-select any user when defaultUsers is empty and mode=multiple', async(() => {
+    it('should not pre-select any user when preSelectedUsers is empty and mode=multiple', async(() => {
         spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
         component.mode = 'multiple';
-        component.defaultUsers = <any> [];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -177,10 +176,10 @@ describe('PeopleCloudComponent', () => {
         });
     }));
 
-    it('should pre-select defaultUsers[0] when mode=single', async(() => {
+    it('should pre-select preSelectedUsers[0] when mode=single', async(() => {
         spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
         component.mode = 'single';
-        component.defaultUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
+        component.preSelectedUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             const selectedUser = component.searchUser.value;
@@ -203,7 +202,7 @@ describe('PeopleCloudComponent', () => {
         let removeUserSpy = spyOn(component.removeUser, 'emit');
 
         component.mode = 'multiple';
-        component.defaultUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
+        component.preSelectedUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
