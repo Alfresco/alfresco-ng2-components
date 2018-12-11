@@ -62,17 +62,20 @@ describe('PeopleCloudComponent', () => {
         });
     }));
 
-    it('should not list the current logged in user when showCurrentUser is false', async(() => {
+    it('should not list the current logged in user when showCurrentUser is false', (done) => {
         spyOn(identityService, 'getCurrentUserInfo').and.returnValue(mockUsers[1]);
         component.showCurrentUser = false;
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const currentUser = component.users.find((user) => {
+        component.searchUser.setValue(mockUsers[1].firstName[0]);
+        component.users$.subscribe((users) => {
+            const currentUser = users.find((user) => {
                 return user.username === mockUsers[1].username;
             });
             expect(currentUser).toBeUndefined();
+            done();
         });
-    }));
+
+    });
 
     it('should show the users if the typed result match', async(() => {
         component.users$ = of(<IdentityUserModel[]> mockUsers);
@@ -99,21 +102,19 @@ describe('PeopleCloudComponent', () => {
         inputHTMLElement.dispatchEvent(new Event('input'));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('mat-option'))).toBeNull();
             expect(fixture.debugElement.query(By.css('#adf-people-cloud-user-0'))).toBeNull();
         });
     });
 
-    it('should emit selectedUser if option is valid', async() => {
+    it('should emit selectedUser if option is valid', async(() => {
         fixture.detectChanges();
-        let selectEmitSpy = spyOn(component.selectedUser, 'emit');
+        let selectEmitSpy = spyOn(component.selectUser, 'emit');
         component.onSelect(new IdentityUserModel({ username: 'username'}));
         fixture.whenStable().then(() => {
-            fixture.detectChanges();
             expect(selectEmitSpy).toHaveBeenCalled();
         });
-    });
+    }));
 
     it('should show an error message if the user is invalid', async(() => {
         getUserSpy.and.returnValue(of([]));
@@ -128,11 +129,91 @@ describe('PeopleCloudComponent', () => {
         inputHTMLElement.value = 'ZZZ';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            fixture.detectChanges();
             const errorMessage = element.querySelector('.adf-start-task-cloud-error-message');
             expect(element.querySelector('.adf-start-task-cloud-error')).not.toBeNull();
             expect(errorMessage.textContent).toContain('ADF_CLOUD_START_TASK.ERROR.MESSAGE');
         });
+    }));
+
+    it('should show chip list when mode=multiple', async(() => {
+        component.mode = 'multiple';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const chip = element.querySelector('mat-chip-list');
+            expect(chip).toBeDefined();
+        });
+    }));
+
+    it('should not show chip list when mode=single', async(() => {
+        component.mode = 'single';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const chip = element.querySelector('mat-chip-list');
+            expect(chip).toBeNull();
+        });
+    }));
+
+    it('should pre-select all defaultUsers when mode=multiple', async(() => {
+        spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
+        component.mode = 'multiple';
+        component.defaultUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            expect(chips.length).toBe(2);
+        });
+    }));
+
+    it('should not pre-select any user when defaultUsers is empty and mode=multiple', async(() => {
+        spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
+        component.mode = 'multiple';
+        component.defaultUsers = <any> [];
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const chip = fixture.debugElement.query(By.css('mat-chip'));
+            expect(chip).toBeNull();
+        });
+    }));
+
+    it('should pre-select defaultUsers[0] when mode=single', async(() => {
+        spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
+        component.mode = 'single';
+        component.defaultUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const selectedUser = component.searchUser.value;
+            expect(selectedUser.id).toBe(mockUsers[1].id);
+        });
+    }));
+
+    it('should not pre-select any user when defaultUsers is empty and mode=single', async(() => {
+        spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
+        component.mode = 'single';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const selectedUser = component.searchUser.value;
+            expect(selectedUser).toBeNull();
+        });
+    }));
+
+    it('should emit removeUser when a selected user is removed if mode=multiple', async(() => {
+        spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
+        let removeUserSpy = spyOn(component.removeUser, 'emit');
+
+        component.mode = 'multiple';
+        component.defaultUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
+            removeIcon.nativeElement.click();
+
+            expect(removeUserSpy).toHaveBeenCalledWith(mockUsers[1]);
+        });
+
     }));
 
 });
