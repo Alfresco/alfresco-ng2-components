@@ -25,8 +25,8 @@ import { AppListCloudComponent } from '../pages/adf/process_cloud/appListCloudCo
 
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';
-import { Query } from '../actions/APS-cloud/query';
 import { Tasks } from '../actions/APS-cloud/tasks';
+import { Query } from '../actions/APS-cloud/query';
 
 describe('Process filters cloud', () => {
 
@@ -44,8 +44,8 @@ describe('Process filters cloud', () => {
 
         const path = '/auth/realms/springboot';
         let silentLogin;
-        let completedProcess, runningProcess ;
-        const simpleApp = 'adminapp';
+        let runningProcess, completedProcess;
+        const simpleApp = 'candidateuserapp';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
         beforeAll(async () => {
@@ -57,14 +57,18 @@ describe('Process filters cloud', () => {
             await processDefinitionService.init(user, password);
             let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             await processInstancesService.init(user, password);
+            runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+
             let processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
             await queryService.init(user, password);
-            completedProcess = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
-
+            let task = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
+            await tasksService.init(user, password);
+            let claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
+            await tasksService.completeTask(claimedTask.entry.id, simpleApp);
         });
 
         beforeEach((done) => {
-            navigationBarPage.navigateToProcessServicesListCloudPage();
+            navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
             done();
@@ -77,19 +81,20 @@ describe('Process filters cloud', () => {
         });
 
         it('[C290043] Should display process in Running Processes List when process is started', () => {
-            tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            let task = tasksService.createStandaloneTask(completedTask, simpleApp);
+            processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
+            processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
+            expect(processCloudDemoPage.checkActiveFilterActive()).toBe('Running Processes');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(runningProcess.entry.id);
 
-            tasksService.claimTask(task.entry.id, simpleApp);
-            tasksService.completeTask(task.entry.id, simpleApp);
+            processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
+            processCloudDemoPage.completedProcessesFilter().checkProcessFilterIsDisplayed();
+            expect(processCloudDemoPage.checkActiveFilterActive()).toBe('Completed Processes');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsNotDisplayed(runningProcess.entry.id);
 
-            tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('My Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTask);
-
-            tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Completed Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTask);
+            processCloudDemoPage.allProcessesFilter().clickProcessFilter();
+            processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
+            expect(processCloudDemoPage.checkActiveFilterActive()).toBe('All Processes');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(runningProcess.entry.id);
         });
 
         xit('[C289957] Should display task filter results when task filter is selected', () => {
