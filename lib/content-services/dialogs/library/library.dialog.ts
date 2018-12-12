@@ -44,9 +44,14 @@ import { debounceTime, mergeMap, takeUntil } from 'rxjs/operators';
   host: { class: 'adf-library-dialog' }
 })
 export class LibraryDialogComponent implements OnInit, OnDestroy {
+  /** Emitted when an error occurs. */
   @Output()
   error: EventEmitter<any> = new EventEmitter<any>();
 
+  /** Emitted when the new library is created successfully. The
+   * event parameter is a SiteEntry object with the details of the
+   * newly-created library.
+   */
   @Output()
   success: EventEmitter<any> = new EventEmitter<any>();
 
