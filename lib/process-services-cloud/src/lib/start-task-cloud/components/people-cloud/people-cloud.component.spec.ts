@@ -63,7 +63,7 @@ describe('PeopleCloudComponent', () => {
     }));
 
     it('should not list the current logged in user when showCurrentUser is false', async(() => {
-        spyOn(identityService, 'getCurrentUserInfo').and.returnValue(of(mockUsers[1]));
+        spyOn(identityService, 'getCurrentUserInfo').and.returnValue(mockUsers[1]);
         component.showCurrentUser = false;
         fixture.detectChanges();
         fixture.whenStable().then(() => {

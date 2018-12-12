@@ -19,6 +19,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { Observable } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
+import { FilterParamsModel } from '../../task-cloud/models/filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
 @Component({
     selector: 'adf-cloud-process-filters',
@@ -33,7 +34,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
 
     /** (optional) The filter to be selected by default */
     @Input()
-    filterParam: ProcessFilterCloudModel;
+    filterParam: FilterParamsModel;
 
     /** (optional) The flag hides/shows icon against each filter */
     @Input()
@@ -59,7 +60,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
 
     constructor(
         private processFilterCloudService: ProcessFilterCloudService,
-        private translate: TranslationService ) { }
+        private translationService: TranslationService ) { }
 
     ngOnChanges(changes: SimpleChanges) {
         const appName = changes['appName'];
@@ -67,7 +68,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
         if (appName && appName.currentValue) {
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
-            this.selectFilterAndEmit(filter.currentValue);
+            this.selectFilter(filter.currentValue);
         }
     }
 
@@ -79,12 +80,8 @@ export class ProcessFiltersCloudComponent implements OnChanges {
 
         this.filters$.subscribe(
             (res: ProcessFilterCloudModel[]) => {
-                if (res.length === 0) {
-                    this.createFilters(appName);
-                } else {
-                    this.resetFilter();
-                    this.filters = res;
-                }
+                this.resetFilter();
+                this.filters = Object.assign([], res);
                 this.selectFilterAndEmit(this.filterParam);
                 this.success.emit(res);
             },
@@ -95,32 +92,15 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     }
 
     /**
-     * Create default filters by appName
-     */
-    createFilters(appName?: string) {
-        this.filters$ = this.processFilterCloudService.createDefaultFilters(appName);
-
-        this.filters$.subscribe(
-            (resDefault: ProcessFilterCloudModel[]) => {
-                this.resetFilter();
-                this.filters = resDefault;
-            },
-            (errDefault: any) => {
-                this.error.emit(errDefault);
-            }
-        );
-    }
-
-    /**
      * Pass the selected filter as next
      */
-    public selectFilter(filterParam: ProcessFilterCloudModel) {
-        if (filterParam) {
+    public selectFilter(paramFilter: FilterParamsModel) {
+        if (paramFilter) {
             this.currentFilter = this.filters.find((filter, index) => {
-                return filterParam.id === filter.id ||
-                (filterParam.name && this.checkFilterNamesEquality(filterParam.name, filter.name)) ||
-                (filterParam.key && (filterParam.key === filter.key)) ||
-                filterParam.index === index;
+                return paramFilter.id === filter.id ||
+                (paramFilter.name && this.checkFilterNamesEquality(paramFilter.name, filter.name)) ||
+                (paramFilter.key && (paramFilter.key === filter.key)) ||
+                paramFilter.index === index;
             });
         }
         if (!this.currentFilter) {
@@ -132,8 +112,8 @@ export class ProcessFiltersCloudComponent implements OnChanges {
      * Check equality of the filter names by translating the given name strings
      */
     private checkFilterNamesEquality(name1: string, name2: string ): boolean {
-        const translatedName1 = this.translate.instant(name1);
-        const translatedName2 = this.translate.instant(name2);
+        const translatedName1 = this.translationService.instant(name1);
+        const translatedName2 = this.translationService.instant(name2);
 
         return translatedName1.toLocaleLowerCase() === translatedName2.toLocaleLowerCase();
     }
@@ -141,8 +121,8 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     /**
      * Select and emit the given filter
      */
-    public selectFilterAndEmit(newFilter: ProcessFilterCloudModel) {
-        this.selectFilter(newFilter);
+    public selectFilterAndEmit(newParamFilter: FilterParamsModel) {
+        this.selectFilter(newParamFilter);
         this.filterClick.emit(this.currentFilter);
     }
 
