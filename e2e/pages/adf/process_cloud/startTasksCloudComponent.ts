@@ -23,7 +23,7 @@ export class StartTasksCloudComponent {
     name = element(by.css('input[id="name_id"]'));
     dueDate = element(by.css('input[id="date_id"]'));
     description = element(by.css('textarea[id="description_id"]'));
-    assignee = element(by.css('div#people-widget-content input'));
+    assignee = element(by.css('adf-cloud-people input'));
     startButton = element(by.css('button[id="button-start"]'));
     startButtonEnabled = element(by.css('button[id="button-start"]:not(disabled)'));
     cancelButton = element(by.css('button[id="button-cancel"]'));
