@@ -127,7 +127,6 @@ import { DocumentListDemoComponent } from './components/document-list/document-l
         ReportIssueComponent,
         TreeViewSampleComponent,
         DocumentListDemoComponent,
-        DocumentListComponent,
         CloudLayoutComponent,
         AppsCloudDemoComponent,
         TasksCloudDemoComponent,
