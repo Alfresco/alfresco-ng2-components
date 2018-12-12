@@ -25,7 +25,7 @@ import { ProcessFilterCloudService } from '../services/process-filter-cloud.serv
 import { ProcessFiltersCloudComponent } from './process-filters-cloud.component';
 import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { ProcessCloudModule } from '../process-cloud.module';
+import { ProcessCloudModule } from '../process-filters.module';
 
 describe('ProcessFiltersCloudComponent', () => {
 

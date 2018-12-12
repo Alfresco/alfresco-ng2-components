@@ -25,7 +25,7 @@ import { MatDialog } from '@angular/material';
 import { of } from 'rxjs';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { EditProcessFilterCloudComponent } from './edit-process-filter-cloud.component';
-import { ProcessCloudModule } from '../process-cloud.module';
+import { ProcessCloudModule } from '../process-filters.module';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 

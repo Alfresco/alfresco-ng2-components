@@ -22,7 +22,7 @@ import { By } from '@angular/platform-browser';
 import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TaskFilterCloudModel } from '../models/filter-cloud.model';
-import { TaskCloudModule } from './../task-cloud.module';
+import { TaskCloudModule } from '../task-filters.module';
 import { EditTaskFilterCloudComponent } from './edit-task-filter-cloud.component';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { MatDialog } from '@angular/material';
