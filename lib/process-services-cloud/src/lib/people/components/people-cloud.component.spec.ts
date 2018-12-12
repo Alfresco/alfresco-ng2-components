@@ -18,11 +18,11 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PeopleCloudComponent } from './people-cloud.component';
-import { StartTaskCloudTestingModule } from '../../testing/start-task-cloud.testing.module';
 import { LogService, setupTestBed, IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
-import { mockUsers, mockRoles } from '../../mock/user-cloud.mock';
 import { of } from 'rxjs';
-import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
+import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { StartTaskCloudTestingModule } from '../../start-task/testing/start-task-cloud.testing.module';
+import { mockRoles, mockUsers } from '../../start-task/mock/user-cloud.mock';
 
 describe('PeopleCloudComponent', () => {
     let component: PeopleCloudComponent;
