@@ -3,7 +3,7 @@ var path = require("path");
 
 module.exports = searchLibraryRecursive;
 
-var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(model)|(pipe)|(service)|(widget))\.ts/;
+var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(dialog)|(directive)|(model)|(pipe)|(service)|(widget))\.ts/;
 var searchFolderOmitRegex = /(config)|(mock)|(i18n)|(assets)|(styles)/;
 
 //  Search source folders for .ts files to discover all components, directives, etc.

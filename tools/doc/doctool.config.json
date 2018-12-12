@@ -68,6 +68,7 @@
         "form-field-validator.interface": "FormFieldValidator",
         "header.component": "HeaderLayoutComponent",
         "inherited-button.directive": "InheritPermissionDirective",
+        "library.dialog": "LibraryDialogComponent",
         "permissions-style.model": "PermissionStyleModel",
         "process-list.component": "ProcessInstanceListComponent",
         "product-version.model": "BpmProductVersionModel",
@@ -140,7 +141,8 @@
         "clipboard",
         "external-alfresco",
         "content-node-share",
-        "tree-view"
+        "tree-view",
+        "dialog"
     ],
     "fileCheckerFilter": [
         "README",

@@ -54,12 +54,17 @@ for more information about installing and using the source code.
 | [Version manager component](version-manager.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Displays the version history of a node with the ability to upload a new version. | [Source](../../lib/content-services/version-manager/version-manager.component.ts) |
 | [Webscript component](webscript.component.md) | Provides access to Webscript features. | [Source](../../lib/content-services/webscript/webscript.component.ts) |
 
+## Dialogs
+
+| Name | Description | Source link |
+| ---- | ----------- | ----------- |
+| [Library dialog](library.dialog.md) | Creates a new Content Services document library/site. | [Source](../../lib/content-services/dialogs/library/library.dialog.ts) |
+
 ## Directives
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Content node share directive](content-node-share.directive.md) | Creates and manages public shared links for files. | [Source](../../lib/content-services/content-node-share/content-node-share.directive.ts) |
-| [Node download directive](node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../../lib/content-services/directives/node-download.directive.ts) |
 | [Node lock directive](node-lock.directive.md) | Locks a node. | [Source](../../lib/content-services/directives/node-lock.directive.ts) |
 | [Folder create directive](folder-create.directive.md) | Creates folders. | [Source](../../lib/content-services/folder-directive/folder-create.directive.ts) |
 | [Folder edit directive](folder-edit.directive.md) | Allows folders to be edited. | [Source](../../lib/content-services/folder-directive/folder-edit.directive.ts) |

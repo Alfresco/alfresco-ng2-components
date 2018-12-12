@@ -3,7 +3,7 @@ module.exports = {
     "ngNameToClassName": ngNameToClassName,
     "dekebabifyName": dekebabifyName,
     "kebabifyClassName": kebabifyClassName,
-    "classTypes": ["component", "directive", "model", "pipe", "service", "widget"]
+    "classTypes": ["component", "dialog", "directive", "model", "pipe", "service", "widget"]
 }
 
 
