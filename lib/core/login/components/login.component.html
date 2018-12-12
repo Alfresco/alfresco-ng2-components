@@ -46,8 +46,8 @@
                                            tabindex="1">
                                 </mat-form-field>
 
-                                <span class="adf-login-validation" for="username" *ngIf="formError.username">
-                                <span id="username-error" class="adf-login-error" data-automation-id="username-error">{{formError.username | translate }}</span>
+                                <span class="adf-login-validation" for="username" *ngIf="formError['username']">
+                                <span id="username-error" class="adf-login-error" data-automation-id="username-error">{{formError['username'] | translate }}</span>
                             </span>
                             </div>
 
@@ -55,7 +55,7 @@
                             <div class="adf-login__field">
                                 <mat-form-field class="adf-full-width" floatPlaceholder="never" color="primary">
                                     <input matInput placeholder="{{'LOGIN.LABEL.PASSWORD' | translate }}"
-                                           type="password"
+                                           [type]="isPasswordShow ? 'text' : 'password'"
                                            [formControl]="form.controls['password']"
                                            id="password"
                                            data-automation-id="password"
@@ -69,9 +69,9 @@
                                         visibility_off
                                     </mat-icon>
                                 </mat-form-field>
-                                <span class="adf-login-validation" for="password" *ngIf="formError.password">
+                                <span class="adf-login-validation" for="password" *ngIf="formError['password']">
                                 <span id="password-required" class="adf-login-error"
-                                      data-automation-id="password-required">{{formError.password | translate }}</span>
+                                      data-automation-id="password-required">{{formError['password'] | translate }}</span>
                             </span>
                             </div>
 
