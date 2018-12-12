@@ -44,7 +44,20 @@ export class TaskFilterCloudModel  {
         }
     }
 }
-
+export class FilterParamsModel {
+    id?: string;
+    name?: string;
+    key?: string;
+    index?: number;
+    constructor(obj?: any) {
+        if (obj) {
+            this.id = obj.id || null;
+            this.name = obj.name || null;
+            this.key = obj.key || null;
+            this.index = obj.index;
+        }
+    }
+}
 export interface FilterActionType {
     actionType: string;
     id: string;

@@ -62,7 +62,7 @@ describe('StartTaskCloudComponent', () => {
         createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(taskDetailsMock));
         getRolesByUserIdSpy = spyOn(identityService, 'getUserRoles').and.returnValue(of(mockRoles));
         getUserSpy = spyOn(identityService, 'getUsers').and.returnValue(of(mockUsers));
-        spyOn(identityService, 'getCurrentUserInfo').and.returnValue(of(new IdentityUserModel({username: 'currentUser'})));
+        spyOn(identityService, 'getCurrentUserInfo').and.returnValue(new IdentityUserModel({username: 'currentUser'}));
         fixture.detectChanges();
     }));
 

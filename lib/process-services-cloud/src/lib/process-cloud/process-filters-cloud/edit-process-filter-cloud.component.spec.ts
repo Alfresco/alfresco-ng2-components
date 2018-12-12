@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { MatDialog } from '@angular/material';
 import { of } from 'rxjs';
@@ -32,6 +32,7 @@ import { ProcessFilterCloudService } from '../services/process-filter-cloud.serv
 describe('EditProcessFilterCloudComponent', () => {
     let component: EditProcessFilterCloudComponent;
     let service: ProcessFilterCloudService;
+    let identityService: IdentityUserService;
     let fixture: ComponentFixture<EditProcessFilterCloudComponent>;
     let dialog: MatDialog;
 
@@ -56,6 +57,7 @@ describe('EditProcessFilterCloudComponent', () => {
         fixture = TestBed.createComponent(EditProcessFilterCloudComponent);
         component = fixture.componentInstance;
         service = TestBed.get(ProcessFilterCloudService);
+        identityService = TestBed.get(IdentityUserService);
         dialog = TestBed.get(MatDialog);
         spyOn(dialog, 'open').and.returnValue({ afterClosed() { return of({
             action: ProcessFilterDialogCloudComponent.ACTION_SAVE,
@@ -236,6 +238,7 @@ describe('EditProcessFilterCloudComponent', () => {
         });
 
         it('should emit save event and save the filter on click save button', async(() => {
+            spyOn(identityService, 'getCurrentUserInfo').and.returnValue({username: 'currentUser'});
             const saveFilterSpy = spyOn(service, 'updateFilter').and.returnValue(fakeFilter);
             let saveSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -257,6 +260,7 @@ describe('EditProcessFilterCloudComponent', () => {
         }));
 
         it('should emit delete event and delete the filter on click of delete button', async(() => {
+            spyOn(identityService, 'getCurrentUserInfo').and.returnValue({username: 'currentUser'});
             const deleteFilterSpy = spyOn(service, 'deleteFilter').and.callThrough();
             let deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -265,16 +269,17 @@ describe('EditProcessFilterCloudComponent', () => {
             const stateElement = fixture.debugElement.query(By.css('#adf-process-filter-state-id .mat-select-trigger')).nativeElement;
             stateElement.click();
             fixture.detectChanges();
+            let deleteButton = fixture.debugElement.nativeElement.querySelector('#adf-delete-id');
+            deleteButton.click();
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                let deleteButton = fixture.debugElement.nativeElement.querySelector('#adf-delete-id');
-                deleteButton.click();
-                fixture.detectChanges();
                 expect(deleteFilterSpy).toHaveBeenCalled();
                 expect(deleteSpy).toHaveBeenCalled();
             });
         }));
 
-        it('should emit saveAs event and add filter on click of saveAs button', async(() => {
+        it('should emit saveAs event and add filter on click saveAs button', async(() => {
+            spyOn(identityService, 'getCurrentUserInfo').and.returnValue({username: 'currentUser'});
             const saveAsFilterSpy = spyOn(service, 'addFilter').and.callThrough();
             let saveAsSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -283,33 +288,15 @@ describe('EditProcessFilterCloudComponent', () => {
             const stateElement = fixture.debugElement.query(By.css('#adf-process-filter-state-id .mat-select-trigger')).nativeElement;
             stateElement.click();
             fixture.detectChanges();
+            const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-as-id');
+            const stateOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+            stateOptions[2].nativeElement.click();
+            fixture.detectChanges();
+            saveButton.click();
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-as-id');
-                const stateOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                stateOptions[2].nativeElement.click();
-                fixture.detectChanges();
-                saveButton.click();
-                fixture.detectChanges();
                 expect(saveAsFilterSpy).toHaveBeenCalled();
                 expect(saveAsSpy).toHaveBeenCalled();
-                expect(dialog.open).toHaveBeenCalled();
-            });
-        }));
-
-        it('should able to open save dialog on click of saveAs button', async(() => {
-            fixture.detectChanges();
-            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
-            const stateElement = fixture.debugElement.query(By.css('#adf-process-filter-state-id .mat-select-trigger')).nativeElement;
-            stateElement.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-as-id');
-                const stateOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                stateOptions[2].nativeElement.click();
-                fixture.detectChanges();
-                saveButton.click();
-                fixture.detectChanges();
                 expect(dialog.open).toHaveBeenCalled();
             });
         }));

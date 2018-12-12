@@ -64,17 +64,14 @@ describe('IdentityUserService', () => {
         });
     });
 
-    it('should fetch identity user info from Jwt token', (done) => {
+    it('should fetch identity user info from Jwt token', () => {
         localStorage.setItem('access_token', mockToken);
-        service.getCurrentUserInfo().subscribe(
-            (user) => {
-                expect(user).toBeDefined();
-                expect(user.firstName).toEqual('John');
-                expect(user.lastName).toEqual('Doe');
-                expect(user.email).toEqual('johnDoe@gmail.com');
-                expect(user.username).toEqual('johnDoe1');
-                done();
-            });
+        const user = service.getCurrentUserInfo();
+        expect(user).toBeDefined();
+        expect(user.firstName).toEqual('John');
+        expect(user.lastName).toEqual('Doe');
+        expect(user.email).toEqual('johnDoe@gmail.com');
+        expect(user.username).toEqual('johnDoe1');
     });
 
     it('should fetch users ', (done) => {
@@ -189,7 +186,7 @@ describe('IdentityUserService', () => {
     it('should fetch users by roles without current user', (done) => {
         spyOn(service, 'getUsers').and.returnValue(of(mockUsers));
         spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
-        spyOn(service, 'getCurrentUserInfo').and.returnValue(of(mockUsers[0]));
+        spyOn(service, 'getCurrentUserInfo').and.returnValue(mockUsers[0]);
 
         service.getUsersByRolesWithoutCurrentUser([mockRoles[0].name]).then(
             (res: IdentityUserModel[]) => {
@@ -201,24 +198,5 @@ describe('IdentityUserService', () => {
                 done();
             }
         );
-    });
-
-    it('Should not fetch users by roles without current user if error occurred', (done) => {
-        const errorResponse = new HttpErrorResponse({
-            error: 'Mock Error',
-            status: 404, statusText: 'Not Found'
-        });
-
-        spyOn(service, 'getCurrentUserInfo').and.returnValue(throwError(errorResponse));
-
-        service.getUsersByRolesWithoutCurrentUser([mockRoles[0].name])
-            .catch(
-                (error) => {
-                    expect(error.status).toEqual(404);
-                    expect(error.statusText).toEqual('Not Found');
-                    expect(error.error).toEqual('Mock Error');
-                    done();
-                }
-            );
     });
 });

@@ -36,17 +36,7 @@ export class CloudLayoutComponent implements OnInit {
         });
     }
 
-    onTaskFilterSelected(filter) {
-        const currentFilter = Object.assign({}, filter);
-        this.router.navigate([`/cloud/${this.applicationName}/tasks/`], { queryParams: currentFilter });
-    }
-
     onStartTask() {
         this.router.navigate([`/cloud/${this.applicationName}/start-task/`]);
-    }
-
-    onProcessFilterSelected(filter) {
-        const currentFilter = Object.assign({}, filter);
-        this.router.navigate([`/cloud/${this.applicationName}/processes/`], { queryParams: currentFilter });
     }
 }

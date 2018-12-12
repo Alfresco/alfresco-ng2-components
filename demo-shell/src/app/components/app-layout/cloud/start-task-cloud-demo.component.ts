@@ -18,7 +18,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '@alfresco/adf-core';
-
+import { CloudLayoutService } from './services/cloud-layout.service';
 @Component({
     templateUrl: './start-task-cloud-demo.component.html',
     styleUrls: ['./start-task-cloud-demo.component.scss']
@@ -28,6 +28,7 @@ export class StartTaskCloudDemoComponent implements OnInit {
     applicationName;
 
     constructor(
+        private cloudLayoutService: CloudLayoutService,
         private route: ActivatedRoute,
         private notificationService: NotificationService,
         private router: Router) {
@@ -41,6 +42,7 @@ export class StartTaskCloudDemoComponent implements OnInit {
 
     onStartTaskSuccess() {
         this.router.navigate([`/cloud/${this.applicationName}`]);
+        this.cloudLayoutService.setCurrentTaskFilterParam({key: 'my-tasks'});
     }
 
     onCancelStartTask() {

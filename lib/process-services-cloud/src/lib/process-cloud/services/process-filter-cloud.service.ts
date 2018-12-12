@@ -15,15 +15,22 @@
  * limitations under the License.
  */
 
-import { StorageService } from '@alfresco/adf-core';
+import { StorageService, IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 
 @Injectable()
 export class ProcessFilterCloudService {
 
-    constructor(private storage: StorageService) {
+    private filtersSubject: BehaviorSubject<ProcessFilterCloudModel[]>;
+    filters$: Observable<ProcessFilterCloudModel[]>;
+
+    constructor(
+        private storage: StorageService,
+        private identityUserService: IdentityUserService) {
+        this.filtersSubject = new BehaviorSubject([]);
+        this.filters$ = this.filtersSubject.asObservable();
     }
 
     /**
@@ -31,15 +38,13 @@ export class ProcessFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of default filters just created
      */
-    public createDefaultFilters(appName: string): Observable<ProcessFilterCloudModel[]> {
+    private createDefaultFilters(appName: string) {
         const allProcessesFilter = this.getAllProcessesFilter(appName);
         this.addFilter(allProcessesFilter);
         const runningProcessesFilter = this.getRunningProcessesFilter(appName);
         this.addFilter(runningProcessesFilter);
         const completedProcessesFilter = this.getCompletedProcessesFilter(appName);
         this.addFilter(completedProcessesFilter);
-
-        return this.getProcessFilters(appName);
     }
 
     /**
@@ -48,12 +53,16 @@ export class ProcessFilterCloudService {
      * @returns Observable of process filter details
      */
     getProcessFilters(appName: string): Observable<ProcessFilterCloudModel[]> {
-        let key = 'process-filters-' + appName;
+        const user: IdentityUserModel = this.identityUserService.getCurrentUserInfo();
+        const key = `process-filters-${appName}-${user.username}`;
         const filters = JSON.parse(this.storage.getItem(key) || '[]');
-        return new Observable(function(observer) {
-            observer.next(filters);
-            observer.complete();
-        });
+
+        if (filters.length === 0) {
+            this.createDefaultFilters(appName);
+        } else {
+            this.addFiltersToStream(filters);
+        }
+        return this.filters$;
     }
 
     /**
@@ -63,7 +72,8 @@ export class ProcessFilterCloudService {
      * @returns Details of process filter
      */
     getProcessFilterById(appName: string, id: string): ProcessFilterCloudModel {
-        const key = 'process-filters-' + appName;
+        const user: IdentityUserModel = this.identityUserService.getCurrentUserInfo();
+        const key = `process-filters-${appName}-${user.username}`;
         let filters = [];
         filters = JSON.parse(this.storage.getItem(key)) || [];
         return filters.filter((filterTmp: ProcessFilterCloudModel) => id === filterTmp.id)[0];
@@ -75,11 +85,14 @@ export class ProcessFilterCloudService {
      * @returns Details of process filter just added
      */
     addFilter(filter: ProcessFilterCloudModel) {
-        const key = 'process-filters-' + filter.appName;
+        const user: IdentityUserModel = this.identityUserService.getCurrentUserInfo();
+        const key = `process-filters-${filter.appName}-${user.username}`;
         const storedFilters = JSON.parse(this.storage.getItem(key) || '[]');
 
         storedFilters.push(filter);
         this.storage.setItem(key, JSON.stringify(storedFilters));
+
+        this.addFiltersToStream(storedFilters);
     }
 
     /**
@@ -87,12 +100,14 @@ export class ProcessFilterCloudService {
      * @param filter The new filter to update
      */
     updateFilter(filter: ProcessFilterCloudModel) {
-        const key = 'process-filters-' + filter.appName;
+        const user: IdentityUserModel = this.identityUserService.getCurrentUserInfo();
+        const key = `process-filters-${filter.appName}-${user.username}`;
         if (key) {
             let filters = JSON.parse(this.storage.getItem(key) || '[]');
             let itemIndex = filters.findIndex((flt: ProcessFilterCloudModel) => flt.id === filter.id);
             filters[itemIndex] = filter;
             this.storage.setItem(key, JSON.stringify(filters));
+            this.addFiltersToStream(filters);
         }
     }
 
@@ -101,11 +116,17 @@ export class ProcessFilterCloudService {
      * @param filter The new filter to delete
      */
     deleteFilter(filter: ProcessFilterCloudModel) {
-        const key = 'process-filters-' + filter.appName;
+        const user: IdentityUserModel = this.identityUserService.getCurrentUserInfo();
+        const key = `process-filters-${filter.appName}-${user.username}`;
         if (key) {
             let filters = JSON.parse(this.storage.getItem(key) || '[]');
             filters = filters.filter((item) => item.id !== filter.id);
             this.storage.setItem(key, JSON.stringify(filters));
+            if (filters.length === 0) {
+                this.createDefaultFilters(filter.appName);
+            } else {
+                this.addFiltersToStream(filters);
+            }
         }
     }
 
@@ -158,5 +179,9 @@ export class ProcessFilterCloudService {
             state: 'COMPLETED',
             order: 'DESC'
         });
+    }
+
+    private addFiltersToStream(filters: ProcessFilterCloudModel []) {
+        this.filtersSubject.next(filters);
     }
 }

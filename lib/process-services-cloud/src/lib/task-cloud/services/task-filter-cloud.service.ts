@@ -35,7 +35,7 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of default filters just created
      */
-    public createDefaultFilters(appName: string) {
+    private createDefaultFilters(appName: string) {
         let myTasksFilter = this.getMyTasksFilterInstance(appName);
         this.addFilter(myTasksFilter);
 
@@ -102,6 +102,7 @@ export class TaskFilterCloudService {
             let itemIndex = filters.findIndex((flt: TaskFilterCloudModel) => flt.id === filter.id);
             filters[itemIndex] = filter;
             this.storage.setItem(key, JSON.stringify(filters));
+            this.addFiltersToStream(filters);
         }
     }
 
