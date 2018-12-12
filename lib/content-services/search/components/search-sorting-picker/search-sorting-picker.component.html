@@ -2,5 +2,6 @@
     [options]="options"
     [selected]="value"
     [ascending]="ascending"
-    (change)="onChanged($event)">
+    (valueChange)="onValueChanged($event)"
+    (sortingChange)="onSortingChanged($event)">
 </adf-sorting-picker>
