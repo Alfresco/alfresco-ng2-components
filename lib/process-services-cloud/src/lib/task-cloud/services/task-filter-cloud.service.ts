@@ -153,8 +153,8 @@ export class TaskFilterCloudService {
             appName: appName,
             state: 'ASSIGNED',
             assignment: username,
-            sort: 'id',
-            order: 'ASC'
+            sort: 'createdDate',
+            order: 'DESC'
         });
     }
 
@@ -171,8 +171,8 @@ export class TaskFilterCloudService {
             appName: appName,
             state: 'COMPLETED',
             assignment: '',
-            sort: 'id',
-            order: 'ASC'
+            sort: 'createdDate',
+            order: 'DESC'
         });
     }
 }

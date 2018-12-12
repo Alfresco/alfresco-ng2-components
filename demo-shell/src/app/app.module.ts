@@ -69,6 +69,7 @@ import { AppExtensionsModule } from './extensions/extensions.module';
 import { CloudLayoutComponent } from './components/app-layout/cloud/cloud-layout.component';
 import { AppsCloudDemoComponent } from './components/app-layout/cloud/apps-cloud-demo.component';
 import { ProcessesCloudDemoComponent } from './components/app-layout/cloud/processes-cloud-demo.component';
+import { TaskDetailsCloudDemoComponent } from './components/app-layout/cloud/task-details-cloud-demo.component';
 import { StartTaskCloudDemoComponent } from './components/app-layout/cloud/start-task-cloud-demo.component';
 import { CloudBreadcrumbsComponent } from './components/app-layout/cloud/cloud-breadcrumb-component';
 import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-cloud-demo.component';
@@ -127,6 +128,7 @@ import { CloudFiltersDemoComponent } from './components/app-layout/cloud/cloud-f
         AppsCloudDemoComponent,
         TasksCloudDemoComponent,
         ProcessesCloudDemoComponent,
+        TaskDetailsCloudDemoComponent,
         StartTaskCloudDemoComponent,
         CloudBreadcrumbsComponent,
         CloudFiltersDemoComponent
