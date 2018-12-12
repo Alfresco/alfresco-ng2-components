@@ -62,4 +62,4 @@ import { ProcessFilterDialogCloudComponent } from './components/process-filter-d
         StorageService
     ]
 })
-export class ProcessCloudModule { }
+export class ProcessFiltersModule { }

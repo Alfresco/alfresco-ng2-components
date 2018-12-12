@@ -21,7 +21,7 @@ import { AppListCloudModule } from './app-list/app-list-cloud.module';
 import { TaskListCloudModule } from './task-list/task-list-cloud.module';
 import { TaskCloudModule } from './task-filters/task-filters.module';
 import { ProcessListCloudModule } from './process-list/process-list-cloud.module';
-import { ProcessCloudModule } from './process-filters/process-filters.module';
+import { ProcessFiltersModule } from './process-filters/process-filters.module';
 import { StartTaskCloudModule } from './start-task/start-task-cloud.module';
 
 @NgModule({
@@ -30,7 +30,7 @@ import { StartTaskCloudModule } from './start-task/start-task-cloud.module';
         TaskListCloudModule,
         TaskCloudModule,
         ProcessListCloudModule,
-        ProcessCloudModule,
+        ProcessFiltersModule,
         StartTaskCloudModule
     ],
     providers: [
@@ -48,7 +48,7 @@ import { StartTaskCloudModule } from './start-task/start-task-cloud.module';
         TaskListCloudModule,
         TaskCloudModule,
         ProcessListCloudModule,
-        ProcessCloudModule,
+        ProcessFiltersModule,
         StartTaskCloudModule
     ]
 })
