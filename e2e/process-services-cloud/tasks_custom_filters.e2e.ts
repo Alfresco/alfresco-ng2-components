@@ -155,7 +155,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
         });
-
+        
         it('[C290155] Should display only tasks with cancelled states when CANCELLED is selected from state dropdown', async() => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment(' ').setStateFilterDropDown('CANCELLED')
                 .setSortFilterDropDown('Created Date').setOrderFilterDropDown('DESC');

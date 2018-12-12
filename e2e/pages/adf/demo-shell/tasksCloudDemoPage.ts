@@ -27,14 +27,9 @@ export class TasksCloudDemoPage {
     myTasks = element(by.css('span[data-automation-id="my-tasks-filter"]'));
     completedTasks = element(by.css('span[data-automation-id="completed-tasks-filter"]'));
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
-<<<<<<< HEAD
     taskFilters = element(by.css("mat-expansion-panel[data-automation-id='Task Filters']"));
 
     editTaskFilterCloud = new EditTaskFilterCloudComponent();
-=======
-    optionSelector = element(by.css("div[class*='mat-select-content']"));
-    customiseFilter = element(by.css('mat-expansion-panel-header'));
->>>>>>> Added tests for sorting tasks by state, order, sort.
 
     taskFiltersCloudComponent(filter) {
         return new TaskFiltersCloudComponent(filter);
@@ -73,5 +68,4 @@ export class TasksCloudDemoPage {
         Util.waitUntilElementIsVisible(this.taskFilters);
         return this.taskFilters.click();
     }
-
 }
