@@ -44,7 +44,6 @@ export class DataTablePage {
     constructor(rootElement: ElementFinder = element(by.css('adf-datatable'))) {
         this.rootElement = rootElement;
         this.list = this.rootElement.all(by.css(`div[class*=adf-datatable-body] div[class*=adf-datatable-row]`));
-
     }
 
     getAllDisplayedRows() {
