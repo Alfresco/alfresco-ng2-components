@@ -54,10 +54,10 @@ export class DataTablePage {
     }
     
     async getAllRowsColumnValues(locator) {
-        let columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='"+ column +"'] span");
+        let columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='" + column + "'] span");
         Util.waitUntilElementIsVisible(element.all(columnLocator).first());
         let initialList = await element.all(columnLocator).getText();
-        return initialList.filter(el => el);
+        return initialList.filter((el) => el);
     }
 
     getRowByRowNumber(rowNumber) {

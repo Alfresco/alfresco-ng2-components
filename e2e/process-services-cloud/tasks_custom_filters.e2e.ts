@@ -108,7 +108,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
         });
 
-        //this test is failing due to ACTIVITI-2501
+        // this test is failing due to ACTIVITI-2501
         xit('[C290060] Should display only tasks with Created state when Created is selected from state dropdown', async() => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('CREATED')
                 .setSortFilterDropDown('Created Date').setOrderFilterDropDown('DESC');
