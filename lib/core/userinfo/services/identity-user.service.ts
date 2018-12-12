@@ -32,7 +32,7 @@ export class IdentityUserService {
 
     static USER_NAME = 'name';
     static FAMILY_NAME = 'family_name';
-    static GIVEN_NAME = 'fiven_name';
+    static GIVEN_NAME = 'given_name';
     static USER_EMAIL = 'email';
     static USER_ACCESS_TOKEN = 'access_token';
     static USER_PREFERRED_USERNAME = 'preferred_username';
