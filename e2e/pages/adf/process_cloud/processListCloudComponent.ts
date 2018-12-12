@@ -19,25 +19,25 @@ import { Util } from '../../../util/util';
 import { DataTablePage } from '../dataTablePage';
 import { element, by } from 'protractor';
 
-export class TaskListCloudComponent {
+export class ProcessListCloudComponent {
 
-    taskList = element(by.css('adf-cloud-task-list'));
-    noTasksFound = element.all(by.css("p[class='adf-empty-content__title']")).first();
+    processList = element(by.css('adf-cloud-process-list'));
+    noProcessFound = element.all(by.css("p[class='adf-empty-content__title']")).first();
 
-    dataTable = new DataTablePage(this.taskList);
+    dataTable = new DataTablePage(this.processList);
 
     getDataTable() {
         return this.dataTable;
     }
 
-    checkTaskListIsLoaded() {
-        Util.waitUntilElementIsVisible(this.taskList);
+    checkProcessListIsLoaded() {
+        Util.waitUntilElementIsVisible(this.processList);
         return this;
     }
 
-    getNoTasksFoundMessage() {
-        Util.waitUntilElementIsVisible(this.noTasksFound);
-        return this.noTasksFound.getText();
+    getNoProcessFoundMessage() {
+        Util.waitUntilElementIsVisible(this.noProcessFound);
+        return this.noProcessFound.getText();
     }
 
 }

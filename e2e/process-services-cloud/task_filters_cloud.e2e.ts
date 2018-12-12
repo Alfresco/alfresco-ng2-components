@@ -27,7 +27,7 @@ import { Tasks } from '../actions/APS-cloud/tasks';
 
 describe('Task filters cloud', () => {
 
-    describe('Filters', () => {
+    describe('Task Filters', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
@@ -56,6 +56,7 @@ describe('Task filters cloud', () => {
 
         it('[C290011] Should display default filters when an app is deployed', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            tasksCloudDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed();
         });
 
         xit('[C290009] Should display default filters and created task', () => {
