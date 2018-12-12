@@ -33,17 +33,18 @@ describe('Task filters cloud', () => {
         let appListCloudComponent = new AppListCloudComponent();
         let tasksCloudDemoPage = new TasksCloudDemoPage();
         const tasksService: Tasks = new Tasks();
+        const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
         const path = '/auth/realms/springboot';
         let silentLogin;
         const newTask = 'newTask', completedTask = 'completedTask1';
-        const simpleApp = 'simple-app';
+        const simpleApp = 'task-app';
 
         beforeAll(() => {
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
             loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            loginSSOPage.loginAPS(user, password);
         });
 
         beforeEach((done) => {
@@ -59,7 +60,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290009] Should display default filters and created task', async() => {
-            await tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await tasksService.init(user, password);
             let task =  await tasksService.createStandaloneTask(newTask, simpleApp);
             await tasksService.claimTask(task.entry.id, simpleApp);
 
@@ -74,7 +75,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C289955] Should display task in Complete Tasks List when task is completed', async() => {
-            await tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await tasksService.init(user, password);
             let task = await tasksService.createStandaloneTask(completedTask, simpleApp);
 
             tasksService.claimTask(task.entry.id, simpleApp);
