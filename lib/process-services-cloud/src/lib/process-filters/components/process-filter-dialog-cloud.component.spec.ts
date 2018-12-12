@@ -20,7 +20,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from './../../testing/process-service-cloud.testing.module';
-import { ProcessCloudModule } from '../process-cloud.module';
+import { ProcessCloudModule } from '../process-filters.module';
 
 describe('ProcessFilterDialogCloudComponent', () => {
     let component: ProcessFilterDialogCloudComponent;

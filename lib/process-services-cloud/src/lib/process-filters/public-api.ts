@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-export * from './task-filters-cloud/task-filters-cloud.component';
-export * from './task-filters-cloud/edit-task-filter-cloud.component';
-export * from './models/filter-cloud.model';
-export * from './services/task-filter-cloud.service';
-export * from './task-cloud.module';
+export * from './process-filters-cloud/process-filters-cloud.component';
+export * from './process-filters-cloud/edit-process-filter-cloud.component';
+export * from './models/process-filter-cloud.model';
+export * from './services/process-filter-cloud.service';
+export * from './process-filters.module';

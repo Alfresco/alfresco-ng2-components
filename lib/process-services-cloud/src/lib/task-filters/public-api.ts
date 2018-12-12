@@ -15,16 +15,8 @@
  * limitations under the License.
  */
 
-import { TaskCloudModule } from './task-cloud.module';
-
-describe('TaskCloudModule', () => {
-  let taskCloudModule: TaskCloudModule;
-
-  beforeEach(() => {
-    taskCloudModule = new TaskCloudModule();
-  });
-
-  it('should create an instance', () => {
-    expect(taskCloudModule).toBeTruthy();
-  });
-});
+export * from './components/task-filters-cloud.component';
+export * from './components/edit-task-filter-cloud.component';
+export * from './models/filter-cloud.model';
+export * from './services/task-filter-cloud.service';
+export * from './task-filters.module';

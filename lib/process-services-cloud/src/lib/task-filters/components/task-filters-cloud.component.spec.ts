@@ -24,7 +24,7 @@ import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
 import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { TaskCloudModule } from '../task-cloud.module';
+import { TaskCloudModule } from '../task-filters.module';
 
 describe('TaskFiltersCloudComponent', () => {
 

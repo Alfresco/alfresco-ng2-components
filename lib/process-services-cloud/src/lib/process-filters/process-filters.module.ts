@@ -42,9 +42,23 @@ import { ProcessFilterDialogCloudComponent } from './process-filters-cloud/proce
         FlexLayoutModule,
         MaterialModule
     ],
-    declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
-    exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
-    entryComponents: [ProcessFilterDialogCloudComponent],
-    providers: [ProcessFilterCloudService, LogService, StorageService]
+    declarations: [
+        ProcessFiltersCloudComponent,
+        EditProcessFilterCloudComponent,
+        ProcessFilterDialogCloudComponent
+    ],
+    exports: [
+        ProcessFiltersCloudComponent,
+        EditProcessFilterCloudComponent,
+        ProcessFilterDialogCloudComponent
+    ],
+    entryComponents: [
+        ProcessFilterDialogCloudComponent
+    ],
+    providers: [
+        ProcessFilterCloudService,
+        LogService,
+        StorageService
+    ]
 })
 export class ProcessCloudModule { }

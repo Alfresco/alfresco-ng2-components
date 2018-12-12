@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
-import { TaskCloudModule } from '../task-cloud.module';
+import { TaskCloudModule } from '../task-filters.module';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 
