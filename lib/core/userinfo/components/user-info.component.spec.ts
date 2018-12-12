@@ -548,7 +548,7 @@ describe('User info component', () => {
         beforeEach(async(() => {
             spyOn(authService, 'isOauth').and.returnValue(true);
             spyOn(authService, 'isLoggedIn').and.returnValue(true);
-            getCurrentUserInfoStub = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(of(identityUserMock));
+            getCurrentUserInfoStub = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
         }));
 
         it('should able to fetch identity userInfo', async(() => {
@@ -583,7 +583,7 @@ describe('User info component', () => {
         it('should show last name if first name is null', async(() => {
             fixture.detectChanges();
             let fakeIdentityUser: IdentityUserModel = new IdentityUserModel(identityUserWithOutFirstNameMock);
-            getCurrentUserInfoStub.and.returnValue(of(fakeIdentityUser));
+            getCurrentUserInfoStub.and.returnValue(fakeIdentityUser);
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
