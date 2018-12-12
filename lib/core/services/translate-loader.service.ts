@@ -55,8 +55,8 @@ export class TranslateLoaderService implements TranslateLoader {
         return this.providers.find((x) => x.name === name) ? true : false;
     }
 
-    fetchLanguageFile(lang: string, component: ComponentTranslationModel): Observable<void> {
-        const translationUrl = `${component.path}/${this.prefix}/${lang}${this.suffix}?v=${Date.now()}`;
+    fetchLanguageFile(lang: string, component: ComponentTranslationModel, fallbackUrl?: string): Observable<void> {
+        const translationUrl = fallbackUrl || `${component.path}/${this.prefix}/${lang}${this.suffix}?v=${Date.now()}`;
 
         return this.http.get(translationUrl).pipe(
             map((res: Response) => {
@@ -64,11 +64,13 @@ export class TranslateLoaderService implements TranslateLoader {
             }),
             retry(3),
             catchError(() => {
-                if (lang.includes('-')) {
+                if (!fallbackUrl && lang.includes('-')) {
                     const [langId] = lang.split('-');
 
                     if (langId && langId !== this.defaultLang) {
-                        return this.fetchLanguageFile(langId, component);
+                        const url = `${component.path}/${this.prefix}/${langId}${this.suffix}?v=${Date.now()}`;
+
+                        return this.fetchLanguageFile(lang, component, url);
                     }
                 }
                 return throwError(`Failed to load ${translationUrl}`);
