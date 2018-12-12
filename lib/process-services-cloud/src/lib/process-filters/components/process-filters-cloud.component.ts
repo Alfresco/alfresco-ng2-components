@@ -19,7 +19,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { Observable } from 'rxjs';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
-import { FilterParamsModel } from '../../task-cloud/models/filter-cloud.model';
+import { FilterParamsModel } from '../../task-filters/models/filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
 @Component({
     selector: 'adf-cloud-process-filters',
