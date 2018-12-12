@@ -57,9 +57,9 @@ describe('Task filters cloud', () => {
 
         beforeAll(async () => {
             silentLogin = false;
-            await settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
-            await loginSSOPage.clickOnSSOButton();
-            await loginSSOPage.loginAPS(user, password);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
+            loginSSOPage.clickOnSSOButton();
+            loginSSOPage.loginAPS(user, password);
 
             await tasksService.init(user, password);
             createdTask = await tasksService.createStandaloneTask(createdTaskName, simpleApp);
@@ -155,7 +155,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
         });
-        
+
         it('[C290155] Should display only tasks with cancelled states when CANCELLED is selected from state dropdown', async() => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment(' ').setStateFilterDropDown('CANCELLED')
                 .setSortFilterDropDown('Created Date').setOrderFilterDropDown('DESC');
