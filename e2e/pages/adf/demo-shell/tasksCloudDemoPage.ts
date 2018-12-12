@@ -19,17 +19,13 @@ import { Util } from '../../../util/util';
 
 import { TaskFiltersCloudComponent } from '../process_cloud/taskFiltersCloudComponent';
 import { TaskListCloudComponent } from '../process_cloud/taskListCloudComponent';
-import { element, by, ElementArrayFinder } from 'protractor';
+import { element, by } from 'protractor';
 
 export class TasksCloudDemoPage {
 
     myTasks = element(by.css('span[data-automation-id="my-tasks-filter"]'));
     completedTasks = element(by.css('span[data-automation-id="completed-tasks-filter"]'));
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
-
-    customFiltersButton = element(by.css('.mat-expansion-panel-header-description'));
-    filters: ElementArrayFinder = element.all(by.css('mat-form-field mat-select'));
-    filtersSection = element(by.css('.task-cloud-demo-select'));
 
     taskFiltersCloudComponent(filter) {
         return new TaskFiltersCloudComponent(filter);
@@ -56,26 +52,4 @@ export class TasksCloudDemoPage {
         return this.activeFilter.getText();
     }
 
-    clickStatusFilter() {
-        const filter = this.filters.get(0);
-        Util.waitUntilElementIsVisible(filter);
-        this.clickFilterDropDown(filter);
-
-    }
-
-    selectOption(value) {
-        const option = element(by.cssContainingText('.mat-select-content .mat-option-text', value));
-        Util.waitUntilElementIsVisible(option);
-        option.click();
-    }
-
-    clickCustomFilters() {
-        Util.waitUntilElementIsVisible(this.customFiltersButton);
-        return this.customFiltersButton.click();
-    }
-
-    clickFilterDropDown(filter) {
-        Util.waitUntilElementIsVisible(filter);
-        return filter.click();
-    }
 }
