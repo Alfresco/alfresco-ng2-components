@@ -31,6 +31,8 @@ import { IdentityRoleModel } from '../models/identity-role.model';
 export class IdentityUserService {
 
     static USER_NAME = 'name';
+    static FAMILY_NAME = 'family_name';
+    static GIVEN_NAME = 'fiven_name';
     static USER_EMAIL = 'email';
     static USER_ACCESS_TOKEN = 'access_token';
     static USER_PREFERRED_USERNAME = 'preferred_username';
@@ -41,11 +43,11 @@ export class IdentityUserService {
         private appConfigService: AppConfigService) {}
 
     getCurrentUserInfo(): IdentityUserModel {
-        const fullName = this.getValueFromToken<string>(IdentityUserService.USER_NAME);
+        const familyName = this.getValueFromToken<string>(IdentityUserService.FAMILY_NAME);
+        const givenName = this.getValueFromToken<string>(IdentityUserService.GIVEN_NAME);
         const email = this.getValueFromToken<string>(IdentityUserService.USER_EMAIL);
         const username = this.getValueFromToken<string>(IdentityUserService.USER_PREFERRED_USERNAME);
-        const nameParts = fullName.split(' ');
-        const user = { firstName: nameParts[0], lastName: nameParts[1], email: email, username: username };
+        const user = { firstName: givenName, lastName: familyName, email: email, username: username };
         return new IdentityUserModel(user);
     }
 

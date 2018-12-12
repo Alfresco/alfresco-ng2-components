@@ -68,7 +68,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
         if (appName && appName.currentValue) {
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
-            this.selectFilterAndEmit(filter.currentValue);
+            this.selectFilter(filter.currentValue);
         }
     }
 
