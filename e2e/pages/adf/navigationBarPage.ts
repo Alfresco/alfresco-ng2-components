@@ -208,7 +208,7 @@ export class NavigationBarPage {
     }
 
     clickProcessListButton = function () {
-        Util.waitUntilElementIsVisible(this.processListButton);
+        Util.waitUntilElementIsClickable(this.processListButton);
         return this.processListButton.click();
     };
 
@@ -217,8 +217,8 @@ export class NavigationBarPage {
         this.treeViewButton.click();
     }
 
-    clickProcessListButton = function () {
+    checkProcessListButtonIsDisplayed = function () {
         Util.waitUntilElementIsVisible(this.processListButton);
-        return this.processListButton.click();
+        return this;
     };
 }

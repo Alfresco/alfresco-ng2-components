@@ -15,25 +15,25 @@
  * limitations under the License.
  */
 
-export class AppsRuntimeActions {
+import { Util } from '../../util/util';
 
-    async getRuntimeAppByName(alfrescoJsApi, appName) {
+/**
+ * Create tenant JSON Object
+ *
+ * @param details - JSON object used to overwrite the default values
+ * @constructor
+ */
+export class User {
 
-        let runtimeApps = await this.getRuntimeAppDefinitions(alfrescoJsApi);
-        let desiredApp;
+    email = Util.generateRandomEmail();
+    firstName = Util.generateRandomString();
+    lastName = Util.generateRandomString();
+    password = Util.generatePasswordString();
+    type = 'enterprise';
+    tenantId = '1';
+    company = null;
 
-        for (let i = 0; i < runtimeApps.data.length; i++) {
-            if (runtimeApps.data[i].name === appName) {
-                desiredApp = runtimeApps.data[i];
-            }
-        }
-
-        return desiredApp;
+    constructor(details?: any) {
+        Object.assign(this, details);
     }
-
-    async getRuntimeAppDefinitions(alfrescoJsApi) {
-
-        return await alfrescoJsApi.activiti.appsRuntimeApi.getAppDefinitions();
-    }
-
 }

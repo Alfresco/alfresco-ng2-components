@@ -16,6 +16,7 @@
  */
 
 import { Util } from '../../../util/util';
+import { element, by, protractor } from 'protractor';
 
 export class AnalyticsPage {
 

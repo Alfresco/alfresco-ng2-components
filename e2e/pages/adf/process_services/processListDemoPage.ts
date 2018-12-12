@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import Util = require('../../../util/util');
+import { Util } from '../../../util/util';
 
-import { element, by } from 'protractor';
+import { element, by, protractor } from 'protractor';
 
 export class ProcessListDemoPage {
 
@@ -25,10 +25,32 @@ export class ProcessListDemoPage {
     resetButton = element(by.cssContainingText('button span', 'Reset'));
     emptyProcessContent = element(by.css('div[class="adf-empty-content"]'));
     processDefinitionInput = element(by.css('input[data-automation-id="process-definition-id"]'));
+    processInstanceInput = element(by.css('input[data-automation-id="process-instance-id"]'));
+    stateSelector = element(by.css('mat-select[data-automation-id="state"'));
+    sortSelector = element(by.css('mat-select[data-automation-id="sort"'));
+
+    selectSorting(sort) {
+        Util.waitUntilElementIsVisible(this.stateSelector);
+        this.sortSelector.click();
+        let sortLocator = element(by.cssContainingText('mat-option span', sort));
+        Util.waitUntilElementIsVisible(sortLocator);
+        sortLocator.click();
+        return this;
+    }
+
+    selectStateFilter(state) {
+        Util.waitUntilElementIsVisible(this.stateSelector);
+        this.stateSelector.click();
+        let stateLocator = element(by.cssContainingText('mat-option span', state));
+        Util.waitUntilElementIsVisible(stateLocator);
+        stateLocator.click();
+        return this;
+    }
 
     addAppId(appId) {
         Util.waitUntilElementIsVisible(this.appIdInput);
         this.appIdInput.click();
+        this.appIdInput.sendKeys(protractor.Key.ENTER);
         this.appIdInput.clear();
         return this.appIdInput.sendKeys(appId);
     }
@@ -47,9 +69,39 @@ export class ProcessListDemoPage {
         return Util.waitUntilElementIsVisible(this.emptyProcessContent);
     }
 
+    checkProcessIsNotDisplayed(processName) {
+        let processRow = element.all(by.css('div[filename="' + processName + '"]')).first();
+        return Util.waitUntilElementIsNotVisible(processRow);
+    }
+
     checkProcessIsDisplayed(processName) {
-        let processRow = element(by.css('div[filename="' + processName + '"]'));
+        let processRow = element.all(by.css('div[filename="' + processName + '"]')).first();
         return Util.waitUntilElementIsVisible(processRow);
+    }
+
+    checkAppIdFieldIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.appIdInput);
+        return this;
+    }
+
+    checkProcessInstanceIdFieldIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.processInstanceInput);
+        return this;
+    }
+
+    checkProcessDefinitionIdFieldIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.processDefinitionInput);
+        return this;
+    }
+
+    checkStateFieldIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.stateSelector);
+        return this;
+    }
+
+    checkSortFieldIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.sortSelector);
+        return this;
     }
 
     addProcessDefinitionId(procDefinitionId) {
@@ -57,5 +109,12 @@ export class ProcessListDemoPage {
         this.processDefinitionInput.click();
         this.processDefinitionInput.clear();
         return this.processDefinitionInput.sendKeys(procDefinitionId);
+    }
+
+    addProcessInstanceId(procInstanceId) {
+        Util.waitUntilElementIsVisible(this.processInstanceInput);
+        this.processInstanceInput.click();
+        this.processInstanceInput.clear();
+        return this.processInstanceInput.sendKeys(procInstanceId);
     }
 }

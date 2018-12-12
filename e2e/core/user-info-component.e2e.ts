@@ -80,11 +80,6 @@ describe('User Info component', () => {
         loginPage.login(contentUserModel.id, contentUserModel.password);
         navigationBarPage.clickUserProfile();
 
-        expect(userInfoDialog.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(userInfoDialog.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        expect(userInfoDialog.getContentEmail()).toEqual(contentUserModel.email);
-        expect(userInfoDialog.getContentJobTitle()).toEqual(contentUserModel.jobTitle);
-
         userInfoDialog.checkInitialImage();
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.ACSProfileImageNotDisplayed();
@@ -99,6 +94,7 @@ describe('User Info component', () => {
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.ACSProfileImageNotDisplayed();
         userInfoDialog.clickOnProcessServicesTab();
+        userInfoDialog.checkProcessServicesTabIsSelected();
 
         expect(userInfoDialog.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
         expect(userInfoDialog.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);

@@ -4,8 +4,8 @@
         <mat-form-field>
             <mat-label>App Id</mat-label>
             <input data-automation-id="app-id"
-                matInput
-                [formControl]="processAppId">
+                   matInput
+                   [formControl]="processAppId">
             <mat-error *ngIf="processAppId.hasError('required')">
                 {{ 'PROCESS_LIST_DEMO.ERROR_MESSAGE.APP_ID_REQUIRED_ERROR' | translate }}
             </mat-error>
@@ -20,24 +20,24 @@
         <mat-form-field>
             <mat-label>ProcessInstanceId</mat-label>
             <input data-automation-id="process-instance-id"
-                matInput
-                class="form-control"
-                [formControl]="processInstanceId">
+                   matInput
+                   class="form-control"
+                   [formControl]="processInstanceId">
             <mat-hint>SimpleProcess:1:2</mat-hint>
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>ProcessDefinitionId</mat-label>
             <input data-automation-id="process-definition-id"
-                matInput
-                [formControl]="processDefinitionId">
+                   matInput
+                   [formControl]="processDefinitionId">
             <mat-hint>SimpleProcess:1:2</mat-hint>
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>State</mat-label>
             <mat-select
-                [formControl]="processState">
+                [formControl]="processState" data-automation-id="state">
                 <mat-option *ngFor="let stateOption of stateOptions" [value]="stateOption.value">{{ stateOption.title }}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -45,7 +45,7 @@
         <mat-form-field>
             <mat-label>Sort</mat-label>
             <mat-select
-                [formControl]="processSort">
+                [formControl]="processSort" data-automation-id="sort">
                 <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOption.value">{{ sortOption.title }}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -109,4 +109,3 @@
         [target]="processList">
     </adf-pagination>
 </div>
-
