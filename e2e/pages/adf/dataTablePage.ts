@@ -58,7 +58,6 @@ export class DataTablePage {
         Util.waitUntilElementIsVisible(element.all(columnLocator).first());
         let initialList = await element.all(columnLocator).getText();
         return initialList.filter((el) => el);
-
     }
 
     getRowByRowNumber(rowNumber) {
