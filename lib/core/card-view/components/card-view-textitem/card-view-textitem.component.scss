@@ -118,5 +118,10 @@
         &-textitem-editable input.mat-input-element:focus {
             margin-bottom: -8px;
         }
+
+        &-textitem-ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 }
