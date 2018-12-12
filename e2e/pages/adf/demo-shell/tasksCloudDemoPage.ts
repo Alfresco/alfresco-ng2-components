@@ -19,6 +19,7 @@ import { Util } from '../../../util/util';
 
 import { TaskFiltersCloudComponent } from '../process_cloud/taskFiltersCloudComponent';
 import { TaskListCloudComponent } from '../process_cloud/taskListCloudComponent';
+import { EditTaskFilterCloudComponent } from '../process_cloud/editTaskFilterCloudComponent';
 import { element, by } from 'protractor';
 
 export class TasksCloudDemoPage {
@@ -26,8 +27,9 @@ export class TasksCloudDemoPage {
     myTasks = element(by.css('span[data-automation-id="my-tasks-filter"]'));
     completedTasks = element(by.css('span[data-automation-id="completed-tasks-filter"]'));
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
-    optionSelector = element(by.css("div[class*='mat-select-content']"));
-    customiseFilter = element(by.css('mat-expansion-panel-header'));
+    taskFilters = element(by.css("mat-expansion-panel[data-automation-id='Task Filters']"));
+
+    editTaskFilterCloud = new EditTaskFilterCloudComponent();
 
     taskFiltersCloudComponent(filter) {
         return new TaskFiltersCloudComponent(filter);
@@ -35,6 +37,10 @@ export class TasksCloudDemoPage {
 
     taskListCloudComponent() {
         return new TaskListCloudComponent();
+    }
+
+    editTaskFilterCloudComponent() {
+        return this.editTaskFilterCloud;
     }
 
     myTasksFilter() {
@@ -54,50 +60,12 @@ export class TasksCloudDemoPage {
         return this.activeFilter.getText();
     }
 
-    clickCustomiseFilter() {
-        Util.waitUntilElementIsVisible(this.customiseFilter);
-        this.customiseFilter.click();
-        return this;
-    }
-
-    setStateFilterDropDown(option) {
-        this.clickOnDropDownArrow('status');
-
-        let stateElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(stateElement);
-        Util.waitUntilElementIsVisible(stateElement);
-        stateElement.click();
-        return this;
-    }
-
-    setSortFilterDropDown(option) {
-        this.clickOnDropDownArrow('sort');
-
-        let sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(sortElement);
-        Util.waitUntilElementIsVisible(sortElement);
-        sortElement.click();
-        return this;
-    }
-
-    setOrderFilterDropDown(option) {
-        this.clickOnDropDownArrow('order');
-
-        let orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(orderElement);
-        Util.waitUntilElementIsVisible(orderElement);
-        orderElement.click();
-        return this;
-    }
-
-    clickOnDropDownArrow(option) {
-        let dropDownArrow = element(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']"));
-        Util.waitUntilElementIsVisible(dropDownArrow);
-        dropDownArrow.click();
-        Util.waitUntilElementIsVisible(this.optionSelector);
-    }
-
     getAllRowsByIdColumn() {
         return new TaskListCloudComponent().getAllRowsByColumn('Id');
+    }
+
+    clickOnTaskFilters() {
+        Util.waitUntilElementIsVisible(this.taskFilters);
+        return this.taskFilters.click();
     }
 }
