@@ -18,7 +18,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { TaskListCloudComponent, TaskListCloudSortingModel, TaskFilterCloudModel } from '@alfresco/adf-process-services-cloud';
 import { UserPreferencesService } from '@alfresco/adf-core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CloudLayoutService } from './services/cloud-layout.service';
 @Component({
     templateUrl: 'tasks-cloud-demo.component.html',
@@ -43,6 +43,7 @@ export class TasksCloudDemoComponent implements OnInit {
     constructor(
         private cloudLayoutService: CloudLayoutService,
         private route: ActivatedRoute,
+        private router: Router,
         private userPreference: UserPreferencesService) {
     }
 
@@ -63,8 +64,8 @@ export class TasksCloudDemoComponent implements OnInit {
         this.userPreference.paginationSize = event.maxItems;
     }
 
-    onRowClick($event) {
-        this.selectedRow = $event;
+    onRowClick(taskId) {
+        this.router.navigate([`/cloud/${this.applicationName}/task-details/${taskId}`]);
     }
 
     onFilterChange(filter: any) {
