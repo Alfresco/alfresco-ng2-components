@@ -1,5 +1,5 @@
 <mat-form-field>
-    <mat-select [(value)]="selected" (selectionChange)="onChanged($event)">
+    <mat-select [(value)]="selected" (selectionChange)="onOptionChanged($event)">
         <mat-option *ngFor="let option of options" [value]="option.key">
             {{ option.label | translate }}
         </mat-option>

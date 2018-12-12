@@ -39,13 +39,18 @@ export class SearchSortingPickerComponent implements OnInit {
         const primary = this.queryBuilder.getPrimarySorting();
         if (primary) {
             this.value = primary.key;
-            this.ascending = primary.ascending;
+            this.ascending = this.getSortingOrder();
         }
     }
 
-    onChanged(sorting: { key: string, ascending: boolean }) {
-        this.value = sorting.key;
-        this.ascending = sorting.ascending;
+    onValueChanged(key: string) {
+        this.value = key;
+        this.ascending = this.getSortingOrder();
+        this.applySorting();
+    }
+
+    onSortingChanged(ascending: boolean) {
+        this.ascending = ascending;
         this.applySorting();
     }
 
@@ -65,6 +70,15 @@ export class SearchSortingPickerComponent implements OnInit {
             }];
             this.queryBuilder.update();
         }
+    }
+
+    private getSortingOrder(): boolean {
+        const option = this.findOptionByKey(this.value);
+        if (option) {
+            return option.ascending;
+        }
+
+        return this.queryBuilder.getPrimarySorting().ascending;
     }
 
 }

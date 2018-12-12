@@ -71,11 +71,23 @@ describe('SearchSortingPickerComponent', () => {
         spyOn(queryBuilder, 'update').and.stub();
 
         component.ngOnInit();
-        component.onChanged({ key: 'description', ascending: false });
+        component.onValueChanged('description');
 
         expect(queryBuilder.update).toHaveBeenCalled();
         expect(queryBuilder.sorting.length).toBe(1);
         expect(queryBuilder.sorting[0].key).toEqual('description');
+        expect(queryBuilder.sorting[0].ascending).toBeTruthy();
+    });
+
+    it('should update query builder each time sorting is changed', () => {
+        spyOn(queryBuilder, 'update').and.stub();
+
+        component.ngOnInit();
+        component.onSortingChanged(false);
+
+        expect(queryBuilder.update).toHaveBeenCalled();
+        expect(queryBuilder.sorting.length).toBe(1);
+        expect(queryBuilder.sorting[0].key).toEqual('name');
         expect(queryBuilder.sorting[0].ascending).toBeFalsy();
     });
 });
