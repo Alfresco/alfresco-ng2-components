@@ -33,10 +33,11 @@ describe('Start Task', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudComponent();
     const standaloneTaskName = Util.generateRandomString(5);
-    const taskNameLessThen255Characters = Util.generateRandomString(255);
+    const taskNameLessThen255Characters = Util.generateRandomString(100);
     const taskNameBiggerThen255Characters = Util.generateRandomString(300);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Field required';
+    const dateValidationError = 'Date format DD/MM/YYYY';
     const path = '/auth/realms/springboot';
     const appName = 'task-app';
     let silentLogin;
@@ -72,6 +73,7 @@ describe('Start Task', () => {
         startTask.addName(standaloneTaskName)
                  .addDescription('descriptions')
                  .addDueDate('12/12/2018')
+                 .addPriority('50')
                  .clickStartButton();
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(standaloneTaskName);
 
@@ -82,8 +84,31 @@ describe('Start Task', () => {
         startTask.addName(taskNameLessThen255Characters)
                  .checkStartButtonIsEnabled();
         startTask.addName(taskNameBiggerThen255Characters)
+                 .blur(startTask.name)
                  .checkValidationErrorIsDisplayed(lengthValidationError)
+                 .checkStartButtonIsDisabled()
+                 .clickCancelButton();
+    });
+
+    it('[C290181] Should be displayed an error message if the date is invalid', () => {
+        tasksCloudDemoPage.createNewTask();
+        startTask.addDueDate('12/12/2018')
+                 .checkStartButtonIsEnabled();
+        startTask.addDueDate('invalid date')
+                 .blur(startTask.dueDate)
+                 .validateDate(dateValidationError)
                  .checkStartButtonIsDisabled();
+    });
+
+    // failing due to ADF-3828
+    xit('[C290182] Should be possible to assign the task to another user', () => {
+        tasksCloudDemoPage.createNewTask();
+        startTask.addName(standaloneTaskName)
+                 .addAssignee('devops user')
+                 .clickStartButton();
+        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('My Tasks');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(standaloneTaskName);
     });
 
 });

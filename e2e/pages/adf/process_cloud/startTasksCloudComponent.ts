@@ -16,7 +16,7 @@
  */
 
 import { Util } from '../../../util/util';
-import { element, by, Key } from 'protractor';
+import { element, by, Key, protractor } from 'protractor';
 
 export class StartTasksCloudComponent {
 
@@ -24,6 +24,7 @@ export class StartTasksCloudComponent {
     dueDate = element(by.css('input[id="date_id"]'));
     description = element(by.css('textarea[id="description_id"]'));
     assignee = element(by.css('adf-cloud-people input'));
+    priority = element(by.css('input[formcontrolname="priority"]'));
     startButton = element(by.css('button[id="button-start"]'));
     startButtonEnabled = element(by.css('button[id="button-start"]:not(disabled)'));
     cancelButton = element(by.css('button[id="button-cancel"]'));
@@ -48,8 +49,15 @@ export class StartTasksCloudComponent {
         return this;
     }
 
+    addPriority(userPriority) {
+        Util.waitUntilElementIsVisible(this.priority);
+        this.priority.sendKeys(userPriority);
+        return this;
+    }
+
     addDueDate(date) {
         Util.waitUntilElementIsVisible(this.dueDate);
+        this.clearField(this.dueDate);
         this.dueDate.sendKeys(date);
         return this;
     }
@@ -102,9 +110,28 @@ export class StartTasksCloudComponent {
         return this;
     }
 
-    checkValidationErrorIsDisplayed(error) {
-        const errorElement = element(by.cssContainingText('mat-error', error));
+    checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
+        const errorElement = element(by.cssContainingText(elementRef, error));
         Util.waitUntilElementIsVisible(errorElement);
         return this;
+    }
+
+    validateAssignee(error) {
+        this.checkValidationErrorIsDisplayed(error, '.adf-start-task-cloud-error');
+        return this;
+    }
+
+    validateDate(error) {
+        this.checkValidationErrorIsDisplayed(error, '.adf-error-text');
+        return this;
+    }
+
+    clearField(locator) {
+        Util.waitUntilElementIsVisible(locator);
+        locator.getAttribute('value').then((result) => {
+            for (let i = result.length; i >= 0; i--) {
+                locator.sendKeys(protractor.Key.BACK_SPACE);
+            }
+        });
     }
 }
