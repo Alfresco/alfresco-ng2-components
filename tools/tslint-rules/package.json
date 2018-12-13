@@ -1,7 +1,7 @@
 {
   "name": "adf-tslint-rules",
   "description": "Custom Rules for the ADF project",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "build": "tsc",
@@ -19,7 +19,8 @@
     "typescript": "2.4.0"
   },
   "peerDependencies": {
-    "tslint": "5.0.0"
+    "tslint": ">=5.0.0",
+    "codelyzer": ">=4.5.0"
   },
   "dependencies": {
     "app-root-path": "2.0.1",
@@ -27,8 +28,7 @@
     "cssauron": "1.4.0",
     "semver-dsl": "1.0.1",
     "source-map": "0.5.6",
-    "sprintf-js": "1.0.3",
-    "codelyzer": "3.1.2"
+    "sprintf-js": "1.0.3"
   },
   "license": "Apache-2.0"
 }
