@@ -295,23 +295,16 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     get pagination(): BehaviorSubject<PaginationModel> {
-        let maxItems = this.preferences.paginationSize;
-
         if (!this._pagination) {
-            if (this.maxItems) {
-                maxItems = this.maxItems;
-            }
-
+            let maxItems = this.maxItems || this.preferences.paginationSize;
             let defaultPagination = <PaginationModel> {
                 maxItems: maxItems,
                 skipCount: 0,
                 totalItems: 0,
                 hasMoreItems: false
             };
-
             this._pagination = new BehaviorSubject<PaginationModel>(defaultPagination);
         }
-
         return this._pagination;
     }
 
