@@ -99,8 +99,8 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290045] Should display only tasks with Assigned state when Assigned is selected from state dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('ASSIGNED')
-                .setSortFilterDropDown('Created Date').setOrderFilterDropDown('DESC');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('ASSIGNED');
+
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
@@ -109,8 +109,8 @@ describe('Task filters cloud', () => {
 
         // this test is failing due to ACTIVITI-2501
         xit('[C290060] Should display only tasks with Created state when Created is selected from state dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('CREATED')
-                .setSortFilterDropDown('Created Date').setOrderFilterDropDown('DESC');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('CREATED');
+
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(createdTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
@@ -118,8 +118,8 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290061] Should display only tasks with Completed state when Completed is selected from state dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('COMPLETED')
-                .setSortFilterDropDown('Created Date').setOrderFilterDropDown('DESC');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('COMPLETED');
+
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTaskName);
@@ -128,8 +128,8 @@ describe('Task filters cloud', () => {
 
         // this test is failing due to ACTIVITI-2501
         xit('[C290068] Should display only tasks with Deleted state when Deleted is selected from state dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('DELETED')
-                .setSortFilterDropDown('Created Date').setOrderFilterDropDown('DESC');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('DELETED');
+
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(deletedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTaskName);
@@ -137,8 +137,8 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290139] Should display only tasks with all states when All is selected from state dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment(' ').setStateFilterDropDown('ALL')
-                .setSortFilterDropDown('Created Date').setOrderFilterDropDown('DESC');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment(' ').setStateFilterDropDown('ALL');
+
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(deletedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(createdTaskName);
@@ -146,8 +146,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290154] Should display only tasks with suspended states when Suspended is selected from state dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment(' ').setStateFilterDropDown('SUSPENDED')
-                .setSortFilterDropDown('Created Date').setOrderFilterDropDown('DESC');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment(' ').setStateFilterDropDown('SUSPENDED');
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(suspendedTasks.list.entries[0].entry.id);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
@@ -157,8 +156,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290155] Should display only tasks with cancelled states when CANCELLED is selected from state dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment(' ').setStateFilterDropDown('CANCELLED')
-                .setSortFilterDropDown('Created Date').setOrderFilterDropDown('DESC');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment(' ').setStateFilterDropDown('CANCELLED');
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(cancelledTasks.list.entries[0].entry.id);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
