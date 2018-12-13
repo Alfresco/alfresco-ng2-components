@@ -1,0 +1,89 @@
+<mat-card>
+    <mat-card-header fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="adf-cloud-start-task-heading">
+        <mat-card-title>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.TITLE' | translate}}</mat-card-title>
+    </mat-card-header>
+    <form [formGroup]="taskForm" fxLayout="column" (ngSubmit)="saveTask()">
+
+    <mat-card-content>
+            <div class="adf-task-name">
+                <mat-form-field fxFlex>
+                    <mat-label>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.NAME' | translate }}</mat-label>
+                    <input
+                        matInput
+                        id="name_id"
+                        class="form-control"
+                        formControlName="name">
+                    <mat-error *ngIf="nameController.hasError('required')">
+                        {{ 'ADF_CLOUD_START_TASK.ERROR.REQUIRED' | translate }}
+                    </mat-error>
+                    <mat-error *ngIf="nameController.hasError('maxlength')">
+                        {{ 'ADF_CLOUD_START_TASK.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxNameLength } }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                <mat-form-field fxFlex>
+                    <mat-label>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.DESCRIPTION' | translate}}</mat-label>
+                    <textarea
+                        matInput
+                        class="form-control"
+                        id="description_id"
+                        formControlName="description">
+                    </textarea>
+                </mat-form-field>
+
+                <mat-form-field fxFlex>
+                    <div style="height: 40px;">
+                    <input  matInput type="number" placeholder="Priority" formControlName="priority">
+                    </div>
+                </mat-form-field>
+            </div>
+            <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+                <mat-form-field fxFlex>
+                    <input matInput
+                        [matDatepicker]="taskDatePicker"
+                        (keydown)="true"
+                        (focusout)="onDateChanged($event.srcElement.value)"
+                        placeholder="{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
+                        [(ngModel)]="dueDate"
+                        [ngModelOptions]="{standalone: true}"
+                        id="date_id">
+                        <mat-datepicker-toggle matSuffix [for]="taskDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #taskDatePicker
+                            [touchUi]="true"
+                            (dateChanged)="onDateChanged($event)">
+                        </mat-datepicker>
+                    <div class="adf-error-text-container">
+                        <div *ngIf="dateError">
+                            <div class="adf-error-text">{{'ADF_CLOUD_START_TASK.ERROR.DATE' | translate}}</div>
+                            <mat-icon class="adf-error-icon">warning</mat-icon>
+                        </div>
+                    </div>
+                </mat-form-field>
+
+                <div fxFlex>
+                    <adf-cloud-people (selectedUser)="onAssigneeSelect($event)"></adf-cloud-people>
+                </div>
+            </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+        <div class="adf-cloud-start-task-footer" fxLayout="row" fxLayoutAlign="end end" >
+            <button
+                mat-button
+                type="button"
+                (click)="onCancel()"
+                id="button-cancel">
+                {{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.ACTION.CANCEL'|translate}}
+            </button>
+            <button
+                color="primary"
+                type="submit" [disabled]="dateError || !taskForm.valid || submitted"
+                mat-button
+                id="button-start">
+                {{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.ACTION.START'|translate}}
+            </button>
+        </div>
+    </mat-card-actions>
+    </form>
+</mat-card>
