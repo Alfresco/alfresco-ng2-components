@@ -36,13 +36,6 @@ export class StartTasksCloudComponent {
         return this;
     }
 
-    Name(userName) {
-        Util.waitUntilElementIsVisible(this.name);
-        this.name.clear();
-        this.name.sendKeys(userName);
-        return this;
-    }
-
     addDescription(userDescription) {
         Util.waitUntilElementIsVisible(this.description);
         this.description.sendKeys(userDescription);
