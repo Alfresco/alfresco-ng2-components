@@ -42,7 +42,6 @@ export class PeopleCloudComponent implements OnInit {
 
     static ROLE_ACTIVITI_ADMIN = 'ACTIVITI_ADMIN';
     static ROLE_ACTIVITI_USER = 'ACTIVITI_USER';
-    static ROLE_ACTIVITI_MODELER = 'ACTIVITI_MODELER';
 
     static MODE_SINGLE = 'single';
     static MODE_MULTIPLE = 'multiple';
@@ -81,7 +80,7 @@ export class PeopleCloudComponent implements OnInit {
     private _users: IdentityUserModel[] = [];
     users$: Observable<IdentityUserModel[]>;
 
-    private _selectedUsers: IdentityUserModel[];
+    private _selectedUsers: IdentityUserModel[] = [];
     private selectedUsers: BehaviorSubject<IdentityUserModel[]>;
     selectedUsers$: Observable<IdentityUserModel[]>;
 
@@ -92,10 +91,8 @@ export class PeopleCloudComponent implements OnInit {
     dataError = false;
 
     constructor(private identityUserService: IdentityUserService) {
-        this._selectedUsers = <IdentityUserModel[]> [];
         this.selectedUsers = new BehaviorSubject<IdentityUserModel[]>(this._selectedUsers);
         this.selectedUsers$ = this.selectedUsers.asObservable();
-        this.selectedUsers.next(this._selectedUsers);
     }
 
     ngOnInit() {
@@ -110,23 +107,25 @@ export class PeopleCloudComponent implements OnInit {
     }
 
     private async loadUsers() {
-        const roles = this.getApplicableRoles();
+        if (!this.hasRoles()) {
+            this.roles = this.getDefaultRoles();
+        }
+
         if (this.showCurrentUser) {
-            this._users = await this.identityUserService.getUsersByRolesWithCurrentUser(roles);
+            this._users = await this.identityUserService.getUsersByRolesWithCurrentUser(this.roles);
         } else {
-            this._users = await this.identityUserService.getUsersByRolesWithoutCurrentUser(roles);
+            this._users = await this.identityUserService.getUsersByRolesWithoutCurrentUser(this.roles);
         }
 
         this.loadPreSelectUsers();
     }
 
-    private getApplicableRoles(): string[] {
-        let roles = this.roles;
-        if (!roles || roles.length === 0) {
-            roles = [PeopleCloudComponent.ROLE_ACTIVITI_ADMIN, PeopleCloudComponent.ROLE_ACTIVITI_MODELER, PeopleCloudComponent.ROLE_ACTIVITI_USER];
-        }
+    private hasRoles(): boolean {
+        return this.roles && this.roles.length > 0;
+    }
 
-        return roles;
+    private getDefaultRoles(): string[] {
+        return [PeopleCloudComponent.ROLE_ACTIVITI_ADMIN, PeopleCloudComponent.ROLE_ACTIVITI_USER];
     }
 
     private searchUsers(keyword: string): Observable<IdentityUserModel[]> {
