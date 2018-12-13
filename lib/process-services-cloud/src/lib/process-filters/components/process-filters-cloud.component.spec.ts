@@ -20,12 +20,12 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { from, Observable } from 'rxjs';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
-import { FilterParamsModel } from '../../task-cloud/models/filter-cloud.model';
+import { FilterParamsModel } from '../../task-filters/models/filter-cloud.model';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFiltersCloudComponent } from './process-filters-cloud.component';
 import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { ProcessCloudModule } from '../process-filters.module';
+import { ProcessFiltersModule } from '../process-filters.module';
 
 describe('ProcessFiltersCloudComponent', () => {
 
@@ -73,7 +73,7 @@ describe('ProcessFiltersCloudComponent', () => {
     let fixture: ComponentFixture<ProcessFiltersCloudComponent>;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, ProcessCloudModule],
+        imports: [ProcessServiceCloudTestingModule, ProcessFiltersModule],
         providers: [ProcessFilterCloudService]
     });
 
