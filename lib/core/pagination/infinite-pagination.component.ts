@@ -40,6 +40,9 @@ import { UserPreferencesService } from '../services/user-preferences.service';
 })
 export class InfinitePaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
 
+    /**
+     * @deprecated 3.0.0 - uses paginationSize's default in UserPreferencesService
+     */
     static DEFAULT_PAGE_SIZE: number = 25;
 
     static DEFAULT_PAGINATION: PaginationModel = {
@@ -61,7 +64,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     /** Number of items that are added with each "load more" event. */
     @Input()
-    pageSize: number = InfinitePaginationComponent.DEFAULT_PAGE_SIZE;
+    pageSize: number;
 
     /** Is a new page loading? */
     @Input('loading')
@@ -81,7 +84,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
             this.paginationSubscription = this.target.pagination.subscribe((pagination) => {
                 this.isLoading = false;
                 this.pagination = pagination;
-                this.pageSize = this.userPreferencesService.paginationSize || this.pageSize;
+                this.pageSize = this.pageSize || this.userPreferencesService.paginationSize;
                 this.cdr.detectChanges();
             });
         }
