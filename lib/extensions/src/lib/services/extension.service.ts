@@ -22,6 +22,7 @@ import { ExtensionLoaderService } from './extension-loader.service';
 import { RouteRef } from '../config/routing.extensions';
 import { ActionRef } from '../config/action.extensions';
 import * as core from '../evaluators/core.evaluators';
+import { ComponentRegisterService } from './component-register.service';
 
 @Injectable({
     providedIn: 'root'
@@ -35,10 +36,12 @@ export class ExtensionService {
     actions: Array<ActionRef> = [];
 
     authGuards: { [key: string]: Type<{}> } = {};
-    components: { [key: string]: Type<{}> } = {};
     evaluators: { [key: string]: RuleEvaluator } = {};
 
-    constructor(private loader: ExtensionLoaderService) {}
+    constructor(
+        private loader: ExtensionLoaderService,
+        private componentRegister: ComponentRegisterService
+    ) {}
 
     async load(): Promise<ExtensionConfig> {
         const config = await this.loader.load(
@@ -79,9 +82,7 @@ export class ExtensionService {
     }
 
     setComponents(values: { [key: string]: Type<{}> }) {
-        if (values) {
-            this.components = Object.assign({}, this.components, values);
-        }
+        this.componentRegister.setComponents(values);
     }
 
     getRouteById(id: string): RouteRef {
@@ -126,7 +127,7 @@ export class ExtensionService {
     }
 
     getComponentById(id: string): Type<{}> {
-        return this.components[id];
+        return this.componentRegister.getComponentById(id);
     }
 
     getRuleById(id: string): RuleRef {
