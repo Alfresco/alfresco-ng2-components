@@ -31,3 +31,4 @@ src/environments/
 /docs/docs.json
 /protractorFailuresReport
 coverage/
+.DS_Store
