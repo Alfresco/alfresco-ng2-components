@@ -30,7 +30,7 @@ Starts a process.
 | ---- | ---- | ----------- |
 | cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceCloud`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-instance-cloud.model.ts)`>` | Emitted when the process is canceled. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceCloud`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-instance-cloud.model.ts)`>` | Emitted when an error occurs. |
-| start | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceCloud`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-instance-cloud.model.ts)`>` | Emitted when the process starts. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceCloud`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-instance-cloud.model.ts)`>` | Emitted when the process starts. |
 
 ## Details
 

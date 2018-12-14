@@ -56,7 +56,9 @@ export class ProcessCloudService {
                     this.contentTypes, this.accepts,
                     this.returnType, null, null)
             ).pipe(
-                map((res) => res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry))),
+                map((res: any) => {
+                    return res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry));
+                }),
                 catchError((err) => this.handleProcessError(err))
             );
         } else {

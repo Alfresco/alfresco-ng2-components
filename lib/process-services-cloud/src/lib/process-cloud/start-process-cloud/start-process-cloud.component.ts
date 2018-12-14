@@ -61,7 +61,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     /** Emitted when the starting process is successfully created. */
     @Output()
-    start: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
+    success: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
 
     /** Emitted when the starting process is cancelled */
     @Output()
@@ -87,14 +87,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             processInstanceName: new FormControl(this.name, Validators.required),
             processDefinition: new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
         });
-
-        this.processInstanceName.valueChanges
-            .pipe(debounceTime(300))
-            .subscribe((processInstanceName) => {
-                if (this.processForm.valid) {
-                    this.processPayloadCloud.processInstanceName = processInstanceName;
-                }
-            });
 
         this.processDefinition.valueChanges
             .pipe(debounceTime(300))
@@ -167,13 +159,15 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     startProcess() {
         this.isLoading = true;
 
+        this.processPayloadCloud.processInstanceName = this.processInstanceName.value;
+        this.processPayloadCloud.payloadType = 'StartProcessPayload';
         if (this.variables) {
             this.processPayloadCloud.variables = this.variables;
         }
-        this.processPayloadCloud.payloadType = 'StartProcessPayload';
+
         this.processCloudService.startProcess(this.appName, this.processPayloadCloud).subscribe(
             (res) => {
-                this.start.emit(res);
+                this.success.emit(res);
                 this.isLoading = false;
             },
             (err) => {
