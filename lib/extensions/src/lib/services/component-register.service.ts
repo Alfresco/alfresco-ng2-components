@@ -17,6 +17,10 @@
 
 import { Injectable, Type } from '@angular/core';
 
+export interface ExtensionComponent {
+    data: any;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ComponentRegisterService {
     components: { [key: string]: Type<{}> } = {};
@@ -27,7 +31,7 @@ export class ComponentRegisterService {
         }
     }
 
-    getComponentById(id: string): Type<{}> {
-        return this.components[id];
+    getComponentById<T>(id: string): Type<T> {
+        return <Type<T>> this.components[id];
     }
 }

@@ -126,8 +126,8 @@ export class ExtensionService {
         return false;
     }
 
-    getComponentById(id: string): Type<{}> {
-        return this.componentRegister.getComponentById(id);
+    getComponentById<T>(id: string) {
+        return this.componentRegister.getComponentById<T>(id);
     }
 
     getRuleById(id: string): RuleRef {

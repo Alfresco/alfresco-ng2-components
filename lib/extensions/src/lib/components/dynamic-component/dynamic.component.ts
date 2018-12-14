@@ -19,33 +19,61 @@ import {
     Component,
     Input,
     ComponentRef,
-    OnInit,
     ComponentFactoryResolver,
     ViewChild,
     ViewContainerRef,
-    OnDestroy
+    OnDestroy,
+    OnChanges,
+    SimpleChanges
 } from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
+import { ExtensionComponent } from '../../services/component-register.service';
 
 @Component({
     selector: 'adf-dynamic-component',
     template: `<div #content></div>`
 })
-export class DynamicExtensionComponent implements OnInit, OnDestroy {
+export class DynamicExtensionComponent implements OnChanges, OnDestroy {
     @ViewChild('content', { read: ViewContainerRef })
     content: ViewContainerRef;
 
     @Input() id: string;
+    @Input() data: any;
 
-    private componentRef: ComponentRef<any>;
+    private componentRef: ComponentRef<ExtensionComponent>;
+    private loaded: boolean = false;
 
-    constructor(
-        private extensions: ExtensionService,
-        private componentFactoryResolver: ComponentFactoryResolver
-    ) {}
+    constructor(private extensions: ExtensionService, private componentFactoryResolver: ComponentFactoryResolver) {
+        const dynamicLifeCycleMethods = [
+            'ngOnInit',
+            'ngDoCheck',
+            'ngAfterContentInit',
+            'ngAfterContentChecked',
+            'ngAfterViewInit',
+            'ngAfterViewChecked'
+        ];
 
-    ngOnInit() {
-        const componentType = this.extensions.getComponentById(this.id);
+        dynamicLifeCycleMethods.forEach((method) => {
+            this[method] = this.proxy.bind(this, method);
+        });
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (!this.loaded) {
+            this.loadComponent();
+            this.loaded = true;
+        }
+
+        if (changes.data) {
+            this.data = changes.data.currentValue;
+        }
+
+        this.updateInstance();
+        this.proxy('ngOnChanges', changes);
+    }
+
+    private loadComponent() {
+        const componentType = this.extensions.getComponentById<ExtensionComponent>(this.id);
         if (componentType) {
             const factory = this.componentFactoryResolver.resolveComponentFactory(
                 componentType
@@ -53,15 +81,27 @@ export class DynamicExtensionComponent implements OnInit, OnDestroy {
             if (factory) {
                 this.content.clear();
                 this.componentRef = this.content.createComponent(factory, 0);
-                // this.setupWidget(this.componentRef);
             }
         }
     }
 
     ngOnDestroy() {
         if (this.componentRef) {
+            this.proxy('ngOnDestroy');
             this.componentRef.destroy();
             this.componentRef = null;
+        }
+    }
+
+    private updateInstance() {
+        if (this.componentRef && this.componentRef.instance) {
+            this.componentRef.instance.data = this.data;
+        }
+    }
+
+    private proxy(methodName, ...args) {
+        if (this.componentRef.instance[methodName]) {
+            this.componentRef.instance[methodName].apply(this.componentRef.instance, args);
         }
     }
 }
