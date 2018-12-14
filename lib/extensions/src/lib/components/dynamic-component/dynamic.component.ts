@@ -86,7 +86,7 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this.componentRef) {
+        if (this.componentCreated()) {
             this.proxy('ngOnDestroy');
             this.componentRef.destroy();
             this.componentRef = null;
@@ -94,14 +94,22 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy {
     }
 
     private updateInstance() {
-        if (this.componentRef && this.componentRef.instance) {
+        if (this.componentCreated()) {
             this.componentRef.instance.data = this.data;
         }
     }
 
-    private proxy(methodName, ...args) {
-        if (this.componentRef.instance[methodName]) {
-            this.componentRef.instance[methodName].apply(this.componentRef.instance, args);
+    private proxy(lifecycleMethod, ...args) {
+        if (this.componentCreated() && this.lifecycleHookIsImplemented(lifecycleMethod)) {
+            this.componentRef.instance[lifecycleMethod].apply(this.componentRef.instance, args);
         }
+    }
+
+    private componentCreated(): boolean {
+        return !!this.componentRef  && !!this.componentRef.instance;
+    }
+
+    private lifecycleHookIsImplemented(lifecycleMethod: string): boolean {
+        return !!this.componentRef.instance[lifecycleMethod];
     }
 }
