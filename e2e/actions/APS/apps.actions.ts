@@ -24,6 +24,32 @@ import { browser } from 'protractor';
 
 export class AppsActions {
 
+    async getProcessTaskId(alfrescoJsApi, processId) {
+        let taskList = await alfrescoJsApi.activiti.taskApi.listTasks();
+        let taskId = -1;
+
+        taskList.data.forEach((task) => {
+            if (task.processInstanceId === processId) {
+                taskId = task.id;
+            }
+        });
+
+        return taskId;
+    }
+
+    async getAppDefinitionId(alfrescoJsApi, appModelId) {
+        let appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+        let appDefinitionId = -1;
+
+        appDefinitions.data.forEach((appDefinition) => {
+            if (appDefinition.modelId === appModelId) {
+                appDefinitionId = appDefinition.id;
+            }
+        });
+
+        return appDefinitionId;
+    }
+
     async importPublishDeployApp(alfrescoJsApi, appFileLocation) {
         let appCreated = await this.importApp(alfrescoJsApi, appFileLocation);
 

@@ -45,7 +45,7 @@ describe('Process list cloud', () => {
         const queryService: Query = new Query();
 
         let silentLogin;
-        let runningProcess, completedProcess;
+        let completedProcess;
         const simpleApp = 'candidateuserapp';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
@@ -58,7 +58,7 @@ describe('Process list cloud', () => {
             await processDefinitionService.init(user, password);
             let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             await processInstancesService.init(user, password);
-            runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
 
             completedProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
             await queryService.init(user, password);

@@ -39,6 +39,7 @@ export class UsersActions {
         let user = new User({ tenantId: tenantId });
 
         await alfrescoJsApi.activiti.adminUsersApi.createNewUser(user);
+
         return user;
     }
 

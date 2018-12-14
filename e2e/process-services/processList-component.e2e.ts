@@ -16,7 +16,7 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessListDemoPage } from '../pages/adf/process_services/processListDemoPage';
+import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/processListDemoPage';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
@@ -24,14 +24,12 @@ import resources = require('../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
-import { browser, by } from 'protractor';
-import { ContentListPage } from '../pages/adf/dialog/contentListPage';
+import { browser } from 'protractor';
 
 describe('Process List Test', () => {
 
     const loginPage = new LoginPage();
     const processListDemoPage = new ProcessListDemoPage();
-    const contentList = new ContentListPage();
 
     let appWithDateField = resources.Files.APP_WITH_DATE_FIELD_FORM;
     let appWithUserWidget = resources.Files.APP_WITH_USER_WIDGET;
@@ -51,8 +49,7 @@ describe('Process List Test', () => {
         insertAppId: 'Insert App ID'
     };
 
-    let appWithDateFieldId = 0;
-    let appWithUserWidgetId = 0;
+    let appWithDateFieldId;
     let procWithDate, completedProcWithDate, completedProcWithUserWidget;
 
     beforeAll(async (done) => {
@@ -80,30 +77,10 @@ describe('Process List Test', () => {
         await apps.startProcess(this.alfrescoJsApi, appUserWidgetModel, processName.procWithUserWidget);
         completedProcWithUserWidget = await apps.startProcess(this.alfrescoJsApi, appUserWidgetModel, processName.completedProcWithUserWidget);
 
-        let appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
-        let i = 0;
+        appWithDateFieldId = await apps.getAppDefinitionId(this.alfrescoJsApi, appDateModel.id);
 
-        do {
-            if (appDefinitions.data[i].modelId === appDateModel.id) {
-                appWithDateFieldId = appDefinitions.data[i].id;
-            } else if (appDefinitions.data[i].modelId === appUserWidgetModel.id) {
-                appWithUserWidgetId = appDefinitions.data[i].id;
-            }
-        }while ((appWithDateFieldId === 0 || appWithUserWidgetId === 0) && ++i < appDefinitions.size);
-
-        let taskList = await this.alfrescoJsApi.activiti.taskApi.listTasks();
-
-        let procWithDateTaskId = 0;
-        let procWithUserWidgetTaskId = 0;
-        i = 0;
-
-        do {
-            if (taskList.data[i].processInstanceId === completedProcWithDate.id) {
-                procWithDateTaskId = taskList.data[i].id;
-            } else if (taskList.data[i].processInstanceId === completedProcWithUserWidget.id) {
-                procWithUserWidgetTaskId = taskList.data[i].id;
-            }
-        }while ((procWithDateTaskId === 0 || procWithUserWidgetTaskId === 0) && ++i < taskList.size);
+        let procWithDateTaskId = await apps.getProcessTaskId(this.alfrescoJsApi, completedProcWithDate.id);
+        let procWithUserWidgetTaskId = await apps.getProcessTaskId(this.alfrescoJsApi, completedProcWithUserWidget.id);
 
         await this.alfrescoJsApi.activiti.taskApi.completeTaskForm(procWithDateTaskId, {values: {label: null }});
         await this.alfrescoJsApi.activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId, {values: {label: null }});
@@ -202,17 +179,15 @@ describe('Process List Test', () => {
     });
 
     it('[C282010] Should be able to sort by creation date', () => {
-        let nameColumn = by.css('div[class*="adf-datatable-body"] div[class*="adf-datatable-row"] div[title="Name"] span');
-
         processListDemoPage.selectSorting('asc');
 
-        contentList.getAllRowsColumnValues(nameColumn).then( (sortedProcessList) => {
+        processListDemoPage.getDisplayedProcessesNames().then((sortedProcessList) => {
             expect(JSON.stringify(processList) === JSON.stringify(sortedProcessList)).toBe(true);
         });
 
         processListDemoPage.selectSorting('desc');
 
-        contentList.getAllRowsColumnValues(nameColumn).then( (sortedProcessList) => {
+        processListDemoPage.getDisplayedProcessesNames().then((sortedProcessList) => {
             expect(JSON.stringify(processList.reverse()) === JSON.stringify(sortedProcessList)).toBe(true);
         });
     });

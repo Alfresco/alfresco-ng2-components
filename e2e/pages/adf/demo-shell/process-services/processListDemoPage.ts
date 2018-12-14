@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
-
+import { Util } from '../../../../util/util';
+import { DataTablePage } from '../../dataTablePage';
 import { element, by, protractor } from 'protractor';
 
 export class ProcessListDemoPage {
@@ -28,6 +28,12 @@ export class ProcessListDemoPage {
     processInstanceInput = element(by.css('input[data-automation-id="process-instance-id"]'));
     stateSelector = element(by.css('mat-select[data-automation-id="state"'));
     sortSelector = element(by.css('mat-select[data-automation-id="sort"'));
+
+    dataTable = new DataTablePage();
+
+    getDisplayedProcessesNames() {
+        return this.dataTable.getAllRowsNameColumn();
+    }
 
     selectSorting(sort) {
         Util.waitUntilElementIsVisible(this.stateSelector);
@@ -70,13 +76,15 @@ export class ProcessListDemoPage {
     }
 
     checkProcessIsNotDisplayed(processName) {
-        let processRow = element.all(by.css('div[filename="' + processName + '"]')).first();
-        return Util.waitUntilElementIsNotVisible(processRow);
+        return this.dataTable.checkRowIsNotDisplayedByName(processName);
+        // let processRow = element.all(by.css('div[filename="' + processName + '"]')).first();
+        // return Util.waitUntilElementIsNotVisible(processRow);
     }
 
     checkProcessIsDisplayed(processName) {
-        let processRow = element.all(by.css('div[filename="' + processName + '"]')).first();
-        return Util.waitUntilElementIsVisible(processRow);
+        return this.dataTable.checkRowIsDisplayedByName(processName);
+        // let processRow = element.all(by.css('div[filename="' + processName + '"]')).first();
+        // return Util.waitUntilElementIsVisible(processRow);
     }
 
     checkAppIdFieldIsDisplayed() {
