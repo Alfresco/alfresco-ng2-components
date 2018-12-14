@@ -72,4 +72,11 @@ export class Tasks {
         return data;
     }
 
+    async createAndCompleteTask (taskName, appName) {
+        let task = await this.createStandaloneTask(taskName, appName);
+        await this.claimTask(task.entry.id, appName);
+        await this.completeTask(task.entry.id, appName);
+        return task;
+    }
+
 }

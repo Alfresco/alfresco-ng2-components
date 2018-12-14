@@ -38,8 +38,8 @@ describe('Task filters cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudComponent();
-        let tasksCloudDemoPage = new TasksCloudDemoPage();
+        const appListCloudComponent = new AppListCloudComponent();
+        const tasksCloudDemoPage = new TasksCloudDemoPage();
         const tasksService: Tasks = new Tasks();
         const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
         const processInstancesService: ProcessInstances = new ProcessInstances();
@@ -54,6 +54,7 @@ describe('Task filters cloud', () => {
         let createdTask, assignedTask, completedTask, deletedTask;
         let orderByNameAndPriority = ['cCreatedTask', 'dCreatedTask', 'eCreatedTask'];
         let suspendedTasks, cancelledTasks;
+        let priority = 30, nrOfTasks = 3;
 
         beforeAll(async () => {
             silentLogin = false;
@@ -66,34 +67,29 @@ describe('Task filters cloud', () => {
 
             assignedTask = await tasksService.createStandaloneTask(assignedTaskName, simpleApp);
             await tasksService.claimTask(assignedTask.entry.id, simpleApp);
-            completedTask = await tasksService.createStandaloneTask(completedTaskName, simpleApp);
-            await tasksService.claimTask(completedTask.entry.id, simpleApp);
-            await tasksService.completeTask(completedTask.entry.id, simpleApp);
+            completedTask = await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
             deletedTask = await tasksService.createStandaloneTask(deletedTaskName, simpleApp);
             await tasksService.deleteTask(deletedTask.entry.id, simpleApp);
-            await tasksService.createStandaloneTask(orderByNameAndPriority[0], simpleApp, {priority: 30});
-            await tasksService.createStandaloneTask(orderByNameAndPriority[1], simpleApp, {priority: 50});
-            await tasksService.createStandaloneTask(orderByNameAndPriority[2], simpleApp, {priority: 80});
+            for(let i=0; i< nrOfTasks; i++) {
+                await tasksService.createStandaloneTask(orderByNameAndPriority[i], simpleApp, {priority: priority});
+                priority = priority + 20;
+            };
 
             await processDefinitionService.init(user, password);
             let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             await processInstancesService.init(user, password);
             let processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            let secondProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
             await queryService.init(user, password);
             suspendedTasks = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
+            cancelledTasks = await queryService.getProcessInstanceTasks(secondProcessInstance.entry.id, simpleApp);
             await processInstancesService.suspendProcessInstance(processInstance.entry.id, simpleApp);
-
-            await processDefinitionService.init(user, password);
-            let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
-            await processInstancesService.init(user, password);
-            let processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
-            await queryService.init(user, password);
-            cancelledTasks = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
-            await processInstancesService.deleteProcessInstance(processInstance.entry.id, simpleApp);
+            await processInstancesService.deleteProcessInstance(secondProcessInstance.entry.id, simpleApp);
         });
 
         beforeEach(async (done) => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
+            appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
             done();
         });
