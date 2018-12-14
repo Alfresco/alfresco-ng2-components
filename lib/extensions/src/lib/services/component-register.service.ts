@@ -34,4 +34,8 @@ export class ComponentRegisterService {
     getComponentById<T>(id: string): Type<T> {
         return <Type<T>> this.components[id];
     }
+
+    hasComponentById(id: string): boolean {
+        return !!this.getComponentById(id);
+    }
 }
