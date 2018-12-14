@@ -103,4 +103,10 @@ export class StartTaskDialog {
         Util.waitUntilElementIsClickable(this.cancelButton);
         return this.cancelButton.click();
     }
+
+    checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
+        const errorElement = element(by.cssContainingText(elementRef, error));
+        Util.waitUntilElementIsVisible(errorElement);
+        return this;
+    }
 }

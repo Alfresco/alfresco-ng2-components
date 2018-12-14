@@ -33,6 +33,7 @@ import resources = require('../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';
+import { Util } from '../util/util';
 import fs = require('fs');
 import path = require('path');
 
@@ -49,6 +50,9 @@ describe('Start Task - Task App', () => {
     let formFieldValue = 'First value ';
     let taskPage = new TasksPage();
     let firstComment = 'comm1', firstChecklist = 'checklist1';
+    const taskNameLessThen255Characters = Util.generateRandomString(100);
+    const taskNameBiggerThen255Characters = Util.generateRandomString(300);
+    const lengthValidationError = 'Length exceeded, 255 characters max.';
     let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
     let showHeaderTask = 'Show Header';
     let jpgFile = new FileModel({
@@ -182,6 +186,14 @@ describe('Start Task - Task App', () => {
     xit('[C260424] Should be able to see Spinner loading on task list when clicking on Tasks', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp();
         taskPage.tasksListPage().getDataTable().checkSpinnerIsDisplayed();
+    });
+
+    it('[C291780] Should be displayed an error message if task name exceed 255 characters', () => {
+        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        const startDialog = taskPage.createNewTask().addName(taskNameLessThen255Characters).checkStartButtonIsEnabled();
+        startDialog.addName(taskNameBiggerThen255Characters).checkValidationErrorIsDisplayed(lengthValidationError).checkStartButtonIsDisabled();
+
     });
 
 });
