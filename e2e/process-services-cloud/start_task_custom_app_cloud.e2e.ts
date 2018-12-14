@@ -100,8 +100,7 @@ describe('Start Task', () => {
                  .checkStartButtonIsDisabled();
     });
 
-    // failing due to ADF-3828
-    xit('[C290182] Should be possible to assign the task to another user', () => {
+    xit('[C290182] Should be possible to assign the task to another user (ADF-3828 issue)', () => {
         tasksCloudDemoPage.createNewTask();
         startTask.addName(standaloneTaskName)
                  .addAssignee('devops user')
