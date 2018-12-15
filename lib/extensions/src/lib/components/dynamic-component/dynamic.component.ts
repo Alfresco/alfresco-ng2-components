@@ -29,6 +29,7 @@ import {
 import { ExtensionService } from '../../services/extension.service';
 import { ExtensionComponent } from '../../services/component-register.service';
 
+// cSpell:words lifecycle
 @Component({
     selector: 'adf-dynamic-component',
     template: `<div #content></div>`
