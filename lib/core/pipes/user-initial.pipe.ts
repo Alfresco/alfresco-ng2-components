@@ -29,12 +29,12 @@ export class InitialUsernamePipe implements PipeTransform {
     }
 
     transform(user: UserProcessModel | EcmUserModel, className: string = '', delimiter: string = ''): SafeHtml {
-        let result: SafeHtml = '';
+        let safeHtml: SafeHtml = '';
         if (user) {
             let initialResult = this.getInitialUserName(user.firstName, user.lastName, delimiter);
-            result = this.sanitized.bypassSecurityTrustHtml(`<div id="user-initials-image" class="${className}">${initialResult}</div>`);
+            safeHtml = this.sanitized.bypassSecurityTrustHtml(`<div id="user-initials-image" class="${className}">${initialResult}</div>`);
         }
-        return result;
+        return safeHtml;
     }
 
     getInitialUserName(firstName: string, lastName: string, delimiter: string) {

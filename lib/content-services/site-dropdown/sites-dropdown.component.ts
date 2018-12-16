@@ -91,30 +91,36 @@ export class DropdownSitesComponent implements OnInit {
         if (this.relations) {
             extendedOptions = { relations: [this.relations] };
         }
-        this.sitesService.getSites(extendedOptions).subscribe((result) => {
+        this.sitesService.getSites(extendedOptions).subscribe((sitePaging: SitePaging) => {
 
-            this.siteList = this.relations === Relations.Members ? this.filteredResultsByMember(result) : result;
+                this.siteList = this.relations === Relations.Members ? this.filteredResultsByMember(sitePaging) : sitePaging;
 
-            if (!this.hideMyFiles) {
-                let myItem = { entry: { id: '-my-', guid: '-my-', title: 'DROPDOWN.MY_FILES_OPTION' } };
+                if (!this.hideMyFiles) {
+                    let siteEntry = new SiteEntry({
+                        entry: {
+                            id: '-my-',
+                            guid: '-my-',
+                            title: 'DROPDOWN.MY_FILES_OPTION'
+                        }
+                    });
 
-                this.siteList.list.entries.unshift(myItem);
+                    this.siteList.list.entries.unshift(siteEntry);
 
-                if (!this.value) {
-                    this.value = '-my-';
+                    if (!this.value) {
+                        this.value = '-my-';
+                    }
                 }
-            }
 
-            this.selected = this.siteList.list.entries.find((site) => site.entry.id === this.value);
-        },
-        (error) => {
-            this.logService.error(error);
-        });
+                this.selected = this.siteList.list.entries.find((site: SiteEntry) => site.entry.id === this.value);
+            },
+            (error) => {
+                this.logService.error(error);
+            });
     }
 
     private filteredResultsByMember(sites: SitePaging): SitePaging {
         const loggedUserName = this.sitesService.getEcmCurrentLoggedUserName();
-        sites.list.entries = sites.list.entries.filter( (site) => this.isCurrentUserMember(site, loggedUserName));
+        sites.list.entries = sites.list.entries.filter((site) => this.isCurrentUserMember(site, loggedUserName));
         return sites;
     }
 

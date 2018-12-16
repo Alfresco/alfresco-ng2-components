@@ -17,21 +17,12 @@
 
 import { Injectable } from '@angular/core';
 import {
-    AlfrescoApi,
     ContentApi,
-    FavoritesApi,
-    NodesApi,
-    PeopleApi,
-    RenditionsApi,
-    SharedlinksApi,
-    SitesApi,
-    VersionsApi,
-    ClassesApi,
+    Core,
     SearchApi,
-    GroupsApi,
-    MinimalNodeEntryEntity
+    Node
 } from 'alfresco-js-api';
-import * as alfrescoApi from 'alfresco-js-api';
+import { AlfrescoApiCompatibility } from 'alfresco-js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs';
@@ -46,47 +37,48 @@ export class AlfrescoApiService {
     /**
      * Publish/subscribe to events related to node updates.
      */
-    nodeUpdated = new Subject<MinimalNodeEntryEntity>();
+    nodeUpdated = new Subject<Node>();
 
-    protected alfrescoApi: AlfrescoApi;
+    protected alfrescoApi: AlfrescoApiCompatibility;
 
-    getInstance(): AlfrescoApi {
+    getInstance(): AlfrescoApiCompatibility {
         return this.alfrescoApi;
     }
 
-    get taskApi(): alfrescoApi.TaskApi {
-        return this.getInstance().activiti.taskApi;
-    }
+    //
+    // get taskApi(): alfrescoApi.TaskApi {
+    //     return this.getInstance().activiti.taskApi;
+    // }
 
-    get modelsApi(): alfrescoApi.ModelsApi {
-        return this.getInstance().activiti.modelsApi;
-    }
+    // get modelsApi(): Core.ModelsApi {
+    //     return this.getInstance().activiti.modelsApi;
+    // }
 
     get contentApi(): ContentApi {
         return this.getInstance().content;
     }
 
-    get nodesApi(): NodesApi {
+    get nodesApi(): Core.NodesApi {
         return this.getInstance().nodes;
     }
 
-    get renditionsApi(): RenditionsApi {
+    get renditionsApi(): Core.RenditionsApi {
         return this.getInstance().core.renditionsApi;
     }
 
-    get sharedLinksApi(): SharedlinksApi {
+    get sharedLinksApi(): Core.SharedlinksApi {
         return this.getInstance().core.sharedlinksApi;
     }
 
-    get sitesApi(): SitesApi {
+    get sitesApi(): Core.SitesApi {
         return this.getInstance().core.sitesApi;
     }
 
-    get favoritesApi(): FavoritesApi {
+    get favoritesApi(): Core.FavoritesApi {
         return this.getInstance().core.favoritesApi;
     }
 
-    get peopleApi(): PeopleApi {
+    get peopleApi(): Core.PeopleApi {
         return this.getInstance().core.peopleApi;
     }
 
@@ -94,15 +86,15 @@ export class AlfrescoApiService {
         return this.getInstance().search.searchApi;
     }
 
-    get versionsApi(): VersionsApi {
+    get versionsApi(): Core.VersionsApi {
         return this.getInstance().core.versionsApi;
     }
 
-    get classesApi(): ClassesApi {
+    get classesApi(): Core.ClassesApi {
         return this.getInstance().core.classesApi;
     }
 
-    get groupsApi(): GroupsApi {
+    get groupsApi(): Core.GroupsApi {
         return this.getInstance().core.groupsApi;
     }
 
@@ -141,7 +133,7 @@ export class AlfrescoApiService {
         if (this.alfrescoApi) {
             this.alfrescoApi.configureJsApi(config);
         } else {
-            this.alfrescoApi = <AlfrescoApi> new alfrescoApi(config);
+            this.alfrescoApi = new AlfrescoApiCompatibility(config);
         }
     }
 

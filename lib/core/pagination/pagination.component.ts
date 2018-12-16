@@ -237,22 +237,22 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
             pagination
         } = this;
 
-        const data = Object.assign({}, pagination, params);
+        const paginationModel: PaginationModel = Object.assign({}, pagination, params);
 
         if (action === NEXT_PAGE) {
-            nextPage.emit(data);
+            nextPage.emit(paginationModel);
         }
 
         if (action === PREV_PAGE) {
-            prevPage.emit(data);
+            prevPage.emit(paginationModel);
         }
 
         if (action === CHANGE_PAGE_NUMBER) {
-            changePageNumber.emit(data);
+            changePageNumber.emit(paginationModel);
         }
 
         if (action === CHANGE_PAGE_SIZE) {
-            changePageSize.emit(data);
+            changePageSize.emit(paginationModel);
         }
 
         change.emit(params);

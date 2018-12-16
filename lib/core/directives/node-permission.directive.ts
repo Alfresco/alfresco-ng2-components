@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { ChangeDetectorRef, Directive, ElementRef, Host, Inject, Input, OnChanges, Optional, Renderer2,  SimpleChanges } from '@angular/core';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { NodeEntry } from 'alfresco-js-api';
 import { ContentService } from './../services/content.service';
 import { EXTENDIBLE_COMPONENT } from './../interface/injection.tokens';
 
@@ -39,7 +39,7 @@ export class NodePermissionDirective implements OnChanges {
 
     /** Nodes to check permission for. */
     @Input('adf-nodes')
-    nodes: MinimalNodeEntity[] = [];
+    nodes: NodeEntry[] = [];
 
     constructor(private elementRef: ElementRef,
                 private renderer: Renderer2,
@@ -117,7 +117,7 @@ export class NodePermissionDirective implements OnChanges {
      * @param  permission Permission to check for each node
      * @memberof NodePermissionDirective
      */
-    hasPermission(nodes: MinimalNodeEntity[], permission: string): boolean {
+    hasPermission(nodes: NodeEntry[], permission: string): boolean {
         if (nodes && nodes.length > 0) {
             return nodes.every((node) => this.contentService.hasPermission(node.entry, permission));
         }

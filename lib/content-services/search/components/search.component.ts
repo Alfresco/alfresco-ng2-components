@@ -119,7 +119,7 @@ export class SearchComponent implements AfterContentInit, OnChanges {
             });
 
         searchService.dataLoaded.subscribe(
-            (data) => this.onSearchDataLoaded(data),
+            (nodePaging: NodePaging) => this.onSearchDataLoaded(nodePaging),
             (error) => this.onSearchDataError(error)
         );
     }
@@ -176,9 +176,9 @@ export class SearchComponent implements AfterContentInit, OnChanges {
         }
     }
 
-    onSearchDataLoaded(data: NodePaging) {
-        if (data) {
-            this.results = data;
+    onSearchDataLoaded(nodePaging: NodePaging) {
+        if (nodePaging) {
+            this.results = nodePaging;
             this.resultLoaded.emit(this.results);
             this.isOpen = true;
             this.setVisibility();

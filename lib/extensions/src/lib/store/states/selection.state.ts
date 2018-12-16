@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { MinimalNodeEntity, SiteEntry } from 'alfresco-js-api';
+import { NodeEntry, SiteEntry } from 'alfresco-js-api';
 
 export interface SelectionState {
     count: number;
-    nodes: MinimalNodeEntity[];
+    nodes: NodeEntry[];
     libraries: SiteEntry[];
     isEmpty: boolean;
-    first?: MinimalNodeEntity;
-    last?: MinimalNodeEntity;
-    folder?: MinimalNodeEntity;
-    file?: MinimalNodeEntity;
+    first?: NodeEntry;
+    last?: NodeEntry;
+    folder?: NodeEntry;
+    file?: NodeEntry;
     library?: SiteEntry;
 }

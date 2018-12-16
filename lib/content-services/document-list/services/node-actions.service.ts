@@ -16,7 +16,7 @@
  */
 
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { MinimalNodeEntryEntity, MinimalNodeEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, NodeEntry } from 'alfresco-js-api';
 import { Subject } from 'rxjs';
 import { AlfrescoApiService, ContentService, NodeDownloadDirective } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material';
@@ -39,7 +39,7 @@ export class NodeActionsService {
                 private apiService?: AlfrescoApiService,
                 private dialog?: MatDialog) {}
 
-    downloadNode(node: MinimalNodeEntity) {
+    downloadNode(node: NodeEntry) {
         new NodeDownloadDirective(this.apiService, this.dialog)
             .downloadNode(node);
     }

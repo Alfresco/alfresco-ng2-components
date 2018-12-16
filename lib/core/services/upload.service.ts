@@ -161,7 +161,7 @@ export class UploadService {
      * @param file The target file
      * @returns Promise that is resolved if the upload is successful or error otherwise
      */
-    getUploadPromise(file: FileModel) {
+    getUploadPromise(file: FileModel): any {
         let opts: any = {
             renditions: 'doclib',
             include: ['allowableOperations']
@@ -181,9 +181,7 @@ export class UploadService {
         }
 
         if (file.id) {
-            return this.apiService.getInstance().upload.updateFile(
-                file.file,
-                file.options.path,
+            return this.apiService.getInstance().node.updateNodeContent(
                 file.id,
                 file.file,
                 opts

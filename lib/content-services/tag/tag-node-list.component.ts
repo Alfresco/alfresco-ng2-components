@@ -17,6 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { TagService } from './services/tag.service';
+import { TagPaging } from 'alfresco-js-api';
 
 /**
  *
@@ -60,8 +61,8 @@ export class TagNodeListComponent implements OnChanges {
 
     refreshTag() {
         if (this.nodeId) {
-            this.tagService.getTagsByNodeId(this.nodeId).subscribe((data) => {
-                this.tagsEntries = data.list.entries;
+            this.tagService.getTagsByNodeId(this.nodeId).subscribe((tagPaging: TagPaging) => {
+                this.tagsEntries = tagPaging.list.entries;
                 this.results.emit(this.tagsEntries);
             });
         }

@@ -17,7 +17,7 @@
 
 import { ContentService, TranslationService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { NodeEntry } from 'alfresco-js-api';
 import { Observable, Subject, throwError } from 'rxjs';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
@@ -89,21 +89,21 @@ export class DocumentActionsService {
         this.handlers['lock'] = this.lockNode.bind(this);
     }
 
-    private lockNode(node: MinimalNodeEntity, target?: any, permission?: string) {
+    private lockNode(node: NodeEntry, target?: any, permission?: string) {
         return this.contentNodeDialogService.openLockNodeDialog(node.entry);
     }
 
-    private downloadNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
+    private downloadNode(obj: NodeEntry, target?: any, permission?: string) {
         this.nodeActionsService.downloadNode(obj);
     }
 
-    private copyNode(node: MinimalNodeEntity, target?: any, permission?: string) {
+    private copyNode(node: NodeEntry, target?: any, permission?: string) {
         const actionObservable = this.nodeActionsService.copyContent(node.entry, permission);
         this.prepareHandlers(actionObservable, 'content', 'copy', target, permission);
         return actionObservable;
     }
 
-    private moveNode(node: MinimalNodeEntity, target?: any, permission?: string) {
+    private moveNode(node: NodeEntry, target?: any, permission?: string) {
         const actionObservable = this.nodeActionsService.moveContent(node.entry, permission);
         this.prepareHandlers(actionObservable, 'content', 'move', target, permission);
         return actionObservable;
@@ -118,7 +118,7 @@ export class DocumentActionsService {
         );
     }
 
-    private deleteNode(node: MinimalNodeEntity, target?: any, permission?: string): Observable<any> {
+    private deleteNode(node: NodeEntry, target?: any, permission?: string): Observable<any> {
         let handlerObservable;
 
         if (this.canExecuteAction(node)) {

@@ -28,7 +28,7 @@ import {
     UserPreferencesService, PaginationModel, ThumbnailService
 } from '@alfresco/adf-core';
 
-import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, Node, NodeEntry, NodePaging } from 'alfresco-js-api';
 import { Subject, BehaviorSubject, Subscription, of } from 'rxjs';
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
@@ -238,7 +238,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
     noPermission: boolean = false;
-    selection = new Array<MinimalNodeEntity>();
+    selection = new Array<NodeEntry>();
 
     private _pagination: BehaviorSubject<PaginationModel>;
     private layoutPresets = {};
@@ -256,7 +256,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private thumbnailService: ThumbnailService) {
     }
 
-    getContextActions(node: MinimalNodeEntity) {
+    getContextActions(node: NodeEntry) {
         if (node && node.entry) {
             let actions = this.getNodeActions(node);
             if (actions && actions.length > 0) {
@@ -446,7 +446,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    getNodeActions(node: MinimalNodeEntity | any): ContentActionModel[] {
+    getNodeActions(node: NodeEntry | any): ContentActionModel[] {
         if (node && node.entry) {
             let target = null;
 
@@ -487,12 +487,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return [];
     }
 
-    private refreshAction(action: ContentActionModel, node: MinimalNodeEntity) {
+    private refreshAction(action: ContentActionModel, node: NodeEntry) {
         action.disabled = this.isActionDisabled(action, node);
         action.visible = this.isActionVisible(action, node);
     }
 
-    private isActionVisible(action: ContentActionModel, node: MinimalNodeEntity): boolean {
+    private isActionVisible(action: ContentActionModel, node: NodeEntry): boolean {
         if (typeof action.visible === 'function') {
             return action.visible(node);
         }
@@ -500,7 +500,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return action.visible;
     }
 
-    private isActionDisabled(action: ContentActionModel, node: MinimalNodeEntity): boolean {
+    private isActionDisabled(action: ContentActionModel, node: NodeEntry): boolean {
         if (typeof action.disabled === 'function') {
             return action.disabled(node);
         }
@@ -519,7 +519,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    performNavigation(node: MinimalNodeEntity): boolean {
+    performNavigation(node: NodeEntry): boolean {
         if (this.canNavigateFolder(node)) {
             this.updateFolderData(node);
             return true;
@@ -527,7 +527,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return false;
     }
 
-    performCustomSourceNavigation(node: MinimalNodeEntity): boolean {
+    performCustomSourceNavigation(node: NodeEntry): boolean {
         if (this.customResourcesService.isCustomSource(this.currentFolderId)) {
             this.updateFolderData(node);
             return true;
@@ -535,18 +535,18 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return false;
     }
 
-    updateFolderData(node: MinimalNodeEntity): void {
+    updateFolderData(node: NodeEntry): void {
         this.resetNewFolderPagination();
         this.currentFolderId = this.getNodeFolderDestinationId(node);
-        this.folderChange.emit(new NodeEntryEvent({ id: this.currentFolderId }));
+        this.folderChange.emit(new NodeEntryEvent(<Node> { id: this.currentFolderId }));
         this.reload();
     }
 
-    private getNodeFolderDestinationId(node: MinimalNodeEntity) {
+    private getNodeFolderDestinationId(node: NodeEntry) {
         return this.isLinkFolder(node) ? node.entry.properties['cm:destination'] : node.entry.id;
     }
 
-    private isLinkFolder(node: MinimalNodeEntity) {
+    private isLinkFolder(node: NodeEntry) {
         return node.entry.nodeType === 'app:folderlink' && node.entry.properties &&
             node.entry.properties['cm:destination'];
     }
@@ -561,7 +561,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * @param node Node to be the context of the execution.
      * @param action Action to be executed against the context.
      */
-    executeContentAction(node: MinimalNodeEntity, action: ContentActionModel) {
+    executeContentAction(node: NodeEntry, action: ContentActionModel) {
         if (node && node.entry && action) {
             let handlerSub;
 
@@ -620,9 +620,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         } else {
             this.documentListService
                 .getFolderNode(nodeId, this.includeFields)
-                .subscribe((node: MinimalNodeEntryEntity) => {
-                    this.folderNode = node;
-                    return this.loadFolderNodesByFolderNodeId(node.id, this.pagination.getValue())
+                .subscribe((node: NodeEntry) => {
+                    this.folderNode = node.entry;
+                    return this.loadFolderNodesByFolderNodeId(node.entry.id, this.pagination.getValue())
                         .catch((err) => this.handleError(err));
                 }, (err) => {
                     this.handleError(err);
@@ -675,13 +675,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    onPreviewFile(node: MinimalNodeEntity) {
+    onPreviewFile(node: NodeEntry) {
         if (node) {
             this.preview.emit(new NodeEntityEvent(node));
         }
     }
 
-    onNodeClick(node: MinimalNodeEntity) {
+    onNodeClick(node: NodeEntry) {
         const domEvent = new CustomEvent('node-click', {
             detail: {
                 sender: this,
@@ -709,7 +709,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    onNodeDblClick(node: MinimalNodeEntity) {
+    onNodeDblClick(node: NodeEntry) {
         const domEvent = new CustomEvent('node-dblclick', {
             detail: {
                 sender: this,
@@ -796,7 +796,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
     }
 
-    canNavigateFolder(node: MinimalNodeEntity): boolean {
+    canNavigateFolder(node: NodeEntry): boolean {
         let canNavigateFolder: boolean = false;
 
         if (this.customResourcesService.isCustomSource(this.currentFolderId)) {
@@ -833,7 +833,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.currentFolderId = nodeId;
         this.resetNewFolderPagination();
         this.loadFolder();
-        this.folderChange.emit(new NodeEntryEvent({ id: nodeId }));
+        this.folderChange.emit(new NodeEntryEvent(<Node> { id: nodeId }));
     }
 
     private resetNewFolderPagination() {

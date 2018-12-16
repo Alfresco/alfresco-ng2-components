@@ -17,7 +17,7 @@
 
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { DownloadEntry, MinimalNodeEntity } from 'alfresco-js-api';
+import { DownloadEntry, NodeEntry } from 'alfresco-js-api';
 import { LogService } from '../services/log.service';
 import { DownloadZipService } from '../services/download-zip.service';
 
@@ -64,7 +64,7 @@ export class DownloadZipDialogComponent implements OnInit {
                 if (data && data.entry && data.entry.id) {
                     const url = this.downloadZipService.getContentUrl(data.entry.id, true);
 
-                    this.downloadZipService.getNode(data.entry.id).subscribe((downloadNode: MinimalNodeEntity) => {
+                    this.downloadZipService.getNode(data.entry.id).subscribe((downloadNode: NodeEntry) => {
                         this.logService.log(downloadNode);
                         const fileName = downloadNode.entry.name;
                         this.downloadId = data.entry.id;

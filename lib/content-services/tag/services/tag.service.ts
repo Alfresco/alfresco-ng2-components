@@ -19,7 +19,7 @@ import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { TagPaging } from 'alfresco-js-api';
+import { TagPaging, TagEntry } from 'alfresco-js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -39,7 +39,7 @@ export class TagService {
      * @param nodeId ID of the target node
      * @returns TagPaging object (defined in JS-API) containing the tags
      */
-    getTagsByNodeId(nodeId: string): any {
+    getTagsByNodeId(nodeId: string): Observable<TagPaging> {
         return from(this.apiService.getInstance().core.tagsApi.getNodeTags(nodeId)).pipe(
             catchError((err) => this.handleError(err))
         );
@@ -61,20 +61,20 @@ export class TagService {
      * @param tagName Name of the tag to add
      * @returns TagEntry object (defined in JS-API) with details of the new tag
      */
-    addTag(nodeId: string, tagName: string): any {
+    addTag(nodeId: string, tagName: string): Observable<TagEntry> {
         const alfrescoApi: any = this.apiService.getInstance();
         const tagBody = new alfrescoApi.core.TagBody();
         tagBody.tag = tagName;
 
-        let promiseAdd = from(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody));
+        let observableAdd = from(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody));
 
-        promiseAdd.subscribe((data) => {
-            this.refresh.emit(data);
+        observableAdd.subscribe((tagEntry: TagEntry) => {
+            this.refresh.emit(tagEntry);
         }, (err) => {
             this.handleError(err);
         });
 
-        return promiseAdd;
+        return observableAdd;
     }
 
     /**
@@ -83,16 +83,16 @@ export class TagService {
      * @param tag Name of the tag to remove
      * @returns Null object when the operation completes
      */
-    removeTag(nodeId: string, tag: string): any {
-        const promiseRemove = from(this.apiService.getInstance().core.tagsApi.removeTag(nodeId, tag));
+    removeTag(nodeId: string, tag: string): Observable<any> {
+        const observableRemove = from(this.apiService.getInstance().core.tagsApi.removeTag(nodeId, tag));
 
-        promiseRemove.subscribe((data) => {
+        observableRemove.subscribe((data) => {
             this.refresh.emit(data);
         }, (err) => {
             this.handleError(err);
         });
 
-        return promiseRemove;
+        return observableRemove;
     }
 
     private handleError(error: any) {

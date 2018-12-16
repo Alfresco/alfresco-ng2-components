@@ -19,6 +19,7 @@ import { TranslationService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation, OnDestroy, OnInit } from '@angular/core';
 import { TagService } from './services/tag.service';
 import { Subscription } from 'rxjs';
+import { TagPaging } from 'alfresco-js-api';
 
 /**
  *
@@ -56,7 +57,8 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
 
     private subscriptions: Subscription[] = [];
 
-    constructor(private tagService: TagService, private translateService: TranslationService) {}
+    constructor(private tagService: TagService, private translateService: TranslationService) {
+    }
 
     ngOnInit() {
         this.subscriptions.push(
@@ -77,8 +79,8 @@ export class TagActionsComponent implements OnChanges, OnInit, OnDestroy {
 
     refreshTag() {
         if (this.nodeId) {
-            this.tagService.getTagsByNodeId(this.nodeId).subscribe((data) => {
-                this.tagsEntries = data.list.entries;
+            this.tagService.getTagsByNodeId(this.nodeId).subscribe((tagPaging: TagPaging) => {
+                this.tagsEntries = tagPaging.list.entries;
                 this.disableAddTag = false;
                 this.result.emit(this.tagsEntries);
             }, () => {

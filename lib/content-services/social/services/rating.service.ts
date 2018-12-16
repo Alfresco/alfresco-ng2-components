@@ -18,9 +18,10 @@
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { RatingBody } from 'alfresco-js-api';
+import { RatingEntry, RatingBody } from 'alfresco-js-api';
 import { from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +37,7 @@ export class RatingService {
      * @param ratingType Type of rating (can be "likes" or "fiveStar")
      * @returns The rating value
      */
-    getRating(nodeId: string, ratingType: any): any {
+    getRating(nodeId: string, ratingType: any): Observable<RatingEntry> {
         return from(this.apiService.getInstance().core.ratingsApi.getRating(nodeId, ratingType))
             .pipe(
                 catchError(this.handleError)
@@ -50,11 +51,11 @@ export class RatingService {
      * @param vote Rating value (boolean for "likes", numeric 0..5 for "fiveStar")
      * @returns Details about the rating, including the new value
      */
-    postRating(nodeId: string, ratingType: any, vote: any): any {
-        let ratingBody: RatingBody = {
+    postRating(nodeId: string, ratingType: string, vote: any): Observable<RatingEntry> {
+        let ratingBody: RatingBody = new RatingBody({
             'id': ratingType,
             'myRating': vote
-        };
+        });
         return from(this.apiService.getInstance().core.ratingsApi.rate(nodeId, ratingBody))
             .pipe(
                 catchError(this.handleError)
@@ -67,7 +68,7 @@ export class RatingService {
      * @param ratingType Type of rating to remove (can be "likes" or "fiveStar")
      * @returns Null response indicating that the operation is complete
      */
-    deleteRating(nodeId: string, ratingType: any): any {
+    deleteRating(nodeId: string, ratingType: any): Observable<any> {
         return from(this.apiService.getInstance().core.ratingsApi.removeRating(nodeId, ratingType))
             .pipe(
                 catchError(this.handleError)

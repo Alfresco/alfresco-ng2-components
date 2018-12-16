@@ -20,6 +20,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { NodeMetadata } from '../models/node-metadata.model';
 import { map } from 'rxjs/operators';
+import { NodeEntry } from 'alfresco-js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -35,7 +36,7 @@ export class NodeService {
      * @returns Node metadata
      */
     public getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
-        return from(this.apiService.getInstance().nodes.getNodeInfo(nodeId))
+        return from(this.apiService.getInstance().nodes.getNode(nodeId))
             .pipe(map(this.cleanMetadataFromSemicolon));
     }
 
@@ -87,21 +88,21 @@ export class NodeService {
         });
     }
 
-    private cleanMetadataFromSemicolon(data: any): NodeMetadata {
+    private cleanMetadataFromSemicolon(nodeEntry: NodeEntry): NodeMetadata {
         let metadata = {};
 
-        if (data && data.properties) {
-            for (let key in data.properties) {
+        if (nodeEntry && nodeEntry.entry.properties) {
+            for (let key in nodeEntry.entry.properties) {
                 if (key) {
                     if (key.indexOf(':') !== -1) {
-                        metadata [key.split(':')[1]] = data.properties[key];
+                        metadata [key.split(':')[1]] = nodeEntry.entry.properties[key];
                     } else {
-                        metadata [key] = data.properties[key];
+                        metadata [key] = nodeEntry.entry.properties[key];
                     }
                 }
             }
         }
 
-        return new NodeMetadata(metadata, data.nodeType);
+        return new NodeMetadata(metadata, nodeEntry.entry.nodeType);
     }
 }

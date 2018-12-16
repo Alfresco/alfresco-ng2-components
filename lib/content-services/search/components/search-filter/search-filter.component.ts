@@ -25,6 +25,7 @@ import { FacetQuery } from '../../facet-query.interface';
 import { FacetField } from '../../facet-field.interface';
 import { SearchFilterList } from './models/search-filter-list.model';
 import { takeWhile } from 'rxjs/operators';
+import { ResultSetPaging } from 'alfresco-js-api';
 
 @Component({
     selector: 'adf-search-filter',
@@ -73,9 +74,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         if (this.queryBuilder) {
             this.queryBuilder.executed.pipe(
                 takeWhile(() => this.isAlive)
-            ).subscribe((data) => {
-                this.onDataLoaded(data);
-                this.searchService.dataLoaded.next(data);
+            ).subscribe((resultSetPaging: ResultSetPaging) => {
+                this.onDataLoaded(resultSetPaging);
+                this.searchService.dataLoaded.next(resultSetPaging);
             });
         }
     }

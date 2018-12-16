@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { RenditionEntry } from 'alfresco-js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
+import { RenditionPaging } from 'alfresco-js-api/src/api-new/content-rest-api/model/renditionPaging';
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +31,7 @@ export class ViewUtilService {
      * Content groups based on categorization of files that can be viewed in the web browser. This
      * implementation or grouping is tied to the definition the ng component: ViewerComponent
      */
-    // tslint:disable-next-line:variable-name
+        // tslint:disable-next-line:variable-name
     static ContentGroup = {
         IMAGE: 'image',
         MEDIA: 'media',
@@ -69,7 +70,7 @@ export class ViewUtilService {
             // Because of the way chrome focus and close image window vs. pdf preview window
             if (type === ViewUtilService.ContentGroup.IMAGE) {
                 pwa.onfocus = () => {
-                    setTimeout( () => {
+                    setTimeout(() => {
                         pwa.close();
                     }, 500);
                 };
@@ -93,17 +94,17 @@ export class ViewUtilService {
         const type: string = this.getViewerTypeByMimeType(mimeType);
 
         this.getRendition(nodeId, ViewUtilService.ContentGroup.PDF)
-        .then((value) => {
-            const url: string = this.getRenditionUrl(nodeId, type, (value ? true : false));
-            const printType = (type === ViewUtilService.ContentGroup.PDF
-                || type === ViewUtilService.ContentGroup.TEXT)
-                ? ViewUtilService.ContentGroup.PDF : type;
-            this.printFile(url, printType);
-        })
-        .catch((err) => {
-            this.logService.error('Error with Printing');
-            this.logService.error(err);
-        });
+            .then((value) => {
+                const url: string = this.getRenditionUrl(nodeId, type, (value ? true : false));
+                const printType = (type === ViewUtilService.ContentGroup.PDF
+                    || type === ViewUtilService.ContentGroup.TEXT)
+                    ? ViewUtilService.ContentGroup.PDF : type;
+                this.printFile(url, printType);
+            })
+            .catch((err) => {
+                this.logService.error('Error with Printing');
+                this.logService.error(err);
+            });
     }
 
     getRenditionUrl(nodeId: string, type: string, renditionExists: boolean): string {
@@ -147,22 +148,22 @@ export class ViewUtilService {
     }
 
     async getRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
-        const supported = await this.apiService.renditionsApi.getRenditions(nodeId);
-        let rendition = supported.list.entries.find((obj) => obj.entry.id.toLowerCase() === renditionId);
+        const renditionPaging: RenditionPaging = await this.apiService.renditionsApi.getRenditions(nodeId);
+        let rendition: RenditionEntry = renditionPaging.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
 
         if (rendition) {
             const status = rendition.entry.status.toString();
 
             if (status === 'NOT_CREATED') {
                 try {
-                    await this.apiService.renditionsApi.createRendition(nodeId, {id: renditionId});
+                    await this.apiService.renditionsApi.createRendition(nodeId, { id: renditionId });
                     rendition = await this.waitRendition(nodeId, renditionId, 0);
                 } catch (err) {
                     this.logService.error(err);
                 }
             }
         }
-        return new Promise((resolve) => resolve(rendition));
+        return new Promise<RenditionEntry>((resolve) => resolve(rendition));
     }
 
 }

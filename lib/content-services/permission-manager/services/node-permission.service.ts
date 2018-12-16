@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, from, throwError } from 'rxjs';
 import { AlfrescoApiService, SearchService, NodesApiService, TranslationService } from '@alfresco/adf-core';
-import { QueryBody, MinimalNodeEntryEntity, MinimalNodeEntity, PathElement, GroupMemberEntry, GroupsPaging, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
+import { QueryBody, MinimalNodeEntryEntity, NodeEntry, PathElement, GroupMemberEntry, GroupsPaging, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
 import { switchMap, map } from 'rxjs/operators';
 
 @Injectable({
@@ -76,7 +76,7 @@ export class NodePermissionService {
      * @param permissionList New permission settings
      * @returns Node with updated permissions
      */
-    updateNodePermissions(nodeId: string, permissionList: MinimalNodeEntity[]): Observable<MinimalNodeEntryEntity> {
+    updateNodePermissions(nodeId: string, permissionList: NodeEntry[]): Observable<MinimalNodeEntryEntity> {
        return this.nodeService.getNode(nodeId).pipe(
            switchMap((node) => {
                 return this.getNodeRoles(node).pipe(
@@ -94,7 +94,7 @@ export class NodePermissionService {
      * @param nodeRole Permission role
      * @returns Node with updated permissions
      */
-    updateLocallySetPermissions(node: MinimalNodeEntryEntity, nodes: MinimalNodeEntity[], nodeRole: string[]): Observable<MinimalNodeEntryEntity> {
+    updateLocallySetPermissions(node: MinimalNodeEntryEntity, nodes: NodeEntry[], nodeRole: string[]): Observable<MinimalNodeEntryEntity> {
         let permissionBody = { permissions: { locallySet: []} };
         const permissionList = this.transformNodeToPermissionElement(nodes, nodeRole[0]);
         const duplicatedPermissions = this.getDuplicatedPermissions(node.permissions.locallySet, permissionList);
@@ -126,7 +126,7 @@ export class NodePermissionService {
                oldPermission.name === newPermission.name;
     }
 
-    private transformNodeToPermissionElement(nodes: MinimalNodeEntity[], nodeRole: any): PermissionElement[] {
+    private transformNodeToPermissionElement(nodes: NodeEntry[], nodeRole: any): PermissionElement[] {
         return nodes.map((node) => {
             let newPermissionElement: PermissionElement = <PermissionElement> {
                 'authorityId': node.entry.properties['cm:authorityName'] ?
@@ -159,9 +159,9 @@ export class NodePermissionService {
         const groupName = 'GROUP_site_' + siteName;
         return this.getGroupMemberByGroupName(groupName)
             .pipe(
-                map((res: GroupsPaging) => {
+                map((groupMemberPaging: GroupMemberPaging) => {
                     let displayResult: string[] = [];
-                    res.list.entries.forEach((member: GroupMemberEntry) => {
+                    groupMemberPaging.list.entries.forEach((member: GroupMemberEntry) => {
                         displayResult.push(this.formattedRoleName(member.entry.displayName, 'site_' + siteName));
                     });
                     return displayResult;

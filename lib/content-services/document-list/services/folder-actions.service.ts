@@ -17,7 +17,7 @@
 
 import { ContentService, TranslationService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { NodeEntry } from 'alfresco-js-api';
 import { Observable, Subject, throwError } from 'rxjs';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';
@@ -86,17 +86,17 @@ export class FolderActionsService {
         this.handlers['download'] = this.downloadNode.bind(this);
     }
 
-    private downloadNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
+    private downloadNode(obj: NodeEntry, target?: any, permission?: string) {
         this.nodeActionsService.downloadNode(obj);
     }
 
-    private copyNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
+    private copyNode(obj: NodeEntry, target?: any, permission?: string) {
         const actionObservable = this.nodeActionsService.copyFolder(obj.entry, permission);
         this.prepareHandlers(actionObservable, 'folder', 'copy', target, permission);
         return actionObservable;
     }
 
-    private moveNode(obj: MinimalNodeEntity, target?: any, permission?: string) {
+    private moveNode(obj: NodeEntry, target?: any, permission?: string) {
         const actionObservable = this.nodeActionsService.moveFolder(obj.entry, permission);
         this.prepareHandlers(actionObservable, 'folder', 'move', target, permission);
         return actionObservable;
@@ -114,7 +114,7 @@ export class FolderActionsService {
         );
     }
 
-    private deleteNode(node: MinimalNodeEntity, target?: any, permission?: string): Observable<any> {
+    private deleteNode(node: NodeEntry, target?: any, permission?: string): Observable<any> {
         let handlerObservable: Observable<any>;
 
         if (this.canExecuteAction(node)) {

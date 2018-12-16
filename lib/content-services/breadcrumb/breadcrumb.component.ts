@@ -150,13 +150,13 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
     }
 
     private getElementPosition(route: PathElementEntity[], nodeId: string): number {
-        let result: number = -1;
+        let position: number = -1;
 
         if (route && route.length > 0 && nodeId) {
-            result = route.findIndex((el) => el.id === nodeId);
+            position = route.findIndex((el) => el.id === nodeId);
         }
 
-        return result;
+        return position;
     }
 
     onRoutePathClick(route: PathElementEntity, event?: Event): void {

@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { FavoriteBody, MinimalNodeEntity } from 'alfresco-js-api';
+import { FavoriteBody, NodeEntry } from 'alfresco-js-api';
 import { Observable, from, forkJoin, of } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { catchError, map } from 'rxjs/operators';
@@ -32,7 +32,7 @@ export class NodeFavoriteDirective implements OnChanges {
 
     /** Array of nodes to toggle as favorites. */
     @Input('adf-node-favorite')
-    selection: MinimalNodeEntity[] = [];
+    selection: NodeEntry[] = [];
 
     /** Emitted when the favorite setting is complete. */
     @Output() toggle: EventEmitter<any> = new EventEmitter();
@@ -97,7 +97,7 @@ export class NodeFavoriteDirective implements OnChanges {
         }
     }
 
-    markFavoritesNodes(selection: MinimalNodeEntity[]) {
+    markFavoritesNodes(selection: NodeEntry[]) {
         if (selection.length <= this.favorites.length) {
             const newFavorites = this.reduce(this.favorites, selection);
             this.favorites = newFavorites;
@@ -120,10 +120,10 @@ export class NodeFavoriteDirective implements OnChanges {
     }
 
     private getProcessBatch(selection): any[] {
-        return selection.map((selected: MinimalNodeEntity) => this.getFavorite(selected));
+        return selection.map((selected: NodeEntry) => this.getFavorite(selected));
     }
 
-    private getFavorite(selected: MinimalNodeEntity): Observable<any> {
+    private getFavorite(selected: NodeEntry): Observable<any> {
         const node = selected.entry;
 
         // ACS 6.x with 'isFavorite' include
@@ -133,8 +133,7 @@ export class NodeFavoriteDirective implements OnChanges {
 
         // ACS 5.x and 6.x without 'isFavorite' include
         const { name, isFile, isFolder } = node;
-        // shared files have nodeId
-        const id = node.nodeId || node.id;
+        const id =  node.id;
 
         const promise = this.alfrescoApiService.favoritesApi.getFavorite('-me-', id);
 

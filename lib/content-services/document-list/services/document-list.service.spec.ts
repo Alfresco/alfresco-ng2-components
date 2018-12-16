@@ -105,43 +105,6 @@ describe('DocumentListService', () => {
         jasmine.Ajax.uninstall();
     });
 
-    it('should create a folder in the path', () => {
-        service.createFolder('fake-name', 'fake-path').subscribe(
-            (res) => {
-                expect(res).toBeDefined();
-                expect(res.entry).toBeDefined();
-                expect(res.entry.isFolder).toBeTruthy();
-                expect(res.entry.name).toEqual('fake-name');
-                expect(res.entry.nodeType).toEqual('cm:folder');
-            }
-        );
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: fakeEntryNode
-        });
-    });
-
-    it('should emit an error when the folder already exist', () => {
-        service.createFolder('fake-name', 'fake-path').subscribe(
-            (res) => {
-
-            },
-            (err) => {
-                expect(err).toBeDefined();
-                expect(err.status).toEqual(409);
-                expect(err.response).toBeDefined();
-            }
-        );
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 409,
-            contentType: 'json',
-            responseText: fakeAlreadyExist
-        });
-    });
-
     it('should return the folder info', () => {
         service.getFolder('/fake-root/fake-name').subscribe(
             (res) => {

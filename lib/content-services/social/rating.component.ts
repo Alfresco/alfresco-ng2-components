@@ -17,6 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { RatingService } from './services/rating.service';
+import { RatingEntry } from 'alfresco-js-api';
 
 @Component({
     selector: 'adf-rating',
@@ -47,9 +48,9 @@ export class RatingComponent implements OnChanges {
         let ratingObserver = this.ratingService.getRating(this.nodeId, this.ratingType);
 
         ratingObserver.subscribe(
-            (data) => {
-                if (data.entry.aggregate) {
-                    this.average = data.entry.aggregate.average;
+            (ratingEntry: RatingEntry) => {
+                if (ratingEntry.entry.aggregate) {
+                    this.average = ratingEntry.entry.aggregate.average;
                     this.calculateStars();
                 }
             }
@@ -63,9 +64,9 @@ export class RatingComponent implements OnChanges {
 
         for (let i = 0; i < 5; i++) {
             if (i < this.average) {
-                this.stars.push({fill: true});
+                this.stars.push({ fill: true });
             } else {
-                this.stars.push({fill: false});
+                this.stars.push({ fill: false });
             }
         }
 
@@ -74,10 +75,10 @@ export class RatingComponent implements OnChanges {
 
     updateVote(vote: number) {
         this.ratingService.postRating(this.nodeId, this.ratingType, vote).subscribe(
-            (data) => {
-                if (data.entry.aggregate) {
-                    if (this.average !== data.entry.aggregate.average) {
-                        this.average = data.entry.aggregate.average;
+            (ratingEntry: RatingEntry) => {
+                if (ratingEntry.entry.aggregate) {
+                    if (this.average !== ratingEntry.entry.aggregate.average) {
+                        this.average = ratingEntry.entry.aggregate.average;
                         this.calculateStars();
                     }
                 }

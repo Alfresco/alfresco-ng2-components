@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { NodeEntry } from 'alfresco-js-api';
 
 export interface FolderCreatedEvent {
 
     name: string;
     relativePath?: string;
     parentId?: string;
-    node?: MinimalNodeEntity;
+    node?: NodeEntry;
 
 }

@@ -25,7 +25,7 @@ import { BehaviorSubject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { NodeEntry } from 'alfresco-js-api';
 @Component({
     selector: 'adf-cloud-process-list',
     templateUrl: './process-list-cloud.component.html',
@@ -221,7 +221,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         if (!this.isListEmpty()) {
             let dataRow: any = null;
             if (taskIdSelected) {
-                dataRow = this.rows.find((currentRow: MinimalNodeEntity) => {
+                dataRow = this.rows.find((currentRow: NodeEntry) => {
                     return currentRow.entry.id === taskIdSelected;
                 });
             }

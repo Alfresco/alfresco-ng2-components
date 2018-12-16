@@ -20,7 +20,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ContentService } from '@alfresco/adf-core';
 import { Subject, Observable, throwError } from 'rxjs';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
-import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
+import { Node, NodeEntry, SitePaging } from 'alfresco-js-api';
 import { DataColumn, SitesService, TranslationService, PermissionsEnum } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
@@ -49,9 +49,9 @@ export class ContentNodeDialogService {
      * @param folderNodeId ID of the folder to use
      * @returns Information about the selected file(s)
      */
-    openFileBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
-        return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((node: MinimalNodeEntryEntity) => {
-            return this.openUploadFileDialog('Choose', node);
+    openFileBrowseDialogByFolderId(folderNodeId: string): Observable<Node[]> {
+        return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((nodeEntry: NodeEntry) => {
+            return this.openUploadFileDialog('Choose', nodeEntry.entry);
         }));
     }
 
@@ -60,7 +60,7 @@ export class ContentNodeDialogService {
      * @param contentEntry Node to lock
      * @returns Error/status message (if any)
      */
-    public openLockNodeDialog(contentEntry: MinimalNodeEntryEntity): Subject<string> {
+    public openLockNodeDialog(contentEntry: Node): Subject<string> {
         const observable: Subject<string> = new Subject<string>();
 
         if (this.contentService.hasPermission(contentEntry, PermissionsEnum.LOCK)) {
@@ -85,7 +85,7 @@ export class ContentNodeDialogService {
      * Opens a file browser at a chosen site location.
      * @returns Information about the selected file(s)
      */
-    openFileBrowseDialogBySite(): Observable<MinimalNodeEntryEntity[]> {
+    openFileBrowseDialogBySite(): Observable<Node[]> {
         return this.siteService.getSites().pipe(switchMap((response: SitePaging) => {
             return this.openFileBrowseDialogByFolderId(response.list.entries[0].entry.guid);
         }));
@@ -95,7 +95,7 @@ export class ContentNodeDialogService {
      * Opens a folder browser at a chosen site location.
      * @returns Information about the selected folder(s)
      */
-    openFolderBrowseDialogBySite(): Observable<MinimalNodeEntryEntity[]> {
+    openFolderBrowseDialogBySite(): Observable<Node[]> {
         return this.siteService.getSites().pipe(switchMap((response: SitePaging) => {
             return this.openFolderBrowseDialogByFolderId(response.list.entries[0].entry.guid);
         }));
@@ -106,9 +106,9 @@ export class ContentNodeDialogService {
      * @param folderNodeId ID of the folder to use
      * @returns Information about the selected folder(s)
      */
-    openFolderBrowseDialogByFolderId(folderNodeId: string): Observable<MinimalNodeEntryEntity[]> {
-        return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((node: MinimalNodeEntryEntity) => {
-            return this.openUploadFolderDialog('Choose', node);
+    openFolderBrowseDialogByFolderId(folderNodeId: string): Observable<Node[]> {
+        return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((node: NodeEntry) => {
+            return this.openUploadFolderDialog('Choose', node.entry);
         }));
     }
 
@@ -119,10 +119,10 @@ export class ContentNodeDialogService {
      * @param permission Permission for the operation
      * @returns Information about files that were copied/moved
      */
-    openCopyMoveDialog(action: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Observable<MinimalNodeEntryEntity[]> {
+    openCopyMoveDialog(action: string, contentEntry: Node, permission?: string): Observable<Node[]> {
         if (this.contentService.hasPermission(contentEntry, permission)) {
 
-            const select = new Subject<MinimalNodeEntryEntity[]>();
+            const select = new Subject<Node[]>();
             select.subscribe({
                 complete: this.close.bind(this)
             });
@@ -164,8 +164,8 @@ export class ContentNodeDialogService {
      * @param contentEntry  Item to upload
      * @returns Information about the chosen folder(s)
      */
-    openUploadFolderDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]> {
-        const select = new Subject<MinimalNodeEntryEntity[]>();
+    openUploadFolderDialog(action: string, contentEntry: Node): Observable<Node[]> {
+        const select = new Subject<Node[]>();
         select.subscribe({
             complete: this.close.bind(this)
         });
@@ -190,8 +190,8 @@ export class ContentNodeDialogService {
      * @param contentEntry Item to upload
      * @returns Information about the chosen file(s)
      */
-    openUploadFileDialog(action: string, contentEntry: MinimalNodeEntryEntity): Observable<MinimalNodeEntryEntity[]> {
-        const select = new Subject<MinimalNodeEntryEntity[]>();
+    openUploadFileDialog(action: string, contentEntry: Node): Observable<Node[]> {
+        const select = new Subject<Node[]>();
         select.subscribe({
             complete: this.close.bind(this)
         });
@@ -214,7 +214,7 @@ export class ContentNodeDialogService {
     }
 
     private imageResolver(row: ShareDataRow, col: DataColumn): string | null {
-        const entry: MinimalNodeEntryEntity = row.node.entry;
+        const entry: Node = row.node.entry;
         if (!this.contentService.hasPermission(entry, 'create')) {
             return this.documentListService.getMimeTypeIcon('disable/folder');
         }
@@ -223,7 +223,7 @@ export class ContentNodeDialogService {
     }
 
     private rowFilter(currentNodeId, row: ShareDataRow): boolean {
-        const node: MinimalNodeEntryEntity = row.node.entry;
+        const node: Node = row.node.entry;
 
         if (node.id === currentNodeId || node.isFile) {
             return false;
@@ -232,23 +232,23 @@ export class ContentNodeDialogService {
         }
     }
 
-    private isNodeFile(entry: MinimalNodeEntryEntity): boolean {
+    private isNodeFile(entry: Node): boolean {
         return entry.isFile;
     }
 
-    private hasPermissionOnNodeFolder(entry: MinimalNodeEntryEntity): boolean {
+    private hasPermissionOnNodeFolder(entry: Node): boolean {
         return this.isNodeFolder(entry) && this.contentService.hasPermission(entry, 'create');
     }
 
-    private isNodeFolder(entry: MinimalNodeEntryEntity): boolean {
+    private isNodeFolder(entry: Node): boolean {
         return entry.isFolder;
     }
 
-    private isCopyMoveSelectionValid(entry: MinimalNodeEntryEntity): boolean {
+    private isCopyMoveSelectionValid(entry: Node): boolean {
         return this.hasEntityCreatePermission(entry) && !this.isSite(entry);
     }
 
-    private hasEntityCreatePermission(entry: MinimalNodeEntryEntity): boolean {
+    private hasEntityCreatePermission(entry: Node): boolean {
         return this.contentService.hasPermission(entry, 'create');
     }
 

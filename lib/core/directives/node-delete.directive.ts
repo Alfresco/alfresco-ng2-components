@@ -18,14 +18,14 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { MinimalNodeEntity, MinimalNodeEntryEntity, DeletedNodeEntity, DeletedNodeMinimalEntry } from 'alfresco-js-api';
+import { NodeEntry, Node, DeletedNodeEntity, DeletedNode } from 'alfresco-js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';
 import { map, catchError } from 'rxjs/operators';
 
 interface ProcessedNodeData {
-    entry: MinimalNodeEntryEntity | DeletedNodeMinimalEntry;
+    entry: Node | DeletedNode;
     status: number;
 }
 
@@ -52,7 +52,7 @@ interface ProcessStatus {
 export class NodeDeleteDirective implements OnChanges {
     /** Array of nodes to delete. */
     @Input('adf-delete')
-    selection: MinimalNodeEntity[] | DeletedNodeEntity[];
+    selection: NodeEntry[] | DeletedNodeEntity[];
 
     /** If true then the nodes are deleted immediately rather than being put in the trash */
     @Input()
@@ -86,7 +86,7 @@ export class NodeDeleteDirective implements OnChanges {
         this.elementRef.nativeElement.disabled = disable;
     }
 
-    private process(selection: MinimalNodeEntity[] | DeletedNodeEntity[]) {
+    private process(selection: NodeEntry[] | DeletedNodeEntity[]) {
         if (selection && selection.length) {
 
             const batch = this.getDeleteNodesBatch(selection);
@@ -102,22 +102,40 @@ export class NodeDeleteDirective implements OnChanges {
     }
 
     private getDeleteNodesBatch(selection: any): Observable<ProcessedNodeData>[] {
-        return selection.map((node) => this.deleteNode(node));
+        return selection.map((node) => {
+
+            if (node.entry.hasOwnProperty('archivedAt')) {
+                this.permanentDeleteNode(node);
+            } else {
+                this.deleteNode(node);
+            }
+        });
     }
 
-    private deleteNode(node: MinimalNodeEntity | DeletedNodeEntity): Observable<ProcessedNodeData> {
-        const id = (<any> node.entry).nodeId || node.entry.id;
+    private deleteNode(node: NodeEntry): Observable<ProcessedNodeData> {
+        const id = node.entry.id;
 
-        let promise;
-
-        if (node.entry.hasOwnProperty('archivedAt')) {
-            promise = this.alfrescoApiService.nodesApi.purgeDeletedNode(id);
-        } else {
-            promise = this.alfrescoApiService.nodesApi.deleteNode(id, { permanent: this.permanent });
-        }
+        let promise = this.alfrescoApiService.nodesApi.deleteNode(id, { permanent: this.permanent });
 
         return from(promise).pipe(
-            map(() => ({
+            map(() => (<ProcessedNodeData> {
+                entry: node.entry,
+                status: 1
+            })),
+            catchError(() => of({
+                entry: node.entry,
+                status: 0
+            }))
+        );
+    }
+
+    private permanentDeleteNode(node: DeletedNodeEntity): Observable<ProcessedNodeData> {
+        const id = node.entry.id;
+
+        let promise = this.alfrescoApiService.nodesApi.purgeDeletedNode(id);
+
+        return from(promise).pipe(
+            map(() => (<ProcessedNodeData> {
                 entry: node.entry,
                 status: 1
             })),

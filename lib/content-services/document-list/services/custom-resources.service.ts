@@ -286,7 +286,7 @@ export class CustomResourcesService {
      * @param includeFields List of data field names to include in the results
      * @returns List of items contained in the folder
      */
-    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[]): Observable<NodePaging> {
+    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[] = []): any {
         if (nodeId === '-trashcan-') {
             return this.loadTrashcan(pagination, includeFields);
         } else if (nodeId === '-sharedlinks-') {
@@ -313,20 +313,10 @@ export class CustomResourcesService {
     getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel = {}): Observable<string[]> {
         if (this.isCustomSource(nodeId)) {
 
-            return this.loadFolderByNodeId(nodeId, pagination, [])
-                .pipe(map((result) => result.list.entries.map((node: any) => {
-                    if (nodeId === '-sharedlinks-') {
-                        return node.entry.nodeId;
-
-                    } else if (nodeId === '-sites-' || nodeId === '-mysites-') {
-                        return node.entry.guid;
-
-                    } else if (nodeId === '-favorites-') {
-                        return node.entry.targetGuid;
-                    }
-
-                    return node.entry.id;
-                })));
+            return this.loadFolderByNodeId(nodeId, pagination)
+                .pipe(map((result: any): string[] => {
+                    return result.list.entries.map((node: any): string => this.getIdFromEntry(node, nodeId));
+                }));
 
         } else if (nodeId) {
             // cases when nodeId is '-my-', '-root-' or '-shared-'
@@ -335,6 +325,18 @@ export class CustomResourcesService {
         }
 
         return of([]);
+    }
+
+    getIdFromEntry(node: any, nodeId: string): string {
+        if (nodeId === '-sharedlinks-') {
+            return node.entry.nodeId;
+        } else if (nodeId === '-sites-' || nodeId === '-mysites-') {
+            return node.entry.guid;
+        } else if (nodeId === '-favorites-') {
+            return node.entry.targetGuid;
+        } else {
+            return node.entry.id;
+        }
     }
 
     /**

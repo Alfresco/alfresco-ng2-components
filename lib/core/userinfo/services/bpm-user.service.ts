@@ -45,8 +45,8 @@ export class BpmUserService {
     getCurrentUserInfo(): Observable<BpmUserModel> {
         return from(this.apiService.getInstance().activiti.profileApi.getProfile())
             .pipe(
-                map((data: UserRepresentation) => {
-                    return new BpmUserModel(data);
+                map((userRepresentation: UserRepresentation) => {
+                    return new BpmUserModel(userRepresentation);
                 }),
                 catchError((err) => this.handleError(err))
             );

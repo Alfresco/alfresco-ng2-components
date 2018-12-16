@@ -288,11 +288,11 @@ export class FormService {
      * @returns Null response when the operation is complete
      */
     completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
-        let data: any = {values: formValues};
+        let formValuesObj: any = {values: formValues};
         if (outcome) {
-            data.outcome = outcome;
+            formValuesObj.outcome = outcome;
         }
-        let body = JSON.stringify(data);
+        let body = JSON.stringify(formValuesObj);
 
         return from(this.taskApi.completeTaskForm(taskId, body))
             .pipe(
@@ -494,11 +494,11 @@ export class FormService {
      * @param res Object representing a form
      * @returns ID string
      */
-    getFormId(res: any): string {
+    getFormId(form: any): string {
         let result = null;
 
-        if (res && res.data && res.data.length > 0) {
-            result = res.data[0].id;
+        if (form && form.data && form.data.length > 0) {
+            result = form.data[0].id;
         }
 
         return result;

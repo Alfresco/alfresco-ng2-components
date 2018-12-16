@@ -17,11 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import {
-    AlfrescoApi,
+    AlfrescoApiCompatibility,
     ContentApi,
-    NodesApi
+    Core
 } from 'alfresco-js-api';
-import * as alfrescoApi from 'alfresco-js-api';
 /* tslint:disable:adf-file-name */
 
 @Injectable({
@@ -29,9 +28,9 @@ import * as alfrescoApi from 'alfresco-js-api';
 })
 export class ExternalAlfrescoApiService {
 
-    protected alfrescoApi: AlfrescoApi;
+    protected alfrescoApi: AlfrescoApiCompatibility;
 
-    getInstance(): AlfrescoApi {
+    getInstance(): AlfrescoApiCompatibility {
         return this.alfrescoApi;
     }
 
@@ -39,7 +38,7 @@ export class ExternalAlfrescoApiService {
         return this.getInstance().content;
     }
 
-    get nodesApi(): NodesApi {
+    get nodesApi(): Core.NodesApi {
         return this.getInstance().nodes;
     }
 
@@ -61,7 +60,7 @@ export class ExternalAlfrescoApiService {
         if (this.alfrescoApi) {
             this.alfrescoApi.configureJsApi(config);
         } else {
-            this.alfrescoApi = <AlfrescoApi> new alfrescoApi(config);
+            this.alfrescoApi = new AlfrescoApiCompatibility(config);
         }
     }
 

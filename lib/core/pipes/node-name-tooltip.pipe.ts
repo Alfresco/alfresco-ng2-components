@@ -16,14 +16,14 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { NodeEntry } from 'alfresco-js-api';
 
 @Pipe({
     name: 'adfNodeNameTooltip'
 })
 export class NodeNameTooltipPipe implements PipeTransform {
 
-    transform(node: MinimalNodeEntity): string {
+    transform(node: NodeEntry): string {
         if (node) {
             return this.getNodeTooltip(node);
         }
@@ -45,7 +45,7 @@ export class NodeNameTooltipPipe implements PipeTransform {
         return lines.reduce(reducer, []);
     }
 
-    private getNodeTooltip(node: MinimalNodeEntity): string {
+    private getNodeTooltip(node: NodeEntry): string {
         if (!node || !node.entry) {
             return null;
         }

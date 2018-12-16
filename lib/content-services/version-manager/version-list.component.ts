@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
 import { Component, Input, OnChanges, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
-import { VersionsApi, MinimalNodeEntryEntity, VersionEntry } from 'alfresco-js-api';
+import { VersionsApi, MinimalNodeEntryEntity, VersionEntry, VersionPaging } from 'alfresco-js-api';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 
@@ -92,8 +92,8 @@ export class VersionListComponent implements OnChanges {
 
     loadVersionHistory() {
         this.isLoading = true;
-        this.versionsApi.listVersionHistory(this.node.id).then((data) => {
-            this.versions = data.list.entries;
+        this.versionsApi.listVersionHistory(this.node.id).then((versionPaging: VersionPaging) => {
+            this.versions = versionPaging.list.entries;
             this.isLoading = false;
         });
     }

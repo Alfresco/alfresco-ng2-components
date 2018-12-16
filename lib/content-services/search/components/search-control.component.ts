@@ -19,7 +19,7 @@ import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output,
          QueryList, ViewEncapsulation, ViewChild, ViewChildren, ElementRef, TemplateRef, ContentChild } from '@angular/core';
-import { MinimalNodeEntity, QueryBody } from 'alfresco-js-api';
+import { NodeEntry, QueryBody } from 'alfresco-js-api';
 import { Observable, Subject } from 'rxjs';
 import { SearchComponent } from './search.component';
 import { MatListItem } from '@angular/material';
@@ -175,7 +175,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
         return this.autocomplete ? 'on' : 'off';
     }
 
-    getMimeTypeIcon(node: MinimalNodeEntity): string {
+    getMimeTypeIcon(node: NodeEntry): string {
         let mimeType;
 
         if (node.entry.content && node.entry.content.mimeType) {

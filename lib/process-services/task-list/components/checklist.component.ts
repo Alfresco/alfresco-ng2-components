@@ -108,9 +108,9 @@ export class ChecklistComponent implements OnChanges {
             assignee: { id: this.assignee }
         });
         this.activitiTaskList.addTask(newTask).subscribe(
-            (res: TaskDetailsModel) => {
-                this.checklist.push(res);
-                this.checklistTaskCreated.emit(res);
+            (taskDetailsModel: TaskDetailsModel) => {
+                this.checklist.push(taskDetailsModel);
+                this.checklistTaskCreated.emit(taskDetailsModel);
                 this.taskName = '';
             },
             (error) => {

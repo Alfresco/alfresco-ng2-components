@@ -21,7 +21,7 @@ import { SearchService, SearchConfigurationService } from '@alfresco/adf-core';
 import { SearchComponent } from '../../../search/components/search.component';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { NodeEntry } from 'alfresco-js-api';
 
 @Component({
     selector: 'adf-add-permission-panel',
@@ -46,9 +46,9 @@ export class AddPermissionPanelComponent {
     searchedWord = '';
     debounceSearch: number = 200;
 
-    selectedItems: MinimalNodeEntity[] = [];
+    selectedItems: NodeEntry[] = [];
 
-    EVERYONE: MinimalNodeEntity = { entry: { properties: {'cm:authorityName': 'GROUP_EVERYONE'}}};
+    EVERYONE: NodeEntry = new NodeEntry({ entry: { properties: {'cm:authorityName': 'GROUP_EVERYONE'}}});
 
     constructor() {
         this.searchInput.valueChanges
@@ -63,7 +63,7 @@ export class AddPermissionPanelComponent {
         });
     }
 
-    elementClicked(item: MinimalNodeEntity) {
+    elementClicked(item: NodeEntry) {
         if (this.isAlreadySelected(item)) {
             this.selectedItems.splice(this.selectedItems.indexOf(item), 1);
         } else {
@@ -72,7 +72,7 @@ export class AddPermissionPanelComponent {
         this.select.emit(this.selectedItems);
     }
 
-    private isAlreadySelected(item: MinimalNodeEntity): boolean {
+    private isAlreadySelected(item: NodeEntry): boolean {
         return this.selectedItems.indexOf(item) >= 0;
     }
 

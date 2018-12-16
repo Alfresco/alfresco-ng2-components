@@ -104,8 +104,8 @@ export class AttachFormComponent implements OnInit, OnChanges {
     }
 
     private loadFormsTask(): void {
-        this.taskService.getFormList().subscribe((res: Form[]) => {
-                this.forms = res;
+        this.taskService.getFormList().subscribe((form: Form[]) => {
+                this.forms = form;
             },
             (err) => {
                 this.error.emit(err);

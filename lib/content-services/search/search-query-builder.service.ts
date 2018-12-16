@@ -18,7 +18,14 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
-import { QueryBody, RequestFacetFields, RequestFacetField, RequestSortDefinitionInner } from 'alfresco-js-api';
+import {
+    ModelError,
+    QueryBody,
+    RequestFacetFields,
+    RequestFacetField,
+    RequestSortDefinitionInner,
+    ResultSetPaging
+} from 'alfresco-js-api';
 import { SearchCategory } from './search-category.interface';
 import { FilterQuery } from './filter-query.interface';
 import { SearchRange } from './search-range.interface';
@@ -36,7 +43,7 @@ export class SearchQueryBuilderService {
     private _userQuery = '';
 
     updated: Subject<QueryBody> = new Subject();
-    executed: Subject<any> = new Subject();
+    executed: Subject<ResultSetPaging | ModelError> = new Subject();
 
     categories: Array<SearchCategory> = [];
     queryFragments: { [id: string]: string } = {};
@@ -165,8 +172,8 @@ export class SearchQueryBuilderService {
     async execute() {
         const query = this.buildQuery();
         if (query) {
-            const data = await this.alfrescoApiService.searchApi.search(query);
-            this.executed.next(data);
+            const resultSetPaging: ModelError | ResultSetPaging = await this.alfrescoApiService.searchApi.search(query);
+            this.executed.next(resultSetPaging);
         }
     }
 
@@ -234,11 +241,11 @@ export class SearchQueryBuilderService {
 
     protected get sort(): RequestSortDefinitionInner[] {
         return this.sorting.map((def) => {
-            return {
+            return new RequestSortDefinitionInner({
                 type: def.type,
                 field: def.field,
                 ascending: def.ascending
-            };
+            });
         });
     }
 

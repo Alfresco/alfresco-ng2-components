@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
+import { NodeEntry, MinimalNode, NodePaging } from 'alfresco-js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';
@@ -35,7 +35,7 @@ export class NodesApiService {
         return this.api.getInstance().core.nodesApi;
     }
 
-    private getEntryFromEntity(entity: MinimalNodeEntity) {
+    private getEntryFromEntity(entity: NodeEntry) {
         return entity.entry;
     }
 
@@ -45,7 +45,7 @@ export class NodesApiService {
      * @param options Optional parameters supported by JS-API
      * @returns Node information
      */
-    getNode(nodeId: string, options: any = {}): Observable<MinimalNodeEntryEntity> {
+    getNode(nodeId: string, options: any = {}): Observable<MinimalNode> {
         const defaults = {
             include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
         };
@@ -87,7 +87,7 @@ export class NodesApiService {
      * @param options Optional parameters supported by JS-API
      * @returns Details of the new node
      */
-    createNode(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity> {
+    createNode(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNode> {
         const promise = this.nodesApi
             .addNode(parentNodeId, nodeBody, options)
             .then(this.getEntryFromEntity);
@@ -104,7 +104,7 @@ export class NodesApiService {
      * @param options Optional parameters supported by JS-API
      * @returns Details of the new folder
      */
-    createFolder(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity> {
+    createFolder(parentNodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNode> {
         const body = Object.assign({ nodeType: 'cm:folder' }, nodeBody);
         return this.createNode(parentNodeId, body, options);
     }
@@ -116,7 +116,7 @@ export class NodesApiService {
      * @param options Optional parameters supported by JS-API
      * @returns Updated node information
      */
-    updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNodeEntryEntity> {
+    updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNode> {
         const defaults = {
             include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
         };
@@ -150,7 +150,7 @@ export class NodesApiService {
      * @param nodeId ID of the node to restore
      * @returns Details of the restored node
      */
-    restoreNode(nodeId: string): Observable<MinimalNodeEntryEntity> {
+    restoreNode(nodeId: string): Observable<MinimalNode> {
         const promise = this.nodesApi
             .restoreNode(nodeId)
             .then(this.getEntryFromEntity);

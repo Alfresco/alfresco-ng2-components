@@ -17,7 +17,7 @@
 
 import { Directive, Input, HostListener, OnChanges, NgZone } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { NodeEntry } from 'alfresco-js-api';
 
 import { ShareDialogComponent } from './content-node-share.dialog';
 
@@ -33,7 +33,7 @@ export class NodeSharedDirective implements OnChanges {
     /** Node to share. */
     // tslint:disable-next-line:no-input-rename
     @Input('adf-share')
-    node: MinimalNodeEntity;
+    node: NodeEntry;
 
     /** Prefix to add to the generated link. */
     @Input()
@@ -48,7 +48,7 @@ export class NodeSharedDirective implements OnChanges {
 
     constructor(private dialog: MatDialog, private zone: NgZone) {}
 
-    shareNode(node: MinimalNodeEntity) {
+    shareNode(node: NodeEntry) {
         if (node && node.entry && node.entry.isFile) {
             this.dialog.open(ShareDialogComponent, {
                 width: '600px',

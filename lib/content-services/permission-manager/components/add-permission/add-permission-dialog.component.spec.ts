@@ -22,7 +22,7 @@ import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
 import { setupTestBed } from '@alfresco/adf-core';
 import { AddPermissionDialogComponent } from './add-permission-dialog.component';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { NodeEntry } from 'alfresco-js-api';
 import { Subject } from 'rxjs';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
@@ -35,7 +35,7 @@ describe('AddPermissionDialog', () => {
     let data: AddPermissionDialogData = {
         title: 'dead or alive you are coming with me',
         nodeId: 'fake-node-id',
-        confirm: new Subject<MinimalNodeEntity[]> ()
+        confirm: new Subject<NodeEntry[]> ()
     };
     const dialogRef = {
         close: jasmine.createSpy('close')

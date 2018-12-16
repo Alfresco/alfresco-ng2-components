@@ -16,7 +16,7 @@
  */
 
 import { DataRow, ObjectUtils, ThumbnailService } from '@alfresco/adf-core';
-import { MinimalNode, MinimalNodeEntity } from 'alfresco-js-api';
+import { MinimalNode, NodeEntry } from 'alfresco-js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
 
@@ -29,11 +29,11 @@ export class ShareDataRow implements DataRow {
     isDropTarget: boolean;
     cssClass: string = '';
 
-    get node(): MinimalNodeEntity {
+    get node(): NodeEntry {
         return this.obj;
     }
 
-    constructor(private obj: MinimalNodeEntity,
+    constructor(private obj: NodeEntry,
                 private documentListService: DocumentListService,
                 private permissionsStyle: PermissionStyleModel[],
                 private thumbnailService?: ThumbnailService) {
@@ -48,7 +48,7 @@ export class ShareDataRow implements DataRow {
         }
     }
 
-    getPermissionClass(nodeEntity: MinimalNodeEntity): string {
+    getPermissionClass(nodeEntity: NodeEntry): string {
         let permissionsClasses = '';
 
         this.permissionsStyle.forEach((currentPermissionsStyle: PermissionStyleModel) => {
@@ -73,11 +73,11 @@ export class ShareDataRow implements DataRow {
         return (currentPermissionsStyle.isFolder && node.isFolder);
     }
 
-    isFolderAndHasPermissionToUpload(obj: MinimalNodeEntity): boolean {
+    isFolderAndHasPermissionToUpload(obj: NodeEntry): boolean {
         return this.isFolder(obj) && this.documentListService.hasPermission(obj.entry, 'create');
     }
 
-    isFolder(obj: MinimalNodeEntity): boolean {
+    isFolder(obj: NodeEntry): boolean {
         return obj.entry && obj.entry.isFolder;
     }
 

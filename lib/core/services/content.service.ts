@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ContentApi, MinimalNodeEntryEntity, Node, NodeEntry } from 'alfresco-js-api';
+import { ContentApi, MinimalNode, Node, NodeEntry } from 'alfresco-js-api';
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { FolderCreatedEvent } from '../events/folder-created.event';
 import { PermissionsEnum } from '../models/permissions.enum';
@@ -34,8 +34,8 @@ export class ContentService {
     private saveData: Function;
 
     folderCreated: Subject<FolderCreatedEvent> = new Subject<FolderCreatedEvent>();
-    folderCreate: Subject<MinimalNodeEntryEntity> = new Subject<MinimalNodeEntryEntity>();
-    folderEdit: Subject<MinimalNodeEntryEntity> = new Subject<MinimalNodeEntryEntity>();
+    folderCreate: Subject<MinimalNode> = new Subject<MinimalNode>();
+    folderEdit: Subject<MinimalNode> = new Subject<MinimalNode>();
 
     constructor(public authService: AuthenticationService,
                 public apiService: AlfrescoApiService,
@@ -46,15 +46,15 @@ export class ContentService {
             document.body.appendChild(a);
             a.style.display = 'none';
 
-            return function (data, format, fileName) {
+            return function (fileData, format, fileName) {
                 let blob = null;
 
                 if (format === 'blob' || format === 'data') {
-                    blob = new Blob([data], { type: 'octet/stream' });
+                    blob = new Blob([fileData], { type: 'octet/stream' });
                 }
 
                 if (format === 'object' || format === 'json') {
-                    let json = JSON.stringify(data);
+                    let json = JSON.stringify(fileData);
                     blob = new Blob([json], { type: 'octet/stream' });
                 }
 
@@ -157,28 +157,6 @@ export class ContentService {
     getNodeContent(nodeId: string): Observable<any> {
         return from(this.apiService.getInstance().core.nodesApi.getFileContent(nodeId))
             .pipe(
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    /**
-     * Creates a folder.
-     * @param relativePath Location to create the folder
-     * @param name Folder name
-     * @param parentId Node ID of parent folder
-     * @returns Information about the new folder
-     */
-    createFolder(relativePath: string, name: string, parentId?: string): Observable<NodeEntry> {
-        return from(this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId))
-            .pipe(
-                tap((data) => {
-                    this.folderCreated.next(<FolderCreatedEvent> {
-                        relativePath: relativePath,
-                        name: name,
-                        parentId: parentId,
-                        node: data
-                    });
-                }),
                 catchError((err) => this.handleError(err))
             );
     }

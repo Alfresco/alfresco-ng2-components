@@ -19,7 +19,7 @@ import { Directive, Input, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { DownloadZipDialogComponent } from '../dialogs/download-zip.dialog';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { NodeEntry } from 'alfresco-js-api';
 
 @Directive({
     selector: '[adfNodeDownload]'
@@ -29,7 +29,7 @@ export class NodeDownloadDirective {
     /** Nodes to download. */
     // tslint:disable-next-line:no-input-rename
     @Input('adfNodeDownload')
-    nodes: MinimalNodeEntity | MinimalNodeEntity[];
+    nodes: NodeEntry | NodeEntry[];
 
     @HostListener('click')
     onClick() {
@@ -46,7 +46,7 @@ export class NodeDownloadDirective {
      * Packs result into a .ZIP archive if there is more than one node selected.
      * @param selection Multiple selected nodes to download
      */
-    downloadNodes(selection: MinimalNodeEntity | Array<MinimalNodeEntity>) {
+    downloadNodes(selection: NodeEntry | Array<NodeEntry>) {
 
         if (!this.isSelectionValid(selection)) {
             return;
@@ -67,7 +67,7 @@ export class NodeDownloadDirective {
      * Packs result into a .ZIP archive is the node is a Folder.
      * @param node Node to download
      */
-    downloadNode(node: MinimalNodeEntity) {
+    downloadNode(node: NodeEntry) {
         if (node && node.entry) {
             const entry = node.entry;
 
@@ -86,11 +86,11 @@ export class NodeDownloadDirective {
         }
     }
 
-    private isSelectionValid(selection: MinimalNodeEntity | Array<MinimalNodeEntity>) {
+    private isSelectionValid(selection: NodeEntry | Array<NodeEntry>) {
         return selection || (selection instanceof Array && selection.length > 0);
     }
 
-    private downloadFile(node: MinimalNodeEntity) {
+    private downloadFile(node: NodeEntry) {
         if (node && node.entry) {
             const contentApi = this.apiService.getInstance().content;
             // nodeId for Shared node
@@ -103,7 +103,7 @@ export class NodeDownloadDirective {
         }
     }
 
-    private downloadZip(selection: Array<MinimalNodeEntity>) {
+    private downloadZip(selection: Array<NodeEntry>) {
         if (selection && selection.length > 0) {
             // nodeId for Shared node
             const nodeIds = selection.map((node: any) => (node.entry.nodeId || node.entry.id));

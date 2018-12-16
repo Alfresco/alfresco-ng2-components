@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { NodeEntry } from 'alfresco-js-api';
 import { NodeNameTooltipPipe } from './node-name-tooltip.pipe';
 
 describe('NodeNameTooltipPipe', () => {
@@ -58,7 +58,7 @@ describe('NodeNameTooltipPipe', () => {
                 name: nodeName
             }
         };
-        let tooltip = pipe.transform(<MinimalNodeEntity> node);
+        let tooltip = pipe.transform(<NodeEntry> node);
         expect(tooltip).toBe(nodeName);
     });
 

@@ -104,7 +104,7 @@ export class RenditionsService {
 
     /** @deprecated */
     createRendition(nodeId: string, encoding: string): Observable<{}> {
-        return from(this.apiService.renditionsApi.createRendition(nodeId, {id: encoding}));
+        return from(this.apiService.renditionsApi.createRendition(nodeId, { id: encoding }));
     }
 
     /** @deprecated */
@@ -121,12 +121,12 @@ export class RenditionsService {
         return interval(intervalSize)
             .pipe(
                 switchMap(() => this.getRendition(nodeId, encoding)),
-                takeWhile((data) => {
+                takeWhile((renditionEntry: RenditionEntry) => {
                     attempts += 1;
                     if (attempts > retries) {
                         return false;
                     }
-                    return (data.entry.status.toString() !== 'CREATED');
+                    return (renditionEntry.entry.status.toString() !== 'CREATED');
                 })
             );
     }

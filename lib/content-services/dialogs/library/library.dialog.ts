@@ -32,7 +32,7 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
-import { SiteBody, SiteEntry, SitePaging } from 'alfresco-js-api';
+import { SiteBodyCreate, SiteEntry, SitePaging } from 'alfresco-js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { debounceTime, mergeMap, takeUntil } from 'rxjs/operators';
 
@@ -166,7 +166,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
 
   private create(): Observable<SiteEntry> {
     const { title, id, description, visibility } = this;
-    const siteBody = <SiteBody> {
+    const siteBody = <SiteBodyCreate> {
       id,
       title,
       description,

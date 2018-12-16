@@ -18,7 +18,7 @@
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
-import { AlfrescoApi, MinimalNodeEntryEntity, RelatedContentRepresentation } from 'alfresco-js-api';
+import { AlfrescoApiCompatibility, MinimalNode, RelatedContentRepresentation } from 'alfresco-js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { ExternalContent } from '../components/widgets/core/external-content';
 import { ExternalContentLink } from '../components/widgets/core/external-content-link';
@@ -43,7 +43,7 @@ export class ActivitiContentService {
      * @param folderId
      */
     getAlfrescoNodes(accountId: string, folderId: string): Observable<[ExternalContent]> {
-        let apiService: AlfrescoApi = this.apiService.getInstance();
+        let apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
         let accountShortId = accountId.replace('alfresco-', '');
         return from(apiService.activiti.alfrescoApi.getContentInFolder(accountShortId, folderId))
             .pipe(
@@ -59,7 +59,7 @@ export class ActivitiContentService {
      * @param folderId
      */
     getAlfrescoRepositories(tenantId: number, includeAccount: boolean): Observable<any> {
-        let apiService: AlfrescoApi = this.apiService.getInstance();
+        let apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
         const opts = {
             tenantId: tenantId,
             includeAccounts: includeAccount
@@ -79,7 +79,7 @@ export class ActivitiContentService {
      * @param siteId
      */
     linkAlfrescoNode(accountId: string, node: ExternalContent, siteId: string): Observable<ExternalContentLink> {
-        const apiService: AlfrescoApi = this.apiService.getInstance();
+        const apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
         return from(apiService.activiti.contentApi.createTemporaryRelatedContent({
             link: true,
             name: node.title,
@@ -87,14 +87,14 @@ export class ActivitiContentService {
             source: accountId,
             sourceId: node.id + '@' + siteId
         }))
-        .pipe(
-            map(this.toJson),
-            catchError((err) => this.handleError(err))
-        );
+            .pipe(
+                map(this.toJson),
+                catchError((err) => this.handleError(err))
+            );
     }
 
-    applyAlfrescoNode(node: MinimalNodeEntryEntity, siteId: string, accountId: string) {
-        let apiService: AlfrescoApi = this.apiService.getInstance();
+    applyAlfrescoNode(node: MinimalNode, siteId: string, accountId: string) {
+        let apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
         const currentSideId = siteId ? siteId : this.getSiteNameFromNodePath(node);
         const params: RelatedContentRepresentation = {
             source: accountId,
@@ -110,11 +110,11 @@ export class ActivitiContentService {
             );
     }
 
-    private getSiteNameFromNodePath(node: MinimalNodeEntryEntity): string {
+    private getSiteNameFromNodePath(node: MinimalNode): string {
         let siteName = '';
         if (node.path) {
             const foundNode = node.path
-                .elements.find((pathNode: MinimalNodeEntryEntity) =>
+                .elements.find((pathNode: MinimalNode) =>
                     pathNode.nodeType === 'st:site' &&
                     pathNode.name !== 'Sites');
             siteName = foundNode ? foundNode.name : '';

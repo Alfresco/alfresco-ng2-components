@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, throwError } from 'rxjs';
 import { AddPermissionDialogComponent } from '../components/add-permission/add-permission-dialog.component';
 import { AddPermissionDialogData } from '../components/add-permission/add-permission-dialog-data.interface';
-import { MinimalNodeEntity, MinimalNodeEntryEntity, Node } from 'alfresco-js-api';
+import { NodeEntry, MinimalNodeEntryEntity, Node } from 'alfresco-js-api';
 import { NodePermissionService } from './node-permission.service';
 import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
 import { switchMap } from 'rxjs/operators';
@@ -41,9 +41,9 @@ export class NodePermissionDialogService {
      * @param title Dialog title
      * @returns Node with updated permissions
      */
-    openAddPermissionDialog(node: Node, title?: string): Observable<MinimalNodeEntity[]> {
+    openAddPermissionDialog(node: Node, title?: string): Observable<NodeEntry[]> {
         if (this.contentService.hasPermission(node, PermissionsEnum.UPDATEPERMISSIONS)) {
-            const confirm = new Subject<MinimalNodeEntity[]>();
+            const confirm = new Subject<NodeEntry[]>();
 
             confirm.subscribe({
                 complete: this.close.bind(this)

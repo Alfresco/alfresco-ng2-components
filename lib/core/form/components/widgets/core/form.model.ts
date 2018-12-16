@@ -80,7 +80,7 @@ export class FormModel {
         return this.outcomes && this.outcomes.length > 0;
     }
 
-    constructor(json?: any, data?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
+    constructor(json?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
         this.readOnly = readOnly;
 
         if (json) {
@@ -107,8 +107,8 @@ export class FormModel {
 
             this.fields = this.parseRootFields(json);
 
-            if (data) {
-                this.loadData(data);
+            if (formValues) {
+                this.loadData(formValues);
             }
 
             for (let i = 0; i < this.fields.length; i++) {
@@ -162,22 +162,22 @@ export class FormModel {
 
     // TODO: consider evaluating and caching once the form is loaded
     getFormFields(): FormFieldModel[] {
-        let result: FormFieldModel[] = [];
+        let formFieldModel: FormFieldModel[] = [];
 
         for (let i = 0; i < this.fields.length; i++) {
             let field = this.fields[i];
 
             if (field instanceof ContainerModel) {
                 let container = <ContainerModel> field;
-                result.push(container.field);
+                formFieldModel.push(container.field);
 
                 container.field.columns.forEach((column) => {
-                    result.push(...column.fields);
+                    formFieldModel.push(...column.fields);
                 });
             }
         }
 
-        return result;
+        return formFieldModel;
     }
 
     markAsInvalid() {
@@ -254,7 +254,7 @@ export class FormModel {
             fields = json.formDefinition.fields;
         }
 
-        let result: FormWidgetModel[] = [];
+        let formWidgetModel: FormWidgetModel[] = [];
 
         for (let field of fields) {
             if (field.type === FormFieldTypes.DISPLAY_VALUE) {
@@ -262,23 +262,23 @@ export class FormModel {
                 if (field.params) {
                     let originalField = field.params['field'];
                     if (originalField.type === FormFieldTypes.DYNAMIC_TABLE) {
-                        result.push(new ContainerModel(new FormFieldModel(this, field)));
+                        formWidgetModel.push(new ContainerModel(new FormFieldModel(this, field)));
                     }
                 }
             } else {
-                result.push(new ContainerModel(new FormFieldModel(this, field)));
+                formWidgetModel.push(new ContainerModel(new FormFieldModel(this, field)));
             }
         }
 
-        return result;
+        return formWidgetModel;
     }
 
     // Loads external data and overrides field values
     // Typically used when form definition and form data coming from different sources
-    private loadData(data: FormValues) {
+    private loadData(formValues: FormValues) {
         for (let field of this.getFormFields()) {
-            if (data[field.id]) {
-                field.json.value = data[field.id];
+            if (formValues[field.id]) {
+                field.json.value = formValues[field.id];
                 field.value = field.parseValue(field.json);
             }
         }

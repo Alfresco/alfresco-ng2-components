@@ -42,8 +42,8 @@ export class SearchService {
     getNodeQueryResults(term: string, options?: SearchOptions): Observable<NodePaging> {
         const promise = this.apiService.getInstance().core.queriesApi.findNodes(term, options);
 
-        promise.then((data: any) => {
-            this.dataLoaded.next(data);
+        promise.then((nodePaging: NodePaging) => {
+            this.dataLoaded.next(nodePaging);
         });
 
         return from(promise).pipe(
@@ -62,8 +62,8 @@ export class SearchService {
         const searchQuery = Object.assign(this.searchConfigurationService.generateQueryBody(searchTerm, maxResults, skipCount));
         const promise = this.apiService.getInstance().search.searchApi.search(searchQuery);
 
-        promise.then((data: any) => {
-            this.dataLoaded.next(data);
+        promise.then((nodePaging: NodePaging) => {
+            this.dataLoaded.next(nodePaging);
         });
 
         return from(promise).pipe(
@@ -79,8 +79,8 @@ export class SearchService {
     searchByQueryBody(queryBody: QueryBody): Observable<NodePaging> {
         const promise = this.apiService.getInstance().search.searchApi.search(queryBody);
 
-        promise.then((data: any) => {
-            this.dataLoaded.next(data);
+        promise.then((nodePaging: NodePaging) => {
+            this.dataLoaded.next(nodePaging);
         });
 
         return from(promise).pipe(
