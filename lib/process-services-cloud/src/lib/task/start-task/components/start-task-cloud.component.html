@@ -12,7 +12,7 @@
                         matInput
                         id="name_id"
                         class="form-control"
-                        formControlName="name">
+                        formControlName="name" #taskNameInput>
                     <mat-error *ngIf="nameController.hasError('required')">
                         {{ 'ADF_CLOUD_START_TASK.ERROR.REQUIRED' | translate }}
                     </mat-error>
