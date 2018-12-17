@@ -321,7 +321,7 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should output start event when process started successfully', async(() => {
-            let emitSpy = spyOn(component.start, 'emit');
+            let emitSpy = spyOn(component.success, 'emit');
             component.processPayloadCloud = fakeProcessPayload;
             component.startProcess();
             fixture.whenStable().then(() => {
@@ -354,7 +354,7 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should emit start event when start select a process and add a name', (done) => {
-            let disposableStart = component.start.subscribe(() => {
+            let disposableStart = component.success.subscribe(() => {
                 disposableStart.unsubscribe();
                 done();
             });
@@ -369,7 +369,7 @@ describe('StartProcessCloudComponent', () => {
             component.processForm.controls['processInstanceName'].setValue('My Process 1');
             component.processForm.controls['processDefinition'].setValue('NewProcess 1');
 
-            let disposableStart = component.start.subscribe(() => {
+            let disposableStart = component.success.subscribe(() => {
                 disposableStart.unsubscribe();
                 done();
             });
