@@ -192,7 +192,7 @@ describe('Start Task - Task App', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         const startDialog = taskPage.createNewTask().addName(taskNameLessThen255Characters).checkStartButtonIsEnabled();
-        startDialog.addName(taskNameBiggerThen255Characters).checkValidationErrorIsDisplayed(lengthValidationError).checkStartButtonIsDisabled();
+        startDialog.addName(taskNameBiggerThen255Characters).blur(startDialog.name).checkValidationErrorIsDisplayed(lengthValidationError).checkStartButtonIsDisabled();
 
     });
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, Key } from 'protractor';
 import { Util } from '../../../../util/util';
 
 export class StartTaskDialog {
@@ -102,6 +102,12 @@ export class StartTaskDialog {
         Util.waitUntilElementIsVisible(this.cancelButton);
         Util.waitUntilElementIsClickable(this.cancelButton);
         return this.cancelButton.click();
+    }
+
+    blur(locator) {
+        locator.click();
+        locator.sendKeys(Key.TAB);
+        return this;
     }
 
     checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
