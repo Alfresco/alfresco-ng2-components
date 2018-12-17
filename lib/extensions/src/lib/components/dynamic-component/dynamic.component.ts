@@ -88,7 +88,6 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy {
 
     ngOnDestroy() {
         if (this.componentCreated()) {
-            this.proxy('ngOnDestroy');
             this.componentRef.destroy();
             this.componentRef = null;
         }
