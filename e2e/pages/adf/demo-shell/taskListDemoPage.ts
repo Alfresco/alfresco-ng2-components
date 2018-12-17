@@ -39,9 +39,6 @@ export class TaskListDemoPage {
     stateSelector = element(by.css("div[class*='mat-select-panel']"));
     sortDropDownArrow = element(by.css("mat-form-field[data-automation-id='sort'] div[class*='arrow']"));
     sortSelector = element(by.css("div[class*='mat-select-panel']"));
-    processDefinitionIdColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Process Definition Id'] span");
-    processInstanceIdColumn = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='a" +
-        "df-datatable-row'] div[title='Process Instance Id'] span");
 
     taskList(): TasksListPage {
         return this.taskListPage;
@@ -212,11 +209,11 @@ export class TaskListDemoPage {
     }
 
     getAllProcessDefinitionIds() {
-        return this.taskList().getDataTable().getAllRowsColumnValues(this.processDefinitionIdColumn);
+        return this.taskList().getDataTable().getAllRowsColumnValues('Process Definition Id');
     }
 
     getAllProcessInstanceIds() {
-        return this.taskList().getDataTable().getAllRowsColumnValues(this.processInstanceIdColumn);
+        return this.taskList().getDataTable().getAllRowsColumnValues('Process Instance Id');
     }
 
 }

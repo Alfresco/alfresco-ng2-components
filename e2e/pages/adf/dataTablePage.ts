@@ -51,7 +51,7 @@ export class DataTablePage {
     }
 
     getAllRowsNameColumn() {
-        return this.getAllRowsColumnValues(this.nameColumn);
+        return this.getAllRowsColumnValues('Name');
     }
 
     async getAllRowsColumnValues(locator) {
