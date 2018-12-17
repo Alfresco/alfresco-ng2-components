@@ -19,33 +19,49 @@ import {
     Component,
     Input,
     ComponentRef,
-    OnInit,
     ComponentFactoryResolver,
     ViewChild,
     ViewContainerRef,
-    OnDestroy
+    OnDestroy,
+    OnChanges,
+    SimpleChanges
 } from '@angular/core';
 import { ExtensionService } from '../../services/extension.service';
+import { ExtensionComponent } from '../../services/component-register.service';
 
+// cSpell:words lifecycle
 @Component({
     selector: 'adf-dynamic-component',
     template: `<div #content></div>`
 })
-export class DynamicExtensionComponent implements OnInit, OnDestroy {
+export class DynamicExtensionComponent implements OnChanges, OnDestroy {
     @ViewChild('content', { read: ViewContainerRef })
     content: ViewContainerRef;
 
     @Input() id: string;
+    @Input() data: any;
 
-    private componentRef: ComponentRef<any>;
+    private componentRef: ComponentRef<ExtensionComponent>;
+    private loaded: boolean = false;
 
-    constructor(
-        private extensions: ExtensionService,
-        private componentFactoryResolver: ComponentFactoryResolver
-    ) {}
+    constructor(private extensions: ExtensionService, private componentFactoryResolver: ComponentFactoryResolver) {}
 
-    ngOnInit() {
-        const componentType = this.extensions.getComponentById(this.id);
+    ngOnChanges(changes: SimpleChanges) {
+        if (!this.loaded) {
+            this.loadComponent();
+            this.loaded = true;
+        }
+
+        if (changes.data) {
+            this.data = changes.data.currentValue;
+        }
+
+        this.updateInstance();
+        this.proxy('ngOnChanges', changes);
+    }
+
+    private loadComponent() {
+        const componentType = this.extensions.getComponentById<ExtensionComponent>(this.id);
         if (componentType) {
             const factory = this.componentFactoryResolver.resolveComponentFactory(
                 componentType
@@ -53,15 +69,34 @@ export class DynamicExtensionComponent implements OnInit, OnDestroy {
             if (factory) {
                 this.content.clear();
                 this.componentRef = this.content.createComponent(factory, 0);
-                // this.setupWidget(this.componentRef);
             }
         }
     }
 
     ngOnDestroy() {
-        if (this.componentRef) {
+        if (this.componentCreated()) {
             this.componentRef.destroy();
             this.componentRef = null;
         }
+    }
+
+    private updateInstance() {
+        if (this.componentCreated()) {
+            this.componentRef.instance.data = this.data;
+        }
+    }
+
+    private proxy(lifecycleMethod, ...args) {
+        if (this.componentCreated() && this.lifecycleHookIsImplemented(lifecycleMethod)) {
+            this.componentRef.instance[lifecycleMethod].apply(this.componentRef.instance, args);
+        }
+    }
+
+    private componentCreated(): boolean {
+        return !!this.componentRef  && !!this.componentRef.instance;
+    }
+
+    private lifecycleHookIsImplemented(lifecycleMethod: string): boolean {
+        return !!this.componentRef.instance[lifecycleMethod];
     }
 }
