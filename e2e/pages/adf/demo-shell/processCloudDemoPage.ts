@@ -19,6 +19,7 @@ import { Util } from '../../../util/util';
 
 import { ProcessFiltersCloudComponent } from '../process_cloud/processFiltersCloudComponent';
 import { ProcessListCloudComponent } from '../process_cloud/processListCloudComponent';
+import { EditProcessFilterCloudComponent } from '../process_cloud/editProcessFilterCloudComponent';
 import { element, by } from 'protractor';
 
 export class ProcessCloudDemoPage {
@@ -30,13 +31,22 @@ export class ProcessCloudDemoPage {
     processFilters = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
 
     processListCloud = new ProcessListCloudComponent();
+    editProcessFilterCloud = new EditProcessFilterCloudComponent();
 
     processFiltersCloudComponent(filter) {
         return new ProcessFiltersCloudComponent(filter);
     }
 
+    editProcessFilterCloudComponent() {
+        return this.editProcessFilterCloud;
+    }
+
     processListCloudComponent() {
         return this.processListCloud;
+    }
+
+    getAllRowsByIdColumn() {
+        return this.processListCloud.getAllRowsByColumn('Id');
     }
 
     allProcessesFilter() {

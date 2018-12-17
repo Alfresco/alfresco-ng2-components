@@ -40,4 +40,8 @@ export class ProcessListCloudComponent {
         return this.noProcessFound.getText();
     }
 
+    getAllRowsByColumn(column) {
+        return this.dataTable.getAllRowsColumnValues(column);
+    }
+
 }
