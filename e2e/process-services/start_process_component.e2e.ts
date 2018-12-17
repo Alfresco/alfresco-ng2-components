@@ -54,8 +54,8 @@ describe('Start Process Component', () => {
     let simpleApp = resources.Files.WIDGETS_SMOKE_TEST;
     let appId, procUserModel, secondProcUserModel, tenantId, simpleAppCreated;
     let processModelWithSe = 'process_with_se', processModelWithoutSe = 'process_without_se';
-    const processNameLessThen255Characters = Util.generateRandomString(100);
-    const processNameBiggerThen255Characters = Util.generateRandomString(300);
+    const processName255Characters = Util.generateRandomString(255);
+    const processNameBiggerThen255Characters = Util.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
 
     let auditLogFile = path.join('../e2e/download/', 'Audit.pdf');
@@ -434,7 +434,7 @@ describe('Start Process Component', () => {
             processFiltersPage.clickCreateProcessButton();
             processFiltersPage.clickNewProcessDropdown();
 
-            startProcessPage.enterProcessName(processNameLessThen255Characters);
+            startProcessPage.enterProcessName(processName255Characters);
             startProcessPage.selectFromProcessDropdown(processModelWithoutSe);
             startProcessPage.checkStartProcessButtonIsEnabled();
 

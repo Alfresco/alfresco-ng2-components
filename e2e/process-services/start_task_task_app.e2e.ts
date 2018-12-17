@@ -50,8 +50,8 @@ describe('Start Task - Task App', () => {
     let formFieldValue = 'First value ';
     let taskPage = new TasksPage();
     let firstComment = 'comm1', firstChecklist = 'checklist1';
-    const taskNameLessThen255Characters = Util.generateRandomString(100);
-    const taskNameBiggerThen255Characters = Util.generateRandomString(300);
+    const taskName255Characters = Util.generateRandomString(255);
+    const taskNameBiggerThen255Characters = Util.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
     let showHeaderTask = 'Show Header';
@@ -191,7 +191,7 @@ describe('Start Task - Task App', () => {
     it('[C291780] Should be displayed an error message if task name exceed 255 characters', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        const startDialog = taskPage.createNewTask().addName(taskNameLessThen255Characters).checkStartButtonIsEnabled();
+        const startDialog = taskPage.createNewTask().addName(taskName255Characters).checkStartButtonIsEnabled();
         startDialog.addName(taskNameBiggerThen255Characters).blur(startDialog.name).checkValidationErrorIsDisplayed(lengthValidationError).checkStartButtonIsDisabled();
 
     });
