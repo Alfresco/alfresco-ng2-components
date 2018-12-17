@@ -54,6 +54,7 @@ describe('Start Task', () => {
     });
 
     it('[C290166] Should be possible to cancel a task', () => {
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         tasksCloudDemoPage.createNewTask();
         startTask.checkStartButtonIsDisabled()
                  .blur(startTask.name)
