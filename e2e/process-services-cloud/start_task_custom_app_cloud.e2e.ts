@@ -33,8 +33,8 @@ describe('Start Task', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudComponent();
     const standaloneTaskName = Util.generateRandomString(5);
-    const taskNameLessThen255Characters = Util.generateRandomString(100);
-    const taskNameBiggerThen255Characters = Util.generateRandomString(300);
+    const taskName255Characters = Util.generateRandomString(255);
+    const taskNameBiggerThen255Characters = Util.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
@@ -82,7 +82,7 @@ describe('Start Task', () => {
 
     it('[C290181] Should be displayed an error message if task name exceed 255 characters', () => {
         tasksCloudDemoPage.createNewTask();
-        startTask.addName(taskNameLessThen255Characters)
+        startTask.addName(taskName255Characters)
                  .checkStartButtonIsEnabled();
         startTask.addName(taskNameBiggerThen255Characters)
                  .blur(startTask.name)
