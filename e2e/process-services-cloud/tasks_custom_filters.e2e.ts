@@ -70,10 +70,10 @@ describe('Task filters cloud', () => {
             completedTask = await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
             deletedTask = await tasksService.createStandaloneTask(deletedTaskName, simpleApp);
             await tasksService.deleteTask(deletedTask.entry.id, simpleApp);
-            for(let i=0; i< nrOfTasks; i++) {
+            for ( let i = 0; i < nrOfTasks; i++ ) {
                 await tasksService.createStandaloneTask(orderByNameAndPriority[i], simpleApp, {priority: priority});
                 priority = priority + 20;
-            };
+            }
 
             await processDefinitionService.init(user, password);
             let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
