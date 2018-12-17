@@ -103,16 +103,6 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
         });
 
-        // this test is failing due to ACTIVITI-2501
-        xit('[C290060] Should display only tasks with Created state when Created is selected from state dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('CREATED');
-
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
-        });
-
         it('[C290061] Should display only tasks with Completed state when Completed is selected from state dropdown', async() => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('COMPLETED');
 
@@ -120,16 +110,6 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
-        });
-
-        // this test is failing due to ACTIVITI-2501
-        xit('[C290068] Should display only tasks with Deleted state when Deleted is selected from state dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('DELETED');
-
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(deletedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
         });
 
         it('[C290139] Should display only tasks with all states when All is selected from state dropdown', async() => {
@@ -178,21 +158,6 @@ describe('Task filters cloud', () => {
                 list.sort();
                 list.reverse();
                 expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
-            });
-        });
-
-        xit('[C290087] Should display tasks ordered by priority when Priority is selected from sort dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('PRIORITY')
-                .setOrderFilterDropDown('ASC');
-
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then(function (list) {
-                expect(JSON.stringify(list) === JSON.stringify(orderByNameAndPriority)).toEqual(true);
-            });
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then(function (list) {
-                orderByNameAndPriority.reverse();
-                expect(JSON.stringify(list) === JSON.stringify(orderByNameAndPriority)).toEqual(true);
             });
         });
 
