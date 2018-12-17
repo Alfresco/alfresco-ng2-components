@@ -44,20 +44,7 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy {
     private componentRef: ComponentRef<ExtensionComponent>;
     private loaded: boolean = false;
 
-    constructor(private extensions: ExtensionService, private componentFactoryResolver: ComponentFactoryResolver) {
-        const dynamicLifeCycleMethods = [
-            'ngOnInit',
-            'ngDoCheck',
-            'ngAfterContentInit',
-            'ngAfterContentChecked',
-            'ngAfterViewInit',
-            'ngAfterViewChecked'
-        ];
-
-        dynamicLifeCycleMethods.forEach((method) => {
-            this[method] = this.proxy.bind(this, method);
-        });
-    }
+    constructor(private extensions: ExtensionService, private componentFactoryResolver: ComponentFactoryResolver) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (!this.loaded) {

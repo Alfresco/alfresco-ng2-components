@@ -23,14 +23,7 @@ import {
     SimpleChanges,
     OnChanges,
     SimpleChange,
-    ComponentFactoryResolver,
-    OnInit,
-    OnDestroy,
-    AfterContentInit,
-    DoCheck,
-    AfterContentChecked,
-    AfterViewInit,
-    AfterViewChecked
+    ComponentFactoryResolver
 } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -43,42 +36,10 @@ import { HttpClientModule } from '@angular/common/http';
     selector: 'test-component',
     template: '<div data-automation-id="found-me">Hey I am the mighty test component!</div>'
 })
-export class TestComponent {
+export class TestComponent implements OnChanges {
     @Input() data: any;
-}
-
-@Component({
-    selector: 'test-component-with-methods',
-    template: '<div data-automation-id="found-me-2">Hey I am the mighty test component!</div>'
-})
-export class TestWithMethodsComponent implements
-        OnChanges,
-        OnInit,
-        AfterContentInit,
-        DoCheck,
-        AfterContentChecked,
-        AfterViewInit,
-        AfterViewChecked,
-        OnDestroy {
-    @Input() data: any;
-
     public onChangesCalled = 0;
-    public onInitCalled = 0;
-    public doCheckCalled = 0;
-    public afterContentInitCalled = 0;
-    public afterContentCheckedCalled = 0;
-    public afterViewInitCalled = 0;
-    public afterViewCheckedCalled = 0;
-    public onDestroyCalled = 0;
-
     ngOnChanges(changes: SimpleChanges) { this.onChangesCalled ++; }
-    ngOnInit() { this.onInitCalled++; }
-    ngDoCheck() { this.doCheckCalled++; }
-    ngAfterContentInit() { this.afterContentInitCalled++; }
-    ngAfterContentChecked() { this.afterContentCheckedCalled++; }
-    ngAfterViewInit() { this.afterViewInitCalled++; }
-    ngAfterViewChecked() { this.afterViewCheckedCalled++; }
-    ngOnDestroy() { this.onDestroyCalled++; }
 }
 
 describe('DynamicExtensionComponent', () => {
@@ -88,29 +49,18 @@ describe('DynamicExtensionComponent', () => {
     let component: DynamicExtensionComponent;
     let componentFactoryResolver: ComponentFactoryResolver;
 
-    const lifeCycleMethods = [
-        { name: 'ngOnInit', checker: 'onInitCalled' },
-        { name: 'ngDoCheck', checker: 'doCheckCalled' },
-        { name: 'ngAfterContentInit', checker: 'afterContentInitCalled' },
-        { name: 'ngAfterContentChecked', checker: 'afterContentCheckedCalled' },
-        { name: 'ngAfterViewInit', checker: 'afterViewInitCalled' },
-        { name: 'ngAfterViewChecked', checker: 'afterViewCheckedCalled' },
-        { name: 'ngOnDestroy', checker: 'onDestroyCalled' }
-    ];
-
     beforeEach(async(() => {
         componentRegister = new ComponentRegisterService();
         componentRegister.setComponents({'test-component': TestComponent});
-        componentRegister.setComponents({'test-component-with-methods': TestWithMethodsComponent});
 
         TestBed.configureTestingModule({
             imports: [ HttpClientModule ],
-            declarations: [ DynamicExtensionComponent, TestComponent, TestWithMethodsComponent ],
+            declarations: [ DynamicExtensionComponent, TestComponent ],
             providers: [ { provide: ComponentRegisterService, useValue: componentRegister } ]
         });
 
         TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [ TestComponent, TestWithMethodsComponent ] }
+            set: { entryComponents: [ TestComponent ] }
         });
 
         TestBed.compileComponents();
@@ -172,11 +122,11 @@ describe('DynamicExtensionComponent', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(DynamicExtensionComponent);
             component = fixture.componentInstance;
-            component.id = 'test-component-with-methods';
+            component.id = 'test-component';
 
             fixture.detectChanges();
             component.ngOnChanges({});
-            testComponent = fixture.debugElement.query(By.css('test-component-with-methods')).componentInstance;
+            testComponent = fixture.debugElement.query(By.css('test-component')).componentInstance;
         });
 
         afterEach(() => {
@@ -192,71 +142,14 @@ describe('DynamicExtensionComponent', () => {
             expect(testComponent.onChangesCalled).toBe(2);
         });
 
-        it('should call through the remaining life-cycle methods', () => {
-            lifeCycleMethods.forEach((lifeCycleMethod) => {
-                try {
-                    component[lifeCycleMethod.name].call(component);
-                    expect(testComponent[lifeCycleMethod.checker]).toBe(1, `${lifeCycleMethod.name} should have been called once and only once.`);
-                } catch (e) {
-                    console.error(`${lifeCycleMethod.name} can't be called.`);
-                    throw e;
-                }
-            });
-        });
-
         it('should NOT call through the ngOnChanges if the method does not exist (no error should be thrown)', () => {
+            testComponent.ngOnChanges = undefined;
             const params = {};
             const execution = () => {
                 component.ngOnChanges(params);
             };
 
             expect(execution).not.toThrowError();
-        });
-
-        it('should NOT call through the remaining life-cycle methods if the method does not exist (no error should be thrown)', () => {
-            lifeCycleMethods.forEach((lifeCycleMethod) => {
-                const execution = () => {
-                    component[lifeCycleMethod.name].call(component);
-                };
-
-                expect(execution).not.toThrowError();
-            });
-        });
-    });
-
-    describe('The lack of Angular life-cycle methods in sub-component', () => {
-
-        beforeEach(() => {
-            fixture = TestBed.createComponent(DynamicExtensionComponent);
-            component = fixture.componentInstance;
-            component.id = 'test-component';
-
-            fixture.detectChanges();
-            component.ngOnChanges({});
-        });
-
-        afterEach(() => {
-            fixture.destroy();
-            TestBed.resetTestingModule();
-        });
-
-        it('should NOT call through the ngOnChanges if the method does not exist (no error should be thrown)', () => {
-            const params = {};
-            const execution = () => {
-                component.ngOnChanges(params);
-            };
-
-            expect(execution).not.toThrowError();
-        });
-
-        it('should NOT call through the remaining life-cycle methods if the method does not exist (no error should be thrown)', () => {
-            lifeCycleMethods.forEach((lifeCycleMethod) => {
-                const execution = () => {
-                    component[lifeCycleMethod.name].call(component);
-                };
-
-                expect(execution).not.toThrowError();
-            });
         });
     });
 });
