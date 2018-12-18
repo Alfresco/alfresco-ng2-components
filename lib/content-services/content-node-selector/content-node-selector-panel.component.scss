@@ -115,12 +115,15 @@
                         }
 
                         &--image {
-                            padding-left: 16px;
-                            padding-right: 8px;
+                            padding: 8px 16px;
                         }
 
                         &--text {
-                            padding-left: 8px;
+                            padding: 8px 16px;
+                        }
+
+                        &:first-of-type {
+                            padding: 8px 16px;
                         }
                     }
 
@@ -146,7 +149,7 @@
                     .adf-data-table {
                         .adf-data-table-cell {
                             height: 56px;
-                            padding-bottom: 24px;
+                            padding-bottom: 8px;
 
                             & .adf-name-location-cell-location {
                                 display: block;
