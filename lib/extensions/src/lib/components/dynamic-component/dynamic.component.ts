@@ -38,7 +38,10 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy {
     @ViewChild('content', { read: ViewContainerRef })
     content: ViewContainerRef;
 
+    /** Unique ID string for the component to show. */
     @Input() id: string;
+
+    /** Data for the extension component instance. */
     @Input() data: any;
 
     private componentRef: ComponentRef<ExtensionComponent>;
