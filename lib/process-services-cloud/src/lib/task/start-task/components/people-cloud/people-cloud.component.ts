@@ -18,6 +18,7 @@
 import { FormControl } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input, ViewChild, ElementRef } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
+import { switchMap, debounceTime, distinctUntilChanged, mergeMap, flatMap, tap, filter } from 'rxjs/operators';
 import { FullNamePipe, IdentityUserModel, IdentityUserService } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
@@ -77,11 +78,11 @@ export class PeopleCloudComponent implements OnInit {
     @ViewChild('userInput')
     private userInput: ElementRef<HTMLInputElement>;
 
-    private _users: IdentityUserModel[] = [];
     users$: Observable<IdentityUserModel[]>;
 
     private _selectedUsers: IdentityUserModel[] = [];
     private selectedUsers: BehaviorSubject<IdentityUserModel[]>;
+    private searchUsers: BehaviorSubject<IdentityUserModel[]>;
     selectedUsers$: Observable<IdentityUserModel[]>;
 
     searchUser: FormControl = new FormControl();
@@ -90,69 +91,69 @@ export class PeopleCloudComponent implements OnInit {
 
     dataError = false;
 
+    filtered = [];
+
     constructor(private identityUserService: IdentityUserService) {
         this.selectedUsers = new BehaviorSubject<IdentityUserModel[]>(this._selectedUsers);
+        this.searchUsers = new BehaviorSubject<IdentityUserModel[]>(this._selectedUsers);
         this.selectedUsers$ = this.selectedUsers.asObservable();
+        this.users$ = this.searchUsers.asObservable();
     }
 
     ngOnInit() {
-        this.loadUsers();
+        this.loadPreSelectUsers();
         this.initSearch();
     }
 
     initSearch() {
-        this.searchUser.valueChanges.subscribe((keyword) => {
-            this.users$ = this.searchUsers(keyword);
-        });
-    }
-
-    private async loadUsers() {
-        if (!this.hasRoles()) {
-            this.roles = this.getDefaultRoles();
-        }
-
-        if (this.showCurrentUser) {
-            this._users = await this.identityUserService.getUsersByRolesWithCurrentUser(this.roles);
-        } else {
-            this._users = await this.identityUserService.getUsersByRolesWithoutCurrentUser(this.roles);
-        }
-
-        this.loadPreSelectUsers();
-    }
-
-    private hasRoles(): boolean {
-        return this.roles && this.roles.length > 0;
-    }
-
-    private getDefaultRoles(): string[] {
-        return [PeopleCloudComponent.ROLE_ACTIVITI_ADMIN, PeopleCloudComponent.ROLE_ACTIVITI_USER];
-    }
-
-    private searchUsers(keyword: string): Observable<IdentityUserModel[]> {
-        const filteredUsers = this._users.filter((user) => {
-            return user.username.toLowerCase().indexOf(keyword.toString().toLowerCase()) !== -1;
-        });
-        this.dataError = filteredUsers.length === 0;
-        return of(filteredUsers);
-    }
-
-    private loadPreSelectUsers() {
-        if (this.preSelectUsers && this.preSelectUsers.length > 0) {
-            for (const preSelectedUser of this.preSelectUsers) {
-                const newUser = this._users.find((user) => {
-                    return user.id === preSelectedUser.id ||
-                        (user.username && preSelectedUser.username && user.username.toLocaleLowerCase() === preSelectedUser.username.toLocaleLowerCase());
-                });
-                if (newUser) {
-                    if (this.isMultipleMode()) {
-                        this.onSelect(newUser);
-                    } else {
-                        this.searchUser.setValue(newUser);
-                        this.onSelect(newUser);
-                        break;
-                    }
+        this.searchUser.valueChanges.pipe(
+            debounceTime(500),
+            distinctUntilChanged(),
+            tap( () => {
+                this.filtered = [];
+                this.searchUsers.next(this.filtered);
+            }),
+            switchMap( (search) => this.identityUserService.findUsersByName(search)),
+            flatMap( (user) => {
+                return user;
+            }),
+            mergeMap( (user: any) => {
+                if (this.isUserAlreadySelected(user)) {
+                    return of();
                 }
+                return this.identityUserService.checkUserHasClientRoleMapping(user.id, '39d1f2b9-de0e-48d6-98f2-00af9d25c9e1').pipe(
+                    mergeMap((hasRole) => {
+                        return of({user, hasRole});
+                     })
+                );
+            }),
+            filter( (user: any) => user.hasRole)
+        ).subscribe( (user) => {
+            this.filtered.push(user.user);
+            this.searchUsers.next(this.filtered);
+        });
+    }
+
+    isUserAlreadySelected(user: IdentityUserModel): boolean {
+        if (this._selectedUsers && this._selectedUsers.length > 0) {
+            const result = this._selectedUsers.filter((tmpUser) => {
+                return tmpUser.id === user.id;
+            });
+            if (result && result.length > 0) {
+                return true;
             }
+        }
+        return false;
+    }
+
+    loadPreSelectUsers() {
+        if (this.isMultipleMode()) {
+            if (this.preSelectUsers && this.preSelectUsers.length > 0) {
+                this.selectedUsers.next(this.preSelectUsers);
+            }
+        } else {
+            this.selectedUsers.next(this.preSelectUsers);
+            this.searchUser.setValue(this.preSelectUsers[0].username);
         }
     }
 
@@ -167,6 +168,7 @@ export class PeopleCloudComponent implements OnInit {
                 this._selectedUsers.push(user);
                 this.selectedUsers.next(this._selectedUsers);
                 this.selectUser.emit(user);
+                this.searchUsers.next([]);
             }
 
             this.userInput.nativeElement.value = '';

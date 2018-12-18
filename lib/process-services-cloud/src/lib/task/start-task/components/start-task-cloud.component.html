@@ -62,7 +62,7 @@
                 </mat-form-field>
 
                 <div fxFlex>
-                    <adf-cloud-people (selectUser)="onAssigneeSelect($event)"></adf-cloud-people>
+                    <adf-cloud-people *ngIf="currentUser" [preSelectUsers]="[currentUser]" [mode]="'multiple'" (selectUser)="onAssigneeSelect($event)"></adf-cloud-people>
                 </div>
             </div>
     </mat-card-content>

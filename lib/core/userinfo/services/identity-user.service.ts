@@ -74,6 +74,40 @@ export class IdentityUserService {
      * Gets details for all users.
      * @returns Array of user info objects
      */
+    findUsersByName(search: string): Observable<any> {
+        if (search === '') {
+            return of([]);
+        }
+        const url = this.buildUserUrl();
+        const httpMethod = 'GET', pathParams = {}, queryParams = {search: search}, bodyParam = {}, headerParams = {},
+            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+                    url, httpMethod, pathParams, queryParams,
+                    headerParams, formParams, bodyParam, authNames,
+                    contentTypes, accepts, Object, null, null)
+                ));
+    }
+
+    checkUserHasClientRoleMapping(userId: string, clientId: string): Observable<any> {
+        const url = this.buildUserClientRoleMapping(userId, clientId);
+        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
+            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+                    url, httpMethod, pathParams, queryParams,
+                    headerParams, formParams, bodyParam, authNames,
+                    contentTypes, accepts, Object, null, null)
+                ).pipe(
+                    map((response) => {
+                        if (response.length > 0) {
+                            return (true);
+                        }
+                        return (false);
+                    })
+            );
+    }
+
     getUsers(): Observable<IdentityUserModel[]> {
         const url = this.buildUserUrl();
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
@@ -171,6 +205,10 @@ export class IdentityUserService {
 
     private buildUserUrl(): any {
         return `${this.appConfigService.get('identityHost')}/users`;
+    }
+
+    private buildUserClientRoleMapping(userId: string, clientId: string): any {
+        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/users/${userId}/role-mappings/clients/${clientId}`;
     }
 
     private buildRolesUrl(userId: string): any {
