@@ -42,7 +42,7 @@ describe('Start Task', () => {
     const appName = 'task-app';
     let silentLogin;
 
-    beforeAll(() => {
+    beforeAll((done) => {
         silentLogin = false;
         settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
         loginSSOPage.clickOnSSOButton();
@@ -52,6 +52,8 @@ describe('Start Task', () => {
         appListCloudComponent.checkAppIsDisplayed(appName);
         appListCloudComponent.goToApp(appName);
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+
+        done();
     });
 
     it('[C290166] Should be possible to cancel a task', () => {
