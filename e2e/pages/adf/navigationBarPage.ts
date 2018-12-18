@@ -46,6 +46,7 @@ export class NavigationBarPage {
     processListButton = element(by.css('a[data-automation-id="Process List"]'));
 	treeViewButton = element(by.css('a[data-automation-id="Tree View"]'));
     iconsButton = element(by.css('a[data-automation-id="Icons"]'));
+    customSourcesButton = element(by.css('a[data-automation-id="Custom Sources"]'));
 
     navigateToDatatable() {
         Util.waitUntilElementIsVisible(this.dataTableButton);
@@ -221,4 +222,9 @@ export class NavigationBarPage {
         Util.waitUntilElementIsVisible(this.processListButton);
         return this;
     };
+    
+    navigateToCustomSources() {
+        Util.waitUntilElementIsVisible(this.customSourcesButton);
+        this.customSourcesButton.click();
+    }
 }

@@ -47,11 +47,11 @@ export class ContentListPage {
     }
 
     getTooltip(nodeName) {
-        return this.getRowByRowName(nodeName).element(by.css(`#document-list-container span[title="${nodeName}"]`)).getAttribute('title');
+        return this.getRowByRowName(nodeName).element(by.css(`adf-document-list span[title="${nodeName}"]`)).getAttribute('title');
     }
 
     getRowsName(content) {
-        let row = element.all(by.css(`#document-list-container span[title='${content}']`)).first();
+        let row = element.all(by.css(`adf-document-list span[title='${content}']`)).first();
         Util.waitUntilElementIsVisible(row);
         return row;
     }
@@ -59,6 +59,10 @@ export class ContentListPage {
     getRowByRowName(content) {
         Util.waitUntilElementIsVisible(this.getRowsName(content).element(this.rowByRowName));
         return this.getRowsName(content).element(this.rowByRowName);
+    }
+
+    getCellByNameAndColumn(content, columnName) {
+        return this.getRowByRowName(content).element(by.css(`div[title='${columnName}']`));
     }
 
     getAllDisplayedRows() {
