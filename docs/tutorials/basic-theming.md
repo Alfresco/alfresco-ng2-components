@@ -1,4 +1,5 @@
 ---
+Title: Basic theming
 Level: Beginner
 ---
 

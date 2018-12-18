@@ -1,4 +1,5 @@
 ---
+Title: Working with a DataTable
 Level: Intermediate
 ---
 

@@ -1,4 +1,5 @@
 ---
+Title: Customizing the Login component
 Level: Intermediate
 ---
 

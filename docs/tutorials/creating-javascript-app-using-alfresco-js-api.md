@@ -1,4 +1,5 @@
 ---
+Title: Creating an Alfresco JavaScript app
 Level: Basic
 ---
 

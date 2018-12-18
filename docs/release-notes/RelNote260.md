@@ -1,3 +1,7 @@
+---
+Title: Release notes v2.6.0
+---
+
 # Alfresco Application Development Framework, version 2.6.0 Release Note
 
 These release notes provide information about the **2.6.0 release** of the Alfresco Application Development Framework.
