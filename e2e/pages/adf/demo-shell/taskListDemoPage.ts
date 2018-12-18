@@ -38,7 +38,7 @@ export class TaskListDemoPage {
     stateDropDownArrow = element(by.css("mat-form-field[data-automation-id='state'] div[class*='arrow']"));
     stateSelector = element(by.css("div[class*='mat-select-panel']"));
     sortDropDownArrow = element(by.css("mat-form-field[data-automation-id='sort'] div[class*='arrow']"));
-    sortSelector = element(by.css("div[class*='mat-select-content']"));
+    sortSelector = element(by.css("div[class*='mat-select-panel']"));
 
     taskList(): TasksListPage {
         return this.taskListPage;

@@ -21,7 +21,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
     selector: 'adf-file-uploading-list-row',
     templateUrl: './file-uploading-list-row.component.html',
-    styleUrls: [ './file-uploading-list-row.component.scss' ]
+    styleUrls: ['./file-uploading-list-row.component.scss']
 })
 export class FileUploadingListRowComponent {
     @Input()
@@ -41,5 +41,11 @@ export class FileUploadingListRowComponent {
 
     onRemove(file: FileModel): void {
         this.remove.emit(file);
+    }
+
+    showCancelledStatus(): boolean {
+        return this.file.status === FileUploadStatus.Cancelled ||
+            this.file.status === FileUploadStatus.Aborted ||
+            this.file.status === FileUploadStatus.Deleted;
     }
 }

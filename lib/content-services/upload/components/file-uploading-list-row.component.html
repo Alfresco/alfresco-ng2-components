@@ -71,10 +71,8 @@
     </div>
 
     <div
-        *ngIf="file.status === FileUploadStatus.Cancelled  ||
-            file.status === FileUploadStatus.Aborted ||
-            file.status === FileUploadStatus.Deleted"
+        *ngIf="showCancelledStatus()"
         class="adf-file-uploading-row__block adf-file-uploading-row__status--cancelled">
         {{ 'ADF_FILE_UPLOAD.STATUS.FILE_CANCELED_STATUS' | translate }}
     </div>
-<div>
+</div>
