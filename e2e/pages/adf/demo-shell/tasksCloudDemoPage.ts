@@ -78,6 +78,7 @@ export class TasksCloudDemoPage {
         this.clickOnCreateButton();
         this.newTaskButtonIsDisplayed();
         this.newTaskButton.click();
+        return this;
     }
 
     createButtonIsDisplayed() {
