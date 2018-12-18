@@ -51,25 +51,14 @@ export class DataTablePage {
     }
 
     getAllRowsNameColumn() {
-        return this.getAllRowsColumnValues(this.nameColumn);
+        return this.getAllRowsColumnValues('Name');
     }
 
-    getAllRowsColumnValues(locator) {
-        let deferred = protractor.promise.defer();
-        Util.waitUntilElementIsVisible(element.all(locator).first());
-        let initialList = [];
-
-        element.all(locator).each(function (currentElement) {
-            currentElement.getText().then(function (text) {
-                if (text !== '') {
-                    initialList.push(text);
-                }
-            });
-        }).then(function () {
-            deferred.fulfill(initialList);
-        });
-
-        return deferred.promise;
+    async getAllRowsColumnValues(locator) {
+        let columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='" + column + "'] span");
+        Util.waitUntilElementIsVisible(element.all(columnLocator).first());
+        let initialList = await element.all(columnLocator).getText();
+        return initialList.filter((el) => el);
     }
 
     getRowByRowNumber(rowNumber) {
