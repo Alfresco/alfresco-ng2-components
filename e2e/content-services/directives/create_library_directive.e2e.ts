@@ -57,7 +57,7 @@ describe('Create library directive', function () {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        createSite = await siteActions.createSite(this.alfrescoJsApi, Util.generateRandomString(), 'PUBLIC');
+        createSite = await siteActions.createSite(this.alfrescoJsApi, Util.generateRandomString(20).toLowerCase(), 'PUBLIC');
 
         done();
     });
@@ -222,8 +222,8 @@ describe('Create library directive', function () {
     it('[C290178] Should accept the same library name but different Library Ids', () => {
         let name = createSite.entry.title;
         let libraryId = Util.generateRandomString();
-
-        createLibraryDialog.typeLibraryName(name);
+        
+        createLibraryDialog.typeLibraryName(name.toUpperCase());
         createLibraryDialog.typeLibraryId(libraryId);
 
         createLibraryDialog.waitForLibraryNameHint();
