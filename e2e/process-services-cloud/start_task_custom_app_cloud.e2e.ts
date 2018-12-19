@@ -52,11 +52,10 @@ describe('Start Task', () => {
         appListCloudComponent.checkAppIsDisplayed(appName);
         appListCloudComponent.goToApp(appName);
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-
         done();
     });
 
-    it('[C290166] Should be possible to cancel a task', () => {
+    xit('[C290166] Should be possible to cancel a task', () => {
         tasksCloudDemoPage.createNewTask();
         startTask.checkStartButtonIsDisabled()
                  .blur(startTask.name)
