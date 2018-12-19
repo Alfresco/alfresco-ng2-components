@@ -54,6 +54,9 @@ describe('Start Process Component', () => {
     let simpleApp = resources.Files.WIDGETS_SMOKE_TEST;
     let appId, procUserModel, secondProcUserModel, tenantId, simpleAppCreated;
     let processModelWithSe = 'process_with_se', processModelWithoutSe = 'process_without_se';
+    const processName255Characters = Util.generateRandomString(255);
+    const processNameBiggerThen255Characters = Util.generateRandomString(256);
+    const lengthValidationError = 'Length exceeded, 255 characters max.';
 
     let auditLogFile = path.join('../e2e/download/', 'Audit.pdf');
 
@@ -423,6 +426,21 @@ describe('Start Process Component', () => {
             attachmentListPage.checkAttachFileButtonIsNotDisplayed();
         });
 
-    });
+        it('[C291781] Should be displayed an error message if process name exceed 255 characters', () => {
+            processServicesPage.goToApp(app.title);
 
+            appNavigationBarPage.clickProcessButton();
+
+            processFiltersPage.clickCreateProcessButton();
+            processFiltersPage.clickNewProcessDropdown();
+
+            startProcessPage.enterProcessName(processName255Characters);
+            startProcessPage.selectFromProcessDropdown(processModelWithoutSe);
+            startProcessPage.checkStartProcessButtonIsEnabled();
+
+            startProcessPage.enterProcessName(processNameBiggerThen255Characters);
+            startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
+            startProcessPage.checkStartProcessButtonIsDisabled();
+        });
+    });
 });
