@@ -1,4 +1,5 @@
 ---
+Title: Internationalization
 Added: v2.2.0
 ---
 

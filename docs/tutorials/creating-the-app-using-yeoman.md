@@ -1,4 +1,5 @@
 ---
+Title: Creating an ADF app using Yeoman
 Level: Basic
 ---
 

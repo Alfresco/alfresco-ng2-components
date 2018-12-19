@@ -1,8 +1,9 @@
 ---
+Title: Form extensibility and customization
 Added: v2.0.0
 ---
 
-# Form Extensibility and Customisation
+# Form Extensibility and Customization
 
 _Note: it is assumed you are familiar with Alfresco Process Services (powered by Activiti) form definition structure._
 

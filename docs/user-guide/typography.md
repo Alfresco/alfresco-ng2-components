@@ -1,6 +1,8 @@
 ---
+Title: Typography
 Added: v2.0.0
 ---
+
 # ADF Typography
 
 ## What is typography?
