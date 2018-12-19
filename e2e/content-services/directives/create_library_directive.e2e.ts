@@ -222,7 +222,7 @@ describe('Create library directive', function () {
     it('[C290178] Should accept the same library name but different Library Ids', () => {
         let name = createSite.entry.title;
         let libraryId = Util.generateRandomString();
-        
+
         createLibraryDialog.typeLibraryName(name.toUpperCase());
         createLibraryDialog.typeLibraryId(libraryId);
 
