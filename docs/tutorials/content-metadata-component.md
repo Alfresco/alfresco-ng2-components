@@ -1,4 +1,5 @@
 ---
+Title: Content metadata component
 Level: Advanced
 ---
 

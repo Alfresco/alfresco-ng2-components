@@ -1,4 +1,5 @@
 ---
+Title: Adding a new component
 Level: Basic
 ---
 

@@ -1,3 +1,8 @@
+---
+Title: Working with the Nodes API service
+Level: Intermediate
+---
+
 # Working with the Nodes API Service
 
 In this tutorial you will learn how to use the [`NodesApiService`](../core/nodes-api.service.md). We have developed some practical examples to show you how to interact with an instance of Alfresco Content Services without using the REST endpoints directly. With this approach the [`NodesApiService`](../core/nodes-api.service.md) is used as an abstraction layer, defined by one of the services in the ADF Core library.
