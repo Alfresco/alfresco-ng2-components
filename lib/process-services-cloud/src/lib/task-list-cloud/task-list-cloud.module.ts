@@ -20,8 +20,10 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
 import { TaskListCloudComponent } from './components/task-list-cloud.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateLoaderService, DataTableModule, TemplateModule } from '@alfresco/adf-core';
+import { TranslateLoaderService, DataTableModule, TemplateModule, CardViewModule } from '@alfresco/adf-core';
 import { TaskListCloudService } from './services/task-list-cloud.service';
+import { TaskHeaderCloudService } from '../task-header/services/task-header-cloud.service';
+import { TaskHeaderCloudComponent } from '../task-header/components/task-header-cloud.component';
 
 @NgModule({
     imports: [
@@ -34,10 +36,11 @@ import { TaskListCloudService } from './services/task-list-cloud.service';
         }),
         MaterialModule,
         DataTableModule,
-        TemplateModule
+        TemplateModule,
+        CardViewModule
     ],
-    declarations: [TaskListCloudComponent],
-    exports: [TaskListCloudComponent],
-    providers: [TaskListCloudService]
+    declarations: [TaskListCloudComponent, TaskHeaderCloudComponent],
+    exports: [TaskListCloudComponent, TaskHeaderCloudComponent],
+    providers: [TaskListCloudService, TaskHeaderCloudService]
 })
 export class TaskListCloudModule { }

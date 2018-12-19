@@ -42,6 +42,9 @@ export class TaskDetailsCloudModel {
     serviceName: string;
     serviceFullName: string;
     serviceVersion: string;
+    managerOfCandidateGroup: boolean;
+    memberOfCandidateGroup: boolean;
+    memberOfCandidateUsers: boolean;
 
         constructor(obj?: any) {
           if (obj) {
@@ -70,6 +73,9 @@ export class TaskDetailsCloudModel {
               this.serviceName = obj.serviceName || null;
               this.serviceFullName = obj.serviceFullName || null;
               this.serviceVersion = obj.serviceVersion || null;
+              this.managerOfCandidateGroup = obj.managerOfCandidateGroup || null;
+              this.memberOfCandidateGroup = obj.memberOfCandidateGroup || null;
+              this.memberOfCandidateUsers = obj.memberOfCandidateUsers || null;
           }
         }
   }

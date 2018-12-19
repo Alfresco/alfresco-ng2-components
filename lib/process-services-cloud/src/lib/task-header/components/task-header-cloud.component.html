@@ -1,0 +1,15 @@
+<mat-card *ngIf="appName && taskId" class="adf-card-container">
+    <mat-card-content>
+        <adf-card-view 
+            [properties]="properties"
+            [editable]="!isCompleted()">
+        </adf-card-view>
+    </mat-card-content>
+
+    <mat-card-actions class="adf-controls">
+        <button *ngIf="isTaskClaimedByCandidateMember()" mat-button data-automation-id="header-unclaim-button" id="unclaim-task" (click)="unclaimTask()" class="adf-claim-controls">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM' | translate }}
+        </button>
+        <button *ngIf="isTaskClaimable()" mat-button data-automation-id="header-claim-button" id="claim-task" (click)="claimTask()" class="adf-claim-controls">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.CLAIM' | translate }}
+        </button>
+    </mat-card-actions>
+</mat-card>

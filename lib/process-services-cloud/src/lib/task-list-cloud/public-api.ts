@@ -16,6 +16,7 @@
  */
 
 export * from './components/task-list-cloud.component';
+export * from '../task-header/components/task-header-cloud.component';
 
 export * from './models/filter-cloud-model';
 export * from './models/task-list-sorting.model';
