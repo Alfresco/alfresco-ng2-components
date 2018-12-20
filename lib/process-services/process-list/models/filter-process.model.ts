@@ -15,12 +15,16 @@
  * limitations under the License.
  */
 
-import { ProcessFilterRequestRepresentation, ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from 'alfresco-js-api';
+import {
+    ProcessFilterRequestRepresentation,
+    ProcessInstanceFilterRepresentation,
+    UserProcessInstanceFilterRepresentation
+} from 'alfresco-js-api';
 
 export class FilterProcessRepresentationModel implements UserProcessInstanceFilterRepresentation {
     appId: number;
     filter: ProcessInstanceFilterRepresentation;
-    icon: number;
+    icon: string;
     id: number;
     index: number;
     name: string;
@@ -48,11 +52,11 @@ export class FilterProcessRepresentationModel implements UserProcessInstanceFilt
  */
 export class ProcessFilterParamRepresentationModel implements ProcessFilterRequestRepresentation {
 
-    processDefinitionId?: number;
-    processInstanceId?: number|string;
+    processDefinitionId?: string;
+    processInstanceId?: string;
     appDefinitionId?: number;
-    state?: string;
-    sort?: string;
+    state?: any;
+    sort?: any;
     page?: number;
     size?: number;
 

@@ -24,7 +24,7 @@ import { PermissionsEnum } from '../models/permissions.enum';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { LogService } from './log.service';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -157,7 +157,7 @@ export class ContentService {
     getNodeContent(nodeId: string): Observable<any> {
         return from(this.apiService.getInstance().core.nodesApi.getFileContent(nodeId))
             .pipe(
-                catchError((err) => this.handleError(err))
+                catchError((err: any) => this.handleError(err))
             );
     }
 

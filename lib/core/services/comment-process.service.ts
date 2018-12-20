@@ -39,7 +39,7 @@ export class CommentProcessService {
      * @returns Details about the comment
      */
     addTaskComment(taskId: string, message: string): Observable<CommentModel> {
-        return from(this.apiService.getInstance().activiti.taskApi.addTaskComment({message: message}, taskId))
+        return from(this.apiService.getInstance().activiti.taskApi.addTaskComment({ message: message }, taskId))
             .pipe(
                 map((response: CommentModel) => {
                     return new CommentModel({
@@ -49,7 +49,7 @@ export class CommentProcessService {
                         createdBy: response.createdBy
                     });
                 }),
-                catchError((err) => this.handleError(err))
+                catchError((err: any) => this.handleError(err))
             );
     }
 
@@ -65,11 +65,16 @@ export class CommentProcessService {
                     let comments: CommentModel[] = [];
                     response.data.forEach((comment: CommentModel) => {
                         let user = new UserProcessModel(comment.createdBy);
-                        comments.push(new CommentModel({id: comment.id, message: comment.message, created: comment.created, createdBy: user}));
+                        comments.push(new CommentModel({
+                            id: comment.id,
+                            message: comment.message,
+                            created: comment.created,
+                            createdBy: user
+                        }));
                     });
                     return comments;
                 }),
-                catchError((err) => this.handleError(err))
+                catchError((err: any) => this.handleError(err))
             );
     }
 
@@ -85,11 +90,16 @@ export class CommentProcessService {
                     let comments: CommentModel[] = [];
                     response.data.forEach((comment: CommentModel) => {
                         let user = new UserProcessModel(comment.createdBy);
-                        comments.push(new CommentModel({id: comment.id, message: comment.message, created: comment.created, createdBy: user}));
+                        comments.push(new CommentModel({
+                            id: comment.id,
+                            message: comment.message,
+                            created: comment.created,
+                            createdBy: user
+                        }));
                     });
                     return comments;
                 }),
-                catchError((err) => this.handleError(err))
+                catchError((err: any) => this.handleError(err))
             );
     }
 
@@ -101,7 +111,7 @@ export class CommentProcessService {
      */
     addProcessInstanceComment(processInstanceId: string, message: string): Observable<CommentModel> {
         return from(
-            this.apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({message: message}, processInstanceId)
+            this.apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({ message: message }, processInstanceId)
         ).pipe(
             map((response: CommentModel) => {
                 return new CommentModel({
@@ -111,7 +121,7 @@ export class CommentProcessService {
                     createdBy: response.createdBy
                 });
             }),
-            catchError((err) => this.handleError(err))
+            catchError((err: any) => this.handleError(err))
         );
     }
 

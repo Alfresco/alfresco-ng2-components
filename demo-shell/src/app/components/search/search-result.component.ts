@@ -17,7 +17,7 @@
 
 import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { NodePaging, Pagination } from 'alfresco-js-api';
+import { NodePaging, Pagination, ResultSetPaging } from 'alfresco-js-api';
 import { SearchQueryBuilderService } from '@alfresco/adf-content-services';
 import { UserPreferencesService, SearchService, AppConfigService } from '@alfresco/adf-core';
 import { Subscription } from 'rxjs';
@@ -61,10 +61,10 @@ export class SearchResultComponent implements OnInit, OnDestroy {
                 this.isLoading = true;
             }),
 
-            this.queryBuilder.executed.subscribe((data) => {
+            this.queryBuilder.executed.subscribe((resultSetPaging: ResultSetPaging) => {
                 this.queryBuilder.paging.skipCount = 0;
 
-                this.onSearchResultLoaded(data);
+                this.onSearchResultLoaded(resultSetPaging);
                 this.isLoading = false;
             })
         );
@@ -79,7 +79,12 @@ export class SearchResultComponent implements OnInit, OnDestroy {
                     this.queryBuilder.update();
                 } else {
                     this.queryBuilder.userQuery = null;
-                    this.queryBuilder.executed.next({ list: { pagination: { totalItems: 0 }, entries: [] } });
+                    this.queryBuilder.executed.next(new ResultSetPaging({
+                        list: {
+                            pagination: { totalItems: 0 },
+                            entries: []
+                        }
+                    }));
                 }
             });
         }
@@ -101,9 +106,9 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         this.subscriptions = [];
     }
 
-    onSearchResultLoaded(nodePaging: NodePaging) {
-        this.data = nodePaging;
-        this.pagination = { ...nodePaging.list.pagination };
+    onSearchResultLoaded(resultSetPaging: ResultSetPaging) {
+        this.data = resultSetPaging;
+        this.pagination = { ...resultSetPaging.list.pagination };
     }
 
     onRefreshPagination(pagination: Pagination) {

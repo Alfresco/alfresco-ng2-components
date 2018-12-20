@@ -16,9 +16,9 @@
  */
 
 import { PaginatedComponent } from './paginated-component.interface';
-import { Pagination } from 'alfresco-js-api';
+import { PaginationModel } from '../models/pagination.model';
 
 export interface PaginationComponentInterface {
     target: PaginatedComponent;
-    pagination: Pagination;
+    pagination: PaginationModel;
 }

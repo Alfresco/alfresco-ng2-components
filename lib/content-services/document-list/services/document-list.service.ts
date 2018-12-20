@@ -39,37 +39,6 @@ export class DocumentListService {
                 private thumbnailService: ThumbnailService) {
     }
 
-    private getNodesPromise(folder: string, opts?: any, includeFields: string[] = []): Promise<NodePaging> {
-
-        let rootNodeId = DocumentListService.ROOT_ID;
-        if (opts && opts.rootFolderId) {
-            rootNodeId = opts.rootFolderId;
-        }
-
-        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
-            .filter((element, index, array) => index === array.indexOf(element));
-
-        let params: any = {
-            includeSource: true,
-            include: includeFieldsRequest
-        };
-
-        if (folder) {
-            params.relativePath = folder;
-        }
-
-        if (opts) {
-            if (opts.maxItems) {
-                params.maxItems = opts.maxItems;
-            }
-            if (opts.skipCount) {
-                params.skipCount = opts.skipCount;
-            }
-        }
-
-        return this.apiService.getInstance().nodes.getNodeChildren(rootNodeId, params);
-    }
-
     /**
      * Deletes a node.
      * @param nodeId ID of the node to delete
@@ -113,10 +82,35 @@ export class DocumentListService {
      * @returns Details of the folder
      */
     getFolder(folder: string, opts?: any, includeFields: string[] = []): Observable<NodePaging> {
-        return from(this.getNodesPromise(folder, opts, includeFields))
-            .pipe(
-                catchError((err) => this.handleError(err))
-            );
+        let rootNodeId = DocumentListService.ROOT_ID;
+        if (opts && opts.rootFolderId) {
+            rootNodeId = opts.rootFolderId;
+        }
+
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
+            .filter((element, index, array) => index === array.indexOf(element));
+
+        let params: any = {
+            includeSource: true,
+            include: includeFieldsRequest
+        };
+
+        if (folder) {
+            params.relativePath = folder;
+        }
+
+        if (opts) {
+            if (opts.maxItems) {
+                params.maxItems = opts.maxItems;
+            }
+            if (opts.skipCount) {
+                params.skipCount = opts.skipCount;
+            }
+        }
+
+        return from(this.apiService.getInstance().nodes.getNodeChildren(rootNodeId, params)).pipe(
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**
@@ -154,7 +148,9 @@ export class DocumentListService {
             include: includeFieldsRequest
         };
 
-        return from(this.apiService.getInstance().nodes.getNode(nodeId, opts));
+        return from(this.apiService.getInstance().nodes.getNode(nodeId, opts)).pipe(
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**

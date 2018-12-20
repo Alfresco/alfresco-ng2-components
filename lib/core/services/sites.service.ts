@@ -16,7 +16,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { SitePaging, SiteEntry } from 'alfresco-js-api';
@@ -28,7 +27,8 @@ import { catchError } from 'rxjs/operators';
 export class SitesService {
 
     constructor(
-        private apiService: AlfrescoApiService) { }
+        private apiService: AlfrescoApiService) {
+    }
 
     /**
      * Gets a list of all sites in the repository.
@@ -43,7 +43,7 @@ export class SitesService {
         const queryOptions = Object.assign({}, defaultOptions, opts);
         return from(this.apiService.getInstance().core.sitesApi.getSites(queryOptions))
             .pipe(
-                catchError((err) => this.handleError(err))
+                catchError((err: any) => this.handleError(err))
             );
     }
 
@@ -53,10 +53,10 @@ export class SitesService {
      * @param opts Options supported by JS-API
      * @returns Information about the site
      */
-    getSite(siteId: string, opts?: any): Observable<SiteEntry> {
+    getSite(siteId: string, opts?: any): Observable<SiteEntry | {}> {
         return from(this.apiService.getInstance().core.sitesApi.getSite(siteId, opts))
             .pipe(
-                catchError((err) => this.handleError(err))
+                catchError((err: any) => this.handleError(err))
             );
     }
 
@@ -71,7 +71,7 @@ export class SitesService {
         options.permanent = permanentFlag;
         return from(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, options))
             .pipe(
-                catchError((err) => this.handleError(err))
+                catchError((err: any) => this.handleError(err))
             );
     }
 
@@ -80,7 +80,7 @@ export class SitesService {
      * @param siteId ID of the target site
      * @returns Site content
      */
-    getSiteContent(siteId: string): Observable<SiteEntry> {
+    getSiteContent(siteId: string): Observable<SiteEntry | {}> {
         return this.getSite(siteId, { relations: ['containers'] });
     }
 
@@ -89,7 +89,7 @@ export class SitesService {
      * @param siteId ID of the target site
      * @returns Site members
      */
-    getSiteMembers(siteId: string): Observable<SiteEntry> {
+    getSiteMembers(siteId: string): Observable<SiteEntry | {}> {
         return this.getSite(siteId, { relations: ['members'] });
     }
 
@@ -101,7 +101,7 @@ export class SitesService {
         return this.apiService.getInstance().getEcmUsername();
     }
 
-    private handleError(error: Response): any {
+    private handleError(error: any): any {
         console.error(error);
         return throwError(error || 'Server error');
     }

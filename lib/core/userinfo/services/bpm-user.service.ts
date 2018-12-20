@@ -16,7 +16,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
@@ -64,7 +63,7 @@ export class BpmUserService {
      * Throw the error
      * @param error
      */
-    private handleError(error: Response) {
+    private handleError(error: any) {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
         this.logService.error(error);

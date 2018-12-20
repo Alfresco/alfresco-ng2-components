@@ -21,7 +21,7 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { MinimalNodeEntryEntity, NodeEntry } from 'alfresco-js-api';
+import { NodeBodyLock, MinimalNodeEntryEntity, NodeEntry } from 'alfresco-js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Component({
@@ -42,7 +42,8 @@ export class NodeLockDialogComponent implements OnInit {
         @Optional()
         @Inject(MAT_DIALOG_DATA)
         public data: any
-    ) {}
+    ) {
+    }
 
     ngOnInit() {
         const { node } = this.data;
@@ -65,12 +66,12 @@ export class NodeLockDialogComponent implements OnInit {
         return 0;
     }
 
-    private get nodeBodyLock(): object {
-        return {
+    private get nodeBodyLock(): NodeBodyLock {
+        return new NodeBodyLock({
             'timeToExpire': this.lockTimeInSeconds,
             'type': this.form.value.allowOwner ? 'ALLOW_OWNER_CHANGES' : 'FULL',
             'lifetime': 'PERSISTENT'
-        };
+        });
     }
 
     private toggleLock(): Promise<NodeEntry> {
@@ -85,10 +86,10 @@ export class NodeLockDialogComponent implements OnInit {
 
     submit(): void {
         this.toggleLock()
-            .then((node) => {
+            .then((node: NodeEntry) => {
                 this.data.node.isLocked = this.form.value.isLocked;
                 this.dialog.close(node.entry);
             })
-            .catch((error) => this.data.onError(error));
+            .catch((error: any) => this.data.onError(error));
     }
 }

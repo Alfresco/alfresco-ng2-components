@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TaskQueryRequestRepresentation, UserTaskFilterRepresentation } from 'alfresco-js-api';
+import { TaskFilterRepresentation, TaskQueryRequestRepresentation, UserTaskFilterRepresentation } from 'alfresco-js-api';
 
 export class AppDefinitionRepresentationModel {
     defaultAppId: string;
@@ -57,37 +57,13 @@ export class FilterParamsModel {
     }
 }
 
-export class FilterParamRepresentationModel {
-    processDefinitionId: string;
-    processDefinitionKey: string;
-    name: string;
-    state: string;
-    sort: string;
-    assignment: string;
-    dueAfter: Date;
-    dueBefore: Date;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.processDefinitionId = obj.processDefinitionId || null;
-            this.processDefinitionKey = obj.processDefinitionKey || null;
-            this.name = obj.name || null;
-            this.state = obj.state || null;
-            this.sort = obj.sort || null;
-            this.assignment = obj.assignment || null;
-            this.dueAfter = obj.dueAfter || null;
-            this.dueBefore = obj.dueBefore || null;
-        }
-    }
-}
-
 export class FilterRepresentationModel implements UserTaskFilterRepresentation {
     id: number;
     appId: number;
     name: string;
     recent: boolean;
     icon: string;
-    filter: FilterParamRepresentationModel;
+    filter: TaskFilterRepresentation;
     index: number;
 
     constructor(obj?: any) {
@@ -97,7 +73,7 @@ export class FilterRepresentationModel implements UserTaskFilterRepresentation {
             this.name = obj.name || null;
             this.recent = !!obj.recent;
             this.icon = obj.icon || null;
-            this.filter = new FilterParamRepresentationModel(obj.filter);
+            this.filter = new UserTaskFilterRepresentation(obj.filter);
             this.index = obj.index;
         }
     }
@@ -107,38 +83,6 @@ export class FilterRepresentationModel implements UserTaskFilterRepresentation {
     }
 }
 
-export class TaskQueryRequestRepresentationModel implements TaskQueryRequestRepresentation {
-    appDefinitionId: string;
-    dueAfter: string;
-    dueBefore: string;
-    processInstanceId: string;
-    processDefinitionId: string;
-    text: string;
-    assignment: string;
-    state: string;
-    start: string;
-    sort: string;
-    page: number;
-    size: number;
-    taskId: string;
-    includeProcessInstance: boolean;
+export class TaskQueryRequestRepresentationModel extends TaskQueryRequestRepresentation {
 
-    constructor(obj?: any) {
-        if (obj) {
-            this.appDefinitionId = obj.appDefinitionId || null;
-            this.dueAfter = obj.dueAfter || null;
-            this.dueBefore = obj.dueBefore || null;
-            this.processInstanceId = obj.processInstanceId || null;
-            this.processDefinitionId = obj.processDefinitionId || null;
-            this.text = obj.text || null;
-            this.assignment = obj.assignment || null;
-            this.state = obj.state || null;
-            this.start = obj.start || null;
-            this.sort = obj.sort || null;
-            this.page = obj.page || 0;
-            this.size = obj.size || 25;
-            this.taskId = obj.taskId || null;
-            this.includeProcessInstance = obj.includeProcessInstance;
-        }
-    }
 }

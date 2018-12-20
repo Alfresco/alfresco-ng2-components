@@ -1,6 +1,6 @@
 module.exports = {
     "/alfresco": {
-        "target": "http://localhost:8080",
+        "target": "http://adfdev.envalfresco.com",
         "secure": false,
         "pathRewrite": {
             "^/alfresco/alfresco": ""
@@ -15,7 +15,7 @@ module.exports = {
         }
     },
     "/activiti-app": {
-        "target": "http://localhost:9999",
+        "target": "http://adfdev.envalfresco.com",
         "secure": false,
         "pathRewrite": {
             "^/activiti-app/activiti-app": ""

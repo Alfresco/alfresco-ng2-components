@@ -19,7 +19,6 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import {
-    ModelError,
     QueryBody,
     RequestFacetFields,
     RequestFacetField,
@@ -43,7 +42,7 @@ export class SearchQueryBuilderService {
     private _userQuery = '';
 
     updated: Subject<QueryBody> = new Subject();
-    executed: Subject<ResultSetPaging | ModelError> = new Subject();
+    executed: Subject<ResultSetPaging> = new Subject();
 
     categories: Array<SearchCategory> = [];
     queryFragments: { [id: string]: string } = {};
@@ -172,7 +171,7 @@ export class SearchQueryBuilderService {
     async execute() {
         const query = this.buildQuery();
         if (query) {
-            const resultSetPaging: ModelError | ResultSetPaging = await this.alfrescoApiService.searchApi.search(query);
+            const resultSetPaging: ResultSetPaging = await this.alfrescoApiService.searchApi.search(query);
             this.executed.next(resultSetPaging);
         }
     }

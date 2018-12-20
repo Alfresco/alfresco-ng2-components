@@ -37,11 +37,11 @@ import { UserPreferencesService } from '../services/user-preferences.service';
 })
 export class PaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
 
-    static DEFAULT_PAGINATION: Pagination = {
+    static DEFAULT_PAGINATION: Pagination = new Pagination({
         skipCount: 0,
         maxItems: 25,
         totalItems: 0
-    };
+    });
 
     static ACTIONS = {
         NEXT_PAGE: 'NEXT_PAGE',

@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import {
     ContentApi,
     Core,
+    Activiti,
     SearchApi,
     Node
 } from 'alfresco-js-api';
@@ -45,10 +46,9 @@ export class AlfrescoApiService {
         return this.alfrescoApi;
     }
 
-    //
-    // get taskApi(): alfrescoApi.TaskApi {
-    //     return this.getInstance().activiti.taskApi;
-    // }
+    get taskApi(): Activiti.TaskApi {
+        return this.getInstance().activiti.taskApi;
+    }
 
     // get modelsApi(): Core.ModelsApi {
     //     return this.getInstance().activiti.modelsApi;

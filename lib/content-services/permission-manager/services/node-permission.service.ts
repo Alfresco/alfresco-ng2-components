@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, from, throwError } from 'rxjs';
 import { AlfrescoApiService, SearchService, NodesApiService, TranslationService } from '@alfresco/adf-core';
-import { QueryBody, MinimalNodeEntryEntity, NodeEntry, PathElement, GroupMemberEntry, GroupsPaging, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
+import { QueryBody, MinimalNodeEntryEntity, NodeEntry, PathElement, GroupMemberEntry, GroupMemberPaging, PermissionElement } from 'alfresco-js-api';
 import { switchMap, map } from 'rxjs/operators';
 
 @Injectable({

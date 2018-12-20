@@ -21,7 +21,7 @@ import {
     Input, OnChanges, Output, SimpleChanges, TemplateRef,
     ViewEncapsulation, OnInit, OnDestroy
 } from '@angular/core';
-import { Node, RenditionEntry, NodeEntry } from 'alfresco-js-api';
+import { RenditionPaging, SharedLinkEntry, Node, RenditionEntry, NodeEntry } from 'alfresco-js-api';
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
@@ -31,7 +31,6 @@ import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { Subscription } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
-import { RenditionPaging } from 'alfresco-js-api/src/api-new/content-rest-api/model/renditionPaging';
 
 @Component({
     selector: 'adf-viewer',
@@ -327,15 +326,15 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 );
 
                 this.apiService.nodesApi.getNode(this.nodeId).then(
-                    (node) => {
+                    (node: NodeEntry) => {
                         this.node = node;
                     }
                 );
             } else if (this.sharedLinkId) {
 
                 this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(
-                    (details) => {
-                        this.setUpSharedLinkFile(details);
+                    (sharedLinkEntry: SharedLinkEntry) => {
+                        this.setUpSharedLinkFile(sharedLinkEntry);
                         this.isLoading = false;
                     },
                     () => {
@@ -663,7 +662,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private async displaySharedLinkRendition(sharedId: string) {
         try {
-            const rendition = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'pdf');
+            const rendition: RenditionEntry = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'pdf');
             if (rendition.entry.status.toString() === 'CREATED') {
                 this.viewerType = 'pdf';
                 this.urlFileContent = this.apiService.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
@@ -671,7 +670,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         } catch (error) {
             this.logService.error(error);
             try {
-                const rendition = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'imgpreview');
+                const rendition: RenditionEntry = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'imgpreview');
                 if (rendition.entry.status.toString() === 'CREATED') {
                     this.viewerType = 'image';
                     this.urlFileContent = this.apiService.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview');
@@ -687,14 +686,14 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
         const supportedRendition: RenditionPaging = await this.apiService.renditionsApi.getRenditions(nodeId);
 
-        let rendition = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
+        let rendition: RenditionEntry = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
         if (!rendition) {
             renditionId = 'imgpreview';
             rendition = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
         }
 
         if (rendition) {
-            const status = rendition.entry.status.toString();
+            const status: string = rendition.entry.status.toString();
 
             if (status === 'NOT_CREATED') {
                 try {

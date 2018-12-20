@@ -44,7 +44,7 @@ export class TaskListCloudService {
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, queryParams, null,
                     null, null, null, ['application/json'],
-                    ['application/json'], Object, null, null)
+                    ['application/json'], null, null)
             );
         } else {
             this.logService.error('Appname is mandatory for querying task');

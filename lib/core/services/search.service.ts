@@ -84,7 +84,7 @@ export class SearchService {
         });
 
         return from(promise).pipe(
-            catchError((err) => this.handleError(err))
+            catchError((err: any) => this.handleError(err))
         );
     }
 

@@ -17,15 +17,11 @@
 
 import { Pagination } from 'alfresco-js-api';
 
-export class PaginationModel implements Pagination {
-    count?: number;
-    hasMoreItems?: boolean;
+export class PaginationModel extends Pagination {
     merge?: boolean;
-    totalItems?: number;
-    skipCount?: number;
-    maxItems?: number;
 
     constructor(obj?: any) {
+        super(obj);
         if (obj) {
             this.count = obj.count;
             this.hasMoreItems = obj.hasMoreItems ? obj.hasMoreItems : false;

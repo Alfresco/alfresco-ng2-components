@@ -44,20 +44,20 @@ export class ContentNodeSelectorComponent {
     customImageResolver: any = null;
 
     defaultSites: SiteEntry[] = [
-        { entry: { title: 'MINE', guid: '-my-' } },
-        { entry: { title: 'ROOTY', guid: '-root-' } }];
+        new SiteEntry({ entry: { title: 'MINE', guid: '-my-' } }),
+        new SiteEntry({ entry: { title: 'ROOTY', guid: '-root-' } })];
 
-    customSites: SitePaging = {
+    customSites: SitePaging = new SitePaging({
         list: {
             entries: [
                 { entry: { title: 'MINE', guid: '-my-' } },
                 { entry: { title: 'ROOTY', guid: '-root-' } }],
             pagination: {}
         }
-    };
+    });
 
     onClickAddSite() {
-        const newSiteEntry: SiteEntry = { entry: { title: this.customSideTitle, guid: this.customSideGuid } };
+        const newSiteEntry: SiteEntry = new SiteEntry({ entry: { title: this.customSideTitle, guid: this.customSideGuid } });
         this.customSites.list.entries.push(newSiteEntry);
         this.customSideGuid = '';
         this.customSideTitle = '';

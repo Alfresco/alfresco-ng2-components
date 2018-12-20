@@ -16,7 +16,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { ContentService } from '../../services/content.service';
@@ -74,7 +73,7 @@ export class EcmUserService {
      * Throw the error
      * @param error
      */
-    private handleError(error: Response) {
+    private handleError(error: any) {
         this.logService.error(error);
         return throwError(error || 'Server error');
     }

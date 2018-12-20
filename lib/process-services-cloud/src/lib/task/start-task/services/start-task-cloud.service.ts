@@ -47,7 +47,7 @@ export class StartTaskCloudService {
                 .oauth2Auth.callCustomApi(
                     queryUrl, httpMethod, pathParams, queryParams,
                     headerParams, formParams, bodyParam, authNames,
-                    contentTypes, accepts, Object, null, null)
+                    contentTypes, accepts, null, null)
                 ).pipe(
                     map((response: StartTaskCloudResponseModel) => {
                         return new TaskDetailsCloudModel(response.entry);
