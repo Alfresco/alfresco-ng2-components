@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IdentityUserModel } from '../models/identity-user.model';
@@ -70,10 +70,6 @@ export class IdentityUserService {
         return <T> value;
     }
 
-    /**
-     * Gets details for all users.
-     * @returns Array of user info objects
-     */
     findUsersByName(search: string): Observable<any> {
         if (search === '') {
             return of([]);
@@ -107,6 +103,11 @@ export class IdentityUserService {
                     })
             );
     }
+
+    /**
+     * Gets details for all users.
+     * @returns Array of user info objects
+     */
 
     getUsers(): Observable<IdentityUserModel[]> {
         const url = this.buildUserUrl();

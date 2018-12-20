@@ -153,7 +153,7 @@ export class PeopleCloudComponent implements OnInit {
             }
         } else {
             this.selectedUsers.next(this.preSelectUsers);
-            this.searchUser.setValue(this.preSelectUsers[0].username);
+            this.searchUser.setValue(this.preSelectUsers[0]);
         }
     }
 
