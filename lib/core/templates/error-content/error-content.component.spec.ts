@@ -31,16 +31,6 @@ describe('ErrorContentComponent', () => {
     let element: HTMLElement;
     let translateService: TranslationService;
 
-    setupTestBed({
-        imports: [
-            CoreTestingModule
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock },
-            { provide: ActivatedRoute, useValue: { params: of({id: '404'})}}
-        ]
-    });
-
     beforeEach(() => {
         fixture = TestBed.createComponent(ErrorContentComponent);
         element = fixture.nativeElement;
@@ -53,84 +43,109 @@ describe('ErrorContentComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    it('should create error component', async(() => {
-        fixture.detectChanges();
-        expect(errorContentComponent).toBeTruthy();
-    }));
+    describe(' with an undefined error', () => {
 
-    it('should render error code', async(() => {
-        fixture.detectChanges();
-        const errorContentElement = element.querySelector('.adf-error-content-code');
-        expect(errorContentElement).not.toBeNull();
-        expect(errorContentElement).toBeDefined();
-    }));
-
-    it('should render error title', async(() => {
-        fixture.detectChanges();
-        const errorContentElement = element.querySelector('.adf-error-content-title');
-        expect(errorContentElement).not.toBeNull();
-        expect(errorContentElement).toBeDefined();
-    }));
-
-    it('should render error description', async(() => {
-        fixture.detectChanges();
-        const errorContentElement = element.querySelector('.adf-error-content-description');
-        expect(errorContentElement).not.toBeNull();
-        expect(errorContentElement).toBeDefined();
-    }));
-
-    it('should render error description', async(() => {
-        fixture.detectChanges();
-        const errorContentElement = element.querySelector('.adf-error-content-description');
-        expect(errorContentElement).not.toBeNull();
-        expect(errorContentElement).toBeDefined();
-    }));
-
-    it('should hide secondary button if this one has no value', async(() => {
-        spyOn(translateService, 'instant').and.callFake((inputString) => {
-            return '';
+        setupTestBed({
+            imports: [
+                CoreTestingModule
+            ],
+            providers: [
+                { provide: TranslationService, useClass: TranslationMock },
+                { provide: ActivatedRoute, useValue: { params: of() } }
+            ]
         });
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const errorContentElement = element.querySelector('.adf-error-content-description-link');
-            expect(errorContentElement).toBeNull();
-        });
-    }));
 
-    it('should render secondary button with its value from the translate file', async(() => {
-        spyOn(translateService, 'instant').and.callFake((inputString) => {
-            return 'Secondary Button';
-        });
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const errorContentElement = element.querySelector('#adf-secondary-button');
+        it('should create error component', async(() => {
+            fixture.detectChanges();
+            expect(errorContentComponent).toBeTruthy();
+        }));
+
+        it('should render error code', async(() => {
+            fixture.detectChanges();
+            const errorContentElement = element.querySelector('.adf-error-content-code');
             expect(errorContentElement).not.toBeNull();
             expect(errorContentElement).toBeDefined();
-            expect(errorContentElement.textContent).toContain('ERROR_CONTENT.UNKNOWN.SECONDARY_BUTTON.TEXT');
+        }));
 
+        it('should render error title', async(() => {
+            fixture.detectChanges();
+            const errorContentElement = element.querySelector('.adf-error-content-title');
+            expect(errorContentElement).not.toBeNull();
+            expect(errorContentElement).toBeDefined();
+        }));
+
+        it('should render error description', async(() => {
+            fixture.detectChanges();
+            const errorContentElement = element.querySelector('.adf-error-content-description');
+            expect(errorContentElement).not.toBeNull();
+            expect(errorContentElement).toBeDefined();
+        }));
+
+        it('should render error description', async(() => {
+            fixture.detectChanges();
+            const errorContentElement = element.querySelector('.adf-error-content-description');
+            expect(errorContentElement).not.toBeNull();
+            expect(errorContentElement).toBeDefined();
+        }));
+
+        it('should hide secondary button if this one has no value', async(() => {
+            spyOn(translateService, 'instant').and.callFake((inputString) => {
+                return '';
+            });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const errorContentElement = element.querySelector('.adf-error-content-description-link');
+                expect(errorContentElement).toBeNull();
+            });
+        }));
+
+        it('should render secondary button with its value from the translate file', async(() => {
+            spyOn(translateService, 'instant').and.callFake((inputString) => {
+                return 'Secondary Button';
+            });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const errorContentElement = element.querySelector('#adf-secondary-button');
+                expect(errorContentElement).not.toBeNull();
+                expect(errorContentElement).toBeDefined();
+                expect(errorContentElement.textContent).toContain('ERROR_CONTENT.UNKNOWN.SECONDARY_BUTTON.TEXT');
+
+            });
+        }));
+
+        it('should the default value of return button be /', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(errorContentComponent.returnButtonUrl).toBe('/');
+            });
+        }));
+
+        it('should navigate to the default error UNKNOWN if it does not find the error', async(() => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(errorContentComponent.errorCode).toBe('UNKNOWN');
+            });
+        }));
+    });
+
+    describe(' with a specific error', () => {
+
+        setupTestBed({
+            imports: [
+                CoreTestingModule
+            ],
+            providers: [
+                { provide: TranslationService, useClass: TranslationMock },
+                { provide: ActivatedRoute, useValue: { params: of({ id: '404' }) } }
+            ]
         });
-    }));
 
-    it('should the default value of return button be /', async(() => {
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(errorContentComponent.returnButtonUrl).toBe('/');
-        });
-    }));
-
-    it('should navigate to an error given by the route params', async(() => {
-        spyOn(translateService, 'get').and.returnValue(of('404'));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(errorContentComponent.errorCode).toBe('404');
-        });
-    }));
-
-    it('should navigate to the default error UNKNOWN if it does not find the error', async(() => {
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(errorContentComponent.errorCode).toBe('UNKNOWN');
-        });
-    }));
-
+        it('should navigate to an error given by the route params', async(() => {
+            spyOn(translateService, 'get').and.returnValue(of('404'));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(errorContentComponent.errorCode).toBe('404');
+            });
+        }));
+    });
 });

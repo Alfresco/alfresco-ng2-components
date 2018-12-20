@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter,
+import { Component, EventEmitter,
     Input, OnInit, Output, TemplateRef, ViewEncapsulation
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -40,6 +40,11 @@ enum LoginSteps {
     Landing = 0,
     Checking = 1,
     Welcome = 2
+}
+
+interface ValidationMessage {
+    value: string;
+    params?: any;
 }
 
 @Component({
@@ -134,7 +139,7 @@ export class LoginComponent implements OnInit {
     headerTemplate: TemplateRef<any>;
     data: any;
 
-    private _message: { [id: string]: { [id: string]: string } };
+    private _message: { [id: string]: { [id: string]: ValidationMessage } };
 
     /**
      * Constructor
@@ -147,7 +152,6 @@ export class LoginComponent implements OnInit {
         private authService: AuthenticationService,
         private translateService: TranslationService,
         private logService: LogService,
-        private elementRef: ElementRef,
         private router: Router,
         private appConfig: AppConfigService,
         private userPreferences: UserPreferencesService,
@@ -220,8 +224,11 @@ export class LoginComponent implements OnInit {
                 if (hasError) {
                     for (let key in this.form.controls[field].errors) {
                         if (key) {
-                            this.formError[field] +=
-                                this._message[field][key] + '';
+                            const message = this._message[field][key];
+                            if (message && message.value) {
+                                const translated = this.translateService.instant(message.value, message.params);
+                                this.formError[field] += translated;
+                            }
                         }
                     }
                 }
@@ -256,7 +263,7 @@ export class LoginComponent implements OnInit {
                 (err: any) => {
                     this.actualLoginStep = LoginSteps.Landing;
                     this.displayErrorMessage(err);
-                    this.enableError();
+                    this.isError = true;
                     this.error.emit(new LoginErrorEvent(err));
                 },
                 () => this.logService.info('Login done')
@@ -310,13 +317,10 @@ export class LoginComponent implements OnInit {
         msg: string,
         params?: any
     ) {
-        if (params) {
-            this.translateService.get(msg, params).subscribe((res: string) => {
-                this._message[field][ruleId] = res;
-            });
-        } else {
-            this._message[field][ruleId] = msg;
-        }
+        this._message[field][ruleId] = {
+            value: msg,
+            params
+        };
     }
 
     /**
@@ -324,10 +328,6 @@ export class LoginComponent implements OnInit {
      */
     toggleShowPassword() {
         this.isPasswordShow = !this.isPasswordShow;
-        this.elementRef.nativeElement.querySelector('#password').type = this
-            .isPasswordShow
-            ? 'text'
-            : 'password';
     }
 
     /**
@@ -371,18 +371,25 @@ export class LoginComponent implements OnInit {
     private initFormFieldsMessagesDefault() {
         this._message = {
             username: {
-                required: 'LOGIN.MESSAGES.USERNAME-REQUIRED'
+                required: {
+                   value: 'LOGIN.MESSAGES.USERNAME-REQUIRED'
+                },
+                minLength: {
+                    value: 'LOGIN.MESSAGES.USERNAME-MIN',
+                    params: {
+                        get minLength() {
+                            return this.minLength;
+                        }
+                    }
+                }
+
             },
             password: {
-                required: 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
+                required: {
+                    value: 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
+                }
             }
         };
-
-        this.translateService
-            .get('LOGIN.MESSAGES.USERNAME-MIN', { minLength: this.minLength })
-            .subscribe((res: string) => {
-                this._message['username']['minlength'] = res;
-            });
     }
 
     private initFormFieldsDefault() {
@@ -398,13 +405,6 @@ export class LoginComponent implements OnInit {
     private disableError() {
         this.isError = false;
         this.initFormError();
-    }
-
-    /**
-     * Enable the error flag
-     */
-    private enableError() {
-        this.isError = true;
     }
 
     private hasCustomFieldsValidation(): boolean {
