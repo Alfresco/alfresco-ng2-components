@@ -51,4 +51,5 @@ export class TasksCloudDemoPage {
         Util.waitUntilElementIsVisible(this.activeFilter);
         return this.activeFilter.getText();
     }
+
 }

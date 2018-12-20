@@ -34,11 +34,8 @@ describe('Applications list', () => {
 
         settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path);
         loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
         navigationBarPage.navigateToProcessServicesCloudPage();
-
         appListCloudComponent.checkApsContainer();
-
         appListCloudComponent.checkAppIsDisplayed(appName);
         appListCloudComponent.goToApp(appName);
 
