@@ -336,6 +336,7 @@
       "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
     },
     "VERSIONS": {
+      "TITLE": "Product Versions",
       "CONTENT_SERVICE": "ECM",
       "PROCESS_SERVICE": "BPM",
       "LABELS": {
@@ -353,6 +354,33 @@
     "PACKAGES": {
       "TITLE": "Packages",
       "DESCRIPTION": "Current project is using the following ADF libraries:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "ID",
+        "TITLE": "Title",
+        "DESCRIPTION": "Description",
+        "INSTALL_DATE": "Install Date",
+        "INSTALL_STATE": "Install State",
+        "VERSION_MIN": "Version Minor",
+        "VERSION_MAX": "Version Max"
+      },
+      "STATUS": {
+        "READ_ONLY": "ReadOnly",
+        "AUDIT_ENABLED": "Is Audit Enabled",
+        "QUICK_SHARE_ENABLED": "Is Quick Shared Enabled",
+        "THUMBNAIL_ENABLED": "Thumbnail Generation"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "Issued At",
+        "EXPIRES_AT": "Expires At",
+        "REMAINING_DAYS": "Remaining Days",
+        "HOLDER": "Holder",
+        "MODE": "Mode",
+        "CLUSTER_ENABLED": "Is Cluster Enabled",
+        "CRYPTODOC_ENABLED": "Is Cryptodoc Enabled"
+      }
     }
+
   }
 }

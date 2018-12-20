@@ -56,30 +56,30 @@ export class AboutComponent implements OnInit {
                 this.ecmVersion = ecmVers;
 
                 this.modules = new ObjectDataTableAdapter(this.ecmVersion.modules, [
-                    { type: 'text', key: 'id', title: 'ID', sortable: true },
-                    { type: 'text', key: 'title', title: 'Title', sortable: true },
-                    { type: 'text', key: 'version', title: 'Description', sortable: true },
-                    { type: 'text', key: 'installDate', title: 'Install Date', sortable: true },
-                    { type: 'text', key: 'installState', title: 'Install State', sortable: true },
-                    { type: 'text', key: 'versionMin', title: 'Version Minor', sortable: true },
-                    { type: 'text', key: 'versionMax', title: 'Version Max', sortable: true }
+                    { type: 'text', key: 'id', title: 'ABOUT.TABLE_HEADERS.MODULES.ID', sortable: true },
+                    { type: 'text', key: 'title', title: 'ABOUT.TABLE_HEADERS.MODULES.TITLE', sortable: true },
+                    { type: 'text', key: 'version', title: 'ABOUT.TABLE_HEADERS.MODULES.DESCRIPTION', sortable: true },
+                    { type: 'text', key: 'installDate', title: 'ABOUT.TABLE_HEADERS.MODULES.INSTALL_DATE', sortable: true },
+                    { type: 'text', key: 'installState', title: 'ABOUT.TABLE_HEADERS.MODULES.INSTALL_STATE', sortable: true },
+                    { type: 'text', key: 'versionMin', title: 'ABOUT.TABLE_HEADERS.MODULES.VERSION_MIN', sortable: true },
+                    { type: 'text', key: 'versionMax', title: 'ABOUT.TABLE_HEADERS.MODULES.VERSION_MAX', sortable: true }
                 ]);
 
                 this.status = new ObjectDataTableAdapter([this.ecmVersion.status], [
-                    { type: 'text', key: 'isReadOnly', title: 'ReadOnly', sortable: true },
-                    { type: 'text', key: 'isAuditEnabled', title: 'Is Audit Enable', sortable: true },
-                    { type: 'text', key: 'isQuickShareEnabled', title: 'Is quick shared enable', sortable: true },
-                    { type: 'text', key: 'isThumbnailGenerationEnabled', title: 'Thumbnail Generation', sortable: true }
+                    { type: 'text', key: 'isReadOnly', title: 'ABOUT.TABLE_HEADERS.STATUS.READ_ONLY', sortable: true },
+                    { type: 'text', key: 'isAuditEnabled', title: 'ABOUT.TABLE_HEADERS.STATUS.AUDIT_ENABLED', sortable: true },
+                    { type: 'text', key: 'isQuickShareEnabled', title: 'ABOUT.TABLE_HEADERS.STATUS.QUICK_SHARE_ENABLED', sortable: true },
+                    { type: 'text', key: 'isThumbnailGenerationEnabled', title: 'ABOUT.TABLE_HEADERS.STATUS.THUMBNAIL_ENABLED', sortable: true }
                 ]);
 
                 this.license = new ObjectDataTableAdapter([this.ecmVersion.license], [
-                    { type: 'text', key: 'issuedAt', title: 'Issued At', sortable: true },
-                    { type: 'text', key: 'expiresAt', title: 'Expires At', sortable: true },
-                    { type: 'text', key: 'remainingDays', title: 'Remaining Days', sortable: true },
-                    { type: 'text', key: 'holder', title: 'Holder', sortable: true },
-                    { type: 'text', key: 'mode', title: 'Mode', sortable: true },
-                    { type: 'text', key: 'isClusterEnabled', title: 'Is Cluster Enabled', sortable: true },
-                    { type: 'text', key: 'isCryptodocEnabled', title: 'Is Cryptodoc Enable', sortable: true }
+                    { type: 'text', key: 'issuedAt', title: 'ABOUT.TABLE_HEADERS.LICENSE.ISSUES_AT', sortable: true },
+                    { type: 'text', key: 'expiresAt', title: 'ABOUT.TABLE_HEADERS.LICENSE.EXPIRES_AT', sortable: true },
+                    { type: 'text', key: 'remainingDays', title: 'ABOUT.TABLE_HEADERS.LICENSE.REMAINING_DAYS', sortable: true },
+                    { type: 'text', key: 'holder', title: 'ABOUT.TABLE_HEADERS.LICENSE.HOLDER', sortable: true },
+                    { type: 'text', key: 'mode', title: 'ABOUT.TABLE_HEADERS.LICENSE.MODE', sortable: true },
+                    { type: 'text', key: 'isClusterEnabled', title: 'ABOUT.TABLE_HEADERS.LICENSE.CLUSTER_ENABLED', sortable: true },
+                    { type: 'text', key: 'isCryptodocEnabled', title: 'ABOUT.TABLE_HEADERS.LICENSE.CRYPTODOC_ENABLED', sortable: true }
                 ]);
             });
         }
