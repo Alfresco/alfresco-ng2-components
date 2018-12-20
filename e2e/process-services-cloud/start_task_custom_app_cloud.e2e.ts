@@ -55,7 +55,7 @@ describe('Start Task', () => {
         done();
     });
 
-    xit('[C290166] Should be possible to cancel a task', () => {
+    it('[C290166] Should be possible to cancel a task', () => {
         tasksCloudDemoPage.createNewTask();
         startTask.checkStartButtonIsDisabled()
                  .blur(startTask.name)
