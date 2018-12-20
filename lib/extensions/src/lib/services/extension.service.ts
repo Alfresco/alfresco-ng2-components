@@ -98,7 +98,7 @@ export class ExtensionService {
     }
 
     /**
-     * Adds one or more new components auth guards to the existing set.
+     * Adds one or more new components to the existing set.
      * @param values The new components to add
      */
     setComponents(values: { [key: string]: Type<{}> }) {
@@ -106,7 +106,7 @@ export class ExtensionService {
     }
 
     /**
-     * Retrieves a registered route using its ID value.
+     * Retrieves a route using its ID value.
      * @param id The ID value to look for
      * @returns The route or null if not found
      */
@@ -126,7 +126,7 @@ export class ExtensionService {
     }
 
     /**
-     * Retrieves a registered action using its ID value.
+     * Retrieves an action using its ID value.
      * @param id The ID value to look for
      * @returns Action or null if not found
      */
@@ -182,7 +182,7 @@ export class ExtensionService {
     }
 
     /**
-     * Retrieves a registered rule using its ID value.
+     * Retrieves a rule using its ID value.
      * @param id The ID value to look for
      * @returns The rule or null if not found
      */

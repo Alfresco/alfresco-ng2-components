@@ -65,6 +65,7 @@
         "datatable-adapter.interface": "DataTableAdapter",
         "datatable.component": "DataTableComponent",
         "document-library.model": "NodePaging",
+        "dynamic.component": "DynamicExtensionComponent",
         "form-field-validator.interface": "FormFieldValidator",
         "header.component": "HeaderLayoutComponent",
         "inherited-button.directive": "InheritPermissionDirective",
@@ -82,6 +83,7 @@
     },
     "undocStoplist": [
         "model",
+        "component-register.service",
         "context-menu-holder",
         "data-column-list",
         "card-view-[a-z]+item",
@@ -90,6 +92,7 @@
         "content-action-list",
         "empty-folder-content",
         "empty-list",
+        "extension-loader.service",
         "loading-template",
         "no-content-template",
         "card-view-content-proxy",

@@ -41,7 +41,7 @@ export class DynamicExtensionComponent implements OnChanges, OnDestroy {
     /** Unique ID string for the component to show. */
     @Input() id: string;
 
-    /** Data for the extension component instance. */
+    /** Data for the dynamically-loaded component instance. */
     @Input() data: any;
 
     private componentRef: ComponentRef<ExtensionComponent>;
