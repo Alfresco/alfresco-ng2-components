@@ -56,33 +56,30 @@ describe('Start Task', () => {
     });
 
     it('[C290166] Should be possible to cancel a task', () => {
-        tasksCloudDemoPage.createNewTask();
+        tasksCloudDemoPage.openNewTaskForm();
         startTask.checkStartButtonIsDisabled()
                  .blur(startTask.name)
                  .checkValidationErrorIsDisplayed(requiredError);
         startTask.addName(standaloneTaskName)
                  .addDescription('descriptions')
-                 .addDueDate('12/12/2018')
-                 .clickStartButton();
+                 .addDueDate('12/12/2018');
         startTask.checkStartButtonIsEnabled();
         startTask.clickCancelButton();
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(standaloneTaskName);
-
     });
 
     it('[C290180] Should be able to create a new standalone task', () => {
-        tasksCloudDemoPage.createNewTask();
+        tasksCloudDemoPage.openNewTaskForm();
         startTask.addName(standaloneTaskName)
                  .addDescription('descriptions')
                  .addDueDate('12/12/2018')
                  .addPriority('50')
                  .clickStartButton();
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(standaloneTaskName);
-
     });
 
     it('[C290181] Should be displayed an error message if task name exceed 255 characters', () => {
-        tasksCloudDemoPage.createNewTask();
+        tasksCloudDemoPage.openNewTaskForm();
         startTask.addName(taskName255Characters)
                  .checkStartButtonIsEnabled();
         startTask.addName(taskNameBiggerThen255Characters)
@@ -93,7 +90,7 @@ describe('Start Task', () => {
     });
 
     it('[C290181] Should be displayed an error message if the date is invalid', () => {
-        tasksCloudDemoPage.createNewTask();
+        tasksCloudDemoPage.openNewTaskForm();
         startTask.addDueDate('12/12/2018')
                  .checkStartButtonIsEnabled();
         startTask.addDueDate('invalid date')

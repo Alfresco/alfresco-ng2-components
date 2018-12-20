@@ -73,7 +73,7 @@ export class TasksCloudDemoPage {
         return this.taskFilters.click();
     }
 
-    createNewTask() {
+    openNewTaskForm() {
         this.createButtonIsDisplayed();
         this.clickOnCreateButton();
         this.newTaskButtonIsDisplayed();
@@ -92,7 +92,6 @@ export class TasksCloudDemoPage {
     }
 
     clickOnCreateButton() {
-        Util.waitUntilElementIsVisible(this.createButton);
         Util.waitUntilElementIsClickable(this.createButton);
         this.createButton.click();
         return this;
