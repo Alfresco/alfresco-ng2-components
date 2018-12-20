@@ -1,0 +1,56 @@
+@mixin adf-cloud-group-theme($theme) {
+
+    $warn: map-get($theme, warn);
+    $primary: map-get($theme, primary);
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+    .adf {
+        &-cloud-group {
+            .mat-form-field {
+                padding-top: 8px;
+                width: 100%;
+            }
+
+            &-error {
+                margin-top: -10px;
+            }
+
+            &-error {
+                position: absolute;
+                height: 20px;
+
+                &-message {
+                    padding-right: 8px;
+                    height: 16px;
+                    font-size: 12px;
+                    line-height: 1.33;
+                    color: mat-color($warn);
+                    width: auto;
+                }
+
+                &-icon {
+                    font-size: 17px;
+                    color: mat-color($warn);
+                }
+            }
+        }
+    }
+
+
+    .mat-autocomplete-panel .mat-fab {
+        background: mat-color($primary);
+        width: 40px;
+        height: 40px;
+        font-weight: bolder;
+        font-size: 18px;
+    }
+
+    .mat-autocomplete-panel .mat-fab {
+        box-shadow: none !important;
+    }
+
+    .mat-autocomplete-panel .mat-fab .mat-button-wrapper {
+        display: inline !important;
+    }
+}

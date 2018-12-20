@@ -1,0 +1,46 @@
+<div class="adf-cloud-group">
+<mat-form-field [floatLabel]="'auto'">
+    <mat-chip-list #groupChipList *ngIf="isMultipleMode()" class="apa-group-chip-list">
+      <mat-chip *ngFor="let group of selectedGroups$ | async" (removed)="onRemove(group)">
+        {{group.name}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input
+        placeholder="{{ 'ADF_CLOUD_GROUPS.SEARCH-GROUP' | translate }}"
+        [formControl]="searchGroup"
+        class="adf-group-input"
+        id="group-name"
+        data-automation-id="adf-cloud-group-search-input"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="groupChipList" #groupInput>
+    </mat-chip-list>
+
+    <input *ngIf="!isMultipleMode()"
+      matInput
+      placeholder="{{ 'ADF_CLOUD_GROUPS.SEARCH-GROUP' | translate }}"
+      class="adf-group-input"
+      data-automation-id="adf-cloud-group-search-input"
+      type="text"
+      [formControl]="searchGroup"
+      [matAutocomplete]="auto" #groupInput>
+
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      class="adf-cloud-group-list"
+      (optionSelected)="onSelect($event.option.value)"
+      [displayWith]="getDisplayName">
+      <mat-option *ngFor="let group of groups$ | async; let i = index" [value]="group">
+        <div class="adf-cloud-group-row" id="adf-group-{{i}}" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+         <button class="adf-group-short-name" mat-fab>{{getGroupShortName(group)}}</button>
+          <span>{{group.name}}</span>
+        </div>
+      </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+<div class="adf-cloud-group-error" *ngIf="dataError">
+    <div fxLayout="row" fxLayoutAlign="start start" [@transitionMessages]="_subscriptAnimationState">
+        <div class="adf-cloud-group-error-message">{{ 'ADF_CLOUD_GROUPS.ERROR.MESSAGE' | translate }}</div>
+        <mat-icon class="adf-cloud-group-error-icon">warning</mat-icon>
+    </div>
+</div>
+</div>

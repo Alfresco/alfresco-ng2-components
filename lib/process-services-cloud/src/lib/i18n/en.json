@@ -145,5 +145,11 @@
       "SAVE": "SAVE",
       "CANCEL": "CANCEL"
     }
+  },
+  "ADF_CLOUD_GROUPS": {
+    "SEARCH-GROUP": "Groups",
+    "ERROR": {
+      "MESSAGE": "Enter a different value"
+    }
   }
 }
