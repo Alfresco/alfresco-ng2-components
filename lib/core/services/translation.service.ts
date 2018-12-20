@@ -43,6 +43,7 @@ export class TranslationService {
 
         this.defaultLang = 'en';
         translate.setDefaultLang(this.defaultLang);
+        this.customLoader.setDefaultLang(this.defaultLang);
 
         if (providers && providers.length > 0) {
             for (let provider of providers) {

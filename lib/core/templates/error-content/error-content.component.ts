@@ -46,7 +46,7 @@ export class ErrorContentComponent implements OnInit, AfterContentChecked {
 
     /** Error code associated with this error. */
     @Input()
-    errorCode: string;
+    errorCode: string = 'UNKNOWN';
 
     hasSecondButton: boolean;
 
@@ -58,15 +58,8 @@ export class ErrorContentComponent implements OnInit, AfterContentChecked {
     ngOnInit() {
         if (this.route) {
             this.route.params.forEach((params: Params) => {
-                if (params['id'] && !this.errorCode) {
+                if (params['id']) {
                     this.errorCode = params['id'];
-                    let unknown = '';
-                    this.translateService.get('ERROR_CONTENT.' + this.errorCode + '.TITLE').subscribe((errorTranslation: string) => {
-                        unknown = errorTranslation;
-                    });
-                    if (unknown === 'ERROR_CONTENT.' + this.errorCode + '.TITLE') {
-                        this.errorCode = 'UNKNOWN';
-                    }
                 }
             });
         }
