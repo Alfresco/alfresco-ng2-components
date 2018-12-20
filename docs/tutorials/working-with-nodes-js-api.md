@@ -1,3 +1,8 @@
+---
+Title: Working with nodes using the JS-API
+Level: Intermediate
+---
+
 # Working with Nodes using the JS API
 
 In this tutorial you will learn how to use the [`AlfrescoCoreRestApi`](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-core-rest-api). We have developed some practical examples to show you how to interact with an instance of Alfresco Content Services without using the REST endpoints directly. With this approach the `AlfrescoCoreRestApi` is used as an abstraction layer, defining one of the core services of the [`alfresco-api-js`](https://github.com/Alfresco/alfresco-js-api) library.

@@ -1,3 +1,7 @@
+---
+Title: Release notes v1.9.0
+---
+
 # Alfresco Application Development Framework, version 1.9.0 Release Note
 
 These release notes provide information for the **1.9.0 release** of Alfresco Application Development Framework.

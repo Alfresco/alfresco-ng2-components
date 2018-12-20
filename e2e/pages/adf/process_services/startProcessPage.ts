@@ -145,4 +145,9 @@ export class StartProcessPage {
         return processPlaceholder;
     }
 
+    checkValidationErrorIsDisplayed(error, elementRef = 'mat-error') {
+        const errorElement = element(by.cssContainingText(elementRef, error));
+        Util.waitUntilElementIsVisible(errorElement);
+        return this;
+    }
 }

@@ -1,4 +1,5 @@
 ---
+Title: Adding a new view
 Level: Beginner
 ---
 
