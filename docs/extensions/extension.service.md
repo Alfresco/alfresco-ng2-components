@@ -64,3 +64,6 @@ Manages and runs basic extension functionality.
     -   _config:_ [`ExtensionConfig`](../../lib/extensions/src/lib/config/extension.config.ts)  - Object with config data
 
 ## Details
+
+Use the methods of this service to add extensibility features to your app. You can find further
+details in the [App extensions](../user-guide/app-extensions.md) page.

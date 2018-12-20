@@ -8,7 +8,7 @@ Added: 3.0.0
 ADF lets you simplify the app developer's task by providing an **extensible app**
 as a starting point.
 
-An extensible app is designed with *extension points*, which are
+An extensible app is designed with _extension points_, which are
 placeholders where components and other content
 can be "plugged in" to provide functionality. The app may be supplied with
 default content for the extension points but the idea is that a developer can
@@ -17,6 +17,17 @@ useful, for example, if they want to create a family of apps with consistent
 appearance and behavior. One developer can produce an extensible app that
 can then be adapted by other developers to create the various apps in the
 family.
+
+## Contents
+
+-   [Extension points](#extension-points)
+-   [Extensibility features](#extensibility-features)
+-   [Setting up an app for extensibility](#setting-up-an-app-for-extensibility)
+-   [Creating extensions](#creating-extensions)
+    -   [Routes](#routes)
+    -   [Actions](#actions)
+    -   [Rules](#rules)
+    -   [Features](#features)
 
 ## Extension points
 
@@ -34,18 +45,18 @@ a place in the app where the actual content will be supplied dynamically.
 ADF provides a number of features that offer extension points or help
 with extensibility in general:
 
--   **Components**: The Dynamic component and Dynamic Tab component
+-   **Components**: The [Dynamic component](../extensions/dynamic.component.md) and Dynamic Tab component
     have no content of their own but they have an `id` property that
     references a registered component extension ID. The referenced component
     will be added as a child of the Dynamic component at runtime.
 -   **Routes**: These are registered as key/ID strings that resolve to standard
     Angular routes. This feature can be used, say, that a click on a list item
-    should send the user *somewhere* but leave the actual destination up to the
+    should send the user _somewhere_ but leave the actual destination up to the
     developer.
 -   **Auth guards**: Routes can be protected by auth guards
     to prevent unauthorized users from accessing pages they shouldn't see.
 -   **Rules**: These are tests that produce a boolean result depending on the app state.
-    The extensible app can use them with *features* or `ngIf` directives, for example, to show or
+    The extensible app can use them with _features_ or `ngIf` directives, for example, to show or
     hide content in certain conditions. The exact conditions, however, are chosen
     by the developer who extends the app.
 -   **Actions**: The extensible app can define a set of **application actions** that
@@ -67,9 +78,9 @@ with extensibility in general:
 
 ## Setting up an app for extensibility
 
-You can register component classes for use with the Dynamic component
+You can register component classes for use with the [Dynamic component](../extensions/dynamic.component.md)
 or Dynamic Tab component using the `setComponents` method of the
-Extension service (see the Dynamic component page for further details
+[Extension service](../extensions/extension.service.md) (see the Dynamic component page for further details
 and code samples). The service also has `setAuthGuards` and
 `setEvaluators` methods that behave analogously.
 
@@ -106,8 +117,8 @@ below:
 }
 ```
 
-You can use the `load` method of the Extension service to read the file into a
-convenient object that implements the `ExtensionConfig` and `ExtensionRef` interfaces.
+You can use the `load` method of the [Extension service](../extensions/extension.service.md) to read the file into a
+convenient object that implements the [`ExtensionConfig`](../../lib/extensions/src/lib/config/extension.config.ts) and [`ExtensionRef`](../../lib/extensions/src/lib/config/extension.config.ts) interfaces.
 Note that the `extension.schema.json` file contains a [JSON schema](http://json-schema.org/)
 that allows for format checking and also text completion in some editors.
 
@@ -133,7 +144,7 @@ following example:
 ```
 
 You can access routes from the config using the `getRouteById` method of the
-Extension service, which returns a `RouteRef` object. Note that the references
+[Extension service,](../extensions/extension.service.md) which returns a [`RouteRef`](../../lib/extensions/src/lib/config/routing.extensions.ts) object. Note that the references
 to the component and auth guards are extension IDs,
 [as described above](#extension-points).
 
@@ -160,9 +171,9 @@ The `actions` array has the following structure:
     },
     ...
   ]
-  ```
+```
 
-The Extension service defines a `getActionById` method that returns an
+The [Extension service](../extensions/extension.service.md) defines a `getActionById` method that returns an
 `ActionRef` object corresponding to an item from this array.
 
 The `type` property refers to an action type that must be provided by the
@@ -174,7 +185,7 @@ a message, URL or other static text data. However, you can also define a
 JavaScript expression here by surrounding it with `$( ... )`. The expression
 has access to an object named `context` which typically contains information
 about the app state. You can supply the object that contains this data via the
-`runExpression` method of the Extension service, which actually evaluates the
+`runExpression` method of the [Extension service,](../extensions/extension.service.md) which actually evaluates the
 expression. Note that the result of the expression doesn't necessarily
 have to be a string.
 
@@ -193,7 +204,7 @@ The simplest type of rule is configured as shown below:
 ```
 
 The `type` is the ID of a `RuleEvaluator` function that has been registered using
-the `setEvaluators` method of the Extension service.
+the `setEvaluators` method of the [Extension service](../extensions/extension.service.md).
 The evaluator is a boolean function that represents whether a certain
 condition is true or false (eg, whether an item is selected, whether the user
 has certain options enabled, etc). The evaluator has access to a context object
@@ -222,9 +233,9 @@ relationships to hold among the parameter rules. A few useful metarules
 are defined in the
 [core.evaluators.ts](../lib/extensions/evaluators/core.evaluators.ts) file:
 
-- `every`: Returns true only if all the parameter rules return true
-- `some`: Returns true if one or more of the parameter rules return true
-- `not`: Returns true only if all the parameter rules return false
+-   `every`: Returns true only if all the parameter rules return true
+-   `some`: Returns true if one or more of the parameter rules return true
+-   `not`: Returns true only if all the parameter rules return false
 
 Note that parameter rules can also recursively invoke their own rules, etc.
 
@@ -238,10 +249,10 @@ using actions, rules, etc, defined elsewhere in the config. Suppose, for
 example, the app has a tools menu that can be extended with extra commands.
 The properties for a new command might include:
 
-- The title shown in the menu
-- An icon shown next to the title
-- The action that is activated when the command is selected
-- A rule that determines whether or not the command is enabled
+-   The title shown in the menu
+-   An icon shown next to the title
+-   The action that is activated when the command is selected
+-   A rule that determines whether or not the command is enabled
 
 A `features` object to add an extra item to this menu might look like
 the following:
