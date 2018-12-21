@@ -35,7 +35,7 @@ const includedNodeTypes = [
 ];
 
 const docFolder = path.resolve("docs");
-const adfLibNames = ["core", "content-services", "insights", "process-services", "process-services-cloud"];
+const adfLibNames = ["core", "content-services", "insights", "process-services", "process-services-cloud", "extensions"];
 
 let externalNameLinks;
 
