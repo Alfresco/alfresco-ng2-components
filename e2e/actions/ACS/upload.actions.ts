@@ -53,7 +53,7 @@ export class UploadActions {
         });
     }
 
-    async uploadFolder(alfrescoJsApi, folderName, parentFolderId) {
+    async createFolder(alfrescoJsApi, folderName, parentFolderId) {
         return alfrescoJsApi.nodes.addNode(parentFolderId, {
             'name': folderName,
             'nodeType': 'cm:folder'
@@ -64,7 +64,7 @@ export class UploadActions {
         return alfrescoJsApi.nodes.deleteNode(folderId, { permanent: true } );
     }
 
-    async uploadFolderFiles(alfrescoJsApi, sourcePath, folder) {
+    async uploadFolder(alfrescoJsApi, sourcePath, folder) {
         let absolutePath = '../../' + sourcePath;
         let files = fs.readdirSync(path.join(__dirname, absolutePath));
         let uploadedFiles;

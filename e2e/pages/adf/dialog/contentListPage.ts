@@ -39,8 +39,12 @@ export class ContentListPage {
     createdColumnHeader = by.css('div[data-automation-id*="auto_id_createdAt"]');
     rows = by.css('div[id="document-list-container"] div[class*="adf-datatable-body"] div[class*="adf-datatable-row"]');
     emptyFolderMessage = element(by.css('div[class="adf-empty-folder-this-space-is-empty"]'));
-    table = element(by.css('div[class*="upload-border"]'));
+    table = element.all(by.css('adf-datatable')).first();
     tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
+
+    getColumnLocator(column) {
+        return by.css(`div[id*='document-list-container'] div[class*='adf-datatable-row'] div[title='${column}'] span`);
+    }
 
     getTooltip(nodeName) {
         return this.getRowByRowName(nodeName).element(by.css(`#document-list-container span[title="${nodeName}"]`)).getAttribute('title');
