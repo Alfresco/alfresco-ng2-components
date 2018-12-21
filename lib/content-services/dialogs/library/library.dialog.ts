@@ -84,13 +84,17 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         Validators.maxLength(72),
         this.forbidSpecialCharacters
       ],
-      title: [Validators.required, Validators.maxLength(256)],
+      title: [
+        Validators.required,
+        this.forbidOnlySpaces,
+        Validators.maxLength(256)
+      ],
       description: [Validators.maxLength(512)]
     };
 
     this.form = this.formBuilder.group({
-      title: ['', validators.title],
-      id: ['', validators.id, this.createSiteIdValidator()],
+      title: [null, validators.title],
+      id: [null, validators.id, this.createSiteIdValidator()],
       description: ['', validators.description]
     });
 
@@ -106,11 +110,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         takeUntil(this.onDestroy$)
       )
       .subscribe((title: string) => {
-        if (!title.trim().length) {
-          return;
-        }
-
-        if (!this.form.controls['id'].dirty) {
+        if (!this.form.controls['id'].dirty && this.canGenerateId(title)) {
           this.form.patchValue({ id: this.sanitize(title.trim()) });
           this.form.controls['id'].markAsTouched();
         }
@@ -177,7 +177,11 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
   }
 
   private sanitize(input: string) {
-    return input.replace(/[\s]/g, '-').replace(/[^A-Za-z0-9-]/g, '');
+    return input.replace(/[\s\s]+/g, '-').replace(/[^A-Za-z0-9-]/g, '');
+  }
+
+  private canGenerateId(title) {
+    return Boolean(title.replace(/[^A-Za-z0-9-]/g, '').length);
   }
 
   private handleError(error: any): any {
@@ -215,6 +219,10 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
   }
 
   private forbidSpecialCharacters({ value }: FormControl) {
+    if (value === null || value.length === 0) {
+      return null;
+    }
+
     const validCharacters: RegExp = /[^A-Za-z0-9-]/;
     const isValid: boolean = !validCharacters.test(value);
 
@@ -222,6 +230,20 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
       ? null
       : {
           message: 'LIBRARY.ERRORS.ILLEGAL_CHARACTERS'
+        };
+  }
+
+  private forbidOnlySpaces({ value }: FormControl) {
+    if (value === null || value.length === 0) {
+      return null;
+    }
+
+    const isValid: boolean = !!(value || '').trim();
+
+    return isValid
+      ? null
+      : {
+          message: 'LIBRARY.ERRORS.ONLY_SPACES'
         };
   }
 
