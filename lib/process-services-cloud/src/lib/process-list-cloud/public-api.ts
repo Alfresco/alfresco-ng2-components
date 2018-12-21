@@ -15,4 +15,8 @@
  * limitations under the License.
  */
 
-export * from './src/public-api';
+export * from './components/process-list-cloud.component';
+export * from './models/process-cloud-query-request.model';
+export * from './models/process-cloud-preset.model';
+export * from './models/process-list-sorting.model';
+export * from './process-list-cloud.module';

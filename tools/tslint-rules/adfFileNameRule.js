@@ -17,6 +17,7 @@ Rule.metadata = {
     typescriptOnly: true,
 };
 Rule.FAILURE_STRING = 'The name of the File should not start with ADF Alfresco or Activiti prefix ';
+Rule.FAILURE_STRING_UNDERSCORE = 'The name of the File should not have _ in the name but you can use - prefer the kebab case';
 exports.Rule = Rule;
 class AdfFileName extends Lint.RuleWalker {
     visitSourceFile(node) {
@@ -30,6 +31,10 @@ class AdfFileName extends Lint.RuleWalker {
         });
         if (filenameMatch && !isWhiteListName) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + fileName));
+            super.visitSourceFile(node);
+        }
+        if (fileName.indexOf('_') >= 0) {
+            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_UNDERSCORE + fileName));
             super.visitSourceFile(node);
         }
     }

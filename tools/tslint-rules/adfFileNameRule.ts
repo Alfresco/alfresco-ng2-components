@@ -15,6 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     };
 
     public static FAILURE_STRING = 'The name of the File should not start with ADF Alfresco or Activiti prefix ';
+    public static FAILURE_STRING_UNDERSCORE = 'The name of the File should not have _ in the name but you can use - ';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new AdfFileName(sourceFile, this.getOptions()));
@@ -36,8 +37,14 @@ class AdfFileName extends Lint.RuleWalker {
             return currentWhiteListName === fileName;
         });
 
+        console.log('error');
         if (filenameMatch && !isWhiteListName) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING + fileName));
+            super.visitSourceFile(node);
+        }
+
+        if (fileName.indexOf('-') >= 0) {
+            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_UNDERSCORE + fileName));
             super.visitSourceFile(node);
         }
     }
