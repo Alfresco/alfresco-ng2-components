@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var fs = require("fs");
 /*
@@ -25,7 +25,7 @@ var includedNodeTypes = [
     "link", "text"
 ];
 var docFolder = path.resolve("docs");
-var adfLibNames = ["core", "content-services", "insights", "process-services", "process-services-cloud"];
+var adfLibNames = ["core", "content-services", "insights", "process-services", "process-services-cloud", "extensions"];
 var externalNameLinks;
 function processDocs(mdCache, aggData, errorMessages) {
     initPhase(aggData);
@@ -99,8 +99,9 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
                 }
             }
         }
-        else if ((node.children) && (node.type !== "heading")) {
+        else if ((node.children) && (node.type !== "heading")) { //((node.type === "paragraph") || (node.type === "tableCell")) {
             node.children.forEach(function (child, index) {
+                var _a;
                 if ((child.type === "text") || (child.type === "inlineCode")) {
                     var newNodes = handleLinksInBodyText(aggData, child.value, child.type === 'inlineCode');
                     (_a = node.children).splice.apply(_a, [index, 1].concat(newNodes));
@@ -108,7 +109,6 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
                 else {
                     traverseMDTree(child);
                 }
-                var _a;
             });
         } /*else if (node.children) {
             node.children.forEach(child => {

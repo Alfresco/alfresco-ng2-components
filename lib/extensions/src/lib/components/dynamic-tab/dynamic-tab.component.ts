@@ -38,6 +38,7 @@ export class DynamicTabComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('content', { read: ViewContainerRef })
     content: ViewContainerRef;
 
+    /** Unique ID string for the component to show. */
     @Input()
     id: string;
 

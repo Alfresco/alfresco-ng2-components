@@ -16,14 +16,13 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| _Dynamic component_ | _Not currently documented_ | [Source](../../lib/extensions/src/lib/components/dynamic-component/dynamic.component.ts) |
-| _Dynamic tab component_ | _Not currently documented_ | [Source](../../lib/extensions/src/lib/components/dynamic-tab/dynamic-tab.component.ts) |
+| [Dynamic component](dynamic.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Displays dynamically-loaded extension components. | [Source](../../lib/extensions/src/lib/components/dynamic-component/dynamic.component.ts) |
+| [Dynamic tab component](dynamic-tab.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Displays dynamically-loaded extensions with tabs. | [Source](../../lib/extensions/src/lib/components/dynamic-tab/dynamic-tab.component.ts) |
 
 ## Services
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| _Extension loader service_ | _Not currently documented_ | [Source](../../lib/extensions/src/lib/services/extension-loader.service.ts) |
-| _Extension service_ | _Not currently documented_ | [Source](../../lib/extensions/src/lib/services/extension.service.ts) |
+| [Extension service](extension.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manages and runs basic extension functionality. | [Source](../../lib/extensions/src/lib/services/extension.service.ts) |
 
 <!--extensions end-->

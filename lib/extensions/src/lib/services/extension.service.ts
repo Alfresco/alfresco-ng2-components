@@ -43,6 +43,10 @@ export class ExtensionService {
         private componentRegister: ComponentRegisterService
     ) {}
 
+    /**
+     * Loads and registers an extension config file and plugins (specified by path properties).
+     * @returns The loaded config data
+     */
     async load(): Promise<ExtensionConfig> {
         const config = await this.loader.load(
             this.configPath,
@@ -52,6 +56,10 @@ export class ExtensionService {
         return config;
     }
 
+    /**
+     * Registers extensions from a config object.
+     * @param config Object with config data
+     */
     setup(config: ExtensionConfig) {
         if (!config) {
             console.warn('Extension configuration not found');
@@ -69,36 +77,68 @@ export class ExtensionService {
         this.routes = this.loader.getRoutes(config);
     }
 
+    /**
+     * Adds one or more new rule evaluators to the existing set.
+     * @param values The new evaluators to add
+     */
     setEvaluators(values: { [key: string]: RuleEvaluator }) {
         if (values) {
             this.evaluators = Object.assign({}, this.evaluators, values);
         }
     }
 
+    /**
+     * Adds one or more new auth guards to the existing set.
+     * @param values The new auth guards to add
+     */
     setAuthGuards(values: { [key: string]: Type<{}> }) {
         if (values) {
             this.authGuards = Object.assign({}, this.authGuards, values);
         }
     }
 
+    /**
+     * Adds one or more new components to the existing set.
+     * @param values The new components to add
+     */
     setComponents(values: { [key: string]: Type<{}> }) {
         this.componentRegister.setComponents(values);
     }
 
+    /**
+     * Retrieves a route using its ID value.
+     * @param id The ID value to look for
+     * @returns The route or null if not found
+     */
     getRouteById(id: string): RouteRef {
         return this.routes.find((route) => route.id === id);
     }
 
+    /**
+     * Retrieves one or more auth guards using an array of ID values.
+     * @param ids Array of ID value to look for
+     * @returns Array of auth guards or empty array if none were found
+     */
     getAuthGuards(ids: string[]): Array<Type<{}>> {
         return (ids || [])
             .map((id) => this.authGuards[id])
             .filter((guard) => guard);
     }
 
+    /**
+     * Retrieves an action using its ID value.
+     * @param id The ID value to look for
+     * @returns Action or null if not found
+     */
     getActionById(id: string): ActionRef {
         return this.actions.find((action) => action.id === id);
     }
 
+    /**
+     * Retrieves a RuleEvaluator function using its key name.
+     * @param key Key name to look for
+     * @returns RuleEvaluator or null if not found
+     */
     getEvaluator(key: string): RuleEvaluator {
         if (key && key.startsWith('!')) {
             const fn = this.evaluators[key.substring(1)];
@@ -109,6 +149,12 @@ export class ExtensionService {
         return this.evaluators[key];
     }
 
+    /**
+     * Evaluates a rule.
+     * @param ruleId ID of the rule to evaluate
+     * @param context Parameter object for the evaluator with details of app state
+     * @returns True if the rule passed, false otherwise
+     */
     evaluateRule(ruleId: string, context: RuleContext): boolean {
         const ruleRef = this.getRuleById(ruleId);
 
@@ -126,14 +172,30 @@ export class ExtensionService {
         return false;
     }
 
+    /**
+     * Retrieves a registered extension component using its ID value.
+     * @param id The ID value to look for
+     * @returns The component or null if not found
+     */
     getComponentById<T>(id: string) {
         return this.componentRegister.getComponentById<T>(id);
     }
 
+    /**
+     * Retrieves a rule using its ID value.
+     * @param id The ID value to look for
+     * @returns The rule or null if not found
+     */
     getRuleById(id: string): RuleRef {
         return this.rules.find((ref) => ref.id === id);
     }
 
+    /**
+     * Runs a lightweight expression stored in a string.
+     * @param value String containing the expression or literal value
+     * @param context Parameter object for the expression with details of app state
+     * @returns Result of evaluated expression, if found, or the literal value otherwise
+     */
     runExpression(value: string, context?: any) {
         const pattern = new RegExp(/\$\((.*\)?)\)/g);
         const matches = pattern.exec(value);
