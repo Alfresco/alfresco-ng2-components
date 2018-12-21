@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
+import { browser, protractor } from 'protractor';
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { FilePreviewPage } from '../pages/adf/filePreviewPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
-import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
@@ -34,7 +33,7 @@ import { Util } from '../util/util';
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
 
-xdescribe('Search component - Search Bar', () => {
+describe('Search component - Search Bar', () => {
 
     let search = {
         inactive: {
@@ -50,7 +49,6 @@ xdescribe('Search component - Search Bar', () => {
     let searchDialog = new SearchDialog();
     let searchResultPage = new SearchResultsPage();
     let filePreviewPage = new FilePreviewPage();
-    const searchFilters = new SearchFiltersPage();
 
     let acsUser = new AcsUserModel();
 
@@ -91,9 +89,9 @@ xdescribe('Search component - Search Bar', () => {
         let firstFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, firstFileModel.location, firstFileModel.name, '-my-');
         Object.assign(firstFileModel, firstFileUploaded.entry);
 
-        filesToDelete.push(await uploadActions.uploadFolder(this.alfrescoJsApi, firstFolderModel.name, '-my-'));
-        filesToDelete.push(await uploadActions.uploadFolder(this.alfrescoJsApi, secondFolder.name, '-my-'));
-        filesToDelete.push(await uploadActions.uploadFolder(this.alfrescoJsApi, thirdFolder.name, '-my-'));
+        filesToDelete.push(await uploadActions.createFolder(this.alfrescoJsApi, firstFolderModel.name, '-my-'));
+        filesToDelete.push(await uploadActions.createFolder(this.alfrescoJsApi, secondFolder.name, '-my-'));
+        filesToDelete.push(await uploadActions.createFolder(this.alfrescoJsApi, thirdFolder.name, '-my-'));
 
         await browser.driver.sleep(15000); // wait search index previous file/folder uploaded
 
@@ -113,8 +111,9 @@ xdescribe('Search component - Search Bar', () => {
         done();
     });
 
-    beforeEach(() => {
-        contentServicesPage.goToDocumentList();
+    afterEach(async (done) => {
+        await browser.get(TestConfig.adf.url);
+        done();
     });
 
     it('[C272798] Search bar should be visible', () => {
@@ -127,8 +126,9 @@ xdescribe('Search component - Search Bar', () => {
             .checkSearchBarIsVisible()
             .checkSearchIconIsVisible();
 
+        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+
         searchDialog
-            .clickOnSearchIcon()
             .checkSearchBarIsNotVisible()
             .checkSearchIconIsVisible();
     });
@@ -138,13 +138,6 @@ xdescribe('Search component - Search Bar', () => {
             .checkSearchIconIsVisible()
             .clickOnSearchIcon()
             .enterText(firstFolderModel.shortName);
-
-        searchDialog
-            .clickOnSearchIcon()
-            .checkSearchBarIsNotVisible()
-            .checkSearchIconIsVisible();
-
-        contentServicesPage.checkAcsContainer();
     });
 
     it('[C260255] Should display message when searching for an inexistent file', () => {
@@ -154,9 +147,6 @@ xdescribe('Search component - Search Bar', () => {
             .checkNoResultMessageIsNotDisplayed()
             .enterText(search.inactive.name)
             .checkNoResultMessageIsDisplayed();
-
-        searchDialog.clearText();
-        searchDialog.checkSearchBarIsNotVisible();
     });
 
     it('[C260256] Should display file/folder in search suggestion when typing first characters', () => {
@@ -172,7 +162,6 @@ xdescribe('Search component - Search Bar', () => {
         expect(searchDialog.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
 
         searchDialog.clearText();
-        searchDialog.checkSearchBarIsNotVisible();
 
         searchDialog.clickOnSearchIcon().enterText(firstFileModel.shortName);
         searchDialog.resultTableContainsRow(firstFileModel.name);
@@ -181,9 +170,6 @@ xdescribe('Search component - Search Bar', () => {
         expect(searchDialog.getSpecificRowsAuthor(firstFileModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
 
         expect(searchDialog.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
-
-        searchDialog.clearText();
-        searchDialog.checkSearchBarIsNotVisible();
     });
 
     it('[C272800] Should display file/folder in search suggestion when typing name', () => {
@@ -199,7 +185,6 @@ xdescribe('Search component - Search Bar', () => {
         expect(searchDialog.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
 
         searchDialog.clearText();
-        searchDialog.checkSearchBarIsNotVisible();
 
         searchDialog.clickOnSearchIcon().enterText(firstFileModel.name);
         searchDialog.resultTableContainsRow(firstFileModel.name);
@@ -207,9 +192,6 @@ xdescribe('Search component - Search Bar', () => {
         expect(searchDialog.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.name);
         expect(searchDialog.getSpecificRowsAuthor(firstFileModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
         expect(searchDialog.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
-
-        searchDialog.clearText();
-        searchDialog.checkSearchBarIsNotVisible();
     });
 
     it('[C260257] Should display content when clicking on folder from search suggestions', () => {
@@ -221,13 +203,7 @@ xdescribe('Search component - Search Bar', () => {
         searchDialog.resultTableContainsRow(firstFolderModel.name);
         searchDialog.clickOnSpecificRow(firstFolderModel.name);
 
-        contentServicesPage
-            .checkAcsContainer()
-            .waitForTableBody();
-
         expect(contentServicesPage.currentFolderName()).toEqual(firstFolderModel.name);
-
-        contentServicesPage.goToDocumentList();
 
         searchDialog
             .checkSearchIconIsVisible()
@@ -280,7 +256,7 @@ xdescribe('Search component - Search Bar', () => {
             .enterText(secondFolder.shortName)
             .pressDownArrowAndEnter();
 
-        contentServicesPage.checkAcsContainer();
+        searchResultPage.tableIsLoaded();
         expect(contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
     });
 

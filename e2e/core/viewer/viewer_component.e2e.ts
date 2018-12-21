@@ -134,9 +134,9 @@ describe('Viewer', () => {
         let archiveFolderUploaded;
 
         beforeAll(async (done) => {
-            archiveFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, archiveFolderInfo.name, '-my-');
+            archiveFolderUploaded = await uploadActions.createFolder(this.alfrescoJsApi, archiveFolderInfo.name, '-my-');
 
-            uploadedArchives = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, archiveFolderInfo.location, archiveFolderUploaded.entry.id);
+            uploadedArchives = await uploadActions.uploadFolder(this.alfrescoJsApi, archiveFolderInfo.location, archiveFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -169,9 +169,9 @@ describe('Viewer', () => {
         let excelFolderUploaded;
 
         beforeAll(async (done) => {
-            excelFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, excelFolderInfo.name, '-my-');
+            excelFolderUploaded = await uploadActions.createFolder(this.alfrescoJsApi, excelFolderInfo.name, '-my-');
 
-            uploadedExcels = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, excelFolderInfo.location, excelFolderUploaded.entry.id);
+            uploadedExcels = await uploadActions.uploadFolder(this.alfrescoJsApi, excelFolderInfo.location, excelFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -204,9 +204,9 @@ describe('Viewer', () => {
         let pptFolderUploaded;
 
         beforeAll(async (done) => {
-            pptFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, pptFolderInfo.name, '-my-');
+            pptFolderUploaded = await uploadActions.createFolder(this.alfrescoJsApi, pptFolderInfo.name, '-my-');
 
-            uploadedPpt = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, pptFolderInfo.location, pptFolderUploaded.entry.id);
+            uploadedPpt = await uploadActions.uploadFolder(this.alfrescoJsApi, pptFolderInfo.location, pptFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -239,9 +239,9 @@ describe('Viewer', () => {
         let textFolderUploaded;
 
         beforeAll(async (done) => {
-            textFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, textFolderInfo.name, '-my-');
+            textFolderUploaded = await uploadActions.createFolder(this.alfrescoJsApi, textFolderInfo.name, '-my-');
 
-            uploadedTexts = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, textFolderInfo.location, textFolderUploaded.entry.id);
+            uploadedTexts = await uploadActions.uploadFolder(this.alfrescoJsApi, textFolderInfo.location, textFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -274,9 +274,9 @@ describe('Viewer', () => {
         let wordFolderUploaded;
 
         beforeAll(async (done) => {
-            wordFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, wordFolderInfo.name, '-my-');
+            wordFolderUploaded = await uploadActions.createFolder(this.alfrescoJsApi, wordFolderInfo.name, '-my-');
 
-            uploadedWords = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, wordFolderInfo.location, wordFolderUploaded.entry.id);
+            uploadedWords = await uploadActions.uploadFolder(this.alfrescoJsApi, wordFolderInfo.location, wordFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -309,9 +309,9 @@ describe('Viewer', () => {
         let otherFolderUploaded;
 
         beforeAll(async (done) => {
-            otherFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, otherFolderInfo.name, '-my-');
+            otherFolderUploaded = await uploadActions.createFolder(this.alfrescoJsApi, otherFolderInfo.name, '-my-');
 
-            uploadedOthers = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, otherFolderInfo.location, otherFolderUploaded.entry.id);
+            uploadedOthers = await uploadActions.uploadFolder(this.alfrescoJsApi, otherFolderInfo.location, otherFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -344,9 +344,9 @@ describe('Viewer', () => {
         let imgFolderUploaded;
 
         beforeAll(async (done) => {
-            imgFolderUploaded = await uploadActions.uploadFolder(this.alfrescoJsApi, imgFolderInfo.name, '-my-');
+            imgFolderUploaded = await uploadActions.createFolder(this.alfrescoJsApi, imgFolderInfo.name, '-my-');
 
-            uploadedImages = await uploadActions.uploadFolderFiles(this.alfrescoJsApi, imgFolderInfo.location, imgFolderUploaded.entry.id);
+            uploadedImages = await uploadActions.uploadFolder(this.alfrescoJsApi, imgFolderInfo.location, imgFolderUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();

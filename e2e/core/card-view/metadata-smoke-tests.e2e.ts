@@ -78,7 +78,7 @@ describe('Metadata component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await uploadActions.uploadFolder(this.alfrescoJsApi, folderName, '-my-');
+        await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
 
         let pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
 

@@ -73,7 +73,7 @@ describe('Trashcan - Pagination', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        let folderUploadedModel = await uploadActions.uploadFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
+        let folderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, newFolderModel.name, '-my-');
 
         let emptyFiles = await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
         await emptyFiles.list.entries.forEach(async (node) => {

@@ -62,7 +62,7 @@ describe('Login component - Redirect', () => {
 
         await this.alfrescoJsApi.login(user.id, user.password);
 
-        uploadedFolder = await uploadActions.uploadFolder(this.alfrescoJsApi, 'protecteFolder' + Util.generateRandomString(), '-my-');
+        uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, 'protecteFolder' + Util.generateRandomString(), '-my-');
 
         done();
     });
