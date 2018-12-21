@@ -279,5 +279,17 @@
   },
   "TASK_LIST_CLOUD_DEMO": {
     "CUSTOMIZE_FILTERS": "Customise your filter"
+  },
+  "ABOUT": {
+    "TITLE": "Plugins",
+    "TABLE_HEADERS": {
+      "ID": "ID",
+      "NAME": "Name",
+      "VERSION": "Version",
+      "VENDOR": "Vendor",
+      "LICENSE": "License",
+      "RUNTIME": "Runtime",
+      "DESCRIPTION": "Description"
+    }
   }
 }
