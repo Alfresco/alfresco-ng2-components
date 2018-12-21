@@ -11,7 +11,7 @@
         </mat-list-item>
     </mat-list>
 
-    <h3>Product Versions</h3>
+    <h3>{{ 'ABOUT.VERSIONS.TITLE' | translate }}</h3>
     <div *ngIf="bpmVersion">
         <h3>{{ 'ABOUT.VERSIONS.PROCESS_SERVICE' | translate }}</h3>
         <label> {{ 'ABOUT.VERSIONS.LABELS.EDITION' | translate }} </label> {{ bpmVersion.edition }}
