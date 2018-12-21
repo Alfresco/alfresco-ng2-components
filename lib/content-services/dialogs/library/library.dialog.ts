@@ -198,7 +198,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
     const { entries } = (await this.findLibraryByTitle(libraryTitle)).list;
 
     if (entries.length) {
-      this.libraryTitleExists = entries[0].entry.title === libraryTitle;
+      this.libraryTitleExists = entries[0].entry.title.toLowerCase() === libraryTitle.toLowerCase();
     } else {
       this.libraryTitleExists = false;
     }
