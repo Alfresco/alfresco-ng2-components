@@ -101,7 +101,9 @@ export class PeopleCloudComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loadPreSelectUsers();
+        if (this.hasPreSelectUsers()) {
+            this.loadPreSelectUsers();
+        }
         this.initSearch();
     }
 
@@ -191,6 +193,10 @@ export class PeopleCloudComponent implements OnInit {
 
     isMultipleMode(): boolean {
         return this.mode === PeopleCloudComponent.MODE_MULTIPLE;
+    }
+
+    private hasPreSelectUsers(): boolean {
+        return this.preSelectUsers && this.preSelectUsers.length > 0;
     }
 
 }
