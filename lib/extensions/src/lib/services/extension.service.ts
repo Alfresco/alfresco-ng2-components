@@ -46,7 +46,7 @@ export class ExtensionService {
     /**
      * Loads and registers an extension config file and plugins (specified by path properties).
      * @returns The loaded config data
-     */ 
+     */
     async load(): Promise<ExtensionConfig> {
         const config = await this.loader.load(
             this.configPath,
