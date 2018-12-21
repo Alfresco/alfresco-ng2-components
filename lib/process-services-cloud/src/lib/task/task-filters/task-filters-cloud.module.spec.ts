@@ -15,7 +15,16 @@
  * limitations under the License.
  */
 
-export * from './lib/process-services-cloud.module';
-export * from './lib/app/public-api';
-export * from './lib/process/public-api';
-export * from './lib/task/public-api';
+import { TaskFiltersCloudModule } from './task-filters-cloud.module';
+
+describe('TaskCloudModule', () => {
+  let taskCloudModule: TaskFiltersCloudModule;
+
+  beforeEach(() => {
+    taskCloudModule = new TaskFiltersCloudModule();
+  });
+
+  it('should create an instance', () => {
+    expect(taskCloudModule).toBeTruthy();
+  });
+});

@@ -15,7 +15,18 @@
  * limitations under the License.
  */
 
-export * from './lib/process-services-cloud.module';
-export * from './lib/app/public-api';
-export * from './lib/process/public-api';
-export * from './lib/task/public-api';
+import { NgModule } from '@angular/core';
+import { ProcessFiltersCloudModule } from './process-filters/process-filters-cloud.module';
+import { ProcessListCloudModule } from './process-list/process-list-cloud.module';
+
+@NgModule({
+    imports: [
+        ProcessFiltersCloudModule,
+        ProcessListCloudModule
+    ],
+    exports: [
+        ProcessFiltersCloudModule,
+        ProcessListCloudModule
+    ]
+})
+export class ProcessCloudModule { }
