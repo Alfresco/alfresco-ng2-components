@@ -26,6 +26,7 @@ export class TasksCloudDemoPage {
     myTasks = element(by.css('span[data-automation-id="my-tasks-filter"]'));
     completedTasks = element(by.css('span[data-automation-id="completed-tasks-filter"]'));
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
+    defaultActiveFilter = element.all(by.css('.adf-filters__entry')).first();
 
     taskFiltersCloudComponent(filter) {
         return new TaskFiltersCloudComponent(filter);
@@ -52,4 +53,7 @@ export class TasksCloudDemoPage {
         return this.activeFilter.getText();
     }
 
+    firstFilterIsActive () {
+        return this.defaultActiveFilter.getAttribute('class').then((value) => value.includes('adf-active'));
+    }
 }
