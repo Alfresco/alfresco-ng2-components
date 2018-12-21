@@ -32,7 +32,6 @@ import { taskDetailsMock } from '../mock/task-details.mock';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from './../../../testing/process-service-cloud.testing.module';
 import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
-import { mockRoles, mockUsers } from '../mock/user-cloud.mock';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 
 describe('StartTaskCloudComponent', () => {
@@ -43,8 +42,6 @@ describe('StartTaskCloudComponent', () => {
     let identityService: IdentityUserService;
     let element: HTMLElement;
     let createNewTaskSpy: jasmine.Spy;
-    let getRolesByUserIdSpy: jasmine.Spy;
-    let getUserSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
@@ -60,8 +57,6 @@ describe('StartTaskCloudComponent', () => {
         service = TestBed.get(StartTaskCloudService);
         identityService = TestBed.get(IdentityUserService);
         createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(taskDetailsMock));
-        getRolesByUserIdSpy = spyOn(identityService, 'getUserRoles').and.returnValue(of(mockRoles));
-        getUserSpy = spyOn(identityService, 'getUsers').and.returnValue(of(mockUsers));
         spyOn(identityService, 'getCurrentUserInfo').and.returnValue(new IdentityUserModel({username: 'currentUser'}));
         fixture.detectChanges();
     }));
@@ -70,13 +65,11 @@ describe('StartTaskCloudComponent', () => {
         expect(component instanceof StartTaskCloudComponent).toBe(true, 'should create StartTaskCloudComponent');
     });
 
-    it('should defined adf-cloud-people and fetch users ', () => {
+    it('should define adf-cloud-people', () => {
         component.ngOnInit();
         fixture.detectChanges();
         const peopleElement = fixture.debugElement.nativeElement.querySelector('adf-cloud-people');
         expect(peopleElement).toBeDefined();
-        expect(getRolesByUserIdSpy).toHaveBeenCalled();
-        expect(getUserSpy).toHaveBeenCalled();
     });
 
     describe('create task', () => {

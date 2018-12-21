@@ -30,7 +30,7 @@ describe('PeopleCloudComponent', () => {
     let element: HTMLElement;
     let identityService: IdentityUserService;
     let getRolesByUserIdSpy: jasmine.Spy;
-    let getUserSpy: jasmine.Spy;
+    let checkUserHasRoleSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
@@ -43,24 +43,12 @@ describe('PeopleCloudComponent', () => {
         element = fixture.nativeElement;
         identityService = TestBed.get(IdentityUserService);
         getRolesByUserIdSpy = spyOn(identityService, 'getUserRoles').and.returnValue(of(mockRoles));
-        getUserSpy = spyOn(identityService, 'getUsers').and.returnValue(of(mockUsers));
+        checkUserHasRoleSpy = spyOn(identityService, 'checkUserHasClientRoleMapping').and.returnValue(of(mockUsers));
     });
 
     it('should create PeopleCloudComponent', () => {
         expect(component instanceof PeopleCloudComponent).toBeTruthy();
     });
-
-    it('should able to fetch users', () => {
-        fixture.detectChanges();
-        expect(getUserSpy).toHaveBeenCalled();
-    });
-
-    it('should able to fetch roles by user id', async(() => {
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(getRolesByUserIdSpy).toHaveBeenCalled();
-        });
-    }));
 
     it('should not list the current logged in user when showCurrentUser is false', (done) => {
         spyOn(identityService, 'getCurrentUserInfo').and.returnValue(mockUsers[1]);
@@ -117,7 +105,7 @@ describe('PeopleCloudComponent', () => {
     }));
 
     it('should show an error message if the user is invalid', async(() => {
-        getUserSpy.and.returnValue(of([]));
+        checkUserHasRoleSpy.and.returnValue(of([]));
         getRolesByUserIdSpy.and.returnValue(of([]));
         component.dataError = true;
         fixture.detectChanges();
