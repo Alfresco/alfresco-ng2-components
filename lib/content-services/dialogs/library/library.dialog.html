@@ -18,6 +18,10 @@
       <mat-error *ngIf="form.controls['title'].hasError('maxlength')">
         {{ 'LIBRARY.ERRORS.TITLE_TOO_LONG' | translate }}
       </mat-error>
+
+      <mat-error *ngIf="form.controls['title'].errors?.message">
+        {{ form.controls['title'].errors?.message | translate }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field>

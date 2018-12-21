@@ -214,4 +214,46 @@ describe('LibraryDialogComponent', () => {
       message: 'LIBRARY.ERRORS.CONFLICT'
     });
   }));
+
+  it('should not translate library title if value is not a valid id', fakeAsync(() => {
+    spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
+      return new Promise((resolve, reject) => reject());
+    });
+
+    fixture.detectChanges();
+    component.form.controls.title.setValue('@@@####');
+    tick(500);
+    flush();
+    fixture.detectChanges();
+
+    expect(component.form.controls.id.value).toBe(null);
+  }));
+
+  it('should translate library title partially for library id', fakeAsync(() => {
+    spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
+      return new Promise((resolve, reject) => reject());
+    });
+
+    fixture.detectChanges();
+    component.form.controls.title.setValue('@@@####library');
+    tick(500);
+    flush();
+    fixture.detectChanges();
+
+    expect(component.form.controls.id.value).toBe('library');
+  }));
+
+  it('should translate library title multiple space character to one dash for library id', fakeAsync(() => {
+    spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
+      return new Promise((resolve, reject) => reject());
+    });
+
+    fixture.detectChanges();
+    component.form.controls.title.setValue('library     title');
+    tick(500);
+    flush();
+    fixture.detectChanges();
+
+    expect(component.form.controls.id.value).toBe('library-title');
+  }));
 });
