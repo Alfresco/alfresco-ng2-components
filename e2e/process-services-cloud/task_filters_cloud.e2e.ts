@@ -38,7 +38,7 @@ describe('Task filters cloud', () => {
         const path = '/auth/realms/springboot';
         let silentLogin;
         const newTask = 'newTask', completedTask = 'completedTask1';
-        const simpleApp = 'task-app';
+        const simpleApp = 'simple-app';
 
         beforeAll(() => {
             silentLogin = false;
@@ -78,8 +78,8 @@ describe('Task filters cloud', () => {
             await tasksService.init(user, password);
             let task = await tasksService.createStandaloneTask(completedTask, simpleApp);
 
-            tasksService.claimTask(task.entry.id, simpleApp);
-            tasksService.completeTask(task.entry.id, simpleApp);
+            await tasksService.claimTask(task.entry.id, simpleApp);
+            await tasksService.completeTask(task.entry.id, simpleApp);
 
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('My Tasks');
