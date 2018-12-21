@@ -110,11 +110,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         takeUntil(this.onDestroy$)
       )
       .subscribe((title: string) => {
-        if (!title.trim().length) {
-          return;
-        }
-
-        if (!this.form.controls['id'].dirty) {
+        if (!this.form.controls['id'].dirty && this.canGenerateId(title)) {
           this.form.patchValue({ id: this.sanitize(title.trim()) });
           this.form.controls['id'].markAsTouched();
         }
@@ -181,7 +177,11 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
   }
 
   private sanitize(input: string) {
-    return input.replace(/[\s]/g, '-').replace(/[^A-Za-z0-9-]/g, '');
+    return input.replace(/[\s\s]+/g, '-').replace(/[^A-Za-z0-9-]/g, '');
+  }
+
+  private canGenerateId(title) {
+    return Boolean(title.replace(/[^A-Za-z0-9-]/g, '').length);
   }
 
   private handleError(error: any): any {
@@ -219,6 +219,10 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
   }
 
   private forbidSpecialCharacters({ value }: FormControl) {
+    if (value === null || value.length === 0) {
+      return null;
+    }
+
     const validCharacters: RegExp = /[^A-Za-z0-9-]/;
     const isValid: boolean = !validCharacters.test(value);
 
