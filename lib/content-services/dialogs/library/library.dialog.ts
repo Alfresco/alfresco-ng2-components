@@ -84,13 +84,17 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
         Validators.maxLength(72),
         this.forbidSpecialCharacters
       ],
-      title: [Validators.required, Validators.maxLength(256)],
+      title: [
+        Validators.required,
+        this.forbidOnlySpaces,
+        Validators.maxLength(256)
+      ],
       description: [Validators.maxLength(512)]
     };
 
     this.form = this.formBuilder.group({
-      title: ['', validators.title],
-      id: ['', validators.id, this.createSiteIdValidator()],
+      title: [null, validators.title],
+      id: [null, validators.id, this.createSiteIdValidator()],
       description: ['', validators.description]
     });
 
@@ -222,6 +226,20 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
       ? null
       : {
           message: 'LIBRARY.ERRORS.ILLEGAL_CHARACTERS'
+        };
+  }
+
+  private forbidOnlySpaces({ value }: FormControl) {
+    if (value === null || value.length === 0) {
+      return null;
+    }
+
+    const isValid: boolean = !!(value || '').trim();
+
+    return isValid
+      ? null
+      : {
+          message: 'LIBRARY.ERRORS.ONLY_SPACES'
         };
   }
 
