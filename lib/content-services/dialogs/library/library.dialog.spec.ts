@@ -32,6 +32,8 @@ describe('LibraryDialogComponent', () => {
   let fixture;
   let component;
   let alfrescoApi;
+  let findSitesSpy;
+  const findSitesResponse = { list: { entries: [] } };
   const dialogRef = {
     close: jasmine.createSpy('close')
   };
@@ -53,18 +55,15 @@ describe('LibraryDialogComponent', () => {
     fixture = TestBed.createComponent(LibraryDialogComponent);
     component = fixture.componentInstance;
     alfrescoApi = TestBed.get(AlfrescoApiService);
+    findSitesSpy = spyOn(alfrescoApi.getInstance().core.queriesApi, 'findSites');
+  });
 
-    spyOn(
-      alfrescoApi.getInstance().core.queriesApi,
-      'findSites'
-    ).and.returnValue(
-      Promise.resolve({
-        list: { entries: [] }
-      })
-    );
+  afterEach(() => {
+    findSitesSpy.calls.reset();
   });
 
   it('should set library id automatically on title input', fakeAsync(() => {
+    findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
     spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
       return new Promise((resolve, reject) => reject());
     });
@@ -79,6 +78,7 @@ describe('LibraryDialogComponent', () => {
   }));
 
   it('should translate library title space character to dash for library id', fakeAsync(() => {
+    findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
     spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
       return new Promise((resolve, reject) => reject());
     });
@@ -93,6 +93,7 @@ describe('LibraryDialogComponent', () => {
   }));
 
   it('should not change custom library id on title input', fakeAsync(() => {
+    findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
     spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
       return new Promise((resolve, reject) => reject());
     });
@@ -128,6 +129,7 @@ describe('LibraryDialogComponent', () => {
   }));
 
   it('should create site when form is valid', fakeAsync(() => {
+    findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
     spyOn(alfrescoApi.sitesApi, 'createSite').and.returnValue(
       Promise.resolve()
     );
@@ -154,6 +156,7 @@ describe('LibraryDialogComponent', () => {
   }));
 
   it('should not create site when form is invalid', fakeAsync(() => {
+    findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
     spyOn(alfrescoApi.sitesApi, 'createSite').and.returnValue(
       Promise.resolve({})
     );
@@ -172,7 +175,23 @@ describe('LibraryDialogComponent', () => {
     expect(alfrescoApi.sitesApi.createSite).not.toHaveBeenCalled();
   }));
 
+  it('should notify when library title is already used', fakeAsync(() => {
+    spyOn(alfrescoApi.sitesApi, 'getSite').and.returnValue(Promise.resolve());
+    findSitesSpy.and.returnValue(Promise.resolve(
+      { list: { entries: [ { entry: { title: 'TEST', id: 'library-id' } } ] } }
+    ));
+
+    fixture.detectChanges();
+    component.form.controls.title.setValue('test');
+    tick(500);
+    flush();
+    fixture.detectChanges();
+
+    expect(component.libraryTitleExists).toBe(true);
+  }));
+
   it('should notify on 409 conflict error (might be in trash)', fakeAsync(() => {
+    findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
     const error = { message: '{ "error": { "statusCode": 409 } }' };
     spyOn(alfrescoApi.sitesApi, 'createSite').and.callFake(() => {
       return new Promise((resolve, reject) => reject(error));
