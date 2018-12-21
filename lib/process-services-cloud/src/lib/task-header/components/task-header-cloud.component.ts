@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import {
     CardViewDateItemModel,
     CardViewItem,
@@ -49,6 +49,14 @@ export class TaskHeaderCloudComponent implements OnInit {
     /** The name of the form. */
     @Input()
     formName: string = null;
+
+    /** Emitted when the task is claimed. */
+    @Output()
+    claim: EventEmitter<any> = new EventEmitter<any>();
+
+    /** Emitted when the task is unclaimed (ie, requeued). */
+    @Output()
+    unclaim: EventEmitter<any> = new EventEmitter<any>();
 
     taskDetails: TaskDetailsCloudModel = new TaskDetailsCloudModel();
     properties: CardViewItem [];
@@ -86,23 +94,23 @@ export class TaskHeaderCloudComponent implements OnInit {
         return [
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_TASK_LIST.PROPERTIES.ASSIGNEE',
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE',
                     value: this.taskDetails.assignee,
                     key: 'assignee',
-                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT'),
+                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT'),
                     icon: 'create'
                 }
             ),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_TASK_LIST.PROPERTIES.STATUS',
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS',
                     value: this.taskDetails.status,
                     key: 'status'
                 }
             ),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_TASK_LIST.PROPERTIES.PRIORITY',
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PRIORITY',
                     value: this.taskDetails.priority,
                     key: 'priority',
                     editable: true
@@ -110,74 +118,74 @@ export class TaskHeaderCloudComponent implements OnInit {
             ),
             new CardViewDateItemModel(
                 {
-                    label: 'ADF_TASK_LIST.PROPERTIES.DUE_DATE',
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE',
                     value: this.taskDetails.dueDate,
                     key: 'dueDate',
-                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT'),
+                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT'),
                     editable: true
                 }
             ),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_TASK_LIST.PROPERTIES.CATEGORY',
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CATEGORY',
                     value: this.taskDetails.category,
                     key: 'category',
-                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.CATEGORY_DEFAULT')
+                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.CATEGORY_DEFAULT')
                 }
             ),
             new CardViewDateItemModel(
                 {
-                    label: 'ADF_TASK_LIST.PROPERTIES.CREATED',
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.CREATED',
                     value: this.taskDetails.createdDate,
                     key: 'created'
                 }
             ),
             new CardViewMapItemModel(
                 {
-                    label: 'ADF_TASK_LIST.PROPERTIES.PARENT_NAME',
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME',
                     value: parentInfoMap,
                     key: 'parentName',
-                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT'),
+                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT'),
                     clickable: true
                 }
             ),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_TASK_LIST.PROPERTIES.PARENT_TASK_ID',
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_TASK_ID',
                     value: this.taskDetails.parentTaskId,
                     key: 'parentTaskId'
                 }
             ),
             new CardViewDateItemModel(
                 {
-                    label: 'ADF_TASK_LIST.PROPERTIES.END_DATE',
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.END_DATE',
                     value: this.taskDetails.claimedDate,
                     key: 'endDate'
                 }
             ),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_TASK_LIST.PROPERTIES.ID',
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.ID',
                     value: this.taskDetails.id,
                     key: 'id'
                 }
             ),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_TASK_LIST.PROPERTIES.DESCRIPTION',
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.DESCRIPTION',
                     value: this.taskDetails.description,
                     key: 'description',
-                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.DESCRIPTION_DEFAULT'),
+                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DESCRIPTION_DEFAULT'),
                     multiline: true,
                     editable: true
                 }
             ),
             new CardViewTextItemModel(
                 {
-                    label: 'ADF_TASK_LIST.PROPERTIES.FORM_NAME',
+                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.FORM_NAME',
                     value: this.formName,
                     key: 'formName',
-                    default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT'),
+                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.FORM_NAME_DEFAULT'),
                     clickable: !!this.formName,
                     icon: 'create'
                 }
@@ -192,7 +200,7 @@ export class TaskHeaderCloudComponent implements OnInit {
         if (this.taskDetails) {
             const parentInfo = this.getParentInfo();
             const defaultProperties = this.initDefaultProperties(parentInfo);
-            const filteredProperties: string[] = this.appConfig.get('adf-task-header.presets.properties');
+            const filteredProperties: string[] = this.appConfig.get('adf-cloud-task-header.presets.properties');
             this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
         }
     }
@@ -219,7 +227,7 @@ export class TaskHeaderCloudComponent implements OnInit {
     }
 
     isCompleted() {
-        return  this.taskDetails && this.taskDetails.status === 'COMPLETED';
+        return  this.taskDetails && this.taskDetails.status === 'completed';
     }
 
     isTaskClaimable(): boolean {
@@ -250,6 +258,7 @@ export class TaskHeaderCloudComponent implements OnInit {
         this.taskHeaderCloudService.claimTask(this.appName, this.taskId, this.currentUser).subscribe(
             (res: any) => {
                 this.loadTaskDetailsById(this.appName, this.taskId);
+                this.claim.emit(this.taskId);
             });
     }
 
@@ -257,6 +266,7 @@ export class TaskHeaderCloudComponent implements OnInit {
         this.taskHeaderCloudService.unclaimTask(this.appName, this.taskId).subscribe(
             () => {
                 this.loadTaskDetailsById(this.appName, this.taskId);
+                this.unclaim.emit(this.taskId);
             });
     }
 

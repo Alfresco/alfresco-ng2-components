@@ -73,7 +73,7 @@ describe('TaskHeaderComponent', () => {
 
         fixture.whenStable().then(() => {
             let valueEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"] span'));
-            expect(valueEl.nativeElement.innerText).toBe('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT');
+            expect(valueEl.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT');
         });
 
     }));
@@ -105,7 +105,7 @@ describe('TaskHeaderComponent', () => {
 
         fixture.whenStable().then(() => {
             let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-            expect(valueEl.nativeElement.innerText.trim()).toBe('ADF_TASK_LIST.PROPERTIES.DUE_DATE_DEFAULT');
+            expect(valueEl.nativeElement.innerText.trim()).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT');
         });
     }));
 
@@ -116,7 +116,7 @@ describe('TaskHeaderComponent', () => {
 
         fixture.whenStable().then(() => {
             let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] .adf-property-value'));
-            expect(valueEl.nativeElement.innerText.trim()).toEqual('ADF_TASK_LIST.PROPERTIES.PARENT_NAME_DEFAULT');
+            expect(valueEl.nativeElement.innerText.trim()).toEqual('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT');
         });
     }));
 
@@ -132,8 +132,8 @@ describe('TaskHeaderComponent', () => {
                 expect(propertyList).toBeDefined();
                 expect(propertyList).not.toBeNull();
                 expect(propertyList.length).toBe(2);
-                expect(propertyList[0].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.ASSIGNEE');
-                expect(propertyList[1].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.STATUS');
+                expect(propertyList[0].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE');
+                expect(propertyList[1].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS');
             });
         }));
 
@@ -148,8 +148,8 @@ describe('TaskHeaderComponent', () => {
                 expect(propertyList).toBeDefined();
                 expect(propertyList).not.toBeNull();
                 expect(propertyList.length).toBe(component.properties.length);
-                expect(propertyList[0].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.ASSIGNEE');
-                expect(propertyList[1].nativeElement.textContent).toContain('ADF_TASK_LIST.PROPERTIES.STATUS');
+                expect(propertyList[0].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE');
+                expect(propertyList[1].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS');
             });
         }));
     });
