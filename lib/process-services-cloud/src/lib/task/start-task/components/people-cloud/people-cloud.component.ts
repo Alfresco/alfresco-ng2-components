@@ -18,7 +18,7 @@
 import { FormControl } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input, ViewChild, ElementRef } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { switchMap, debounceTime, distinctUntilChanged, mergeMap, flatMap, tap, filter } from 'rxjs/operators';
+import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter } from 'rxjs/operators';
 import { FullNamePipe, IdentityUserModel, IdentityUserService } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
@@ -107,41 +107,42 @@ export class PeopleCloudComponent implements OnInit {
 
     initSearch() {
         this.searchUser.valueChanges.pipe(
+            tap((value) => {
+                this.dataError = !!value;
+            }),
             debounceTime(500),
             distinctUntilChanged(),
-            tap( () => {
+            tap(() => {
                 this.filtered = [];
                 this.searchUsers.next(this.filtered);
             }),
-            switchMap( (search) => this.identityUserService.findUsersByName(search)),
-            flatMap( (user) => {
+            switchMap((search) => this.identityUserService.findUsersByName(search)),
+            mergeMap((user) => {
                 return user;
             }),
-            mergeMap( (user: any) => {
-                if (this.isUserAlreadySelected(user)) {
-                    return of();
-                }
+            filter((user: any) => {
+                return !this.isUserAlreadySelected(user);
+            }),
+            mergeMap((user: any) => {
                 return this.identityUserService.checkUserHasClientRoleMapping(user.id, '39d1f2b9-de0e-48d6-98f2-00af9d25c9e1').pipe(
                     mergeMap((hasRole) => {
-                        return of({user, hasRole});
-                     })
+                        return hasRole ? of(user) : of();
+                    })
                 );
-            }),
-            filter( (user: any) => user.hasRole)
-        ).subscribe( (user) => {
-            this.filtered.push(user.user);
+            })
+        ).subscribe((user) => {
+            this.filtered.push(user);
             this.searchUsers.next(this.filtered);
         });
     }
 
     isUserAlreadySelected(user: IdentityUserModel): boolean {
         if (this._selectedUsers && this._selectedUsers.length > 0) {
-            const result = this._selectedUsers.filter((tmpUser) => {
+            const result = this._selectedUsers.find((tmpUser) => {
                 return tmpUser.id === user.id;
             });
-            if (result && result.length > 0) {
-                return true;
-            }
+
+            return !!result;
         }
         return false;
     }
@@ -162,9 +163,8 @@ export class PeopleCloudComponent implements OnInit {
         this.dataError = false;
 
         if (this.isMultipleMode()) {
-            const isExistingUser = this._selectedUsers.find((selectedUser) => { return selectedUser.id === user.id; });
 
-            if (!isExistingUser) {
+            if (!this.isUserAlreadySelected(user)) {
                 this._selectedUsers.push(user);
                 this.selectedUsers.next(this._selectedUsers);
                 this.selectUser.emit(user);

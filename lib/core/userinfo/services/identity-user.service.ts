@@ -85,7 +85,7 @@ export class IdentityUserService {
                 ));
     }
 
-    checkUserHasClientRoleMapping(userId: string, clientId: string): Observable<any> {
+    checkUserHasClientRoleMapping(userId: string, clientId: string): Observable<boolean> {
         const url = this.buildUserClientRoleMapping(userId, clientId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
