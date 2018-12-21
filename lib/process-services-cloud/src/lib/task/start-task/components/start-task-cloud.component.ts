@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
 import moment from 'moment-es6';
@@ -29,6 +29,7 @@ import {
     IdentityUserService,
     IdentityUserModel
 } from '@alfresco/adf-core';
+import { PeopleCloudComponent } from './people-cloud/people-cloud.component';
 
 @Component({
   selector: 'adf-cloud-start-task',
@@ -69,6 +70,9 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
+
+    @ViewChild('peopleInput')
+    assignee: PeopleCloudComponent;
 
     users$: Observable<any[]>;
 

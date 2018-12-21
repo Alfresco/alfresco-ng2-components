@@ -95,7 +95,7 @@ export class IdentityUserService {
                     headerParams, formParams, bodyParam, authNames,
                     contentTypes, accepts, Object, null, null)
                 ).pipe(
-                    map((response) => {
+                    map((response: any) => {
                         if (response.length > 0) {
                             return (true);
                         }
