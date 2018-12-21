@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-export * from './lib/process-services-cloud.module';
-export * from './lib/app/public-api';
-export * from './lib/process/public-api';
-export * from './lib/task/public-api';
+export * from './components/process-filters-cloud.component';
+export * from './components/edit-process-filter-cloud.component';
+export * from './models/process-filter-cloud.model';
+export * from './services/process-filter-cloud.service';
+export * from './process-filters-cloud.module';

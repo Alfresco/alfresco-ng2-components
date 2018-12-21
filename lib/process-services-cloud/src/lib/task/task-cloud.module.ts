@@ -15,7 +15,21 @@
  * limitations under the License.
  */
 
-export * from './lib/process-services-cloud.module';
-export * from './lib/app/public-api';
-export * from './lib/process/public-api';
-export * from './lib/task/public-api';
+import { NgModule } from '@angular/core';
+import { TaskListCloudModule } from './task-list/task-list-cloud.module';
+import { TaskFiltersCloudModule } from './task-filters/task-filters-cloud.module';
+import { StartTaskCloudModule } from './start-task/start-task-cloud.module';
+
+@NgModule({
+    imports: [
+        TaskListCloudModule,
+        TaskFiltersCloudModule,
+        StartTaskCloudModule
+    ],
+    exports: [
+        TaskListCloudModule,
+        TaskFiltersCloudModule,
+        StartTaskCloudModule
+    ]
+})
+export class TaskCloudModule { }
