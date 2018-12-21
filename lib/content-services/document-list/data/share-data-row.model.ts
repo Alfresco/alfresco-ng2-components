@@ -16,7 +16,7 @@
  */
 
 import { DataRow, ObjectUtils, ThumbnailService } from '@alfresco/adf-core';
-import { MinimalNode, NodeEntry } from 'alfresco-js-api';
+import { MinimalNode, NodeEntry } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
 

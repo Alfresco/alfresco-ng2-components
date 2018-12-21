@@ -17,7 +17,7 @@
 
 import { Component, Inject, ViewEncapsulation, Input } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, SitePaging } from '@alfresco/js-api';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';

@@ -28,7 +28,7 @@ import {
     UserPreferencesService, PaginationModel, ThumbnailService
 } from '@alfresco/adf-core';
 
-import { MinimalNodeEntryEntity, Node, NodeEntry, NodePaging } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, Node, NodeEntry, NodePaging } from '@alfresco/js-api';
 import { Subject, BehaviorSubject, Subscription, of } from 'rxjs';
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';

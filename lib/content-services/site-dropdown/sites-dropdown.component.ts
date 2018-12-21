@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { SitesService, LogService } from '@alfresco/adf-core';
-import { SitePaging, SiteEntry } from 'alfresco-js-api';
+import { SitePaging, SiteEntry } from '@alfresco/js-api';
 
 export enum Relations {
     Members = 'members',

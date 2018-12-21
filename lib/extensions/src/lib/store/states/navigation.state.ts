@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Node } from 'alfresco-js-api';
+import { Node } from '@alfresco/js-api';
 
 export interface NavigationState {
     currentFolder?: Node;

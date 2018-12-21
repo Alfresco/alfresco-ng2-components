@@ -21,7 +21,7 @@ import {
     PaginatedComponent, PaginationModel
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
-import { MinimalNodeEntryEntity, NodePaging, Pagination, SiteEntry, SitePaging } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, NodePaging, Pagination, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { DocumentListComponent, PaginationStrategy } from '../document-list/components/document-list.component';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';

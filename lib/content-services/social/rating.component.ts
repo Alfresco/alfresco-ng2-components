@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { RatingService } from './services/rating.service';
-import { RatingEntry } from 'alfresco-js-api';
+import { RatingEntry } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-rating',

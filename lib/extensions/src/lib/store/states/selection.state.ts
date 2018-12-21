@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NodeEntry, SiteEntry } from 'alfresco-js-api';
+import { NodeEntry, SiteEntry } from '@alfresco/js-api';
 
 export interface SelectionState {
     count: number;

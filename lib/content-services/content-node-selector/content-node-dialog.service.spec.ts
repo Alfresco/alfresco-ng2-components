@@ -16,7 +16,7 @@
  */
 
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, SitePaging } from '@alfresco/js-api';
 import { AppConfigService, SitesService, setupTestBed } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeDialogService } from './content-node-dialog.service';

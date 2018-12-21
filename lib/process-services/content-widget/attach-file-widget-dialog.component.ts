@@ -20,7 +20,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 import { ExternalAlfrescoApiService, AlfrescoApiService, AuthenticationService, LoginDialogPanelComponent, SitesService, SearchService } from '@alfresco/adf-core';
 import { DocumentListService, ContentNodeSelectorService } from '@alfresco/adf-content-services';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-attach-file-widget-dialog',

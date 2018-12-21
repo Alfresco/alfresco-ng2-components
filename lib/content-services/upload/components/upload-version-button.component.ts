@@ -17,7 +17,7 @@
 
 import { PermissionsEnum  } from '@alfresco/adf-core';
 import { Component, forwardRef, Input, OnChanges, ViewEncapsulation, OnInit } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { UploadButtonComponent } from './upload-button.component';
 import { FileModel, EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
 

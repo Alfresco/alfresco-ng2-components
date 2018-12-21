@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { NodeMetadata } from '../models/node-metadata.model';
 import { map } from 'rxjs/operators';
-import { NodeEntry } from 'alfresco-js-api';
+import { NodeEntry } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'

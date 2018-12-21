@@ -16,7 +16,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { PathInfoEntity } from 'alfresco-js-api';
+import { PathInfoEntity } from '@alfresco/js-api';
 import { DataTableCellComponent } from './datatable-cell.component';
 
 @Component({

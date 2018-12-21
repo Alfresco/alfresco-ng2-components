@@ -20,7 +20,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
 import { setupTestBed, SitesService } from '@alfresco/adf-core';
 import { of } from 'rxjs';

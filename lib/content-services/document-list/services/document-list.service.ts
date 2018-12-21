@@ -21,7 +21,7 @@ import {
 } from '@alfresco/adf-core';
 
 import { Injectable } from '@angular/core';
-import { NodeEntry, NodePaging } from 'alfresco-js-api';
+import { NodeEntry, NodePaging } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 

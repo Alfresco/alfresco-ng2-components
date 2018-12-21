@@ -25,7 +25,7 @@ import { BehaviorSubject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-import { NodeEntry } from 'alfresco-js-api';
+import { NodeEntry } from '@alfresco/js-api';
 @Component({
     selector: 'adf-cloud-process-list',
     templateUrl: './process-list-cloud.component.html',

@@ -22,7 +22,7 @@ import { ContentService } from '../../services/content.service';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { EcmUserModel } from '../models/ecm-user.model';
-import { PersonEntry } from 'alfresco-js-api';
+import { PersonEntry } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'

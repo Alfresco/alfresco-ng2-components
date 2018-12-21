@@ -19,7 +19,7 @@ import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output,
          QueryList, ViewEncapsulation, ViewChild, ViewChildren, ElementRef, TemplateRef, ContentChild } from '@angular/core';
-import { NodeEntry, QueryBody } from 'alfresco-js-api';
+import { NodeEntry, QueryBody } from '@alfresco/js-api';
 import { Observable, Subject } from 'rxjs';
 import { SearchComponent } from './search.component';
 import { MatListItem } from '@angular/material';

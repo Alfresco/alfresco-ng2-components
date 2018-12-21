@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { ChangeDetectorRef, Directive, ElementRef, Host, Inject, Input, OnChanges, Optional, Renderer2,  SimpleChanges } from '@angular/core';
-import { NodeEntry } from 'alfresco-js-api';
+import { NodeEntry } from '@alfresco/js-api';
 import { ContentService } from './../services/content.service';
 import { EXTENDIBLE_COMPONENT } from './../interface/injection.tokens';
 

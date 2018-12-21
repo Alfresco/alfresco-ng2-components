@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { NodeEntry, MinimalNode, NodePaging } from 'alfresco-js-api';
+import { NodeEntry, MinimalNode, NodePaging } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { UserPreferencesService } from './user-preferences.service';

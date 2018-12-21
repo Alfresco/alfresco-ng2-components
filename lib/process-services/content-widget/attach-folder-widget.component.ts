@@ -24,7 +24,7 @@ import {
     NodesApiService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 
 @Component({
     selector: 'attach-folder-widget',

@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, ElementRef, Renderer2, HostListener, Input, AfterViewInit } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { PermissionsEnum, ContentService } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '../content-node-selector/content-node-dialog.service';
 

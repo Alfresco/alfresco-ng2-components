@@ -17,7 +17,7 @@
 
 // note: contains only limited subset of available fields
 
-import { NodeEntry, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { NodeEntry, MinimalNodeEntryEntity } from '@alfresco/js-api';
 
 export class NodePaging {
     list: NodePagingList;

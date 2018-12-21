@@ -23,7 +23,7 @@ import {
     Component, EventEmitter, forwardRef, Input,
     OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, NgZone
 } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { PermissionModel } from '../../document-list/models/permissions.model';
 import { UploadBase } from './base-upload/upload-base';

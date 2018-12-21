@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { SitePaging, SiteEntry } from 'alfresco-js-api';
+import { SitePaging, SiteEntry } from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({

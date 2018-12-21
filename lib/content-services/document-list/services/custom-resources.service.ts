@@ -31,7 +31,7 @@ import {
     FavoritePaging,
     SiteMemberPaging,
     SiteRolePaging
-} from 'alfresco-js-api';
+} from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';

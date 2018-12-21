@@ -20,7 +20,7 @@ import {
     AlfrescoApiCompatibility,
     ContentApi,
     Core
-} from 'alfresco-js-api';
+} from '@alfresco/js-api';
 /* tslint:disable:adf-file-name */
 
 @Injectable({

@@ -23,7 +23,7 @@ import { Subject, of } from 'rxjs';
 
 import { ContentService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { FolderEditDirective } from './folder-edit.directive';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 
 @Component({
     template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>'

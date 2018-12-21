@@ -19,7 +19,7 @@ import { TranslationService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation, OnDestroy, OnInit } from '@angular/core';
 import { TagService } from './services/tag.service';
 import { Subscription } from 'rxjs';
-import { TagPaging } from 'alfresco-js-api';
+import { TagPaging } from '@alfresco/js-api';
 
 /**
  *

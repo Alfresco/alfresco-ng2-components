@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
 
 @Component({

@@ -25,7 +25,7 @@ import { FacetQuery } from '../../facet-query.interface';
 import { FacetField } from '../../facet-field.interface';
 import { SearchFilterList } from './models/search-filter-list.model';
 import { takeWhile } from 'rxjs/operators';
-import { ResultSetPaging } from 'alfresco-js-api';
+import { ResultSetPaging } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-search-filter',

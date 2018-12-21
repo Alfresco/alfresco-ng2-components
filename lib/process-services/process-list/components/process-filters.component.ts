@@ -17,7 +17,7 @@
 
 import { AppsProcessService } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from 'alfresco-js-api';
+import { ProcessInstanceFilterRepresentation, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './../services/process-filter.service';

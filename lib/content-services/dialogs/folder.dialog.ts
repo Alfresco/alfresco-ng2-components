@@ -21,7 +21,7 @@ import { Component, Inject, OnInit, Optional, EventEmitter, Output } from '@angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { NodesApiService, TranslationService } from '@alfresco/adf-core';
 
 import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './folder-name.validators';

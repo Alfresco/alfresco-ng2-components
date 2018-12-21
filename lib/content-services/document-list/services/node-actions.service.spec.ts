@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';

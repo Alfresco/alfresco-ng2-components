@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NodeEntry } from 'alfresco-js-api';
+import { NodeEntry } from '@alfresco/js-api';
 
 export interface FolderCreatedEvent {
 

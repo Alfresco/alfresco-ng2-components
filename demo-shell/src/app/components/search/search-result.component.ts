@@ -17,7 +17,7 @@
 
 import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { NodePaging, Pagination, ResultSetPaging } from 'alfresco-js-api';
+import { NodePaging, Pagination, ResultSetPaging } from '@alfresco/js-api';
 import { SearchQueryBuilderService } from '@alfresco/adf-content-services';
 import { UserPreferencesService, SearchService, AppConfigService } from '@alfresco/adf-core';
 import { Subscription } from 'rxjs';

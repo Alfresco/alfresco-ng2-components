@@ -27,7 +27,7 @@ import {
     OnChanges,
     SimpleChanges
 } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { ExtensionService } from '../../services/extension.service';
 
 @Component({

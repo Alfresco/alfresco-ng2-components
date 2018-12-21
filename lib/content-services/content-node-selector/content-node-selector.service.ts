@@ -17,7 +17,7 @@
 
 import { SearchService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { NodePaging } from 'alfresco-js-api';
+import { NodePaging } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
 
 /**

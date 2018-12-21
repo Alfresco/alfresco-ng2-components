@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { NodePaging, QueryBody } from 'alfresco-js-api';
+import { NodePaging, QueryBody } from '@alfresco/js-api';
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { SearchConfigurationService } from './search-configuration.service';

@@ -26,7 +26,7 @@ import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 
 describe('AttachFileWidgetDialogComponent', () => {
 

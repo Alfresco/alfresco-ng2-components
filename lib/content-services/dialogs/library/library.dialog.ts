@@ -32,7 +32,7 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
-import { SiteBodyCreate, SiteEntry, SitePaging } from 'alfresco-js-api';
+import { SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { debounceTime, mergeMap, takeUntil } from 'rxjs/operators';
 

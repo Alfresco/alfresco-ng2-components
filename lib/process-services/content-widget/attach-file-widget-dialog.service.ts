@@ -19,7 +19,7 @@ import { MatDialog } from '@angular/material';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
 
 @Injectable({

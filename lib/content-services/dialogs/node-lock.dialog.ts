@@ -21,7 +21,7 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { NodeBodyLock, MinimalNodeEntryEntity, NodeEntry } from 'alfresco-js-api';
+import { NodeBodyLock, MinimalNodeEntryEntity, NodeEntry } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Component({

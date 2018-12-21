@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { RenditionEntry, RenditionPaging } from 'alfresco-js-api';
+import { RenditionEntry, RenditionPaging } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 

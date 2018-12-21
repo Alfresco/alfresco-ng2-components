@@ -20,7 +20,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ContentService } from '@alfresco/adf-core';
 import { Subject, Observable, throwError } from 'rxjs';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
-import { Node, NodeEntry, SitePaging } from 'alfresco-js-api';
+import { Node, NodeEntry, SitePaging } from '@alfresco/js-api';
 import { DataColumn, SitesService, TranslationService, PermissionsEnum } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';

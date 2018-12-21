@@ -16,7 +16,7 @@
  */
 
 import { BaseEvent } from '@alfresco/adf-core';
-import { NodeEntry, Node } from 'alfresco-js-api';
+import { NodeEntry, Node } from '@alfresco/js-api';
 
 export class NodeEntityEvent extends BaseEvent<NodeEntry> {
 

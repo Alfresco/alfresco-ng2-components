@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSelect } from '@angular/material';
-import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, PathElementEntity } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list';
 
 @Component({

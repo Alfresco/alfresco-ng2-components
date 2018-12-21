@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewBaseItemModel, CardViewComponent, CardViewUpdateService, NodesApiService, LogService, setupTestBed } from '@alfresco/adf-core';

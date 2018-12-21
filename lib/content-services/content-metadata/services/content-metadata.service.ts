@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { BasicPropertiesService } from './basic-properties.service';
 import { Observable, of } from 'rxjs';
 import { PropertyGroupTranslatorService } from './property-groups-translator.service';

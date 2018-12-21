@@ -18,7 +18,7 @@
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
-import { AlfrescoApiCompatibility, MinimalNode, RelatedContentRepresentation } from 'alfresco-js-api';
+import { AlfrescoApiCompatibility, MinimalNode, RelatedContentRepresentation } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { ExternalContent } from '../components/widgets/core/external-content';
 import { ExternalContentLink } from '../components/widgets/core/external-content-link';

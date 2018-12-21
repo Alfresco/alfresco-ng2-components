@@ -29,7 +29,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { NodePaging, QueryBody } from 'alfresco-js-api';
+import { NodePaging, QueryBody } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 

@@ -21,7 +21,7 @@ import {
     Input, OnChanges, Output, SimpleChanges, TemplateRef,
     ViewEncapsulation, OnInit, OnDestroy
 } from '@angular/core';
-import { RenditionPaging, SharedLinkEntry, Node, RenditionEntry, NodeEntry } from 'alfresco-js-api';
+import { RenditionPaging, SharedLinkEntry, Node, RenditionEntry, NodeEntry } from '@alfresco/js-api';
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';

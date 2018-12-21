@@ -16,7 +16,7 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { NodeEntry } from 'alfresco-js-api';
+import { NodeEntry } from '@alfresco/js-api';
 
 @Pipe({
     name: 'adfNodeNameTooltip'

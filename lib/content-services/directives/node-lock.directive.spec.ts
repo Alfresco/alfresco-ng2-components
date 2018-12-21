@@ -20,7 +20,7 @@ import { By } from '@angular/platform-browser';
 import { Component, DebugElement } from '@angular/core';
 
 import { NodeLockDirective } from './node-lock.directive';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { NodeActionsService } from '../document-list/services/node-actions.service';
 import { ContentNodeDialogService } from '../content-node-selector/content-node-dialog.service';
 import { DocumentListService } from '../document-list/services/document-list.service';

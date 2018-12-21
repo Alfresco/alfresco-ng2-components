@@ -22,8 +22,8 @@ import {
     Activiti,
     SearchApi,
     Node
-} from 'alfresco-js-api';
-import { AlfrescoApiCompatibility } from 'alfresco-js-api';
+} from '@alfresco/js-api';
+import { AlfrescoApiCompatibility } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs';

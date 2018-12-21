@@ -19,7 +19,7 @@ import {
     ProcessFilterRequestRepresentation,
     ProcessInstanceFilterRepresentation,
     UserProcessInstanceFilterRepresentation
-} from 'alfresco-js-api';
+} from '@alfresco/js-api';
 
 export class FilterProcessRepresentationModel implements UserProcessInstanceFilterRepresentation {
     appId: number;

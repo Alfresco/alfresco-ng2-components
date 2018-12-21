@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { SitePaging, SiteEntry, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { SitePaging, SiteEntry, MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { ShareDataRow } from '@alfresco/adf-content-services';
 import { DataRow, DataColumn, ThumbnailService } from '@alfresco/adf-core';
 

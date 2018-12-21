@@ -24,7 +24,7 @@ import { FolderDialogComponent } from '../dialogs/folder.dialog';
 
 import { ContentService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { FolderCreateDirective } from './folder-create.directive';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 
 @Component({
     template: `

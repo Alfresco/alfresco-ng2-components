@@ -23,7 +23,7 @@ import { Location } from '@angular/common';
 
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from 'alfresco-js-api';
+import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry } from '@alfresco/js-api';
 import {
     AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,

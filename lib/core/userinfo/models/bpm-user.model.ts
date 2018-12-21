@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { UserRepresentation } from 'alfresco-js-api';
+import { UserRepresentation } from '@alfresco/js-api';
 
 export class BpmUserModel implements UserRepresentation {
     apps: any;

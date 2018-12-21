@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { Observable, Subscription } from 'rxjs';
 import { CardViewItem, NodesApiService, LogService, CardViewUpdateService, AlfrescoApiService } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';

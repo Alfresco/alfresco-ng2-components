@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AssocChildBody, AssocTargetBody } from 'alfresco-js-api';
+import { AssocChildBody, AssocTargetBody } from '@alfresco/js-api';
 
 export interface FileUploadProgress {
     loaded: number;

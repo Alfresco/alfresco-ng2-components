@@ -33,7 +33,7 @@ import {
     ProcessInstanceFilterRepresentation,
     Pagination,
     UserProcessInstanceFilterRepresentation
-} from 'alfresco-js-api';
+} from '@alfresco/js-api';
 import {
     FORM_FIELD_VALIDATORS, FormEvent, FormFieldEvent, FormRenderingService, FormService,
     DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent, UserPreferenceValues

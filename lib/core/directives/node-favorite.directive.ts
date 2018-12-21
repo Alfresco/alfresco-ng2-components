@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { FavoriteBody, NodeEntry } from 'alfresco-js-api';
+import { FavoriteBody, NodeEntry } from '@alfresco/js-api';
 import { Observable, from, forkJoin, of } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { catchError, map } from 'rxjs/operators';

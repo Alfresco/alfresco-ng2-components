@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ContentApi, MinimalNode, Node, NodeEntry } from 'alfresco-js-api';
+import { ContentApi, MinimalNode, Node, NodeEntry } from '@alfresco/js-api';
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { FolderCreatedEvent } from '../events/folder-created.event';
 import { PermissionsEnum } from '../models/permissions.enum';

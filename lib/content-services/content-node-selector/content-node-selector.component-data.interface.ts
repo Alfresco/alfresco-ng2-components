@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, SitePaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 
 export interface ContentNodeSelectorComponentData {

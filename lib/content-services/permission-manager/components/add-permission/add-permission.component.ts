@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
-import { NodeEntry, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { NodeEntry, MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { NodesApiService, ContentService, PermissionsEnum } from '@alfresco/adf-core';
 

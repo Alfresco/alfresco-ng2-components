@@ -16,7 +16,7 @@
  */
 
 import { DataColumn, DataRow, DataSorting, DataTableAdapter, ThumbnailService } from '@alfresco/adf-core';
-import { NodePaging } from 'alfresco-js-api';
+import { NodePaging } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
 import { ShareDataRow } from './share-data-row.model';

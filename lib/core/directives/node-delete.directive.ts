@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { NodeEntry, Node, DeletedNodeEntity, DeletedNode } from 'alfresco-js-api';
+import { NodeEntry, Node, DeletedNodeEntity, DeletedNode } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';

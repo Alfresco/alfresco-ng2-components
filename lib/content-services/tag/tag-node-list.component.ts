@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { TagService } from './services/tag.service';
-import { TagPaging } from 'alfresco-js-api';
+import { TagPaging } from '@alfresco/js-api';
 
 /**
  *

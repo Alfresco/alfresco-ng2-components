@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, throwError } from 'rxjs';
 import { AddPermissionDialogComponent } from '../components/add-permission/add-permission-dialog.component';
 import { AddPermissionDialogData } from '../components/add-permission/add-permission-dialog-data.interface';
-import { NodeEntry, MinimalNodeEntryEntity, Node } from 'alfresco-js-api';
+import { NodeEntry, MinimalNodeEntryEntity, Node } from '@alfresco/js-api';
 import { NodePermissionService } from './node-permission.service';
 import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
 import { switchMap } from 'rxjs/operators';

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Pagination } from 'alfresco-js-api';
+import { Pagination } from '@alfresco/js-api';
 
 export class PaginationModel extends Pagination {
     merge?: boolean;

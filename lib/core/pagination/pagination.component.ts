@@ -20,7 +20,7 @@ import {
     ChangeDetectorRef, OnDestroy, HostBinding
 } from '@angular/core';
 
-import { Pagination } from 'alfresco-js-api';
+import { Pagination } from '@alfresco/js-api';
 import { PaginatedComponent } from './paginated-component.interface';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { Subscription } from 'rxjs';

@@ -17,7 +17,7 @@
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PathElementEntity } from 'alfresco-js-api';
+import { PathElementEntity } from '@alfresco/js-api';
 import { setupTestBed } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
 import { DocumentListComponent } from '../document-list';

@@ -24,7 +24,7 @@ import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model'
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { BehaviorSubject } from 'rxjs';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
-import { NodeEntry } from 'alfresco-js-api';
+import { NodeEntry } from '@alfresco/js-api';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 
 @Component({

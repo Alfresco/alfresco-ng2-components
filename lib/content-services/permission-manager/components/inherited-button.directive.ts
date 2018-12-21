@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 import { Directive, Input, Output, EventEmitter } from '@angular/core';
 import { NodesApiService, ContentService, PermissionsEnum } from '@alfresco/adf-core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 
 @Directive({
     selector: 'button[adf-inherit-permission], mat-button-toggle[adf-inherit-permission]',

@@ -18,13 +18,13 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MinimalNodeEntryEntity, SiteEntry, SitePaging } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { SearchService, SitesService, setupTestBed } from '@alfresco/adf-core';
 import { Observable, Observer, of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { ContentNodeSelectorService } from './content-node-selector.service';
-import { NodePaging } from 'alfresco-js-api';
+import { NodePaging } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';

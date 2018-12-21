@@ -21,7 +21,7 @@ import { SearchService, SearchConfigurationService } from '@alfresco/adf-core';
 import { SearchComponent } from '../../../search/components/search.component';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
-import { NodeEntry } from 'alfresco-js-api';
+import { NodeEntry } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-add-permission-panel',

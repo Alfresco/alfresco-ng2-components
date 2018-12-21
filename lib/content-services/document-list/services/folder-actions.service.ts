@@ -17,7 +17,7 @@
 
 import { ContentService, TranslationService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { NodeEntry } from 'alfresco-js-api';
+import { NodeEntry } from '@alfresco/js-api';
 import { Observable, Subject, throwError } from 'rxjs';
 import { ContentActionHandler } from '../models/content-action.model';
 import { PermissionModel } from '../models/permissions.model';

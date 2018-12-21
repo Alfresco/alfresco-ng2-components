@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { VersionListComponent } from './version-list.component';
 import { AppConfigService, ContentService, AlfrescoApiService } from '@alfresco/adf-core';
 import { trigger, state, style, animate, transition } from '@angular/animations';

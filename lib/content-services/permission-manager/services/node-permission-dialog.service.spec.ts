@@ -22,7 +22,7 @@ import { MatDialog } from '@angular/material';
 import { Subject, of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodePermissionService } from './node-permission.service';
-import { Node } from 'alfresco-js-api';
+import { Node } from '@alfresco/js-api';
 
 describe('NodePermissionDialogService', () => {
 

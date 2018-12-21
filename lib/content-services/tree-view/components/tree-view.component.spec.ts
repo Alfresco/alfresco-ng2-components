@@ -22,7 +22,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TreeViewService } from '../services/tree-view.service';
 import { of, throwError } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
-import { NodeEntry } from 'alfresco-js-api';
+import { NodeEntry } from '@alfresco/js-api';
 import { SimpleChange } from '@angular/core';
 
 describe('TreeViewComponent', () => {

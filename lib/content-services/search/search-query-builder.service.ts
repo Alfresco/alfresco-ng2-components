@@ -24,7 +24,7 @@ import {
     RequestFacetField,
     RequestSortDefinitionInner,
     ResultSetPaging
-} from 'alfresco-js-api';
+} from '@alfresco/js-api';
 import { SearchCategory } from './search-category.interface';
 import { FilterQuery } from './filter-query.interface';
 import { SearchRange } from './search-range.interface';

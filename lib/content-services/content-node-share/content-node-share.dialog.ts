@@ -34,7 +34,7 @@ import {
     ContentService,
     RenditionsService
 } from '@alfresco/adf-core';
-import { SharedLinkEntry, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { SharedLinkEntry, MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import moment from 'moment-es6';
 

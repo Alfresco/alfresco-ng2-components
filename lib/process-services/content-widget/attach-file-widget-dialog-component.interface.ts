@@ -16,7 +16,7 @@
  */
 
 import { Subject } from 'rxjs';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 
 export interface AttachFileWidgetDialogComponentData {
     title: string;

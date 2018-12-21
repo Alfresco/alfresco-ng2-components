@@ -17,7 +17,7 @@
 
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Pagination } from 'alfresco-js-api';
+import { Pagination } from '@alfresco/js-api';
 import { PaginationComponent } from './pagination.component';
 import { PaginatedComponent } from './public-api';
 import { BehaviorSubject } from 'rxjs';
