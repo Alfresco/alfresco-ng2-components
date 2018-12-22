@@ -25,10 +25,12 @@ export class TreeBaseNode {
     expandable = true;
     node: NodeEntry;
 
-    constructor(nodeEntry: NodeEntry, level?: number) {
+    constructor(nodeEntry: NodeEntry, level?: number, expandable?: boolean) {
         this.name = nodeEntry.entry.name;
-        this.level = level ? level : 0;
         this.nodeId = nodeEntry.entry.id;
-        this.node = nodeEntry;
+        this.level = level ? level : 0;
+        this.expandable = expandable ? expandable : true;
+        this.node = nodeEntry ? new NodeEntry(nodeEntry) : undefined;
+
     }
 }

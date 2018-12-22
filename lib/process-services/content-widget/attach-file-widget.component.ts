@@ -31,7 +31,7 @@ import {
     AppConfigService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { from, zip, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
@@ -133,7 +133,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         let params = this.field.params;
         if (this.isDefinedSourceFolder()) {
             this.contentDialog.openFileBrowseDialogByFolderId(params.fileSource.selectedFolder.pathId).subscribe(
-                (selections: MinimalNodeEntryEntity[]) => {
+                (selections: Node[]) => {
                     this.tempFilesList.push(...selections);
                     this.uploadFileFromCS(selections,
                         this.field.params.fileSource.selectedFolder.accountId,
@@ -195,7 +195,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 });
         } else {
             this.contentDialog.openFileBrowseDialogBySite().subscribe(
-                (selections: MinimalNodeEntryEntity[]) => {
+                (selections: Node[]) => {
                     this.tempFilesList.push(...selections);
                     this.uploadFileFromCS(selections, accountIdentifier);
                 });

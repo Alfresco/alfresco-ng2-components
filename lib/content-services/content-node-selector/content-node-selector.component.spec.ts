@@ -20,7 +20,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
 import { setupTestBed, SitesService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
@@ -35,7 +35,7 @@ describe('ContentNodeSelectorDialogComponent', () => {
     let data: any = {
         title: 'Move along citizen...',
         actionName: 'move',
-        select: new EventEmitter<MinimalNodeEntryEntity>(),
+        select: new EventEmitter<Node>(),
         rowFilter: () => {
         },
         imageResolver: () => 'piccolo',
@@ -140,7 +140,7 @@ describe('ContentNodeSelectorDialogComponent', () => {
         });
 
         it('should be enabled when a node is chosen', () => {
-            component.onSelect([{ id: 'fake' }]);
+            component.onSelect([new Node({ id: 'fake' })]);
             fixture.detectChanges();
 
             let actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));

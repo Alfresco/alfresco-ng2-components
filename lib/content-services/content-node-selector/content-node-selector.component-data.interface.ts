@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { MinimalNodeEntryEntity, SitePaging } from '@alfresco/js-api';
+import { Node, SitePaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 
 export interface ContentNodeSelectorComponentData {
@@ -26,7 +26,7 @@ export interface ContentNodeSelectorComponentData {
     dropdownSiteList?: SitePaging;
     rowFilter?: any;
     imageResolver?: any;
-    isSelectionValid?: (entry: MinimalNodeEntryEntity) => boolean;
+    isSelectionValid?: (entry: Node) => boolean;
     breadcrumbTransform?: (node) => any;
-    select: Subject<MinimalNodeEntryEntity[]>;
+    select: Subject<Node[]>;
 }

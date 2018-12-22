@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { ContentMetadataCardComponent } from './content-metadata-card.component';
 import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
 import { setupTestBed, PermissionsEnum } from '@alfresco/adf-core';
@@ -27,7 +27,7 @@ describe('ContentMetadataCardComponent', () => {
 
     let component: ContentMetadataCardComponent;
     let fixture: ComponentFixture<ContentMetadataCardComponent>;
-    let node: MinimalNodeEntryEntity;
+    let node: Node;
     let preset = 'custom-preset';
 
     setupTestBed({
@@ -37,7 +37,7 @@ describe('ContentMetadataCardComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ContentMetadataCardComponent);
         component = fixture.componentInstance;
-        node = <MinimalNodeEntryEntity> {
+        node = <Node> {
             aspectNames: [],
             nodeType: '',
             content: {},

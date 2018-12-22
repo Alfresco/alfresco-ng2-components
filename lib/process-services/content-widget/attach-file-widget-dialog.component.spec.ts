@@ -26,7 +26,7 @@ import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 
 describe('AttachFileWidgetDialogComponent', () => {
 
@@ -131,12 +131,12 @@ describe('AttachFileWidgetDialogComponent', () => {
         });
 
         it('should be able to select a file', (done) => {
-            data.selected.subscribe((nodeList: MinimalNodeEntryEntity[]) => {
+            data.selected.subscribe((nodeList: Node[]) => {
                 expect(nodeList[0].id).toBe('fake');
                 expect(nodeList[0].isFile).toBeTruthy();
                 done();
             });
-            let fakeNode: MinimalNodeEntryEntity = { id: 'fake', isFile: true};
+            let fakeNode: Node = new Node({ id: 'fake', isFile: true});
             contentNodePanel.componentInstance.select.emit([fakeNode]);
             fixture.detectChanges();
             fixture.whenStable().then(() => {

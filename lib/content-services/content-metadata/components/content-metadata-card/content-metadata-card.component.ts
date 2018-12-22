@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
 
 @Component({
@@ -29,7 +29,7 @@ import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
 export class ContentMetadataCardComponent {
     /** (required) The node entity to fetch metadata about */
     @Input()
-    node: MinimalNodeEntryEntity;
+    node: Node;
 
     /** (optional) This flag displays/hides empty metadata
      * fields.

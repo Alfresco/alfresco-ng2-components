@@ -21,7 +21,7 @@ import {
     PaginatedComponent, PaginationModel
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
-import { MinimalNodeEntryEntity, NodePaging, Pagination, SiteEntry, SitePaging } from '@alfresco/js-api';
+import { Node, NodePaging, Pagination, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { DocumentListComponent, PaginationStrategy } from '../document-list/components/document-list.component';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
@@ -30,7 +30,7 @@ import { debounceTime } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 
-export type ValidationFunction = (entry: MinimalNodeEntryEntity) => boolean;
+export type ValidationFunction = (entry: Node) => boolean;
 
 const defaultValidation = () => true;
 
@@ -95,7 +95,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
 
     /** Emitted when the user has chosen an item. */
     @Output()
-    select: EventEmitter<MinimalNodeEntryEntity[]> = new EventEmitter<MinimalNodeEntryEntity[]>();
+    select: EventEmitter<Node[]> = new EventEmitter<Node[]>();
 
     @ViewChild('documentList')
     documentList: DocumentListComponent;
@@ -109,7 +109,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     showingSearchResults: boolean = false;
     loadingSearchResults: boolean = false;
     inDialog: boolean = false;
-    _chosenNode: MinimalNodeEntryEntity = null;
+    _chosenNode: Node = null;
     folderIdToShow: string | null = null;
     paginationStrategy: PaginationStrategy = PaginationStrategy.Infinite;
     pagination: BehaviorSubject<PaginationModel>;
@@ -141,7 +141,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
         this.pagination = new BehaviorSubject<PaginationModel>(defaultPagination);
     }
 
-    set chosenNode(value: MinimalNodeEntryEntity) {
+    set chosenNode(value: Node) {
         this._chosenNode = value;
         let valuesArray = null;
         if (value) {
@@ -184,8 +184,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     /**
      * Returns the actually selected|entered folder node or null in case of searching for the breadcrumb
      */
-    get breadcrumbFolderNode(): MinimalNodeEntryEntity | null {
-        let folderNode: MinimalNodeEntryEntity;
+    get breadcrumbFolderNode(): Node | null {
+        let folderNode: Node;
 
         if (this.showingSearchResults && this.chosenNode) {
             folderNode = this.chosenNode;
@@ -345,7 +345,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
      *
      * @param entry
      */
-    private attemptNodeSelection(entry: MinimalNodeEntryEntity): void {
+    private attemptNodeSelection(entry: Node): void {
         if (this.isSelectionValid(entry)) {
             this.chosenNode = entry;
         } else {

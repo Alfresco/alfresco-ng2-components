@@ -61,7 +61,7 @@ describe('NodePermissionDialogService', () => {
 
     describe('when node has permission to update permissions', () => {
 
-        let fakePermissionNode = {};
+        let fakePermissionNode = new Node({});
 
         beforeEach(() => {
             fakePermissionNode = <Node> { id: 'fake-permission-node', allowableOperations: ['updatePermissions']};
@@ -97,7 +97,7 @@ describe('NodePermissionDialogService', () => {
 
     describe('when node does not have permission to update permissions', () => {
 
-        let fakeForbiddenNode = {};
+        let fakeForbiddenNode = new Node({});
 
         beforeEach(() => {
             fakeForbiddenNode = <Node> { id: 'fake-permission-node', allowableOperations: ['update']};

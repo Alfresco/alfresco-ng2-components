@@ -21,7 +21,7 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { NodeBodyLock, MinimalNodeEntryEntity, NodeEntry } from '@alfresco/js-api';
+import { NodeBodyLock, Node, NodeEntry } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 
 @Component({
@@ -32,7 +32,7 @@ import { AlfrescoApiService } from '@alfresco/adf-core';
 export class NodeLockDialogComponent implements OnInit {
 
     form: FormGroup;
-    node: MinimalNodeEntryEntity = null;
+    node: Node = null;
     nodeName: string;
 
     constructor(

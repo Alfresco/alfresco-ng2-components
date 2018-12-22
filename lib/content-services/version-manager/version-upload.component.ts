@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { ContentService } from '@alfresco/adf-core';
 
 @Component({
@@ -33,7 +33,7 @@ export class VersionUploadComponent {
     uploadVersion: boolean = false;
 
     @Input()
-    node: MinimalNodeEntryEntity;
+    node: Node;
 
     @Output()
     success = new EventEmitter();

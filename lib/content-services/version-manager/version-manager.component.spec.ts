@@ -19,7 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { VersionManagerComponent } from './version-manager.component';
 import { VersionListComponent } from './version-list.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,11 +31,11 @@ describe('VersionManagerComponent', () => {
     let alfrescoApiService: AlfrescoApiService;
 
     const expectedComment = 'test-version-comment';
-    const  node: MinimalNodeEntryEntity = {
+    const  node: Node = new Node({
         id: '1234',
         name: 'TEST-NODE',
         isFile: true
-    };
+    });
     const versionEntry = {
        entry: {
            id: '1.0',

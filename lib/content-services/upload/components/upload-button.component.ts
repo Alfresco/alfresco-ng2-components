@@ -23,7 +23,7 @@ import {
     Component, EventEmitter, forwardRef, Input,
     OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation, NgZone
 } from '@angular/core';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { PermissionModel } from '../../document-list/models/permissions.model';
 import { UploadBase } from './base-upload/upload-base';
@@ -125,7 +125,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
         }
     }
 
-    nodeHasPermission(node: MinimalNodeEntryEntity, permission: PermissionsEnum | string): boolean {
+    nodeHasPermission(node: Node, permission: PermissionsEnum | string): boolean {
         return this.contentService.hasPermission(node, permission);
     }
 }

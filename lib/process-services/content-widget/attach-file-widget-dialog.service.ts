@@ -19,7 +19,7 @@ import { MatDialog } from '@angular/material';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
 
 @Injectable({
@@ -40,9 +40,9 @@ export class AttachFileWidgetDialogService {
      * @param contentEntry Item to upload
      * @returns Information about the chosen file(s)
      */
-    openLogin(ecmHost: string, actionName?: string, context?: string): Observable<MinimalNodeEntryEntity[]> {
+    openLogin(ecmHost: string, actionName?: string, context?: string): Observable<Node[]> {
         let titleString: string = `Please log in for ${ecmHost}`;
-        const selected = new Subject<MinimalNodeEntryEntity[]>();
+        const selected = new Subject<Node[]>();
         selected.subscribe({
             complete: this.close.bind(this)
         });
@@ -69,7 +69,7 @@ export class AttachFileWidgetDialogService {
         this.dialog.closeAll();
     }
 
-    private isNodeFile(entry: MinimalNodeEntryEntity): boolean {
+    private isNodeFile(entry: Node): boolean {
         return entry.isFile;
     }
 

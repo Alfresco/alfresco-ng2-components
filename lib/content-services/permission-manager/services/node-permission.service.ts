@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, from, throwError } from 'rxjs';
 import { AlfrescoApiService, SearchService, NodesApiService, TranslationService } from '@alfresco/adf-core';
-import { QueryBody, MinimalNodeEntryEntity, NodeEntry, PathElement, GroupMemberEntry, GroupMemberPaging, PermissionElement } from '@alfresco/js-api';
+import { QueryBody, Node, NodeEntry, PathElement, GroupMemberEntry, GroupMemberPaging, PermissionElement } from '@alfresco/js-api';
 import { switchMap, map } from 'rxjs/operators';
 
 @Injectable({
@@ -37,7 +37,7 @@ export class NodePermissionService {
      * @param node The target node
      * @returns Array of strings representing the roles
      */
-    getNodeRoles(node: MinimalNodeEntryEntity): Observable<string[]> {
+    getNodeRoles(node: Node): Observable<string[]> {
         const retrieveSiteQueryBody: QueryBody = this.buildRetrieveSiteQueryBody(node.path.elements);
         return this.searchApiService.searchByQueryBody(retrieveSiteQueryBody)
             .pipe(
@@ -58,7 +58,7 @@ export class NodePermissionService {
      * @param updatedPermissionRole Permission role to update or add
      * @returns Node with updated permission
      */
-    updatePermissionRole(node: MinimalNodeEntryEntity, updatedPermissionRole: PermissionElement): Observable<MinimalNodeEntryEntity> {
+    updatePermissionRole(node: Node, updatedPermissionRole: PermissionElement): Observable<Node> {
         let permissionBody = { permissions: { locallySet: []} };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(updatedPermissionRole.authorityId);
         permissionBody.permissions.locallySet = permissionBody.permissions.locallySet.concat(node.permissions.locallySet);
@@ -76,7 +76,7 @@ export class NodePermissionService {
      * @param permissionList New permission settings
      * @returns Node with updated permissions
      */
-    updateNodePermissions(nodeId: string, permissionList: NodeEntry[]): Observable<MinimalNodeEntryEntity> {
+    updateNodePermissions(nodeId: string, permissionList: NodeEntry[]): Observable<Node> {
        return this.nodeService.getNode(nodeId).pipe(
            switchMap((node) => {
                 return this.getNodeRoles(node).pipe(
@@ -94,7 +94,7 @@ export class NodePermissionService {
      * @param nodeRole Permission role
      * @returns Node with updated permissions
      */
-    updateLocallySetPermissions(node: MinimalNodeEntryEntity, nodes: NodeEntry[], nodeRole: string[]): Observable<MinimalNodeEntryEntity> {
+    updateLocallySetPermissions(node: Node, nodes: NodeEntry[], nodeRole: string[]): Observable<Node> {
         let permissionBody = { permissions: { locallySet: []} };
         const permissionList = this.transformNodeToPermissionElement(nodes, nodeRole[0]);
         const duplicatedPermissions = this.getDuplicatedPermissions(node.permissions.locallySet, permissionList);
@@ -145,7 +145,7 @@ export class NodePermissionService {
      * @param permissionToRemove Permission setting to remove
      * @returns Node with modified permissions
      */
-    removePermission(node: MinimalNodeEntryEntity, permissionToRemove: PermissionElement): Observable<MinimalNodeEntryEntity> {
+    removePermission(node: Node, permissionToRemove: PermissionElement): Observable<Node> {
         let permissionBody = { permissions: { locallySet: [] } };
         const index = node.permissions.locallySet.map((permission) => permission.authorityId).indexOf(permissionToRemove.authorityId);
         if (index !== -1) {

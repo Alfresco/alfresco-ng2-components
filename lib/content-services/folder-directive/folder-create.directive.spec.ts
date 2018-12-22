@@ -24,7 +24,7 @@ import { FolderDialogComponent } from '../dialogs/folder.dialog';
 
 import { ContentService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { FolderCreateDirective } from './folder-create.directive';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 
 @Component({
     template: `
@@ -37,9 +37,9 @@ import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 })
 class TestTypeComponent {
     parentNode = '';
-    public successParameter: MinimalNodeEntryEntity = null;
+    public successParameter: Node = null;
 
-    success(node: MinimalNodeEntryEntity) {
+    success(node: Node) {
         this.successParameter = node;
     }
 }
@@ -49,7 +49,7 @@ class TestTypeComponent {
 })
 class TestComponent {
     parentNode = '';
-    public successParameter: MinimalNodeEntryEntity = null;
+    public successParameter: Node = null;
 }
 
 describe('FolderCreateDirective', () => {
@@ -91,7 +91,7 @@ describe('FolderCreateDirective', () => {
             afterClosed: (val) =>  of(val),
             componentInstance: {
                 error: new Subject<any>(),
-                success: new Subject<MinimalNodeEntryEntity>()
+                success: new Subject<Node>()
             }
         };
     });
@@ -135,7 +135,7 @@ describe('FolderCreateDirective', () => {
         });
 
         it('should emit success event with node if the folder creation was successful', async(() => {
-            const testNode = <MinimalNodeEntryEntity> {};
+            const testNode = <Node> {};
             fixture.detectChanges();
 
             element.triggerEventHandler('click', event);

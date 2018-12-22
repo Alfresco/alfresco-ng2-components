@@ -31,7 +31,7 @@ import {
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService, ContentModule } from '@alfresco/adf-content-services';
 import { of } from 'rxjs';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 
 const fakeRepositoryListAnswer = [
@@ -72,7 +72,7 @@ const definedSourceParams = {
     }
 };
 
-const fakeMinimalNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+const fakeMinimalNode: Node = <Node> {
     id: 'fake',
     name: 'fake-name',
     content: {

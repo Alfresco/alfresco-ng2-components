@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MinimalNodeEntryEntity, SiteEntry, SitePaging } from '@alfresco/js-api';
+import { Node, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { SearchService, SitesService, setupTestBed } from '@alfresco/adf-core';
 import { Observable, Observer, of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
@@ -98,7 +98,7 @@ describe('ContentNodeSelectorComponent', () => {
         describe('Parameters', () => {
 
             it('should trigger the select event when selection has been made', (done) => {
-                const expectedNode = <MinimalNodeEntryEntity> {};
+                const expectedNode = <Node> {};
                 component.select.subscribe((nodes) => {
                     expect(nodes.length).toBe(1);
                     expect(nodes[0]).toBe(expectedNode);
@@ -116,7 +116,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expectedDefaultFolderNode;
 
             beforeEach(() => {
-                expectedDefaultFolderNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
+                expectedDefaultFolderNode = <Node> { path: { elements: [] } };
                 documentListService = TestBed.get(DocumentListService);
                 sitesService = TestBed.get(SitesService);
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(expectedDefaultFolderNode));
@@ -189,7 +189,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                 tick(debounceSearch);
 
-                const chosenNode = <MinimalNodeEntryEntity> { path: { elements: ['one'] } };
+                const chosenNode = new Node({ path: { elements: ['one'] } });
                 component.onNodeSelect({ detail: { node: { entry: chosenNode } } });
                 fixture.detectChanges();
 
@@ -210,7 +210,7 @@ describe('ContentNodeSelectorComponent', () => {
                     component.onFolderChange();
                     fixture.detectChanges();
 
-                    const chosenNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
+                    const chosenNode = <Node> { path: { elements: [] } };
                     component.onNodeSelect({ detail: { node: { entry: chosenNode } } });
                     fixture.detectChanges();
 
@@ -235,7 +235,7 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should make changes to breadcrumb\'s folderNode if breadcrumbTransform is defined', (done) => {
-                const transformedFolderNode = <MinimalNodeEntryEntity> {
+                const transformedFolderNode = <Node> {
                     id: 'trans-node',
                     name: 'trans-node-name',
                     path: { elements: [{ id: 'testId', name: 'testName' }] }
@@ -288,7 +288,7 @@ describe('ContentNodeSelectorComponent', () => {
 
             beforeEach(() => {
                 const documentListService = TestBed.get(DocumentListService);
-                const expectedDefaultFolderNode = <MinimalNodeEntryEntity> { path: { elements: [] } };
+                const expectedDefaultFolderNode = <Node> { path: { elements: [] } };
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(expectedDefaultFolderNode));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
@@ -319,7 +319,7 @@ describe('ContentNodeSelectorComponent', () => {
             }));
 
             it('should reset the currently chosen node in case of starting a new search', fakeAsync(() => {
-                component.chosenNode = <MinimalNodeEntryEntity> {};
+                component.chosenNode = <Node> {};
                 typeToSearchBox('kakarot');
 
                 tick(debounceSearch);
@@ -458,7 +458,7 @@ describe('ContentNodeSelectorComponent', () => {
             }));
 
             it('should clear the search field, nodes and chosenNode when clicking on the X (clear) icon', () => {
-                component.chosenNode = <MinimalNodeEntryEntity> {};
+                component.chosenNode = <Node> {};
                 component.nodes = {
                     list: {
                         entries: [{ entry: component.chosenNode }]
@@ -684,7 +684,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         describe('Chosen node', () => {
 
-            const entry: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {};
+            const entry: Node = <Node> {};
             const nodePage: NodePaging = <NodePaging> { list: {}, pagination: {} };
             let hasPermission;
 
@@ -783,7 +783,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                 it('should be null when the chosenNode is reset', async(() => {
                     hasPermission = true;
-                    component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
+                    component.onNodeSelect({ detail: { node: { entry: <Node> {} } } });
                     fixture.detectChanges();
 
                     component.select.subscribe((nodes) => {
@@ -833,7 +833,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                 it('should be null when the chosenNode is reset', async(() => {
                     fixture.detectChanges();
-                    component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
+                    component.onNodeSelect({ detail: { node: { entry: <Node> {} } } });
                     fixture.detectChanges();
 
                     component.select.subscribe((nodes) => {
@@ -885,7 +885,7 @@ describe('ContentNodeSelectorComponent', () => {
                 it('should be null when the chosenNode is reset', async(() => {
                     fixture.detectChanges();
 
-                    component.onNodeSelect({ detail: { node: { entry: <MinimalNodeEntryEntity> {} } } });
+                    component.onNodeSelect({ detail: { node: { entry: <Node> {} } } });
                     fixture.detectChanges();
 
                     component.select.subscribe((nodes) => {

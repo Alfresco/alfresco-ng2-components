@@ -21,7 +21,7 @@ import { Component, Inject, OnInit, Optional, EventEmitter, Output } from '@angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { NodesApiService, TranslationService } from '@alfresco/adf-core';
 
 import { forbidEndingDot, forbidOnlySpaces, forbidSpecialCharacters } from './folder-name.validators';
@@ -35,7 +35,7 @@ export class FolderDialogComponent implements OnInit {
 
     form: FormGroup;
 
-    folder: MinimalNodeEntryEntity = null;
+    folder: Node = null;
 
     /** Emitted when the edit/create folder give error for example a folder with same name already exist
      */
@@ -45,7 +45,7 @@ export class FolderDialogComponent implements OnInit {
     /** Emitted when the edit/create folder is successfully created/modified
      */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<MinimalNodeEntryEntity>();
+    success: EventEmitter<any> = new EventEmitter<Node>();
 
     editTitle = 'CORE.FOLDER_DIALOG.EDIT_FOLDER_TITLE';
     createTitle = 'CORE.FOLDER_DIALOG.CREATE_FOLDER_TITLE';
@@ -119,12 +119,12 @@ export class FolderDialogComponent implements OnInit {
         };
     }
 
-    private create(): Observable<MinimalNodeEntryEntity> {
+    private create(): Observable<Node> {
         const { name, properties, nodeType, nodesApi, data: { parentNodeId} } = this;
         return nodesApi.createFolder(parentNodeId, { name, properties, nodeType });
     }
 
-    private edit(): Observable<MinimalNodeEntryEntity> {
+    private edit(): Observable<Node> {
         const { name, properties, nodesApi, data: { folder: { id: nodeId }} } = this;
         return nodesApi.updateNode(nodeId, { name, properties });
     }
@@ -136,7 +136,7 @@ export class FolderDialogComponent implements OnInit {
 
         (editing ? this.edit() : this.create())
             .subscribe(
-                (folder: MinimalNodeEntryEntity) => {
+                (folder: Node) => {
                     this.success.emit(folder);
                     dialog.close(folder);
                 },

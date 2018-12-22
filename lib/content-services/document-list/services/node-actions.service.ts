@@ -16,7 +16,7 @@
  */
 
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { MinimalNodeEntryEntity, NodeEntry } from '@alfresco/js-api';
+import { Node, NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { AlfrescoApiService, ContentService, NodeDownloadDirective } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material';
@@ -50,7 +50,7 @@ export class NodeActionsService {
      * @param contentEntry node to copy
      * @param permission permission which is needed to apply the action
      */
-    public copyContent(contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
+    public copyContent(contentEntry: Node, permission?: string): Subject<string> {
         return this.doFileOperation('copy', 'content', contentEntry, permission);
     }
 
@@ -60,7 +60,7 @@ export class NodeActionsService {
      * @param contentEntry node to copy
      * @param permission permission which is needed to apply the action
      */
-    public copyFolder(contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
+    public copyFolder(contentEntry: Node, permission?: string): Subject<string> {
         return this.doFileOperation('copy', 'folder', contentEntry, permission);
     }
 
@@ -70,7 +70,7 @@ export class NodeActionsService {
      * @param contentEntry node to move
      * @param permission permission which is needed to apply the action
      */
-    public moveContent(contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
+    public moveContent(contentEntry: Node, permission?: string): Subject<string> {
         return this.doFileOperation('move', 'content', contentEntry, permission);
     }
 
@@ -80,7 +80,7 @@ export class NodeActionsService {
      * @param contentEntry node to move
      * @param permission permission which is needed to apply the action
      */
-    public moveFolder(contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
+    public moveFolder(contentEntry: Node, permission?: string): Subject<string> {
         return this.doFileOperation('move', 'folder', contentEntry, permission);
     }
 
@@ -92,12 +92,12 @@ export class NodeActionsService {
      * @param contentEntry the contentEntry which has to have the action performed on
      * @param permission permission which is needed to apply the action
      */
-    private doFileOperation(action: string, type: string, contentEntry: MinimalNodeEntryEntity, permission?: string): Subject<string> {
+    private doFileOperation(action: string, type: string, contentEntry: Node, permission?: string): Subject<string> {
         const observable: Subject<string> = new Subject<string>();
 
         this.contentDialogService
             .openCopyMoveDialog(action, contentEntry, permission)
-            .subscribe((selections: MinimalNodeEntryEntity[]) => {
+            .subscribe((selections: Node[]) => {
                 const selection = selections[0];
                 this.documentListService[`${action}Node`].call(this.documentListService, contentEntry.id, selection.id)
                     .subscribe(

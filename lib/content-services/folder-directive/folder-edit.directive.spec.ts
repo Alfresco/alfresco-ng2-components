@@ -23,16 +23,16 @@ import { Subject, of } from 'rxjs';
 
 import { ContentService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { FolderEditDirective } from './folder-edit.directive';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 
 @Component({
     template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>'
 })
 class TestComponent {
     folder = {};
-    public successParameter: MinimalNodeEntryEntity = null;
+    public successParameter: Node = null;
 
-    success(node: MinimalNodeEntryEntity) {
+    success(node: Node) {
         this.successParameter = node;
     }
 }
@@ -74,7 +74,7 @@ describe('FolderEditDirective', () => {
             afterClosed: (val) =>  of(val),
             componentInstance: {
                 error: new Subject<any>(),
-                success: new Subject<MinimalNodeEntryEntity>()
+                success: new Subject<Node>()
             }
         };
 
@@ -106,7 +106,7 @@ describe('FolderEditDirective', () => {
     });
 
     it('should emit success event with node if the folder creation was successful', async(() => {
-        const testNode = <MinimalNodeEntryEntity> {};
+        const testNode = <Node> {};
         fixture.detectChanges();
 
         element.triggerEventHandler('click', event);

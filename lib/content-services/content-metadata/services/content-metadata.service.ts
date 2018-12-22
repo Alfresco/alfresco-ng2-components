@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { BasicPropertiesService } from './basic-properties.service';
 import { Observable, of } from 'rxjs';
 import { PropertyGroupTranslatorService } from './property-groups-translator.service';
@@ -37,11 +37,11 @@ export class ContentMetadataService {
                 private propertyDescriptorsService: PropertyDescriptorsService) {
     }
 
-    getBasicProperties(node: MinimalNodeEntryEntity): Observable<CardViewItem[]> {
+    getBasicProperties(node: Node): Observable<CardViewItem[]> {
         return of(this.basicPropertiesService.getProperties(node));
     }
 
-    getGroupedProperties(node: MinimalNodeEntryEntity, presetName: string = 'default'): Observable<CardViewGroup[]> {
+    getGroupedProperties(node: Node, presetName: string = 'default'): Observable<CardViewGroup[]> {
         let groupedProperties = of([]);
 
         if (node.aspectNames) {

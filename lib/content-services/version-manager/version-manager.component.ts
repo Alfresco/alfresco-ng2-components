@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { VersionListComponent } from './version-list.component';
 import { AppConfigService, ContentService, AlfrescoApiService } from '@alfresco/adf-core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -45,7 +45,7 @@ export class VersionManagerComponent {
 
     /** Target node to manage version history. */
     @Input()
-    node: MinimalNodeEntryEntity;
+    node: Node;
 
     /** Toggles showing/hiding of comments. */
     @Input()
@@ -57,11 +57,11 @@ export class VersionManagerComponent {
 
     /** Emitted when a file is uploaded successfully. */
     @Output()
-    uploadSuccess: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+    uploadSuccess: EventEmitter<Node> = new EventEmitter<Node>();
 
     /** Emitted when an error occurs during upload. */
     @Output()
-    uploadError: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+    uploadError: EventEmitter<Node> = new EventEmitter<Node>();
 
     @ViewChild('versionList')
     versionListComponent: VersionListComponent;
@@ -73,7 +73,7 @@ export class VersionManagerComponent {
                 private alfrescoApiService: AlfrescoApiService) {
     }
 
-    refresh(node: MinimalNodeEntryEntity) {
+    refresh(node: Node) {
         this.alfrescoApiService.nodeUpdated.next(node);
         this.versionListComponent.loadVersionHistory();
         this.uploadSuccess.emit(node);

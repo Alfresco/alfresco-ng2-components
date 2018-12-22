@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { Observable, Subscription } from 'rxjs';
 import { CardViewItem, NodesApiService, LogService, CardViewUpdateService, AlfrescoApiService } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
@@ -33,7 +33,7 @@ import { switchMap } from 'rxjs/operators';
 export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     /** (required) The node entity to fetch metadata about */
     @Input()
-    node: MinimalNodeEntryEntity;
+    node: Node;
 
     /** Toggles whether the edit button should be shown */
     @Input()
@@ -95,14 +95,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private loadProperties(node: MinimalNodeEntryEntity) {
+    private loadProperties(node: Node) {
         if (node) {
             this.basicProperties$ = this.contentMetadataService.getBasicProperties(node);
             this.groupedProperties$ = this.contentMetadataService.getGroupedProperties(node, this.preset);
         }
     }
 
-    private saveNode({ changed: nodeBody }): Observable<MinimalNodeEntryEntity> {
+    private saveNode({ changed: nodeBody }): Observable<Node> {
         return this.nodesApiService.updateNode(this.node.id, nodeBody);
     }
 

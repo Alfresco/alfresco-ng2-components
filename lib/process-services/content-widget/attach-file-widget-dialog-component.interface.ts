@@ -16,13 +16,13 @@
  */
 
 import { Subject } from 'rxjs';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 
 export interface AttachFileWidgetDialogComponentData {
     title: string;
     actionName?: string;
-    selected: Subject<MinimalNodeEntryEntity[]>;
+    selected: Subject<Node[]>;
     ecmHost: string;
     context?: string;
-    isSelectionValid?: (entry: MinimalNodeEntryEntity) => boolean;
+    isSelectionValid?: (entry: Node) => boolean;
 }

@@ -18,7 +18,7 @@
 import { async, TestBed } from '@angular/core/testing';
 import { NodePermissionService } from './node-permission.service';
 import { SearchService, NodesApiService, setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { MinimalNodeEntryEntity, PermissionElement } from '@alfresco/js-api';
+import { Node, PermissionElement } from '@alfresco/js-api';
 import { of } from 'rxjs';
 import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse,
          fakeNodeToRemovePermission, fakeNodeWithoutPermissions } from '../../mock/permission-list.component.mock';
@@ -52,7 +52,7 @@ describe('NodePermissionService', () => {
     });
 
     function returnUpdatedNode(nodeId, nodeBody) {
-        let fakeNode: MinimalNodeEntryEntity = {};
+        let fakeNode: Node = new Node({});
         fakeNode.id = 'fake-updated-node';
         fakeNode.permissions = nodeBody.permissions;
         return of(fakeNode);
@@ -89,7 +89,7 @@ describe('NodePermissionService', () => {
 
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
 
-        service.updatePermissionRole(fakeNodeWithOnlyLocally, fakePermission).subscribe((node: MinimalNodeEntryEntity) => {
+        service.updatePermissionRole(fakeNodeWithOnlyLocally, fakePermission).subscribe((node: Node) => {
             expect(node).not.toBeNull();
             expect(node.id).toBe('fake-updated-node');
             expect(node.permissions.locallySet.length).toBe(1);
@@ -108,7 +108,7 @@ describe('NodePermissionService', () => {
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
         const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeToRemovePermission));
 
-        service.removePermission(fakeNodeCopy, fakePermission).subscribe((node: MinimalNodeEntryEntity) => {
+        service.removePermission(fakeNodeCopy, fakePermission).subscribe((node: Node) => {
             expect(node).not.toBeNull();
             expect(node.id).toBe('fake-updated-node');
             expect(node.permissions.locallySet.length).toBe(2);
@@ -124,7 +124,7 @@ describe('NodePermissionService', () => {
         spyOn(searchApiService, 'searchByQueryBody').and.returnValue(of(fakeSiteNodeResponse));
         spyOn(service, 'getGroupMemberByGroupName').and.returnValue(of(fakeSiteRoles));
 
-        service.updateNodePermissions('fake-node-id', fakeAuthorityResults).subscribe((node: MinimalNodeEntryEntity) => {
+        service.updateNodePermissions('fake-node-id', fakeAuthorityResults).subscribe((node: Node) => {
             expect(node).not.toBeNull();
             expect(node.id).toBe('fake-updated-node');
             expect(node.permissions.locallySet.length).toBe(4);
@@ -138,7 +138,7 @@ describe('NodePermissionService', () => {
         const fakeNodeCopy = JSON.parse(JSON.stringify(fakeNodeWithOnlyLocally));
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
 
-        service.updateLocallySetPermissions(fakeNodeCopy, fakeAuthorityResults, fakeSiteRoles).subscribe((node: MinimalNodeEntryEntity) => {
+        service.updateLocallySetPermissions(fakeNodeCopy, fakeAuthorityResults, fakeSiteRoles).subscribe((node: Node) => {
             expect(node).not.toBeNull();
             expect(node.id).toBe('fake-updated-node');
             expect(node.permissions.locallySet.length).toBe(4);
@@ -153,7 +153,7 @@ describe('NodePermissionService', () => {
         fakeNodeCopy.permissions.locallySet = undefined;
         spyOn(nodeService, 'updateNode').and.callFake((nodeId, permissionBody) => returnUpdatedNode(nodeId, permissionBody));
 
-        service.updateLocallySetPermissions(fakeNodeCopy, fakeAuthorityResults, fakeSiteRoles).subscribe((node: MinimalNodeEntryEntity) => {
+        service.updateLocallySetPermissions(fakeNodeCopy, fakeAuthorityResults, fakeSiteRoles).subscribe((node: Node) => {
             expect(node).not.toBeNull();
             expect(node.id).toBe('fake-updated-node');
             expect(node.permissions.locallySet.length).toBe(3);
@@ -185,7 +185,7 @@ describe('NodePermissionService', () => {
         }];
 
         service.updateLocallySetPermissions(fakeNodeCopy, fakeDuplicateAuthority, ['Contributor'])
-            .subscribe((node: MinimalNodeEntryEntity) => {
+            .subscribe((node: Node) => {
 
             }, (errorMessage) => {
                 expect(errorMessage).not.toBeNull();

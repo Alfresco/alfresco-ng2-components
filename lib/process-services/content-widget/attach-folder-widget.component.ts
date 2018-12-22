@@ -24,7 +24,7 @@ import {
     NodesApiService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 
 @Component({
     selector: 'attach-folder-widget',
@@ -58,7 +58,7 @@ export class AttachFolderWidgetComponent extends WidgetComponent implements OnIn
         if (this.field &&
             this.field.value) {
             this.hasFolder = true;
-            this.nodeService.getNode(this.field.value).subscribe((node: MinimalNodeEntryEntity) => {
+            this.nodeService.getNode(this.field.value).subscribe((node: Node) => {
                 this.selectedFolderName = node.name;
             });
         }
@@ -74,14 +74,14 @@ export class AttachFolderWidgetComponent extends WidgetComponent implements OnIn
         let params = this.field.params;
         if (this.isDefinedSourceFolder()) {
             this.contentDialog.openFolderBrowseDialogByFolderId(params.folderSource.selectedFolder.pathId).subscribe(
-                (selections: MinimalNodeEntryEntity[]) => {
+                (selections: Node[]) => {
                     this.selectedFolderName = selections[0].name;
                     this.field.value = selections[0].id;
                     this.hasFolder = true;
                 });
         } else {
             this.contentDialog.openFolderBrowseDialogBySite().subscribe(
-                (selections: MinimalNodeEntryEntity[]) => {
+                (selections: Node[]) => {
                     this.selectedFolderName = selections[0].name;
                     this.field.value = selections[0].id;
                     this.hasFolder = true;

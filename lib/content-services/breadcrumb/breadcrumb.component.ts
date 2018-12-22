@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSelect } from '@angular/material';
-import { MinimalNodeEntryEntity, PathElementEntity } from '@alfresco/js-api';
+import { Node, PathElementEntity } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list';
 
 @Component({
@@ -33,7 +33,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     /** Active node, builds UI based on folderNode.path.elements collection. */
     @Input()
-    folderNode: MinimalNodeEntryEntity = null;
+    folderNode: Node = null;
 
     /** (optional) Name of the root element of the breadcrumb. You can use
      * this property to rename "Company Home" to "Personal Files" for
@@ -88,7 +88,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.folderNode) {
-            let node: MinimalNodeEntryEntity = null;
+            let node: Node = null;
             node = this.transform ? this.transform(changes.folderNode.currentValue) : changes.folderNode.currentValue;
             this.route = this.parseRoute(node);
         }
@@ -121,7 +121,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
         return this.previousNodes ? true : false;
     }
 
-    parseRoute(node: MinimalNodeEntryEntity): PathElementEntity[] {
+    parseRoute(node: Node): PathElementEntity[] {
         if (node && node.path) {
             const route = <PathElementEntity[]> (node.path.elements || []).slice();
 

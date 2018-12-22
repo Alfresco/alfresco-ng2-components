@@ -24,6 +24,7 @@ import { of, throwError } from 'rxjs';
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { NodePermissionService } from '../../services/node-permission.service';
+import { Node } from '@alfresco/js-api';
 
 describe('AddPermissionComponent', () => {
 
@@ -73,7 +74,7 @@ describe('AddPermissionComponent', () => {
     it('should NOT enable the ADD button when a selection is sent but the user does not have the permissions', async(() => {
         const addPermissionPanelComponent: AddPermissionPanelComponent = fixture.debugElement.query(By.directive(AddPermissionPanelComponent)).componentInstance;
         addPermissionPanelComponent.select.emit(fakeAuthorityResults);
-        fixture.componentInstance.currentNode = {id: 'fake-node-id'};
+        fixture.componentInstance.currentNode = new Node({id: 'fake-node-id'});
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             const addButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#adf-add-permission-action-button');
@@ -100,7 +101,7 @@ describe('AddPermissionComponent', () => {
 
     it('should NOT emit a success event when the user does not have permission to update the node', () => {
         fixture.componentInstance.selectedItems = fakeAuthorityResults;
-        fixture.componentInstance.currentNode = { id: 'fake-node-id' };
+        fixture.componentInstance.currentNode = new Node({ id: 'fake-node-id' });
         spyOn(nodePermissionService, 'updateNodePermissions').and.returnValue(of({ id: 'fake-node-id' }));
 
         let spySuccess = spyOn(fixture.componentInstance, 'success');

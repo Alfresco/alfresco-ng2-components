@@ -28,7 +28,7 @@ import {
     UserPreferencesService, PaginationModel, ThumbnailService
 } from '@alfresco/adf-core';
 
-import { MinimalNodeEntryEntity, Node, NodeEntry, NodePaging } from '@alfresco/js-api';
+import { Node, NodeEntry, NodePaging } from '@alfresco/js-api';
 import { Subject, BehaviorSubject, Subscription, of } from 'rxjs';
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
@@ -178,7 +178,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * @deprecated 2.3.0 - use currentFolderId or node
      */
     @Input()
-    folderNode: MinimalNodeEntryEntity = null;
+    folderNode: Node = null;
 
     /** The Document list will show all the nodes contained in the NodePaging entity */
     @Input()

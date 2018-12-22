@@ -17,7 +17,7 @@
 
 import { Component, Inject, ViewEncapsulation, Input } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { MinimalNodeEntryEntity, SitePaging } from '@alfresco/js-api';
+import { Node, SitePaging } from '@alfresco/js-api';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
@@ -73,7 +73,7 @@ export class ContentNodeSelectorComponent {
     pageSize: number;
 
     buttonActionName: string;
-    chosenNode: MinimalNodeEntryEntity[];
+    chosenNode: Node[];
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
         this.buttonActionName = data.actionName ? `NODE_SELECTOR.${data.actionName.toUpperCase()}` : 'NODE_SELECTOR.CHOOSE';
@@ -83,7 +83,7 @@ export class ContentNodeSelectorComponent {
         this.data.select.complete();
     }
 
-    onSelect(nodeList: MinimalNodeEntryEntity[]) {
+    onSelect(nodeList: Node[]) {
         this.chosenNode = nodeList;
     }
 

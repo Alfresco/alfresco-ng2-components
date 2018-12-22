@@ -17,7 +17,7 @@
 
 import { Component, OnChanges, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSelect } from '@angular/material';
-import { PathElementEntity, MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { PathElementEntity, Node } from '@alfresco/js-api';
 import { BreadcrumbComponent } from './breadcrumb.component';
 
 @Component({
@@ -39,7 +39,7 @@ export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements 
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.folderNode) {
-            let node: MinimalNodeEntryEntity = null;
+            let node: Node = null;
             node = this.transform ? this.transform(changes.folderNode.currentValue) : changes.folderNode.currentValue;
             this.route = this.parseRoute(node);
         }

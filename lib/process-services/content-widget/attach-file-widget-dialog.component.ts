@@ -20,7 +20,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 import { ExternalAlfrescoApiService, AlfrescoApiService, AuthenticationService, LoginDialogPanelComponent, SitesService, SearchService } from '@alfresco/adf-core';
 import { DocumentListService, ContentNodeSelectorService } from '@alfresco/adf-content-services';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-attach-file-widget-dialog',
@@ -39,7 +39,7 @@ export class AttachFileWidgetDialogComponent {
     @ViewChild('adfLoginPanel')
     loginPanel: LoginDialogPanelComponent;
 
-    chosenNode: MinimalNodeEntryEntity[];
+    chosenNode: Node[];
     buttonActionName;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,
@@ -60,7 +60,7 @@ export class AttachFileWidgetDialogComponent {
         this.data.selected.complete();
     }
 
-    onSelect(nodeList: MinimalNodeEntryEntity[]) {
+    onSelect(nodeList: Node[]) {
         if (nodeList && nodeList[0].isFile) {
             this.chosenNode = nodeList;
         } else {

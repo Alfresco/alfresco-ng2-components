@@ -18,7 +18,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewBaseItemModel, CardViewComponent, CardViewUpdateService, NodesApiService, LogService, setupTestBed } from '@alfresco/adf-core';
@@ -28,8 +28,8 @@ import { ContentTestingModule } from '../../../testing/content.testing.module';
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
     let fixture: ComponentFixture<ContentMetadataComponent>;
-    let node: MinimalNodeEntryEntity;
-    let folderNode: MinimalNodeEntryEntity;
+    let node: Node;
+    let folderNode: Node;
     let preset = 'custom-preset';
 
     setupTestBed({
@@ -40,7 +40,7 @@ describe('ContentMetadataComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ContentMetadataComponent);
         component = fixture.componentInstance;
-        node = <MinimalNodeEntryEntity> {
+        node = <Node> {
             id: 'node-id',
             aspectNames: [],
             nodeType: '',
@@ -50,7 +50,7 @@ describe('ContentMetadataComponent', () => {
             modifiedByUser: {}
         };
 
-        folderNode = <MinimalNodeEntryEntity> {
+        folderNode = <Node> {
             id: 'folder-id',
             aspectNames: [],
             nodeType: '',

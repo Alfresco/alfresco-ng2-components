@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 import { Directive, Input, Output, EventEmitter } from '@angular/core';
 import { NodesApiService, ContentService, PermissionsEnum } from '@alfresco/adf-core';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 
 @Directive({
     selector: 'button[adf-inherit-permission], mat-button-toggle[adf-inherit-permission]',
@@ -35,7 +35,7 @@ export class InheritPermissionDirective {
 
     /** Emitted when the node is updated. */
     @Output()
-    updated: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+    updated: EventEmitter<Node> = new EventEmitter<Node>();
 
     /** Emitted when an error occurs. */
     @Output()
@@ -46,10 +46,10 @@ export class InheritPermissionDirective {
     }
 
     onInheritPermissionClicked() {
-        this.nodeService.getNode(this.nodeId).subscribe((node: MinimalNodeEntryEntity) => {
+        this.nodeService.getNode(this.nodeId).subscribe((node: Node) => {
             if (this.contentService.hasPermission(node, PermissionsEnum.UPDATEPERMISSIONS)) {
                 const nodeBody = { permissions: { isInheritanceEnabled: !node.permissions.isInheritanceEnabled } };
-                this.nodeService.updateNode(this.nodeId, nodeBody, { include: ['permissions'] }).subscribe((nodeUpdated: MinimalNodeEntryEntity) => {
+                this.nodeService.updateNode(this.nodeId, nodeBody, { include: ['permissions'] }).subscribe((nodeUpdated: Node) => {
                     this.updated.emit(nodeUpdated);
                 }, (error) => this.error.emit(error));
             } else {

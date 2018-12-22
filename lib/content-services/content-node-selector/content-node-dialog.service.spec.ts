@@ -16,7 +16,7 @@
  */
 
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { MinimalNodeEntryEntity, SitePaging } from '@alfresco/js-api';
+import { Node, SitePaging, Site } from '@alfresco/js-api';
 import { AppConfigService, SitesService, setupTestBed } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeDialogService } from './content-node-dialog.service';
@@ -24,12 +24,12 @@ import { MatDialog } from '@angular/material';
 import { Subject, of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
-const fakeNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+const fakeNode: Node = <Node> {
         id: 'fake',
         name: 'fake-name'
 };
 
-const fakeSiteList: SitePaging = {
+const fakeSiteList: SitePaging = new SitePaging({
        list: {
         pagination: {
             count: 1,
@@ -48,7 +48,7 @@ const fakeSiteList: SitePaging = {
             }
         ]
     }
-};
+});
 
 describe('ContentNodeDialogService', () => {
 
@@ -82,7 +82,7 @@ describe('ContentNodeDialogService', () => {
     });
 
     it('should not open the lock node dialog if have no permission', () => {
-        const testNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+        const testNode: Node = <Node> {
             id: 'fake',
             isFile: false
         };
@@ -140,23 +140,23 @@ describe('ContentNodeDialogService', () => {
     });
 
     describe('for the copy/move dialog', () => {
-        const siteNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+        const siteNode: Node = <Node> {
             id: 'site-node-id',
             nodeType: 'st:site'
         };
-        const sites: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+        const sites: Node = <Node> {
             id: 'sites-id',
             nodeType: 'st:sites'
         };
-        const site: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+        const site: Site = <Site> {
             id: 'site-id',
             guid: 'any-guid'
         };
-        const nodeEntryWithRightPermissions: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+        const nodeEntryWithRightPermissions: Node = <Node> {
             id: 'node-id',
             allowableOperations: ['create']
         };
-        const nodeEntryNoPermissions: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+        const nodeEntryNoPermissions: Node = <Node> {
             id: 'node-id',
             allowableOperations: []
         };

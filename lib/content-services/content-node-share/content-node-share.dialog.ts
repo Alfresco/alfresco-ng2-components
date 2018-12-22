@@ -34,7 +34,7 @@ import {
     ContentService,
     RenditionsService
 } from '@alfresco/adf-core';
-import { SharedLinkEntry, MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { SharedLinkEntry, Node } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import moment from 'moment-es6';
 
@@ -195,7 +195,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         });
     }
 
-    private updateNode(updates): Observable<MinimalNodeEntryEntity> {
+    private updateNode(updates): Observable<Node> {
         return this.nodesApiService.updateNode(
             this.data.node.entry.id,
             {

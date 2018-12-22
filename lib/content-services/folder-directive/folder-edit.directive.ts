@@ -20,7 +20,7 @@
 import { Directive, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 
 import { FolderDialogComponent } from '../dialogs/folder.dialog';
 import { ContentService } from '@alfresco/adf-core';
@@ -33,7 +33,7 @@ export class FolderEditDirective {
 
     /** Folder node to edit. */
     @Input('adf-edit-folder')
-    folder: MinimalNodeEntryEntity;
+    folder: Node;
 
     /** Emitted when an error occurs (eg, a folder with same name already exists). */
     @Output()
@@ -45,7 +45,7 @@ export class FolderEditDirective {
 
     /** Emitted when the folder has been edited successfully. */
     @Output()
-    success: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+    success: EventEmitter<Node> = new EventEmitter<Node>();
 
     @HostListener('click', [ '$event' ])
     onClick(event) {
@@ -82,11 +82,11 @@ export class FolderEditDirective {
             this.error.emit(error);
         });
 
-        dialogInstance.componentInstance.success.subscribe((node: MinimalNodeEntryEntity) => {
+        dialogInstance.componentInstance.success.subscribe((node: Node) => {
             this.success.emit(node);
         });
 
-        dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {
+        dialogInstance.afterClosed().subscribe((node: Node) => {
             if (node) {
                 content.folderEdit.next(node);
             }

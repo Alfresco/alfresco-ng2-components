@@ -38,6 +38,7 @@ import { CustomResourcesService } from './../services/custom-resources.service';
 import { DocumentListComponent } from './document-list.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { NodeEntry } from '@alfresco/js-api';
 
 describe('DocumentList', () => {
 
@@ -996,7 +997,7 @@ describe('DocumentList', () => {
             expect(folderNode.value.id).toBe('fake-node');
             done();
         });
-        documentList.onNodeDblClick({ entry: { id: 'fake-node', isFolder: true } });
+        documentList.onNodeDblClick(new NodeEntry({ entry: { id: 'fake-node', isFolder: true } }));
     });
 
     it('should set no permission when getFolderNode fails with 403', (done) => {

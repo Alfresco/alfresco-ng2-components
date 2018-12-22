@@ -19,7 +19,7 @@
 
 import { Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { MinimalNodeEntryEntity } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { FolderDialogComponent } from '../dialogs/folder.dialog';
 import { ContentService } from '@alfresco/adf-core';
 
@@ -49,7 +49,7 @@ export class FolderCreateDirective {
 
     /** Emitted when the folder is created successfully. */
     @Output()
-    success: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+    success: EventEmitter<Node> = new EventEmitter<Node>();
 
     @HostListener('click', [ '$event' ])
     onClick(event) {
@@ -80,11 +80,11 @@ export class FolderCreateDirective {
             this.error.emit(error);
         });
 
-        dialogInstance.componentInstance.success.subscribe((node: MinimalNodeEntryEntity) => {
+        dialogInstance.componentInstance.success.subscribe((node: Node) => {
             this.success.emit(node);
         });
 
-        dialogInstance.afterClosed().subscribe((node: MinimalNodeEntryEntity) => {
+        dialogInstance.afterClosed().subscribe((node: Node) => {
             if (node) {
                 content.folderCreate.next(node);
             }
