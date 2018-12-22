@@ -18,6 +18,7 @@ Rule.metadata = {
 };
 Rule.FAILURE_STRING = 'The name of the File should not start with ADF Alfresco or Activiti prefix ';
 Rule.FAILURE_STRING_UNDERSCORE = 'The name of the File should not have _ in the name but you can use - prefer the kebab case';
+Rule.FAILURE_STRING_UPPERCASE = 'The name of the File should not start with uppercase';
 exports.Rule = Rule;
 class AdfFileName extends Lint.RuleWalker {
     visitSourceFile(node) {
@@ -35,6 +36,11 @@ class AdfFileName extends Lint.RuleWalker {
         }
         if (fileName.indexOf('_') >= 0) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_UNDERSCORE + fileName));
+            super.visitSourceFile(node);
+        }
+
+        if (fileName[0] == fileName[0].toUpperCase()) {
+            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_UPPERCASE + fileName));
             super.visitSourceFile(node);
         }
     }

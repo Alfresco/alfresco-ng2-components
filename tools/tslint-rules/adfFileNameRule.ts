@@ -16,6 +16,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     public static FAILURE_STRING = 'The name of the File should not start with ADF Alfresco or Activiti prefix ';
     public static FAILURE_STRING_UNDERSCORE = 'The name of the File should not have _ in the name but you can use - ';
+    public static FAILURE_STRING_UPPERCASE = 'The name of the File should not start with uppercase';
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new AdfFileName(sourceFile, this.getOptions()));
@@ -45,6 +46,11 @@ class AdfFileName extends Lint.RuleWalker {
 
         if (fileName.indexOf('-') >= 0) {
             this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_UNDERSCORE + fileName));
+            super.visitSourceFile(node);
+        }
+
+        if (fileName[0] == fileName[0].toUpperCase()) {
+            this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING_UPPERCASE + fileName));
             super.visitSourceFile(node);
         }
     }

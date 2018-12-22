@@ -26,7 +26,7 @@ import { TasksListPage } from '../pages/adf/process_services/tasksListPage';
 import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
 import { FiltersPage } from '../pages/adf/process_services/filtersPage';
 
-import { StandaloneTask } from '../models/APS/StandaloneTask';
+import { StandaloneTask } from '../models/APS/standaloneTask';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UsersActions } from '../actions/users.actions';

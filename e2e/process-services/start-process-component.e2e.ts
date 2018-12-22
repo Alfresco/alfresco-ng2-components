@@ -30,7 +30,7 @@ import { AttachmentListPage } from '../pages/adf/process_services/attachmentList
 import { AppsActions } from '../actions/APS/apps.actions';
 import { browser } from 'protractor';
 
-import { User } from '../models/APS/User';
+import { User } from '../models/APS/user';
 import { Tenant } from '../models/APS/Tenant';
 
 import { FileModel } from '../models/ACS/fileModel';

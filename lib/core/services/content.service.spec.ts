@@ -93,7 +93,7 @@ describe('ContentService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 201,
             contentType: 'application/json',
-            responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
+            responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
         });
     });
 
@@ -108,7 +108,7 @@ describe('ContentService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 201,
             contentType: 'application/json',
-            responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
+            responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
         });
     });
 
@@ -118,23 +118,23 @@ describe('ContentService', () => {
     });
 
     it('should havePermission be true if allowableOperation is present and you have the permission for the request operation', () => {
-        let permissionNode =new Node( {allowableOperations: ['delete', 'update', 'create', 'updatePermissions']});
+        let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'create', 'updatePermissions'] });
 
         expect(contentService.hasPermission(permissionNode, 'create')).toBeTruthy();
     });
 
     it('should havePermission be false if allowableOperation is present but you don\'t have the permission for the request operation', () => {
-        let permissionNode = new Node({allowableOperations: ['delete', 'update', 'updatePermissions']});
+        let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
         expect(contentService.hasPermission(permissionNode, 'create')).toBeFalsy();
     });
 
     it('should havePermission works in the opposite way with negate value', () => {
-        let permissionNode = new Node({allowableOperations: ['delete', 'update', 'updatePermissions']});
+        let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
         expect(contentService.hasPermission(permissionNode, '!create')).toBeTruthy();
     });
 
     it('should havePermission return false id no permission parameter are passed', () => {
-        let permissionNode = new Node({allowableOperations: ['delete', 'update', 'updatePermissions']});
+        let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
         expect(contentService.hasPermission(permissionNode, null)).toBeFalsy();
     });
 
@@ -153,7 +153,7 @@ describe('ContentService', () => {
                 done();
             });
 
-            let blob = new Blob([''], {type: 'text/html'});
+            let blob = new Blob([''], { type: 'text/html' });
             contentService.downloadBlob(blob, 'test_ie');
         });
     });

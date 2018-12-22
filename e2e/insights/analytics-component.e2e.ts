@@ -22,7 +22,7 @@ import { ProcessServicesPage } from '../pages/adf/process_services/processServic
 import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
 import TestConfig = require('../test.config');
 import { Tenant } from '../models/APS/Tenant';
-import { User } from '../models/APS/User';
+import { User } from '../models/APS/user';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 
