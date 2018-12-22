@@ -189,7 +189,7 @@ describe('UploadService', () => {
             size: 10
         }, undefined, undefined, { newVersion: true }, {
             renditions: 'doclib',
-            include: [ 'allowableOperations' ],
+            include: ['allowableOperations'],
             overwrite: true,
             majorVersion: undefined,
             comment: undefined,
@@ -229,12 +229,12 @@ describe('UploadService', () => {
 
         let filesFake = new FileModel(
             <File> { name: 'fake-name', size: 10 },
-            <FileUploadOptions> { parentId: '123', path: 'fake-dir',
-                                    secondaryChildren: [{ assocType: 'assoc-1', childId: 'child-id' }],
-                                    association: { assocType: 'fake-assoc' },
-                                    targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
-                                }
-        );
+            new FileUploadOptions({
+                parentId: '123', path: 'fake-dir',
+                secondaryChildren: [{ assocType: 'assoc-1', childId: 'child-id' }],
+                association: { assocType: 'fake-assoc' },
+                targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
+            }));
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -243,17 +243,17 @@ describe('UploadService', () => {
             size: 10
         }, 'fake-dir', '123', {
             newVersion: false,
-                parentId: '123',
-                path: 'fake-dir',
-                secondaryChildren: [
-                    { assocType: 'assoc-1', childId: 'child-id' }],
-                    association: { assocType: 'fake-assoc' },
-                    targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
-            }, {
-                renditions: 'doclib',
-                include: ['allowableOperations'],
-                autoRename: true
-            });
+            parentId: '123',
+            path: 'fake-dir',
+            secondaryChildren: [
+                { assocType: 'assoc-1', childId: 'child-id' }],
+            association: { assocType: 'fake-assoc' },
+            targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
+        }, {
+            renditions: 'doclib',
+            include: ['allowableOperations'],
+            autoRename: true
+        });
     });
 
     it('should start downloading the next one if a file of the list is aborted', (done) => {

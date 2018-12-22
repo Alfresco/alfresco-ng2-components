@@ -368,12 +368,10 @@ describe('ViewerComponent', () => {
     });
 
     it('should change display name every time node changes', fakeAsync(() => {
-        spyOn(alfrescoApiService.nodesApi, 'getNodeInfo').and.returnValues(
+        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValues(
             Promise.resolve({ name: 'file1', content: {} }),
             Promise.resolve({ name: 'file2', content: {} })
         );
-
-        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValue(Promise.resolve({ id: 'fake-node' }));
 
         component.urlFile = null;
         component.displayName = null;
@@ -384,14 +382,12 @@ describe('ViewerComponent', () => {
         component.ngOnChanges({});
         tick();
 
-        expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id1', { include: ['allowableOperations'] });
         expect(component.fileTitle).toBe('file1');
 
         component.fileNodeId = 'id2';
         component.ngOnChanges({});
         tick();
 
-        expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id2', { include: ['allowableOperations'] });
         expect(component.fileTitle).toBe('file2');
     }));
 
@@ -795,7 +791,7 @@ describe('ViewerComponent', () => {
         describe('error handling', () => {
 
             it('should show unknown view when node file not found', (done) => {
-                spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo')
+                spyOn(alfrescoApiService.getInstance().nodes, 'getNode')
                     .and.returnValue(Promise.reject({}));
 
                 component.nodeId = 'the-node-id-of-the-file-to-preview';

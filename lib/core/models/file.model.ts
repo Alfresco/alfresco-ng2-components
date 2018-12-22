@@ -23,7 +23,7 @@ export interface FileUploadProgress {
     percent: number;
 }
 
-export interface FileUploadOptions {
+export class FileUploadOptions {
     comment?: string;
     newVersion?: boolean;
     majorVersion?: boolean;
@@ -34,6 +34,23 @@ export interface FileUploadOptions {
     association?: any;
     secondaryChildren?: AssocChildBody[];
     targets?: AssocTargetBody[];
+
+    constructor(input?: any) {
+        Object.assign(this, input);
+
+        if (input.secondaryChildren) {
+            this.secondaryChildren = input.secondaryChildren.map((item: any) => {
+                return new AssocChildBody(item);
+            });
+        }
+
+        if (input.targets) {
+            this.targets = input.targets.map((item: any) => {
+                return new AssocTargetBody(item);
+            });
+        }
+    }
+
 }
 
 export enum FileUploadStatus {
