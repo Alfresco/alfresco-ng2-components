@@ -25,6 +25,7 @@ import { AlfrescoApiService } from './alfresco-api.service';
 
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { AssocChildBody, AssociationBody } from '@alfresco/js-api';
 
 declare let jasmine: any;
 
@@ -169,8 +170,9 @@ describe('UploadService', () => {
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
 
-        expect(jasmine.Ajax.requests.mostRecent().url.endsWith('autoRename=true')).toBe(false);
-        expect(jasmine.Ajax.requests.mostRecent().params.has('majorVersion')).toBe(false);
+        expect(jasmine.Ajax.requests.mostRecent().url)
+            .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?include=allowableOperations');
+        expect(jasmine.Ajax.requests.mostRecent().params).toBe('{"name":"fake-name","nodeType":"cm:content","newVersion":true}');
     });
 
     it('If newVersion is set, name should be a param', () => {
@@ -229,12 +231,12 @@ describe('UploadService', () => {
 
         let filesFake = new FileModel(
             <File> { name: 'fake-name', size: 10 },
-            new FileUploadOptions({
+            <FileUploadOptions> {
                 parentId: '123', path: 'fake-dir',
-                secondaryChildren: [{ assocType: 'assoc-1', childId: 'child-id' }],
+                secondaryChildren: [<AssocChildBody>{ assocType: 'assoc-1', childId: 'child-id' }],
                 association: { assocType: 'fake-assoc' },
-                targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
-            }));
+                targets: [<AssociationBody>{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
+            });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -245,10 +247,9 @@ describe('UploadService', () => {
             newVersion: false,
             parentId: '123',
             path: 'fake-dir',
-            secondaryChildren: [
-                { assocType: 'assoc-1', childId: 'child-id' }],
+            secondaryChildren: [<AssocChildBody>{ assocType: 'assoc-1', childId: 'child-id' }],
             association: { assocType: 'fake-assoc' },
-            targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
+            targets: [<AssociationBody>{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
         }, {
             renditions: 'doclib',
             include: ['allowableOperations'],

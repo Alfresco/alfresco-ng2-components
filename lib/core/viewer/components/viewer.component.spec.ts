@@ -29,6 +29,7 @@ import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ViewerComponent } from './viewer.component';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
+import { NodeEntry } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -369,8 +370,8 @@ describe('ViewerComponent', () => {
 
     it('should change display name every time node changes', fakeAsync(() => {
         spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValues(
-            Promise.resolve({ name: 'file1', content: {} }),
-            Promise.resolve({ name: 'file2', content: {} })
+            Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {} } })),
+            Promise.resolve(new NodeEntry({ entry: { name: 'file2', content: {} } }))
         );
 
         component.urlFile = null;
@@ -916,12 +917,11 @@ describe('ViewerComponent', () => {
         describe('display name property override by nodeId', () => {
 
             const displayName = 'the-name';
-            const nodeDetails = { name: displayName, id: '12', content: { mimeType: 'txt' } };
+            const nodeDetails = new NodeEntry({ entry: { name: displayName, id: '12', content: { mimeType: 'txt' } } });
             const contentUrl = '/content/url/path';
             const alfrescoApiInstanceMock = {
                 nodes: {
-                    getNodeInfo: () => Promise.resolve(nodeDetails),
-                    getNode: () => Promise.resolve({ id: 'fake-node' })
+                    getNode: () => Promise.resolve(nodeDetails)
                 },
                 content: { getContentUrl: () => contentUrl }
             };

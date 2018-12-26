@@ -102,40 +102,22 @@ export class NodeDeleteDirective implements OnChanges {
     }
 
     private getDeleteNodesBatch(selection: any): Observable<ProcessedNodeData>[] {
-        return selection.map((node) => {
-
-            if (node.entry.hasOwnProperty('archivedAt')) {
-                this.permanentDeleteNode(node);
-            } else {
-                this.deleteNode(node);
-            }
-        });
+        return selection.map((node) => this.deleteNode(node));
     }
 
-    private deleteNode(node: NodeEntry): Observable<ProcessedNodeData> {
-        const id = node.entry.id;
+    private deleteNode(node: NodeEntry | DeletedNodeEntity): Observable<ProcessedNodeData> {
+        const id = (<any> node.entry).nodeId || node.entry.id;
 
-        let promise = this.alfrescoApiService.nodesApi.deleteNode(id, { permanent: this.permanent });
+        let promise;
 
-        return from(promise).pipe(
-            map(() => (<ProcessedNodeData> {
-                entry: node.entry,
-                status: 1
-            })),
-            catchError(() => of({
-                entry: node.entry,
-                status: 0
-            }))
-        );
-    }
-
-    private permanentDeleteNode(node: DeletedNodeEntity): Observable<ProcessedNodeData> {
-        const id = node.entry.id;
-
-        let promise = this.alfrescoApiService.nodesApi.purgeDeletedNode(id);
+        if (node.entry.hasOwnProperty('archivedAt')) {
+            promise = this.alfrescoApiService.nodesApi.purgeDeletedNode(id);
+        } else {
+            promise = this.alfrescoApiService.nodesApi.deleteNode(id, { permanent: this.permanent });
+        }
 
         return from(promise).pipe(
-            map(() => (<ProcessedNodeData> {
+            map(() => ({
                 entry: node.entry,
                 status: 1
             })),

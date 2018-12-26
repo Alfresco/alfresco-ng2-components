@@ -314,20 +314,15 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 this.isLoading = false;
             } else if (this.nodeId) {
                 this.apiService.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] }).then(
-                    (data: NodeEntry) => {
-                        this.setUpNodeFile(data.entry).then(() => {
+                    (node: NodeEntry) => {
+                        this.node = node;
+                        this.setUpNodeFile(node.entry).then(() => {
                             this.isLoading = false;
                         });
                     },
                     (error) => {
                         this.isLoading = false;
                         this.logService.error('This node does not exist');
-                    }
-                );
-
-                this.apiService.nodesApi.getNode(this.nodeId).then(
-                    (node: NodeEntry) => {
-                        this.node = node;
                     }
                 );
             } else if (this.sharedLinkId) {

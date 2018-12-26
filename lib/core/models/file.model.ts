@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AssocChildBody, AssocTargetBody } from '@alfresco/js-api';
+import { AssocChildBody, AssociationBody } from '@alfresco/js-api';
 
 export interface FileUploadProgress {
     loaded: number;
@@ -33,24 +33,7 @@ export class FileUploadOptions {
     properties?: any;
     association?: any;
     secondaryChildren?: AssocChildBody[];
-    targets?: AssocTargetBody[];
-
-    constructor(input?: any) {
-        Object.assign(this, input);
-
-        if (input.secondaryChildren) {
-            this.secondaryChildren = input.secondaryChildren.map((item: any) => {
-                return new AssocChildBody(item);
-            });
-        }
-
-        if (input.targets) {
-            this.targets = input.targets.map((item: any) => {
-                return new AssocTargetBody(item);
-            });
-        }
-    }
-
+    targets?: AssociationBody[];
 }
 
 export enum FileUploadStatus {
