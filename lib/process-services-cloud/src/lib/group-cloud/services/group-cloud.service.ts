@@ -16,38 +16,41 @@
  */
 
 import { Injectable } from '@angular/core';
-import { from, of, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { from, of, Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
 })
-export class GroupService {
+export class GroupCloudService {
 
     constructor(
         private apiService: AlfrescoApiService,
-        private appConfigService: AppConfigService
+        private appConfigService: AppConfigService,
+        private logService: LogService
     ) {}
 
     findGroupsByName(search: string): Observable<any> {
         if (search === '') {
             return of([]);
         }
-        const url = this.getGroupUrl();
+        const url = this.getGroupsApi();
         const httpMethod = 'GET', pathParams = {}, queryParams = {search: search}, bodyParam = {}, headerParams = {},
             formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
 
         return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
-                    url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam, authNames,
-                    contentTypes, accepts, Object, null, null)
-                ));
+            url, httpMethod, pathParams, queryParams,
+            headerParams, formParams, bodyParam, authNames,
+            contentTypes, accepts, Object, null, null)
+        )).pipe(
+            catchError((err) => this.handleError(err))
+        );
     }
 
     getClientIdByApplicationName(applicationName: string): Observable<string> {
-        const url = this.getClientUrl();
+        const url = this.getApplicationIdApi();
         const httpMethod = 'GET', pathParams = {}, queryParams = {clientId: applicationName}, bodyParam = {}, headerParams = {}, formParams = {}, authNames = [],
               contentTypes = ['application/json'], accepts = ['application/json'];
         return from(this.apiService.getInstance()
@@ -58,12 +61,13 @@ export class GroupService {
                 map((response: any[]) => {
                     const clientId = response && response.length > 0 ? response[0].id : '';
                     return clientId;
-                })
+                }),
+                catchError((err) => this.handleError(err))
             );
     }
 
-    checkGroupHasClientRoleMapping(userId: string, clientId: string): Observable<any> {
-        const url = this.buildGroupClientRoleMapping(userId, clientId);
+    checkGroupHasClientRoleMapping(groupId: string, clientId: string): Observable<any> {
+        const url = this.groupClientRoleMappingApi(groupId, clientId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
 
@@ -76,20 +80,30 @@ export class GroupService {
                         if (response && response.length > 0) {
                             return (true);
                         }
-                        return (false);
-                    })
+                        return (true);
+                    }),
+                    catchError((err) => this.handleError(err))
             );
     }
 
-    private buildGroupClientRoleMapping(groupId: string, clientId: string): any {
+    private groupClientRoleMappingApi(groupId: string, clientId: string): any {
         return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/groups/${groupId}/role-mappings/clients/${clientId}`;
     }
 
-    private getClientUrl() {
+    private getApplicationIdApi() {
         return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/clients`;
     }
 
-    private getGroupUrl() {
+    private getGroupsApi() {
         return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/groups`;
+    }
+
+    /**
+     * Throw the error
+     * @param error
+     */
+    private handleError(error: Response) {
+        this.logService.error(error);
+        return throwError(error || 'Server error');
     }
 }

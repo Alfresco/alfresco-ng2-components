@@ -1,5 +1,5 @@
 <div class="adf-cloud-group">
-<mat-form-field [floatLabel]="'auto'">
+<mat-form-field>
     <mat-chip-list #groupChipList *ngIf="isMultipleMode()" class="apa-group-chip-list">
       <mat-chip *ngFor="let group of selectedGroups$ | async" (removed)="onRemove(group)">
         {{group.name}}
@@ -37,7 +37,7 @@
       </mat-option>
     </mat-autocomplete>
 </mat-form-field>
-<div class="adf-cloud-group-error" *ngIf="dataError">
+<div class="adf-cloud-group-error" *ngIf="showHint">
     <div fxLayout="row" fxLayoutAlign="start start" [@transitionMessages]="_subscriptAnimationState">
         <div class="adf-cloud-group-error-message">{{ 'ADF_CLOUD_GROUPS.ERROR.MESSAGE' | translate }}</div>
         <mat-icon class="adf-cloud-group-error-icon">warning</mat-icon>

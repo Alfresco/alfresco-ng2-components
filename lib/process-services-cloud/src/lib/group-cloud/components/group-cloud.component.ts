@@ -20,7 +20,7 @@ import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { GroupModel } from '../models/group.model';
-import { GroupService } from '../services/group.service';
+import { GroupCloudService } from '../services/group-cloud.service';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { distinctUntilChanged, switchMap, flatMap, mergeMap, filter, tap } from 'rxjs/operators';
 
@@ -69,21 +69,27 @@ export class GroupCloudComponent implements OnInit {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    private _selectedGroups: GroupModel[] = [];
+
+    private selectedGroups: BehaviorSubject<GroupModel[]>;
+
+    private searchGroups: BehaviorSubject<GroupModel[]>;
+
+    applicationId: string;
+
     groups$: Observable<GroupModel[]>;
 
-    private _selectedGroups: GroupModel[] = [];
-    private selectedGroups: BehaviorSubject<GroupModel[]>;
-    private searchGroups: BehaviorSubject<GroupModel[]>;
-    private applicationId: string;
     selectedGroups$: Observable<GroupModel[]>;
 
     searchGroup: FormControl = new FormControl();
 
     _subscriptAnimationState = 'enter';
-    dataError = false;
+
+    showHint = false;
+
     filtered = [];
 
-    constructor(private groupService: GroupService) {
+    constructor(private groupService: GroupCloudService) {
         this.selectedGroups = new BehaviorSubject<GroupModel[]>(this._selectedGroups);
         this.searchGroups = new BehaviorSubject<GroupModel[]>(this._selectedGroups);
         this.selectedGroups$ = this.selectedGroups.asObservable();
@@ -98,38 +104,58 @@ export class GroupCloudComponent implements OnInit {
 
     initSearch() {
         this.searchGroup.valueChanges.pipe(
+            tap((inputValue) => {
+                this.showHint = !!inputValue;
+            }),
             debounceTime(500),
             distinctUntilChanged(),
             tap( () => {
                 this.filtered = [];
                 this.searchGroups.next(this.filtered);
             }),
-            switchMap( (search) => this.groupService.findGroupsByName(search)),
-            flatMap((group) => {
-                return group;
+            switchMap((inputValue) => {
+                return this.findGroupsByName(inputValue);
             }),
             mergeMap((group: any) => {
-                if (this.isGroupAlreadySelected(group)) {
-                    return of();
-                }
-                return this.groupService.checkGroupHasClientRoleMapping(group.id, this.applicationId).pipe(
-                    mergeMap((hasRole) => {
-                        return of({group, hasRole});
-                     })
-                );
+                return this.checkGroupHasClientRoleMapping(group);
             }),
-            filter((group: any) => group.hasRole)).subscribe((user) => {
-                this.filtered.push(user.group);
-                this.searchGroups.next(this.filtered);
-            });
+            filter((filteredGroup) => filteredGroup.hasRole)
+        ).subscribe((filteredGroup) => {
+            this.showHint = false;
+            this.filtered.push(filteredGroup.group);
+            this.searchGroups.next(this.filtered);
+        });
     }
 
-    isGroupAlreadySelected(group: any): boolean {
-        if (this._selectedGroups && this._selectedGroups.length > 0) {
-            const result = this._selectedGroups.filter((selectedGroup) => {
+    findGroupsByName(searchedWord: any): Observable<GroupModel> {
+        return this.groupService.findGroupsByName(searchedWord).pipe(
+            flatMap((groups: GroupModel[]) => {
+                if (searchedWord) {
+                    this.showHint = this.hasGroups(groups) ? false : true;
+                    // console.log('from find' + this.showHint);
+                }
+                return groups;
+            })
+        );
+    }
+
+    checkGroupHasClientRoleMapping(group: GroupModel): Observable<any> {
+        if (this.isGroupAlreadySelected(group)) {
+            return of();
+        }
+        return this.groupService.checkGroupHasClientRoleMapping(group.id, this.applicationId).pipe(
+            mergeMap((hasRole: boolean) => {
+                return of({ group, hasRole });
+            })
+        );
+    }
+
+    isGroupAlreadySelected(group: GroupModel): boolean {
+        if (this.hasGroups(this._selectedGroups)) {
+            const result = this._selectedGroups.filter((selectedGroup: GroupModel) => {
                 return selectedGroup.id === group.id;
             });
-            if (result && result.length > 0) {
+            if (this.hasGroups(result)) {
                 return true;
             }
         }
@@ -144,9 +170,9 @@ export class GroupCloudComponent implements OnInit {
     }
 
     private loadPreSelectGroups() {
-        if (this.preSelectGroups && this.preSelectGroups.length > 0) {
+        if (this.hasGroups(this.preSelectGroups)) {
             if (this.isMultipleMode()) {
-                this.preSelectGroups.forEach((group) => {
+                this.preSelectGroups.forEach((group: GroupModel) => {
                     this.onSelect(group);
                 });
             } else {
@@ -157,12 +183,10 @@ export class GroupCloudComponent implements OnInit {
     }
 
     onSelect(selectedGroup: GroupModel) {
-        this.dataError = false;
-        this.error.emit(this.dataError);
-
+        this.showHint = false;
+        this.error.emit(this.showHint);
         if (this.isMultipleMode()) {
-            const isExistingGroup = this._selectedGroups.find((group: GroupModel) => { return group.id === selectedGroup.id; });
-            if (!isExistingGroup) {
+            if (!this.isGroupAlreadySelected(selectedGroup)) {
                 this._selectedGroups.push(selectedGroup);
                 this.selectedGroups.next(this._selectedGroups);
                 this.selectGroup.emit(selectedGroup);
@@ -197,7 +221,11 @@ export class GroupCloudComponent implements OnInit {
         return this.mode === GroupCloudComponent.MODE_MULTIPLE;
     }
 
-    getDisplayName(group): string {
+    getDisplayName(group: GroupModel): string {
         return group ? group.name : '';
+    }
+
+    private hasGroups(groups: GroupModel[]): boolean {
+        return groups && groups.length > 0;
     }
 }
