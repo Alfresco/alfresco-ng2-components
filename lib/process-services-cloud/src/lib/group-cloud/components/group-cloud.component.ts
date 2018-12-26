@@ -67,7 +67,7 @@ export class GroupCloudComponent implements OnInit {
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     private _selectedGroups: GroupModel[] = [];
 
