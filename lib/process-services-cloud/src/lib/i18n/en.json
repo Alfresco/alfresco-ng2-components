@@ -125,5 +125,36 @@
       "SAVE": "SAVE",
       "CANCEL": "CANCEL"
     }
+  },
+  "ADF_CLOUD_TASK_HEADER": {
+    "BUTTON": {
+      "CLAIM": "Claim",
+      "UNCLAIM": "Requeue"
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Task",
+      "THUMBNAIL": "Thumbnail",
+      "DURATION": "Duration",
+      "PARENT_TASK_ID": "Parent task id",
+      "NAME": "Name",
+      "ASSIGNEE": "Assignee",
+      "ASSIGNEE_DEFAULT": "No assignee",
+      "PRIORITY": "Priority",
+      "DUE_DATE": "Due Date",
+      "DUE_DATE_DEFAULT": "No date",
+      "STATUS": "Status",
+      "CATEGORY": "Category",
+      "CATEGORY_DEFAULT": "No category",
+      "PARENT_NAME": "Parent name",
+      "PARENT_NAME_DEFAULT": "No parent",
+      "CREATED_BY": "Created By",
+      "CREATED": "Created",
+      "END_DATE": "End date",
+      "ID": "ID",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_DEFAULT": "No description",
+      "FORM_NAME": "Form Name",
+      "FORM_NAME_DEFAULT": "No form"
+    }
   }
 }

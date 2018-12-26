@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-export * from './task-list/public-api';
-export * from './task-filters/public-api';
-export * from './start-task/public-api';
-export * from './task-header/public-api';
+export * from './components/task-header-cloud.component';
 
-export * from './task-cloud.module';
+export * from './task-header-cloud.module';
