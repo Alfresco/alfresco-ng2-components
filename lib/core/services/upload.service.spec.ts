@@ -233,9 +233,9 @@ describe('UploadService', () => {
             <File> { name: 'fake-name', size: 10 },
             <FileUploadOptions> {
                 parentId: '123', path: 'fake-dir',
-                secondaryChildren: [<AssocChildBody>{ assocType: 'assoc-1', childId: 'child-id' }],
+                secondaryChildren: [<AssocChildBody> { assocType: 'assoc-1', childId: 'child-id' }],
                 association: { assocType: 'fake-assoc' },
-                targets: [<AssociationBody>{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
+                targets: [<AssociationBody> { assocType: 'target-assoc', targetId: 'fake-target-id' }]
             });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
@@ -247,9 +247,9 @@ describe('UploadService', () => {
             newVersion: false,
             parentId: '123',
             path: 'fake-dir',
-            secondaryChildren: [<AssocChildBody>{ assocType: 'assoc-1', childId: 'child-id' }],
+            secondaryChildren: [<AssocChildBody> { assocType: 'assoc-1', childId: 'child-id' }],
             association: { assocType: 'fake-assoc' },
-            targets: [<AssociationBody>{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
+            targets: [<AssociationBody> { assocType: 'target-assoc', targetId: 'fake-target-id' }]
         }, {
             renditions: 'doclib',
             include: ['allowableOperations'],
