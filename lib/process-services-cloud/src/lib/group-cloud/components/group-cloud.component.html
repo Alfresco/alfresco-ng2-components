@@ -20,7 +20,6 @@
       placeholder="{{ 'ADF_CLOUD_GROUPS.SEARCH-GROUP' | translate }}"
       class="adf-group-input"
       data-automation-id="adf-cloud-group-search-input"
-      type="text"
       [formControl]="searchGroup"
       [matAutocomplete]="auto" #groupInput>
 
@@ -39,7 +38,7 @@
 </mat-form-field>
 <div class="adf-cloud-group-error" *ngIf="showHint">
     <div fxLayout="row" fxLayoutAlign="start start" [@transitionMessages]="_subscriptAnimationState">
-        <div class="adf-cloud-group-error-message">{{ 'ADF_CLOUD_GROUPS.ERROR.MESSAGE' | translate }}</div>
+        <div class="adf-cloud-group-error-message">{{ errorMessage | translate }}</div>
         <mat-icon class="adf-cloud-group-error-icon">warning</mat-icon>
     </div>
 </div>

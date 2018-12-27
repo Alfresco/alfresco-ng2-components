@@ -35,6 +35,7 @@ import {
     roleMappingApi,
     noRoleMappingApi
 } from '../mock/group-cloud.mock';
+import { GroupSearchParam } from '../models/group.model';
 
 describe('GroupCloudService', () => {
     let service: GroupCloudService;
@@ -56,7 +57,7 @@ describe('GroupCloudService', () => {
 
     it('should be able to fetch groups', (done) => {
         spyOn(apiService, 'getInstance').and.returnValue(groupsMockApi);
-        service.findGroupsByName('mock').subscribe((res) => {
+        service.findGroupsByName(<GroupSearchParam> {name: 'mock'}).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.length).toBe(3);
@@ -90,7 +91,7 @@ describe('GroupCloudService', () => {
 
     it('should append to the call all the parameters', (done) => {
         spyOn(apiService, 'getInstance').and.returnValue(returnCallQueryParameters);
-        service.findGroupsByName('mock').subscribe((res) => {
+        service.findGroupsByName(<GroupSearchParam> {name: 'mock'}).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.search).toBe('mock');
@@ -100,7 +101,7 @@ describe('GroupCloudService', () => {
 
     it('should request groups api url', (done) => {
         spyOn(apiService, 'getInstance').and.returnValue(returnCallUrl);
-        service.findGroupsByName('mock').subscribe((requestUrl) => {
+        service.findGroupsByName(<GroupSearchParam> {name: 'mock'}).subscribe((requestUrl) => {
             expect(requestUrl).toBeDefined();
             expect(requestUrl).not.toBeNull();
             expect(requestUrl).toContain('/groups');
@@ -121,7 +122,7 @@ describe('GroupCloudService', () => {
     it('should notify errors returned from the API', (done) => {
         const logServiceSpy = spyOn(logService, 'error').and.callThrough();
         spyOn(apiService, 'getInstance').and.returnValue(mockApiError);
-        service.findGroupsByName('zzz').subscribe(
+        service.findGroupsByName(<GroupSearchParam> {name: 'mock'}).subscribe(
             () => {},
             (res: any) => {
                 expect(res).toBeDefined();

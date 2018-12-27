@@ -19,7 +19,7 @@ import { Component, ElementRef, OnInit, Output, EventEmitter, ViewChild, ViewEnc
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { GroupModel } from '../models/group.model';
+import { GroupModel, GroupSearchParam } from '../models/group.model';
 import { GroupCloudService } from '../services/group-cloud.service';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { distinctUntilChanged, switchMap, flatMap, mergeMap, filter, tap } from 'rxjs/operators';
@@ -43,10 +43,12 @@ export class GroupCloudComponent implements OnInit {
 
     static MODE_SINGLE = 'single';
     static MODE_MULTIPLE = 'multiple';
+    static NO_MATCH_FOUND = 'match';
+    static NO_ROLE_MAPPING = 'rolemapping';
 
     @ViewChild('groupInput') groupInput: ElementRef<HTMLInputElement>;
 
-    /** Mode of the group selection (single/multiple) */
+    /** (required) Name of the app. */
     @Input()
     applicationName: string;
 
@@ -85,9 +87,11 @@ export class GroupCloudComponent implements OnInit {
 
     _subscriptAnimationState = 'enter';
 
-    showHint = false;
-
     filtered = [];
+
+    showHint = false;
+    errorMessage: string;
+    private validationMessages = { match: 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND', rolemapping: 'ADF_CLOUD_GROUPS.ERROR.ROLE_MAPPING' };
 
     constructor(private groupService: GroupCloudService) {
         this.selectedGroups = new BehaviorSubject<GroupModel[]>(this._selectedGroups);
@@ -104,22 +108,24 @@ export class GroupCloudComponent implements OnInit {
 
     initSearch() {
         this.searchGroup.valueChanges.pipe(
-            tap((inputValue) => {
-                this.showHint = !!inputValue;
-            }),
             debounceTime(500),
             distinctUntilChanged(),
-            tap( () => {
+            tap(() => {
                 this.filtered = [];
                 this.searchGroups.next(this.filtered);
             }),
             switchMap((inputValue) => {
-                return this.findGroupsByName(inputValue);
+                const queryParams = this.createSearchParam(inputValue);
+                return this.findGroupsByName(queryParams);
             }),
             mergeMap((group: any) => {
                 return this.checkGroupHasClientRoleMapping(group);
             }),
-            filter((filteredGroup) => filteredGroup.hasRole)
+            filter((filteredGroup) => {
+                this.showHint = !filteredGroup.hasRole;
+                this.setValidationMessage(GroupCloudComponent.NO_ROLE_MAPPING);
+                return filteredGroup.hasRole;
+            })
         ).subscribe((filteredGroup) => {
             this.showHint = false;
             this.filtered.push(filteredGroup.group);
@@ -127,13 +133,11 @@ export class GroupCloudComponent implements OnInit {
         });
     }
 
-    findGroupsByName(searchedWord: any): Observable<GroupModel> {
-        return this.groupService.findGroupsByName(searchedWord).pipe(
+    findGroupsByName(searchParam: GroupSearchParam): Observable<GroupModel> {
+        return this.groupService.findGroupsByName(searchParam).pipe(
             flatMap((groups: GroupModel[]) => {
-                if (searchedWord) {
-                    this.showHint = this.hasGroups(groups) ? false : true;
-                    // console.log('from find' + this.showHint);
-                }
+                this.showHint = searchParam.name ? !this.hasGroups(groups) : false;
+                this.setValidationMessage(GroupCloudComponent.NO_MATCH_FOUND);
                 return groups;
             })
         );
@@ -227,5 +231,24 @@ export class GroupCloudComponent implements OnInit {
 
     private hasGroups(groups: GroupModel[]): boolean {
         return groups && groups.length > 0;
+    }
+
+    createSearchParam(value: any): GroupSearchParam {
+        let queryParams: GroupSearchParam = { name: '' };
+        queryParams.name = this.isString(value) ? value.trim() : value.name.trim();
+        return queryParams;
+    }
+
+    isString(value: any): boolean {
+        return typeof value === 'string';
+    }
+
+    setValidationMessage(errorKey: any): void {
+        this.errorMessage = '';
+        if (errorKey === GroupCloudComponent.NO_MATCH_FOUND) {
+            this.errorMessage = this.validationMessages[errorKey];
+        } else {
+            this.errorMessage = this.validationMessages[errorKey];
+        }
     }
 }

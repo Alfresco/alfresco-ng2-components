@@ -20,6 +20,7 @@ import { from, of, Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
+import { GroupSearchParam } from '../models/group.model';
 
 @Injectable({
     providedIn: 'root'
@@ -32,12 +33,12 @@ export class GroupCloudService {
         private logService: LogService
     ) {}
 
-    findGroupsByName(search: string): Observable<any> {
-        if (search === '') {
+    findGroupsByName(searchParams: GroupSearchParam): Observable<any> {
+        if (searchParams.name === '') {
             return of([]);
         }
         const url = this.getGroupsApi();
-        const httpMethod = 'GET', pathParams = {}, queryParams = {search: search}, bodyParam = {}, headerParams = {},
+        const httpMethod = 'GET', pathParams = {}, queryParams = {search: searchParams.name}, bodyParam = {}, headerParams = {},
             formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
 
         return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
@@ -80,7 +81,7 @@ export class GroupCloudService {
                         if (response && response.length > 0) {
                             return (true);
                         }
-                        return (true);
+                        return (false);
                     }),
                     catchError((err) => this.handleError(err))
             );

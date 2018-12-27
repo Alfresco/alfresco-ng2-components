@@ -137,17 +137,6 @@ describe('GroupCloudComponent', () => {
         });
     }));
 
-    it('should pre-select all preSelectGroups when mode=multiple', async(() => {
-        fixture.detectChanges();
-        component.mode = 'multiple';
-        component.preSelectGroups = <any> [{id: mockGroups[1].id}, {id: mockGroups[2].id}];
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const chips = element.querySelectorAll('.mat-chip-list .mat-chip');
-            expect(chips.length).toBe(2);
-        });
-    }));
-
     it('should not pre-select any group when preSelectGroups is empty and mode=multiple', async(() => {
         component.mode = 'multiple';
         fixture.detectChanges();

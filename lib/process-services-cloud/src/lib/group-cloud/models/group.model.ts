@@ -35,3 +35,7 @@ export class GroupModel {
         this.clientRoles = obj.clientRoles || null;
       }
 }
+
+export interface GroupSearchParam {
+    name?: string;
+}
