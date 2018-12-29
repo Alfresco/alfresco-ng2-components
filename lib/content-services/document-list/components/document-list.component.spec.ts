@@ -74,7 +74,7 @@ describe('DocumentList', () => {
         documentList.ngOnInit();
 
         spyGetSites = spyOn(apiService.sitesApi, 'getSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
-        spyFavorite = spyOn(apiService.favoritesApi, 'getFavorites').and.returnValue(Promise.resolve({list: []}));
+        spyFavorite = spyOn(apiService.favoritesApi, 'getFavorites').and.returnValue(Promise.resolve({ list: [] }));
     });
 
     afterEach(() => {
@@ -978,7 +978,7 @@ describe('DocumentList', () => {
 
     it('should emit error when loadFolderNodesByFolderNodeId fails', (done) => {
         const error = { message: '{ "error": { "statusCode": 501 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeWithCreatePermission));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: fakeNodeWithCreatePermission }));
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.reject(error));
 
         let disposableError = documentList.error.subscribe((val) => {
@@ -1044,7 +1044,7 @@ describe('DocumentList', () => {
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
 
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeWithNoPermission));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: fakeNodeWithNoPermission }));
         spyOn(documentListService, 'getFolder').and.returnValue(throwError(error));
 
         documentList.loadFolder();

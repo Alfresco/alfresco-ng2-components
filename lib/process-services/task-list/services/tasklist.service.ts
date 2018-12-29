@@ -23,6 +23,10 @@ import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListModel } from '../models/task-list.model';
+import {
+    TaskQueryRepresentation,
+    AssigneeIdentifierRepresentation
+} from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -85,7 +89,7 @@ export class TaskListService {
      * @returns List of tasks
      */
     getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
-        return from<TaskListModel>(this.callApiTasksFiltered(requestNode))
+        return from(this.callApiTasksFiltered(requestNode))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -318,8 +322,8 @@ export class TaskListService {
      * @param userId ID of the user to assign the task to
      * @returns Details of the assigned task
      */
-    assignTaskByUserId(taskId: string, userId: number): Observable<TaskDetailsModel> {
-        const assignee = { assignee: userId };
+    assignTaskByUserId(taskId: string, userId: string): Observable<TaskDetailsModel> {
+        const assignee = <AssigneeIdentifierRepresentation> { assignee: userId };
         return from(this.callApiAssignTask(taskId, assignee))
             .pipe(
                 map((response: TaskDetailsModel) => {
@@ -392,35 +396,35 @@ export class TaskListService {
             );
     }
 
-    private callApiTasksFiltered(requestNode: TaskQueryRequestRepresentationModel) {
+    private callApiTasksFiltered(requestNode: TaskQueryRepresentation): Promise<TaskListModel> {
         return this.apiService.taskApi.listTasks(requestNode);
     }
 
-    private callApiTaskDetails(taskId: string) {
+    private callApiTaskDetails(taskId: string): Promise<TaskDetailsModel> {
         return this.apiService.taskApi.getTask(taskId);
     }
 
-    private callApiAddTask(task: TaskDetailsModel) {
+    private callApiAddTask(task: TaskDetailsModel): Promise<TaskDetailsModel> {
         return this.apiService.taskApi.addSubtask(task.parentTaskId, task);
     }
 
-    private callApiDeleteTask(taskId: string) {
+    private callApiDeleteTask(taskId: string): Promise<any> {
         return this.apiService.taskApi.deleteTask(taskId);
     }
 
-    private callApiDeleteForm(taskId: string) {
+    private callApiDeleteForm(taskId: string): Promise<any> {
         return this.apiService.taskApi.removeForm(taskId);
     }
 
-    private callApiTaskChecklist(taskId: string) {
+    private callApiTaskChecklist(taskId: string): Promise<TaskListModel> {
         return this.apiService.taskApi.getChecklist(taskId);
     }
 
-    private callApiCreateTask(task: TaskDetailsModel) {
+    private callApiCreateTask(task: TaskDetailsModel): Promise<TaskDetailsModel> {
         return this.apiService.taskApi.createNewTask(task);
     }
 
-    private callApiAssignTask(taskId: string, requestNode: any) {
+    private callApiAssignTask(taskId: string, requestNode: AssigneeIdentifierRepresentation): Promise<TaskDetailsModel> {
         return this.apiService.taskApi.assignTask(taskId, requestNode);
     }
 

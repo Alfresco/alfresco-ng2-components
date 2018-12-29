@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Node, SiteEntry, SitePaging } from '@alfresco/js-api';
+import { NodeEntry, Node, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { SearchService, SitesService, setupTestBed } from '@alfresco/adf-core';
 import { Observable, Observer, of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
@@ -116,7 +116,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expectedDefaultFolderNode;
 
             beforeEach(() => {
-                expectedDefaultFolderNode = <Node> { path: { elements: [] } };
+                expectedDefaultFolderNode = <NodeEntry> { entry: { path: { elements: [] } } };
                 documentListService = TestBed.get(DocumentListService);
                 sitesService = TestBed.get(SitesService);
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(expectedDefaultFolderNode));
@@ -288,7 +288,7 @@ describe('ContentNodeSelectorComponent', () => {
 
             beforeEach(() => {
                 const documentListService = TestBed.get(DocumentListService);
-                const expectedDefaultFolderNode = <Node> { path: { elements: [] } };
+                const expectedDefaultFolderNode = <NodeEntry> { entry: { path: { elements: [] } } };
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(expectedDefaultFolderNode));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());

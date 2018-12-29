@@ -53,7 +53,7 @@ describe('ShareDialogComponent', () => {
             NodesApiService,
             SharedLinksApiService,
             { provide: NotificationService, useValue: notificationServiceMock },
-            { provide: MatDialogRef, useValue: {} },
+            { providef: MatDialogRef, useValue: {} },
             { provide: MAT_DIALOG_DATA, useValue: {} }
         ]
     });
@@ -76,10 +76,6 @@ describe('ShareDialogComponent', () => {
                 properties: {}
             }
         };
-    });
-
-    afterEach(() => {
-        fixture.destroy();
     });
 
     it(`should toggle share action when property 'sharedId' does not exists`, () => {
