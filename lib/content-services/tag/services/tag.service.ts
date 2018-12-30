@@ -19,7 +19,7 @@ import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { TagPaging, TagEntry } from '@alfresco/js-api';
+import { TagBody,  TagPaging, TagEntry } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -62,8 +62,7 @@ export class TagService {
      * @returns TagEntry object (defined in JS-API) with details of the new tag
      */
     addTag(nodeId: string, tagName: string): Observable<TagEntry> {
-        const alfrescoApi: any = this.apiService.getInstance();
-        const tagBody = new alfrescoApi.core.TagBody();
+        const tagBody = new TagBody();
         tagBody.tag = tagName;
 
         let observableAdd = from(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody));

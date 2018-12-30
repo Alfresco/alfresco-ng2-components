@@ -196,7 +196,7 @@ describe('Form service', () => {
         });
 
         it('should get form definition by id', (done) => {
-            service.getFormDefinitionById('1').subscribe((result) => {
+            service.getFormDefinitionById(1).subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/form-models/1')).toBeTruthy();
                 expect(result.id).toEqual(1);
                 done();
@@ -360,10 +360,10 @@ describe('Form service', () => {
         });
 
         it('should add form fields to a form', (done) => {
-            let formId = '100';
+            let formId = 100;
             let name = 'testName';
             let data = [{ name: 'name' }, { name: 'email' }];
-            let formDefinitionModel = new FormDefinitionModel(formId, name, 'testUserName', '2016-09-05T14:41:19.049Z', data);
+            let formDefinitionModel = new FormDefinitionModel(formId.toString(), name, 'testUserName', '2016-09-05T14:41:19.049Z', data);
 
             service.addFieldsToAForm(formId, formDefinitionModel).subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/form-models/' + formId)).toBeTruthy();
