@@ -69,15 +69,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     blobFile: Blob;
 
-    /**
-     * Node Id of the file to load.
-     * @deprecated 2.4.0 use nodeId
-     */
-    @Input()
-    set fileNodeId(nodeId: string) {
-        this.nodeId = nodeId;
-    }
-
     /** Node Id of the file to load. */
     @Input()
     nodeId: string = null;
@@ -115,13 +106,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     /** Toggles printing. */
     @Input()
     allowPrint = false;
-
-    /**
-     * Toggles sharing.
-     * @deprecated 2.5.0 - inject the share button directive as custom button
-     */
-    @Input()
-    allowShare = false;
 
     /** Toggles the 'Full Screen' feature. */
     @Input()
@@ -209,10 +193,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     /** Emitted when user clicks the 'Print' button. */
     @Output()
     print = new EventEmitter<BaseEvent<any>>();
-
-    /** Emitted when user clicks the 'Share' button. */
-    @Output()
-    share = new EventEmitter<BaseEvent<any>>();
 
     /** Emitted when the viewer is shown or hidden. */
     @Output()
@@ -606,13 +586,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             if (!args.defaultPrevented) {
                 this.viewUtils.printFileGeneric(this.nodeId, this.mimeType);
             }
-        }
-    }
-
-    shareContent() {
-        if (this.allowShare) {
-            const args = new BaseEvent();
-            this.share.next(args);
         }
     }
 

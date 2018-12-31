@@ -77,8 +77,8 @@ export class DocumentActionsService {
      * @param obj Item to receive an action
      * @returns True if the action can be executed on this item, false otherwise
      */
-    canExecuteAction(obj: any): boolean {
-        return this.documentListService && obj && obj.entry.isFile === true;
+    canExecuteAction(nodeEntry: NodeEntry): boolean {
+        return this.documentListService && nodeEntry && nodeEntry.entry.isFile === true;
     }
 
     private setupActionHandlers() {

@@ -116,10 +116,10 @@ describe('ContentNodeSelectorComponent', () => {
                 expectedDefaultFolderNode;
 
             beforeEach(() => {
-                expectedDefaultFolderNode = <NodeEntry> { entry: { path: { elements: [] } } };
+                expectedDefaultFolderNode = <Node> { path: { elements: [] } };
                 documentListService = TestBed.get(DocumentListService);
                 sitesService = TestBed.get(SitesService);
-                spyOn(documentListService, 'getFolderNode').and.returnValue(of(expectedDefaultFolderNode));
+                spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
                 spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
                 spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
@@ -134,7 +134,7 @@ describe('ContentNodeSelectorComponent', () => {
                     fixture.detectChanges();
                     const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
                     expect(breadcrumb).not.toBeNull();
-                    expect(breadcrumb.componentInstance.folderNode).toBe(expectedDefaultFolderNode);
+                    expect(breadcrumb.componentInstance.folderNode).toEqual(expectedDefaultFolderNode);
                     done();
                 });
             });
@@ -216,7 +216,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                     const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
                     expect(breadcrumb).not.toBeNull();
-                    expect(breadcrumb.componentInstance.folderNode).toBe(expectedDefaultFolderNode);
+                    expect(breadcrumb.componentInstance.folderNode).toEqual(expectedDefaultFolderNode);
                     done();
                 }, 300);
             });
@@ -229,7 +229,7 @@ describe('ContentNodeSelectorComponent', () => {
                     expect(component.breadcrumbTransform).toBeNull();
 
                     const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
-                    expect(breadcrumb.componentInstance.folderNode).toBe(expectedDefaultFolderNode);
+                    expect(breadcrumb.componentInstance.folderNode).toEqual(expectedDefaultFolderNode);
                     done();
                 });
             });

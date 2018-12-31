@@ -63,7 +63,7 @@ export class PermissionListComponent implements OnInit {
             this.actualNode = node;
             this.permissionList = this.getPermissionList(node);
             this.nodePermissionService.getNodeRoles(node).subscribe((settableList: string[]) => {
-                this.settableRoles =  settableList;
+                this.settableRoles = settableList;
             });
         });
     }
@@ -71,14 +71,14 @@ export class PermissionListComponent implements OnInit {
     private getPermissionList(node: Node): PermissionDisplayModel[] {
         let allPermissions: PermissionDisplayModel[] = [];
         if (node.permissions.locallySet) {
-            node.permissions.locallySet.map((element) => {
-                let permission = new PermissionDisplayModel(element);
+            node.permissions.locallySet.map((permissionElement: PermissionElement) => {
+                let permission = new PermissionDisplayModel(permissionElement);
                 allPermissions.push(permission);
             });
         }
         if (node.permissions.inherited) {
-            node.permissions.inherited.map((element) => {
-                let permissionInherited = new PermissionDisplayModel(element);
+            node.permissions.inherited.map((permissionElement: PermissionElement) => {
+                let permissionInherited = new PermissionDisplayModel(permissionElement);
                 permissionInherited.isInherited = true;
                 allPermissions.push(permissionInherited);
             });

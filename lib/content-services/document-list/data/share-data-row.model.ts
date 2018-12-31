@@ -73,12 +73,12 @@ export class ShareDataRow implements DataRow {
         return (currentPermissionsStyle.isFolder && node.isFolder);
     }
 
-    isFolderAndHasPermissionToUpload(obj: NodeEntry): boolean {
-        return this.isFolder(obj) && this.documentListService.hasPermission(obj.entry, 'create');
+    isFolderAndHasPermissionToUpload(nodeEntry: NodeEntry): boolean {
+        return this.isFolder(nodeEntry) && this.documentListService.hasPermission(nodeEntry.entry, 'create');
     }
 
-    isFolder(obj: NodeEntry): boolean {
-        return obj.entry && obj.entry.isFolder;
+    isFolder(nodeEntry: NodeEntry): boolean {
+        return nodeEntry.entry && nodeEntry.entry.isFolder;
     }
 
     cacheValue(key: string, value: any): any {
@@ -94,7 +94,9 @@ export class ShareDataRow implements DataRow {
     }
 
     imageErrorResolver(event: Event): any {
-        return this.thumbnailService.getMimeTypeIcon(this.obj.entry.content.mimeType);
+        if (this.obj.entry.content) {
+            return this.thumbnailService.getMimeTypeIcon(this.obj.entry.content.mimeType);
+        }
     }
 
     hasValue(key: string): boolean {

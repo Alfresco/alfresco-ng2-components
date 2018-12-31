@@ -39,28 +39,28 @@ export class BpmUserModel implements UserRepresentation {
     tenantPictureId: number;
     type: string;
 
-    constructor(obj?: any) {
-        if (obj) {
-            this.apps = obj.apps;
-            this.capabilities = obj.capabilities;
-            this.company = obj.company;
-            this.created = obj.created;
-            this.email = obj.email;
-            this.externalId = obj.externalId;
-            this.firstName = obj.firstName;
-            this.lastName = obj.lastName;
-            this.fullname = obj.fullname;
-            this.groups = obj.groups;
-            this.id = obj.id;
-            this.lastUpdate = obj.lastUpdate;
-            this.latestSyncTimeStamp = obj.latestSyncTimeStamp;
-            this.password = obj.password;
-            this.pictureId = obj.pictureId;
-            this.status = obj.status;
-            this.tenantId = obj.tenantId;
-            this.tenantName = obj.tenantName;
-            this.tenantPictureId = obj.tenantPictureId;
-            this.type = obj.type;
+    constructor(input?: any) {
+        if (input) {
+            this.apps = input.apps;
+            this.capabilities = input.capabilities;
+            this.company = input.company;
+            this.created = input.created;
+            this.email = input.email;
+            this.externalId = input.externalId;
+            this.firstName = input.firstName;
+            this.lastName = input.lastName;
+            this.fullname = input.fullname;
+            this.groups = input.groups;
+            this.id = input.id;
+            this.lastUpdate = input.lastUpdate;
+            this.latestSyncTimeStamp = input.latestSyncTimeStamp;
+            this.password = input.password;
+            this.pictureId = input.pictureId;
+            this.status = input.status;
+            this.tenantId = input.tenantId;
+            this.tenantName = input.tenantName;
+            this.tenantPictureId = input.tenantPictureId;
+            this.type = input.type;
         }
     }
 }

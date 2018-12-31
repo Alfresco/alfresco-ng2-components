@@ -203,6 +203,7 @@ describe('DocumentList', () => {
     });
 
     it('should reset selection upon reload', () => {
+        documentList.currentFolderId = 'id-folder';
         spyOn(documentList, 'resetSelection').and.callThrough();
 
         documentList.reload();
@@ -229,6 +230,7 @@ describe('DocumentList', () => {
     });
 
     it('should reset selection upon reload', () => {
+        documentList.currentFolderId = 'id-folder';
         spyOn(documentList, 'resetSelection').and.callThrough();
 
         documentList.reload();
@@ -297,6 +299,7 @@ describe('DocumentList', () => {
     });
 
     it('should disable the action if there is no permission for the file and disableWithNoPermission true', () => {
+        documentList.currentFolderId = 'fake-node-id';
         let documentMenu = new ContentActionModel({
             disableWithNoPermission: true,
             permission: 'delete',
@@ -930,7 +933,7 @@ describe('DocumentList', () => {
     it('should emit node-click DOM event', (done) => {
         let node = new NodeMinimalEntry();
 
-        document.addEventListener('node-click', (e: CustomEvent) => {
+        document.addEventListener('node-click', (customEvent: CustomEvent) => {
             done();
         });
 
@@ -948,7 +951,7 @@ describe('DocumentList', () => {
     it('should emit node-dblclick DOM event', (done) => {
         let node = new NodeMinimalEntry();
 
-        document.addEventListener('node-dblclick', (e: CustomEvent) => {
+        document.addEventListener('node-dblclick', (customEvent: CustomEvent) => {
             done();
         });
 
@@ -1015,6 +1018,7 @@ describe('DocumentList', () => {
     });
 
     it('should reset noPermission upon reload', () => {
+        documentList.currentFolderId = 'fake-node-id';
         documentList.noPermission = true;
         fixture.detectChanges();
 
@@ -1154,14 +1158,14 @@ describe('DocumentList', () => {
 
     it('should fetch user membership sites', () => {
         const peopleApi = apiService.getInstance().core.peopleApi;
-        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve(fakeGetSiteMembership));
+        spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
         documentList.loadFolderByNodeId('-mysites-');
-        expect(peopleApi.getSiteMembership).toHaveBeenCalled();
+        expect(peopleApi.listSiteMembershipsForPerson).toHaveBeenCalled();
     });
 
     it('should emit error when fetch membership sites fails', (done) => {
-        spyOn(apiService.getInstance().core.peopleApi, 'getSiteMembership')
+        spyOn(apiService.getInstance().core.peopleApi, 'listSiteMembershipsForPerson')
             .and.returnValue(Promise.reject('error'));
 
         let disposableError = documentList.error.subscribe((val) => {
@@ -1176,10 +1180,10 @@ describe('DocumentList', () => {
     it('should assure that user membership sites have name property set', (done) => {
         fixture.detectChanges();
         const peopleApi = apiService.getInstance().core.peopleApi;
-        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve(fakeGetSiteMembership));
+        spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
         documentList.loadFolderByNodeId('-mysites-');
-        expect(peopleApi.getSiteMembership).toHaveBeenCalled();
+        expect(peopleApi.listSiteMembershipsForPerson).toHaveBeenCalled();
 
         let disposableReady = documentList.ready.subscribe((page) => {
             const entriesWithoutName = page.list.entries.filter((item) => !item.entry.name);
@@ -1192,10 +1196,10 @@ describe('DocumentList', () => {
     it('should assure that user membership sites have name property set correctly', (done) => {
         fixture.detectChanges();
         const peopleApi = apiService.getInstance().core.peopleApi;
-        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve(fakeGetSiteMembership));
+        spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
         documentList.loadFolderByNodeId('-mysites-');
-        expect(peopleApi.getSiteMembership).toHaveBeenCalled();
+        expect(peopleApi.listSiteMembershipsForPerson).toHaveBeenCalled();
 
         let disposableReady = documentList.ready.subscribe((page) => {
             const wrongName = page.list.entries.filter((item) => (item.entry.name !== item.entry.title));
@@ -1260,6 +1264,7 @@ describe('DocumentList', () => {
     });
 
     it('should reset folder node upon changing current folder id', () => {
+        documentList.currentFolderId = 'fake-node-id';
         documentList.folderNode = <any> {};
 
         documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, '-sites-', false) });
@@ -1279,7 +1284,7 @@ describe('DocumentList', () => {
         documentList.currentFolderId = '12345-some-id-6789';
 
         const peopleApi = apiService.getInstance().core.peopleApi;
-        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve(fakeGetSiteMembership));
+        spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
         documentList.loadFolderByNodeId('-mysites-');
         expect(documentList.currentFolderId).toBe('-mysites-');

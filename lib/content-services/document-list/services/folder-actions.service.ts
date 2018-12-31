@@ -72,11 +72,11 @@ export class FolderActionsService {
 
     /**
      * Checks if an action is available for a particular item.
-     * @param obj Item to check
+     * @param nodeEntry Item to check
      * @returns True if the action is available, false otherwise
      */
-    canExecuteAction(obj: any): boolean {
-        return this.documentListService && obj && obj.entry.isFolder === true;
+    canExecuteAction(nodeEntry: NodeEntry): boolean {
+        return this.documentListService && nodeEntry && nodeEntry.entry.isFolder === true;
     }
 
     private setupActionHandlers() {
@@ -86,18 +86,18 @@ export class FolderActionsService {
         this.handlers['download'] = this.downloadNode.bind(this);
     }
 
-    private downloadNode(obj: NodeEntry, target?: any, permission?: string) {
-        this.nodeActionsService.downloadNode(obj);
+    private downloadNode(nodeEntry: NodeEntry) {
+        this.nodeActionsService.downloadNode(nodeEntry);
     }
 
-    private copyNode(obj: NodeEntry, target?: any, permission?: string) {
-        const actionObservable = this.nodeActionsService.copyFolder(obj.entry, permission);
+    private copyNode(nodeEntry: NodeEntry, target?: any, permission?: string) {
+        const actionObservable = this.nodeActionsService.copyFolder(nodeEntry.entry, permission);
         this.prepareHandlers(actionObservable, 'folder', 'copy', target, permission);
         return actionObservable;
     }
 
-    private moveNode(obj: NodeEntry, target?: any, permission?: string) {
-        const actionObservable = this.nodeActionsService.moveFolder(obj.entry, permission);
+    private moveNode(nodeEntry: NodeEntry, target?: any, permission?: string) {
+        const actionObservable = this.nodeActionsService.moveFolder(nodeEntry.entry, permission);
         this.prepareHandlers(actionObservable, 'folder', 'move', target, permission);
         return actionObservable;
     }

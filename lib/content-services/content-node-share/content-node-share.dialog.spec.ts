@@ -53,7 +53,7 @@ describe('ShareDialogComponent', () => {
             NodesApiService,
             SharedLinksApiService,
             { provide: NotificationService, useValue: notificationServiceMock },
-            { providef: MatDialogRef, useValue: {} },
+            { provide: MatDialogRef, useValue: {} },
             { provide: MAT_DIALOG_DATA, useValue: {} }
         ]
     });

@@ -21,6 +21,7 @@ import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material';
 import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
+import { NodeBodyLock } from '@alfresco/js-api';
 import { NodeLockDialogComponent } from './node-lock.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
@@ -67,7 +68,8 @@ describe('NodeLockDialogComponent', () => {
                         ['cm:expiryDate']: expiryDate
                     }
                 },
-                onError: () => {}
+                onError: () => {
+                }
             };
             fixture.detectChanges();
         });
@@ -100,11 +102,11 @@ describe('NodeLockDialogComponent', () => {
 
             expect(alfrescoApi.nodesApi.lockNode).toHaveBeenCalledWith(
                 'node-id',
-                {
+                new NodeBodyLock({
                     'timeToExpire': 60,
                     'type': 'ALLOW_OWNER_CHANGES',
                     'lifetime': 'PERSISTENT'
-                }
+                })
             );
         });
 

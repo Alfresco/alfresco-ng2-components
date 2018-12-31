@@ -147,7 +147,7 @@ describe('DocumentListService', () => {
     it('should delete the folder', () => {
         service.deleteNode('fake-id').subscribe(
             (res) => {
-                expect(res).toBeNull();
+                expect(res).toBe('');
             }
         );
 

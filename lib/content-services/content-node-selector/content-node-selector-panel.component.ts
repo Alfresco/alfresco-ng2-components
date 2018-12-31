@@ -369,8 +369,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
         this.attemptNodeSelection(event.detail.node.entry);
     }
 
-    onNodeDoubleClick(e: CustomEvent) {
-        const node: any = e.detail.node.entry;
+    onNodeDoubleClick(customEvent: CustomEvent) {
+        const node: any = customEvent.detail.node.entry;
 
         if (node && node.guid) {
             const options = {
