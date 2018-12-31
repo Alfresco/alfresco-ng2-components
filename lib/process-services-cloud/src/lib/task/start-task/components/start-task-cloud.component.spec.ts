@@ -57,7 +57,7 @@ describe('StartTaskCloudComponent', () => {
         service = TestBed.get(StartTaskCloudService);
         identityService = TestBed.get(IdentityUserService);
         createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(taskDetailsMock));
-        spyOn(identityService, 'getCurrentUserInfo').and.returnValue(new IdentityUserModel({username: 'currentUser'}));
+        spyOn(identityService, 'getCurrentUserInfo').and.returnValue(new IdentityUserModel({username: 'currentUser', firstName: 'Test', lastName: 'User'}));
         fixture.detectChanges();
     }));
 
@@ -65,24 +65,7 @@ describe('StartTaskCloudComponent', () => {
         expect(component instanceof StartTaskCloudComponent).toBe(true, 'should create StartTaskCloudComponent');
     });
 
-    it('should define adf-cloud-people', () => {
-        component.ngOnInit();
-        fixture.detectChanges();
-        const peopleElement = fixture.debugElement.nativeElement.querySelector('adf-cloud-people');
-        expect(peopleElement).toBeDefined();
-    });
-
     describe('create task', () => {
-
-        beforeEach(() => {
-            createNewTaskSpy.and.returnValue(of(
-                {
-                    id: 91,
-                    name: 'fakeName',
-                    assignee: 'fake-assignee'
-                }
-            ));
-        });
 
         it('should create new task when start button is clicked', async(() => {
             let successSpy = spyOn(component.success, 'emit');
@@ -106,11 +89,7 @@ describe('StartTaskCloudComponent', () => {
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                expect(successSpy).toHaveBeenCalledWith({
-                    id: 91,
-                    name: 'fakeName',
-                    assignee: 'fake-assignee'
-                });
+                expect(successSpy).toHaveBeenCalledWith(taskDetailsMock);
             });
         }));
 
@@ -136,20 +115,18 @@ describe('StartTaskCloudComponent', () => {
             expect(successSpy).not.toHaveBeenCalled();
         });
 
-        it('should assign task when an assignee is selected', async(() => {
-            let successSpy = spyOn(component.success, 'emit');
+        it('should assign task to the logged in user when invalid assignee is selected', async(() => {
             component.taskForm.controls['name'].setValue('fakeName');
-            component.assigneeName = 'fake-assignee';
             fixture.detectChanges();
-            let createTaskButton = <HTMLElement> element.querySelector('#button-start');
+            const assigneeInput = <HTMLElement> element.querySelector('input.adf-cloud-input');
+            assigneeInput.nodeValue = 'a';
+            fixture.detectChanges();
+            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                expect(successSpy).toHaveBeenCalledWith({
-                    id: 91,
-                    name: 'fakeName',
-                    assignee: 'fake-assignee'
-                });
+                const taskRequest = new TaskDetailsCloudModel({ name: 'fakeName', assignee: 'currentUser'});
+                expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest);
             });
         }));
 
@@ -166,12 +143,18 @@ describe('StartTaskCloudComponent', () => {
         }));
     });
 
+    it('should select logged in user as assignee by default', () => {
+        fixture.detectChanges();
+        const assignee = fixture.nativeElement.querySelector('[data-automation-id="adf-people-cloud-search-input"]');
+        expect(assignee.value).toBe('Test User');
+    });
+
     it('should show start task button', () => {
         component.taskForm.controls['name'].setValue('fakeName');
         fixture.detectChanges();
-        expect(element.querySelector('#button-start')).toBeDefined();
-        expect(element.querySelector('#button-start')).not.toBeNull();
-        expect(element.querySelector('#button-start').textContent).toContain('ADF_CLOUD_TASK_LIST.START_TASK.FORM.ACTION.START');
+        const startButton = element.querySelector('#button-start');
+        expect(startButton).toBeDefined();
+        expect(startButton.textContent).toContain('ADF_CLOUD_TASK_LIST.START_TASK.FORM.ACTION.START');
     });
 
     it('should disable start button if name is empty', () => {

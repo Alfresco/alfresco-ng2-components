@@ -52,9 +52,7 @@ describe('PeopleCloudComponent', () => {
 
     it('should not list the current logged in user when showCurrentUser is false', (done) => {
         spyOn(identityService, 'getCurrentUserInfo').and.returnValue(mockUsers[1]);
-        component.showCurrentUser = false;
-        fixture.detectChanges();
-        component.searchUser.setValue(mockUsers[1].firstName[0]);
+
         component.users$.subscribe((users) => {
             const currentUser = users.find((user) => {
                 return user.username === mockUsers[1].username;
@@ -63,6 +61,9 @@ describe('PeopleCloudComponent', () => {
             done();
         });
 
+        component.showCurrentUser = false;
+        component.searchUser.setValue(mockUsers[1].firstName[0]);
+        fixture.detectChanges();
     });
 
     it('should show the users if the typed result match', async(() => {
@@ -81,7 +82,7 @@ describe('PeopleCloudComponent', () => {
         });
     }));
 
-    it('should hide result list if input is empty', () => {
+    it('should hide result list if input is empty', async(() => {
         fixture.detectChanges();
         let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
@@ -93,7 +94,7 @@ describe('PeopleCloudComponent', () => {
             expect(fixture.debugElement.query(By.css('mat-option'))).toBeNull();
             expect(fixture.debugElement.query(By.css('#adf-people-cloud-user-0'))).toBeNull();
         });
-    });
+    }));
 
     it('should emit selectedUser if option is valid', async(() => {
         fixture.detectChanges();
@@ -198,7 +199,7 @@ describe('PeopleCloudComponent', () => {
             const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
             removeIcon.nativeElement.click();
 
-            expect(removeUserSpy).toHaveBeenCalledWith(mockUsers[1]);
+            expect(removeUserSpy).toHaveBeenCalledWith({ id: mockUsers[1].id });
         });
 
     }));
