@@ -47,6 +47,10 @@ export class PeopleCloudComponent implements OnInit {
     static MODE_SINGLE = 'single';
     static MODE_MULTIPLE = 'multiple';
 
+    /** Name of the application. If specified, shows the users who have access to the app. */
+    @Input()
+    appName: string;
+
     /** Show current user in the list or not. */
     @Input()
     showCurrentUser: boolean = true;
@@ -126,16 +130,33 @@ export class PeopleCloudComponent implements OnInit {
                 return !this.isUserAlreadySelected(user);
             }),
             mergeMap((user: any) => {
-                return this.identityUserService.checkUserHasClientRoleMapping(user.id, '39d1f2b9-de0e-48d6-98f2-00af9d25c9e1').pipe(
-                    mergeMap((hasRole) => {
-                        return hasRole ? of(user) : of();
-                    })
-                );
+                if (this.appName) {
+                    return this.checkUserHasAccess(user.id).pipe(
+                        mergeMap((hasRole) => {
+                            return hasRole ? of(user) : of();
+                        })
+                    );
+                } else {
+                    return of(user);
+                }
             })
         ).subscribe((user) => {
             this.filtered.push(user);
             this.searchUsers.next(this.filtered);
         });
+    }
+
+    private checkUserHasAccess(userId: string): Observable<boolean> {
+        const roles = this.hasRoles() ? this.roles : this.getDefaultRoles();
+        return this.identityUserService.checkUserHasAnyApplicationRole(userId, this.appName, roles);
+    }
+
+    private hasRoles(): boolean {
+        return this.roles && this.roles.length > 0;
+    }
+
+    private getDefaultRoles(): string[] {
+        return [PeopleCloudComponent.ROLE_ACTIVITI_USER, PeopleCloudComponent.ROLE_ACTIVITI_ADMIN];
     }
 
     isUserAlreadySelected(user: IdentityUserModel): boolean {
