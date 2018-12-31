@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { IdentityUserModel } from '../models/identity-user.model';
 import { JwtHelperService } from '../../services/jwt-helper.service';
@@ -104,11 +104,71 @@ export class IdentityUserService {
             );
     }
 
+    checkUserHasAnyClientRole(userId: string, clientId: string, roleNames: string[]): Observable<boolean> {
+        const url = this.buildUserClientRoleMapping(userId, clientId);
+        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
+            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+                    url, httpMethod, pathParams, queryParams,
+                    headerParams, formParams, bodyParam, authNames,
+                    contentTypes, accepts, Object, null, null)
+                ).pipe(
+                    map((availableRoles: any[]) => {
+                        let hasRole = false;
+                        if (availableRoles.length > 0) {
+                            roleNames.forEach((roleName) => {
+                                const role = availableRoles.find((availableRole) => {
+                                    return availableRole.name === roleName;
+                                });
+
+                                if (role) {
+                                    hasRole = true;
+                                    return;
+                                }
+                            });
+                        }
+                        return hasRole;
+                    })
+            );
+    }
+
+    getClientIdByApplicationName(applicationName: string): Observable<string> {
+        const url = this.buildGetClientsUrl();
+        const httpMethod = 'GET', pathParams = {}, queryParams = {clientId: applicationName}, bodyParam = {}, headerParams = {}, formParams = {}, authNames = [],
+              contentTypes = ['application/json'], accepts = ['application/json'];
+        return from(this.apiService.getInstance()
+                        .oauth2Auth.callCustomApi(url, httpMethod, pathParams, queryParams, headerParams,
+                                              formParams, bodyParam, authNames, contentTypes,
+                                              accepts, Object, null, null)
+            ).pipe(
+                map((response: any[]) => {
+                    const clientId = response && response.length > 0 ? response[0].id : '';
+                    return clientId;
+                })
+            );
+    }
+
+    checkUserHasApplicationAccess(userId: string, applicationName: string): Observable<boolean> {
+        return this.getClientIdByApplicationName(applicationName).pipe(
+            switchMap((clientId: string) => {
+                return this.checkUserHasClientRoleMapping(userId, clientId);
+            })
+        );
+    }
+
+    checkUserHasAnyApplicationRole(userId: string, applicationName: string, roleNames: string[]): Observable<boolean> {
+        return this.getClientIdByApplicationName(applicationName).pipe(
+            switchMap((clientId: string) => {
+                return this.checkUserHasAnyClientRole(userId, clientId, roleNames);
+            })
+        );
+    }
+
     /**
      * Gets details for all users.
      * @returns Array of user info objects
      */
-
     getUsers(): Observable<IdentityUserModel[]> {
         const url = this.buildUserUrl();
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
@@ -214,6 +274,10 @@ export class IdentityUserService {
 
     private buildRolesUrl(userId: string): any {
         return `${this.appConfigService.get('identityHost')}/users/${userId}/role-mappings/realm/composite`;
+    }
+
+    private buildGetClientsUrl() {
+        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/clients`;
     }
 
 }
