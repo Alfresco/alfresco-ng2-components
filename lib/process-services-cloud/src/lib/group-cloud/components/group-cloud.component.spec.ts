@@ -46,7 +46,7 @@ describe('GroupCloudComponent', () => {
         element = fixture.nativeElement;
         service = TestBed.get(GroupCloudService);
         spyOn(service, 'findGroupsByName').and.returnValue(mockGroups);
-        getClientIdSpy = spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client-id'));
+        getClientIdSpy = spyOn(service, 'getClientId').and.returnValue(Promise.resolve('mock-client-id'));
         checkGroupHasClientRoleMappingSpy = spyOn(service, 'checkGroupHasClientRoleMapping').and.returnValue(of(true));
         component.applicationName = 'mock-name';
     });
@@ -55,15 +55,17 @@ describe('GroupCloudComponent', () => {
         expect(component instanceof GroupCloudComponent).toBeTruthy();
     });
 
-    it('should be able to fetch client id', () => {
+    it('should be able to fetch client id', async(() => {
         fixture.detectChanges();
-        expect(getClientIdSpy).toHaveBeenCalled();
-        expect(component.applicationId).toBe('mock-client-id');
-    });
+        fixture.whenStable().then(() => {
+            expect(getClientIdSpy).toHaveBeenCalled();
+            expect(component.applicationId).toBe('mock-client-id');
+        });
+    }));
 
     it('should show the groups if the typed result match', async(() => {
         fixture.detectChanges();
-        component.groups$ = of(<GroupModel[]> mockGroups);
+        component.searchGroups$ = of(<GroupModel[]> mockGroups);
         let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -115,7 +117,7 @@ describe('GroupCloudComponent', () => {
         fixture.whenStable().then(() => {
             const errorMessage = element.querySelector('.adf-cloud-group-error-message');
             expect(element.querySelector('.adf-cloud-group-error')).not.toBeNull();
-            expect(errorMessage.textContent).toContain('ADF_CLOUD_GROUPS.ERROR.MESSAGE');
+            expect(errorMessage.textContent.trim()).toContain('ADF_CLOUD_GROUPS.ERROR.NOT_FOUND');
         });
     }));
 
@@ -152,7 +154,7 @@ describe('GroupCloudComponent', () => {
         component.preSelectGroups = <any> [{id: mockGroups[1].id}, {id: mockGroups[2].id}];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const selectedUser = component.searchGroup.value;
+            const selectedUser = component.searchGroupsControl.value;
             expect(selectedUser.id).toBe(mockGroups[1].id);
         });
     }));
@@ -161,7 +163,7 @@ describe('GroupCloudComponent', () => {
         component.mode = 'single';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const selectedUser = component.searchGroup.value;
+            const selectedUser = component.searchGroupsControl.value;
             expect(selectedUser).toBeNull();
         });
     }));

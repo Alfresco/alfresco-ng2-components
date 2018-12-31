@@ -149,8 +149,7 @@
   "ADF_CLOUD_GROUPS": {
     "SEARCH-GROUP": "Groups",
     "ERROR": {
-      "NOT_FOUND": "Enter a different value",
-      "ROLE_MAPPING": "Please add some group mapping"
+      "NOT_FOUND": "No group found with the name {{groupName}}"
     }
   }
 }

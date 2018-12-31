@@ -24,6 +24,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TemplateModule, TranslateLoaderService, FormModule, PipeModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
 import { GroupCloudComponent } from './components/group-cloud.component';
+import { InitialGroupNamePipe } from './pipe/group-initial.pipe';
 
 @NgModule({
   imports: [
@@ -42,7 +43,7 @@ import { GroupCloudComponent } from './components/group-cloud.component';
       ReactiveFormsModule,
       FormModule
     ],
-    declarations: [GroupCloudComponent],
-    exports: [GroupCloudComponent]
+    declarations: [GroupCloudComponent, InitialGroupNamePipe],
+    exports: [GroupCloudComponent, InitialGroupNamePipe]
 })
 export class GroupCloudModule { }

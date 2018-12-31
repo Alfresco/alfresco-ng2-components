@@ -57,7 +57,7 @@ export class GroupCloudComponent implements OnInit {
     mode: string = GroupCloudComponent.MODE_SINGLE;
 
     @Input()
-    preSelectGroups: GroupModel[];
+    preSelectGroups: GroupModel[] = [];
 
     /** Emitted when a group is selected. */
     @Output()
@@ -71,48 +71,52 @@ export class GroupCloudComponent implements OnInit {
     @Output()
     error: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    private _selectedGroups: GroupModel[] = [];
+    private selectedGroups: GroupModel[] = [];
 
-    private selectedGroups: BehaviorSubject<GroupModel[]>;
+    private searchGroupsSubject: BehaviorSubject<GroupModel[]>;
 
-    private searchGroups: BehaviorSubject<GroupModel[]>;
+    private selectedGroupsSubject: BehaviorSubject<GroupModel[]>;
 
-    applicationId: string;
-
-    groups$: Observable<GroupModel[]>;
+    searchGroups$: Observable<GroupModel[]>;
 
     selectedGroups$: Observable<GroupModel[]>;
 
-    searchGroup: FormControl = new FormControl();
+    searchGroupsControl: FormControl = new FormControl();
 
     _subscriptAnimationState = 'enter';
 
-    filtered = [];
+    applicationId: string;
 
     showHint = false;
-    errorMessage: string;
-    private validationMessages = { match: 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND', rolemapping: 'ADF_CLOUD_GROUPS.ERROR.ROLE_MAPPING' };
+
+    searchedValue = '';
+
+    filtered = [];
 
     constructor(private groupService: GroupCloudService) {
-        this.selectedGroups = new BehaviorSubject<GroupModel[]>(this._selectedGroups);
-        this.searchGroups = new BehaviorSubject<GroupModel[]>(this._selectedGroups);
-        this.selectedGroups$ = this.selectedGroups.asObservable();
-        this.groups$ = this.searchGroups.asObservable();
+        this.selectedGroupsSubject = new BehaviorSubject<GroupModel[]>(this.selectedGroups);
+        this.searchGroupsSubject = new BehaviorSubject<GroupModel[]>(this.selectedGroups);
+        this.selectedGroups$ = this.selectedGroupsSubject.asObservable();
+        this.searchGroups$ = this.searchGroupsSubject.asObservable();
     }
 
     ngOnInit() {
-        this.getClientId();
         this.loadPreSelectGroups();
         this.initSearch();
     }
 
-    initSearch() {
-        this.searchGroup.valueChanges.pipe(
+   private async initSearch() {
+        this.applicationId = await this.groupService.getClientId(this.applicationName);
+        this.search();
+    }
+
+    search() {
+        this.searchGroupsControl.valueChanges.pipe(
             debounceTime(500),
             distinctUntilChanged(),
             tap(() => {
                 this.filtered = [];
-                this.searchGroups.next(this.filtered);
+                this.searchGroupsSubject.next([]);
             }),
             switchMap((inputValue) => {
                 const queryParams = this.createSearchParam(inputValue);
@@ -121,23 +125,18 @@ export class GroupCloudComponent implements OnInit {
             mergeMap((group: any) => {
                 return this.checkGroupHasClientRoleMapping(group);
             }),
-            filter((filteredGroup) => {
-                this.showHint = !filteredGroup.hasRole;
-                this.setValidationMessage(GroupCloudComponent.NO_ROLE_MAPPING);
-                return filteredGroup.hasRole;
-            })
+            filter((filteredGroup) => filteredGroup.hasRole)
         ).subscribe((filteredGroup) => {
-            this.showHint = false;
             this.filtered.push(filteredGroup.group);
-            this.searchGroups.next(this.filtered);
+            this.searchGroupsSubject.next(this.filtered);
         });
     }
 
     findGroupsByName(searchParam: GroupSearchParam): Observable<GroupModel> {
         return this.groupService.findGroupsByName(searchParam).pipe(
             flatMap((groups: GroupModel[]) => {
+                this.searchedValue = searchParam.name;
                 this.showHint = searchParam.name ? !this.hasGroups(groups) : false;
-                this.setValidationMessage(GroupCloudComponent.NO_MATCH_FOUND);
                 return groups;
             })
         );
@@ -155,8 +154,8 @@ export class GroupCloudComponent implements OnInit {
     }
 
     isGroupAlreadySelected(group: GroupModel): boolean {
-        if (this.hasGroups(this._selectedGroups)) {
-            const result = this._selectedGroups.filter((selectedGroup: GroupModel) => {
+        if (this.hasGroups(this.selectedGroups)) {
+            const result = this.selectedGroups.filter((selectedGroup: GroupModel) => {
                 return selectedGroup.id === group.id;
             });
             if (this.hasGroups(result)) {
@@ -166,21 +165,14 @@ export class GroupCloudComponent implements OnInit {
         return false;
     }
 
-    getClientId() {
-        this.groupService.getClientIdByApplicationName(this.applicationName)
-        .subscribe((clientId) => {
-            this.applicationId = clientId;
-        });
-    }
-
     private loadPreSelectGroups() {
         if (this.hasGroups(this.preSelectGroups)) {
             if (this.isMultipleMode()) {
                 this.preSelectGroups.forEach((group: GroupModel) => {
-                    this.onSelect(group);
+                    this.selectedGroups.push(group);
                 });
             } else {
-                this.searchGroup.setValue(this.preSelectGroups[0]);
+                this.searchGroupsControl.setValue(this.preSelectGroups[0]);
                 this.onSelect(this.preSelectGroups[0]);
             }
         }
@@ -191,12 +183,12 @@ export class GroupCloudComponent implements OnInit {
         this.error.emit(this.showHint);
         if (this.isMultipleMode()) {
             if (!this.isGroupAlreadySelected(selectedGroup)) {
-                this._selectedGroups.push(selectedGroup);
-                this.selectedGroups.next(this._selectedGroups);
+                this.selectedGroups.push(selectedGroup);
+                this.selectedGroupsSubject.next(this.selectedGroups);
                 this.selectGroup.emit(selectedGroup);
-                this.searchGroups.next([]);
+                this.searchGroupsSubject.next([]);
             }
-            this.searchGroup.setValue('');
+            this.searchGroupsControl.setValue('');
         } else {
             this.selectGroup.emit(selectedGroup);
         }
@@ -204,21 +196,9 @@ export class GroupCloudComponent implements OnInit {
 
     onRemove(selectedGroup: GroupModel) {
         this.removeGroup.emit(selectedGroup);
-        const indexToRemove = this._selectedGroups.findIndex((group: GroupModel) => { return group.id === selectedGroup.id; });
-        this._selectedGroups.splice(indexToRemove, 1);
-        this.selectedGroups.next(this._selectedGroups);
-    }
-
-    getGroupShortName(group: GroupModel): string {
-        let shortName = '';
-        if (group) {
-            shortName = this.getInitialGroupName(group.name).toUpperCase();
-        }
-        return shortName;
-    }
-
-    getInitialGroupName(name: string): string {
-        return (name = name ? name[0] : '');
+        const indexToRemove = this.selectedGroups.findIndex((group: GroupModel) => { return group.id === selectedGroup.id; });
+        this.selectedGroups.splice(indexToRemove, 1);
+        this.selectedGroupsSubject.next(this.selectedGroups);
     }
 
     isMultipleMode(): boolean {
@@ -241,14 +221,5 @@ export class GroupCloudComponent implements OnInit {
 
     isString(value: any): boolean {
         return typeof value === 'string';
-    }
-
-    setValidationMessage(errorKey: any): void {
-        this.errorMessage = '';
-        if (errorKey === GroupCloudComponent.NO_MATCH_FOUND) {
-            this.errorMessage = this.validationMessages[errorKey];
-        } else {
-            this.errorMessage = this.validationMessages[errorKey];
-        }
     }
 }

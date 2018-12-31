@@ -67,6 +67,10 @@ export class GroupCloudService {
             );
     }
 
+    async getClientId(applicationName: string): Promise<string> {
+        return this.getClientIdByApplicationName(applicationName).toPromise();
+    }
+
     checkGroupHasClientRoleMapping(groupId: string, clientId: string): Observable<any> {
         const url = this.groupClientRoleMappingApi(groupId, clientId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},

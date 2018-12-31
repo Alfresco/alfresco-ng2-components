@@ -7,7 +7,7 @@
       </mat-chip>
       <input
         placeholder="{{ 'ADF_CLOUD_GROUPS.SEARCH-GROUP' | translate }}"
-        [formControl]="searchGroup"
+        [formControl]="searchGroupsControl"
         class="adf-group-input"
         id="group-name"
         data-automation-id="adf-cloud-group-search-input"
@@ -20,7 +20,7 @@
       placeholder="{{ 'ADF_CLOUD_GROUPS.SEARCH-GROUP' | translate }}"
       class="adf-group-input"
       data-automation-id="adf-cloud-group-search-input"
-      [formControl]="searchGroup"
+      [formControl]="searchGroupsControl"
       [matAutocomplete]="auto" #groupInput>
 
     <mat-autocomplete
@@ -28,9 +28,9 @@
       class="adf-cloud-group-list"
       (optionSelected)="onSelect($event.option.value)"
       [displayWith]="getDisplayName">
-      <mat-option *ngFor="let group of groups$ | async; let i = index" [value]="group">
+      <mat-option *ngFor="let group of searchGroups$ | async; let i = index" [value]="group">
         <div class="adf-cloud-group-row" id="adf-group-{{i}}" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-         <button class="adf-group-short-name" mat-fab>{{getGroupShortName(group)}}</button>
+         <button class="adf-group-short-name" mat-fab>{{group | groupNameInitial }}</button>
           <span>{{group.name}}</span>
         </div>
       </mat-option>
@@ -38,7 +38,9 @@
 </mat-form-field>
 <div class="adf-cloud-group-error" *ngIf="showHint">
     <div fxLayout="row" fxLayoutAlign="start start" [@transitionMessages]="_subscriptAnimationState">
-        <div class="adf-cloud-group-error-message">{{ errorMessage | translate }}</div>
+        <div class="adf-cloud-group-error-message">
+        {{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate : { groupName : searchedValue } }}
+        </div>
         <mat-icon class="adf-cloud-group-error-icon">warning</mat-icon>
     </div>
 </div>
