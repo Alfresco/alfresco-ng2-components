@@ -18,14 +18,14 @@
 
 <adf-document-list
   #documentList
-  [currentFolderId]="'-root-'"  
+  [currentFolderId]="'-root-'"
   (preview)="showPreview($event)">
 </adf-document-list>
 
 <adf-viewer
-  [showViewer]="showViewer" 
-  [overlayMode]="true" 
-  [fileNodeId]="nodeId"
+  [showViewer]="showViewer"
+  [overlayMode]="true"
+  [nodeId]="nodeId"
   (goBack)="onGoBack($event)">
 </adf-viewer>
 <file-uploading-dialog></file-uploading-dialog>

@@ -32,9 +32,9 @@ import { EcmModelService } from './ecm-model.service';
 import { map, catchError, switchMap, combineAll, defaultIfEmpty } from 'rxjs/operators';
 import {
     Activiti,
+    CompleteFormRepresentation,
     SaveFormRepresentation
 } from '@alfresco/js-api';
-import { CompleteFormRepresentation } from '../../../../node_modules/alfresco-js-api/node_modules/@alfresco/js-api/src/api-new/activiti-rest-api/model/completeFormRepresentation';
 
 @Injectable({
     providedIn: 'root'

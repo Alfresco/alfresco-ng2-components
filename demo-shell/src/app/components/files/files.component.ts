@@ -57,7 +57,7 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
 export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     errorMessage: string = null;
-    fileNodeId: any;
+    nodeId: any;
     showViewer = false;
     showVersions = false;
     allowDropFiles = true;

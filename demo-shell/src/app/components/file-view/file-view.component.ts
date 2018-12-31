@@ -43,7 +43,6 @@ export class FileViewComponent implements OnInit {
     openWith = false;
     allowDownload = true;
     allowPrint = true;
-    allowShare = true;
     allowSidebar = true;
     allowLeftSidebar = true;
     moreActions = true;
@@ -118,10 +117,6 @@ export class FileViewComponent implements OnInit {
 
     toggleAllowPrint() {
         this.allowPrint = !this.allowPrint;
-    }
-
-    toggleAllowShare() {
-        this.allowShare = !this.allowShare;
     }
 
     toggleOpenMoreActions() {
