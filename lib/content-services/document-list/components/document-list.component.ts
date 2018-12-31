@@ -853,7 +853,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                     this.setLoadingState(false);
                     this.noPermission = true;
                 }
-            } catch(error) {
+            } catch (error) {
             }
         }
         this.error.emit(err);
