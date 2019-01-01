@@ -42,7 +42,7 @@ export class FormModel {
     static COMPLETE_OUTCOME: string = '$complete';
     static START_PROCESS_OUTCOME: string = '$startProcess';
 
-    readonly id: string;
+    readonly id: number;
     readonly name: string;
     readonly taskId: string;
     readonly taskName: string = FormModel.UNSET_TASK_NAME;

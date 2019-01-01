@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { NodeMetadata } from '../models/node-metadata.model';
 import { map } from 'rxjs/operators';
-import { NodeEntry } from '@alfresco/js-api';
+import { AlfrescoApiCompatibility, NodeEntry } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -49,7 +49,7 @@ export class NodeService {
      * @param data Property data to store in the node under namespace
      * @returns The created node
      */
-    public createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<any> {
+    public createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<NodeEntry> {
         let properties = {};
         for (let key in data) {
             if (data[key]) {
@@ -68,7 +68,7 @@ export class NodeService {
      * @param path Path to the node
      * @returns The created node
      */
-    public createNode(name: string, nodeType: string, properties: any, path: string): Observable<any> {
+    public createNode(name: string, nodeType: string, properties: any, path: string): Observable<NodeEntry> {
         let body = {
             name: name,
             nodeType: nodeType,
@@ -76,8 +76,7 @@ export class NodeService {
             relativePath: path
         };
 
-        // TODO: requires update to alfresco-js-api typings
-        let apiService: any = this.apiService.getInstance();
+        let apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
         return from(apiService.nodes.addNode('-root-', body, {}));
     }
 

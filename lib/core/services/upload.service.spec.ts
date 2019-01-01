@@ -163,18 +163,6 @@ describe('UploadService', () => {
         service.cancelUpload(...file);
     });
 
-    it('If versioning is true autoRename should not be present and majorVersion should be a param', () => {
-        let emitter = new EventEmitter();
-
-        const filesFake = new FileModel(<File> { name: 'fake-name', size: 10 }, { newVersion: true });
-        service.addToQueue(filesFake);
-        service.uploadFilesInTheQueue(emitter);
-
-        expect(jasmine.Ajax.requests.mostRecent().url)
-            .toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?include=allowableOperations');
-        expect(jasmine.Ajax.requests.mostRecent().params).toBe('{"name":"fake-name","nodeType":"cm:content","newVersion":true}');
-    });
-
     it('If newVersion is set, name should be a param', () => {
         let uploadFileSpy = spyOn(alfrescoApiService.getInstance().upload, 'uploadFile').and.callThrough();
 

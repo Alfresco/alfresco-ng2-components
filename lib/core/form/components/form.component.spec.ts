@@ -487,9 +487,8 @@ describe('FormComponent', () => {
         formComponent.getFormDefinitionByFormId(formId);
 
         expect(loaded).toBeTruthy();
-        expect(formService.getFormDefinitionById).toHaveBeenCalledWith(formId);
         expect(formComponent.form).toBeDefined();
-        expect(formComponent.form.id).toBe(formId.toString());
+        expect(formComponent.form.id).toBe(formId);
     });
 
     it('should handle error when getting form by definition id', () => {

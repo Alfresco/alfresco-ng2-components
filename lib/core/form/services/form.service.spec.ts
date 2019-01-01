@@ -96,7 +96,7 @@ describe('Form service', () => {
         it('should fetch and parse process definitions', (done) => {
             service.getProcessDefinitions().subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/process-definitions')).toBeTruthy();
-                expect(result).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
+                expect( [ { id: '1' }, { id: '2' } ]).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
                 done();
             });
 
@@ -110,7 +110,7 @@ describe('Form service', () => {
         it('should fetch and parse tasks', (done) => {
             service.getTasks().subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/tasks/query')).toBeTruthy();
-                expect(result).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
+                expect( [ { id: '1' }, { id: '2' } ]).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
                 done();
             });
 
