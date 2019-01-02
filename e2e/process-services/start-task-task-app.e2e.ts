@@ -25,7 +25,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import CONSTANTS = require('../util/constants');
 
-import { Tenant } from '../models/APS/Tenant';
+import { Tenant } from '../models/APS/tenant';
 import { FileModel } from '../models/ACS/fileModel';
 
 import TestConfig = require('../test.config');

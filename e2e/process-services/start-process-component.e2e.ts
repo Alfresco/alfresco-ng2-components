@@ -31,7 +31,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import { browser } from 'protractor';
 
 import { User } from '../models/APS/user';
-import { Tenant } from '../models/APS/Tenant';
+import { Tenant } from '../models/APS/tenant';
 
 import { FileModel } from '../models/ACS/fileModel';
 import dateFormat = require('dateformat');

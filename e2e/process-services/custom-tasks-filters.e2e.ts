@@ -21,7 +21,7 @@ import { TaskListDemoPage } from '../pages/adf/demo-shell/taskListDemoPage';
 import { PaginationPage } from '../pages/adf/paginationPage';
 import moment = require('moment');
 
-import { Tenant } from '../models/APS/Tenant';
+import { Tenant } from '../models/APS/tenant';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');

@@ -21,7 +21,7 @@ import { AnalyticsPage } from '../pages/adf/process-services/analyticsPage';
 import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
 import TestConfig = require('../test.config');
-import { Tenant } from '../models/APS/Tenant';
+import { Tenant } from '../models/APS/tenant';
 import { User } from '../models/APS/user';
 
 import AlfrescoApi = require('alfresco-js-api-node');

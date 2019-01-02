@@ -23,7 +23,7 @@ import { AttachmentListPage } from '../pages/adf/process-services/attachmentList
 import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
-import { Tenant } from '../models/APS/Tenant';
+import { Tenant } from '../models/APS/tenant';
 
 import { FileModel } from '../models/ACS/fileModel';
 
