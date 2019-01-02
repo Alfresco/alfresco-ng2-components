@@ -32,7 +32,7 @@ describe('LibraryNameColumnComponent', () => {
     });
 
     beforeEach(() => {
-        node = <any>{
+        node = <any> {
             id: 'nodeId',
             path: {
                 elements: []
@@ -72,7 +72,7 @@ describe('LibraryNameColumnComponent', () => {
             node.title = 'title';
 
             const rows = [
-                <any>{ node: { entry: { id: 'some-id', title: 'title' } } }
+                <any> { node: { entry: { id: 'some-id', title: 'title' } } }
             ];
 
             const title = component.makeLibraryTitle(node, rows);
@@ -83,7 +83,7 @@ describe('LibraryNameColumnComponent', () => {
             node.title = 'title';
 
             const rows = [
-                <any>{
+                <any> {
                     node: { entry: { id: 'some-id', title: 'title-some-id' } }
                 }
             ];
