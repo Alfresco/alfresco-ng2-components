@@ -219,7 +219,8 @@
                 (ready)="emitReadyEvent($event)"
                 (preview)="showFile($event)"
                 (folderChange)="onFolderChange($event)"
-                (permissionError)="handlePermissionError($event)">
+                (permissionError)="handlePermissionError($event)"
+                (name-click)="documentList.onNodeDblClick($event.detail?.node)">
                 <no-permission-content *ngIf="enableCustomPermissionMessage">
                     <ng-template>
                         <h1>You don't have permissions</h1>
@@ -246,6 +247,9 @@
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         [formatTooltip]="getNodeNameTooltip"
                         class="adf-full-width adf-ellipsis-cell">
+                        <ng-template let-context>
+                            <adf-name-column [context]="context"></adf-name-column>
+                        </ng-template>
                     </data-column>
                     <!-- Location column demo -->
                     <!--
