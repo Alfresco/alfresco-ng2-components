@@ -50,22 +50,6 @@ describe('PeopleCloudComponent', () => {
         expect(component instanceof PeopleCloudComponent).toBeTruthy();
     });
 
-    it('should not list the current logged in user when showCurrentUser is false', (done) => {
-        spyOn(identityService, 'getCurrentUserInfo').and.returnValue(mockUsers[1]);
-
-        component.users$.subscribe((users) => {
-            const currentUser = users.find((user) => {
-                return user.username === mockUsers[1].username;
-            });
-            expect(currentUser).toBeUndefined();
-            done();
-        });
-
-        component.showCurrentUser = false;
-        component.searchUser.setValue(mockUsers[1].firstName[0]);
-        fixture.detectChanges();
-    });
-
     it('should show the users if the typed result match', async(() => {
         component.users$ = of(<IdentityUserModel[]> mockUsers);
         fixture.detectChanges();
@@ -202,6 +186,84 @@ describe('PeopleCloudComponent', () => {
             expect(removeUserSpy).toHaveBeenCalledWith({ id: mockUsers[1].id });
         });
 
+    }));
+
+    it('should list users who have access to the app when appName is specified', async(() => {
+        spyOn(identityService, 'findUsersByName').and.returnValue(Promise.resolve(mockUsers));
+        spyOn(identityService, 'checkUserHasAnyApplicationRole').and.returnValue(of(true));
+
+        component.appName = 'sample-app';
+
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        inputHTMLElement.dispatchEvent(new Event('keyup'));
+        inputHTMLElement.dispatchEvent(new Event('keydown'));
+        inputHTMLElement.value = 'M';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const usersList = fixture.debugElement.queryAll(By.css('mat-option'));
+            expect(usersList.length).toBe(mockUsers.length);
+        });
+    }));
+
+    it('should not list users who have access to the app when appName is specified', async(() => {
+        spyOn(identityService, 'findUsersByName').and.returnValue(Promise.resolve(mockUsers));
+        spyOn(identityService, 'checkUserHasAnyApplicationRole').and.returnValue(of(false));
+
+        component.appName = 'sample-app';
+
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        inputHTMLElement.dispatchEvent(new Event('keyup'));
+        inputHTMLElement.dispatchEvent(new Event('keydown'));
+        inputHTMLElement.value = 'M';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const usersList = fixture.debugElement.queryAll(By.css('mat-option'));
+            expect(usersList.length).toBe(0);
+        });
+    }));
+
+    it('should validate access to the app when appName is specified', async(() => {
+        spyOn(identityService, 'findUsersByName').and.returnValue(Promise.resolve(mockUsers));
+        const accessService = spyOn(identityService, 'checkUserHasAnyApplicationRole').and.returnValue(of(true));
+
+        component.appName = 'sample-app';
+
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        inputHTMLElement.dispatchEvent(new Event('keyup'));
+        inputHTMLElement.dispatchEvent(new Event('keydown'));
+        inputHTMLElement.value = 'M';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(accessService).toHaveBeenCalledTimes(mockUsers.length);
+        });
+    }));
+
+    it('should not validate access to the app when appName is not specified', async(() => {
+        spyOn(identityService, 'findUsersByName').and.returnValue(Promise.resolve(mockUsers));
+        const accessService = spyOn(identityService, 'checkUserHasAnyApplicationRole');
+
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        inputHTMLElement.dispatchEvent(new Event('keyup'));
+        inputHTMLElement.dispatchEvent(new Event('keydown'));
+        inputHTMLElement.value = 'M';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(accessService).not.toHaveBeenCalled();
+        });
     }));
 
 });

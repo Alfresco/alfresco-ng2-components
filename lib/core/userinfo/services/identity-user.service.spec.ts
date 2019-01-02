@@ -199,4 +199,52 @@ describe('IdentityUserService', () => {
             }
         );
     });
+
+    it('should return true when user has access to an application', (done) => {
+        spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client'));
+        spyOn(service, 'getClientRoles').and.returnValue(of(mockRoles));
+
+        service.checkUserHasApplicationAccess('user-id', 'app-name').subscribe(
+            (res: boolean) => {
+                expect(res).toBeTruthy();
+                done();
+            }
+        );
+    });
+
+    it('should return false when user does not have access to an application', (done) => {
+        spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client'));
+        spyOn(service, 'getClientRoles').and.returnValue(of([]));
+
+        service.checkUserHasApplicationAccess('user-id', 'app-name').subscribe(
+            (res: boolean) => {
+                expect(res).toBeFalsy();
+                done();
+            }
+        );
+    });
+
+    it('should return true when user has any given application role', (done) => {
+        spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client'));
+        spyOn(service, 'getClientRoles').and.returnValue(of(mockRoles));
+
+        service.checkUserHasAnyApplicationRole('user-id', 'app-name', [mockRoles[1].name] ).subscribe(
+            (res: boolean) => {
+                expect(res).toBeTruthy();
+                done();
+            }
+        );
+    });
+
+    it('should return false when user does not have any given application role', (done) => {
+        spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client'));
+        spyOn(service, 'getClientRoles').and.returnValue(of([]));
+
+        service.checkUserHasAnyApplicationRole('user-id', 'app-name', [mockRoles[1].name]).subscribe(
+            (res: boolean) => {
+                expect(res).toBeFalsy();
+                done();
+            }
+        );
+    });
 });
