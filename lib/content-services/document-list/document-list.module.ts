@@ -35,6 +35,7 @@ import { TrashcanNameColumnComponent } from './components/trashcan-name-column/t
 import { LibraryStatusColumnComponent } from './components/library-status-column/library-status-column.component';
 import { LibraryRoleColumnComponent } from './components/library-role-column/library-role-column.component';
 import { LibraryNameColumnComponent } from './components/library-name-column/library-name-column.component';
+import { NameColumnComponent } from './components/name-column/name-column.component';
 
 @NgModule({
     imports: [
@@ -51,6 +52,7 @@ import { LibraryNameColumnComponent } from './components/library-name-column/lib
         LibraryStatusColumnComponent,
         LibraryRoleColumnComponent,
         LibraryNameColumnComponent,
+        NameColumnComponent,
         ContentColumnListComponent,
         ContentActionComponent,
         ContentActionListComponent,
@@ -64,6 +66,7 @@ import { LibraryNameColumnComponent } from './components/library-name-column/lib
         LibraryStatusColumnComponent,
         LibraryRoleColumnComponent,
         LibraryNameColumnComponent,
+        NameColumnComponent,
         ContentColumnListComponent,
         ContentActionComponent,
         ContentActionListComponent,
