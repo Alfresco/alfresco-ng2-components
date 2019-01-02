@@ -18,89 +18,89 @@
 import { TrashcanNameColumnComponent } from './trashcan-name-column.component';
 
 describe('TrashcanNameColumnComponent', () => {
-  let component;
+    let component;
 
-  beforeEach(() => {
-    component = new TrashcanNameColumnComponent();
-  });
+    beforeEach(() => {
+        component = new TrashcanNameColumnComponent();
+    });
 
-  it('should set displayText for content files', () => {
-    const context = {
-      data: { rows: [] },
-      row: {
-        node: {
-          entry: {
-            name: 'contentName',
-            nodeType: 'content'
-          }
-        }
-      }
-    };
-
-    component.context = context;
-    component.ngOnInit();
-
-    expect(component.displayText).toBe('contentName');
-  });
-
-  it('should set displayText for library', () => {
-    const context = {
-      data: {
-        rows: []
-      },
-      row: {
-        node: {
-          entry: {
-            nodeType: 'st:site',
-            properties: {
-              'cm:title': 'libraryTitle'
-            }
-          }
-        }
-      }
-    };
-
-    component.context = context;
-    component.ngOnInit();
-
-    expect(component.displayText).toBe('libraryTitle');
-  });
-
-  it('should set custom displayText for libraries with same name', () => {
-    const context = {
-      data: {
-        rows: [
-          {
-            node: {
-              entry: {
-                id: 'id1',
-                name: 'name1',
-                nodeType: 'st:site',
-                properties: {
-                  'cm:title': 'bogus'
+    it('should set displayText for content files', () => {
+        const context = {
+            data: { rows: [] },
+            row: {
+                node: {
+                    entry: {
+                        name: 'contentName',
+                        nodeType: 'content'
+                    }
                 }
-              }
             }
-          }
-        ]
-      },
-      row: {
-        node: {
-          entry: {
-            id: 'id2',
-            name: 'name1',
-            nodeType: 'st:site',
-            properties: {
-              'cm:title': 'bogus'
+        };
+
+        component.context = context;
+        component.ngOnInit();
+
+        expect(component.displayText).toBe('contentName');
+    });
+
+    it('should set displayText for library', () => {
+        const context = {
+            data: {
+                rows: []
+            },
+            row: {
+                node: {
+                    entry: {
+                        nodeType: 'st:site',
+                        properties: {
+                            'cm:title': 'libraryTitle'
+                        }
+                    }
+                }
             }
-          }
-        }
-      }
-    };
+        };
 
-    component.context = context;
-    component.ngOnInit();
+        component.context = context;
+        component.ngOnInit();
 
-    expect(component.displayText).toBe('bogus (name1)');
-  });
+        expect(component.displayText).toBe('libraryTitle');
+    });
+
+    it('should set custom displayText for libraries with same name', () => {
+        const context = {
+            data: {
+                rows: [
+                    {
+                        node: {
+                            entry: {
+                                id: 'id1',
+                                name: 'name1',
+                                nodeType: 'st:site',
+                                properties: {
+                                    'cm:title': 'bogus'
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            row: {
+                node: {
+                    entry: {
+                        id: 'id2',
+                        name: 'name1',
+                        nodeType: 'st:site',
+                        properties: {
+                            'cm:title': 'bogus'
+                        }
+                    }
+                }
+            }
+        };
+
+        component.context = context;
+        component.ngOnInit();
+
+        expect(component.displayText).toBe('bogus (name1)');
+    });
 });

@@ -15,78 +15,82 @@
  * limitations under the License.
  */
 
-import { LibraryNameColumnComponent } from './library-name-column.component';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { setupTestBed } from '@alfresco/adf-core';
+import { LibraryNameColumnComponent } from './library-name-column.component';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('LibraryNameColumnComponent', () => {
-  let fixture: ComponentFixture<LibraryNameColumnComponent>;
-  let component: LibraryNameColumnComponent;
-  let node;
+    let fixture: ComponentFixture<LibraryNameColumnComponent>;
+    let component: LibraryNameColumnComponent;
+    let node;
 
-  beforeEach(() => {
-    node = <any> {
-      id: 'nodeId',
-      path: {
-        elements: []
-      }
-    };
-  });
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [LibraryNameColumnComponent],
-      schemas: [NO_ERRORS_SCHEMA]
+    setupTestBed({
+        imports: [ContentTestingModule],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     });
 
-    fixture = TestBed.createComponent(LibraryNameColumnComponent);
-    component = fixture.componentInstance;
-  });
-
-  describe('makeLibraryTooltip()', () => {
-    it('maps tooltip to description', () => {
-      node.description = 'description';
-      const tooltip = component.makeLibraryTooltip(node);
-
-      expect(tooltip).toBe(node.description);
+    beforeEach(() => {
+        node = <any>{
+            id: 'nodeId',
+            path: {
+                elements: []
+            }
+        };
     });
 
-    it('maps tooltip to description', () => {
-      node.title = 'title';
-      const tooltip = component.makeLibraryTooltip(node);
-
-      expect(tooltip).toBe(node.title);
+    beforeEach(() => {
+        fixture = TestBed.createComponent(LibraryNameColumnComponent);
+        component = fixture.componentInstance;
     });
 
-    it('sets tooltip to empty string', () => {
-      const tooltip = component.makeLibraryTooltip(node);
+    describe('makeLibraryTooltip()', () => {
+        it('maps tooltip to description', () => {
+            node.description = 'description';
+            const tooltip = component.makeLibraryTooltip(node);
 
-      expect(tooltip).toBe('');
+            expect(tooltip).toBe(node.description);
+        });
+
+        it('maps tooltip to description', () => {
+            node.title = 'title';
+            const tooltip = component.makeLibraryTooltip(node);
+
+            expect(tooltip).toBe(node.title);
+        });
+
+        it('sets tooltip to empty string', () => {
+            const tooltip = component.makeLibraryTooltip(node);
+
+            expect(tooltip).toBe('');
+        });
     });
-  });
 
-  describe('makeLibraryTitle()', () => {
-    it('sets title with id when duplicate nodes title exists in list', () => {
-      node.title = 'title';
+    describe('makeLibraryTitle()', () => {
+        it('sets title with id when duplicate nodes title exists in list', () => {
+            node.title = 'title';
 
-      const rows = [
-        <any> { node: { entry: { id: 'some-id', title: 'title' } } }
-      ];
+            const rows = [
+                <any>{ node: { entry: { id: 'some-id', title: 'title' } } }
+            ];
 
-      const title = component.makeLibraryTitle(node, rows);
-      expect(title).toContain('nodeId');
+            const title = component.makeLibraryTitle(node, rows);
+            expect(title).toContain('nodeId');
+        });
+
+        it('sets title when no duplicate nodes title exists in list', () => {
+            node.title = 'title';
+
+            const rows = [
+                <any>{
+                    node: { entry: { id: 'some-id', title: 'title-some-id' } }
+                }
+            ];
+
+            const title = component.makeLibraryTitle(node, rows);
+
+            expect(title).toBe('title');
+        });
     });
-
-    it('sets title when no duplicate nodes title exists in list', () => {
-      node.title = 'title';
-
-      const rows = [
-        <any> { node: { entry: { id: 'some-id', title: 'title-some-id' } } }
-      ];
-
-      const title = component.makeLibraryTitle(node, rows);
-
-      expect(title).toBe('title');
-    });
-  });
 });
