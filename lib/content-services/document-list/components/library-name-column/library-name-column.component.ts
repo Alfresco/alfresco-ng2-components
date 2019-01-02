@@ -35,7 +35,7 @@ import { ShareDataRow } from '../../data/share-data-row.model';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: { class: 'adf-datatable-cell dl-link adf-library-name-column' }
+  host: { class: 'adf-datatable-cell adf-datatable-link adf-library-name-column' }
 })
 export class LibraryNameColumnComponent implements OnInit {
   @Input()

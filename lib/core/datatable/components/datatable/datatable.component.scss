@@ -177,6 +177,16 @@
         border-collapse: unset;
         border-spacing: 0;
 
+        .adf-datatable-link {
+            text-decoration: none;
+            color: mat-color($foreground, text);
+
+            &:hover {
+                color: #2196f3;
+                text-decoration: underline;
+            }
+        }
+
         .adf-datatable-row {
             display: table-row;
             vertical-align: inherit;
