@@ -85,7 +85,7 @@ export class IdentityUserService {
                 ));
     }
 
-    checkUserHasClientRoleMapping(userId: string, clientId: string): Observable<boolean> {
+    getClientRoles(userId: string, clientId: string): Observable<any[]> {
         const url = this.buildUserClientRoleMapping(userId, clientId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
@@ -94,43 +94,39 @@ export class IdentityUserService {
                     url, httpMethod, pathParams, queryParams,
                     headerParams, formParams, bodyParam, authNames,
                     contentTypes, accepts, Object, null, null)
-                ).pipe(
-                    map((response: any) => {
-                        if (response.length > 0) {
-                            return (true);
-                        }
-                        return (false);
-                    })
-            );
+                );
+    }
+
+    checkUserHasClientRoleMapping(userId: string, clientId: string): Observable<boolean> {
+        return this.getClientRoles(userId, clientId).pipe(
+            map((clientRoles: any[]) => {
+                if (clientRoles.length > 0) {
+                    return (true);
+                }
+                return (false);
+            })
+        );
     }
 
     checkUserHasAnyClientRole(userId: string, clientId: string, roleNames: string[]): Observable<boolean> {
-        const url = this.buildUserClientRoleMapping(userId, clientId);
-        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
-            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
+        return this.getClientRoles(userId, clientId).pipe(
+            map((clientRoles: any[]) => {
+                let hasRole = false;
+                if (clientRoles.length > 0) {
+                    roleNames.forEach((roleName) => {
+                        const role = clientRoles.find((availableRole) => {
+                            return availableRole.name === roleName;
+                        });
 
-        return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
-                    url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam, authNames,
-                    contentTypes, accepts, Object, null, null)
-                ).pipe(
-                    map((availableRoles: any[]) => {
-                        let hasRole = false;
-                        if (availableRoles.length > 0) {
-                            roleNames.forEach((roleName) => {
-                                const role = availableRoles.find((availableRole) => {
-                                    return availableRole.name === roleName;
-                                });
-
-                                if (role) {
-                                    hasRole = true;
-                                    return;
-                                }
-                            });
+                        if (role) {
+                            hasRole = true;
+                            return;
                         }
-                        return hasRole;
-                    })
-            );
+                    });
+                }
+                return hasRole;
+            })
+        );
     }
 
     getClientIdByApplicationName(applicationName: string): Observable<string> {

@@ -51,10 +51,6 @@ export class PeopleCloudComponent implements OnInit {
     @Input()
     appName: string;
 
-    /** Show current user in the list or not. */
-    @Input()
-    showCurrentUser: boolean = true;
-
     /** Mode of the user selection (single/multiple) */
     @Input()
     mode: string = PeopleCloudComponent.MODE_SINGLE;
