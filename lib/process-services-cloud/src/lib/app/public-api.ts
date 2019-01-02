@@ -16,5 +16,6 @@
  */
 
 export * from './components/app-list-cloud.component';
+export * from './services/apps-process-cloud.service';
 export * from './models/application-instance.model';
 export * from './app-list-cloud.module';
