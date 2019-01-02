@@ -33,6 +33,7 @@ import { EmptyFolderContentDirective } from './components/empty-folder/empty-fol
 import { NoPermissionContentDirective } from './components/no-permission/no-permission-content.directive';
 import { TrashcanNameColumnComponent } from './components/trashcan-name-column/trashcan-name-column.component';
 import { LibraryStatusColumnComponent } from './components/library-status-column/library-status-column.component';
+import { LibraryRoleColumnComponent } from './components/library-role-column/library-role-column.component';
 
 @NgModule({
     imports: [
@@ -47,6 +48,7 @@ import { LibraryStatusColumnComponent } from './components/library-status-column
         ContentColumnComponent,
         TrashcanNameColumnComponent,
         LibraryStatusColumnComponent,
+        LibraryRoleColumnComponent,
         ContentColumnListComponent,
         ContentActionComponent,
         ContentActionListComponent,
@@ -58,6 +60,7 @@ import { LibraryStatusColumnComponent } from './components/library-status-column
         ContentColumnComponent,
         TrashcanNameColumnComponent,
         LibraryStatusColumnComponent,
+        LibraryRoleColumnComponent,
         ContentColumnListComponent,
         ContentActionComponent,
         ContentActionListComponent,

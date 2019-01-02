@@ -299,6 +299,12 @@
         "NAME": "名称"
       }
     },
+    "ROLE": {
+      "MANAGER": "管理员",
+      "COLLABORATOR": "合作者",
+      "CONTRIBUTOR": "贡献者",
+      "CONSUMER": "使用者"
+    },
     "VISIBILITY": {
       "PRIVATE": "私有",
       "PUBLIC": "公共",
