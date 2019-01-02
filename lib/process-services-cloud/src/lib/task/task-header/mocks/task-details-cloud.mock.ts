@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TaskDetailsCloudModel } from '../../../start-task-cloud/models/task-details-cloud.model';
+import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 
 export const taskDetailsCloudMock = new TaskDetailsCloudModel(
     {

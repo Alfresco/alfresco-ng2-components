@@ -18,7 +18,7 @@
 import { async } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService, CoreModule } from '@alfresco/adf-core';
-import { fakeTaskDetailsCloud } from '../components/mocks/fake-task-details-response.mock';
+import { fakeTaskDetailsCloud } from '../mocks/fake-task-details-response.mock';
 import { TaskHeaderCloudService } from './task-header-cloud.service';
 
 describe('Task Header Cloud Service', () => {

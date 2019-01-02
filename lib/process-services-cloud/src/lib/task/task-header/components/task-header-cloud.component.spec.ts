@@ -17,14 +17,13 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed, AppConfigService } from '@alfresco/adf-core';
-
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
-import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { taskDetailsCloudMock } from './mocks/task-details-cloud.mock';
-import { TaskListCloudModule } from '../../task-list-cloud/task-list-cloud.module';
+import { taskDetailsCloudMock } from '../mocks/task-details-cloud.mock';
+import { TaskHeaderCloudModule } from '../task-header-cloud.module';
 import { By } from '@angular/platform-browser';
 import { TaskHeaderCloudService } from '../services/task-header-cloud.service';
 import { of } from 'rxjs';
+import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 
 describe('TaskHeaderComponent', () => {
     let component: TaskHeaderCloudComponent;
@@ -35,7 +34,7 @@ describe('TaskHeaderComponent', () => {
     setupTestBed({
         imports: [
             ProcessServiceCloudTestingModule,
-            TaskListCloudModule
+            TaskHeaderCloudModule
         ]
     });
 
