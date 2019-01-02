@@ -29,10 +29,8 @@ import { FormNodeViewerComponent } from './components/process-service/form-node-
 import { AppsViewComponent } from './components/process-service/apps-view.component';
 import { SearchResultComponent } from './components/search/search-result.component';
 import { SearchExtendedComponent } from './components/search/search-extended.component';
-
 import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
-
 import { FormListComponent } from './components/form/form-list.component';
 import { OverlayViewerComponent } from './components/overlay-viewer/overlay-viewer.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
@@ -47,6 +45,7 @@ import { TaskDetailsCloudDemoComponent } from './components/app-layout/cloud/tas
 import { AppsCloudDemoComponent } from './components/app-layout/cloud/apps-cloud-demo.component';
 import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-cloud-demo.component';
 import { StartTaskCloudDemoComponent } from './components/app-layout/cloud/start-task-cloud-demo.component';
+import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -166,6 +165,10 @@ export const appRoutes: Routes = [
                             {
                                 path: 'start-task',
                                 component: StartTaskCloudDemoComponent
+                            },
+                            {
+                                path: 'start-process',
+                                component: StartProcessCloudDemoComponent
                             },
                             {
                                 path: 'task-details/:taskId',

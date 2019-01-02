@@ -39,4 +39,8 @@ export class CloudLayoutComponent implements OnInit {
     onStartTask() {
         this.router.navigate([`/cloud/${this.applicationName}/start-task/`]);
     }
+
+    onStartProcess() {
+        this.router.navigate([`/cloud/${this.applicationName}/start-process/`]);
+    }
 }

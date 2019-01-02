@@ -2,18 +2,40 @@
   "ADF_CLOUD_PROCESS_LIST": {
     "MESSAGES": {
       "TITLE": "No Processes Found",
-      "SUBTITLE":"Create a new process that you want to easily find later",
+      "SUBTITLE": "Create a new process that you want to easily find later",
       "NONE": "No process instance filter selected."
     },
     "PROPERTIES": {
       "NAME": "Name",
       "CREATED": "Created"
+    },
+    "ADF_CLOUD_START_PROCESS": {
+      "BUTTON": "Start Process",
+      "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
+      "FORM": {
+        "TITLE": "Start Process",
+        "LABEL": {
+          "TYPE": "Select Process",
+          "NAME": "Process Name"
+        },
+        "TYPE_PLACEHOLDER": "Choose one...",
+        "ACTION": {
+          "START": "Start Process",
+          "CANCEL": "Cancel"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
+        "START": "Couldn't start new process instance, check you have access.",
+        "PROCESS_NAME_REQUIRED": "Process Name is required",
+        "PROCESS_DEFINITION_REQUIRED": "Process Definition is required"
+      }
     }
   },
   "ADF_CLOUD_TASK_LIST": {
     "APPS": {
       "TITLE": "No Applications Found",
-      "SUBTITLE":"Create a new application that you want to easily find later"
+      "SUBTITLE": "Create a new application that you want to easily find later"
     },
     "START_TASK": {
       "FORM": {
@@ -40,7 +62,7 @@
     "LIST": {
       "MESSAGES": {
         "TITLE": "No Tasks Found",
-        "SUBTITLE":"Create a new task that you want to easily find later",
+        "SUBTITLE": "Create a new task that you want to easily find later",
         "NONE": "No task lists found"
       }
     }
