@@ -26,6 +26,8 @@ import { ApplicationInstanceModel } from '../models/application-instance.model';
 @Injectable()
 export class AppsProcessCloudService {
 
+    static STATUS_RUNNING = 'RUNNING';
+
     contextRoot = '';
 
     constructor(
@@ -58,6 +60,24 @@ export class AppsProcessCloudService {
                 ),
                 catchError((err) => this.handleError(err))
             );
+    }
+
+    getRunningApplications(): Observable<any> {
+        const url = this.getApplicationUrl();
+        const httpMethod = 'GET', pathParams = {}, queryParams = {status: AppsProcessCloudService.STATUS_RUNNING}, bodyParam = {}, headerParams = {},
+            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+            url, httpMethod, pathParams, queryParams,
+            headerParams, formParams, bodyParam, authNames,
+            contentTypes, accepts, Object, null, null)
+        )).pipe(
+            catchError((err) => this.handleError(err))
+        );
+    }
+
+    private getApplicationUrl() {
+        return `${this.appConfig.get('bpmHost')}/alfresco-deployment-service/v1/applications`;
     }
 
     private handleError(error?: any) {

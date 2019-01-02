@@ -29,25 +29,23 @@ export class TaskFilterCloudModel  {
     sort: string;
     assignment: string;
     order: string;
+    description: string;
     dueAfter: Date;
     dueBefore: Date;
-    page: number;
-    size: number;
+    owner: string;
     processInstanceId: string;
-    category: string;
     claimedDateFrom: Date;
     claimedDateTo: Date;
     createdDateFrom: Date;
     createdDateTo: Date;
     dueDateFrom: Date;
     dueDateTo: Date;
-    formKey: string;
     taskName: string;
     parentTaskId: string;
     priority: number;
-    serviceFullName: string;
-    serviceName: string;
     standAlone: any;
+    lastModifiedFrom: Date;
+    lastModifiedTo: Date;
 
     constructor(obj?: any) {
         if (obj) {
@@ -62,26 +60,22 @@ export class TaskFilterCloudModel  {
             this.sort = obj.sort || null;
             this.assignment = obj.assignment || null;
             this.order = obj.order || null;
-
+            this.description = obj.description || null;
             this.dueAfter = obj.dueAfter || null;
             this.dueBefore = obj.dueBefore || null;
-            this.page = obj.page || null;
-            this.size = obj.size || null;
             this.processInstanceId = obj.processInstanceId || null;
-            this.category = obj.category || null;
             this.claimedDateFrom = obj.claimedDateFrom || null;
             this.claimedDateTo = obj.claimedDateTo || null;
             this.createdDateFrom = obj.createdDateFrom || null;
             this.createdDateTo = obj.createdDateTo || null;
             this.dueDateFrom = obj.dueDateFrom || null;
             this.dueDateTo = obj.dueDateTo || null;
-            this.formKey = obj.formKey || null;
             this.taskName = obj.taskName || null;
             this.parentTaskId = obj.parentTaskId || null;
             this.priority = obj.priority || null;
-            this.serviceFullName = obj.serviceFullName || null;
-            this.serviceName = obj.serviceName || null;
             this.standAlone = obj.standAlone || null;
+            this.lastModifiedFrom = obj.lastModifiedFrom || null;
+            this.lastModifiedTo = obj.lastModifiedTo || null;
         }
     }
 }
@@ -115,6 +109,7 @@ export interface FilterOptions {
 export class TaskFilterProperties {
     label: string;
     type: string; // text|date|select
+    value: string;
     key: string;
     options$: Observable<FilterOptions[]>;
 
@@ -122,6 +117,7 @@ export class TaskFilterProperties {
         if (obj) {
             this.label = obj.label || null;
             this.type = obj.type || null;
+            this.value = obj.value || null;
             this.key = obj.key || null;
             this.options$ = obj.options || null;
         }

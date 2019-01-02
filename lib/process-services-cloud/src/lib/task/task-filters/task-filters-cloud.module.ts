@@ -27,6 +27,8 @@ import { TaskFilterCloudService } from './services/task-filter-cloud.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EditTaskFilterCloudComponent } from './components/edit-task-filter-cloud.component';
 import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog-cloud.component';
+import { AppListCloudModule } from './../../app/app-list-cloud.module';
+
 @NgModule({
     imports: [
         FormsModule,
@@ -40,7 +42,8 @@ import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog-
                 useClass: TranslateLoaderService
             }
         }),
-        MaterialModule
+        MaterialModule,
+        AppListCloudModule
     ],
     declarations: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent, TaskFilterDialogCloudComponent],
     exports: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent],

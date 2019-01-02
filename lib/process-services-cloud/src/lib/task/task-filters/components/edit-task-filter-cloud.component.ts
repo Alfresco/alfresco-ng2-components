@@ -17,13 +17,15 @@
 
 import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { TaskFilterCloudModel, FilterActionType, TaskFilterProperties } from './../models/filter-cloud.model';
+import { TaskFilterCloudModel, FilterActionType, TaskFilterProperties, FilterOptions } from './../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { MatDialog } from '@angular/material';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
 import { TranslationService } from '@alfresco/adf-core';
-import { debounceTime } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
+import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
+import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 
 @Component({
   selector: 'adf-cloud-edit-task-filter',
@@ -49,7 +51,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     filterProperties = ['state', 'assignment', 'sort', 'order', 'page', 'size']; // default ['state', 'assignment', 'sort', 'order']
 
     @Input()
-    showFilterActions = true ;
+    toggleFilterActions = true ;
 
     /** Emitted when a task filter property changes. */
     @Output()
@@ -80,58 +82,37 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         {label: 'DELETED', value: 'DELETED'}
     ];
 
-    directions = [{label: 'ASC', value: 'ASC'}, {label: 'DESC', value: 'DESC'}];
+    directions = [
+        { label: 'ASC', value: 'ASC' },
+        { label: 'DESC', value: 'DESC' }
+    ];
 
     formHasBeenChanged = false;
     editTaskFilterForm: FormGroup;
     taskFilterProperties: any[] = [];
-    toggleFilterActions: boolean = false;
+    showFilterActions: boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
         public dialog: MatDialog,
         private translateService: TranslationService,
-        private taskFilterCloudService: TaskFilterCloudService) {
+        private taskFilterCloudService: TaskFilterCloudService,
+        private appsProcessCloudService: AppsProcessCloudService) {
         }
 
     ngOnChanges(changes: SimpleChanges) {
         const id = changes['id'];
         if (id && id.currentValue !== id.previousValue) {
             this.retrieveTaskFilter();
-            this.buildForm();
-            this.initTaskFilterProperties();
+            this.initTaskFilterProperties(this.taskFilter);
+            this.buildForm(this.taskFilterProperties);
         }
     }
 
-    buildForm() {
+    buildForm(taskFilterProperties: TaskFilterProperties[]) {
         this.formHasBeenChanged = false;
-        this.editTaskFilterForm = this.formBuilder.group({
-            state: this.taskFilter.state,
-            appName: this.taskFilter.appName,
-            processDefinitionId: this.taskFilter.processDefinitionId,
-            assignment: this.taskFilter.assignment,
-            sort: this.taskFilter.sort,
-            order: this.taskFilter.order,
-            dueAfter: '',
-            dueBefore: '',
-            page: new FormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(EditTaskFilterCloudComponent.MIN_VALUE)]),
-            size: new FormControl('', [Validators.pattern('^[0-9]*$'), Validators.min(EditTaskFilterCloudComponent.MIN_VALUE)]),
-            processInstanceId: '',
-            category: '',
-            claimedDateFrom: '',
-            claimedDateTo: '',
-            createdDateFrom: '',
-            createdDateTo: '',
-            dueDateFrom: '',
-            dueDateTo: '',
-            formKey: '',
-            taskName: '',
-            parentTaskId: '',
-            priority: '',
-            serviceFullName: '',
-            serviceName: '',
-            standAlone: ''
-        });
+        const formControllerKeys = this.getFormControllers(taskFilterProperties);
+        this.editTaskFilterForm = this.formBuilder.group(formControllerKeys);
         this.onFilterChange();
     }
 
@@ -139,17 +120,39 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         this.taskFilter = this.taskFilterCloudService.getTaskFilterById(this.appName, this.id);
     }
 
+    getFormControllers(taskFilterProperties: TaskFilterProperties[]) {
+        const properties = taskFilterProperties.map((property: TaskFilterProperties) => {
+            return { [property.key]: property.value };
+        });
+        return properties.reduce(((result, current) => Object.assign(result, current)), {});
+    }
+
     /**
      * Check for edit task filter form changes
      */
     onFilterChange() {
         this.editTaskFilterForm.valueChanges
-            .pipe(debounceTime(300))
-            .subscribe((formValues: TaskFilterCloudModel) => {
+        .pipe(debounceTime(300))
+        .subscribe((formValues: TaskFilterCloudModel) => {
             this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, formValues));
             this.formHasBeenChanged = !this.compareFilters(this.changedTaskFilter, this.taskFilter);
-            this.filterChange.emit(this.changedTaskFilter);
+            if (this.isFormValid()) {
+                this.filterChange.emit(this.changedTaskFilter);
+            }
         });
+    }
+
+    getRunningApplications(): Observable<FilterOptions[]> {
+        return this.appsProcessCloudService.getRunningApplications().pipe(
+            map((applications: ApplicationInstanceModel[]) => {
+                if (applications && applications.length > 0) {
+                    let options: FilterOptions[] = [];
+                    applications.map((application) => {
+                        options.push({ label: application.name, value: application.name });
+                    });
+                    return options;
+                }
+            }));
     }
 
     /**
@@ -205,144 +208,167 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     }
 
     onExpand() {
-        this.toggleFilterActions = true;
+        this.showFilterActions = true;
     }
 
     onClose() {
-        this.toggleFilterActions = false;
+        this.showFilterActions = false;
     }
 
-    initTaskFilterProperties() {
+    initTaskFilterProperties(currentTaskFilter: TaskFilterCloudModel) {
         if (this.filterProperties && this.filterProperties.length > 0) {
-            const defaultProperties = this.defaultTaskFilterProperties();
+            const defaultProperties = this.defaultTaskFilterProperties(currentTaskFilter);
             this.taskFilterProperties = defaultProperties.filter((filterProperty) => this.isValidSelection(this.filterProperties, filterProperty));
         }
+    }
+
+    isFormValid() {
+        return this.editTaskFilterForm.valid;
     }
 
     private isValidSelection(filterProperties: string[], filterProperty: any): boolean {
         return filterProperties ? filterProperties.indexOf(filterProperty.key) >= 0 : true;
     }
 
-    defaultTaskFilterProperties() {
+    defaultTaskFilterProperties(currentTaskFilter: TaskFilterCloudModel) {
         return [
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'state',
+                value: currentTaskFilter.state || '',
                 options: of(this.status)
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
                 type: 'text',
-                key: 'assignment'
+                key: 'assignment',
+                value: currentTaskFilter.assignment || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.APP_NAME',
-                type: 'text',
-                key: 'appName'
+                type: 'select',
+                key: 'appName',
+                value: currentTaskFilter.appName || '',
+                options: this.getRunningApplications()
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_DEF_ID',
                 type: 'text',
-                key: 'processDefinitionId'
+                key: 'processDefinitionId',
+                value: currentTaskFilter.processDefinitionId || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COLUMN',
                 type: 'select',
                 key: 'sort',
+                value: currentTaskFilter.sort || this.columns[0],
                 options: of(this.columns)
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DIRECTION',
                 type: 'select',
                 key: 'order',
+                value: currentTaskFilter.order || this.directions[0],
                 options: of(this.directions)
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_INSTANCE_ID',
                 type: 'text',
-                key: 'processInstanceId'
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.SIZE',
-                type: 'text',
-                key: 'size'
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PAGE',
-                type: 'text',
-                key: 'page'
+                key: 'processInstanceId',
+                value: currentTaskFilter.processInstanceId || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_AFTER',
                 type: 'date',
-                key: 'dueAfter'
+                key: 'dueAfter',
+                value: currentTaskFilter.dueAfter || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_BEFORE',
                 type: 'date',
-                key: 'dueBefore'
-            }),
-
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CATEGORY',
-                type: 'text',
-                key: 'category'
+                key: 'dueBefore',
+                value: currentTaskFilter.dueBefore || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CLAIMED_DATE_FROM',
                 type: 'date',
-                key: 'claimedDateFrom'
+                key: 'claimedDateFrom',
+                value: currentTaskFilter.claimedDateFrom || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CLAIMED_DATE_TO',
                 type: 'date',
-                key: 'claimedDateTo'
+                key: 'claimedDateTo',
+                value: currentTaskFilter.claimedDateTo || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE_FORM',
                 type: 'date',
-                key: 'createdDateFrom'
+                key: 'createdDateFrom',
+                value: currentTaskFilter.createdDateFrom || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE_TO',
                 type: 'date',
-                key: 'createdDateTo'
+                key: 'createdDateTo',
+                value: currentTaskFilter.createdDateTo || ''
             }),
             new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.FORM_KEY',
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.TASK_NAME',
                 type: 'text',
-                key: 'formKey'
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.NAME',
-                type: 'text',
-                key: 'taskName'
+                key: 'taskName',
+                value: currentTaskFilter.taskName || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PARENT_TASK_ID',
                 type: 'text',
-                key: 'parentTaskId'
+                key: 'parentTaskId',
+                value: currentTaskFilter.parentTaskId || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PRIORITY',
                 type: 'text',
-                key: 'priority'
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.SERVICE_FULL_NAME',
-                type: 'text',
-                key: 'serviceFullName'
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.SERVICE_NAME',
-                type: 'text',
-                key: 'serviceName'
+                key: 'priority',
+                value: currentTaskFilter.priority || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STAND_ALONE',
                 type: 'text',
-                key: 'standAlone'
+                key: 'standAlone',
+                value: currentTaskFilter.standAlone || ''
+            }),
+
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.LAST_MODIFIED_FROM',
+                type: 'date',
+                key: 'lastModifiedFrom',
+                value: currentTaskFilter.lastModifiedFrom || ''
+            }),
+
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.LAST_MODIFIED_TO',
+                type: 'date',
+                key: 'lastModifiedTo',
+                value: currentTaskFilter.lastModifiedTo || ''
+            }),
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.OWNER',
+                type: 'text',
+                key: 'owner',
+                value: currentTaskFilter.owner || ''
+            }),
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE_FROM',
+                type: 'text',
+                key: 'dueDateFrom',
+                value: currentTaskFilter.dueDateFrom || ''
+            }),
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE_TO',
+                type: 'text',
+                key: 'dueDateTo',
+                value: currentTaskFilter.dueDateTo || ''
             })
         ];
     }

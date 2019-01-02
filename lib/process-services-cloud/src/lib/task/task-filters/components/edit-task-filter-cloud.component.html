@@ -4,8 +4,8 @@
             <mat-panel-title fxLayoutAlign="space-between center" id="adf-edit-task-filter-title-id">{{taskFilter.name | translate}}</mat-panel-title>
             <mat-panel-description fxLayoutAlign="space-between center" id="adf-edit-task-filter-sub-title-id">
                 <span>{{ 'ADF_CLOUD_EDIT_TASK_FILTER.TITLE' | translate}}</span>
-                <div *ngIf="showFilterActions" class="adf-cloud-edit-task-filter-actions">
-                    <ng-container *ngIf="toggleFilterActions">
+                <div *ngIf="toggleFilterActions" class="adf-cloud-edit-task-filter-actions">
+                    <ng-container *ngIf="showFilterActions">
                         <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE' | translate}}" id="adf-save-id" [disabled]="!formHasBeenChanged" (click)="onSave()">
                             <mat-icon>save</mat-icon>
                         </button>
@@ -23,7 +23,7 @@
             <div fxLayout="column">
                 <div>
                 <ng-container *ngFor="let taskFilterProperty of taskFilterProperties">
-                    <mat-form-field *ngIf="isSelectType(taskFilterProperty)" [floatLabel]="'auto'">
+                    <mat-form-field *ngIf="isSelectType(taskFilterProperty)">
                         <mat-select
                             placeholder="{{taskFilterProperty.label | translate}}"
                             [formControlName]="taskFilterProperty.key"
@@ -33,14 +33,14 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field *ngIf="isTextType(taskFilterProperty)" [floatLabel]="'auto'">
+                    <mat-form-field *ngIf="isTextType(taskFilterProperty)">
                         <input matInput
                         [formControlName]="taskFilterProperty.key"
                         type="text"
                         id="adf-task-filter-appname-id"
                         placeholder="{{taskFilterProperty.label | translate}}"/>
                     </mat-form-field>
-                    <mat-form-field *ngIf="isDateType(taskFilterProperty)" [floatLabel]="'auto'">
+                    <mat-form-field *ngIf="isDateType(taskFilterProperty)">
                         <mat-label>{{taskFilterProperty.label | translate}}</mat-label>
                             <input matInput [matDatepicker]="dateController" placeholder="Choose a date"
                                 [formControlName]="taskFilterProperty.key" data-automation-id="due after">

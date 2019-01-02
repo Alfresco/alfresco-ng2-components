@@ -1,6 +1,7 @@
 <div fxLayout="column" fxFill fxLayoutGap="2px">
     <adf-cloud-edit-task-filter
         [appName]="applicationName"
+        [filterProperties]="['appName', 'state', 'assignment']"
         [id]="filterId"
         (action)="onTaskFilterAction($event)"
         (filterChange)="onFilterChange($event)">
