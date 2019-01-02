@@ -32,6 +32,7 @@ import { DocumentListComponent } from './components/document-list.component';
 import { EmptyFolderContentDirective } from './components/empty-folder/empty-folder-content.directive';
 import { NoPermissionContentDirective } from './components/no-permission/no-permission-content.directive';
 import { TrashcanNameColumnComponent } from './components/trashcan-name-column/trashcan-name-column.component';
+import { LibraryStatusColumnComponent } from './components/library-status-column/library-status-column.component';
 
 @NgModule({
     imports: [
@@ -45,6 +46,7 @@ import { TrashcanNameColumnComponent } from './components/trashcan-name-column/t
         DocumentListComponent,
         ContentColumnComponent,
         TrashcanNameColumnComponent,
+        LibraryStatusColumnComponent,
         ContentColumnListComponent,
         ContentActionComponent,
         ContentActionListComponent,
@@ -55,6 +57,7 @@ import { TrashcanNameColumnComponent } from './components/trashcan-name-column/t
         DocumentListComponent,
         ContentColumnComponent,
         TrashcanNameColumnComponent,
+        LibraryStatusColumnComponent,
         ContentColumnListComponent,
         ContentActionComponent,
         ContentActionListComponent,
