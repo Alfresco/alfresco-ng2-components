@@ -92,10 +92,31 @@
       "DELETE": "Delete filter"
     },
     "LABEL": {
+      "APP_NAME": "Application Name",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
       "STATUS": "Status",
       "ASSIGNMENT": "Assignment",
       "COLUMN": "Column",
-      "DIRECTION": "Direction"
+      "DIRECTION": "Direction",
+      "PAGE": "Page",
+      "PROCESS_INSTANCE_ID": "Process Instance id",
+      "SIZE": "Size",
+      "DUE_BEFORE": "Due Before",
+      "DUE_AFTER": "Due After",
+      "CATEGORY": "Category",
+      "CLAIMED_DATE_FROM": "Claimed Date from",
+      "CLAIMED_DATE_TO": "Claimed Date to",
+      "CREATED_DATE_FORM": "Created Date from",
+      "CREATED_DATE_TO": "Created Date to",
+      "FORM_KEY": "Form key",
+      "NAME": "Name",
+      "PARENT_TASK_ID": "ParentTaskId",
+      "PRIORITY": "Priority",
+      "SERVICE_FULL_NAME": "Service full name",
+      "SERVICE_NAME": "Service name",
+      "STAND_ALONE": "Stand Alone"
+
+
     },
     "DIALOG": {
       "TITLE": "Save filter as",
