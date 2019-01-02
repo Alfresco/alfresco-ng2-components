@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessFiltersPage } from '../pages/adf/process_services/processFiltersPage';
+import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
 import { CommentsPage } from '../pages/adf/commentsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 

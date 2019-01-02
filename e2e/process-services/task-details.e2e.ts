@@ -31,7 +31,7 @@ import dateFormat = require('dateformat');
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TasksPage } from '../pages/adf/process_services/tasksPage';
+import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { browser } from 'protractor';
 
 describe('Task Details component', () => {

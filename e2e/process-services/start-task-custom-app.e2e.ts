@@ -18,9 +18,9 @@
 import { by } from 'protractor';
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { TasksPage } from '../pages/adf/process_services/tasksPage';
-import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
-import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
+import { TasksPage } from '../pages/adf/process-services/tasksPage';
+import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
+import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import { Tenant } from '../models/APS/Tenant';

@@ -18,9 +18,9 @@
 import { browser } from 'protractor';
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessFiltersPage } from '../pages/adf/process_services/processFiltersPage';
-import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
-import { AppSettingsToggles } from '../pages/adf/process_services/dialog/appSettingsToggles';
+import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
+import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { AppSettingsToggles } from '../pages/adf/process-services/dialog/appSettingsToggles';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');

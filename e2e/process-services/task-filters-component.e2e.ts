@@ -20,12 +20,12 @@ import resources = require('../util/resources');
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
-import { TasksPage } from '../pages/adf/process_services/tasksPage';
-import { TasksListPage } from '../pages/adf/process_services/tasksListPage';
-import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
-import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
-import { AppSettingsToggles } from '../pages/adf/process_services/dialog/appSettingsToggles';
+import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
+import { TasksPage } from '../pages/adf/process-services/tasksPage';
+import { TasksListPage } from '../pages/adf/process-services/tasksListPage';
+import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
+import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { AppSettingsToggles } from '../pages/adf/process-services/dialog/appSettingsToggles';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/taskFiltersDemoPage';
 
 import AlfrescoApi = require('alfresco-js-api-node');

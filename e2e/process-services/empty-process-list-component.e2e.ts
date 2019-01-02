@@ -19,11 +19,11 @@ import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
-import { ProcessFiltersPage } from '../pages/adf/process_services/processFiltersPage';
-import { ProcessDetailsPage } from '../pages/adf/process_services/processDetailsPage';
-import { ProcessListPage } from '../pages/adf/process_services/processListPage';
-import { StartProcessPage } from '../pages/adf/process_services/startProcessPage';
+import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
+import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
+import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
+import { ProcessListPage } from '../pages/adf/process-services/processListPage';
+import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';

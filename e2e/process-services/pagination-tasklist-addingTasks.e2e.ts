@@ -16,7 +16,7 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { TasksPage } from '../pages/adf/process_services/tasksPage';
+import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { PaginationPage } from '../pages/adf/paginationPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 

@@ -16,7 +16,7 @@
  */
 
 import { Util } from '../../../util/util';
-import { TasksListPage } from '../process_services/tasksListPage';
+import { TasksListPage } from '../process-services/tasksListPage';
 import { PaginationPage } from '../paginationPage';
 import { element, by } from 'protractor';
 

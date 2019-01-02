@@ -16,12 +16,12 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessFiltersPage } from '../pages/adf/process_services/processFiltersPage';
-import { Widget } from '../pages/adf/process_services/widgets/widget';
-import { StartProcessPage } from '../pages/adf/process_services/startProcessPage';
-import { ProcessDetailsPage } from '../pages/adf/process_services/processDetailsPage';
-import { TaskDetailsPage } from '../pages/adf/process_services/taskDetailsPage';
-import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
+import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
+import { Widget } from '../pages/adf/process-services/widgets/widget';
+import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
+import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
+import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
+import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');

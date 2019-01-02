@@ -18,8 +18,8 @@
 import { Util } from '../../util/util';
 import TestConfig = require('../../test.config');
 import { element, by, browser } from 'protractor';
-import { ProcessServicesPage } from './process_services/processServicesPage';
-import { AppListCloudComponent } from './process_cloud/appListCloudComponent';
+import { ProcessServicesPage } from './process-services/processServicesPage';
+import { AppListCloudComponent } from './process-cloud/appListCloudComponent';
 
 export class NavigationBarPage {
 

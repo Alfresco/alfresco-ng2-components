@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TreeViewPage } from '../pages/adf/content_services/treeViewPage';
+import { TreeViewPage } from '../pages/adf/content-services/treeViewPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 

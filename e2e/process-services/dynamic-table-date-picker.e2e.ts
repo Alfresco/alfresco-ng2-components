@@ -16,10 +16,10 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessFiltersPage } from '../pages/adf/process_services/processFiltersPage';
-import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
-import { DynamicTableWidget } from '../pages/adf/process_services/widgets/dynamicTableWidget';
-import { DropdownWidget } from '../pages/adf/process_services/widgets/dropdownWidget';
+import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
+import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
+import { DynamicTableWidget } from '../pages/adf/process-services/widgets/dynamicTableWidget';
+import { DropdownWidget } from '../pages/adf/process-services/widgets/dropdownWidget';
 import { DatePickerPage } from '../pages/adf/material/datePickerPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 

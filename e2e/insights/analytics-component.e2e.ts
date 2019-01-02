@@ -17,9 +17,9 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { AnalyticsPage } from '../pages/adf/process_services/analyticsPage';
-import { ProcessServicesPage } from '../pages/adf/process_services/processServicesPage';
-import { AppNavigationBarPage } from '../pages/adf/process_services/appNavigationBarPage';
+import { AnalyticsPage } from '../pages/adf/process-services/analyticsPage';
+import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
+import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
 import TestConfig = require('../test.config');
 import { Tenant } from '../models/APS/Tenant';
 import { User } from '../models/APS/user';

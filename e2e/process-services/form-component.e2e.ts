@@ -17,10 +17,10 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { FormPage } from '../pages/adf/process_services/formPage';
-import { DateWidget } from '../pages/adf/process_services/widgets/dateWidget';
-import { AmountWidget } from '../pages/adf/process_services/widgets/amountWidget';
-import { NumberWidget } from '../pages/adf/process_services/widgets/numberWidget';
+import { FormPage } from '../pages/adf/process-services/formPage';
+import { DateWidget } from '../pages/adf/process-services/widgets/dateWidget';
+import { AmountWidget } from '../pages/adf/process-services/widgets/amountWidget';
+import { NumberWidget } from '../pages/adf/process-services/widgets/numberWidget';
 import TestConfig = require('../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');

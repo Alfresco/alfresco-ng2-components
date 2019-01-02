@@ -19,8 +19,8 @@ import { browser } from 'protractor';
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TasksPage } from '../pages/adf/process_services/tasksPage';
-import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
+import { TasksPage } from '../pages/adf/process-services/tasksPage';
+import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
 import { ViewerPage } from '../pages/adf/viewerPage';
 
 import CONSTANTS = require('../util/constants');

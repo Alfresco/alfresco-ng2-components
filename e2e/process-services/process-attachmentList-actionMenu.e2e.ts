@@ -16,9 +16,9 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ProcessFiltersPage } from '../pages/adf/process_services/processFiltersPage';
-import { ProcessDetailsPage } from '../pages/adf/process_services/processDetailsPage';
-import { AttachmentListPage } from '../pages/adf/process_services/attachmentListPage';
+import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
+import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
+import { AttachmentListPage } from '../pages/adf/process-services/attachmentListPage';
 import { ViewerPage } from '../pages/adf/viewerPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 

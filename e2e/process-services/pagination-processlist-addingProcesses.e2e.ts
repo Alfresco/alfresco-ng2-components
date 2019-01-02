@@ -17,8 +17,8 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { PaginationPage } from '../pages/adf/paginationPage';
-import { ProcessFiltersPage } from '../pages/adf/process_services/processFiltersPage';
-import { ProcessDetailsPage } from '../pages/adf/process_services/processDetailsPage';
+import { ProcessFiltersPage } from '../pages/adf/process-services/processFiltersPage';
+import { ProcessDetailsPage } from '../pages/adf/process-services/processDetailsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import TestConfig = require('../test.config');
