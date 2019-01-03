@@ -307,6 +307,12 @@
         "VISIBILITY": "Visibility"
       }
     },
+    "ROLE": {
+      "MANAGER": "Manager",
+      "COLLABORATOR": "Collaborator",
+      "CONTRIBUTOR": "Contributor",
+      "CONSUMER": "Consumer"
+    },
     "VISIBILITY": {
       "PRIVATE": "Private",
       "PUBLIC": "Public",

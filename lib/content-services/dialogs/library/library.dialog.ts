@@ -199,7 +199,13 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
   }
 
   private async checkLibraryNameExists(libraryTitle: string) {
-    const { entries } = (await this.findLibraryByTitle(libraryTitle)).list;
+    let entries = [];
+
+    try {
+        entries = (await this.findLibraryByTitle(libraryTitle)).list.entries;
+    } catch {
+        entries = [];
+    }
 
     if (entries.length) {
       this.libraryTitleExists = entries[0].entry.title.toLowerCase() === libraryTitle.toLowerCase();
@@ -208,14 +214,13 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  private findLibraryByTitle(libraryTitle: string): Promise<SitePaging> {
+  private async findLibraryByTitle(libraryTitle: string): Promise<SitePaging> {
     return this.alfrescoApiService
       .getInstance()
       .core.queriesApi.findSites(libraryTitle, {
         maxItems: 1,
         fields: ['title']
-      })
-      .catch(() => ({ list: { entries: [] } }));
+      });
   }
 
   private forbidSpecialCharacters({ value }: FormControl) {
