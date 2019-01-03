@@ -105,7 +105,6 @@ describe('GroupCloudComponent', () => {
     it('should show an error message if the group is invalid', async(() => {
         fixture.detectChanges();
         checkGroupHasClientRoleMappingSpy.and.returnValue(of(false));
-        component.showHint = true;
         fixture.detectChanges();
         let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();

@@ -36,7 +36,7 @@
       </mat-option>
     </mat-autocomplete>
 </mat-form-field>
-<div class="adf-cloud-group-error" *ngIf="showHint">
+<div class="adf-cloud-group-error" *ngIf="hasError()">
     <div fxLayout="row" fxLayoutAlign="start start" [@transitionMessages]="_subscriptAnimationState">
         <div class="adf-cloud-group-error-message">
         {{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate : { groupName : searchedValue } }}

@@ -67,10 +67,6 @@ export class GroupCloudComponent implements OnInit {
     @Output()
     removeGroup: EventEmitter<GroupModel> = new EventEmitter<GroupModel>();
 
-    /** Emitted when an error occurs. */
-    @Output()
-    error: EventEmitter<boolean> = new EventEmitter<boolean>();
-
     private selectedGroups: GroupModel[] = [];
 
     private searchGroups: GroupModel[] = [];
@@ -88,8 +84,6 @@ export class GroupCloudComponent implements OnInit {
     _subscriptAnimationState = 'enter';
 
     applicationId: string;
-
-    showHint = false;
 
     searchedValue = '';
 
@@ -115,8 +109,7 @@ export class GroupCloudComponent implements OnInit {
             debounceTime(500),
             distinctUntilChanged(),
             tap(() => {
-                this.searchGroups = [];
-                this.searchGroupsSubject.next([]);
+                this.resetSearchGroups();
             }),
             switchMap((inputValue) => {
                 const queryParams = this.createSearchParam(inputValue);
@@ -136,7 +129,11 @@ export class GroupCloudComponent implements OnInit {
         return this.groupService.findGroupsByName(searchParam).pipe(
             flatMap((groups: GroupModel[]) => {
                 this.searchedValue = searchParam.name;
-                this.showHint = searchParam.name ? !this.hasGroups(groups) : false;
+                if (this.searchedValue) {
+                    !this.hasGroups(groups) ? this.setError() : this.clearError();
+                } else {
+                    this.clearError();
+                }
                 return groups;
             })
         );
@@ -148,6 +145,7 @@ export class GroupCloudComponent implements OnInit {
         }
         return this.groupService.checkGroupHasClientRoleMapping(group.id, this.applicationId).pipe(
             mergeMap((hasRole: boolean) => {
+                hasRole ? this.clearError() : this.setError();
                 return of({ group, hasRole });
             })
         );
@@ -179,8 +177,6 @@ export class GroupCloudComponent implements OnInit {
     }
 
     onSelect(selectedGroup: GroupModel) {
-        this.showHint = false;
-        this.error.emit(this.showHint);
         if (this.isMultipleMode()) {
             if (!this.isGroupAlreadySelected(selectedGroup)) {
                 this.selectedGroups.push(selectedGroup);
@@ -200,6 +196,11 @@ export class GroupCloudComponent implements OnInit {
         const indexToRemove = this.selectedGroups.findIndex((group: GroupModel) => { return group.id === selectedGroup.id; });
         this.selectedGroups.splice(indexToRemove, 1);
         this.selectedGroupsSubject.next(this.selectedGroups);
+    }
+
+    private resetSearchGroups() {
+        this.searchGroups = [];
+        this.searchGroupsSubject.next([]);
     }
 
     isMultipleMode(): boolean {
@@ -222,5 +223,17 @@ export class GroupCloudComponent implements OnInit {
 
     isString(value: any): boolean {
         return typeof value === 'string';
+    }
+
+    private setError() {
+        this.searchGroupsControl.setErrors({invalid: true});
+    }
+
+    private clearError() {
+        this.searchGroupsControl.setErrors(null);
+    }
+
+    hasError(): boolean {
+        return this.searchGroupsControl && this.searchGroupsControl.errors && this.searchGroupsControl.errors.invalid;
     }
 }
