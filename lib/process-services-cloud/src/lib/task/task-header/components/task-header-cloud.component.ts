@@ -46,10 +46,6 @@ export class TaskHeaderCloudComponent implements OnInit {
     @Input()
     taskId: string;
 
-    /** The name of the form. */
-    @Input()
-    formName: string = null;
-
     /** Emitted when the task is claimed. */
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
@@ -179,16 +175,6 @@ export class TaskHeaderCloudComponent implements OnInit {
                     multiline: true,
                     editable: true
                 }
-            ),
-            new CardViewTextItemModel(
-                {
-                    label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.FORM_NAME',
-                    value: this.formName,
-                    key: 'formName',
-                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.FORM_NAME_DEFAULT'),
-                    clickable: !!this.formName,
-                    icon: 'create'
-                }
             )
         ];
     }
@@ -198,8 +184,7 @@ export class TaskHeaderCloudComponent implements OnInit {
      */
     refreshData() {
         if (this.taskDetails) {
-            const parentInfo = this.getParentInfo();
-            const defaultProperties = this.initDefaultProperties(parentInfo);
+            const defaultProperties = this.initDefaultProperties(this.getParentInfo());
             const filteredProperties: string[] = this.appConfig.get('adf-cloud-task-header.presets.properties');
             this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
         }
@@ -250,8 +235,12 @@ export class TaskHeaderCloudComponent implements OnInit {
         return this.hasAssignee() && this.isAssignedTo(this.currentUser);
     }
 
-    isAssignedTo(userId): boolean {
-        return this.hasAssignee() ? this.taskDetails.assignee === userId : false;
+    isAssignedTo(userName): boolean {
+        return this.hasAssignee() ? this.taskDetails.assignee === userName : false;
+    }
+
+    isTaskValid() {
+        return this.appName && this.taskId;
     }
 
     claimTask() {
