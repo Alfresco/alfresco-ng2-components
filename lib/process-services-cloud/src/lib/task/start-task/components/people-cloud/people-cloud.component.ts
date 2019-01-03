@@ -41,9 +41,6 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 
 export class PeopleCloudComponent implements OnInit {
 
-    static ROLE_ACTIVITI_ADMIN = 'ACTIVITI_ADMIN';
-    static ROLE_ACTIVITI_USER = 'ACTIVITI_USER';
-
     static MODE_SINGLE = 'single';
     static MODE_MULTIPLE = 'multiple';
 
@@ -78,49 +75,60 @@ export class PeopleCloudComponent implements OnInit {
     @ViewChild('userInput')
     private userInput: ElementRef<HTMLInputElement>;
 
-    users$: Observable<IdentityUserModel[]>;
-
     private _selectedUsers: IdentityUserModel[] = [];
+    private _searchUsers: IdentityUserModel[] = [];
     private selectedUsers: BehaviorSubject<IdentityUserModel[]>;
     private searchUsers: BehaviorSubject<IdentityUserModel[]>;
     selectedUsers$: Observable<IdentityUserModel[]>;
+    searchUsers$: Observable<IdentityUserModel[]>;
 
-    searchUser: FormControl = new FormControl();
+    searchUserCtrl: FormControl = new FormControl();
 
     _subscriptAnimationState: string = 'enter';
 
-    dataError = false;
+    clientId: string;
 
-    filtered = [];
+    isFocused: boolean;
 
     constructor(private identityUserService: IdentityUserService) {
         this.selectedUsers = new BehaviorSubject<IdentityUserModel[]>(this._selectedUsers);
-        this.searchUsers = new BehaviorSubject<IdentityUserModel[]>(this._selectedUsers);
+        this.searchUsers = new BehaviorSubject<IdentityUserModel[]>(this._searchUsers);
         this.selectedUsers$ = this.selectedUsers.asObservable();
-        this.users$ = this.searchUsers.asObservable();
+        this.searchUsers$ = this.searchUsers.asObservable();
     }
 
     ngOnInit() {
         if (this.hasPreSelectUsers()) {
             this.loadPreSelectUsers();
         }
+
         this.initSearch();
+
+        if (this.appName) {
+            this.loadClientId();
+        }
     }
 
-    initSearch() {
-        this.searchUser.valueChanges.pipe(
-            tap((value) => {
-                this.dataError = !!value;
+    private initSearch() {
+        this.searchUserCtrl.valueChanges.pipe(
+            filter((value) => {
+                return typeof value === 'string';
             }),
+            tap((value) => {
+                if (value) {
+                    this.setError();
+                } else {
+                    this.clearError();
+                }
+             }),
             debounceTime(500),
             distinctUntilChanged(),
             tap(() => {
-                this.filtered = [];
-                this.searchUsers.next(this.filtered);
+                this.resetSearchUsers();
             }),
             switchMap((search) => this.identityUserService.findUsersByName(search)),
-            mergeMap((user) => {
-                return user;
+            mergeMap((users) => {
+                return users;
             }),
             filter((user: any) => {
                 return !this.isUserAlreadySelected(user);
@@ -137,28 +145,27 @@ export class PeopleCloudComponent implements OnInit {
                 }
             })
         ).subscribe((user) => {
-            this.filtered.push(user);
-            this.searchUsers.next(this.filtered);
+            this._searchUsers.push(user);
+            this.searchUsers.next(this._searchUsers);
         });
     }
 
     private checkUserHasAccess(userId: string): Observable<boolean> {
-        const roles = this.hasRoles() ? this.roles : this.getDefaultRoles();
-        return this.identityUserService.checkUserHasAnyApplicationRole(userId, this.appName, roles);
+        if (this.hasRoles()) {
+            return this.identityUserService.checkUserHasAnyClientAppRole(userId, this.clientId, this.roles);
+        } else {
+            return this.identityUserService.checkUserHasClientApp(userId, this.clientId);
+        }
     }
 
     private hasRoles(): boolean {
         return this.roles && this.roles.length > 0;
     }
 
-    private getDefaultRoles(): string[] {
-        return [PeopleCloudComponent.ROLE_ACTIVITI_USER, PeopleCloudComponent.ROLE_ACTIVITI_ADMIN];
-    }
-
-    isUserAlreadySelected(user: IdentityUserModel): boolean {
+    private isUserAlreadySelected(user: IdentityUserModel): boolean {
         if (this._selectedUsers && this._selectedUsers.length > 0) {
-            const result = this._selectedUsers.find((tmpUser) => {
-                return tmpUser.id === user.id;
+            const result = this._selectedUsers.find((selectedUser) => {
+                return selectedUser.id === user.id;
             });
 
             return !!result;
@@ -166,35 +173,38 @@ export class PeopleCloudComponent implements OnInit {
         return false;
     }
 
-    loadPreSelectUsers() {
+    private loadPreSelectUsers() {
         if (this.isMultipleMode()) {
             if (this.preSelectUsers && this.preSelectUsers.length > 0) {
                 this.selectedUsers.next(this.preSelectUsers);
             }
         } else {
             this.selectedUsers.next(this.preSelectUsers);
-            this.searchUser.setValue(this.preSelectUsers[0]);
+            this.searchUserCtrl.setValue(this.preSelectUsers[0]);
         }
     }
 
+    private async loadClientId() {
+        this.clientId = await this.identityUserService.getClientIdByApplicationName(this.appName).toPromise();
+    }
+
     onSelect(user: IdentityUserModel) {
-
-        this.dataError = false;
-
         if (this.isMultipleMode()) {
 
             if (!this.isUserAlreadySelected(user)) {
                 this._selectedUsers.push(user);
                 this.selectedUsers.next(this._selectedUsers);
                 this.selectUser.emit(user);
-                this.searchUsers.next([]);
             }
 
             this.userInput.nativeElement.value = '';
-            this.searchUser.setValue('');
+            this.searchUserCtrl.setValue('');
         } else {
             this.selectUser.emit(user);
         }
+
+        this.clearError();
+        this.resetSearchUsers();
     }
 
     onRemove(user: IdentityUserModel) {
@@ -214,6 +224,31 @@ export class PeopleCloudComponent implements OnInit {
 
     private hasPreSelectUsers(): boolean {
         return this.preSelectUsers && this.preSelectUsers.length > 0;
+    }
+
+    private resetSearchUsers() {
+        this._searchUsers = [];
+        this.searchUsers.next(this._searchUsers);
+    }
+
+    private setError() {
+        this.searchUserCtrl.setErrors({invalid: true});
+    }
+
+    private clearError() {
+        this.searchUserCtrl.setErrors(null);
+    }
+
+    setFocus(isFocused: boolean) {
+        this.isFocused = isFocused;
+    }
+
+    hasError(): boolean {
+        return !!this.searchUserCtrl.errors;
+    }
+
+    hasErrorMessage(): boolean {
+        return !this.isFocused && this.hasError();
     }
 
 }

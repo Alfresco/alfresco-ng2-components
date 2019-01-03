@@ -11,26 +11,30 @@
       <input
         #userInput
         matInput
-        [formControl]="searchUser"
+        [formControl]="searchUserCtrl"
         [matAutocomplete]="auto"
         [matChipInputFor]="userChipList"
         class="adf-cloud-input"
+        (focus)="setFocus(true)"
+        (blur)="setFocus(false)"
         data-automation-id="adf-people-cloud-search-input">
     </mat-chip-list>
 
     <ng-template #singleSelection>
     <input matInput
-           class="adf-cloud-input"
-           data-automation-id="adf-people-cloud-search-input"
-           type="text"
-           [formControl]="searchUser"
-           [matAutocomplete]="auto">
+        (focus)="setFocus(true)"
+        (blur)="setFocus(false)"
+        class="adf-cloud-input"
+        data-automation-id="adf-people-cloud-search-input"
+        type="text"
+        [formControl]="searchUserCtrl"
+        [matAutocomplete]="auto">
     </ng-template>
     <mat-autocomplete autoActiveFirstOption class="adf-people-cloud-list"
                       #auto="matAutocomplete"
                       (optionSelected)="onSelect($event.option.value)"
                       [displayWith]="getDisplayName">
-        <mat-option *ngFor="let user of users$ | async; let i = index" [value]="user">
+        <mat-option *ngFor="let user of searchUsers$ | async; let i = index" [value]="user">
             <div class="adf-people-cloud-row" id="adf-people-cloud-user-{{i}}">
                 <div [outerHTML]="user | usernameInitials:'adf-people-widget-pic'"></div>
                 <span class="adf-people-label-name"> {{user | fullName}}</span>
@@ -39,7 +43,7 @@
     </mat-autocomplete>
   </mat-form-field>
 <div class="adf-start-task-cloud-error">
-    <div *ngIf="dataError" fxLayout="row" fxLayoutAlign="start start" [@transitionMessages]="_subscriptAnimationState">
+    <div *ngIf="hasErrorMessage()" fxLayout="row" fxLayoutAlign="start start" [@transitionMessages]="_subscriptAnimationState">
         <div class="adf-start-task-cloud-error-message">{{ 'ADF_CLOUD_START_TASK.ERROR.MESSAGE' | translate }}</div>
         <mat-icon class="adf-start-task-cloud-error-icon">warning</mat-icon>
     </div>
