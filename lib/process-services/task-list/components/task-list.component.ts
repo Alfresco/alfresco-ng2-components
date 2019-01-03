@@ -124,7 +124,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
 
     /** Starting point of the */
     @Input()
-    start: number = 0;
+    start: number;
 
     /** Emitted when a task in the list is clicked */
     @Output()
