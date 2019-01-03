@@ -557,6 +557,29 @@ You can also use the HTML-based schema declaration used by
 
 You can also add tooltips, styling, automatic column title translation and other features. See the [DataColumn component page](../core/data-column.component.md) for more information about specifying and customizing columns.
 
+### Column templates
+
+You can use the following components as column templates:
+
+* adf-name-column
+* adf-library-name-column
+* adf-library-role-column
+* adf-library-status-column
+
+All components above require `context` property to be bound.
+For example:
+
+```html
+<data-column
+    key="name"
+    title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
+    class="adf-full-width adf-ellipsis-cell">
+    <ng-template let-context>
+        <adf-name-column [context]="context"></adf-name-column>
+    </ng-template>
+</data-column>
+```
+
 ### Date Column
 
 For the `date` column type, the Angular [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) formatting is used.

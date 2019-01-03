@@ -299,6 +299,12 @@
         "NAME": "Name"
       }
     },
+    "ROLE": {
+      "MANAGER": "Manager",
+      "COLLABORATOR": "Mitarbeiter",
+      "CONTRIBUTOR": "Beitragender",
+      "CONSUMER": "Verbraucher"
+    },
     "VISIBILITY": {
       "PRIVATE": "Privat",
       "PUBLIC": "Öffentlich",

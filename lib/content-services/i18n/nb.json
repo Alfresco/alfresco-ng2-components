@@ -299,6 +299,12 @@
         "NAME": "Navn"
       }
     },
+    "ROLE": {
+      "MANAGER": "Administrator",
+      "COLLABORATOR": "Medarbeider",
+      "CONTRIBUTOR": "Bidragsyter",
+      "CONSUMER": "Forbruker"
+    },
     "VISIBILITY": {
       "PRIVATE": "Privat",
       "PUBLIC": "Offentlig",

@@ -299,6 +299,12 @@
         "NAME": "Имя"
       }
     },
+    "ROLE": {
+      "MANAGER": "Менеджер",
+      "COLLABORATOR": "Редактор",
+      "CONTRIBUTOR": "Писатель",
+      "CONSUMER": "Читатель"
+    },
     "VISIBILITY": {
       "PRIVATE": "Частный",
       "PUBLIC": "Общедоступный",

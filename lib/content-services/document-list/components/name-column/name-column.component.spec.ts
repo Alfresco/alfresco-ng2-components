@@ -15,21 +15,10 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { DynamicExtensionComponent } from './components/dynamic-component/dynamic.component';
-import { DynamicTabComponent } from './components/dynamic-tab/dynamic-tab.component';
-import { DynamicColumnComponent } from './components/dynamic-column/dynamic-column.component';
+import { NameColumnComponent } from './name-column.component';
 
-@NgModule({
-    declarations: [
-        DynamicExtensionComponent,
-        DynamicTabComponent,
-        DynamicColumnComponent
-    ],
-    exports: [
-        DynamicExtensionComponent,
-        DynamicTabComponent,
-        DynamicColumnComponent
-    ]
-})
-export class ExtensionsModule {}
+describe('NameColumnComponent', () => {
+  it('should be defined', () => {
+    expect(NameColumnComponent).toBeDefined();
+  });
+});

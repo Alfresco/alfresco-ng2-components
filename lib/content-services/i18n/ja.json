@@ -299,6 +299,12 @@
         "NAME": "名前"
       }
     },
+    "ROLE": {
+      "MANAGER": "マネージャ",
+      "COLLABORATOR": "共同作業者",
+      "CONTRIBUTOR": "投稿者",
+      "CONSUMER": "利用者"
+    },
     "VISIBILITY": {
       "PRIVATE": "非公開",
       "PUBLIC": "公開",

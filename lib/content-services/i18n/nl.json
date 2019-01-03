@@ -299,6 +299,12 @@
         "NAME": "Naam"
       }
     },
+    "ROLE": {
+      "MANAGER": "Beheerder",
+      "COLLABORATOR": "Medewerker",
+      "CONTRIBUTOR": "Bijdrager",
+      "CONSUMER": "Consument"
+    },
     "VISIBILITY": {
       "PRIVATE": "Privé",
       "PUBLIC": "Openbaar",

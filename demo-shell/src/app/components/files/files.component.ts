@@ -187,6 +187,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     enableCustomPermissionMessage = false;
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
+    hyperlinkNavigation = false;
 
     private onCreateFolder: Subscription;
     private onEditFolder: Subscription;
