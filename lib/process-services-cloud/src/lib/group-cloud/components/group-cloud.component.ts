@@ -73,6 +73,8 @@ export class GroupCloudComponent implements OnInit {
 
     private selectedGroups: GroupModel[] = [];
 
+    private searchGroups: GroupModel[] = [];
+
     private searchGroupsSubject: BehaviorSubject<GroupModel[]>;
 
     private selectedGroupsSubject: BehaviorSubject<GroupModel[]>;
@@ -91,11 +93,9 @@ export class GroupCloudComponent implements OnInit {
 
     searchedValue = '';
 
-    filtered = [];
-
     constructor(private groupService: GroupCloudService) {
         this.selectedGroupsSubject = new BehaviorSubject<GroupModel[]>(this.selectedGroups);
-        this.searchGroupsSubject = new BehaviorSubject<GroupModel[]>(this.selectedGroups);
+        this.searchGroupsSubject = new BehaviorSubject<GroupModel[]>(this.searchGroups);
         this.selectedGroups$ = this.selectedGroupsSubject.asObservable();
         this.searchGroups$ = this.searchGroupsSubject.asObservable();
     }
@@ -115,7 +115,7 @@ export class GroupCloudComponent implements OnInit {
             debounceTime(500),
             distinctUntilChanged(),
             tap(() => {
-                this.filtered = [];
+                this.searchGroups = [];
                 this.searchGroupsSubject.next([]);
             }),
             switchMap((inputValue) => {
@@ -127,8 +127,8 @@ export class GroupCloudComponent implements OnInit {
             }),
             filter((filteredGroup) => filteredGroup.hasRole)
         ).subscribe((filteredGroup) => {
-            this.filtered.push(filteredGroup.group);
-            this.searchGroupsSubject.next(this.filtered);
+            this.searchGroups.push(filteredGroup.group);
+            this.searchGroupsSubject.next(this.searchGroups);
         });
     }
 
@@ -188,6 +188,7 @@ export class GroupCloudComponent implements OnInit {
                 this.selectGroup.emit(selectedGroup);
                 this.searchGroupsSubject.next([]);
             }
+            this.groupInput.nativeElement.value = '';
             this.searchGroupsControl.setValue('');
         } else {
             this.selectGroup.emit(selectedGroup);
