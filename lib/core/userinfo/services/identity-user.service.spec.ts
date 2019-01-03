@@ -204,7 +204,7 @@ describe('IdentityUserService', () => {
         spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client'));
         spyOn(service, 'getClientRoles').and.returnValue(of(mockRoles));
 
-        service.checkUserHasApplicationAccess('user-id', 'app-name').subscribe(
+        service.checkUserHasClientApp('user-id', 'app-name').subscribe(
             (res: boolean) => {
                 expect(res).toBeTruthy();
                 done();
@@ -216,7 +216,7 @@ describe('IdentityUserService', () => {
         spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client'));
         spyOn(service, 'getClientRoles').and.returnValue(of([]));
 
-        service.checkUserHasApplicationAccess('user-id', 'app-name').subscribe(
+        service.checkUserHasClientApp('user-id', 'app-name').subscribe(
             (res: boolean) => {
                 expect(res).toBeFalsy();
                 done();
@@ -228,7 +228,7 @@ describe('IdentityUserService', () => {
         spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client'));
         spyOn(service, 'getClientRoles').and.returnValue(of(mockRoles));
 
-        service.checkUserHasAnyApplicationRole('user-id', 'app-name', [mockRoles[1].name] ).subscribe(
+        service.checkUserHasAnyClientAppRole('user-id', 'app-name', [mockRoles[1].name] ).subscribe(
             (res: boolean) => {
                 expect(res).toBeTruthy();
                 done();
@@ -240,7 +240,7 @@ describe('IdentityUserService', () => {
         spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client'));
         spyOn(service, 'getClientRoles').and.returnValue(of([]));
 
-        service.checkUserHasAnyApplicationRole('user-id', 'app-name', [mockRoles[1].name]).subscribe(
+        service.checkUserHasAnyClientAppRole('user-id', 'app-name', [mockRoles[1].name]).subscribe(
             (res: boolean) => {
                 expect(res).toBeFalsy();
                 done();

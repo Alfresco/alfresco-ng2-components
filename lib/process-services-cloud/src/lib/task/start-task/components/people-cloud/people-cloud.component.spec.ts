@@ -20,7 +20,7 @@ import { By } from '@angular/platform-browser';
 import { PeopleCloudComponent } from './people-cloud.component';
 import { StartTaskCloudTestingModule } from '../../testing/start-task-cloud.testing.module';
 import { LogService, setupTestBed, IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
-import { mockUsers, mockRoles } from '../../mock/user-cloud.mock';
+import { mockUsers } from '../../mock/user-cloud.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 
@@ -29,8 +29,8 @@ describe('PeopleCloudComponent', () => {
     let fixture: ComponentFixture<PeopleCloudComponent>;
     let element: HTMLElement;
     let identityService: IdentityUserService;
-    let getRolesByUserIdSpy: jasmine.Spy;
-    let checkUserHasRoleSpy: jasmine.Spy;
+    let findUsersSpy: jasmine.Spy;
+    let checkUserHasAccessSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
@@ -42,8 +42,9 @@ describe('PeopleCloudComponent', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         identityService = TestBed.get(IdentityUserService);
-        getRolesByUserIdSpy = spyOn(identityService, 'getUserRoles').and.returnValue(of(mockRoles));
-        checkUserHasRoleSpy = spyOn(identityService, 'checkUserHasClientRoleMapping').and.returnValue(of(mockUsers));
+        findUsersSpy = spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
+        checkUserHasAccessSpy = spyOn(identityService, 'checkUserHasClientApp').and.returnValue(of(true));
+        spyOn(identityService, 'getClientIdByApplicationName').and.returnValue(of('mock-client-id'));
     });
 
     it('should create PeopleCloudComponent', () => {
@@ -51,7 +52,7 @@ describe('PeopleCloudComponent', () => {
     });
 
     it('should show the users if the typed result match', async(() => {
-        component.users$ = of(<IdentityUserModel[]> mockUsers);
+        component.searchUsers$ = of(<IdentityUserModel[]> mockUsers);
         fixture.detectChanges();
         let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
@@ -90,20 +91,19 @@ describe('PeopleCloudComponent', () => {
     }));
 
     it('should show an error message if the user is invalid', async(() => {
-        checkUserHasRoleSpy.and.returnValue(of([]));
-        getRolesByUserIdSpy.and.returnValue(of([]));
-        component.dataError = true;
+        checkUserHasAccessSpy.and.returnValue(of(false));
+        findUsersSpy.and.returnValue(of([]));
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        inputHTMLElement.dispatchEvent(new Event('keyup'));
-        inputHTMLElement.dispatchEvent(new Event('keydown'));
         inputHTMLElement.value = 'ZZZ';
+        inputHTMLElement.dispatchEvent(new Event('input'));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
+            inputHTMLElement.blur();
+            fixture.detectChanges();
             const errorMessage = element.querySelector('.adf-start-task-cloud-error-message');
-            expect(element.querySelector('.adf-start-task-cloud-error')).not.toBeNull();
+            expect(errorMessage).not.toBeNull();
             expect(errorMessage.textContent).toContain('ADF_CLOUD_START_TASK.ERROR.MESSAGE');
         });
     }));
@@ -155,7 +155,7 @@ describe('PeopleCloudComponent', () => {
         component.preSelectUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const selectedUser = component.searchUser.value;
+            const selectedUser = component.searchUserCtrl.value;
             expect(selectedUser.id).toBe(mockUsers[1].id);
         });
     }));
@@ -165,7 +165,7 @@ describe('PeopleCloudComponent', () => {
         component.mode = 'single';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const selectedUser = component.searchUser.value;
+            const selectedUser = component.searchUserCtrl.value;
             expect(selectedUser).toBeNull();
         });
     }));
@@ -189,18 +189,12 @@ describe('PeopleCloudComponent', () => {
     }));
 
     it('should list users who have access to the app when appName is specified', async(() => {
-        spyOn(identityService, 'findUsersByName').and.returnValue(Promise.resolve(mockUsers));
-        spyOn(identityService, 'checkUserHasAnyApplicationRole').and.returnValue(of(true));
-
         component.appName = 'sample-app';
-
         fixture.detectChanges();
         let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        inputHTMLElement.dispatchEvent(new Event('keyup'));
-        inputHTMLElement.dispatchEvent(new Event('keydown'));
         inputHTMLElement.value = 'M';
+        inputHTMLElement.dispatchEvent(new Event('input'));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -209,19 +203,15 @@ describe('PeopleCloudComponent', () => {
         });
     }));
 
-    it('should not list users who have access to the app when appName is specified', async(() => {
-        spyOn(identityService, 'findUsersByName').and.returnValue(Promise.resolve(mockUsers));
-        spyOn(identityService, 'checkUserHasAnyApplicationRole').and.returnValue(of(false));
-
+    it('should not list users who do not have access to the app when appName is specified', async(() => {
+        checkUserHasAccessSpy.and.returnValue(of(false));
         component.appName = 'sample-app';
 
         fixture.detectChanges();
         let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        inputHTMLElement.dispatchEvent(new Event('keyup'));
-        inputHTMLElement.dispatchEvent(new Event('keydown'));
         inputHTMLElement.value = 'M';
+        inputHTMLElement.dispatchEvent(new Event('input'));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -231,38 +221,30 @@ describe('PeopleCloudComponent', () => {
     }));
 
     it('should validate access to the app when appName is specified', async(() => {
-        spyOn(identityService, 'findUsersByName').and.returnValue(Promise.resolve(mockUsers));
-        const accessService = spyOn(identityService, 'checkUserHasAnyApplicationRole').and.returnValue(of(true));
-
         component.appName = 'sample-app';
 
         fixture.detectChanges();
         let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        inputHTMLElement.dispatchEvent(new Event('keyup'));
-        inputHTMLElement.dispatchEvent(new Event('keydown'));
         inputHTMLElement.value = 'M';
+        inputHTMLElement.dispatchEvent(new Event('input'));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            expect(accessService).toHaveBeenCalledTimes(mockUsers.length);
+            fixture.detectChanges();
+            expect(checkUserHasAccessSpy).toHaveBeenCalledTimes(mockUsers.length);
         });
     }));
 
     it('should not validate access to the app when appName is not specified', async(() => {
-        spyOn(identityService, 'findUsersByName').and.returnValue(Promise.resolve(mockUsers));
-        const accessService = spyOn(identityService, 'checkUserHasAnyApplicationRole');
-
         fixture.detectChanges();
         let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        inputHTMLElement.dispatchEvent(new Event('keyup'));
-        inputHTMLElement.dispatchEvent(new Event('keydown'));
         inputHTMLElement.value = 'M';
+        inputHTMLElement.dispatchEvent(new Event('input'));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            expect(accessService).not.toHaveBeenCalled();
+            fixture.detectChanges();
+            expect(checkUserHasAccessSpy).not.toHaveBeenCalled();
         });
     }));
 
