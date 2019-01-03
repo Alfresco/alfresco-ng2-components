@@ -16,7 +16,7 @@
  */
 
 import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { TaskFilterCloudModel, FilterActionType, TaskFilterProperties, FilterOptions } from './../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { MatDialog } from '@angular/material';
@@ -26,11 +26,12 @@ import { debounceTime, map } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
+import moment = require('moment');
 
 @Component({
   selector: 'adf-cloud-edit-task-filter',
   templateUrl: './edit-task-filter-cloud.component.html',
-  styleUrls: ['./edit-task-filter-cloud.component.scss']
+    styleUrls: ['./edit-task-filter-cloud.component.scss']
 })
 export class EditTaskFilterCloudComponent implements OnChanges {
 
@@ -38,6 +39,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     public static ACTION_SAVE_AS = 'SAVE_AS';
     public static ACTION_DELETE = 'DELETE';
     public static MIN_VALUE = 1;
+    public FORMAT_DATE: string = 'DD/MM/YYYY';
 
     /** Name of the app. */
     @Input()
@@ -63,6 +65,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
 
     taskFilter: TaskFilterCloudModel;
     changedTaskFilter: TaskFilterCloudModel;
+    dateError: boolean = false;
 
     columns = [
         {value: 'id', label: 'ID'},
@@ -132,14 +135,34 @@ export class EditTaskFilterCloudComponent implements OnChanges {
      */
     onFilterChange() {
         this.editTaskFilterForm.valueChanges
-        .pipe(debounceTime(300))
+        .pipe(debounceTime(500))
         .subscribe((formValues: TaskFilterCloudModel) => {
             this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, formValues));
             this.formHasBeenChanged = !this.compareFilters(this.changedTaskFilter, this.taskFilter);
-            if (this.isFormValid()) {
+            if (this.isFormValid() && !this.dateError) {
                 this.filterChange.emit(this.changedTaskFilter);
             }
         });
+    }
+
+    onDateChanged(newDateValue: any, dateFormController: any) {
+        this.dateError = false;
+
+        if (newDateValue) {
+            let momentDate;
+
+            if (typeof newDateValue === 'string') {
+                momentDate = moment(newDateValue, this.FORMAT_DATE, true);
+            } else {
+                momentDate = newDateValue;
+            }
+
+            if (momentDate.isValid()) {
+                this.editTaskFilterForm.get(dateFormController.key).setValue(momentDate.toDate());
+            } else {
+                this.dateError = true;
+            }
+        }
     }
 
     getRunningApplications(): Observable<FilterOptions[]> {
@@ -215,9 +238,9 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         this.showFilterActions = false;
     }
 
-    initTaskFilterProperties(currentTaskFilter: TaskFilterCloudModel) {
+    initTaskFilterProperties(taskFilter: TaskFilterCloudModel) {
         if (this.filterProperties && this.filterProperties.length > 0) {
-            const defaultProperties = this.defaultTaskFilterProperties(currentTaskFilter);
+            const defaultProperties = this.defaultTaskFilterProperties(taskFilter);
             this.taskFilterProperties = defaultProperties.filter((filterProperty) => this.isValidSelection(this.filterProperties, filterProperty));
         }
     }

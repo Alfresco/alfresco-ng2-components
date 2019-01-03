@@ -27,7 +27,7 @@
                         <mat-select
                             placeholder="{{taskFilterProperty.label | translate}}"
                             [formControlName]="taskFilterProperty.key"
-                            id="adf-task-filter-state-id">
+                            id="adf-task-filter-state-id" data-automation-id="taskFilterProperty.key">
                             <mat-option *ngFor="let state of taskFilterProperty.options$ | async" [value]="state.value">
                                 {{ state.label }}
                             </mat-option>
@@ -38,14 +38,27 @@
                         [formControlName]="taskFilterProperty.key"
                         type="text"
                         id="adf-task-filter-appname-id"
-                        placeholder="{{taskFilterProperty.label | translate}}"/>
+                        placeholder="{{taskFilterProperty.label | translate}}"
+                        data-automation-id="taskFilterProperty.key"/>
                     </mat-form-field>
                     <mat-form-field *ngIf="isDateType(taskFilterProperty)">
                         <mat-label>{{taskFilterProperty.label | translate}}</mat-label>
-                            <input matInput [matDatepicker]="dateController" placeholder="Choose a date"
-                                [formControlName]="taskFilterProperty.key" data-automation-id="due after">
+                            <input
+                                matInput
+                                (keyup)="onDateChanged($event.srcElement.value, taskFilterProperty)"
+                                (dateChange)="onDateChanged($event.value, taskFilterProperty)"
+                                [matDatepicker]="dateController"
+                                placeholder="{{taskFilterProperty.label | translate}}"
+                                [formControlName]="taskFilterProperty.key"
+                                data-automation-id="taskFilterProperty.key">
                         <mat-datepicker-toggle matSuffix [for]="dateController"></mat-datepicker-toggle>
                         <mat-datepicker #dateController></mat-datepicker>
+                        <div class="adf-edit-task-filter-date-error-container">
+                            <div *ngIf="dateError">
+                                <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</div>
+                                <mat-icon class="adf-error-icon">warning</mat-icon>
+                            </div>
+                        </div>
                     </mat-form-field>
                 </ng-container>
             </div>
