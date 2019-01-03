@@ -27,6 +27,7 @@ Displays the documents from a repository.
     -   [Calling DocumentList api directly](#calling-documentlist-api-directly)
     -   [Underlying node object](#underlying-node-object)
     -   [Custom columns](#custom-columns)
+    -   [Column templates](#column-templates)
     -   [Date Column](#date-column)
     -   [Location Column](#location-column)
     -   [Actions](#actions)
@@ -561,24 +562,29 @@ You can also add tooltips, styling, automatic column title translation and other
 
 You can use the following components as column templates:
 
-* adf-name-column
-* adf-library-name-column
-* adf-library-role-column
-* adf-library-status-column
+| Name | Description |
+| --- | --- |
+| adf-name-column | Renders hyperlink-styled name of the node. Provides formatted tooltip. Emits `name-click` DOM event that can be handled by any parent component. |
+| adf-library-name-column | Renders library name. Provides formatted tooltips and extra details for libraries with same names on the page. Emits `name-click` DOM event that can be handled by any parent component. |
+| adf-library-role-column | Renders i18n-enabled information about Library (Site) role (`Manager`, `Collaborator`, `Contributor`, `Consumer`) |
+| adf-library-status-column | Renders i18n-enabled information about Library (Site) status (`Public`, `Private`, `Moderated`, `Unknown`)|
+| adf-trashcan-name-column | Renders a name of the deleted node. Distinguishes between a Library (Site) and File/Folder nodes. Provides proper tooltips. |
 
-All components above require `context` property to be bound.
+All components above require only `context` property to be bound,
+each component fetches and renders the information it needs from the underlying node.
+
 For example:
 
 ```html
-<data-column
-    key="name"
-    title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
-    class="adf-full-width adf-ellipsis-cell">
+<data-column key="name" title="Name">
     <ng-template let-context>
         <adf-name-column [context]="context"></adf-name-column>
     </ng-template>
 </data-column>
 ```
+
+> All the components above also participate in the Extensibility
+> and can be used to compose DocumentList layouts from within the plugins. 
 
 ### Date Column
 
