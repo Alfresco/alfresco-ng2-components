@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { IdentityUserModel } from '../models/identity-user.model';
 import { JwtHelperService } from '../../services/jwt-helper.service';
@@ -97,7 +97,7 @@ export class IdentityUserService {
                 );
     }
 
-    checkUserHasClientRoleMapping(userId: string, clientId: string): Observable<boolean> {
+    checkUserHasClientApp(userId: string, clientId: string): Observable<boolean> {
         return this.getClientRoles(userId, clientId).pipe(
             map((clientRoles: any[]) => {
                 if (clientRoles.length > 0) {
@@ -108,7 +108,7 @@ export class IdentityUserService {
         );
     }
 
-    checkUserHasAnyClientRole(userId: string, clientId: string, roleNames: string[]): Observable<boolean> {
+    checkUserHasAnyClientAppRole(userId: string, clientId: string, roleNames: string[]): Observable<boolean> {
         return this.getClientRoles(userId, clientId).pipe(
             map((clientRoles: any[]) => {
                 let hasRole = false;
