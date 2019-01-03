@@ -19,7 +19,7 @@ import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import TestConfig = require('../test.config');
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/NavigationBarPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { UserInfoDialog } from '../pages/adf/dialog/userInfoDialog';
 import { Identity } from '../actions/APS-cloud/identity';
 
