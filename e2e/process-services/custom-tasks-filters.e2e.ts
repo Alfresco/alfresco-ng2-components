@@ -31,6 +31,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';
 import { AppsRuntimeActions } from '../actions/APS/appsRuntime.actions';
 import { UsersActions } from '../actions/users.actions';
+import { DateUtil } from '../util/dateUtil';
 
 describe('Start Task - Custom App', () => {
 
@@ -51,8 +52,8 @@ describe('Start Task - Custom App', () => {
     let invalidAppId = '1234567890', invalidName = 'invalidName', invalidTaskId = '0000';
     let noTasksFoundMessage = 'No Tasks Found';
     let nrOfTasks = 20, currentPage = 1, totalNrOfPages = 'of 4';
-    let currentDateStandardFormat = Util.getCrtDateInFormat('YYYY-MM-DDTHH:mm:ss.SSSZ');
-    let currentDate = Util.getCrtDateInFormat('MM/DD/YYYY');
+    let currentDateStandardFormat = DateUtil.formatDate('YYYY-MM-DDTHH:mm:ss.SSSZ');
+    let currentDate = DateUtil.formatDate('MM/DD/YYYY');
     let beforeDate = moment().add(-1, 'days').format('MM/DD/YYYY');
     let afterDate = moment().add(1, 'days').format('MM/DD/YYYY');
     let taskWithDueDate;
@@ -108,7 +109,7 @@ describe('Start Task - Custom App', () => {
         for (let i = 0; i < 3; i++) {
             completedTasks[i] = await this.alfrescoJsApi.activiti.taskApi.createNewTask({
                 'name': completedTasksName[i],
-                'dueDate': Util.getSpecificDateAfterCrtDateInFormat('YYYY-MM-DDTHH:mm:ss.SSSZ', i + 2)
+                'dueDate': DateUtil.formatDate('YYYY-MM-DDTHH:mm:ss.SSSZ', new Date(), i + 2)
             });
             await this.alfrescoJsApi.activiti.taskActionsApi.completeTask(completedTasks[i].id);
         }

@@ -29,7 +29,7 @@ import TestConfig = require('../../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { browser } from 'protractor';
-import moment from 'moment-es6';
+import { DateUtil } from '../../util/dateUtil';
 
 describe('Search Date Range Filter', () => {
 
@@ -120,7 +120,7 @@ describe('Search Date Range Filter', () => {
             .selectTodayDate()
             .checkDatePickerIsNotDisplayed();
         dateRangeFilter.getFromDate().then((date) => {
-            fromDate = datePicker.convertDefaultFormatToDate(date);
+            fromDate = DateUtil.formatDate('DD-MM-YY', date);
         });
 
         dateRangeFilter.checkApplyButtonIsDisabled();
@@ -129,7 +129,7 @@ describe('Search Date Range Filter', () => {
             .selectTodayDate()
             .checkDatePickerIsNotDisplayed();
         dateRangeFilter.getToDate().then((date) => {
-            toDate = datePicker.convertDefaultFormatToDate(date);
+            toDate = DateUtil.formatDate('DD-MM-YY', date);
         });
 
         dateRangeFilter.checkApplyButtonIsEnabled()
@@ -142,8 +142,8 @@ describe('Search Date Range Filter', () => {
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 let nodeCreation = new Date(node.entry.createdAt);
                 nodeCreation.setHours(0, 0, 0, 0);
-                await expect(nodeCreation.getTime() >= fromDate.getTime()).toBe(true);
-                await expect(nodeCreation.getTime() <= toDate.getTime()).toBe(true);
+                await expect(nodeCreation.getTime() >= DateUtil.parse(fromDate).getTime()).toBe(true);
+                await expect(nodeCreation.getTime() <= DateUtil.parse(toDate).getTime()).toBe(true);
             });
         });
 
@@ -154,8 +154,8 @@ describe('Search Date Range Filter', () => {
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 let nodeCreation = new Date(node.entry.createdAt);
                 nodeCreation.setHours(0, 0, 0, 0);
-                await expect(nodeCreation.getTime() >= fromDate.getTime()).toBe(true);
-                await expect(nodeCreation.getTime() <= toDate.getTime()).toBe(true);
+                await expect(nodeCreation.getTime() >= DateUtil.parse(fromDate).getTime()).toBe(true);
+                await expect(nodeCreation.getTime() <= DateUtil.parse(toDate).getTime()).toBe(true);
             });
         });
     });
@@ -182,9 +182,8 @@ describe('Search Date Range Filter', () => {
     });
 
     it('[C277115] Should display warning message if user types a date later than today\'s date', () => {
-        let tomorrowDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
         dateRangeFilter.checkFromFieldIsDisplayed()
-            .putFromDate(datePicker.convertDateToDefaultFormat(tomorrowDate))
+            .putFromDate(DateUtil.formatDate('DD-MMM-YY', new Date(), 1))
             .checkFromErrorMessageIsDisplayed('The date is beyond the maximum date.');
     });
 
@@ -200,7 +199,6 @@ describe('Search Date Range Filter', () => {
     describe('configuration change', () => {
 
         let jsonFile;
-        let dateFormat = 'MM-DD-YY';
 
         beforeAll(() => {
             let searchConfiguration = new SearchConfiguration();
@@ -208,7 +206,7 @@ describe('Search Date Range Filter', () => {
         });
 
         it('[C277117] Should be able to change date format', () => {
-            jsonFile.categories[4].component.settings.dateFormat = dateFormat;
+            jsonFile.categories[4].component.settings.dateFormat = 'MM-DD-YY';
 
             navigationBar.clickConfigEditorButton();
             configEditor.clickSearchConfiguration();
@@ -223,7 +221,7 @@ describe('Search Date Range Filter', () => {
             dateRangeFilter.checkFromFieldIsDisplayed()
                 .openFromDatePicker();
 
-            let todayDate = moment().format(dateFormat);
+            let todayDate = DateUtil.formatDate('MM-DD-YY');
             datePicker.selectTodayDate();
 
             browser.controlFlow().execute(async () => {

@@ -127,13 +127,6 @@ describe('Viewer - properties', () => {
         viewerPage.enablePrint();
     });
 
-    it('[C260087] Should Show/Hide share button when allowShare is true/false', () => {
-        viewerPage.checkShareButtonDisplayed();
-        viewerPage.disableShare();
-        viewerPage.checkShareButtonIsNotDisplayed();
-        viewerPage.enableShare();
-    });
-
     it('[C260092] Should show adf-viewer-toolbar-actions directive buttons when adf-viewer-toolbar-actions is used', () => {
         viewerPage.checkMoreActionsDisplayed();
 

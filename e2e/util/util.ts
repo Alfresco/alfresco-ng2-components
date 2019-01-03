@@ -35,41 +35,6 @@ export class Util {
     }
 
     /**
-     * Get current date in long format: Oct 24, 2016
-     *
-     * @return {string}
-     * @method getCrtDateLongFormat
-     */
-    static getCrtDateLongFormat() {
-        let currentDate = new Date();
-        let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-        ];
-
-        return months[currentDate.getMonth()] + ' ' + currentDate.getDate() + ', ' + (currentDate.getFullYear() + 1900);
-    }
-
-    /**
-     * Get current date in specified format
-     *
-     * @return {string}
-     * @method getCrtDateInFormat
-     */
-    static getCrtDateInFormat(dateFormat) {
-        return moment().format(dateFormat);
-    }
-
-    /**
-     * Get specific date after current date in specific format
-     *
-     * @return {string}
-     * @method getCrtDateInFormat
-     */
-    static getSpecificDateAfterCrtDateInFormat(dateFormat, days) {
-        return moment(new Date()).add(days, 'days').format(dateFormat);
-    }
-
-    /**
      * Generates a random string.
      *
      * @param length {int} If this parameter is not provided the length is set to 8 by default.
@@ -214,10 +179,9 @@ export class Util {
     /**
      * Generates a random date inside the interval [1990, 2100) following the format dd.mm.yyyy
      *
-     * @return {string}
      * @method generateRandomDateFormat
      */
-    static generateRandomDateFormat() {
+    static generateRandomDateFormat(): string {
         let day = Math.floor(Math.random() * (29 - 1) + 1);
         let month = Math.floor(Math.random() * (12 - 1) + 1);
         let year = Math.floor(Math.random() * (2100 - 1990) + 1990);
@@ -228,10 +192,9 @@ export class Util {
     /**
      * Generates a random date inside the interval [1990, 2100) following the format dd-mm-yyyy.
      *
-     * @return {string}
      * @method generateRandomDate
      */
-    static generateRandomDate() {
+    static generateRandomDate(): string {
         let dayText, monthText;
 
         let day = (Math.floor(Math.random() * (29 - 1) + 1));
@@ -256,7 +219,7 @@ export class Util {
      * @return {boolean}
      * @method arrayContainsArray
      */
-    static arrayContainsArray(superset, subset) {
+    static arrayContainsArray(superset: any[], subset: any[]) {
         if (0 === subset.length) {
             return false;
         }

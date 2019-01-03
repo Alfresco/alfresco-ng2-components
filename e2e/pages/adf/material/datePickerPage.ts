@@ -17,11 +17,11 @@
 
 import { Util } from '../../../util/util';
 import { element, by, browser, protractor } from 'protractor';
+import { DateUtil } from '../../../util/dateUtil';
 
 export class DatePickerPage {
 
     datePicker = element(by.css('mat-calendar'));
-    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     nextMonthButton = element(by.css('button[class*="mat-calendar-next-button"]'));
     previousMonthButton = element(by.css('button[class*="mat-calendar-previous-button"]'));
 
@@ -30,8 +30,8 @@ export class DatePickerPage {
     }
 
     checkDatesAfterDateAreDisabled(date) {
-        let afterDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
-        let afterCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${this.convertDateToDefaultFormat(afterDate)}"]`));
+        let afterDate = DateUtil.formatDate('DD-MM-YY', date, 1);
+        let afterCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${afterDate}"]`));
         browser.controlFlow().execute(async () => {
             if (await afterCalendar.isPresent()) {
                 await expect(afterCalendar.getAttribute('aria-disabled')).toBe('true');
@@ -42,8 +42,8 @@ export class DatePickerPage {
     }
 
     checkDatesBeforeDateAreDisabled(date) {
-        let beforeDate = new Date(date.getTime() - 24 * 60 * 60 * 1000);
-        let beforeCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${this.convertDateToDefaultFormat(beforeDate)}"]`));
+        let beforeDate = DateUtil.formatDate('DD-MM-YY', date, -1);
+        let beforeCalendar = element(by.css(`td[class*="mat-calendar-body-cell"][aria-label="${beforeDate}"]`));
         browser.controlFlow().execute(async () => {
             if (await beforeCalendar.isPresent()) {
                 await expect(beforeCalendar.getAttribute('aria-disabled')).toBe('true');
@@ -51,15 +51,6 @@ export class DatePickerPage {
             await expect(this.previousMonthButton.isEnabled()).toBe(false);
         });
         return this;
-    }
-
-    convertDefaultFormatToDate(dateString) { // Format : dd-Mmm-yy
-        let date = dateString.split('-');
-        return new Date((2000 + parseInt(date[2], 10)), this.months.indexOf(date[1]), date[0]);
-    }
-
-    convertDateToDefaultFormat(date) { // Format : dd-Mmm-yy
-        return `${('0' + date.getDate()).slice(-2)}-${this.months[date.getMonth()]}-${date.getFullYear().toString().substr(-2)}`;
     }
 
     selectTodayDate() {
