@@ -54,7 +54,7 @@
                         <mat-datepicker-toggle matSuffix [for]="dateController"></mat-datepicker-toggle>
                         <mat-datepicker #dateController></mat-datepicker>
                         <div class="adf-edit-task-filter-date-error-container">
-                            <div *ngIf="dateError">
+                            <div *ngIf="hasError(taskFilterProperty)">
                                 <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</div>
                                 <mat-icon class="adf-error-icon">warning</mat-icon>
                             </div>

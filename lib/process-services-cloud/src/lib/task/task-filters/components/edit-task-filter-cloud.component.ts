@@ -16,7 +16,7 @@
  */
 
 import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { AbstractControl , FormGroup, FormBuilder } from '@angular/forms';
 import { TaskFilterCloudModel, FilterActionType, TaskFilterProperties, FilterOptions } from './../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { MatDialog } from '@angular/material';
@@ -65,7 +65,6 @@ export class EditTaskFilterCloudComponent implements OnChanges {
 
     taskFilter: TaskFilterCloudModel;
     changedTaskFilter: TaskFilterCloudModel;
-    dateError: boolean = false;
 
     columns = [
         {value: 'id', label: 'ID'},
@@ -112,15 +111,15 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         }
     }
 
+    retrieveTaskFilter() {
+        this.taskFilter = this.taskFilterCloudService.getTaskFilterById(this.appName, this.id);
+    }
+
     buildForm(taskFilterProperties: TaskFilterProperties[]) {
         this.formHasBeenChanged = false;
         const formControllerKeys = this.getFormControllers(taskFilterProperties);
         this.editTaskFilterForm = this.formBuilder.group(formControllerKeys);
         this.onFilterChange();
-    }
-
-    retrieveTaskFilter() {
-        this.taskFilter = this.taskFilterCloudService.getTaskFilterById(this.appName, this.id);
     }
 
     getFormControllers(taskFilterProperties: TaskFilterProperties[]) {
@@ -139,15 +138,32 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         .subscribe((formValues: TaskFilterCloudModel) => {
             this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, formValues));
             this.formHasBeenChanged = !this.compareFilters(this.changedTaskFilter, this.taskFilter);
-            if (this.isFormValid() && !this.dateError) {
+            if (this.isFormValid()) {
                 this.filterChange.emit(this.changedTaskFilter);
             }
         });
     }
 
-    onDateChanged(newDateValue: any, dateFormController: any) {
-        this.dateError = false;
+    initTaskFilterProperties(taskFilter: TaskFilterCloudModel) {
+        if (this.filterProperties && this.filterProperties.length > 0) {
+            const defaultProperties = this.defaultTaskFilterProperties(taskFilter);
+            this.taskFilterProperties = defaultProperties.filter((filterProperty) => this.isValidSelection(this.filterProperties, filterProperty));
+        }
+    }
 
+    private isValidSelection(filterProperties: string[], filterProperty: any): boolean {
+        return filterProperties ? filterProperties.indexOf(filterProperty.key) >= 0 : true;
+    }
+
+    isFormValid() {
+        return this.editTaskFilterForm.valid;
+    }
+
+    getPropertyController(property: TaskFilterProperties): AbstractControl {
+        return this.editTaskFilterForm.get(property.key);
+    }
+
+    onDateChanged(newDateValue: any, dateProperty: TaskFilterProperties) {
         if (newDateValue) {
             let momentDate;
 
@@ -158,11 +174,22 @@ export class EditTaskFilterCloudComponent implements OnChanges {
             }
 
             if (momentDate.isValid()) {
-                this.editTaskFilterForm.get(dateFormController.key).setValue(momentDate.toDate());
+                this.getPropertyController(dateProperty).setValue(momentDate.toDate());
             } else {
-                this.dateError = true;
+                this.getPropertyController(dateProperty).setErrors({ invalid: true });
             }
         }
+    }
+
+    hasError(property: TaskFilterProperties): boolean {
+        return this.getPropertyController(property).errors && this.getPropertyController(property).errors.invalid;
+    }
+
+    /**
+     * Check if both filters are same
+     */
+    compareFilters(editedQuery, currentQuery): boolean {
+        return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }
 
     getRunningApplications(): Observable<FilterOptions[]> {
@@ -176,13 +203,6 @@ export class EditTaskFilterCloudComponent implements OnChanges {
                     return options;
                 }
             }));
-    }
-
-    /**
-     * Check if both filters are same
-     */
-    compareFilters(editedQuery, currentQuery): boolean {
-        return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }
 
     onSave() {
@@ -238,19 +258,16 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         this.showFilterActions = false;
     }
 
-    initTaskFilterProperties(taskFilter: TaskFilterCloudModel) {
-        if (this.filterProperties && this.filterProperties.length > 0) {
-            const defaultProperties = this.defaultTaskFilterProperties(taskFilter);
-            this.taskFilterProperties = defaultProperties.filter((filterProperty) => this.isValidSelection(this.filterProperties, filterProperty));
-        }
+    isDateType(property: TaskFilterProperties) {
+        return property.type === 'date';
     }
 
-    isFormValid() {
-        return this.editTaskFilterForm.valid;
+    isSelectType(property: TaskFilterProperties) {
+        return property.type === 'select';
     }
 
-    private isValidSelection(filterProperties: string[], filterProperty: any): boolean {
-        return filterProperties ? filterProperties.indexOf(filterProperty.key) >= 0 : true;
+    isTextType(property: TaskFilterProperties) {
+        return property.type === 'text';
     }
 
     defaultTaskFilterProperties(currentTaskFilter: TaskFilterCloudModel) {
@@ -394,17 +411,5 @@ export class EditTaskFilterCloudComponent implements OnChanges {
                 value: currentTaskFilter.dueDateTo || ''
             })
         ];
-    }
-
-    isDateType(property: TaskFilterProperties) {
-        return property.type === 'date';
-    }
-
-    isSelectType(property: TaskFilterProperties) {
-        return property.type === 'select';
-    }
-
-    isTextType(property: TaskFilterProperties) {
-        return property.type === 'text';
     }
 }
