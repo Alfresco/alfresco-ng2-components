@@ -24,9 +24,9 @@ import { element, by } from 'protractor';
 
 export class ProcessCloudDemoPage {
 
-    allProcesses = element(by.css('span[data-automation-id="ADF_CLOUD_PROCESS_FILTERS.ALL_PROCESSES_filter"]'));
-    runningProcesses = element(by.css('span[data-automation-id="ADF_CLOUD_PROCESS_FILTERS.RUNNING_PROCESSES_filter"]'));
-    completedProcesses = element(by.css('span[data-automation-id="ADF_CLOUD_PROCESS_FILTERS.COMPLETED_PROCESSES_filter"]'));
+    allProcesses = element(by.css('span[data-automation-id="all-processes_filter"]'));
+    runningProcesses = element(by.css('span[data-automation-id="running-processes_filter"]'));
+    completedProcesses = element(by.css('span[data-automation-id="completed-processes_filter"]'));
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
     processFilters = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
 

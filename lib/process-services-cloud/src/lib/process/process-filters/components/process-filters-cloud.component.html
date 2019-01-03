@@ -4,7 +4,7 @@
                      class="adf-filters__entry" [class.adf-active]="currentFilter === filter">
           <mat-icon *ngIf="showIcons && filter.icon" matListIcon class="adf-filters__entry-icon">{{filter.icon}}
           </mat-icon>
-          <span matLine [attr.data-automation-id]="filter.name + '_filter'">{{filter.name | translate}}</span>
+          <span matLine [attr.data-automation-id]="filter.key + '_filter'">{{filter.name | translate}}</span>
       </mat-list-item>
   </mat-list>
   <ng-template #loading>
