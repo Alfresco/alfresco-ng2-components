@@ -1,9 +1,5 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-  "javascript.preferences.quoteStyle": "single",
-  "javascript.preferences.importModuleSpecifier": "relative",
-  "typescript.preferences.quoteStyle": "single",
-  "typescript.preferences.importModuleSpecifier": "relative",
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,

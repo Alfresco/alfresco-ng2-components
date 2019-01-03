@@ -242,7 +242,7 @@
                         [class.adf-cell-thumbnail]="thumbnails">
                     </data-column>
                     <data-column
-                        *ngIf="showNameColumn"
+                        *ngIf="showNameColumn && hyperlinkNavigation"
                         key="name"
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         [formatTooltip]="getNodeNameTooltip"
@@ -250,6 +250,13 @@
                         <ng-template let-context>
                             <adf-name-column [context]="context"></adf-name-column>
                         </ng-template>
+                    </data-column>
+                    <data-column
+                        *ngIf="showNameColumn && !hyperlinkNavigation"
+                        key="name"
+                        title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
+                        [formatTooltip]="getNodeNameTooltip"
+                        class="adf-full-width adf-ellipsis-cell">
                     </data-column>
                     <!-- Location column demo -->
                     <!--
@@ -380,14 +387,14 @@
                         (execute)="onManageVersions($event)">
                     </content-action>
                     <content-action
-                        target="document" 
+                        target="document"
                         *ngIf="authenticationService.isBpmLoggedIn()"
                         icon="play_arrow"
                         title="DOCUMENT_LIST.ACTIONS.DOCUMENT.PROCESS_ACTION"
-                        (execute)="startProcessAction($event)">
+                        (execute)="startProcessAction($event)">
                     </content-action>
                     <content-action
-                        target="document" 
+                        target="document"
                         icon="lock"
                         permission="lock"
                         handler="lock"
@@ -480,6 +487,12 @@
         <section>
             <mat-slide-toggle color="primary" [(ngModel)]="showNameColumn">
                 Show Name Column
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle [(ngModel)]="hyperlinkNavigation">
+                Hyperlink navigation
             </mat-slide-toggle>
         </section>
 
