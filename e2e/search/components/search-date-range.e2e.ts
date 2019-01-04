@@ -29,6 +29,7 @@ import TestConfig = require('../../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { browser } from 'protractor';
+import moment from 'moment-es6';
 
 describe('Search Date Range Filter', () => {
 
@@ -196,9 +197,10 @@ describe('Search Date Range Filter', () => {
             .checkFromErrorMessageIsNotDisplayed();
     });
 
-    describe('configuration change', () => {
+    fdescribe('configuration change', () => {
 
         let jsonFile;
+        let dateFormat = 'MM-DD-YY';
 
         beforeAll(() => {
             let searchConfiguration = new SearchConfiguration();
@@ -206,7 +208,7 @@ describe('Search Date Range Filter', () => {
         });
 
         it('[C277117] Should be able to change date format', () => {
-            jsonFile.categories[4].component.settings.dateFormat = 'MM-DD-YY';
+            jsonFile.categories[4].component.settings.dateFormat = dateFormat;
 
             navigationBar.clickConfigEditorButton();
             configEditor.clickSearchConfiguration();
@@ -221,7 +223,7 @@ describe('Search Date Range Filter', () => {
             dateRangeFilter.checkFromFieldIsDisplayed()
                 .openFromDatePicker();
 
-            let todayDate = datePicker.convertDateToNewFormat(new Date());
+            let todayDate = moment().format(dateFormat);
             datePicker.selectTodayDate();
 
             browser.controlFlow().execute(async () => {
