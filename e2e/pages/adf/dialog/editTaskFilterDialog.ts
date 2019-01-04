@@ -20,7 +20,7 @@ import { Util } from '../../../util/util';
 
 export class EditTaskFilterDialog {
 
-    componentElement = element(by.css("adf-cloud-task-filter-dialog"));
+    componentElement = element(by.css('adf-cloud-task-filter-dialog'));
     title = element(by.id('adf-task-filter-dialog-title'));
     filterNameInput = element(by.id('adf-filter-name-id'));
     saveButtonLocator = by.id('adf-save-button-id');

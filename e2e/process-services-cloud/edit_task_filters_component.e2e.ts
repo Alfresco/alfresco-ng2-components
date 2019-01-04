@@ -64,7 +64,7 @@ describe('Edit task filters cloud', () => {
         afterEach((done) => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Created Date');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual("Created Date");
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Created Date');
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveButton();
             done();
         });
@@ -73,17 +73,17 @@ describe('Edit task filters cloud', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getStateFilterDropDownValue()).toEqual("ASSIGNED");
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual("Created Date");
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getOrderFilterDropDownValue()).toEqual("DESC");
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getStateFilterDropDownValue()).toEqual('ASSIGNED');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Created Date');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getOrderFilterDropDownValue()).toEqual('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getStateFilterDropDownValue()).toEqual("COMPLETED");
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual("Created Date");
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getOrderFilterDropDownValue()).toEqual("DESC");
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getStateFilterDropDownValue()).toEqual('COMPLETED');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Created Date');
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getOrderFilterDropDownValue()).toEqual('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTaskName);
         });
