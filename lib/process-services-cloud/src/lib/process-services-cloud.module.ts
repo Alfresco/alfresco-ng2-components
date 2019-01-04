@@ -20,7 +20,7 @@ import { TRANSLATION_PROVIDER } from '@alfresco/adf-core';
 import { AppListCloudModule } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
-import { GroupCloudModule } from './group-cloud/group-cloud.module';
+import { GroupCloudModule } from './group/group-cloud.module';
 
 @NgModule({
     imports: [
