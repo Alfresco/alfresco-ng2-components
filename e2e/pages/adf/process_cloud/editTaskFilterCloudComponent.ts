@@ -16,13 +16,23 @@
  */
 
 import { Util } from '../../../util/util';
-import { by } from 'protractor';
+import { by, element, protractor } from 'protractor';
+import { EditTaskFilterDialog } from '../dialog/editTaskFilterDialog';
 
 export class EditTaskFilterCloudComponent {
 
     customiseFilter = element(by.id('adf-edit-task-filter-title-id'));
     selectedOption = element(by.css('mat-option[class*="mat-selected"]'));
     assignment = element(by.css('mat-form-field[data-automation-id="assignment"] input'));
+    saveButton = element(by.css('button[data-automation-id="Save"]'));
+    saveAsButton = element(by.css('button[data-automation-id="Save as"]'));
+    deleteButton = element(by.css('button[data-automation-id="Delete"]'));
+
+    editTaskFilter = new EditTaskFilterDialog();
+
+    editTaskFilterDialog() {
+        return this.editTaskFilter;
+    }
 
     clickCustomiseFilterHeader() {
         Util.waitUntilElementIsVisible(this.customiseFilter);
@@ -89,6 +99,52 @@ export class EditTaskFilterCloudComponent {
 
     getAssignment() {
         return this.assignment.getText();
+    }
+
+    checkSaveButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.saveButton);
+        return this;
+    }
+
+    checkSaveAsButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.saveAsButton);
+        return this;
+    }
+
+    checkDeleteButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.deleteButton);
+        return this;
+    }
+
+    checkSaveButtonIsEnabled() {
+        return this.saveButton.isEnabled();
+    }
+
+    checkSaveAsButtonIsEnabled() {
+        return this.saveAsButton.isEnabled();
+    }
+
+    checkDeleteButtonIsEnabled() {
+        return this.deleteButton.isEnabled();
+    }
+
+    clickSaveAsButton() {
+        Util.waitUntilElementIsClickable(this.saveAsButton);
+        Util.waitUntilElementIsVisible(this.saveAsButton);
+        this.saveAsButton.click();
+        return this.editTaskFilter;
+    }
+
+    clickDeleteButton() {
+        Util.waitUntilElementIsVisible(this.deleteButton);
+        this.deleteButton.click();
+        return this;
+    }
+
+    clickSaveButton() {
+        Util.waitUntilElementIsVisible(this.saveButton);
+        this.saveButton.click();
+        return this;
     }
 
 }
