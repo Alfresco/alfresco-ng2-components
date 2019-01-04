@@ -3,8 +3,8 @@
         <mat-expansion-panel-header id="adf-edit-task-filter-expansion-header">
             <mat-panel-title fxLayoutAlign="space-between center" id="adf-edit-task-filter-title-id">{{taskFilter.name | translate}}</mat-panel-title>
             <mat-panel-description fxLayoutAlign="space-between center" id="adf-edit-task-filter-sub-title-id">
-                <span>{{ 'ADF_CLOUD_EDIT_TASK_FILTER.TITLE' | translate}}</span>
-                <div *ngIf="toggleFilterActions" class="adf-cloud-edit-task-filter-actions">
+                <span fxShow [fxShow.xs]="false">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.TITLE' | translate}}</span>
+                <div *ngIf="toggleActions()" class="adf-cloud-edit-task-filter-actions">
                     <ng-container *ngIf="showFilterActions">
                         <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE' | translate}}" id="adf-save-id" [disabled]="!formHasBeenChanged" (click)="onSave()">
                             <mat-icon>save</mat-icon>
@@ -20,49 +20,47 @@
             </mat-panel-description>
         </mat-expansion-panel-header>
         <form [formGroup]="editTaskFilterForm">
-            <div fxLayout="column">
-                <div>
-                <ng-container *ngFor="let taskFilterProperty of taskFilterProperties">
-                    <mat-form-field *ngIf="isSelectType(taskFilterProperty)">
-                        <mat-select
+            <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">
+            <ng-container *ngFor="let taskFilterProperty of taskFilterProperties">
+                <mat-form-field fxFlex="23%" *ngIf="isSelectType(taskFilterProperty)">
+                    <mat-select
+                        placeholder="{{taskFilterProperty.label | translate}}"
+                        [formControlName]="taskFilterProperty.key"
+                        id="adf-task-filter-state-id" data-automation-id="taskFilterProperty.key">
+                        <mat-option *ngFor="let state of taskFilterProperty.options$ | async" [value]="state.value">
+                            {{ state.label }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field fxFlex="23%" *ngIf="isTextType(taskFilterProperty)">
+                    <input matInput
+                    [formControlName]="taskFilterProperty.key"
+                    type="text"
+                    id="adf-task-filter-appname-id"
+                    placeholder="{{taskFilterProperty.label | translate}}"
+                    data-automation-id="taskFilterProperty.key"/>
+                </mat-form-field>
+                <mat-form-field fxFlex="23%" *ngIf="isDateType(taskFilterProperty)">
+                    <mat-label>{{taskFilterProperty.label | translate}}</mat-label>
+                        <input
+                            matInput
+                            (keyup)="onDateChanged($event.srcElement.value, taskFilterProperty)"
+                            (dateChange)="onDateChanged($event.value, taskFilterProperty)"
+                            [matDatepicker]="dateController"
                             placeholder="{{taskFilterProperty.label | translate}}"
                             [formControlName]="taskFilterProperty.key"
-                            id="adf-task-filter-state-id" data-automation-id="taskFilterProperty.key">
-                            <mat-option *ngFor="let state of taskFilterProperty.options$ | async" [value]="state.value">
-                                {{ state.label }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field *ngIf="isTextType(taskFilterProperty)">
-                        <input matInput
-                        [formControlName]="taskFilterProperty.key"
-                        type="text"
-                        id="adf-task-filter-appname-id"
-                        placeholder="{{taskFilterProperty.label | translate}}"
-                        data-automation-id="taskFilterProperty.key"/>
-                    </mat-form-field>
-                    <mat-form-field *ngIf="isDateType(taskFilterProperty)">
-                        <mat-label>{{taskFilterProperty.label | translate}}</mat-label>
-                            <input
-                                matInput
-                                (keyup)="onDateChanged($event.srcElement.value, taskFilterProperty)"
-                                (dateChange)="onDateChanged($event.value, taskFilterProperty)"
-                                [matDatepicker]="dateController"
-                                placeholder="{{taskFilterProperty.label | translate}}"
-                                [formControlName]="taskFilterProperty.key"
-                                data-automation-id="taskFilterProperty.key">
-                        <mat-datepicker-toggle matSuffix [for]="dateController"></mat-datepicker-toggle>
-                        <mat-datepicker #dateController></mat-datepicker>
-                        <div class="adf-edit-task-filter-date-error-container">
-                            <div *ngIf="hasError(taskFilterProperty)">
-                                <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</div>
-                                <mat-icon class="adf-error-icon">warning</mat-icon>
-                            </div>
+                            data-automation-id="taskFilterProperty.key">
+                    <mat-datepicker-toggle matSuffix [for]="dateController"></mat-datepicker-toggle>
+                    <mat-datepicker #dateController></mat-datepicker>
+                    <div class="adf-edit-task-filter-date-error-container">
+                        <div *ngIf="hasError(taskFilterProperty)">
+                            <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</div>
+                            <mat-icon class="adf-error-icon">warning</mat-icon>
                         </div>
-                    </mat-form-field>
-                </ng-container>
-            </div>
-            </div>
+                    </div>
+                </mat-form-field>
+            </ng-container>
+        </div>
         </form>
     </mat-expansion-panel>
 </mat-accordion>

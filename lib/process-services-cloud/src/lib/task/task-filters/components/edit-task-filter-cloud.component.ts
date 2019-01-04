@@ -38,6 +38,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     public static ACTION_SAVE = 'SAVE';
     public static ACTION_SAVE_AS = 'SAVE_AS';
     public static ACTION_DELETE = 'DELETE';
+    public static APP_RUNNING_STATUS: string = 'RUNNING';
     public static MIN_VALUE = 1;
     public static DEFAULT_TASK_FILTER_PROPERTIES = ['state', 'assignment', 'sort', 'order'];
     public FORMAT_DATE: string = 'DD/MM/YYYY';
@@ -113,7 +114,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     }
 
     retrieveTaskFilter() {
-        this.taskFilter = this.taskFilterCloudService.getTaskFilterById(this.appName, this.id);
+        this.taskFilter = new TaskFilterCloudModel(this.taskFilterCloudService.getTaskFilterById(this.appName, this.id));
     }
 
     buildForm(taskFilterProperties: TaskFilterProperties[]) {
@@ -194,7 +195,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     }
 
     getRunningApplications(): Observable<FilterOptions[]> {
-        return this.appsProcessCloudService.getRunningApplications().pipe(
+        return this.appsProcessCloudService.getDeployedApplicationsByStatus(EditTaskFilterCloudComponent.APP_RUNNING_STATUS).pipe(
             map((applications: ApplicationInstanceModel[]) => {
                 if (applications && applications.length > 0) {
                     let options: FilterOptions[] = [];
@@ -249,6 +250,10 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     replaceSpaceWithHyphen(name) {
         const regExt = new RegExp(' ', 'g');
         return name.replace(regExt, '-');
+    }
+
+    toggleActions(): boolean {
+        return this.toggleFilterActions;
     }
 
     onExpand() {
@@ -401,13 +406,13 @@ export class EditTaskFilterCloudComponent implements OnChanges {
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE_FROM',
-                type: 'text',
+                type: 'date',
                 key: 'dueDateFrom',
                 value: currentTaskFilter.dueDateFrom || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE_TO',
-                type: 'text',
+                type: 'date',
                 key: 'dueDateTo',
                 value: currentTaskFilter.dueDateTo || ''
             })
