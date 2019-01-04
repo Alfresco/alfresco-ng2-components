@@ -3,7 +3,7 @@
         <mat-list-item (click)="selectFilterAndEmit(filter)" *ngFor="let filter of filters"
                       class="adf-filters__entry" [class.adf-active]="currentFilter === filter">
             <mat-icon *ngIf="showIcon" matListIcon class="adf-filters__entry-icon">{{getFilterIcon(filter.icon)}}</mat-icon>
-            <span matLine [attr.data-automation-id]="filter.key + '_filter'">{{filter.name}}</span>
+            <span matLine [attr.data-automation-id]="filter.name + '_filter'">{{filter.name}}</span>
         </mat-list-item>
     </mat-list>
 </div>
