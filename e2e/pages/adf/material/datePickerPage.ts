@@ -62,10 +62,6 @@ export class DatePickerPage {
         return `${('0' + date.getDate()).slice(-2)}-${this.months[date.getMonth()]}-${date.getFullYear().toString().substr(-2)}`;
     }
 
-    convertDateToNewFormat(date) { // Format : mm-dd-yy
-        return `${date.getMonth() + 1}-${('0' + date.getDate()).slice(-2)}-${date.getFullYear().toString().substr(-2)}`;
-    }
-
     selectTodayDate() {
         this.checkDatePickerIsDisplayed();
         let todayDate = element(by.css('.mat-calendar-body-today'));

@@ -40,6 +40,7 @@ describe('ProcessFiltersCloudComponent', () => {
         }),
         new ProcessFilterCloudModel({
             name: 'FakeRunningProcesses',
+            key: 'FakeRunningProcesses',
             icon: 'inbox',
             id: '11',
             state: 'RUNNING'

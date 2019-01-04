@@ -15,8 +15,16 @@
  * limitations under the License.
  */
 
-export * from './process-list/public-api';
-export * from './process-filters/public-api';
-export * from './start-process/public-api';
+import { StartProcessCloudModule } from './start-process-cloud.module';
 
-export * from './process-cloud.module';
+describe('ProcessCloudModule', () => {
+  let startProcessCloudModule: StartProcessCloudModule;
+
+  beforeEach(() => {
+    startProcessCloudModule = new StartProcessCloudModule();
+  });
+
+  it('should create an instance', () => {
+    expect(startProcessCloudModule).toBeTruthy();
+  });
+});
