@@ -18,15 +18,18 @@
 import { NgModule } from '@angular/core';
 import { ProcessFiltersCloudModule } from './process-filters/process-filters-cloud.module';
 import { ProcessListCloudModule } from './process-list/process-list-cloud.module';
+import { StartProcessCloudModule } from './start-process/start-process-cloud.module';
 
 @NgModule({
     imports: [
         ProcessFiltersCloudModule,
-        ProcessListCloudModule
+        ProcessListCloudModule,
+        StartProcessCloudModule
     ],
     exports: [
         ProcessFiltersCloudModule,
-        ProcessListCloudModule
+        ProcessListCloudModule,
+        StartProcessCloudModule
     ]
 })
 export class ProcessCloudModule { }
