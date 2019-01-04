@@ -197,7 +197,7 @@ describe('Search Date Range Filter', () => {
             .checkFromErrorMessageIsNotDisplayed();
     });
 
-    fdescribe('configuration change', () => {
+    describe('configuration change', () => {
 
         let jsonFile;
         let dateFormat = 'MM-DD-YY';
