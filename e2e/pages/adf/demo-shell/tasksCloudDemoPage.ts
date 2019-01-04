@@ -19,6 +19,7 @@ import { Util } from '../../../util/util';
 
 import { TaskFiltersCloudComponent } from '../process-cloud/taskFiltersCloudComponent';
 import { TaskListCloudComponent } from '../process-cloud/taskListCloudComponent';
+import { EditTaskFilterCloudComponent } from '../process_cloud/editTaskFilterCloudComponent';
 import { element, by } from 'protractor';
 
 export class TasksCloudDemoPage {
@@ -26,6 +27,9 @@ export class TasksCloudDemoPage {
     myTasks = element(by.css('span[data-automation-id="my-tasks-filter"]'));
     completedTasks = element(by.css('span[data-automation-id="completed-tasks-filter"]'));
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
+    taskFilters = element(by.css("mat-expansion-panel[data-automation-id='Task Filters']"));
+
+    editTaskFilterCloud = new EditTaskFilterCloudComponent();
 
     taskFiltersCloudComponent(filter) {
         return new TaskFiltersCloudComponent(filter);
@@ -33,6 +37,10 @@ export class TasksCloudDemoPage {
 
     taskListCloudComponent() {
         return new TaskListCloudComponent();
+    }
+
+    editTaskFilterCloudComponent() {
+        return this.editTaskFilterCloud;
     }
 
     myTasksFilter() {
@@ -47,9 +55,17 @@ export class TasksCloudDemoPage {
         return new TaskFiltersCloudComponent(element(by.css(`span[data-automation-id="${filterName}_filter"]`)));
     }
 
-    checkActiveFilterActive () {
+    getActiveFilterName() {
         Util.waitUntilElementIsVisible(this.activeFilter);
         return this.activeFilter.getText();
     }
 
+    getAllRowsByIdColumn() {
+        return new TaskListCloudComponent().getAllRowsByColumn('Id');
+    }
+
+    clickOnTaskFilters() {
+        Util.waitUntilElementIsVisible(this.taskFilters);
+        return this.taskFilters.click();
+    }
 }

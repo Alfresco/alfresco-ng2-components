@@ -35,11 +35,9 @@ export class DataTablePage {
     reset = element(by.xpath(`//span[contains(text(),'Reset to default')]/..`));
     replaceColumnsElement = element(by.xpath(`//span[contains(text(),'Replace columns')]/..`));
     createdOnColumn = element(by.css(`div[data-automation-id='auto_id_createdOn']`));
-    pageLoaded = element(by.css(`div[data-automation-id='auto_id_id']`));
     tableBody = element.all(by.css(`div[class='adf-datatable-body']`)).first();
     spinner = element(by.css('mat-progress-spinner'));
     rows = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`);
-    nameColumn = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Name'] span`);
 
     constructor(rootElement: ElementFinder = element(by.css('adf-datatable'))) {
         this.rootElement = rootElement;

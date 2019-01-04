@@ -86,34 +86,34 @@ describe('Process filters cloud', () => {
         it('[C290043] Should display process in Running Processes List when process is started', () => {
             processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
-            expect(processCloudDemoPage.checkActiveFilterActive()).toBe('Running Processes');
+            expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(runningProcess.entry.id);
 
             processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
             processCloudDemoPage.completedProcessesFilter().checkProcessFilterIsDisplayed();
-            expect(processCloudDemoPage.checkActiveFilterActive()).toBe('Completed Processes');
+            expect(processCloudDemoPage.getActiveFilterName()).toBe('Completed Processes');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsNotDisplayed(runningProcess.entry.id);
 
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
-            expect(processCloudDemoPage.checkActiveFilterActive()).toBe('All Processes');
+            expect(processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(runningProcess.entry.id);
         });
 
         it('[C290044] Should display process in Completed Processes List when process is completed', () => {
             processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             processCloudDemoPage.runningProcessesFilter().checkProcessFilterIsDisplayed();
-            expect(processCloudDemoPage.checkActiveFilterActive()).toBe('Running Processes');
+            expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedProcess.entry.id);
 
             processCloudDemoPage.completedProcessesFilter().clickProcessFilter();
             processCloudDemoPage.completedProcessesFilter().checkProcessFilterIsDisplayed();
-            expect(processCloudDemoPage.checkActiveFilterActive()).toBe('Completed Processes');
+            expect(processCloudDemoPage.getActiveFilterName()).toBe('Completed Processes');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(completedProcess.entry.id);
 
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
-            expect(processCloudDemoPage.checkActiveFilterActive()).toBe('All Processes');
+            expect(processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(completedProcess.entry.id);
         });
     });

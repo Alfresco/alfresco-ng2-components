@@ -65,7 +65,7 @@ export class ProcessCloudDemoPage {
         return new ProcessFiltersCloudComponent(element(by.css(`span[data-automation-id="${filterName}_filter"]`)));
     }
 
-    checkActiveFilterActive() {
+    getActiveFilterName() {
         Util.waitUntilElementIsVisible(this.activeFilter);
         return this.activeFilter.getText();
     }
