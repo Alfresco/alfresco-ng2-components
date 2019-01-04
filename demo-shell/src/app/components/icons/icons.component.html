@@ -1,0 +1,47 @@
+<h1>Icons</h1>
+
+<h2>Ligatures</h2>
+<small>
+    See more details here:
+    <a href="https://material.angular.io/components/icon/overview#font-icons-with-ligatures">Font icons with ligatures</a>
+</small>
+
+<div>
+    <div><strong>Markup:</strong></div>
+    <pre>
+    &lt;adf-icon value="alarm"&gt;&lt;/adf-icon&gt;</pre>
+</div>
+
+<div>
+    <div><strong>Result:</strong></div>
+    <adf-icon value="alarm"></adf-icon>
+</div>
+
+<h2>Named icons</h2>
+<small>
+    See more details here:
+    <a href="https://material.angular.io/components/icon/overview#named-icons">Named icons</a>
+</small>
+
+<div>
+    <div><strong>Code:</strong></div>
+    <pre>
+    matIconRegistry.addSvgIconInNamespace(
+        'adf',
+        'move_file',
+        this.sanitizer.bypassSecurityTrustResourceUrl(
+            './assets/images/adf-move-file-24px.svg'
+        )
+    );</pre>
+</div>
+
+<div>
+    <div><strong>Markup:</strong></div>
+    <pre>
+    &lt;adf-icon value="adf:move_file"&gt;&lt;/adf-icon&gt;</pre>
+</div>
+
+<div>
+    <div><strong>Result:</strong></div>
+    <adf-icon value="adf:move_file"></adf-icon>
+</div>
