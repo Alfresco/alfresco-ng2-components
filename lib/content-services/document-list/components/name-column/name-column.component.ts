@@ -23,7 +23,7 @@ import {
   ViewEncapsulation,
   ElementRef
 } from '@angular/core';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { NodeEntry } from '@alfresco/js-api';
 
 @Component({
   selector: 'adf-name-column',
@@ -41,7 +41,7 @@ export class NameColumnComponent implements OnInit {
   context: any;
 
   displayText: string;
-  node: MinimalNodeEntity;
+  node: NodeEntry;
 
   constructor(private element: ElementRef) {}
 

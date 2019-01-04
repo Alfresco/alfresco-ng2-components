@@ -51,7 +51,7 @@ export class StartProcessCloudService {
 
             return from(this.alfrescoApiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
-                    null, null, null,
+                    null, null,
                     null, null, null,
                     this.contentTypes, this.accepts,
                     this.returnType, null, null)
@@ -83,14 +83,14 @@ export class StartProcessCloudService {
 
         return from(this.alfrescoApiService.getInstance()
             .oauth2Auth.callCustomApi(queryUrl, 'POST',
-                null, null, null,
+                null, null,
                 null, requestPayload, null,
                 this.contentTypes, this.accepts,
                 this.returnType, null, null)
-            ).pipe(
-                map((processInstance) => new ProcessInstanceCloud(processInstance)),
-                catchError((err) => this.handleProcessError(err))
-            );
+        ).pipe(
+            map((processInstance) => new ProcessInstanceCloud(processInstance)),
+            catchError((err) => this.handleProcessError(err))
+        );
     }
 
     private handleProcessError(error: any) {
