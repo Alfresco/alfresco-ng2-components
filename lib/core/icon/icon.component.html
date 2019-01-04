@@ -1,0 +1,7 @@
+<ng-container *ngIf="isCustom; else: default">
+  <mat-icon [svgIcon]="value"></mat-icon>
+</ng-container>
+
+<ng-template #default>
+  <mat-icon>{{ value }}</mat-icon>
+</ng-template>

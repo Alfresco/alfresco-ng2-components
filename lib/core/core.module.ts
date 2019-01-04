@@ -54,6 +54,7 @@ import { TranslateLoaderService } from './services/translate-loader.service';
 import { TranslationService } from './services/translation.service';
 import { startupServiceFactory } from './services/startup-service-factory';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
+import { IconModule } from './icon/icon.module';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateLoaderService(http);
@@ -89,6 +90,7 @@ export function createTranslateLoader(http: HttpClient) {
         DataTableModule,
         ButtonsMenuModule,
         TemplateModule,
+        IconModule,
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
@@ -128,7 +130,8 @@ export function createTranslateLoader(http: HttpClient) {
         TranslateModule,
         ButtonsMenuModule,
         TemplateModule,
-        SortingPickerModule
+        SortingPickerModule,
+        IconModule
     ]
 })
 export class CoreModuleLazy {
@@ -163,6 +166,7 @@ export class CoreModuleLazy {
         DataTableModule,
         ButtonsMenuModule,
         TemplateModule,
+        IconModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -202,7 +206,8 @@ export class CoreModuleLazy {
         TranslateModule,
         ButtonsMenuModule,
         TemplateModule,
-        SortingPickerModule
+        SortingPickerModule,
+        IconModule
     ],
     providers: [
         {
