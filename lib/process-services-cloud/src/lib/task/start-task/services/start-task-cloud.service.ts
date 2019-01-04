@@ -38,15 +38,15 @@ export class StartTaskCloudService {
     createNewTask(taskDetails: TaskDetailsCloudModel): Observable<TaskDetailsCloudModel> {
         let queryUrl = this.buildCreateTaskUrl(taskDetails.appName);
         const bodyParam = JSON.stringify(this.buildRequestBody(taskDetails));
-        const httpMethod = 'POST', pathParams = {}, queryParams = {}, headerParams = {},
-            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
+        const pathParams = {}, queryParams = {}, headerParams = {},
+            formParams = {},  contentTypes = ['application/json'], accepts = ['application/json'];
 
         return from(
             this.apiService
                 .getInstance()
                 .oauth2Auth.callCustomApi(
-                    queryUrl, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam, authNames,
+                    queryUrl, 'POST', pathParams, queryParams,
+                    headerParams, formParams, bodyParam,
                     contentTypes, accepts, null, null)
                 ).pipe(
                     map((response: StartTaskCloudResponseModel) => {

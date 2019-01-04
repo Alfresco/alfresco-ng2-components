@@ -41,7 +41,7 @@ export class ProcessListCloudService {
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, queryParams, null,
-                    null, null, null, this.contentTypes,
+                    null, null,  this.contentTypes,
                     this.accepts, null, null)
             );
         } else {

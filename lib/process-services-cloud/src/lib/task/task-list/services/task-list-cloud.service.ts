@@ -43,7 +43,7 @@ export class TaskListCloudService {
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, queryParams, null,
-                    null, null, null, ['application/json'],
+                    null, null,  ['application/json'],
                     ['application/json'], null, null)
             );
         } else {

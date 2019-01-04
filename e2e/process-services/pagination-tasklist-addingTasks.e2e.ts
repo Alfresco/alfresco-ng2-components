@@ -66,7 +66,6 @@ describe('Items per page set to 15 and adding of tasks', () => {
         for (i = 0; i < (nrOfTasks - 5); i++) {
             await apps.startProcess(this.alfrescoJsApi, resultApp);
         }
-        console.log(processUserModel.email+"      "+processUserModel.password);
 
         loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
@@ -95,10 +94,6 @@ describe('Items per page set to 15 and adding of tasks', () => {
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfTasks + ' of ' + nrOfTasks);
-
-        taskPage.tasksListPage().getDataTable().getNumberOfRows().then((number)=>{
-            console.log('number '+number);
-        });
         expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsEnabled();
