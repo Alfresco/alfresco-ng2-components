@@ -57,7 +57,10 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     @Input()
     toggleFilterActions = true;
 
-    /** Emitted when a task filter property changes. */
+    @Input()
+    showTitle = true;
+
+    /** Emitted when an task filter property changes. */
     @Output()
     filterChange: EventEmitter<TaskFilterCloudModel> = new EventEmitter();
 
@@ -256,11 +259,11 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         return this.toggleFilterActions;
     }
 
-    onExpand() {
+    onExpand(event: any) {
         this.showFilterActions = true;
     }
 
-    onClose() {
+    onClose(event: any) {
         this.showFilterActions = false;
     }
 
@@ -282,14 +285,14 @@ export class EditTaskFilterCloudComponent implements OnChanges {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.APP_NAME',
                 type: 'select',
                 key: 'appName',
-                value: currentTaskFilter.appName || '',
+                value: this.appName || '',
                 options: this.getRunningApplications()
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'state',
-                value: currentTaskFilter.state || '',
+                value: currentTaskFilter.state || this.status[0],
                 options: of(this.status)
             }),
             new TaskFilterProperties({
