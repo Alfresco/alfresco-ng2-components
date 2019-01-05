@@ -22,7 +22,7 @@ import {
   OnInit,
   Input
 } from '@angular/core';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { NodeEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 
 @Component({
@@ -46,7 +46,7 @@ export class TrashcanNameColumnComponent implements OnInit {
   isLibrary = false;
   displayText: string;
   displayTooltip: string;
-  node: MinimalNodeEntity;
+  node: NodeEntry;
 
   ngOnInit() {
     this.node = this.context.row.node;
