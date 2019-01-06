@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { QueryBody } from 'alfresco-js-api';
+import { QueryBody } from '@alfresco/js-api';
 import { SearchService, setupTestBed } from '@alfresco/adf-core';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { ContentTestingModule } from '../testing/content.testing.module';

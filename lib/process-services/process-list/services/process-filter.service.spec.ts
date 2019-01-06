@@ -121,7 +121,7 @@ describe('Process filter', () => {
                     'status': 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
-                        appId: 1001, id: '111', name: 'Running', icon: 'fake-icon', recent: false
+                        appId: 1001, id: 111, name: 'Running', icon: 'fake-icon', recent: false
                     })
                 });
 
@@ -129,7 +129,7 @@ describe('Process filter', () => {
                     'status': 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
-                        appId: 1001, id: '222', name: 'Completed', icon: 'fake-icon', recent: false
+                        appId: 1001, id: 222, name: 'Completed', icon: 'fake-icon', recent: false
                     })
                 });
 
@@ -137,7 +137,7 @@ describe('Process filter', () => {
                     'status': 200,
                     contentType: 'application/json',
                     responseText: JSON.stringify({
-                        appId: 1001, id: '333', name: 'All', icon: 'fake-icon', recent: false
+                        appId: 1001, id: 333, name: 'All', icon: 'fake-icon', recent: false
                     })
                 });
             });

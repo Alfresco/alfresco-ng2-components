@@ -142,7 +142,7 @@ describe('Activiti Task filter Service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    appId: 1001, id: '111', name: 'Involved Tasks', icon: 'fake-icon', recent: false
+                    appId: 1001, id: 111, name: 'Involved Tasks', icon: 'fake-icon', recent: false
                 })
             });
 
@@ -150,7 +150,7 @@ describe('Activiti Task filter Service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    appId: 1001, id: '222', name: 'My Tasks', icon: 'fake-icon', recent: false
+                    appId: 1001, id: 222, name: 'My Tasks', icon: 'fake-icon', recent: false
                 })
             });
 
@@ -158,7 +158,7 @@ describe('Activiti Task filter Service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    appId: 1001, id: '333', name: 'Queued Tasks', icon: 'fake-icon', recent: false
+                    appId: 1001, id: 333, name: 'Queued Tasks', icon: 'fake-icon', recent: false
                 })
             });
 
@@ -166,7 +166,7 @@ describe('Activiti Task filter Service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    appId: 1001, id: '444', name: 'Completed Tasks', icon: 'fake-icon', recent: false
+                    appId: 1001, id: 444, name: 'Completed Tasks', icon: 'fake-icon', recent: false
                 })
             });
         });

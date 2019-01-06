@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { RestVariable } from 'alfresco-js-api';
+import { RestVariable } from '@alfresco/js-api';
 
 export class ProcessInstanceVariable implements RestVariable {
 

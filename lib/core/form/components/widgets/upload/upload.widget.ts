@@ -133,8 +133,8 @@ export class UploadWidgetComponent extends WidgetComponent implements OnInit {
         return this.thumbnailService.getMimeTypeIcon(mimeType);
     }
 
-    fileClicked(obj: any): void {
-        const file = new ContentLinkModel(obj);
+    fileClicked(contentLinkModel: any): void {
+        const file = new ContentLinkModel(contentLinkModel);
         let fetch = this.processContentService.getContentPreview(file.id);
         if (file.isTypeImage() || file.isTypePdf()) {
             fetch = this.processContentService.getFileRawContent(file.id);

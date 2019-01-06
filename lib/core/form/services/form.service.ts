@@ -30,6 +30,11 @@ import {
 } from './../events/index';
 import { EcmModelService } from './ecm-model.service';
 import { map, catchError, switchMap, combineAll, defaultIfEmpty } from 'rxjs/operators';
+import {
+    Activiti,
+    CompleteFormRepresentation,
+    SaveFormRepresentation
+} from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -60,31 +65,31 @@ export class FormService {
                 protected logService: LogService) {
     }
 
-    private get taskApi(): any {
+    private get taskApi(): Activiti.TaskApi {
         return this.apiService.getInstance().activiti.taskApi;
     }
 
-    private get modelsApi(): any {
+    private get modelsApi(): Activiti.ModelsApi {
         return this.apiService.getInstance().activiti.modelsApi;
     }
 
-    private get editorApi(): any {
+    private get editorApi(): Activiti.EditorApi {
         return this.apiService.getInstance().activiti.editorApi;
     }
 
-    private get processApi(): any {
+    private get processApi(): Activiti.ProcessApi {
         return this.apiService.getInstance().activiti.processApi;
     }
 
-    private get processInstanceVariablesApi(): any {
+    private get processInstanceVariablesApi(): Activiti.ProcessInstanceVariablesApi {
         return this.apiService.getInstance().activiti.processInstanceVariablesApi;
     }
 
-    private get usersWorkflowApi(): any {
+    private get usersWorkflowApi(): Activiti.UsersWorkflowApi {
         return this.apiService.getInstance().activiti.usersWorkflowApi;
     }
 
-    private get groupsApi(): any {
+    private get groupsApi(): Activiti.GroupsApi {
         return this.apiService.getInstance().activiti.groupsApi;
     }
 
@@ -159,7 +164,7 @@ export class FormService {
      * @param formModel Model data for the form
      * @returns Data for the saved form
      */
-    saveForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
+    saveForm(formId: number, formModel: FormDefinitionModel): Observable<any> {
         return from(
             this.editorApi.saveForm(formId, formModel)
         );
@@ -171,7 +176,7 @@ export class FormService {
      * @param formId ID of the form
      * @param formModel Form definition
      */
-    addFieldsToAForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
+    addFieldsToAForm(formId: number, formModel: FormDefinitionModel): Observable<any> {
         this.logService.log('addFieldsToAForm is deprecated in 1.7.0, use saveForm API instead');
         return from(
             this.editorApi.saveForm(formId, formModel)
@@ -191,12 +196,12 @@ export class FormService {
         return from(
             this.modelsApi.getModels(opts)
         )
-        .pipe(
-            map(function (forms: any) {
-                return forms.data.find((formData) => formData.name === name);
-            }),
-            catchError((err) => this.handleError(err))
-        );
+            .pipe(
+                map(function (forms: any) {
+                    return forms.data.find((formData) => formData.name === name);
+                }),
+                catchError((err) => this.handleError(err))
+            );
     }
 
     /**
@@ -272,9 +277,9 @@ export class FormService {
      * @returns Null response when the operation is complete
      */
     saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
-        let body = JSON.stringify({values: formValues});
+        let saveFormRepresentation = <SaveFormRepresentation> { values: formValues };
 
-        return from(this.taskApi.saveTaskForm(taskId, body))
+        return from(this.taskApi.saveTaskForm(taskId, saveFormRepresentation))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -288,13 +293,12 @@ export class FormService {
      * @returns Null response when the operation is complete
      */
     completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
-        let data: any = {values: formValues};
+        let completeFormRepresentation: any = <CompleteFormRepresentation> { values: formValues };
         if (outcome) {
-            data.outcome = outcome;
+            completeFormRepresentation.outcome = outcome;
         }
-        let body = JSON.stringify(data);
 
-        return from(this.taskApi.completeTaskForm(taskId, body))
+        return from(this.taskApi.completeTaskForm(taskId, completeFormRepresentation))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -318,7 +322,7 @@ export class FormService {
      * @param formId ID of the target form
      * @returns Form definition
      */
-    getFormDefinitionById(formId: string): Observable<any> {
+    getFormDefinitionById(formId: number): Observable<any> {
         return from(this.editorApi.getForm(formId))
             .pipe(
                 map(this.toJson),
@@ -454,7 +458,7 @@ export class FormService {
      * @returns Array of users
      */
     getWorkflowUsers(filter: string, groupId?: string): Observable<UserProcessModel[]> {
-        let option: any = {filter: filter};
+        let option: any = { filter: filter };
         if (groupId) {
             option.groupId = groupId;
         }
@@ -478,7 +482,7 @@ export class FormService {
      * @returns Array of groups
      */
     getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]> {
-        let option: any = {filter: filter};
+        let option: any = { filter: filter };
         if (groupId) {
             option.groupId = groupId;
         }
@@ -494,11 +498,11 @@ export class FormService {
      * @param res Object representing a form
      * @returns ID string
      */
-    getFormId(res: any): string {
+    getFormId(form: any): string {
         let result = null;
 
-        if (res && res.data && res.data.length > 0) {
-            result = res.data[0].id;
+        if (form && form.data && form.data.length > 0) {
+            result = form.data[0].id;
         }
 
         return result;

@@ -74,13 +74,13 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
     }
 
     isValid() {
-        let result = true;
+        let valid = true;
 
         if (this.content && this.content.field) {
-            result = this.content.field.isValid;
+            valid = this.content.field.isValid;
         }
 
-        return result;
+        return valid;
     }
 
     onRowClicked(row: DynamicTableRow) {
@@ -151,11 +151,11 @@ export class DynamicTableWidgetComponent extends WidgetComponent implements OnIn
 
     getCellValue(row: DynamicTableRow, column: DynamicTableColumn): any {
         if (this.content) {
-            let result = this.content.getCellValue(row, column);
+            let cellValue = this.content.getCellValue(row, column);
             if (column.type === 'Amount') {
-                return (column.amountCurrency || '$') + ' ' + (result || 0);
+                return (column.amountCurrency || '$') + ' ' + (cellValue || 0);
             }
-            return result;
+            return cellValue;
         }
         return null;
     }

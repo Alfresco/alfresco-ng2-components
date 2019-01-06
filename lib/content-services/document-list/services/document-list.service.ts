@@ -21,7 +21,7 @@ import {
 } from '@alfresco/adf-core';
 
 import { Injectable } from '@angular/core';
-import { MinimalNodeEntity, MinimalNodeEntryEntity,  NodeEntry, NodePaging } from 'alfresco-js-api';
+import { NodeEntry, NodePaging } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -37,37 +37,6 @@ export class DocumentListService {
                 private apiService: AlfrescoApiService,
                 private logService: LogService,
                 private thumbnailService: ThumbnailService) {
-    }
-
-    private getNodesPromise(folder: string, opts?: any, includeFields: string[] = []): Promise<NodePaging> {
-
-        let rootNodeId = DocumentListService.ROOT_ID;
-        if (opts && opts.rootFolderId) {
-            rootNodeId = opts.rootFolderId;
-        }
-
-        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
-            .filter((element, index, array) => index === array.indexOf(element));
-
-        let params: any = {
-            includeSource: true,
-            include: includeFieldsRequest
-        };
-
-        if (folder) {
-            params.relativePath = folder;
-        }
-
-        if (opts) {
-            if (opts.maxItems) {
-                params.maxItems = opts.maxItems;
-            }
-            if (opts.skipCount) {
-                params.skipCount = opts.skipCount;
-            }
-        }
-
-        return this.apiService.getInstance().nodes.getNodeChildren(rootNodeId, params);
     }
 
     /**
@@ -106,19 +75,6 @@ export class DocumentListService {
     }
 
     /**
-     * Creates a new folder in the path.
-     * @param name Folder name
-     * @param parentId Parent folder ID
-     * @returns Details of the created folder node
-     */
-    createFolder(name: string, parentId: string): Observable<MinimalNodeEntity> {
-        return from(this.apiService.getInstance().nodes.createFolder(name, '/', parentId))
-            .pipe(
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    /**
      * Gets the folder node with the specified relative name path below the root node.
      * @param folder Path to folder.
      * @param opts Options.
@@ -126,10 +82,35 @@ export class DocumentListService {
      * @returns Details of the folder
      */
     getFolder(folder: string, opts?: any, includeFields: string[] = []): Observable<NodePaging> {
-        return from(this.getNodesPromise(folder, opts, includeFields))
-            .pipe(
-                catchError((err) => this.handleError(err))
-            );
+        let rootNodeId = DocumentListService.ROOT_ID;
+        if (opts && opts.rootFolderId) {
+            rootNodeId = opts.rootFolderId;
+        }
+
+        let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
+            .filter((element, index, array) => index === array.indexOf(element));
+
+        let params: any = {
+            includeSource: true,
+            include: includeFieldsRequest
+        };
+
+        if (folder) {
+            params.relativePath = folder;
+        }
+
+        if (opts) {
+            if (opts.maxItems) {
+                params.maxItems = opts.maxItems;
+            }
+            if (opts.skipCount) {
+                params.skipCount = opts.skipCount;
+            }
+        }
+
+        return from(this.apiService.getInstance().nodes.getNodeChildren(rootNodeId, params)).pipe(
+            catchError((err) => this.handleError(err))
+        );
     }
 
     /**
@@ -153,12 +134,11 @@ export class DocumentListService {
 
     /**
      * Gets a folder node via its node ID.
-     * @deprecated 2.3.0
      * @param nodeId ID of the folder node
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
      */
-    getFolderNode(nodeId: string, includeFields: string[] = []): Observable<MinimalNodeEntryEntity> {
+    getFolderNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
 
         let includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
@@ -168,14 +148,17 @@ export class DocumentListService {
             include: includeFieldsRequest
         };
 
-        return from(this.apiService.getInstance().nodes.getNodeInfo(nodeId, opts));
+        return from(this.apiService.getInstance().nodes.getNode(nodeId, opts)).pipe(
+            catchError((err) => this.handleError(err))
+        );
     }
+
     /**
      * Get thumbnail URL for the given document node.
      * @param node Node to get URL for.
      * @returns Thumbnail URL string
      */
-    getDocumentThumbnailUrl(node: MinimalNodeEntity): string {
+    getDocumentThumbnailUrl(node: NodeEntry): string {
         return this.thumbnailService.getDocumentThumbnailUrl(node);
     }
 

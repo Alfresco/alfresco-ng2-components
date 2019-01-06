@@ -21,7 +21,7 @@ import {
     Input, OnChanges, Output, SimpleChanges, TemplateRef,
     ViewEncapsulation, OnInit, OnDestroy
 } from '@angular/core';
-import { MinimalNodeEntryEntity, RenditionEntry, MinimalNodeEntity } from 'alfresco-js-api';
+import { RenditionPaging, SharedLinkEntry, Node, RenditionEntry, NodeEntry } from '@alfresco/js-api';
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
@@ -69,15 +69,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     blobFile: Blob;
 
-    /**
-     * Node Id of the file to load.
-     * @deprecated 2.4.0 use nodeId
-     */
-    @Input()
-    set fileNodeId(nodeId: string) {
-        this.nodeId = nodeId;
-    }
-
     /** Node Id of the file to load. */
     @Input()
     nodeId: string = null;
@@ -115,13 +106,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     /** Toggles printing. */
     @Input()
     allowPrint = false;
-
-    /**
-     * Toggles sharing.
-     * @deprecated 2.5.0 - inject the share button directive as custom button
-     */
-    @Input()
-    allowShare = false;
 
     /** Toggles the 'Full Screen' feature. */
     @Input()
@@ -210,10 +194,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Output()
     print = new EventEmitter<BaseEvent<any>>();
 
-    /** Emitted when user clicks the 'Share' button. */
-    @Output()
-    share = new EventEmitter<BaseEvent<any>>();
-
     /** Emitted when the viewer is shown or hidden. */
     @Output()
     showViewerChange = new EventEmitter<boolean>();
@@ -236,15 +216,15 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     viewerType = 'unknown';
     isLoading = false;
-    node: MinimalNodeEntity;
+    node: NodeEntry;
 
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
     externalExtensions: string[] = [];
     urlFileContent: string;
     otherMenu: any;
     extension: string;
-    sidebarTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
-    sidebarLeftTemplateContext: { node: MinimalNodeEntryEntity } = { node: null };
+    sidebarTemplateContext: { node: Node } = { node: null };
+    sidebarLeftTemplateContext: { node: Node } = { node: null };
     fileTitle: string;
 
     private cacheBusterNumber;
@@ -289,7 +269,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.subscriptions = [];
     }
 
-    private onNodeUpdated(node: MinimalNodeEntryEntity) {
+    private onNodeUpdated(node: Node) {
         if (node && node.id === this.nodeId) {
             this.generateCacheBusterNumber();
             this.isLoading = true;
@@ -313,9 +293,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 this.setUpUrlFile();
                 this.isLoading = false;
             } else if (this.nodeId) {
-                this.apiService.nodesApi.getNodeInfo(this.nodeId, { include: ['allowableOperations'] }).then(
-                    (data: MinimalNodeEntryEntity) => {
-                        this.setUpNodeFile(data).then(() => {
+                this.apiService.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] }).then(
+                    (node: NodeEntry) => {
+                        this.node = node;
+                        this.setUpNodeFile(node.entry).then(() => {
                             this.isLoading = false;
                         });
                     },
@@ -324,17 +305,11 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                         this.logService.error('This node does not exist');
                     }
                 );
-
-                this.apiService.nodesApi.getNode(this.nodeId).then(
-                    (node) => {
-                        this.node = node;
-                    }
-                );
             } else if (this.sharedLinkId) {
 
                 this.apiService.sharedLinksApi.getSharedLink(this.sharedLinkId).then(
-                    (details) => {
-                        this.setUpSharedLinkFile(details);
+                    (sharedLinkEntry: SharedLinkEntry) => {
+                        this.setUpSharedLinkFile(sharedLinkEntry);
                         this.isLoading = false;
                     },
                     () => {
@@ -375,7 +350,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.scrollTop();
     }
 
-    private async setUpNodeFile(data: MinimalNodeEntryEntity) {
+    private async setUpNodeFile(data: Node) {
         let setupNode;
 
         if (data.content) {
@@ -431,9 +406,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     toggleSidebar() {
         this.showSidebar = !this.showSidebar;
         if (this.showSidebar && this.nodeId) {
-            this.apiService.getInstance().nodes.getNodeInfo(this.nodeId, { include: ['allowableOperations'] })
-                .then((data: MinimalNodeEntryEntity) => {
-                    this.sidebarTemplateContext.node = data;
+            this.apiService.getInstance().nodes.getNode(this.nodeId, { include: ['allowableOperations'] })
+                .then((nodeEntry: NodeEntry) => {
+                    this.sidebarTemplateContext.node = nodeEntry.entry;
                 });
         }
     }
@@ -441,15 +416,15 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     toggleLeftSidebar() {
         this.showLeftSidebar = !this.showLeftSidebar;
         if (this.showSidebar && this.nodeId) {
-            this.apiService.getInstance().nodes.getNodeInfo(this.nodeId, { include: ['allowableOperations'] })
-                .then((data: MinimalNodeEntryEntity) => {
-                    this.sidebarLeftTemplateContext.node = data;
+            this.apiService.getInstance().nodes.getNode(this.nodeId, { include: ['allowableOperations'] })
+                .then((nodeEntry: NodeEntry) => {
+                    this.sidebarLeftTemplateContext.node = nodeEntry.entry;
                 });
         }
     }
 
     private getDisplayName(name) {
-        return this.displayName || name ;
+        return this.displayName || name;
     }
 
     scrollTop() {
@@ -614,13 +589,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    shareContent() {
-        if (this.allowShare) {
-            const args = new BaseEvent();
-            this.share.next(args);
-        }
-    }
-
     /**
      * Triggers full screen mode with a main content area displayed.
      */
@@ -662,7 +630,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private async displaySharedLinkRendition(sharedId: string) {
         try {
-            const rendition = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'pdf');
+            const rendition: RenditionEntry = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'pdf');
             if (rendition.entry.status.toString() === 'CREATED') {
                 this.viewerType = 'pdf';
                 this.urlFileContent = this.apiService.contentApi.getSharedLinkRenditionUrl(sharedId, 'pdf');
@@ -670,7 +638,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         } catch (error) {
             this.logService.error(error);
             try {
-                const rendition = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'imgpreview');
+                const rendition: RenditionEntry = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'imgpreview');
                 if (rendition.entry.status.toString() === 'CREATED') {
                     this.viewerType = 'image';
                     this.urlFileContent = this.apiService.contentApi.getSharedLinkRenditionUrl(sharedId, 'imgpreview');
@@ -681,26 +649,26 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private async resolveRendition(nodeId: string, renditionId: string) {
+    private async resolveRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
         renditionId = renditionId.toLowerCase();
 
-        const supported = await this.apiService.renditionsApi.getRenditions(nodeId);
+        const supportedRendition: RenditionPaging = await this.apiService.renditionsApi.getRenditions(nodeId);
 
-        let rendition = supported.list.entries.find((obj) => obj.entry.id.toLowerCase() === renditionId);
+        let rendition: RenditionEntry = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
         if (!rendition) {
             renditionId = 'imgpreview';
-            rendition = supported.list.entries.find((obj) => obj.entry.id.toLowerCase() === renditionId);
+            rendition = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
         }
 
         if (rendition) {
-            const status = rendition.entry.status.toString();
+            const status: string = rendition.entry.status.toString();
 
             if (status === 'NOT_CREATED') {
                 try {
                     await this.apiService.renditionsApi.createRendition(nodeId, { id: renditionId }).then(() => {
                         this.viewerType = 'in_creation';
                     });
-                    rendition = await this.waitRendition(nodeId, renditionId, 0);
+                    rendition = await this.waitRendition(nodeId, renditionId);
                 } catch (err) {
                     this.logService.error(err);
                 }
@@ -710,14 +678,14 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         return rendition;
     }
 
-    private async waitRendition(nodeId: string, renditionId: string, retries: number): Promise<RenditionEntry> {
-        let currentRetry = 0;
-        return new Promise((resolve, reject) => {
+    private async waitRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
+        let currentRetry: number = 0;
+        return new Promise<RenditionEntry>((resolve, reject) => {
             let intervalId = setInterval(() => {
                 currentRetry++;
                 if (this.maxRetries >= currentRetry) {
-                    this.apiService.renditionsApi.getRendition(nodeId, renditionId).then((rendition) => {
-                        const status = rendition.entry.status.toString();
+                    this.apiService.renditionsApi.getRendition(nodeId, renditionId).then((rendition: RenditionEntry) => {
+                        const status: string = rendition.entry.status.toString();
                         if (status === 'CREATED') {
 
                             if (renditionId === 'pdf') {

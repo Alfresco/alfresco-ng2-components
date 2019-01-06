@@ -18,7 +18,7 @@
 import { Util } from '../../../util/util';
 
 import { element, by } from 'protractor';
-import { TaskFiltersPage } from '../process_services/taskFiltersPage';
+import { TaskFiltersPage } from '../process-services/taskFiltersPage';
 
 export class TaskFiltersDemoPage {
 

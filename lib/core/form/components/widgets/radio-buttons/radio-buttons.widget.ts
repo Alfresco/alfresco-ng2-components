@@ -54,8 +54,8 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
                 this.field.id
             )
             .subscribe(
-                (result: FormFieldOption[]) => {
-                    this.field.options = result || [];
+                (formFieldOption: FormFieldOption[]) => {
+                    this.field.options = formFieldOption || [];
                     this.field.updateForm();
                 },
                 (err) => this.handleError(err)
@@ -69,8 +69,8 @@ export class RadioButtonsWidgetComponent extends WidgetComponent implements OnIn
                 this.field.id
             )
             .subscribe(
-                (result: FormFieldOption[]) => {
-                    this.field.options = result || [];
+                (formFieldOption: FormFieldOption[]) => {
+                    this.field.options = formFieldOption || [];
                     this.field.updateForm();
                 },
                 (err) => this.handleError(err)

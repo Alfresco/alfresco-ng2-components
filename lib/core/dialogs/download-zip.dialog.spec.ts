@@ -102,7 +102,7 @@ describe('DownloadZipDialogComponent', () => {
 
     it('should call cancelDownload when CANCEL button is clicked', () => {
         fixture.detectChanges();
-        spyOn(component, 'cancelDownload').and.callThrough();
+        spyOn(component, 'cancelDownload').and.returnValue('');
 
         const cancelButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#cancel-button');
         cancelButton.click();
@@ -118,7 +118,7 @@ describe('DownloadZipDialogComponent', () => {
 
     it('should close dialog when download is completed', () => {
         component.download('fakeUrl', 'fileName');
-        spyOn(downloadZipService, 'cancelDownload');
+        spyOn(component, 'cancelDownload').and.returnValue('');
         fixture.detectChanges();
         expect(dialogRef.close).toHaveBeenCalled();
     });
@@ -134,7 +134,7 @@ describe('DownloadZipDialogComponent', () => {
     it('should interrupt download when cancel button is clicked', () => {
         spyOn(component, 'downloadZip');
         spyOn(component, 'download');
-        spyOn(component, 'cancelDownload').and.callThrough();
+        spyOn(component, 'cancelDownload').and.returnValue('');
 
         fixture.detectChanges();
 

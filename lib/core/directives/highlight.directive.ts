@@ -47,9 +47,9 @@ export class HighlightDirective {
             const elements = this.el.nativeElement.querySelectorAll(selector);
 
             elements.forEach((element) => {
-                const result: HighlightTransformResult = this.highlightTransformService.highlight(element.innerHTML, search, classToApply);
-                if (result.changed) {
-                    this.renderer.setProperty(element, 'innerHTML', result.text);
+                const highlightTransformResult: HighlightTransformResult = this.highlightTransformService.highlight(element.innerHTML, search, classToApply);
+                if (highlightTransformResult.changed) {
+                    this.renderer.setProperty(element, 'innerHTML', highlightTransformResult.text);
                 }
             });
         }

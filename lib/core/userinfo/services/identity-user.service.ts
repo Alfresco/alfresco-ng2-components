@@ -69,7 +69,7 @@ export class IdentityUserService {
         return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
                     url, httpMethod, pathParams, queryParams,
                     headerParams, formParams, bodyParam, authNames,
-                    contentTypes, accepts, Object, null, null)
+                    contentTypes, accepts, null, null)
                 ).pipe(
                     map((response: IdentityUserModel[]) => {
                         return response;
@@ -85,7 +85,7 @@ export class IdentityUserService {
         return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
                     url, httpMethod, pathParams, queryParams,
                     headerParams, formParams, bodyParam, authNames,
-                    contentTypes, accepts, Object, null, null)
+                    contentTypes, accepts, null, null)
                 ).pipe(
                     map((response: IdentityRoleModel[]) => {
                         return response;

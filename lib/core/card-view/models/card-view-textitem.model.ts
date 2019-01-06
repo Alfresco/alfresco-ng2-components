@@ -25,10 +25,10 @@ export class CardViewTextItemModel extends CardViewBaseItemModel implements Card
     multiline?: boolean;
     pipes?: CardViewTextItemPipeProperty[];
 
-    constructor(obj: CardViewTextItemProperties) {
-        super(obj);
-        this.multiline = !!obj.multiline ;
-        this.pipes = obj.pipes || [];
+    constructor(cardViewTextItemProperties: CardViewTextItemProperties) {
+        super(cardViewTextItemProperties);
+        this.multiline = !!cardViewTextItemProperties.multiline ;
+        this.pipes = cardViewTextItemProperties.pipes || [];
     }
 
     get displayValue() {

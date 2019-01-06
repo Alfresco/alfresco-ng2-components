@@ -17,7 +17,7 @@
 
 import { Util } from '../../util/util';
 import { element, by } from 'protractor';
-import { SearchCategoriesPage } from './content_services/search/search-categories';
+import { SearchCategoriesPage } from './content-services/search/search-categories';
 
 export class SearchFiltersPage {
 

@@ -17,8 +17,8 @@
 
 import { Util } from '../../../util/util';
 
-import { TaskFiltersCloudComponent } from '../process_cloud/taskFiltersCloudComponent';
-import { TaskListCloudComponent } from '../process_cloud/taskListCloudComponent';
+import { TaskFiltersCloudComponent } from '../process-cloud/taskFiltersCloudComponent';
+import { TaskListCloudComponent } from '../process-cloud/taskListCloudComponent';
 import { element, by } from 'protractor';
 
 export class TasksCloudDemoPage {

@@ -29,7 +29,7 @@
     "@mat-datetimepicker/moment": ">=2.0.1",
     "alfresco-js-api": ">=2.7.0-beta5",
     "rxjs": ">=6.2.2",
-    "@ngx-translate/core": ">=10.0.2",
+    "@ngx-translate/core": ">=11.0.0",
     "core-js": ">=2.5.4",
     "hammerjs": ">=2.0.8",
     "minimatch-browser": ">=1.0.0",

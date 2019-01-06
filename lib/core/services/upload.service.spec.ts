@@ -25,6 +25,7 @@ import { AlfrescoApiService } from './alfresco-api.service';
 
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { AssocChildBody, AssociationBody } from '@alfresco/js-api';
 
 declare let jasmine: any;
 
@@ -162,17 +163,6 @@ describe('UploadService', () => {
         service.cancelUpload(...file);
     });
 
-    it('If versioning is true autoRename should not be present and majorVersion should be a param', () => {
-        let emitter = new EventEmitter();
-
-        const filesFake = new FileModel(<File> { name: 'fake-name', size: 10 }, { newVersion: true });
-        service.addToQueue(filesFake);
-        service.uploadFilesInTheQueue(emitter);
-
-        expect(jasmine.Ajax.requests.mostRecent().url.endsWith('autoRename=true')).toBe(false);
-        expect(jasmine.Ajax.requests.mostRecent().params.has('majorVersion')).toBe(false);
-    });
-
     it('If newVersion is set, name should be a param', () => {
         let uploadFileSpy = spyOn(alfrescoApiService.getInstance().upload, 'uploadFile').and.callThrough();
 
@@ -189,7 +179,7 @@ describe('UploadService', () => {
             size: 10
         }, undefined, undefined, { newVersion: true }, {
             renditions: 'doclib',
-            include: [ 'allowableOperations' ],
+            include: ['allowableOperations'],
             overwrite: true,
             majorVersion: undefined,
             comment: undefined,
@@ -229,12 +219,12 @@ describe('UploadService', () => {
 
         let filesFake = new FileModel(
             <File> { name: 'fake-name', size: 10 },
-            <FileUploadOptions> { parentId: '123', path: 'fake-dir',
-                                    secondaryChildren: [{ assocType: 'assoc-1', childId: 'child-id' }],
-                                    association: { assocType: 'fake-assoc' },
-                                    targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
-                                }
-        );
+            <FileUploadOptions> {
+                parentId: '123', path: 'fake-dir',
+                secondaryChildren: [<AssocChildBody> { assocType: 'assoc-1', childId: 'child-id' }],
+                association: { assocType: 'fake-assoc' },
+                targets: [<AssociationBody> { assocType: 'target-assoc', targetId: 'fake-target-id' }]
+            });
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue(emitter);
 
@@ -243,17 +233,16 @@ describe('UploadService', () => {
             size: 10
         }, 'fake-dir', '123', {
             newVersion: false,
-                parentId: '123',
-                path: 'fake-dir',
-                secondaryChildren: [
-                    { assocType: 'assoc-1', childId: 'child-id' }],
-                    association: { assocType: 'fake-assoc' },
-                    targets: [{ assocType: 'target-assoc', targetId: 'fake-target-id' }]
-            }, {
-                renditions: 'doclib',
-                include: ['allowableOperations'],
-                autoRename: true
-            });
+            parentId: '123',
+            path: 'fake-dir',
+            secondaryChildren: [<AssocChildBody> { assocType: 'assoc-1', childId: 'child-id' }],
+            association: { assocType: 'fake-assoc' },
+            targets: [<AssociationBody> { assocType: 'target-assoc', targetId: 'fake-target-id' }]
+        }, {
+            renditions: 'doclib',
+            include: ['allowableOperations'],
+            autoRename: true
+        });
     });
 
     it('should start downloading the next one if a file of the list is aborted', (done) => {

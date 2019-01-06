@@ -64,7 +64,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
 
     /** The id of the form definition to load and display with custom values. */
     @Input()
-    formId: string;
+    formId: number;
 
     /** Name of the form definition to load and display with custom values. */
     @Input()
@@ -389,7 +389,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    getFormDefinitionByFormId(formId: string) {
+    getFormDefinitionByFormId(formId: number) {
         this.formService
             .getFormDefinitionById(formId)
             .subscribe(
@@ -522,7 +522,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
         );
     }
 
-    private loadFormFromFormId(formId: string) {
+    private loadFormFromFormId(formId: number) {
         this.formId = formId;
         this.loadForm();
     }

@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchService, setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { QueryBody } from 'alfresco-js-api';
+import { QueryBody } from '@alfresco/js-api';
 import { differentResult, folderResult, result, SimpleSearchTestComponent } from '../../mock';
 import { Observable, of, throwError } from 'rxjs';
 import { SearchModule } from '../search.module';

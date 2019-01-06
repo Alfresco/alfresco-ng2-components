@@ -17,6 +17,7 @@
 
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { RatingService } from './services/rating.service';
+import { RatingEntry } from 'alfresco-js-api-node';
 
 @Component({
     selector: 'adf-like',
@@ -37,16 +38,17 @@ export class LikeComponent implements OnChanges {
     ratingType: string = 'likes';
     isLike: boolean = false;
 
-    constructor(private ratingService: RatingService) {}
+    constructor(private ratingService: RatingService) {
+    }
 
     ngOnChanges() {
         this.clean();
 
         this.ratingService.getRating(this.nodeId, this.ratingType).subscribe(
-            (data) => {
-                if (data.entry.aggregate) {
-                    this.likesCounter = data.entry.aggregate.numberOfRatings;
-                    if (data.entry.ratedAt) {
+            (ratingEntry: RatingEntry) => {
+                if (ratingEntry.entry.aggregate) {
+                    this.likesCounter = ratingEntry.entry.aggregate.numberOfRatings;
+                    if (ratingEntry.entry.ratedAt) {
                         this.isLike = true;
                     }
                 }
@@ -65,8 +67,8 @@ export class LikeComponent implements OnChanges {
             );
         } else {
             this.ratingService.postRating(this.nodeId, this.ratingType, true).subscribe(
-                (data) => {
-                    this.likesCounter = data.entry.aggregate.numberOfRatings;
+                (ratingEntry: RatingEntry) => {
+                    this.likesCounter = ratingEntry.entry.aggregate.numberOfRatings;
                     this.isLike = true;
                     this.changeVote.emit(this.likesCounter);
                 }

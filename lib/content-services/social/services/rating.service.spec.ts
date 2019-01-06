@@ -56,7 +56,7 @@ describe('Rating service', () => {
             contentType: 'json',
             responseText: {
                 'entry': {
-                    myRating: 1,
+                    myRating: '1',
                     'ratedAt': '2017-04-06T14:34:28.061+0000',
                     'id': 'fiveStar',
                     'aggregate': {'numberOfRatings': 1, 'average': 1.0}
@@ -79,7 +79,7 @@ describe('Rating service', () => {
             contentType: 'json',
             responseText: {
                 'entry': {
-                    'myRating': 3,
+                    'myRating': '3',
                     'ratedAt': '2017-04-06T14:36:40.731+0000',
                     'id': 'fiveStar',
                     'aggregate': {'numberOfRatings': 1, 'average': 3.0}

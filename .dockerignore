@@ -14,3 +14,13 @@ integration
 tools
 demo-shell/src/
 demo-shell/resources/
+/angular.json
+/desktop.ini
+/cspell.json
+/.travis.yml
+/CODE_OF_CONDUCT.md
+/.stylelintignore
+/ALFRESCOCORS.md
+/CONTRIBUTING.md
+/appveyor.yml
+/BROWSER-SUPPORT.md

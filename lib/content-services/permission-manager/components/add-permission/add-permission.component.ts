@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
-import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { NodeEntry, Node } from '@alfresco/js-api';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { NodesApiService, ContentService, PermissionsEnum } from '@alfresco/adf-core';
 
@@ -34,14 +34,14 @@ export class AddPermissionComponent {
 
     /** Emitted when the node is updated successfully. */
     @Output()
-    success: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter();
+    success: EventEmitter<Node> = new EventEmitter();
 
     /** Emitted when an error occurs during the update. */
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
-    selectedItems: MinimalNodeEntity[] = [];
-    currentNode: MinimalNodeEntryEntity;
+    selectedItems: NodeEntry[] = [];
+    currentNode: Node;
     currentNodeRoles: string[];
 
     constructor(private nodePermissionService: NodePermissionService,
@@ -50,7 +50,7 @@ export class AddPermissionComponent {
         this.nodeApiService.getNode(this.nodeId).subscribe((node) => this.currentNode = node);
     }
 
-    onSelect(selection: MinimalNodeEntity[]) {
+    onSelect(selection: NodeEntry[]) {
         this.selectedItems = selection;
     }
 

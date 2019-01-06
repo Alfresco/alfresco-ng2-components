@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { QueryBody } from 'alfresco-js-api';
+import { QueryBody } from '@alfresco/js-api';
 import { SearchConfigurationInterface } from '@alfresco/adf-core';
 
 export class TestSearchConfigurationService implements SearchConfigurationInterface {

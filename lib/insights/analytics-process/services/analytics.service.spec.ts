@@ -68,7 +68,7 @@ describe('AnalyticsService', () => {
                 (report) => {
                     expect(report).toBeDefined();
                     expect(report).not.toBeNull();
-                    expect(report.id).toEqual(2);
+                    expect(report.id).toEqual('2');
                     done();
                 }
             );

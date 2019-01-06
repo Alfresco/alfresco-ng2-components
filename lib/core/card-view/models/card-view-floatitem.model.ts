@@ -24,12 +24,12 @@ import { CardViewItemFloatValidator } from '..//validators/card-view.validators'
 export class CardViewFloatItemModel extends CardViewTextItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'float';
 
-    constructor(obj: CardViewTextItemProperties) {
-        super(obj);
+    constructor(cardViewTextItemProperties: CardViewTextItemProperties) {
+        super(cardViewTextItemProperties);
 
         this.validators.push(new CardViewItemFloatValidator());
-        if (obj.value) {
-            this.value = parseFloat(obj.value);
+        if (cardViewTextItemProperties.value) {
+            this.value = parseFloat(cardViewTextItemProperties.value);
         }
     }
 }

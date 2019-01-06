@@ -22,7 +22,7 @@ import { CookieService } from './cookie.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { UserRepresentation } from 'alfresco-js-api';
+import { UserRepresentation } from '@alfresco/js-api';
 
 declare let jasmine: any;
 
@@ -54,88 +54,12 @@ describe('AuthenticationService', () => {
         jasmine.Ajax.uninstall();
     });
 
-    describe('remember me', () => {
-
-        beforeEach(() => {
-            appConfigService.config.providers = 'ECM';
-            appConfigService.load();
-            apiService.reset();
-        });
-
-        it('[ECM] should save the remember me cookie as a session cookie after successful login', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password', false).subscribe(() => {
-                expect(cookie['ALFRESCO_REMEMBER_ME']).not.toBeUndefined();
-                expect(cookie['ALFRESCO_REMEMBER_ME'].expiration).toBeNull();
-                disposableLogin.unsubscribe();
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
-            });
-        });
-
-        it('[ECM] should save the remember me cookie as a persistent cookie after successful login', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password', true).subscribe(() => {
-                expect(cookie['ALFRESCO_REMEMBER_ME']).not.toBeUndefined();
-                expect(cookie['ALFRESCO_REMEMBER_ME'].expiration).not.toBeNull();
-                disposableLogin.unsubscribe();
-
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 201,
-                contentType: 'application/json',
-                responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
-            });
-        });
-
-        it('[ECM] should not save the remember me cookie after failed login', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
-                (res) => {
-                },
-                (err: any) => {
-                    expect(cookie['ALFRESCO_REMEMBER_ME']).toBeUndefined();
-                    disposableLogin.unsubscribe();
-                    done();
-                });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 403,
-                contentType: 'application/json',
-                responseText: JSON.stringify({
-                    'error': {
-                        'errorKey': 'Login failed',
-                        'statusCode': 403,
-                        'briefSummary': '05150009 Login failed',
-                        'stackTrace': 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
-                        'descriptionURL': 'https://api-explorer.alfresco.com'
-                    }
-                })
-            });
-        });
-    });
-
     describe('when the setting is ECM', () => {
 
         beforeEach(() => {
             appConfigService.config.providers = 'ECM';
             appConfigService.load();
             apiService.reset();
-        });
-
-        it('should require remember me set for ECM check', () => {
-            spyOn(cookie, 'isEnabled').and.returnValue(true);
-            spyOn(authService, 'isRememberMeSet').and.returnValue(false);
-            spyOn(authService, 'isECMProvider').and.returnValue(true);
-            spyOn(authService, 'isOauth').and.returnValue(false);
-            spyOn(apiService, 'getInstance').and.callThrough();
-
-            expect(authService.isEcmLoggedIn()).toBeFalsy();
-            expect(apiService.getInstance).not.toHaveBeenCalled();
         });
 
         it('should not require cookie service enabled for ECM check', () => {
@@ -147,6 +71,17 @@ describe('AuthenticationService', () => {
 
             expect(authService.isEcmLoggedIn()).toBeFalsy();
             expect(apiService.getInstance).toHaveBeenCalled();
+        });
+
+        it('should require remember me set for ECM check', () => {
+            spyOn(cookie, 'isEnabled').and.returnValue(true);
+            spyOn(authService, 'isRememberMeSet').and.returnValue(false);
+            spyOn(authService, 'isECMProvider').and.returnValue(true);
+            spyOn(authService, 'isOauth').and.returnValue(false);
+            spyOn(apiService, 'getInstance').and.callThrough();
+
+            expect(authService.isEcmLoggedIn()).toBeFalsy();
+            expect(apiService.getInstance).not.toHaveBeenCalled();
         });
 
         it('[ECM] should return an ECM ticket after the login done', (done) => {
@@ -365,6 +300,71 @@ describe('AuthenticationService', () => {
         });
     });
 
+    describe('remember me', () => {
+
+        beforeEach(() => {
+            appConfigService.config.providers = 'ECM';
+            appConfigService.load();
+            apiService.reset();
+        });
+
+        it('[ECM] should save the remember me cookie as a session cookie after successful login', (done) => {
+            let disposableLogin = authService.login('fake-username', 'fake-password', false).subscribe(() => {
+                expect(cookie['ALFRESCO_REMEMBER_ME']).not.toBeUndefined();
+                expect(cookie['ALFRESCO_REMEMBER_ME'].expiration).toBeNull();
+                disposableLogin.unsubscribe();
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
+            });
+        });
+
+        it('[ECM] should save the remember me cookie as a persistent cookie after successful login', (done) => {
+            let disposableLogin = authService.login('fake-username', 'fake-password', true).subscribe(() => {
+                expect(cookie['ALFRESCO_REMEMBER_ME']).not.toBeUndefined();
+                expect(cookie['ALFRESCO_REMEMBER_ME'].expiration).not.toBeNull();
+                disposableLogin.unsubscribe();
+
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({ 'entry': { 'id': 'fake-post-ticket', 'userId': 'admin' } })
+            });
+        });
+
+        it('[ECM] should not save the remember me cookie after failed login', (done) => {
+            let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
+                (res) => {
+                },
+                (err: any) => {
+                    expect(cookie['ALFRESCO_REMEMBER_ME']).toBeUndefined();
+                    disposableLogin.unsubscribe();
+                    done();
+                });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 403,
+                contentType: 'application/json',
+                responseText: JSON.stringify({
+                    'error': {
+                        'errorKey': 'Login failed',
+                        'statusCode': 403,
+                        'briefSummary': '05150009 Login failed',
+                        'stackTrace': 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+                        'descriptionURL': 'https://api-explorer.alfresco.com'
+                    }
+                })
+            });
+        });
+    });
+
     describe('when the setting is both ECM and BPM ', () => {
 
         beforeEach(() => {
@@ -402,9 +402,9 @@ describe('AuthenticationService', () => {
                 },
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false, 'isLoggedIn');
-                    expect(authService.getTicketEcm()).toBe(undefined, 'getTicketEcm');
+                    expect(authService.getTicketEcm()).toBe(null, 'getTicketEcm');
                     // cspell: disable-next
-                    expect(authService.getTicketBpm()).toBe('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk', 'getTicketBpm');
+                    expect(authService.getTicketBpm()).toBe(null, 'getTicketBpm');
                     expect(authService.isEcmLoggedIn()).toBe(false, 'isEcmLoggedIn');
                     disposableLogin.unsubscribe();
                     done();
@@ -425,8 +425,8 @@ describe('AuthenticationService', () => {
                 },
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicketEcm()).toBe('fake-post-ticket');
-                    expect(authService.getTicketBpm()).toBe(undefined);
+                    expect(authService.getTicketEcm()).toBe(null);
+                    expect(authService.getTicketBpm()).toBe(null);
                     expect(authService.isBpmLoggedIn()).toBe(false);
                     disposableLogin.unsubscribe();
                     done();
@@ -449,8 +449,8 @@ describe('AuthenticationService', () => {
                 },
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicketEcm()).toBe(undefined);
-                    expect(authService.getTicketBpm()).toBe(undefined);
+                    expect(authService.getTicketEcm()).toBe(null);
+                    expect(authService.getTicketBpm()).toBe(null);
                     expect(authService.isBpmLoggedIn()).toBe(false);
                     expect(authService.isEcmLoggedIn()).toBe(false);
                     disposableLogin.unsubscribe();

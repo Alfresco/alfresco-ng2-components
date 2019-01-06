@@ -17,13 +17,21 @@
 
 import { TaskDetailsModel } from './task-details.model';
 
-export class TaskListModel {
-    size: number;
-    total: number;
-    start: number;
-    length: number;
-    data: TaskDetailsModel[] = [];
+export class TaskListModel  {
+    size?: number;
+    total?: number;
+    start?: number;
+    length?: number;
+    data?: TaskDetailsModel[] = [];
 
-    constructor() {
+    constructor(input?: any) {
+        if (input) {
+            Object.assign(this, input);
+            if (input.data) {
+                this.data = input.data.map((item: any) => {
+                    return new TaskDetailsModel(item);
+                });
+            }
+        }
     }
 }

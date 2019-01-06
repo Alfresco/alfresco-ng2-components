@@ -90,6 +90,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     isPanelDisabled = true;
     showThumbnails: boolean = false;
     pdfThumbnailsContext: { viewer: any } = { viewer: null };
+    randomPdfId: string;
 
     get currentScaleText(): string {
         return Math.round(this.currentScale * 100) + '%';
@@ -103,6 +104,7 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.onPageChange = this.onPageChange.bind(this);
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
         this.onPageRendered = this.onPageRendered.bind(this);
+        this.randomPdfId = this.generateUuid();
     }
 
     ngOnChanges(changes) {
@@ -159,8 +161,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     initPDFViewer(pdfDocument: any) {
-        const viewer: any = document.getElementById('viewer-viewerPdf');
-        const container = document.getElementById('viewer-pdf-viewer');
+        const viewer: any = document.getElementById(`${this.randomPdfId}-viewer-viewerPdf`);
+        const container = document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
 
         if (viewer && container) {
             this.documentContainer = container;
@@ -197,7 +199,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         if (this.loadingTask) {
             try {
                 this.loadingTask.destroy();
-            } catch {}
+            } catch {
+            }
 
             this.loadingTask = null;
         }
@@ -217,8 +220,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
 
         if (this.pdfViewer) {
 
-            let viewerContainer = document.getElementById('viewer-main-container');
-            let documentContainer = document.getElementById('viewer-pdf-viewer');
+            let viewerContainer = document.getElementById(`${this.randomPdfId}-viewer-main-container`);
+            let documentContainer = document.getElementById(`${this.randomPdfId}-viewer-pdf-viewer`);
 
             let widthContainer;
             let heightContainer;
@@ -452,5 +455,12 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         } else if (key === 37) {// left arrow
             this.previousPage();
         }
+    }
+
+    private generateUuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
     }
 }

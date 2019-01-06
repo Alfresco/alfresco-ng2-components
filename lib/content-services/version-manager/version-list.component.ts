@@ -17,7 +17,7 @@
 
 import { AlfrescoApiService, ContentService } from '@alfresco/adf-core';
 import { Component, Input, OnChanges, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
-import { VersionsApi, MinimalNodeEntryEntity, VersionEntry } from 'alfresco-js-api';
+import { VersionsApi, Node, VersionEntry, VersionPaging } from '@alfresco/js-api';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 
@@ -42,7 +42,7 @@ export class VersionListComponent implements OnChanges {
 
     /** The target node. */
     @Input()
-    node: MinimalNodeEntryEntity;
+    node: Node;
 
     /** Toggles showing/hiding of comments */
     @Input()
@@ -58,11 +58,11 @@ export class VersionListComponent implements OnChanges {
 
     /** Emitted when a version is restored */
     @Output()
-    restored: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+    restored: EventEmitter<Node> = new EventEmitter<Node>();
 
     /** Emitted when a version is deleted */
     @Output()
-    deleted: EventEmitter<MinimalNodeEntryEntity> = new EventEmitter<MinimalNodeEntryEntity>();
+    deleted: EventEmitter<Node> = new EventEmitter<Node>();
 
     constructor(private alfrescoApi: AlfrescoApiService,
                 private contentService: ContentService,
@@ -92,8 +92,8 @@ export class VersionListComponent implements OnChanges {
 
     loadVersionHistory() {
         this.isLoading = true;
-        this.versionsApi.listVersionHistory(this.node.id).then((data) => {
-            this.versions = data.list.entries;
+        this.versionsApi.listVersionHistory(this.node.id).then((versionPaging: VersionPaging) => {
+            this.versions = versionPaging.list.entries;
             this.isLoading = false;
         });
     }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { QueryBody } from 'alfresco-js-api';
+import { QueryBody } from '@alfresco/js-api';
 
 export interface SearchConfigurationInterface {
 

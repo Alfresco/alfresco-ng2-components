@@ -210,16 +210,6 @@
 
                 <p class="toggle">
                     <mat-slide-toggle
-                        id="adf-switch-share"
-                        [color]="'primary'"
-                        (change)="toggleAllowShare()"
-                        [checked]="allowShare">
-                        Allow Share
-                    </mat-slide-toggle>
-                </p>
-
-                <p class="toggle">
-                    <mat-slide-toggle
                         id="adf-switch-allowsidebar"
                         [color]="'primary'"
                         (change)="toggleAllowSidebar()"
@@ -274,7 +264,6 @@
         [allowGoBack]="allowGoBack"
         [displayName]="displayName"
         [showToolbar]="showToolbar"
-        [allowShare]="allowShare"
         [allowPrint]="allowPrint"
         [allowDownload]="allowDownload"
         [allowSidebar]="allowSidebar"

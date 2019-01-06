@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { MinimalNodeEntity } from '@alfresco/js-api';
 import { PreviewService } from '../../services/preview.service';
 
 @Component({

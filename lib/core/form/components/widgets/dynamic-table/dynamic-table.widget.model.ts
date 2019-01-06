@@ -171,33 +171,33 @@ export class DynamicTableModel extends FormWidgetModel {
     }
 
     getCellValue(row: DynamicTableRow, column: DynamicTableColumn): any {
-        let result = row.value[column.id];
+        let rowValue = row.value[column.id];
 
         if (column.type === 'Dropdown') {
-            if (result) {
-                return result.name;
+            if (rowValue) {
+                return rowValue.name;
             }
         }
 
         if (column.type === 'Boolean') {
-            return result ? true : false;
+            return rowValue ? true : false;
         }
 
         if (column.type === 'Date') {
-            if (result) {
-                return moment(result.split('T')[0], 'YYYY-MM-DD').format('DD-MM-YYYY');
+            if (rowValue) {
+                return moment(rowValue.split('T')[0], 'YYYY-MM-DD').format('DD-MM-YYYY');
             }
         }
 
-        return result || '';
+        return rowValue || '';
     }
 
     getDisplayText(column: DynamicTableColumn): string {
-        let result = column.name;
+        let columnName = column.name;
         if (column.type === 'Amount') {
             let currency = column.amountCurrency || '$';
-            result = `${column.name} (${currency})`;
+            columnName = `${column.name} (${currency})`;
         }
-        return result;
+        return columnName;
     }
 }
