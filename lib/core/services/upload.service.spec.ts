@@ -123,7 +123,7 @@ describe('UploadService', () => {
     });
 
     it('should make XHR error request after an error occur', (done) => {
-        let emitter = new EventEmitter()
+        let emitter = new EventEmitter();
 
         let emitterDisposable = emitter.subscribe((e) => {
             expect(e.value).toBe('Error file uploaded');
