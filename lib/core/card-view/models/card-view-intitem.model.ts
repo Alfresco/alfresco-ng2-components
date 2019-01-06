@@ -24,12 +24,12 @@ import { CardViewItemIntValidator } from '../validators/card-view.validators';
 export class CardViewIntItemModel extends CardViewTextItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'int';
 
-    constructor(obj: CardViewTextItemProperties) {
-        super(obj);
+    constructor(cardViewTextItemProperties: CardViewTextItemProperties) {
+        super(cardViewTextItemProperties);
 
         this.validators.push(new CardViewItemIntValidator());
-        if (obj.value) {
-            this.value = parseInt(obj.value, 10);
+        if (cardViewTextItemProperties.value) {
+            this.value = parseInt(cardViewTextItemProperties.value, 10);
         }
     }
 }

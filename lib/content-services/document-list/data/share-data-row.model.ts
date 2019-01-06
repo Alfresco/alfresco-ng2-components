@@ -16,7 +16,7 @@
  */
 
 import { DataRow, ObjectUtils, ThumbnailService } from '@alfresco/adf-core';
-import { MinimalNode, MinimalNodeEntity } from 'alfresco-js-api';
+import { MinimalNode, NodeEntry } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
 
@@ -29,11 +29,11 @@ export class ShareDataRow implements DataRow {
     isDropTarget: boolean;
     cssClass: string = '';
 
-    get node(): MinimalNodeEntity {
+    get node(): NodeEntry {
         return this.obj;
     }
 
-    constructor(private obj: MinimalNodeEntity,
+    constructor(private obj: NodeEntry,
                 private documentListService: DocumentListService,
                 private permissionsStyle: PermissionStyleModel[],
                 private thumbnailService?: ThumbnailService) {
@@ -48,7 +48,7 @@ export class ShareDataRow implements DataRow {
         }
     }
 
-    getPermissionClass(nodeEntity: MinimalNodeEntity): string {
+    getPermissionClass(nodeEntity: NodeEntry): string {
         let permissionsClasses = '';
 
         this.permissionsStyle.forEach((currentPermissionsStyle: PermissionStyleModel) => {
@@ -73,12 +73,12 @@ export class ShareDataRow implements DataRow {
         return (currentPermissionsStyle.isFolder && node.isFolder);
     }
 
-    isFolderAndHasPermissionToUpload(obj: MinimalNodeEntity): boolean {
-        return this.isFolder(obj) && this.documentListService.hasPermission(obj.entry, 'create');
+    isFolderAndHasPermissionToUpload(nodeEntry: NodeEntry): boolean {
+        return this.isFolder(nodeEntry) && this.documentListService.hasPermission(nodeEntry.entry, 'create');
     }
 
-    isFolder(obj: MinimalNodeEntity): boolean {
-        return obj.entry && obj.entry.isFolder;
+    isFolder(nodeEntry: NodeEntry): boolean {
+        return nodeEntry.entry && nodeEntry.entry.isFolder;
     }
 
     cacheValue(key: string, value: any): any {
@@ -94,7 +94,9 @@ export class ShareDataRow implements DataRow {
     }
 
     imageErrorResolver(event: Event): any {
-        return this.thumbnailService.getMimeTypeIcon(this.obj.entry.content.mimeType);
+        if (this.obj.entry.content) {
+            return this.thumbnailService.getMimeTypeIcon(this.obj.entry.content.mimeType);
+        }
     }
 
     hasValue(key: string): boolean {

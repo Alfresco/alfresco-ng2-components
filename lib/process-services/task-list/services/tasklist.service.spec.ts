@@ -390,7 +390,7 @@ describe('Activiti TaskList Service', () => {
 
         it('should assign task to a userId', (done) => {
             let testTaskId = '8888';
-            service.assignTaskByUserId(testTaskId, fakeUser2.id).subscribe((res: TaskDetailsModel) => {
+            service.assignTaskByUserId(testTaskId, fakeUser2.id.toString()).subscribe((res: TaskDetailsModel) => {
                 expect(res).toBeDefined();
                 expect(res.id).toEqual(testTaskId);
                 expect(res.name).toEqual('FakeNameTask');

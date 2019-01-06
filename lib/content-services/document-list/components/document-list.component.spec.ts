@@ -38,6 +38,7 @@ import { CustomResourcesService } from './../services/custom-resources.service';
 import { DocumentListComponent } from './document-list.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { NodeEntry } from '@alfresco/js-api';
 
 describe('DocumentList', () => {
 
@@ -73,7 +74,7 @@ describe('DocumentList', () => {
         documentList.ngOnInit();
 
         spyGetSites = spyOn(apiService.sitesApi, 'getSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
-        spyFavorite = spyOn(apiService.favoritesApi, 'getFavorites').and.returnValue(Promise.resolve({list: []}));
+        spyFavorite = spyOn(apiService.favoritesApi, 'getFavorites').and.returnValue(Promise.resolve({ list: [] }));
     });
 
     afterEach(() => {
@@ -202,6 +203,7 @@ describe('DocumentList', () => {
     });
 
     it('should reset selection upon reload', () => {
+        documentList.currentFolderId = 'id-folder';
         spyOn(documentList, 'resetSelection').and.callThrough();
 
         documentList.reload();
@@ -228,6 +230,7 @@ describe('DocumentList', () => {
     });
 
     it('should reset selection upon reload', () => {
+        documentList.currentFolderId = 'id-folder';
         spyOn(documentList, 'resetSelection').and.callThrough();
 
         documentList.reload();
@@ -296,6 +299,7 @@ describe('DocumentList', () => {
     });
 
     it('should disable the action if there is no permission for the file and disableWithNoPermission true', () => {
+        documentList.currentFolderId = 'fake-node-id';
         let documentMenu = new ContentActionModel({
             disableWithNoPermission: true,
             permission: 'delete',
@@ -929,7 +933,7 @@ describe('DocumentList', () => {
     it('should emit node-click DOM event', (done) => {
         let node = new NodeMinimalEntry();
 
-        document.addEventListener('node-click', (e: CustomEvent) => {
+        document.addEventListener('node-click', (customEvent: CustomEvent) => {
             done();
         });
 
@@ -947,7 +951,7 @@ describe('DocumentList', () => {
     it('should emit node-dblclick DOM event', (done) => {
         let node = new NodeMinimalEntry();
 
-        document.addEventListener('node-dblclick', (e: CustomEvent) => {
+        document.addEventListener('node-dblclick', (customEvent: CustomEvent) => {
             done();
         });
 
@@ -977,7 +981,7 @@ describe('DocumentList', () => {
 
     it('should emit error when loadFolderNodesByFolderNodeId fails', (done) => {
         const error = { message: '{ "error": { "statusCode": 501 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeWithCreatePermission));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: fakeNodeWithCreatePermission }));
         spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.reject(error));
 
         let disposableError = documentList.error.subscribe((val) => {
@@ -996,7 +1000,7 @@ describe('DocumentList', () => {
             expect(folderNode.value.id).toBe('fake-node');
             done();
         });
-        documentList.onNodeDblClick({ entry: { id: 'fake-node', isFolder: true } });
+        documentList.onNodeDblClick(new NodeEntry({ entry: { id: 'fake-node', isFolder: true } }));
     });
 
     it('should set no permission when getFolderNode fails with 403', (done) => {
@@ -1014,6 +1018,7 @@ describe('DocumentList', () => {
     });
 
     it('should reset noPermission upon reload', () => {
+        documentList.currentFolderId = 'fake-node-id';
         documentList.noPermission = true;
         fixture.detectChanges();
 
@@ -1043,7 +1048,7 @@ describe('DocumentList', () => {
         documentList.folderNode = new NodeMinimal();
         documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
 
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeWithNoPermission));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: fakeNodeWithNoPermission }));
         spyOn(documentListService, 'getFolder').and.returnValue(throwError(error));
 
         documentList.loadFolder();
@@ -1153,14 +1158,14 @@ describe('DocumentList', () => {
 
     it('should fetch user membership sites', () => {
         const peopleApi = apiService.getInstance().core.peopleApi;
-        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve(fakeGetSiteMembership));
+        spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
         documentList.loadFolderByNodeId('-mysites-');
-        expect(peopleApi.getSiteMembership).toHaveBeenCalled();
+        expect(peopleApi.listSiteMembershipsForPerson).toHaveBeenCalled();
     });
 
     it('should emit error when fetch membership sites fails', (done) => {
-        spyOn(apiService.getInstance().core.peopleApi, 'getSiteMembership')
+        spyOn(apiService.getInstance().core.peopleApi, 'listSiteMembershipsForPerson')
             .and.returnValue(Promise.reject('error'));
 
         let disposableError = documentList.error.subscribe((val) => {
@@ -1175,10 +1180,10 @@ describe('DocumentList', () => {
     it('should assure that user membership sites have name property set', (done) => {
         fixture.detectChanges();
         const peopleApi = apiService.getInstance().core.peopleApi;
-        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve(fakeGetSiteMembership));
+        spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
         documentList.loadFolderByNodeId('-mysites-');
-        expect(peopleApi.getSiteMembership).toHaveBeenCalled();
+        expect(peopleApi.listSiteMembershipsForPerson).toHaveBeenCalled();
 
         let disposableReady = documentList.ready.subscribe((page) => {
             const entriesWithoutName = page.list.entries.filter((item) => !item.entry.name);
@@ -1191,10 +1196,10 @@ describe('DocumentList', () => {
     it('should assure that user membership sites have name property set correctly', (done) => {
         fixture.detectChanges();
         const peopleApi = apiService.getInstance().core.peopleApi;
-        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve(fakeGetSiteMembership));
+        spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
         documentList.loadFolderByNodeId('-mysites-');
-        expect(peopleApi.getSiteMembership).toHaveBeenCalled();
+        expect(peopleApi.listSiteMembershipsForPerson).toHaveBeenCalled();
 
         let disposableReady = documentList.ready.subscribe((page) => {
             const wrongName = page.list.entries.filter((item) => (item.entry.name !== item.entry.title));
@@ -1259,6 +1264,7 @@ describe('DocumentList', () => {
     });
 
     it('should reset folder node upon changing current folder id', () => {
+        documentList.currentFolderId = 'fake-node-id';
         documentList.folderNode = <any> {};
 
         documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, '-sites-', false) });
@@ -1278,7 +1284,7 @@ describe('DocumentList', () => {
         documentList.currentFolderId = '12345-some-id-6789';
 
         const peopleApi = apiService.getInstance().core.peopleApi;
-        spyOn(peopleApi, 'getSiteMembership').and.returnValue(Promise.resolve(fakeGetSiteMembership));
+        spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
         documentList.loadFolderByNodeId('-mysites-');
         expect(documentList.currentFolderId).toBe('-mysites-');

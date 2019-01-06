@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LightUserRepresentation, ProcessInstanceRepresentation, RestVariable } from 'alfresco-js-api';
+import { LightUserRepresentation, ProcessInstanceRepresentation, RestVariable } from '@alfresco/js-api';
 
 export class ProcessInstance implements ProcessInstanceRepresentation {
 

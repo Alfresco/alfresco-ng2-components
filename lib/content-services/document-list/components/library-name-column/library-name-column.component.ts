@@ -23,7 +23,7 @@ import {
   Input,
   ElementRef
 } from '@angular/core';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { NodeEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 
 @Component({
@@ -43,7 +43,7 @@ export class LibraryNameColumnComponent implements OnInit {
 
   displayTooltip: string;
   displayText: string;
-  node: MinimalNodeEntity;
+  node: NodeEntry;
 
   constructor(private element: ElementRef) {}
 

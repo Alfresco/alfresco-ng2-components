@@ -19,7 +19,7 @@ import { Component, ViewChild } from '@angular/core';
 import { DocumentListComponent } from '@alfresco/adf-content-services';
 import { UserPreferencesService, UserPreferenceValues, RestoreMessageModel, NotificationService } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
-import { PathInfoEntity } from 'alfresco-js-api';
+import { PathInfoEntity } from '@alfresco/js-api';
 
 @Component({
     templateUrl: './trashcan.component.html',

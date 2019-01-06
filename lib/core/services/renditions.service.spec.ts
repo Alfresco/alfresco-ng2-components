@@ -22,7 +22,7 @@ import { setupTestBed } from '../testing/setupTestBed';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
-import { RenditionEntry } from 'alfresco-js-api';
+import { RenditionEntry } from '@alfresco/js-api';
 
 declare let jasmine: any;
 

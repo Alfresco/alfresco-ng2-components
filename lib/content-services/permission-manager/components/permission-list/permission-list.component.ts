@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { NodesApiService } from '@alfresco/adf-core';
-import { MinimalNodeEntryEntity, PermissionElement } from 'alfresco-js-api';
+import { Node, PermissionElement } from '@alfresco/js-api';
 import { PermissionDisplayModel } from '../../models/permission.model';
 import { NodePermissionService } from '../../services/node-permission.service';
 
@@ -43,7 +43,7 @@ export class PermissionListComponent implements OnInit {
 
     permissionList: PermissionDisplayModel[];
     settableRoles: any[];
-    actualNode: MinimalNodeEntryEntity;
+    actualNode: Node;
 
     constructor(private nodeService: NodesApiService,
                 private nodePermissionService: NodePermissionService) {
@@ -59,26 +59,26 @@ export class PermissionListComponent implements OnInit {
     }
 
     private fetchNodePermissions() {
-        this.nodeService.getNode(this.nodeId).subscribe((node: MinimalNodeEntryEntity) => {
+        this.nodeService.getNode(this.nodeId).subscribe((node: Node) => {
             this.actualNode = node;
             this.permissionList = this.getPermissionList(node);
             this.nodePermissionService.getNodeRoles(node).subscribe((settableList: string[]) => {
-                this.settableRoles =  settableList;
+                this.settableRoles = settableList;
             });
         });
     }
 
-    private getPermissionList(node: MinimalNodeEntryEntity): PermissionDisplayModel[] {
+    private getPermissionList(node: Node): PermissionDisplayModel[] {
         let allPermissions: PermissionDisplayModel[] = [];
         if (node.permissions.locallySet) {
-            node.permissions.locallySet.map((element) => {
-                let permission = new PermissionDisplayModel(element);
+            node.permissions.locallySet.map((permissionElement: PermissionElement) => {
+                let permission = new PermissionDisplayModel(permissionElement);
                 allPermissions.push(permission);
             });
         }
         if (node.permissions.inherited) {
-            node.permissions.inherited.map((element) => {
-                let permissionInherited = new PermissionDisplayModel(element);
+            node.permissions.inherited.map((permissionElement: PermissionElement) => {
+                let permissionInherited = new PermissionDisplayModel(permissionElement);
                 permissionInherited.isInherited = true;
                 allPermissions.push(permissionInherited);
             });
@@ -89,7 +89,7 @@ export class PermissionListComponent implements OnInit {
     saveNewRole(event: any, permissionRow: PermissionDisplayModel) {
         let updatedPermissionRole: PermissionElement = this.buildUpdatedPermission(event.value, permissionRow);
         this.nodePermissionService.updatePermissionRole(this.actualNode, updatedPermissionRole)
-            .subscribe((node: MinimalNodeEntryEntity) => {
+            .subscribe((node: Node) => {
                 this.update.emit(updatedPermissionRole);
             });
     }

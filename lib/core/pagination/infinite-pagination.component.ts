@@ -24,7 +24,6 @@ import {
 } from '@angular/core';
 
 import { PaginatedComponent } from './paginated-component.interface';
-import { Pagination } from 'alfresco-js-api';
 import { Subscription } from 'rxjs';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { PaginationModel } from '../models/pagination.model';
@@ -72,7 +71,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     /** Emitted when the "Load More" button is clicked. */
     @Output()
-    loadMore: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+    loadMore: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
 
     private paginationSubscription: Subscription;
 

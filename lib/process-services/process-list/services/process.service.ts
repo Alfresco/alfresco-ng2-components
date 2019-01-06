@@ -17,6 +17,7 @@
 
 import { AlfrescoApiService, FormValues } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
+import { RestVariable } from '@alfresco/js-api';
 import { Observable, from, throwError, of } from 'rxjs';
 import { TaskDetailsModel } from '../../task-list';
 import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
@@ -203,7 +204,7 @@ export class ProcessService {
             this.alfrescoApiService.getInstance().activiti.processInstanceVariablesApi.getProcessInstanceVariables(processInstanceId)
         )
             .pipe(
-                map((processVars: any[]) => processVars.map((pd) => new ProcessInstanceVariable(pd))),
+                map((processVars: any[]) => processVars.map((currentProcessVar) => new ProcessInstanceVariable(currentProcessVar))),
                 catchError((err) => this.handleProcessError(err))
             );
     }
@@ -214,11 +215,10 @@ export class ProcessService {
      * @param variables Variables to update
      * @returns Array of instance variable info
      */
-    createOrUpdateProcessInstanceVariables(processInstanceId: string, variables: ProcessInstanceVariable[]): Observable<ProcessInstanceVariable[]> {
-        return from<ProcessInstanceVariable[]>(
+    createOrUpdateProcessInstanceVariables(processInstanceId: string, variables: RestVariable[]): Observable<ProcessInstanceVariable[]> {
+        return from(
             this.alfrescoApiService.getInstance().activiti.processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processInstanceId, variables)
-        )
-            .pipe(
+        ).pipe(
                 catchError((err) => this.handleProcessError(err))
             );
     }

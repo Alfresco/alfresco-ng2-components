@@ -32,7 +32,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';
-import { SearchSortingPickerPage } from '../../pages/adf/content_services/search/components/search-sortingPicker.page';
+import { SearchSortingPickerPage } from '../../pages/adf/content-services/search/components/search-sortingPicker.page';
 
 describe('Search Sorting Picker', () => {
 

@@ -267,8 +267,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                 filter((x) => x.length === 1)
             );
 
-        this.singleClickStreamSub = singleClickStream.subscribe((obj: DataRowEvent[]) => {
-            let event: DataRowEvent = obj[0];
+        this.singleClickStreamSub = singleClickStream.subscribe((dataRowEvents: DataRowEvent[]) => {
+            let event: DataRowEvent = dataRowEvents[0];
             this.handleRowSelection(event.value, <MouseEvent | KeyboardEvent> event.event);
             this.rowClick.emit(event);
             if (!event.defaultPrevented) {
@@ -292,8 +292,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                 filter((x) => x.length >= 2)
             );
 
-        this.multiClickStreamSub = multiClickStream.subscribe((obj: DataRowEvent[]) => {
-            let event: DataRowEvent = obj[0];
+        this.multiClickStreamSub = multiClickStream.subscribe((dataRowEvents: DataRowEvent[]) => {
+            let event: DataRowEvent = dataRowEvents[0];
             this.rowDblClick.emit(event);
             if (!event.defaultPrevented) {
                 this.elementRef.nativeElement.dispatchEvent(
@@ -364,13 +364,13 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return schema;
     }
 
-    onRowClick(row: DataRow, e: MouseEvent) {
-        if (e) {
-            e.preventDefault();
+    onRowClick(row: DataRow, mouseEvent: MouseEvent) {
+        if (mouseEvent) {
+            mouseEvent.preventDefault();
         }
 
         if (row) {
-            const dataRowEvent = new DataRowEvent(row, e, this);
+            const dataRowEvent = new DataRowEvent(row, mouseEvent, this);
             this.clickObserver.next(dataRowEvent);
         }
     }
@@ -419,11 +419,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         this.isSelectAllChecked = false;
     }
 
-    onRowDblClick(row: DataRow, e?: Event) {
-        if (e) {
-            e.preventDefault();
+    onRowDblClick(row: DataRow, event?: Event) {
+        if (event) {
+            event.preventDefault();
         }
-        let dataRowEvent = new DataRowEvent(row, e, this);
+        let dataRowEvent = new DataRowEvent(row, event, this);
         this.clickObserver.next(dataRowEvent);
     }
 
@@ -448,12 +448,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
     }
 
-    private onKeyboardNavigate(row: DataRow, e: KeyboardEvent) {
-        if (e) {
-            e.preventDefault();
+    private onKeyboardNavigate(row: DataRow, keyboardEvent: KeyboardEvent) {
+        if (keyboardEvent) {
+            keyboardEvent.preventDefault();
         }
 
-        const event = new DataRowEvent(row, e, this);
+        const event = new DataRowEvent(row, keyboardEvent, this);
 
         this.rowDblClick.emit(event);
         this.elementRef.nativeElement.dispatchEvent(
@@ -476,18 +476,18 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
     }
 
-    onSelectAllClick(e: MatCheckboxChange) {
-        this.isSelectAllChecked = e.checked;
+    onSelectAllClick(matCheckboxChange: MatCheckboxChange) {
+        this.isSelectAllChecked = matCheckboxChange.checked;
 
         if (this.multiselect) {
             let rows = this.data.getRows();
             if (rows && rows.length > 0) {
                 for (let i = 0; i < rows.length; i++) {
-                    this.selectRow(rows[i], e.checked);
+                    this.selectRow(rows[i], matCheckboxChange.checked);
                 }
             }
 
-            const domEventName = e.checked ? 'row-select' : 'row-unselect';
+            const domEventName = matCheckboxChange.checked ? 'row-select' : 'row-unselect';
             const row = this.selection.length > 0 ? this.selection[0] : null;
 
             this.emitRowSelectionEvent(domEventName, row);

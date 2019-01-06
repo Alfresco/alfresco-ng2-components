@@ -18,14 +18,14 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { MinimalNodeEntity, MinimalNodeEntryEntity, DeletedNodeEntity, DeletedNodeMinimalEntry } from 'alfresco-js-api';
+import { NodeEntry, Node, DeletedNodeEntity, DeletedNode } from '@alfresco/js-api';
 import { Observable, forkJoin, from, of } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';
 import { map, catchError } from 'rxjs/operators';
 
 interface ProcessedNodeData {
-    entry: MinimalNodeEntryEntity | DeletedNodeMinimalEntry;
+    entry: Node | DeletedNode;
     status: number;
 }
 
@@ -52,7 +52,7 @@ interface ProcessStatus {
 export class NodeDeleteDirective implements OnChanges {
     /** Array of nodes to delete. */
     @Input('adf-delete')
-    selection: MinimalNodeEntity[] | DeletedNodeEntity[];
+    selection: NodeEntry[] | DeletedNodeEntity[];
 
     /** If true then the nodes are deleted immediately rather than being put in the trash */
     @Input()
@@ -86,7 +86,7 @@ export class NodeDeleteDirective implements OnChanges {
         this.elementRef.nativeElement.disabled = disable;
     }
 
-    private process(selection: MinimalNodeEntity[] | DeletedNodeEntity[]) {
+    private process(selection: NodeEntry[] | DeletedNodeEntity[]) {
         if (selection && selection.length) {
 
             const batch = this.getDeleteNodesBatch(selection);
@@ -105,7 +105,7 @@ export class NodeDeleteDirective implements OnChanges {
         return selection.map((node) => this.deleteNode(node));
     }
 
-    private deleteNode(node: MinimalNodeEntity | DeletedNodeEntity): Observable<ProcessedNodeData> {
+    private deleteNode(node: NodeEntry | DeletedNodeEntity): Observable<ProcessedNodeData> {
         const id = (<any> node.entry).nodeId || node.entry.id;
 
         let promise;

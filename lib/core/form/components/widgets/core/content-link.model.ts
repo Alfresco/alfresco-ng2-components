@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
- import { RelatedContentRepresentation } from 'alfresco-js-api';
+ import { RelatedContentRepresentation } from '@alfresco/js-api';
 
  export class ContentLinkModel implements RelatedContentRepresentation {
 

@@ -38,7 +38,7 @@ Using with node id:
 <adf-viewer 
     [showViewer]="true" 
     [overlayMode]="true" 
-    [fileNodeId]="'d367023a-7ebe-4f3a-a7d0-4f27c43f1045'">
+    [nodeId]="'d367023a-7ebe-4f3a-a7d0-4f27c43f1045'">
 </adf-viewer>
 ```
 
@@ -106,7 +106,6 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the pdf thumbnails. |
 | urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
 | urlFileViewer | `string` | null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
-| fileNodeId | `void` |  | (**Deprecated:** 2.4.0 use nodeId) Node Id of the file to load. |
 
 ### Events
 
@@ -147,7 +146,7 @@ Below is the most simple integration of the Viewer and
 <adf-viewer
     [(showViewer)]="showViewer"
     [overlayMode]="true"
-    [fileNodeId]="nodeId">
+    [nodeId]="nodeId">
 </adf-viewer>
 ```
 
@@ -276,7 +275,7 @@ the [Viewer component](../core/viewer.component.md). Below is an example that sh
 to handle 3D data files:
 
 ```html
-<adf-viewer [fileNodeId]="fileNodeId">
+<adf-viewer [nodeId]="nodeId">
     
     <adf-viewer-extension [supportedExtensions]="['obj','3ds']" #extension>
         <ng-template let-urlFileContent="urlFileContent" let-extension="extension">
@@ -295,7 +294,7 @@ Note: you need to add the `ng2-3d-editor` dependency to your `package.json` file
 You can define multiple `adf-viewer-extension` templates if required:
 
 ```html
-<adf-viewer [fileNodeId]="fileNodeId">
+<adf-viewer [nodeId]="nodeId">
 
     <adf-viewer-extension [supportedExtensions]="['xls','xlsx']" #extension>
         <ng-template let-urlFileContent="urlFileContent">
@@ -377,7 +376,7 @@ transclusion, which will display all content placed inside the `<adf-viewer-side
 ```
 
 The second way to customize the sidebar is to use template injection but note that this only works
-when using the viewer with `fileNodeId`.
+when using the viewer with `nodeId`.
 
 ```html
 <ng-template let-node="node" #sidebarTemplate>
@@ -424,7 +423,7 @@ You can enable a custom "Open With" menu by providing at least one action inside
 `adf-viewer-open-with` tag:
 
 ```html
-<adf-viewer [fileNodeId]="nodeId">
+<adf-viewer [nodeId]="nodeId">
 
     <adf-viewer-open-with>
         <button mat-menu-item>
@@ -451,7 +450,7 @@ You can enable a custom "Open With" menu by providing at least one action inside
 You can enable a custom "More actions" menu by providing at least one action inside the `adf-viewer-more-actions` tag:
 
 ```html
-<adf-viewer [fileNodeId]="nodeId">
+<adf-viewer [nodeId]="nodeId">
 
     <adf-viewer-more-actions>
         <button mat-menu-item>

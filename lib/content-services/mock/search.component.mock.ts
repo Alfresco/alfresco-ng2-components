@@ -17,7 +17,7 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { SearchComponent } from '../search/components/search.component';
-import { QueryBody } from 'alfresco-js-api';
+import { QueryBody } from '@alfresco/js-api';
 
 const entryItem = {
     entry: {

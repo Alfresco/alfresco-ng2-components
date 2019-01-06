@@ -72,8 +72,8 @@ export class DropdownEditorComponent implements OnInit {
                 this.column.id
             )
             .subscribe(
-                (result: DynamicTableColumnOption[]) => {
-                    this.column.options = result || [];
+                (dynamicTableColumnOption: DynamicTableColumnOption[]) => {
+                    this.column.options = dynamicTableColumnOption || [];
                     this.options = this.column.options;
                     this.value = this.table.getCellValue(this.row, this.column);
                 },
@@ -89,8 +89,8 @@ export class DropdownEditorComponent implements OnInit {
                 this.column.id
             )
             .subscribe(
-                (result: DynamicTableColumnOption[]) => {
-                    this.column.options = result || [];
+                (dynamicTableColumnOption: DynamicTableColumnOption[]) => {
+                    this.column.options = dynamicTableColumnOption || [];
                     this.options = this.column.options;
                     this.value = this.table.getCellValue(this.row, this.column);
                 },

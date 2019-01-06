@@ -20,6 +20,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { NodeMetadata } from '../models/node-metadata.model';
 import { map } from 'rxjs/operators';
+import { AlfrescoApiCompatibility, NodeEntry } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -35,7 +36,7 @@ export class NodeService {
      * @returns Node metadata
      */
     public getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
-        return from(this.apiService.getInstance().nodes.getNodeInfo(nodeId))
+        return from(this.apiService.getInstance().nodes.getNode(nodeId))
             .pipe(map(this.cleanMetadataFromSemicolon));
     }
 
@@ -48,7 +49,7 @@ export class NodeService {
      * @param data Property data to store in the node under namespace
      * @returns The created node
      */
-    public createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<any> {
+    public createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<NodeEntry> {
         let properties = {};
         for (let key in data) {
             if (data[key]) {
@@ -67,7 +68,7 @@ export class NodeService {
      * @param path Path to the node
      * @returns The created node
      */
-    public createNode(name: string, nodeType: string, properties: any, path: string): Observable<any> {
+    public createNode(name: string, nodeType: string, properties: any, path: string): Observable<NodeEntry> {
         let body = {
             name: name,
             nodeType: nodeType,
@@ -75,8 +76,7 @@ export class NodeService {
             relativePath: path
         };
 
-        // TODO: requires update to alfresco-js-api typings
-        let apiService: any = this.apiService.getInstance();
+        let apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
         return from(apiService.nodes.addNode('-root-', body, {}));
     }
 
@@ -87,21 +87,21 @@ export class NodeService {
         });
     }
 
-    private cleanMetadataFromSemicolon(data: any): NodeMetadata {
+    private cleanMetadataFromSemicolon(nodeEntry: NodeEntry): NodeMetadata {
         let metadata = {};
 
-        if (data && data.properties) {
-            for (let key in data.properties) {
+        if (nodeEntry && nodeEntry.entry.properties) {
+            for (let key in nodeEntry.entry.properties) {
                 if (key) {
                     if (key.indexOf(':') !== -1) {
-                        metadata [key.split(':')[1]] = data.properties[key];
+                        metadata [key.split(':')[1]] = nodeEntry.entry.properties[key];
                     } else {
-                        metadata [key] = data.properties[key];
+                        metadata [key] = nodeEntry.entry.properties[key];
                     }
                 }
             }
         }
 
-        return new NodeMetadata(metadata, data.nodeType);
+        return new NodeMetadata(metadata, nodeEntry.entry.nodeType);
     }
 }

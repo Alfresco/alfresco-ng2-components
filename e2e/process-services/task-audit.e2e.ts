@@ -17,11 +17,11 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TasksPage } from '../pages/adf/process_services/tasksPage';
+import { TasksPage } from '../pages/adf/process-services/tasksPage';
 
 import CONSTANTS = require('../util/constants');
 
-import { Tenant } from '../models/APS/Tenant';
+import { Tenant } from '../models/APS/tenant';
 
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');

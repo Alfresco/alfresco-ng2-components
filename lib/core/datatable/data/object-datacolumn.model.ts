@@ -30,14 +30,14 @@ export class ObjectDataColumn implements DataColumn {
     cssClass: string;
     template?: TemplateRef<any>;
 
-    constructor(obj: any) {
-        this.key = obj.key;
-        this.type = obj.type || 'text';
-        this.format = obj.format;
-        this.sortable = obj.sortable;
-        this.title = obj.title;
-        this.srTitle = obj.srTitle;
-        this.cssClass = obj.cssClass;
-        this.template = obj.template;
+    constructor(input: any) {
+        this.key = input.key;
+        this.type = input.type || 'text';
+        this.format = input.format;
+        this.sortable = input.sortable;
+        this.title = input.title;
+        this.srTitle = input.srTitle;
+        this.cssClass = input.cssClass;
+        this.template = input.template;
     }
 }

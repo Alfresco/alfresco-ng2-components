@@ -20,7 +20,7 @@ import {
     ChangeDetectorRef, OnDestroy, HostBinding
 } from '@angular/core';
 
-import { Pagination } from 'alfresco-js-api';
+import { Pagination } from '@alfresco/js-api';
 import { PaginatedComponent } from './paginated-component.interface';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { Subscription } from 'rxjs';
@@ -37,11 +37,11 @@ import { UserPreferencesService } from '../services/user-preferences.service';
 })
 export class PaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
 
-    static DEFAULT_PAGINATION: Pagination = {
+    static DEFAULT_PAGINATION: Pagination = new Pagination({
         skipCount: 0,
         maxItems: 25,
         totalItems: 0
-    };
+    });
 
     static ACTIONS = {
         NEXT_PAGE: 'NEXT_PAGE',
@@ -237,22 +237,22 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
             pagination
         } = this;
 
-        const data = Object.assign({}, pagination, params);
+        const paginationModel: PaginationModel = Object.assign({}, pagination, params);
 
         if (action === NEXT_PAGE) {
-            nextPage.emit(data);
+            nextPage.emit(paginationModel);
         }
 
         if (action === PREV_PAGE) {
-            prevPage.emit(data);
+            prevPage.emit(paginationModel);
         }
 
         if (action === CHANGE_PAGE_NUMBER) {
-            changePageNumber.emit(data);
+            changePageNumber.emit(paginationModel);
         }
 
         if (action === CHANGE_PAGE_SIZE) {
-            changePageSize.emit(data);
+            changePageSize.emit(paginationModel);
         }
 
         change.emit(params);

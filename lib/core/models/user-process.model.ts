@@ -19,24 +19,24 @@
  * This object represent the process service user.*
  */
 
-import { LightUserRepresentation } from 'alfresco-js-api';
+import { LightUserRepresentation } from '@alfresco/js-api';
 
 export class UserProcessModel implements LightUserRepresentation {
     id?: number;
     email?: string;
     firstName?: string;
     lastName?: string;
-    pictureId?: number = null;
+    pictureId?: number;
     externalId?: string;
 
-    constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id;
-            this.email = obj.email || null;
-            this.firstName = obj.firstName || null;
-            this.lastName = obj.lastName || null;
-            this.pictureId = obj.pictureId || null;
-            this.externalId = obj.externalId || null;
+    constructor(input?: any) {
+        if (input) {
+            this.id = input.id;
+            this.email = input.email || null;
+            this.firstName = input.firstName || null;
+            this.lastName = input.lastName || null;
+            this.pictureId = input.pictureId || null;
+            this.externalId = input.externalId || null;
         }
     }
 

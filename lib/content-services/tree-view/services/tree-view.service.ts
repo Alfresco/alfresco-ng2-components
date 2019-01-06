@@ -19,7 +19,7 @@ import { NodesApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
-import { NodePaging, NodeEntry } from 'alfresco-js-api';
+import { NodePaging, NodeEntry } from '@alfresco/js-api';
 import { map } from 'rxjs/operators';
 
 @Injectable({

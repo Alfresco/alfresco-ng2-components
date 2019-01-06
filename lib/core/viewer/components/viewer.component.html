@@ -91,16 +91,6 @@
                 </button>
 
                 <button
-                    id="adf-viewer-share"
-                    *ngIf="allowShare"
-                    mat-icon-button
-                    title="{{ 'ADF_VIEWER.ACTIONS.SHARE' | translate }}"
-                    data-automation-id="adf-toolbar-share"
-                    (click)="shareContent()">
-                    <mat-icon>share</mat-icon>
-                </button>
-
-                <button
                     id="adf-viewer-fullscreen"
                     *ngIf="viewerType !== 'media' && allowFullScreen"
                     mat-icon-button

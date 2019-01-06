@@ -26,33 +26,6 @@ describe('DocumentListService', () => {
     let service: DocumentListService;
     let alfrescoApiService: AlfrescoApiService;
 
-    let fakeEntryNode = {
-        'entry': {
-            'aspectNames': ['cm:auditable'],
-            'createdAt': '2016-12-06T15:58:32.408+0000',
-            'isFolder': true,
-            'isFile': false,
-            'createdByUser': { 'id': 'admin', 'displayName': 'Administrator' },
-            'modifiedAt': '2016-12-06T15:58:32.408+0000',
-            'modifiedByUser': { 'id': 'admin', 'displayName': 'Administrator' },
-            'name': 'fake-name',
-            'id': '2214733d-a920-4dbe-af95-4230345fae82',
-            'nodeType': 'cm:folder',
-            'parentId': 'ed7ab80e-b398-4bed-b38d-139ae4cc592a'
-        }
-    };
-
-    let fakeAlreadyExist = {
-        'error': {
-            'errorKey': 'Duplicate child name not allowed: empty',
-            'statusCode': 409,
-            'briefSummary': '11060002 Duplicate child name not' +
-            ' allowed: empty',
-            'stackTrace': 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
-            'descriptionURL': 'https://api-explorer.alfresco.com'
-        }
-    };
-
     let fakeFolder = {
         'list': {
             'pagination': { 'count': 1, 'hasMoreItems': false, 'totalItems': 1, 'skipCount': 0, 'maxItems': 20 },
@@ -105,43 +78,6 @@ describe('DocumentListService', () => {
         jasmine.Ajax.uninstall();
     });
 
-    it('should create a folder in the path', () => {
-        service.createFolder('fake-name', 'fake-path').subscribe(
-            (res) => {
-                expect(res).toBeDefined();
-                expect(res.entry).toBeDefined();
-                expect(res.entry.isFolder).toBeTruthy();
-                expect(res.entry.name).toEqual('fake-name');
-                expect(res.entry.nodeType).toEqual('cm:folder');
-            }
-        );
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 200,
-            contentType: 'json',
-            responseText: fakeEntryNode
-        });
-    });
-
-    it('should emit an error when the folder already exist', () => {
-        service.createFolder('fake-name', 'fake-path').subscribe(
-            (res) => {
-
-            },
-            (err) => {
-                expect(err).toBeDefined();
-                expect(err.status).toEqual(409);
-                expect(err.response).toBeDefined();
-            }
-        );
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            status: 409,
-            contentType: 'json',
-            responseText: fakeAlreadyExist
-        });
-    });
-
     it('should return the folder info', () => {
         service.getFolder('/fake-root/fake-name').subscribe(
             (res) => {
@@ -186,7 +122,7 @@ describe('DocumentListService', () => {
     });
 
     it('should add the includeTypes in the request getFolderNode if required', () => {
-        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo').and.callThrough();
+        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNode').and.callThrough();
 
         service.getFolderNode('test-id', ['isLocked']);
 
@@ -197,7 +133,7 @@ describe('DocumentListService', () => {
     });
 
     it('should not add the includeTypes in the request getFolderNode if is duplicated', () => {
-        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo').and.callThrough();
+        let spyGetNodeInfo = spyOn(alfrescoApiService.getInstance().nodes, 'getNode').and.callThrough();
 
         service.getFolderNode('test-id', ['allowableOperations']);
 
@@ -211,7 +147,7 @@ describe('DocumentListService', () => {
     it('should delete the folder', () => {
         service.deleteNode('fake-id').subscribe(
             (res) => {
-                expect(res).toBeNull();
+                expect(res).toBe('');
             }
         );
 

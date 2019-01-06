@@ -130,7 +130,7 @@ export class WebscriptComponent implements OnChanges {
                 this.data = new ObjectDataTableAdapter(data.data, data.schema);
             }
 
-        } catch (e) {
+        } catch (error) {
             this.logService.error('error during the cast as datatable');
         }
 

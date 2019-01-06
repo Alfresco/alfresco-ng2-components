@@ -123,9 +123,8 @@ describe('NodeService', () => {
             isFolder: true
         };
 
-        service.createNodeMetadata('typeTest', EcmModelService.MODEL_NAMESPACE, data, '/Sites/swsdp/documentLibrary', 'testNode').subscribe((result) => {
+        service.createNodeMetadata('typeTest', EcmModelService.MODEL_NAMESPACE, data, '/Sites/swsdp/documentLibrary', 'testNode').subscribe(() => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('-root-/children')).toBeTruthy();
-            expect(result).toEqual(responseBody);
             done();
         });
 
@@ -142,7 +141,7 @@ describe('NodeService', () => {
             testdata: 'testdata'
         };
 
-        service.createNodeMetadata('typeTest', EcmModelService.MODEL_NAMESPACE, data, '/Sites/swsdp/documentLibrary').subscribe((result) => {
+        service.createNodeMetadata('typeTest', EcmModelService.MODEL_NAMESPACE, data, '/Sites/swsdp/documentLibrary').subscribe(() => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('-root-/children')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).properties[EcmModelService.MODEL_NAMESPACE + ':test']).toBeDefined();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).properties[EcmModelService.MODEL_NAMESPACE + ':testdata']).toBeDefined();

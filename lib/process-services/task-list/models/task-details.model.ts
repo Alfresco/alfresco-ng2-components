@@ -19,43 +19,43 @@
  * This object represent the details of a task.
  */
 import { UserProcessModel } from '@alfresco/adf-core';
-import { TaskRepresentation } from 'alfresco-js-api';
+import { TaskRepresentation } from '@alfresco/js-api';
 import { UserGroupModel } from './user-group.model';
 
 export class TaskDetailsModel implements TaskRepresentation {
-    id: string;
-    name: string;
-    assignee: UserProcessModel;
-    priority: number;
-    adhocTaskCanBeReassigned: boolean;
-    category: string;
-    created: Date;
-    description: string;
-    parentName: string;
-    dueDate: Date;
-    duration: number;
-    endDate: Date;
-    executionId: string;
-    formKey: string;
-    initiatorCanCompleteTask: boolean;
-    managerOfCandidateGroup: boolean;
-    memberOfCandidateGroup: boolean;
-    memberOfCandidateUsers: boolean;
-    involvedGroups: UserGroupModel [];
-    involvedPeople: UserProcessModel [];
-    parentTaskId: string;
-    parentTaskName: string;
-    processDefinitionCategory: string;
-    processDefinitionDeploymentId: string;
-    processDefinitionDescription: string;
-    processDefinitionId: string;
-    processDefinitionKey: string;
-    processDefinitionName: string;
-    processDefinitionVersion: number = 0;
-    processInstanceId: string;
-    processInstanceName: string;
-    processInstanceStartUserId: string;
-    taskDefinitionKey: string;
+    id?: string;
+    name?: string;
+    assignee?: UserProcessModel;
+    priority?: number;
+    adhocTaskCanBeReassigned?: boolean;
+    category?: string;
+    created?: Date;
+    description?: string;
+    parentName?: string;
+    dueDate?: Date;
+    duration?: number;
+    endDate?: Date;
+    executionId?: string;
+    formKey?: string;
+    initiatorCanCompleteTask?: boolean;
+    managerOfCandidateGroup?: boolean;
+    memberOfCandidateGroup?: boolean;
+    memberOfCandidateUsers?: boolean;
+    involvedGroups?: UserGroupModel [];
+    involvedPeople?: UserProcessModel [];
+    parentTaskId?: string;
+    parentTaskName?: string;
+    processDefinitionCategory?: string;
+    processDefinitionDeploymentId?: string;
+    processDefinitionDescription?: string;
+    processDefinitionId?: string;
+    processDefinitionKey?: string;
+    processDefinitionName?: string;
+    processDefinitionVersion?: number = 0;
+    processInstanceId?: string;
+    processInstanceName?: string;
+    processInstanceStartUserId?: string;
+    taskDefinitionKey?: string;
 
     constructor(obj?: any) {
         if (obj) {

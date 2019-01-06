@@ -15,7 +15,7 @@ module.exports = {
         }
     },
     "/activiti-app": {
-        "target": "http://localhost:9999",
+        "target": "http://localhost:8080",
         "secure": false,
         "pathRewrite": {
             "^/activiti-app/activiti-app": ""

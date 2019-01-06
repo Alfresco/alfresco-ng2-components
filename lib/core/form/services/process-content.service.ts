@@ -18,7 +18,7 @@
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
-import { RelatedContentRepresentation } from 'alfresco-js-api';
+import { RelatedContentRepresentation } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 

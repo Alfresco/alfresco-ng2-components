@@ -18,7 +18,7 @@
 import { Util } from '../../util/util';
 import { ContentListPage } from './dialog/contentListPage';
 import { DataTablePage } from './dataTablePage';
-import { SearchSortingPickerPage } from './content_services/search/components/search-sortingPicker.page';
+import { SearchSortingPickerPage } from './content-services/search/components/search-sortingPicker.page';
 import { element, by, protractor } from 'protractor';
 import { ContentServicesPage } from './contentServicesPage';
 

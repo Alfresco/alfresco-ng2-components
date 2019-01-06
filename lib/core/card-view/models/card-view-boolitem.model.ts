@@ -25,11 +25,11 @@ export class CardViewBoolItemModel extends CardViewBaseItemModel implements Card
     value: boolean = false;
     default: boolean;
 
-    constructor(obj: CardViewBoolItemProperties) {
-        super(obj);
+    constructor(cardViewBoolItemProperties: CardViewBoolItemProperties) {
+        super(cardViewBoolItemProperties);
 
-        if (obj.value !== undefined) {
-            this.value = !!JSON.parse(obj.value);
+        if (cardViewBoolItemProperties.value !== undefined) {
+            this.value = !!JSON.parse(cardViewBoolItemProperties.value);
         }
     }
 
