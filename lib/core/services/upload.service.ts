@@ -223,7 +223,6 @@ export class UploadService {
                 }
             })
             .catch((err) => {
-                throw err;
             });
 
         return promise;
