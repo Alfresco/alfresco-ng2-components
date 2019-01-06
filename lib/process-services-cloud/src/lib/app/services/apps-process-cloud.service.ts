@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError, of } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { AppConfigService, LogService } from '@alfresco/adf-core';
@@ -26,21 +26,22 @@ import { ApplicationInstanceModel } from '../models/application-instance.model';
 @Injectable()
 export class AppsProcessCloudService {
 
+    contextRoot = '';
+
     constructor(
         private apiService: AlfrescoApiService,
         private logService: LogService,
-        private appConfigService: AppConfigService) {}
+        private appConfig: AppConfigService) {
+        this.contextRoot = this.appConfig.get('bpmHost', '');
+    }
 
     /**
      * Gets a list of deployed apps for this user by status.
      * @returns The list of deployed apps
      */
     getDeployedApplicationsByStatus(status: string): Observable<ApplicationInstanceModel[]> {
-        if (status === '') {
-            return of([]);
-        }
         const api: Oauth2Auth = this.apiService.getInstance().oauth2Auth;
-        const path = this.getApplicationUrl();
+        const path = `${this.contextRoot}/alfresco-deployment-service/v1/applications`;
         const pathParams = {}, queryParams = {},
             headerParams = {}, formParams = {}, bodyParam = {},
             contentTypes = ['application/json'], accepts = ['application/json'];
@@ -48,17 +49,15 @@ export class AppsProcessCloudService {
         return from(api.callCustomApi(path, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts))
             .pipe(
-                map((applications: ApplicationInstanceModel[]) => {
-                    return applications.map((application) => {
-                        return new ApplicationInstanceModel(application);
-                    });
-            }),
-            catchError((err) => this.handleError(err))
+                map((apps: Array<{}>) => {
+                        return apps.filter((app: ApplicationInstanceModel) => app.status === status)
+                            .map((app) => {
+                                return new ApplicationInstanceModel(app);
+                            });
+                    }
+                ),
+                catchError((err) => this.handleError(err))
             );
-    }
-
-    private getApplicationUrl() {
-        return `${this.appConfigService.get('bpmHost')}/alfresco-deployment-service/v1/applications`;
     }
 
     private handleError(error?: any) {
