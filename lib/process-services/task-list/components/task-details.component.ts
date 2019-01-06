@@ -43,7 +43,7 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
-import { UserRepresentation } from 'alfresco-js-api';
+import { UserRepresentation } from '@alfresco/js-api';
 import { share } from 'rxjs/operators';
 
 @Component({

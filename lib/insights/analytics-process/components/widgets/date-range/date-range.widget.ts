@@ -101,8 +101,8 @@ export class DateRangeWidgetComponent implements OnInit {
     dateCheck(formControl: AbstractControl) {
         let startDate = moment(formControl.get('startDate').value);
         let endDate = moment(formControl.get('endDate').value);
-        let result = startDate.isAfter(endDate);
-        return result ? {'greaterThan': true} : null;
+        let isAfterCheck = startDate.isAfter(endDate);
+        return isAfterCheck ? {'greaterThan': true} : null;
     }
 
     isStartDateGreaterThanEndDate() {

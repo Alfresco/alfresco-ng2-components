@@ -61,8 +61,8 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
             this.field.id
             )
             .subscribe(
-            (result: FormFieldOption[]) => {
-                let options = result || [];
+            (formFieldOption: FormFieldOption[]) => {
+                let options = formFieldOption || [];
                 this.field.options = options;
 
                 let fieldValue = this.field.value;
@@ -86,8 +86,8 @@ export class TypeaheadWidgetComponent extends WidgetComponent implements OnInit 
             this.field.id
             )
             .subscribe(
-            (result: FormFieldOption[]) => {
-                let options = result || [];
+            (formFieldOption: FormFieldOption[]) => {
+                let options = formFieldOption || [];
                 this.field.options = options;
 
                 let fieldValue = this.field.value;

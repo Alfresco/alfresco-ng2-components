@@ -20,7 +20,7 @@ import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from
 import { TreeBaseNode } from '../models/tree-view.model';
 import { TreeViewDataSource } from '../data/tree-view-datasource';
 import { TreeViewService } from '../services/tree-view.service';
-import { NodeEntry } from 'alfresco-js-api';
+import { NodeEntry } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-tree-view-list',

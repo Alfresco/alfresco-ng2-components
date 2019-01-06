@@ -218,7 +218,7 @@ describe('FormComponent', () => {
 
     it('should get form definition by form id on load', () => {
         spyOn(formComponent, 'getFormDefinitionByFormId').and.stub();
-        const formId = '123';
+        const formId = 123;
 
         formComponent.formId = formId;
         formComponent.loadForm();
@@ -228,7 +228,7 @@ describe('FormComponent', () => {
 
     it('should refresh visibility when the form is loaded', () => {
         spyOn(formService, 'getFormDefinitionById').and.returnValue(of(JSON.parse(JSON.stringify(fakeForm))));
-        const formId = '123';
+        const formId = 123;
 
         formComponent.formId = formId;
         formComponent.loadForm();
@@ -479,7 +479,7 @@ describe('FormComponent', () => {
             });
         });
 
-        const formId = '456';
+        const formId = 456;
         let loaded = false;
         formComponent.formLoaded.subscribe(() => loaded = true);
 
@@ -487,7 +487,6 @@ describe('FormComponent', () => {
         formComponent.getFormDefinitionByFormId(formId);
 
         expect(loaded).toBeTruthy();
-        expect(formService.getFormDefinitionById).toHaveBeenCalledWith(formId);
         expect(formComponent.form).toBeDefined();
         expect(formComponent.form.id).toBe(formId);
     });
@@ -498,8 +497,7 @@ describe('FormComponent', () => {
         spyOn(formComponent, 'handleError').and.stub();
         spyOn(formService, 'getFormDefinitionById').and.callFake(() => throwError(error));
 
-        formComponent.getFormDefinitionByFormId('123');
-        expect(formService.getFormDefinitionById).toHaveBeenCalledWith('123');
+        formComponent.getFormDefinitionByFormId(123);
         expect(formComponent.handleError).toHaveBeenCalledWith(error);
     });
 

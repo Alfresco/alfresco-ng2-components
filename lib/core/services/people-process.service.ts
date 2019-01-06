@@ -16,7 +16,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { Observable, from, throwError } from 'rxjs';
 import { UserProcessModel } from '../models/user-process.model';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -104,7 +103,7 @@ export class PeopleProcessService {
      * Throw the error
      * @param error
      */
-    private handleError(error: Response) {
+    private handleError(error: any) {
         this.logService.error(error);
         return throwError(error || 'Server error');
     }

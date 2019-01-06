@@ -15,9 +15,6 @@ echo "====== Copy i18n ======"
 mkdir -p ./lib/dist/insights/bundles/assets/adf-insights/i18n
 cp -R ./lib/insights/i18n/* ./lib/dist/insights/bundles/assets/adf-insights/i18n
 
-echo "====== Copy assets ======"
-cp -R ./lib/insights/assets/* ./lib/dist/insights/bundles/assets
-
 echo "====== Move to node_modules ======"
 rm -rf ./node_modules/@alfresco/adf-insights/ && \
 mkdir -p ./node_modules/@alfresco/adf-insights/ && \

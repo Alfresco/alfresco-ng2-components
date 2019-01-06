@@ -22,7 +22,7 @@ import { MatDialog } from '@angular/material';
 import { Subject, of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodePermissionService } from './node-permission.service';
-import { Node } from 'alfresco-js-api';
+import { Node } from '@alfresco/js-api';
 
 describe('NodePermissionDialogService', () => {
 
@@ -61,7 +61,7 @@ describe('NodePermissionDialogService', () => {
 
     describe('when node has permission to update permissions', () => {
 
-        let fakePermissionNode = {};
+        let fakePermissionNode = new Node({});
 
         beforeEach(() => {
             fakePermissionNode = <Node> { id: 'fake-permission-node', allowableOperations: ['updatePermissions']};
@@ -97,7 +97,7 @@ describe('NodePermissionDialogService', () => {
 
     describe('when node does not have permission to update permissions', () => {
 
-        let fakeForbiddenNode = {};
+        let fakeForbiddenNode = new Node({});
 
         beforeEach(() => {
             fakeForbiddenNode = <Node> { id: 'fake-permission-node', allowableOperations: ['update']};

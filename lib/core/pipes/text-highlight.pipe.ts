@@ -26,7 +26,7 @@ export class HighlightPipe implements PipeTransform {
     constructor(private highlightTransformService: HighlightTransformService) { }
 
     transform(text: string, search: string): string {
-        const result: HighlightTransformResult = this.highlightTransformService.highlight(text, search);
-        return result.text;
+        const highlightTransformResult: HighlightTransformResult = this.highlightTransformService.highlight(text, search);
+        return highlightTransformResult.text;
     }
 }

@@ -78,10 +78,6 @@ describe('ShareDialogComponent', () => {
         };
     });
 
-    afterEach(() => {
-        fixture.destroy();
-    });
-
     it(`should toggle share action when property 'sharedId' does not exists`, () => {
         spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of({
             entry: { id: 'sharedId', sharedId: 'sharedId' }

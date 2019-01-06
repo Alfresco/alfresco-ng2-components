@@ -22,6 +22,7 @@ import { of, throwError } from 'rxjs';
 import { UploadButtonComponent } from './upload-button.component';
 import { TranslationMock } from '@alfresco/adf-core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NodeEntry } from '@alfresco/js-api';
 
 describe('UploadButtonComponent', () => {
 
@@ -33,7 +34,7 @@ describe('UploadButtonComponent', () => {
         target: { value: 'fake-name-1' }
     };
 
-    let fakeFolderNodeWithPermission = {
+    let fakeFolderNodeWithPermission = new NodeEntry({
         entry: {
             allowableOperations: [
                 'create',
@@ -43,7 +44,7 @@ describe('UploadButtonComponent', () => {
             name: 'Folder Fake Name',
             nodeType: 'cm:folder'
         }
-    };
+    });
 
     let component: UploadButtonComponent;
     let fixture: ComponentFixture<UploadButtonComponent>;
@@ -161,7 +162,7 @@ describe('UploadButtonComponent', () => {
     it('should create a folder and emit an File uploaded event', (done) => {
         component.rootFolderId = '-my-';
 
-        spyOn(contentService, 'createFolder').and.returnValue(of(true));
+        // spyOn(contentService, 'createFolder').and.returnValue(of(true));
         spyOn(contentService, 'getNode').and.returnValue(of(fakeFolderNodeWithPermission));
 
         component.ngOnChanges({ rootFolderId: new SimpleChange(null, component.rootFolderId, true) });

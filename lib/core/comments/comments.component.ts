@@ -80,15 +80,15 @@ export class CommentsComponent implements OnChanges {
         this.resetComments();
         if (this.isATask()) {
             this.commentProcessService.getTaskComments(this.taskId).subscribe(
-                (res: CommentModel[]) => {
-                    if (res && res instanceof Array) {
-                        res = res.sort((comment1: CommentModel, comment2: CommentModel) => {
+                (comments: CommentModel[]) => {
+                    if (comments && comments instanceof Array) {
+                        comments = comments.sort((comment1: CommentModel, comment2: CommentModel) => {
                             let date1 = new Date(comment1.created);
                             let date2 = new Date(comment2.created);
                             return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
                         });
-                        res.forEach((comment) => {
-                            this.commentObserver.next(comment);
+                        comments.forEach((currentComment) => {
+                            this.commentObserver.next(currentComment);
                         });
                     }
 
@@ -101,15 +101,15 @@ export class CommentsComponent implements OnChanges {
 
         if (this.isANode()) {
             this.commentContentService.getNodeComments(this.nodeId).subscribe(
-                (res: CommentModel[]) => {
-                    if (res && res instanceof Array) {
+                (comments: CommentModel[]) => {
+                    if (comments && comments instanceof Array) {
 
-                        res = res.sort((comment1: CommentModel, comment2: CommentModel) => {
+                        comments = comments.sort((comment1: CommentModel, comment2: CommentModel) => {
                             const date1 = new Date(comment1.created);
                             const date2 = new Date(comment2.created);
                             return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
                         });
-                        res.forEach((comment) => {
+                        comments.forEach((comment) => {
                             this.commentObserver.next(comment);
                         });
                     }

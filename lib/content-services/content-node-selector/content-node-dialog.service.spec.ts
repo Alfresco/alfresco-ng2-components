@@ -16,7 +16,7 @@
  */
 
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { MinimalNodeEntryEntity, SitePaging } from 'alfresco-js-api';
+import { NodeEntry, Node, SitePaging, Site } from '@alfresco/js-api';
 import { AppConfigService, SitesService, setupTestBed } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeDialogService } from './content-node-dialog.service';
@@ -24,13 +24,20 @@ import { MatDialog } from '@angular/material';
 import { Subject, of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
-const fakeNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+const fakeNodeEntry: NodeEntry = <NodeEntry> {
+    entry: {
         id: 'fake',
         name: 'fake-name'
+    }
 };
 
-const fakeSiteList: SitePaging = {
-       list: {
+const fakeNode: Node = <Node>  {
+    id: 'fake',
+    name: 'fake-name'
+};
+
+const fakeSiteList: SitePaging = new SitePaging({
+    list: {
         pagination: {
             count: 1,
             hasMoreItems: false,
@@ -48,7 +55,7 @@ const fakeSiteList: SitePaging = {
             }
         ]
     }
-};
+});
 
 describe('ContentNodeDialogService', () => {
 
@@ -82,12 +89,13 @@ describe('ContentNodeDialogService', () => {
     });
 
     it('should not open the lock node dialog if have no permission', () => {
-        const testNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+        const testNode: Node = <Node> {
             id: 'fake',
             isFile: false
         };
 
-        service.openLockNodeDialog(testNode).subscribe(() => {}, (error) => {
+        service.openLockNodeDialog(testNode).subscribe(() => {
+        }, (error) => {
             expect(error).toBe('OPERATION.FAIL.NODE.NO_PERMISSION');
         });
     });
@@ -103,7 +111,8 @@ describe('ContentNodeDialogService', () => {
 
     it('should NOT be able to open the dialog when node has NOT permission', () => {
         service.openCopyMoveDialog('fake-action', fakeNode, 'noperm').subscribe(
-            () => { },
+            () => {
+            },
             (error) => {
                 expect(spyOnDialogOpen).not.toHaveBeenCalled();
                 expect(JSON.parse(error.message).error.statusCode).toBe(403);
@@ -111,24 +120,27 @@ describe('ContentNodeDialogService', () => {
     });
 
     it('should be able to open the dialog using a folder id', fakeAsync(() => {
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNode));
-        service.openFileBrowseDialogByFolderId('fake-folder-id').subscribe(() => {});
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeEntry));
+        service.openFileBrowseDialogByFolderId('fake-folder-id').subscribe(() => {
+        });
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
 
     it('should be able to open the dialog for files using the first user site', fakeAsync(() => {
         spyOn(sitesService, 'getSites').and.returnValue(of(fakeSiteList));
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNode));
-        service.openFileBrowseDialogBySite().subscribe(() => {});
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeEntry));
+        service.openFileBrowseDialogBySite().subscribe(() => {
+        });
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
 
     it('should be able to open the dialog for folder using the first user site', fakeAsync(() => {
         spyOn(sitesService, 'getSites').and.returnValue(of(fakeSiteList));
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNode));
-        service.openFolderBrowseDialogBySite().subscribe(() => {});
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of(fakeNodeEntry));
+        service.openFolderBrowseDialogBySite().subscribe(() => {
+        });
         tick();
         expect(spyOnDialogOpen).toHaveBeenCalled();
     }));
@@ -140,23 +152,23 @@ describe('ContentNodeDialogService', () => {
     });
 
     describe('for the copy/move dialog', () => {
-        const siteNode: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+        const siteNode: Node = <Node> {
             id: 'site-node-id',
             nodeType: 'st:site'
         };
-        const sites: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+        const sites: Node = <Node> {
             id: 'sites-id',
             nodeType: 'st:sites'
         };
-        const site: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+        const site: Site = <Site> {
             id: 'site-id',
             guid: 'any-guid'
         };
-        const nodeEntryWithRightPermissions: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+        const nodeEntryWithRightPermissions: Node = <Node> {
             id: 'node-id',
             allowableOperations: ['create']
         };
-        const nodeEntryNoPermissions: MinimalNodeEntryEntity = <MinimalNodeEntryEntity> {
+        const nodeEntryNoPermissions: Node = <Node> {
             id: 'node-id',
             allowableOperations: []
         };
@@ -192,7 +204,7 @@ describe('ContentNodeDialogService', () => {
         beforeEach(() => {
             spyOnDialogOpen.and.callFake((contentNodeSelectorComponent: any, config: any) => {
                 testContentNodeSelectorComponentData = config.data;
-                return {componentInstance: {}};
+                return { componentInstance: {} };
             });
             service.openCopyMoveDialog('fake-action', fakeNode, '!update');
         });

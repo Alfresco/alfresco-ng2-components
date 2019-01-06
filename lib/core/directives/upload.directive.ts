@@ -68,7 +68,7 @@ export class UploadDirective implements OnInit, OnDestroy {
 
             this.upload.type = 'file';
             this.upload.style.display = 'none';
-            this.upload.addEventListener('change', (e) => this.onSelectFiles(e));
+            this.upload.addEventListener('change', (event) => this.onSelectFiles(event));
 
             if (this.multiple) {
                 this.upload.setAttribute('multiple', '');
@@ -153,7 +153,7 @@ export class UploadDirective implements OnInit, OnDestroy {
 
     onUploadFiles(files: FileInfo[]) {
         if (this.enabled && files.length > 0) {
-            let e = new CustomEvent('upload-files', {
+            let customEvent = new CustomEvent('upload-files', {
                 detail: {
                     sender: this,
                     data: this.data,
@@ -162,7 +162,7 @@ export class UploadDirective implements OnInit, OnDestroy {
                 bubbles: true
             });
 
-            this.el.nativeElement.dispatchEvent(e);
+            this.el.nativeElement.dispatchEvent(customEvent);
         }
     }
 
@@ -245,18 +245,18 @@ export class UploadDirective implements OnInit, OnDestroy {
 
     /**
      * Invoked when user selects files or folders by means of File Dialog
-     * @param e DOM event
+     * @param event DOM event
      */
-    onSelectFiles(e: any): void {
+    onSelectFiles(event: any): void {
         if (this.isClickMode()) {
-            const input = (<HTMLInputElement> e.currentTarget);
+            const input = (<HTMLInputElement> event.currentTarget);
             const files = FileUtils.toFileArray(input.files);
             this.onUploadFiles(files.map((file) => <FileInfo> {
                 entry: null,
                 file: file,
                 relativeFolder: '/'
             }));
-            e.target.value = '';
+            event.target.value = '';
         }
     }
 }

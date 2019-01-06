@@ -28,16 +28,16 @@ export abstract class CardViewBaseItemModel {
     validators?: CardViewItemValidator[];
     data?: any;
 
-    constructor(obj: CardViewItemProperties) {
-        this.label = obj.label || '';
-        this.value = obj.value;
-        this.key = obj.key;
-        this.default = obj.default;
-        this.editable = !!obj.editable;
-        this.clickable = !!obj.clickable;
-        this.icon = obj.icon || '';
-        this.validators = obj.validators || [];
-        this.data = obj.data || null;
+    constructor(cardViewItemProperties: CardViewItemProperties) {
+        this.label = cardViewItemProperties.label || '';
+        this.value = cardViewItemProperties.value;
+        this.key = cardViewItemProperties.key;
+        this.default = cardViewItemProperties.default;
+        this.editable = !!cardViewItemProperties.editable;
+        this.clickable = !!cardViewItemProperties.clickable;
+        this.icon = cardViewItemProperties.icon || '';
+        this.validators = cardViewItemProperties.validators || [];
+        this.data = cardViewItemProperties.data || null;
     }
 
     isEmpty(): boolean {

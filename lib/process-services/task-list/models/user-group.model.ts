@@ -20,11 +20,11 @@
  */
 
 export class UserGroupModel {
-    id: number;
-    name: string;
-    externalId: string;
-    status: string;
-    groups: any = {};
+    id?: number;
+    name?: string;
+    externalId?: string;
+    status?: string;
+    groups?: any = {};
 
     constructor(obj?: any) {
         this.id = obj && obj.id;

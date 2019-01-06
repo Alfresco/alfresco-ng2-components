@@ -54,12 +54,12 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
                 this.field.id
             )
             .subscribe(
-                (result: FormFieldOption[]) => {
+                (formFieldOption: FormFieldOption[]) => {
                     let options = [];
                     if (this.field.emptyOption) {
                         options.push(this.field.emptyOption);
                     }
-                    this.field.options = options.concat((result || []));
+                    this.field.options = options.concat((formFieldOption || []));
                     this.field.updateForm();
                 },
                 (err) => this.handleError(err)
@@ -73,12 +73,12 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
                 this.field.id
             )
             .subscribe(
-                (result: FormFieldOption[]) => {
+                (formFieldOption: FormFieldOption[]) => {
                     let options = [];
                     if (this.field.emptyOption) {
                         options.push(this.field.emptyOption);
                     }
-                    this.field.options = options.concat((result || []));
+                    this.field.options = options.concat((formFieldOption || []));
                     this.field.updateForm();
                 },
                 (err) => this.handleError(err)

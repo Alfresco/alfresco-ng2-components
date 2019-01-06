@@ -29,6 +29,7 @@ import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ViewerComponent } from './viewer.component';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
+import { NodeEntry } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -352,7 +353,7 @@ describe('ViewerComponent', () => {
                 content: { getContentUrl: () => contentUrl }
             };
 
-            component.fileNodeId = '12';
+            component.nodeId = '12';
             component.urlFile = null;
             component.displayName = null;
             spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);
@@ -368,30 +369,26 @@ describe('ViewerComponent', () => {
     });
 
     it('should change display name every time node changes', fakeAsync(() => {
-        spyOn(alfrescoApiService.nodesApi, 'getNodeInfo').and.returnValues(
-            Promise.resolve({ name: 'file1', content: {} }),
-            Promise.resolve({ name: 'file2', content: {} })
+        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValues(
+            Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {} } })),
+            Promise.resolve(new NodeEntry({ entry: { name: 'file2', content: {} } }))
         );
-
-        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValue(Promise.resolve({ id: 'fake-node' }));
 
         component.urlFile = null;
         component.displayName = null;
         component.blobFile = null;
         component.showViewer = true;
 
-        component.fileNodeId = 'id1';
+        component.nodeId = 'id1';
         component.ngOnChanges({});
         tick();
 
-        expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id1', { include: ['allowableOperations'] });
         expect(component.fileTitle).toBe('file1');
 
-        component.fileNodeId = 'id2';
+        component.nodeId = 'id2';
         component.ngOnChanges({});
         tick();
 
-        expect(alfrescoApiService.nodesApi.getNodeInfo).toHaveBeenCalledWith('id2', { include: ['allowableOperations'] });
         expect(component.fileTitle).toBe('file2');
     }));
 
@@ -602,57 +599,9 @@ describe('ViewerComponent', () => {
                 button.click();
             });
 
-            it('should render default share button', (done) => {
-                component.allowShare = true;
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    expect(element.querySelector('[data-automation-id="adf-toolbar-share"]')).toBeDefined();
-                    done();
-                });
-            });
-
-            it('should not render default share button', (done) => {
-                component.allowShare = false;
-                fixture.detectChanges();
-
-                fixture.whenStable().then(() => {
-                    expect(element.querySelector('[data-automation-id="adf-toolbar-share"]')).toBeNull();
-                    done();
-                });
-            });
-
-            it('should invoke share action with the toolbar button', (done) => {
-                component.allowShare = true;
-                fixture.detectChanges();
-
-                spyOn(component, 'shareContent').and.stub();
-
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-share"]') as HTMLButtonElement;
-                button.click();
-
-                fixture.whenStable().then(() => {
-                    expect(component.shareContent).toHaveBeenCalled();
-                    done();
-                });
-            });
-
-            it('should raise share event with the toolbar button', (done) => {
-                component.allowShare = true;
-                fixture.detectChanges();
-
-                component.share.subscribe((e) => {
-                    expect(e).not.toBeNull();
-                    done();
-                });
-
-                const button: HTMLButtonElement = element.querySelector('[data-automation-id="adf-toolbar-share"]') as HTMLButtonElement;
-                button.click();
-            });
-
             it('should get and assign node for download', (done) => {
                 const node = { id: 'fake-node' };
-                component.fileNodeId = '12';
+                component.nodeId = '12';
                 component.urlFile = '';
                 const displayName = 'the-name';
                 const nodeDetails = { name: displayName, id: '12', content: { mimeType: 'txt' } };
@@ -751,9 +700,9 @@ describe('ViewerComponent', () => {
 
         describe('Attribute', () => {
 
-            it('should Url or fileNodeId be mandatory', () => {
+            it('should Url or nodeId be mandatory', () => {
                 component.showViewer = true;
-                component.fileNodeId = undefined;
+                component.nodeId = undefined;
                 component.urlFile = undefined;
 
                 expect(() => {
@@ -763,7 +712,7 @@ describe('ViewerComponent', () => {
 
             it('should FileNodeId present not thrown any error ', () => {
                 component.showViewer = true;
-                component.fileNodeId = 'file-node-id';
+                component.nodeId = 'file-node-id';
                 component.urlFile = undefined;
 
                 expect(() => {
@@ -773,7 +722,7 @@ describe('ViewerComponent', () => {
 
             it('should  urlFile present not thrown any error ', () => {
                 component.showViewer = true;
-                component.fileNodeId = undefined;
+                component.nodeId = undefined;
 
                 expect(() => {
                     component.ngOnChanges(null);
@@ -795,7 +744,7 @@ describe('ViewerComponent', () => {
         describe('error handling', () => {
 
             it('should show unknown view when node file not found', (done) => {
-                spyOn(alfrescoApiService.getInstance().nodes, 'getNodeInfo')
+                spyOn(alfrescoApiService.getInstance().nodes, 'getNode')
                     .and.returnValue(Promise.reject({}));
 
                 component.nodeId = 'the-node-id-of-the-file-to-preview';
@@ -920,18 +869,17 @@ describe('ViewerComponent', () => {
         describe('display name property override by nodeId', () => {
 
             const displayName = 'the-name';
-            const nodeDetails = { name: displayName, id: '12', content: { mimeType: 'txt' } };
+            const nodeDetails = new NodeEntry({ entry: { name: displayName, id: '12', content: { mimeType: 'txt' } } });
             const contentUrl = '/content/url/path';
             const alfrescoApiInstanceMock = {
                 nodes: {
-                    getNodeInfo: () => Promise.resolve(nodeDetails),
-                    getNode: () => Promise.resolve({ id: 'fake-node' })
+                    getNode: () => Promise.resolve(nodeDetails)
                 },
                 content: { getContentUrl: () => contentUrl }
             };
 
-            it('should use the node name if displayName is NOT set and fileNodeId is set', (done) => {
-                component.fileNodeId = '12';
+            it('should use the node name if displayName is NOT set and nodeId is set', (done) => {
+                component.nodeId = '12';
                 component.urlFile = null;
                 component.displayName = null;
                 spyOn(alfrescoApiService, 'getInstance').and.returnValue(alfrescoApiInstanceMock);

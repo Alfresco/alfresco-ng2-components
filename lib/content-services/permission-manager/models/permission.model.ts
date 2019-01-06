@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { PermissionElement } from 'alfresco-js-api';
+import { PermissionElement } from '@alfresco/js-api';
 
 export class PermissionDisplayModel implements PermissionElement {
 

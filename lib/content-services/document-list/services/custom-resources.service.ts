@@ -26,8 +26,12 @@ import {
     PersonEntry,
     SitePaging,
     DeletedNodesPaging,
-    SearchRequest
-} from 'alfresco-js-api';
+    SearchRequest,
+    SharedLinkPaging,
+    FavoritePaging,
+    SiteMemberPaging,
+    SiteRolePaging
+} from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -54,7 +58,7 @@ export class CustomResourcesService {
             this.apiService.peopleApi.getPerson(personId)
                 .then((person: PersonEntry) => {
                         const username = person.entry.id;
-                        const query: SearchRequest = {
+                        const query: SearchRequest = new SearchRequest({
                             query: {
                                 query: '*',
                                 language: 'afts'
@@ -74,7 +78,7 @@ export class CustomResourcesService {
                                 maxItems: pagination.maxItems,
                                 skipCount: pagination.skipCount
                             }
-                        };
+                        });
                         return this.apiService.searchApi.search(query)
                             .then((searchResult) => {
                                     observer.next(searchResult);
@@ -110,8 +114,8 @@ export class CustomResourcesService {
 
         return new Observable((observer) => {
             this.apiService.favoritesApi.getFavorites('-me-', options)
-                .then((result: NodePaging) => {
-                        let page: NodePaging = {
+                .then((result: FavoritePaging) => {
+                        let page: FavoritePaging = {
                             list: {
                                 entries: result.list.entries
                                     .map(({ entry: { target } }: any) => ({
@@ -143,7 +147,7 @@ export class CustomResourcesService {
      * @param pagination Specifies how to paginate the results
      * @returns List of sites
      */
-    loadMemberSites(pagination: PaginationModel): Observable<NodePaging> {
+    loadMemberSites(pagination: PaginationModel): Observable<SiteMemberPaging> {
         const options = {
             include: ['properties'],
             maxItems: pagination.maxItems,
@@ -151,9 +155,9 @@ export class CustomResourcesService {
         };
 
         return new Observable((observer) => {
-            this.apiService.peopleApi.getSiteMembership('-me-', options)
-                .then((result: SitePaging) => {
-                        let page: NodePaging = {
+            this.apiService.peopleApi.listSiteMembershipsForPerson('-me-', options)
+                .then((result: SiteRolePaging) => {
+                        let page: SiteMemberPaging = new SiteMemberPaging( {
                             list: {
                                 entries: result.list.entries
                                     .map(({ entry: { site } }: any) => {
@@ -165,7 +169,7 @@ export class CustomResourcesService {
                                     }),
                                 pagination: result.list.pagination
                             }
-                        };
+                        });
 
                         observer.next(page);
                         observer.complete();
@@ -191,7 +195,7 @@ export class CustomResourcesService {
 
         return new Observable((observer) => {
             this.apiService.sitesApi.getSites(options)
-                .then((page: NodePaging) => {
+                .then((page: SitePaging) => {
                         page.list.entries.map(
                             ({ entry }: any) => {
                                 entry.name = entry.name || entry.title;
@@ -234,7 +238,7 @@ export class CustomResourcesService {
      * @param includeFields List of data field names to include in the results
      * @returns List of shared links
      */
-    loadSharedLinks(pagination: PaginationModel, includeFields: string[] = []): Observable<NodePaging> {
+    loadSharedLinks(pagination: PaginationModel, includeFields: string[] = []): Observable<SharedLinkPaging> {
         let includeFieldsRequest = this.getIncludesFields(includeFields);
 
         const options = {
@@ -286,7 +290,7 @@ export class CustomResourcesService {
      * @param includeFields List of data field names to include in the results
      * @returns List of items contained in the folder
      */
-    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[]): Observable<NodePaging> {
+    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[] = []): any {
         if (nodeId === '-trashcan-') {
             return this.loadTrashcan(pagination, includeFields);
         } else if (nodeId === '-sharedlinks-') {
@@ -313,20 +317,10 @@ export class CustomResourcesService {
     getCorrespondingNodeIds(nodeId: string, pagination: PaginationModel = {}): Observable<string[]> {
         if (this.isCustomSource(nodeId)) {
 
-            return this.loadFolderByNodeId(nodeId, pagination, [])
-                .pipe(map((result) => result.list.entries.map((node: any) => {
-                    if (nodeId === '-sharedlinks-') {
-                        return node.entry.nodeId;
-
-                    } else if (nodeId === '-sites-' || nodeId === '-mysites-') {
-                        return node.entry.guid;
-
-                    } else if (nodeId === '-favorites-') {
-                        return node.entry.targetGuid;
-                    }
-
-                    return node.entry.id;
-                })));
+            return this.loadFolderByNodeId(nodeId, pagination)
+                .pipe(map((result: any): string[] => {
+                    return result.list.entries.map((node: any): string => this.getIdFromEntry(node, nodeId));
+                }));
 
         } else if (nodeId) {
             // cases when nodeId is '-my-', '-root-' or '-shared-'
@@ -335,6 +329,18 @@ export class CustomResourcesService {
         }
 
         return of([]);
+    }
+
+    getIdFromEntry(node: any, nodeId: string): string {
+        if (nodeId === '-sharedlinks-') {
+            return node.entry.nodeId;
+        } else if (nodeId === '-sites-' || nodeId === '-mysites-') {
+            return node.entry.guid;
+        } else if (nodeId === '-favorites-') {
+            return node.entry.targetGuid;
+        } else {
+            return node.entry.id;
+        }
     }
 
     /**

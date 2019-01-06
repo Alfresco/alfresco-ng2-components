@@ -20,6 +20,7 @@ import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { AppConfigService, LogService } from '@alfresco/adf-core';
+import { Oauth2Auth } from '@alfresco/js-api';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
 
 @Injectable()
@@ -39,24 +40,21 @@ export class AppsProcessCloudService {
      * @returns The list of deployed apps
      */
     getDeployedApplicationsByStatus(status: string): Observable<ApplicationInstanceModel[]> {
-        const api: any = this.apiService.getInstance().oauth2Auth;
-        api.basePath = this.contextRoot;
-        const path = 'alfresco-deployment-service/v1/applications';
-        const httpMethod = 'GET', pathParams = {}, queryParams = {},
-            headerParams = {}, formParams = {}, bodyParam = {}, authNames = [],
+        const api: Oauth2Auth = this.apiService.getInstance().oauth2Auth;
+        const path = `${this.contextRoot}/alfresco-deployment-service/v1/applications`;
+        const pathParams = {}, queryParams = {},
+            headerParams = {}, formParams = {}, bodyParam = {},
             contentTypes = ['application/json'], accepts = ['application/json'];
-        return from(api.callApi(
-            path, httpMethod,
-            pathParams, queryParams, headerParams, formParams, bodyParam,
-            authNames, contentTypes, accepts, [], ''
-        ))
+
+        return from(api.callCustomApi(path, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+            contentTypes, accepts))
             .pipe(
                 map((apps: Array<{}>) => {
-                    return apps.filter((app: ApplicationInstanceModel) => app.status === status)
-                        .map((app) => {
-                            return new ApplicationInstanceModel(app);
-                        });
-                }
+                        return apps.filter((app: ApplicationInstanceModel) => app.status === status)
+                            .map((app) => {
+                                return new ApplicationInstanceModel(app);
+                            });
+                    }
                 ),
                 catchError((err) => this.handleError(err))
             );

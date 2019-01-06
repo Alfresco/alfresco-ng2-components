@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CommentRepresentation, LightUserRepresentation } from 'alfresco-js-api';
+import { CommentRepresentation, LightUserRepresentation } from '@alfresco/js-api';
 
 /**
  * @deprecated

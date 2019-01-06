@@ -26,10 +26,10 @@ export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements
     type: string = 'select';
     options$: Observable<CardViewSelectItemOption<T>[]>;
 
-    constructor(obj: CardViewSelectItemProperties<T>) {
-        super(obj);
+    constructor(cardViewSelectItemProperties: CardViewSelectItemProperties<T>) {
+        super(cardViewSelectItemProperties);
 
-        this.options$ = obj.options$;
+        this.options$ = cardViewSelectItemProperties.options$;
     }
 
     get displayValue() {

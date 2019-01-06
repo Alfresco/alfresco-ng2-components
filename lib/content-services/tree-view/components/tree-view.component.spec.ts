@@ -22,7 +22,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TreeViewService } from '../services/tree-view.service';
 import { of, throwError } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
-import { NodeEntry } from 'alfresco-js-api';
+import { NodeEntry } from '@alfresco/js-api';
 import { SimpleChange } from '@angular/core';
 
 describe('TreeViewComponent', () => {
@@ -33,18 +33,32 @@ describe('TreeViewComponent', () => {
     let component: any;
 
     let fakeNodeList: TreeBaseNode[] = [
-        { nodeId: 'fake-node-id', name: 'fake-node-name', level: 0, expandable: true,
-             node: { entry: { name: 'fake-node-name', id: 'fake-node-id' } } }
+        <TreeBaseNode> {
+            nodeId: 'fake-node-id', name: 'fake-node-name', level: 0, expandable: true,
+            node: { entry: { name: 'fake-node-name', id: 'fake-node-id' } }
+        }
     ];
 
     let fakeChildrenList: TreeBaseNode[] = [
-        { nodeId: 'fake-child-id', name: 'fake-child-name', level: 0, expandable: true, node : {} },
-        { nodeId: 'fake-second-id', name: 'fake-second-name', level: 0, expandable: true, node : {} }
+        <TreeBaseNode>  { nodeId: 'fake-child-id', name: 'fake-child-name', level: 0, expandable: true, node: {} },
+        <TreeBaseNode>  { nodeId: 'fake-second-id', name: 'fake-second-name', level: 0, expandable: true, node: {} }
     ];
 
     let fakeNextChildrenList: TreeBaseNode[] = [
-        { nodeId: 'fake-next-child-id', name: 'fake-next-child-name', level: 0, expandable: true, node : {} },
-        { nodeId: 'fake-next-second-id', name: 'fake-next-second-name', level: 0, expandable: true, node : {} }
+        <TreeBaseNode> {
+            nodeId: 'fake-next-child-id',
+            name: 'fake-next-child-name',
+            level: 0,
+            expandable: true,
+            node: {}
+        },
+        <TreeBaseNode> {
+            nodeId: 'fake-next-second-id',
+            name: 'fake-next-second-name',
+            level: 0,
+            expandable: true,
+            node: {}
+        }
     ];
 
     let returnRootOrChildrenNode = function (nodeId: string) {
@@ -61,8 +75,7 @@ describe('TreeViewComponent', () => {
         imports: [
             ContentTestingModule
         ],
-        declarations: [
-        ]
+        declarations: []
     });
 
     describe('When there is a nodeId', () => {

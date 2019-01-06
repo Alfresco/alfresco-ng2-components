@@ -28,7 +28,7 @@ import { ContentNodeShareModule } from './content-node-share.module';
 @Component({
     selector: 'adf-node-share-test-component',
     template: `
-       <button
+        <button
             [disabled]="!shareRef.isFile"
             #shareRef="adfShare"
             [baseShareUrl]="baseShareUrl"
@@ -75,7 +75,9 @@ describe('NodeSharedDirective', () => {
     });
 
     afterEach(() => {
-        fixture.destroy();
+        if (fixture) {
+            fixture.destroy();
+        }
     });
 
     beforeEach(() => {
@@ -88,67 +90,61 @@ describe('NodeSharedDirective', () => {
         };
     });
 
-    it('should have share button disabled when selection is empty', async() => {
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(shareButtonElement.disabled).toBe(true);
-        });
+    it('should have share button disabled when selection is empty', async () => {
+        fixture.whenStable();
+        fixture.detectChanges();
+        expect(shareButtonElement.disabled).toBe(true);
     });
 
-    it('should have button enabled when selection is not empty', () => {
+    it('should have button enabled when selection is not empty', async () => {
         component.documentList.selection = [selection];
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(shareButtonElement.disabled).toBe(false);
-        });
+        fixture.whenStable();
+        fixture.detectChanges();
+        expect(shareButtonElement.disabled).toBe(false);
     });
 
-    it('should have button disabled when selection is not a file', () => {
+    it('should have button disabled when selection is not a file', async () => {
         selection.entry.isFile = false;
         component.documentList.selection = [selection];
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(shareButtonElement.disabled).toBe(true);
-        });
+        fixture.whenStable();
+        fixture.detectChanges();
+        expect(shareButtonElement.disabled).toBe(true);
     });
 
-    it('should indicate if file is not shared', () => {
+    it('should indicate if file is not shared', async () => {
         component.documentList.selection = [selection];
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(shareButtonElement.title).toBe('Not Shared');
-        });
+        fixture.whenStable();
+        fixture.detectChanges();
+        expect(shareButtonElement.title).toBe('Not Shared');
     });
 
-    it('should indicate if file is already shared', () => {
+    it('should indicate if file is already shared', async () => {
+        selection.entry.properties['qshare:sharedId'] = 'someId';
+        component.documentList.selection = [selection];
+        fixture.detectChanges();
+        fixture.whenStable();
+
+        fixture.detectChanges();
+        expect(shareButtonElement.title).toBe('Shared');
+    });
+
+    it('should open share dialog on click event', async () => {
         selection.entry.properties['qshare:sharedId'] = 'someId';
         component.documentList.selection = [selection];
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(shareButtonElement.title).toBe('Shared');
-        });
-    });
-
-    it('should open share dialog on click event', () => {
-        selection.entry.properties['qshare:sharedId'] = 'someId';
-        component.documentList.selection = [selection];
+        fixture.whenStable();
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
+        shareButtonElement.click();
+        fixture.detectChanges();
 
-            shareButtonElement.click();
-            fixture.detectChanges();
-
-            expect(document.querySelector('.adf-share-link-dialog')).not.toBe(null);
-        });
+        expect(document.querySelector('.adf-share-link-dialog')).not.toBe(null);
     });
 });

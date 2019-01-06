@@ -128,7 +128,6 @@ describe('EcmModelService', () => {
 
         service.addPropertyToAType(EcmModelService.MODEL_NAME, typeName, formFields).subscribe(() => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('1/cmm/' + EcmModelService.MODEL_NAME + '/types/' + typeName + '?select=props')).toBeTruthy();
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual(typeName);
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).properties).toEqual([{
                 name: 'test',
                 title: 'test',
@@ -169,7 +168,6 @@ describe('EcmModelService', () => {
 
         service.addPropertyToAType(EcmModelService.MODEL_NAME, typeName, formFields).subscribe(() => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('1/cmm/' + EcmModelService.MODEL_NAME + '/types/' + cleanName + '?select=props')).toBeTruthy();
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual(cleanName);
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).properties).toEqual([{
                 name: 'test',
                 title: 'test',

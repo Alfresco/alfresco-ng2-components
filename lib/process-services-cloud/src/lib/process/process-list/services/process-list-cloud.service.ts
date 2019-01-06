@@ -41,8 +41,8 @@ export class ProcessListCloudService {
             return from(this.apiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, queryParams, null,
-                    null, null, null, this.contentTypes,
-                    this.accepts, Object, null, null)
+                    null, null,  this.contentTypes,
+                    this.accepts, null, null)
             );
         } else {
             this.logService.error('Appname is mandatory for querying task');

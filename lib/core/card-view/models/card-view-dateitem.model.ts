@@ -25,11 +25,11 @@ export class CardViewDateItemModel extends CardViewBaseItemModel implements Card
     type: string = 'date';
     format: string = 'MMM DD YYYY';
 
-    constructor(obj: CardViewDateItemProperties) {
-        super(obj);
+    constructor(cardViewDateItemProperties: CardViewDateItemProperties) {
+        super(cardViewDateItemProperties);
 
-        if (obj.format) {
-            this.format = obj.format;
+        if (cardViewDateItemProperties.format) {
+            this.format = cardViewDateItemProperties.format;
         }
 
     }

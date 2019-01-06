@@ -23,237 +23,240 @@ import { TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import {
-  AlfrescoApiService,
-  AlfrescoApiServiceMock,
-  setupTestBed
+    AlfrescoApiService,
+    AlfrescoApiServiceMock,
+    setupTestBed
 } from '@alfresco/adf-core';
 
 describe('LibraryDialogComponent', () => {
-  let fixture;
-  let component;
-  let alfrescoApi;
-  let findSitesSpy;
-  const findSitesResponse = { list: { entries: [] } };
-  const dialogRef = {
-    close: jasmine.createSpy('close')
-  };
+    let fixture;
+    let component;
+    let alfrescoApi;
+    let findSitesSpy;
+    const findSitesResponse = { list: { entries: [] } };
+    const dialogRef = {
+        close: jasmine.createSpy('close')
+    };
 
-  setupTestBed({
-    imports: [NoopAnimationsModule, CoreModule, ReactiveFormsModule],
-    declarations: [LibraryDialogComponent],
-    providers: [
-      {
-        provide: AlfrescoApiService,
-        useClass: AlfrescoApiServiceMock
-      },
-      { provide: MatDialogRef, useValue: dialogRef }
-    ],
-    schemas: [NO_ERRORS_SCHEMA]
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LibraryDialogComponent);
-    component = fixture.componentInstance;
-    alfrescoApi = TestBed.get(AlfrescoApiService);
-    findSitesSpy = spyOn(alfrescoApi.getInstance().core.queriesApi, 'findSites');
-  });
-
-  afterEach(() => {
-    findSitesSpy.calls.reset();
-  });
-
-  it('should set library id automatically on title input', fakeAsync(() => {
-    findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-    spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-      return new Promise((resolve, reject) => reject());
+    setupTestBed({
+        imports: [NoopAnimationsModule, CoreModule, ReactiveFormsModule],
+        declarations: [LibraryDialogComponent],
+        providers: [
+            {
+                provide: AlfrescoApiService,
+                useClass: AlfrescoApiServiceMock
+            },
+            { provide: MatDialogRef, useValue: dialogRef }
+        ],
+        schemas: [NO_ERRORS_SCHEMA]
     });
 
-    fixture.detectChanges();
-    component.form.controls.title.setValue('libraryTitle');
-    tick(500);
-    flush();
-    fixture.detectChanges();
-
-    expect(component.form.controls.id.value).toBe('libraryTitle');
-  }));
-
-  it('should translate library title space character to dash for library id', fakeAsync(() => {
-    findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-    spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-      return new Promise((resolve, reject) => reject());
+    beforeEach(() => {
+        fixture = TestBed.createComponent(LibraryDialogComponent);
+        component = fixture.componentInstance;
+        alfrescoApi = TestBed.get(AlfrescoApiService);
+        findSitesSpy = spyOn(alfrescoApi.getInstance().core.queriesApi, 'findSites');
     });
 
-    fixture.detectChanges();
-    component.form.controls.title.setValue('library title');
-    tick(500);
-    flush();
-    fixture.detectChanges();
-
-    expect(component.form.controls.id.value).toBe('library-title');
-  }));
-
-  it('should not change custom library id on title input', fakeAsync(() => {
-    findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-    spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-      return new Promise((resolve, reject) => reject());
+    afterEach(() => {
+        findSitesSpy.calls.reset();
     });
 
-    fixture.detectChanges();
-    component.form.controls.id.setValue('custom-id');
-    component.form.controls.id.markAsDirty();
-    tick(500);
-    flush();
-    fixture.detectChanges();
+    it('should set library id automatically on title input', fakeAsync(() => {
+        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
+        spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
+            return new Promise((resolve, reject) => reject());
+        });
 
-    component.form.controls.title.setValue('library title');
-    tick(500);
-    flush();
-    fixture.detectChanges();
+        fixture.detectChanges();
+        component.form.controls.title.setValue('libraryTitle');
+        tick(500);
+        flush();
+        fixture.detectChanges();
 
-    expect(component.form.controls.id.value).toBe('custom-id');
-  }));
+        expect(component.form.controls.id.value).toBe('libraryTitle');
+    }));
 
-  it('should invalidate form when library id already exists', fakeAsync(() => {
-    spyOn(alfrescoApi.sitesApi, 'getSite').and.returnValue(Promise.resolve());
+    it('should translate library title space character to dash for library id', fakeAsync(() => {
+        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
+        spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
+            return new Promise((resolve, reject) => reject());
+        });
 
-    fixture.detectChanges();
-    component.form.controls.id.setValue('existingLibrary');
-    tick(500);
-    flush();
-    fixture.detectChanges();
+        fixture.detectChanges();
+        component.form.controls.title.setValue('library title');
+        tick(500);
+        flush();
+        fixture.detectChanges();
 
-    expect(component.form.controls.id.errors).toEqual({
-      message: 'LIBRARY.ERRORS.EXISTENT_SITE'
-    });
-    expect(component.form.valid).toBe(false);
-  }));
+        expect(component.form.controls.id.value).toBe('library-title');
+    }));
 
-  it('should create site when form is valid', fakeAsync(() => {
-    findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-    spyOn(alfrescoApi.sitesApi, 'createSite').and.returnValue(
-      Promise.resolve()
-    );
-    spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-      return new Promise((resolve, reject) => reject());
-    });
+    it('should not change custom library id on title input', fakeAsync(() => {
+        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
+        spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
+            return new Promise((resolve, reject) => reject());
+        });
 
-    fixture.detectChanges();
-    component.form.controls.title.setValue('library title');
-    tick(500);
-    flush();
-    fixture.detectChanges();
+        fixture.detectChanges();
+        component.form.controls.id.setValue('custom-id');
+        component.form.controls.id.markAsDirty();
+        tick(500);
+        flush();
+        fixture.detectChanges();
 
-    component.submit();
-    fixture.detectChanges();
-    flush();
+        component.form.controls.title.setValue('library title');
+        tick(500);
+        flush();
+        fixture.detectChanges();
 
-    expect(alfrescoApi.sitesApi.createSite).toHaveBeenCalledWith({
-      id: 'library-title',
-      title: 'library title',
-      description: '',
-      visibility: 'PUBLIC'
-    });
-  }));
+        expect(component.form.controls.id.value).toBe('custom-id');
+    }));
 
-  it('should not create site when form is invalid', fakeAsync(() => {
-    findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-    spyOn(alfrescoApi.sitesApi, 'createSite').and.returnValue(
-      Promise.resolve({})
-    );
-    spyOn(alfrescoApi.sitesApi, 'getSite').and.returnValue(Promise.resolve());
+    it('should invalidate form when library id already exists', fakeAsync(() => {
+        spyOn(alfrescoApi.sitesApi, 'getSite').and.returnValue(Promise.resolve());
 
-    fixture.detectChanges();
-    component.form.controls.title.setValue('existingLibrary');
-    tick(500);
-    flush();
-    fixture.detectChanges();
+        fixture.detectChanges();
+        component.form.controls.id.setValue('existingLibrary');
+        tick(500);
+        flush();
+        fixture.detectChanges();
 
-    component.submit();
-    fixture.detectChanges();
-    flush();
+        expect(component.form.controls.id.errors).toEqual({
+            message: 'LIBRARY.ERRORS.EXISTENT_SITE'
+        });
+        expect(component.form.valid).toBe(false);
+    }));
 
-    expect(alfrescoApi.sitesApi.createSite).not.toHaveBeenCalled();
-  }));
+    it('should create site when form is valid', fakeAsync(() => {
+        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
+        spyOn(alfrescoApi.sitesApi, 'createSite').and.returnValue(
+            Promise.resolve()
+        );
+        spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
+            return new Promise((resolve, reject) => reject());
+        });
 
-  it('should notify when library title is already used', fakeAsync(() => {
-    spyOn(alfrescoApi.sitesApi, 'getSite').and.returnValue(Promise.resolve());
-    findSitesSpy.and.returnValue(Promise.resolve(
-      { list: { entries: [ { entry: { title: 'TEST', id: 'library-id' } } ] } }
-    ));
+        fixture.detectChanges();
+        component.form.controls.title.setValue('library title');
+        tick(500);
+        flush();
+        fixture.detectChanges();
 
-    fixture.detectChanges();
-    component.form.controls.title.setValue('test');
-    tick(500);
-    flush();
-    fixture.detectChanges();
+        component.submit();
+        fixture.detectChanges();
+        flush();
 
-    expect(component.libraryTitleExists).toBe(true);
-  }));
+        expect(alfrescoApi.sitesApi.createSite).toHaveBeenCalledWith({
+            id: 'library-title',
+            title: 'library title',
+            description: '',
+            visibility: 'PUBLIC'
+        });
+    }));
 
-  it('should notify on 409 conflict error (might be in trash)', fakeAsync(() => {
-    findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
-    const error = { message: '{ "error": { "statusCode": 409 } }' };
-    spyOn(alfrescoApi.sitesApi, 'createSite').and.callFake(() => {
-      return new Promise((resolve, reject) => reject(error));
-    });
-    spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-      return new Promise((resolve, reject) => reject());
-    });
+    it('should not create site when form is invalid', fakeAsync(() => {
+        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
+        spyOn(alfrescoApi.sitesApi, 'createSite').and.returnValue(
+            Promise.resolve({})
+        );
+        spyOn(alfrescoApi.sitesApi, 'getSite').and.returnValue(Promise.resolve());
 
-    fixture.detectChanges();
-    component.form.controls.title.setValue('test');
-    tick(500);
-    flush();
-    fixture.detectChanges();
+        fixture.detectChanges();
+        component.form.controls.title.setValue('existingLibrary');
+        tick(500);
+        flush();
+        fixture.detectChanges();
 
-    component.submit();
-    fixture.detectChanges();
-    flush();
+        component.submit();
+        fixture.detectChanges();
+        flush();
 
-    expect(component.form.controls.id.errors).toEqual({
-      message: 'LIBRARY.ERRORS.CONFLICT'
-    });
-  }));
+        expect(alfrescoApi.sitesApi.createSite).not.toHaveBeenCalled();
+    }));
 
-  it('should not translate library title if value is not a valid id', fakeAsync(() => {
-    spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-      return new Promise((resolve, reject) => reject());
-    });
+    it('should notify when library title is already used', fakeAsync(() => {
+        spyOn(alfrescoApi.sitesApi, 'getSite').and.returnValue(Promise.resolve());
+        findSitesSpy.and.returnValue(Promise.resolve(
+            { list: { entries: [{ entry: { title: 'TEST', id: 'library-id' } }] } }
+        ));
 
-    fixture.detectChanges();
-    component.form.controls.title.setValue('@@@####');
-    tick(500);
-    flush();
-    fixture.detectChanges();
+        fixture.detectChanges();
+        component.form.controls.title.setValue('test');
+        tick(500);
+        flush();
+        fixture.detectChanges();
 
-    expect(component.form.controls.id.value).toBe(null);
-  }));
+        expect(component.libraryTitleExists).toBe(true);
+    }));
 
-  it('should translate library title partially for library id', fakeAsync(() => {
-    spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-      return new Promise((resolve, reject) => reject());
-    });
+    it('should notify on 409 conflict error (might be in trash)', fakeAsync(() => {
+        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
+        const error = { message: '{ "error": { "statusCode": 409 } }' };
+        spyOn(alfrescoApi.sitesApi, 'createSite').and.callFake(() => {
+            return new Promise((resolve, reject) => reject(error));
+        });
+        spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
+            return new Promise((resolve, reject) => reject());
+        });
 
-    fixture.detectChanges();
-    component.form.controls.title.setValue('@@@####library');
-    tick(500);
-    flush();
-    fixture.detectChanges();
+        fixture.detectChanges();
+        component.form.controls.title.setValue('test');
+        tick(500);
+        flush();
+        fixture.detectChanges();
 
-    expect(component.form.controls.id.value).toBe('library');
-  }));
+        component.submit();
+        fixture.detectChanges();
+        flush();
 
-  it('should translate library title multiple space character to one dash for library id', fakeAsync(() => {
-    spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
-      return new Promise((resolve, reject) => reject());
-    });
+        expect(component.form.controls.id.errors).toEqual({
+            message: 'LIBRARY.ERRORS.CONFLICT'
+        });
+    }));
 
-    fixture.detectChanges();
-    component.form.controls.title.setValue('library     title');
-    tick(500);
-    flush();
-    fixture.detectChanges();
+    it('should not translate library title if value is not a valid id', fakeAsync(() => {
+        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
+        spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
+            return new Promise((resolve, reject) => reject());
+        });
 
-    expect(component.form.controls.id.value).toBe('library-title');
-  }));
+        fixture.detectChanges();
+        component.form.controls.title.setValue('@@@####');
+        tick(500);
+        flush();
+        fixture.detectChanges();
+
+        expect(component.form.controls.id.value).toBe(null);
+    }));
+
+    it('should translate library title partially for library id', fakeAsync(() => {
+        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
+        spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
+            return new Promise((resolve, reject) => reject());
+        });
+
+        fixture.detectChanges();
+        component.form.controls.title.setValue('@@@####library');
+        tick(500);
+        flush();
+        fixture.detectChanges();
+
+        expect(component.form.controls.id.value).toBe('library');
+    }));
+
+    it('should translate library title multiple space character to one dash for library id', fakeAsync(() => {
+        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
+        spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
+            return new Promise((resolve, reject) => reject());
+        });
+
+        fixture.detectChanges();
+        component.form.controls.title.setValue('library     title');
+        tick(500);
+        flush();
+        fixture.detectChanges();
+
+        expect(component.form.controls.id.value).toBe('library-title');
+    }));
 });

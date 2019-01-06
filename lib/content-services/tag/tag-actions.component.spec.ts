@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { TagActionsComponent } from './tag-actions.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
 
@@ -33,9 +33,6 @@ describe('TagActionsComponent', () => {
     });
 
     beforeEach(() => {
-        let appConfig: AppConfigService = TestBed.get(AppConfigService);
-        appConfig.config.ecmHost = 'http://localhost:9876/ecm';
-
         fixture = TestBed.createComponent(TagActionsComponent);
 
         element = fixture.nativeElement;
