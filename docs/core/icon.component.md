@@ -12,7 +12,13 @@ Provides universal way of rendering registered and named icons.
 ## Basic usage
 
 ```html
+<!-- Font ligature -->
 <adf-icon value="alert"></adf-icon>
+
+<!-- ADF Thumbnail Service -->
+<adf-icon value="image/png"></adf-icon>
+
+<!-- Custom icon from MatIconRegistry -->
 <adf-icon value="my-company:my-icon"></adf-icon>
 ```
 
@@ -60,4 +66,12 @@ In the HTML you can now use it like in the following snippet:
 
 ```html
 <adf-icon value="adf:move_file"></adf-icon>
+```
+
+## Thumbnail Service
+
+You can also use icons registered with the ADF [ThumbnailService](thumbnail.service.md)
+
+```html
+<adf-icon value="image/gif"></adf-icon>
 ```
