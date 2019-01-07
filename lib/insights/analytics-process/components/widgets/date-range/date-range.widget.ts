@@ -21,8 +21,7 @@ import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService, UserPre
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import moment from 'moment-es6';
-import { Moment } from 'moment';
+import * as moment from 'moment';
 
 @Component({
     selector: 'adf-date-range-widget',
@@ -47,13 +46,13 @@ export class DateRangeWidgetComponent implements OnInit {
     @Output()
     dateRangeChanged: EventEmitter<any> = new EventEmitter<any>();
 
-    minDate: Moment;
-    maxDate: Moment;
-    startDatePicker: Moment = moment();
-    endDatePicker: Moment = moment();
+    minDate: moment.Moment;
+    maxDate: moment.Moment;
+    startDatePicker: moment.Moment = moment();
+    endDatePicker: moment.Moment = moment();
 
     constructor(
-        private dateAdapter: DateAdapter<Moment>,
+        private dateAdapter: DateAdapter<moment.Moment>,
         private userPreferencesService: UserPreferencesService) {
     }
 

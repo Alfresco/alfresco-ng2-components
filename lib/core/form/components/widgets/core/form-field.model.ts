@@ -16,7 +16,7 @@
  */
 
 /* tslint:disable:component-selector  */
-import moment from 'moment-es6';
+import * as moment from 'moment';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import { ContainerColumnModel } from './container-column.model';
 import { ErrorMessageModel } from './error-message.model';

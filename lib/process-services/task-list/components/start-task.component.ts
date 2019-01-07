@@ -19,8 +19,7 @@ import { LogService, UserPreferencesService, UserPreferenceValues, UserProcessMo
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
-import moment from 'moment-es6';
-import { Moment } from 'moment';
+import * as moment from 'moment';
 import { Observable, of } from 'rxjs';
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -78,7 +77,7 @@ export class StartTaskComponent implements OnInit {
      * @param taskService
      */
     constructor(private taskService: TaskListService,
-                private dateAdapter: DateAdapter<Moment>,
+                private dateAdapter: DateAdapter<moment.Moment>,
                 private userPreferencesService: UserPreferencesService,
                 private formBuilder: FormBuilder,
                 private logService: LogService) {

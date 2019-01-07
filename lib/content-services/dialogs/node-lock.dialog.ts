@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import moment from 'moment-es6';
-
+import * as moment from 'moment';
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';

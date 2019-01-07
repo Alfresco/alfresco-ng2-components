@@ -17,7 +17,7 @@
 
  /* tslint:disable:component-selector  */
 
-import moment from 'moment-es6';
+import * as moment from 'moment';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldModel } from './form-field.model';
 

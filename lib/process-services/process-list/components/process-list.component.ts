@@ -45,7 +45,7 @@ import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
 import { BehaviorSubject } from 'rxjs';
 import { ProcessListModel } from '../models/process-list.model';
-import moment from 'moment-es6';
+import * as moment from 'moment';
 
 @Component({
     selector: 'adf-process-instance-list',

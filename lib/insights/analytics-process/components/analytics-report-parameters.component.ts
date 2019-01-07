@@ -31,7 +31,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import moment from 'moment-es6';
+import * as moment from 'moment';
 import { ParameterValueModel } from '../../diagram/models/report/parameterValue.model';
 import { ReportParameterDetailsModel } from '../../diagram/models/report/reportParameterDetails.model';
 import { ReportParametersModel } from '../../diagram/models/report/reportParameters.model';

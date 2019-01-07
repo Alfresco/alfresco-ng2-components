@@ -17,8 +17,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
-import moment from 'moment-es6';
-import { Moment } from 'moment';
+import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
 import { FormBuilder, AbstractControl, Validators, FormGroup, FormControl } from '@angular/forms';
 import { StartTaskCloudService } from '../services/start-task-cloud.service';
@@ -101,7 +100,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     private createTaskSub: Subscription;
 
     constructor(private taskService: StartTaskCloudService,
-                private dateAdapter: DateAdapter<Moment>,
+                private dateAdapter: DateAdapter<moment.Moment>,
                 private userPreferencesService: UserPreferencesService,
                 private formBuilder: FormBuilder,
                 private identityUserService: IdentityUserService,

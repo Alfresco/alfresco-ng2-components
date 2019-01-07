@@ -19,8 +19,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { MatDatetimepicker, DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
-import moment from 'moment-es6';
-import { Moment } from 'moment';
+import * as moment from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { UserPreferencesService, UserPreferenceValues } from '../../../services/user-preferences.service';
@@ -54,10 +53,10 @@ export class CardViewDateItemComponent implements OnInit {
     @ViewChild('datetimePicker')
     public datepicker: MatDatetimepicker<any>;
 
-    valueDate: Moment;
+    valueDate: moment.Moment;
 
     constructor(private cardViewUpdateService: CardViewUpdateService,
-                private dateAdapter: DateAdapter<Moment>,
+                private dateAdapter: DateAdapter<moment.Moment>,
                 private userPreferencesService: UserPreferencesService) {
     }
 

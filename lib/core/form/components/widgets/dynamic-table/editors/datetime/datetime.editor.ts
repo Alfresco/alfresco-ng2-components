@@ -22,8 +22,7 @@ import { MomentDateAdapter } from '../../../../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../../../../utils/moment-date-formats.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import moment from 'moment-es6';
-import { Moment } from 'moment';
+import * as moment from 'moment';
 import { DynamicTableColumn } from './../../dynamic-table-column.model';
 import { DynamicTableRow } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';
@@ -56,10 +55,10 @@ export class DateTimeEditorComponent implements OnInit {
     @Input()
     column: DynamicTableColumn;
 
-    minDate: Moment;
-    maxDate: Moment;
+    minDate: moment.Moment;
+    maxDate: moment.Moment;
 
-    constructor(private dateAdapter: DateAdapter<Moment>,
+    constructor(private dateAdapter: DateAdapter<moment.Moment>,
                 private userPreferencesService: UserPreferencesService) {
     }
 

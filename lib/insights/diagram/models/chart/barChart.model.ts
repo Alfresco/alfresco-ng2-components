@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import moment from 'moment-es6';
+import * as moment from 'moment';
 import { Chart } from './chart.model';
 
 export class BarChart extends Chart {

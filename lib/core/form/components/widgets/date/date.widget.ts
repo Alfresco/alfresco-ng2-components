@@ -22,8 +22,7 @@ import { MomentDateAdapter } from '../../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../../utils/moment-date-formats.model';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import moment from 'moment-es6';
-import { Moment } from 'moment';
+import * as moment from 'moment';
 import { FormService } from './../../../services/form.service';
 import { baseHost, WidgetComponent } from './../widget.component';
 
@@ -39,13 +38,13 @@ import { baseHost, WidgetComponent } from './../widget.component';
 })
 export class DateWidgetComponent extends WidgetComponent implements OnInit {
 
-    minDate: Moment;
-    maxDate: Moment;
+    minDate: moment.Moment;
+    maxDate: moment.Moment;
 
-    displayDate: Moment;
+    displayDate: moment.Moment;
 
     constructor(public formService: FormService,
-                private dateAdapter: DateAdapter<Moment>,
+                private dateAdapter: DateAdapter<moment.Moment>,
                 private userPreferencesService: UserPreferencesService) {
         super(formService);
     }

@@ -17,7 +17,7 @@
 
 import { DateAdapter } from '@angular/material';
 import { isMoment, Moment } from 'moment';
-import moment from 'moment-es6';
+import * as moment from 'moment';
 
 export class MomentDateAdapter extends DateAdapter<Moment> {
 

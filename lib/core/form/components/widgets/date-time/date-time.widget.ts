@@ -21,8 +21,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
 import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
-import moment from 'moment-es6';
-import { Moment } from 'moment';
+import * as moment from 'moment';
 import { UserPreferencesService, UserPreferenceValues } from '../../../../services/user-preferences.service';
 import { MomentDateAdapter } from '../../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../../utils/moment-date-formats.model';
@@ -43,12 +42,12 @@ import { WidgetComponent } from './../widget.component';
 })
 export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
 
-    minDate: Moment;
-    maxDate: Moment;
-    displayDate: Moment;
+    minDate: moment.Moment;
+    maxDate: moment.Moment;
+    displayDate: moment.Moment;
 
     constructor(public formService: FormService,
-                private dateAdapter: DateAdapter<Moment>,
+                private dateAdapter: DateAdapter<moment.Moment>,
                 private userPreferencesService: UserPreferencesService) {
         super(formService);
     }

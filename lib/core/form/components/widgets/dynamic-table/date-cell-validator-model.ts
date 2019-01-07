@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import moment from 'moment-es6';
+import * as moment from 'moment';
 import { CellValidator } from './cell-validator.model';
 import { DynamicRowValidationSummary } from './dynamic-row-validation-summary.model';
 import { DynamicTableColumn } from './dynamic-table-column.model';
