@@ -39,11 +39,11 @@ export class GroupCloudService {
         }
         const url = this.getGroupsApi();
         const httpMethod = 'GET', pathParams = {}, queryParams = {search: searchParams.name}, bodyParam = {}, headerParams = {},
-            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
         return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
             url, httpMethod, pathParams, queryParams,
-            headerParams, formParams, bodyParam, authNames,
+            headerParams, formParams, bodyParam,
             contentTypes, accepts, Object, null, null)
         )).pipe(
             catchError((err) => this.handleError(err))
@@ -52,11 +52,11 @@ export class GroupCloudService {
 
     getClientIdByApplicationName(applicationName: string): Observable<string> {
         const url = this.getApplicationIdApi();
-        const httpMethod = 'GET', pathParams = {}, queryParams = {clientId: applicationName}, bodyParam = {}, headerParams = {}, formParams = {}, authNames = [],
+        const httpMethod = 'GET', pathParams = {}, queryParams = {clientId: applicationName}, bodyParam = {}, headerParams = {}, formParams = {},
               contentTypes = ['application/json'], accepts = ['application/json'];
         return from(this.apiService.getInstance()
                         .oauth2Auth.callCustomApi(url, httpMethod, pathParams, queryParams, headerParams,
-                                              formParams, bodyParam, authNames, contentTypes,
+                                              formParams, bodyParam, contentTypes,
                                               accepts, Object, null, null)
             ).pipe(
                 map((response: any[]) => {
@@ -74,11 +74,11 @@ export class GroupCloudService {
     checkGroupHasClientRoleMapping(groupId: string, clientId: string): Observable<any> {
         const url = this.groupClientRoleMappingApi(groupId, clientId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
-            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
         return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
                     url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam, authNames,
+                    headerParams, formParams, bodyParam,
                     contentTypes, accepts, [], null, null)
                 ).pipe(
                     map((response: any[]) => {
