@@ -76,11 +76,11 @@ export class IdentityUserService {
         }
         const url = this.buildUserUrl();
         const httpMethod = 'GET', pathParams = {}, queryParams = {search: search}, bodyParam = {}, headerParams = {},
-            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
         return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
                     url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam, authNames,
+                    headerParams, formParams, bodyParam,
                     contentTypes, accepts, Object, null, null)
                 ));
     }
@@ -88,11 +88,11 @@ export class IdentityUserService {
     getClientRoles(userId: string, clientId: string): Observable<any[]> {
         const url = this.buildUserClientRoleMapping(userId, clientId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
-            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
         return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
                     url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam, authNames,
+                    headerParams, formParams, bodyParam,
                     contentTypes, accepts, Object, null, null)
                 );
     }
@@ -131,11 +131,11 @@ export class IdentityUserService {
 
     getClientIdByApplicationName(applicationName: string): Observable<string> {
         const url = this.buildGetClientsUrl();
-        const httpMethod = 'GET', pathParams = {}, queryParams = {clientId: applicationName}, bodyParam = {}, headerParams = {}, formParams = {}, authNames = [],
+        const httpMethod = 'GET', pathParams = {}, queryParams = {clientId: applicationName}, bodyParam = {}, headerParams = {}, formParams = {},
               contentTypes = ['application/json'], accepts = ['application/json'];
         return from(this.apiService.getInstance()
                         .oauth2Auth.callCustomApi(url, httpMethod, pathParams, queryParams, headerParams,
-                                              formParams, bodyParam, authNames, contentTypes,
+                                              formParams, bodyParam, contentTypes,
                                               accepts, Object, null, null)
             ).pipe(
                 map((response: any[]) => {
