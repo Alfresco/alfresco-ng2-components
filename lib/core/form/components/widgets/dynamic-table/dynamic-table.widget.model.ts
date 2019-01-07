@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
- import * as moment from 'moment';
+import * as moment from 'moment';
 import { ValidateDynamicTableRowEvent } from '../../../events/validate-dynamic-table-row.event';
 import { FormService } from './../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
