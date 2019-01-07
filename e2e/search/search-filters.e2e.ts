@@ -20,6 +20,9 @@ import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
 import { PaginationPage } from '../pages/adf/paginationPage';
 import { ContentListPage } from '../pages/adf/dialog/contentListPage';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { ConfigEditorPage } from '../pages/adf/configEditorPage';
+import { SearchResultsPage } from '../pages/adf/searchResultsPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
@@ -31,6 +34,7 @@ import resources = require('../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
 import { browser } from 'protractor';
+import { SearchConfiguration } from './search.config';
 
 describe('Search Filters', () => {
 
@@ -40,6 +44,9 @@ describe('Search Filters', () => {
     let uploadActions = new UploadActions();
     let paginationPage = new PaginationPage();
     let contentList = new ContentListPage();
+    let navigationBar = new NavigationBarPage();
+    let configEditor = new ConfigEditorPage();
+    let searchResults = new SearchResultsPage();
 
     let acsUser = new AcsUserModel();
 
@@ -147,6 +154,27 @@ describe('Search Filters', () => {
                 expect(nameOfResultFiles).toContain('.png');
             });
         });
+    });
+
+    it('[C291802] Should be able to filter facet fields with "Contains"', () => {
+        let searchConfiguration = new SearchConfiguration();
+        let jsonFile = searchConfiguration.getConfiguration();
+        navigationBar.clickConfigEditorButton();
+        configEditor.clickSearchConfiguration();
+        configEditor.clickClearButton();
+        jsonFile['filterWithContains'] = true;
+        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
+        configEditor.clickSaveButton();
+
+        searchDialog.checkSearchIconIsVisible()
+            .clickOnSearchIcon()
+            .enterTextAndPressEnter('*');
+
+        searchResults.tableIsLoaded();
+
+        searchFiltersPage.creatorCheckListFiltersPage()
+            .searchInFilter('dminis')
+            .checkCheckListOptionIsDisplayed('Administrator');
     });
 
 });

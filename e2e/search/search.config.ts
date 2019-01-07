@@ -62,7 +62,7 @@ export class SearchConfiguration {
                 'fields': [
                     {'field': 'content.mimetype', 'mincount': 1, 'label': '1:Type'},
                     {'field': 'content.size', 'mincount': 1, 'label': '2:Size'},
-                    {'field': 'creator', 'mincount': 1, 'label': '3:Creator'},
+                    {'field': 'creator', 'mincount': 1, 'label': 'SEARCH.FACET_FIELDS.CREATOR'},
                     {'field': 'modifier', 'mincount': 1, 'label': '4:Modifier'},
                     {'field': 'created', 'mincount': 1, 'label': '5:Created'}
                 ]
