@@ -89,7 +89,7 @@ describe('Start Task', () => {
                  .clickCancelButton();
     });
 
-    it('[C290181] Should be displayed an error message if the date is invalid', () => {
+    it('[C291774] Should be displayed an error message if the date is invalid', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.addDueDate('12/12/2018')
                  .checkStartButtonIsEnabled();
