@@ -43,20 +43,22 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     public static DEFAULT_TASK_FILTER_PROPERTIES = ['state', 'assignment', 'sort', 'order'];
     public FORMAT_DATE: string = 'DD/MM/YYYY';
 
-    /** Name of the app. */
+    /** (required) Name of the app. */
     @Input()
     appName: string;
 
-    /** ID of the task filter. */
+    /** (required) ID of the task filter. */
     @Input()
     id: string;
 
     @Input()
     filterProperties: string[] = EditTaskFilterCloudComponent.DEFAULT_TASK_FILTER_PROPERTIES; // default ['state', 'assignment', 'sort', 'order']
 
+    /** Toggles the filter actions. */
     @Input()
     toggleFilterActions = true;
 
+    /** Toggles the title. */
     @Input()
     showTitle = true;
 
@@ -292,7 +294,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'state',
-                value: currentTaskFilter.state || this.status[0],
+                value: currentTaskFilter.state || this.status[0].value,
                 options: of(this.status)
             }),
             new TaskFilterProperties({
@@ -311,14 +313,14 @@ export class EditTaskFilterCloudComponent implements OnChanges {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COLUMN',
                 type: 'select',
                 key: 'sort',
-                value: currentTaskFilter.sort || this.columns[0],
+                value: currentTaskFilter.sort || this.columns[0].value,
                 options: of(this.columns)
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DIRECTION',
                 type: 'select',
                 key: 'order',
-                value: currentTaskFilter.order || this.directions[0],
+                value: currentTaskFilter.order || this.directions[0].value,
                 options: of(this.directions)
             }),
             new TaskFilterProperties({
@@ -331,37 +333,37 @@ export class EditTaskFilterCloudComponent implements OnChanges {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_AFTER',
                 type: 'date',
                 key: 'dueAfter',
-                value: currentTaskFilter.dueAfter || ''
+                value: ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_BEFORE',
                 type: 'date',
                 key: 'dueBefore',
-                value: currentTaskFilter.dueBefore || ''
+                value: ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CLAIMED_DATE_FROM',
                 type: 'date',
                 key: 'claimedDateFrom',
-                value: currentTaskFilter.claimedDateFrom || ''
+                value: ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CLAIMED_DATE_TO',
                 type: 'date',
                 key: 'claimedDateTo',
-                value: currentTaskFilter.claimedDateTo || ''
+                value: ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE_FORM',
                 type: 'date',
                 key: 'createdDateFrom',
-                value: currentTaskFilter.createdDateFrom || ''
+                value: ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE_TO',
                 type: 'date',
                 key: 'createdDateTo',
-                value: currentTaskFilter.createdDateTo || ''
+                value: ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.TASK_NAME',
@@ -392,14 +394,14 @@ export class EditTaskFilterCloudComponent implements OnChanges {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.LAST_MODIFIED_FROM',
                 type: 'date',
                 key: 'lastModifiedFrom',
-                value: currentTaskFilter.lastModifiedFrom || ''
+                value: ''
             }),
 
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.LAST_MODIFIED_TO',
                 type: 'date',
                 key: 'lastModifiedTo',
-                value: currentTaskFilter.lastModifiedTo || ''
+                value: ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.OWNER',
@@ -411,13 +413,13 @@ export class EditTaskFilterCloudComponent implements OnChanges {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE_FROM',
                 type: 'date',
                 key: 'dueDateFrom',
-                value: currentTaskFilter.dueDateFrom || ''
+                value: ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE_TO',
                 type: 'date',
                 key: 'dueDateTo',
-                value: currentTaskFilter.dueDateTo || ''
+                value: ''
             })
         ];
     }

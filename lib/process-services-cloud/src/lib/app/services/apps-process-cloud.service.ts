@@ -36,8 +36,11 @@ export class AppsProcessCloudService {
      * @returns The list of deployed apps
      */
     getDeployedApplicationsByStatus(status: string): Observable<ApplicationInstanceModel[]> {
+        if (status === '') {
+            return of([]);
+        }
         const api: Oauth2Auth = this.apiService.getInstance().oauth2Auth;
-        const path = `${this.contextRoot}/alfresco-deployment-service/v1/applications`;
+        const path = this.getApplicationUrl();
         const pathParams = {}, queryParams = {},
             headerParams = {}, formParams = {}, bodyParam = {},
             contentTypes = ['application/json'], accepts = ['application/json'];
@@ -45,34 +48,13 @@ export class AppsProcessCloudService {
         return from(api.callCustomApi(path, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts))
             .pipe(
-                map((apps: Array<{}>) => {
-                        return apps.filter((app: ApplicationInstanceModel) => app.status === status)
-                            .map((app) => {
-                                return new ApplicationInstanceModel(app);
-                            });
-                    }
-                ),
-                catchError((err) => this.handleError(err))
-            );
-    }
-
-    getRunningApplications(): Observable<any> {
-        const url = this.getApplicationUrl();
-        const httpMethod = 'GET', pathParams = {}, queryParams = {status: status}, bodyParam = {}, headerParams = {},
-            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
-
-        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
-            url, httpMethod, pathParams, queryParams,
-            headerParams, formParams, bodyParam, authNames,
-            contentTypes, accepts, Object, null, null)
-        )).pipe(
-            map((applications: ApplicationInstanceModel[]) => {
+                map((applications: ApplicationInstanceModel[]) => {
                     return applications.map((application) => {
                         return new ApplicationInstanceModel(application);
                     });
             }),
             catchError((err) => this.handleError(err))
-        );
+            );
     }
 
     private getApplicationUrl() {

@@ -285,7 +285,6 @@ describe('EditTaskFilterCloudComponent', () => {
                 expect(processInsIdController).toBeDefined();
                 expect(appController.value).toBe('mock-app-name');
                 expect(processInsIdController.value).toBe('process-instance-id');
-                expect(dueDateController.value).toBe('Fri Jan 04 2019 19:16:32 GMT+0530 (IST)');
             });
         }));
     });

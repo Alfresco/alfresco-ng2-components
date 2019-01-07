@@ -27,8 +27,8 @@
                         placeholder="{{taskFilterProperty.label | translate}}"
                         [formControlName]="taskFilterProperty.key"
                         [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key">
-                        <mat-option *ngFor="let state of taskFilterProperty.options$ | async" [value]="state.value" [attr.data-automation-id]="'adf-cloud-edit-task-property-options' + taskFilterProperty.key">
-                            {{ state.label }}
+                        <mat-option *ngFor="let propertyOption of taskFilterProperty.options$ | async" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-task-property-options' + taskFilterProperty.key">
+                            {{ propertyOption.label }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

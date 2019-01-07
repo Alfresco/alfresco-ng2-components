@@ -17,15 +17,15 @@
         .adf-error-text {
             padding-right: 8px;
             height: 16px;
-            font-size: 12px;
+            font-size: 10px;
             line-height: 1.33;
             color: mat-color($warn);
             width: auto;
         }
 
         .adf-error-icon {
-            font-size: 17px;
-            color:  mat-color($warn);
+            font-size: 16px;
+            color: mat-color($warn);
         }
     }
 }
