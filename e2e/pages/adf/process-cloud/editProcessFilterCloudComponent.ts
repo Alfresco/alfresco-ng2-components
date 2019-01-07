@@ -23,8 +23,6 @@ export class EditProcessFilterCloudComponent {
     customiseFilter = element(by.id('adf-edit-process-filter-title-id'));
     selectedOption = element(by.css('mat-option[class*="mat-selected"]'));
 
-    editProcessFilter = new EditProcessFilterDialog();
-
     saveButton = element(by.css('button[data-automation-id="Save"]'));
     saveAsButton = element(by.css('button[data-automation-id="Save as"]'));
     deleteButton = element(by.css('button[data-automation-id="Delete"]'));
