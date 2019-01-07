@@ -31,7 +31,6 @@ import { Util } from '../util/util';
 =======
 >>>>>>> add test for default filter:e2e/process-services-cloud/task_filters_cloud.e2e.ts
 import { Tasks } from '../actions/APS-cloud/tasks';
-import { browser } from 'protractor';
 
 describe('Task filters cloud', () => {
 
@@ -90,10 +89,9 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(newTask);
         });
 
-        fit('[C289955] Should display task in Complete Tasks List when task is completed', async() => {
+        it('[C289955] Should display task in Complete Tasks List when task is completed', async() => {
             await tasksService.init(user, password);
             let task = await tasksService.createStandaloneTask(completedTask, simpleApp);
-            console.log(task);
 
             await tasksService.claimTask(task.entry.id, simpleApp);
             await tasksService.completeTask(task.entry.id, simpleApp);
