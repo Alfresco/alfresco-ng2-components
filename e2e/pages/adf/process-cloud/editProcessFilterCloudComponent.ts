@@ -15,14 +15,19 @@
  * limitations under the License.
  */
 import { Util } from '../../../util/util';
-import { by, element } from 'protractor';
+import { by, element, protractor } from 'protractor';
 import { EditProcessFilterDialog } from '../dialog/editProcessFilterDialog';
 
 export class EditProcessFilterCloudComponent {
 
     customiseFilter = element(by.id('adf-edit-process-filter-title-id'));
     selectedOption = element(by.css('mat-option[class*="mat-selected"]'));
-    saveAsButton = element(by.css('button[id="adf-save-as-id"]'));
+
+    editProcessFilter = new EditProcessFilterDialog();
+
+    saveButton = element(by.css('button[data-automation-id="Save"]'));
+    saveAsButton = element(by.css('button[data-automation-id="Save as"]'));
+    deleteButton = element(by.css('button[data-automation-id="Delete"]'));
 
     editProcessFilter = new EditProcessFilterDialog();
 
@@ -46,6 +51,10 @@ export class EditProcessFilterCloudComponent {
         return this;
     }
 
+    getStateFilterDropDownValue() {
+        return element(by.css("mat-form-field[data-automation-id='status'] span")).getText();
+    }
+
     setSortFilterDropDown(option) {
         this.clickOnDropDownArrow('sort');
 
@@ -56,6 +65,10 @@ export class EditProcessFilterCloudComponent {
         return this;
     }
 
+    getSortFilterDropDownValue() {
+        return element(by.css("mat-form-field[data-automation-id='sort'] span")).getText();
+    }
+
     setOrderFilterDropDown(option) {
         this.clickOnDropDownArrow('order');
 
@@ -64,6 +77,10 @@ export class EditProcessFilterCloudComponent {
         Util.waitUntilElementIsVisible(orderElement);
         orderElement.click();
         return this;
+    }
+
+    getOrderFilterDropDownValue() {
+        return element(by.css("mat-form-field[data-automation-id='order'] span")).getText();
     }
 
     clickOnDropDownArrow(option) {
@@ -96,10 +113,49 @@ export class EditProcessFilterCloudComponent {
         return this;
     }
 
+    checkSaveButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.saveButton);
+        return this;
+    }
+
+    checkSaveAsButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.saveAsButton);
+        return this;
+    }
+
+    checkDeleteButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.deleteButton);
+        return this;
+    }
+
+    checkSaveButtonIsEnabled() {
+        return this.saveButton.isEnabled();
+    }
+
+    checkSaveAsButtonIsEnabled() {
+        return this.saveAsButton.isEnabled();
+    }
+
+    checkDeleteButtonIsEnabled() {
+        return this.deleteButton.isEnabled();
+    }
+
     clickSaveAsButton() {
         Util.waitUntilElementIsClickable(this.saveAsButton);
         Util.waitUntilElementIsVisible(this.saveAsButton);
         this.saveAsButton.click();
         return this.editProcessFilter;
+    }
+
+    clickDeleteButton() {
+        Util.waitUntilElementIsVisible(this.deleteButton);
+        this.deleteButton.click();
+        return this;
+    }
+
+    clickSaveButton() {
+        Util.waitUntilElementIsVisible(this.saveButton);
+        this.saveButton.click();
+        return this;
     }
 }
