@@ -21,7 +21,7 @@ import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudCo
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/tasksCloudDemoPage';
-import { StartTasksCloudComponent } from '../pages/adf/process_cloud/startTasksCloudComponent';
+import { StartTasksCloudComponent } from '../pages/adf/process-cloud/startTasksCloudComponent';
 import { Util } from '../util/util';
 
 describe('Start Task', () => {
