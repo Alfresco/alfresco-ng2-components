@@ -21,16 +21,10 @@ import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/tasksCloudDemoPage';
-<<<<<<< HEAD:e2e/process-services-cloud/task-filters-cloud.e2e.ts
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
-=======
-import { AppListCloudComponent } from '../pages/adf/process_cloud/appListCloudComponent';
 import { Util } from '../util/util';
-<<<<<<< HEAD:e2e/process-services-cloud/task-filters-cloud.e2e.ts
->>>>>>> add test for default filter:e2e/process-services-cloud/task_filters_cloud.e2e.ts
-=======
->>>>>>> add test for default filter:e2e/process-services-cloud/task_filters_cloud.e2e.ts
 import { Tasks } from '../actions/APS-cloud/tasks';
+import { browser } from 'protractor';
 
 describe('Task filters cloud', () => {
 
@@ -44,15 +38,7 @@ describe('Task filters cloud', () => {
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
         let silentLogin;
-<<<<<<< HEAD:e2e/process-services-cloud/task-filters-cloud.e2e.ts
-<<<<<<< HEAD:e2e/process-services-cloud/task-filters-cloud.e2e.ts
-        const newTask = 'newTask', completedTask = 'completedTask1';
-=======
         const newTask = Util.generateRandomString(5), completedTask = Util.generateRandomString(5);
->>>>>>> add test for default filter:e2e/process-services-cloud/task_filters_cloud.e2e.ts
-=======
-        const newTask = Util.generateRandomString(5), completedTask = Util.generateRandomString(5);
->>>>>>> add test for default filter:e2e/process-services-cloud/task_filters_cloud.e2e.ts
         const simpleApp = 'simple-app';
 
         beforeAll(() => {
