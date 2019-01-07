@@ -97,14 +97,16 @@ export class GroupCloudComponent implements OnInit {
     ngOnInit() {
         this.loadPreSelectGroups();
         this.initSearch();
+        if (this.applicationName) {
+            this.loadClientId();
+        }
     }
 
-   private async initSearch() {
+    private async loadClientId() {
         this.applicationId = await this.groupService.getClientId(this.applicationName);
-        this.search();
     }
 
-    search() {
+    initSearch() {
         this.searchGroupsControl.valueChanges.pipe(
             debounceTime(500),
             distinctUntilChanged(),
@@ -115,12 +117,19 @@ export class GroupCloudComponent implements OnInit {
                 const queryParams = this.createSearchParam(inputValue);
                 return this.findGroupsByName(queryParams);
             }),
-            mergeMap((group: any) => {
-                return this.checkGroupHasClientRoleMapping(group);
+            filter((group: any) => {
+                return !this.isGroupAlreadySelected(group);
             }),
-            filter((filteredGroup) => filteredGroup.hasRole)
-        ).subscribe((filteredGroup) => {
-            this.searchGroups.push(filteredGroup.group);
+            mergeMap((group: any) => {
+                if (this.applicationId) {
+                    return this.checkGroupHasClientRoleMapping(group);
+                } else {
+                    return of(group);
+                }
+            })
+        ).subscribe((searchedGroup) => {
+            this.searchGroups.push(searchedGroup);
+            this.clearError();
             this.searchGroupsSubject.next(this.searchGroups);
         });
     }
@@ -129,24 +138,23 @@ export class GroupCloudComponent implements OnInit {
         return this.groupService.findGroupsByName(searchParam).pipe(
             flatMap((groups: GroupModel[]) => {
                 this.searchedValue = searchParam.name;
-                if (this.searchedValue) {
-                    !this.hasGroups(groups) ? this.setError() : this.clearError();
-                } else {
-                    this.clearError();
+                if (this.searchedValue && !this.hasGroups(groups)) {
+                    this.setError();
                 }
                 return groups;
             })
         );
     }
 
-    checkGroupHasClientRoleMapping(group: GroupModel): Observable<any> {
-        if (this.isGroupAlreadySelected(group)) {
-            return of();
-        }
+    checkGroupHasClientRoleMapping(group: GroupModel): Observable<GroupModel> {
         return this.groupService.checkGroupHasClientRoleMapping(group.id, this.applicationId).pipe(
             mergeMap((hasRole: boolean) => {
-                hasRole ? this.clearError() : this.setError();
-                return of({ group, hasRole });
+                if (hasRole) {
+                    return of(group);
+                } else {
+                    this.setError();
+                    return of();
+                }
             })
         );
     }
@@ -223,6 +231,14 @@ export class GroupCloudComponent implements OnInit {
 
     isString(value: any): boolean {
         return typeof value === 'string';
+    }
+
+    setValidationError() {
+        if (this.hasGroups(this.searchGroups)) {
+            this.clearError();
+        } else {
+            this.setError();
+        }
     }
 
     private setError() {

@@ -1,7 +1,10 @@
 <div class="adf-cloud-group">
 <mat-form-field>
-    <mat-chip-list #groupChipList *ngIf="isMultipleMode()" class="apa-group-chip-list">
-      <mat-chip *ngFor="let group of selectedGroups$ | async" (removed)="onRemove(group)">
+    <mat-chip-list #groupChipList *ngIf="isMultipleMode()" data-automation-id="adf-cloud-group-chip-list" class="apa-group-chip-list">
+      <mat-chip
+        *ngFor="let group of selectedGroups$ | async"
+        (removed)="onRemove(group)"
+        [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name">
         {{group.name}}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
@@ -27,8 +30,9 @@
       #auto="matAutocomplete"
       class="adf-cloud-group-list"
       (optionSelected)="onSelect($event.option.value)"
-      [displayWith]="getDisplayName">
-      <mat-option *ngFor="let group of searchGroups$ | async; let i = index" [value]="group">
+      [displayWith]="getDisplayName"
+      data-automation-id="adf-cloud-group-autocomplete">
+      <mat-option *ngFor="let group of searchGroups$ | async; let i = index" [value]="group" [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name">
         <div class="adf-cloud-group-row" id="adf-group-{{i}}" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
          <button class="adf-group-short-name" mat-fab>{{group | groupNameInitial }}</button>
           <span>{{group.name}}</span>

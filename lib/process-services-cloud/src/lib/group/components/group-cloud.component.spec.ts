@@ -32,6 +32,7 @@ describe('GroupCloudComponent', () => {
     let fixture: ComponentFixture<GroupCloudComponent>;
     let element: HTMLElement;
     let service: GroupCloudService;
+    let findGroupsByNameSpy: jasmine.Spy;
     let getClientIdSpy: jasmine.Spy;
     let checkGroupHasClientRoleMappingSpy: jasmine.Spy;
 
@@ -45,10 +46,10 @@ describe('GroupCloudComponent', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         service = TestBed.get(GroupCloudService);
-        spyOn(service, 'findGroupsByName').and.returnValue(mockGroups);
+        findGroupsByNameSpy = spyOn(service, 'findGroupsByName').and.returnValue(of(mockGroups));
         getClientIdSpy = spyOn(service, 'getClientId').and.returnValue(Promise.resolve('mock-client-id'));
         checkGroupHasClientRoleMappingSpy = spyOn(service, 'checkGroupHasClientRoleMapping').and.returnValue(of(true));
-        component.applicationName = 'mock-name';
+        component.applicationName = 'mock-app-name';
     });
 
     it('should create GroupCloudComponent', () => {
@@ -105,18 +106,18 @@ describe('GroupCloudComponent', () => {
     it('should show an error message if the group is invalid', async(() => {
         fixture.detectChanges();
         checkGroupHasClientRoleMappingSpy.and.returnValue(of(false));
+        findGroupsByNameSpy.and.returnValue(of([]));
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
-        inputHTMLElement.dispatchEvent(new Event('input'));
-        inputHTMLElement.dispatchEvent(new Event('keyup'));
-        inputHTMLElement.dispatchEvent(new Event('keydown'));
         inputHTMLElement.value = 'ZZZ';
+        inputHTMLElement.dispatchEvent(new Event('input'));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
+            fixture.detectChanges();
             const errorMessage = element.querySelector('.adf-cloud-group-error-message');
-            expect(element.querySelector('.adf-cloud-group-error')).not.toBeNull();
-            expect(errorMessage.textContent.trim()).toContain('ADF_CLOUD_GROUPS.ERROR.NOT_FOUND');
+            expect(errorMessage).not.toBeNull();
+            expect(errorMessage.textContent).toContain('ADF_CLOUD_GROUPS.ERROR.NOT_FOUN');
         });
     }));
 
@@ -138,6 +139,17 @@ describe('GroupCloudComponent', () => {
         });
     }));
 
+    it('should pre-select all preSelectGroups when mode=multiple', async(() => {
+        component.mode = 'multiple';
+        component.preSelectGroups = <any> [{id: mockGroups[1].id}, {id: mockGroups[2].id}];
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const chips = fixture.debugElement.queryAll(By.css('mat-chip'));
+            expect(chips.length).toBe(2);
+        });
+    }));
+
     it('should not pre-select any group when preSelectGroups is empty and mode=multiple', async(() => {
         component.mode = 'multiple';
         fixture.detectChanges();
@@ -153,8 +165,8 @@ describe('GroupCloudComponent', () => {
         component.preSelectGroups = <any> [{id: mockGroups[1].id}, {id: mockGroups[2].id}];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const selectedUser = component.searchGroupsControl.value;
-            expect(selectedUser.id).toBe(mockGroups[1].id);
+            const selectedGroup = component.searchGroupsControl.value;
+            expect(selectedGroup.id).toBe(mockGroups[1].id);
         });
     }));
 
@@ -162,17 +174,85 @@ describe('GroupCloudComponent', () => {
         component.mode = 'single';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const selectedUser = component.searchGroupsControl.value;
-            expect(selectedUser).toBeNull();
+            const selectedGroup = component.searchGroupsControl.value;
+            expect(selectedGroup).toBeNull();
         });
     }));
 
     it('should emit removeGroup when a selected group is removed if mode=multiple', async(() => {
+        let removeGroupSpy = spyOn(component.removeGroup, 'emit');
+
+        component.mode = 'multiple';
+        component.preSelectGroups = <any> [{id: mockGroups[1].id}, {id: mockGroups[2].id}];
         fixture.detectChanges();
-        let removeUserSpy = spyOn(component.removeGroup, 'emit');
-        component.onRemove(new GroupModel({ name: 'group name'}));
+
         fixture.whenStable().then(() => {
-            expect(removeUserSpy).toHaveBeenCalled();
+            fixture.detectChanges();
+            const removeIcon = fixture.debugElement.query(By.css('mat-chip mat-icon'));
+            removeIcon.nativeElement.click();
+
+            expect(removeGroupSpy).toHaveBeenCalledWith({ id: mockGroups[1].id });
+        });
+
+    }));
+
+    it('should list groups who have access to the app when appName is specified', async(() => {
+        component.applicationName = 'sample-app';
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.value = 'M';
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const groupsList = fixture.debugElement.queryAll(By.css('mat-option'));
+            expect(groupsList.length).toBe(mockGroups.length);
+        });
+    }));
+
+    it('should not list groups who do not have access to the app when appName is specified', async(() => {
+        checkGroupHasClientRoleMappingSpy.and.returnValue(of(false));
+        component.applicationName = 'sample-app';
+
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('[data-automation-id="adf-cloud-group-search-input"]');
+        inputHTMLElement.focus();
+        inputHTMLElement.value = 'Mock';
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const groupsList = fixture.debugElement.queryAll(By.css('mat-option'));
+            expect(groupsList.length).toBe(0);
+        });
+    }));
+
+    it('should validate access to the app when appName is specified', async(() => {
+        findGroupsByNameSpy.and.returnValue(of(mockGroups));
+        checkGroupHasClientRoleMappingSpy.and.returnValue(of(true));
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.value = 'Mock';
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(checkGroupHasClientRoleMappingSpy).toHaveBeenCalledTimes(mockGroups.length);
+        });
+    }));
+
+    it('should not validate access to the app when appName is not specified', async(() => {
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.value = 'M';
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(checkGroupHasClientRoleMappingSpy).not.toHaveBeenCalled();
         });
     }));
 });
