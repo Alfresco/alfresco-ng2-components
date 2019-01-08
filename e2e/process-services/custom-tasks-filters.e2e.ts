@@ -19,7 +19,7 @@ import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TaskListDemoPage } from '../pages/adf/demo-shell/process-services/taskListDemoPage';
 import { PaginationPage } from '../pages/adf/paginationPage';
-import moment = require('moment');
+import * as moment from 'moment';
 
 import { Tenant } from '../models/APS/tenant';
 
