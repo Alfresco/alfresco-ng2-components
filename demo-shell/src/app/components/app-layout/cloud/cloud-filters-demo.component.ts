@@ -48,12 +48,14 @@ export class CloudFiltersDemoComponent implements OnInit {
     this.cloudLayoutService.setCurrentTaskFilterParam({id: filter.id});
     const currentFilter = Object.assign({}, filter);
     this.router.navigate([`/cloud/${this.appName}/tasks/`], { queryParams: currentFilter });
+    this.cloudLayoutService.resetCurrentTaskFilterParam();
   }
 
   onProcessFilterSelected(filter) {
     this.cloudLayoutService.setCurrentProcessFilterParam({id: filter.id});
     const currentFilter = Object.assign({}, filter);
     this.router.navigate([`/cloud/${this.appName}/processes/`], { queryParams: currentFilter });
+    this.cloudLayoutService.resetCurrentProcessFilterParam();
   }
 
 }

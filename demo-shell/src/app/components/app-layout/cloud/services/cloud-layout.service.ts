@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, EMPTY } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -49,4 +49,11 @@ export class CloudLayoutService {
         this.filterProcessSubject.next(param);
     }
 
+    resetCurrentTaskFilterParam() {
+        this.filterTask$ = EMPTY;
+    }
+
+    resetCurrentProcessFilterParam() {
+        return this.filterProcess$ = EMPTY;
+    }
 }
