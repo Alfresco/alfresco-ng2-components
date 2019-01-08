@@ -367,7 +367,7 @@ export class ContentServicesPage {
         Util.waitUntilElementIsVisible(this.createLibraryButton);
         this.createLibraryButton.click();
         this.createLibraryDialog.waitForDialogToOpen();
-        return this;
+        return this.createLibraryDialog;
     }
 
     createNewFolder(folder) {

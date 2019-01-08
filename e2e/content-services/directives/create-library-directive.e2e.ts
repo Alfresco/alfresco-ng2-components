@@ -23,7 +23,6 @@ import { CustomSources } from '../../pages/adf/demo-shell/customSourcesPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
 import AlfrescoApi = require('alfresco-js-api-node');
-import { SiteActions } from '../../actions/ACS/site.actions';
 import { browser, Key } from 'protractor';
 import { Util } from '../../util/util';
 
@@ -33,7 +32,6 @@ describe('Create library directive', function () {
     let contentServicesPage = new ContentServicesPage();
     let createLibraryDialog = new CreateLibraryDialog();
     let customSourcesPage = new CustomSources();
-    let siteActions = new SiteActions();
 
     let visibility = {
         public: 'Public',
@@ -57,7 +55,10 @@ describe('Create library directive', function () {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        createSite = await siteActions.createSite(this.alfrescoJsApi, Util.generateRandomString(20).toLowerCase(), 'PUBLIC');
+        createSite = await this.alfrescoJsApi.core.sitesApi.createSite({
+            'title': Util.generateRandomString(20).toLowerCase(),
+            'visibility': 'PUBLIC'
+        });
 
         done();
     });
@@ -66,11 +67,6 @@ describe('Create library directive', function () {
         await browser.actions().sendKeys(Key.ESCAPE).perform();
         contentServicesPage.goToDocumentList();
         contentServicesPage.openCreateLibraryDialog();
-        done();
-    });
-
-    afterEach(async (done) => {
-        await browser.actions().sendKeys(Key.ESCAPE).perform();
         done();
     });
 
@@ -200,6 +196,17 @@ describe('Create library directive', function () {
             expect(createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
             expect(createLibraryDialog.getErrorMessage()).toMatch('Use numbers and letters only');
         }
+    });
+
+    it('[C291793] Should display error for Name field filled in with spaces only', () => {
+        let name = '    ';
+        let libraryId = Util.generateRandomString();
+
+        createLibraryDialog.typeLibraryName(name);
+        createLibraryDialog.typeLibraryId(libraryId);
+
+        expect(createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
+        expect(createLibraryDialog.getErrorMessage()).toMatch("Library name can't contain only spaces");
     });
 
     it('[C290177] Should not accept a duplicate Library Id', () => {

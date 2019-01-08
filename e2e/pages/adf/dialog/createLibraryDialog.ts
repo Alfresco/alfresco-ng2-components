@@ -144,6 +144,7 @@ export class CreateLibraryDialog {
         this.libraryNameField.clear();
         this.libraryNameField.sendKeys(' ', protractor.Key.CONTROL, 'a', protractor.Key.NULL, protractor.Key.BACK_SPACE);
     }
+
     clearLibraryId() {
         this.libraryIdField.clear();
         this.libraryIdField.sendKeys(' ', protractor.Key.CONTROL, 'a', protractor.Key.NULL, protractor.Key.BACK_SPACE);
