@@ -2,10 +2,10 @@
 Title: Edit Process Filter Cloud component
 Added: v3.0.0
 Status: Active
-Last reviewed: 2018-20-11
+Last reviewed: 2019-01-08
 ---
 
-# [Edit Process Filter Cloud component](../../lib/process-services-cloud/src/lib/process-cloud/process-filters-cloud/edit-process-filter-cloud.component.ts "Defined in edit-process-filter-cloud.component.ts")
+# [Edit Process Filter Cloud component](../../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts "Defined in edit-process-filter-cloud.component.ts")
 
 Shows Process Filter Details.
 
@@ -25,14 +25,14 @@ Shows Process Filter Details.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | The name of the application. |
-| id | `string` |  | Id of the process filter. |
+| id | `string` |  | Id of the process instance filter. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterActionType`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-filter-cloud.model.ts)`>` | Emitted when an filter action occurs i.e Save, SaveAs, Delete. |
-| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterCloudModel`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-filter-cloud.model.ts)`>` | Emitted when an process instance filter property changes. |
+| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterActionType`](../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when an filter action occurs i.e Save, SaveAs, Delete. |
+| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterCloudModel`](../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when an process instance filter property changes. |
 
 ## Details
 

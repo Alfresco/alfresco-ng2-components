@@ -1,8 +1,15 @@
-# Start Process Cloud Component
+---
+Title: Start Process Cloud Component
+Added: v3.0.0
+Status: Active
+Last reviewed: 2019-01-08
+---
+
+# [Start Process Cloud Component](../../lib/process-services-cloud/src/lib/process/start-process/components/start-process-cloud.component.ts "Defined in start-process-cloud.component.ts")
 
 Starts a process.
 
-![adf-start-process ](../docassets/images/startProcess.png)
+![adf-start-process](../docassets/images/startProcess.png)
 
 ## Basic Usage
 
@@ -18,19 +25,19 @@ Starts a process.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appName | `string` |  | Limit the list of processes that can be started to those contained in the specified app. |
-| name | `string` | "" | (optional) Name to assign to the current process. |
-| processDefinitionName | `string` |  | (optional) Definition name of the process to start. |
-| showSelectProcessDropdown | `boolean` | true | (optional) Hide or show the process selection dropdown. |
-| variables | `Map<string, any>[]` |  | (optional) Variables in the input to the process. |
+| appName | `string` |  | (required) Name of the app. |
+| name | `string` | "" | Name of the process. |
+| processDefinitionName | `string` |  | Name of the process definition. |
+| showSelectProcessDropdown | `boolean` | true | Show/hide the process dropdown list. |
+| variables | `Map<string, any>[]` |  | Variables to attach to the payload. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceCloud`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-instance-cloud.model.ts)`>` | Emitted when the process is canceled. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceCloud`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-instance-cloud.model.ts)`>` | Emitted when an error occurs. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceCloud`](../../lib/process-services-cloud/src/lib/process-cloud/models/process-instance-cloud.model.ts)`>` | Emitted when the process starts. |
+| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceCloud`](../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>` | Emitted when the starting process is cancelled |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceCloud`](../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>` | Emitted when an error occurs. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstanceCloud`](../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>` | Emitted when the process is successfully started. |
 
 ## Details
 

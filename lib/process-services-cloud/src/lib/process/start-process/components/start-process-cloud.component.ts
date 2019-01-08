@@ -51,15 +51,15 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     @Input()
     processDefinitionName: string;
 
-    /** Variables to attach to the payload */
+    /** Variables to attach to the payload. */
     @Input()
     variables: Map<string, object>[];
 
-    /** This flag displays/hides the process dropdown list */
+    /** Show/hide the process dropdown list. */
     @Input()
     showSelectProcessDropdown: boolean = true;
 
-    /** Emitted when the starting process is successfully created. */
+    /** Emitted when the process is successfully started. */
     @Output()
     success: EventEmitter<ProcessInstanceCloud> = new EventEmitter<ProcessInstanceCloud>();
 
