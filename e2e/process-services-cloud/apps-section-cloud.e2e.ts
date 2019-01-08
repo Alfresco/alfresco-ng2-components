@@ -30,8 +30,7 @@ describe('Applications list', () => {
     const appName = 'simple-app';
 
     it('[C289910] Should the app be displayed on dashboard when is deployed on APS', () => {
-
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + TestConfig.adf.authHost);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso);
         loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();

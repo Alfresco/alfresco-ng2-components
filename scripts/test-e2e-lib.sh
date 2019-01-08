@@ -22,8 +22,8 @@ show_help() {
     echo "-proxy or --proxy proxy Back end URL to use only possibel to use with -dev option"
     echo "-dev or --dev run it against local development environment it will deploy on localhost:4200 the current version of your branch"
     echo "-host or --host URL of the Front end to test"
-    echo "-host_sso or --host URL of the Back end to test"
-    echo "-host_sso_realms the name of the realm"
+    echo "-host_bpm or --host URL of the Back end to test"
+    echo "-host_sso the entire path including the name of the realm"
     echo "-save  save the error screenshot in the remote env"
     echo "-timeout or --timeout override the timeout foe the wait utils"
     echo "-sl --skip-lint skip lint"
@@ -45,12 +45,12 @@ set_host(){
     HOST=$1
 }
 
-set_host_sso(){
-    HOST_SSO=$1
+set_host_bpm(){
+    HOST_BPM=$1
 }
 
-set_host_sso_realms(){
-    HOST_SSO_REALMS=$1
+set_host_sso(){
+    HOST_SSO=$1
 }
 
 set_test(){
@@ -127,8 +127,8 @@ while [[ $1 == -* ]]; do
       -proxy|--proxy)  set_proxy $2; shift 2;;
       -s|--seleniumServer) set_selenium $2; shift 2;;
       -host|--host)  set_host $2; shift 2;;
+      -host_bpm|--host_bpm)  set_host_bpm $2; shift 2;;
       -host_sso|--host_sso)  set_host_sso $2; shift 2;;
-      -host_sso_realms|--host_sso_realms)  set_host_sso_realms $2; shift 2;;
       -sl|--skip-lint)  skip_lint; shift;;
       -m|--maxInstances)  max_instances $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
@@ -139,8 +139,8 @@ done
 rm -rf ./e2e/downloads/
 rm -rf ./e2e-output/screenshots/
 
+export URL_HOST_BPM_ADF=$HOST_BPM
 export URL_HOST_SSO_ADF=$HOST_SSO
-export URL_HOST_SSO_REALMS_ADF=$HOST_SSO_REALMS
 export URL_HOST_ADF=$HOST
 export USERNAME_ADF=$USERNAME
 export PASSWORD_ADF=$PASSWORD

@@ -51,7 +51,7 @@ describe('Process filters cloud', () => {
 
         beforeAll(async () => {
             silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + TestConfig.adf.authHost, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, silentLogin);
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginAPS(user, password);
 

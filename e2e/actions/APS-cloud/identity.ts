@@ -42,7 +42,7 @@ export class Identity {
   }
 
   async createUser(username) {
-    const path = '/auth/admin/realms/springboot/users';
+    const path = '/auth/admin/realms/alfresco/users';
     const method = 'POST';
     const queryParams = {}, postBody = {
       'username': username,
@@ -56,7 +56,7 @@ export class Identity {
   }
 
   async deleteUser(userId) {
-    const path = `/auth/admin/realms/springboot/users/${userId}`;
+    const path = `/auth/admin/realms/alfresco/users/${userId}`;
     const method = 'DELETE';
     const queryParams = {}, postBody = {
     };
@@ -65,7 +65,7 @@ export class Identity {
   }
 
   async getUserInfoByUsername(username) {
-    const path = `/auth/admin/realms/springboot/users`;
+    const path = `/auth/admin/realms/alfresco/users`;
     const method = 'GET';
     const queryParams = { 'username' : username }, postBody = {};
 
@@ -74,7 +74,7 @@ export class Identity {
   }
 
   async resetPassword(id, password) {
-    const path = `/auth/admin/realms/springboot/users/${id}/reset-password`;
+    const path = `/auth/admin/realms/alfresco/users/${id}/reset-password`;
     const method = 'PUT';
     const queryParams = {},
     postBody = {'type': 'password', 'value': password, 'temporary': false};
@@ -84,7 +84,7 @@ export class Identity {
   }
 
   async getRoleByName(roleName) {
-    const path = `/auth/admin/realms/springboot/roles/${roleName}`;
+    const path = `/auth/admin/realms/alfresco/roles/${roleName}`;
     const method = 'GET';
     const queryParams = {},
     postBody = {};
@@ -94,7 +94,7 @@ export class Identity {
   }
 
   async assignRole(userId, roleId, roleName) {
-    const path = `/auth/admin/realms/springboot/users/${userId}/role-mappings/realm`;
+    const path = `/auth/admin/realms/alfresco/users/${userId}/role-mappings/realm`;
     const method = 'POST';
     const queryParams = {},
     postBody = [{'id': roleId, 'name': roleName}];

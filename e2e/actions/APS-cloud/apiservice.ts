@@ -21,13 +21,13 @@ import TestConfig = require('../../test.config');
 export class ApiService {
 
     HOST_SSO = TestConfig.adf.hostSso;
-    HOST_SSO_REALMS = TestConfig.adf.authHost;
+    HOST_BPM = TestConfig.adf.hostBPM;
 
     apiService = new AlfrescoApi({
         provider: 'BPM',
         authType: 'OAUTH',
         oauth2: {
-            host: `${this.HOST_SSO}/${this.HOST_SSO_REALMS}`,
+            host: `${this.HOST_SSO}`,
             authType: '/protocol/openid-connect/token',
             clientId: 'activiti',
             scope: 'openid',
@@ -45,7 +45,7 @@ export class ApiService {
     }
 
     async performBpmOperation(path, method, queryParams, postBody) {
-        const uri = this.HOST_SSO + path;
+        const uri = this.HOST_BPM + path;
         const pathParams = {}, formParams = {};
         const authNames = [];
         const contentTypes = ['application/json'];
