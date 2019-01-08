@@ -28,5 +28,6 @@ export interface ContentNodeSelectorComponentData {
     imageResolver?: any;
     isSelectionValid?: (entry: Node) => boolean;
     breadcrumbTransform?: (node) => any;
+    restrictedSiteContent?: string[];
     select: Subject<Node[]>;
 }

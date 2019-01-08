@@ -38,6 +38,7 @@ Opens a Content Node Selector in its own dialog window.
 | isSelectionValid | `ValidationFunction` | defaultValidation | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
 | pageSize | `number` |  | Number of items shown per page in the list. |
 | rowFilter | `RowFilter` | null | Custom row filter function. See the [Document List component](document-list.component.md#custom-row-filter) for more information. |
+| restrictedSiteContent | string[] | [] | Custom list of restricted site content that should be hidden from displayed nodes. |
 
 ### Events
 

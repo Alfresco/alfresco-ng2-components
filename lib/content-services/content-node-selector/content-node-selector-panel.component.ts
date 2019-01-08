@@ -29,6 +29,7 @@ import { ContentNodeSelectorService } from './content-node-selector.service';
 import { debounceTime } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
+import { ShareDataRow } from '../document-list';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -67,6 +68,12 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
      */
     @Input()
     rowFilter: RowFilter = null;
+
+    /** Custom list of restricted site content.
+     * Used to filter out such items from the displayed nodes
+     */
+    @Input()
+    restrictedSiteContent: string[] = [];
 
     /** Custom image resolver function. See the
      * [Document List component](document-list.component.md#custom-row-filter)
@@ -159,6 +166,32 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
+        this.restrictedSiteContent = this.restrictedSiteContent ? this.restrictedSiteContent : [];
+        this.rowFilter = this.getRowFilter(this.rowFilter);
+    }
+
+    private getRowFilter(initialFilterFunction) {
+        if (!initialFilterFunction) {
+            initialFilterFunction = () => true;
+        }
+        return (value: ShareDataRow, index: number, array: ShareDataRow[]) => {
+            return initialFilterFunction(value, index, array) &&
+                !this.isRestrictedSiteContent(value);
+        };
+    }
+
+    private isRestrictedSiteContent(row: ShareDataRow) {
+        const entry = row.node.entry;
+        if (this.restrictedSiteContent.length &&
+            entry &&
+            entry.properties &&
+            entry.properties['st:componentId']) {
+            const restrictedItem = this.restrictedSiteContent.find(
+                (restrictedId: string) => entry.properties['st:componentId'] === restrictedId
+            );
+            return !!restrictedItem;
+        }
+        return false;
     }
 
     /**
