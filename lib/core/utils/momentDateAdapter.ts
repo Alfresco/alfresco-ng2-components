@@ -16,28 +16,27 @@
  */
 
 import { DateAdapter } from '@angular/material';
-import { isMoment, Moment } from 'moment';
 import * as moment from 'moment';
 
-export class MomentDateAdapter extends DateAdapter<Moment> {
+export class MomentDateAdapter extends DateAdapter<moment.Moment> {
 
     private localeData: any = moment.localeData();
 
     overrideDisplayFormat: string;
 
-    getYear(date: Moment): number {
+    getYear(date: moment.Moment): number {
         return date.year();
     }
 
-    getMonth(date: Moment): number {
+    getMonth(date: moment.Moment): number {
         return date.month();
     }
 
-    getDate(date: Moment): number {
+    getDate(date: moment.Moment): number {
         return date.date();
     }
 
-    getDayOfWeek(date: Moment): number {
+    getDayOfWeek(date: moment.Moment): number {
         return date.day();
     }
 
@@ -76,7 +75,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
         }
     }
 
-    getYearName(date: Moment): string {
+    getYearName(date: moment.Moment): string {
         return String(date.year());
     }
 
@@ -84,25 +83,25 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
         return this.localeData.firstDayOfWeek();
     }
 
-    getNumDaysInMonth(date: Moment): number {
+    getNumDaysInMonth(date: moment.Moment): number {
         return date.daysInMonth();
     }
 
-    clone(date: Moment): Moment {
+    clone(date: moment.Moment): moment.Moment {
         let locale = this.locale || 'en';
         return date.clone().locale(locale);
     }
 
-    createDate(year: number, month: number, date: number): Moment {
+    createDate(year: number, month: number, date: number): moment.Moment {
         return moment([year, month, date]);
     }
 
-    today(): Moment {
+    today(): moment.Moment {
         let locale = this.locale || 'en';
         return moment().locale(locale);
     }
 
-    parse(value: any, parseFormat: any): Moment {
+    parse(value: any, parseFormat: any): moment.Moment {
         let locale = this.locale || 'en';
 
         if (value && typeof value === 'string') {
@@ -129,7 +128,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
         return value ? moment(value).locale(locale) : null;
     }
 
-    format(date: Moment, displayFormat: any): string {
+    format(date: moment.Moment, displayFormat: any): string {
         date = this.clone(date);
         displayFormat = this.overrideDisplayFormat ? this.overrideDisplayFormat : displayFormat;
 
@@ -140,19 +139,19 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
         }
     }
 
-    addCalendarYears(date: Moment, years: number): Moment {
+    addCalendarYears(date: moment.Moment, years: number): moment.Moment {
         return date.clone().add(years, 'y');
     }
 
-    addCalendarMonths(date: Moment, months: number): Moment {
+    addCalendarMonths(date: moment.Moment, months: number): moment.Moment {
         return date.clone().add(months, 'M');
     }
 
-    addCalendarDays(date: Moment, days: number): Moment {
+    addCalendarDays(date: moment.Moment, days: number): moment.Moment {
         return date.clone().add(days, 'd');
     }
 
-    getISODateString(date: Moment): string {
+    getISODateString(date: moment.Moment): string {
         return date.toISOString();
     }
 
@@ -162,15 +161,15 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
         this.localeData = moment.localeData(locale);
     }
 
-    compareDate(first: Moment, second: Moment): number {
+    compareDate(first: moment.Moment, second: moment.Moment): number {
         return first.diff(second, 'seconds', true);
     }
 
-    sameDate(first: any | Moment, second: any | Moment): boolean {
+    sameDate(first: any | moment.Moment, second: any | moment.Moment): boolean {
         if (first == null) {
             // same if both null
             return second == null;
-        } else if (isMoment(first)) {
+        } else if (moment.isMoment(first)) {
             return first.isSame(second);
         } else {
             const isSame = super.sameDate(first, second);
@@ -178,7 +177,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
         }
     }
 
-    clampDate(date: Moment, min?: any | Moment, max?: any | Moment): Moment {
+    clampDate(date: moment.Moment, min?: any | moment.Moment, max?: any | moment.Moment): moment.Moment {
         if (min && date.isBefore(min)) {
             return min;
         } else if (max && date.isAfter(max)) {
@@ -198,21 +197,21 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
         return isValidDateInstance;
     }
 
-    isValid(date: Moment): boolean {
+    isValid(date: moment.Moment): boolean {
         return date.isValid();
     }
 
-    toIso8601(date: Moment): string {
+    toIso8601(date: moment.Moment): string {
         return this.clone(date).format();
     }
 
-    fromIso8601(iso8601String: string): Moment | null {
+    fromIso8601(iso8601String: string): moment.Moment | null {
         let locale = this.locale || 'en';
         let d = moment(iso8601String, moment.ISO_8601).locale(locale);
         return this.isValid(d) ? d : null;
     }
 
-    invalid(): Moment {
+    invalid(): moment.Moment {
         return moment.invalid();
     }
 }
