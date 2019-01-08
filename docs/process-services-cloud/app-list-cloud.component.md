@@ -2,10 +2,10 @@
 Title: App List Cloud Component
 Added: v3.0.0
 Status: Active
-Last reviewed: 2018-18-10
+Last reviewed: 2019-01-08
 ---
 
-# [App List Cloud Component](../../lib/process-services-cloud/src/lib/app-list-cloud/components/app-list-cloud.component.ts "Defined in app-list-cloud.component.ts")
+# [App List Cloud Component](../../lib/process-services-cloud/src/lib/app/components/app-list-cloud.component.ts "Defined in app-list-cloud.component.ts")
 
 Shows all deployed cloud application instances.
 
@@ -43,4 +43,4 @@ You can show custom content when there are no apps available by supplying an
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| appClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ApplicationInstanceModel`](../../lib/process-services-cloud/src/lib/app-list-cloud/models/application-instance.model.ts)`>` | Emitted when an app entry is clicked. |
+| appClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ApplicationInstanceModel`](../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`>` | Emitted when an app entry is clicked. |

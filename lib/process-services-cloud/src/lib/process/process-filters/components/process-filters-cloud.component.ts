@@ -36,7 +36,7 @@ export class ProcessFiltersCloudComponent implements OnChanges {
     @Input()
     filterParam: FilterParamsModel;
 
-    /** (optional) The flag hides/shows icon against each filter */
+    /** (optional) Toggles showing an icon by the side of each filter */
     @Input()
     showIcons: boolean = false;
 

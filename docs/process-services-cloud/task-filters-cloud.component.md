@@ -2,10 +2,10 @@
 Title: Task Filters Cloud component
 Added: v3.0.0
 Status: Active
-Last reviewed: 2018-20-11
+Last reviewed: 2019-01-08
 ---
 
-# [Task Filters Cloud component](../../lib/process-services-cloud/src/lib/task-cloud/task-filters-cloud/task-filters-cloud.component.ts "Defined in task-filters-cloud.component.ts")
+# [Task Filters Cloud component](../../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.ts "Defined in task-filters-cloud.component.ts")
 
 Shows all available filters.
 
@@ -30,7 +30,7 @@ Shows all available filters.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during loading. |
-| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../lib/process-services-cloud/src/lib/task-cloud/models/filter-cloud.model.ts)`>` | Emitted when a filter in the list is clicked. |
+| filterClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter in the list is clicked. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the list is loaded. |
 
 ## Details

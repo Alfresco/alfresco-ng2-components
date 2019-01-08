@@ -2,12 +2,12 @@
 Title: Edit Task Filter Cloud component
 Added: v3.0.0
 Status: Active
-Last reviewed: 2018-20-11
+Last reviewed: 2019-01-08
 ---
 
-# Edit Task Filter Cloud component
+# [Edit Task Filter Cloud component](../../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filter-cloud.component.ts "Defined in edit-task-filter-cloud.component.ts")
 
-Shows Task Filter Details.
+Edits Task Filter Details.
 
 ## Basic Usage
 
@@ -24,15 +24,15 @@ Shows Task Filter Details.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| id | `string` | "" | The id of the Task filter. |
-| appName | `string` | "" | The name of the application. |
+| appName | `string` |  | Name of the app. |
+| id | `string` |  | ID of the task filter. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../lib/process-services-cloud/src/lib/task-cloud/models/filter-cloud.model.ts)`>` | Emitted when a filter properties changed. |
-| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterActionType`](../../lib/process-services-cloud/src/lib/task-cloud/models/filter-cloud.model.ts)`>` | Emitted when the task filter action clicked (i.e, save, saveAs, Delete). |
+| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterActionType`](../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter action occurs (i.e Save, Save As, Delete). |
+| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a task filter property changes. |
 
 ## Details
 

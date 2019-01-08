@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-09
 ---
 
-# [Process Instance List Cloud component](../../lib/process-services-cloud/src/lib/process-list-cloud/components/process-list-cloud.component.ts "Defined in process-list-cloud.component.ts")
+# [Process Instance List Cloud component](../../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.ts "Defined in process-list-cloud.component.ts")
 
 Renders a list containing all the process instances matched by the parameters specified.
 
@@ -66,7 +66,7 @@ when the process list is empty:
 | serviceName | `string` | "" | Filter the processes to display only the ones with this serviceName value. |
 | serviceType | `string` | "" | Filter the processes to display only the ones with this serviceType value. |
 | serviceVersion | `string` | "" | Filter the processes to display only the ones with this serviceVersion value. |
-| sorting | [`ProcessListCloudSortingModel`](../../lib/process-services-cloud/src/lib/process-list-cloud/models/process-list-sorting.model.ts)`[]` |  | Array of objects specifying the sort order and direction for the list. The sort parameters are for BE sorting. |
+| sorting | [`ProcessListCloudSortingModel`](../../lib/process-services-cloud/src/lib/process/process-list/models/process-list-sorting.model.ts)`[]` |  | Array of objects specifying the sort order and direction for the list. The sort parameters are for BE sorting. |
 | status | `string` | "" | Filter the processes to display only the ones with this status. |
 
 ### Events
