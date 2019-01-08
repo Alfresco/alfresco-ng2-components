@@ -314,6 +314,10 @@ export const appRoutes: Routes = [
                 path: 'about',
                 loadChildren: 'app/components/about/about.module#AppAboutModule'
             },
+            {
+                path: 'icons',
+                loadChildren: './components/icons/icons.module#AppIconsModule'
+            },
             { path: 'form', component: FormComponent },
             { path: 'form-list', component: FormListComponent },
             { path: 'form-loading', component: FormLoadingComponent },
