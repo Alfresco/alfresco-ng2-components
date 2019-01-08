@@ -1,60 +1,65 @@
 <mat-accordion *ngIf="processFilter">
-    <mat-expansion-panel>
+    <mat-expansion-panel (afterExpand)="onExpand($event)" (closed)="onClose($event)">
         <mat-expansion-panel-header id="adf-edit-process-filter-expansion-header">
-            <mat-panel-title id="adf-edit-process-filter-title-id">{{processFilter.name | translate}}</mat-panel-title>
-            <mat-panel-description id="adf-edit-process-filter-sub-title-id">
-                {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}
+            <mat-panel-title fxLayoutAlign="space-between center" id="adf-edit-process-filter-title-id">{{processFilter.name | translate}}</mat-panel-title>
+            <mat-panel-description fxLayoutAlign="space-between center" id="adf-edit-process-filter-sub-title-id">
+                <span *ngIf="showTitle"> {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}</span>
+                <div *ngIf="toggleActions()" class="adf-cloud-edit-task-filter-actions">
+                    <ng-container *ngIf="showFilterActions">
+                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE' | translate}}" [disabled]="!formHasBeenChanged" id="adf-save-id" (click)="onSave()">
+                            <mat-icon>save</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE_AS' | translate}}" [disabled]="!formHasBeenChanged" id="adf-save-as-id" (click)="onSaveAs()">
+                            <mat-icon>unarchive</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.DELETE' | translate}}" id="adf-delete-id" (click)="onDelete()">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </ng-container>
+                </div>
             </mat-panel-description>
         </mat-expansion-panel-header>
         <form [formGroup]="editProcessFilterForm">
-            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-                <mat-form-field [floatLabel]="'auto'" fxFlex data-automation-id="status">
-                    <mat-select placeholder="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STATUS' | translate}}" formControlName="state" id="adf-process-filter-state-id">
-                        <mat-option *ngFor="let state of status" [value]="state.value">
-                            {{ state.label }}
+            <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">
+            <ng-container *ngFor="let processFilterProperty of processFilterProperties">
+                <mat-form-field fxFlex="23%" *ngIf="isSelectType(processFilterProperty)">
+                    <mat-select
+                        placeholder="{{processFilterProperty.label | translate}}"
+                        [formControlName]="processFilterProperty.key"
+                        [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
+                        <mat-option *ngFor="let propertyOptions of processFilterProperty.options$ | async" [value]="propertyOptions.value" [attr.data-automation-id]="'adf-cloud-edit-task-property-options' + processFilterProperty.key">
+                            {{ propertyOptions.label }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field *ngIf="false" [floatLabel]="'auto'" fxFlex>
+                <mat-form-field fxFlex="23%" *ngIf="isTextType(processFilterProperty)">
                     <input matInput
-                        formControlName="appName"
-                        type="text"
-                        id="adf-process-filter-appname-id"
-                        placeholder="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_NAME' | translate}}"/>
+                    [formControlName]="processFilterProperty.key"
+                    type="text"
+                    placeholder="{{processFilterProperty.label | translate}}"
+                    [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"/>
                 </mat-form-field>
-                <mat-form-field *ngIf="false" [floatLabel]="'auto'" fxFlex>
-                    <input matInput
-                        formControlName="processDefinitionId"
-                        type="text"
-                        id="adf-process-filter-process-definition-id"
-                        placeholder="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_ID' | translate}}"/>
+                <mat-form-field fxFlex="23%" *ngIf="isDateType(processFilterProperty)">
+                    <mat-label>{{processFilterProperty.label | translate}}</mat-label>
+                        <input
+                            matInput
+                            (keyup)="onDateChanged($event.srcElement.value, processFilterProperty)"
+                            (dateChange)="onDateChanged($event.value, processFilterProperty)"
+                            [matDatepicker]="dateController"
+                            placeholder="{{processFilterProperty.label | translate}}"
+                            [formControlName]="processFilterProperty.key"
+                            [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
+                    <mat-datepicker-toggle matSuffix [for]="dateController" [attr.data-automation-id]="'adf-cloud-edit-process-property-date-toggle' + processFilterProperty.key"></mat-datepicker-toggle>
+                    <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-process-property-date-picker' + processFilterProperty.key"></mat-datepicker>
+                    <div class="adf-edit-process-filter-date-error-container">
+                        <div *ngIf="hasError(processFilterProperty)">
+                            <div class="adf-error-text">{{'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.DATE' | translate}}</div>
+                            <mat-icon class="adf-error-icon">warning</mat-icon>
+                        </div>
+                    </div>
                 </mat-form-field>
-                <mat-form-field [floatLabel]="'auto'" fxFlex data-automation-id="sort">
-                    <mat-select placeholder="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COLUMN' | translate}}" formControlName="sort" id="adf-process-filter-sort-id">
-                        <mat-option *ngFor="let column of columns" [value]="column.key">
-                            {{ column.label }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field [floatLabel]="'auto'" fxFlex data-automation-id="order">
-                    <mat-select placeholder="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DIRECTION' | translate}}" formControlName="order" id="adf-process-filter-order-id">
-                        <mat-option *ngFor="let direction of directions" [value]="direction">
-                            {{ direction }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <div>
-                    <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE' | translate}}" [disabled]="!formHasBeenChanged" id="adf-save-id" (click)="onSave()">
-                        <mat-icon>save</mat-icon>
-                    </button>
-                    <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE_AS' | translate}}" [disabled]="!formHasBeenChanged" id="adf-save-as-id" (click)="onSaveAs()">
-                        <mat-icon>unarchive</mat-icon>
-                    </button>
-                    <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.DELETE' | translate}}" id="adf-delete-id" (click)="onDelete()">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </div>
-            </div>
+            </ng-container>
+        </div>
         </form>
     </mat-expansion-panel>
 </mat-accordion>

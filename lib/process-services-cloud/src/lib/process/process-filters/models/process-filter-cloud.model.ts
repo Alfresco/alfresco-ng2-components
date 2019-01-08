@@ -15,17 +15,25 @@
  * limitations under the License.
  */
 
+import { Observable } from 'rxjs';
+
 export class ProcessFilterCloudModel {
     id: string;
     name: string;
     key: string;
     icon: string;
     index: number;
-    processDefinitionId: string;
     appName: string;
+    processName: string;
     state: string;
     sort: string;
     order: string;
+    processDefinitionId: string;
+    processInstanceId: string;
+    startDate: Date;
+    lastModified: Date;
+    lastModifiedTo: Date;
+    lastModifiedFrom: Date;
 
     constructor(obj?: any) {
         if (obj) {
@@ -35,10 +43,16 @@ export class ProcessFilterCloudModel {
             this.icon = obj.icon || null;
             this.index = obj.index || null;
             this.appName = obj.appName || null;
-            this.processDefinitionId = obj.processDefinitionId || null;
+            this.processName = obj.processName || null;
             this.state = obj.state || null;
             this.sort = obj.sort || null;
             this.order = obj.order || null;
+            this.processDefinitionId = obj.processDefinitionId || null;
+            this.processInstanceId = obj.processInstanceId || null;
+            this.startDate = obj.startDate || null;
+            this.lastModified = obj.lastModified || null;
+            this.lastModifiedTo = obj.lastModifiedTo || null;
+            this.lastModifiedFrom = obj.lastModifiedFrom || null;
         }
     }
 }
@@ -46,4 +60,27 @@ export class ProcessFilterCloudModel {
 export interface ProcessFilterActionType {
     actionType: string;
     id: string;
+}
+
+export interface FilterOptions {
+    label?: string;
+    value?: string;
+}
+
+export class ProcessFilterProperties {
+    label: string;
+    type: string; // text|date|select
+    value: string;
+    key: string;
+    options$: Observable<FilterOptions[]>;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.label = obj.label || null;
+            this.type = obj.type || null;
+            this.value = obj.value || null;
+            this.key = obj.key || null;
+            this.options$ = obj.options || null;
+        }
+    }
 }

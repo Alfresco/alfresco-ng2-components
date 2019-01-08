@@ -142,7 +142,7 @@ export class ProcessFilterCloudService {
             icon: 'adjust',
             appName: appName,
             sort: 'startDate',
-            state: '',
+            state: 'ALL',
             order: 'DESC'
         });
     }
