@@ -35,14 +35,13 @@ describe('Task filters cloud', () => {
         const tasksService: Tasks = new Tasks();
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
-        const path = '/auth/realms/springboot';
         let silentLogin;
         const newTask = 'newTask', completedTask = 'completedTask1';
         const simpleApp = 'simple-app';
 
         beforeAll(() => {
             silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + TestConfig.adf.authHost, silentLogin);
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginAPS(user, password);
         });

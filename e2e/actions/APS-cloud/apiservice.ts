@@ -21,12 +21,13 @@ import TestConfig = require('../../test.config');
 export class ApiService {
 
     HOST_SSO = TestConfig.adf.hostSso;
+    HOST_SSO_REALMS = TestConfig.adf.authHost;
 
     apiService = new AlfrescoApi({
         provider: 'BPM',
         authType: 'OAUTH',
         oauth2: {
-            host: `${this.HOST_SSO}/auth/realms/springboot`,
+            host: `${this.HOST_SSO}/${this.HOST_SSO_REALMS}`,
             authType: '/protocol/openid-connect/token',
             clientId: 'activiti',
             scope: 'openid',

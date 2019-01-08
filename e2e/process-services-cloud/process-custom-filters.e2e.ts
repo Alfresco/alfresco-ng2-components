@@ -44,7 +44,6 @@ describe('Process list cloud', () => {
         const processInstancesService: ProcessInstances = new ProcessInstances();
         const queryService: Query = new Query();
 
-        const path = '/auth/realms/springboot';
         let silentLogin;
         let runningProcess, completedProcess;
         const simpleApp = 'candidateuserapp';
@@ -52,7 +51,7 @@ describe('Process list cloud', () => {
 
         beforeAll(async () => {
             silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + TestConfig.adf.authHost, silentLogin);
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginAPS(user, password);
 
