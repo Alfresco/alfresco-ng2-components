@@ -1,12 +1,13 @@
 ---
+Title: Start Task Cloud Component
 Added: v3.0.0
 Status: Active
-Last reviewed: 2018-23-10
+Last reviewed: 2019-01-08
 ---
 
-# [Start Task Cloud Component](../../lib/process-services-cloud/src/lib/start-task-cloud/components/start-task-cloud.component.ts "Defined in start-task-cloud.component.ts")
+# [Start Task Cloud Component](../../lib/process-services-cloud/src/lib/task/start-task/components/start-task-cloud.component.ts "Defined in start-task-cloud.component.ts")
 
-Creates/Starts new task for the specified app
+Creates/starts a new task for the specified app.
 
 ![adf-cloud-start-task](../docassets/images/adf-cloud-start-task.png)
 

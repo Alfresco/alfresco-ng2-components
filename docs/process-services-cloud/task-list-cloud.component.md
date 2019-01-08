@@ -2,10 +2,10 @@
 Title: Task List Cloud component
 Added: v3.0.0
 Status: Active
-Last reviewed: 2018-11-28
+Last reviewed: 2019-01-08
 ---
 
-# [Task List Cloud component](../../lib/process-services-cloud/src/lib/task-list-cloud/components/task-list-cloud.component.ts "Defined in task-list-cloud.component.ts")
+# [Task List Cloud component](../../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts "Defined in task-list-cloud.component.ts")
 
 Renders a list containing all the tasks matched by the parameters specified.
 
@@ -64,7 +64,7 @@ when the task list is empty:
 | processInstanceId | `string` | "" | Filter the tasks. Display only tasks with processInstanceId equal to the supplied value. |
 | selectFirstRow | `boolean` | true | Toggles default selection of the first row. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use the Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| sorting | [`TaskListCloudSortingModel`](../../lib/process-services-cloud/src/lib/task-list-cloud/models/task-list-sorting.model.ts)`[]` |  | Specifies how the table should be sorted. The parameters are for BE sorting. |
+| sorting | [`TaskListCloudSortingModel`](../../lib/process-services-cloud/src/lib/task/task-list/models/task-list-sorting.model.ts)`[]` |  | Specifies how the table should be sorted. The parameters are for BE sorting. |
 | status | `string` | "" | Filter the tasks. Display only tasks with status equal to the supplied value. |
 
 ### Events
@@ -82,7 +82,7 @@ This component displays lists of tasks related to the application name insterted
 
 ### Setting the column schema
 
-You can use an HTML-based schema declaration to set a column schema for the tasklist as shown below :
+You can use an HTML-based schema declaration to set a column schema for the tasklist as shown below:
 
 ```html
 <adf-cloud-task-list ...>
@@ -161,6 +161,8 @@ You can use an HTML-based schema and an `app.config.json` custom schema declarat
 </adf-cloud-task-list>
 ```
 
+<!-- {% endraw %} -->
+
 ### Setting Sorting Order for the list
 
 You can specify a sorting order as shown in the example below:
@@ -175,8 +177,6 @@ let sorting = { orderBy: 'created', direction: 'desc' };
     [sorting]="[sorting]">
 </adf-cloud-task-list>
 ```
-
-<!-- {% endraw %} -->
 
 ### Pagination strategy
 

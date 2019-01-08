@@ -35,20 +35,22 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     public static ACTION_SAVE_AS = 'SAVE_AS';
     public static ACTION_DELETE = 'DELETE';
 
+    /** Name of the app. */
     @Input()
     appName: string;
 
+    /** ID of the task filter. */
     @Input()
     id: string;
 
     taskFilter: TaskFilterCloudModel;
     changedTaskFilter: TaskFilterCloudModel;
 
-    /** Emitted when an task filter property changes. */
+    /** Emitted when a task filter property changes. */
     @Output()
     filterChange: EventEmitter<TaskFilterCloudModel> = new EventEmitter();
 
-    /** Emitted when an filter action occurs i.e Save, SaveAs, Delete. */
+    /** Emitted when a filter action occurs (i.e Save, Save As, Delete). */
     @Output()
     action: EventEmitter<FilterActionType> = new EventEmitter();
 
