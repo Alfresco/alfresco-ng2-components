@@ -45,7 +45,6 @@ describe('Task filters cloud', () => {
         const processInstancesService: ProcessInstances = new ProcessInstances();
         const queryService: Query = new Query();
 
-        const path = '/auth/realms/springboot';
         let silentLogin;
         const createdTaskName = Util.generateRandomString(), completedTaskName = Util.generateRandomString(),
             assignedTaskName = Util.generateRandomString(), deletedTaskName = Util.generateRandomString();
@@ -58,7 +57,7 @@ describe('Task filters cloud', () => {
 
         beforeAll(async () => {
             silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, silentLogin);
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginAPS(user, password);
 
