@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { SitePaging, SiteEntry, MinimalNodeEntryEntity } from '@alfresco/js-api';
-import { ShareDataRow } from '@alfresco/adf-content-services';
+import { ContentNodeDialogService, ShareDataRow } from '@alfresco/adf-content-services';
 import { DataRow, DataColumn, ThumbnailService } from '@alfresco/adf-core';
 
 @Component({
@@ -41,6 +41,7 @@ export class ContentNodeSelectorComponent {
     actualPageSize = 2;
 
     rowFilterFunction: any = null;
+    restrictedSiteContentList: string[] = ContentNodeDialogService.copyMoveRestrictedSiteContent;
     customImageResolver: any = null;
 
     defaultSites: SiteEntry[] = [

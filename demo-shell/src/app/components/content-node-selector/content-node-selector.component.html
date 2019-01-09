@@ -115,6 +115,39 @@
         <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
+                        <h2>Restricted Site Content</h2>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <label class="adf-content-node-selector-demo-basic-label">
+                            The restricted site content is filtered out from the list
+                        </label>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div>
+                    <label>Case when the restrictedSiteContent is set as : <b>{{ restrictedSiteContentList.join(', ') }}</b></label>
+                </div>
+                <div>
+                    <label>Navigate into a site having the top content along the 'documentLibrary' to see that such items are not displayed.</label>
+                </div>
+                <br />
+                <mat-slide-toggle color="primary" [(ngModel)]="showFiles" (click)="recreateRowFilterFunction()">
+                    Show Files
+                </mat-slide-toggle>
+                <mat-slide-toggle color="primary" [(ngModel)]="showFolders" (click)="recreateRowFilterFunction()">
+                    Show Folders
+                </mat-slide-toggle>
+
+                <div class="adf-content-node-selector-demo-basic-table">
+                    <adf-content-node-selector-panel
+                        [rowFilter]="rowFilterFunction"
+                        [restrictedSiteContent]="restrictedSiteContentList"
+                        [currentFolderId]="'-root-'">
+                    </adf-content-node-selector-panel>
+                </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
                         <h2>Custom Image Resolving</h2>
                     </mat-panel-title>
                     <mat-panel-description>
