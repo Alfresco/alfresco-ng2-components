@@ -61,6 +61,12 @@ export class TaskFilterCloudService {
         return this.filters$;
     }
 
+    /**
+     * Gets a task filter.
+     * @param appName Name of the target app
+     * @param id ID of the task
+     * @returns Details of the task filter
+     */
     getTaskFilterById(appName: string, id: string): TaskFilterCloudModel {
         const username = this.getUsername();
         let key = `task-filters-${appName}-${username}`;
@@ -70,7 +76,7 @@ export class TaskFilterCloudService {
     }
 
     /**
-     * Adds a new task filter
+     * Adds a new task filter.
      * @param filter The new filter to add
      * @returns Details of task filter just added
      */
@@ -91,8 +97,8 @@ export class TaskFilterCloudService {
     }
 
     /**
-     *  Update task filter
-     * @param filter The new filter to update
+     * Updates a task filter.
+     * @param filter The filter to update
      */
     updateFilter(filter: TaskFilterCloudModel) {
         const username = this.getUsername();
@@ -107,8 +113,8 @@ export class TaskFilterCloudService {
     }
 
     /**
-     *  Delete task filter
-     * @param filter The new filter to delete
+     * Deletes a task filter
+     * @param filter The filter to delete
      */
     deleteFilter(filter: TaskFilterCloudModel) {
         const username = this.getUsername();
@@ -125,10 +131,19 @@ export class TaskFilterCloudService {
         }
     }
 
+    /**
+     * Gets the username field from the access token.
+     * @returns Username string
+     */
     getUsername(): string {
         return this.getValueFromToken<string>('preferred_username');
     }
 
+    /**
+     * Gets a named value from the access token.
+     * @param key Key name of the value
+     * @returns The value data
+     */
     getValueFromToken<T>(key: string): T {
         let value;
         const token = localStorage.getItem('access_token');

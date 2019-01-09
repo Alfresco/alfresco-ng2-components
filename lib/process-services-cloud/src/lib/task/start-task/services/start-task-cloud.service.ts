@@ -35,6 +35,11 @@ export class StartTaskCloudService {
         private logService: LogService
     ) {}
 
+    /**
+     * Creates a new standalone task.
+     * @param taskDetails Details of the task to create
+     * @returns Details of the newly created task
+     */
     createNewTask(taskDetails: TaskDetailsCloudModel): Observable<TaskDetailsCloudModel> {
         let queryUrl = this.buildCreateTaskUrl(taskDetails.appName);
         const bodyParam = JSON.stringify(this.buildRequestBody(taskDetails));
