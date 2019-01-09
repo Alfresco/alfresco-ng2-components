@@ -92,15 +92,15 @@ export class GroupCloudService {
     }
 
     private groupClientRoleMappingApi(groupId: string, clientId: string): any {
-        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/groups/${groupId}/role-mappings/clients/${clientId}`;
+        return `${this.appConfigService.get('identityHost')}/groups/${groupId}/role-mappings/clients/${clientId}`;
     }
 
     private getApplicationIdApi() {
-        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/clients`;
+        return `${this.appConfigService.get('identityHost')}/clients`;
     }
 
     private getGroupsApi() {
-        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/groups`;
+        return `${this.appConfigService.get('identityHost')}/groups`;
     }
 
     /**
