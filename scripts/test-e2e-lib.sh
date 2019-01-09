@@ -132,9 +132,9 @@ while [[ $1 == -* ]]; do
       -proxy|--proxy)  set_proxy $2; shift 2;;
       -s|--seleniumServer) set_selenium $2; shift 2;;
       -host|--host)  set_host $2; shift 2;;
-      -host_bpm) set_host_bpm $2; shift 2;;
-      -host_sso) set_host_sso $2; shift 2;;
-      -host_identity) set_host_identity $2; shift 2;;
+      -host_bpm|--host_bpm) set_host_bpm $2; shift 2;;
+      -host_sso|--host_sso) set_host_sso $2; shift 2;;
+      -host_identity|--host_identity) set_host_identity $2; shift 2;;
       -sl|--skip-lint)  skip_lint; shift;;
       -m|--maxInstances)  max_instances $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
