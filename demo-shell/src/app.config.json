@@ -2,6 +2,7 @@
     "$schema": "../../lib/core/app-config/schema.json",
     "ecmHost": "http://{hostname}:{port}",
     "bpmHost": "http://{hostname}:{port}",
+    "identityHost": "http://localhost:30081/auth/admin/realms/myrealm",
     "baseShareUrl": null,
     "loginRoute": "login",
     "providers": "ALL",
