@@ -79,6 +79,7 @@ for more information about installing and using the source code.
 | [Form component](core/form.component.md) | Shows a Form from APS | [Source](../lib/core/form/components/form.component.ts) |
 | [Start form component](core/start-form.component.md) | Displays the Start Form for a process. | [Source](../lib/core/form/components/start-form.component.ts) |
 | [Text mask component](core/text-mask.component.md) | Implements text field input masks. | [Source](../lib/core/form/components/widgets/text/text-mask.component.ts) |
+| [Icon component](core/icon.component.md) | Provides universal way of rendering registered and named icons. | [Source](../lib/core/icon/icon.component.ts) |
 | [Info drawer layout component](core/info-drawer-layout.component.md) | Displays a sidebar-style information panel. | [Source](../lib/core/info-drawer/info-drawer-layout.component.ts) |
 | [Info drawer component](core/info-drawer.component.md) | Displays a sidebar-style information panel with tabs. | [Source](../lib/core/info-drawer/info-drawer.component.ts) |
 | [Language menu component](core/language-menu.component.md) | Displays all the languages that are present in "app.config.json" and the default (EN). | [Source](../lib/core/language-menu/language-menu.component.ts) |
@@ -160,8 +161,10 @@ for more information about installing and using the source code.
 | [Cookie service](core/cookie.service.md) | Stores key-value data items as browser cookies. | [Source](../lib/core/services/cookie.service.ts) |
 | [Deleted nodes api service](core/deleted-nodes-api.service.md) | Gets a list of Content Services nodes currently in the trash. | [Source](../lib/core/services/deleted-nodes-api.service.ts) |
 | [Discovery api service](core/discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../lib/core/services/discovery-api.service.ts) |
+| [Download zip service](core/download-zip.service.md) | Creates and manages downloads. | [Source](../lib/core/services/download-zip.service.ts) |
 | [Favorites api service](core/favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../lib/core/services/favorites-api.service.ts) |
 | [Highlight transform service](core/highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../lib/core/services/highlight-transform.service.ts) |
+| [Jwt helper service](core/jwt-helper.service.md) | Decodes a JSON Web Token (JWT) to a JavaScript object.  | [Source](../lib/core/services/jwt-helper.service.ts) |
 | [Log service](core/log.service.md) | Provides log functionality. | [Source](../lib/core/services/log.service.ts) |
 | [Login dialog service](core/login-dialog.service.md) | Manages login dialogs. | [Source](../lib/core/services/login-dialog.service.ts) |
 | [Nodes api service](core/nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../lib/core/services/nodes-api.service.ts) |
@@ -181,9 +184,7 @@ for more information about installing and using the source code.
 | [User preferences service](core/user-preferences.service.md) | Stores preferences for the app and for individual components. | [Source](../lib/core/services/user-preferences.service.ts) |
 | [Bpm user service](core/bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/userinfo/services/bpm-user.service.ts) |
 | [Ecm user service](core/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/userinfo/services/ecm-user.service.ts) |
-| _Download zip service_ | _Not currently documented_ | [Source](../lib/core/services/download-zip.service.ts) |
-| _Jwt helper service_ | _Not currently documented_ | [Source](../lib/core/services/jwt-helper.service.ts) |
-| _Identity user service_ | _Not currently documented_ | [Source](../lib/core/userinfo/services/identity-user.service.ts) |
+| [Identity user service](core/identity-user.service.md) | Gets OAuth2 personal details and roles for users.  | [Source](../lib/core/userinfo/services/identity-user.service.ts) |
 
 ## Widgets
 
