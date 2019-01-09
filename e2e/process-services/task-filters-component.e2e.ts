@@ -28,7 +28,7 @@ import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigatio
 import { AppSettingsToggles } from '../pages/adf/process-services/dialog/appSettingsToggles';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/taskFiltersDemoPage';
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';

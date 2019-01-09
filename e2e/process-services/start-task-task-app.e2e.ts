@@ -31,7 +31,7 @@ import { FileModel } from '../models/ACS/fileModel';
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { Util } from '../util/util';
 import fs = require('fs');

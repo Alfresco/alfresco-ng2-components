@@ -29,7 +29,7 @@ import resources = require('../../util/resources');
 import CONSTANTS = require('../../util/constants');
 import { Util } from '../../util/util';
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 

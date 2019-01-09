@@ -36,7 +36,7 @@ import { Tenant } from '../models/APS/tenant';
 import { FileModel } from '../models/ACS/fileModel';
 import dateFormat = require('dateformat');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import path = require('path');
 
 describe('Start Process Component', () => {

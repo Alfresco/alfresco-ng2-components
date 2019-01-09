@@ -23,7 +23,7 @@ import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, Key } from 'protractor';
 
 describe('Create folder directive', function () {

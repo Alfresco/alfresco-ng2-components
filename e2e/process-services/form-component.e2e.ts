@@ -23,7 +23,7 @@ import { AmountWidget } from '../pages/adf/process-services/widgets/amountWidget
 import { NumberWidget } from '../pages/adf/process-services/widgets/numberWidget';
 import TestConfig = require('../test.config');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Form Component', () => {

@@ -31,7 +31,7 @@ import TestConfig = require('../test.config');
 import { Util } from '../util/util';
 import resources = require('../util/resources');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';

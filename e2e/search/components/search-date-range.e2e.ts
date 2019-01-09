@@ -27,7 +27,7 @@ import { SearchConfiguration } from '../search.config';
 
 import TestConfig = require('../../test.config');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { DateUtil } from '../../util/dateUtil';
 

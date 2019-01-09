@@ -25,7 +25,7 @@ import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigatio
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
 
 import { Util } from '../util/util';

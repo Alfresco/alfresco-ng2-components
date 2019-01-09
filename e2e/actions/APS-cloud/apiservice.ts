@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import TestConfig = require('../../test.config');
 export class ApiService {
 
