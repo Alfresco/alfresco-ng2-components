@@ -166,8 +166,7 @@ describe('Search Filters', () => {
         configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
         configEditor.clickSaveButton();
 
-        searchDialog.checkSearchIconIsVisible()
-            .clickOnSearchIcon()
+        searchDialog.clickOnSearchIcon()
             .enterTextAndPressEnter('*');
 
         searchResults.tableIsLoaded();
