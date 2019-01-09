@@ -154,7 +154,7 @@ describe('HeaderLayoutComponent', () => {
         beforeEach(async(() => {
             TestBed.configureTestingModule({
               declarations: [HeaderLayoutTesterComponent],
-              imports: [ LayoutModule, MaterialModule, RouterTestingModule ]
+              imports: [ CoreTestingModule, LayoutModule, MaterialModule, RouterTestingModule ]
             })
             .compileComponents();
           }));
