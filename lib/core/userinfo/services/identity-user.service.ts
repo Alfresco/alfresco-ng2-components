@@ -265,7 +265,7 @@ export class IdentityUserService {
     }
 
     private buildUserClientRoleMapping(userId: string, clientId: string): any {
-        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/users/${userId}/role-mappings/clients/${clientId}`;
+        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/alfresco/users/${userId}/role-mappings/clients/${clientId}`;
     }
 
     private buildRolesUrl(userId: string): any {
@@ -273,7 +273,7 @@ export class IdentityUserService {
     }
 
     private buildGetClientsUrl() {
-        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/clients`;
+        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/alfresco/clients`;
     }
 
 }
