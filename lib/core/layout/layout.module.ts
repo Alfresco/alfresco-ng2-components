@@ -27,11 +27,13 @@ import { LayoutContainerComponent } from './components/layout-container/layout-c
 import { SidebarActionMenuComponent, SidebarMenuDirective,
     SidebarMenuExpandIconDirective, SidebarMenuTitleIconDirective } from './components/sidebar-action/sidebar-action-menu.component';
 import { HeaderLayoutComponent } from './components/header/header.component';
+import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
-        RouterModule
+        RouterModule,
+        TranslateModule.forChild()
     ],
     exports: [
         SidenavLayoutHeaderDirective,
