@@ -48,15 +48,15 @@ export class PeopleCloudComponent implements OnInit {
     @Input()
     appName: string;
 
-    /** Mode of the user selection (single/multiple) */
+    /** Mode of the user selection (single/multiple). */
     @Input()
     mode: string = PeopleCloudComponent.MODE_SINGLE;
 
-    /** Roles of users to be listed */
+    /** Role names of the users to be listed. */
     @Input()
     roles: string[];
 
-    /** Array of users to be pre-selected. Pre-select all users in multi selection mode and only the first user of the array in single selection mode */
+    /** Array of users to be pre-selected. Pre-select all users in multi selection mode and only the first user of the array in single selection mode. */
     @Input()
     preSelectUsers: IdentityUserModel[];
 
@@ -105,6 +105,7 @@ export class PeopleCloudComponent implements OnInit {
         this.initSearch();
 
         if (this.appName) {
+            this.disableSearch();
             this.loadClientId();
         }
     }
@@ -186,6 +187,10 @@ export class PeopleCloudComponent implements OnInit {
 
     private async loadClientId() {
         this.clientId = await this.identityUserService.getClientIdByApplicationName(this.appName).toPromise();
+
+        if (this.clientId) {
+            this.enableSearch();
+        }
     }
 
     onSelect(user: IdentityUserModel) {
@@ -249,6 +254,14 @@ export class PeopleCloudComponent implements OnInit {
 
     hasErrorMessage(): boolean {
         return !this.isFocused && this.hasError();
+    }
+
+    private disableSearch() {
+        this.searchUserCtrl.disable();
+    }
+
+    private enableSearch() {
+        this.searchUserCtrl.enable();
     }
 
 }
