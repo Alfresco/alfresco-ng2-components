@@ -93,6 +93,6 @@ With this configuration, only the four listed properties will be shown.
 
 All Available properties are:
 
-**_appName_**, **_state_**, **_sort_**, **_order_**, **_processDefinitionId_**, **_processInstanceId_**, **_startDate_**, **_lastModified_**, **_lastModifiedFrom_**, **_lastModifiedTo_**.
+**_appName_**, **_initiator_**, **_state_**, **_sort_**, **_order_**, **_processDefinitionId_**, **_processDefinitionKey_**, **_processInstanceId_**, **_startDate_**, **_lastModified_**, **_lastModifiedFrom_**, **_lastModifiedTo_**.
 
 ![edit-process-filter-cloud](../docassets/images/edit-process-filter-cloud.component.png)

@@ -305,6 +305,12 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                 options: this.getRunningApplications()
             }),
             new ProcessFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.INITIATOR',
+                type: 'text',
+                key: 'initiator',
+                value: currentProcessFilter.initiator || ''
+            }),
+            new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'state',
@@ -336,6 +342,12 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                 type: 'text',
                 key: 'processDefinitionId',
                 value: currentProcessFilter.processDefinitionId || ''
+            }),
+            new ProcessFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_KEY',
+                type: 'text',
+                key: 'processDefinitionKey',
+                value: currentProcessFilter.processDefinitionKey || ''
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_INS_ID',

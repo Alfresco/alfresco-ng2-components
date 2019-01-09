@@ -25,10 +25,12 @@ export class ProcessFilterCloudModel {
     index: number;
     appName: string;
     processName: string;
+    initiator: string;
     state: string;
     sort: string;
     order: string;
     processDefinitionId: string;
+    processDefinitionKey: string;
     processInstanceId: string;
     startDate: Date;
     lastModified: Date;
@@ -44,10 +46,12 @@ export class ProcessFilterCloudModel {
             this.index = obj.index || null;
             this.appName = obj.appName || null;
             this.processName = obj.processName || null;
+            this.initiator = obj.initiator || null;
             this.state = obj.state || null;
             this.sort = obj.sort || null;
             this.order = obj.order || null;
             this.processDefinitionId = obj.processDefinitionId || null;
+            this.processDefinitionKey = obj.processDefinitionKey || null;
             this.processInstanceId = obj.processInstanceId || null;
             this.startDate = obj.startDate || null;
             this.lastModified = obj.lastModified || null;
