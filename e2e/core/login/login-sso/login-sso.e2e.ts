@@ -26,7 +26,6 @@ describe('Login component - SSO', () => {
     const settingsPage = new SettingsPage();
     const loginApsPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-    const path = '/auth/realms/springboot';
     let silentLogin;
 
     afterEach(() => {
@@ -37,13 +36,13 @@ describe('Login component - SSO', () => {
 
     it('[C261050] Should be possible login in the PS with SSO', () => {
         silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, silentLogin);
         loginApsPage.clickOnSSOButton();
         loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
     });
 
     it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', () => {
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso);
         loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
     });
 });

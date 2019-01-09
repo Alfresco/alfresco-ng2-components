@@ -26,11 +26,7 @@
             "@alfresco/adf-content-services": ["./content-services/"],
             "@alfresco/adf-extensions": ["./extensions/"],
             "@alfresco/adf-core": ["./core/"],
-            "@alfresco/adf-insights": ["./analytics"],
-            "@alfresco/js-api": ["../node_modules/alfresco-js-api/"],
-            "@angular/*": ["../node_modules/@angular/*"],
-            "@mat-datetimepicker/*": ["../node_modules/@mat-datetimepicker/*"],
-            "rxjs/*": ["../node_modules/rxjs/*"]
+            "@alfresco/adf-insights": ["./analytics"]
         },
         "lib": [
             "es2016",

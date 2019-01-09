@@ -32,12 +32,12 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Process filter cloud service](process-filter-cloud.service.md) | Manage Process Filters, which are pre-configured Process Instance queries. | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/services/process-filter-cloud.service.ts) |
+| [Start process cloud service](start-process-cloud.service.md) | Gets process definitions and starts processes. | [Source](../../lib/process-services-cloud/src/lib/process/start-process/services/start-process-cloud.service.ts) |
+| [Start task cloud service](start-task-cloud.service.md) | Starts standalone tasks. | [Source](../../lib/process-services-cloud/src/lib/task/start-task/services/start-task-cloud.service.ts) |
+| [Task filter cloud service](task-filter-cloud.service.md) | Manages task filters. | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/services/task-filter-cloud.service.ts) |
 | _[Apps process cloud service](../../lib/process-services-cloud/src/lib/app/services/apps-process-cloud.service.ts)_ | _Not currently documented_ | [Source](../../lib/process-services-cloud/src/lib/app/services/apps-process-cloud.service.ts) |
-| _[Process filter cloud service](../../lib/process-services-cloud/src/lib/process/process-filters/services/process-filter-cloud.service.ts)_ | _Not currently documented_ | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/services/process-filter-cloud.service.ts) |
-| _[Process list cloud service](../../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts)_ | _Not currently documented_ | [Source](../../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts) |
-| _[Start process cloud service](../../lib/process-services-cloud/src/lib/process/start-process/services/start-process-cloud.service.ts)_ | _Not currently documented_ | [Source](../../lib/process-services-cloud/src/lib/process/start-process/services/start-process-cloud.service.ts) |
-| _[Start task cloud service](../../lib/process-services-cloud/src/lib/task/start-task/services/start-task-cloud.service.ts)_ | _Not currently documented_ | [Source](../../lib/process-services-cloud/src/lib/task/start-task/services/start-task-cloud.service.ts) |
-| _[Task filter cloud service](../../lib/process-services-cloud/src/lib/task/task-filters/services/task-filter-cloud.service.ts)_ | _Not currently documented_ | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/services/task-filter-cloud.service.ts) |
+| _[Process list cloud service](../../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts)_ | _Not curently documented_ | [Source](../../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts) |
 | _[Task list cloud service](../../lib/process-services-cloud/src/lib/task/task-list/services/task-list-cloud.service.ts)_ | _Not currently documented_ | [Source](../../lib/process-services-cloud/src/lib/task/task-list/services/task-list-cloud.service.ts) |
 
 <!--process-services-cloud end-->
