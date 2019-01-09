@@ -1,0 +1,128 @@
+<div class="adf-task-list-demo-inputs">
+    <form [formGroup]="taskListForm">
+        <mat-form-field>
+            <mat-label>App Name</mat-label>
+            <input matInput formControlName="taskAppName" data-automation-id="appName-input">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Task Name</mat-label>
+            <input matInput [formControl]="taskName" data-automation-id="task-name">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Task Id</mat-label>
+            <input matInput [formControl]="taskId" data-automation-id="task-id">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Landing Task Id</mat-label>
+            <input matInput [formControl]="taskLandingTaskId" data-automation-id="landing-task-id">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Parent Task Id</mat-label>
+            <input matInput [formControl]="taskParentTaskId" data-automation-id="parent-task-id">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Due Date</mat-label>
+            <input matInput class="form-control" [matDatepicker]="pickerAfter" placeholder="Choose a date"
+                [formControl]="taskDueDate" data-automation-id="due-date">
+            <mat-datepicker-toggle matSuffix [for]="pickerAfter"></mat-datepicker-toggle>
+            <mat-datepicker #pickerAfter></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Created Date</mat-label>
+            <input matInput class="form-control" [matDatepicker]="pickerBefore" placeholder="Choose a date"
+                [formControl]="taskCreatedDate" data-automation-id="created-date">
+            <mat-datepicker-toggle matSuffix [for]="pickerBefore"></mat-datepicker-toggle>
+            <mat-datepicker #pickerBefore></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Assignee</mat-label>
+            <input matInput [formControl]="taskAssignee" data-automation-id="assignee">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Selection Mode</mat-label>
+            <mat-select [formControl]="taskSelectionMode">
+                <mat-option *ngFor="let option of selectionModeOptions" [value]="option.value">
+                    {{ option.title }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field data-automation-id="status">
+            <mat-label>Status</mat-label>
+            <mat-select [formControl]="taskStatus" data-automation-id="task-status">
+                <mat-option *ngFor="let option of statusOptions" [value]="option.value">
+                    {{ option.title }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>ProcessDefinitionId</mat-label>
+            <input matInput class="form-control" [formControl]="taskProcessDefinitionId" data-automation-id="process-definition-id">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>ProcessInstanceId</mat-label>
+            <input matInput class="form-control" [formControl]="taskProcessInstanceId" data-automation-id="process-instance-id">
+        </mat-form-field>
+
+        <mat-slide-toggle 
+            [color]="'primary'"
+            (change)="toggleSelectFirstRow()"
+            [checked]="selectFirstRow"
+            data-automation-id="select-first-row">
+            Select First Row
+        </mat-slide-toggle>
+        <mat-slide-toggle
+            [color]="'primary'"
+            (change)="toggleMultiselect()"
+            [checked]="multiSelection"
+            data-automation-id="multiSelection">
+            Multiselect
+        </mat-slide-toggle>
+
+    </form>
+</div>
+
+<div class="adf-reset-button">
+    <button mat-raised-button (click)="resetTaskForm()">Reset</button>
+</div>
+
+<div>
+    <adf-cloud-task-list 
+        #taskCloud 
+        [applicationName]="appName"
+        [status]="status"
+        [assignee]="assignee"
+        [processDefinitionId]="processDefinitionId"
+        [processInstanceId]="processInstanceId"
+        [landingTaskId]="landingTaskId"
+        [parentTaskId]="parentTaskId"
+        [id]="id"
+        [name]="name"
+        [dueDate]="dueDate"
+        [createdDate]="createdDate"
+        [selectionMode]="selectionMode"
+        [selectFirstRow]="selectFirstRow"
+        [multiselect]="multiSelection">
+        <data-columns>
+            <data-column key="entry.id" title="Id"></data-column>
+            <data-column key="entry.name" title="Name" class="full-width name-column ellipsis-cell"></data-column>
+            <data-column key="entry.status" title="Status"></data-column>
+            <data-column key="entry.processDefinitionId" title="Process Definition Id"></data-column>
+            <data-column key="entry.priority" title="Priority"></data-column>
+            <data-column key="entry.createdDate" type="date" title="Created Date" [format]="'timeAgo'"></data-column>
+        </data-columns>
+    </adf-cloud-task-list>
+
+    <adf-pagination [target]="taskCloud">
+    </adf-pagination>
+</div>
