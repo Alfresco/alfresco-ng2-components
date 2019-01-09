@@ -42,7 +42,7 @@ export class Identity {
   }
 
   async createUser(username) {
-    const path = '/auth/admin/realms/alfresco/users';
+    const path = '/users';
     const method = 'POST';
     const queryParams = {}, postBody = {
       'username': username,
@@ -51,55 +51,55 @@ export class Identity {
       'enabled': true,
       'email': username + '@alfresco.com'
     };
-    const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+    const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
     return data;
   }
 
   async deleteUser(userId) {
-    const path = `/auth/admin/realms/alfresco/users/${userId}`;
+    const path = `/users/${userId}`;
     const method = 'DELETE';
     const queryParams = {}, postBody = {
     };
-    const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+    const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
     return data;
   }
 
   async getUserInfoByUsername(username) {
-    const path = `/auth/admin/realms/alfresco/users`;
+    const path = `/users`;
     const method = 'GET';
     const queryParams = { 'username' : username }, postBody = {};
 
-    const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+    const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
     return data;
   }
 
   async resetPassword(id, password) {
-    const path = `/auth/admin/realms/alfresco/users/${id}/reset-password`;
+    const path = `/users/${id}/reset-password`;
     const method = 'PUT';
     const queryParams = {},
     postBody = {'type': 'password', 'value': password, 'temporary': false};
 
-    const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+    const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
     return data;
   }
 
   async getRoleByName(roleName) {
-    const path = `/auth/admin/realms/alfresco/roles/${roleName}`;
+    const path = `/roles/${roleName}`;
     const method = 'GET';
     const queryParams = {},
     postBody = {};
 
-    const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+    const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
     return data;
   }
 
   async assignRole(userId, roleId, roleName) {
-    const path = `/auth/admin/realms/alfresco/users/${userId}/role-mappings/realm`;
+    const path = `/users/${userId}/role-mappings/realm`;
     const method = 'POST';
     const queryParams = {},
     postBody = [{'id': roleId, 'name': roleName}];
 
-    const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+    const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
     return data;
   }
 

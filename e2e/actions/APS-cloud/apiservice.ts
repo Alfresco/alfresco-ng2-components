@@ -22,9 +22,12 @@ export class ApiService {
 
     HOST_SSO = TestConfig.adf.hostSso;
     HOST_BPM = TestConfig.adf.hostBPM;
+    HOST_IDENTITY = TestConfig.adf.hostIdentity;
 
     apiService = new AlfrescoApi({
         provider: 'BPM',
+        bpmHost: `${this.HOST_BPM}`,
+        identityHost: `${this.HOST_IDENTITY}`,
         authType: 'OAUTH',
         oauth2: {
             host: `${this.HOST_SSO}`,
@@ -46,6 +49,24 @@ export class ApiService {
 
     async performBpmOperation(path, method, queryParams, postBody) {
         const uri = this.HOST_BPM + path;
+        const pathParams = {}, formParams = {};
+        const authNames = [];
+        const contentTypes = ['application/json'];
+        const accepts = ['application/json'];
+
+        const headerParams = {
+            'Authorization': 'bearer ' + this.apiService.oauth2Auth.token
+        };
+
+        return this.apiService.bpmClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
+            authNames, contentTypes, accepts, {})
+            .catch((error) => {
+                throw (error);
+            });
+    }
+
+    async performIdentityOperation(path, method, queryParams, postBody) {
+        const uri = this.HOST_IDENTITY + path;
         const pathParams = {}, formParams = {};
         const authNames = [];
         const contentTypes = ['application/json'];
