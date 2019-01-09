@@ -142,11 +142,11 @@ export class IdentityUserService {
     }
 
     private buildUserUrl(): any {
-        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/users`;
+        return `${this.appConfigService.get('identityHost')}/users`;
     }
 
     private buildRolesUrl(userId: string): any {
-        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/springboot/users/${userId}/role-mappings/realm/composite`;
+        return `${this.appConfigService.get('identityHost')}/users/${userId}/role-mappings/realm/composite`;
     }
 
 }
