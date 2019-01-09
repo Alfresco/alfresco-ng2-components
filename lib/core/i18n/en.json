@@ -29,6 +29,9 @@
     }
   },
   "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Company Logo"
+    },
     "FILE_SIZE": {
       "BYTES": "Bytes",
       "KB": "KB",

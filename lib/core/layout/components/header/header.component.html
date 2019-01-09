@@ -5,7 +5,7 @@
     </button>
 
     <a [routerLink]="redirectUrl" title="{{ tooltip }}">
-        <img src="{{logo}}" class="adf-app-logo"/>
+        <img src="{{logo}}" class="adf-app-logo" alt="{{ 'CORE.HEADER.LOGO_ARIA' | translate }}"/>
     </a>
 
     <span [routerLink]="redirectUrl" fxFlex="1 1 auto" fxShow fxHide.lt-sm="true" class="adf-app-title">{{title}}</span>
