@@ -42,6 +42,10 @@ export class IdentityUserService {
         private apiService: AlfrescoApiService,
         private appConfigService: AppConfigService) {}
 
+    /**
+     * Gets the name and other basic details of the current user.
+     * @returns User details
+     */
     getCurrentUserInfo(): IdentityUserModel {
         const familyName = this.getValueFromToken<string>(IdentityUserService.FAMILY_NAME);
         const givenName = this.getValueFromToken<string>(IdentityUserService.GIVEN_NAME);
@@ -51,6 +55,11 @@ export class IdentityUserService {
         return new IdentityUserModel(user);
     }
 
+    /**
+     * Gets a named value from the user access token.
+     * @param key Key name of the field to retrieve
+     * @returns Value associated with the key
+     */
     getValueFromToken<T>(key: string): T {
         let value;
         const token = localStorage.getItem(IdentityUserService.USER_ACCESS_TOKEN);
@@ -61,6 +70,10 @@ export class IdentityUserService {
         return <T> value;
     }
 
+    /**
+     * Gets details for all users.
+     * @returns Array of user info objects
+     */
     getUsers(): Observable<IdentityUserModel[]> {
         const url = this.buildUserUrl();
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
@@ -77,6 +90,11 @@ export class IdentityUserService {
             );
     }
 
+    /**
+     * Gets a list of roles for a user.
+     * @param userId ID of the user
+     * @returns Array of role info objects
+     */
     getUserRoles(userId: string): Observable<IdentityRoleModel[]> {
         const url = this.buildRolesUrl(userId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
@@ -93,6 +111,11 @@ export class IdentityUserService {
             );
     }
 
+    /**
+     * Gets an array of users (including the current user) who have any of the roles in the supplied list.
+     * @param roleNames List of role names to look for
+     * @returns Array of user info objects
+     */
     async getUsersByRolesWithCurrentUser(roleNames: string[]): Promise<IdentityUserModel[]> {
         const filteredUsers: IdentityUserModel[] = [];
         if (roleNames && roleNames.length > 0) {
@@ -109,6 +132,11 @@ export class IdentityUserService {
         return filteredUsers;
     }
 
+    /**
+     * Gets an array of users (not including the current user) who have any of the roles in the supplied list.
+     * @param roleNames List of role names to look for
+     * @returns Array of user info objects
+     */
     async getUsersByRolesWithoutCurrentUser(roleNames: string[]): Promise<IdentityUserModel[]> {
         const filteredUsers: IdentityUserModel[] = [];
         if (roleNames && roleNames.length > 0) {

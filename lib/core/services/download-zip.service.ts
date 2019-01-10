@@ -31,24 +31,49 @@ export class DownloadZipService {
                 private logService: LogService) {
     }
 
+    /**
+     * Creates a new download.
+     * @param payload Object containing the node IDs of the items to add to the ZIP file
+     * @returns Status object for the download
+     */
     createDownload(payload: DownloadBodyCreate): Observable<DownloadEntry> {
         return from(this.apiService.getInstance().core.downloadsApi.createDownload(payload)).pipe(
             catchError((err) => this.handleError(err))
         );
     }
 
+    /**
+     * Gets a content URL for the given node.
+     * @param nodeId Node to get URL for.
+     * @param attachment Toggles whether to retrieve content as an attachment for download
+     * @returns URL string
+     */
     getContentUrl(nodeId: string, attachment?: boolean): string {
         return this.apiService.getInstance().content.getContentUrl(nodeId, attachment);
     }
 
+    /**
+     * Gets a Node via its node ID.
+     * @param nodeId ID of the target node
+     * @returns Details of the node
+     */
     getNode(nodeId: string): Observable<NodeEntry> {
         return from(this.apiService.getInstance().core.nodesApi.getNode(nodeId));
     }
 
+    /**
+     * Gets status information for a download node.
+     * @param downloadId ID of the download node
+     * @returns Status object for the download
+     */
     getDownload(downloadId: string): Observable<DownloadEntry> {
         return from(this.apiService.getInstance().core.downloadsApi.getDownload(downloadId));
     }
 
+    /**
+     * Cancels a download.
+     * @param downloadId ID of the target download node
+     */
     cancelDownload(downloadId: string) {
         this.apiService.getInstance().core.downloadsApi.cancelDownload(downloadId);
     }
