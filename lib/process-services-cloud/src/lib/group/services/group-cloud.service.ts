@@ -67,10 +67,6 @@ export class GroupCloudService {
             );
     }
 
-    async getClientId(applicationName: string): Promise<string> {
-        return this.getClientIdByApplicationName(applicationName).toPromise();
-    }
-
     checkGroupHasClientRoleMapping(groupId: string, clientId: string): Observable<any> {
         const url = this.groupClientRoleMappingApi(groupId, clientId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
@@ -79,7 +75,7 @@ export class GroupCloudService {
         return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
                     url, httpMethod, pathParams, queryParams,
                     headerParams, formParams, bodyParam,
-                    contentTypes, accepts, [], null, null)
+                    contentTypes, accepts, Object, null, null)
                 ).pipe(
                     map((response: any[]) => {
                         if (response && response.length > 0) {

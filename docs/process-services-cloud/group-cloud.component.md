@@ -12,7 +12,10 @@ Searches Groups.
 ## Basic Usage
 
 ```html
-<adf-cloud-group></adf-cloud-group>
+<adf-cloud-group
+    [applicationName]="'simple-app'"
+    [mode]="'multiple'">
+</adf-cloud-group>
 ```
 
 ![adf-cloud-group](../docassets/images/group-cloud.component.png)
@@ -23,16 +26,16 @@ Searches Groups.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| applicationName | `string` |  | (required) The application name |
+| applicationName | `string` |  | Name of the application. If specified, shows the groups who have access to the app. |
 | mode | `string` | `single` | selection mode single or multiple |
-| preSelectGroups | `GroupModel[]` |  |(optional) the groups that groupCloud will show as preSelectedGroups |
+| preSelectGroups | `GroupModel[]` |  Array of groups to be pre-selected. Pre-select all groups in `multiple` mode and only the first group of the array in `single` mode. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | selectGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`GroupModel`](../../lib/process-services-cloud/src/lib/group-cloud/models/group.model.ts)`>` | Emitted when a group selected. |
-| removeGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`GroupModel`](../../lib/process-services-cloud/src/lib/group-cloud/models/group.model.ts)`>` | Emitted when selected group removed. |
+| removeGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`GroupModel`](../../lib/process-services-cloud/src/lib/group-cloud/models/group.model.ts)`>` | Emitted when selected group is removed in `multiple` mode. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` |
 
 
@@ -45,8 +48,7 @@ You can provide selection mode singe(default)/multiple
 ## Single select
 
 ```html
-<adf-cloud-group>
-</adf-cloud-group>
+<adf-cloud-group></adf-cloud-group>
 ```
 
 ![adf-cloud-group](../docassets/images/group-cloud.component-single.png)
@@ -60,6 +62,8 @@ You can provide selection mode singe(default)/multiple
 ```
 
 ![adf-cloud-group](../docassets/images/group-cloud.component-multiple-mode.png)
+
+## Pre-select
 
 Usage example:
 

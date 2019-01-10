@@ -33,7 +33,7 @@ describe('GroupCloudComponent', () => {
     let element: HTMLElement;
     let service: GroupCloudService;
     let findGroupsByNameSpy: jasmine.Spy;
-    let getClientIdSpy: jasmine.Spy;
+    let getClientIdByApplicationNameSpy: jasmine.Spy;
     let checkGroupHasClientRoleMappingSpy: jasmine.Spy;
 
     setupTestBed({
@@ -47,7 +47,7 @@ describe('GroupCloudComponent', () => {
         element = fixture.nativeElement;
         service = TestBed.get(GroupCloudService);
         findGroupsByNameSpy = spyOn(service, 'findGroupsByName').and.returnValue(of(mockGroups));
-        getClientIdSpy = spyOn(service, 'getClientId').and.returnValue(Promise.resolve('mock-client-id'));
+        getClientIdByApplicationNameSpy = spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client-id'));
         checkGroupHasClientRoleMappingSpy = spyOn(service, 'checkGroupHasClientRoleMapping').and.returnValue(of(true));
         component.applicationName = 'mock-app-name';
     });
@@ -59,8 +59,8 @@ describe('GroupCloudComponent', () => {
     it('should be able to fetch client id', async(() => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            expect(getClientIdSpy).toHaveBeenCalled();
-            expect(component.applicationId).toBe('mock-client-id');
+            expect(getClientIdByApplicationNameSpy).toHaveBeenCalled();
+            expect(component.clientId).toBe('mock-client-id');
         });
     }));
 

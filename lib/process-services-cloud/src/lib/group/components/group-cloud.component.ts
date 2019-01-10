@@ -43,8 +43,6 @@ export class GroupCloudComponent implements OnInit {
 
     static MODE_SINGLE = 'single';
     static MODE_MULTIPLE = 'multiple';
-    static NO_MATCH_FOUND = 'match';
-    static NO_ROLE_MAPPING = 'rolemapping';
 
     @ViewChild('groupInput') groupInput: ElementRef<HTMLInputElement>;
 
@@ -79,11 +77,11 @@ export class GroupCloudComponent implements OnInit {
 
     selectedGroups$: Observable<GroupModel[]>;
 
-    searchGroupsControl: FormControl = new FormControl();
+    searchGroupsControl: FormControl = new FormControl('');
 
     _subscriptAnimationState = 'enter';
 
-    applicationId: string;
+    clientId: string;
 
     searchedValue = '';
 
@@ -97,13 +95,18 @@ export class GroupCloudComponent implements OnInit {
     ngOnInit() {
         this.loadPreSelectGroups();
         this.initSearch();
+
         if (this.applicationName) {
+            this.disableSearch();
             this.loadClientId();
         }
     }
 
     private async loadClientId() {
-        this.applicationId = await this.groupService.getClientId(this.applicationName);
+        this.clientId = await this.groupService.getClientIdByApplicationName(this.applicationName).toPromise();
+        if (this.clientId) {
+            this.enableSearch();
+        }
     }
 
     initSearch() {
@@ -121,7 +124,7 @@ export class GroupCloudComponent implements OnInit {
                 return !this.isGroupAlreadySelected(group);
             }),
             mergeMap((group: any) => {
-                if (this.applicationId) {
+                if (this.clientId) {
                     return this.checkGroupHasClientRoleMapping(group);
                 } else {
                     return of(group);
@@ -147,7 +150,7 @@ export class GroupCloudComponent implements OnInit {
     }
 
     checkGroupHasClientRoleMapping(group: GroupModel): Observable<GroupModel> {
-        return this.groupService.checkGroupHasClientRoleMapping(group.id, this.applicationId).pipe(
+        return this.groupService.checkGroupHasClientRoleMapping(group.id, this.clientId).pipe(
             mergeMap((hasRole: boolean) => {
                 if (hasRole) {
                     return of(group);
@@ -197,6 +200,9 @@ export class GroupCloudComponent implements OnInit {
         } else {
             this.selectGroup.emit(selectedGroup);
         }
+
+        this.clearError();
+        this.resetSearchGroups();
     }
 
     onRemove(selectedGroup: GroupModel) {
@@ -225,7 +231,11 @@ export class GroupCloudComponent implements OnInit {
 
     createSearchParam(value: any): GroupSearchParam {
         let queryParams: GroupSearchParam = { name: '' };
-        queryParams.name = this.isString(value) ? value.trim() : value.name.trim();
+        if (this.isString(value)) {
+            queryParams.name = value.trim();
+        } else {
+            queryParams.name = value.name.trim();
+        }
         return queryParams;
     }
 
@@ -239,6 +249,14 @@ export class GroupCloudComponent implements OnInit {
         } else {
             this.setError();
         }
+    }
+
+    private disableSearch() {
+        this.searchGroupsControl.disable();
+    }
+
+    private enableSearch() {
+        this.searchGroupsControl.enable();
     }
 
     private setError() {
