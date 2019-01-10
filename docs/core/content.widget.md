@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [APS Content Component](../../lib/core/form/components/widgets/content/content.widget.ts "Defined in content.widget.ts")
+# [APS Content Component](../../core/form/components/widgets/content/content.widget.ts "Defined in content.widget.ts")
 
 Shows the content preview.
 
@@ -16,16 +16,20 @@ Shows the content preview.
 </adf-content>
 ```
 
+## Class members
+
 ### Properties
 
-The recommended set of properties can be found in the following table:
-
-| Name | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| contentId | string |  | The content id to show. |
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| id | `string` |  | The content id to show. |
+| showDocumentContent | `boolean` | true | Toggles showing document content. |
 
 ### Events
 
-| Name | Description |
-| ---- | ----------- |
-| contentClick | Invoked when the content is clicked. |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| contentClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the content is clicked. |
+| contentLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the content has loaded. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
+| thumbnailLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the thumbnail has loaded. |

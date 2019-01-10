@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-07
 ---
 
-# [Translation service](../../lib/core/services/translation.service.ts "Defined in translation.service.ts")
+# [Translation service](../../core/services/translation.service.ts "Defined in translation.service.ts")
 
 Supports localisation.
 
@@ -28,10 +28,9 @@ Supports localisation.
     -   _interpolateParams:_ `Object`  - (Optional) String(s) to be interpolated into the main message
     -   **Returns** `string|any` - Translated text
 -   **loadTranslation**(lang: `string`, fallback?: `string`)<br/>
-
-    -   _lang:_ `string`  - 
-    -   _fallback:_ `string`  - (Optional) (Optional) 
-
+    Loads a translation file.
+    -   _lang:_ `string`  - Language code for the language to load
+    -   _fallback:_ `string`  - (Optional) Language code to fall back to if the first one was unavailable
 -   **onTranslationChanged**(lang: `string`)<br/>
     Triggers a notification callback when the translation language changes.
     -   _lang:_ `string`  - The new language code
