@@ -30,6 +30,9 @@ export class ProcessCloudDemoPage {
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
     processFilters = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
 
+    createButton = element(by.css('button[data-automation-id="create-button"'));
+    newProcessButton = element(by.css('button[data-automation-id="btn-start-process"]'));
+
     processListCloud = new ProcessListCloudComponent();
     editProcessFilterCloud = new EditProcessFilterCloudComponent();
 
@@ -74,4 +77,29 @@ export class ProcessCloudDemoPage {
         Util.waitUntilElementIsVisible(this.processFilters);
         return this.processFilters.click();
     }
+
+    openNewProcessForm() {
+        this.createButtonIsDisplayed();
+        this.clickOnCreateButton();
+        this.newProcessButtonIsDisplayed();
+        this.newProcessButton.click();
+        return this;
+    }
+
+    createButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.createButton);
+        return this;
+    }
+
+    newProcessButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.newProcessButton);
+        return this;
+    }
+
+    clickOnCreateButton() {
+        Util.waitUntilElementIsClickable(this.createButton);
+        this.createButton.click();
+        return this;
+    }
+
 }
