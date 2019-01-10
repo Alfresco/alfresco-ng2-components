@@ -30,7 +30,7 @@
 
      public static LAYOUT_LIST: string = 'LIST';
      public static LAYOUT_GRID: string = 'GRID';
-     public static RUNNING_STATUS: string = 'Running';
+     public static RUNNING_STATUS: string = 'RUNNING';
 
      @ContentChild(EmptyCustomContentDirective)
      emptyCustomContent: EmptyCustomContentDirective;
