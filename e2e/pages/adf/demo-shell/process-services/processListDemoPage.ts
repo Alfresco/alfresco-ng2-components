@@ -77,14 +77,10 @@ export class ProcessListDemoPage {
 
     checkProcessIsNotDisplayed(processName) {
         return this.dataTable.checkRowIsNotDisplayedByName(processName);
-        // let processRow = element.all(by.css('div[filename="' + processName + '"]')).first();
-        // return Util.waitUntilElementIsNotVisible(processRow);
     }
 
     checkProcessIsDisplayed(processName) {
         return this.dataTable.checkRowIsDisplayedByName(processName);
-        // let processRow = element.all(by.css('div[filename="' + processName + '"]')).first();
-        // return Util.waitUntilElementIsVisible(processRow);
     }
 
     checkAppIdFieldIsDisplayed() {
@@ -94,11 +90,6 @@ export class ProcessListDemoPage {
 
     checkProcessInstanceIdFieldIsDisplayed() {
         Util.waitUntilElementIsVisible(this.processInstanceInput);
-        return this;
-    }
-
-    checkProcessDefinitionIdFieldIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.processDefinitionInput);
         return this;
     }
 
