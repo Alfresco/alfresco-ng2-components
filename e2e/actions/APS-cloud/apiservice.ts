@@ -17,7 +17,7 @@
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import TestConfig = require('../../test.config');
-
+import TestingService = require('@alfresco/adf-testing');
 export class ApiService {
 
     HOST_SSO = TestConfig.adf.hostSso;
@@ -44,6 +44,8 @@ export class ApiService {
     });
 
     async login(username, password) {
+        let test = new TestingService();
+        test.print();
         await this.apiService.login(username, password);
     }
 

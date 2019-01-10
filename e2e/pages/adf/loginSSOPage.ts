@@ -17,6 +17,7 @@
 
 import { Util } from '../../util/util';
 import { element, by, browser, protractor } from 'protractor';
+import { TestingService } from '@alfresco/adf-testing';
 
 export class LoginSSOPage {
 
@@ -28,6 +29,9 @@ export class LoginSSOPage {
 
     loginAPS(username, password) {
         browser.ignoreSynchronization = true;
+        const test = new TestingService();
+        test.print();
+        Util.waitUntilElementIsVisible(element(by.id('new')));
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickLoginButton();
