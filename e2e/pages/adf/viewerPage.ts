@@ -122,10 +122,6 @@ export class ViewerPage {
         this.passwordInput.sendKeys(password);
     }
 
-    checkDatatableHeaderIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.datatableHeader);
-    }
-
     checkFileIsLoaded() {
         Util.waitUntilElementIsOnPage(this.pdfPageLoaded, 15000);
     }
@@ -519,38 +515,12 @@ export class ViewerPage {
         return this;
     }
 
-    disableShare() {
-        this.formControllersPage.disableToggle(this.shareSwitch);
-    }
-
-    enableShare() {
-        this.formControllersPage.enableToggle(this.shareSwitch);
-    }
-
     disableAllowSidebar() {
         this.formControllersPage.disableToggle(this.allowSidebarSwitch);
     }
 
-    enableAllowSidebar() {
-        this.formControllersPage.enableToggle(this.allowSidebarSwitch);
-    }
-
     disableAllowLeftSidebar() {
         this.formControllersPage.disableToggle(this.allowLeftSidebarSwitch);
-    }
-
-    enableAllowLeftSidebar() {
-        this.formControllersPage.enableToggle(this.allowLeftSidebarSwitch);
-    }
-
-    checkShareButtonDisplayed() {
-        Util.waitUntilElementIsVisible(this.shareButton);
-        return this;
-    }
-
-    checkShareButtonIsNotDisplayed() {
-        Util.waitUntilElementIsNotVisible(this.shareButton);
-        return this;
     }
 
     checkMoreActionsDisplayed() {
