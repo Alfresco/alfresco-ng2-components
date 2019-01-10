@@ -24,7 +24,7 @@ Searches Groups.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | applicationName | `string` |  | (required) The application name |
-| mode | `string` | `single` | selection mode |
+| mode | `string` | `single` | selection mode single or multiple |
 | preSelectGroups | `GroupModel[]` |  |(optional) the groups that groupCloud will show as preSelectedGroups |
 
 ### Events
