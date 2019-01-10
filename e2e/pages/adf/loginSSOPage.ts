@@ -23,11 +23,7 @@ export class LoginSSOPage {
     ssoButton = element(by.css(`[data-automation-id="login-button-sso"]`));
     usernameField = element(by.id('username'));
     passwordField = element(by.id('password'));
-<<<<<<< HEAD
     loginButton = element(by.css('input[class="submit"]'));
-=======
-    loginButton = element(by.css('.submit'));
->>>>>>> add tests for start process
     header = element(by.id('adf-header'));
 
     loginAPS(username, password) {
