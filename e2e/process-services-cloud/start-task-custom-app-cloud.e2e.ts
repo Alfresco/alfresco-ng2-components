@@ -38,15 +38,15 @@ describe('Start Task', () => {
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
-    const path = '/auth/realms/springboot';
+    const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
     const appName = 'task-app';
     let silentLogin;
 
     beforeAll((done) => {
         silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, silentLogin);
         loginSSOPage.clickOnSSOButton();
-        loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        loginSSOPage.loginAPS(user, password);
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         appListCloudComponent.checkAppIsDisplayed(appName);
