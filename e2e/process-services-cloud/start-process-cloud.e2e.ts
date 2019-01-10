@@ -39,15 +39,15 @@ describe('Start Process', () => {
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Process Name is required';
     const requiredProcessError = 'Process Definition is required';
-    const path = '/auth/realms/alfresco';
+    const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
     const appName = 'simple-app', noProcessApp = 'test-dpk';
     let silentLogin;
 
     beforeAll((done) => {
         silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, silentLogin);
         loginSSOPage.clickOnSSOButton();
-        loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        loginSSOPage.loginAPS(user, password);
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
         done();
@@ -70,7 +70,7 @@ describe('Start Process', () => {
     });
 
     it('[C291842] Should be displayed an error message if process name exceed 255 characters', () => {
-
+        appListCloudComponent.goToApp(appName);
         processCloudDemoPage.openNewProcessForm();
         startProcessPage.enterProcessName(processName255Characters);
         startProcessPage.checkStartProcessButtonIsEnabled();
