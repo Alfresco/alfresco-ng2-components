@@ -43,7 +43,7 @@ export class TaskHeaderCloudService {
             return from(this.alfrescoApiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'GET',
                     null, null, null,
-                    null, null, null,
+                    null, null,
                     this.contentTypes, this.accepts,
                     this.returnType, null, null)
             ).pipe(
@@ -67,7 +67,7 @@ export class TaskHeaderCloudService {
             return from(this.alfrescoApiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'PUT',
                     null, null, null,
-                    null, updatePayload, null,
+                    null, updatePayload,
                     this.contentTypes, this.accepts,
                     this.returnType, null, null)
             ).pipe(
@@ -89,7 +89,7 @@ export class TaskHeaderCloudService {
             return from(this.alfrescoApiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'POST',
                     null, null, null,
-                    null, null, null,
+                    null, null,
                     this.contentTypes, this.accepts,
                     this.returnType, null, null)
             ).pipe(
@@ -111,7 +111,7 @@ export class TaskHeaderCloudService {
             return from(this.alfrescoApiService.getInstance()
                 .oauth2Auth.callCustomApi(queryUrl, 'POST',
                     null, null, null,
-                    null, null, null,
+                    null, null,
                     this.contentTypes, this.accepts,
                     this.returnType, null, null)
             ).pipe(
