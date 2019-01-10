@@ -24,6 +24,11 @@ export class JwtHelperService {
 
     constructor() {}
 
+    /**
+     * Decodes a JSON web token into a JS object.
+     * @param token Token in encoded form
+     * @returns Decoded token data object
+     */
     decodeToken(token): Object {
         let parts = token.split('.');
 

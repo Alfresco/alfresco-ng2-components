@@ -161,8 +161,10 @@ for more information about installing and using the source code.
 | [Cookie service](core/cookie.service.md) | Stores key-value data items as browser cookies. | [Source](../lib/core/services/cookie.service.ts) |
 | [Deleted nodes api service](core/deleted-nodes-api.service.md) | Gets a list of Content Services nodes currently in the trash. | [Source](../lib/core/services/deleted-nodes-api.service.ts) |
 | [Discovery api service](core/discovery-api.service.md) | Gets version and license information for Process Services and Content Services. | [Source](../lib/core/services/discovery-api.service.ts) |
+| [Download zip service](core/download-zip.service.md) | Creates and manages downloads. | [Source](../lib/core/services/download-zip.service.ts) |
 | [Favorites api service](core/favorites-api.service.md) | Gets a list of items a user has marked as their favorites. | [Source](../lib/core/services/favorites-api.service.ts) |
 | [Highlight transform service](core/highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../lib/core/services/highlight-transform.service.ts) |
+| [Jwt helper service](core/jwt-helper.service.md) | Decodes a JSON Web Token (JWT) to a JavaScript object.  | [Source](../lib/core/services/jwt-helper.service.ts) |
 | [Log service](core/log.service.md) | Provides log functionality. | [Source](../lib/core/services/log.service.ts) |
 | [Login dialog service](core/login-dialog.service.md) | Manages login dialogs. | [Source](../lib/core/services/login-dialog.service.ts) |
 | [Nodes api service](core/nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../lib/core/services/nodes-api.service.ts) |
@@ -182,9 +184,8 @@ for more information about installing and using the source code.
 | [User preferences service](core/user-preferences.service.md) | Stores preferences for the app and for individual components. | [Source](../lib/core/services/user-preferences.service.ts) |
 | [Bpm user service](core/bpm-user.service.md) | Gets information about the current Process Services user. | [Source](../lib/core/userinfo/services/bpm-user.service.ts) |
 | [Ecm user service](core/ecm-user.service.md) | Gets information about a Content Services user. | [Source](../lib/core/userinfo/services/ecm-user.service.ts) |
-| _[Download zip service](../../lib/core/services/download-zip.service.ts)_ | _Not currently documented_ | [Source](../lib/core/services/download-zip.service.ts) |
-| _[Jwt helper service](../../lib/core/services/jwt-helper.service.ts)_ | _Not currently documented_ | [Source](../lib/core/services/jwt-helper.service.ts) |
-| _[Identity](../../e2e/actions/APS-cloud/identity.ts) user service_ | _Not currently documented_ | [Source](../lib/core/userinfo/services/identity-user.service.ts) |
+| [Identity user service](core/identity-user.service.md) | Gets OAuth2 personal details and roles for users.  | [Source](../lib/core/userinfo/services/identity-user.service.ts) |
+actions/APS-cloud/identity.ts) user service_ | _Not currently documented_ | [Source](../lib/core/userinfo/services/identity-user.service.ts) |
 
 ## Widgets
 
