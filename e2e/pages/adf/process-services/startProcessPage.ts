@@ -16,7 +16,7 @@
  */
 
 import { Util } from '../../../util/util';
-import { by, element } from 'protractor';
+import { by, element, Key } from 'protractor';
 
 export class StartProcessPage {
 
@@ -66,6 +66,7 @@ export class StartProcessPage {
     }
 
     clearProcessName() {
+        Util.waitUntilElementIsVisible(this.processNameInput);
         this.processNameInput.clear();
     }
 
@@ -149,5 +150,20 @@ export class StartProcessPage {
         const errorElement = element(by.cssContainingText(elementRef, error));
         Util.waitUntilElementIsVisible(errorElement);
         return this;
+    }
+
+    blur(locator) {
+        locator.click();
+        locator.sendKeys(Key.TAB);
+        return this;
+    }
+
+    clearField(locator) {
+        Util.waitUntilElementIsVisible(locator);
+        locator.getAttribute('value').then((result) => {
+            for (let i = result.length; i >= 0; i--) {
+                locator.sendKeys(protractor.Key.BACK_SPACE);
+            }
+        });
     }
 }
