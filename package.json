@@ -174,8 +174,8 @@
     "tslib": "^1.9.0",
     "tslint": "5.9.1",
     "typedoc": "^0.11.1",
-    "unist-util-select": "^2.0.0",
     "typescript": "^3.1.6",
+    "unist-util-select": "^2.0.0",
     "url-join": "^4.0.0",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.0",
@@ -201,11 +201,11 @@
     },
     {
       "path": "./lib/dist/process-services-cloud/bundles/adf-process-services-cloud.umd.min.js",
-      "maxSize": "20 kb"
+      "maxSize": "50 kb"
     },
     {
       "path": "./lib/dist/extensions/bundles/adf-extensions.umd.min.js",
-      "maxSize": "5 kb"
+      "maxSize": "10 kb"
     }
   ],
   "engines": {

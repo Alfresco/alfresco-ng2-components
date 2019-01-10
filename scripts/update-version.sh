@@ -154,24 +154,25 @@ update_total_build_dependency_version(){
 update_total_build_dependency_js_version(){
     echo "====== UPDATE DEPENDENCY VERSION @alfresco/js-api total build to ~${1} in ${DESTDIR}======"
     DESTDIR="$DIR/../"
-    PACKAGETOCHANGE="@alfresco/js-api"
+    PACKAGETOCHANGE="@alfresco\/js-api"
 
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"^.*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
 
-    JSAPINODE="alfresco-js-api-node"
+    # not needed for not
+    #JSAPINODE="alfresco-js-api-node"
 
-    sed "${sedi[@]}" "s/\"${JSAPINODE}\": \".*\"/\"${JSAPINODE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${JSAPINODE}\": \"~.*\"/\"${JSAPINODE}\": \"${1}\"/g"  ${DESTDIR}/package.json
-    sed "${sedi[@]}" "s/\"${JSAPINODE}\": \"^.*\"/\"${JSAPINODE}\": \"${1}\"/g"  ${DESTDIR}/package.json
+    #sed "${sedi[@]}" "s/\"${JSAPINODE}\": \".*\"/\"${JSAPINODE}\": \"${1}\"/g"  ${DESTDIR}/package.json
+    #sed "${sedi[@]}" "s/\"${JSAPINODE}\": \"~.*\"/\"${JSAPINODE}\": \"${1}\"/g"  ${DESTDIR}/package.json
+    #sed "${sedi[@]}" "s/\"${JSAPINODE}\": \"^.*\"/\"${JSAPINODE}\": \"${1}\"/g"  ${DESTDIR}/package.json
 }
 
 update_component_js_version(){
    echo "====== UPDATE DEPENDENCY VERSION of @alfresco/js-api in ${1} to ${2} ======"
    DESTDIR="$DIR/../lib/${1}"
 
-   PACKAGETOCHANGE="@alfresco/js-api"
+   PACKAGETOCHANGE="@alfresco\/js-api"
 
    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
