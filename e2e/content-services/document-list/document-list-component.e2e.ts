@@ -731,7 +731,7 @@ describe('Document List Component', () => {
         });
 
         it('[C291843] Should be able to navigate using nodes hyperlink when activated', () => {
-            contentServicesPage.enableHyperlinkNavigation()
+            contentServicesPage.clickHyperlinkNavigationToggle()
                 .checkFileHyperlinkIsEnabled(file.entry.name)
                 .clickFileHyperlink(file.entry.name);
             viewer.checkFileIsLoaded();
