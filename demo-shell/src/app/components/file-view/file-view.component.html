@@ -190,6 +190,16 @@
 
                 <p class="toggle">
                     <mat-slide-toggle
+                        id="adf-switch-moreactionsmenu"
+                        [color]="'primary'"
+                        (change)="toggleMoreActionsMenu()"
+                        [checked]="moreActionsMenu">
+                        More Actions Menu
+                    </mat-slide-toggle>
+                </p>
+
+                <p class="toggle">
+                    <mat-slide-toggle
                         id="adf-switch-download"
                         [color]="'primary'"
                         (change)="toggleAllowDownload()"
@@ -285,6 +295,21 @@
                 <mat-icon>bug_report</mat-icon>
             </button>
         </adf-viewer-toolbar-actions>
+
+        <adf-viewer-more-actions *ngIf="moreActionsMenu">
+            <button mat-menu-item id="adf-viewer-more-menu-time">
+                <mat-icon>alarm</mat-icon>
+                <span>Alarm</span>
+            </button>
+            <button mat-menu-item id="adf-viewer-more-menu-upload">
+                <mat-icon>backup</mat-icon>
+                <span>Backup</span>
+            </button>
+            <button mat-menu-item id="adf-viewer-more-menu-bug">
+                <mat-icon>bug_report</mat-icon>
+                <span>Bug report</span>
+            </button>
+        </adf-viewer-more-actions>
 
         <ng-container *ngIf="openWith">
             <adf-viewer-open-with>
