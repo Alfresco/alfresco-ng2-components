@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-09-01
 ---
 
-# [App List Cloud Component](../../lib/process-services-cloud/src/lib/process-services-cloud/src/lib/task/start-task/components/people-cloud/people-cloud.component.ts")
+# [People Cloud Component](../../lib/process-services-cloud/src/lib/process-services-cloud/src/lib/task/start-task/components/people-cloud/people-cloud.component.ts")
 
 An autosuggest input control that allows single or multiple users to be selected based on the input parameters.
 

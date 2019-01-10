@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { IdentityUserModel } from '../models/identity-user.model';
 import { JwtHelperService } from '../../services/jwt-helper.service';
@@ -70,6 +70,11 @@ export class IdentityUserService {
         return <T> value;
     }
 
+    /**
+     * Find users based on search input.
+     * @param search search parameter
+     * @returns Array of user info objects
+     */
     findUsersByName(search: string): Observable<any> {
         if (search === '') {
             return of([]);
@@ -85,6 +90,12 @@ export class IdentityUserService {
                 ));
     }
 
+    /**
+     * Get client roles of a user for a particular client.
+     * @param userId Id of the user
+     * @param clientId Id of the client
+     * @returns Array of roles objects
+     */
     getClientRoles(userId: string, clientId: string): Observable<any[]> {
         const url = this.buildUserClientRoleMapping(userId, clientId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
@@ -97,6 +108,12 @@ export class IdentityUserService {
                 );
     }
 
+    /**
+     * Checks whether user has access to a client app.
+     * @param userId Id of the user
+     * @param clientId Id of the client
+     * @returns Boolean
+     */
     checkUserHasClientApp(userId: string, clientId: string): Observable<boolean> {
         return this.getClientRoles(userId, clientId).pipe(
             map((clientRoles: any[]) => {
@@ -108,6 +125,13 @@ export class IdentityUserService {
         );
     }
 
+    /**
+     * Checks whether user has any of client app role.
+     * @param userId Id of the user
+     * @param clientId Id of the client
+     * @param roleNames List of role names
+     * @returns Boolean
+     */
     checkUserHasAnyClientAppRole(userId: string, clientId: string, roleNames: string[]): Observable<boolean> {
         return this.getClientRoles(userId, clientId).pipe(
             map((clientRoles: any[]) => {
@@ -129,6 +153,11 @@ export class IdentityUserService {
         );
     }
 
+    /**
+     * Get client id for an application.
+     * @param applicationName Name of the application
+     * @returns Client id as string
+     */
     getClientIdByApplicationName(applicationName: string): Observable<string> {
         const url = this.buildGetClientsUrl();
         const httpMethod = 'GET', pathParams = {}, queryParams = {clientId: applicationName}, bodyParam = {}, headerParams = {}, formParams = {},
@@ -145,18 +174,31 @@ export class IdentityUserService {
             );
     }
 
+    /**
+     * Checks a user has access to an application
+     * @param userId Id of the user
+     * @param applicationName Name of the application
+     * @returns Boolean
+     */
     checkUserHasApplicationAccess(userId: string, applicationName: string): Observable<boolean> {
         return this.getClientIdByApplicationName(applicationName).pipe(
             switchMap((clientId: string) => {
-                return this.checkUserHasClientRoleMapping(userId, clientId);
+                return this.checkUserHasClientApp(userId, clientId);
             })
         );
     }
 
+    /**
+     * Checks a user has any application role
+     * @param userId Id of the user
+     * @param applicationName Name of the application
+     * @param roleNames List of role names
+     * @returns Boolean
+     */
     checkUserHasAnyApplicationRole(userId: string, applicationName: string, roleNames: string[]): Observable<boolean> {
         return this.getClientIdByApplicationName(applicationName).pipe(
             switchMap((clientId: string) => {
-                return this.checkUserHasAnyClientRole(userId, clientId, roleNames);
+                return this.checkUserHasAnyClientAppRole(userId, clientId, roleNames);
             })
         );
     }
@@ -265,7 +307,7 @@ export class IdentityUserService {
     }
 
     private buildUserClientRoleMapping(userId: string, clientId: string): any {
-        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/alfresco/users/${userId}/role-mappings/clients/${clientId}`;
+        return `${this.appConfigService.get('identityHost')}/users/${userId}/role-mappings/clients/${clientId}`;
     }
 
     private buildRolesUrl(userId: string): any {
@@ -273,7 +315,7 @@ export class IdentityUserService {
     }
 
     private buildGetClientsUrl() {
-        return `${this.appConfigService.get('bpmHost')}/auth/admin/realms/alfresco/clients`;
+        return `${this.appConfigService.get('identityHost')}/clients`;
     }
 
 }
