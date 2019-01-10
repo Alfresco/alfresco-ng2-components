@@ -36,6 +36,7 @@ export class ContentServicesPage {
     currentFolder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
     createFolderButton = element(by.css('button[data-automation-id="create-new-folder"]'));
     activeBreadcrumb = element(by.css('div[class*="active"]'));
+    tooltip = by.css('div[class*="--text adf-full-width"] span');
     uploadFileButton = element(by.css('input[data-automation-id="upload-single-file"]'));
     uploadMultipleFileButton = element(by.css('input[data-automation-id="upload-multiple-files"]'));
     uploadFolderButton = element(by.css('input[data-automation-id="uploadFolder"]'));
@@ -60,6 +61,26 @@ export class ContentServicesPage {
     copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
     searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
+
+    clickFileHyperlink(fileName) {
+        let hyperlink = element(by.cssContainingText('adf-name-column[class*="adf-datatable-link"] span', fileName));
+        Util.waitUntilElementIsClickable(hyperlink);
+        hyperlink.click();
+        return this;
+    }
+
+    checkFileHyperlinkIsEnabled(fileName) {
+        let hyperlink = element(by.cssContainingText('adf-name-column[class*="adf-datatable-link"] span', fileName));
+        Util.waitUntilElementIsVisible(hyperlink);
+        return this;
+    }
+
+    enableHyperlinkNavigation() {
+        let hyperlinkToggle = element(by.cssContainingText('.mat-slide-toggle-content', 'Hyperlink navigation'));
+        Util.waitUntilElementIsVisible(hyperlinkToggle);
+        hyperlinkToggle.click();
+        return this;
+    }
 
     getElementsDisplayedCreated() {
         let deferred = protractor.promise.defer();
@@ -103,7 +124,9 @@ export class ContentServicesPage {
 
     getElementsDisplayedAuthor(alfrescoJsApi) {
         let deferred = protractor.promise.defer();
-        this.nodeActions.getNodesDisplayed(alfrescoJsApi).then((nodes) => {
+        let idList = this.getElementsDisplayedId();
+        let numberOfElements = this.numberOfResultsDisplayed();
+        this.nodeActions.getNodesDisplayed(alfrescoJsApi, idList, numberOfElements).then((nodes) => {
             let initialList = [];
 
             nodes.forEach((item) => {
@@ -226,6 +249,7 @@ export class ContentServicesPage {
     goToDocumentList() {
         this.clickOnContentServices();
         this.checkAcsContainer();
+        return this;
     }
 
     clickOnContentServices() {
@@ -251,6 +275,10 @@ export class ContentServicesPage {
             deferred.fulfill(result);
         });
         return deferred.promise;
+    }
+
+    getTooltip(content) {
+        return this.contentList.getRowByRowName(content).element(this.tooltip).getAttribute('title');
     }
 
     getBreadcrumbTooltip(nodeName: string) {

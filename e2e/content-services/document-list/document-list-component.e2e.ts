@@ -20,6 +20,7 @@ import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import { ViewerPage } from '../../pages/adf/viewerPage';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 import { Util } from '../../util/util';
@@ -703,6 +704,37 @@ describe('Document List Component', () => {
                 await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, folderNode.entry.id);
             }
             done();
+        });
+    });
+
+    describe('Column Template', () => {
+
+        const file0BytesModel = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        });
+
+        let file;
+        let viewer = new ViewerPage();
+
+        beforeAll(async (done) => {
+            acsUser = new AcsUserModel();
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            file = await uploadActions.uploadFile(this.alfrescoJsApi, file0BytesModel.location, file0BytesModel.name, '-my-');
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList()
+                .waitForTableBody();
+            done();
+        });
+
+        it('[C291843] Should be able to navigate using nodes hyperlink when activated', () => {
+            contentServicesPage.enableHyperlinkNavigation()
+                .checkFileHyperlinkIsEnabled(file.entry.name)
+                .clickFileHyperlink(file.entry.name);
+            viewer.checkFileIsLoaded();
         });
     });
 });
