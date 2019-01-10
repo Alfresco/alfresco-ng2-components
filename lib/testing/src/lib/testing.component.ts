@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'lib-testing',
+  selector: 'adf-testing',
   template: `
     <p>
       testing works!

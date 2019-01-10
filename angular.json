@@ -782,7 +782,7 @@
       "root": "lib/testing",
       "sourceRoot": "lib/testing/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "adf",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
