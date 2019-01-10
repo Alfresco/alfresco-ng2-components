@@ -18,6 +18,8 @@ cp -R ./lib/core/i18n/* ./lib/dist/core/bundles/assets/adf-core/i18n
 echo "====== Copy assets ======"
 cp -R ./lib/core/assets/* ./lib/dist/core/bundles/assets
 
+npm run webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail
+
 echo "====== Move to node_modules ======"
 rm -rf ./node_modules/@alfresco/adf-core/ && \
 mkdir -p ./node_modules/@alfresco/adf-core/ && \
