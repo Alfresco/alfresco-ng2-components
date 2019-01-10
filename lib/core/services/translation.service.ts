@@ -74,6 +74,11 @@ export class TranslationService {
         }
     }
 
+    /**
+     * Loads a translation file.
+     * @param lang Language code for the language to load
+     * @param fallback Language code to fall back to if the first one was unavailable
+     */
     loadTranslation(lang: string, fallback?: string) {
         this.translate.getTranslation(lang).subscribe(
             () => {

@@ -39,6 +39,7 @@ export class IconComponent {
         return this._value;
     }
 
+    /** Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. */
     @Input()
     set value(value: string) {
         this._value = value || 'settings';
