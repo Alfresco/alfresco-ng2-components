@@ -148,7 +148,7 @@
         "content-node-share",
         "tree-view",
         "dialog",
-        " column component"
+        "[Cc]olumn"
     ],
     "fileCheckerFilter": [
         "README",
