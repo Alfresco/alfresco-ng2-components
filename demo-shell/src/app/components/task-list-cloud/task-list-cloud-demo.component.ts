@@ -19,6 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
+import { LogService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: './task-list-cloud-demo.component.html',
@@ -63,7 +64,8 @@ export class TaskListCloudDemoComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private formBuilder: FormBuilder) {
+        private formBuilder: FormBuilder,
+        private logService: LogService) {
     }
 
     ngOnInit() {
@@ -153,6 +155,14 @@ export class TaskListCloudDemoComponent implements OnInit {
 
     toggleSelectFirstRow() {
         this.selectFirstRow = !this.selectFirstRow;
+    }
+
+    showSelectedRows(rows: any) {
+
+        const selectedRows = rows.map((row) => {
+            return row.obj.entry;
+        });
+        this.logService.log(selectedRows);
     }
 
     get taskAppName(): AbstractControl {

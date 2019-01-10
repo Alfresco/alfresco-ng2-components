@@ -112,7 +112,8 @@
         [createdDate]="createdDate"
         [selectionMode]="selectionMode"
         [selectFirstRow]="selectFirstRow"
-        [multiselect]="multiSelection">
+        [multiselect]="multiSelection"
+        (rowsSelected)="showSelectedRows($event)">
         <data-columns>
             <data-column key="entry.id" title="Id"></data-column>
             <data-column key="entry.name" title="Name" class="full-width name-column ellipsis-cell"></data-column>
