@@ -23,8 +23,6 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/processCloudDemoPage';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
 import { Util } from '../util/util';
-import { browser } from 'protractor';
-
 describe('Start Process', () => {
 
     const settingsPage = new SettingsPage();
@@ -86,7 +84,6 @@ describe('Start Process', () => {
         processCloudDemoPage.openNewProcessForm();
         startProcessPage.checkNoProcessMessage();
     });
-
 
     it('[C291860] Should be able to start a process', () => {
         appListCloudComponent.checkAppIsDisplayed(appName);
