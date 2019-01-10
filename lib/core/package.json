@@ -27,7 +27,7 @@
     "@angular/router": ">=7.0.3",
     "@mat-datetimepicker/core": ">=2.0.1",
     "@mat-datetimepicker/moment": ">=2.0.1",
-    "alfresco-js-api": ">=2.7.0-beta5",
+    "@alfresco/js-api": "3.0.0-delta18",
     "rxjs": ">=6.2.2",
     "@ngx-translate/core": ">=11.0.0",
     "core-js": ">=2.5.4",

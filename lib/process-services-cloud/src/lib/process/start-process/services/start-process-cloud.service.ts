@@ -40,8 +40,8 @@ export class StartProcessCloudService {
     }
 
     /**
-     * Gets process definitions associated with an app.
-     * @param appId ID of a target app
+     * Gets the process definitions associated with an app.
+     * @param appName Name of the target app
      * @returns Array of process definitions
      */
     getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
@@ -70,11 +70,7 @@ export class StartProcessCloudService {
     /**
      * Starts a process based on a process definition, name, form values or variables.
      * @param appName name of the Application
-     * @param processDefinitionId Process definition ID
-     * @param name Process name
-     * @param outcome Process outcome
-     * @param startFormValues Values for the start form
-     * @param variables Array of process instance variables
+     * @param requestPayload Details of the process (definition key, name, variables, etc)
      * @returns Details of the process instance just started
      */
     startProcess(appName: string, requestPayload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {

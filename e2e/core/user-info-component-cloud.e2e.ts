@@ -30,14 +30,13 @@ describe('User Info - SSO', () => {
     const navigationBarPage = new NavigationBarPage();
     const userInfoDialog = new UserInfoDialog();
     const identityService: Identity = new Identity();
-    const path = '/auth/realms/springboot';
     let silentLogin, identityUser;
 
     beforeAll(async () => {
         await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         identityUser = await identityService.createIdentityUser();
         silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, silentLogin);
         loginSSOPage.clickOnSSOButton();
         browser.ignoreSynchronization = true;
         loginSSOPage.loginAPS(identityUser['0'].username, identityUser['0'].password);

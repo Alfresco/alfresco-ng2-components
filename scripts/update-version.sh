@@ -51,7 +51,7 @@ last_alpha_mode() {
     echo "====== version lib ${VERSION} ====="
 
     DIFFERENT_JS_API=true
-    VERSION_JS_API=$(npm view alfresco-js-api@alpha version)
+    VERSION_JS_API=$(npm view @alfresco/js-api@alpha version)
 
     echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
@@ -63,7 +63,7 @@ next_alpha_mode() {
     echo "====== version lib ${VERSION} ====="
 
     DIFFERENT_JS_API=true
-    VERSION_JS_API=$(npm view alfresco-js-api@alpha version)
+    VERSION_JS_API=$(npm view @alfresco/js-api@alpha version)
 
     echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
@@ -75,7 +75,7 @@ next_beta_mode() {
     echo "====== version lib ${VERSION} ====="
 
     DIFFERENT_JS_API=true
-    VERSION_JS_API=$(npm view alfresco-js-api@beta version)
+    VERSION_JS_API=$(npm view @alfresco/js-api@beta version)
 
     echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
@@ -87,7 +87,7 @@ last_beta_mode() {
     echo "====== version lib ${VERSION} ====="
 
     DIFFERENT_JS_API=true
-    VERSION_JS_API=$(npm view alfresco-js-api@beta version)
+    VERSION_JS_API=$(npm view @alfresco/js-api@beta version)
 
     echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
@@ -152,9 +152,9 @@ update_total_build_dependency_version(){
 }
 
 update_total_build_dependency_js_version(){
-    echo "====== UPDATE DEPENDENCY VERSION alfresco-js-api total build to ~${1} in ${DESTDIR}======"
+    echo "====== UPDATE DEPENDENCY VERSION @alfresco/js-api total build to ~${1} in ${DESTDIR}======"
     DESTDIR="$DIR/../"
-    PACKAGETOCHANGE="alfresco-js-api"
+    PACKAGETOCHANGE="@alfresco/js-api"
 
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
     sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"${1}\"/g"  ${DESTDIR}/package.json
@@ -168,10 +168,10 @@ update_total_build_dependency_js_version(){
 }
 
 update_component_js_version(){
-   echo "====== UPDATE DEPENDENCY VERSION of alfresco-js-api in ${1} to ${2} ======"
+   echo "====== UPDATE DEPENDENCY VERSION of @alfresco/js-api in ${1} to ${2} ======"
    DESTDIR="$DIR/../lib/${1}"
 
-   PACKAGETOCHANGE="alfresco-js-api"
+   PACKAGETOCHANGE="@alfresco/js-api"
 
    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \".*\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
    sed "${sedi[@]}" "s/\"${PACKAGETOCHANGE}\": \"~.*\"/\"${PACKAGETOCHANGE}\": \"${2}\"/g"  ${DESTDIR}/package.json
