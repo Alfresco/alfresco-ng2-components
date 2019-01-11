@@ -69,11 +69,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     @Input()
     rowFilter: RowFilter = null;
 
-    /** Custom list of restricted site content.
-     * Used to filter out such items from the displayed nodes
+    /** Custom list of site content componentIds.
+     * Used to filter out the corresponding items from the displayed nodes
      */
     @Input()
-    restrictedSiteContent: string[] = [];
+    excludeSiteContent: string[] = [];
 
     /** Custom image resolver function. See the
      * [Document List component](document-list.component.md#custom-row-filter)
@@ -166,7 +166,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
-        this.restrictedSiteContent = this.restrictedSiteContent ? this.restrictedSiteContent : [];
+        this.excludeSiteContent = this.excludeSiteContent ? this.excludeSiteContent : [];
         this.rowFilter = this.getRowFilter(this.rowFilter);
     }
 
@@ -176,20 +176,20 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
         }
         return (value: ShareDataRow, index: number, array: ShareDataRow[]) => {
             return initialFilterFunction(value, index, array) &&
-                !this.isRestrictedSiteContent(value);
+                !this.isExcludedSiteContent(value);
         };
     }
 
-    private isRestrictedSiteContent(row: ShareDataRow) {
+    private isExcludedSiteContent(row: ShareDataRow) {
         const entry = row.node.entry;
-        if (this.restrictedSiteContent.length &&
+        if (this.excludeSiteContent.length &&
             entry &&
             entry.properties &&
             entry.properties['st:componentId']) {
-            const restrictedItem = this.restrictedSiteContent.find(
-                (restrictedId: string) => entry.properties['st:componentId'] === restrictedId
+            const excludedItem = this.excludeSiteContent.find(
+                (id: string) => entry.properties['st:componentId'] === id
             );
-            return !!restrictedItem;
+            return !!excludedItem;
         }
         return false;
     }

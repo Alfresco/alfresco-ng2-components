@@ -41,7 +41,7 @@ export class ContentNodeSelectorComponent {
     actualPageSize = 2;
 
     rowFilterFunction: any = null;
-    restrictedSiteContentList: string[] = ContentNodeDialogService.copyMoveRestrictedSiteContent;
+    excludeSiteContentList: string[] = ContentNodeDialogService.nonDocumentSiteContent;
     customImageResolver: any = null;
 
     defaultSites: SiteEntry[] = [

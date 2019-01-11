@@ -108,8 +108,8 @@ describe('ContentNodeSelectorComponent', () => {
                 component.chosenNode = expectedNode;
             });
 
-            it('should be able to filter out the restricted site content', () => {
-                component.restrictedSiteContent = ['blog'];
+            it('should be able to filter out the exclude site content', () => {
+                component.excludeSiteContent = ['blog'];
                 fixture.detectChanges();
 
                 const testSiteContent = new Node({id: 'blog-id', properties: { 'st:componentId': 'blog' }});

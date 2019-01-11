@@ -32,7 +32,7 @@ import { switchMap } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ContentNodeDialogService {
-    static copyMoveRestrictedSiteContent = [
+    static nonDocumentSiteContent = [
         'blog',
         'calendar',
         'dataLists',
@@ -125,10 +125,10 @@ export class ContentNodeDialogService {
      * @param action Name of the action (eg, "Copy" or "Move") to show in the title
      * @param contentEntry Item to be copied or moved
      * @param permission Permission for the operation
-     * @param restrictedSiteContent The site content that should be filtered out
+     * @param excludeSiteContent The site content that should be filtered out
      * @returns Information about files that were copied/moved
      */
-    openCopyMoveDialog(action: string, contentEntry: Node, permission?: string, restrictedSiteContent?: string[]): Observable<Node[]> {
+    openCopyMoveDialog(action: string, contentEntry: Node, permission?: string, excludeSiteContent?: string[]): Observable<Node[]> {
         if (this.contentService.hasPermission(contentEntry, permission)) {
 
             const select = new Subject<Node[]>();
@@ -145,7 +145,7 @@ export class ContentNodeDialogService {
                 imageResolver: this.imageResolver.bind(this),
                 rowFilter: this.rowFilter.bind(this, contentEntry.id),
                 isSelectionValid: this.isCopyMoveSelectionValid.bind(this),
-                restrictedSiteContent: restrictedSiteContent || ContentNodeDialogService.copyMoveRestrictedSiteContent,
+                excludeSiteContent: excludeSiteContent || ContentNodeDialogService.nonDocumentSiteContent,
                 select: select
             };
 
