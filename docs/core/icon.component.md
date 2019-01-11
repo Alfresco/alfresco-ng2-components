@@ -1,13 +1,13 @@
-# [Icon Component](../../lib/core/icon/icon.component.ts "Defined in icon.component.ts")
+---
+Title: Icon Component
+Added: v3.0.0
+Status: Active
+Last reviewed: 2019-01-10
+---
 
-Provides universal way of rendering registered and named icons.
+# [Icon Component](../../core/icon/icon.component.ts "Defined in icon.component.ts")
 
-## Contents
-
--   [Basic usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
--   [Named icons](#named-icons)
+Provides a universal way of rendering registered and named icons.
 
 ## Basic usage
 
@@ -28,14 +28,14 @@ Provides universal way of rendering registered and named icons.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| value | `string` |  | Icon value, can be either ligature name or custom icon in the format `[namespace]:[name]` |
+| value | `string` |  | Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. |
 
-## Named icons
+## Details
 
 You can register custom SVG files as named icons in the format `[namespace]:[name]`.
 
-Example below shows how to register a new icon named `adf:move_file`
-that points to an external file within the `assets` folder.
+The example below shows how to register a new icon named `adf:move_file`
+that points to an external file within the `assets` folder:
 
 ```ts
 import { Component, OnInit } from '@angular/core';
@@ -62,16 +62,20 @@ export class AppComponent implements OnInit {
 }
 ```
 
-In the HTML you can now use it like in the following snippet:
+In the HTML, you can now use the icon as shown below:
 
 ```html
 <adf-icon value="adf:move_file"></adf-icon>
 ```
 
-## Thumbnail Service
+### Thumbnail Service
 
-You can also use icons registered with the ADF [ThumbnailService](thumbnail.service.md)
+You can also use icons registered with the [Thumbnail Service](thumbnail.service.md):
 
 ```html
 <adf-icon value="image/gif"></adf-icon>
 ```
+
+## See also
+
+-   [Thumbnail service](../core/thumbnail.service.md)

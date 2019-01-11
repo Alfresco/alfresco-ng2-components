@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# [Start Task Component](../../lib/process-services/task-list/components/start-task.component.ts "Defined in start-task.component.ts")
+# [Start Task Component](../../process-services/task-list/components/start-task.component.ts "Defined in start-task.component.ts")
 
 Creates/Starts a new task for the specified app
 
@@ -27,7 +27,7 @@ Creates/Starts a new task for the specified app
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | (required) The id of the app. |
-| name | `string` |  | Default Task Name |
+| name | `string` | "" | Default Task Name. |
 
 ### Events
 
