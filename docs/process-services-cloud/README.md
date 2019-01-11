@@ -3,7 +3,7 @@ Title: Process Services Cloud API
 Github only: true
 ---
 
-# Process Services Cloud API
+# Alfresco Process Services (APS) and Activiti 7 - Cloud API
 
 Contains components related to Process Services Cloud.
 See the library's
