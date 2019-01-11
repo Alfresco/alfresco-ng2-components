@@ -29,7 +29,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { NodePaging, QueryBody } from '@alfresco/js-api';
+import { NodePaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -63,10 +63,6 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     /** Number of results to skip from the results pagination. */
     @Input()
     skipResults: number = 0;
-
-    /** @deprecated in 2.1.0 */
-    @Input()
-    queryBody: QueryBody;
 
     /** Search term to use when executing the search. Updating this value will
      * run a new search and update the results.
@@ -129,10 +125,6 @@ export class SearchComponent implements AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes) {
-        if (changes.queryBody &&
-            this.hasDifferentQueryBody(changes.queryBody.previousValue, changes.queryBody.currentValue)) {
-            this.loadSearchResults();
-        }
         if (changes.searchTerm && changes.searchTerm.currentValue) {
             this.loadSearchResults(changes.searchTerm.currentValue);
         }
@@ -145,10 +137,6 @@ export class SearchComponent implements AfterContentInit, OnChanges {
 
     reload() {
         this.loadSearchResults(this.searchTerm);
-    }
-
-    private hasDifferentQueryBody(previousQueryBody: QueryBody, currentQueryBody: QueryBody) {
-        return JSON.stringify(previousQueryBody) !== JSON.stringify(currentQueryBody);
     }
 
     private cleanResults() {

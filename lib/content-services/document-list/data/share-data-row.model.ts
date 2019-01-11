@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DataRow, ObjectUtils, ThumbnailService } from '@alfresco/adf-core';
+import { DataRow, ObjectUtils, ThumbnailService, ContentService } from '@alfresco/adf-core';
 import { MinimalNode, NodeEntry } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
@@ -35,6 +35,7 @@ export class ShareDataRow implements DataRow {
 
     constructor(private obj: NodeEntry,
                 private documentListService: DocumentListService,
+                private contentService: ContentService,
                 private permissionsStyle: PermissionStyleModel[],
                 private thumbnailService?: ThumbnailService) {
         if (!obj) {
@@ -55,7 +56,7 @@ export class ShareDataRow implements DataRow {
 
             if (this.applyPermissionStyleToFolder(nodeEntity.entry, currentPermissionsStyle) || this.applyPermissionStyleToFile(nodeEntity.entry, currentPermissionsStyle)) {
 
-                if (this.documentListService.hasPermission(nodeEntity.entry, currentPermissionsStyle.permission)) {
+                if (this.contentService.hasPermission(nodeEntity.entry, currentPermissionsStyle.permission)) {
                     permissionsClasses += ` ${currentPermissionsStyle.css}`;
                 }
             }
@@ -74,7 +75,7 @@ export class ShareDataRow implements DataRow {
     }
 
     isFolderAndHasPermissionToUpload(nodeEntry: NodeEntry): boolean {
-        return this.isFolder(nodeEntry) && this.documentListService.hasPermission(nodeEntry.entry, 'create');
+        return this.isFolder(nodeEntry) && this.contentService.hasPermission(nodeEntry.entry, 'create');
     }
 
     isFolder(nodeEntry: NodeEntry): boolean {

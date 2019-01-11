@@ -247,7 +247,7 @@ export class AuthenticationService {
      * @returns The redirect URL
      */
     getRedirect(): string {
-        let provider = this.appConfig.get(AppConfigValues.PROVIDERS);
+        let provider = <string> this.appConfig.get(AppConfigValues.PROVIDERS);
         return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
     }
 

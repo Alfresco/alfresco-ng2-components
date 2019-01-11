@@ -20,9 +20,8 @@
 import { Directive, HostListener, Input } from '@angular/core';
 import { ContextMenuOverlayService } from './context-menu-overlay.service';
 
-// @deprecated 2.3.0 context-menu tag removed
 @Directive({
-    selector: '[adf-context-menu], [context-menu]'
+    selector: '[context-menu]'
 })
 export class ContextMenuDirective {
     /** Items for the menu. */

@@ -173,19 +173,6 @@ export class FormService {
     }
 
     /**
-     * Add Fields to a form
-     * @deprecated in 1.7.0, use saveForm API instead
-     * @param formId ID of the form
-     * @param formModel Form definition
-     */
-    addFieldsToAForm(formId: number, formModel: FormDefinitionModel): Observable<any> {
-        this.logService.log('addFieldsToAForm is deprecated in 1.7.0, use saveForm API instead');
-        return from(
-            this.editorApi.saveForm(formId, formModel)
-        );
-    }
-
-    /**
      * Searches for a form by name.
      * @param name The form name to search for
      * @returns Form model(s) matching the search name

@@ -57,7 +57,6 @@ export class WidgetComponent implements AfterViewInit {
 
     /**
      * Emitted when a field value changes.
-     * @deprecated Used only to trigger visibility engine; components should do that internally if needed.
      */
     @Output()
     fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
@@ -96,12 +95,10 @@ export class WidgetComponent implements AfterViewInit {
         this.fieldChanged.emit(this.field);
     }
 
-    /** @deprecated used only to trigger visibility engine, components should do that internally if needed */
     checkVisibility(field: FormFieldModel) {
         this.fieldChanged.emit(field);
     }
 
-    /** @deprecated used only to trigger visibility engine, components should do that internally if needed */
     onFieldChanged(field: FormFieldModel) {
         this.fieldChanged.emit(field);
     }

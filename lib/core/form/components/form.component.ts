@@ -457,7 +457,7 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     handleError(err: any): any {
-        this.onError.emit(err);
+        this.error.emit(err);
     }
 
     parseForm(json: any): FormModel {

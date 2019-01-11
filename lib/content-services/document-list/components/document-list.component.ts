@@ -218,6 +218,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     data: ShareDataTableAdapter;
     noPermission: boolean = false;
     selection = new Array<NodeEntry>();
+    folderNode: Node = null;
 
     private _pagination: BehaviorSubject<PaginationModel>;
     private layoutPresets = {};
@@ -522,6 +523,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     updateCustomSourceData(nodeId: string): void {
+        this.folderNode = null;
         this.currentFolderId = nodeId;
     }
 
@@ -585,6 +587,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.documentListService
                 .getFolderNode(nodeId, this.includeFields)
                 .subscribe((node: NodeEntry) => {
+                    this.folderNode = node.entry;
                     return this.loadFolderNodesByFolderNodeId(node.entry.id, this.pagination.getValue())
                         .catch((err) => this.handleError(err));
                 }, (err) => {
@@ -800,6 +803,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private resetNewFolderPagination() {
+        this.folderNode = null;
         this.pagination.value.skipCount = 0;
     }
 

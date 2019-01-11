@@ -56,13 +56,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     processDefinitionId: string;
 
-    /**
-     * The Definition Key of the process.
-     * @deprecated 2.4.0
-     */
-    @Input()
-    processDefinitionKey: string;
-
     /** Current state of the process. Possible values are: `completed`, `active`. */
     @Input()
     state: string;
@@ -373,7 +366,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
             dueBefore: this.dueBefore ? moment(this.dueBefore).toDate() : null,
             processInstanceId: this.processInstanceId,
             processDefinitionId: this.processDefinitionId,
-            processDefinitionKey: this.processDefinitionKey,
             text: this.name,
             assignment: this.assignment,
             state: this.state,

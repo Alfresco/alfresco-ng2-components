@@ -72,10 +72,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     @Input()
     liveSearchMaxResults: number = 5;
 
-    /** @deprecated in 2.1.0 */
-    @Input()
-    customQueryBody: QueryBody;
-
     /** Emitted when the search is submitted by pressing the ENTER key.
      * The search term is provided as the value of the event.
      */
