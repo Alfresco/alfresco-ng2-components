@@ -22,7 +22,10 @@ export class EditTaskFilterCloudComponent {
 
     customiseFilter = element(by.id('adf-edit-task-filter-title-id'));
     selectedOption = element(by.css('mat-option[class*="mat-selected"]'));
-    assignment = element(by.css('mat-form-field[data-automation-id="assignment"] input'));
+    assignment = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignment"]'));
+    statusBy = by.css('mat-select[data-automation-id="adf-cloud-edit-task-property-state"]');
+    sortBy = by.css('mat-select[data-automation-id="adf-cloud-edit-task-property-sort"]');
+    orderBy = by.css('mat-select[data-automation-id="adf-cloud-edit-task-property-order"]');
 
     clickCustomiseFilterHeader() {
         Util.waitUntilElementIsVisible(this.customiseFilter);
@@ -31,7 +34,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setStateFilterDropDown(option) {
-        this.clickOnDropDownArrow('status');
+        this.clickOnDropDownArrow(this.statusBy);
 
         let stateElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(stateElement);
@@ -41,7 +44,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setSortFilterDropDown(option) {
-        this.clickOnDropDownArrow('sort');
+        this.clickOnDropDownArrow(this.sortBy);
 
         let sortElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(sortElement);
@@ -51,7 +54,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setOrderFilterDropDown(option) {
-        this.clickOnDropDownArrow('order');
+        this.clickOnDropDownArrow(this.orderBy);
 
         let orderElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(orderElement);
@@ -61,7 +64,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     clickOnDropDownArrow(option) {
-        let dropDownArrow = element(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']"));
+        let dropDownArrow = element(option);
         Util.waitUntilElementIsVisible(dropDownArrow);
         dropDownArrow.click();
         Util.waitUntilElementIsVisible(this.selectedOption);

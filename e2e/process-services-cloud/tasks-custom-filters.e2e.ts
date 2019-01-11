@@ -23,7 +23,7 @@ import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import TasksListPage = require('../pages/adf/process_services/tasksListPage');
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/tasksCloudDemoPage';
-import { AppListCloudComponent } from '../pages/adf/process_cloud/appListCloudComponent';
+import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { Tasks } from '../actions/APS-cloud/tasks';
@@ -84,6 +84,7 @@ describe('Task filters cloud', () => {
             cancelledTasks = await queryService.getProcessInstanceTasks(secondProcessInstance.entry.id, simpleApp);
             await processInstancesService.suspendProcessInstance(processInstance.entry.id, simpleApp);
             await processInstancesService.deleteProcessInstance(secondProcessInstance.entry.id, simpleApp);
+            await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
         });
 
         beforeEach(async (done) => {
@@ -93,7 +94,7 @@ describe('Task filters cloud', () => {
             done();
         });
 
-        it('[C290045] Should display only tasks with Assigned state when Assigned is selected from state dropdown', async() => {
+        it('[C290045] Should display only tasks with Assigned state when Assigned is selected from state dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('ASSIGNED');
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(assignedTaskName);
@@ -102,7 +103,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
         });
 
-        it('[C290061] Should display only tasks with Completed state when Completed is selected from state dropdown', async() => {
+        it('[C290061] Should display only tasks with Completed state when Completed is selected from state dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('COMPLETED');
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTaskName);
@@ -111,8 +112,9 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
         });
 
-        it('[C290139] Should display only tasks with all states when All is selected from state dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment(' ').setStateFilterDropDown('ALL');
+        it('[C290139] Should display only tasks with all states when All is selected from state dropdown', () => {
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment(' ')
+                .setStateFilterDropDown('ALL');
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(deletedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(assignedTaskName);
@@ -120,31 +122,12 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTaskName);
         });
 
-        it('[C290154] Should display only tasks with suspended states when Suspended is selected from state dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment(' ').setStateFilterDropDown('SUSPENDED');
-
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(suspendedTasks.list.entries[0].entry.id);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
-        });
-
-        it('[C290155] Should display only tasks with cancelled states when CANCELLED is selected from state dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment(' ').setStateFilterDropDown('CANCELLED');
-
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(cancelledTasks.list.entries[0].entry.id);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
-        });
-
-        it('[C290069] Should display tasks ordered by name when Name is selected from sort dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('CREATED')
+        it('[C290069] Should display tasks ordered by name when Name is selected from sort dropdown', () => {
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('ASSIGNED')
                 .setSortFilterDropDown('NAME').setOrderFilterDropDown('ASC');
-
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then(function (list) {
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then( (list) => {
 
                 let initialList = list.slice(0);
                 list.sort();
@@ -152,7 +135,9 @@ describe('Task filters cloud', () => {
             });
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then(function (list) {
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then( (list) => {
                 let initialList = list.slice(0);
                 list.sort();
                 list.reverse();
@@ -160,11 +145,13 @@ describe('Task filters cloud', () => {
             });
         });
 
-        it('[C290156] Should display tasks ordered by id when Id is selected from sort dropdown', async() => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('CREATED')
+        it('[C290156] Should display tasks ordered by id when Id is selected from sort dropdown', () => {
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('ASSIGNED')
                 .setSortFilterDropDown('ID').setOrderFilterDropDown('ASC');
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
 
-            tasksCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
+            tasksCloudDemoPage.getAllRowsByIdColumn().then( (list) => {
                 let initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);
@@ -173,7 +160,9 @@ describe('Task filters cloud', () => {
             });
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            tasksCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.getAllRowsByIdColumn().then( (list) => {
                 let initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);

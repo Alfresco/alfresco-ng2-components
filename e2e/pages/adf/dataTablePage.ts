@@ -53,7 +53,7 @@ export class DataTablePage {
     }
 
     async getAllRowsColumnValues(locator) {
-        let columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='" + column + "'] span");
+        let columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='" + locator + "'] span");
         Util.waitUntilElementIsVisible(element.all(columnLocator).first());
         let initialList = await element.all(columnLocator).getText();
         return initialList.filter((el) => el);
@@ -239,6 +239,10 @@ export class DataTablePage {
 
     checkSpinnerIsDisplayed() {
         Util.waitUntilElementIsPresent(this.spinner);
+    }
+
+    checkSpinnerIsNotDisplayed() {
+        Util.waitUntilElementIsNotOnPage(this.spinner);
     }
 
     checkRowIsDisplayedByName(filename) {
