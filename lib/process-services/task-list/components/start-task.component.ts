@@ -42,18 +42,23 @@ export class StartTaskComponent implements OnInit {
     public FORMAT_DATE: string = 'DD/MM/YYYY';
     MAX_LENGTH: number = 255;
 
+    /** (required) The id of the app. */
     @Input()
     appId: number;
 
+    /** Default Task Name. */
     @Input()
     name: string = '';
 
+    /** Emitted when the task is successfully created. */
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when the cancel button is clicked by the user. */
     @Output()
     cancel: EventEmitter<void> = new EventEmitter<void>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 

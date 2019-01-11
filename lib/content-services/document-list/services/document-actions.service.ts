@@ -74,7 +74,7 @@ export class DocumentActionsService {
 
     /**
      * Checks if actions can be executed for an item.
-     * @param obj Item to receive an action
+     * @param nodeEntry Item to receive an action
      * @returns True if the action can be executed on this item, false otherwise
      */
     canExecuteAction(nodeEntry: NodeEntry): boolean {

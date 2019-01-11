@@ -147,7 +147,8 @@
         "external-alfresco",
         "content-node-share",
         "tree-view",
-        "dialog"
+        "dialog",
+        "[Cc]olumn"
     ],
     "fileCheckerFilter": [
         "README",

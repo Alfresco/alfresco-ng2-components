@@ -71,6 +71,9 @@ export class SearchQueryBuilderService {
         this.resetToDefaults();
     }
 
+    /**
+     * Resets the query to the defaults specified in the app config.
+     */
     resetToDefaults() {
         const template = this.appConfig.get<SearchConfiguration>('search');
         if (template) {
@@ -85,6 +88,10 @@ export class SearchQueryBuilderService {
         }
     }
 
+    /**
+     * Adds a facet query.
+     * @param query Query to add
+     */
     addUserFacetQuery(query: FacetQuery) {
         if (query) {
             const existing = this.userFacetQueries.find((facetQuery) => facetQuery.label === query.label);
@@ -96,6 +103,10 @@ export class SearchQueryBuilderService {
         }
     }
 
+    /**
+     * Removes an existing facet query.
+     * @param query Query to remove
+     */
     removeUserFacetQuery(query: FacetQuery) {
         if (query) {
             this.userFacetQueries = this.userFacetQueries
@@ -103,6 +114,11 @@ export class SearchQueryBuilderService {
         }
     }
 
+    /**
+     * Adds a facet bucket to a field.
+     * @param field The target field
+     * @param bucket Bucket to add
+     */
     addUserFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
         if (field && field.field && bucket) {
             const buckets = this.userFacetBuckets[field.field] || [];
@@ -114,10 +130,20 @@ export class SearchQueryBuilderService {
         }
     }
 
+    /**
+     * Gets the buckets currently added to a field
+     * @param field The target fields
+     * @returns Bucket array
+     */
     getUserFacetBuckets(field: string) {
         return this.userFacetBuckets[field] || [];
     }
 
+    /**
+     * Removes an existing bucket from a field.
+     * @param field The target field
+     * @param bucket Bucket to remove
+     */
     removeUserFacetBucket(field: FacetField, bucket: FacetFieldBucket) {
         if (field && field.field && bucket) {
             const buckets = this.userFacetBuckets[field.field] || [];
@@ -126,6 +152,10 @@ export class SearchQueryBuilderService {
         }
     }
 
+    /**
+     * Adds a filter query to the current query.
+     * @param query Query string to add
+     */
     addFilterQuery(query: string): void {
         if (query) {
             const existing = this.filterQueries.find((filterQuery) => filterQuery.query === query);
@@ -135,6 +165,10 @@ export class SearchQueryBuilderService {
         }
     }
 
+    /**
+     * Removes an existing filter query.
+     * @param query The query to remove
+     */
     removeFilterQuery(query: string): void {
         if (query) {
             this.filterQueries = this.filterQueries
@@ -142,6 +176,11 @@ export class SearchQueryBuilderService {
         }
     }
 
+    /**
+     * Gets a facet query by label.
+     * @param label Label of the query
+     * @returns Facet query data
+     */
     getFacetQuery(label: string): FacetQuery {
         if (label && this.hasFacetQueries) {
             const result = this.config.facetQueries.queries.find((query) => query.label === label);
@@ -152,6 +191,11 @@ export class SearchQueryBuilderService {
         return null;
     }
 
+    /**
+     * Gets a facet field by label.
+     * @param label Label of the facet field
+     * @returns Facet field data
+     */
     getFacetField(label: string): FacetField {
         if (label) {
             const fields = this.config.facetFields.fields || [];
@@ -163,11 +207,18 @@ export class SearchQueryBuilderService {
         return null;
     }
 
+    /**
+     * Builds the current query and triggers the `updated` event.
+     */
     update(): void {
         const query = this.buildQuery();
         this.updated.next(query);
     }
 
+    /**
+     * Builds and executes the current query.
+     * @returns Nothing
+     */
     async execute() {
         const query = this.buildQuery();
         if (query) {
@@ -176,6 +227,10 @@ export class SearchQueryBuilderService {
         }
     }
 
+    /**
+     * Builds the current query.
+     * @returns The finished query
+     */
     buildQuery(): QueryBody {
         let query = this.getFinalQuery();
 
@@ -206,7 +261,8 @@ export class SearchQueryBuilderService {
     }
 
     /**
-     * Returns primary sorting definition.
+     * Gets the primary sorting definition.
+     * @returns The primary sorting definition
      */
     getPrimarySorting(): SearchSortingDefinition {
         if (this.sorting && this.sorting.length > 0) {
@@ -216,7 +272,8 @@ export class SearchQueryBuilderService {
     }
 
     /**
-     * Returns all pre-configured sorting options that users can choose from.
+     * Gets all pre-configured sorting options that users can choose from.
+     * @returns Pre-configured sorting options
      */
     getSortingOptions(): SearchSortingDefinition[] {
         if (this.config && this.config.sorting) {
@@ -226,7 +283,8 @@ export class SearchQueryBuilderService {
     }
 
     /**
-     * Check if FacetQueries has been defined
+     * Checks if FacetQueries has been defined
+     * @returns True if defined, false otherwise
      */
     get hasFacetQueries(): boolean {
         if (this.config
