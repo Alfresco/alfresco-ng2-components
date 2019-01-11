@@ -1,12 +1,12 @@
 <mat-accordion>
-  <mat-expansion-panel [expanded]="true" (opened)="panelOpenStateTask = true" (closed)="panelOpenStateTask = false" data-automation-id='Task Filters'>
+  <mat-expansion-panel [expanded]="expandTaskFilter" (opened)="onTaskFilterOpen()" (closed)="onTaskFilterClose()" data-automation-id='Task Filters'>
     <mat-expansion-panel-header>
       <mat-panel-title>
         Task Filters
       </mat-panel-title>
     </mat-expansion-panel-header>
     <adf-cloud-task-filters
-        *ngIf="panelOpenStateTask"
+        *ngIf="expandTaskFilter"
         [appName]="appName"
         [showIcons]="true"
         [filterParam]="currentTaskFilter$ | async"
@@ -14,14 +14,14 @@
       </adf-cloud-task-filters>
   </mat-expansion-panel>
 
-  <mat-expansion-panel (opened)="panelOpenStateProcess = true" (closed)="panelOpenStateProcess = false" data-automation-id='Process Filters'>
+  <mat-expansion-panel [expanded]="expandProcessFilter" (opened)="onProcessFilterOpen()" (closed)="onProcessFilterClose()" data-automation-id='Process Filters'>
     <mat-expansion-panel-header>
       <mat-panel-title>
           Process Filters
       </mat-panel-title>
     </mat-expansion-panel-header>
     <adf-cloud-process-filters
-        *ngIf="panelOpenStateProcess"
+        *ngIf="expandProcessFilter"
         [appName]="appName"
         [showIcons]="true"
         [filterParam]="currentProcessFilter$ | async"
