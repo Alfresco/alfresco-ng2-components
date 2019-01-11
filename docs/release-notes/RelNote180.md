@@ -4,10 +4,10 @@ Title: Release notes v1.8.0
 
 # Alfresco Application Development Framework, version 1.8.0 Release Note
 
-These release notes provide information for the **1.8.0 release** of Alfresco Application Development Framework.
+These release notes provide information for the **1.8.0 release** of Alfresco Application Development Framework.
 
-This is the next **Limited Available** release of Application Development Framework, containing the Angular components to build a Web Application on top of the Alfresco Services.
-The release can be found on GitHub at [this link.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
+This is the next **Limited Available** release of Application Development Framework, containing the Angular components to build a Web Application on top of the Alfresco Services.
+The release can be found on GitHub at [this link.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
 
 ## Contents
 
@@ -15,11 +15,11 @@ The release can be found on GitHub at [this link.](https://github.com/Alfresc
 -   [Notable new features](#notable-new-features)
     -   [1. Theming ADF component](#1-theming-adf-component)
     -   [2. Info Drawer component](#2-info-drawer-component)
-    -   [3. Form style component enhancements]\(#3-form-style-component enhancements)
+    -   [3. Form style component enhancements](#3-form-style-component-enhancements)
     -   [4. Empty form template](#4-empty-form-template)
     -   [5. Form Validation Enhancements](#5-form-validation-enhancements)
     -   [6. FormFieldModel/FormModel improvements](#6-formfieldmodelformmodel-improvements)
-    -   [7. DataTable Accessibility Improvements]\(#7-datatable accessibility-improvements)
+    -   [7. DataTable Accessibility Improvements](#7-datatable-accessibility-improvements)
     -   [8. Copy and move component enhancements](#8-copy-and-move-component-enhancements)
     -   [9. Download as a ZIP functionality](#9-download-as-a-zip-functionality)
     -   [10. Tooltips for DataTable/DocumentList cells](#10-tooltips-for-datatabledocumentlist-cells)
@@ -44,7 +44,7 @@ We continue the effort to migrate to @angular/material, it will be a few more re
 
 This release builds on last month's contains bug fixes and new feature. See the list below for major details.
 
-Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues). You can collaborate on this release or share feedback by using the discussion tools on [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
+Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues). You can collaborate on this release or share feedback by using the discussion tools on [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
 
 ## Notable new features
 
@@ -52,12 +52,12 @@ Below the most relevant features of this release:
 
 -   Theming ADF component
 -   [Info Drawer component](../core/info-drawer.component.md)
--   [`Form`](../../lib/process-services/task-list/models/form.model.ts) style component enhancements
+-   [`Form`](../../lib/process-services/task-list/models/form.model.ts) style component enhancements
 -   Empty form template
 -   Additional data sources input for Document List
 -   [`Form`](../../lib/process-services/task-list/models/form.model.ts) validation enhancements
 -   FormFieldModel/FormModelimprovements
--   DataTable\*\* \*\*Accessibility Improvements
+-   DataTable\*\* \*\*Accessibility Improvements
 -   Copy and move component enhancements
 -   Download as a ZIP functionality
 -   Tooltips for DataTable/DocumentList cells
@@ -72,7 +72,7 @@ Below the most relevant features of this release:
 ### 1. Theming ADF component
 
 We have added in ADF several pre-built theme css files. These theme files also include all of the styles for core (styles common to all components), so you only have to include a single css file for Angular Material in your app.
-When you want more customization than a pre-built theme offers, you can create your own theme file. You need to include the packages only what you really use in your application. For more information about theming please refer to the [offiicial documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/theming.md)
+When you want more customization than a pre-built theme offers, you can create your own theme file. You need to include the packages only what you really use in your application. For more information about theming please refer to the [offiicial documentation.](../user-guide/theming.md)
 
 ![](images/theming.gif)
 
@@ -82,7 +82,7 @@ It is now possible to use the [Info Drawer component,](../core/info-drawer.compo
 
 ![](images/info-drawer.gif)
 
-### 3. Form style component enhancements
+### 3. Form style component enhancements
 
 We have completed the transition from mdl to material2 for the form components. In addition we have also improved the style of some form components.
 
@@ -93,9 +93,9 @@ We have completed the transition from mdl to material2 for the form components. 
 You can now add an empty template that will be shown if no form definition are present
 
     <adf-form .... >
-       <div empty-form >
-           <h2>Empty form</h2>
-        </div>
+       <div empty-form >
+           <h2>Empty form</h2>
+        </div>
     </adf-form>
 
 ### 5. Form Validation Enhancements
@@ -105,22 +105,22 @@ New events that allow taking control over the [`Form`](../../lib/process-service
     validateForm: Subject<ValidateFormEvent>
     validateFormField: Subject<ValidateFormFieldEvent>()
 
-The [validateForm](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-activiti-form/src/events/validate-form.event.ts) event is raised every time the entire [`Form`](../../lib/process-services/task-list/models/form.model.ts) is re-validated. This happens also every time a field value or some of the properties is changed (for example the "required" property). The [validateFormField](https://github.com/Alfresco/alfresco-ng2-components/blob/development/ng2-components/ng2-activiti-form/src/events/validate-form-field.event.ts) event is raised every time a single [`Form`](../../lib/process-services/task-list/models/form.model.ts) Field is re-validated.
+The [validateForm](../core/form.service.md) event is raised every time the entire [`Form`](../../lib/process-services/task-list/models/form.model.ts) is re-validated. This happens also every time a field value or some of the properties is changed (for example the "required" property). The [validateFormField](../core/form.service.md) event is raised every time a single [`Form`](../../lib/process-services/task-list/models/form.model.ts) Field is re-validated.
 
 Both events are "cancellable", that means you can apply your own validation rules, change corresponding field validation state, or even prevent the default behaviour if needed.
 
 Example:
 
     this.formService.validateFormField.subscribe(
-      (event: ValidateFormFieldEvent) => {
-        const field = event.field;
-        const form = event.form;
-        // do some custom validation based on field or form
+      (event: ValidateFormFieldEvent) => {
+        const field = event.field;
+        const form = event.form;
+        // do some custom validation based on field or form
 
-        // set validation as "failed" and prevent any further checks
-        event.isValid = false;
-        event.preventDefault();
-      }
+        // set validation as "failed" and prevent any further checks
+        event.isValid = false;
+        event.preventDefault();
+      }
     );
 
 ### 6. FormFieldModel/FormModel improvements
@@ -131,25 +131,25 @@ The "required" property now re-validates the corresponding Field and entire [`Fo
 
 #### FormModel
 
-New "getFieldById" method to simplify certain scenarios when accessing multiple fields by id
+New "getFieldById" method to simplify certain scenarios when accessing multiple fields by id
 
     getFieldById(fieldId: string): FormFieldModel
 
 The [`Form`](../../lib/process-services/task-list/models/form.model.ts) now controls all Field validators. It becomes possible managing existing validator instances, replacing them, or extending form validation with custom rules and error messages. The "adf-form" component now also supports binding custom validator sets to the underlying [FormModel,](../../lib/core/form/components/widgets/core/form.model.ts) that allows defining validation sets in your code and binding via HTML.
 
-You can read more details on the new Validation layer in the [`Form`](../../lib/process-services/task-list/models/form.model.ts) readme: [Form Field Validators](https://github.com/Alfresco/alfresco-ng2-components/tree/development/ng2-components/ng2-activiti-form#form-field-validators). The "demo shell" application has been also extended to demonstrate custom validators in action. You can check the code here: [Demo Field Validator](https://github.com/Alfresco/alfresco-ng2-components/blob/development/demo-shell-ng2/app/components/activiti/demo-field-validator.ts).
+You can read more details on the new Validation layer in the [`Form`](../../lib/process-services/task-list/models/form.model.ts) readme: [Form Field Validators](../core/form-field-validator.interface.md). The "demo shell" application has been also extended to demonstrate custom validators in action. You can check the code here: [Demo Field Validator](../core/form-field-validator.interface.md).
 
-### 7. DataTable Accessibility Improvements
+### 7. DataTable Accessibility Improvements
 
-The "**DataTable**" component has got multiple accessibility improvements. That means all derived components (Document List, Tas/Process List, etc) get the same set of features automatically.
+The "**DataTable**" component has got multiple accessibility improvements. That means all derived components (Document List, Tas/Process List, etc) get the same set of features automatically.
 
-The major features are:
+The major features are:
 
 -   tabbing through the column headers (including Shift-Tab to tab backwards)
--   tabbing through the individual row cells (including Shift-Tab to tab backwards)
+-   tabbing through the individual row cells (including Shift-Tab to tab backwards)
 -   focus rings for row cells and column headers
 -   keyboard (Enter key) support for column headers: sorting order change
--   keyboard (Enter key) support for rows: navigate to a folder or initiate a file preview
+-   keyboard (Enter key) support for rows: navigate to a folder or initiate a file preview
 
 ### 8. Copy and move component enhancements
 
@@ -159,21 +159,21 @@ Further enhancements were implemented for the Copy & move dialog. From now, you 
 
 ### 9. Download as a ZIP functionality
 
-The ADF framework provides support for downloading nodes (Files and Folders) as "ZIP" archives. The **alfresco-js-api** library features new support for the [Downloads](https://api-explorer.alfresco.com/api-explorer/#/downloads) API. In addition, the Core library (ng2-alfresco-core) provides a ["DownloadZipDialogComponent"](../../lib/content-services/dialogs/download-zip.dialog.ts) that allows invoking "Download as Zip" dialogues from any place in your code.
+The ADF framework provides support for downloading nodes (Files and Folders) as "ZIP" archives. The **alfresco-js-api** library features new support for the [Downloads](https://api-explorer.alfresco.com/api-explorer/#/downloads) API. In addition, the Core library (ng2-alfresco-core) provides a ["DownloadZipDialogComponent"](../core/download-zip.service.md) that allows invoking "Download as Zip" dialogues from any place in your code.
 
 ![](images/download-as-zip.gif)
 
-You can see a working button handler code in the following [resource](https://github.com/Alfresco/alfresco-ng2-components/blob/development/demo-shell-ng2/app/components/files/files.component.ts#L234).
+You can see a working button handler code in the following [resource](../../demo-shell/src/app/components/files/files.component.ts).
 
 ### 10. Tooltips for DataTable/DocumentList cells
 
 It is now possible to provide a custom tooltip for every column in the DataTable and derived components.
 
     <data-column
-        title="Name"
-        key="name"
-        [formatTooltip]="getNodeNameTooltip"
-        class="full-width ellipsis-cell">
+        title="Name"
+        key="name"
+        [formatTooltip]="getNodeNameTooltip"
+        class="full-width ellipsis-cell">
     </data-column>
 
 And the code behind in this case can be as follows:
@@ -182,14 +182,14 @@ And the code behind in this case can be as follows:
 
     @Component({...})
     export class MyComponent {
-        ...
+        ...
 
-        getNodeNameTooltip(row: DataRow, col: DataColumn): string {
-            if (row) {
-                return row.getValue('name');
-            }
-            return null;
-        }
+        getNodeNameTooltip(row: DataRow, col: DataColumn): string {
+            if (row) {
+                return row.getValue('name');
+            }
+            return null;
+        }
     }
 
 ### 11. Profile picture in Comments and Involved people
@@ -232,14 +232,14 @@ You can get more details on the data sources and default presets in the [Data So
 
 The Core ADF library (ng2-alfresco-core) features a new **adf-node-permission** directive that allows you to selectively disable or enable an HTML element or an Angular component based on the node permissions. You can bind one or multiple nodes by means of the **adf-nodes** property that becomes available for each element.
 
-For example toggling the state of the toolbar button based on the DocumentList selection state (selected nodes):
+For example toggling the state of the toolbar button based on the DocumentList selection state (selected nodes):
 
     <adf-toolbar title="toolbar example">
-        <button md-icon-button
-                adf-node-permission="delete"
-                [adf-nodes]="documentList.selection">
-            <md-icon>delete</md-icon>
-        </button>
+        <button md-icon-button
+                adf-node-permission="delete"
+                [adf-nodes]="documentList.selection">
+            <md-icon>delete</md-icon>
+        </button>
     </adf-toolbar>
 
     <adf-document-list #documentList ...>
@@ -250,8 +250,8 @@ You can find all the details and usage examples in the directive documentation: 
 
 ### 14. Task/Process Audit Log Directive
 
-With the latest ADF release, we got two new directives **adf-process-audit** and **adf-task-audit**. Using these directives is very easily create a button to download the Task Audit or the Process Audit pdf.
-In the case you are using the **adf-process-audit**  the only parameters that are needed are:
+With the latest ADF release, we got two new directives **adf-process-audit** and **adf-task-audit**. Using these directives is very easily create a button to download the Task Audit or the Process Audit pdf.
+In the case you are using the **adf-process-audit**  the only parameters that are needed are:
 
 -   process-id
 -   fileName
@@ -259,11 +259,11 @@ In the case you are using the **adf-process-audit**  the only parameters that 
 
 
     <button
-       md-icon-button
-       adf-process-audit
-       [process-id]="processInstanceDetails.id"
-       [fileName]="'Process Audit - ' + processInstanceDetails.id"
-       (error)="onAuditError($event)">
+       md-icon-button
+       adf-process-audit
+       [process-id]="processInstanceDetails.id"
+       [fileName]="'Process Audit - ' + processInstanceDetails.id"
+       (error)="onAuditError($event)">
     <md-icon mdTooltip="Process Audit">assignment_ind</md-icon>
     </button>
 
@@ -275,19 +275,19 @@ On the click process audit pdf will be downloaded:
 
 ![download process audit ](images/Screen+Shot+2017-09-04+at+12.10.25.png)
 
-In the case you are using the **adf-task-audit**  the only parameters that are needed are:
+In the case you are using the **adf-task-audit**  the only parameters that are needed are:
 
 -   task-id
 -   fileName
--   format (pdf or json)
+-   format (pdf or json)
 
 
     <button
-       md-icon-button
-       adf-task-audit
-       [task-id]="taskId"
-       [fileName]="'Task Audit - ' + taskId"
-       (error)="onAuditError($event)">
+       md-icon-button
+       adf-task-audit
+       [task-id]="taskId"
+       [fileName]="'Task Audit - ' + taskId"
+       (error)="onAuditError($event)">
     <md-icon mdTooltip="Task Audit">assignment_ind</md-icon>
     </button>
 
@@ -301,7 +301,7 @@ On the click the task audit pdf will be downloaded:
 
 ### 15. Task List Pagination
 
-With the latest ADF release, the adf-tasklist is fully compatible with the adf-pagination component. Although ADF doesn't provide a  single component that includes the adf-tasklist and the adf-pagination in a single component, is not so difficult create your custom component that binds the adf-tasklist and the adf-pagination.
+With the latest ADF release, the adf-tasklist is fully compatible with the adf-pagination component. Although ADF doesn't provide a  single component that includes the adf-tasklist and the adf-pagination in a single component, is not so difficult create your custom component that binds the adf-tasklist and the adf-pagination.
 
 This is how the pagination looks like:
 
@@ -310,22 +310,22 @@ This is how the pagination looks like:
 tasklist-pagination.html
 
     <activiti-tasklist
-        [appId]="'2002'"
-        [assignment]="'assignee'"
-        [state]="'open'"
-        [sort]="'created-desc'"
-        [page]="page"
-        [size]="pagination.maxItems"
-        #activititasklist>
+        [appId]="'2002'"
+        [assignment]="'assignee'"
+        [state]="'open'"
+        [sort]="'created-desc'"
+        [page]="page"
+        [size]="pagination.maxItems"
+        #activititasklist>
     </activiti-tasklist>
 
     <adf-pagination
-        [pagination]="pagination"
-        [supportedPageSizes]="[5, 10, 15, 20]"
-        (changePageNumber)="onChangePageNumber($event)"
-        (changePageSize)="onChangePageSize($event)"
-        (nextPage)="onNextPage($event)"
-        (prevPage)="onPrevPage($event)">
+        [pagination]="pagination"
+        [supportedPageSizes]="[5, 10, 15, 20]"
+        (changePageNumber)="onChangePageNumber($event)"
+        (changePageSize)="onChangePageSize($event)"
+        (nextPage)="onNextPage($event)"
+        (prevPage)="onPrevPage($event)">
     </adf-pagination>
 
 tasklist-pagination.ts
@@ -335,53 +335,53 @@ tasklist-pagination.ts
     import { TaskListService } from 'ng2-activiti-tasklist';
 
     @Component({
-        selector: 'tasklist-paginator',
-        templateUrl: './activiti-tasklist-paginator.component.html'
+        selector: 'tasklist-paginator',
+        templateUrl: './activiti-tasklist-paginator.component.html'
     })
     export class TasklistPaginatorComponent implements OnInit {
 
-        pagination: Pagination = {
-            skipCount: 0,
-            maxItems: 5,
-            totalItems:  
-        };
+        pagination: Pagination = {
+            skipCount: 0,
+            maxItems: 5,
+            totalItems:  
+        };
 
-        page: number = 0;
+        page: number = 0;
 
-        constructor(private taskListService: TaskListService) {
-        }
+        constructor(private taskListService: TaskListService) {
+        }
 
-        ngOnInit() {
-            this.taskListService.tasksList$.subscribe(
-                (tasks) => {
-                    this.pagination = {count: tasks.data.length, maxItems: this.pagination.maxItems, skipCount: this.pagination.skipCount, totalItems: tasks.total};
-                }, (err) => {
-                console.log('err');
-            });
+        ngOnInit() {
+            this.taskListService.tasksList$.subscribe(
+                (tasks) => {
+                    this.pagination = {count: tasks.data.length, maxItems: this.pagination.maxItems, skipCount: this.pagination.skipCount, totalItems: tasks.total};
+                }, (err) => {
+                console.log('err');
+            });
 
-        }
+        }
 
-        onPrevPage(pagination: Pagination): void {
-            this.pagination.skipCount = pagination.skipCount;
-            this.page--;
-        }
+        onPrevPage(pagination: Pagination): void {
+            this.pagination.skipCount = pagination.skipCount;
+            this.page--;
+        }
 
-        onNextPage(pagination: Pagination): void {
-            this.pagination.skipCount = pagination.skipCount;
-            this.page++;
-        }
+        onNextPage(pagination: Pagination): void {
+            this.pagination.skipCount = pagination.skipCount;
+            this.page++;
+        }
 
-        onChangePageSize(pagination: Pagination): void {
-            const { maxItems, skipCount } = pagination;
-            this.page = (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
-            this.pagination.maxItems = maxItems;
-            this.pagination.skipCount = skipCount;
-        }
+        onChangePageSize(pagination: Pagination): void {
+            const { maxItems, skipCount } = pagination;
+            this.page = (skipCount && maxItems) ? Math.floor(skipCount / maxItems) : 0;
+            this.pagination.maxItems = maxItems;
+            this.pagination.skipCount = skipCount;
+        }
 
-        onChangePageNumber(pagination: Pagination): void {
-            this.pagination.skipCount = pagination.skipCount;
-            this.page = Math.floor(pagination.skipCount / pagination.maxItems);
-        }
+        onChangePageNumber(pagination: Pagination): void {
+            this.pagination.skipCount = pagination.skipCount;
+            this.page = Math.floor(pagination.skipCount / pagination.maxItems);
+        }
 
     }
 
@@ -400,23 +400,23 @@ In the current release, you can test a basic implementation of the Viewer Dialog
 
 ![](images/Screenshot+2017-09-05+14.00.57.png)
 
-This dialogue does not require extra HTML elements in your templates and can be opened from any place in your code using Viewer Service:
+This dialogue does not require extra HTML elements in your templates and can be opened from any place in your code using Viewer Service:
 
     if (node.isFile) {
-      this.viewerService.showViewerForNode(node);
+      this.viewerService.showViewerForNode(node);
     }
 
 Note that the dialog component and the underlying service are in the early preview and APIs are subject to change in the future releases.
 
 ## References
 
-Below you can find a brief list of references to help you start to use the new release.
+Below you can find a brief list of references to help you start to use the new release.
 
-[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
+[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
 
 [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
 
-[Component catalog](http://devproducts.alfresco.com/)
+[Component catalog](http://devproducts.alfresco.com/)
 
 [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
 
@@ -426,13 +426,13 @@ Below you can find a brief list of references to help you start to use the new
 
 [Alfresco-JS-API](https://github.com/Alfresco/alfresco-js-api)
 
-[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
+[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
-Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
+Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
 
 ## Issues addressed
 
-Below you can find a detailed list of tickets addressed in the new release. For a better understanding, the list is grouped by topic.
+Below you can find a detailed list of tickets addressed in the new release. For a better understanding, the list is grouped by topic.
 
 Release Notes - Apps Development Framework - Version 1.8. 
 
@@ -571,4 +571,4 @@ Release Notes - Apps Development Framework - Version 1.8.
 -   \[[ADF-1457](https://issues.alfresco.com/jira/browse/ADF-1457)] - Upload Dialog - Cancel all confirmation dialog
 -   \[[ADF-1468](https://issues.alfresco.com/jira/browse/ADF-1468)] - Upload Dialog - Remove color import
 
-Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have more questions, please reply here or contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
+Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have more questions, please reply here or contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).

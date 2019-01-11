@@ -4,9 +4,9 @@ Title: Release notes v2.6.0
 
 # Alfresco Application Development Framework, version 2.6.0 Release Note
 
-These release notes provide information about the **2.6.0 release** of the Alfresco Application Development Framework.
-This is the latest **General Available** release of the Application Development Framework, which contains the Angular components to build a Web Application on top of the Alfresco Platform.
-The release can be found on GitHub at [this location.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
+These release notes provide information about the **2.6.0 release** of the Alfresco Application Development Framework.
+This is the latest **General Available** release of the Application Development Framework, which contains the Angular components to build a Web Application on top of the Alfresco Platform.
+The release can be found on GitHub at [this location.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
 
 ## Contents
 
@@ -16,7 +16,7 @@ The release can be found on GitHub at [this location.](https://github.com/Alf
     -   [Show sidebar on the right option](#show-sidebar-on-the-right-option)
     -   [Double sidebar for viewer](#double-sidebar-for-viewer)
     -   [Smart folder icon](#smart-folder-icon)
-    -   [Tag node list component has a configurable delete button for tag](#tag-node-list-component has-a-configurable-delete-button-for-tag)
+    -   [Tag node list component has a configurable delete button for tag](#tag-node-list-component-has-a-configurable-delete-button-for-tag)
     -   [Validation summary support for form component](#validation-summary-support-for-form-component)
     -   [Share link with expiry date](#share-link-with-expiry-date)
     -   [Base extensibility support](#base-extensibility-support)
@@ -42,7 +42,7 @@ The release can be found on GitHub at [this location.](https://github.com/Alf
 
 In this release we added some new minor features such as validation summary for forms, filter support in the process list and setting an expiry date for the public sharing features. The team also worked on the extensibility features for applications, which we will talk much more about in the following months. As usual the team closed a lot of bugs and minor enhancements to provide an even better experience when using ADF - check out the full list below.
 
-Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
+Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
 
 Notable new features
 Below are the most important new features of this release:
@@ -58,7 +58,7 @@ Below are the most important new features of this release:
 
 ### Show more/less tag
 
-The **Tag List Component** has two new buttons that allow the user to see more/less tags. This turns out to be more useful than showing the whole list of tags related to a node. This functionality is already embedded into the component and the user doesn't have to do anything to make it work.
+The **Tag List Component** has two new buttons that allow the user to see more/less tags. This turns out to be more useful than showing the whole list of tags related to a node. This functionality is already embedded into the component and the user doesn't have to do anything to make it work.
 
     <adf-tag-list></adf-tag-list>
 
@@ -66,7 +66,7 @@ The **Tag List Component** has two new buttons that allow the user to see more
 
 ### Show sidebar on the right option
 
-The **Sidenav Component** now accepts the **position** as an input parameter so you can decide where to show the sidebar. The possible values are **start** for the left of the screen and **end** for the right of the screen.
+The **Sidenav Component** now accepts the **position** as an input parameter so you can decide where to show the sidebar. The possible values are **start** for the left of the screen and **end** for the right of the screen.
 
     <adf-sidenav-layout [position]="'end'"></adf-sidenav-layout>
 
@@ -74,32 +74,32 @@ The **Sidenav Component** now accepts the **position** as an input parameter so 
 
 ### Double sidebar for viewer
 
-An extra sidebar is now available to use within the **Viewer Component**. This helps the user to organise the information related to the node in a better way.
+An extra sidebar is now available to use within the **Viewer Component**. This helps the user to organise the information related to the node in a better way.
 
      <ng-template #sidebarRightTemplate>
-       //your right sidebar content here
+       //your right sidebar content here
      </ng-template>
      <ng-template #sidebarLeftTemplate>
-      //your left sidebar content here
+      //your left sidebar content here
     </ng-template>
      <adf-viewer
-        [nodeId]="nodeId"
-        [showSidebar]="showRightSidebar"
-        [showLeftSidebar]="showLeftSidebar"
-        [sidebarLeftTemplate]="sidebarLeftTemplate"
-        [sidebarTemplate]="sidebarRightTemplate"></adf-viewer>
+        [nodeId]="nodeId"
+        [showSidebar]="showRightSidebar"
+        [showLeftSidebar]="showLeftSidebar"
+        [sidebarLeftTemplate]="sidebarLeftTemplate"
+        [sidebarTemplate]="sidebarRightTemplate"></adf-viewer>
 
 ![double Side bar](images/DoubleSideBar.gif)
 
 ### Smart folder icon
 
-The **DocumentList Component** can now show different icons for **Smart Folders** and Standard Folders. No extra action is needed by the user to use this functionality.
+The **DocumentList Component** can now show different icons for **Smart Folders** and Standard Folders. No extra action is needed by the user to use this functionality.
 
 ![Delete Tag Configurable](images/DeleteTagConfigurable.gif)
 
-### Tag node list component has a configurable delete button for tag
+### Tag node list component has a configurable delete button for tag
 
-A configurable delete button has been added to the **Tag Node List Component** to let you show it only when user has permissions.
+A configurable delete button has been added to the **Tag Node List Component** to let you show it only when user has permissions.
 
     <adf-tag-node-list [showDelete]="showDelete" [nodeId]="nodeId"></adf-tag-node-list>
 
@@ -107,13 +107,13 @@ A configurable delete button has been added to the **Tag Node List Component** 
 
 ### Validation summary support for form component
 
-The **Form Component** will now use the **formError** event to send a validation summary for all the fields with errors. This will be useful particularly with big forms for showing which fields are in error without scrolling the whole form by creating a summary.
+The **Form Component** will now use the **formError** event to send a validation summary for all the fields with errors. This will be useful particularly with big forms for showing which fields are in error without scrolling the whole form by creating a summary.
 
     <div class="form-container">
     <adf-form
-        [showRefreshButton]="false"
-        [form]="form"
-        (formError)="logErrors($event)">
+        [showRefreshButton]="false"
+        [form]="form"
+        (formError)="logErrors($event)">
     </adf-form>
     </div>
      <div class="console" #console>
@@ -125,15 +125,15 @@ The **Form Component** will now use the **formError** event to send a validat
 
 ### Share link with expiry date
 
-Some extra information is now available for shared links: expiry date. The earliest date accepted is at least 24h after the time you created it (following the ACS specification : [here](https://docs.alfresco.com/5.2/concepts/repository-properties.html) is the link). This is embedded into the **Share Dialog Component** and will be automatically shown when the share dialog is displayed.
+Some extra information is now available for shared links: expiry date. The earliest date accepted is at least 24h after the time you created it (following the ACS specification : [here](https://docs.alfresco.com/5.2/concepts/repository-properties.html) is the link). This is embedded into the **Share Dialog Component** and will be automatically shown when the share dialog is displayed.
 
 ![Expiry Share Link](images/ShareExpiryLink.gif)
 
 ### Base extensibility support
 
-With this release, we also add basic extensibility support in the scope of the **@alfresco/adf-extensions** library.
-This library powers the extensibility layer in the Alfresco Content Application, and you can find more details about the features it supports here: [Alfresco Content App](https://alfresco.github.io/alfresco-content-app/#/extending)
-In the following releases we will provide more documentation and examples of how to use this library and how to build your own extension points.
+With this release, we also add basic extensibility support in the scope of the **@alfresco/adf-extensions** library.
+This library powers the extensibility layer in the Alfresco Content Application, and you can find more details about the features it supports here: [Alfresco Content App](https://alfresco.github.io/alfresco-content-app/#/extending)
+In the following releases we will provide more documentation and examples of how to use this library and how to build your own extension points.
 
 ## Localization
 
@@ -141,9 +141,9 @@ This release includes: French, German, Italian, Spanish, Japanese, Dutch, Norweg
 
 ## References
 
-Below you can find a brief list of references to help you start using the new release.
+Below you can find a brief list of references to help you start using the new release.
 
-[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
+[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
 
 [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
 
@@ -157,9 +157,9 @@ Below you can find a brief list of references to help you start using the new
 
 [Alfresco-JS-API](https://github.com/Alfresco/alfresco-js-api)
 
-[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
+[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
-Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
+Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
 
 ## Issues addressed
 
@@ -296,4 +296,4 @@ Release Notes - Apps Development Framework - Version 2.6.
 -   \[[ADF-3596](https://issues.alfresco.com/jira/browse/ADF-3596)] - Automated tests for start a process
 -   \[[ADF-3597](https://issues.alfresco.com/jira/browse/ADF-3597)] - Create automated test to cover Error Log on Form component
 
-Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have any questions about the release, please contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
+Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have any questions about the release, please contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
