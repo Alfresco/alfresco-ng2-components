@@ -5,7 +5,7 @@
   "author": "Alfresco Software, Ltd.",
   "main": "./index.js",
   "scripts": {
-    "docbuild": "node node_modules/typedoc/bin/typedoc --tsconfig tsconfig.json --json docs/docs.json --exclude '**/*.spec.ts' --ignoreCompilerErrors && node tools/doc/buildYamlSourceInfo.js docs/docs.json && node ./tools/doc/docProcessor.js",
+    "docbuild": "node node_modules/typedoc/bin/typedoc --tsconfig lib/tsconfig.json --json docs/docs.json --exclude '**/*.spec.ts' --ignoreCompilerErrors && node tools/doc/buildYamlSourceInfo.js docs/docs.json && node ./tools/doc/docProcessor.js",
     "prepublishOnly": "npm run build-lib",
     "markdownlint": "markdownlint ./docs",
     "stylelint": "stylelint ./**/*.scss --config stylelint-config.json",

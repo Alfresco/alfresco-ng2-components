@@ -31,21 +31,27 @@ import { FormService } from './../../../services/form.service';
 })
 export class ContentWidgetComponent implements OnChanges {
 
+    /** The content id to show. */
     @Input()
     id: string;
 
+    /** Toggles showing document content. */
     @Input()
     showDocumentContent: boolean = true;
 
+    /** Emitted when the content is clicked. */
     @Output()
     contentClick = new EventEmitter();
 
+    /** Emitted when the thumbnail has loaded. */
     @Output()
     thumbnailLoaded: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when the content has loaded. */
     @Output()
     contentLoaded: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when an error occurs. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 

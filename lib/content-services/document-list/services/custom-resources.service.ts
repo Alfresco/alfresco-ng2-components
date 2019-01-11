@@ -331,6 +331,12 @@ export class CustomResourcesService {
         return of([]);
     }
 
+    /**
+     * Chooses the correct ID for a node entry.
+     * @param node Node object
+     * @param nodeId ID of the node object
+     * @returns ID value
+     */
     getIdFromEntry(node: any, nodeId: string): string {
         if (nodeId === '-sharedlinks-') {
             return node.entry.nodeId;

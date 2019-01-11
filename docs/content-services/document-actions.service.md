@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# [Document Actions service](../../lib/content-services/document-list/services/document-actions.service.ts "Defined in document-actions.service.ts")
+# [Document Actions service](../../content-services/document-list/services/document-actions.service.ts "Defined in document-actions.service.ts")
 
 Implements the document menu actions for the [Document List component](../content-services/document-list.component.md).
 
@@ -13,9 +13,9 @@ Implements the document menu actions for the [Document List component](../conten
 
 ### Methods
 
--   **canExecuteAction**(obj: `any`): `boolean`<br/>
+-   **canExecuteAction**(nodeEntry: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)): `boolean`<br/>
     Checks if actions can be executed for an item.
-    -   _obj:_ `any`  - Item to receive an action
+    -   _nodeEntry:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)  - Item to receive an action
     -   **Returns** `boolean` - True if the action can be executed on this item, false otherwise
 -   **getHandler**(key: `string`): `ContentActionHandler`<br/>
     Gets the handler for an action.
