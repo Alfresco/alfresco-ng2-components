@@ -131,7 +131,7 @@ export class FileViewComponent implements OnInit {
         this.showLeftSidebar = false;
     }
 
-    toggleallowRightSidebar() {
+    toggleAllowRightSidebar() {
         this.allowRightSidebar = !this.allowRightSidebar;
     }
 
