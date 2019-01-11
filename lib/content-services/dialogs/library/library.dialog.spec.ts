@@ -259,4 +259,20 @@ describe('LibraryDialogComponent', () => {
 
         expect(component.form.controls.id.value).toBe('library-title');
     }));
+
+    it('should invalidate library title title if title is too short', fakeAsync(() => {
+        findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
+        spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
+            return new Promise((resolve, reject) => reject());
+        });
+
+        fixture.detectChanges();
+        component.form.controls.title.setValue('l');
+        tick(500);
+        flush();
+        fixture.detectChanges();
+
+        expect(component.form.controls.title.errors['minlength']).toBeTruthy();
+        expect(component.form.valid).toBe(false);
+    }));
 });

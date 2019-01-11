@@ -87,6 +87,7 @@ export class LibraryDialogComponent implements OnInit, OnDestroy {
       title: [
         Validators.required,
         this.forbidOnlySpaces,
+        Validators.minLength(2),
         Validators.maxLength(256)
       ],
       description: [Validators.maxLength(512)]
