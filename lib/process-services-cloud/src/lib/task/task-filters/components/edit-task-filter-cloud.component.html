@@ -1,67 +1,65 @@
 <mat-accordion *ngIf="taskFilter">
-    <mat-expansion-panel>
+    <mat-expansion-panel (afterExpand)="onExpand($event)" (closed)="onClose($event)">
         <mat-expansion-panel-header id="adf-edit-task-filter-expansion-header">
-            <mat-panel-title id="adf-edit-task-filter-title-id">{{taskFilter.name | translate}}</mat-panel-title>
-            <mat-panel-description id="adf-edit-task-filter-sub-title-id">
-                {{ 'ADF_CLOUD_EDIT_TASK_FILTER.TITLE' | translate}}
+            <mat-panel-title fxLayoutAlign="space-between center" id="adf-edit-task-filter-title-id">{{taskFilter.name | translate}}</mat-panel-title>
+            <mat-panel-description fxLayoutAlign="space-between center" id="adf-edit-task-filter-sub-title-id">
+                <span *ngIf="showTitle">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.TITLE' | translate}}</span>
+                <div *ngIf="toggleActions()" class="adf-cloud-edit-task-filter-actions">
+                    <ng-container *ngIf="showFilterActions">
+                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE' | translate}}" id="adf-save-id" [disabled]="!formHasBeenChanged" (click)="onSave()">
+                            <mat-icon>save</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE_AS' | translate}}" id="adf-save-as-id" [disabled]="!formHasBeenChanged" (click)="onSaveAs()">
+                            <mat-icon>unarchive</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.DELETE' | translate}}" id="adf-delete-id" (click)="onDelete()">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </ng-container>
+                </div>
             </mat-panel-description>
         </mat-expansion-panel-header>
         <form [formGroup]="editTaskFilterForm">
-            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-                <mat-form-field [floatLabel]="'auto'" fxFlex data-automation-id="status">
-                    <mat-select placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS' | translate}}" formControlName="state" id="adf-task-filter-state-id">
-                        <mat-option *ngFor="let state of status" [value]="state.value">
-                            {{ state.label }}
+            <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">
+            <ng-container *ngFor="let taskFilterProperty of taskFilterProperties">
+                <mat-form-field fxFlex="23%" *ngIf="isSelectType(taskFilterProperty)">
+                    <mat-select
+                        placeholder="{{taskFilterProperty.label | translate}}"
+                        [formControlName]="taskFilterProperty.key"
+                        [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key">
+                        <mat-option *ngFor="let propertyOption of taskFilterProperty.options$ | async" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-task-property-options' + taskFilterProperty.key">
+                            {{ propertyOption.label }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field [floatLabel]="'auto'" fxFlex data-automation-id="assignment">
+                <mat-form-field fxFlex="23%" *ngIf="isTextType(taskFilterProperty)">
                     <input matInput
-                        formControlName="assignment"
-                        type="text"
-                        id="adf-task-filter-assignment-id"
-                        placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT' | translate}}"/>
+                    [formControlName]="taskFilterProperty.key"
+                    type="text"
+                    placeholder="{{taskFilterProperty.label | translate}}"
+                    [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key"/>
                 </mat-form-field>
-                <mat-form-field *ngIf="false" [floatLabel]="'auto'" fxFlex>
-                    <input matInput
-                        formControlName="appName"
-                        type="text"
-                        id="adf-task-filter-appname-id"
-                        placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.APP_NAME' | translate}}"/>
+                <mat-form-field fxFlex="23%" *ngIf="isDateType(taskFilterProperty)">
+                    <mat-label>{{taskFilterProperty.label | translate}}</mat-label>
+                        <input
+                            matInput
+                            (keyup)="onDateChanged($event.srcElement.value, taskFilterProperty)"
+                            (dateChange)="onDateChanged($event.value, taskFilterProperty)"
+                            [matDatepicker]="dateController"
+                            placeholder="{{taskFilterProperty.label | translate}}"
+                            [formControlName]="taskFilterProperty.key"
+                            [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key">
+                    <mat-datepicker-toggle matSuffix [for]="dateController" [attr.data-automation-id]="'adf-cloud-edit-task-property-date-toggle' + taskFilterProperty.key"></mat-datepicker-toggle>
+                    <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-task-property-date-picker' + taskFilterProperty.key"></mat-datepicker>
+                    <div class="adf-edit-task-filter-date-error-container">
+                        <div *ngIf="hasError(taskFilterProperty)">
+                            <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</div>
+                            <mat-icon class="adf-error-icon">warning</mat-icon>
+                        </div>
+                    </div>
                 </mat-form-field>
-                <mat-form-field *ngIf="false" [floatLabel]="'auto'" fxFlex>
-                    <input matInput
-                        formControlName="processDefinitionId"
-                        type="text"
-                        id="adf-task-filter-process-definition-id"
-                        placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_DEF_ID' | translate}}"/>
-                </mat-form-field>
-                <mat-form-field [floatLabel]="'auto'" fxFlex data-automation-id="sort">
-                    <mat-select placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COLUMN' | translate}}" formControlName="sort" id="adf-task-filter-sort-id">
-                        <mat-option *ngFor="let column of columns" [value]="column.key">
-                            {{ column.label }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field [floatLabel]="'auto'" fxFlex data-automation-id="order">
-                    <mat-select placeholder="{{'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DIRECTION' | translate}}" formControlName="order" id="adf-task-filter-order-id">
-                        <mat-option *ngFor="let direction of directions" [value]="direction">
-                            {{ direction }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <div>
-                    <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE' | translate}}" id="adf-save-id" [disabled]="!formHasBeenChanged" (click)="onSave()">
-                        <mat-icon>save</mat-icon>
-                    </button>
-                    <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE_AS' | translate}}" id="adf-save-as-id" [disabled]="!formHasBeenChanged" (click)="onSaveAs()">
-                        <mat-icon>unarchive</mat-icon>
-                    </button>
-                    <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.DELETE' | translate}}" id="adf-delete-id" (click)="onDelete()">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </div>
-            </div>
+            </ng-container>
+        </div>
         </form>
     </mat-expansion-panel>
 </mat-accordion>
