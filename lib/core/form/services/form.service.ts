@@ -129,7 +129,9 @@ export class FormService {
                     this.ecmModelService.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                         (customType) => {
                             let formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
-                            this.addFieldsToAForm(form.id, formDefinitionModel).subscribe((formData) => {
+                            from(
+                                this.editorApi.saveForm(form.id, formDefinitionModel)
+                            ).subscribe((formData) => {
                                 observer.next(formData);
                                 observer.complete();
                             }, (err) => this.handleError(err));

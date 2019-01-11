@@ -68,7 +68,7 @@ as the drag/drop target:
 | nodeType | `string` | "cm:content" | Custom node type for uploaded file |
 | rootFolderId | `string` | "-root-" | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
 | versioning | `boolean` | false | Toggles versioning. |
-| parentId | `void` |  | (**Deprecated:** 2.4.0 - use rootFolderId ID of parent folder node) ID of parent folder node |
+
 
 ### Events
 

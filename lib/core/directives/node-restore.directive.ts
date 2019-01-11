@@ -40,13 +40,6 @@ export class NodeRestoreDirective {
     @Input('adf-restore')
     selection: DeletedNodeEntry[];
 
-    /**
-     * Path to restored node.
-     * @deprecated 2.4.0
-     */
-    @Input()
-    location: string = '';
-
     /** Emitted when restoration is complete. */
     @Output()
     restore: EventEmitter<RestoreMessageModel> = new EventEmitter();

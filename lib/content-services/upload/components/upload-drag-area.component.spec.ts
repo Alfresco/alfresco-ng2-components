@@ -162,7 +162,7 @@ describe('UploadDragAreaComponent', () => {
                     callbackFile(fileFake);
                 }
             };
-            component.onFilesEntityDropped(itemEntity);
+            component.onFilesDropped([itemEntity]);
 
             expect(uploadService.addToQueue).not.toHaveBeenCalled();
             expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
@@ -282,7 +282,7 @@ describe('UploadDragAreaComponent', () => {
                 }
             };
             fixture.whenStable().then(() => {
-                component.onFilesEntityDropped(itemEntity);
+                component.onFilesDropped([itemEntity]);
                 expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
             });
         }));
@@ -305,7 +305,7 @@ describe('UploadDragAreaComponent', () => {
                 }
             };
             fixture.whenStable().then(() => {
-                component.onFilesEntityDropped(itemEntity);
+                component.onFilesDropped([itemEntity]);
                 expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalledWith(null);
             });
         }));
@@ -326,7 +326,7 @@ describe('UploadDragAreaComponent', () => {
                     callbackFile(fileFake);
                 }
             };
-            component.onFilesEntityDropped(itemEntity);
+            component.onFilesDropped([itemEntity]);
             expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
         }));
 

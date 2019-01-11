@@ -24,6 +24,7 @@ import { FormService } from './form.service';
 import { setupTestBed } from '../../testing/setupTestBed';
 import { CoreModule } from '../../core.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { from } from 'rxjs/index';
 
 declare let jasmine: any;
 
@@ -364,6 +365,10 @@ describe('Form service', () => {
             let name = 'testName';
             let data = [{ name: 'name' }, { name: 'email' }];
             let formDefinitionModel = new FormDefinitionModel(formId.toString(), name, 'testUserName', '2016-09-05T14:41:19.049Z', data);
+
+            return from(
+                this.editorApi.saveFor(form.id, formDefinitionModel)
+            );
 
             service.addFieldsToAForm(formId, formDefinitionModel).subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/form-models/' + formId)).toBeTruthy();

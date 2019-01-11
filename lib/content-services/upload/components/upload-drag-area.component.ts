@@ -34,15 +34,6 @@ import { UploadBase } from './base-upload/upload-base';
 })
 export class UploadDragAreaComponent extends UploadBase implements NodePermissionSubject {
 
-    /**
-     * ID of parent folder node
-     * @deprecated 2.4.0 - use rootFolderId ID of parent folder node
-     */
-    @Input()
-    set parentId(nodeId: string) {
-        this.rootFolderId = nodeId;
-    }
-
     constructor(protected uploadService: UploadService,
                 protected translationService: TranslationService,
                 private notificationService: NotificationService,
@@ -59,21 +50,6 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
     onFilesDropped(files: File[]): void {
         if (!this.disabled && files.length) {
             this.uploadFiles(files);
-        }
-    }
-
-    /**
-     * Called when the file are dropped in the drag area.
-     * @deprecated in 2.4.0: use `onFilesDropped` instead
-     * @param item - FileEntity
-     */
-    onFilesEntityDropped(item: any): void {
-        if (!this.disabled) {
-            item.file((file: File) => {
-                // const fileModel = this.createFileModel(file, this.rootFolderId, item.fullPath.replace(item.name, ''));
-
-                this.uploadFiles([file]);
-            });
         }
     }
 

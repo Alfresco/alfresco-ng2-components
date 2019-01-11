@@ -158,10 +158,9 @@ export class FormComponent implements OnInit, OnChanges, OnDestroy {
 
     /**
      * Emitted when any error occurs.
-     * @deprecated in 2.4.0, will be renamed as "error" in 3.x.x
      */
     @Output()
-    onError: EventEmitter<any> = new EventEmitter<any>();
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     debugMode: boolean = false;
 

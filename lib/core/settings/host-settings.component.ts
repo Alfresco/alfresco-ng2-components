@@ -50,12 +50,6 @@ export class HostSettingsComponent implements OnInit {
     @Output()
     error = new EventEmitter<string>();
 
-    /** Emitted when the ecm host URL is changed.
-     * @deprecated in 2.4.0
-     */
-    @Output()
-    ecmHostChange = new EventEmitter<string>();
-
     /** Emitted when the user cancels the changes. */
     @Output()
     cancel = new EventEmitter<boolean>();
@@ -63,12 +57,6 @@ export class HostSettingsComponent implements OnInit {
     /** Emitted when the changes are successfully applied. */
     @Output()
     success = new EventEmitter<boolean>();
-
-    /** Emitted when the bpm host URL is changed.
-     * @deprecated in 2.4.0
-     */
-    @Output()
-    bpmHostChange = new EventEmitter<string>();
 
     constructor(private formBuilder: FormBuilder,
                 private storageService: StorageService,

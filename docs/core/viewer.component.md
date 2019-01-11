@@ -80,10 +80,9 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | allowFullScreen | `boolean` | true | Toggles the 'Full Screen' feature. |
 | allowGoBack | `boolean` | true | Allows `back` navigation |
 | allowLeftSidebar | `boolean` | false | Allow the left the sidebar. |
+| allowRightSidebar | `boolean` | false | Allow the right sidebar. |
 | allowNavigate | `boolean` | false | Toggles before/next navigation. You can use the arrow buttons to navigate between documents in the collection. |
 | allowPrint | `boolean` | false | Toggles printing. |
-| allowShare | `boolean` | false | (**Deprecated:** 2.5.0 - inject the share button directive as custom button) Toggles sharing. |
-| allowSidebar | `boolean` | false | (**Deprecated:** 2.5.0 - will be renamed  allowRightSidebar in 3.0.0) Allow the right sidebar. |
 | allowThumbnails | `boolean` | true | Toggles PDF thumbnails. |
 | blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
 | canNavigateBefore | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled. |
@@ -96,13 +95,12 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | nodeId | `string` | null | Node Id of the file to load. |
 | overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
 | sharedLinkId | `string` | null | Shared link id (to display shared file). |
-| showLeftSidebar | `boolean` | false | Toggles left sidebar visibility. Requires `allowSidebar` to be set to `true`. |
-| showSidebar | `boolean` | false | (**Deprecated:** 2.5.0 - will be renamed showRightSidebar in 3.0.0) Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`. |
+| showLeftSidebar | `boolean` | false | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`. |
+| showRightSidebar | `boolean` | false |Toggles Right sidebar visibility. Requires `allowRightSidebar` to be set to `true`. |
 | showToolbar | `boolean` | true | Hide or show the toolbar |
 | showViewer | `boolean` | true | Hide or show the viewer |
 | sidebarLeftTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the left sidebar. The template context contains the loaded node data. |
-| sidebarPosition | `string` | "right" | (**Deprecated:** 2.5.0 use sidebarTemplateLeft) The position of the sidebar. Can be `left` or `right`. |
-| sidebarTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | (**Deprecated:** 2.5.0 renamed as sidebarRight) The template for the sidebar. The template context contains the loaded node data. |
+| sidebarRightTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for right sidebar. The template context contains the loaded node data. |
 | thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the pdf thumbnails. |
 | urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
 | urlFileViewer | `string` | null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
@@ -362,13 +360,13 @@ The result should look like this:
 #### Custom sidebar
 
 The [Viewer component](../core/viewer.component.md) also supports custom sidebar components and layouts.
-Set the `allowSidebar` property to `true` to enable this feature.
+Set the `allowRightSidebar` property to `true` to enable this feature.
 
 The custom sidebar can be injected in two different ways. The first way is to use
 transclusion, which will display all content placed inside the `<adf-viewer-sidebar>` element:
 
 ```html
-<adf-viewer [allowSidebar]="true">
+<adf-viewer [allowRightSidebar]="true">
     <adf-viewer-sidebar>
         <h1>My info</h1>
     </adf-viewer-sidebar>
@@ -382,7 +380,7 @@ when using the viewer with `nodeId`.
 <ng-template let-node="node" #sidebarTemplate>
     <adf-content-metadata-card [node]="node"></adf-content-metadata-card>
 </ng-template>
-<adf-viewer [allowSidebar]="true" [sidebarTemplate]="sidebarTemplate"></adf-viewer>
+<adf-viewer [allowRightSidebar]="true" [sidebarRightTemplate]="sidebarTemplate"></adf-viewer>
 ```
 
 #### Custom thumbnails

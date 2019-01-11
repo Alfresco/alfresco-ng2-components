@@ -63,13 +63,6 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     @Output()
     success = new EventEmitter();
 
-    /**
-     * Emitted when a folder is created.
-     * @deprecated 2.4.0 No longer used by the framework
-     */
-    @Output()
-    createFolder = new EventEmitter();
-
     /** Emitted when an error occurs. */
     @Output()
     error = new EventEmitter();

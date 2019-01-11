@@ -84,7 +84,7 @@ a custom _no content template_ (using &lt;adf-empty-list>) to invite the user to
 
 ```html
 <adf-upload-drag-area
-    [parentId]="YOUR_PROCESS_ID"
+    [rootFolderId]="YOUR_PROCESS_ID"
     [showNotificationBar]="BOOLEAN">
     <adf-process-attachment-list  
         [processId]="YOUR_PROCESS_ID"

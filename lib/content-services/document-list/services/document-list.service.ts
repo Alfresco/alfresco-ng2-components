@@ -179,17 +179,6 @@ export class DocumentListService {
         return this.thumbnailService.getDefaultMimeTypeIcon();
     }
 
-    /**
-     * Checks if a node has the specified permission.
-     * @deprecated 2.3.0 - use the equivalent in the content service
-     * @param node Target node
-     * @param permission Permission level to query
-     * @returns True if the node has the permission, false otherwise
-     */
-    hasPermission(node: any, permission: PermissionsEnum | string): boolean {
-        return this.contentService.hasPermission(node, permission);
-    }
-
     private handleError(error: any) {
         this.logService.error(error);
         return throwError(error || 'Server error');

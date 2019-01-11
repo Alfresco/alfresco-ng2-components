@@ -244,10 +244,10 @@ export class AuthenticationService {
     }
 
     /** Gets the URL to redirect to after login.
-     * @param provider Service provider. Can be "ECM", "BPM" or "ALL".
      * @returns The redirect URL
      */
-    getRedirect(provider: string): string {
+    getRedirect(): string {
+        let provider = this.appConfig.get(AppConfigValues.PROVIDERS);
         return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
     }
 
