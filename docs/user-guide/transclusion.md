@@ -11,7 +11,7 @@ most cases, this is used to make small customizations (for example, the various
 list components let you supply custom content to show when the list is empty).
 However, there are also a few "containers" whose entire content is set by the user
 with the container itself being mainly for convenient display and formatting
-(for example, the [Accordion component](../core/accordion.component.md)).
+(for example, the [Info drawer component](../core/info-drawer.component.md)).
 
 You supply the content you want to transclude between the opening and closing tags of
 the main component. In a few cases, this content can be completely free-form as with

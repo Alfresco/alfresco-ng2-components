@@ -111,7 +111,7 @@ The purpose of the [content metadata component](../content-services/content-meta
 
 The component can be configured from the application configuration. This way, you can easily restrict the displayed metadata to a list of aspects or even further, to just a subset or properties belonging to an aspect.
 
-For more information about the component see its [documentation](https://community.alfresco.com/docs/DOC-7301-introduction-to-the-new-content-metadata-component) or [this article](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/content-metadata.component.md).
+For more information about the component see its [documentation](https://community.alfresco.com/docs/DOC-7301-introduction-to-the-new-content-metadata-component) or [this article](../content-services/content-metadata.component.md).
 
 ### 5. Start process from a file
 
@@ -146,7 +146,7 @@ Note that in the object above, the key file is the name of the attach file fie
 
 For more information about this functionality see the documentation section linked below:
 
--   [Attaching a File to the start form of the process](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/start-process.component.md#attaching-a-file-to-the-start-form-of-the-process)
+-   [Attaching a File to the start form of the process](../process-services/start-process.component.md#attaching-a-file-to-the-start-form-of-the-process)
 
 ### 6. Start form process prefilling values
 
@@ -169,7 +169,7 @@ Here is an example of how to pass in form field values to initialize the start f
 With these settings, the start form will appear with the values above already filled in.
 For more information about this functionality see the following link:
 
--   [Custom data form example](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/start-process.component.md#custom-data-example)
+-   [Custom data form example](../process-services/start-process.component.md#custom-data-example)
 
 ### 7. Task List - Support custom HTML template and static columns
 
@@ -258,7 +258,7 @@ You can use the same component also to create a [Content Service](../core/conten
 
 For more information about this functionality see the following link:
 
--   [Sidebar component](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/sidebar-action-menu.component.md)
+-   [Sidebar component](../core/sidebar-action-menu.component.md)
 
 ### 9. Infinite pagination component enhancement
 
@@ -271,8 +271,8 @@ We have added the [target] property in the [infinite pagination component](../co
 
 For more information about the infinite pagination see the following links:
 
--   [Infinite pagination component](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/infinite-pagination.component.md)
--   [Paginated component interface](https://github.com/Alfresco/alfresco-ng2-components/blob/18dc0711f93ebad7fbcadc50cd5a6e50c7667be9/lib/core/pagination/paginated-component.interface.ts)
+-   [Infinite pagination component](../core/infinite-pagination.component.md)
+-   [Paginated component interface](../../lib/core/pagination/paginated-component.interface.ts)
 
 ### 10. App drop-down dialog selector
 
