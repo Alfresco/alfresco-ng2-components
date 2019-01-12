@@ -19,7 +19,7 @@ import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TranslateLoaderService } from './translate-loader.service';
-import { UserPreferencesService, UserPreferenceValues} from './user-preferences.service';
+import { UserPreferencesService, UserPreferenceValues } from './user-preferences.service';
 
 export const TRANSLATION_PROVIDER = new InjectionToken('Injection token for translation providers.');
 
