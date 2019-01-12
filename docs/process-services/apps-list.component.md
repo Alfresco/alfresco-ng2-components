@@ -70,10 +70,10 @@ For example, if you set `filtersAppId` as follows:
 
 ```html
 <adf-apps 
-    [filtersAppId]="'[
+    [filtersAppId]="[
         {defaultAppId: 'tasks'}, 
         {deploymentId: '15037'}, 
-        {name : 'my app name'}]'">
+        {name : 'my app name'}]">
 </adf-apps>
 ```
 
