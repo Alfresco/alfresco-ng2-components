@@ -170,7 +170,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
         this.rowFilter = this.getRowFilter(this.rowFilter);
     }
 
-    private getRowFilter(initialFilterFunction) {
+    private getRowFilter(initialFilterFunction): RowFilter {
         if (!initialFilterFunction) {
             initialFilterFunction = () => true;
         }
@@ -180,7 +180,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
         };
     }
 
-    private isExcludedSiteContent(row: ShareDataRow) {
+    private isExcludedSiteContent(row: ShareDataRow): boolean {
         const entry = row.node.entry;
         if (this.excludeSiteContent.length &&
             entry &&
