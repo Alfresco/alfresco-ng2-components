@@ -18,7 +18,6 @@
 import { DataRow, ObjectUtils, ThumbnailService, ContentService } from '@alfresco/adf-core';
 import { MinimalNode, NodeEntry } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
-import { DocumentListService } from './../services/document-list.service';
 
 export class ShareDataRow implements DataRow {
 
@@ -34,7 +33,6 @@ export class ShareDataRow implements DataRow {
     }
 
     constructor(private obj: NodeEntry,
-                private documentListService: DocumentListService,
                 private contentService: ContentService,
                 private permissionsStyle: PermissionStyleModel[],
                 private thumbnailService?: ThumbnailService) {

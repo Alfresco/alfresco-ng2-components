@@ -242,7 +242,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (page && page.list) {
             let data = page.list.entries;
             if (data && data.length > 0) {
-                rows = data.map((item) => new ShareDataRow(item, this.documentListService, this.contentService, this.permissionsStyle, this.thumbnailService));
+                rows = data.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle, this.thumbnailService));
 
                 if (this.filter) {
                     rows = rows.filter(this.filter);

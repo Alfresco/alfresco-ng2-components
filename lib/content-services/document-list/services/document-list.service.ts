@@ -16,8 +16,7 @@
  */
 
 import {
-    AlfrescoApiService, AuthenticationService, ContentService, LogService,
-    PermissionsEnum, ThumbnailService
+    AlfrescoApiService, AuthenticationService, ContentService, LogService, ThumbnailService
 } from '@alfresco/adf-core';
 
 import { Injectable } from '@angular/core';

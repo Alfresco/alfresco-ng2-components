@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation, Input } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { Node, SitePaging } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
-import { RowFilter } from '../document-list/data/row-filter.model';
-import { ImageResolver } from '../document-list/data/image-resolver.model';
 
 @Component({
     selector: 'adf-content-node-selector',
