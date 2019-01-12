@@ -312,7 +312,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     ngOnInit() {
         this.rowMenuCache = {};
         this.loadLayoutPresets();
-        this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, null, this.getDefaultSorting(), this.sortingMode);
+        this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, this.contentService, null, this.getDefaultSorting(), this.sortingMode);
         this.data.thumbnails = this.thumbnails;
         this.data.permissionsStyle = this.permissionsStyle;
 
@@ -350,7 +350,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
 
         if (!this.data) {
-            this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, schema, this.getDefaultSorting(), this.sortingMode);
+            this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, this.contentService, schema, this.getDefaultSorting(), this.sortingMode);
         } else if (schema && schema.length > 0) {
             this.data.setColumns(schema);
         }

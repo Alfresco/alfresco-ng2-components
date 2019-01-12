@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow, DataSorting, DataTableAdapter, ThumbnailService } from '@alfresco/adf-core';
+import { DataColumn, DataRow, DataSorting, DataTableAdapter, ThumbnailService, ContentService } from '@alfresco/adf-core';
 import { NodePaging } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
@@ -52,6 +52,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
     constructor(private documentListService: DocumentListService,
                 private thumbnailService: ThumbnailService,
+                private contentService: ContentService,
                 schema: DataColumn[] = [],
                 sorting?: DataSorting,
                 sortingMode: string = 'client') {
@@ -241,7 +242,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (page && page.list) {
             let data = page.list.entries;
             if (data && data.length > 0) {
-                rows = data.map((item) => new ShareDataRow(item, this.documentListService, this.permissionsStyle, this.thumbnailService));
+                rows = data.map((item) => new ShareDataRow(item, this.documentListService, this.contentService, this.permissionsStyle, this.thumbnailService));
 
                 if (this.filter) {
                     rows = rows.filter(this.filter);

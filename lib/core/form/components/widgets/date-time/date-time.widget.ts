@@ -23,7 +23,7 @@ import { DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core'
 import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
-import { UserPreferencesService } from '../../../../services/user-preferences.service';
+import { UserPreferencesService, UserPreferenceValues } from '../../../../services/user-preferences.service';
 import { MomentDateAdapter } from '../../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../../utils/moment-date-formats.model';
 import { FormService } from './../../../services/form.service';
@@ -49,14 +49,15 @@ export class DateTimeWidgetComponent extends WidgetComponent implements OnInit {
 
     constructor(public formService: FormService,
                 private dateAdapter: DateAdapter<Moment>,
-                private preferences: UserPreferencesService) {
+                private userPreferencesService: UserPreferencesService) {
         super(formService);
     }
 
     ngOnInit() {
-        this.preferences.locale$.subscribe((locale) => {
+        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
+
         let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.field.dateDisplayFormat;
 

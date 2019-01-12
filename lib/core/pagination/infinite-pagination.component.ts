@@ -61,6 +61,8 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     @Output()
     loadMore: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
 
+    pagination: PaginationModel;
+
     private paginationSubscription: Subscription;
 
     constructor(private cdr: ChangeDetectorRef, private userPreferencesService: UserPreferencesService) {
@@ -76,9 +78,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
             });
         }
 
-        if (!this.pagination) {
-            this.pagination = InfinitePaginationComponent.DEFAULT_PAGINATION;
-        }
+        this.pagination = InfinitePaginationComponent.DEFAULT_PAGINATION;
     }
 
     onLoadMore() {
