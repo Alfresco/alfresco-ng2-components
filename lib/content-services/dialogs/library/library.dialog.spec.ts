@@ -260,7 +260,7 @@ describe('LibraryDialogComponent', () => {
         expect(component.form.controls.id.value).toBe('library-title');
     }));
 
-    it('should invalidate library title title if title is too short', fakeAsync(() => {
+    it('should invalidate library title if is too short', fakeAsync(() => {
         findSitesSpy.and.returnValue(Promise.resolve(findSitesResponse));
         spyOn(alfrescoApi.sitesApi, 'getSite').and.callFake(() => {
             return new Promise((resolve, reject) => reject());
