@@ -4,9 +4,9 @@ Title: Release notes v1.6.1
 
 # Alfresco Application Development Framework, version 1.6.1 Release Note
 
-These release notes provide information for the **1.6.1 release** of Alfresco Application Development Framework.
-This is the next **Limited Available** release of Application Development Framework, containing the Angular components to build a Web Application on top of the Alfresco Services.
-The release can be found on GitHub at [this link.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.6.1)
+These release notes provide information for the **1.6.1 release** of Alfresco Application Development Framework.
+This is the next **Limited Available** release of Application Development Framework, containing the Angular components to build a Web Application on top of the Alfresco Services.
+The release can be found on GitHub at [this link.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.6.1)
 
 ## Contents
 
@@ -38,11 +38,11 @@ The release can be found on GitHub at [this link.](https://github.com/Alfresc
 
 The roadmap for ADF is taking form, and we have a high focus on bringing in engaging design and UX, as well as add more and more content capabilities into ADF.
 
-Our focus while developing ADF 1.6.1 has been improving the Document List, Improved Preview, Finalize the design of the [Login component,](../core/login.component.md) External configuration, Performance enhancements for development, improvements in forms as well as paving the way for editing metadata and using forms for content.
+Our focus while developing ADF 1.6.1 has been improving the Document List, Improved Preview, Finalize the design of the [Login component,](../core/login.component.md) External configuration, Performance enhancements for development, improvements in forms as well as paving the way for editing metadata and using forms for content.
 
 This release builds on last month's contains bug fixes and new feature. See the list below for major details.
 
-Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues). You can collaborate on this release or share feedback by using the discussion tools on [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
+Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues). You can collaborate on this release or share feedback by using the discussion tools on [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
 
 ## Notable new features
 
@@ -71,32 +71,32 @@ _The ng2-alfresco-viewer if the [renditions service](../core/renditions.service.
 
 ### 2. Datatable loading state
 
-Is now possible define your custom loading template that will be shown during the loading of your data in the datatable:
+Is now possible define your custom loading template that will be shown during the loading of your data in the datatable:
 
     <alfresco-datatable
-        [data]="data"
-        [loading]=isLoading()">
+        [data]="data"
+        [loading]=isLoading()">
 
-            <loading-content-template>
-                <ng-template>
-                   <!--Add your custom loading template here-->
-                    <md-progress-spinner
-                        class="adf-document-list-loading-margin"
-                        [color]="'primary'"
-                        [mode]="'indeterminate'">
-                    </md-progress-spinner>
-                </ng-template>
-            </loading-content-template>
+            <loading-content-template>
+                <ng-template>
+                   <!--Add your custom loading template here-->
+                    <md-progress-spinner
+                        class="adf-document-list-loading-margin"
+                        [color]="'primary'"
+                        [mode]="'indeterminate'">
+                    </md-progress-spinner>
+                </ng-template>
+            </loading-content-template>
 
     </alfresco-datatable>
 
 ![](images/Jun-29-2017+11-34-06.gif)
 
-Refer to the [datable documentation](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-datatable#loading-content-template) for further details. With this modify also the n2-alfresco-documentlist has gained a loading state.
+Refer to the [datable documentation](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-datatable#loading-content-template) for further details. With this modify also the n2-alfresco-documentlist has gained a loading state.
 
 ### 3. New extension support in viewer
 
-The ng2-alfresco-viewer is now able to show files with txt extension natively and play wav and Mp3 files.
+The ng2-alfresco-viewer is now able to show files with txt extension natively and play wav and Mp3 files.
 
 ### 4. Extend TypeScript definitions for JS-API
 
@@ -106,33 +106,33 @@ We have added more methods in the type definition file of the alfresco-js-api to
 
 ### 5. ADF Card View
 
-The ADF Card is a generic component, which shows the properties received in input as a material design card.  The main idea was to create a component that can be shared among different components.
+The ADF Card is a generic component, which shows the properties received in input as a material design card.  The main idea was to create a component that can be shared among different components.
 
     <adf-card-view
-        [properties]="[{label: 'My Label', value: 'My value'}]">
+        [properties]="[{label: 'My Label', value: 'My value'}]">
     </adf-card-view>
 
 The properties are an array of CardViewModel
 
     export class CardViewModel {
-        label: string;
-        value: any;
-        key: any;
-        format: string;
-        default: string;
+        label: string;
+        value: any;
+        key: any;
+        format: string;
+        default: string;
 
-        constructor(obj?: any) {
-            this.label = obj.label || '';
-            this.value = obj.value;
-            this.key = obj.key;
-            this.format = obj.format;
-            this.default = obj.default;
-        }
+        constructor(obj?: any) {
+            this.label = obj.label || '';
+            this.value = obj.value;
+            this.key = obj.key;
+            this.format = obj.format;
+            this.default = obj.default;
+        }
     }
 
 As properties you can set the label, the value and other optional fields, such as the format and the default values.
 Specifically, the **format** propriety is useful to show a value in a custom format, for example, the date in DD/MM/YYYY or MM/DD/YYYY
-The **default** values allow initializing some properties as defined, in case the value provided is empty.
+The **default** values allow initializing some properties as defined, in case the value provided is empty.
 
 ### 6. Task Header Component
 
@@ -140,9 +140,9 @@ This component was already present in the previous ADF versions but we changed t
 The Task Header shows all the information related to the task.
 
     <div *ngIf="taskDetails">
-        <div class="mdl-grid mdl-shadow--2dp">
-            <adf-card-view [properties]="properties"></adf-card-view>
-        </div>
+        <div class="mdl-grid mdl-shadow--2dp">
+            <adf-card-view [properties]="properties"></adf-card-view>
+        </div>
     </div>
 
 Result:
@@ -151,19 +151,19 @@ Result:
 
 ### 7. Process and Task attachment list component
 
-This component shows all the attachments added to a task/process as a list. The component is using the [data table component](../../lib/core/datatable/components/datatable/datatable.component.ts) to show the list and the context menu with the actions. At the moment, you can open the attachment doing the double click on the row or select the action view from the menu actions. There is also the ability to download the attachment or remove it.
+This component shows all the attachments added to a task/process as a list. The component is using the [data table component](../../lib/core/datatable/components/datatable/datatable.component.ts) to show the list and the context menu with the actions. At the moment, you can open the attachment doing the double click on the row or select the action view from the menu actions. There is also the ability to download the attachment or remove it.
 
     <alfresco-datatable *ngIf="!isEmpty()"
-        [rows]="attachments"
-        [actions]="true"
-        (rowDblClick)="openContent($event)"
-        (showRowActionsMenu)="onShowRowActionsMenu($event)"
-        (executeRowAction)="onExecuteRowAction($event)">
-        <data-columns>
-            <data-column key="icon" type="icon" srTitle="Thumbnail" [sortable]="false"></data-column>
-            <data-column key="name" type="text" title="Name" class="full-width ellipsis-cell" [sortable]="true"></data-column>
-            <data-column key="created" type="date" format="shortDate" title="Date"></data-column>
-        </data-columns>
+        [rows]="attachments"
+        [actions]="true"
+        (rowDblClick)="openContent($event)"
+        (showRowActionsMenu)="onShowRowActionsMenu($event)"
+        (executeRowAction)="onExecuteRowAction($event)">
+        <data-columns>
+            <data-column key="icon" type="icon" srTitle="Thumbnail" [sortable]="false"></data-column>
+            <data-column key="name" type="text" title="Name" class="full-width ellipsis-cell" [sortable]="true"></data-column>
+            <data-column key="created" type="date" format="shortDate" title="Date"></data-column>
+        </data-columns>
     </alfresco-datatable>
 
 Result:
@@ -180,33 +180,33 @@ The [search component](../content-services/search.component.md) has the goal to 
 
 The [people list component](../process-services/people-list.component.md) shows all the people involved in a task in a list.
 
-The component is a wrapper of the data-table component with a custom action i.e. Remove the person from the list.
+The component is a wrapper of the data-table component with a custom action i.e. Remove the person from the list.
 
     <div class="assignment-container" *ngIf="showAssignment">
-        <activiti-people-search
-            (searchPeople)="searchUser($event)"
-            (success)="involveUser($event)"
-            (closeSearch)="onCloseSearch()"
-            [results]="peopleSearch$">
-            </activiti-people-search>
+        <activiti-people-search
+            (searchPeople)="searchUser($event)"
+            (success)="involveUser($event)"
+            (closeSearch)="onCloseSearch()"
+            [results]="peopleSearch$">
+            </activiti-people-search>
     </div>
     <div class="assignment-list-container" id="assignment-people-list" *ngIf="hasPeople()">
-       <adf-people-list [users]="people">
-          <data-columns>
-            <data-column key="firstName">
-              <ng-template let-entry="$implicit">
-                <div class="people-pic">{{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
-              </ng-template>
-            </data-column>
-            <data-column key="email" class="full-width">
-              <ng-template let-entry="$implicit">
-                <div class="adf-people-full-name">{{ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ') }}</div>
-                <div class="adf-people-email">{{ entry.row.obj.email }}</div>
-                <div class="adf-people-edit-label">can edit</div>
-              </ng-template>
-            </data-column>
-          </data-columns>
-       </adf-people-list>
+       <adf-people-list [users]="people">
+          <data-columns>
+            <data-column key="firstName">
+              <ng-template let-entry="$implicit">
+                <div class="people-pic">{{getInitialUserName(entry.row.obj.firstName, entry.row.obj.lastName)}}</div>
+              </ng-template>
+            </data-column>
+            <data-column key="email" class="full-width">
+              <ng-template let-entry="$implicit">
+                <div class="adf-people-full-name">{{ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ') }}</div>
+                <div class="adf-people-email">{{ entry.row.obj.email }}</div>
+                <div class="adf-people-edit-label">can edit</div>
+              </ng-template>
+            </data-column>
+          </data-columns>
+       </adf-people-list>
     </div>
 
 Add people search person result:
@@ -223,14 +223,14 @@ The Breadcrumbs has received a little cosmetic upgrade plus we have added also a
 
 ![](images/Screen+Shot+2017-06-29+at+01.06.36.png)
 
-The new property is **root**. You can specify in the root property the name of the folder where you want to tart the breadcrumb. Note: The root will always be shown as first element and it will continue to be displayed until you are not in a subfolder of it.
+The new property is **root**. You can specify in the root property the name of the folder where you want to tart the breadcrumb. Note: The root will always be shown as first element and it will continue to be displayed until you are not in a subfolder of it.
 
 Example:
 
     <adf-breadcrumb
-         [target]="documentList"
-         [root]="'New-Root'"
-         [folderNode]="newRootId">
+         [target]="documentList"
+         [root]="'New-Root'"
+         [folderNode]="newRootId">
     </adf-breadcrumb>
 
 Result:
@@ -239,18 +239,18 @@ Result:
 
 Note: The root will always be showed as first element and it will continue to be displayed until you are not in a subfolder of it.
 
-Refer to the [document list documentation](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-documentlist#properties-1) for further details.
+Refer to the [document list documentation](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-documentlist#properties-1) for further details.
 
 ### 10. Form events bus
 
-If you want to listen to all the events fired from the form you can subscribe to this [`Subject`](http://reactivex.io/documentation/subject.html):
+If you want to listen to all the events fired from the form you can subscribe to this [`Subject`](http://reactivex.io/documentation/subject.html):
 
     formService.formEvents.subscribe((event: Event) => {
-      console.log('Event fired:' + event.type);
-      console.log('Event Target:' + event.target);
+      console.log('Event fired:' + event.type);
+      console.log('Event Target:' + event.target);
     });
 
-Refer to the [form documentation](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-activiti-form#listen-all-form-events)
+Refer to the [form documentation](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-activiti-form#listen-all-form-events)
 for further details.
 
 ### 11. Form render independent from APS
@@ -268,13 +268,13 @@ And the underlying component controller code can be as follows:
 
     export class FormDemoComponent implements OnInit {
 
-      form: FormModel;
+      form: FormModel;
 
-      ngOnInit() {
-        let formDefinitionJSON: any = DemoForm.getDefinition();
-        let form = this.formService.parseForm(formDefinitionJSON);
-        this.form = form;
-      }
+      ngOnInit() {
+        let formDefinitionJSON: any = DemoForm.getDefinition();
+        let form = this.formService.parseForm(formDefinitionJSON);
+        this.form = form;
+      }
     }
 
 #### Parsing form definitions
@@ -289,12 +289,12 @@ It is now possible to control what happens when end users click the form outcome
 
     export class FormDemoComponent implements OnInit {
 
-      constructor(private formService: FormService) {
-        formService.executeOutcome.subscribe(e => {
-          e.preventDefault();
-          console.log(e.outcome);
-        });
-      }
+      constructor(private formService: FormService) {
+        formService.executeOutcome.subscribe(e => {
+          e.preventDefault();
+          console.log(e.outcome);
+        });
+      }
 
     }
 
@@ -305,17 +305,17 @@ It is now possible to have global (server-side) settings that enable or disable 
 By default, all application settings are stored in the "app.config.json" file in the root of your web application and have the following defaults:
 
     {
-        "ecmHost": "http://localhost:3000/ecm",
-        "bpmHost": "http://localhost:3000/bpm",
-        "application": {
-            "name": "Alfresco"
-        }
+        "ecmHost": "http://localhost:3000/ecm",
+        "bpmHost": "http://localhost:3000/bpm",
+        "application": {
+            "name": "Alfresco"
+        }
     }
 
 You can get more details on application configuration in the following articles:
 
--   [Demo App Readme](https://github.com/Alfresco/alfresco-ng2-components/blob/development/demo-shell-ng2/README.md#application-settings-server-side)
--   [AppConfigService Readme](https://github.com/Alfresco/alfresco-ng2-components/tree/development/ng2-components/ng2-alfresco-core#appconfigservice)
+-   [Demo App Readme](../..//demo-shell/README.md#application-settings-server-side)
+-   [AppConfigService Readme](../core/app-config.service.md)
 
 ### 13. Proxy settings and CORS
 
@@ -323,8 +323,8 @@ To greatly simplify development process the demo and generated applications now 
 
 You get the following settings by default (also applied to the Application settings)
 
--   <http://localhost:3000/ecm> is mapped to <http://localhost:8080>
--   <http://localhost:3000/bpm> is mapped to <http://localhost:9999>
+-   <http://localhost:3000/ecm> is mapped to <http://localhost:8080>
+-   <http://localhost:3000/bpm> is mapped to <http://localhost:9999>
 
 ### 14. Login restyling
 
@@ -336,13 +336,13 @@ If you would like to change default proxy settings, please edit the "**config/we
 
 ## References
 
-Below you can find a brief list of references to help you starting to use the new release.
+Below you can find a brief list of references to help you starting to use the new release.
 
-[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
+[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
 
 [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
 
-[Component catalog](http://devproducts.alfresco.com/)
+[Component catalog](http://devproducts.alfresco.com/)
 
 [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
 
@@ -352,13 +352,13 @@ Below you can find a brief list of references to help you starting to use the 
 
 [Alfresco-JS-API](https://github.com/Alfresco/alfresco-js-api)
 
-[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
+[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
-Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
+Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
 
 ## Issues addressed
 
-Below you can find a detailed list of tickets addressed in the new release. For a better understanding, the list is grouped by topic.
+Below you can find a detailed list of tickets addressed in the new release. For a better understanding, the list is grouped by topic.
 
 ## Feature
 
@@ -439,7 +439,7 @@ Below you can find a detailed list of tickets addressed in the new release. Fo
 ## Documentation
 
 -   \[[ADF-78](https://issues.alfresco.com/jira/browse/ADF-78)] - Update Activiti CORS setup guide - 1438 Github
--   \[[ADF-602](https://issues.alfresco.com/jira/browse/ADF-602)] - [Accordion Component](../core/accordion.component.md) - Documentation
+-   \[[ADF-602](https://issues.alfresco.com/jira/browse/ADF-602)] - Accordion Component - Documentation
 -   \[[ADF-776](https://issues.alfresco.com/jira/browse/ADF-776)] - Update ADF project from 1.4.0 to 1.5. 
 
-Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have more questions, please reply here or contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
+Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have more questions, please reply here or contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
