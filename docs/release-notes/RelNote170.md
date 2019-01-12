@@ -4,10 +4,10 @@ Title: Release notes v1.7.0
 
 # Alfresco Application Development Framework, version 1.7.0 Release Note
 
-These release notes provide information for the **1.7.0 release** of Alfresco Application Development Framework.
+These release notes provide information for the **1.7.0 release** of Alfresco Application Development Framework.
 
-This is the next **Limited Available** release of Application Development Framework, containing the Angular components to build a Web Application on top of the Alfresco Services.
-The release can be found on GitHub at [this link.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
+This is the next **Limited Available** release of Application Development Framework, containing the Angular components to build a Web Application on top of the Alfresco Services.
+The release can be found on GitHub at [this link.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
 
 ## Contents
 
@@ -19,12 +19,12 @@ The release can be found on GitHub at [this link.](https://github.com/Alfresc
     -   [4. Toolbar Component](#4-toolbar-component)
     -   [5. Upload Component New design](#5-upload-component-new-design)
     -   [6. Upload ignore list configuration service](#6-upload-ignore-list-configuration-service)
-    -   [7. Process Service Start Task New design]\(#7-process-service-start-task new-design)
+    -   [7. Process Service Start Task New design](#7-process-service-start-task-new-design)
     -   [8. Process Header Component](#8-process-header-component)
-    -   [9. Search list Component new delete file feature]\(#9-search-list-component new-delete-file-feature)
+    -   [9. Search list Component new delete file feature](#9-search-list-component-new-delete-file-feature)
     -   [10. Login new property](#10-login-new-property)
-    -   [11. TaskDetails - DueDate and Description editable](#11-taskDetails---duedate-and-description-editable)
-    -   [12. Configuration back end service hostname feature]\(#12-configuration-back-end-service hostname feature)
+    -   [11. TaskDetails - DueDate and Description editable](#11-taskdetails---duedate-and-description-editable)
+    -   [12. Configuration back end service hostname feature](#12-configuration-back-end-service-hostname-feature)
     -   [13. User Preferences Service](#13-user-preferences-service)
     -   [14. Search results highlighting properties](#14-search-results-highlighting-properties)
     -   [15. Change document list style rows based on permissions](#15-change-document-list-style-rows-based-on-permissions)
@@ -48,7 +48,7 @@ We have introduced a "Copy and Move" component that integrates into the document
 
 This release builds on last month's contains bug fixes and new feature. See the list below for major details.
 
-Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues). You can collaborate on this release or share feedback by using the discussion tools on [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
+Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues). You can collaborate on this release or share feedback by using the discussion tools on [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
 
 ## Notable new features
 
@@ -62,10 +62,10 @@ Below the most relevant features of this release:
 -   Upload ignore list configuration service
 -   Start Task New design
 -   Process Header Component
--   Search list Component new delete file feature
--   Login new property
+-   Search list Component new delete file feature
+-   Login new property
 -   TaskDetails - DueDate and Description editable
--   Configuration back end service hostname feature
+-   Configuration back end service hostname feature
 -   [User Preferences Service](../core/user-preferences.service.md)
 -   Search results highlighting properties
 -   Change document list style rows based on permissions
@@ -75,7 +75,7 @@ Below the most relevant features of this release:
 
 ### 1. ADF Prefix
 
-In the previous release, there was a mixing usage of TAG prefix for all the components ("alfresco-", "activiti-", "adf-" ) . We find out that this approach was quite cumbersome. Now all the component using only the  TAG adf- prefix.
+In the previous release, there was a mixing usage of TAG prefix for all the components ("alfresco-", "activiti-", "adf-" ) . We find out that this approach was quite cumbersome. Now all the component using only the  TAG adf- prefix.
 The good news is that you don't need to rename your old component because the old name also if are not suggested anymore to use will be still supported. If you want see the complete list of all our components please follow [this link.](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components)
 
 ### 2. Copy and Move component
@@ -83,30 +83,30 @@ The good news is that you don't need to rename your old component because the ol
 Two new content actions have been added, the "copy" and the "move" for both folders and files. You can define them the same way as you can do it for the existing content actions.
 
     <content-action
-        icon="content_copy"
-        target="folder"
-        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.COPY' | translate}}"
-        permission="update"
-        [disableWithNoPermission]="true"
-        handler="copy">
+        icon="content_copy"
+        target="folder"
+        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.COPY' | translate}}"
+        permission="update"
+        [disableWithNoPermission]="true"
+        handler="copy">
     </content-action>
     <content-action
-        icon="redo"
-        target="folder"
-        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.MOVE' | translate}}"
-        permission="update"
-        [disableWithNoPermission]="true"
-        handler="move">
+        icon="redo"
+        target="folder"
+        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.MOVE' | translate}}"
+        permission="update"
+        [disableWithNoPermission]="true"
+        handler="move">
     </content-action>
 
 ![](images/copy-move.gif)
 
 ### 3. Dropdown Sites/Favorites Component
 
-DocumentList now provides a site dropdown component to show and interact with the sites of the current user.
+DocumentList now provides a site dropdown component to show and interact with the sites of the current user.
 
      <adf-sites-dropdown
-      (change)="getSiteContent($event)">
+      (change)="getSiteContent($event)">
      </adf-sites-dropdown>
 
 ![](images/dropdown-sites.gif)
@@ -116,15 +116,15 @@ DocumentList now provides a site dropdown component to show and interact with t
 adf-toolbar is an easy container for headers, titles, actions, breadcrumbs.
 
     <adf-toolbar title="Toolbar">
-        <adf-toolbar-title>
-            <adf-breadcrumb ...></adf-breadcrumb>
-        </adf-toolbar-title>
-        <button md-icon-button>
-            <md-icon>create_new_folder</md-icon>
-        </button>
-        <button md-icon-button>
-            <md-icon>delete</md-icon>
-        </button>
+        <adf-toolbar-title>
+            <adf-breadcrumb ...></adf-breadcrumb>
+        </adf-toolbar-title>
+        <button md-icon-button>
+            <md-icon>create_new_folder</md-icon>
+        </button>
+        <button md-icon-button>
+            <md-icon>delete</md-icon>
+        </button>
     </adf-toolbar>
 
 ![](images/toobar.gif)
@@ -135,26 +135,26 @@ adf-toolbar is an easy container for headers, titles, actions, breadcrumbs.
 
 ### 6. Upload ignore list configuration service
 
-Is now possible add an ignore list for files that you don't want to allow upload on your CS. The configuration of this service is made through the [config service](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-core#appconfigservice)
+Is now possible add an ignore list for files that you don't want to allow upload on your CS. The configuration of this service is made through the [config service](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-core#appconfigservice)
 In the example below, you can see how filtered out the: '.git', '.DS_Store' and 'desktop.ini'.
 
 ```json
 {
-    "ecmHost": "[http://localhost:3000/ecm](http://localhost:3000/ecm)",
-    "bpmHost": "[http://localhost:3000/bpm](http://localhost:3000/bpm)",
-    "application": {
-        "name": "Alfresco"
-    },
-    "files": {
-          "excluded": [".DS_Store", "desktop.ini", ".git"]
-    }
+    "ecmHost": "[http://localhost:3000/ecm](http://localhost:3000/ecm)",
+    "bpmHost": "[http://localhost:3000/bpm](http://localhost:3000/bpm)",
+    "application": {
+        "name": "Alfresco"
+    },
+    "files": {
+          "excluded": [".DS_Store", "desktop.ini", ".git"]
+    }
 }
 ```
 
 -   Standard glob patterns work.
 -   You can end patterns with a forward slash / to specify a directory.
 
-### 7. Process Service Start Task New design
+### 7. Process Service Start Task New design
 
 Start Process task form has been redesigned:
 
@@ -165,14 +165,14 @@ Start Process task form has been redesigned:
 This component shows all the basic information of a process.
 
     <adf-process-instance-header
-        processInstance="localProcessDetails">
+        processInstance="localProcessDetails">
     </adf-process-instance-details>
 
-The component is using the **adf-card-view** component to render all the information like a card.
+The component is using the **adf-card-view** component to render all the information like a card.
 
 ![adf process header component](images/adf-process-instance-header-attachment.png)
 
-### 9. Search list Component new delete file feature
+### 9. Search list Component new delete file feature
 
 From now, it is possible to delete files (if you have permission) from within the search results.
 This action will do delete the particular file from your contents and NOT just from the search results.
@@ -181,7 +181,7 @@ This action will do delete the particular file from your contents and NOT just f
 
 ### 10. Login new property
 
-You can now customize the copyright text in the adf-login component using the copyrightText property:
+You can now customize the copyright text in the adf-login component using the copyrightText property:
 
 ![](images/Untitled.gif)
 
@@ -191,17 +191,17 @@ The due date and the description of the task details are now editable and integr
 
 ![](images/description.gif)
 
-### 12. Configuration back end service hostname feature
+### 12. Configuration back end service hostname feature
 
 [Application Configuration Service](https://github.com/Alfresco/alfresco-ng2-components/tree/development/ng2-components/ng2-alfresco-core#appconfigservice) (AppConfigService) gets support for dynamic variable substitution for APS and ACS endpoint settings.
 It is now possible having a configuration like given below:
 
     {
-        "ecmHost": "http://{hostname}:{port}/ecm",
-        "bpmHost": "http://{hostname}:{port}/bpm",
-        "application": {
-            "name": "Alfresco"
-        }
+        "ecmHost": "http://{hostname}:{port}/ecm",
+        "bpmHost": "http://{hostname}:{port}/bpm",
+        "application": {
+            "name": "Alfresco"
+        }
     }
 
 At runtime, the "hostname" and "port" variables will be automatically replaced with the actual values taken from the client machine. This helps reducing overhead with having multiple CI and E2E environments, all environments can use the same config file.
@@ -214,22 +214,22 @@ Developers have now a possibility storing and retrieving user preferences for ei
 
     @Component({...})
     class AppComponent {
-        constructor(userPreferences: UserPreferencesService) {
+        constructor(userPreferences: UserPreferencesService) {
 
-            userPreferences.set('myProperty1', 'value1');
-            userPreferences.set('myProperty2', 'value2');
+            userPreferences.set('myProperty1', 'value1');
+            userPreferences.set('myProperty2', 'value2');
 
-            console.log(
-                userPreferences.get('myProperty1')
-            );
-        }
+            console.log(
+                userPreferences.get('myProperty1')
+            );
+        }
     }
 
-The [`UserPreferencesService`](../core/user-preferences.service.md) provides an API needed to store preferences based on different profiles. You can now have multiple users on the same machine with different set of preferences (like pagination size, authentication type, etc).
+The [`UserPreferencesService`](../core/user-preferences.service.md) provides an API needed to store preferences based on different profiles. You can now have multiple users on the same machine with different set of preferences (like pagination size, authentication type, etc).
 
 ### 14. Search results highlighting properties
 
-With the current ADF version, we got a Pipe that has the goal to highlight a specific term found in the text. Basically, when the term has been found, a CSS class is added to the HTML code. By doing so it will be easy to customise the colour just overriding the CSS class.
+With the current ADF version, we got a Pipe that has the goal to highlight a specific term found in the text. Basically, when the term has been found, a CSS class is added to the HTML code. By doing so it will be easy to customise the colour just overriding the CSS class.
 Note that the Pipe can be used in all the template where this behaviour is needed, but at the moment we are using that only inside the search result.
 
 ![Pipe highlight](images/pipe-highlight.gif)
@@ -242,12 +242,12 @@ You can now customize the document list style row based on the permissions of th
 
 ### 16. APS Audit REST API in the JS API
 
-Two new methods has been added into the alfresco-js-api to support retrieve the audit informations inside the [process service](../process-services/process.service.md):
+Two new methods has been added into the alfresco-js-api to support retrieve the audit informations inside the [process service](../process-services/process.service.md):
 
 | API | Name | HTTP method | URL | Description |
 | --- | ---- | ----------- | --- | ----------- |
-| _ActivitiPublicRestApi.TaskApi_ | [**getTaskAuditJson**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditJson) | **GET**  | /api/enterprise/tasks/{taskId}/audit | Retrieve audit infromation in json format |
-| _ActivitiPublicRestApi.TaskApi_ | [**getTaskAuditPdf**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditPdf) | **GET**  | /app/rest/tasks/{taskId}/audit | Retrieve the task audit infromation in pdf format |
+| _ActivitiPublicRestApi.TaskApi_ | [**getTaskAuditJson**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditJson) | **GET**  | /api/enterprise/tasks/{taskId}/audit | Retrieve audit infromation in json format |
+| _ActivitiPublicRestApi.TaskApi_ | [**getTaskAuditPdf**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditPdf) | **GET**  | /app/rest/tasks/{taskId}/audit | Retrieve the task audit infromation in pdf format |
 
 For further details about those endepoints please refer to the [official documentation](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/TaskApi.md) 
 
@@ -268,20 +268,20 @@ The list below is the list of the new services added in 1.7.0:
 
 ### 18. Code Contribution Guide and CLA
 
-With the goal to make even easy contribute to our project, we have created a new [Contribution guide](https://github.com/Alfresco/alfresco-ng2-components/blob/master/CONTRIBUTING.md) to help all the people the community to contribute to the ADF code.
+With the goal to make even easy contribute to our project, we have created a new [Contribution guide](https://github.com/Alfresco/alfresco-ng2-components/blob/master/CONTRIBUTING.md) to help all the people the community to contribute to the ADF code.
 To make the contribution process smooth we have also added an automatic CLA (Contributor License Agreement) in our GitHub CI.
 
 ![](images/Screen+Shot+2017-07-31+at+20.16.25.png)
 
 ## References
 
-Below you can find a brief list of references to help you starting to use the new release.
+Below you can find a brief list of references to help you starting to use the new release.
 
-[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
+[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
 
 [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
 
-[Component catalog](http://devproducts.alfresco.com/)
+[Component catalog](http://devproducts.alfresco.com/)
 
 [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
 
@@ -291,13 +291,13 @@ Below you can find a brief list of references to help you starting to use the 
 
 [Alfresco-JS-API](https://github.com/Alfresco/alfresco-js-api)
 
-[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
+[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
-Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
+Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
 
 ## Issues addressed
 
-Below you can find a detailed list of tickets addressed in the new release. For a better understanding, the list is grouped by topic.
+Below you can find a detailed list of tickets addressed in the new release. For a better understanding, the list is grouped by topic.
 
 Release Notes - Apps Development Framework - Version 1.7. 
 
@@ -436,4 +436,4 @@ Release Notes - Apps Development Framework - Version 1.7.
 -   \[[ADF-1120](https://issues.alfresco.com/jira/browse/ADF-1120)] - Remove MDL button wrapper from ADF core
 -   \[[ADF-1144](https://issues.alfresco.com/jira/browse/ADF-1144)] - Deprecate MDL sidebar in demo shell
 
-Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have more questions, please reply here or contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
+Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have more questions, please reply here or contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).

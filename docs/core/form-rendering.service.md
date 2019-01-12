@@ -31,13 +31,13 @@ Maps a form field type string onto the corresponding form [widget component](../
 
 ## Details
 
-The [`Form`](../../lib/process-services/task-list/models/form.model.ts) Field component uses this service to choose which [widget](../../e2e/pages/adf/process_services/widgets/widget.ts) to use to render an instance of a
+The [`Form`](../../lib/process-services/task-list/models/form.model.ts) Field component uses this service to choose which widget to use to render an instance of a
 form field. The [`Form`](../../lib/process-services/task-list/models/form.model.ts) Field model stores the field type name as a string (see the table below).
 The [`Form`](../../lib/process-services/task-list/models/form.model.ts) Rendering service maintains a mapping between each type name and
 a corresponding `DynamicComponentResolveFunction`. The function takes a [`FormFieldModel`](../core/form-field.model.md) object as its argument and
-uses the data from the object to determine which [widget](../../e2e/pages/adf/process_services/widgets/widget.ts) should be used to render the field.
+uses the data from the object to determine which widget should be used to render the field.
 
-In some cases, the field type string alone is enough to determine the [widget](../../e2e/pages/adf/process_services/widgets/widget.ts) type and so the function
+In some cases, the field type string alone is enough to determine the widget type and so the function
 just returns the type directly:
 
 ```ts
@@ -45,7 +45,7 @@ let customResolver: DynamicComponentResolveFunction = () => CustomWidgetComponen
 formRenderingService.setComponentTypeResolver('text', customResolver, true);
 ```
 
-In other cases, the function may need to choose the [widget](../../e2e/pages/adf/process_services/widgets/widget.ts) dynamically based on
+In other cases, the function may need to choose the widget dynamically based on
 specific values in the form data:
 
 ```ts
@@ -95,7 +95,7 @@ if you set the `override` parameter to 'true':
 formRenderingService.setComponentTypeResolver('text', newResolver, true);
 ```
 
-You would typically use this to replace an existing [widget](../../e2e/pages/adf/process_services/widgets/widget.ts) with your own custom version that
+You would typically use this to replace an existing widget with your own custom version that
 implements a modified layout or responds differently when the data is entered. See the
 [Form Extensibility and Customisation](../user-guide/extensibility.md) guide for further details and examples
 of this technique.

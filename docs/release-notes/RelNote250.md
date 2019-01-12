@@ -4,11 +4,11 @@ Title: Release notes v2.5.0
 
 # Alfresco Application Development Framework, version 2.5.0 Release Note
 
-These release notes provide information about the **2.5.0 release**
+These release notes provide information about the **2.5.0 release**
 of the Alfresco Application Development Framework.
-This is the latest **General Available**
-release of the Application Development Framework, which contains the Angular components to build a Web Application on top of the Alfresco Platform.
-The release can be found on GitHub at
+This is the latest **General Available**
+release of the Application Development Framework, which contains the Angular components to build a Web Application on top of the Alfresco Platform.
+The release can be found on GitHub at
 [this location.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
 
 ### New name packages
@@ -31,7 +31,7 @@ The release can be found on GitHub at
     -   [NotificationService customizability improvement](#notificationservice-customizability-improvement)
     -   [Dynamic Table - Datetime widget](#dynamic-table---datetime-widget)
     -   [Attach a form to a standalone Task](#attach-a-form-to-a-standalone-task)
-    -   [Task list/Process list processDefinitionId filter]\(#task-listprocess-list processdefinitionid-filter)
+    -   [Task list/Process list processDefinitionId filter](#task-listprocess-list-processdefinitionid-filter)
     -   [Lazy loading improvements](#lazy-loading-improvements)
     -   [Localization](#localization)
 -   [References](#references)
@@ -49,11 +49,11 @@ The release can be found on GitHub at
 
 In this release we have focused on updating the version of the Angular and Material libraries from 5 to 6. The team has also spent part of the sprints improving the e2e test coverage.
 
-We truly believe in TDD and the whole library has a unit test coverage of 90%. The e2e coverage is still partly achieved with manual work but this is due to a technical debt that we want to fix. The commitment of the team to increasing the coverage of the automatic e2e tests is an added guarantee of the quality and stability that we want delivery in ADF.
+We truly believe in TDD and the whole library has a unit test coverage of 90%. The e2e coverage is still partly achieved with manual work but this is due to a technical debt that we want to fix. The commitment of the team to increasing the coverage of the automatic e2e tests is an added guarantee of the quality and stability that we want delivery in ADF.
 
-Amongst all this hard work, we also found a little time to add some new functionality and fix bugs.
+Amongst all this hard work, we also found a little time to add some new functionality and fix bugs.
 
-Please report issues with this release in the 
+Please report issues with this release in the 
 [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new).
 You can collaborate on this release or share feedback by using the discussion tools on
 [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
@@ -80,31 +80,31 @@ In this release, we have updated our direct dependency on the Angular and Materi
 
 ### Search Improvements
 
--   You can now select multiple buckets for the facet result. All buckets from the same facet are combined with logical "OR", so you can select "JPEG" and "PNG" for the "content.mimetype" for example.
--   Facet fields and queries now respect the order of declaration in the application configuration file. When rendering query results, the Search Filter uses the order of declaration.
+-   You can now select multiple buckets for the facet result. All buckets from the same facet are combined with logical "OR", so you can select "JPEG" and "PNG" for the "content.mimetype" for example.
+-   Facet fields and queries now respect the order of declaration in the application configuration file. When rendering query results, the Search Filter uses the order of declaration.
 -   Facet buckets get the numbers automatically updated based on user interaction.
 
 ### General Header component
 
-This component is a reusable header for Alfresco applications. It displays a customizable header that can be reused. Use the input properties to configure the left side (title, button) and the primary color of the header. The right side of the header can contain other components which are transcluded in the header component.
+This component is a reusable header for Alfresco applications. It displays a customizable header that can be reused. Use the input properties to configure the left side (title, button) and the primary color of the header. The right side of the header can contain other components which are transcluded in the header component.
 
     <adf-layout-header
-        title="title"
-        logo="logo.png"
-        [redirectUrl]="'/home'"
-        color="primary"
-        (toggled)=toggleMenu($event)>
-        .......
+        title="title"
+        logo="logo.png"
+        [redirectUrl]="'/home'"
+        color="primary"
+        (toggled)=toggleMenu($event)>
+        .......
      </adf-layout-header>
 
 ![Empty Page State](images/header.gif)
 
-For more information about this component please refer to the 
+For more information about this component please refer to the 
 [official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/header.component.md).
 
 ### Default metadata properties hide/show
 
-In ADF 2.5.0 you can now customize the metadata card with the option of showing or hiding the default properties of the file.
+In ADF 2.5.0 you can now customize the metadata card with the option of showing or hiding the default properties of the file.
 
     <adf-content-metadata-card .......
         [displayEmpty]="false">
@@ -117,63 +117,63 @@ In ADF 2.5.0 you can now customize the metadata card with the option of showin
 Two new property types are now available in the card view:
 
     new CardViewKeyValuePairsItemModel({
-        label: 'CardView Key-Value Pairs Item',
-        value: [],
-        key: 'key-value-pairs',
-        editable: this.isEditable
+        label: 'CardView Key-Value Pairs Item',
+        value: [],
+        key: 'key-value-pairs',
+        editable: this.isEditable
     }),
     new CardViewSelectItemModel({
-        label: 'CardView Select Item',
-        value: 'one',
-        options$: of([{ key: 'one', label: 'One' }, { key: 'two', label: 'Two' }]),
-        key: 'select',
-        editable: this.isEditable
+        label: 'CardView Select Item',
+        value: 'one',
+        options$: of([{ key: 'one', label: 'One' }, { key: 'two', label: 'Two' }]),
+        key: 'select',
+        editable: this.isEditable
     }),
 
-KeyValuePairs is a map key value that is rendered as shown in the image to the left. It uses a nicely-formatted table that allows also for easy editing.ViewSelectItem is a selectBox that allows you to limit the set of possible values for a property.
+KeyValuePairs is a map key value that is rendered as shown in the image to the left. It uses a nicely-formatted table that allows also for easy editing.ViewSelectItem is a selectBox that allows you to limit the set of possible values for a property.
 
 ![Card view](images/cardview.gif)
 
-For more information about this component please refer to the 
+For more information about this component please refer to the 
 [official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/card-view.component.md).
 
 ### NotificationService customizability improvement
 
-The NotificationService now exposes a new input parameter to allow a full customization of the notification message: 
+The NotificationService now exposes a new input parameter to allow a full customization of the notification message: 
 
--   Direction : Text layout direction for the snack bar.
--   Duration : The length of time in milliseconds to wait before automatically dismissing the snack bar.
--   Horizontal Position : The horizontal position to place the snack bar.
--   Vertical Position : The vertical position to place the snack bar.
--   panelClass :  Extra CSS classes to be added to the snack bar container.
+-   Direction : Text layout direction for the snack bar.
+-   Duration : The length of time in milliseconds to wait before automatically dismissing the snack bar.
+-   Horizontal Position : The horizontal position to place the snack bar.
+-   Vertical Position : The vertical position to place the snack bar.
+-   panelClass :  Extra CSS classes to be added to the snack bar container.
 
 ![Notification](images/notification2.gif)
 
-For more information about this component please refer to the 
+For more information about this component please refer to the 
 [official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/notification.service.md).
 
 ### Dynamic Table - Datetime widget
 
-You can now render DateTime items in the dynamic table of a form.
+You can now render DateTime items in the dynamic table of a form.
 
 ![Datetime datatable](images/date_time_datatable.gif)
 
 ### Attach a form to a standalone Task
 
-You can now attach a form to a new task that is not part of a Process using the task-standalone component 
+You can now attach a form to a new task that is not part of a Process using the task-standalone component 
 
     <adf-task-standalone
-        [taskName]= "taskname">
+        [taskName]= "taskname">
     </adf-task-standalone>
 
 ![Standalone task](images/Standalone+task.gif)
 
-For more information about this component please refer to the 
-[official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/process-services/task-standalone.component.md). 
+For more information about this component please refer to the 
+[official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/process-services/task-standalone.component.md). 
 
-### Task list/Process list processDefinitionId filter
+### Task list/Process list processDefinitionId filter
 
-A new input parameter processDefinitionId has been added to the Tasklist and the Processlist to allow you to filter the list by processDefinitionId.
+A new input parameter processDefinitionId has been added to the Tasklist and the Processlist to allow you to filter the list by processDefinitionId.
 
 ![Task List new processDefinitionId The Definition Id of the process](images/Screen+Shot+2018-08-12+at+15.51.18.png)
 
@@ -188,9 +188,9 @@ This release includes: French, German, Italian, Spanish, Japanese, Dutch, Norweg
 
 ## References
 
-Below you can find a brief list of references to help you start using the new release:
+Below you can find a brief list of references to help you start using the new release:
 
-[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
+[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
 
 [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
 
@@ -204,9 +204,9 @@ Below you can find a brief list of references to help you start using the new
 
 [Alfresco-JS-API](https://github.com/Alfresco/alfresco-js-api)
 
-[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
+[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
-Please refer to the 
+Please refer to the 
 [official documentation](http://docs.alfresco.com/)
 for further details and suggestions.
 
@@ -565,8 +565,8 @@ Release Notes - Apps Development Framework - Version 2.5.0
     [ADF-3369](https://issues.alfresco.com/jira/browse/ADF-3369)
     ] - Add 'showHeaderContent' property of adf-task-details set on false on Demo-Shell
 
-Please refer to 
+Please refer to 
 [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues)
-for other known issues in this release. If you have any questions about the release, please contact us
+for other known issues in this release. If you have any questions about the release, please contact us
 using
 [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
