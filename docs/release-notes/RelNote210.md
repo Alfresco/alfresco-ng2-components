@@ -4,28 +4,28 @@ Title: Release notes v2.1.0
 
 # Alfresco Application Development Framework, version 2.1.0 Release Note
 
-These release notes provide information for the **2.1.0 release** of the Alfresco Application Development Framework.
+These release notes provide information for the **2.1.0 release** of the Alfresco Application Development Framework.
 
-This is the first **General Available** release of the Application Development Framework, which contains the Angular components to build a Web Application on top of the Alfresco Services.
-The release can be found on GitHub at [this link.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
+This is the first **General Available** release of the Application Development Framework, which contains the Angular components to build a Web Application on top of the Alfresco Services.
+The release can be found on GitHub at [this link.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
 
 ## Contents
 
 -   [New name packages](#new-name-packages)
 -   [Goals for this release](#goals-for-this-release)
 -   [Notable new features](#notable-new-features)
-    -   [1. Viewer Enhancements]\(#1 viewer-enhancements)
-    -   [2. Upload file from CS widget]\(#2 upload-file-from cs-widget)
-    -   [3. Attach Folder from CS widget]\(#3 attach-folder-from-cs-widget)
-    -   [4. Content metadata component enhancements]\(#4 content-metadata-component-enhancements)
+    -   [1. Viewer Enhancements](#1-viewer-enhancements)
+    -   [2. Upload file from CS widget](#2-upload-file-from-cs-widget)
+    -   [3. Attach Folder from CS widget](#3-attach-folder-from-cs-widget)
+    -   [4. Content metadata component enhancements](#4-content-metadata-component-enhancements)
     -   [5. Start process from a file](#5-start-process-from-a-file)
     -   [6. Start form process prefilling values](#6-start-form-process-prefilling-values)
-    -   [7. Task List - Support custom HTML template and static columns]\(#7 task-list-- support-custom-html-template-and-static-columns)
+    -   [7. Task List - Support custom HTML template and static columns](#7-task-list---support-custom-html-template-and-static-columns)
     -   [8. Sidebar action menu](#8-sidebar-action-menu)
-    -   [9. Infinite pagination component enhancement]\(#9 infinite pagination-component-enhancement)
+    -   [9. Infinite pagination component enhancement](#9-infinite-pagination-component-enhancement)
     -   [10. App drop-down dialog selector](#10-app-drop-down-dialog-selector)
-    -   [11. JS-API Governance]\(#11 js-api-governance)
-    -   [12. Documentation]\(#12 documentation)
+    -   [11. JS-API Governance](#11-js-api-governance)
+    -   [12. Documentation](#12-documentation)
 -   [CI changes](#ci-changes)
 -   [References](#references)
 -   [Issues addressed](#issues-addressed)
@@ -56,7 +56,7 @@ Continuing on our journey for ADF, this release had a big focus on enhancing the
 
 The [Content Metadata component](../content-services/content-metadata.component.md) also got a lot of new features: It now has full support for custom metadata and aspects. It's dynamic and has complex configuration to enable exactly which aspects and properties you want to show in your app. These are just a few highlights for this release. See the full details below.
 
-This release builds on the one from last month and contains bug fixes and new features as listed below.
+This release builds on the one from last month and contains bug fixes and new features as listed below.
 Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
 
 ## Notable new features
@@ -68,15 +68,15 @@ Below are the most important new features of this release:
 -   Attach Folder from CS Widget
 -   [Content metadata component](../content-services/content-metadata.component.md) enhancements
 -   Start process from a file
--   Start form process pre-filling value
--   Task List - Support custom HTML template and static columns
+-   Start form process pre-filling value
+-   Task List - Support custom HTML template and static columns
 -   Sidebar action menu
--   Infinite pagination component enhancement
+-   Infinite pagination component enhancement
 -   App drop-down dialog selector
 -   JS-API Governance
--   Documentation enhancements
+-   Documentation enhancements
 
-### 1. Viewer Enhancements
+### 1. Viewer Enhancements
 
 In this release, the [Viewer component](../core/viewer.component.md) got improved styles and document processing enhancements:
 
@@ -85,40 +85,40 @@ In this release, the [Viewer component](../core/viewer.component.md) got improve
 -   automatic fallback to Thumbnail when PDF rendition is not available (for example when viewing Apple Keynote/Pages/Numbers files)
 -   support for viewing Shared links with a new "sharedLinkId" property that allows the Viewer to display shared content (does not require authentication)
 
-### 2. Upload file from CS widget
+### 2. Upload file from CS widget
 
 ![](images/pastedImage_1.gif)
 
 In this release we have re-enabled and improved the upload file widget of our [form component](../core/form.component.md).
 We have added the option to choose the file to upload from a configured ECM repository of APS.
 
-This allows you to start the navigation of ECM folders starting from a configured folder or just from the root. It also has an option to restrict the selection to files.
+This allows you to start the navigation of ECM folders starting from a configured folder or just from the root. It also has an option to restrict the selection to files.
 Sometimes you might want to allow the user to choose from all the sources. The new upload widget will show all the options in the menu when clicked.
 It is also possible to make it work like a normal local file uploader by configuring it to allow only local files.
 
-### 3. Attach Folder from CS widget
+### 3. Attach Folder from CS widget
 
 ![](images/pastedImage_3.gif)
 
 We have added the attach folder widget which is really useful in processes where you need to create your content in the ECM platform via APS .
-As you can see this widget works like the attach file widget in terms of navigation through the folders and restricting the selection to folders.
+As you can see this widget works like the attach file widget in terms of navigation through the folders and restricting the selection to folders.
 
-### 4. Content metadata component enhancements
+### 4. Content metadata component enhancements
 
 ![](images/content-metadata.gif)
 
 The purpose of the [content metadata component](../content-services/content-metadata.component.md) is to display the metadata belonging to a given node. Until now, the component was capable of displaying and making the basic properties editable, but with the latest enhancements, all of the system wide and custom aspects related to a particular node can be displayed and edited.
 
-The component can be configured from the application configuration. This way, you can easily restrict the displayed metadata to a list of aspects or even further, to just a subset or properties belonging to an aspect.
+The component can be configured from the application configuration. This way, you can easily restrict the displayed metadata to a list of aspects or even further, to just a subset or properties belonging to an aspect.
 
-For more information about the component see its [documentation](https://community.alfresco.com/docs/DOC-7301-introduction-to-the-new-content-metadata-component) or [this article](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/content-metadata.component.md).
+For more information about the component see its [documentation](https://community.alfresco.com/docs/DOC-7301-introduction-to-the-new-content-metadata-component) or [this article](../content-services/content-metadata.component.md).
 
 ### 5. Start process from a file
 
 ![](images/new-start-process.gif)
 
 After the repository is created in APS, you can see it in the Alfresco Repositories list. If the ID is set to 1 then all default values are fine. However, if it is set to something else, for example
-_1002_ and the name is _alfresco_, you must set the property alfrescoRepositoryName in your app.config.json file to _alfresco-1002_:
+_1002_ and the name is _alfresco_, you must set the property alfrescoRepositoryName in your app.config.json file to _alfresco-1002_:
 
     {
         name: 'Alfresco ADF Application'
@@ -128,80 +128,80 @@ _1002_ and the name is _alfresco_, you must set the property alfrescoReposito
     logLevel: 'silent',
     alfrescoRepositoryName : 'alfresco-1002'
 
-You then need to pass the node via the input values object along with the other properties:
+You then need to pass the node via the input values object along with the other properties:
 
     let node: MinimalNodeEntryEntity = this.nodesApiService.getNode(NODE_ID);
 
-    const formValues: FormValues  = {
-        'file' : node
-        'field_one': 'example text'
+    const formValues: FormValues  = {
+        'file' : node
+        'field_one': 'example text'
     };
 
-Note that in the object above, the key file is the name of the attach file field in the start form of the process. The value of the file property must be a [`MinimalNodeEntryEntity`](../content-services/document-library.model.md):
+Note that in the object above, the key file is the name of the attach file field in the start form of the process. The value of the file property must be a [`MinimalNodeEntryEntity`](../content-services/document-library.model.md):
 
     <adf-start-process
-        [values]="formValues"
-        [appId]="YOUR_APP_ID" >
+        [values]="formValues"
+        [appId]="YOUR_APP_ID" >
     </adf-start-process>
 
-For more information about this functionality see the documentation section linked below:
+For more information about this functionality see the documentation section linked below:
 
--   [Attaching a File to the start form of the process](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/start-process.component.md#attaching-a-file-to-the-start-form-of-the-process)
+-   [Attaching a File to the start form of the process](../process-services/start-process.component.md#attaching-a-file-to-the-start-form-of-the-process)
 
 ### 6. Start form process prefilling values
 
 Here is an example of how to pass in form field values to initialize the start form that has been defined for the process:
 
-    const formValues: FormValues  = {
-        'test_1': 'value_1',
-        'test_2': 'value_2',
-        'test_3': 'value_1',
-        'test_4': 'dropdown_id',
-        'test_5': 'dropdown_label',
-        'dropdown': {'id': 'dropdown_id', 'name': 'dropdown_label'}
+    const formValues: FormValues  = {
+        'test_1': 'value_1',
+        'test_2': 'value_2',
+        'test_3': 'value_1',
+        'test_4': 'dropdown_id',
+        'test_5': 'dropdown_label',
+        'dropdown': {'id': 'dropdown_id', 'name': 'dropdown_label'}
     };
 
     <adf-start-process
-        [values]="formValues"
-        [appId]="YOUR_APP_ID" >
+        [values]="formValues"
+        [appId]="YOUR_APP_ID" >
     </adf-start-process>
 
-With these settings, the start form will appear with the values above already filled in.
-For more information about this functionality see the following link:
+With these settings, the start form will appear with the values above already filled in.
+For more information about this functionality see the following link:
 
--   [Custom data form example](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/start-process.component.md#custom-data-example)
+-   [Custom data form example](../process-services/start-process.component.md#custom-data-example)
 
-### 7. Task List - Support custom HTML template and static columns
+### 7. Task List - Support custom HTML template and static columns
 
-With the previous ADF version, there was no way to combine a custom HTML template and static columns (configured in the **app.config.**json file, for example). With ADF 2.1.0 you can have both of them at the same time.
+With the previous ADF version, there was no way to combine a custom HTML template and static columns (configured in the **app.config.**json file, for example). With ADF 2.1.0 you can have both of them at the same time.
 
 For instance, we can display the Assignee (custom HTML template) and Task Name (Static column)
 
 The HTML contains a custom HTML template column
 
     <adf-tasklist>
-        <data-columns>
-            <data-column key="assignee" title="ASSIGNEE">
-                <ng-template let-entry="$implicit">
-                    <div>{{getFullName(entry.row.obj.assignee)}}</div>
-                </ng-template>
-            </data-column>
-        <data-columns>
+        <data-columns>
+            <data-column key="assignee" title="ASSIGNEE">
+                <ng-template let-entry="$implicit">
+                    <div>{{getFullName(entry.row.obj.assignee)}}</div>
+                </ng-template>
+            </data-column>
+        <data-columns>
     </adf-tasklist>
 
 app.config.json (contains a static column)
 
     "adf-task-list": {
-        "presets": {
-            "default": [
-                {
-                    "key": "name",
-                    "type": "text",
-                    "title": "NAME",
-                    "sortable": true
-                }
-            ]
-        }
+        "presets": {
+            "default": [
+                {
+                    "key": "name",
+                    "type": "text",
+                    "title": "NAME",
+                    "sortable": true
+                }
+            ]
+        }
     }
 
 This is the result:
@@ -210,7 +210,7 @@ This is the result:
 
 ### 8. Sidebar action menu
 
-This component displays a sidebar-action menu information panel. It is basically just a layout with CSS styling.
+This component displays a sidebar-action menu information panel. It is basically just a layout with CSS styling.
 There are three regions where you can add your own content, as shown in the example:
 
 -   sidebar-menu-title-icon
@@ -219,33 +219,33 @@ There are three regions where you can add your own content, as shown in the exam
 
 
     <adf-sidebar-action-menu title="Create">
-        <mat-icon sidebar-menu-title-icon>arrow_drop_down</mat-icon>
-        <div sidebar-menu-options>
-            <button mat-menu-item>
-                <span>New Task</span>
-            </button>
-            <button mat-menu-item>
-                <span>New Process</span>
-            </button>
-        </div>
+        <mat-icon sidebar-menu-title-icon>arrow_drop_down</mat-icon>
+        <div sidebar-menu-options>
+            <button mat-menu-item>
+                <span>New Task</span>
+            </button>
+            <button mat-menu-item>
+                <span>New Process</span>
+            </button>
+        </div>
     </adf-sidebar-action-menu>
 
 This is the result:
 
 ![Sidebar action menu](images/Screen+Shot+2018-01-26+at+16.06.41.png)
 
-You can also use the same component for mobile content
+You can also use the same component for mobile content
 
     <adf-sidebar-action-menu [expanded]="false">
-        <mat-icon sidebar-menu-expand-icon matTooltip="Create">queue</mat-icon>
-        <div sidebar-menu-options>
-            <button mat-menu-item (click)="onCreateClick('tasks')">
-                <span>New Task</span>
-            </button>
-            <button mat-menu-item (click)="onCreateClick('processes')">
-                <span>New Process</span>
-            </button>
-        </div>
+        <mat-icon sidebar-menu-expand-icon matTooltip="Create">queue</mat-icon>
+        <div sidebar-menu-options>
+            <button mat-menu-item (click)="onCreateClick('tasks')">
+                <span>New Task</span>
+            </button>
+            <button mat-menu-item (click)="onCreateClick('processes')">
+                <span>New Process</span>
+            </button>
+        </div>
     </adf-sidebar-action-menu>
 
 This is the result:
@@ -256,23 +256,23 @@ You can use the same component also to create a [Content Service](../core/conten
 
 ![Sidebar action menu content service](images/Screen+Shot+2018-01-26+at+16.28.15.png)
 
-For more information about this functionality see the following link:
+For more information about this functionality see the following link:
 
--   [Sidebar component](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/sidebar-action-menu.component.md)
+-   [Sidebar component](../core/sidebar-action-menu.component.md)
 
-### 9. Infinite pagination component enhancement
+### 9. Infinite pagination component enhancement
 
-We have added the [target] property in the [infinite pagination component](../core/infinite-pagination.component.md) to bring it in line with the [pagination component](../core/pagination.component.md). With this, the link between the infinite pagination and its target is simpler:
+We have added the [target] property in the [infinite pagination component](../core/infinite-pagination.component.md) to bring it in line with the [pagination component](../core/pagination.component.md). With this, the link between the infinite pagination and its target is simpler:
 
     <adf-infinite-pagination
-        [target]="documentList"
-        [loading="documentList.infiniteLoading">
+        [target]="documentList"
+        [loading="documentList.infiniteLoading">
     </adf-infinite-pagination>
 
 For more information about the infinite pagination see the following links:
 
--   [Infinite pagination component](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/infinite-pagination.component.md)
--   [Paginated component interface](https://github.com/Alfresco/alfresco-ng2-components/blob/18dc0711f93ebad7fbcadc50cd5a6e50c7667be9/lib/core/pagination/paginated-component.interface.ts)
+-   [Infinite pagination component](../core/infinite-pagination.component.md)
+-   [Paginated component interface](../../lib/core/pagination/paginated-component.interface.ts)
 
 ### 10. App drop-down dialog selector
 
@@ -280,42 +280,42 @@ For more information about the infinite pagination see the following links:
 
 ### 
 
-### 11. JS-API Governance
+### 11. JS-API Governance
 
-In order to enable the creation of new ADF component based on Alfresco Governance Services, we have updated the alfresco-js-api with all the governance core and classification API.
-For more information about this functionality see the following links:
+In order to enable the creation of new ADF component based on Alfresco Governance Services, we have updated the alfresco-js-api with all the governance core and classification API.
+For more information about this functionality see the following links:
 
 -   [Governance Core](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-gs-core-rest-api)
 -   [Governance Classification](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-gs-classification-rest-api)
 
-### 12. Documentation
+### 12. Documentation
 
-The Properties tables in the [documentation](https://alfresco.github.io/adf-component-catalog/) are now updated with the type and the default value of any property.
+The Properties tables in the [documentation](https://alfresco.github.io/adf-component-catalog/) are now updated with the type and the default value of any property.
 
 ## CI changes
 
-In our constant commitment to improving the quality of ADF we have also introduced one new automatic check over all the PRs:
+In our constant commitment to improving the quality of ADF we have also introduced one new automatic check over all the PRs:
 
 ![](images/Screen+Shot+2018-01-26+at+10.59.39.png)
 
-Codacy is a tool that checks the code style, security, duplication and complexity of any pull request. If you want more information on Codacy please visit their [website](https://community.alfresco.com/docs/DOC-7292/codacy.com)
+Codacy is a tool that checks the code style, security, duplication and complexity of any pull request. If you want more information on Codacy please visit their [website](https://community.alfresco.com/docs/DOC-7292/codacy.com)
 
 Application generators (Yeoman)
 Below are the most noteworthy changes in the generator:
 
--   Support for silent mode ton enable generators to be used in shell scripts and automated scenarios
+-   Support for silent mode ton enable generators to be used in shell scripts and automated scenarios
 -   All blueprints now also contain a basic Dockerfile to build docker images
--   All blueprints are updated to the latest angular cli 1.6.5 dependencies
+-   All blueprints are updated to the latest angular cli 1.6.5 dependencies
 
 ## References
 
-Below you can find a brief list of references to help you start to use the new release.
+Below you can find a brief list of references to help you start to use the new release.
 
-[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
+[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
 
 [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
 
-[Component catalog](https://alfresco.github.io/adf-component-catalog/)
+[Component catalog](https://alfresco.github.io/adf-component-catalog/)
 
 [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
 
@@ -325,9 +325,9 @@ Below you can find a brief list of references to help you start to use the new
 
 [Alfresco-JS-API](https://github.com/Alfresco/alfresco-js-api)
 
-[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
+[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
-Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
+Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
 
 ## Issues addressed
 
@@ -443,4 +443,4 @@ Release Notes - Apps Development Framework - Version 2.1.
 -   \[[ADF-2172](https://issues.alfresco.com/jira/browse/ADF-2172)] - Adding of data-automation-id tag for 'Create' process/task button.
 -   \[[ADF-2188](https://issues.alfresco.com/jira/browse/ADF-2188)] - Provide a workaround to change the processName without changing the code.
 
-Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have more questions, please reply here or contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
+Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have more questions, please reply here or contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).

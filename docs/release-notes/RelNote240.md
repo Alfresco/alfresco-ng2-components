@@ -5,7 +5,7 @@ Title: Release notes v2.4.0
 # Alfresco Application Development Framework, version 2.4.0 Release Note
 
 These release notes provide information about the **2.4.0 release** of the Alfresco Application Development Framework.
-This is the latest **General Available** release of the Application Development Framework, which contains the Angular components to build a Web Application on top of the Alfresco Platform.
+This is the latest **General Available** release of the Application Development Framework, which contains the Angular components to build a Web Application on top of the Alfresco Platform.
 The release can be found on GitHub at [this location.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
 
 ## Contents
@@ -14,7 +14,7 @@ The release can be found on GitHub at [this location.](https://github.com/Alfres
 -   [Goals for this release](#goals-for-this-release)
 -   [Notable new features](#notable-new-features)
     -   [SSO Login support](#sso-login-support)
-    -   [SSO Implicit Flow with Keycloak Login page]\(#sso implicit-flow-with-keycloak-login-page)
+    -   [SSO Implicit Flow with Keycloak Login page](#sso-implicit-flow-with-keycloak-login-page)
     -   [File versioning enhancement](#file-versioning-enhancement)
     -   [Empty Page Component](#empty-page-component)
     -   [TaskList Empty Page](#tasklist-empty-page)
@@ -46,7 +46,7 @@ The release can be found on GitHub at [this location.](https://github.com/Alfres
 
 ## Goals for this release
 
-This release introduces native support for OpenID Connect and oAuth2 implicit flows. This enables complex Single Sign-On configurations using JWT and OpenID Connect and aligns with the new authentication features in Alfresco Process Services (powered by Activiti) 1.9 and Alfresco Content Services 6.0 which both include native support for using Keycloak. If you have SSO requirements for your project then this release (along with APS 1.9, ACS 6.0, and Keycloak) will be useful to you. 
+This release introduces native support for OpenID Connect and oAuth2 implicit flows. This enables complex Single Sign-On configurations using JWT and OpenID Connect and aligns with the new authentication features in Alfresco Process Services (powered by Activiti) 1.9 and Alfresco Content Services 6.0 which both include native support for using Keycloak. If you have SSO requirements for your project then this release (along with APS 1.9, ACS 6.0, and Keycloak) will be useful to you. 
 
 The release also contains new components such as Error Pages and Empty Page. Searchs continues to be improved and the Upload component has new features to customize the upload flow by providing new events and configuration properties to enable providing metadata and nodeType as part of the upload. See all the new features and bug fixes below.
 
@@ -55,13 +55,13 @@ The release also contains new components such as Error Pages and Empty Page. Sea
 Below are the most important new features of this release:
 
 -   SSO Login support
--   SSO Implicit flow Keycloak login page
+-   SSO Implicit flow Keycloak login page
 -   File Versioning enhancements
 -   Empty Page Component
 -   TaskList Empty Page
 -   [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) Empty Page
 -   Error Page Component
--   Search Improvements 
+-   Search Improvements 
 -   [App config pipe](../core/app-config.pipe.md)
 -   Intercepting and Resuming Upload
 -   Conditional Visibility for Data Columns
@@ -78,17 +78,17 @@ For more information about how to configure SSO on ADF please refer to:
 
 ![Empty Page State](images/Screen+Shot+2018-06-24+at+18.40.41.png)
 
-### SSO Implicit Flow with Keycloak Login page
+### SSO Implicit Flow with Keycloak Login page
 
-You can configure the app.config.json file to redirect the user to the Keycloak login page to fetch the JWT token if you need this functionality.
+You can configure the app.config.json file to redirect the user to the Keycloak login page to fetch the JWT token if you need this functionality.
 
-As you can see from the configuration we are pointing to an Alfresco Process Services _(powered by Activiti)_ [_1.9.0_ ](https://www.alfresco.com/platform/process-services-bpm/trial/download) instance with Keycloak enabled ([http://myactivitikeycloak.com](https://community.alfresco.com/myactivitikeycloak.com)). 
+As you can see from the configuration we are pointing to an Alfresco Process Services _(powered by Activiti)_ [_1.9.0_ ](https://www.alfresco.com/platform/process-services-bpm/trial/download) instance with Keycloak enabled ([http://myactivitikeycloak.com](https://community.alfresco.com/myactivitikeycloak.com)). 
 AuthType is **OAuth**, which means that the JS API will add the JWT token as part of the header when an API call is performed. In addition, we provide all the necessary configuration for the Keycloak,
 **host, clientId, scope and redirectUri**.
 
 When the app is bootstrapped, the user is redirected to the Keycloak login if they are not logged in. 
-As a prerequisite, the user must be known to Keycloak and Activiti.
-Once the Keycloak login is performed the user is redirected back to the app based on the **redirectUri** that has been specified. From now on every time we do a call a JWT token is added to the header.
+As a prerequisite, the user must be known to Keycloak and Activiti.
+Once the Keycloak login is performed the user is redirected back to the app based on the **redirectUri** that has been specified. From now on every time we do a call a JWT token is added to the header.
 
 ![ADF SSO implicit flow with redirect](images/Screen+Shot+2018-06-25+at+11.14.34.png)
 
@@ -100,8 +100,8 @@ Once the Keycloak login is performed the user is redirected back to the app bas
 
 ### File versioning enhancement
 
-With ADF 2.4.0, you can now upload minor or major versions of a file. We have also removed the restriction where you were limited to uploading only same file types as new versions.
-For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/version-manager.component.md)
+With ADF 2.4.0, you can now upload minor or major versions of a file. We have also removed the restriction where you were limited to uploading only same file types as new versions.
+For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/version-manager.component.md)
 
 ![Verrsioning](images/Jun-24-2018+18-53-43.gif)
 
@@ -109,21 +109,21 @@ For more information about this component please refer to [the official documen
 
 We have created a general-purpose Empty Page Component to allow you to have a consistent empty state for your tables.
 This component needs just 3 inputs: icon, title, and subtitle.
-You can also transclude external content into the component's body.
-For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/empty-content.component.md) 
+You can also transclude external content into the component's body.
+For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/empty-content.component.md) 
 
 ![Empty Page State](images/EmptyPage.gif)
 
 ### TaskList Empty Page
 
-In the version 2.4, the TaskList uses the empty state component if there are no available tasks.
+In the version 2.4, the TaskList uses the empty state component if there are no available tasks.
 You can still override it from the parent component using `<ng-template>`.
 
 ![Task list Empty Page](images/Screen+Shot+2018-06-25+at+11.16.45.png)
 
 ### ProcessList Empty Page
 
-In the version 2.4, the [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) uses the empty state component if there are no available processes.   
+In the version 2.4, the [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) uses the empty state component if there are no available processes.   
 You can still override it from the parent component using `<ng-template>`.
 
 ![Process list Empty Page](images/Screen+Shot+2018-06-25+at+11.16.57.png)
@@ -131,7 +131,7 @@ You can still override it from the parent component using `<ng-template>`.
 ### Error Page Component
 
 We have created an error page component that will show buttons and messages relevant to the error that occurred (404, 403, etc...)
-For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/error-content.component.md) 
+For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/error-content.component.md) 
 
 ![404Example](images/404Error.gif)
 
@@ -144,8 +144,8 @@ In this release we have provided a great number of Search enhancements.
 -   Configuration schema for "app.config.json" updates that provide you with validation and code completion
 -   Server-side sorting with full customization support
 -   Support for custom widgets in the Search Filter
--   Multi-select facet, Date range facet, Number range facet,  Slider range facet
-    A full list of details and examples is available in the [Search filter component documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/search-filter.component.md)
+-   Multi-select facet, Date range facet, Number range facet,  Slider range facet
+    A full list of details and examples is available in the [Search filter component documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/search-filter.component.md)
 
 ![](images/pastedImage_1.png)
 
@@ -154,16 +154,16 @@ In this release we have provided a great number of Search enhancements.
 In 2.4.0 we provide a special Angular Pipe to deal with application configuration without coding overhead. You can now extract a value from the configuration directly into the component property or content:
 
     <adf-login
-        copyrightText="{{ 'application.copyright' | adfAppConfig }}">
+        copyrightText="{{ 'application.copyright' | adfAppConfig }}">
     </adf-login>
 
 Developers can also provide fallback values and chain the pipe with other pipes, such as Translate.
 
-You can find details and examples on the [App config pipe page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/app-config.pipe.md)
+You can find details and examples on the [App config pipe page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/app-config.pipe.md)
 
 ### Intercepting and Resuming Upload
 
-You can now intercept a file or folder upload to perform additional actions. With the current release you can:
+You can now intercept a file or folder upload to perform additional actions. With the current release you can:
 
 -   pause the upload process and get access to the array of file models prepared for upload
 -   show dialogs (confirmation or custom)
@@ -172,7 +172,7 @@ You can now intercept a file or folder upload to perform additional actions. Wi
 
 Note that this feature applies to all methods of uploading (drag and drop, buttons, etc).
 
-You can find more details and examples of how to set up the confirmation dialog on the [Upload drag area page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/upload-drag-area.component.md#intercepting-uploads)
+You can find more details and examples of how to set up the confirmation dialog on the [Upload drag area page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/upload-drag-area.component.md#intercepting-uploads)
 
 ![](images/adf-download-intercept.gif)
 
@@ -181,27 +181,27 @@ You can find more details and examples of how to set up the confirmation dialog�
 You can now toggle Data Column visibility based on a static value or expression.
 
     <data-column
-        *nfIg="showNameColumn"
-        key="name"
-        title="MY.RESOURCE.KEY">
+        *nfIg="showNameColumn"
+        key="name"
+        title="MY.RESOURCE.KEY">
     </data-column>
 
-Find more details and examples on the [Document list component page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/document-list.component.md#conditional-visibility)
+Find more details and examples on the [Document list component page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/document-list.component.md#conditional-visibility)
 
 ### Conditional States for Content Actions
 
-You can now control the visibility and disabled state of the Content Actions.
+You can now control the visibility and disabled state of the Content Actions.
 Specifically, you can:
 
 -   Set static values
 -   Bind to functions that take the corresponding node and evaluate the state
 
-More details are available on the [Content action component page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/content-action.component.md#conditional-visibility)
+More details are available on the [Content action component page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/content-action.component.md#conditional-visibility)
 
 ### Responsive Button Menu
 
-We have added a new component which allows you add a custom list of buttons. The list will automatically collapse into a burger menu choice for small screens so the menu button will always fit inside your page.
-See the [Buttons menu component page](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/buttons-menu.component.md) for more information.
+We have added a new component which allows you add a custom list of buttons. The list will automatically collapse into a burger menu choice for small screens so the menu button will always fit inside your page.
+See the [Buttons menu component page](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/buttons-menu.component.md) for more information.
 
 ![Responsive Button Menu](images/ButtonMenuResponsive.gif)
 
@@ -211,16 +211,16 @@ This release includes: French, German, Italian, Spanish, Japanese, Dutch, Norweg
 
 ## References
 
-Below you can find a brief list of references to help you start using the new release.
+Below you can find a brief list of references to help you start using the new release.
 
--   [Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
+-   [Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
 -   [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
 -   [Component catalog](https://alfresco.github.io/adf-component-catalog/)
 -   [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
 -   [ADF examples](https://github.com/Alfresco/adf-examples)
 -   [List of all components](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components)
 -   [Alfresco-JS-API](https://github.com/Alfresco/alfresco-js-api)
--   [ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
+-   [ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
 Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
 
@@ -460,4 +460,4 @@ Release Notes - Apps Development Framework - Version 2.4.0
 -   \[[ADF-3055](https://issues.alfresco.com/jira/browse/ADF-3055)] - pageSize not working for facetField
 -   \[[ADF-3060](https://issues.alfresco.com/jira/browse/ADF-3060)] - Multi-select facet basic (P2)
 
-Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have any questions about the release,please contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components) . 
+Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have any questions about the release,please contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components) . 

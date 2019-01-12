@@ -4,32 +4,32 @@ Title: Release notes v2.0.0
 
 # Alfresco Application Development Framework, version 2.0.0 Release Note
 
-These release notes provide information for the **2.0.0 release** of the Alfresco Application Development Framework.
+These release notes provide information for the **2.0.0 release** of the Alfresco Application Development Framework.
 
-This is the first **General Available** release of the Application Development Framework, which contains the Angular components to build a Web Application on top of the Alfresco Services.
-The release can be found on GitHub at [this link.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
+This is the first **General Available** release of the Application Development Framework, which contains the Angular components to build a Web Application on top of the Alfresco Services.
+The release can be found on GitHub at [this link.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
 
 ## Contents
 
 -   [New name packages](#new-name-packages)
 -   [Goals for this release](#goals-for-this-release)
 -   [Notable new features](#notable-new-features)
-    -   [1. Viewer Enhancements]\(#1 viewer-enhancements)
+    -   [1. Viewer Enhancements](#1-viewer-enhancements)
     -   [2. Pagination Component and DocumentList integration](#2-pagination-component-and-documentlist-integration)
     -   [3. Create Folder and Edit Folder dialogs](#3-create-folder-and-edit-folder-dialogs)
     -   [4. Editable file metadata](#4-editable-file-metadata)
     -   [5. File versioning](#5-file-versioning)
     -   [6. Search Component refactoring](#6-search-component-refactoring)
-    -   [7. Max file size constraints properties in Upload Button]\(#7-max-file-size-constraints properties-in-upload-button)
+    -   [7. Max file size constraints properties in Upload Button](#7-max-file-size-constraints-properties-in-upload-button)
     -   [8. Register Alfresco file type icons within the mat-icon](#8-register-alfresco-file-type-icons-within-the-mat-icon)
     -   [9. LogService configuration](#9-logservice-configuration)
     -   [10. Favorite node directive](#10-favorite-node-directive)
     -   [11. Delete multiple nodes directive](#11-delete-multiple-nodes-directive)
-    -   [12. Task Attachment List customizable template]\(#12-task attachment-list-customizable-template)
-    -   [13. CS and PS setting host component]\(#13 cs-and-ps-setting-host-component)
-    -   [14. Complete process service type definition in the alfresco-js-api]\(#14-complete-process-service-type definition-in-the-alfresco-js-api)
+    -   [12. Task Attachment List customizable template](#12-task-attachment-list-customizable-template)
+    -   [13. CS and PS setting host component](#13-cs-and-ps-setting-host-component)
+    -   [14. Complete process service type definition in the alfresco-js-api](#14-complete-process-service-type-definition-in-the-alfresco-js-api)
     -   [15. Redirect to original path upon successful login](#15-redirect-to-original-path-upon-successful-login)
-    -   [16. Task List override the columns]\(#16-task-list override-the-columns)
+    -   [16. Task List override the columns](#16-task-list-override-the-columns)
     -   [17. Internationalization support](#17-internationalization-support)
     -   [18. Document List enhancements](#18-document-list-enhancements)
 -   [Breaking changes](#breaking-changes)
@@ -39,10 +39,10 @@ The release can be found on GitHub at [this link.](https://github.com/Alfresc
     -   [Rename 'extension-viewer' component to 'adf-viewer-extension'](#rename-extension-viewer-component-to-adf-viewer-extension)
     -   [Deprecated Upload button and Drag area properties have been removed](#deprecated-upload-button-and-drag-area-properties-have-been-removed)
     -   [Internal pagination has been removed from the DocumentList](#internal-pagination-has-been-removed-from-the-documentlist)
-    -   [Internal search documentlist has been removed from the search component]\(#internal-search documentlist has-been-removed-from-the-search-component)
+    -   [Internal search documentlist has been removed from the search component](#internal-search-documentlist-has-been-removed-from-the-search-component)
 -   [CI changes](#ci-changes)
     -   [Bundle size checker](#bundle-size-checker)
-    -   [Security checker Snyk]\(#security checker-snyk)
+    -   [Security checker Snyk](#security-checker-snyk)
     -   [Application generators (Yeoman)](#application-generators-yeoman)
 -   [References](#references)
 -   [Issues addressed](#issues-addressed)
@@ -55,14 +55,14 @@ The release can be found on GitHub at [this link.](https://github.com/Alfresc
 
 ## New name packages
 
-From ADF 2.0 we split everything into four main packages:
+From ADF 2.0 we split everything into four main packages:
 
     "@alfresco/adf-content-services" : "2.0.0"
     "@alfresco/adf-process-services" : "2.0.0"
     "@alfresco/adf-core" : "2.0.0"
     "@alfresco/adf-insights" : "2.0.1"
 
-Please note the only major version valid for the package @alfresco/adf-insights is 2.0.1
+Please note the only major version valid for the package @alfresco/adf-insights is 2.0.1
 
 ## Goals for this release
 
@@ -74,7 +74,7 @@ We have continued to expand and rewrite our documentation. We now have a [new co
 The Yeoman generators have been updated. We now ship three small [Angular CLI](https://cli.angular.io)
 based applications to help get you started.
 
-Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues). Enterprise customers can now submit issues in the support portal. You can collaborate on this release or share feedback by using the discussion tools on [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
+Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues). Enterprise customers can now submit issues in the support portal. You can collaborate on this release or share feedback by using the discussion tools on [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
 
 The entire team has been working hard to make this release a reality and we're excited to share all the details!
 
@@ -88,19 +88,19 @@ Below the most relevant features of this release:
 -   Editable file metadata
 -   File versioning
 -   [Search Component](../content-services/search.component.md) refatoring
--   Max file size constraints properties in Upload Button
+-   Max file size constraints properties in Upload Button
 -   Register Alfresco file type icons within the mat-icon
 -   [`LogService`](../core/log.service.md) configuration
 -   Favorite node Directive
 -   Delete multiple nodes directive
 -   Task Attachment list customizable template
 -   CS and PS setting host component
--   Complete [process service](../process-services/process.service.md) type definition in the alfresco-js-api
+-   Complete [process service](../process-services/process.service.md) type definition in the alfresco-js-api
 -   Redirect to original path upon successful login
 -   Task List override the default columns
 -   Internationalization support
 
-### 1. Viewer Enhancements
+### 1. Viewer Enhancements
 
 The [Viewer component](../core/viewer.component.md) has been enhanced with the following features:
 
@@ -114,7 +114,7 @@ The [Viewer component](../core/viewer.component.md) has been enhanced with the f
 -   Custom "traffic light" menu that you can fill with your own content
 -   Ability to download the file previewed
 -   Ability to hide/show any button on the toolbar
--   Ability to hide, show or even replace entire [toolbar component](../core/toolbar.component.md)
+-   Ability to hide, show or even replace entire [toolbar component](../core/toolbar.component.md)
 
 ![](images/pastedImage_1.png)
 
@@ -123,7 +123,7 @@ This allows you to have separate URLs for previewing content and later revisitin
 
 In addition, the "Overlay" mode has been stabilised. It now handles subsequent reopenings correctly.
 
-You can find more details in the corresponding documentation: [Viewer Component](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/viewer.component.md).
+You can find more details in the corresponding documentation: [Viewer Component](../core/viewer.component.md).
 
 ### 2. Pagination Component and DocumentList integration
 
@@ -136,7 +136,7 @@ ADF provides a lightweight integration with the DocumentList component out of th
     <adf-pagination [target]="documentList" ...>
     </adf-pagination>
 
-For more details on custom pagination features see the following article: [Pagination Component](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/pagination.component.md)
+For more details on custom pagination features see the following article: [Pagination Component](../core/pagination.component.md)
 
 ### 3. Create Folder and Edit Folder dialogs
 
@@ -145,10 +145,10 @@ You can now use "Create Folder" and "Edit Folder" dialogs with your ACS-enabled 
 In order to greatly simplify your development experience, two extra Angular directives were introduced: "adf-create-folder" and "adf-edit-folder". These allow you to invoke dialogs from any clickable element, including other Angular components:
 
     <adf-toolbar>
-        <button mat-icon-button
-                [adf-create-folder]="documentList.currentFolderId">
-                <mat-icon>create_new_folder</mat-icon>
-        </button>
+        <button mat-icon-button
+                [adf-create-folder]="documentList.currentFolderId">
+                <mat-icon>create_new_folder</mat-icon>
+        </button>
     </adf-toolbar>
 
     <adf-document-list #documentList ...>
@@ -157,8 +157,8 @@ In order to greatly simplify your development experience, two extra Angular dire
 
 For more details please refer to:
 
--   [Folder Create directive](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/folder-create.directive.md)
--   [Folder Edit directive](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/folder-edit.directive.md)
+-   [Folder Create directive](../content-services/folder-create.directive.md)
+-   [Folder Edit directive](../content-services/folder-edit.directive.md)
 
 ### 4. Editable file metadata
 
@@ -170,7 +170,7 @@ Basic content metadata can now be displayed and edited with the new ContentMetad
 
 ### 5. File versioning
 
-You can now see and restore previous versions of a file node. This component can also be used in a dialog or in a sidebar layout. Being the first prototype, there are some restrictions applied on this component - check the documentation for details.
+You can now see and restore previous versions of a file node. This component can also be used in a dialog or in a sidebar layout. Being the first prototype, there are some restrictions applied on this component - check the documentation for details.
 
 ![file versions](images/versioning.gif)
 
@@ -193,13 +193,13 @@ For example :
 The adf-search component offers a simple way to customize your search results:
 
     <adf-search [searchTerm]="searchedWord">
-      <ng-template let-data>
-       <ul>
-          <li *ngFor="let item of data?.list?.entries; let idx = index">
-             ...
-          </li>
-       </ul>
-      </ng-template>
+      <ng-template let-data>
+       <ul>
+          <li *ngFor="let item of data?.list?.entries; let idx = index">
+             ...
+          </li>
+       </ul>
+      </ng-template>
     </adf-search>
 
 With this, you have access to the search results objects, so you can modify them as you like :
@@ -218,16 +218,16 @@ This allows you to fetch the search result typed from the input/textarea element
 
 For more details please refer to:
 
--   [Search Control Component](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/search-control.component.md)
--   [Search Component](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/search.component.md)
+-   [Search Control Component](../content-services/search-control.component.md)
+-   [Search Component](../content-services/search.component.md)
 
-### 7. Max file size constraints properties in Upload Button
+### 7. Max file size constraints properties in Upload Button
 
-The [upload button component](../content-services/upload-button.component.md) now provides a new parameter to disallow uploading files larger than a certain size (in bytes):
+The [upload button component](../content-services/upload-button.component.md) now provides a new parameter to disallow uploading files larger than a certain size (in bytes):
 
     <adf-upload-button [maxFilesSize]="20"></adf-upload-button>
 
-For more details please refer to [Upload button documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/upload-button.component.md)
+For more details please refer to [Upload button documentation](../content-services/upload-button.component.md)
 
 ### 8. Register Alfresco file type icons within the mat-icon
 
@@ -240,29 +240,29 @@ All the ADF MIME type icons are now registered into the MatIconRegistry. This im
     constructor(public thumbnailService: ThumbnailService) {
     }
 
-To see the list of all supported MIME types please refer to [Thumbnail service documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/thumbnail.service.md).
+To see the list of all supported MIME types please refer to [Thumbnail service documentation](../core/thumbnail.service.md).
 
 ### 9. LogService configuration
 
-The new logservice provides logging functionality for your ADF application. You can configure **_logLevel_** in **app.config.json**.
+The new logservice provides logging functionality for your ADF application. You can configure **_logLevel_** in **app.config.json**.
 By default the level is TRACE. If you want to silence all log output in ADF you can set it to SILENT:
 
     {
-        "logLevel": " SILENT"
+        "logLevel": " SILENT"
     }
 
-The [log service](../core/log.service.md) provides 6 level of logs: TRACE, DEBUG, INFO, WARN, ERROR, SILENT. For more information please refer to [log service documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/log.service.md)
+The [log service](../core/log.service.md) provides 6 level of logs: TRACE, DEBUG, INFO, WARN, ERROR, SILENT. For more information please refer to [log service documentation.](../core/log.service.md)
 
 ### 10. Favorite node directive
 
-The NodeFavoriteDirective instance can be bound to a button to retrieve and manage a favorites node list:
+The NodeFavoriteDirective instance can be bound to a button to retrieve and manage a favorites node list:
 
     <button mat-icon-button
-            #favorite="adfFavorite"
-            [adf-node-favorite]="nodeSelection">
-        <mat-icon>
-            {{ favorite.hasFavorites() ? 'star' :'star_border' }}
-        </mat-icon>
+            #favorite="adfFavorite"
+            [adf-node-favorite]="nodeSelection">
+        <mat-icon>
+            {{ favorite.hasFavorites() ? 'star' :'star_border' }}
+        </mat-icon>
     </button>
 
 ![](images/favorite.gif)
@@ -272,12 +272,12 @@ The NodeFavoriteDirective instance can be bound to a button to retrieve and m
 Deletes multiple files and folders.
 
     <button mat-icon-button
-            (delete)="onDelete()"
-            [adf-delete]="nodeSelection">
-        <mat-icon>delete</mat-icon>
+            (delete)="onDelete()"
+            [adf-delete]="nodeSelection">
+        <mat-icon>delete</mat-icon>
     </button>
 
-### 12. Task Attachment List customizable template
+### 12. Task Attachment List customizable template
 
 If there are no attachments for the selected task the [Task Attachment List component](../process-services/task-attachment-list.component.md) shows a basic empty template.
 
@@ -286,42 +286,42 @@ If there are no attachments for the selected task the [Task Attachment List comp
 If you want to customize and render a custom template, you can inject the **adf-empty-list** tag
 
     <adf-task-attachment-list
-        [taskId]="YOUR_TASK_ID">
-        <adf-empty-list>
-            <div adf-empty-list-header>This is the header of my empty list</div>
-            <div adf-empty-list-body>This is the body</div>
-            <div adf-empty-list-footer>>This is the footer</div>
-        </adf-empty-list>
+        [taskId]="YOUR_TASK_ID">
+        <adf-empty-list>
+            <div adf-empty-list-header>This is the header of my empty list</div>
+            <div adf-empty-list-body>This is the body</div>
+            <div adf-empty-list-footer>>This is the footer</div>
+        </adf-empty-list>
     </adf-task-attachment-list>
 
 Note that the [Task Attachment List component](../process-services/task-attachment-list.component.md) doesn't provide the Drag & Drop feature out-of-the-box. To add it, you must use an **adf-upload-drag-area** as the parent of this component. You can also specify a custom template:
 
     <adf-upload-drag-area
-        [parentId]="YOUR_TASK_ID">
-        <adf-task-attachment-list
-            [taskId]="YOUR_TASK_ID">
-            <adf-empty-list>
-                <div adf-empty-list-header>This List is empty</div>
-                <div adf-empty-list-body>Drag and drop to upload</div>
-                <div adf-empty-list-footer>
-                    <img [src]="Your custom image URL"></div>
-            </adf-empty-list>
-        </adf-task-attachment-list>
+        [parentId]="YOUR_TASK_ID">
+        <adf-task-attachment-list
+            [taskId]="YOUR_TASK_ID">
+            <adf-empty-list>
+                <div adf-empty-list-header>This List is empty</div>
+                <div adf-empty-list-body>Drag and drop to upload</div>
+                <div adf-empty-list-footer>
+                    <img [src]="Your custom image URL"></div>
+            </adf-empty-list>
+        </adf-task-attachment-list>
     </adf-upload-drag-area>
 
 This is the result:
 
 ![Task Attachment List drag & drop template](images/Screen+Shot+2017-11-29+at+12.50.22+copy.png)
 
-### 13. CS and PS setting host component
+### 13. CS and PS setting host component
 
 This component is a form that allows you to validate and set the URL of your CS and PS, saving it in the user's local storage
 
 ![](images/host-settings-component.png)
 
-For more information please refer to [host component documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/host-settings.component.md)
+For more information please refer to [host component documentation.](../core/host-settings.component.md)
 
-### 14. Complete process service type definition in the alfresco-js-api
+### 14. Complete process service type definition in the alfresco-js-api
 
 We have added all the [process service](../process-services/process.service.md) related models, class methods and type in the type definition file of the alfresco-js-api to help you with the autocomplete of your IDE.
 
@@ -331,41 +331,41 @@ We have added all the [process service](../process-services/process.service.md) 
 
 The [Login component](../core/login.component.md) now redirects users back to the originally requested URLs.
 
-For example, if you have a route "/my-files" protected by the **[`AuthGuardEcm`](../../lib/core/services/auth-guard-ecm.service.ts)** (for ACS-related content) or **[`AuthGuardBpm`](../../lib/core/services/auth-guard-bpm.service.ts)** (for APS-related content), users may be redirected to a "/login" route if they are not authenticated. Upon successful login, the user is then redirected back to the "/my-files" page.
+For example, if you have a route "/my-files" protected by the **[`AuthGuardEcm`](../../lib/core/services/auth-guard-ecm.service.ts)** (for ACS-related content) or **[`AuthGuardBpm`](../../lib/core/services/auth-guard-bpm.service.ts)** (for APS-related content), users may be redirected to a "/login" route if they are not authenticated. Upon successful login, the user is then redirected back to the "/my-files" page.
 
-### 16. Task List override the columns
+### 16. Task List override the columns
 
-With the current ADF release, you can override the Task List columns from the **app.config.json** file.
+With the current ADF release, you can override the Task List columns from the **app.config.json** file.
 
     "adf-task-list": {
-            "presets": {
-                "default": [
-                    {
-                        "key": "name",
-                        "type": "text",
-                        "title": "ADF_TASK_LIST.PROPERTIES.NAME",
-                        "sortable": true
-                    },
-                    {
-                        "key": "created",
-                        "type": "date",
-                        "title": "ADF_TASK_LIST.PROPERTIES.CREATED",
-                        "sortable": true
-                    },
-                    {
-                        "key": "priority",
-                        "type": "text",
-                        "title": "ADF_TASK_LIST.PROPERTIES.PRIORITY",
-                        "sortable": true
-                    },
-                    {
-                        "key": "assignee",
-                        "type": "text",
-                        "title": "ADF_TASK_LIST.PROPERTIES.ASSIGNEE",
-                        "sortable": true
-                    }
-                ]
-            }
+            "presets": {
+                "default": [
+                    {
+                        "key": "name",
+                        "type": "text",
+                        "title": "ADF_TASK_LIST.PROPERTIES.NAME",
+                        "sortable": true
+                    },
+                    {
+                        "key": "created",
+                        "type": "date",
+                        "title": "ADF_TASK_LIST.PROPERTIES.CREATED",
+                        "sortable": true
+                    },
+                    {
+                        "key": "priority",
+                        "type": "text",
+                        "title": "ADF_TASK_LIST.PROPERTIES.PRIORITY",
+                        "sortable": true
+                    },
+                    {
+                        "key": "assignee",
+                        "type": "text",
+                        "title": "ADF_TASK_LIST.PROPERTIES.ASSIGNEE",
+                        "sortable": true
+                    }
+                ]
+            }
     }
 
 This is the result:
@@ -390,9 +390,9 @@ From the version 2.0.0, all the components in ADF are natively translated into 1
 
 ### 18. Document List enhancements
 
-It is now possible to display the Sites (from ACS) that the currently logged-in user is a member of. You can do this by assigning the "**-mysites-**" alias to the "**currentFolderId**" property. The Document List automatically displays the required content.  If you want to display all available Sites use the "**-sites-**" alias, which is still supported.
+It is now possible to display the Sites (from ACS) that the currently logged-in user is a member of. You can do this by assigning the "**-mysites-**" alias to the "**currentFolderId**" property. The Document List automatically displays the required content.  If you want to display all available Sites use the "**-sites-**" alias, which is still supported.
 
-Also, the Document List now provides a customizable screen for permission errors. The users will see your custom content if they are trying to access any restricted content. The default permission screen is shown in the picture below:
+Also, the Document List now provides a customizable screen for permission errors. The users will see your custom content if they are trying to access any restricted content. The default permission screen is shown in the picture below:
 
 ![](images/pastedImage_2.png)
 
@@ -403,14 +403,14 @@ Also, the Document List now provides a customizable screen for permission errors
 -   Clean old prefix TAG name support
 -   Rename 'extension-viewer' component to 'adf-viewer-extension'
 -   Upload button and Drag area deprecated properties has been removed
--   DocumentList has been separated from the [search component](../content-services/search.component.md)
+-   DocumentList has been separated from the [search component](../content-services/search.component.md)
 -   'md' prefix is not supported anymore
--   Internal pagination has been removed from the  DocumentList
--   Internal search documentlist has been separated from the [search component](../content-services/search.component.md)
+-   Internal pagination has been removed from the  DocumentList
+-   Internal search documentlist has been separated from the [search component](../content-services/search.component.md)
 
 ### New name packages
 
-From ADF 2.0 we split everything into four main packages:
+From ADF 2.0 we split everything into four main packages:
 
     @alfresco/adf-content-services
     @alfresco/adf-process-services
@@ -418,12 +418,12 @@ From ADF 2.0 we split everything into four main packages:
     @alfresco/adf-insights
 
 The Alfresco Javascript API remains the same and will be deployed as previously.
-The structure of the Github repository has been rearranged to reflect these changes.
-The impact for developers using ADF is that the dependencies need to be adjusted (and simplified) in package.json, and all import statements in typescript files need to be changed.
+The structure of the Github repository has been rearranged to reflect these changes.
+The impact for developers using ADF is that the dependencies need to be adjusted (and simplified) in package.json, and all import statements in typescript files need to be changed.
 
 ### Clean all the events that start with "on"
 
-If you want to know more about why this modification was necessary, please see this [link](https://angular.io/guide/styleguide#dont-prefix-output-properties). Full details about the events that have been renamed are given below:
+If you want to know more about why this modification was necessary, please see this [link](https://angular.io/guide/styleguide#dont-prefix-output-properties). Full details about the events that have been renamed are given below:
 
 adf-analytics-generator, adf-analytics-report-list, adf-diagram, adf-login, adf-process-instance-filters, adf-process-instance-list, adf-filters:
 
@@ -463,11 +463,11 @@ adf-analytics:
 
 ### Remove old prefix TAG name support
 
-In the previous release, there was a mixed usage of TAG prefixes for all the components ("alfresco-", "activiti","adf-") We found this approach was quite cumbersome in 1.7.0 and so we renamed all of them using only the TAG **adf-** prefix. However, we still had backward compatibility for the old tags. **The compatibility with "alfresco-" and "activiti-" prefix is now discontinued from 2.0.0**
+In the previous release, there was a mixed usage of TAG prefixes for all the components ("alfresco-", "activiti","adf-") We found this approach was quite cumbersome in 1.7.0 and so we renamed all of them using only the TAG **adf-** prefix. However, we still had backward compatibility for the old tags. **The compatibility with "alfresco-" and "activiti-" prefix is now discontinued from 2.0.0**
 
 ### Rename 'extension-viewer' component to 'adf-viewer-extension'
 
-The **extension-viewer** tag (used to extend the viewer behavior to open extensions not supported by the standard viewer) has been renamed to **adf-viewer-extension**.
+The **extension-viewer** tag (used to extend the viewer behavior to open extensions not supported by the standard viewer) has been renamed to **adf-viewer-extension**.
 
 ### Deprecated Upload button and Drag area properties have been removed
 
@@ -475,38 +475,38 @@ The **extension-viewer** tag (used to extend the viewer behavior to open exten
 
 | Properties | Description |
 | ---------- | ----------- |
-| enabled |  Deprecated in 1.6.0 in favor of disabled input property |
-| showNotificationBar  | Deprecated in 1.6.0 you can use [`UploadService`](../core/upload.service.md) events and [`NotificationService`](../core/notification.service.md) api instead. |
-| currentFolderPath  | Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead. |
-| rootFolderId  | Deprecated in 1.6.0, this property is not used for couple of releases already. Use parentId instead |
+| enabled |  Deprecated in 1.6.0 in favor of disabled input property |
+| showNotificationBar  | Deprecated in 1.6.0 you can use [`UploadService`](../core/upload.service.md) events and [`NotificationService`](../core/notification.service.md) api instead. |
+| currentFolderPath  | Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead. |
+| rootFolderId  | Deprecated in 1.6.0, this property is not used for couple of releases already. Use parentId instead |
 
 **adf-upload-button :**
 
 | Properties | Description |
 | ---------- | ----------- |
-| showNotificationBar  | Deprecated in 1.6.0 you can use [`UploadService`](../core/upload.service.md) events and NotificationService api instead. |
-| currentFolderPath  | Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead. |
-| disableWithNoPermission  | Deprecated in 1.8.0, use the button with combination of adf-node-permission directive |
+| showNotificationBar  | Deprecated in 1.6.0 you can use [`UploadService`](../core/upload.service.md) events and NotificationService api instead. |
+| currentFolderPath  | Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead. |
+| disableWithNoPermission  | Deprecated in 1.8.0, use the button with combination of adf-node-permission directive |
 
 ### Internal pagination has been removed from the DocumentList
 
 The [search component](../content-services/search.component.md) has received a big refactor in this release in order to use the new search API. This gives better configurability as described above. The decoupling of the internal documentlist from the search allows you to customize the search result as you wish.
-Learn how to show the search result in a document list [here](https://github.com/Alfresco/alfresco-ng2-components/tree/master/demo-shell/src/app/components/search).
+Learn how to show the search result in a document list [here](https://github.com/Alfresco/alfresco-ng2-components/tree/master/demo-shell/src/app/components/search).
 
-### Internal search documentlist has been removed from the search component
+### Internal search documentlist has been removed from the search component
 
-Because is now possible to select between two different pagination strategies (**classic pagination** and** infinite scrolling**) we moved these options into separate components:
+Because is now possible to select between two different pagination strategies (**classic pagination** and** infinite scrolling**) we moved these options into separate components:
 
     <adf-document-list
-        .....>
+        .....>
     </adf-document-list>
     <adf-pagination
-        *ngIf="!infiniteScrolling"
-        .....>
+        *ngIf="!infiniteScrolling"
+        .....>
     </adf-pagination>
     <adf-infinite-pagination
-        *ngIf="infiniteScrolling"
-        .....>
+        *ngIf="infiniteScrolling"
+        .....>
     </adf-infinite-pagination>
 
 This modification will even allow you to write your own pagination if you need to or use our pagination system to paginate your own list.
@@ -521,9 +521,9 @@ In our constant commitment to improving the quality of ADF we have also introduc
 
 ![](images/bundle+size+check.png)
 
-### Security checker Snyk
+### Security checker Snyk
 
-[Snyk](https://snyk.io) is an open source tool that helps us to find and  fix known vulnerabilities in our dependencies
+[Snyk](https://snyk.io) is an open source tool that helps us to find and  fix known vulnerabilities in our dependencies
 
 ![](images/security+check.png)
 
@@ -533,7 +533,7 @@ This release features brand new application generators powered by Yeoman. All ou
 
     npm install -g generator-alfresco-adf-app
 
-In addition, the application generator provides support for "blueprints". The 2.0 release includes the following blueprints:
+In addition, the application generator provides support for "blueprints". The 2.0 release includes the following blueprints:
 
 -   Content Services Application
 -   Process Services Application
@@ -549,13 +549,13 @@ The tests run for all modifications to either the generator the underlying bluep
 
 ## References
 
-Below you can find a brief list of references to help you start to use the new release.
+Below you can find a brief list of references to help you start to use the new release.
 
-[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
+[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
 
 [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
 
-[Component catalog](https://alfresco.github.io/adf-component-catalog/)
+[Component catalog](https://alfresco.github.io/adf-component-catalog/)
 
 [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
 
@@ -565,9 +565,9 @@ Below you can find a brief list of references to help you start to use the new
 
 [Alfresco-JS-API](https://github.com/Alfresco/alfresco-js-api)
 
-[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
+[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
-Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
+Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
 
 ## Issues addressed
 
@@ -749,7 +749,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1861](https://issues.alfresco.com/jira/browse/ADF-1861)] - Line breaks not displayed in "Display Text" widget in forms
 -   \[[ADF-1862](https://issues.alfresco.com/jira/browse/ADF-1862)] - Adf toolbar should get the background color from the theme
 -   \[[ADF-1865](https://issues.alfresco.com/jira/browse/ADF-1865)] - [Document List] "Empty View" does not wrap long text
--   \[[ADF-1866](https://issues.alfresco.com/jira/browse/ADF-1866)] - [Accordion Component](../core/accordion.component.md) - Doesn't allow to close the menu
+-   \[[ADF-1866](https://issues.alfresco.com/jira/browse/ADF-1866)] - Accordion Component - Doesn't allow to close the menu
 -   \[[ADF-1871](https://issues.alfresco.com/jira/browse/ADF-1871)] - Tasklist IE 11 crash
 -   \[[ADF-1872](https://issues.alfresco.com/jira/browse/ADF-1872)] - TaskList Component - Doesn't show the currentTaskId highlited
 -   \[[ADF-1875](https://issues.alfresco.com/jira/browse/ADF-1875)] - [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) Component - Doesn't show the currentProcessId highlighted
@@ -833,4 +833,4 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-2040](https://issues.alfresco.com/jira/browse/ADF-2040)] - Date picker is not working when changing language.
 -   \[[ADF-2045](https://issues.alfresco.com/jira/browse/ADF-2045)] - [Demo-Shell][pagination](../../lib/content-services/document-list/models/document-library.model.ts) is not working properly on Search Results Page
 
-Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have more questions, please reply here or contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
+Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have more questions, please reply here or contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
