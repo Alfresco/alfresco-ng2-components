@@ -29,6 +29,7 @@ import { ContentNodeSelectorService } from './content-node-selector.service';
 import { debounceTime } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
+import { ShareDataRow } from '../document-list';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -67,6 +68,12 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
      */
     @Input()
     rowFilter: RowFilter = null;
+
+    /** Custom list of site content componentIds.
+     * Used to filter out the corresponding items from the displayed nodes
+     */
+    @Input()
+    excludeSiteContent: string[] = [];
 
     /** Custom image resolver function. See the
      * [Document List component](document-list.component.md#custom-row-filter)
@@ -159,6 +166,32 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
+        this.excludeSiteContent = this.excludeSiteContent ? this.excludeSiteContent : [];
+        this.rowFilter = this.getRowFilter(this.rowFilter);
+    }
+
+    private getRowFilter(initialFilterFunction): RowFilter {
+        if (!initialFilterFunction) {
+            initialFilterFunction = () => true;
+        }
+        return (value: ShareDataRow, index: number, array: ShareDataRow[]) => {
+            return initialFilterFunction(value, index, array) &&
+                !this.isExcludedSiteContent(value);
+        };
+    }
+
+    private isExcludedSiteContent(row: ShareDataRow): boolean {
+        const entry = row.node.entry;
+        if (this.excludeSiteContent.length &&
+            entry &&
+            entry.properties &&
+            entry.properties['st:componentId']) {
+            const excludedItem = this.excludeSiteContent.find(
+                (id: string) => entry.properties['st:componentId'] === id
+            );
+            return !!excludedItem;
+        }
+        return false;
     }
 
     /**
