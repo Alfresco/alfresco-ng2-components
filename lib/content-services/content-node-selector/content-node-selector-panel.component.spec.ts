@@ -107,6 +107,21 @@ describe('ContentNodeSelectorComponent', () => {
 
                 component.chosenNode = expectedNode;
             });
+
+            it('should be able to filter out the exclude site content', () => {
+                component.excludeSiteContent = ['blog'];
+                fixture.detectChanges();
+
+                const testSiteContent = new Node({id: 'blog-id', properties: { 'st:componentId': 'blog' }});
+                expect(component.rowFilter(<any> {node: {entry: testSiteContent}}, null, null)).toBe(false);
+            });
+
+            it('should NOT filter out any site content by default', () => {
+                fixture.detectChanges();
+
+                const testSiteContent = new Node({id: 'blog-id', properties: { 'st:componentId': 'blog' }});
+                expect(component.rowFilter(<any> {node: {entry: testSiteContent}}, null, null)).toBe(true);
+            });
         });
 
         describe('Breadcrumbs', () => {
