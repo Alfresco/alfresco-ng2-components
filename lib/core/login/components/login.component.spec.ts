@@ -90,7 +90,6 @@ describe('LoginComponent', () => {
     });
 
     function loginWithCredentials(username, password, providers: string = 'ECM') {
-        component.providers = providers;
         usernameInput.value = username;
         passwordInput.value = password;
 
@@ -393,7 +392,6 @@ describe('LoginComponent', () => {
     it('should return success event after the login have succeeded', (done) => {
         spyOn(authService, 'login').and.returnValue(of({ type: 'type', ticket: 'ticket' }));
 
-        component.providers = 'ECM';
         expect(component.isError).toBe(false);
 
         component.success.subscribe(() => {
@@ -409,7 +407,6 @@ describe('LoginComponent', () => {
     });
 
     it('should return error with a wrong username', (done) => {
-        component.providers = 'ECM';
 
         component.error.subscribe(() => {
             fixture.detectChanges();
@@ -424,8 +421,6 @@ describe('LoginComponent', () => {
     });
 
     it('should return error with a wrong password', (done) => {
-        component.providers = 'ECM';
-
         component.error.subscribe(() => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -440,8 +435,6 @@ describe('LoginComponent', () => {
     });
 
     it('should return error with a wrong username and password', (done) => {
-        component.providers = 'ECM';
-
         component.error.subscribe(() => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -462,7 +455,6 @@ describe('LoginComponent', () => {
                 message: 'ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin'
             }
         }));
-        component.providers = 'ECM';
 
         component.error.subscribe(() => {
             fixture.detectChanges();
@@ -480,7 +472,6 @@ describe('LoginComponent', () => {
     it('should return CSRF error when server CSRF error occurs', async(() => {
         spyOn(authService, 'login')
             .and.returnValue(throwError({ message: 'ERROR: Invalid CSRF-token', status: 403 }));
-        component.providers = 'ECM';
 
         component.error.subscribe(() => {
             fixture.detectChanges();
@@ -502,7 +493,6 @@ describe('LoginComponent', () => {
                     status: 403
                 }
             ));
-        component.providers = 'ECM';
 
         component.error.subscribe(() => {
             fixture.detectChanges();
@@ -516,8 +506,6 @@ describe('LoginComponent', () => {
     }));
 
     it('should emit success event after the login has succeeded and discard password', async(() => {
-        component.providers = 'ECM';
-
         component.success.subscribe((event) => {
             fixture.detectChanges();
 
@@ -532,7 +520,6 @@ describe('LoginComponent', () => {
 
     it('should emit error event after the login has failed', async(() => {
         spyOn(authService, 'login').and.returnValue(throwError('Fake server error'));
-        component.providers = 'ECM';
 
         component.error.subscribe((error) => {
             fixture.detectChanges();

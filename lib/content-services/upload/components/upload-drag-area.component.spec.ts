@@ -151,18 +151,7 @@ describe('UploadDragAreaComponent', () => {
             spyOn(uploadService, 'uploadFilesInTheQueue');
             fixture.detectChanges();
 
-            let itemEntity = {
-                fullPath: '/folder-fake/file-fake.png',
-                isDirectory: false,
-                isFile: true,
-                relativeFolder: '/',
-                name: 'file-fake.png',
-                file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
-                    callbackFile(fileFake);
-                }
-            };
-            component.onFilesDropped([itemEntity]);
+            component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { type: 'image/png' })]);
 
             expect(uploadService.addToQueue).not.toHaveBeenCalled();
             expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalled();
@@ -270,19 +259,9 @@ describe('UploadDragAreaComponent', () => {
             component.success = null;
             component.acceptedFilesType = '.png';
             fixture.detectChanges();
-            let itemEntity = {
-                fullPath: '/folder-fake/file-fake.png',
-                isDirectory: false,
-                isFile: true,
-                name: 'file-fake.png',
-                relativeFolder: '/',
-                file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
-                    callbackFile(fileFake);
-                }
-            };
+
             fixture.whenStable().then(() => {
-                component.onFilesDropped([itemEntity]);
+                component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { type: 'image/png' })]);
                 expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
             });
         }));
@@ -293,19 +272,8 @@ describe('UploadDragAreaComponent', () => {
             fixture.detectChanges();
             spyOn(uploadService, 'uploadFilesInTheQueue');
 
-            let itemEntity = {
-                fullPath: '/folder-fake/file-fake.png',
-                isDirectory: false,
-                isFile: true,
-                relativeFolder: '/',
-                name: 'file-fake.png',
-                file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
-                    callbackFile(fileFake);
-                }
-            };
             fixture.whenStable().then(() => {
-                component.onFilesDropped([itemEntity]);
+                component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { type: 'image/png' })]);
                 expect(uploadService.uploadFilesInTheQueue).not.toHaveBeenCalledWith(null);
             });
         }));
@@ -315,18 +283,7 @@ describe('UploadDragAreaComponent', () => {
             fixture.detectChanges();
             spyOn(uploadService, 'uploadFilesInTheQueue');
 
-            let itemEntity = {
-                fullPath: '/folder-fake/file-fake.png',
-                isDirectory: false,
-                isFile: true,
-                name: 'file-fake.png',
-                relativeFolder: '/',
-                file: (callbackFile) => {
-                    let fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
-                    callbackFile(fileFake);
-                }
-            };
-            component.onFilesDropped([itemEntity]);
+            component.onFilesDropped([new File(['fakefake'], 'file-fake.png', { type: 'image/png' })]);
             expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith(null);
         }));
 

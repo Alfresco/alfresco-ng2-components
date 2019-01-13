@@ -366,11 +366,9 @@ describe('Form service', () => {
             let data = [{ name: 'name' }, { name: 'email' }];
             let formDefinitionModel = new FormDefinitionModel(formId.toString(), name, 'testUserName', '2016-09-05T14:41:19.049Z', data);
 
-            return from(
-                this.editorApi.saveFor(form.id, formDefinitionModel)
-            );
-
-            service.addFieldsToAForm(formId, formDefinitionModel).subscribe((result) => {
+            from(
+                this.editorApi.saveForm(formId, formDefinitionModel)
+            ).subscribe((result) => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/form-models/' + formId)).toBeTruthy();
                 expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).formRepresentation.name).toEqual(name);
                 done();

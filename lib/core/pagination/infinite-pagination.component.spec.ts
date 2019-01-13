@@ -118,7 +118,6 @@ describe('InfinitePaginationComponent', () => {
             pagination = { maxItems: 444, skipCount: 0, totalItems: 888, hasMoreItems: true };
             testTarget = {
                 pagination: new BehaviorSubject<Pagination>(pagination),
-                supportedPageSizes: [],
                 updatePagination() {}
             };
 

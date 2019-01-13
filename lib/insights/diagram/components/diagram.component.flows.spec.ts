@@ -69,7 +69,7 @@ describe('Diagrams flows', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-sequence-flow > raphael-flow-arrow');
+                    let shape: any = element.querySelector('adf-diagram-sequence-flow > raphael-flow-arrow');
                     expect(shape).not.toBeNull();
 
                     let tooltip: any = element.querySelector('diagram-tooltip > div');
@@ -90,7 +90,7 @@ describe('Diagrams flows', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-sequence-flow > raphael-flow-arrow');
+                    let shape: any = element.querySelector('adf-diagram-sequence-flow > raphael-flow-arrow');
                     expect(shape).not.toBeNull();
 
                     let tooltip: any = element.querySelector('diagram-tooltip > div');
