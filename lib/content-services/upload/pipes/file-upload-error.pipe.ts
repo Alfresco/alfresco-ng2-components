@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-export * from './components/upload-button.component';
-export * from './components/upload-version-button.component';
-export * from './components/file-uploading-dialog.component';
-export * from './components/upload-drag-area.component';
-export * from './components/file-uploading-list.component';
-export * from './components/file-uploading-list-row.component';
-export * from './components/upload-files.event';
+import { Pipe, PipeTransform } from '@angular/core';
+import { TranslationService } from '@alfresco/adf-core';
 
-export * from './directives/file-draggable.directive';
+@Pipe({
+    name: 'adfFileUploadError',
+    pure: true
+})
+export class FileUploadErrorPipe implements PipeTransform {
 
-export * from './pipes/file-upload-error.pipe';
+    constructor(private translation: TranslationService) {
+    }
 
-export * from './components/base-upload/upload-base';
-
-export * from './upload.module';
+    transform(errorCode: number): string {
+        return this.translation.instant(`FILE_UPLOAD.ERRORS.${errorCode || 'GENERIC'}`);
+    }
+}
