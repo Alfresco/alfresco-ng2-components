@@ -27,7 +27,7 @@ Searches Groups.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | applicationName | `string` |  | Name of the application. If specified, shows the groups who have access to the app. |
-| mode | `string` | `single` | selection mode single or multiple |
+| mode | `string` | 'single' | Mode of the user selection (single/multiple). |
 | preSelectGroups | `GroupModel[]` |  Array of groups to be pre-selected. Pre-select all groups in `multiple` mode and only the first group of the array in `single` mode. |
 
 ### Events

@@ -79,9 +79,9 @@ export class GroupCloudService {
                 ).pipe(
                     map((response: any[]) => {
                         if (response && response.length > 0) {
-                            return (true);
+                            return true;
                         }
-                        return (false);
+                        return false;
                     }),
                     catchError((err) => this.handleError(err))
             );
