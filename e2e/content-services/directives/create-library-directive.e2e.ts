@@ -63,10 +63,14 @@ describe('Create library directive', function () {
         done();
     });
 
-    beforeEach(async (done) => {
-        await browser.actions().sendKeys(Key.ESCAPE).perform();
+    beforeEach( (done) => {
         contentServicesPage.goToDocumentList();
         contentServicesPage.openCreateLibraryDialog();
+        done();
+    });
+
+    afterEach(async (done) => {
+        await browser.actions().sendKeys(Key.ESCAPE).perform();
         done();
     });
 
