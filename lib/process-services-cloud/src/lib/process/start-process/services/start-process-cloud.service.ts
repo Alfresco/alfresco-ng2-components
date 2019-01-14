@@ -80,7 +80,7 @@ export class StartProcessCloudService {
         return from(this.alfrescoApiService.getInstance()
             .oauth2Auth.callCustomApi(queryUrl, 'POST',
                 null, null,
-                null, requestPayload, null,
+                null, null, requestPayload,
                 this.contentTypes, this.accepts,
                 this.returnType, null, null)
         ).pipe(
