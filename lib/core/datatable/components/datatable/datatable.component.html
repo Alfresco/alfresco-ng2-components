@@ -1,10 +1,11 @@
 <div
+    role="table"
     *ngIf="data" class="adf-full-width"
     [class.adf-data-table-card]="display === 'gallery'"
     [class.adf-data-table]="display === 'list'"
     [class.adf-data-table--empty]="isEmpty()">
-    <div *ngIf="isHeaderVisible()" class="adf-datatable-header">
-        <div class="adf-datatable-row" *ngIf="display === 'list'">
+    <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup">
+        <div class="adf-datatable-row" *ngIf="display === 'list'" role="row">
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-table-cell-header">
                 <span class="adf-sr-only">Actions</span>
@@ -21,7 +22,7 @@
                  [class.adf-data-table__header--sorted-desc]="isColumnSorted(col, 'desc')"
                  (click)="onColumnHeaderClick(col)"
                  (keyup.enter)="onColumnHeaderClick(col)"
-                 role="button"
+                 role="columnheader"
                  tabindex="0"
                  title="{{ col.title | translate }}">
                 <span *ngIf="col.srTitle" class="adf-sr-only">{{ col.srTitle | translate }}</span>
@@ -45,11 +46,11 @@
         </mat-form-field>
     </div>
 
-    <div class="adf-datatable-body">
+    <div class="adf-datatable-body" role="rowgroup">
         <ng-container *ngIf="!loading && !noPermission">
             <div *ngFor="let row of data.getRows(); let idx = index"
                  class="adf-datatable-row"
-                 role="button"
+                 role="row"
                  [class.adf-is-selected]="row.isSelected"
                  [adf-upload]="allowDropFiles && rowAllowsDrop(row)" [adf-upload-data]="row"
                  [ngStyle]="rowStyle"
@@ -58,6 +59,7 @@
                 <!-- Actions (left) -->
                 <div *ngIf="actions && actionsPosition === 'left'" class="adf-datatable-table-cell">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
+                            role="cell"
                             [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
                             [attr.id]="'action_menu_left_' + idx"
                             [attr.data-automation-id]="'action_menu_' + idx">
