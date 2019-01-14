@@ -9,10 +9,12 @@
         <adf-loading-content-template>
             <ng-template>
                 <mat-progress-spinner
+                    *ngIf="!customLoadingContent"
                     class="adf-cloud-process-list-loading-margin"
                     [color]="'primary'"
                     [mode]="'indeterminate'">
                 </mat-progress-spinner>
+                <ng-content select="adf-custom-loading-content-template"></ng-content>
             </ng-template>
         </adf-loading-content-template>
         <adf-no-content-template>
@@ -22,7 +24,7 @@
                     [title]="'ADF_CLOUD_PROCESS_LIST.MESSAGES.TITLE' | translate"
                     [subtitle]="'ADF_CLOUD_PROCESS_LIST.MESSAGES.SUBTITLE'| translate">
                 </adf-empty-content>
-                <ng-content select="adf-custom-empty-content"></ng-content>
+                <ng-content select="adf-custom-empty-content-template"></ng-content>
             </ng-template>
         </adf-no-content-template>
 </adf-datatable>

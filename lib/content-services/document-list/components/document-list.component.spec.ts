@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, TemplateRef, QueryList } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange, QueryList } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AlfrescoApiService, DataColumnListComponent, DataColumnComponent } from '@alfresco/adf-core';
 import { DataColumn, DataTableComponent } from '@alfresco/adf-core';
@@ -39,6 +39,7 @@ import { DocumentListComponent } from './document-list.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodeEntry } from '@alfresco/js-api';
+import { By } from '@angular/platform-browser';
 
 describe('DocumentList', () => {
 
@@ -846,42 +847,26 @@ describe('DocumentList', () => {
         expect(documentList.navigationMode).toBe(DocumentListComponent.SINGLE_CLICK_NAVIGATION);
     });
 
-    it('should require dataTable to check empty template', () => {
-        documentList.dataTable = null;
-        expect(documentList.isEmptyTemplateDefined()).toBeFalsy();
-    });
-
-    it('should check [empty folder] template ', () => {
-        documentList.emptyFolderTemplate = <TemplateRef<any>> {};
+    it('should display [empty folder] template ', () => {
+        fixture.detectChanges();
         documentList.dataTable = new DataTableComponent(null, null);
         expect(documentList.dataTable).toBeDefined();
-        expect(documentList.isEmptyTemplateDefined()).toBeTruthy();
-
-        documentList.emptyFolderTemplate = null;
-        expect(documentList.isEmptyTemplateDefined()).toBeFalsy();
+        expect(fixture.debugElement.query(By.css('adf-empty-list'))).not.toBeNull();
     });
 
-    it('should require dataTable to check no permission template', () => {
-        documentList.dataTable = null;
-        expect(documentList.isNoPermissionTemplateDefined()).toBe(false);
+    it('should display no permission template when the user has no permission', () => {
+        documentList.noPermission = true;
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('.adf-no-permission__template'))).not.toBeNull();
     });
 
-    it('should return true if custom permission template is provided', () => {
-        documentList.noPermissionTemplate = <TemplateRef<any>> {};
-        documentList.dataTable = new DataTableComponent(null, null);
-
-        expect(documentList.isNoPermissionTemplateDefined()).toBe(true);
-    });
-
-    it('should return false if no custom permission template is provided', () => {
-        documentList.noPermissionTemplate = null;
-        documentList.dataTable = new DataTableComponent(null, null);
-
-        expect(documentList.isNoPermissionTemplateDefined()).toBe(false);
+    it('should display loading template when data is loading', () => {
+        documentList.loading = true;
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('mat-progress-spinner'))).not.toBeNull();
     });
 
     it('should empty folder NOT show the pagination', () => {
-        documentList.emptyFolderTemplate = <TemplateRef<any>> {};
         documentList.dataTable = new DataTableComponent(null, null);
 
         expect(documentList.isEmpty()).toBeTruthy();

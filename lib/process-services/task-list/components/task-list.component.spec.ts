@@ -569,9 +569,9 @@ describe('CustomTaskListComponent', () => {
 @Component({
     template: `
     <adf-tasklist [appId]="1">
-        <adf-custom-empty-content>
+        <adf-custom-empty-content-template>
             <p id="custom-id">CUSTOM EMPTY</p>
-        </adf-custom-empty-content>
+        </adf-custom-empty-content-template>
     </adf-tasklist>
        `
 })

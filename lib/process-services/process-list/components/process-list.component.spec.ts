@@ -455,9 +455,9 @@ describe('CustomProcessListComponent', () => {
 @Component({
     template: `
     <adf-process-instance-list [appId]="1">
-        <adf-custom-empty-content>
+        <adf-custom-empty-content-template>
             <p id="custom-id"> No Process Instance</p>
-        </adf-custom-empty-content>
+        </adf-custom-empty-content-template>
     </adf-process-instance-list>
        `
 })

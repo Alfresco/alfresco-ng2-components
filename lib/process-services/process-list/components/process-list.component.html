@@ -1,31 +1,33 @@
 <adf-datatable #dataTable
-        [data]="data"
-        [rows]="rows"
-        [columns]="columns"
-        [sorting]="sorting"
-        [loading]="isLoading"
-        [selectionMode]="selectionMode"
-        [multiselect]="multiselect"
-        (rowClick)="onRowClick($event)"
-        (row-keyup)="onRowKeyUp($event)">
-        <adf-loading-content-template>
-            <ng-template>
-                <!--Add your custom loading template here-->
-                <mat-progress-spinner
-                    class="adf-process-list-loading-margin"
-                    [color]="'primary'"
-                    [mode]="'indeterminate'">
-                </mat-progress-spinner>
-            </ng-template>
-        </adf-loading-content-template>
-        <adf-no-content-template>
-            <ng-template>
-                    <adf-empty-content *ngIf="!customEmptyContent"
+    [data]="data"
+    [rows]="rows"
+    [columns]="columns"
+    [sorting]="sorting"
+    [loading]="isLoading"
+    [selectionMode]="selectionMode"
+    [multiselect]="multiselect"
+    (rowClick)="onRowClick($event)"
+    (row-keyup)="onRowKeyUp($event)">
+    <adf-loading-content-template>
+        <ng-template>
+            <!--Add your custom loading template here-->
+            <mat-progress-spinner
+                *ngIf="!customLoadingContent"
+                class="adf-process-list-loading-margin"
+                [color]="'primary'"
+                [mode]="'indeterminate'">
+            </mat-progress-spinner>
+            <ng-content select="adf-custom-loading-content-template"></ng-content>
+        </ng-template>
+    </adf-loading-content-template>
+    <adf-no-content-template>
+        <ng-template>
+                <adf-empty-content *ngIf="!customEmptyContent"
                     icon="assessment"
                     [title]="(requestNode ? 'ADF_PROCESS_LIST.LIST.TITLE' : 'ADF_PROCESS_LIST.FILTERS.MESSAGES.NONE') | translate "
                     [subtitle]="'ADF_PROCESS_LIST.LIST.SUBTITLE'| translate">
-                    </adf-empty-content>
-                <ng-content select="adf-custom-empty-content"></ng-content>
-            </ng-template>
-        </adf-no-content-template>
-    </adf-datatable>
+                </adf-empty-content>
+            <ng-content select="adf-custom-empty-content-template"></ng-content>
+        </ng-template>
+    </adf-no-content-template>
+</adf-datatable>
