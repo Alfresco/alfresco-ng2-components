@@ -41,7 +41,7 @@ export class CommentsComponent implements OnChanges {
     @Input()
     readOnly: boolean = false;
 
-    /** Emitted when an error occurs while displaying/adding a comment. */
+    /** Emitted when an error occurs while displaying or adding a comment. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 

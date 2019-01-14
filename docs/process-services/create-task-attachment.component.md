@@ -2,11 +2,12 @@
 Title: Create Task Attachment Component
 Added: v2.0.0
 Status: Active
+Last reviewed: 2019-01-14
 ---
 
-# [Create Task Attachment Component](../../lib/process-services/attachment/create-task-attachment.component.ts "Defined in create-task-attachment.component.ts")
+# [Create Task Attachment Component](../../process-services/attachment/create-task-attachment.component.ts "Defined in create-task-attachment.component.ts")
 
-Displays Upload Component (Drag and Click) to upload the attachment to a specified task
+Displays an Upload Component (Drag and Click) to upload an attachment to a specified task
 
 ![task-create-attachment](../docassets/images/task-create-attachment.png)
 

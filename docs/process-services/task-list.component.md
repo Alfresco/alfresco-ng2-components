@@ -2,10 +2,10 @@
 Title: Task List component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-16
+Last reviewed: 2019-01-14
 ---
 
-# [Task List component](../../lib/process-services/task-list/components/task-list.component.ts "Defined in task-list.component.ts")
+# [Task List component](../../process-services/task-list/components/task-list.component.ts "Defined in task-list.component.ts")
 
 Renders a list containing all the tasks matched by the parameters specified.
 
@@ -55,7 +55,7 @@ when the task list is empty:
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | The id of the app. |
 | assignment | `string` |  | The assignment of the process. Possible values are: "assignee" (the current user is the assignee), candidate (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value(the current user is involved). |
-| data | `DataTableAdapter` |  | (**Deprecated:** 2.4.0) Data source object that represents the number and the type of the columns that you want to show. |
+| data | [`DataTableAdapter`](../../core/datatable/data/datatable-adapter.ts) |  | (**Deprecated:** 2.4.0) Data source object that represents the number and the type of the columns that you want to show. |
 | dueAfter | `string` |  | Filter the tasks. Display only tasks with created_date after dueAfter. |
 | dueBefore | `string` |  | Filter the tasks. Display only tasks with created_date before dueBefore. |
 | includeProcessInstance | `boolean` |  | Toggles inclusion of Process Instances |
@@ -63,6 +63,7 @@ when the task list is empty:
 | multiselect | `boolean` | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
 | name | `string` |  | Name of the tasklist. |
 | page | `number` | 0 | The page number of the tasks to fetch. |
+| presetColumn | `string` |  | Custom preset column schema in JSON format. |
 | processDefinitionId | `string` |  | The Definition Id of the process. |
 | processDefinitionKey | `string` |  | (**Deprecated:** 2.4.0) The Definition Key of the process. |
 | processInstanceId | `string` |  | The Instance Id of the process. |
@@ -70,7 +71,7 @@ when the task list is empty:
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | size | `number` |  | The number of tasks to fetch. Default value: 25. |
 | sort | `string` |  | Define the sort order of the tasks. Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc` |
-| start | `number` | 0 | Starting point of the |
+| start | `number` |  | Starting point of the |
 | state | `string` |  | Current state of the process. Possible values are: `completed`, `active`. |
 | taskId | `string` |  | The id of a task |
 
@@ -172,7 +173,7 @@ You can use an HTML-based schema and an `app.config.json` custom schema declarat
 
 ### Setting Sorting Order for the list
 
-you can pass sorting order as shown in the example below:
+You can pass a sorting order as shown in the example below:
 
 ```ts
 // Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc`
@@ -209,8 +210,8 @@ The Tasklist also supports pagination as shown in the example below:
 
 ### DataTableAdapter example
 
-See the [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) page for full details of the interface and its standard
-implementation, [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts). Below is an example of how you can set up the adapter for a
+See the [`DataTableAdapter`](../../core/datatable/data/datatable-adapter.ts) page for full details of the interface and its standard
+implementation, [`ObjectDataTableAdapter`](../../core/datatable/data/object-datatable-adapter.ts). Below is an example of how you can set up the adapter for a
 typical tasklist.
 
 ```json
@@ -224,10 +225,10 @@ typical tasklist.
 
 ### DataColumn Features
 
-You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) page for more information about these features.
+You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [`DataColumn`](../../core/datatable/data/data-column.model.ts) page for more information about these features.
 
 ## See also
 
 -   [Data column component](../core/data-column.component.md)
--   [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts)
+-   [`DataTableAdapter`](../../core/datatable/data/datatable-adapter.ts)
 -   [Pagination component](../core/pagination.component.md)

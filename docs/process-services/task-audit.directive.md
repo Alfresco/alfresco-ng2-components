@@ -2,11 +2,12 @@
 Title: Task Audit Directive
 Added: v2.0.0
 Status: Active
+Last reviewed: 2019-01-14
 ---
 
-# [Task Audit Directive](../../lib/process-services/task-list/components/task-audit.directive.ts "Defined in task-audit.directive.ts")
+# [Task Audit Directive](../../process-services/task-list/components/task-audit.directive.ts "Defined in task-audit.directive.ts")
 
-Fetches the Task Audit information in PDF or JSON format.
+Fetches Task Audit information in PDF or JSON format.
 
 ![adf-task-audit-directive](../docassets/images/adf-task-audit-directive.png)
 

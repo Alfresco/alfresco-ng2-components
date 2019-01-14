@@ -2,9 +2,10 @@
 Title: Node Name Tooltip pipe
 Added: v2.0.0
 Status: Active
+Last reviewed: 2019-01-14
 ---
 
-# [Node Name Tooltip pipe](../../lib/core/pipes/node-name-tooltip.pipe.ts "Defined in node-name-tooltip.pipe.ts")
+# [Node Name Tooltip pipe](../../core/pipes/node-name-tooltip.pipe.ts "Defined in node-name-tooltip.pipe.ts")
 
 Formats the tooltip for a Node.
 

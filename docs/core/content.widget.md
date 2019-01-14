@@ -2,6 +2,7 @@
 Title: APS Content Component
 Added: v2.0.0
 Status: Active
+Last reviewed: 2019-01-14
 ---
 
 # [APS Content Component](../../core/form/components/widgets/content/content.widget.ts "Defined in content.widget.ts")

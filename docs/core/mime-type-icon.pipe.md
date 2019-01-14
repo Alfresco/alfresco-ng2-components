@@ -2,9 +2,10 @@
 Title: Mime Type Icon pipe
 Added: v2.0.0
 Status: Active
+Last reviewed: 2019-01-14
 ---
 
-# [Mime Type Icon pipe](../../lib/core/pipes/mime-type-icon.pipe.ts "Defined in mime-type-icon.pipe.ts")
+# [Mime Type Icon pipe](../../core/pipes/mime-type-icon.pipe.ts "Defined in mime-type-icon.pipe.ts")
 
 Retrieves an icon to represent a MIME type.
 

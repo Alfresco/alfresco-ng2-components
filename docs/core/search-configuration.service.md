@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-09-13
 ---
 
-# [Search Configuration service](../../lib/core/services/search-configuration.service.ts "Defined in search-configuration.service.ts")
+# [Search Configuration service](../../core/services/search-configuration.service.ts "Defined in search-configuration.service.ts")
 
 Provides fine control of parameters to a search.
 
@@ -18,7 +18,7 @@ Provides fine control of parameters to a search.
     -   _searchTerm:_ `string`  - Term text to search for
     -   _maxResults:_ `number`  - Maximum number of search results to show in a page
     -   _skipCount:_ `number`  - The offset of the start of the page within the results list
-    -   **Returns** `QueryBody` - Query body defined by the parameters
+    -   **Returns** `QueryBody` - [Query](../../e2e/actions/APS-cloud/query.ts) body defined by the parameters
 
 ## Details
 

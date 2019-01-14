@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [Rating component](../../lib/content-services/social/rating.component.ts "Defined in rating.component.ts")
+# [Rating component](../../content-services/social/rating.component.ts "Defined in rating.component.ts")
 
 Allows a user to add ratings to an item.
 

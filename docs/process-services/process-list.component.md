@@ -2,10 +2,10 @@
 Title: Process Instance List
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-05-24
+Last reviewed: 2019-01-14
 ---
 
-# [Process Instance List](../../lib/process-services/process-list/components/process-list.component.ts "Defined in process-list.component.ts")
+# [Process Instance List](../../process-services/process-list/components/process-list.component.ts "Defined in process-list.component.ts")
 
 Renders a list containing all the process instances matched by the parameters specified.
 
@@ -52,9 +52,10 @@ when the process list is empty:
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | The id of the app. |
-| data | `DataTableAdapter` |  | Data source to define the datatable. |
+| data | [`DataTableAdapter`](../../core/datatable/data/datatable-adapter.ts) |  | Data source to define the datatable. |
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row |
 | page | `number` | 0 | The page number of the processes to fetch. |
+| presetColumn | `string` |  | Custom preset column schema in JSON format. |
 | processDefinitionId | `string` |  | The Definition Id of the process. |
 | processDefinitionKey | `string` |  | (**Deprecated:** 2.4.0) The Definition Key of the process. |
 | processInstanceId | `number \| string` |  | The id of the process instance. |
@@ -70,7 +71,7 @@ when the process list is empty:
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<ProcessListModel>` | Emitted when the list of process instances has been loaded successfully from the server. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessListModel`](../../process-services/process-list/models/process-list.model.ts)`>` | Emitted when the list of process instances has been loaded successfully from the server. |
 
 ## Details
 
@@ -149,7 +150,7 @@ information defined in `app.config.json` as in the example below:
 
 ### Setting Sorting Order for the list
 
-you can pass sorting order as shown in the example below:
+You can pass a sorting order as shown in the example below:
 
 ```ts
 // Possible values are : `created-desc`, `created-asc`, `ended-desc`, `ended-asc` |

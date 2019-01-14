@@ -2,11 +2,12 @@
 Title: Process Audit Directive
 Added: v2.0.0
 Status: Active
+Last reviewed: 2019-01-14
 ---
 
-# [Process Audit Directive](../../lib/process-services/process-list/components/process-audit.directive.ts "Defined in process-audit.directive.ts")
+# [Process Audit Directive](../../process-services/process-list/components/process-audit.directive.ts "Defined in process-audit.directive.ts")
 
-Fetches the Process Audit information the PDF or JSON format.
+Fetches Process Audit information in PDF or JSON format.
 
 ![adf-process-audit-directive](../docassets/images/adf-process-audit-directive.png)
 
