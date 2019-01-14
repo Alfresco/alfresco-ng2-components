@@ -38,7 +38,7 @@ describe('Start Process', () => {
     const requiredError = 'Process Name is required';
     const requiredProcessError = 'Process Definition is required';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    const appName = 'simple-app', noProcessApp = 'test-dpk';
+    const appName = 'simple-app', noProcessApp = 'noprocessapp';
     let silentLogin;
 
     beforeAll((done) => {
@@ -86,6 +86,23 @@ describe('Start Process', () => {
     });
 
     it('[C291860] Should be able to start a process', () => {
+        appListCloudComponent.checkAppIsDisplayed(appName);
+        appListCloudComponent.goToApp(appName);
+        processCloudDemoPage.openNewProcessForm();
+
+        startProcessPage.clearField(startProcessPage.processNameInput);
+        startProcessPage.enterProcessName(processName);
+        startProcessPage.checkStartProcessButtonIsEnabled();
+        startProcessPage.clickStartProcessButton();
+        processCloudDemoPage.clickOnProcessFilters();
+
+        processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
+        expect(processCloudDemoPage.checkActiveFilterActive()).toBe('Running Processes');
+        processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(processName);
+
+    });
+
+    it('[C291860] Should be able to start a process with variables', () => {
         appListCloudComponent.checkAppIsDisplayed(appName);
         appListCloudComponent.goToApp(appName);
         processCloudDemoPage.openNewProcessForm();
