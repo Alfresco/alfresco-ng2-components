@@ -7,8 +7,4 @@ export class TestingService {
 
   constructor() { }
 
-  print() {
-      /* tslint:disable */
-      console.log('it works');
-  }
 }

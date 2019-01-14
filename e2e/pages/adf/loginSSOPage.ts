@@ -17,8 +17,6 @@
 
 import { Util } from '../../util/util';
 import { element, by, browser, protractor } from 'protractor';
-import { TestingService } from '@alfresco/adf-testing';
-
 export class LoginSSOPage {
 
     ssoButton = element(by.css(`[data-automation-id="login-button-sso"]`));
