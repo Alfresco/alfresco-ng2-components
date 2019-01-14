@@ -28,13 +28,14 @@ export class Tasks {
         await this.api.login(username, password);
     }
 
-    async createStandaloneTask(taskName, appName) {
+    async createStandaloneTask(taskName, appName, options?) {
         const path = '/' + appName + '-rb/v1/tasks';
         const method = 'POST';
 
         const queryParams = {}, postBody = {
             'name': taskName,
-            'payloadType': 'CreateTaskPayload'
+            'payloadType': 'CreateTaskPayload',
+            ...options
         };
 
         const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
@@ -59,6 +60,23 @@ export class Tasks {
 
         const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
         return data;
+    }
+
+    async deleteTask(taskId, appName) {
+        const path = '/' + appName + '-rb/v1/tasks/' + taskId;
+        const method = 'DELETE';
+
+        const queryParams = {}, postBody = {};
+
+        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+        return data;
+    }
+
+    async createAndCompleteTask (taskName, appName) {
+        let task = await this.createStandaloneTask(taskName, appName);
+        await this.claimTask(task.entry.id, appName);
+        await this.completeTask(task.entry.id, appName);
+        return task;
     }
 
 }
