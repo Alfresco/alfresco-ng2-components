@@ -38,16 +38,14 @@
                            [contextMenuActions]="true"
                            [contentActions]="false">
 
-            <empty-folder-content>
-                <ng-template>
-                    <adf-empty-content
-                        icon="delete"
-                        [title]="'TRASHCAN.EMPTY_STATE.TITLE'">
-                        <p class="adf-empty-content__text">{{ 'TRASHCAN.EMPTY_STATE.FIRST_TEXT' | translate }}</p>
-                        <p class="adf-empty-content__text">{{ 'TRASHCAN.EMPTY_STATE.SECOND_TEXT' | translate }}</p>
-                    </adf-empty-content>
-                </ng-template>
-            </empty-folder-content>
+            <adf-custom-empty-content-template>
+                <adf-empty-content
+                    icon="delete"
+                    [title]="'TRASHCAN.EMPTY_STATE.TITLE'">
+                    <p class="adf-empty-content__text">{{ 'TRASHCAN.EMPTY_STATE.FIRST_TEXT' | translate }}</p>
+                    <p class="adf-empty-content__text">{{ 'TRASHCAN.EMPTY_STATE.SECOND_TEXT' | translate }}</p>
+                </adf-empty-content>
+            </adf-custom-empty-content-template>
 
             <data-columns>
 

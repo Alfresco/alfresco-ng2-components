@@ -138,7 +138,7 @@ project have a
 [Transclusions](../user-guide/transclusion.md)
 section in the doc page with all the relevant details.
 
-The `<adf-login/>` component supports two targets: `login-header` and `login-footer`. 
+The `<adf-login/>` component supports two targets: `adf-login-header` and `adf-login-footer`. 
 
 Let's add a simple Hello World message in the footer. Open the template `src/app/login/login.component.html` and add a new tag _inside_ the `<adf-login/>` HTML tag:
 
@@ -149,17 +149,17 @@ Let's add a simple Hello World message in the footer. Open the template `src/app
 	(executeSubmit)="myExecuteSubmitMethod($event)"
 	copyrightText="© 2017 Alfresco Software, Inc. All Rights Reserved."
 	successRoute="/documentlist">
-		<login-footer>
+		<adf-login-footer>
 			<ng-template>
 				Hello World!
 			</ng-template>
-		</login-footer>
+		</adf-login-footer>
 </adf-login>
 ```
 
-Be careful that you place the `<login-footer/>` tag _inside_ the `<adf-login/>` tag.
+Be careful that you place the `<adf-login-footer/>` tag _inside_ the `<adf-login/>` tag.
 
-Inside the `<login-footer/>` or `<login-header/>` tags we can put anything we want, as long as we wrap it inside an `<ng-template/>` tag. We can also source in custom or 3rd party components.
+Inside the `<adf-login-footer/>` or `<adf-login-header/>` tags we can put anything we want, as long as we wrap it inside an `<ng-template/>` tag. We can also source in custom or 3rd party components.
 
 ### Bonus objective: Add a custom logo and background to the login screen
 

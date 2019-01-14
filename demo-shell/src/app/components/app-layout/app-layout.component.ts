@@ -48,6 +48,7 @@ export class AppLayoutComponent implements OnInit {
         { href: '/dl-custom-sources', icon: 'extension', title: 'APP_LAYOUT.CUSTOM_SOURCES' },
         { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE' },
         { href: '/datatable-lazy', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE_LAZY' },
+        { href: '/document-list', icon: 'list_alt', title: 'APP_LAYOUT.DOCUMENT_LIST' },
         { href: '/form', icon: 'poll', title: 'APP_LAYOUT.FORM' },
         { href: '/form-list', icon: 'library_books', title: 'APP_LAYOUT.FORM_LIST' },
         { href: '/form-loading', icon: 'cached', title: 'APP_LAYOUT.FORM_LOADING' },

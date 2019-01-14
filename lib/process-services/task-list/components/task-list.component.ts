@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DataRowEvent, DataTableAdapter, DataTableSchema, EmptyCustomContentDirective } from '@alfresco/adf-core';
+import { DataRowEvent, DataTableAdapter, DataTableSchema, CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
 import {
     AppConfigService, PaginationComponent, PaginatedComponent,
     UserPreferencesService, UserPreferenceValues, PaginationModel } from '@alfresco/adf-core';
@@ -40,7 +40,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     static PRESET_KEY = 'adf-task-list.presets';
     public FORMAT_DATE: string = 'll';
 
-    @ContentChild(EmptyCustomContentDirective) emptyCustomContent: EmptyCustomContentDirective;
+    @ContentChild(CustomEmptyContentTemplateDirective) customEmptyContent: CustomEmptyContentTemplateDirective;
 
     requestNode: TaskQueryRequestRepresentationModel;
 

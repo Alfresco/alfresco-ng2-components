@@ -16,14 +16,12 @@
                 [maxItems]="5"
                 (preview)="showFile($event)"
                 selectionMode="null">
-                <empty-folder-content>
-                    <ng-template>
-                        <div class="adf-empty-list__block">
-                            <mat-icon>history</mat-icon>
-                            <p class="adf-empty-list__title">{{ 'DOCUMENT_LIST.RECENT.EMPTY_STATE.TITLE' | translate}}</p>
-                        </div>
-                    </ng-template>
-                </empty-folder-content>
+                <adf-custom-empty-content-template>
+                    <div class="adf-empty-list__block">
+                        <mat-icon>history</mat-icon>
+                        <p class="adf-empty-list__title">{{ 'DOCUMENT_LIST.RECENT.EMPTY_STATE.TITLE' | translate}}</p>
+                    </div>
+                </adf-custom-empty-content-template>
             </adf-document-list>
         </mat-expansion-panel>
     </mat-accordion>
@@ -227,18 +225,18 @@
                 (folderChange)="onFolderChange($event)"
                 (permissionError)="handlePermissionError($event)"
                 (name-click)="documentList.onNodeDblClick($event.detail?.node)">
-                <no-permission-content *ngIf="enableCustomPermissionMessage">
+                <adf-custom-no-permission-template *ngIf="enableCustomPermissionMessage">
                     <ng-template>
                         <h1>You don't have permissions</h1>
                     </ng-template>
-                </no-permission-content>
-                <empty-folder-content *ngIf="disableDragArea">
+                </adf-custom-no-permission-template>
+                <adf-custom-empty-content-template *ngIf="disableDragArea">
                     <ng-template>
                         <div class="adf-empty_template">
                             <div class="adf-no-result-message">{{ 'SEARCH.NO_RESULT' | translate }}</div>
                         </div>
                     </ng-template>
-                </empty-folder-content>
+                </adf-custom-empty-content-template>
                 <data-columns>
                     <data-column
                         key="$thumbnail"

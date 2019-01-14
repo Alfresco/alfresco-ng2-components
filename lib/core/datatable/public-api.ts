@@ -40,6 +40,8 @@ export * from './data/data-table.schema';
 export * from './directives/loading-template.directive';
 export * from './directives/no-content-template.directive';
 export * from './directives/no-permission-template.directive';
-export * from './directives/empty-custom-content.directive';
+export * from './directives/custom-empty-content-template.directive';
+export * from './directives/custom-loading-template.directive';
+export * from './directives/custom-no-permission-template.directive';
 
 export * from './datatable.module';

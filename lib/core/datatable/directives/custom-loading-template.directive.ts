@@ -18,7 +18,6 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-    selector: 'adf-empty-custom-content'
+    selector: 'adf-custom-loading-content-template'
 })
-
-export class EmptyCustomContentDirective {}
+export class CustomLoadingContentTemplateDirective {}

@@ -15,22 +15,9 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular/core';
-import { DocumentListComponent } from './../document-list.component';
+import { Directive } from '@angular/core';
 
 @Directive({
-    selector: 'no-permission-content'
+    selector: 'adf-custom-no-permission-template'
 })
-export class NoPermissionContentDirective implements AfterContentInit {
-
-    @ContentChild(TemplateRef)
-    template: any;
-
-    constructor(private documentList: DocumentListComponent) {
-    }
-
-    ngAfterContentInit() {
-        this.documentList.noPermissionTemplate = this.template;
-        this.documentList.dataTable.noPermissionTemplate = this.template;
-    }
-}
+export class CustomNoPermissionTemplateDirective {}

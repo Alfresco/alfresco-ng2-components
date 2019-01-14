@@ -171,10 +171,10 @@ describe('AppListCloudComponent', () => {
 @Component({
     template: `
     <adf-cloud-app-list>
-        <adf-empty-custom-content>
+        <adf-custom-empty-content>
             <mat-icon>apps</mat-icon>
             <p id="custom-id">No Apps Found</p>
-        </adf-empty-custom-content>
+        </adf-custom-empty-content>
     </adf-cloud-app-list>
        `
 })

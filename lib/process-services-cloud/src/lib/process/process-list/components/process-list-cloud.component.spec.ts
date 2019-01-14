@@ -48,9 +48,9 @@ class CustomTaskListComponent {
 @Component({
     template: `
     <adf-cloud-process-list>
-        <adf-empty-custom-content>
+        <adf-custom-empty-content>
             <p id="custom-id">TEST</p>
-        </adf-empty-custom-content>
+        </adf-custom-empty-content>
     </adf-cloud-process-list>
        `
 })

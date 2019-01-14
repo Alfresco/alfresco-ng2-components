@@ -23,45 +23,43 @@
     (row-unselect)="onNodeUnselect($event.detail)"
     [class.adf-datatable-gallery-thumbnails]="data.thumbnails">
 
-    <div *ngIf="!isEmptyTemplateDefined()">
-        <no-content-template>
-            <ng-template>
-                <adf-empty-list>
-                    <div class="adf-empty-list_template adf-empty-folder">
-                        <div class="adf-empty-folder-this-space-is-empty">{{'ADF-DOCUMENT-LIST.EMPTY.HEADER' | translate}}</div>
-                        <div fxHide.lt-md="true" class="adf-empty-folder-drag-drop">{{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE' | translate }}</div>
-                        <div fxHide.lt-md="true" class="adf-empty-folder-any-files-here-to-add">{{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate }}</div>
-                        <img class="adf-empty-folder-image" [src]="emptyFolderImageUrl">
-                    </div>
-                    <!-- <div adf-empty-list-header class="adf-empty-list-header"> {{'ADF-DOCUMENT-LIST.EMPTY.HEADER' | translate}} </div> -->
-                </adf-empty-list>
-            </ng-template>
-        </no-content-template>
-    </div>
-
-    <div *ngIf="!isNoPermissionTemplateDefined()">
-        <no-permission-template>
-            <ng-template>
-                <div class="adf-no-permission__template">
-                    <mat-icon>ic_error</mat-icon>
-                    <p class="adf-no-permission__template--text">{{ 'ADF-DOCUMENT-LIST.NO_PERMISSION' | translate }}</p>
+    <adf-no-content-template>
+        <ng-template>
+            <adf-empty-list *ngIf="!customNoContentTemplate">
+                <div class="adf-empty-list_template adf-empty-folder">
+                    <div class="adf-empty-folder-this-space-is-empty">{{'ADF-DOCUMENT-LIST.EMPTY.HEADER' | translate}}</div>
+                    <div fxHide.lt-md="true" class="adf-empty-folder-drag-drop">{{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.TITLE' | translate }}</div>
+                    <div fxHide.lt-md="true" class="adf-empty-folder-any-files-here-to-add">{{ 'ADF-DATATABLE.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate }}</div>
+                    <img class="adf-empty-folder-image" [src]="emptyFolderImageUrl">
                 </div>
-            </ng-template>
-        </no-permission-template>
-    </div>
+                <!-- <div adf-empty-list-header class="adf-empty-list-header"> {{'ADF-DOCUMENT-LIST.EMPTY.HEADER' | translate}} </div> -->
+            </adf-empty-list>
+            <ng-content select="adf-custom-empty-content-template"></ng-content>
+        </ng-template>
+    </adf-no-content-template>
 
-    <div>
-        <loading-content-template>
-            <ng-template>
-                <div class="adf-document-list-loading-container">
-                    <mat-progress-spinner
-                        id="adf-document-list-loading"
-                        class="adf-document-list-loading-margin"
-                        [color]="'primary'"
-                        [mode]="'indeterminate'">
-                    </mat-progress-spinner>
-                </div>
-            </ng-template>
-        </loading-content-template>
-    </div>
+    <adf-no-permission-template>
+        <ng-template>
+            <div class="adf-no-permission__template" *ngIf="!customNoPermissionsTemplate">
+                <mat-icon>ic_error</mat-icon>
+                <p class="adf-no-permission__template--text">{{ 'ADF-DOCUMENT-LIST.NO_PERMISSION' | translate }}</p>
+            </div>
+            <ng-content select="adf-custom-no-permission-template"></ng-content>
+        </ng-template>
+    </adf-no-permission-template>
+
+    <adf-loading-content-template>
+        <ng-template>
+            <div class="adf-document-list-loading-container" *ngIf="!customLoadingContent">
+                <mat-progress-spinner
+                    id="adf-document-list-loading"
+                    class="adf-document-list-loading-margin"
+                    [color]="'primary'"
+                    [mode]="'indeterminate'">
+                </mat-progress-spinner>
+            </div>
+            <ng-content select="adf-custom-loading-content-template"></ng-content>
+        </ng-template>
+    </adf-loading-content-template>
+
 </adf-datatable>

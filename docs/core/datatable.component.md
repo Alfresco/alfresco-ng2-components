@@ -250,17 +250,17 @@ export class DataTableDemo {
 You can add [Data column component](data-column.component.md) instances to define columns for the
 table as described in the usage examples and the [Customizing columns](#customizing-columns) section.
 
-You can also supply a `<no-content-template>` or an
+You can also supply a `<adf-no-content-template>` or an
 [Empty list component](empty-list.component.md) sub-component to show when the table is empty:
 
 ```html
 <adf-datatable ...>
-    <no-content-template>
+    <adf-no-content-template>
         <!--Add your custom empty template here-->
         <ng-template>
             <h1>Sorry, no content</h1>
         </ng-template>
-    </no-content-template>
+    </adf-no-content-template>
 </adf-datatable>
 ```
 
@@ -275,12 +275,12 @@ You can also supply a `<no-content-template>` or an
 </adf-datatable>
 ```
 
-Another useful transclusion is the `<loading-content-template>`, which is shown
+Another useful transclusion is the `<adf-loading-content-template>`, which is shown
 while the data for the table is loading:
 
 ```html
 <adf-datatable ...>
-    <loading-content-template>
+    <adf-loading-content-template>
         <ng-template>
             <!--Add your custom loading template here-->
             <mat-progress-spinner
@@ -289,7 +289,7 @@ while the data for the table is loading:
                 [mode]="'indeterminate'">
             </mat-progress-spinner>
         </ng-template>
-    </loading-content-template>
+    </adf-loading-content-template>
 </adf-datatable>
 ```
 
@@ -299,7 +299,7 @@ while the data for the table is loading:
     }
 ```
 
-Note that you can use both the `<no-content-template>` and the `<loading-content-template>`
+Note that you can use both the `<adf-no-content-template>` and the `<adf-loading-content-template>`
 together in the same datatable.
 
 ## Class members

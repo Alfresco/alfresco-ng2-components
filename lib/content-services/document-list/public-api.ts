@@ -21,8 +21,6 @@ export * from './components/content-column/content-column.component';
 export * from './components/content-column/content-column-list.component';
 export * from './components/content-action/content-action.component';
 export * from './components/content-action/content-action-list.component';
-export * from './components/empty-folder/empty-folder-content.directive';
-export * from './components/no-permission/no-permission-content.directive';
 export * from './components/library-name-column/library-name-column.component';
 export * from './components/library-role-column/library-role-column.component';
 export * from './components/library-status-column/library-status-column.component';

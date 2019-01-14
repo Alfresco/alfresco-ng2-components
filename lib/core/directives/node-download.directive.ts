@@ -21,8 +21,11 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { DownloadZipDialogComponent } from '../dialogs/download-zip.dialog';
 import { NodeEntry } from '@alfresco/js-api';
 
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
 @Directive({
-    selector: '[adfNodeDownload]'
+    selector: '[adf-node-download], [adfNodeDownload]'
 })
 export class NodeDownloadDirective {
 

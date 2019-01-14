@@ -1,0 +1,36 @@
+<h1>Document List Demo Page</h1>
+
+<h3>Default Loading Template</h3>
+<adf-document-list currentFolderId="-my-" #defaultDocumentList>
+</adf-document-list>
+
+<h3>Custom Loading Template</h3>
+<adf-document-list currentFolderId="-my-" #customLoadingDocumentList>
+        <adf-custom-loading-content-template>
+                This is a custom loading template
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </adf-custom-loading-content-template>
+</adf-document-list>
+
+<h3>Default No Permission Template</h3>
+<adf-document-list currentFolderId="-my-" #defaultNoPermissionDocumentList>
+</adf-document-list>
+
+<h3>Custom No Permission Template</h3>
+<adf-document-list currentFolderId="-my-" #customNoPermissionDocumentList>
+        <adf-custom-no-permission-template>
+                This is a custom no permission template<mat-icon>pan_tool</mat-icon> You shall not see the content
+        </adf-custom-no-permission-template>
+</adf-document-list>
+
+<h3>Default Empty Content Template</h3>
+<adf-document-list #defaultEmptyDocumentList>
+</adf-document-list>
+
+<h3>Custom Empty Content Template</h3>
+<adf-document-list #customEmptyDocumentList>
+        <adf-custom-empty-content-template>
+                <div>This is a custom no content template</div>
+                <mat-icon>cancel_presentation</mat-icon>
+        </adf-custom-empty-content-template>
+</adf-document-list>

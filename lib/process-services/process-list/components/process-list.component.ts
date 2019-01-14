@@ -19,7 +19,7 @@ import {
     DataTableSchema,
     DataRowEvent,
     DataTableAdapter,
-    EmptyCustomContentDirective
+    CustomEmptyContentTemplateDirective
 } from '@alfresco/adf-core';
 import {
     AppConfigService,
@@ -56,7 +56,7 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
     static PRESET_KEY = 'adf-process-list.presets';
     public FORMAT_DATE: string = 'll';
 
-    @ContentChild(EmptyCustomContentDirective) emptyCustomContent: EmptyCustomContentDirective;
+    @ContentChild(CustomEmptyContentTemplateDirective) customEmptyContent: CustomEmptyContentTemplateDirective;
 
     /** The id of the app. */
     @Input()

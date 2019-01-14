@@ -30,7 +30,7 @@ Open the [`login.component`](../core/login.component.md)`.html` file and change 
 
 ```html
 <adf-login ...>
-	<login-header><ng-template>My custom HTML for the header</ng-template></login-header>
+	<adf-login-header><ng-template>My custom HTML for the header</ng-template></adf-login-header>
 </adf-login>
 ```
 

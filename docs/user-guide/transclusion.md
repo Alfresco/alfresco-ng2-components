@@ -34,7 +34,7 @@ content of the body:
 
 ```html
 <adf-login ...>
-    <login-footer><ng-template>My custom HTML for the footer</ng-template></login-footer>
+    <adf-login-footer><ng-template>My custom HTML for the footer</ng-template></adf-login-footer>
 </adf-login>
 ```
 

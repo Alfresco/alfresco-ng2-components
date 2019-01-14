@@ -36,14 +36,14 @@ Renders a list containing all the tasks matched by the parameters specified.
 
 ### [Transclusions](../user-guide/transclusion.md)
 
-Any content inside an `<adf-empty-custom-content>` sub-component will be shown
+Any content inside an `<adf-custom-empty-content>` sub-component will be shown
 when the task list is empty:
 
 ```html
 <adf-tasklist>
-    <adf-empty-custom-content>
+    <adf-custom-empty-content>
         Your Content
-    </adf-empty-custom-content>
+    </adf-custom-empty-content>
 <adf-tasklist>
 ```
 

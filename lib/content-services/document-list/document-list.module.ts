@@ -29,8 +29,6 @@ import { ContentColumnListComponent } from './components/content-column/content-
 import { ContentColumnComponent } from './components/content-column/content-column.component';
 import { DocumentListComponent } from './components/document-list.component';
 
-import { EmptyFolderContentDirective } from './components/empty-folder/empty-folder-content.directive';
-import { NoPermissionContentDirective } from './components/no-permission/no-permission-content.directive';
 import { TrashcanNameColumnComponent } from './components/trashcan-name-column/trashcan-name-column.component';
 import { LibraryStatusColumnComponent } from './components/library-status-column/library-status-column.component';
 import { LibraryRoleColumnComponent } from './components/library-role-column/library-role-column.component';
@@ -55,9 +53,7 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
         NameColumnComponent,
         ContentColumnListComponent,
         ContentActionComponent,
-        ContentActionListComponent,
-        EmptyFolderContentDirective,
-        NoPermissionContentDirective
+        ContentActionListComponent
     ],
     exports: [
         DocumentListComponent,
@@ -69,9 +65,7 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
         NameColumnComponent,
         ContentColumnListComponent,
         ContentActionComponent,
-        ContentActionListComponent,
-        EmptyFolderContentDirective,
-        NoPermissionContentDirective
+        ContentActionListComponent
     ],
     entryComponents: [
         TrashcanNameColumnComponent,

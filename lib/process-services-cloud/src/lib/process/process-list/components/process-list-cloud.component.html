@@ -6,7 +6,7 @@
         [multiselect]="multiselect"
         (rowClick)="onRowClick($event)"
         (row-keyup)="onRowKeyUp($event)">
-        <loading-content-template>
+        <adf-loading-content-template>
             <ng-template>
                 <mat-progress-spinner
                     class="adf-cloud-process-list-loading-margin"
@@ -14,15 +14,15 @@
                     [mode]="'indeterminate'">
                 </mat-progress-spinner>
             </ng-template>
-        </loading-content-template>
-        <no-content-template>
+        </adf-loading-content-template>
+        <adf-no-content-template>
             <ng-template>
                 <adf-empty-content *ngIf="!emptyCustomContent"
                     icon="assessment"
                     [title]="'ADF_CLOUD_PROCESS_LIST.MESSAGES.TITLE' | translate"
                     [subtitle]="'ADF_CLOUD_PROCESS_LIST.MESSAGES.SUBTITLE'| translate">
                 </adf-empty-content>
-                <ng-content select="adf-empty-custom-content"></ng-content>
+                <ng-content select="adf-custom-empty-content"></ng-content>
             </ng-template>
-        </no-content-template>
+        </adf-no-content-template>
 </adf-datatable>

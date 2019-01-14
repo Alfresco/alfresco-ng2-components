@@ -20,7 +20,10 @@ import { Point } from './models/point';
 import { RaphaelBase } from './raphael-base';
 import { RaphaelService } from './raphael.service';
 
-@Directive({selector: 'raphael-cross'})
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
+@Directive({selector: 'adf-raphael-cross, raphael-cross'})
 export class RaphaelCrossDirective extends RaphaelBase implements OnInit {
     @Input()
     center: Point;

@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation, OnChanges, AfterContentInit, ContentChild, Output, EventEmitter, SimpleChanges, SimpleChange, Input } from '@angular/core';
 import { DataTableSchema, PaginatedComponent,
-         EmptyCustomContentDirective, AppConfigService,
+         CustomEmptyContentTemplateDirective, AppConfigService,
          UserPreferencesService, PaginationModel,
          UserPreferenceValues, DataRowEvent } from '@alfresco/adf-core';
 import { ProcessListCloudService } from '../services/process-list-cloud.service';
@@ -36,8 +36,8 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     static PRESET_KEY = 'adf-cloud-process-list.presets';
 
-    @ContentChild(EmptyCustomContentDirective)
-    emptyCustomContent: EmptyCustomContentDirective;
+    @ContentChild(CustomEmptyContentTemplateDirective)
+    emptyCustomContent: CustomEmptyContentTemplateDirective;
 
     /** The name of the application. */
     @Input()

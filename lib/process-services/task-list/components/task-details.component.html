@@ -88,9 +88,9 @@
                             (success)="assignTaskToUser($event)"
                             (closeSearch)="onCloseSearch()"
                             [results]="peopleSearch">
-                            <ng-container people-search-title>{{ 'ADF_TASK_LIST.DETAILS.LABELS.ADD_ASSIGNEE' | translate }}
+                            <ng-container adf-people-search-title>{{ 'ADF_TASK_LIST.DETAILS.LABELS.ADD_ASSIGNEE' | translate }}
                             </ng-container>
-                            <ng-container people-search-action-label>{{ 'ADF_TASK_LIST.PEOPLE.ADD_ASSIGNEE' | translate }}
+                            <ng-container adf-people-search-action-label>{{ 'ADF_TASK_LIST.PEOPLE.ADD_ASSIGNEE' | translate }}
                             </ng-container>
                         </adf-people-search>
                     </div>

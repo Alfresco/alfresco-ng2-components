@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- import { EmptyCustomContentDirective } from '@alfresco/adf-core';
+ import { CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
  import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ContentChild } from '@angular/core';
  import { Observable } from 'rxjs';
  import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
@@ -32,8 +32,8 @@
      public static LAYOUT_GRID: string = 'GRID';
      public static RUNNING_STATUS: string = 'RUNNING';
 
-     @ContentChild(EmptyCustomContentDirective)
-     emptyCustomContent: EmptyCustomContentDirective;
+     @ContentChild(CustomEmptyContentTemplateDirective)
+     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
      /** (**required**) Defines the layout of the apps. There are two possible
       * values, "GRID" and "LIST".

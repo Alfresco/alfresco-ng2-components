@@ -8,7 +8,7 @@
         [multiselect]="multiselect"
         (rowClick)="onRowClick($event)"
         (row-keyup)="onRowKeyUp($event)">
-        <loading-content-template>
+        <adf-loading-content-template>
             <ng-template>
                 <!--Add your custom loading template here-->
                 <mat-progress-spinner
@@ -17,15 +17,15 @@
                     [mode]="'indeterminate'">
                 </mat-progress-spinner>
             </ng-template>
-        </loading-content-template>
-        <no-content-template>
+        </adf-loading-content-template>
+        <adf-no-content-template>
             <ng-template>
-                    <adf-empty-content *ngIf="!emptyCustomContent"
+                    <adf-empty-content *ngIf="!customEmptyContent"
                     icon="assessment"
                     [title]="(requestNode ? 'ADF_PROCESS_LIST.LIST.TITLE' : 'ADF_PROCESS_LIST.FILTERS.MESSAGES.NONE') | translate "
                     [subtitle]="'ADF_PROCESS_LIST.LIST.SUBTITLE'| translate">
                     </adf-empty-content>
-                <ng-content select="adf-empty-custom-content"></ng-content>
+                <ng-content select="adf-custom-empty-content"></ng-content>
             </ng-template>
-        </no-content-template>
+        </adf-no-content-template>
     </adf-datatable>

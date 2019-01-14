@@ -20,15 +20,18 @@
 import { FileUtils } from '@alfresco/adf-core';
 import { Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
 
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
 @Directive({
-    selector: '[file-draggable]'
+    selector: '[adf-file-draggable], [file-draggable]'
 })
 export class FileDraggableDirective implements OnInit, OnDestroy {
 
     files: File [];
 
     /** Enables/disables drag-and-drop functionality. */
-    @Input('file-draggable')
+    @Input('adf-file-draggable')
     enabled: boolean = true;
 
     /** Emitted when one or more files are dragged and dropped onto the draggable element. */
@@ -39,7 +42,7 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     @Output()
     folderEntityDropped: EventEmitter<any> = new EventEmitter();
 
-    private cssClassName: string = 'file-draggable__input-focus';
+    private cssClassName: string = 'adf-file-draggable__input-focus';
     private element: HTMLElement;
 
     constructor(el: ElementRef, private ngZone: NgZone) {
