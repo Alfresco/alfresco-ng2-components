@@ -29,9 +29,6 @@ export class LoginSSOPage {
 
     loginAPS(username, password) {
         browser.ignoreSynchronization = true;
-        const test = new TestingService();
-        test.print();
-        Util.waitUntilElementIsVisible(element(by.id('new')));
         this.enterUsername(username);
         this.enterPassword(password);
         this.clickLoginButton();

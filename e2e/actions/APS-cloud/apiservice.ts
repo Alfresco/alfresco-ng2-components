@@ -44,8 +44,6 @@ export class ApiService {
     });
 
     async login(username, password) {
-        let test = new TestingService();
-        test.print();
         await this.apiService.login(username, password);
     }
 
