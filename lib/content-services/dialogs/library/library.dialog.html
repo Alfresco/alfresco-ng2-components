@@ -19,6 +19,10 @@
         {{ 'LIBRARY.ERRORS.TITLE_TOO_LONG' | translate }}
       </mat-error>
 
+      <mat-error *ngIf="form.controls['title'].hasError('minlength')">
+        {{ 'LIBRARY.ERRORS.TITLE_TOO_SHORT' | translate }}
+      </mat-error>
+
       <mat-error *ngIf="form.controls['title'].errors?.message">
         {{ form.controls['title'].errors?.message | translate }}
       </mat-error>
