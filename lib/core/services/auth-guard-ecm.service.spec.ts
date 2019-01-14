@@ -40,6 +40,8 @@ describe('AuthGuardService ECM', () => {
         authGuard = TestBed.get(AuthGuardEcm);
         routerService = TestBed.get(Router);
         appConfigService = TestBed.get(AppConfigService);
+
+        appConfigService.config.providers = 'ECM';
     });
 
     it('if the alfresco js api is logged in should canActivate be true', async(() => {

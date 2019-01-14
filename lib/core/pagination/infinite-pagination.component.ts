@@ -78,7 +78,9 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
             });
         }
 
-        this.pagination = InfinitePaginationComponent.DEFAULT_PAGINATION;
+        if (!this.pagination) {
+            this.pagination = InfinitePaginationComponent.DEFAULT_PAGINATION;
+        }
     }
 
     onLoadMore() {

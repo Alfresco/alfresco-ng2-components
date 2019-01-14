@@ -40,6 +40,8 @@ describe('AuthGuardService BPM', () => {
         authGuard = TestBed.get(AuthGuardBpm);
         routerService = TestBed.get(Router);
         appConfigService = TestBed.get(AppConfigService);
+
+        appConfigService.config.providers = 'BPM';
     });
 
     it('if the alfresco js api is logged in should canActivate be true', async(() => {

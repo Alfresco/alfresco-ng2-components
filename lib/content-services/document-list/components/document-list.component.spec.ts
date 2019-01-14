@@ -72,6 +72,7 @@ describe('DocumentList', () => {
         customResourcesService = TestBed.get(CustomResourcesService);
 
         documentList.ngOnInit();
+        documentList.currentFolderId = 'no-node';
 
         spyGetSites = spyOn(apiService.sitesApi, 'getSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
         spyFavorite = spyOn(apiService.favoritesApi, 'getFavorites').and.returnValue(Promise.resolve({ list: [] }));
@@ -246,20 +247,17 @@ describe('DocumentList', () => {
         expect(documentList.dataTable.resetSelection).toHaveBeenCalled();
     });
 
-    it('should empty template be present when no element are present', (done) => {
-        fixture.detectChanges();
-        documentList.folderNode = new NodeMinimal();
-        documentList.folderNode.id = '1d26e465-dea3-42f3-b415-faa8364b9692';
-
+    it('should empty template be present when no element are present', () => {
+        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve(''));
+        spyOn(documentList, 'loadFolder').and.callThrough();
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: { id: 'fake-node' } }));
         spyOn(documentListService, 'getFolder').and.returnValue(of(fakeNodeAnswerWithNOEntries));
 
-        let disposableReady = documentList.ready.subscribe(() => {
-            expect(element.querySelector('#adf-document-list-empty')).toBeDefined();
-            disposableReady.unsubscribe();
-            done();
-        });
+        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+        fixture.detectChanges();
 
         documentList.reload();
+        expect(element.querySelector('#adf-document-list-empty')).toBeDefined();
     });
 
     it('should not execute action without node provided', () => {
@@ -959,10 +957,9 @@ describe('DocumentList', () => {
     });
 
     it('should load folder by ID on init', () => {
-        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         spyOn(documentList, 'loadFolder').and.returnValue(Promise.resolve());
 
-        documentList.ngOnChanges({ folderNode: new SimpleChange(null, documentList.currentFolderId, true) });
+        documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, '1d26e465-dea3-42f3-b415-faa8364b9692', true) });
         expect(documentList.loadFolder).toHaveBeenCalled();
     });
 
