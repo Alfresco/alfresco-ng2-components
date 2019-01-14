@@ -44,13 +44,6 @@ export class BrowserVisibility {
         }, waitTimeout, 'Element is not visible ' + elementToCheck.locator());
     }
 
-        /*
-     * Wait for element to not be visible
-     */
-    static waitUntilElementIsNotOnPage(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
-        return browser.wait(until.not(until.visibilityOf(elementToCheck)));
-    }
-
     /*
      * Wait for element to be clickable
      */
@@ -78,6 +71,13 @@ export class BrowserVisibility {
         browser.waitForAngularEnabled();
 
         browser.wait(until.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, 'Element doesn\'t have a value ' + elementToCheck.locator());
+    }
+
+    /*
+     * Wait for element to not be visible
+     */
+    static waitUntilElementIsNotOnPage(elementToCheck, waitTimeout: number = DEFAULT_TIMEOUT) {
+        return browser.wait(until.not(until.visibilityOf(elementToCheck)), waitTimeout, 'Element is not in the page ' + elementToCheck.locator());
     }
 
 }
