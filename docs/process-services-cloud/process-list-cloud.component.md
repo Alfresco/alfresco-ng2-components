@@ -1,7 +1,7 @@
 ---
 Title: Process Instance List Cloud component
 Added: v3.0.0
-Status: Active
+Status: Experimental
 Last reviewed: 2018-11-09
 ---
 
@@ -23,7 +23,7 @@ Renders a list containing all the process instances matched by the parameters sp
 
 ## Basic Usage
 
-**[app.component](../../demo-shell/src/app/app.component.ts).html**
+**app.component.html**
 
 ```html
 <adf-cloud-process-list
