@@ -9,7 +9,7 @@ Last reviewed: 2019-01-14
 
 Fetches Task Audit information in PDF or JSON format.
 
-![adf-task-audit-directive](../docassets/images/adf-task-audit-directive.png)
+![adf-task-audit-directive](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/adf-task-audit-directive.png)
 
 ## Basic Usage
 

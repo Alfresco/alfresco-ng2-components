@@ -9,7 +9,7 @@ Last reviewed: 2019-01-14
 
 Displays an Upload Component (Drag and Click) to upload an attachment to a specified process instance
 
-![process-create-attachment](../docassets/images/process-create-attachment.png)
+![process-create-attachment](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/process-create-attachment.png)
 
 ## Basic Usage
 

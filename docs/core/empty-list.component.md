@@ -9,7 +9,7 @@ Last reviewed: 2019-01-14
 
 Displays a message indicating that a list is empty.
 
-![](../docassets/images/adf-empty-list.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/adf-empty-list.png)
 
 ## Basic Usage
 

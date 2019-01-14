@@ -8,7 +8,7 @@ Status: Active
 
 Allows a user to add ratings to an item.
 
-![Rating component screenshot](../docassets/images/social2.png)
+![Rating component screenshot](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/social2.png)
 
 ## Basic Usage
 

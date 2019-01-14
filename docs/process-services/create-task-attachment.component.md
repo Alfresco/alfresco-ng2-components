@@ -9,7 +9,7 @@ Last reviewed: 2019-01-14
 
 Displays an Upload Component (Drag and Click) to upload an attachment to a specified task
 
-![task-create-attachment](../docassets/images/task-create-attachment.png)
+![task-create-attachment](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/task-create-attachment.png)
 
 ## Basic Usage
 

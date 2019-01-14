@@ -9,7 +9,7 @@ Last reviewed: 2019-01-14
 
 Fetches Process Audit information in PDF or JSON format.
 
-![adf-process-audit-directive](../docassets/images/adf-process-audit-directive.png)
+![adf-process-audit-directive](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/adf-process-audit-directive.png)
 
 ## Basic Usage
 
