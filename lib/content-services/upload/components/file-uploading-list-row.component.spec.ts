@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FileModel } from '@alfresco/adf-core';
+import { FileModel, CoreModule } from '@alfresco/adf-core';
 import { UploadModule } from '../upload.module';
 import { FileUploadingListRowComponent } from './file-uploading-list-row.component';
 
@@ -28,6 +28,7 @@ describe('FileUploadingListRowComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
+                CoreModule.forRoot(),
                 UploadModule
             ]
         }).compileComponents();
