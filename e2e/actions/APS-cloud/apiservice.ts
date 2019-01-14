@@ -57,7 +57,7 @@ export class ApiService {
             'Authorization': 'bearer ' + this.apiService.oauth2Auth.token
         };
 
-        return this.apiService.bpmClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
+        return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
             authNames, contentTypes, accepts, {})
             .catch((error) => {
                 throw (error);
