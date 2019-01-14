@@ -9,7 +9,7 @@ Last reviewed: 2018-06-08
 
 Displays the Start [`Form`](../../lib/process-services/task-list/models/form.model.ts) for a process.
 
-![Start Form screenshot](../docassets/images/ProcessStartForm.png)
+![Start Form screenshot](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/ProcessStartForm.png)
 
 ## Basic Usage
 

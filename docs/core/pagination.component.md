@@ -9,7 +9,7 @@ Last reviewed: 2018-11-20
 
 Adds pagination to the component it is used with.
 
-![](../docassets/images/basic.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/basic.png)
 
 ## Contents
 

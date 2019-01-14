@@ -199,7 +199,7 @@ within the document list.
 
 <!-- {% endraw %} -->
 
-![Tag component in document List](../docassets/images/document-list-tag-template.png)
+![Tag component in document List](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/document-list-tag-template.png)
 
 ### Styling Techniques
 
@@ -238,7 +238,7 @@ adf-document-list ::ng-deep adf-datatable > table > tbody > tr.is-selected > td.
 
 Once your application starts you should see the following icon for each selected row:
 
-![view-child](../docassets/images/document-list-custom-icon.png)
+![view-child](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/document-list-custom-icon.png)
 
 #### Hiding columns on small screens
 
@@ -292,11 +292,11 @@ Now you can declare columns and assign the `desktop-only` class where needed:
 
 **Desktop View**
 
-![Responsive Desktop](../docassets/images/responsive-desktop.png)
+![Responsive Desktop](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/responsive-desktop.png)
 
 **Mobile View**
 
-![Responsive Mobile](../docassets/images/responsive-mobile.png)
+![Responsive Mobile](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/responsive-mobile.png)
 
 ## See also
 

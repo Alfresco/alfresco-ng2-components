@@ -9,7 +9,7 @@ Last reviewed: 2018-11-12
 
 Displays data as a table with customizable columns and presentation.
 
-![DataTable demo](../docassets/images/datatable-demo.png)
+![DataTable demo](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/datatable-demo.png)
 
 See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/)
 
@@ -382,7 +382,7 @@ onRowClick(event) {
 }
 ```
 
-![](../docassets/images/datatable-dom-events.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/datatable-dom-events.png)
 
 ### Card view
 
@@ -395,7 +395,7 @@ Set the `display` property to "gallery" to enable Card View mode:
 </adf-datatable
 ```
 
-![card-view](../docassets/images/document-list-card-view.png)
+![card-view](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/document-list-card-view.png)
 
 ### Using events
 
@@ -550,9 +550,9 @@ onExecuteRowAction(event: DataRowActionEvent) {
 }
 ```
 
-![](../docassets/images/datatable-actions-ui.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/datatable-actions-ui.png)
 
-![](../docassets/images/datatable-actions-console.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/datatable-actions-console.png)
 
 You can use any payloads for row actions. The only requirement for the objects is that they
 must have a `title` property.

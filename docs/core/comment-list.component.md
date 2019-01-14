@@ -9,7 +9,7 @@ Last reviewed: 2018-11-14
 
 Shows a list of comments.
 
-![ADF Comment List](../docassets/images/adf-comment-list.png)
+![ADF Comment List](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/adf-comment-list.png)
 
 ## Basic Usage
 

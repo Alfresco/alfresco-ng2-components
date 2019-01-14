@@ -9,7 +9,7 @@ Last reviewed: 2018-06-08
 
 Shows a notification message with optional feedback.
 
-![Notification Service screenshot](../docassets/images/NotiService.png)
+![Notification Service screenshot](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/NotiService.png)
 
 ## Class members
 

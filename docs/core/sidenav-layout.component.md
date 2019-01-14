@@ -9,7 +9,7 @@ Last reviewed: 2018-11-20
 
 Displays the standard three-region ADF application layout.
 
-![Sidenav on desktop](../docassets/images/sidenav-layout.png)
+![Sidenav on desktop](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/sidenav-layout.png)
 
 ## Contents
 
@@ -104,11 +104,11 @@ in the usage example above.
 
 Desktop layout (screen width greater than the `stepOver` value):
 
-![Sidenav on desktop](../docassets/images/sidenav-layout.png)
+![Sidenav on desktop](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/sidenav-layout.png)
 
 Mobile layout (screen width less than the `stepOver` value):
 
-![Sidenav on mobile](../docassets/images/sidenav-layout-mobile.png)
+![Sidenav on mobile](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/sidenav-layout-mobile.png)
 
 ### Template context
 

@@ -9,7 +9,7 @@ Last reviewed: 2018-09-13
 
 Provides a generic "Empty Content" placeholder for components.
 
-![Favorites screen](../docassets/images/empty-content-favorites.png)
+![Favorites screen](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/empty-content-favorites.png)
 
 ## Basic usage
 
@@ -55,7 +55,7 @@ Provides a generic "Empty Content" placeholder for components.
 </adf-document-list>
 ```
 
-![Favorites screen](../docassets/images/empty-content-favorites.png)
+![Favorites screen](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/empty-content-favorites.png)
 
 You can also use multiple lines instead of the subtitle section:
 
@@ -74,7 +74,7 @@ You can also use multiple lines instead of the subtitle section:
 </adf-document-list>
 ```
 
-![Trashcan screen](../docassets/images/empty-content-trashcan.png)
+![Trashcan screen](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/empty-content-trashcan.png)
 
 ## See also
 

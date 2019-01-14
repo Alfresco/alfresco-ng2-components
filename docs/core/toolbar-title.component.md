@@ -9,7 +9,7 @@ Last reviewed: 2018-06-08
 
 Supplies custom HTML to be included in a [Toolbar component](../core/toolbar.component.md) title.
 
-![](../docassets/images/adf-toolbar-02.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/adf-toolbar-02.png)
 
 ## Basic Usage
 

@@ -243,7 +243,7 @@ also implement your own custom validators to replace or extend the set. See the
 
 #### Rendering a form using form definition JSON
 
-See the [demo-form](../docassets/demo-form.json) file for an example of form definition JSON.
+See the [demo-form](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/demo-form.json) file for an example of form definition JSON.
 
 The component below (with the JSON assigned to the `formDefinitionJSON` property), shows how a
 form definition is rendered:
@@ -300,7 +300,7 @@ to its `value` property.
 
 The result should look like the following:
 
-![](../docassets/images/form-service-sample-01.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/form-service-sample-01.png)
 
 #### Responding to all form events
 
@@ -341,7 +341,7 @@ In the CSS, you can target any outcome ID and change the style as in this exampl
 }
 ```
 
-![](../docassets/images/form-style-sample.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/form-style-sample.png)
 
 ## See also
 

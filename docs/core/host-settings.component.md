@@ -11,7 +11,7 @@ Validates the URLs for ACS and APS and saves them in the user's local storage
 
 **Note:** this is an internal component and is not meant to be used in production.
 
-![Host settings](../docassets/images/host-settings-component.png)
+![Host settings](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/host-settings-component.png)
 
 ## Basic Usage
 

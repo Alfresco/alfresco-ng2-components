@@ -9,8 +9,8 @@ Last reviewed: 2018-11-20
 
 Displays a sidebar-action menu information panel.
 
-![Sidebar action menu button screenshot](../docassets/images/sidebar-action-menu-button.png)
-![Sidebar action menu icon screenshot](../docassets/images/sidebar-action-menu-icon.png)
+![Sidebar action menu button screenshot](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/sidebar-action-menu-button.png)
+![Sidebar action menu icon screenshot](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/sidebar-action-menu-icon.png)
 
 ## Basic usage
 

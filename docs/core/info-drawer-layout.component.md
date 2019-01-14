@@ -9,7 +9,7 @@ Last reviewed: 2018-06-08
 
 Displays a sidebar-style information panel.
 
-![Info drawer layout screenshot](../docassets/images/infodrawerlayout.png)
+![Info drawer layout screenshot](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/infodrawerlayout.png)
 
 ## Basic usage
 

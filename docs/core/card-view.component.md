@@ -9,7 +9,7 @@ Last reviewed: 2018-05-09
 
 Displays a configurable property list renderer.
 
-![adf-custom-view](../docassets/images/adf-custom-view.png)
+![adf-custom-view](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/adf-custom-view.png)
 
 ## Basic Usage
 

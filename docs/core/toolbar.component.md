@@ -9,7 +9,7 @@ Last reviewed: 2018-06-08
 
 Simple container for headers, titles, actions and breadcrumbs.
 
-![](../docassets/images/adf-toolbar-01.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/adf-toolbar-01.png)
 
 ## Contents
 
@@ -66,7 +66,7 @@ For example, the image below shows a toolbar with a
 [Breadcrumb component](../content-services/breadcrumb.component.md) title, and then some buttons
 pushed to the right by a spacer:
 
-![](../docassets/images/adf-toolbar-02.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/adf-toolbar-02.png)
 
 ## Class members
 
@@ -109,12 +109,12 @@ but you could also use your own custom menu components:
 </adf-toolbar>
 ```
 
-![](../docassets/images/adf-toolbar-03.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/adf-toolbar-03.png)
 
 With the menu set up like this, you would see the following menu items as defined earlier
 when you click the menu button:
 
-![](../docassets/images/adf-toolbar-04.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/adf-toolbar-04.png)
 
 ### Custom color
 
@@ -125,11 +125,11 @@ You might also want to change colors to follow your application's color
 
 For example:
 
-![](../docassets/images/adf-toolbar-05.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/adf-toolbar-05.png)
 
-![](../docassets/images/adf-toolbar-06.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/adf-toolbar-06.png)
 
-![](../docassets/images/adf-toolbar-07.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/adf-toolbar-07.png)
 
 ## See also
 

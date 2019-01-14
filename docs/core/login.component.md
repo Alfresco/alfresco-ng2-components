@@ -9,7 +9,7 @@ Last reviewed: 2018-11-13
 
 Authenticates to Alfresco Content Services and Alfresco Process Services.
 
-![Login component](../docassets/images/login-extra-content.png)
+![Login component](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/login-extra-content.png)
 
 ## Contents
 
@@ -48,11 +48,11 @@ You can replace the content of the header and footer of the [Login component](..
 
 Header:
 
-![Login with custom header](../docassets/images/custom-header.png)
+![Login with custom header](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/custom-header.png)
 
 Footer:
 
-![Login with custom footer](../docassets/images/custom-footer.png)
+![Login with custom footer](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/custom-footer.png)
 
 Also, any content that you put inside the `<adf-login>` tags will be rendered as part
 of the Login dialog:
@@ -68,7 +68,7 @@ of the Login dialog:
 This is useful if you need to extend the functionality of the dialog
 with custom input fields handled by your application or parent component:
 
-![Login with custom content](../docassets/images/login-extra-content.png)
+![Login with custom content](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/login-extra-content.png)
 
 ## Class members
 
@@ -136,7 +136,7 @@ You can change the logo and background images using the `backgroundImageUrl` and
 </adf-login>
 ```
 
-![Login with custom logo and background](../docassets/images/custom-login.png)
+![Login with custom logo and background](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/custom-login.png)
 
 You can also bind to your component properties and provide values dynamically if you need to:
 
@@ -290,7 +290,7 @@ enabled the setting in `app.config.json`) then the [login component](../core/log
     },
 ```
 
-![Login component](../docassets/images/sso-login.png)
+![Login component](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/sso-login.png)
 
 Note that if the `silentLogin` property in the `oauth2` configuration is set to true
 then the login page will not be shown. Instead, the application will redirect

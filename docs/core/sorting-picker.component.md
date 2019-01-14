@@ -9,7 +9,7 @@ Last reviewed: 2018-06-08
 
 Selects from a set of predefined sorting definitions and directions.
 
-![Sorting Picker](../docassets/images/sorting-picker.png)
+![Sorting Picker](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/sorting-picker.png)
 
 ## Basic Usage
 

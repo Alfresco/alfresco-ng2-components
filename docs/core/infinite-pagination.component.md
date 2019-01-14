@@ -9,7 +9,7 @@ Last reviewed: 2018-11-13
 
 Adds "infinite" pagination to the component it is used with.
 
-![Infinite Pagination screenshot](../docassets/images/InfPagination.png)
+![Infinite Pagination screenshot](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/InfPagination.png)
 
 ## Basic Usage
 

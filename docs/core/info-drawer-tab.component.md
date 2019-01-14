@@ -9,7 +9,7 @@ Last reviewed: 2018-06-08
 
 Renders tabs in a [Info drawer component](../core/info-drawer.component.md).
 
-![Info drawer screenshot](../docassets/images/label-tab.png)
+![Info drawer screenshot](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/label-tab.png)
 
 ## Basic usage
 
@@ -44,7 +44,7 @@ Render tab with icon instead of labels:
 </adf-info-drawer>
 ```
 
-![Info drawer screenshot](../docassets/images/icon-tab.png)
+![Info drawer screenshot](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/icon-tab.png)
 
 ## Class members
 

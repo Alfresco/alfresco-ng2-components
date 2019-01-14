@@ -147,7 +147,7 @@ custom validator set:
 
 If you now run the application and try to enter "admin" in one of the text fields (either optional or required), you should see the following error:
 
-![](../docassets/images/demo-validator.png)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/demo-validator.png)
 
 ## See also
 

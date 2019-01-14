@@ -9,7 +9,7 @@ Last reviewed: 2018-06-08
 
 Displays a sidebar-style information panel with tabs.
 
-![Info drawer screenshot](../docassets/images/activities-infodrawer.png)
+![Info drawer screenshot](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/activities-infodrawer.png)
 
 ## Basic usage
 

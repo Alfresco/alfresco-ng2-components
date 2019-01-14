@@ -9,7 +9,7 @@ Last reviewed: 2018-11-09
 
 Displays all the languages that are present in "app.config.json" and the default (EN).
 
-![Language Menu screenshot](../docassets/images/languages-menu.png)
+![Language Menu screenshot](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/languages-menu.png)
 
 ## Basic usage
 
@@ -71,7 +71,7 @@ You can also attach the Language Menu as a nested menu:
 </mat-menu>
 ```
 
-![Nested Language Menu screenshot](../docassets/images/languages-menu-nested.png)
+![Nested Language Menu screenshot](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/languages-menu-nested.png)
 
 ## See Also
 

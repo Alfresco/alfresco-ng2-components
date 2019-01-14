@@ -120,7 +120,7 @@ let data = new ObjectDataTableAdapter(
 );
 ```
 
-![DataTable demo](../docassets/images/datatable-demo.png)
+![DataTable demo](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/datatable-demo.png)
 
 If you don't specify the column array then the constructor will infer the layout of the columns from
 the structure of the row objects. The field names ('id' and 'name' in the example below) will be used
