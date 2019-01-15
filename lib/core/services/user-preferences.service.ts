@@ -40,13 +40,6 @@ export class UserPreferencesService {
     };
 
     private userPreferenceStatus: any = this.defaults;
-
-    /**
-     * @deprecated we are grouping every value changed on the user preference in a single stream : userPreferenceValue$
-     */
-    locale$: Observable<string>;
-    private localeSubject: BehaviorSubject<string>;
-
     private onChangeSubject: BehaviorSubject<any>;
     onChange: Observable<any>;
 
@@ -54,8 +47,6 @@ export class UserPreferencesService {
                 private appConfig: AppConfigService,
                 private storage: StorageService) {
         this.appConfig.onLoad.subscribe(this.initUserPreferenceStatus.bind(this));
-        this.localeSubject = new BehaviorSubject(this.get(UserPreferenceValues.Locale, this.getDefaultLocale()));
-        this.locale$ = this.localeSubject.asObservable();
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
         this.onChange = this.onChangeSubject.asObservable();
     }
@@ -169,12 +160,10 @@ export class UserPreferencesService {
 
     /** Current locale setting. */
     get locale(): string {
-        const locale = this.get(UserPreferenceValues.Locale, this.userPreferenceStatus[UserPreferenceValues.Locale]);
-        return locale;
+        return this.get(UserPreferenceValues.Locale, this.userPreferenceStatus[UserPreferenceValues.Locale]);
     }
 
     set locale(value: string) {
-        this.localeSubject.next(value);
         this.set(UserPreferenceValues.Locale, value);
     }
 

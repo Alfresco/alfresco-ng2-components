@@ -51,7 +51,6 @@ export class RenditionsService {
         );
     }
 
-    /** @deprecated */
     isRenditionAvailable(nodeId: string, encoding: string): Observable<boolean> {
         return new Observable((observer) => {
             this.getRendition(nodeId, encoding).subscribe(
@@ -71,7 +70,6 @@ export class RenditionsService {
         });
     }
 
-    /** @deprecated */
     isConversionPossible(nodeId: string, encoding: string): Observable<boolean> {
         return new Observable((observer) => {
             this.getRendition(nodeId, encoding).subscribe(
@@ -87,27 +85,22 @@ export class RenditionsService {
         });
     }
 
-    /** @deprecated */
     getRenditionUrl(nodeId: string, encoding: string): string {
         return this.apiService.contentApi.getRenditionUrl(nodeId, encoding);
     }
 
-    /** @deprecated */
     getRendition(nodeId: string, encoding: string): Observable<RenditionEntry> {
         return from(this.apiService.renditionsApi.getRendition(nodeId, encoding));
     }
 
-    /** @deprecated */
     getRenditionsListByNodeId(nodeId: string): Observable<RenditionPaging> {
         return from(this.apiService.renditionsApi.getRenditions(nodeId));
     }
 
-    /** @deprecated */
     createRendition(nodeId: string, encoding: string): Observable<{}> {
         return from(this.apiService.renditionsApi.createRendition(nodeId, { id: encoding }));
     }
 
-    /** @deprecated */
     convert(nodeId: string, encoding: string, pollingInterval: number = 1000, retries: number = 5) {
         return this.createRendition(nodeId, encoding)
             .pipe(
@@ -115,7 +108,6 @@ export class RenditionsService {
             );
     }
 
-    /** @deprecated */
     private pollRendition(nodeId: string, encoding: string, intervalSize: number = 1000, retries: number = 5) {
         let attempts = 0;
         return interval(intervalSize)

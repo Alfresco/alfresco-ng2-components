@@ -36,10 +36,6 @@ export class VersionListComponent implements OnChanges {
     versions: VersionEntry[] = [];
     isLoading = true;
 
-    /** @deprecated in 2.3.0 */
-    @Input()
-    id: string;
-
     /** The target node. */
     @Input()
     node: Node;

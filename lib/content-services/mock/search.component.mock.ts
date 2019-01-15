@@ -118,7 +118,7 @@ export let errorJson = {
 
 @Component({
     template: `
-    <adf-search [searchTerm]="searchedWord" [queryBody]="searchNode" [maxResults]="maxResults"
+    <adf-search [searchTerm]="searchedWord" [maxResults]="maxResults"
         (error)="showSearchResult('ERROR')"
         (success)="showSearchResult('success')" #search>
        <ng-template let-data>

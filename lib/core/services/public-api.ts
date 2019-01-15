@@ -17,7 +17,6 @@
 
 export * from './authentication.service';
 export * from './alfresco-api.service';
-export * from './settings.service';
 export * from './content.service';
 export * from './auth-guard.service';
 export * from './auth-guard-ecm.service';

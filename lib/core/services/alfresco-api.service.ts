@@ -50,10 +50,6 @@ export class AlfrescoApiService {
         return this.getInstance().activiti.taskApi;
     }
 
-    // get modelsApi(): Core.ModelsApi {
-    //     return this.getInstance().activiti.modelsApi;
-    // }
-
     get contentApi(): ContentApi {
         return this.getInstance().content;
     }
@@ -120,13 +116,13 @@ export class AlfrescoApiService {
         }
 
         const config = {
-            provider: this.getProvider(),
+            provider: this.appConfig.get<string>(AppConfigValues.PROVIDERS),
             hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
             hostBpm: this.appConfig.get<string>(AppConfigValues.BPMHOST),
             authType: this.appConfig.get<string>(AppConfigValues.AUTHTYPE, 'BASIC'),
             contextRootBpm: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM),
             contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
-            disableCsrf: this.getDisableCSRF(),
+            disableCsrf: this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF),
             oauth2: oauth
         };
 
@@ -137,17 +133,4 @@ export class AlfrescoApiService {
         }
     }
 
-    // @deprecated 3.0.0 get only from app config
-    private getDisableCSRF(): boolean {
-        if (this.storage.getItem(AppConfigValues.DISABLECSRF) === 'true') {
-            return true;
-        } else {
-            return this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF);
-        }
-    }
-
-    // @deprecated 3.0.0 get only from app config
-    private getProvider() {
-        return this.storage.getItem(AppConfigValues.PROVIDERS) || this.appConfig.get<string>(AppConfigValues.PROVIDERS);
-    }
 }

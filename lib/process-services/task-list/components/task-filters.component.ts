@@ -23,11 +23,8 @@ import { TaskFilterService } from './../services/task-filter.service';
 import { TaskListService } from './../services/tasklist.service';
 import { IconModel } from '../../app-list/icon.model';
 
-/**
- * @deprecated: in 2.4.0 'adf-filters' selector was deprecated, use adf-task-filters instead.
- */
 @Component({
-    selector: 'adf-task-filters, adf-filters',
+    selector: 'adf-task-filters',
     templateUrl: './task-filters.component.html',
     styleUrls: ['task-filters.component.scss']
 })

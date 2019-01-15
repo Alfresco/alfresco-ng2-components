@@ -40,6 +40,8 @@ describe('AuthGuardService ECM', () => {
         authGuard = TestBed.get(AuthGuardEcm);
         routerService = TestBed.get(Router);
         appConfigService = TestBed.get(AppConfigService);
+
+        appConfigService.config.providers = 'ECM';
     });
 
     it('if the alfresco js api is logged in should canActivate be true', async(() => {
@@ -78,7 +80,7 @@ describe('AuthGuardService ECM', () => {
         expect(authService.setRedirect).toHaveBeenCalledWith({
             provider: 'ECM', url: 'some-url'
         });
-        expect(authService.getRedirect('ECM')).toEqual('some-url');
+        expect(authService.getRedirect()).toEqual('some-url');
     }));
 
     it('should set redirect navigation commands with query params', async(() => {
@@ -91,7 +93,7 @@ describe('AuthGuardService ECM', () => {
         expect(authService.setRedirect).toHaveBeenCalledWith({
             provider: 'ECM', url: 'some-url;q=123'
         });
-        expect(authService.getRedirect('ECM')).toEqual('some-url;q=123');
+        expect(authService.getRedirect()).toEqual('some-url;q=123');
     }));
 
     it('should set redirect navigation commands with query params', async(() => {
@@ -104,7 +106,7 @@ describe('AuthGuardService ECM', () => {
         expect(authService.setRedirect).toHaveBeenCalledWith({
             provider: 'ECM', url: '/'
         });
-        expect(authService.getRedirect('ECM')).toEqual('/');
+        expect(authService.getRedirect()).toEqual('/');
     }));
 
     it('should get redirect url from config if there is one configured', async(() => {

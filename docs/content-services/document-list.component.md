@@ -63,8 +63,6 @@ Displays the documents from a repository.
 | currentFolderId | `string` | null | The ID of the folder node to display or a reserved string alias for special sources |
 | display | `string` | DisplayMode.List | Change the display mode of the table. Can be "list" or "gallery". |
 | emptyFolderImageUrl | `string` |  | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
-| enableInfiniteScrolling | `boolean` | false | (**Deprecated:** 2.3.0) Set document list to work in infinite scrolling mode |
-| folderNode | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) | null | (**Deprecated:** 2.3.0 - use currentFolderId or node) Currently displayed folder node |
 | imageResolver | `any \| null` | null | Custom image resolver |
 | includeFields | `string[]` |  | Include additional information about the node in the server request. For example: association, isLink, isLocked and others. |
 | loading | `boolean` | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
@@ -80,7 +78,6 @@ Displays the documents from a repository.
 | rowStyleClass | `string` |  | The CSS class to apply to every row |
 | selectionMode | `string` | "single" | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showHeader | `boolean` | true | Toggles the header |
-| skipCount | `number` | 0 | (**Deprecated:** 2.3.0 - define it in pagination) Number of elements to skip over for pagination purposes |
 | sorting | `string[]` | ['name', 'asc'] | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
 | sortingMode | `string` | "client" | Defines sorting mode. Can be either `client` (items in the list are sorted client-side) or `server` (the ordering supplied by the server is used without further client-side sorting). Note that the `server` option _does not_ request the server to sort the data before delivering it. |
 | thumbnails | `boolean` | false | Show document thumbnails rather than icons |
@@ -98,7 +95,7 @@ Displays the documents from a repository.
 
 ## Details
 
-The properties `currentFolderId`, `folderNode` and `node` set the initial folder shown by
+The properties `currentFolderId` and `node` set the initial folder shown by
 the Document List. They cannot be used together, so choose the one that suits your use case
 best.
 Document list will automatically show special icons for : `Smart Folder`, `Link to a Folder` and `Folder with rules` as showed in the picture below : 
@@ -175,12 +172,28 @@ Set the `[display]` property to "gallery" to enable card view mode:
 
 ### Pagination strategy
 
-The Document List by default supports 2 types of pagination: **finite** and **infinite**: 
+The Document List by default supports 2 types of pagination:  [Pagination component](../core/pagination.component.md) and [Infinite pagination component](../core/infinite-pagination.component.md) 
 
--   With **finite** pagination, the Document List needs 2 parameters: `maxItems` and `skipCount`. These set the maximum number of items shown in a single page and the start
-    offset of the first item in the page (ie, the number of items you need to skip to get there).
--   You can enable **infinite** pagination by setting the same parameters plus an extra third
-    parameter: `enableInfiniteScrolling`.
+#### Pagination component
+
+```html
+<adf-document-list #documentList ...></adf-document-list>
+
+<adf-pagination
+    [target]="documentList"">
+</adf-pagination>
+```
+
+#### Infinite pagination component
+
+```html
+<adf-document-list #documentList ...></adf-document-list>
+
+<adf-infinite-pagination 
+    [target]="documentList"
+    [loading]="documentList.infiniteLoading">
+</adf-infinite-pagination>
+```
 
 ### Data Sources
 
@@ -447,7 +460,7 @@ Now you can access Document List properties or call methods directly:
 
 ```ts
 // print currently displayed folder node object to console
-console.log(documentList.folderNode);
+console.log(documentList.currentFolderId);
 ```
 
 **Important note**:  
@@ -660,7 +673,7 @@ actions you have defined in a context menu:
     selector: 'my-view',
     template: `
         <adf-document-list [contextMenuActions]="true">...</adf-document-list>
-        <context-menu-holder></context-menu-holder>
+        <adf-context-menu-holder></context-menu-holder>
     `
 })
 export class MyView {

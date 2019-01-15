@@ -54,11 +54,6 @@ Implements node operations used by the [Document List component](../content-serv
     -   _nodeId:_ `string`  - ID of the target node
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
--   **hasPermission**(node: `any`, permission: [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
-    (**Deprecated:** 2.3.0 - use the equivalent in the content service) Checks if a node has the specified permission.
-    -   _node:_ `any`  - Target node
-    -   _permission:_ [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)`|string`  - Permission level to query
-    -   **Returns** `boolean` - True if the node has the permission, false otherwise
 -   **moveNode**(nodeId: `string`, targetParentId: `string`): `any`<br/>
     Moves a node to destination node.
     -   _nodeId:_ `string`  - The id of the node to be moved

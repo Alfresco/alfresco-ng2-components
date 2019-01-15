@@ -17,9 +17,8 @@
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-// @deprecated 2.3.0 diagram-alfresco-publish-task tag removed
 @Component({
-    selector: 'adf-diagram-publish-task, diagram-alfresco-publish-task',
+    selector: 'adf-diagram-publish-task',
     templateUrl: './diagram-alfresco-publish-task.component.html'
 })
 export class DiagramAlfrescoPublishTaskComponent implements OnInit {

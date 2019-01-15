@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-/** @deprecated in 2.3.0, part of the module moved in the core */
-export { CommentsModule } from '@alfresco/adf-core';
-/** @deprecated in 2.3.0, component moved in the core */
-export { CommentListComponent } from '@alfresco/adf-core';
-/** @deprecated in 2.3.0, component moved in the core */
-export { CommentsComponent } from '@alfresco/adf-core';
-
 export * from './process-list/index';
 export * from './task-list/index';
 export * from './app-list/index';

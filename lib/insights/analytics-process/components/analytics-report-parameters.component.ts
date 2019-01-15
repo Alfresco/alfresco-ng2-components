@@ -38,9 +38,8 @@ import { ReportParametersModel } from '../../diagram/models/report/reportParamet
 import { ReportQuery } from '../../diagram/models/report/reportQuery.model';
 import { AnalyticsService } from '../services/analytics.service';
 
-// @deprecated 2.3.0 analytics-report-parameters tag removed
 @Component({
-    selector: 'adf-analytics-report-parameters, analytics-report-parameters',
+    selector: 'adf-analytics-report-parameters',
     templateUrl: './analytics-report-parameters.component.html',
     styleUrls: ['./analytics-report-parameters.component.scss'],
     encapsulation: ViewEncapsulation.None

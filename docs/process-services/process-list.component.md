@@ -56,8 +56,7 @@ when the process list is empty:
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row |
 | page | `number` | 0 | The page number of the processes to fetch. |
 | processDefinitionId | `string` |  | The Definition Id of the process. |
-| processDefinitionKey | `string` |  | (**Deprecated:** 2.4.0) The Definition Key of the process. |
-| processInstanceId | `number \| string` |  | The id of the process instance. |
+| processInstanceId | `number` |  |  | The id of the process instance. |
 | selectFirstRow | `boolean` | true | Toggles default selection of the first row |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | size | `number` |  | The number of processes to fetch in each page. |

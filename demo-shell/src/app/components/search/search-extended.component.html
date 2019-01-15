@@ -1,9 +1,4 @@
 <div>
-    <h3>{{'APP_LAYOUT.EXTENDED_SEARCH_QUERY_BODY' | translate}}</h3>
-    <mat-checkbox [(ngModel)]="useServiceApproach">
-            {{'APP_LAYOUT.SEARCH_SERVICE_APPROACH' | translate}}
-    </mat-checkbox>
-
     <div id="container-for-custom-input" class="adf-search-extended-input-containers">
         <mat-form-field>
             <label>{{'APP_LAYOUT.WORD_TO_SEARCH' | translate}}</label>
@@ -13,7 +8,6 @@
     </div>
     <div>
       <adf-search #auto="searchAutocomplete"
-                  [queryBody]="generateQueryBody(searchedWord)"
                   class="adf-example-card-search-container">
           <ng-template let-data>
             <mat-card class="adf-example-card"

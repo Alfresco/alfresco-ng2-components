@@ -173,13 +173,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     currentFolderId: string = null;
 
-    /**
-     * Currently displayed folder node
-     * @deprecated 2.3.0 - use currentFolderId or node
-     */
-    @Input()
-    folderNode: Node = null;
-
     /** The Document list will show all the nodes contained in the NodePaging entity */
     @Input()
     node: NodePaging = null;
@@ -187,20 +180,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     /** Default value is stored into user preference settings use it only if you are not using the pagination */
     @Input()
     maxItems: number;
-
-    /**
-     * Number of elements to skip over for pagination purposes
-     * @deprecated 2.3.0 - define it in pagination
-     */
-    @Input()
-    skipCount: number = 0;
-
-    /**
-     * Set document list to work in infinite scrolling mode
-     * @deprecated 2.3.0
-     */
-    @Input()
-    enableInfiniteScrolling: boolean = false;
 
     /** Emitted when the user clicks a list node */
     @Output()
@@ -239,6 +218,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     data: ShareDataTableAdapter;
     noPermission: boolean = false;
     selection = new Array<NodeEntry>();
+    folderNode: Node = null;
 
     private _pagination: BehaviorSubject<PaginationModel>;
     private layoutPresets = {};
@@ -272,11 +252,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return null;
     }
 
-    /** @deprecated 2.3.0 define it in pagination */
-    get supportedPageSizes(): number[] {
-        return this.preferences.getDefaultPageSizes();
-    }
-
     get hasCustomLayout(): boolean {
         return this.columnList && this.columnList.columns && this.columnList.columns.length > 0;
     }
@@ -296,7 +271,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     get pagination(): BehaviorSubject<PaginationModel> {
         if (!this._pagination) {
-            let maxItems = this.maxItems || this.preferences.paginationSize;
+            let maxItems = this.maxItems || this.preferences.paginationSize;
             let defaultPagination = <PaginationModel> {
                 maxItems: maxItems,
                 skipCount: 0,
@@ -337,7 +312,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     ngOnInit() {
         this.rowMenuCache = {};
         this.loadLayoutPresets();
-        this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, null, this.getDefaultSorting(), this.sortingMode);
+        this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, this.contentService, null, this.getDefaultSorting(), this.sortingMode);
         this.data.thumbnails = this.thumbnails;
         this.data.permissionsStyle = this.permissionsStyle;
 
@@ -375,7 +350,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
 
         if (!this.data) {
-            this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, schema, this.getDefaultSorting(), this.sortingMode);
+            this.data = new ShareDataTableAdapter(this.documentListService, this.thumbnailService, this.contentService, schema, this.getDefaultSorting(), this.sortingMode);
         } else if (schema && schema.length > 0) {
             this.data.setColumns(schema);
         }
@@ -404,11 +379,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             }
         }
 
-        if (changes.folderNode && changes.folderNode.currentValue) {
-            this.currentFolderId = changes.folderNode.currentValue.id;
-            this.resetNewFolderPagination();
-            this.loadFolder();
-        } else if (changes.currentFolderId &&
+        if (changes.currentFolderId &&
             changes.currentFolderId.currentValue &&
             changes.currentFolderId.currentValue !== changes.currentFolderId.previousValue) {
             this.resetNewFolderPagination();
@@ -600,12 +571,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.setupDefaultColumns(this.currentFolderId);
         }
 
-        if (this.folderNode) {
-            return this.loadFolderNodesByFolderNodeId(this.folderNode.id, this.pagination.getValue())
-                .catch((err) => this.handleError(err));
-        } else {
-            this.loadFolderByNodeId(this.currentFolderId);
-        }
+        this.loadFolderByNodeId(this.currentFolderId);
     }
 
     loadFolderByNodeId(nodeId: string) {

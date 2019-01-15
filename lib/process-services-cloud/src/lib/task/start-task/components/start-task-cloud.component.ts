@@ -27,7 +27,8 @@ import {
     LogService,
     UserPreferencesService,
     IdentityUserService,
-    IdentityUserModel
+    IdentityUserModel,
+    UserPreferenceValues
 } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from './people-cloud/people-cloud.component';
 
@@ -95,16 +96,17 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     constructor(private taskService: StartTaskCloudService,
                 private dateAdapter: DateAdapter<Moment>,
-                private preferences: UserPreferencesService,
+                private userPreferencesService: UserPreferencesService,
                 private formBuilder: FormBuilder,
                 private identityUserService: IdentityUserService,
                 private logService: LogService) {
     }
 
     ngOnInit() {
-        this.localeSub = this.preferences.locale$.subscribe((locale) => {
+        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
+
         this.loadCurrentUser();
         this.buildForm();
     }

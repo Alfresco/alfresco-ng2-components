@@ -116,7 +116,6 @@ describe('ProcessInstanceListComponent', () => {
         let emitSpy = spyOn(component.success, 'emit');
         component.appId = 1;
         component.state = 'open';
-        component.processDefinitionKey = null;
         fixture.detectChanges();
         tick();
         expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstance);
@@ -131,7 +130,6 @@ describe('ProcessInstanceListComponent', () => {
         );
         component.appId = 1;
         component.state = 'open';
-        component.processDefinitionKey = null;
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.rows).toBeDefined();
@@ -147,7 +145,6 @@ describe('ProcessInstanceListComponent', () => {
         getProcessInstancesSpy = getProcessInstancesSpy.and.returnValue(of(fakeProcessInstancesWithNoName));
         component.appId = 1;
         component.state = 'open';
-        component.processDefinitionKey = 'fakeprocess';
         component.success.subscribe( (res) => {
             expect(component.rows[0]['name']).toEqual('Fake Process Name - Nov 9, 2017, 12:36:14 PM');
             expect(component.rows[1]['name']).toEqual('Fake Process Name - Nov 9, 2017, 12:37:25 PM');
@@ -198,7 +195,6 @@ describe('ProcessInstanceListComponent', () => {
     it('should emit onSuccess event when reload() called', fakeAsync(() => {
         component.appId = 1;
         component.state = 'open';
-        component.processDefinitionKey = null;
         fixture.detectChanges();
         tick();
         let emitSpy = spyOn(component.success, 'emit');
@@ -308,22 +304,6 @@ describe('ProcessInstanceListComponent', () => {
             component.ngOnChanges({'appId': change});
         });
 
-        it('should reload the list when the processDefinitionKey parameter changes', (done) => {
-            const processDefinitionKey = 'fakeprocess';
-            let change = new SimpleChange(null, processDefinitionKey, true);
-
-            component.success.subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(component.rows).toBeDefined();
-                expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.rows.length).toEqual(2);
-                expect(component.rows[0]['name']).toEqual('Process 773443333');
-                done();
-            });
-
-            component.ngOnChanges({'processDefinitionKey': change});
-        });
-
         it('should reload the list when the state parameter changes', (done) => {
             const state = 'open';
             let change = new SimpleChange(null, state, true);
@@ -354,38 +334,6 @@ describe('ProcessInstanceListComponent', () => {
             });
 
             component.ngOnChanges({'sort': change});
-        });
-
-        it('should reload the process list when the processDefinitionKey parameter changes', (done) => {
-            const processDefinitionKey = 'SimpleProcess';
-            let change = new SimpleChange(null, processDefinitionKey, true);
-
-            component.success.subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(component.rows).toBeDefined();
-                expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.rows.length).toEqual(2);
-                expect(component.rows[0].name).toEqual('Process 773443333');
-                done();
-            });
-
-            component.ngOnChanges({'processDefinitionKey': change});
-        });
-
-        it('should reload the process list when the processDefinitionKey parameter changes to null', (done) => {
-            const processDefinitionKey = null;
-            let change = new SimpleChange('SimpleProcess', processDefinitionKey, false);
-
-            component.success.subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(component.rows).toBeDefined();
-                expect(component.isListEmpty()).not.toBeTruthy();
-                expect(component.rows.length).toEqual(2);
-                expect(component.rows[0].name).toEqual('Process 773443333');
-                done();
-            });
-
-            component.ngOnChanges({'processDefinitionKey': change});
         });
 
         it('should reload the process list when the processDefinitionId parameter changes', (done) => {

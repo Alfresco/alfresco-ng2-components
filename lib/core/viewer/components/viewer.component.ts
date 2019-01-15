@@ -129,40 +129,25 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     allowLeftSidebar = false;
 
-    /** Allow the right sidebar.
-     * @deprecated 2.5.0 - will be renamed  allowRightSidebar in 3.0.0
-     */
+    /** Allow the right sidebar. */
     @Input()
-    allowSidebar = false;
+    allowRightSidebar = false;
 
     /** Toggles PDF thumbnails. */
     @Input()
     allowThumbnails = true;
 
-    /**
-     * Toggles sidebar visibility. Requires `allowSidebar` to be set to `true`.
-     * @deprecated 2.5.0 - will be renamed showRightSidebar in 3.0.0
-     */
+    /** Toggles right sidebar visibility. Requires `allowRightSidebar` to be set to `true`. */
     @Input()
-    showSidebar = false;
+    showRightSidebar = false;
 
-    /** Toggles left sidebar visibility. Requires `allowSidebar` to be set to `true`. */
+    /** Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`. */
     @Input()
     showLeftSidebar = false;
 
-    /**
-     * The position of the sidebar. Can be `left` or `right`.
-     * @deprecated 2.5.0 use sidebarTemplateLeft
-     */
+    /** The template for the right sidebar. The template context contains the loaded node data. */
     @Input()
-    sidebarPosition = 'right';
-
-    /**
-     * The template for the sidebar. The template context contains the loaded node data.
-     * @deprecated 2.5.0 renamed as sidebarRight
-     */
-    @Input()
-    sidebarTemplate: TemplateRef<any> = null;
+    sidebarRightTemplate: TemplateRef<any> = null;
 
     /** The template for the left sidebar. The template context contains the loaded node data. */
     @Input()
@@ -223,7 +208,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     urlFileContent: string;
     otherMenu: any;
     extension: string;
-    sidebarTemplateContext: { node: Node } = { node: null };
+    sidebarRightTemplateContext: { node: Node } = { node: null };
     sidebarLeftTemplateContext: { node: Node } = { node: null };
     fileTitle: string;
 
@@ -376,7 +361,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         this.extensionChange.emit(this.extension);
-        this.sidebarTemplateContext.node = data;
+        this.sidebarRightTemplateContext.node = data;
         this.sidebarLeftTemplateContext.node = data;
         this.scrollTop();
 
@@ -404,18 +389,18 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     toggleSidebar() {
-        this.showSidebar = !this.showSidebar;
-        if (this.showSidebar && this.nodeId) {
+        this.showRightSidebar = !this.showRightSidebar;
+        if (this.showRightSidebar && this.nodeId) {
             this.apiService.getInstance().nodes.getNode(this.nodeId, { include: ['allowableOperations'] })
                 .then((nodeEntry: NodeEntry) => {
-                    this.sidebarTemplateContext.node = nodeEntry.entry;
+                    this.sidebarRightTemplateContext.node = nodeEntry.entry;
                 });
         }
     }
 
     toggleLeftSidebar() {
         this.showLeftSidebar = !this.showLeftSidebar;
-        if (this.showSidebar && this.nodeId) {
+        if (this.showRightSidebar && this.nodeId) {
             this.apiService.getInstance().nodes.getNode(this.nodeId, { include: ['allowableOperations'] })
                 .then((nodeEntry: NodeEntry) => {
                     this.sidebarLeftTemplateContext.node = nodeEntry.entry;

@@ -35,13 +35,6 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
     @Output()
     filesDropped: EventEmitter<File[]> = new EventEmitter<File[]>();
 
-    /**
-     * Emitted when one or more files are dragged and dropped onto the draggable element.
-     * @deprecated in 2.4.0: use `filesDropped` instead
-     */
-    @Output()
-    filesEntityDropped: EventEmitter<any> = new EventEmitter();
-
     /** Emitted when a directory is dragged and dropped onto the draggable element. */
     @Output()
     folderEntityDropped: EventEmitter<any> = new EventEmitter();

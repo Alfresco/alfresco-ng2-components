@@ -18,7 +18,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Response, ResponseOptions } from '@angular/http';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { FormDefinitionModel } from '../models/form-definition.model';
 import { formModelTabs, AlfrescoApiServiceMock } from '../../mock';
 import { FormService } from './form.service';
 import { setupTestBed } from '../../testing/setupTestBed';
@@ -349,25 +348,6 @@ describe('Form service', () => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/models')).toBeTruthy();
                 expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).modelType).toEqual(2);
                 expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual('testName');
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                'status': 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify(simpleResponseBody)
-            });
-        });
-
-        it('should add form fields to a form', (done) => {
-            let formId = 100;
-            let name = 'testName';
-            let data = [{ name: 'name' }, { name: 'email' }];
-            let formDefinitionModel = new FormDefinitionModel(formId.toString(), name, 'testUserName', '2016-09-05T14:41:19.049Z', data);
-
-            service.addFieldsToAForm(formId, formDefinitionModel).subscribe((result) => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/form-models/' + formId)).toBeTruthy();
-                expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).formRepresentation.name).toEqual(name);
                 done();
             });
 

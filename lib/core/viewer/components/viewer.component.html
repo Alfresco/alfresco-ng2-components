@@ -114,14 +114,14 @@
                     </mat-menu>
                 </ng-container>
 
-                <ng-container *ngIf="allowSidebar">
+                <ng-container *ngIf="allowRightSidebar">
                     <adf-toolbar-divider></adf-toolbar-divider>
 
                     <button
                         mat-icon-button
                         title="{{ 'ADF_VIEWER.ACTIONS.INFO' | translate }}"
                         data-automation-id="adf-toolbar-sidebar"
-                        [color]="showSidebar ? 'accent' : 'default'"
+                        [color]="showRightSidebar ? 'accent' : 'default'"
                         (click)="toggleSidebar()">
                         <mat-icon>info_outline</mat-icon>
                     </button>
@@ -132,12 +132,12 @@
         </ng-container>
 
         <div fxLayout="row" fxFlex="1 1 auto">
-            <ng-container *ngIf="allowSidebar && showSidebar">
+            <ng-container *ngIf="allowRightSidebar && showRightSidebar">
                 <div class="adf-viewer__sidebar" [ngClass]="'adf-viewer__sidebar__right'" fxFlexOrder="4"  id="adf-right-sidebar" >
-                    <ng-container *ngIf="sidebarTemplate">
-                        <ng-container *ngTemplateOutlet="sidebarTemplate;context:sidebarTemplateContext"></ng-container>
+                    <ng-container *ngIf="sidebarRightTemplate">
+                        <ng-container *ngTemplateOutlet="sidebarRightTemplate;context:sidebarRightTemplateContext"></ng-container>
                     </ng-container>
-                    <ng-content *ngIf="!sidebarTemplate" select="adf-viewer-sidebar"></ng-content>
+                    <ng-content *ngIf="!sidebarRightTemplate" select="adf-viewer-sidebar"></ng-content>
                 </div>
             </ng-container>
 
@@ -150,7 +150,7 @@
                 </div>
             </ng-container>
 
-            <div  *ngIf="isLoading"  class="adf-viewer-main" fxFlexOrder="{{sidebarPosition !== 'left'? 1 : 4}}" fxFlex="1 1 auto">
+            <div  *ngIf="isLoading"  class="adf-viewer-main" fxFlexOrder="1" fxFlex="1 1 auto">
                 <div class="adf-viewer-layout-content adf-viewer__fullscreen-container">
                     <div class="adf-viewer-content-container">
                         <ng-container *ngIf="isLoading">
@@ -166,7 +166,7 @@
                 </div>
             </div>
 
-            <div  *ngIf="!isLoading"  class="adf-viewer-main" fxFlexOrder="{{sidebarPosition !== 'left'? 1 : 4}}" fxFlex="1 1 auto">
+            <div  *ngIf="!isLoading"  class="adf-viewer-main" fxFlexOrder="1" fxFlex="1 1 auto">
                 <div class="adf-viewer-layout-content adf-viewer__fullscreen-container">
                     <div class="adf-viewer-content-container" [ngSwitch]="viewerType">
                         <ng-container *ngSwitchCase="'pdf'">

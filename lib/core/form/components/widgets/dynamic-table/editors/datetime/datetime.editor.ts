@@ -17,7 +17,7 @@
 
 /* tslint:disable:component-selector  */
 
-import { UserPreferencesService } from '../../../../../../services/user-preferences.service';
+import { UserPreferencesService, UserPreferenceValues } from '../../../../../../services/user-preferences.service';
 import { MomentDateAdapter } from '../../../../../../utils/momentDateAdapter';
 import { MOMENT_DATE_FORMATS } from '../../../../../../utils/moment-date-formats.model';
 import { Component, Input, OnInit } from '@angular/core';
@@ -60,13 +60,14 @@ export class DateTimeEditorComponent implements OnInit {
     maxDate: Moment;
 
     constructor(private dateAdapter: DateAdapter<Moment>,
-                private preferences: UserPreferencesService) {
+                private userPreferencesService: UserPreferencesService) {
     }
 
     ngOnInit() {
-        this.preferences.locale$.subscribe((locale) => {
+        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
+
         let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.DATE_FORMAT;
 
