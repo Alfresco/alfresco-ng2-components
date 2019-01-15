@@ -19,19 +19,8 @@
 
         <span
             class="adf-upload-dialog__title"
-            *ngIf="!uploadList.isUploadCompleted() && !uploadList.isUploadCancelled()">
+            *ngIf="!uploadList.isUploadCancelled()">
             {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_PROGRESS'
-                | translate: {
-                    completed: totalCompleted,
-                    total: filesUploadingList.length
-                }
-            }}
-        </span>
-
-        <span
-            class="adf-upload-dialog__title"
-            *ngIf="uploadList.isUploadCompleted()">
-            {{ 'FILE_UPLOAD.MESSAGES.UPLOAD_COMPLETED'
                 | translate: {
                     completed: totalCompleted,
                     total: filesUploadingList.length
