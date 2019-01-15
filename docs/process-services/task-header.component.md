@@ -2,7 +2,7 @@
 Title: Task Header component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-13
+Last reviewed: 2019-01-14
 ---
 
 # [Task Header component](../../lib/process-services/task-list/components/task-header.component.ts "Defined in task-header.component.ts")

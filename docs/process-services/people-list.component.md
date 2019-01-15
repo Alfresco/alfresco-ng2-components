@@ -2,7 +2,7 @@
 Title: People list component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-14
+Last reviewed: 2019-01-14
 ---
 
 # [People list component](../../lib/process-services/people/components/people-list/people-list.component.ts "Defined in people-list.component.ts")
@@ -44,7 +44,8 @@ export class SomeComponent implements OnInit {
     }
 ```
 
-In the component template use the [people list component](../process-services/people-list.component.md):
+You can use column templates with the [people list component](../process-services/people-list.component.md), since it is based on the
+[Datatable component](../core/datatable.component.md):
 
 <!-- {% raw %} -->
 
@@ -70,9 +71,6 @@ In the component template use the [people list component](../process-services/pe
 ```
 
 <!-- {% endraw %} -->
-
-Note that the [people list component](../process-services/people-list.component.md) is based on the
-[Datatable component](../core/datatable.component.md).
 
 ## Class members
 
