@@ -443,6 +443,99 @@ describe('DocumentList', () => {
         expect(actions[0].disabled).toBeFalsy();
     });
 
+    it('should disable the action if a readonly lock is applied to the file', () => {
+        let documentMenu = new ContentActionModel({
+            permission: 'delete',
+            target: 'document',
+            title: 'FileAction'
+        });
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {
+            entry: {
+                isFile: true,
+                name: 'xyz',
+                isLocked: true,
+                allowableOperations: ['create', 'update', 'delete'],
+                properties: { 'cm:lockType': 'READ_ONLY_LOCK', 'cm:lockLifetime': 'PERSISTENT' }
+            }
+        };
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FileAction');
+        expect(actions[0].disabled).toBeTruthy();
+    });
+
+    it('should not disable the action for the lock owner if write lock is applied', () => {
+        let documentMenu = new ContentActionModel({
+            permission: 'delete',
+            target: 'document',
+            title: 'FileAction'
+        });
+
+        spyOn(apiService.getInstance(), 'getEcmUsername').and.returnValue('lockOwner');
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {
+            entry: {
+                isFile: true,
+                name: 'xyz',
+                isLocked: true,
+                allowableOperations: ['create', 'update', 'delete'],
+                properties: {
+                    'cm:lockType': 'WRITE_LOCK',
+                    'cm:lockLifetime': 'PERSISTENT',
+                    'cm:lockOwner': { id: 'lockOwner', displayName: 'lockOwner' }
+                }
+            }
+        };
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FileAction');
+        expect(actions[0].disabled).toBeFalsy();
+    });
+
+    it('should disable the action if write lock is applied and user is not the lock owner', () => {
+        let documentMenu = new ContentActionModel({
+            permission: 'delete',
+            target: 'document',
+            title: 'FileAction'
+        });
+
+        spyOn(apiService.getInstance(), 'getEcmUsername').and.returnValue('jerryTheKillerCow');
+
+        documentList.actions = [
+            documentMenu
+        ];
+
+        let nodeFile = {
+            entry: {
+                isFile: true,
+                name: 'xyz',
+                isLocked: true,
+                allowableOperations: ['create', 'update', 'delete'],
+                properties: {
+                    'cm:lockType': 'WRITE_LOCK',
+                    'cm:lockLifetime': 'PERSISTENT',
+                    'cm:lockOwner': { id: 'lockOwner', displayName: 'lockOwner' }
+                }
+            }
+        };
+
+        let actions = documentList.getNodeActions(nodeFile);
+        expect(actions.length).toBe(1);
+        expect(actions[0].title).toEqual('FileAction');
+        expect(actions[0].disabled).toBeTruthy();
+    });
+
     it('should not disable the action if there is the right permission for the folder', () => {
         let documentMenu = new ContentActionModel({
             disableWithNoPermission: true,
