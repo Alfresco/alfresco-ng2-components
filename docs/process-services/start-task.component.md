@@ -2,12 +2,12 @@
 Title: Start Task Component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-13
+Last reviewed: 2019-01-14
 ---
 
 # [Start Task Component](../../process-services/task-list/components/start-task.component.ts "Defined in start-task.component.ts")
 
-Creates/Starts a new task for the specified app
+Creates/Starts a new task for the specified app.
 
 ![adf-start-task](../docassets/images/adf-start-task.png)
 

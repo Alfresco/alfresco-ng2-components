@@ -2,7 +2,7 @@
 Title: Start Process component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-13
+Last reviewed: 2019-01-14
 ---
 
 # [Start Process component](../../lib/process-services/process-list/components/start-process.component.ts "Defined in start-process.component.ts")

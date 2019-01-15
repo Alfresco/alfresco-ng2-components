@@ -2,12 +2,12 @@
 Title: Task Attachment List Component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-13
+Last reviewed: 2019-01-14
 ---
 
 # [Task Attachment List Component](../../lib/process-services/attachment/task-attachment-list.component.ts "Defined in task-attachment-list.component.ts")
 
-Displays attached documents on a specified task.
+Displays documents attached to a specified task.
 
 ![task-attachment-list-sample](../docassets/images/task-attachment-list.png)
 
