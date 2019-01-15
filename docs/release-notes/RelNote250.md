@@ -97,7 +97,7 @@ This component is a reusable header for Alfresco applications. It displays a cus
         .......
      </adf-layout-header>
 
-![Empty Page State](images/header.gif)
+![Empty Page State](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/header.gif)
 
 For more information about this component please refer to the 
 [official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/header.component.md).
@@ -110,7 +110,7 @@ In ADF 2.5.0 you can now customize the metadata card with the option of showing 
         [displayEmpty]="false">
     </adf-content-metadata-card>
 
-![Metadata default property](images/metadata.gif)
+![Metadata default property](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/metadata.gif)
 
 ### Card view new property types rendering
 
@@ -132,7 +132,7 @@ Two new property types are now available in the card view:
 
 KeyValuePairs is a map key value that is rendered as shown in the image to the left. It uses a nicely-formatted table that allows also for easy editing.ViewSelectItem is a selectBox that allows you to limit the set of possible values for a property.
 
-![Card view](images/cardview.gif)
+![Card view](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/cardview.gif)
 
 For more information about this component please refer to the 
 [official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/card-view.component.md).
@@ -147,7 +147,7 @@ The NotificationService now exposes a new input parameter to allow a full custom
 -   Vertical Position : The vertical position to place the snack bar.
 -   panelClass :  Extra CSS classes to be added to the snack bar container.
 
-![Notification](images/notification2.gif)
+![Notification](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/notification2.gif)
 
 For more information about this component please refer to the 
 [official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/notification.service.md).
@@ -156,7 +156,7 @@ For more information about this component please refer to the
 
 You can now render DateTime items in the dynamic table of a form.
 
-![Datetime datatable](images/date_time_datatable.gif)
+![Datetime datatable](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/date_time_datatable.gif)
 
 ### Attach a form to a standalone Task
 
@@ -166,7 +166,7 @@ You can now attach a form to a new task that is not part of a Process using the 
         [taskName]= "taskname">
     </adf-task-standalone>
 
-![Standalone task](images/Standalone+task.gif)
+![Standalone task](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/Standalone+task.gif)
 
 For more information about this component please refer to the 
 [official documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/process-services/task-standalone.component.md). 

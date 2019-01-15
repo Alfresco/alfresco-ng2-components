@@ -164,7 +164,7 @@ For more details please refer to:
 
 Basic content metadata can now be displayed and edited with the new ContentMetadata component. At the moment, only the basic properties are supported, such as title, description, author, etc. As an example it can be injected into the revamped viewer in the sidebar layout.
 
-![content metadata](images/metadata.gif)
+![content metadata](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/metadata.gif)
 
     <adf-content-metadata-card [node]="aMinimalNodeEntryEntity"></adf-content-metadata-card>
 
@@ -172,7 +172,7 @@ Basic content metadata can now be displayed and edited with the new ContentMetad
 
 You can now see and restore previous versions of a file node. This component can also be used in a dialog or in a sidebar layout. Being the first prototype, there are some restrictions applied on this component - check the documentation for details.
 
-![file versions](images/versioning.gif)
+![file versions](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/versioning.gif)
 
     <adf-version-manager [node]="aMinimalNodeEntryEntity"></adf-version-manager>
 
@@ -188,7 +188,7 @@ The adf-search-control provides you with a standard input search with an pre-sty
 
 For example :
 
-![Search Bar Autocomplete](images/GifSearchBar.gif)
+![Search Bar Autocomplete](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/GifSearchBar.gif)
 
 The adf-search component offers a simple way to customize your search results:
 
@@ -214,7 +214,7 @@ You can also associate to your own input/textarea with the search results via th
 
 This allows you to fetch the search result typed from the input/textarea element associated with the adf-search component:
 
-![Custo Input with custom search templates](images/RandoInputWithCustomResult.gif)
+![Custo Input with custom search templates](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/RandoInputWithCustomResult.gif)
 
 For more details please refer to:
 
@@ -233,7 +233,7 @@ For more details please refer to [Upload button documentation](../content-servic
 
 All the ADF MIME type icons are now registered into the MatIconRegistry. This improvement allows you to use all the icons through the mat-icon tag:
 
-![](images/Untitled.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/Untitled.gif)
 
     <mat-icon svgIcon="video/mp4"></mat-icon>
 
@@ -265,7 +265,7 @@ The NodeFavoriteDirective instance can be bound to a button to retrieve and mana
         </mat-icon>
     </button>
 
-![](images/favorite.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/favorite.gif)
 
 ### 11. Delete multiple nodes directive
 
@@ -325,7 +325,7 @@ For more information please refer to [host component documentation.](../core/hos
 
 We have added all the [process service](../process-services/process.service.md) related models, class methods and type in the type definition file of the alfresco-js-api to help you with the autocomplete of your IDE.
 
-![](images/type+definition.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/type+definition.gif)
 
 ### 15. Redirect to original path upon successful login
 
