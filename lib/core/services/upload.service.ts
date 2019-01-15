@@ -250,7 +250,7 @@ export class UploadService {
 
     private onUploadError(file: FileModel, error: any): void {
         if (file) {
-            file.errorCode = error.status;
+            file.errorCode = ( error || {} ).status;
             file.status = FileUploadStatus.Error;
             this.totalError++;
 
