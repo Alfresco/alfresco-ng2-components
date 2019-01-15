@@ -2,6 +2,7 @@
 Title: Rating component
 Added: v2.0.0
 Status: Active
+Last reviewed: 2019-01-14
 ---
 
 # [Rating component](../../lib/content-services/social/rating.component.ts "Defined in rating.component.ts")

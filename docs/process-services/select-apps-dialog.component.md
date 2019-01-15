@@ -2,6 +2,7 @@
 Title: Select App Component
 Added: v2.0.0
 Status: Active
+Last reviewed: 2019-01-14
 ---
 
 # [Select App Component](../../lib/process-services/app-list/select-apps-dialog-component.ts "Defined in select-apps-dialog-component.ts")

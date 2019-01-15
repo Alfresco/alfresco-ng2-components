@@ -2,7 +2,7 @@
 Title: Apps List Component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-06-08
+Last reviewed: 2019-01-14
 ---
 
 # [Apps List Component](../../lib/process-services/app-list/apps-list.component.ts "Defined in apps-list.component.ts")
