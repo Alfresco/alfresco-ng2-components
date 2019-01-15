@@ -43,6 +43,7 @@ export class HostSettingsComponent implements OnInit {
     providers: string[] = ['BPM', 'ECM', 'ALL'];
 
     showSelectProviders = true;
+    hasIdentity = false;
 
     form: FormGroup;
 
@@ -113,11 +114,14 @@ export class HostSettingsComponent implements OnInit {
     private removeFormGroups() {
         this.form.removeControl('bpmHost');
         this.form.removeControl('ecmHost');
+        this.form.removeControl('identityHost');
+        this.hasIdentity = false;
     }
 
     private addFormGroups() {
         this.addBPMFormControl();
         this.addECMFormControl();
+        this.addIdentityHostFormControl();
     }
 
     private addOAuthFormGroup() {
@@ -129,6 +133,14 @@ export class HostSettingsComponent implements OnInit {
         if ((this.isBPM() || this.isALL() || this.isOAUTH()) && !this.bpmHost) {
             const bpmFormControl = this.createBPMFormControl();
             this.form.addControl('bpmHost', bpmFormControl);
+        }
+    }
+
+    private addIdentityHostFormControl() {
+        if ((this.isOAUTH()) && !this.identityHost) {
+            const identityHostFormControl = this.createIdentityFormControl();
+            this.form.addControl('identityHost', identityHostFormControl);
+            this.hasIdentity = true;
         }
     }
 
@@ -156,6 +168,10 @@ export class HostSettingsComponent implements OnInit {
 
     private createBPMFormControl(): AbstractControl {
         return new FormControl(this.appConfig.get<string>(AppConfigValues.BPMHOST), [Validators.required, Validators.pattern(this.HOST_REGEX)]);
+    }
+
+    private createIdentityFormControl(): AbstractControl {
+        return new FormControl(this.appConfig.get<string>(AppConfigValues.IDENTITY_HOST), [Validators.required, Validators.pattern(this.HOST_REGEX)]);
     }
 
     private createECMFormControl(): AbstractControl {
@@ -191,6 +207,7 @@ export class HostSettingsComponent implements OnInit {
 
     private saveOAuthValues(values: any) {
         this.storageService.setItem(AppConfigValues.OAUTHCONFIG, JSON.stringify(values.oauthConfig));
+        this.storageService.setItem(AppConfigValues.IDENTITY_HOST, values.identityHost);
     }
 
     private saveBPMValues(values: any) {
@@ -231,6 +248,10 @@ export class HostSettingsComponent implements OnInit {
 
     get host(): AbstractControl {
         return this.oauthConfig.get('host');
+    }
+
+    get identityHost(): AbstractControl {
+        return this.form.get('identityHost');
     }
 
     get clientId(): AbstractControl {
