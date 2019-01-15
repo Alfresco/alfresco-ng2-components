@@ -4,7 +4,7 @@ const jasmineReporters = require('jasmine-reporters');
 const htmlReporter = require('protractor-html-reporter-2');
 const retry = require('protractor-retry').retry;
 
-const AlfrescoApi = require('@alfresco/js-api');
+const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
 const TestConfig = require('./e2e/test.config');
 let argv = require('yargs').argv;
 
