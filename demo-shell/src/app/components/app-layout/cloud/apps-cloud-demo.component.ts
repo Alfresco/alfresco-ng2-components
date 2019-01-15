@@ -17,6 +17,7 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CloudLayoutService } from './services/cloud-layout.service';
 
 @Component({
     templateUrl: './apps-cloud-demo.component.html'
@@ -24,10 +25,11 @@ import { Router } from '@angular/router';
 
 export class AppsCloudDemoComponent {
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private cloudLayoutService: CloudLayoutService) {
     }
 
     onAppClick(app) {
+        this.cloudLayoutService.setCurrentTaskFilterParam({key: 'my-tasks'});
         this.router.navigate([`/cloud/${app.name}`]);
     }
 }

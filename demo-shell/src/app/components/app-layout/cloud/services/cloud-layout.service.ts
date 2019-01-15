@@ -48,5 +48,4 @@ export class CloudLayoutService {
     setCurrentProcessFilterParam(param) {
         this.filterProcessSubject.next(param);
     }
-
 }
