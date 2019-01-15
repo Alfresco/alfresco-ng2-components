@@ -99,6 +99,7 @@ describe('User Info component', () => {
         userInfoDialog.APSProfileImageNotDisplayed();
         userInfoDialog.ACSProfileImageNotDisplayed();
         userInfoDialog.clickOnProcessServicesTab();
+        userInfoDialog.checkProcessServicesTabIsSelected();
 
         expect(userInfoDialog.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
         expect(userInfoDialog.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
