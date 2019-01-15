@@ -19,9 +19,9 @@ Shows all the information related to a task.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| formName | `string` | null | The name of the form. |
 | appName | `string` |  | (required) The name of the application. |
 | taskId | `string` |  | (required) The id of the Task. |
+| readOnly | `boolean` | false | Flag to set the component in Read Only Mode. This mode makes all the cells not clickable and not editable. |
 
 ### Events
 

@@ -46,6 +46,10 @@ export class TaskHeaderCloudComponent implements OnInit {
     @Input()
     taskId: string;
 
+    /** The id of the task. */
+    @Input()
+    readOnly: boolean = false;
+
     /** Emitted when the task is claimed. */
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
@@ -109,7 +113,7 @@ export class TaskHeaderCloudComponent implements OnInit {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PRIORITY',
                     value: this.taskDetails.priority,
                     key: 'priority',
-                    editable: true
+                    editable: this.isReadOnlyMode()
                 }
             ),
             new CardViewDateItemModel(
@@ -118,7 +122,7 @@ export class TaskHeaderCloudComponent implements OnInit {
                     value: this.taskDetails.dueDate,
                     key: 'dueDate',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT'),
-                    editable: true
+                    editable: this.isReadOnlyMode()
                 }
             ),
             new CardViewTextItemModel(
@@ -142,7 +146,7 @@ export class TaskHeaderCloudComponent implements OnInit {
                     value: parentInfoMap,
                     key: 'parentName',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT'),
-                    clickable: true
+                    clickable: this.isReadOnlyMode()
                 }
             ),
             new CardViewTextItemModel(
@@ -173,7 +177,7 @@ export class TaskHeaderCloudComponent implements OnInit {
                     key: 'description',
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.DESCRIPTION_DEFAULT'),
                     multiline: true,
-                    editable: true
+                    editable: this.isReadOnlyMode()
                 }
             )
         ];
@@ -241,6 +245,10 @@ export class TaskHeaderCloudComponent implements OnInit {
 
     isTaskValid() {
         return this.appName && this.taskId;
+    }
+
+    isReadOnlyMode() {
+        return !this.readOnly;
     }
 
     claimTask() {

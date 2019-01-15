@@ -85,10 +85,6 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @Input()
     status: string = '';
 
-    /** Toggles default selection of the first row. */
-    @Input()
-    selectFirstRow: boolean = true;
-
     /**
      * Define which task id should be selected after reloading. If the task id doesn't
      * exist or nothing is passed then the first task will be selected.
@@ -219,9 +215,6 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
                 dataRow = this.rows.find((currentRow: NodeEntry) => {
                     return currentRow.entry.id === taskIdSelected;
                 });
-            }
-            if (!dataRow && this.selectFirstRow) {
-                dataRow = this.rows[0];
             }
             if (dataRow) {
                 dataRow.isSelected = true;

@@ -62,7 +62,6 @@ when the task list is empty:
 | parentTaskId | `string` | "" | Filter the tasks. Display only tasks with parentTaskId equal to the supplied value. |
 | processDefinitionId | `string` | "" | Filter the tasks. Display only tasks with processDefinitionId equal to the supplied value. |
 | processInstanceId | `string` | "" | Filter the tasks. Display only tasks with processInstanceId equal to the supplied value. |
-| selectFirstRow | `boolean` | true | Toggles default selection of the first row. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use the Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | sorting | [`TaskListCloudSortingModel`](../../lib/process-services-cloud/src/lib/task/task-list/models/task-list-sorting.model.ts)`[]` |  | Specifies how the table should be sorted. The parameters are for BE sorting. |
 | status | `string` | "" | Filter the tasks. Display only tasks with status equal to the supplied value. |

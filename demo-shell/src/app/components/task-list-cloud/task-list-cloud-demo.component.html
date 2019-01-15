@@ -74,13 +74,6 @@
             <input matInput class="form-control" [formControl]="taskProcessInstanceId" data-automation-id="process-instance-id">
         </mat-form-field>
 
-        <mat-slide-toggle 
-            [color]="'primary'"
-            (change)="toggleSelectFirstRow()"
-            [checked]="selectFirstRow"
-            data-automation-id="select-first-row">
-            Select First Row
-        </mat-slide-toggle>
         <mat-slide-toggle
             [color]="'primary'"
             (change)="toggleMultiselect()"
@@ -111,7 +104,6 @@
         [dueDate]="dueDate"
         [createdDate]="createdDate"
         [selectionMode]="selectionMode"
-        [selectFirstRow]="selectFirstRow"
         [multiselect]="multiSelection"
         (rowsSelected)="showSelectedRows($event)">
         <data-columns>
