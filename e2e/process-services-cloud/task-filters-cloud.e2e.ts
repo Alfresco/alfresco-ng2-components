@@ -24,7 +24,6 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/tasksCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
 import { Util } from '../util/util';
 import { Tasks } from '../actions/APS-cloud/tasks';
-import { browser } from 'protractor';
 
 describe('Task filters cloud', () => {
 
