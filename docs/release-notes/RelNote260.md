@@ -62,7 +62,7 @@ The **Tag List Component** has two new buttons that allow the user to see more/l
 
     <adf-tag-list></adf-tag-list>
 
-![Show More/Less Tag](images/ShowMoreLessTag.gif)
+![Show More/Less Tag](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/ShowMoreLessTag.gif)
 
 ### Show sidebar on the right option
 
@@ -70,7 +70,7 @@ The **Sidenav Component** now accepts the **position** as an input parameter so 
 
     <adf-sidenav-layout [position]="'end'"></adf-sidenav-layout>
 
-![SideBar Right](images/SideBarMove.gif)
+![SideBar Right](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/SideBarMove.gif)
 
 ### Double sidebar for viewer
 
@@ -89,13 +89,13 @@ An extra sidebar is now available to use within the **Viewer Component**. This h
         [sidebarLeftTemplate]="sidebarLeftTemplate"
         [sidebarTemplate]="sidebarRightTemplate"></adf-viewer>
 
-![double Side bar](images/DoubleSideBar.gif)
+![double Side bar](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/DoubleSideBar.gif)
 
 ### Smart folder icon
 
 The **DocumentList Component** can now show different icons for **Smart Folders** and Standard Folders. No extra action is needed by the user to use this functionality.
 
-![Delete Tag Configurable](images/DeleteTagConfigurable.gif)
+![Delete Tag Configurable](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/DeleteTagConfigurable.gif)
 
 ### Tag node list component has a configurable delete button for tag
 
@@ -103,7 +103,7 @@ A configurable delete button has been added to the **Tag Node List Component** t
 
     <adf-tag-node-list [showDelete]="showDelete" [nodeId]="nodeId"></adf-tag-node-list>
 
-![Smart Folder Icon](images/SmartFolderIcon.gif)
+![Smart Folder Icon](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/SmartFolderIcon.gif)
 
 ### Validation summary support for form component
 
@@ -121,13 +121,13 @@ The **Form Component** will now use the **formError** event to send a validation
      <p *ngFor="let error of errorFields">Error {{ error.name }} {{error.validationSummary.message | translate}}</p>
     </div>
 
-![Form Validation Summary](images/ValidationFormRecap.gif)
+![Form Validation Summary](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/ValidationFormRecap.gif)
 
 ### Share link with expiry date
 
 Some extra information is now available for shared links: expiry date. The earliest date accepted is at least 24h after the time you created it (following the ACS specification : [here](https://docs.alfresco.com/5.2/concepts/repository-properties.html) is the link). This is embedded into the **Share Dialog Component** and will be automatically shown when the share dialog is displayed.
 
-![Expiry Share Link](images/ShareExpiryLink.gif)
+![Expiry Share Link](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/ShareExpiryLink.gif)
 
 ### Base extensibility support
 

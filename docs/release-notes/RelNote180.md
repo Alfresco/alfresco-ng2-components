@@ -74,13 +74,13 @@ Below the most relevant features of this release:
 We have added in ADF several pre-built theme css files. These theme files also include all of the styles for core (styles common to all components), so you only have to include a single css file for Angular Material in your app.
 When you want more customization than a pre-built theme offers, you can create your own theme file. You need to include the packages only what you really use in your application. For more information about theming please refer to the [offiicial documentation.](../user-guide/theming.md)
 
-![](images/theming.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/theming.gif)
 
 ### 2. Info Drawer component
 
 It is now possible to use the [Info Drawer component,](../core/info-drawer.component.md) which gives you a sidebar like look with tabbing support. For more information about the usage, check the documentation in the core package.
 
-![](images/info-drawer.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/info-drawer.gif)
 
 ### 3. Form style component enhancements
 
@@ -155,13 +155,13 @@ The major features are:
 
 Further enhancements were implemented for the Copy & move dialog. From now, you can see the path of a selected item, navigate back with the breadcrumbs and select the folder you entered.
 
-![](images/copy-and-move-II.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/copy-and-move-II.gif)
 
 ### 9. Download as a ZIP functionality
 
 The ADF framework provides support for downloading nodes (Files and Folders) as "ZIP" archives. The **alfresco-js-api** library features new support for the [Downloads](https://api-explorer.alfresco.com/api-explorer/#/downloads) API. In addition, the Core library (ng2-alfresco-core) provides a ["DownloadZipDialogComponent"](../core/download-zip.service.md) that allows invoking "Download as Zip" dialogues from any place in your code.
 
-![](images/download-as-zip.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/download-as-zip.gif)
 
 You can see a working button handler code in the following [resource](../../demo-shell/src/app/components/files/files.component.ts).
 
@@ -224,7 +224,7 @@ DocumentList now also supports extra data sources. You can now set the "**curren
 
 The component provides reasonable column defaults for each custom source, so you can use an empty **adf-document-list** tag in HTML templates, and the layout will be automatically adopted.
 
-![](images/dl-custom-sources.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/dl-custom-sources.gif)
 
 You can get more details on the data sources and default presets in the [Data Sources](https://github.com/Alfresco/alfresco-ng2-components/tree/development/ng2-components/ng2-alfresco-documentlist#data-sources) section.
 

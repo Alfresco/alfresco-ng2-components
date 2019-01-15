@@ -99,7 +99,7 @@ Two new content actions have been added, the "copy" and the "move" for both fold
         handler="move">
     </content-action>
 
-![](images/copy-move.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/copy-move.gif)
 
 ### 3. Dropdown Sites/Favorites Component
 
@@ -109,7 +109,7 @@ DocumentList now provides a site dropdown component to show and interact with th
       (change)="getSiteContent($event)">
      </adf-sites-dropdown>
 
-![](images/dropdown-sites.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/dropdown-sites.gif)
 
 ### 4. Toolbar Component
 
@@ -127,11 +127,11 @@ adf-toolbar is an easy container for headers, titles, actions, breadcrumbs.
         </button>
     </adf-toolbar>
 
-![](images/toobar.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/toobar.gif)
 
 ### 5. Upload Component New design
 
-![](images/upload.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/upload.gif)
 
 ### 6. Upload ignore list configuration service
 
@@ -177,19 +177,19 @@ The component is using the **adf-card-view** component to render all the informa
 From now, it is possible to delete files (if you have permission) from within the search results.
 This action will do delete the particular file from your contents and NOT just from the search results.
 
-![](images/search-delete.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/search-delete.gif)
 
 ### 10. Login new property
 
 You can now customize the copyright text in the adf-login component using the copyrightText property:
 
-![](images/Untitled.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/Untitled.gif)
 
 ### 11. TaskDetails - DueDate and Description editable
 
 The due date and the description of the task details are now editable and integrate into the adf-task-header component
 
-![](images/description.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/description.gif)
 
 ### 12. Configuration back end service hostname feature
 
@@ -232,7 +232,7 @@ The [`UserPreferencesService`](../core/user-preferences.service.md) provides an 
 With the current ADF version, we got a Pipe that has the goal to highlight a specific term found in the text. Basically, when the term has been found, a CSS class is added to the HTML code. By doing so it will be easy to customise the colour just overriding the CSS class.
 Note that the Pipe can be used in all the template where this behaviour is needed, but at the moment we are using that only inside the search result.
 
-![Pipe highlight](images/pipe-highlight.gif)
+![Pipe highlight](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/pipe-highlight.gif)
 
 ### 15. Change document list style rows based on permissions
 

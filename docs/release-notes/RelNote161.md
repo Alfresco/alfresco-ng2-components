@@ -90,7 +90,7 @@ Is now possible define your custom loading template that will be shown during th
 
     </alfresco-datatable>
 
-![](images/Jun-29-2017+11-34-06.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/Jun-29-2017+11-34-06.gif)
 
 Refer to the [datable documentation](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-datatable#loading-content-template) for further details. With this modify also the n2-alfresco-documentlist has gained a loading state.
 
@@ -102,7 +102,7 @@ The ng2-alfresco-viewer is now able to show files with txt extension natively an
 
 We have added more methods in the type definition file of the alfresco-js-api to help you with the autocomplete of your IDE.
 
-![](images/Jun-29-2017+12-34-21.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/Jun-29-2017+12-34-21.gif)
 
 ### 5. ADF Card View
 
@@ -328,7 +328,7 @@ You get the following settings by default (also applied to the Application setti
 
 ### 14. Login restyling
 
-![](images/Jun-29-2017+13-01-12.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/Jun-29-2017+13-01-12.gif)
 
 The settings above address most common scenarios for running ACS on port 8080 and APS on port 9999 and allow you to skip the CORS configuration.
 
