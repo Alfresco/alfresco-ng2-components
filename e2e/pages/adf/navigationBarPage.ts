@@ -43,15 +43,8 @@ export class NavigationBarPage {
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = element(by.css('a[data-automation-id="Form"]'));
     treeViewButton = element(by.css('a[data-automation-id="Tree View"]'));
-    processListButton = element(by.css('a[data-automation-id="Process List"]'));
-	treeViewButton = element(by.css('a[data-automation-id="Tree View"]'));
     iconsButton = element(by.css('a[data-automation-id="Icons"]'));
     customSourcesButton = element(by.css('a[data-automation-id="Custom Sources"]'));
-
-    navigateToDatatable() {
-        Util.waitUntilElementIsVisible(this.dataTableButton);
-        this.dataTableButton.click();
-    }
 
     navigateToDatatable() {
         Util.waitUntilElementIsVisible(this.dataTableButton);
@@ -194,10 +187,6 @@ export class NavigationBarPage {
         browser.get(TestConfig.adf.url + `/files/${site.entry.guid}/display/list`);
     }
 
-    checkContentServicesButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.contentServicesButton);
-    }
-
     clickTreeViewButton() {
         Util.waitUntilElementIsVisible(this.treeViewButton);
         this.treeViewButton.click();
@@ -208,21 +197,6 @@ export class NavigationBarPage {
         this.iconsButton.click();
     }
 
-    clickProcessListButton = function () {
-        Util.waitUntilElementIsClickable(this.processListButton);
-        return this.processListButton.click();
-    };
-
-    clickTreeViewButton() {
-        Util.waitUntilElementIsVisible(this.treeViewButton);
-        this.treeViewButton.click();
-    }
-
-    checkProcessListButtonIsDisplayed = function () {
-        Util.waitUntilElementIsVisible(this.processListButton);
-        return this;
-    };
-    
     navigateToCustomSources() {
         Util.waitUntilElementIsVisible(this.customSourcesButton);
         this.customSourcesButton.click();
