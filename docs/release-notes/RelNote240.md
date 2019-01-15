@@ -103,7 +103,7 @@ Once the Keycloak login is performed the user is redirected back to the app base
 With ADF 2.4.0, you can now upload minor or major versions of a file. We have also removed the restriction where you were limited to uploading only same file types as new versions.
 For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/version-manager.component.md)
 
-![Verrsioning](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/Jun-24-2018+18-53-43.gif)
+![Verrsioning](images/Jun-24-2018+18-53-43.gif)
 
 ### Empty Page Component
 
@@ -112,7 +112,7 @@ This component needs just 3 inputs: icon, title, and subtitle.
 You can also transclude external content into the component's body.
 For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/empty-content.component.md) 
 
-![Empty Page State](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/EmptyPage.gif)
+![Empty Page State](images/EmptyPage.gif)
 
 ### TaskList Empty Page
 
@@ -133,7 +133,7 @@ You can still override it from the parent component using `<ng-template>`.
 We have created an error page component that will show buttons and messages relevant to the error that occurred (404, 403, etc...)
 For more information about this component please refer to [the official documentation.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/error-content.component.md) 
 
-![404Example](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/404Error.gif)
+![404Example](images/404Error.gif)
 
 ### Search Improvements
 
@@ -174,7 +174,7 @@ Note that this feature applies to all methods of uploading (drag and drop, butto
 
 You can find more details and examples of how to set up the confirmation dialog on the [Upload drag area page.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/content-services/upload-drag-area.component.md#intercepting-uploads)
 
-![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/adf-download-intercept.gif)
+![](images/adf-download-intercept.gif)
 
 ### Conditional Visibility for Data Columns
 
@@ -203,7 +203,7 @@ More details are available on the [Content action component page.](https://githu
 We have added a new component which allows you add a custom list of buttons. The list will automatically collapse into a burger menu choice for small screens so the menu button will always fit inside your page.
 See the [Buttons menu component page](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/buttons-menu.component.md) for more information.
 
-![Responsive Button Menu](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/ButtonMenuResponsive.gif)
+![Responsive Button Menu](images/ButtonMenuResponsive.gif)
 
 ## Localization
 

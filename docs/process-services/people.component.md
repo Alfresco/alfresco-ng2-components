@@ -65,7 +65,7 @@ This makes it easy to customize the [people component](../process-services/peopl
 </adf-people>
 ```
 
-![involve-people-single-click-and-close-search](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/involve-people-single-click-and-close-search.gif)
+![involve-people-single-click-and-close-search](../docassets/images/involve-people-single-click-and-close-search.gif)
 
 ### Involve People single click without close search
 
@@ -78,7 +78,7 @@ This makes it easy to customize the [people component](../process-services/peopl
 </adf-people>
 ```
 
-![involve-people-single-click-without-close-search](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/involve-people-single-click-without-close-search.gif)
+![involve-people-single-click-without-close-search](../docassets/images/involve-people-single-click-without-close-search.gif)
 
 ### Involve People double click and close search
 
@@ -91,7 +91,7 @@ This makes it easy to customize the [people component](../process-services/peopl
 </adf-people>
 ```
 
-![involve-people-double-click-and-close-search](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/involve-people-double-click-and-close-search.gif)
+![involve-people-double-click-and-close-search](../docassets/images/involve-people-double-click-and-close-search.gif)
 
 ### Involve People double double without close search
 
@@ -104,4 +104,4 @@ This makes it easy to customize the [people component](../process-services/peopl
 </adf-people>
 ```
 
-![involve-people-double-click-without-close-search](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/docassets/images/involve-people-double-click-without-close-search.gif)
+![involve-people-double-click-without-close-search](../docassets/images/involve-people-double-click-without-close-search.gif)
