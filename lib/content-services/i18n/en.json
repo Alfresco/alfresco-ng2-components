@@ -152,6 +152,16 @@
     },
     "ACTION": {
       "UNDO": "Undo"
+    },
+    "ERRORS": {
+      "GENERIC": "Upload unsuccessful. Contact IT if this problem persists",
+      "500": "Internal server error, try again or contact IT support [500]",
+      "504": "The server timed out, try again or contact IT support [504]",
+      "403": "Insufficient permissions to upload in this location [403]",
+      "404": "Upload location no longer exists [404]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Upload error"
     }
   },
   "WEBSCRIPT": {
