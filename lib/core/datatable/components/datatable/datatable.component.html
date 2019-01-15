@@ -1,5 +1,5 @@
 <div
-    role="table"
+    role="grid"
     *ngIf="data" class="adf-full-width"
     [class.adf-data-table-card]="display === 'gallery'"
     [class.adf-data-table]="display === 'list'"
@@ -57,9 +57,8 @@
                  [ngClass]="getRowStyle(row)"
                  (keyup)="onRowKeyUp(row, $event)">
                 <!-- Actions (left) -->
-                <div *ngIf="actions && actionsPosition === 'left'" class="adf-datatable-table-cell">
+                <div *ngIf="actions && actionsPosition === 'left'" role="gridcell" class="adf-datatable-table-cell">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
-                            role="cell"
                             [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
                             [attr.id]="'action_menu_left_' + idx"
                             [attr.data-automation-id]="'action_menu_' + idx">
@@ -83,6 +82,7 @@
                     </mat-checkbox>
                 </div>
                 <div *ngFor="let col of data.getColumns()"
+                     role="gridcell"
                      class="adf-data-table-cell adf-datatable-table-cell adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"
                      [attr.title]="col.title | translate"
                      [attr.filename]="getFilename(row)"
@@ -163,6 +163,7 @@
 
                 <!-- Actions (right) -->
                 <div *ngIf="actions && actionsPosition === 'right'"
+                     role="gridcell"
                      class="adf-datatable-table-cell adf-datatable__actions-cell">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
                             [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
@@ -183,9 +184,10 @@
 
             </div>
             <div *ngIf="isEmpty()"
+                 role="row"
                  [class.adf-datatable-row]="display === 'list'"
                  [class.adf-data-table-card-empty]="display === 'gallery'">
-                <div class="adf-no-content-container adf-datatable-table-cell">
+                <div class="adf-no-content-container adf-datatable-table-cell" role="gridcell">
                     <ng-template *ngIf="noContentTemplate"
                                  ngFor [ngForOf]="[data]"
                                  [ngForTemplate]="noContentTemplate">
@@ -198,6 +200,7 @@
             </div>
         </ng-container>
         <div *ngIf="!loading && noPermission"
+             role="row"
              [class.adf-datatable-row]="display === 'list'"
              [class.adf-data-table-card-permissions]="display === 'gallery'"
              class="adf-no-permission__row">
