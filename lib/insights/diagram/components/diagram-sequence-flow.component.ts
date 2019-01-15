@@ -17,9 +17,8 @@
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-// @deprecated 2.3.0 diagram-sequence-flow tag removed
 @Component({
-    selector: 'adf-diagram-sequence-flow, diagram-sequence-flow',
+    selector: 'adf-diagram-sequence-flow',
     templateUrl: './diagram-sequence-flow.component.html'
 })
 export class DiagramSequenceFlowComponent implements OnInit {

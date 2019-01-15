@@ -62,12 +62,6 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
     @Input()
     appId: number;
 
-    /** The Definition Key of the process.
-     * @deprecated 2.4.0
-     */
-    @Input()
-    processDefinitionKey: string;
-
     /** The Definition Id of the process. */
     @Input()
     processDefinitionId: string;
@@ -175,7 +169,6 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
         let changed: boolean = false;
 
         let appId = changes['appId'];
-        let processDefinitionKey = changes['processDefinitionKey'];
         let processDefinitionId = changes['processDefinitionId'];
         let processInstanceId = changes['processInstanceId'];
         let state = changes['state'];
@@ -184,8 +177,6 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
         let size = changes['size'];
 
         if (appId && appId.currentValue) {
-            changed = true;
-        } else if (processDefinitionKey) {
             changed = true;
         } else if (processDefinitionId) {
             changed = true;
@@ -210,7 +201,7 @@ export class ProcessInstanceListComponent extends DataTableSchema  implements On
 
     private load(requestNode: ProcessFilterParamRepresentationModel) {
         this.isLoading = true;
-        this.processService.getProcesses(requestNode, this.processDefinitionKey)
+        this.processService.getProcesses(requestNode)
             .subscribe(
                 (response) => {
                     this.rows = this.optimizeProcessDetails(response.data);

@@ -17,21 +17,9 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchService, setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { QueryBody } from '@alfresco/js-api';
-import { differentResult, folderResult, result, SimpleSearchTestComponent } from '../../mock';
-import { Observable, of, throwError } from 'rxjs';
+import { differentResult, result, SimpleSearchTestComponent } from '../../mock';
+import { of, throwError } from 'rxjs';
 import { SearchModule } from '../search.module';
-
-function fakeNodeResultSearch(searchNode: QueryBody): Observable<any> {
-    if (searchNode && searchNode.query.query === 'FAKE_SEARCH_EXMPL') {
-        return of(differentResult);
-    }
-    if (searchNode && searchNode.filterQueries.length === 1 &&
-        searchNode.filterQueries[0].query === "TYPE:'cm:folder'") {
-        return of(folderResult);
-    }
-    return of(result);
-}
 
 describe('SearchComponent', () => {
 
@@ -131,30 +119,6 @@ describe('SearchComponent', () => {
 
     describe('search node', () => {
 
-        it('should perform a search based on the query node given', (done) => {
-            spyOn(searchService, 'searchByQueryBody')
-                    .and.callFake((searchObj) => fakeNodeResultSearch(searchObj));
-            let fakeSearchNode: QueryBody = {
-                query: {
-                    query: 'TEST-FAKE-NODE'
-                },
-                filterQueries: [
-                    { 'query': "TYPE:'cm:folder'" }
-                ]
-            };
-            component.setSearchWordTo('searchTerm');
-            component.setSearchNodeTo(fakeSearchNode);
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                let optionShowed = element.querySelectorAll('#autocomplete-search-result-list > li').length;
-                expect(optionShowed).toBe(1);
-                let folderOption: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
-                expect(folderOption.textContent.trim()).toBe('MyFolder');
-                done();
-            });
-        });
-
         it('should perform a search with a defaultNode if no search node is given', (done) => {
             spyOn(searchService, 'search').and.returnValue(of(result));
             component.setSearchWordTo('searchTerm');
@@ -165,30 +129,6 @@ describe('SearchComponent', () => {
                 expect(optionShowed).toBe(1);
                 let folderOption: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
                 expect(folderOption.textContent.trim()).toBe('MyDoc');
-                done();
-            });
-        });
-
-        it('should perform a search with the searchNode given', (done) => {
-            spyOn(searchService, 'searchByQueryBody')
-                .and.callFake((searchObj) => fakeNodeResultSearch(searchObj));
-            let fakeSearchNode: QueryBody = {
-                query: {
-                    query: 'FAKE_SEARCH_EXMPL'
-                },
-                filterQueries: [
-                    { 'query': "TYPE:'cm:folder'" }
-                ]
-            };
-            component.setSearchWordTo('searchTerm');
-            component.setSearchNodeTo(fakeSearchNode);
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                let optionShowed = element.querySelectorAll('#autocomplete-search-result-list > li').length;
-                expect(optionShowed).toBe(1);
-                let folderOption: HTMLElement = <HTMLElement> element.querySelector('#result_option_0');
-                expect(folderOption.textContent.trim()).toBe('TEST_DOC');
                 done();
             });
         });

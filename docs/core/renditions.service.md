@@ -1,7 +1,7 @@
 ---
 Title: Renditions service
 Added: v2.0.0
-Status: Deprecated
+Status: Active
 ---
 
 # [Renditions service](../../lib/core/services/renditions.service.ts "Defined in renditions.service.ts")
@@ -26,9 +26,6 @@ Gets all available renditions for an item.
 Performs a format conversion on an item directly.
 
 ## Details
-
-**Note:** This service is deprecated from v2.2.0 and may be removed in a future
-version of ADF.
 
 ACS allows content items to be converted to other formats for display or delivery.
 For example, a raw text file might be converted to HTML to enable better formatting

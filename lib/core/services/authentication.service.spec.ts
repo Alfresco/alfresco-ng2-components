@@ -144,19 +144,19 @@ describe('AuthenticationService', () => {
         it('[ECM] should set/get redirectUrl when provider is ECM', () => {
             authService.setRedirect({ provider: 'ECM', url: 'some-url' });
 
-            expect(authService.getRedirect(appConfigService.config.providers)).toEqual('some-url');
+            expect(authService.getRedirect()).toEqual('some-url');
         });
 
         it('[ECM] should set/get redirectUrl when provider is BPM', () => {
             authService.setRedirect({ provider: 'BPM', url: 'some-url' });
 
-            expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
+            expect(authService.getRedirect()).toBeNull();
         });
 
         it('[ECM] should return null as redirectUrl when redirectUrl field is not set', () => {
             authService.setRedirect(null);
 
-            expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
+            expect(authService.getRedirect()).toBeNull();
         });
 
         it('[ECM] should return isECMProvider true', () => {
@@ -260,19 +260,19 @@ describe('AuthenticationService', () => {
         it('[BPM] should set/get redirectUrl when provider is BPM', () => {
             authService.setRedirect({ provider: 'BPM', url: 'some-url' });
 
-            expect(authService.getRedirect(appConfigService.config.providers)).toEqual('some-url');
+            expect(authService.getRedirect()).toEqual('some-url');
         });
 
         it('[BPM] should set/get redirectUrl when provider is ECM', () => {
             authService.setRedirect({ provider: 'ECM', url: 'some-url' });
 
-            expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
+            expect(authService.getRedirect()).toBeNull();
         });
 
         it('[BPM] should return null as redirectUrl when redirectUrl field is not set', () => {
             authService.setRedirect(null);
 
-            expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
+            expect(authService.getRedirect()).toBeNull();
         });
 
         it('[BPM] should return isECMProvider false', () => {
@@ -469,25 +469,25 @@ describe('AuthenticationService', () => {
         it('[ALL] should set/get redirectUrl when provider is ALL', () => {
             authService.setRedirect({ provider: 'ALL', url: 'some-url' });
 
-            expect(authService.getRedirect(appConfigService.config.providers)).toEqual('some-url');
+            expect(authService.getRedirect()).toEqual('some-url');
         });
 
         it('[ALL] should set/get redirectUrl when provider is BPM', () => {
             authService.setRedirect({ provider: 'BPM', url: 'some-url' });
 
-            expect(authService.getRedirect(appConfigService.config.providers)).toEqual('some-url');
+            expect(authService.getRedirect()).toEqual('some-url');
         });
 
         it('[ALL] should set/get redirectUrl when provider is ECM', () => {
             authService.setRedirect({ provider: 'ECM', url: 'some-url' });
 
-            expect(authService.getRedirect(appConfigService.config.providers)).toEqual('some-url');
+            expect(authService.getRedirect()).toEqual('some-url');
         });
 
         it('[ALL] should return null as redirectUrl when redirectUrl field is not set', () => {
             authService.setRedirect(null);
 
-            expect(authService.getRedirect(appConfigService.config.providers)).toBeNull();
+            expect(authService.getRedirect()).toBeNull();
         });
 
         it('[ALL] should return isECMProvider false', () => {

@@ -19,7 +19,7 @@ import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TranslateLoaderService } from './translate-loader.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { UserPreferencesService, UserPreferenceValues } from './user-preferences.service';
 
 export const TRANSLATION_PROVIDER = new InjectionToken('Injection token for translation providers.');
 
@@ -37,7 +37,7 @@ export class TranslationService {
     customLoader: TranslateLoaderService;
 
     constructor(public translate: TranslateService,
-                userPreference: UserPreferencesService,
+                userPreferencesService: UserPreferencesService,
                 @Optional() @Inject(TRANSLATION_PROVIDER) providers: TranslationProvider[]) {
         this.customLoader = <TranslateLoaderService> this.translate.currentLoader;
 
@@ -51,10 +51,9 @@ export class TranslationService {
             }
         }
 
-        userPreference.locale$.subscribe((locale) => {
+        userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
             this.userLang = locale;
-            this.use(this.userLang);
-        });
+            this.use(this.userLang);        });
     }
 
     /**

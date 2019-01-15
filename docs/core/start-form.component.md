@@ -61,7 +61,7 @@ Displays the Start [`Form`](../../lib/process-services/task-list/models/form.mod
 | formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../core/form-field.model.md)`[]>` | Emitted when the supplied form values have a validation error. |
 | formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
 | formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
-| onError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | (**Deprecated:** in 2.4.0, will be renamed as "error" in 3.x.x) Emitted when any error occurs. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
 | outcomeClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the user clicks one of the outcome buttons that completes the form. |
 
 ## Details

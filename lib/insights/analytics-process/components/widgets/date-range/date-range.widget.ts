@@ -17,7 +17,7 @@
 
 /* tslint:disable:no-input-rename  */
 
-import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService } from '@alfresco/adf-core';
+import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
@@ -54,13 +54,14 @@ export class DateRangeWidgetComponent implements OnInit {
 
     constructor(
         private dateAdapter: DateAdapter<Moment>,
-        private preferences: UserPreferencesService) {
+        private userPreferencesService: UserPreferencesService) {
     }
 
     ngOnInit() {
-        this.preferences.locale$.subscribe( (locale) => {
+        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
+
         let momentDateAdapter = <MomentDateAdapter> this.dateAdapter;
         momentDateAdapter.overrideDisplayFormat = this.SHOW_FORMAT;
 

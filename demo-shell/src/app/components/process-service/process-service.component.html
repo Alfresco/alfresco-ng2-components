@@ -42,7 +42,6 @@
                         [page]="taskPage"
                         [size]="paginationPageSize"
                         [selectionMode]="selectionMode"
-                        [processDefinitionKey]="taskFilter?.filter?.processDefinitionKey"
                         [name]="taskFilter?.filter?.name"
                         [assignment]="taskFilter?.filter?.assignment"
                         [state]="taskFilter?.filter?.state"
@@ -157,7 +156,6 @@
                         #processList
                         *ngIf="processFilter?.filter" [appId]="processFilter?.appId"
                         [selectionMode]="selectionMode"
-                        [processDefinitionKey]="processFilter?.filter?.processDefinitionKey"
                         [presetColumn]="presetColumn"
                         [state]="processFilter?.filter?.state"
                         [page]="processPage"
@@ -231,12 +229,12 @@
             <div class="adf-grid-item adf-reports-menu" fxFlex.gt-md="300px">
                 <span><h5>Report List</h5></span>
                 <mat-divider></mat-divider>
-                <analytics-report-list
+                <adf-analytics-report-list
                     [appId]="appId"
                     [selectFirst]="selectFirstReport"
                     (reportClick)="onReportClick($event)"
                     #analyticsReportList>
-                </analytics-report-list>
+                </adf-analytics-report-list>
             </div>
             <div class="adf-grid-item adf-reports-details" fxFlex.gt-md="1 1 auto">
                 <adf-analytics

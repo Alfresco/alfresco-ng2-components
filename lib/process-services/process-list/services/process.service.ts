@@ -66,7 +66,7 @@ export class ProcessService {
      * @returns List of processes
      */
     getProcesses(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessListModel> {
-        return this.getProcessInstances(requestNode, processDefinitionKey || null)
+        return this.getProcessInstances(requestNode, processDefinitionKey)
             .pipe(catchError(() => {
                 return of(new ProcessListModel({}));
             }));

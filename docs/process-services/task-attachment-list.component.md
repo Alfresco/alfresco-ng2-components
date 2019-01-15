@@ -67,7 +67,7 @@ upload whenever the list is empty.
 
 ```html
 <adf-upload-drag-area
-    [parentId]="YOUR_TASK_ID"
+    [rootFolderId]="YOUR_TASK_ID"
     [showNotificationBar]="BOOLEAN">
     <adf-task-attachment-list  
         [taskId]="YOUR_TASK_ID"

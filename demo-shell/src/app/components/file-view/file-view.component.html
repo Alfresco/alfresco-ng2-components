@@ -212,8 +212,8 @@
                     <mat-slide-toggle
                         id="adf-switch-allowsidebar"
                         [color]="'primary'"
-                        (change)="toggleAllowSidebar()"
-                        [checked]="allowSidebar">
+                        (change)="toggleAllowRightSidebar()"
+                        [checked]="allowRightSidebar">
                         Allow Right Sidebar
                     </mat-slide-toggle>
                 </p>
@@ -255,22 +255,20 @@
         </adf-info-drawer>
     </ng-template>
 
-    <ng-template let-node="node" #sidebarTemplate> <adf-info-drawer-layout> <div info-drawer-content> <mat-card> My info </mat-card> </div> </adf-info-drawer-layout> </ng-template>
-
     <adf-viewer
         [nodeId]="nodeId"
-        [showSidebar]="showRightSidebar"
+        [showRightSidebar]="showRightSidebar"
         [showLeftSidebar]="showLeftSidebar"
         [allowGoBack]="allowGoBack"
         [displayName]="displayName"
         [showToolbar]="showToolbar"
         [allowPrint]="allowPrint"
         [allowDownload]="allowDownload"
-        [allowSidebar]="allowSidebar"
+        [allowRightSidebar]="allowRightSidebar"
         [allowLeftSidebar]="allowLeftSidebar"
         [urlFile]="urlFile"
         [sidebarLeftTemplate]="sidebarLeftTemplate"
-        [sidebarTemplate]="sidebarRightTemplate">
+        [sidebarRightTemplate]="sidebarRightTemplate">
 
         <adf-viewer-toolbar *ngIf="customToolbar" data-automation-id="adf-viewer-custom-toolbar">
             <h1>My custom toolbar</h1>

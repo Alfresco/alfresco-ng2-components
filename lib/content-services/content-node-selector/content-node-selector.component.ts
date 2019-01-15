@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation, Input } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { Node, SitePaging } from '@alfresco/js-api';
+import { Node } from '@alfresco/js-api';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
-import { RowFilter } from '../document-list/data/row-filter.model';
-import { ImageResolver } from '../document-list/data/image-resolver.model';
 
 @Component({
     selector: 'adf-content-node-selector',
@@ -29,48 +27,6 @@ import { ImageResolver } from '../document-list/data/image-resolver.model';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentNodeSelectorComponent {
-
-    /**
-     * @deprecated in 2.1.0
-     */
-    @Input()
-    title: string = null;
-
-    /**
-     * @deprecated in 2.1.0
-     */
-    @Input()
-    currentFolderId: string = null;
-
-    /**
-     * @deprecated in 2.1.0
-     */
-    @Input()
-    dropdownHideMyFiles: boolean = false;
-
-    /**
-     * @deprecated in 2.1.0
-     */
-    @Input()
-    dropdownSiteList: SitePaging = null;
-
-    /**
-     * @deprecated in 2.1.0
-     */
-    @Input()
-    rowFilter: RowFilter = null;
-
-    /**
-     * @deprecated in 2.1.0
-     */
-    @Input()
-    imageResolver: ImageResolver = null;
-
-    /**
-     * @deprecated in 2.1.0
-     */
-    @Input()
-    pageSize: number;
 
     buttonActionName: string;
     chosenNode: Node[];

@@ -103,7 +103,7 @@ export class UploadService {
 
     /**
      * Finds all the files in the queue that are not yet uploaded and uploads them into the directory folder.
-     * @param emitter (Deprecated) Emitter to invoke on file status change
+     * @param emitter Emitter to invoke on file status change
      */
     uploadFilesInTheQueue(emitter?: EventEmitter<any>): void {
         if (!this.activeTask) {
@@ -197,7 +197,7 @@ export class UploadService {
         }
     }
 
-    private beginUpload(file: FileModel, /* @deprecated */emitter: EventEmitter<any>): any {
+    private beginUpload(file: FileModel, emitter: EventEmitter<any>): any {
 
         let promise = this.getUploadPromise(file);
 

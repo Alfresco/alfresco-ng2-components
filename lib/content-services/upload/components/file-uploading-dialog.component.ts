@@ -23,9 +23,8 @@ import { ChangeDetectorRef, Component, Input, Output, EventEmitter, OnDestroy, O
 import { Subscription, merge } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 
-// @deprecated file-uploading-dialog TODO remove in 3.0.0
 @Component({
-    selector: 'adf-file-uploading-dialog, file-uploading-dialog',
+    selector: 'adf-file-uploading-dialog',
     templateUrl: './file-uploading-dialog.component.html',
     styleUrls: ['./file-uploading-dialog.component.scss']
 })
