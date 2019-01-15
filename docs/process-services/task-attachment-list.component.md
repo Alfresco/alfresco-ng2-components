@@ -103,4 +103,6 @@ export class MyCustomTaskAttachmentComponent {
 }
 ```
 
-[Upload Drag Area Component](../content-services/upload-drag-area.component.md)
+## See also
+
+- [Upload Drag Area Component](../content-services/upload-drag-area.component.md)
