@@ -1,11 +1,11 @@
 ---
 Title: Group Cloud component
 Added: v3.0.0
-Status: Active
-Last reviewed: 2018-20-11
+Status: Experimental
+Last reviewed: 2019-01-15
 ---
 
-# [Group Cloud component](../../lib/process-services-cloud/src/lib/group-cloud/components/group-cloud.component.ts "Defined in group-cloud.component.ts")
+# [Group Cloud component](../../process-services-cloud/src/lib/group/components/group-cloud.component.ts "Defined in group-cloud.component.ts")
 
 Searches Groups.
 
@@ -26,26 +26,25 @@ Searches Groups.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| applicationName | `string` |  | Name of the application. If specified, shows the groups who have access to the app. |
-| mode | `string` | 'single' | Mode of the user selection (single/multiple). |
-| preSelectGroups | `GroupModel[]` |  Array of groups to be pre-selected. Pre-select all groups in `multiple` mode and only the first group of the array in `single` mode. |
+| applicationName | `string` |  | Name of the application. If specified this shows the users who have access to the app. |
+| mode | `string` |  | User selection mode (single/multiple). |
+| preSelectGroups | [`GroupModel`](../../process-services-cloud/src/lib/group/models/group.model.ts)`[]` | \[] | Array of users to be pre-selected. This pre-selects all users in multi selection mode and only the first user of the array in single selection mode. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| selectGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`GroupModel`](../../lib/process-services-cloud/src/lib/group-cloud/models/group.model.ts)`>` | Emitted when a group selected. |
-| removeGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`GroupModel`](../../lib/process-services-cloud/src/lib/group-cloud/models/group.model.ts)`>` | Emitted when selected group is removed in `multiple` mode. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` |
-
+| removeGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`GroupModel`](../../process-services-cloud/src/lib/group/models/group.model.ts)`>` | Emitted when a group is removed. |
+| selectGroup | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`GroupModel`](../../process-services-cloud/src/lib/group/models/group.model.ts)`>` | Emitted when a group is selected. |
 
 ## Details
 
 ### Selection Mode
 
-You can provide selection mode singe(default)/multiple
+You can specify either single selection or multiple selection (single
+is the default):
 
-## Single select
+#### Single selection
 
 ```html
 <adf-cloud-group></adf-cloud-group>
@@ -53,7 +52,7 @@ You can provide selection mode singe(default)/multiple
 
 ![adf-cloud-group](../docassets/images/group-cloud.component-single.png)
 
-## Multiple select
+#### Multiple selection
 
 ```html
 <adf-cloud-group
@@ -63,7 +62,7 @@ You can provide selection mode singe(default)/multiple
 
 ![adf-cloud-group](../docassets/images/group-cloud.component-multiple-mode.png)
 
-## Pre-select
+### Pre-selection
 
 Usage example:
 
