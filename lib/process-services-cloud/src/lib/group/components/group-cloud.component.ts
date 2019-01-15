@@ -46,15 +46,15 @@ export class GroupCloudComponent implements OnInit {
 
     @ViewChild('groupInput') groupInput: ElementRef<HTMLInputElement>;
 
-    /** Name of the application. If specified, shows the users who have access to the app. */
+    /** Name of the application. If specified this shows the users who have access to the app. */
     @Input()
     applicationName: string;
 
-    /** Mode of the user selection (single/multiple). */
+    /** User selection mode (single/multiple). */
     @Input()
     mode: string = GroupCloudComponent.MODE_SINGLE;
 
-    /** Array of users to be pre-selected. Pre-select all users in multi selection mode and only the first user of the array in single selection mode. */
+    /** Array of users to be pre-selected. This pre-selects all users in multi selection mode and only the first user of the array in single selection mode. */
     @Input()
     preSelectGroups: GroupModel[] = [];
 
