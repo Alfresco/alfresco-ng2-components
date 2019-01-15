@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import AppPublish = require('../../models/APS/AppPublish');
-
 export class AppsRuntimeActions {
 
     async getRuntimeAppByName(alfrescoJsApi, appName) {

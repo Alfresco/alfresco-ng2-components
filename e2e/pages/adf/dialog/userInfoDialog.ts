@@ -21,7 +21,7 @@ import { element, by, browser, protractor } from 'protractor';
 
 export class UserInfoDialog {
 
-    dialog = element(by.css('mat-card[class*="adf-userinfo-card"]'));
+    dialog = element.all(by.css('mat-card[class*="adf-userinfo-card"]')).first();
     userImage = element(by.css('div[id="user-initial-image"]'));
     userInfoEcmHeaderTitle = element(by.css('div[id="ecm-username"]'));
     userInfoEcmTitle = element(by.css('mat-card-content span[id="ecm-full-name"]'));
@@ -51,6 +51,12 @@ export class UserInfoDialog {
     clickOnContentServicesTab() {
         let tabsPage = new TabsPage;
         tabsPage.clickTabByTitle('Content Services');
+        return this;
+    }
+
+    checkProcessServicesTabIsSelected() {
+        let tabsPage = new TabsPage;
+        tabsPage.checkTabIsSelectedByTitle('Process Services');
         return this;
     }
 

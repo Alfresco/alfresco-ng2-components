@@ -25,6 +25,7 @@ import { Tenant } from '../models/APS/tenant';
 import { User } from '../models/APS/user';
 
 import AlfrescoApi = require('alfresco-js-api-node');
+import { browser } from 'protractor';
 
 describe('Analytics Smoke Test', () => {
 
