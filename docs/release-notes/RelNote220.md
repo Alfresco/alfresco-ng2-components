@@ -84,7 +84,7 @@ The data table and the document list are now able to render in different formats
     <adf-document-list ...[display]="'gallery'"> </adf-document-list>
     <adf-datatable ... [display]="'gallery'"> </adf-datatable>
 
-![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/Feb-27-2018+14-36-59.gif)
+![](images/Feb-27-2018+14-36-59.gif)
 
 ### Metadata Component enhancements: layout oriented configurations
 
@@ -167,7 +167,7 @@ With ADF 2.2.0 the processes list result are easy to paginate. You just need to 
 
 With ADF 2.2.0, the app list component is shows the mat-spinner until the apps are loaded.
 
-![app list mat spinner](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/app-list-loader.gif)
+![app list mat spinner](images/app-list-loader.gif)
 
 ### Task Header - Make it customizable from the config file
 
@@ -237,7 +237,7 @@ You can define your custom template in the HTML code:
 We have added the new date time widget provided with APS 1.7.
 This widget lets you choose the date and the time in the format given by the APS form.
 
-![Date Time Widget](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/DataTimeWidget.gif)
+![Date Time Widget](images/DataTimeWidget.gif)
 
 ### Form Upload Widget Actions menu
 
@@ -247,7 +247,7 @@ Clicking on the Show button will trigger the viewer to open with the given docum
 Clicking on the Download button will allow you to download the selected file.
 Clicking on the Remove button will remove the file from the Upload widget value.
 
-![Upload Widget Options](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/UploadWidgetOption.gif)
+![Upload Widget Options](images/UploadWidgetOption.gif)
 
 ### Search custom empty template
 
@@ -263,7 +263,7 @@ We enhanced the [search control component](../content-services/search-control.co
 
 This lets you customize the empty search template as you want.
 
-![Custom Empty Template](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/SearchEmptyTemplate.gif)
+![Custom Empty Template](images/SearchEmptyTemplate.gif)
 
 ### CI changes
 

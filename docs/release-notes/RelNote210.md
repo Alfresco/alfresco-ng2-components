@@ -87,7 +87,7 @@ In this release, the [Viewer component](../core/viewer.component.md) got improve
 
 ### 2. Upload file from CS widget
 
-![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/pastedImage_1.gif)
+![](images/pastedImage_1.gif)
 
 In this release we have re-enabled and improved the upload file widget of our [form component](../core/form.component.md).
 We have added the option to choose the file to upload from a configured ECM repository of APS.
@@ -98,14 +98,14 @@ It is also possible to make it work like a normal local file uploader by configu
 
 ### 3. Attach Folder from CS widget
 
-![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/pastedImage_3.gif)
+![](images/pastedImage_3.gif)
 
 We have added the attach folder widget which is really useful in processes where you need to create your content in the ECM platform via APS .
 As you can see this widget works like the attach file widget in terms of navigation through the folders and restricting the selection to folders.
 
 ### 4. Content metadata component enhancements
 
-![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/content-metadata.gif)
+![](images/content-metadata.gif)
 
 The purpose of the [content metadata component](../content-services/content-metadata.component.md) is to display the metadata belonging to a given node. Until now, the component was capable of displaying and making the basic properties editable, but with the latest enhancements, all of the system wide and custom aspects related to a particular node can be displayed and edited.
 
@@ -115,7 +115,7 @@ For more information about the component see its [documentation](https://communi
 
 ### 5. Start process from a file
 
-![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/new-start-process.gif)
+![](images/new-start-process.gif)
 
 After the repository is created in APS, you can see it in the Alfresco Repositories list. If the ID is set to 1 then all default values are fine. However, if it is set to something else, for example
 _1002_ and the name is _alfresco_, you must set the property alfrescoRepositoryName in your app.config.json file to _alfresco-1002_:

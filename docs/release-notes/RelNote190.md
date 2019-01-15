@@ -62,7 +62,7 @@ Below the most relevant features of this release:
 The document list now provides two different way to paginate the results the normal pagination or the infinite scrolling.
 In order to enable this feature, you need to specify the paginationStrategy properties 'Infinite'. The infinite scrolling is also now used as default in the object picker component
 
-![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/infinite-scrolling.gif)
+![](images/infinite-scrolling.gif)
 
 ### 2.Requeue option added to adf-task-header
 
