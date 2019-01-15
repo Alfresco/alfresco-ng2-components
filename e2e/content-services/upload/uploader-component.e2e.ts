@@ -108,13 +108,10 @@ describe('Upload component', () => {
     });
 
     afterEach(async (done) => {
-        let nodesPromise = await contentServicesPage.getContentList().getAllNodeIdInList();
 
-        nodesPromise.forEach(async (currentNodePromise) => {
-            await currentNodePromise.then(async (currentNode) => {
-                if (currentNode && currentNode !== 'Node id') {
-                    await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNode);
-                }
+        contentServicesPage.getElementsDisplayedId().then((nodeList) => {
+            nodeList.forEach(async (currentNode) => {
+                await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNode);
             });
         });
 

@@ -16,7 +16,7 @@
  */
 
 import { Util } from '../../util/util';
-import { ContentListPage } from './dialog/contentListPage';
+import { DocumentListPage } from './content-services/documentListPage';
 import { DataTablePage } from './dataTablePage';
 import { SearchSortingPickerPage } from './content-services/search/components/search-sortingPicker.page';
 import { element, by, protractor } from 'protractor';
@@ -25,13 +25,13 @@ import { ContentServicesPage } from './contentServicesPage';
 export class SearchResultsPage {
 
     noResultsMessage = element(by.css('div[class="adf-no-result-message"]'));
-    contentList = new ContentListPage();
+    contentList = new DocumentListPage();
     dataTable = new DataTablePage();
     searchSortingPicker = new SearchSortingPickerPage();
     contentServices = new ContentServicesPage();
 
     tableIsLoaded() {
-        this.contentList.tableIsLoaded();
+        this.contentList.dataTablePage().tableIsLoaded();
     }
 
     closeActionButton() {
@@ -43,12 +43,12 @@ export class SearchResultsPage {
     }
 
     checkContentIsDisplayed(content) {
-        this.contentList.checkContentIsDisplayed(content);
+        this.contentList.dataTablePage().checkContentIsDisplayed(content);
         return this;
     }
 
     numberOfResultsDisplayed() {
-        return this.contentList.getAllDisplayedRows();
+        return this.contentList.dataTablePage().getAllDisplayedRows();
     }
 
     checkContentIsNotDisplayed(content) {
@@ -66,7 +66,7 @@ export class SearchResultsPage {
     }
 
     navigateToFolder(content) {
-        this.contentList.doubleClickRow(content);
+        this.contentList.dataTablePage().doubleClickRow(content);
         return this;
     }
 

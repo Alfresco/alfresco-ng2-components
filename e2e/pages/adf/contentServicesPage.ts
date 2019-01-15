@@ -17,7 +17,7 @@
 
 import TestConfig = require('../../test.config');
 import { Util } from '../../util/util';
-import { ContentListPage } from './dialog/contentListPage';
+import { DocumentListPage } from './content-services/documentListPage';
 import { CreateFolderDialog } from './dialog/createFolderDialog';
 import { CreateLibraryDialog } from './dialog/createLibraryDialog';
 import { NavigationBarPage } from './navigationBarPage';
@@ -29,7 +29,7 @@ import path = require('path');
 
 export class ContentServicesPage {
 
-    contentList = new ContentListPage();
+    contentList = new DocumentListPage();
     createFolderDialog = new CreateFolderDialog();
     nodeActions = new NodeActions();
     createLibraryDialog = new CreateLibraryDialog();
@@ -66,21 +66,29 @@ export class ContentServicesPage {
     copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
     searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
-    siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
+    nameColumn = by.css('div[class*="datatable-body"] div[class*="adf-data-table-cell"][title="Display name"]');
+    nameColumnHeader = by.css('div[data-automation-id="auto_id_name"]');
+    createdByColumn = by.css('div[class*="--text"][title="Created by"] span');
+    sizeColumn = by.css('div[id*="document-list-container"] div[class*="adf-datatable-row"] .adf-filesize-cell');
+    createdByColumnHeader = by.css('div[data-automation-id*="auto_id_createdByUser"]');
+    createdColumn = by.css('div[class*="--date"] span');
+    createdColumnHeader = by.css('div[data-automation-id*="auto_id_createdAt"]');
+	siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-select']`));
 
     getUploadAreaDocumentList() {
         return new ContentListPage(element(by.css('adf-upload-drag-area')));
     }
 
     clickFileHyperlink(fileName) {
-        let hyperlink = this.contentList.getFileHyperlink(fileName);
+        let hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
+
         Util.waitUntilElementIsClickable(hyperlink);
         hyperlink.click();
         return this;
     }
 
     checkFileHyperlinkIsEnabled(fileName) {
-        let hyperlink = this.contentList.getFileHyperlink(fileName);
+        let hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
         Util.waitUntilElementIsVisible(hyperlink);
         return this;
     }
@@ -94,7 +102,7 @@ export class ContentServicesPage {
 
     getElementsDisplayedCreated() {
         let deferred = protractor.promise.defer();
-        let fileCreatedLocator = this.contentList.getColumnLocator('Created');
+        let fileCreatedLocator = this.contentList.dataTablePage().getColumnLocator('Created');
         Util.waitUntilElementIsVisible(element.all(fileCreatedLocator).first());
         let initialList = [];
 
@@ -114,7 +122,7 @@ export class ContentServicesPage {
 
     getElementsDisplayedSize() {
         let deferred = protractor.promise.defer();
-        let fileSizeLocator = this.contentList.getColumnLocator('Size');
+        let fileSizeLocator = this.contentList.dataTablePage().getColumnLocator('Size');
         Util.waitUntilElementIsVisible(element.all(fileSizeLocator).first());
         let initialList = [];
 
@@ -152,7 +160,7 @@ export class ContentServicesPage {
 
     getElementsDisplayedName() {
         let deferred = protractor.promise.defer();
-        let fileNameLocator = this.contentList.getColumnLocator('Display name');
+        let fileNameLocator = this.contentList.dataTablePage().getColumnLocator('Display name');
         Util.waitUntilElementIsVisible(element.all(fileNameLocator).first());
         let initialList = [];
 
@@ -171,7 +179,7 @@ export class ContentServicesPage {
 
     getElementsDisplayedId() {
         let deferred = protractor.promise.defer();
-        let fileIdLocator = this.contentList.getColumnLocator('Node id');
+        let fileIdLocator = this.contentList.dataTablePage().getColumnLocator('Node id');
         Util.waitUntilElementIsVisible(element.all(fileIdLocator).first());
         let initialList = [];
 
@@ -282,7 +290,7 @@ export class ContentServicesPage {
     }
 
     numberOfResultsDisplayed() {
-        return this.contentList.getAllDisplayedRows();
+        return this.contentList.dataTablePage().getAllDisplayedRows();
     }
 
     currentFolderName() {
@@ -294,59 +302,51 @@ export class ContentServicesPage {
         return deferred.promise;
     }
 
-    getTooltip(content) {
-        return this.contentList.getRowByRowName(content).element(this.tooltip).getAttribute('title');
-    }
-
-    getBreadcrumbTooltip(nodeName: string) {
-        return element(by.css(`nav[data-automation-id="breadcrumb"] div[title="${nodeName}"]`)).getAttribute('title');
-    }
-
     getAllRowsNameColumn() {
-        return this.contentList.getAllRowsNameColumn();
+        return this.contentList.dataTablePage().getAllRowsNameColumn();
     }
 
     sortByName(sortOrder) {
-        this.contentList.sortByName(sortOrder);
+        return this.contentList.dataTable.sortByColumn(sortOrder, this.nameColumnHeader);
     }
 
     sortByAuthor(sortOrder) {
-        this.contentList.sortByAuthor(sortOrder);
+        return this.contentList.dataTable.sortByColumn(sortOrder, this.createdByColumnHeader);
     }
 
     sortByCreated(sortOrder) {
-        return this.contentList.sortByCreated(sortOrder);
+        return this.contentList.dataTable.sortByColumn(sortOrder, this.createdColumnHeader);
     }
 
     sortAndCheckListIsOrderedByName(sortOrder) {
         this.sortByName(sortOrder);
         let deferred = protractor.promise.defer();
-        this.contentList.checkListIsOrderedByNameColumn(sortOrder).then((result) => {
+        this.checkListIsSortedByNameColumn(sortOrder).then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;
     }
 
     async checkListIsSortedByNameColumn(sortOrder) {
-        await this.contentList.checkListIsOrderedByNameColumn(sortOrder);
+        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.nameColumn);
     }
 
     async checkListIsSortedByCreatedColumn(sortOrder) {
-        await this.contentList.checkListIsOrderedByCreatedColumn(sortOrder);
+        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.createdColumn);
     }
 
     async checkListIsSortedByAuthorColumn(sortOrder) {
-        await this.contentList.checkListIsOrderedByAuthorColumn(sortOrder);
+        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.createdByColumn);
     }
 
     async checkListIsSortedBySizeColumn(sortOrder) {
-        await this.contentList.checkListIsOrderedBySizeColumn(sortOrder);
+        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.sizeColumn);
     }
 
     sortAndCheckListIsOrderedByAuthor(sortOrder) {
         this.sortByAuthor(sortOrder);
         let deferred = protractor.promise.defer();
-        this.contentList.checkListIsOrderedByAuthorColumn(sortOrder).then((result) => {
+        this.checkListIsSortedByAuthorColumn(sortOrder).then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -355,7 +355,7 @@ export class ContentServicesPage {
     sortAndCheckListIsOrderedByCreated(sortOrder) {
         this.sortByCreated(sortOrder);
         let deferred = protractor.promise.defer();
-        this.contentList.checkListIsOrderedByCreatedColumn(sortOrder).then((result) => {
+        this.checkListIsSortedByCreatedColumn(sortOrder).then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -366,8 +366,8 @@ export class ContentServicesPage {
         return this;
     }
 
-    doubleClickRow(nodeName) {
-        this.contentList.doubleClickRow(nodeName);
+    doubleClickRow(folder) {
+        this.contentList.dataTablePage().doubleClickRow(folder);
         return this;
     }
 
@@ -393,7 +393,7 @@ export class ContentServicesPage {
     }
 
     checkContentIsDisplayed(content) {
-        this.contentList.checkContentIsDisplayed(content);
+        this.contentList.dataTablePage().checkContentIsDisplayed(content);
         return this;
     }
 
@@ -405,7 +405,7 @@ export class ContentServicesPage {
     }
 
     checkContentIsNotDisplayed(content) {
-        this.contentList.checkContentIsNotDisplayed(content);
+        this.contentList.dataTablePage().checkContentIsNotDisplayed(content);
         return this;
     }
 
@@ -564,7 +564,7 @@ export class ContentServicesPage {
     }
 
     getColumnValueForRow(file, columnName) {
-        let row = this.contentList.getRowByRowName(file);
+        let row = this.contentList.dataTablePage().getRowByRowName(file);
         Util.waitUntilElementIsVisible(row);
         let rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
         Util.waitUntilElementIsVisible(rowColumn);
@@ -668,7 +668,7 @@ export class ContentServicesPage {
     }
 
     checkRowIsDisplayed(rowName) {
-        let row = this.contentList.getRowByRowName(rowName);
+        let row = this.contentList.dataTablePage().getRowByRowName(rowName);
         Util.waitUntilElementIsVisible(row);
     }
 

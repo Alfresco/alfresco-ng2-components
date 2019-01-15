@@ -18,7 +18,7 @@
 import { element, by } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
-import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
+import { DocumentListPage } from '../../pages/adf/content-services/documentListPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
@@ -40,7 +40,7 @@ import CONSTANTS = require('../../util/constants');
 describe('Version component permissions', () => {
 
     const loginPage = new LoginPage();
-    const contentListPage = new ContentListPage();
+    const contentListPage = new DocumentListPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialog();

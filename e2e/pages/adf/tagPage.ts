@@ -16,7 +16,7 @@
  */
 
 import { Util } from '../../util/util';
-import { ContentListPage } from './dialog/contentListPage';
+import { DocumentListPage } from './content-services/documentListPage';
 
 import { element, by, protractor, browser } from 'protractor';
 
@@ -134,7 +134,7 @@ export class TagPage {
 
     checkTagListIsOrderedAscending() {
         let deferred = protractor.promise.defer();
-        new ContentListPage().checkListIsSorted(false, this.tagListRowLocator).then((result) => {
+        new DocumentListPage().checkListIsSorted(false, this.tagListRowLocator).then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -142,7 +142,7 @@ export class TagPage {
 
     checkTagListByNodeIdIsOrderedAscending() {
         let deferred = protractor.promise.defer();
-        new ContentListPage().checkListIsSorted(false, this.tagListByNodeIdRowLocator).then((result) => {
+        new DocumentListPage().checkListIsSorted(false, this.tagListByNodeIdRowLocator).then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -150,7 +150,7 @@ export class TagPage {
 
     checkTagListContentServicesIsOrderedAscending() {
         let deferred = protractor.promise.defer();
-        new ContentListPage().checkListIsSorted(false, this.tagListContentServicesRowLocator).then((result) => {
+        new DocumentListPage().checkListIsSorted(false, this.tagListContentServicesRowLocator).then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;

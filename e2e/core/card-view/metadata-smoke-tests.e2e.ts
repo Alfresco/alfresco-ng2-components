@@ -21,7 +21,7 @@ import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
-import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
+import { DocumentListPage } from '../../pages/adf/content-services/documentListPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
@@ -52,7 +52,7 @@ describe('Metadata component', () => {
     const contentServicesPage = new ContentServicesPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
-    const contentListPage = new ContentListPage();
+    const contentListPage = new DocumentListPage();
 
     let acsUser = new AcsUserModel();
 

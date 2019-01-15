@@ -21,7 +21,7 @@ import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import { ContentListPage } from '../pages/adf/dialog/contentListPage';
+import { DocumentListPage } from '../pages/adf/content-services/documentListPage';
 import AlfrescoApi = require('alfresco-js-api-node');
 import { FileModel } from '../models/ACS/fileModel';
 import { UploadActions } from '../actions/ACS/upload.actions';
@@ -34,7 +34,8 @@ describe('Permissions Component', function () {
     let contentServicesPage = new ContentServicesPage();
     let permissionsPage = new PermissionsPage();
     let uploadActions = new UploadActions();
-    let contentList = new ContentListPage();
+    let contentList = new DocumentList();
+    let dataTablePage = new DataTablePage();
     let fileOwnerUser, filePermissionUser, file;
     let publicSite, folderName;
 
@@ -92,9 +93,10 @@ describe('Permissions Component', function () {
 
             loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
             contentServicesPage.goToDocumentList();
-            contentList.checkContentIsDisplayed(fileModel.name);
+
+            contentList.dataTablePage().checkContentIsDisplayed(fileModel.name);
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
-            contentList.rightClickOnRowNamed(fileModel.name);
+            contentList.dataTablePage().rightClickOnRowNamed(fileModel.name);
             contentList.pressContextMenuActionNamed('Permission');
 
             done();

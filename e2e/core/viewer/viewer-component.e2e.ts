@@ -21,7 +21,7 @@ import { LoginPage } from '../../pages/adf/loginPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
+import { DocumentListPage } from '../../pages/adf/content-services/documentListPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
 import { AboutPage } from '../../pages/adf/demo-shell/aboutPage';
 
@@ -48,7 +48,7 @@ xdescribe('Viewer', () => {
     let site;
     let acsUser = new AcsUserModel();
     let pngFileUploaded;
-    const contentList = new ContentListPage();
+    const contentList = new DocumentListPage();
     const shareDialog = new ShareDialog();
     const about = new AboutPage();
 
@@ -436,7 +436,7 @@ xdescribe('Viewer', () => {
         it('[C260106] Should be able to open a Word file shared via API', () => {
             contentServicesPage.navigateToDocumentList();
 
-            contentList.clickRowToSelect(wordFileInfo.name);
+            contentList.dataTablePage().clickRowToSelect(wordFileInfo.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickShareLinkButton();

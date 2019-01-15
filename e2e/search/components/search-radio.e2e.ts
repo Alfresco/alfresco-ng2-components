@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
-import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
+import { DocumentListPage } from '../../pages/adf/content-services/documentListPage';
 import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
@@ -37,7 +37,7 @@ describe('Search Radio Component', () => {
 
     const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
-    const contentList = new ContentListPage();
+    const contentList = new DocumentListPage();
     const configEditorPage = new ConfigEditorPage();
     const navigationBarPage = new NavigationBarPage();
     const searchDialog = new SearchDialog();
@@ -110,26 +110,26 @@ describe('Search Radio Component', () => {
 
         searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.none);
 
-        contentList.checkContentIsDisplayed(nodeNames.folder);
-        contentList.checkContentIsDisplayed(nodeNames.document);
+        contentList.dataTablePage().checkContentIsDisplayed(nodeNames.folder);
+        contentList.dataTablePage().checkContentIsDisplayed(nodeNames.document);
 
         searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.folder);
         searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.folder);
 
-        contentList.checkContentIsDisplayed(nodeNames.folder);
-        contentList.checkContentIsNotDisplayed(nodeNames.document);
+        contentList.dataTablePage().checkContentIsDisplayed(nodeNames.folder);
+        contentList.dataTablePage().checkContentIsNotDisplayed(nodeNames.document);
 
         searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.document);
         searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.document);
 
-        contentList.checkContentIsDisplayed(nodeNames.document);
-        contentList.checkContentIsNotDisplayed(nodeNames.folder);
+        contentList.dataTablePage().checkContentIsDisplayed(nodeNames.document);
+        contentList.dataTablePage().checkContentIsNotDisplayed(nodeNames.folder);
 
         searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.all);
         searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsChecked(filterType.all);
 
-        contentList.checkContentIsDisplayed(nodeNames.folder);
-        contentList.checkContentIsDisplayed(nodeNames.document);
+        contentList.dataTablePage().checkContentIsDisplayed(nodeNames.folder);
+        contentList.dataTablePage().checkContentIsDisplayed(nodeNames.document);
     });
 
     describe('configuration change', () => {
@@ -316,8 +316,8 @@ describe('Search Radio Component', () => {
 
             searchFiltersPage.typeFiltersPage().clickFilterRadioButton(filterType.custom);
 
-            contentList.checkContentIsDisplayed(nodeNames.document);
-            contentList.checkContentIsNotDisplayed(nodeNames.folder);
+            contentList.dataTablePage().checkContentIsDisplayed(nodeNames.document);
+            contentList.dataTablePage().checkContentIsNotDisplayed(nodeNames.folder);
         });
 
     });

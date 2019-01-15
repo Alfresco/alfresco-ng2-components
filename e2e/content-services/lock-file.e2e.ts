@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ContentServicesPage } from '../pages/adf/contentServicesPage';
+import { DocumentListPage } from '../pages/adf/content-services/documentListPage';
 
 import { LockFilePage } from '../pages/adf/lockFilePage';
 
@@ -37,8 +37,7 @@ describe('Lock File', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    const contentServicesPage = new ContentServicesPage();
-    const contentList = contentServicesPage.getUploadAreaDocumentList();
+    const contentList = new DocumentListPage();
     const lockFilePage = new LockFilePage();
 
     let adminUser = new AcsUserModel();
@@ -345,7 +344,7 @@ describe('Lock File', () => {
             lockFilePage.clickSaveButton();
 
             contentList.deleteContentWithRoot(pngFileToBeLocked.entry.name);
-            contentList.checkContentIsNotDisplayed(pngFileToBeLocked.entry.name);
+            contentList.dataTablePage().checkContentIsNotDisplayed(pngFileToBeLocked.entry.name);
         });
 
     });
