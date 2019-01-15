@@ -168,6 +168,12 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         this.rowFilter = this.getRowFilter(this.rowFilter);
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.rowFilter) {
+            this.rowFilter = this.getRowFilter(this.rowFilter);
+        }
+    }
+
     private getRowFilter(initialFilterFunction): RowFilter {
         if (!initialFilterFunction) {
             initialFilterFunction = () => true;
