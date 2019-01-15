@@ -1,10 +1,11 @@
 <div
+    role="grid"
     *ngIf="data" class="adf-full-width"
     [class.adf-data-table-card]="display === 'gallery'"
     [class.adf-data-table]="display === 'list'"
     [class.adf-data-table--empty]="isEmpty()">
-    <div *ngIf="isHeaderVisible()" class="adf-datatable-header">
-        <div class="adf-datatable-row" *ngIf="display === 'list'">
+    <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup">
+        <div class="adf-datatable-row" *ngIf="display === 'list'" role="row">
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-table-cell-header">
                 <span class="adf-sr-only">Actions</span>
@@ -21,7 +22,7 @@
                  [class.adf-data-table__header--sorted-desc]="isColumnSorted(col, 'desc')"
                  (click)="onColumnHeaderClick(col)"
                  (keyup.enter)="onColumnHeaderClick(col)"
-                 role="button"
+                 role="columnheader"
                  tabindex="0"
                  title="{{ col.title | translate }}">
                 <span *ngIf="col.srTitle" class="adf-sr-only">{{ col.srTitle | translate }}</span>
@@ -45,18 +46,18 @@
         </mat-form-field>
     </div>
 
-    <div class="adf-datatable-body">
+    <div class="adf-datatable-body" role="rowgroup">
         <ng-container *ngIf="!loading && !noPermission">
             <div *ngFor="let row of data.getRows(); let idx = index"
                  class="adf-datatable-row"
-                 role="button"
+                 role="row"
                  [class.adf-is-selected]="row.isSelected"
                  [adf-upload]="allowDropFiles && rowAllowsDrop(row)" [adf-upload-data]="row"
                  [ngStyle]="rowStyle"
                  [ngClass]="getRowStyle(row)"
                  (keyup)="onRowKeyUp(row, $event)">
                 <!-- Actions (left) -->
-                <div *ngIf="actions && actionsPosition === 'left'" class="adf-datatable-table-cell">
+                <div *ngIf="actions && actionsPosition === 'left'" role="gridcell" class="adf-datatable-table-cell">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
                             [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
                             [attr.id]="'action_menu_left_' + idx"
@@ -81,6 +82,7 @@
                     </mat-checkbox>
                 </div>
                 <div *ngFor="let col of data.getColumns()"
+                     role="gridcell"
                      class="adf-data-table-cell adf-datatable-table-cell adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"
                      [attr.title]="col.title | translate"
                      [attr.filename]="getFilename(row)"
@@ -161,6 +163,7 @@
 
                 <!-- Actions (right) -->
                 <div *ngIf="actions && actionsPosition === 'right'"
+                     role="gridcell"
                      class="adf-datatable-table-cell adf-datatable__actions-cell">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
                             [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
@@ -181,9 +184,10 @@
 
             </div>
             <div *ngIf="isEmpty()"
+                 role="row"
                  [class.adf-datatable-row]="display === 'list'"
                  [class.adf-data-table-card-empty]="display === 'gallery'">
-                <div class="adf-no-content-container adf-datatable-table-cell">
+                <div class="adf-no-content-container adf-datatable-table-cell" role="gridcell">
                     <ng-template *ngIf="noContentTemplate"
                                  ngFor [ngForOf]="[data]"
                                  [ngForTemplate]="noContentTemplate">
@@ -196,6 +200,7 @@
             </div>
         </ng-container>
         <div *ngIf="!loading && noPermission"
+             role="row"
              [class.adf-datatable-row]="display === 'list'"
              [class.adf-data-table-card-permissions]="display === 'gallery'"
              class="adf-no-permission__row">
