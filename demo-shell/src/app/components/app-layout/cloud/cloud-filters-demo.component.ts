@@ -18,42 +18,78 @@
 import { Component, ViewEncapsulation, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CloudLayoutService } from './services/cloud-layout.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
-  selector: 'app-cloud-filters-demo',
-  templateUrl: './cloud-filters-demo.component.html',
-  styleUrls: ['cloud-filters-demo.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-cloud-filters-demo',
+    templateUrl: './cloud-filters-demo.component.html',
+    styleUrls: ['cloud-filters-demo.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CloudFiltersDemoComponent implements OnInit {
 
-  @Input()
-  appName: string;
+    @Input()
+    appName: string;
 
-  panelOpenStateTask: boolean;
-  panelOpenStateProcess: boolean;
+    currentTaskFilter$: Observable<any>;
+    currentProcessFilter$: Observable<any>;
 
-  currentTaskFilter$: Observable<any>;
-  currentProcessFilter$: Observable<any>;
+    toggleTaskFilter = true;
+    toggleProcessFilter = true;
 
-  constructor(private cloudLayoutService: CloudLayoutService, private router: Router) {
-  }
+    expandTaskFilter = true;
+    expandProcessFilter = false;
 
-  ngOnInit() {
-    this.currentTaskFilter$  = this.cloudLayoutService.getCurrentTaskFilterParam();
-    this.currentProcessFilter$  = this.cloudLayoutService.getCurrentProcessFilterParam();
-  }
+    constructor(
+        private cloudLayoutService: CloudLayoutService,
+        private router: Router,
+        private route: ActivatedRoute
+    ) {}
 
-  onTaskFilterSelected(filter) {
-    this.cloudLayoutService.setCurrentTaskFilterParam({id: filter.id});
-    const currentFilter = Object.assign({}, filter);
-    this.router.navigate([`/cloud/${this.appName}/tasks/`], { queryParams: currentFilter });
-  }
+    ngOnInit() {
+        this.currentTaskFilter$ = this.cloudLayoutService.getCurrentTaskFilterParam();
+        this.currentProcessFilter$ = this.cloudLayoutService.getCurrentProcessFilterParam();
+        let root = '';
+        if ( this.route.snapshot && this.route.snapshot.firstChild) {
+            root = this.route.snapshot.firstChild.url[0].path;
+            if (root === 'tasks') {
+                this.expandTaskFilter = true;
+                this.expandProcessFilter = false;
+            } else if (root === 'processes') {
+                this.expandProcessFilter = true;
+                this.expandTaskFilter = false;
+            }
+        }
+    }
 
-  onProcessFilterSelected(filter) {
-    this.cloudLayoutService.setCurrentProcessFilterParam({id: filter.id});
-    const currentFilter = Object.assign({}, filter);
-    this.router.navigate([`/cloud/${this.appName}/processes/`], { queryParams: currentFilter });
-  }
+    onTaskFilterSelected(filter) {
+        this.cloudLayoutService.setCurrentTaskFilterParam({id: filter.id});
+        const currentFilter = Object.assign({}, filter);
+        this.router.navigate([`/cloud/${this.appName}/tasks/`], { queryParams: currentFilter });
+    }
 
+    onProcessFilterSelected(filter) {
+        this.cloudLayoutService.setCurrentProcessFilterParam({id: filter.id});
+        const currentFilter = Object.assign({}, filter);
+        this.router.navigate([`/cloud/${this.appName}/processes/`], { queryParams: currentFilter });
+    }
+
+    onTaskFilterOpen(): boolean {
+        this.expandTaskFilter = true;
+        this.expandProcessFilter = false;
+        return this.toggleTaskFilter;
+    }
+
+    onTaskFilterClose(): boolean {
+        return !this.toggleTaskFilter;
+    }
+
+    onProcessFilterOpen(): boolean {
+        this.expandProcessFilter = true;
+        this.expandTaskFilter = false;
+        return this.toggleProcessFilter;
+    }
+
+    onProcessFilterClose(): boolean {
+        return !this.toggleProcessFilter;
+    }
 }
