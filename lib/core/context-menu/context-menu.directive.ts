@@ -21,15 +21,15 @@ import { Directive, HostListener, Input } from '@angular/core';
 import { ContextMenuOverlayService } from './context-menu-overlay.service';
 
 @Directive({
-    selector: '[context-menu]'
+    selector: '[adf-context-menu], [context-menu]'
 })
 export class ContextMenuDirective {
     /** Items for the menu. */
-    @Input('context-menu')
+    @Input('adf-context-menu')
     links: any[];
 
     /** Is the menu enabled? */
-    @Input('context-menu-enabled')
+    @Input('adf-context-menu-enabled')
     enabled: boolean = false;
 
     constructor(private contextMenuService: ContextMenuOverlayService) {}
