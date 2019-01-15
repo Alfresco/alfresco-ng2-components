@@ -83,7 +83,7 @@ Creates and manages public shared links for files.
      <mat-icon>share</mat-icon>
     </button>
 
-![](images/share.gif)
+![](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/share.gif)
 
 ### Lock File
 
@@ -97,7 +97,7 @@ When a file is locked it can be locked and unlocked by default only by the user 
      <mat-icon>lock</mat-icon> Lock file
     </button>
 
-![Lock file](images/Apr-15-2018+13-36-31.gif)
+![Lock file](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/Apr-15-2018+13-36-31.gif)
 
 ### Comment a Node
 
@@ -108,7 +108,7 @@ The [comments component](../core/comments.component.md) can now be used also on 
      [readOnly]="YOUR_READ_ONLY_FLAG">
     </adf-comments>
 
-![Comments](images/comments.gif)
+![Comments](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/comments.gif)
 
 ### Inherit Permission Button
 
@@ -121,7 +121,7 @@ Is it now possible add remove inherit permissions to a specific node via ADF add
 
 This directive should be added to a button and when the button is clicked this will add/remove the inherited permission based on the actual node configuration.
 
-![Inherit permissions button](images/InheritButtonPermission.gif)
+![Inherit permissions button](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/InheritButtonPermission.gif)
 
 ### Permission List Component
 
@@ -132,7 +132,7 @@ We have added a new component to show the list of the permission actually presen
 
 Also this component will allow a role change for the locally set permissions using a dropdown.
 
-![Permission List Component](images/PermissionListGIF.gif)
+![Permission List Component](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/PermissionListGIF.gif)
 
 ### Sidenav Layout Component
 
@@ -156,7 +156,7 @@ We have added a new component to make this common layout organisation easier to 
 
     </adf-sidenav-layout>
 
-![Sidenav Layout Component](images/sidenav-layout.gif)
+![Sidenav Layout Component](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/sidenav-layout.gif)
 
 ### Content metadata component enhancement
 
@@ -172,7 +172,7 @@ Two new input parameters have been added to the content-metadata component.
      [readOnly]="true">
     </adf-content-metadata-card>
 
-![Sidenav Layout Component](images/content-metadata-enhancements.gif)
+![Sidenav Layout Component](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/release-notes/images/content-metadata-enhancements.gif)
 
 ### Search Enhancements
 
