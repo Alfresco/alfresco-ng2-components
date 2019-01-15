@@ -35,11 +35,9 @@ export class DataTablePage {
     reset = element(by.xpath(`//span[contains(text(),'Reset to default')]/..`));
     replaceColumnsElement = element(by.xpath(`//span[contains(text(),'Replace columns')]/..`));
     createdOnColumn = element(by.css(`div[data-automation-id='auto_id_createdOn']`));
-    pageLoaded = element(by.css(`div[data-automation-id='auto_id_id']`));
     tableBody = element.all(by.css(`div[class='adf-datatable-body']`)).first();
     spinner = element(by.css('mat-progress-spinner'));
     rows = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`);
-    nameColumn = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='Name'] span`);
 
     constructor(rootElement: ElementFinder = element(by.css('adf-datatable'))) {
         this.rootElement = rootElement;
@@ -55,7 +53,7 @@ export class DataTablePage {
     }
 
     async getAllRowsColumnValues(locator) {
-        let columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='" + column + "'] span");
+        let columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='" + locator + "'] span");
         Util.waitUntilElementIsVisible(element.all(columnLocator).first());
         let initialList = await element.all(columnLocator).getText();
         return initialList.filter((el) => el);
@@ -241,6 +239,10 @@ export class DataTablePage {
 
     checkSpinnerIsDisplayed() {
         Util.waitUntilElementIsPresent(this.spinner);
+    }
+
+    checkSpinnerIsNotDisplayed() {
+        Util.waitUntilElementIsNotOnPage(this.spinner);
     }
 
     checkRowIsDisplayedByName(filename) {

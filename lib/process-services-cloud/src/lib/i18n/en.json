@@ -145,5 +145,11 @@
       "SAVE": "SAVE",
       "CANCEL": "CANCEL"
     }
+  },
+  "ADF_CLOUD_GROUPS": {
+    "SEARCH-GROUP": "Groups",
+    "ERROR": {
+      "NOT_FOUND": "No group found with the name {{groupName}}"
+    }
   }
 }

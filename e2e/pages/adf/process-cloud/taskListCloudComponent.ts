@@ -40,4 +40,8 @@ export class TaskListCloudComponent {
         return this.noTasksFound.getText();
     }
 
+    getAllRowsByColumn(column) {
+        return this.dataTable.getAllRowsColumnValues(column);
+    }
+
 }

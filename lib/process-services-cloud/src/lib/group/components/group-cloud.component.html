@@ -1,0 +1,51 @@
+<div class="adf-cloud-group">
+<mat-form-field>
+    <mat-chip-list #groupChipList *ngIf="isMultipleMode()" data-automation-id="adf-cloud-group-chip-list" class="apa-group-chip-list">
+      <mat-chip
+        *ngFor="let group of selectedGroups$ | async"
+        (removed)="onRemove(group)"
+        [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name">
+        {{group.name}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input
+        placeholder="{{ 'ADF_CLOUD_GROUPS.SEARCH-GROUP' | translate }}"
+        [formControl]="searchGroupsControl"
+        class="adf-group-input"
+        id="group-name"
+        data-automation-id="adf-cloud-group-search-input"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="groupChipList" #groupInput>
+    </mat-chip-list>
+
+    <input *ngIf="!isMultipleMode()"
+      matInput
+      placeholder="{{ 'ADF_CLOUD_GROUPS.SEARCH-GROUP' | translate }}"
+      class="adf-group-input"
+      data-automation-id="adf-cloud-group-search-input"
+      [formControl]="searchGroupsControl"
+      [matAutocomplete]="auto" #groupInput>
+
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      class="adf-cloud-group-list"
+      (optionSelected)="onSelect($event.option.value)"
+      [displayWith]="getDisplayName"
+      data-automation-id="adf-cloud-group-autocomplete">
+      <mat-option *ngFor="let group of searchGroups$ | async; let i = index" [value]="group" [attr.data-automation-id]="'adf-cloud-group-chip-' + group.name">
+        <div class="adf-cloud-group-row" id="adf-group-{{i}}" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+         <button class="adf-group-short-name" mat-fab>{{group | groupNameInitial }}</button>
+          <span>{{group.name}}</span>
+        </div>
+      </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+<div class="adf-cloud-group-error" *ngIf="hasError()">
+    <div fxLayout="row" fxLayoutAlign="start start" [@transitionMessages]="_subscriptAnimationState">
+        <div class="adf-cloud-group-error-message">
+        {{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate : { groupName : searchedValue } }}
+        </div>
+        <mat-icon class="adf-cloud-group-error-icon">warning</mat-icon>
+    </div>
+</div>
+</div>

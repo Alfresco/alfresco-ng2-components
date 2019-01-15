@@ -16,8 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, from, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { IdentityUserModel } from '../models/identity-user.model';
 import { JwtHelperService } from '../../services/jwt-helper.service';
@@ -44,7 +44,6 @@ export class IdentityUserService {
 
     /**
      * Gets the name and other basic details of the current user.
-     * @returns User details
      */
     getCurrentUserInfo(): IdentityUserModel {
         const familyName = this.getValueFromToken<string>(IdentityUserService.FAMILY_NAME);
@@ -57,8 +56,6 @@ export class IdentityUserService {
 
     /**
      * Gets a named value from the user access token.
-     * @param key Key name of the field to retrieve
-     * @returns Value associated with the key
      */
     getValueFromToken<T>(key: string): T {
         let value;
@@ -71,8 +68,122 @@ export class IdentityUserService {
     }
 
     /**
+     * Find users based on search input.
+     */
+    findUsersByName(search: string): Observable<any> {
+        if (search === '') {
+            return of([]);
+        }
+        const url = this.buildUserUrl();
+        const httpMethod = 'GET', pathParams = {}, queryParams = {search: search}, bodyParam = {}, headerParams = {},
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+                    url, httpMethod, pathParams, queryParams,
+                    headerParams, formParams, bodyParam,
+                    contentTypes, accepts, Object, null, null)
+                ));
+    }
+
+    /**
+     * Get client roles of a user for a particular client.
+     */
+    getClientRoles(userId: string, clientId: string): Observable<any[]> {
+        const url = this.buildUserClientRoleMapping(userId, clientId);
+        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+                    url, httpMethod, pathParams, queryParams,
+                    headerParams, formParams, bodyParam,
+                    contentTypes, accepts, Object, null, null)
+                );
+    }
+
+    /**
+     * Checks whether user has access to a client app.
+     */
+    checkUserHasClientApp(userId: string, clientId: string): Observable<boolean> {
+        return this.getClientRoles(userId, clientId).pipe(
+            map((clientRoles: any[]) => {
+                if (clientRoles.length > 0) {
+                    return true;
+                }
+                return false;
+            })
+        );
+    }
+
+    /**
+     * Checks whether user has any of client app role.
+     */
+    checkUserHasAnyClientAppRole(userId: string, clientId: string, roleNames: string[]): Observable<boolean> {
+        return this.getClientRoles(userId, clientId).pipe(
+            map((clientRoles: any[]) => {
+                let hasRole = false;
+                if (clientRoles.length > 0) {
+                    roleNames.forEach((roleName) => {
+                        const role = clientRoles.find((availableRole) => {
+                            return availableRole.name === roleName;
+                        });
+
+                        if (role) {
+                            hasRole = true;
+                            return;
+                        }
+                    });
+                }
+                return hasRole;
+            })
+        );
+    }
+
+    /**
+     * Get client id for an application.
+     */
+    getClientIdByApplicationName(applicationName: string): Observable<string> {
+        const url = this.buildGetClientsUrl();
+        const httpMethod = 'GET', pathParams = {}, queryParams = {clientId: applicationName}, bodyParam = {}, headerParams = {}, formParams = {},
+              contentTypes = ['application/json'], accepts = ['application/json'];
+        return from(this.apiService.getInstance()
+                        .oauth2Auth.callCustomApi(url, httpMethod, pathParams, queryParams, headerParams,
+                                              formParams, bodyParam, contentTypes,
+                                              accepts, Object, null, null)
+            ).pipe(
+                map((response: any[]) => {
+                    const clientId = response && response.length > 0 ? response[0].id : '';
+                    return clientId;
+                })
+            );
+    }
+
+    /**
+     * Checks a user has access to an application
+     * @param userId Id of the user
+     * @param applicationName Name of the application
+     * @returns Boolean
+     */
+    checkUserHasApplicationAccess(userId: string, applicationName: string): Observable<boolean> {
+        return this.getClientIdByApplicationName(applicationName).pipe(
+            switchMap((clientId: string) => {
+                return this.checkUserHasClientApp(userId, clientId);
+            })
+        );
+    }
+
+    /**
+     * Checks a user has any application role
+     */
+    checkUserHasAnyApplicationRole(userId: string, applicationName: string, roleNames: string[]): Observable<boolean> {
+        return this.getClientIdByApplicationName(applicationName).pipe(
+            switchMap((clientId: string) => {
+                return this.checkUserHasAnyClientAppRole(userId, clientId, roleNames);
+            })
+        );
+    }
+
+    /**
      * Gets details for all users.
-     * @returns Array of user info objects
      */
     getUsers(): Observable<IdentityUserModel[]> {
         const url = this.buildUserUrl();
@@ -92,8 +203,6 @@ export class IdentityUserService {
 
     /**
      * Gets a list of roles for a user.
-     * @param userId ID of the user
-     * @returns Array of role info objects
      */
     getUserRoles(userId: string): Observable<IdentityRoleModel[]> {
         const url = this.buildRolesUrl(userId);
@@ -113,8 +222,6 @@ export class IdentityUserService {
 
     /**
      * Gets an array of users (including the current user) who have any of the roles in the supplied list.
-     * @param roleNames List of role names to look for
-     * @returns Array of user info objects
      */
     async getUsersByRolesWithCurrentUser(roleNames: string[]): Promise<IdentityUserModel[]> {
         const filteredUsers: IdentityUserModel[] = [];
@@ -134,8 +241,6 @@ export class IdentityUserService {
 
     /**
      * Gets an array of users (not including the current user) who have any of the roles in the supplied list.
-     * @param roleNames List of role names to look for
-     * @returns Array of user info objects
      */
     async getUsersByRolesWithoutCurrentUser(roleNames: string[]): Promise<IdentityUserModel[]> {
         const filteredUsers: IdentityUserModel[] = [];
@@ -173,8 +278,16 @@ export class IdentityUserService {
         return `${this.appConfigService.get('identityHost')}/users`;
     }
 
+    private buildUserClientRoleMapping(userId: string, clientId: string): any {
+        return `${this.appConfigService.get('identityHost')}/users/${userId}/role-mappings/clients/${clientId}`;
+    }
+
     private buildRolesUrl(userId: string): any {
         return `${this.appConfigService.get('identityHost')}/users/${userId}/role-mappings/realm/composite`;
+    }
+
+    private buildGetClientsUrl() {
+        return `${this.appConfigService.get('identityHost')}/clients`;
     }
 
 }
