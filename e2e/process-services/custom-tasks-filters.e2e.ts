@@ -414,7 +414,6 @@ describe('Start Task - Custom App', () => {
         expect(taskListSinglePage.getAppId()).toEqual(appRuntime.id.toString());
 
         taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(app.taskName);
-        taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(app.taskName);
         taskListSinglePage.taskList().getDataTable().checkRowIsNotDisplayedByName(paginationTasksName[13]);
     });
 

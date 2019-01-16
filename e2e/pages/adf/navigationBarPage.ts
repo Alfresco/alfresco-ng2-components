@@ -29,6 +29,7 @@ export class NavigationBarPage {
     configEditorButton = element(by.css('a[data-automation-id="Configuration Editor"]'));
     processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
     processServicesCloudButton = element(by.css('a[data-automation-id="Process Cloud"]'));
+    taskListCloudButton = element(by.css('a[data-automation-id="Task List Cloud"]'));
     loginButton = element(by.css('a[data-automation-id="Login"]'));
     trashcanButton = element(by.css('a[data-automation-id="Trashcan"]'));
     overlayViewerButton = element(by.css('a[data-automation-id="Overlay Viewer"]'));
@@ -83,6 +84,11 @@ export class NavigationBarPage {
         Util.waitUntilElementIsVisible(this.settingsButton);
         this.settingsButton.click();
         return new AppListCloudComponent();
+    }
+
+    navigateToTaskListCloudPage() {
+        Util.waitUntilElementIsVisible(this.taskListCloudButton);
+        this.taskListCloudButton.click();
     }
 
     clickLoginButton() {

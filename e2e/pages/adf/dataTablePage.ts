@@ -92,6 +92,16 @@ export class DataTablePage {
         return this.getRowByRowNumber(rowNumber).click();
     }
 
+    selectRowByRowName(rowName) {
+        let row = element.all(by.css(`div[filename="${filename}"]`)).first()
+        Util.waitUntilElementIsVisible(row);
+        return row.click();
+    }
+
+    checkRowIsDisplayedByName(filename) {
+        Util.waitUntilElementIsVisible(element.all(by.css(`div[filename="${filename}"]`)).first());
+    }
+
     selectRowWithKeyboard(rowNumber) {
         let row = this.getRowByRowNumber(rowNumber);
         browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
