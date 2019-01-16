@@ -29,6 +29,7 @@ export enum AppConfigValues {
     ECMHOST = 'ecmHost',
     BASESHAREURL = 'baseShareUrl',
     BPMHOST = 'bpmHost',
+    IDENTITY_HOST = 'identityHost',
     AUTHTYPE = 'authType',
     CONTEXTROOTECM = 'contextRootEcm',
     CONTEXTROOTBPM = 'contextRootBpm',
