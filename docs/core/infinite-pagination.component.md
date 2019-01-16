@@ -2,7 +2,7 @@
 Title: Infinite Pagination component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-13
+Last reviewed: 2019-01-16
 ---
 
 # [Infinite Pagination component](../../lib/core/pagination/infinite-pagination.component.ts "Defined in infinite-pagination.component.ts")
@@ -46,7 +46,7 @@ Adds "infinite" pagination to the component it is used with.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| loadMore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Pagination`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when the "Load More" button is clicked. |
+| loadMore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PaginationModel`](../../lib/core/models/pagination.model.ts)`>` | Emitted when the "Load More" button is clicked. |
 
 ## Details
 
