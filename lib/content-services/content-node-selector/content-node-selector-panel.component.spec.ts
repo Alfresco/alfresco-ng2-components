@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeEntry, Node, SiteEntry, SitePaging } from '@alfresco/js-api';
@@ -29,6 +29,7 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
+import { ShareDataRow } from '../document-list';
 
 const ONE_FOLDER_RESULT = {
     list: {
@@ -112,8 +113,32 @@ describe('ContentNodeSelectorComponent', () => {
                 component.excludeSiteContent = ['blog'];
                 fixture.detectChanges();
 
-                const testSiteContent = new Node({ id: 'blog-id', properties: { 'st:componentId': 'blog' } });
-                expect(component.rowFilter(<any> { node: { entry: testSiteContent } }, null, null)).toBe(false);
+                const testSiteContent = new Node({id: 'blog-id', properties: { 'st:componentId': 'blog' }});
+                expect(component.rowFilter(<any> {node: {entry: testSiteContent}}, null, null))
+                    .toBe(false, 'did not filter out blog');
+            });
+
+            it('should still be able to filter out the exclude site content after rowFilter changes', () => {
+                const filterFunction1 = () => {
+                    return true;
+                };
+                const filterFunction2 = (row: ShareDataRow) => {
+                    const node: Node = row.node.entry;
+                    return node.isFile;
+                };
+
+                component.excludeSiteContent = ['blog'];
+                component.ngOnChanges({rowFilter: new SimpleChange(null, filterFunction1, true)});
+                fixture.detectChanges();
+
+                const testSiteContent = new Node({id: 'blog-id', properties: {'st:componentId': 'blog'}, isFile: true});
+                expect(component.rowFilter(<any> {node: {entry: testSiteContent}}, null, null))
+                    .toBe(false, 'did not filter out blog with filterFunction1');
+
+                component.ngOnChanges({rowFilter: new SimpleChange(filterFunction1, filterFunction2, false)});
+                fixture.detectChanges();
+                expect(component.rowFilter(<any> {node: {entry: testSiteContent}}, null, null))
+                    .toBe(false, 'did not filter out blog with filterFunction2');
             });
 
             it('should NOT filter out any site content by default', () => {
