@@ -43,7 +43,6 @@ export class TaskListCloudDemoComponent implements OnInit {
     createdDate: string;
     dueDate: string;
     selectionMode: string;
-    selectFirstRow: boolean = false;
     multiSelection: boolean = false;
 
     statusOptions = [
@@ -151,10 +150,6 @@ export class TaskListCloudDemoComponent implements OnInit {
 
     toggleMultiselect() {
         this.multiSelection = !this.multiSelection;
-    }
-
-    toggleSelectFirstRow() {
-        this.selectFirstRow = !this.selectFirstRow;
     }
 
     showSelectedRows(rows: any) {

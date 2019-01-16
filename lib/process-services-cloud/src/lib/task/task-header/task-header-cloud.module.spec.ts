@@ -15,9 +15,16 @@
  * limitations under the License.
  */
 
-export * from './task-list/public-api';
-export * from './task-filters/public-api';
-export * from './start-task/public-api';
-export * from './task-header/public-api';
+import { TaskHeaderCloudModule } from './task-header-cloud.module';
 
-export * from './task-cloud.module';
+describe('TaskCloudModule', () => {
+  let taskHeaderCloudModule: TaskHeaderCloudModule;
+
+  beforeEach(() => {
+    taskHeaderCloudModule = new TaskHeaderCloudModule();
+  });
+
+  it('should create an instance', () => {
+    expect(taskHeaderCloudModule).toBeTruthy();
+  });
+});
