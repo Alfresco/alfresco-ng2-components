@@ -270,10 +270,12 @@ describe('HostSettingsComponent', () => {
 
         let bpmUrlInput;
         let ecmUrlInput;
+        let identityUrlInput;
         let oauthHostUrlInput;
         let clientIdInput;
 
         beforeEach(() => {
+            appConfigService.config.identityHost = 'http://localhost:123';
             appConfigService.config.providers = 'ALL';
             appConfigService.config.authType = 'OAUTH';
             appConfigService.config.oauth2 = {
@@ -289,6 +291,7 @@ describe('HostSettingsComponent', () => {
             fixture.detectChanges();
             bpmUrlInput = element.querySelector('#bpmHost');
             ecmUrlInput = element.querySelector('#ecmHost');
+            identityUrlInput = element.querySelector('#identityHost');
             oauthHostUrlInput = element.querySelector('#oauthHost');
             clientIdInput = element.querySelector('#clientId');
         });
@@ -300,6 +303,7 @@ describe('HostSettingsComponent', () => {
         it('should have a valid form when the urls are correct', (done) => {
             const urlBpm = 'http://localhost:9999/bpm';
             const urlEcm = 'http://localhost:9999/bpm';
+            const urlIdentity = 'http://localhost:9999/identity';
 
             component.form.statusChanges.subscribe((status: string) => {
                 expect(status).toEqual('VALID');
@@ -311,6 +315,9 @@ describe('HostSettingsComponent', () => {
 
             bpmUrlInput.value = urlBpm;
             bpmUrlInput.dispatchEvent(new Event('input'));
+
+            identityUrlInput.value = urlIdentity;
+            identityUrlInput.dispatchEvent(new Event('input'));
         });
 
         it('should have an invalid form when the url inserted is wrong', (done) => {
@@ -324,6 +331,19 @@ describe('HostSettingsComponent', () => {
 
             bpmUrlInput.value = url;
             bpmUrlInput.dispatchEvent(new Event('input'));
+        });
+
+        it('should have an invalid form when the identity url inserted is wrong', (done) => {
+            const url = 'wrong';
+
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('INVALID');
+                expect(component.identityHost.hasError('pattern')).toBeTruthy();
+                done();
+            });
+
+            identityUrlInput.value = url;
+            identityUrlInput.dispatchEvent(new Event('input'));
         });
 
         it('should have an invalid form when the host is wrong', (done) => {
