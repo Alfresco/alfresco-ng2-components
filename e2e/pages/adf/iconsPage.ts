@@ -15,25 +15,15 @@
  * limitations under the License.
  */
 
-export class AppsRuntimeActions {
+import { by, element } from 'protractor';
 
-    async getRuntimeAppByName(alfrescoJsApi, appName) {
+export class IconsPage {
 
-        let runtimeApps = await this.getRuntimeAppDefinitions(alfrescoJsApi);
-        let desiredApp;
-
-        for (let i = 0; i < runtimeApps.data.length; i++) {
-            if (runtimeApps.data[i].name === appName) {
-                desiredApp = runtimeApps.data[i];
-            }
-        }
-
-        return desiredApp;
+    locateCustomIcon(name) {
+        return element(by.css(`adf-icon[value='${name}'] svg`));
     }
 
-    async getRuntimeAppDefinitions(alfrescoJsApi) {
-
-        return await alfrescoJsApi.activiti.appsRuntimeApi.getAppDefinitions();
+    locateLigatureIcon(name) {
+        return element(by.css(`adf-icon[value='${name}'] .material-icons`));
     }
-
 }

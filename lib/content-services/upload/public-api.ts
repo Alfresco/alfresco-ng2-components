@@ -25,6 +25,8 @@ export * from './components/upload-files.event';
 
 export * from './directives/file-draggable.directive';
 
+export * from './pipes/file-upload-error.pipe';
+
 export * from './components/base-upload/upload-base';
 
 export * from './upload.module';

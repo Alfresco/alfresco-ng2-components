@@ -41,12 +41,13 @@ export class StartTaskCloudDemoComponent implements OnInit {
     }
 
     onStartTaskSuccess() {
-        this.router.navigate([`/cloud/${this.applicationName}`]);
         this.cloudLayoutService.setCurrentTaskFilterParam({key: 'my-tasks'});
+        this.router.navigate([`/cloud/${this.applicationName}/tasks`]);
     }
 
     onCancelStartTask() {
-        this.router.navigate([`/cloud/${this.applicationName}`]);
+        this.cloudLayoutService.setCurrentTaskFilterParam({key: 'my-tasks'});
+        this.router.navigate([`/cloud/${this.applicationName}/tasks`]);
     }
 
     openSnackMessage(event: any) {

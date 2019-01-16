@@ -54,6 +54,7 @@ export class FileModel {
 
     id: string;
     status: FileUploadStatus = FileUploadStatus.Pending;
+    errorCode: number;
     progress: FileUploadProgress;
     options: FileUploadOptions;
     data: any;
@@ -64,6 +65,7 @@ export class FileModel {
         this.name = file.name;
         this.size = file.size;
         this.data = null;
+        this.errorCode = null;
 
         this.progress = {
             loaded: 0,

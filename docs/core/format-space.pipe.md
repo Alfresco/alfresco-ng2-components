@@ -14,8 +14,8 @@ Replaces all the white space in a string with a supplied character.
 <!-- {% raw %} -->
 
 ```HTML
-<div [id]="'CHECK MY ID' | formatSpace"> 
-    BATTLESTAR GALACTICA 
+<div [id]="'CHECK MY ID' | formatSpace">
+    BATTLESTAR GALACTICA
 </div>
 ```
 

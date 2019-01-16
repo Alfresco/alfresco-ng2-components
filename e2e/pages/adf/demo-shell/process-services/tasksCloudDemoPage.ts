@@ -27,13 +27,13 @@ export class TasksCloudDemoPage {
     myTasks = element(by.css('span[data-automation-id="my-tasks-filter"]'));
     completedTasks = element(by.css('span[data-automation-id="completed-tasks-filter"]'));
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
-<<<<<<< HEAD
-    defaultActiveFilter = element.all(by.css('.adf-filters__entry')).first();
-=======
+
     taskFilters = element(by.css("mat-expansion-panel[data-automation-id='Task Filters']"));
-    defaultActiveFilter = element.all(by.css('.adf-filters__entry')).first();
+
     editTaskFilterCloud = new EditTaskFilterCloudComponent();
->>>>>>> 9ff4790e2acb317cde8608a16abe8a7378d494c4
+
+    createButton = element(by.css('button[data-automation-id="create-button"'));
+    newTaskButton = element(by.css('button[data-automation-id="btn-start-task"]'));
 
     taskFiltersCloudComponent(filter) {
         return new TaskFiltersCloudComponent(filter);
@@ -64,8 +64,6 @@ export class TasksCloudDemoPage {
         return this.activeFilter.getText();
     }
 
-<<<<<<< HEAD
-=======
     getAllRowsByIdColumn() {
         return new TaskListCloudComponent().getAllRowsByColumn('Id');
     }
@@ -75,8 +73,28 @@ export class TasksCloudDemoPage {
         return this.taskFilters.click();
     }
 
->>>>>>> 9ff4790e2acb317cde8608a16abe8a7378d494c4
-    firstFilterIsActive () {
-        return this.defaultActiveFilter.getAttribute('class').then((value) => value.includes('adf-active'));
+    openNewTaskForm() {
+        this.createButtonIsDisplayed();
+        this.clickOnCreateButton();
+        this.newTaskButtonIsDisplayed();
+        this.newTaskButton.click();
+        return this;
     }
+
+    createButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.createButton);
+        return this;
+    }
+
+    newTaskButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.newTaskButton);
+        return this;
+    }
+
+    clickOnCreateButton() {
+        Util.waitUntilElementIsClickable(this.createButton);
+        this.createButton.click();
+        return this;
+    }
+
 }

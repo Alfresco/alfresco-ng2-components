@@ -68,6 +68,7 @@
         color="primary"
         [disabled]="option.disabled"
         *ngFor="let option of visibilityOptions"
+        [attr.data-automation-id]="option.value"
         [value]="option.value"
         [checked]="visibilityOption.value === option.value"
       >
@@ -78,7 +79,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions class="adf-action-buttons">
-  <button mat-button mat-dialog-close>
+  <button mat-button mat-dialog-close data-automation-id="cancel-library-id">
     {{ 'LIBRARY.DIALOG.CANCEL' | translate }}
   </button>
 
@@ -87,6 +88,7 @@
     mat-button
     (click)="submit()"
     [disabled]="!form.valid"
+    data-automation-id="create-library-id"
   >
     {{ 'LIBRARY.DIALOG.CREATE' | translate }}
   </button>

@@ -44,12 +44,13 @@ export class StartProcessCloudDemoComponent implements OnInit {
     }
 
     onStartProcessSuccess() {
-        this.router.navigate([`/cloud/${this.applicationName}`]);
         this.cloudLayoutService.setCurrentProcessFilterParam({ key: 'running-processes' });
+        this.router.navigate([`/cloud/${this.applicationName}/processes`]);
     }
 
     onCancelStartProcess() {
-        this.router.navigate([`/cloud/${this.applicationName}`]);
+        this.cloudLayoutService.setCurrentProcessFilterParam({ key: 'all-processes' });
+        this.router.navigate([`/cloud/${this.applicationName}/processes`]);
     }
 
     openSnackMessage(event: any) {

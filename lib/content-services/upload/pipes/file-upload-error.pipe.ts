@@ -15,25 +15,19 @@
  * limitations under the License.
  */
 
-export class AppsRuntimeActions {
+import { Pipe, PipeTransform } from '@angular/core';
+import { TranslationService } from '@alfresco/adf-core';
 
-    async getRuntimeAppByName(alfrescoJsApi, appName) {
+@Pipe({
+    name: 'adfFileUploadError',
+    pure: true
+})
+export class FileUploadErrorPipe implements PipeTransform {
 
-        let runtimeApps = await this.getRuntimeAppDefinitions(alfrescoJsApi);
-        let desiredApp;
-
-        for (let i = 0; i < runtimeApps.data.length; i++) {
-            if (runtimeApps.data[i].name === appName) {
-                desiredApp = runtimeApps.data[i];
-            }
-        }
-
-        return desiredApp;
+    constructor(private translation: TranslationService) {
     }
 
-    async getRuntimeAppDefinitions(alfrescoJsApi) {
-
-        return await alfrescoJsApi.activiti.appsRuntimeApi.getAppDefinitions();
+    transform(errorCode: number): string {
+        return this.translation.instant(`FILE_UPLOAD.ERRORS.${errorCode || 'GENERIC'}`);
     }
-
 }

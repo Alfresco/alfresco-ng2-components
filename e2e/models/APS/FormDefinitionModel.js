@@ -56,6 +56,6 @@ var FormDefinitionModel = function (fields) {
             return field[key]===value;
         })
     };
-}
+};
 
 module.exports = FormDefinitionModel;

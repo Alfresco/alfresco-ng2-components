@@ -25,6 +25,7 @@ import { FileUploadingListComponent } from './components/file-uploading-list.com
 import { UploadButtonComponent } from './components/upload-button.component';
 import { UploadVersionButtonComponent } from './components/upload-version-button.component';
 import { UploadDragAreaComponent } from './components/upload-drag-area.component';
+import { FileUploadErrorPipe } from './pipes/file-upload-error.pipe';
 
 import { CoreModule } from '@alfresco/adf-core';
 import { FileDraggableDirective } from './directives/file-draggable.directive';
@@ -42,7 +43,8 @@ import { FileDraggableDirective } from './directives/file-draggable.directive';
         UploadVersionButtonComponent,
         FileUploadingDialogComponent,
         FileUploadingListComponent,
-        FileUploadingListRowComponent
+        FileUploadingListRowComponent,
+        FileUploadErrorPipe
     ],
     exports: [
         FileDraggableDirective,
@@ -51,7 +53,8 @@ import { FileDraggableDirective } from './directives/file-draggable.directive';
         UploadVersionButtonComponent,
         FileUploadingDialogComponent,
         FileUploadingListComponent,
-        FileUploadingListRowComponent
+        FileUploadingListRowComponent,
+        FileUploadErrorPipe
     ]
 })
 export class UploadModule {}
