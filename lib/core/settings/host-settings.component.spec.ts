@@ -99,6 +99,7 @@ describe('HostSettingsComponent', () => {
 
         beforeEach(() => {
             appConfigService.config.providers = 'BPM';
+            appConfigService.config.authType = 'BASIC';
             appConfigService.load();
             fixture.detectChanges();
             bpmUrlInput = element.querySelector('#bpmHost');
@@ -152,6 +153,7 @@ describe('HostSettingsComponent', () => {
 
         beforeEach(() => {
             appConfigService.config.providers = 'ECM';
+            appConfigService.config.authType = 'BASIC';
             appConfigService.load();
             fixture.detectChanges();
             bpmUrlInput = element.querySelector('#bpmHost');
@@ -200,6 +202,7 @@ describe('HostSettingsComponent', () => {
 
         beforeEach(() => {
             appConfigService.config.providers = 'ALL';
+            appConfigService.config.authType = 'BASIC';
             appConfigService.load();
             fixture.detectChanges();
             bpmUrlInput = element.querySelector('#bpmHost');
