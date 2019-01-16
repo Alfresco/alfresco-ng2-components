@@ -54,7 +54,7 @@ describe('ContentNodeSelectorDialogComponent', () => {
         const documentListService: DocumentListService = TestBed.get(DocumentListService);
         const sitesService: SitesService = TestBed.get(SitesService);
         spyOn(documentListService, 'getFolder').and.returnValue(of({ list: [] }));
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of({}));
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: {} }));
         spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
 
         fixture = TestBed.createComponent(ContentNodeSelectorComponent);

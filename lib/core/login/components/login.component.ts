@@ -25,7 +25,6 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { LogService } from '../../services/log.service';
 import { TranslationService } from '../../services/translation.service';
 import { UserPreferencesService } from '../../services/user-preferences.service';
-import { SettingsService } from '../../services/settings.service';
 
 import { LoginErrorEvent } from '../models/login-error.event';
 import { LoginSubmitEvent } from '../models/login-submit.event';
@@ -91,23 +90,9 @@ export class LoginComponent implements OnInit {
     @Input()
     copyrightText: string = '\u00A9 2016 Alfresco Software, Inc. All Rights Reserved.';
 
-    /**
-     * Possible valid values are ECM, BPM or ALL.
-     * @deprecated 3.0.0 - use the providers property in the the app.config.json
-     */
-    @Input()
-    providers: string;
-
     /** Custom validation rules for the login form. */
     @Input()
     fieldsValidation: any;
-
-    /**
-     * Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services.
-     * @deprecated 3.0.0
-     */
-    @Input()
-    disableCsrf: boolean;
 
     /** Route to redirect to on successful login. */
     @Input()
@@ -154,8 +139,7 @@ export class LoginComponent implements OnInit {
         private logService: LogService,
         private router: Router,
         private appConfig: AppConfigService,
-        private userPreferences: UserPreferencesService,
-        private settingsService: SettingsService
+        private userPreferences: UserPreferencesService
     ) {
         this.initFormError();
         this.initFormFieldsMessages();
@@ -188,9 +172,6 @@ export class LoginComponent implements OnInit {
      * @param event
      */
     onSubmit(values: any) {
-        this.settingsService.setProviders(this.providers);
-        this.settingsService.csrfDisabled = this.disableCsrf;
-
         this.disableError();
         const args = new LoginSubmitEvent({
             controls: { username: this.form.controls.username }
@@ -242,9 +223,7 @@ export class LoginComponent implements OnInit {
             .login(values.username, values.password, this.rememberMe)
             .subscribe(
                 (token: any) => {
-                    const redirectUrl = this.authService.getRedirect(
-                        this.providers
-                    );
+                    const redirectUrl = this.authService.getRedirect();
 
                     this.actualLoginStep = LoginSteps.Welcome;
                     this.userPreferences.setStoragePrefix(values.username);

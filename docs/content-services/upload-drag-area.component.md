@@ -68,14 +68,13 @@ as the drag/drop target:
 | nodeType | `string` | "cm:content" | Custom node type for uploaded file |
 | rootFolderId | `string` | "-root-" | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
 | versioning | `boolean` | false | Toggles versioning. |
-| parentId | `void` |  | (**Deprecated:** 2.4.0 - use rootFolderId ID of parent folder node) ID of parent folder node |
+
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
-| createFolder | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | (**Deprecated:** 2.4.0 No longer used by the framework) Emitted when a folder is created. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the file is uploaded successfully. |
 

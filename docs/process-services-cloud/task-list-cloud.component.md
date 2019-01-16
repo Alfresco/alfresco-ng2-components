@@ -1,7 +1,7 @@
 ---
 Title: Task List Cloud component
 Added: v3.0.0
-Status: Active
+Status: Experimental
 Last reviewed: 2019-01-08
 ---
 

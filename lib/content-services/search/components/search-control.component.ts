@@ -19,7 +19,7 @@ import { AuthenticationService, ThumbnailService } from '@alfresco/adf-core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output,
          QueryList, ViewEncapsulation, ViewChild, ViewChildren, ElementRef, TemplateRef, ContentChild } from '@angular/core';
-import { NodeEntry, QueryBody } from '@alfresco/js-api';
+import { NodeEntry } from '@alfresco/js-api';
 import { Observable, Subject } from 'rxjs';
 import { SearchComponent } from './search.component';
 import { MatListItem } from '@angular/material';
@@ -71,10 +71,6 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     /** Maximum number of results to show in the live search. */
     @Input()
     liveSearchMaxResults: number = 5;
-
-    /** @deprecated in 2.1.0 */
-    @Input()
-    customQueryBody: QueryBody;
 
     /** Emitted when the search is submitted by pressing the ENTER key.
      * The search term is provided as the value of the event.

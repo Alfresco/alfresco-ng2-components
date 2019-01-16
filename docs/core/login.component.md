@@ -78,11 +78,9 @@ with custom input fields handled by your application or parent component:
 | ---- | ---- | ------------- | ----------- |
 | backgroundImageUrl | `string` |  | Path to a custom background image. |
 | copyrightText | `string` |  | The copyright text below the login box. |
-| disableCsrf | `boolean` |  | (**Deprecated:** 3.0.0) Prevents the CSRF Token from being submitted. Only valid for Alfresco Process Services. |
 | fieldsValidation | `any` |  | Custom validation rules for the login form. |
 | logoImageUrl | `string` |  | Path to a custom logo image. |
 | needHelpLink | `string` | "" | Sets the URL of the NEED HELP link in the footer. |
-| providers | `string` |  | (**Deprecated:** 3.0.0 - use the providers property in the the app.config.json) Possible valid values are ECM, BPM or ALL. |
 | registerLink | `string` | "" | Sets the URL of the REGISTER link in the footer. |
 | showLoginActions | `boolean` | true | Should the extra actions (`Need Help`, `Register`, etc) be shown? |
 | showRememberMe | `boolean` | true | Should the `Remember me` checkbox be shown? When selected, this option will remember the logged-in user after the browser is closed to avoid logging in repeatedly. |
@@ -269,7 +267,7 @@ export class MyCustomLogin {
 Note that if you do not call `event.preventDefault()` then the default behaviour 
 will execute _after_ your custom code has completed.
 
-### SSO login
+### Single Sign-On (SSO)
 
 #### Implicit Flow
 
@@ -277,9 +275,11 @@ If you used the host-setting component to enable SSO Oauth (or if you
 enabled the setting in `app.config.json`) then the [login component](../core/login.component.md) will show only a button to login:
 
 ```JSON
+{
+    "providers": "ECM",
     "authType" :"OAUTH",
     "oauth2": {
-      "host": "http://localhost:30081/auth/realms/myrealm",
+      "host": "<AUTH-SERVER>/auth/realms/alfresco",
       "clientId": "activiti",
       "scope": "openid",
       "secret": "",
@@ -287,7 +287,8 @@ enabled the setting in `app.config.json`) then the [login component](../core/log
       "silentLogin": false,
       "redirectUri": "/",
       "redirectUriLogout": "/logout"
-    },
+    }
+}
 ```
 
 ![Login component](../docassets/images/sso-login.png)
@@ -295,6 +296,44 @@ enabled the setting in `app.config.json`) then the [login component](../core/log
 Note that if the `silentLogin` property in the `oauth2` configuration is set to true
 then the login page will not be shown. Instead, the application will redirect
 automatically to the authorization server when the user is not logged-in
+
+#### Silent login
+
+You can also enable automatic redirection to OAuth provider
+by utilising the following properties:
+
+* silentLogin
+* redirectSilentIframeUri
+
+```json
+{
+  "providers": "ECM",
+  "authType": "OAUTH",
+  "oauth2": {
+    "host": "<AUTH-SERVER>/auth/realms/alfresco",
+    "clientId": "alfresco",
+    "scope": "openid",
+    "secret": "",
+    "implicitFlow": true,
+    "silentLogin": true,
+    "redirectSilentIframeUri": "/assets/silent-refresh.html",
+    "redirectUri": "/",
+    "redirectUriLogout": "/logout"
+  },
+```
+
+Please note that if you deploy the application to a virtual folder,
+for example `http://<ADDRESS>/my-app`, then `redirectSilentIframeUri`
+must contain the full URI value: 
+
+```json
+{
+    "redirectSilentIframeUri": "http://<ADDRESS>/my-app/assets/silent-refresh.html",
+}
+```
+
+> In the default ADF application configurations the `silent-refresh.html` file
+> gets automatically copied to the application output when building for production.
 
 ## See Also
 

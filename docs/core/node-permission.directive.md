@@ -87,7 +87,7 @@ for example). You can also use it in much the same way as you would with an HTML
 
 ```html
 <alfresco-upload-drag-area
-        [parentId]="..."
+        [rootFolderId]="..."
         [versioning]="..."
         [adf-node-permission]="'create'"
         [adf-nodes]="getCurrentDocumentListNode()">

@@ -57,7 +57,7 @@
     <div *ngFor="let flow of diagram.flows">
         <div [ngSwitch]="flow.type">
             <div *ngSwitchCase="'sequenceFlow'">
-                <diagram-sequence-flow [flow]="flow"></diagram-sequence-flow>
+                <adf-diagram-sequence-flow [flow]="flow"></adf-diagram-sequence-flow>
             </div>
         </div>
     </div>

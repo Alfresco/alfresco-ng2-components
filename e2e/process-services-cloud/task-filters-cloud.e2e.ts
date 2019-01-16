@@ -66,11 +66,11 @@ describe('Task filters cloud', () => {
             await tasksService.claimTask(task.entry.id, simpleApp);
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Completed Tasks');
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(newTask);
 
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('My Tasks');
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(newTask);
         });
@@ -83,11 +83,11 @@ describe('Task filters cloud', () => {
             await tasksService.completeTask(task.entry.id, simpleApp);
 
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('My Tasks');
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTask);
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-            expect(tasksCloudDemoPage.checkActiveFilterActive()).toBe('Completed Tasks');
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTask);
         });

@@ -15,24 +15,27 @@
  * limitations under the License.
  */
 
-import { TestBed } from '@angular/core/testing';
-import { SettingsService } from './settings.service';
-import { setupTestBed } from '../testing/setupTestBed';
-import { CoreTestingModule } from '../testing/core.testing.module';
+export class GroupModel {
 
-describe('SettingsService', () => {
+    id: string;
+    name: string;
+    path: string;
+    realmRoles: string[];
+    access: any;
+    attributes: any;
+    clientRoles: any;
 
-    let service: SettingsService;
+    constructor(obj?: any) {
+        this.id = obj.id || null;
+        this.name = obj.name || null;
+        this.path = obj.path || null;
+        this.realmRoles = obj.realmRoles || null;
+        this.access = obj.access || null;
+        this.attributes = obj.attributes || null;
+        this.clientRoles = obj.clientRoles || null;
+      }
+}
 
-    setupTestBed({
-        imports: [CoreTestingModule]
-    });
-
-    beforeEach(() => {
-        service = TestBed.get(SettingsService);
-    });
-
-    it('should be exposed by the module', () => {
-        expect(service).toBeDefined();
-    });
-});
+export interface GroupSearchParam {
+    name?: string;
+}

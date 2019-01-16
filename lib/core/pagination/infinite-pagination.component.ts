@@ -39,23 +39,11 @@ import { UserPreferencesService } from '../services/user-preferences.service';
 })
 export class InfinitePaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
 
-    /**
-     * @deprecated 3.0.0 - uses paginationSize's default in UserPreferencesService
-     */
-    static DEFAULT_PAGE_SIZE: number = 25;
-
     static DEFAULT_PAGINATION: PaginationModel = {
         skipCount: 0,
         hasMoreItems: false,
         merge: true
     };
-
-    /**
-     * Pagination object.
-     * @deprecated 2.3.0
-     */
-    @Input()
-    pagination: PaginationModel;
 
     /** Component that provides custom pagination support. */
     @Input()
@@ -72,6 +60,8 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     /** Emitted when the "Load More" button is clicked. */
     @Output()
     loadMore: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
+
+    pagination: PaginationModel;
 
     private paginationSubscription: Subscription;
 

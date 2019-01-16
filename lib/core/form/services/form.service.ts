@@ -129,7 +129,9 @@ export class FormService {
                     this.ecmModelService.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                         (customType) => {
                             let formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
-                            this.addFieldsToAForm(form.id, formDefinitionModel).subscribe((formData) => {
+                            from(
+                                this.editorApi.saveForm(form.id, formDefinitionModel)
+                            ).subscribe((formData) => {
                                 observer.next(formData);
                                 observer.complete();
                             }, (err) => this.handleError(err));
@@ -165,19 +167,6 @@ export class FormService {
      * @returns Data for the saved form
      */
     saveForm(formId: number, formModel: FormDefinitionModel): Observable<any> {
-        return from(
-            this.editorApi.saveForm(formId, formModel)
-        );
-    }
-
-    /**
-     * Add Fields to a form
-     * @deprecated in 1.7.0, use saveForm API instead
-     * @param formId ID of the form
-     * @param formModel Form definition
-     */
-    addFieldsToAForm(formId: number, formModel: FormDefinitionModel): Observable<any> {
-        this.logService.log('addFieldsToAForm is deprecated in 1.7.0, use saveForm API instead');
         return from(
             this.editorApi.saveForm(formId, formModel)
         );

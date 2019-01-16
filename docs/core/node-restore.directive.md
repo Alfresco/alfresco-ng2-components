@@ -14,7 +14,6 @@ Restores deleted nodes to their original location.
 ```html
 <adf-toolbar title="toolbar example">
     <button mat-icon-button
-        location="/files"
         [adf-restore]="documentList.selection"
         (restore)="onRestore($event)">
         <mat-icon>restore</mat-icon>
@@ -51,7 +50,6 @@ Restores deleted nodes to their original location.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| location | `string` | "" | (**Deprecated:** 2.4.0) Path to restored node. |
 | selection | `DeletedNodeEntry[]` |  | Array of deleted nodes to restore. |
 
 ### Events

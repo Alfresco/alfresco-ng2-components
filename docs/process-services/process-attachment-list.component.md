@@ -2,12 +2,12 @@
 Title: Process Attachment List component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-03-21
+Last reviewed: 2019-01-14
 ---
 
 # [Process Attachment List component](../../lib/process-services/attachment/process-attachment-list.component.ts "Defined in process-attachment-list.component.ts")
 
-Displays attached documents on a specified process instance
+Displays documents attached to a specified process instance.
 
 ![process-attachment-list-sample](../docassets/images/process-attachment-list.png)
 
@@ -84,7 +84,7 @@ a custom _no content template_ (using &lt;adf-empty-list>) to invite the user to
 
 ```html
 <adf-upload-drag-area
-    [parentId]="YOUR_PROCESS_ID"
+    [rootFolderId]="YOUR_PROCESS_ID"
     [showNotificationBar]="BOOLEAN">
     <adf-process-attachment-list  
         [processId]="YOUR_PROCESS_ID"

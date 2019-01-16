@@ -231,7 +231,7 @@ A more complex rule can take other rules as parameters:
 This is mainly useful for creating "metarules" that require certain
 relationships to hold among the parameter rules. A few useful metarules
 are defined in the
-[core.evaluators.ts](../lib/extensions/evaluators/core.evaluators.ts) file:
+[core.evaluators.ts](../../lib/extensions/src/lib/evaluators/core.evaluators.ts) file:
 
 -   `every`: Returns true only if all the parameter rules return true
 -   `some`: Returns true if one or more of the parameter rules return true

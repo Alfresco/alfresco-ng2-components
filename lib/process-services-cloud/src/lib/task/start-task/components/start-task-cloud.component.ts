@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MOMENT_DATE_FORMATS, MomentDateAdapter } from '@alfresco/adf-core';
 import moment from 'moment-es6';
@@ -27,8 +27,10 @@ import {
     LogService,
     UserPreferencesService,
     IdentityUserService,
-    IdentityUserModel
+    IdentityUserModel,
+    UserPreferenceValues
 } from '@alfresco/adf-core';
+import { PeopleCloudComponent } from './people-cloud/people-cloud.component';
 
 @Component({
   selector: 'adf-cloud-start-task',
@@ -70,6 +72,9 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    @ViewChild('peopleInput')
+    assignee: PeopleCloudComponent;
+
     users$: Observable<any[]>;
 
     taskId: string;
@@ -91,16 +96,17 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     constructor(private taskService: StartTaskCloudService,
                 private dateAdapter: DateAdapter<Moment>,
-                private preferences: UserPreferencesService,
+                private userPreferencesService: UserPreferencesService,
                 private formBuilder: FormBuilder,
                 private identityUserService: IdentityUserService,
                 private logService: LogService) {
     }
 
     ngOnInit() {
-        this.localeSub = this.preferences.locale$.subscribe((locale) => {
+        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
             this.dateAdapter.setLocale(locale);
         });
+
         this.loadCurrentUser();
         this.buildForm();
     }

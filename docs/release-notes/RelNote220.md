@@ -126,7 +126,7 @@ In this release, the [Viewer component](../core/viewer.component.md) has receive
 -   Image view now supports panning of the images. Hardware-accelerated styles were used to enable panning of zoomed in or large images with the highest performance and efficiency
 -   The viewer has greatly improved maintenance of the Renditions (see possible conversion options here: [File types that support preview and thumbnail generation | Alfresco Documentation](https://docs.alfresco.com/5.2/references/valid-transformations-preview.html) )
 -   Support for "carousel" modes and document navigation options (extra buttons you can enable and provide handlers for). This feature will be fully demonstrated in the upcoming "Alfresco Content Application" release.
--   It is now possible to provide custom menu buttons for the Viewer toolbar. See more details in the docs: [alfresco-ng2-components/viewer.component.md at development · Alfresco/alfresco-ng2-components · GitHub ](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/viewer.component.md#custom-toolbar-buttons)
+-   It is now possible to provide custom menu buttons for the Viewer toolbar. See more details in the docs: [alfresco-ng2-components/viewer.component.md at development · Alfresco/alfresco-ng2-components · GitHub ](../core/viewer.component.md#custom-toolbar-buttons)
 
 ![PDF thumbnails](images/pdf-thumbnails.png)
 

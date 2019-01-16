@@ -21,9 +21,8 @@ import { ReportParametersModel } from '../../diagram/models/report/reportParamet
 import { AnalyticsService } from '../services/analytics.service';
 import { share } from 'rxjs/operators';
 
-// @deprecated 2.3.0 analytics-report-list tag removed
 @Component({
-    selector: 'adf-analytics-report-list, analytics-report-list',
+    selector: 'adf-analytics-report-list',
     templateUrl: './analytics-report-list.component.html',
     styleUrls: ['./analytics-report-list.component.scss'],
     encapsulation: ViewEncapsulation.None

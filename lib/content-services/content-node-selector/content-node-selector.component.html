@@ -1,17 +1,18 @@
 <header
     mat-dialog-title
-    data-automation-id="content-node-selector-title">{{title || data?.title}}
+    data-automation-id="content-node-selector-title">{{data?.title}}
 </header>
 
 <mat-dialog-content>
     <adf-content-node-selector-panel
-        [currentFolderId]="currentFolderId || data?.currentFolderId"
-        [dropdownHideMyFiles]="dropdownHideMyFiles || data?.dropdownHideMyFiles"
-        [dropdownSiteList]="dropdownSiteList || data?.dropdownSiteList"
-        [rowFilter]="rowFilter || data?.rowFilter"
-        [imageResolver]="imageResolver || data?.imageResolver"
+        [currentFolderId]="data?.currentFolderId"
+        [dropdownHideMyFiles]="data?.dropdownHideMyFiles"
+        [dropdownSiteList]="data?.dropdownSiteList"
+        [rowFilter]="data?.rowFilter"
+        [imageResolver]="data?.imageResolver"
         [isSelectionValid]="data?.isSelectionValid"
         [breadcrumbTransform]="data?.breadcrumbTransform"
+        [excludeSiteContent]="data?.excludeSiteContent"
         (select)="onSelect($event)">
     </adf-content-node-selector-panel>
 </mat-dialog-content>

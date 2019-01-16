@@ -2,7 +2,7 @@
 Title: Process Instance Details Header component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-06-08
+Last reviewed: 2019-01-14
 ---
 
 # [Process Instance Details Header component](../../lib/process-services/process-list/components/process-instance-header.component.ts "Defined in process-instance-header.component.ts")

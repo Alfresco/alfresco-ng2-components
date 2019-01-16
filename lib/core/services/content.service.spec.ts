@@ -18,7 +18,6 @@
 import { TestBed } from '@angular/core/testing';
 import { CookieServiceMock } from '../mock/cookie.service.mock';
 import { ContentService } from './content.service';
-import { SettingsService } from './settings.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
@@ -37,7 +36,6 @@ describe('ContentService', () => {
 
     let contentService: ContentService;
     let authService: AuthenticationService;
-    let settingsService: SettingsService;
     let storage: StorageService;
     let node: any;
 
@@ -56,7 +54,6 @@ describe('ContentService', () => {
 
     beforeEach(() => {
         authService = TestBed.get(AuthenticationService);
-        settingsService = TestBed.get(SettingsService);
         contentService = TestBed.get(ContentService);
         storage = TestBed.get(StorageService);
         storage.clear();
@@ -71,16 +68,13 @@ describe('ContentService', () => {
 
         let appConfig: AppConfigService = TestBed.get(AppConfigService);
         appConfig.config = {
-            ecmHost: 'http://localhost:9876/ecm'
+            ecmHost: 'http://localhost:9876/ecm',
+            provider: 'ECM'
         };
     });
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
-    });
-
-    beforeEach(() => {
-        settingsService.setProviders('ECM');
     });
 
     it('should return a valid content URL', (done) => {

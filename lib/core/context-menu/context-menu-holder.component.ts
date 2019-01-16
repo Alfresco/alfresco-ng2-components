@@ -22,11 +22,8 @@ import { MatMenuTrigger } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { ContextMenuService } from './context-menu.service';
 
-/**
- * @deprecated: context-menu-holder is deprecated, use adf-context-menu-holder instead.
- */
 @Component({
-    selector: 'adf-context-menu-holder, context-menu-holder',
+    selector: 'adf-context-menu-holder',
     template: `
         <button mat-button [matMenuTriggerFor]="contextMenu"></button>
         <mat-menu #contextMenu="matMenu" class="context-menu">

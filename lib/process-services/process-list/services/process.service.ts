@@ -59,8 +59,14 @@ export class ProcessService {
             );
     }
 
+    /**
+     * Gets processes for a filter and optionally a process definition.
+     * @param requestNode Filter for instances
+     * @param processDefinitionKey Limits returned instances to a process definition
+     * @returns List of processes
+     */
     getProcesses(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessListModel> {
-        return this.getProcessInstances(requestNode, processDefinitionKey || null)
+        return this.getProcessInstances(requestNode, processDefinitionKey)
             .pipe(catchError(() => {
                 return of(new ProcessListModel({}));
             }));

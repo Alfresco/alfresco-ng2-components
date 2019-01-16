@@ -4,20 +4,20 @@ Title: Release notes v1.9.0
 
 # Alfresco Application Development Framework, version 1.9.0 Release Note
 
-These release notes provide information for the **1.9.0 release** of Alfresco Application Development Framework.
+These release notes provide information for the **1.9.0 release** of Alfresco Application Development Framework.
 
-This is the next **Limited Available** release of Application Development Framework, containing the Angular components to build a Web Application on top of the Alfresco Services.
-The release can be found on GitHub at [this link.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
+This is the next **Limited Available** release of Application Development Framework, containing the Angular components to build a Web Application on top of the Alfresco Services.
+The release can be found on GitHub at [this link.](https://github.com/Alfresco/alfresco-ng2-components/releases/tag/1.7.0)
 
 ## Contents
 
 -   [Goals for this release](#goals-for-this-release)
 -   [Notable new features](#notable-new-features)
     -   [1.Infinite scrolling](#1infinite-scrolling)
-    -   [2.Requeue option added to adf-task-header]\(#2requeue-option-added-to adf-task-header)
+    -   [2.Requeue option added to adf-task-header](#2requeue-option-added-to-adf-task-header)
     -   [3.Tasklist multi-selection support](#3tasklist-multi-selection-support)
     -   [4.Page Title Service](#4page-title-service)
-    -   [5.Viewer Enhancements]\(#5viewer enhancements)
+    -   [5.Viewer Enhancements](#5viewer-enhancements)
     -   [6.Document List Presets](#6document-list-presets)
     -   [7.Login redirect options](#7login-redirect-options)
     -   [8.Logout directive](#8logout-directive)
@@ -34,13 +34,13 @@ The release can be found on GitHub at [this link.](https://github.com/Alfresc
 
 ## Goals for this release
 
-In the ADF 1.9 release we've enhanced a number of components, such as Document List, Viewer and Breadcrumbs. We continue the effort to migrate to @angular/material, only a few more components remain until we are fully switched to Angular Material Design. Again in this release we have enhanced the accessibility and we have started to consolidate, streamline and enhance our documentation. Before everything was inside the individual README.md files, this has now been pulled out into a [separate directory](https://github.com/Alfresco/alfresco-ng2-components/tree/master/docs), and a new [Doc Index](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/README.md) to help navigate it.
+In the ADF 1.9 release we've enhanced a number of components, such as Document List, Viewer and Breadcrumbs. We continue the effort to migrate to @angular/material, only a few more components remain until we are fully switched to Angular Material Design. Again in this release we have enhanced the accessibility and we have started to consolidate, streamline and enhance our documentation. Before everything was inside the individual README.md files, this has now been pulled out into a [separate directory](https://github.com/Alfresco/alfresco-ng2-components/tree/master/docs), and a new [Doc Index](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/README.md) to help navigate it.
 
-This is the last LA release, we are targeting ADF 2.0 by the end of November at which point it will become **General Available** and **fully supported** by Alfresco. As part of this effort we have increased the efforts on resolving bugs and stabilisation.
+This is the last LA release, we are targeting ADF 2.0 by the end of November at which point it will become **General Available** and **fully supported** by Alfresco. As part of this effort we have increased the efforts on resolving bugs and stabilisation.
 
 This release builds on last month's contains bug fixes and the new features. See the list below for major details.
 
-Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues). You can collaborate on this release or share feedback by using the discussion tools on [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
+Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues). You can collaborate on this release or share feedback by using the discussion tools on [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
 
 ## Notable new features
 
@@ -50,7 +50,7 @@ Below the most relevant features of this release:
 -   Requeue option added to adf-task-header
 -   Tasklist now support multi-select
 -   [Page title service](../core/page-title.service.md)
--   Viewer enhancements
+-   Viewer enhancements
 -   Document List presets
 -   Login redirect options
 -   [Logout directive](../core/logout.directive.md)
@@ -60,11 +60,11 @@ Below the most relevant features of this release:
 ### 1.Infinite scrolling
 
 The document list now provides two different way to paginate the results the normal pagination or the infinite scrolling.
-In order to enable this feature, you need to specify the paginationStrategy properties 'Infinite'. The infinite scrolling is also now used as default in the object picker component
+In order to enable this feature, you need to specify the paginationStrategy properties 'Infinite'. The infinite scrolling is also now used as default in the object picker component
 
 ![](images/infinite-scrolling.gif)
 
-### 2.Requeue option added to adf-task-header
+### 2.Requeue option added to adf-task-header
 
 The requeue feature has been added into the ADF 1.9.0. This means that after a task has been claimed by the user, the user will see a button Requeue to un-claim the task.
 
@@ -75,10 +75,10 @@ The requeue feature has been added into the ADF 1.9.0. This means that after a t
 With the latest code, the tasklist component exposes the **multiselect** property. If the value is true a checkbox is rendered at the beginning of each row. In this way, the user can select more than one row.
 
     <adf-tasklist
-        [multiselect]="true"
-        [appId]="'1'"
-        [state]="'open'"
-        [assignment]="'assignee'">
+        [multiselect]="true"
+        [appId]="'1'"
+        [state]="'open'"
+        [assignment]="'assignee'">
     </adf-tasklist>
 
 ### 
@@ -87,28 +87,28 @@ This is the result:
 
 ![Tasklist multiselection](images/Screen+Shot+2017-10-09+at+15.51.31.png)
 
-The component also provides a new event **rowSelected** that contains all the selected rows:
+The component also provides a new event **rowSelected** that contains all the selected rows:
 
     <adf-tasklist
-        [appId]="'1'"
-        [state]="'open'"
-        [assignment]="'assignee'"
-        (rowsSelected)="console.log($event)">
+        [appId]="'1'"
+        [state]="'open'"
+        [assignment]="'assignee'"
+        (rowsSelected)="console.log($event)">
     </adf-tasklist>
 
 ![task list rowsSelected ](images/Screen+Shot+2017-10-09+at+16.01.46.png)
 
 ### 4.Page Title Service
 
-The 1.9.0 version features a new service ["PageTitleService"](../core/page-title.service.md) in the "ng2-alfresco-core" package. This service allows changing the title of the page (browser tab) on demand from the code. The format of the title is always "&lt;Application Name> - &lt;Title>" where "&lt;Application Name>" is taken from the application configuration file:
+The 1.9.0 version features a new service ["PageTitleService"](../core/page-title.service.md) in the "ng2-alfresco-core" package. This service allows changing the title of the page (browser tab) on demand from the code. The format of the title is always "&lt;Application Name> - &lt;Title>" where "&lt;Application Name>" is taken from the application configuration file:
 
     {
-      "application": {
-        "name": "Alfresco ADF Appplication"
-      }
+      "application": {
+        "name": "Alfresco ADF Appplication"
+      }
     }
 
-### 5.Viewer Enhancements
+### 5.Viewer Enhancements
 
 [Viewer component](../core/viewer.component.md) has been updated with improved UI and support for integration with Angular Router.
 The major features and improvements are:
@@ -122,58 +122,58 @@ The major features and improvements are:
 It is now possible to store layouts for Document List in the global application configuration file ("app.config.json") for default mode or special aliases like "-trashcan-", "-favorites-", etc. The DocumentList component automatically falls back to the defaults if no customizations are present.
 
     {
-        ...,
+        ...,
 
-        "document-list": {
-            "supportedPageSizes": [5, 10, 15, 20],
-            "presets": {
-                "-trashcan-": [
-                    {
-                        "key": "$thumbnail",
-                        "type": "image",
-                        "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
-                        "sortable": false
-                    },
-                    {
-                        "key": "name",
-                        "type": "text",
-                        "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
-                        "cssClass": "full-width ellipsis-cell",
-                        "sortable": true
-                    },
-                    {
-                        "key": "path",
-                        "type": "location",
-                        "title": "ADF-DOCUMENT-LIST.LAYOUT.LOCATION",
-                        "format": "/files",
-                        "sortable": true
-                    },
-                    {
-                        "key": "content.sizeInBytes",
-                        "type": "fileSize",
-                        "title": "ADF-DOCUMENT-LIST.LAYOUT.SIZE",
-                        "sortable": true
-                    },
-                    {
-                        "key": "archivedAt",
-                        "type": "date",
-                        "title": "ADF-DOCUMENT-LIST.LAYOUT.DELETED_ON",
-                        "format": "timeAgo",
-                        "sortable": true
-                    },
-                    {
-                        "key": "archivedByUser.displayName",
-                        "type": "text",
-                        "title": "ADF-DOCUMENT-LIST.LAYOUT.DELETED_BY",
-                        "sortable": true
-                    }
-                ],
+        "document-list": {
+            "supportedPageSizes": [5, 10, 15, 20],
+            "presets": {
+                "-trashcan-": [
+                    {
+                        "key": "$thumbnail",
+                        "type": "image",
+                        "srTitle": "ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL",
+                        "sortable": false
+                    },
+                    {
+                        "key": "name",
+                        "type": "text",
+                        "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
+                        "cssClass": "full-width ellipsis-cell",
+                        "sortable": true
+                    },
+                    {
+                        "key": "path",
+                        "type": "location",
+                        "title": "ADF-DOCUMENT-LIST.LAYOUT.LOCATION",
+                        "format": "/files",
+                        "sortable": true
+                    },
+                    {
+                        "key": "content.sizeInBytes",
+                        "type": "fileSize",
+                        "title": "ADF-DOCUMENT-LIST.LAYOUT.SIZE",
+                        "sortable": true
+                    },
+                    {
+                        "key": "archivedAt",
+                        "type": "date",
+                        "title": "ADF-DOCUMENT-LIST.LAYOUT.DELETED_ON",
+                        "format": "timeAgo",
+                        "sortable": true
+                    },
+                    {
+                        "key": "archivedByUser.displayName",
+                        "type": "text",
+                        "title": "ADF-DOCUMENT-LIST.LAYOUT.DELETED_BY",
+                        "sortable": true
+                    }
+                ],
 
-                "default": [
-                    ...
-                ]
-            }
-        }
+                "default": [
+                    ...
+                ]
+            }
+        }
     }
 
 ### 7.Login redirect options
@@ -190,7 +190,7 @@ You can turn any clickable HTML element or other Angular Component into a Logout
 
 ### 9.Breadcrumb enhancements
 
-The [Breadcrumb component](../content-services/breadcrumb.component.md) exposes a new **rootId** property to allow you restricting the root element to a particular node. Component automatically trims the elements if full node path needs to be cut. You can use this together with the **root** property that allows renaming the root (first) element of the path.
+The [Breadcrumb component](../content-services/breadcrumb.component.md) exposes a new **rootId** property to allow you restricting the root element to a particular node. Component automatically trims the elements if full node path needs to be cut. You can use this together with the **root** property that allows renaming the root (first) element of the path.
 
     <adf-breadcrumb root="Personal Files" rootId="<GUID>" ...></adf-breadcrumb>
 
@@ -200,13 +200,13 @@ All the documentation was inside the individual README.md files of any component
 
 ## References
 
-Below you can find a brief list of references to help you start to use the new release.
+Below you can find a brief list of references to help you start to use the new release.
 
-[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
+[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
 
 [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
 
-[Component catalog](http://devproducts.alfresco.com/)
+[Component catalog](http://devproducts.alfresco.com/)
 
 [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
 
@@ -216,13 +216,13 @@ Below you can find a brief list of references to help you start to use the new
 
 [Alfresco-JS-API](https://github.com/Alfresco/alfresco-js-api)
 
-[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
+[ADF App Generator ](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
-Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
+Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
 
 ## Issues addressed
 
-Below you can find a detailed list of tickets addressed in the new release. For a better understanding, the list is grouped by topic.
+Below you can find a detailed list of tickets addressed in the new release. For a better understanding, the list is grouped by topic.
 
 Release Notes - Apps Development Framework - Version 1.9. 
 
@@ -369,4 +369,4 @@ Release Notes - Apps Development Framework - Version 1.9.
 -   \[[ADF-1534](https://issues.alfresco.com/jira/browse/ADF-1534)] - Automatic PDF rendition loading for Viewer Dialog
 -   \[[ADF-1542](https://issues.alfresco.com/jira/browse/ADF-1542)] - Toggle all toolbar elements in the Viewer Dialog from code
 
-Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have more questions, please reply here or contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
+Please refer to [the Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have more questions, please reply here or contact us using [gitter](https://gitter.im/Alfresco/alfresco-ng2-components).

@@ -67,9 +67,6 @@ class MyComponent {
     Saves a form.  
     -   `formId` - ID of the form to save 
     -   `formModel` - Model data for the form
--   `addFieldsToAForm(formId: string, formModel: FormDefinitionModel):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
-    -   `formId` - ID of the form
-    -   `formModel` - [`Form`](../../lib/process-services/task-list/models/form.model.ts) definition
 -   `searchFrom(name: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Search for a form by name.  
     -   `name` - The form name to search for

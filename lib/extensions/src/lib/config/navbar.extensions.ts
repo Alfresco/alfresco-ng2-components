@@ -28,4 +28,5 @@ export interface NavBarLinkRef extends ExtensionElement {
 
     url?: string; // evaluated at runtime based on route ref
     description?: string;
+    children?: Array<NavBarLinkRef>;
 }

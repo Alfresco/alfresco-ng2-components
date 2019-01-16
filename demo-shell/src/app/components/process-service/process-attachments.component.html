@@ -2,7 +2,7 @@
     <div class="adf-no-form-container">
 
         <adf-upload-drag-area
-            [parentId]="processInstanceId"
+            [rootFolderId]="processInstanceId"
             [disabled]="isCompletedProcess()">
 
             <adf-process-attachment-list #processAttachList
@@ -12,7 +12,7 @@
                 (attachmentClick)="onAttachmentClick($event)">
                     <adf-empty-list>
                       <div adf-empty-list-header class="adf-empty-list-header">
-                          {{'ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER' | translate}} 
+                          {{'ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.HEADER' | translate}}
                        </div>
                             <div adf-empty-list-body>
                             <div fxHide.lt-md="true" class="adf-empty-list-drag_drop">
@@ -22,7 +22,7 @@
                                   {{'ADF_PROCESS_LIST.PROCESS-ATTACHMENT.EMPTY.DRAG-AND-DROP.SUBTITLE' | translate}}
                                   </div>
                             </div>
-                        
+
                     </adf-empty-list>
             </adf-process-attachment-list>
 

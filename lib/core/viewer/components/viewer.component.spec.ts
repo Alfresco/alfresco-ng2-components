@@ -467,8 +467,8 @@ describe('ViewerComponent', () => {
         describe('SideBar Test', () => {
 
             it('should NOT display sidebar if is not allowed', (done) => {
-                component.showSidebar = true;
-                component.allowSidebar = false;
+                component.showRightSidebar = true;
+                component.allowRightSidebar = false;
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
@@ -479,8 +479,8 @@ describe('ViewerComponent', () => {
             });
 
             it('should display sidebar on the right side', (done) => {
-                component.allowSidebar = true;
-                component.showSidebar = true;
+                component.allowRightSidebar = true;
+                component.showRightSidebar = true;
                 fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
