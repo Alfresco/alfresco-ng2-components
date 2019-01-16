@@ -40,7 +40,7 @@ if [ ! -d "$DIRECTORY" ]; then
 fi
 
 if [ ! -f $DIRECTORY/deps.txt ]; then
-    npm run affected:libs -- $HEAD_SHA_BRANCH "HEAD" > $DIRECTORY/deps.txt
+    npm run affected:libs -- $HEAD_SHA_BRANCH "HEAD" > $DIRECTORY/deps.txt || ( echo "This PR needs to be rebased"; exit 1 )
 fi
 
 cat $DIRECTORY/deps.txt

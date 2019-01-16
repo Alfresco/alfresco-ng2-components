@@ -1,0 +1,40 @@
+@mixin adf-task-list-header-theme($theme) {
+    $primary: map-get($theme, primary);
+
+    .adf {
+        &-controls {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &-edit-controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-left: auto;
+        }
+
+        &-switch-to-edit-mode,
+        &-save-edit-mode {
+            color: mat-color($primary);
+        }
+
+        &-cancel-edit-mode,
+        &-claim-controls {
+            color: rgb(131, 131, 131);
+        }
+
+        &-card-container {
+            font-family: inherit;
+        }
+
+    }
+
+    @media screen and  ($mat-small) {
+        adf-card-view .adf-property-value {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    }
+
+}

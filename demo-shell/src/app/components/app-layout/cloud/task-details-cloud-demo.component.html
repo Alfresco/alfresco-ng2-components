@@ -4,3 +4,9 @@
 </button>
 
 <h4>Simple page to show the taskId: {{ taskId }} of the app: {{ applicationName }}</h4>
+
+<adf-cloud-task-header
+    [appName]="applicationName"
+    [taskId]="taskId"
+    [readOnly]="readOnly">
+</adf-cloud-task-header>

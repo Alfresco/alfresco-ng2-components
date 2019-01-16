@@ -26,6 +26,7 @@ export class TaskDetailsCloudDemoComponent {
 
     taskId: string;
     applicationName: string;
+    readOnly = false;
 
     constructor(private route: ActivatedRoute, private router: Router) {
         this.route.params.subscribe((params) => {
