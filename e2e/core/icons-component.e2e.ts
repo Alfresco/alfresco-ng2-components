@@ -50,7 +50,7 @@ describe('Universal Icon component', function () {
         done();
     });
 
-    it('Should display the icons on the page', () => {
+    it('[C291872] Should display the icons on the page', () => {
 
         expect(iconsPage.locateLigatureIcon('alarm').isDisplayed()).toBe(true, 'Ligature icon is not displayed');
 
