@@ -52,9 +52,9 @@ export class UserPreferencesService {
     }
 
     private initUserPreferenceStatus() {
-        this.userPreferenceStatus[UserPreferenceValues.Locale] = this.locale || this.getDefaultLocale();
-        this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.appConfig.get('pagination.size', this.defaults.paginationSize);
-        this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes] = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
+        this.set(UserPreferenceValues.Locale,( this.locale || this.getDefaultLocale()));
+        this.set(UserPreferenceValues.PaginationSize, this.appConfig.get('pagination.size', this.defaults.paginationSize));
+        this.set(UserPreferenceValues.SupportedPageSizes, this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes));
     }
 
     /**

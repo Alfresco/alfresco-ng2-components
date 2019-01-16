@@ -52,8 +52,11 @@ export class TranslationService {
         }
 
         userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            this.userLang = locale;
-            this.use(this.userLang);        });
+            if(locale) {
+                this.userLang = locale;
+                this.use(this.userLang);
+            }
+        });
     }
 
     /**

@@ -54,8 +54,7 @@ export abstract class DataTableSchema {
     }
 
     public mergeJsonAndHtmlSchema(): any {
-        let customSchemaColumns = [];
-        customSchemaColumns = this.getSchemaFromConfig(this.presetColumn).concat(this.getSchemaFromHtml(this.columnList));
+        let customSchemaColumns = this.getSchemaFromConfig(this.presetColumn).concat(this.getSchemaFromHtml(this.columnList));
         if (customSchemaColumns.length === 0) {
             customSchemaColumns = this.getDefaultLayoutPreset();
         }

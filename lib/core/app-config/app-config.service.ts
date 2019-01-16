@@ -38,6 +38,13 @@ export enum AppConfigValues {
     LOGIN_ROUTE = 'loginRoute',
     DISABLECSRF = 'disableCSRF'
 }
+
+export enum Status {
+    INIT = 'init',
+    LOADING = 'loading',
+    LOADED = 'loaded'
+}
+
 /* spellchecker: enable */
 
 @Injectable({
@@ -55,6 +62,7 @@ export class AppConfigService {
         alfrescoRepositoryName: 'alfresco-1'
     };
 
+    status: Status = Status.INIT;
     private onLoadSubject: Subject<any>;
     onLoad: Observable<any>;
 
@@ -128,19 +136,29 @@ export class AppConfigService {
      * @returns Notification when loading is complete
      */
     load(): Promise<any> {
-        return new Promise((resolve) => {
+        return new Promise(async (resolve) => {
             const configUrl = `app.config.json?v=${Date.now()}`;
 
-            this.http.get(configUrl).subscribe(
-                (data: any) => {
-                    this.config = Object.assign({}, this.config, data || {});
-                    this.onLoadSubject.next(this.config);
+            if (this.status === Status.INIT) {
+                this.status = Status.LOADING;
+                await this.http.get(configUrl).subscribe(
+                    (data: any) => {
+                        this.status = Status.LOADED;
+                        this.config = Object.assign({}, this.config, data || {});
+                        this.onLoadSubject.next(this.config);
+                        resolve(this.config);
+                    },
+                    () => {
+                        resolve(this.config);
+                    }
+                );
+            } else if(this.status === Status.LOADED){
+                resolve(this.config);
+            }else if(this.status === Status.LOADING){
+                this.onLoad.subscribe(()=>{
                     resolve(this.config);
-                },
-                () => {
-                    resolve(this.config);
-                }
-            );
+                });
+            }
         });
     }
 
