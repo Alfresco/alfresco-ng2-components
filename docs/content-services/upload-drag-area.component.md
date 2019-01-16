@@ -2,7 +2,7 @@
 Title: Upload Drag Area Component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-09-13
+Last reviewed: 2019-01-16
 ---
 
 # [Upload Drag Area Component](../../lib/content-services/upload/components/upload-drag-area.component.ts "Defined in upload-drag-area.component.ts")
@@ -68,7 +68,6 @@ as the drag/drop target:
 | nodeType | `string` | "cm:content" | Custom node type for uploaded file |
 | rootFolderId | `string` | "-root-" | The ID of the root. Use the nodeId for Content Services or the taskId/processId for Process Services. |
 | versioning | `boolean` | false | Toggles versioning. |
-
 
 ### Events
 

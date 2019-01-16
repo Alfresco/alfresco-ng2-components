@@ -2,7 +2,7 @@
 Title: Search component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-13
+Last reviewed: 2019-01-16
 ---
 
 # [Search component](../../lib/content-services/search/components/search.component.ts "Defined in search.component.ts")
@@ -40,6 +40,7 @@ Searches items for supplied search terms.
 | maxResults | `number` | 20 | Maximum number of results to show in the search. |
 | searchTerm | `string` | "" | Search term to use when executing the search. Updating this value will run a new search and update the results. |
 | skipResults | `number` | 0 | Number of results to skip from the results pagination. |
+| classList | `void` |  | CSS class for display. |
 
 ### Events
 
@@ -152,7 +153,7 @@ By doing this, you can get the results as the user types into the input text.
 You can get finer control over the parameters of a search by defining them in a custom
 [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md)
 object. The recommended way to do this is with a custom implementation of the
-. The ADF source provides a standard implementation of this
+[Search Configuration interface](../core/search-configuration.interface.md). The ADF source provides a standard implementation of this
 interface, [`SearchConfigurationService`](../core/search-configuration.service.md) that you can use as a base to adapt to your needs. See the
 [Search Configuration interface](../core/search-configuration.interface.md) page for full details of how to
 customize your search.
