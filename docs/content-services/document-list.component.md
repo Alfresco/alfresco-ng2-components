@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Document List component](../../content-services/document-list/components/document-list.component.ts "Defined in document-list.component.ts")
+# [Document List component](../../lib/content-services/document-list/components/document-list.component.ts "Defined in document-list.component.ts")
 
 Displays the documents from a repository.
 
@@ -71,8 +71,8 @@ Displays the documents from a repository.
 | multiselect | `boolean` | false | Toggles multiselect mode |
 | navigate | `boolean` | true | Toggles navigation to folder content or file preview |
 | navigationMode | `string` |  | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
-| node | [`NodePaging`](../../content-services/document-list/models/document-library.model.ts) | null | The Document list will show all the nodes contained in the [NodePaging](../../content-services/document-list/models/document-library.model.ts) entity |
-| permissionsStyle | [`PermissionStyleModel`](../../content-services/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
+| node | [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) | null | The Document list will show all the nodes contained in the [NodePaging](../../lib/content-services/document-list/models/document-library.model.ts) entity |
+| permissionsStyle | [`PermissionStyleModel`](../../lib/content-services/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
 | rowFilter | `any \| null` | null | Custom row filter |
 | rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
 | rowStyleClass | `string` |  | The CSS class to apply to every row |
@@ -87,11 +87,11 @@ Displays the documents from a repository.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the API fails to get the Document List data |
-| folderChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntryEvent`](../../content-services/document-list/components/node.event.ts)`>` | Emitted when the current display folder changes |
-| nodeClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../content-services/document-list/components/node.event.ts)`>` | Emitted when the user clicks a list node |
-| nodeDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../content-services/document-list/components/node.event.ts)`>` | Emitted when the user double-clicks a list node |
-| preview | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../content-services/document-list/components/node.event.ts)`>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the [Viewer component](../core/viewer.component.md). |
-| ready | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](../../content-services/document-list/models/document-library.model.ts)`>` | Emitted when the Document List has loaded all items and is ready for use |
+| folderChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntryEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the current display folder changes |
+| nodeClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user clicks a list node |
+| nodeDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user double-clicks a list node |
+| preview | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the [Viewer component](../core/viewer.component.md). |
+| ready | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when the Document List has loaded all items and is ready for use |
 
 ## Details
 
@@ -706,7 +706,7 @@ The following example switches navigation to single clicks:
 
 You can create a custom row filter function that returns `true` if the row should be
 displayed or `false` if it should be hidden.
-A typical row filter implementation receives a [`ShareDataRow`](../../content-services/document-list/data/share-data-row.model.ts) object as a parameter:
+A typical row filter implementation receives a [`ShareDataRow`](../../lib/content-services/document-list/data/share-data-row.model.ts) object as a parameter:
 
 ```ts
 myFilter(row: ShareDataRow): boolean {
@@ -757,7 +757,7 @@ are resolved (ie, which image is shown for which item).
 
 **Note:** Image resolvers are executed only for columns of the `image` type.
 
-A typical image resolver implementation receives [`DataRow`](../../core/datatable/data/data-row.model.ts) and [`DataColumn`](../../core/datatable/data/data-column.model.ts) objects as parameters:
+A typical image resolver implementation receives [`DataRow`](../../lib/core/datatable/data/data-row.model.ts) and [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) objects as parameters:
 
 ```ts
 myImageResolver(row: DataRow, col: DataColumn): string {

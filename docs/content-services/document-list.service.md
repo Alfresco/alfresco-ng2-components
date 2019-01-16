@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Document List service](../../content-services/document-list/services/document-list.service.ts "Defined in document-list.service.ts")
+# [Document List service](../../lib/content-services/document-list/services/document-list.service.ts "Defined in document-list.service.ts")
 
 Implements node operations used by the [Document List component](../content-services/document-list.component.md).
 
@@ -29,12 +29,12 @@ Implements node operations used by the [Document List component](../content-serv
     Get thumbnail URL for the given document node.
     -   _node:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)  - Node to get URL for.
     -   **Returns** `string` - Thumbnail URL string
--   **getFolder**(folder: `string`, opts?: `any`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../content-services/document-list/models/document-library.model.ts)`>`<br/>
+-   **getFolder**(folder: `string`, opts?: `any`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
     Gets the folder node with the specified relative name path below the root node.
     -   _folder:_ `string`  - Path to folder.
     -   _opts:_ `any`  - (Optional) Options.
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../content-services/document-list/models/document-library.model.ts)`>` - Details of the folder
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - Details of the folder
 -   **getFolderNode**(nodeId: `string`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Gets a folder node via its node ID.
     -   _nodeId:_ `string`  - ID of the folder node

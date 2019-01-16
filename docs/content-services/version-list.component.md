@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2019-01-16
 ---
 
-# [Version List component](../../content-services/version-manager/version-list.component.ts "Defined in version-list.component.ts")
+# [Version List component](../../lib/content-services/version-manager/version-list.component.ts "Defined in version-list.component.ts")
 
 Displays the version history of a node in a [Version Manager component](../content-services/version-manager.component.md).
 

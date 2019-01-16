@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Upload Drag Area Component](../../content-services/upload/components/upload-drag-area.component.ts "Defined in upload-drag-area.component.ts")
+# [Upload Drag Area Component](../../lib/content-services/upload/components/upload-drag-area.component.ts "Defined in upload-drag-area.component.ts")
 
 Adds a drag and drop area to upload files to ACS.
 
@@ -73,7 +73,7 @@ as the drag/drop target:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../content-services/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
+| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the file is uploaded successfully. |
 
@@ -83,9 +83,9 @@ as the drag/drop target:
 
 You can intercept the upload process using the `beginUpload` event. 
 
-The event has a type of [`UploadFilesEvent`](../../content-services/upload/components/upload-files.event.ts) and provides the following APIs:
+The event has a type of [`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts) and provides the following APIs:
 
--   **files**: accesses the [`FileInfo`](../../core/utils/file-utils.ts) objects that are prepared for the upload
+-   **files**: accesses the [`FileInfo`](../../lib/core/utils/file-utils.ts) objects that are prepared for the upload
 -   **pauseUpload**: pauses the upload and performs additional tasks, like showing the confirmation dialog
 -   **resumeUpload**: resumes the upload process
 

@@ -177,7 +177,7 @@ The properties of the `options` objects are as follows:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| key | string | Unique key to identify the entry. This can also be used to map DataColumn instances. |
+| key | string | Unique key to identify the entry. This can also be used to map [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) instances. |
 | label | string | Display text, which can also be an [i18n resource key](../user-guide/internationalization.md). |
 | type | string | This specifies how to order the results. It can be based on a field, based on the position of the document in the index, or by score/relevance. |
 | field | string | The name of the field. |
@@ -189,7 +189,7 @@ for further details.
 
 ### Categories and widgets
 
-The Search [Settings component](../../demo-shell/src/app/components/settings/settings.component.ts) and Query Builder require a `categories` section in the
+The Search Settings component and Query Builder require a `categories` section in the
 configuration.
 
 Categories are used to configure the UI widgets that let the user edit the search query
@@ -229,7 +229,7 @@ a category:
 | [Slider](search-slider.component.md) | `slider` | Selects a single numeric value in a given range that a field may contain |
 | [Text](search-text.component.md) | `text` | Specifies a text value that a field may contain |
 
-See the individual search widget pages for full details of their usage and settings.
+See the individual [search widget](../../lib/content-services/search/search-widget.interface.ts) pages for full details of their usage and settings.
 
 You can also implement your own custom search widgets. See the [`SearchWidget`](../../lib/content-services/search/search-widget.interface.ts) interface
 page for full details of how to do this.

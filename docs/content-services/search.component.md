@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Search component](../../content-services/search/components/search.component.ts "Defined in search.component.ts")
+# [Search component](../../lib/content-services/search/components/search.component.ts "Defined in search.component.ts")
 
 Searches items for supplied search terms. 
 
@@ -47,7 +47,7 @@ Searches items for supplied search terms.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| resultLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](../../content-services/document-list/models/document-library.model.ts)`>` | Emitted when search results have fully loaded. |
+| resultLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when search results have fully loaded. |
 
 ## Details
 
