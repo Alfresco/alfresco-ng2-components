@@ -2,7 +2,7 @@
 Title: Document List component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-12
+Last reviewed: 2019-01-16
 ---
 
 # [Document List component](../../lib/content-services/document-list/components/document-list.component.ts "Defined in document-list.component.ts")
@@ -98,7 +98,8 @@ Displays the documents from a repository.
 The properties `currentFolderId` and `node` set the initial folder shown by
 the Document List. They cannot be used together, so choose the one that suits your use case
 best.
-Document list will automatically show special icons for : `Smart Folder`, `Link to a Folder` and `Folder with rules` as showed in the picture below : 
+
+The Document list will automatically show special icons for : `Smart Folder`, `Link to a Folder` and `Folder with rules` as shown below : 
 
 ![Document List Folders](../docassets/images/document-list-special-folder-icon.png)
 
@@ -576,14 +577,14 @@ You can also add tooltips, styling, automatic column title translation and other
 You can use the following components as column templates:
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | adf-name-column | Renders hyperlink-styled name of the node. Provides formatted tooltip. Emits `name-click` DOM event that can be handled by any parent component. |
 | adf-library-name-column | Renders library name. Provides formatted tooltips and extra details for libraries with same names on the page. Emits `name-click` DOM event that can be handled by any parent component. |
 | adf-library-role-column | Renders i18n-enabled information about Library (Site) role (`Manager`, `Collaborator`, `Contributor`, `Consumer`) |
-| adf-library-status-column | Renders i18n-enabled information about Library (Site) status (`Public`, `Private`, `Moderated`, `Unknown`)|
+| adf-library-status-column | Renders i18n-enabled information about Library (Site) status (`Public`, `Private`, `Moderated`, `Unknown`) |
 | adf-trashcan-name-column | Renders a name of the deleted node. Distinguishes between a Library (Site) and File/Folder nodes. Provides proper tooltips. |
 
-All components above require only `context` property to be bound,
+All the components above require only the `context` property to be bound, since
 each component fetches and renders the information it needs from the underlying node.
 
 For example:
@@ -596,8 +597,8 @@ For example:
 </data-column>
 ```
 
-> All the components above also participate in the Extensibility
-> and can be used to compose DocumentList layouts from within the plugins. 
+All the components above also participate in [Extensibility](../user-guide/app-extensions.md)
+and can be used to compose DocumentList layouts from within the plugins. 
 
 ### Date Column
 

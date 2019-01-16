@@ -2,7 +2,7 @@
 Title: Search control component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-14
+Last reviewed: 2019-01-16
 ---
 
 # [Search control component](../../lib/content-services/search/components/search-control.component.ts "Defined in search-control.component.ts")

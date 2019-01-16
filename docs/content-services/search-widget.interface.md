@@ -43,7 +43,7 @@ export interface SearchWidget {
 The [Search Filter component](../content-services/search-filter.component.md) uses widgets to provide the UI that lets the user customize the
 search. ADF provides a number of widgets out of the box (see the [See Also](#see-also) section
 for a full list) but you can also implement your own. Both built-in and custom widgets must
-implement the Search Widget interface to operate with the [Search Filter component](../content-services/search-filter.component.md).
+implement the [Search Widget](../../lib/content-services/search/search-widget.interface.ts) interface to operate with the [Search Filter component](../content-services/search-filter.component.md).
 
 ### Implementing a custom widget
 

@@ -28,7 +28,7 @@ export class MyAppOrComponent {
 }
 ```
 
-See the Search Widget interface page for details about creating your own
+See the [Search Widget](../../lib/content-services/search/search-widget.interface.ts) interface page for details about creating your own
 custom search widgets.
 
 ## See also
