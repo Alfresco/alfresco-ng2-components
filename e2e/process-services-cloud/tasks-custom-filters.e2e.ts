@@ -21,8 +21,8 @@ import resources = require('../util/resources');
 import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import TasksListPage = require('../pages/adf/process_services/tasksListPage');
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/tasksCloudDemoPage';
+import { TasksListPage } from '../pages/adf/process_services/tasksListPage';
+import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
 
 import AlfrescoApi = require('alfresco-js-api-node');

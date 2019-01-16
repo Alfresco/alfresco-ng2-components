@@ -20,8 +20,9 @@ import TestConfig = require('../test.config');
 import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/tasksCloudDemoPage';
+import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { Util } from '../util/util';
 import { Tasks } from '../actions/APS-cloud/tasks';
 
 describe('Task filters cloud', () => {
@@ -36,7 +37,7 @@ describe('Task filters cloud', () => {
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
         let silentLogin;
-        const newTask = 'newTask', completedTask = 'completedTask1';
+        const newTask = Util.generateRandomString(5), completedTask = Util.generateRandomString(5);
         const simpleApp = 'simple-app';
 
         beforeAll(() => {
@@ -88,6 +89,11 @@ describe('Task filters cloud', () => {
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTask);
+        });
+
+        it('[C291792] Should select the first task filter from the list as default', () => {
+
+            expect(tasksCloudDemoPage.firstFilterIsActive()).toBe(true);
         });
 
     });

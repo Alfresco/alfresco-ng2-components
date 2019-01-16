@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
+import { Util } from '../../../../util/util';
 
-import { TaskFiltersCloudComponent } from '../process-cloud/taskFiltersCloudComponent';
-import { TaskListCloudComponent } from '../process-cloud/taskListCloudComponent';
-import { EditTaskFilterCloudComponent } from '../process-cloud/editTaskFilterCloudComponent';
+import { TaskFiltersCloudComponent } from '../../process-cloud/taskFiltersCloudComponent';
+import { TaskListCloudComponent } from '../../process-cloud/taskListCloudComponent';
+import { EditTaskFilterCloudComponent } from '../../process-cloud/editTaskFilterCloudComponent';
 import { element, by } from 'protractor';
 
 export class TasksCloudDemoPage {
@@ -29,7 +29,7 @@ export class TasksCloudDemoPage {
     activeFilter = element(by.css("mat-list-item[class*='active'] span"));
 
     taskFilters = element(by.css("mat-expansion-panel[data-automation-id='Task Filters']"));
-
+    defaultActiveFilter = element.all(by.css('.adf-filters__entry')).first();
     editTaskFilterCloud = new EditTaskFilterCloudComponent();
 
     createButton = element(by.css('button[data-automation-id="create-button"'));
@@ -95,6 +95,10 @@ export class TasksCloudDemoPage {
         Util.waitUntilElementIsClickable(this.createButton);
         this.createButton.click();
         return this;
+    }
+
+    firstFilterIsActive () {
+        return this.defaultActiveFilter.getAttribute('class').then((value) => value.includes('adf-active'));
     }
 
 }
