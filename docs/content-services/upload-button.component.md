@@ -2,10 +2,10 @@
 Title: Upload Button Component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-09-13
+Last reviewed: 2019-01-16
 ---
 
-# [Upload Button Component](../../lib/content-services/upload/components/upload-button.component.ts "Defined in upload-button.component.ts")
+# [Upload Button Component](../../content-services/upload/components/upload-button.component.ts "Defined in upload-button.component.ts")
 
 Activates a file upload.
 
@@ -46,10 +46,9 @@ Activates a file upload.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
-| createFolder | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when a folder is created. |
+| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../content-services/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs. |
-| permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionModel`](../../lib/content-services/document-list/models/permissions.model.ts)`>` | Emitted when create permission is missing. |
+| permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionModel`](../../content-services/document-list/models/permissions.model.ts)`>` | Emitted when create permission is missing. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the file is uploaded successfully. |
 
 ## Details

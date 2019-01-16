@@ -2,10 +2,10 @@
 Title: Document List service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-09-13
+Last reviewed: 2019-01-16
 ---
 
-# [Document List service](../../lib/content-services/document-list/services/document-list.service.ts "Defined in document-list.service.ts")
+# [Document List service](../../content-services/document-list/services/document-list.service.ts "Defined in document-list.service.ts")
 
 Implements node operations used by the [Document List component](../content-services/document-list.component.md).
 
@@ -18,11 +18,6 @@ Implements node operations used by the [Document List component](../content-serv
     -   _nodeId:_ `string`  - The id of the node to be copied
     -   _targetParentId:_ `string`  - The id of the folder where the node will be copied
     -   **Returns** `any` - [NodeEntry](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md) for the copied node
--   **createFolder**(name: `string`, parentId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntity`](../content-services/document-library.model.md)`>`<br/>
-    Creates a new folder in the path.
-    -   _name:_ `string`  - Folder name
-    -   _parentId:_ `string`  - Parent folder ID
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntity`](../content-services/document-library.model.md)`>` - Details of the created folder node
 -   **deleteNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Deletes a node.
     -   _nodeId:_ `string`  - ID of the node to delete
@@ -30,21 +25,21 @@ Implements node operations used by the [Document List component](../content-serv
 -   **getDefaultMimeTypeIcon**(): `string`<br/>
     Gets a default icon for MIME types with no specific icon.
     -   **Returns** `string` - Path to the icon file
--   **getDocumentThumbnailUrl**(node: [`MinimalNodeEntity`](../content-services/document-library.model.md)): `string`<br/>
+-   **getDocumentThumbnailUrl**(node: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)): `string`<br/>
     Get thumbnail URL for the given document node.
-    -   _node:_ [`MinimalNodeEntity`](../content-services/document-library.model.md)  - Node to get URL for.
+    -   _node:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)  - Node to get URL for.
     -   **Returns** `string` - Thumbnail URL string
--   **getFolder**(folder: `string`, opts?: `any`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
+-   **getFolder**(folder: `string`, opts?: `any`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../content-services/document-list/models/document-library.model.ts)`>`<br/>
     Gets the folder node with the specified relative name path below the root node.
     -   _folder:_ `string`  - Path to folder.
     -   _opts:_ `any`  - (Optional) Options.
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - Details of the folder
--   **getFolderNode**(nodeId: `string`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
-    (**Deprecated:** 2.3.0) Gets a folder node via its node ID.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../content-services/document-list/models/document-library.model.ts)`>` - Details of the folder
+-   **getFolderNode**(nodeId: `string`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
+    Gets a folder node via its node ID.
     -   _nodeId:_ `string`  - ID of the folder node
     -   _includeFields:_ `string[]`  - Extra information to include (available options are "aspectNames", "isLink" and "association")
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Details of the folder
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
 -   **getMimeTypeIcon**(mimeType: `string`): `string`<br/>
     Gets the icon that represents a MIME type.
     -   _mimeType:_ `string`  - MIME type to get the icon for

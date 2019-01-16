@@ -2,10 +2,10 @@
 Title: Document List component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-12
+Last reviewed: 2019-01-16
 ---
 
-# [Document List component](../../lib/content-services/document-list/components/document-list.component.ts "Defined in document-list.component.ts")
+# [Document List component](../../content-services/document-list/components/document-list.component.ts "Defined in document-list.component.ts")
 
 Displays the documents from a repository.
 
@@ -71,8 +71,8 @@ Displays the documents from a repository.
 | multiselect | `boolean` | false | Toggles multiselect mode |
 | navigate | `boolean` | true | Toggles navigation to folder content or file preview |
 | navigationMode | `string` |  | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
-| node | [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) | null | The Document list will show all the nodes contained in the [NodePaging](../../lib/content-services/document-list/models/document-library.model.ts) entity |
-| permissionsStyle | [`PermissionStyleModel`](../../lib/content-services/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
+| node | [`NodePaging`](../../content-services/document-list/models/document-library.model.ts) | null | The Document list will show all the nodes contained in the [NodePaging](../../content-services/document-list/models/document-library.model.ts) entity |
+| permissionsStyle | [`PermissionStyleModel`](../../content-services/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
 | rowFilter | `any \| null` | null | Custom row filter |
 | rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
 | rowStyleClass | `string` |  | The CSS class to apply to every row |
@@ -87,18 +87,19 @@ Displays the documents from a repository.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the API fails to get the Document List data |
-| folderChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntryEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the current display folder changes |
-| nodeClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user clicks a list node |
-| nodeDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user double-clicks a list node |
-| preview | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the [Viewer component](../core/viewer.component.md). |
-| ready | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when the Document List has loaded all items and is ready for use |
+| folderChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntryEvent`](../../content-services/document-list/components/node.event.ts)`>` | Emitted when the current display folder changes |
+| nodeClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../content-services/document-list/components/node.event.ts)`>` | Emitted when the user clicks a list node |
+| nodeDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../content-services/document-list/components/node.event.ts)`>` | Emitted when the user double-clicks a list node |
+| preview | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../content-services/document-list/components/node.event.ts)`>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the [Viewer component](../core/viewer.component.md). |
+| ready | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](../../content-services/document-list/models/document-library.model.ts)`>` | Emitted when the Document List has loaded all items and is ready for use |
 
 ## Details
 
 The properties `currentFolderId` and `node` set the initial folder shown by
 the Document List. They cannot be used together, so choose the one that suits your use case
 best.
-Document list will automatically show special icons for : `Smart Folder`, `Link to a Folder` and `Folder with rules` as showed in the picture below : 
+
+The Document list will automatically show special icons for : `Smart Folder`, `Link to a Folder` and `Folder with rules` as shown below : 
 
 ![Document List Folders](../docassets/images/document-list-special-folder-icon.png)
 
@@ -576,14 +577,14 @@ You can also add tooltips, styling, automatic column title translation and other
 You can use the following components as column templates:
 
 | Name | Description |
-| --- | --- |
+| ---- | ----------- |
 | adf-name-column | Renders hyperlink-styled name of the node. Provides formatted tooltip. Emits `name-click` DOM event that can be handled by any parent component. |
 | adf-library-name-column | Renders library name. Provides formatted tooltips and extra details for libraries with same names on the page. Emits `name-click` DOM event that can be handled by any parent component. |
 | adf-library-role-column | Renders i18n-enabled information about Library (Site) role (`Manager`, `Collaborator`, `Contributor`, `Consumer`) |
-| adf-library-status-column | Renders i18n-enabled information about Library (Site) status (`Public`, `Private`, `Moderated`, `Unknown`)|
+| adf-library-status-column | Renders i18n-enabled information about Library (Site) status (`Public`, `Private`, `Moderated`, `Unknown`) |
 | adf-trashcan-name-column | Renders a name of the deleted node. Distinguishes between a Library (Site) and File/Folder nodes. Provides proper tooltips. |
 
-All components above require only `context` property to be bound,
+All the components above require only the `context` property to be bound, since
 each component fetches and renders the information it needs from the underlying node.
 
 For example:
@@ -596,8 +597,8 @@ For example:
 </data-column>
 ```
 
-> All the components above also participate in the Extensibility
-> and can be used to compose DocumentList layouts from within the plugins. 
+All the components above also participate in [Extensibility](../user-guide/app-extensions.md)
+and can be used to compose DocumentList layouts from within the plugins. 
 
 ### Date Column
 
@@ -705,7 +706,7 @@ The following example switches navigation to single clicks:
 
 You can create a custom row filter function that returns `true` if the row should be
 displayed or `false` if it should be hidden.
-A typical row filter implementation receives a [`ShareDataRow`](../../lib/content-services/document-list/data/share-data-row.model.ts) object as a parameter:
+A typical row filter implementation receives a [`ShareDataRow`](../../content-services/document-list/data/share-data-row.model.ts) object as a parameter:
 
 ```ts
 myFilter(row: ShareDataRow): boolean {
@@ -756,7 +757,7 @@ are resolved (ie, which image is shown for which item).
 
 **Note:** Image resolvers are executed only for columns of the `image` type.
 
-A typical image resolver implementation receives [`DataRow`](../../lib/core/datatable/data/data-row.model.ts) and [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) objects as parameters:
+A typical image resolver implementation receives [`DataRow`](../../core/datatable/data/data-row.model.ts) and [`DataColumn`](../../core/datatable/data/data-column.model.ts) objects as parameters:
 
 ```ts
 myImageResolver(row: DataRow, col: DataColumn): string {

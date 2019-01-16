@@ -2,39 +2,14 @@
 Title: Content Node Selector component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-18
+Last reviewed: 2019-01-16
 ---
 
-# [Content Node Selector component](../../lib/content-services/content-node-selector/content-node-selector.component.ts "Defined in content-node-selector.component.ts")
+# [Content Node Selector component](../../content-services/content-node-selector/content-node-selector.component.ts "Defined in content-node-selector.component.ts")
 
 Allows a user to select items from a Content Services repository.
 
 ![Content Node Selector screenshot](../docassets/images/ContentNodeSelector.png)
-
-## Contents
-
--   [Class members](#class-members)
-    -   [Properties](#properties)
--   [Details](#details)
-    -   [Showing the dialog](#showing-the-dialog)
-    -   [Usage example](#usage-example)
-    -   [RowFilter and ImageResolver](#rowfilter-and-imageresolver)
-    -   [Using the breadcrumbTransform function](#using-the-breadcrumbtransform-function)
--   [See also](#see-also)
-
-## Class members
-
-### Properties
-
-| Name | Type | Default value | Description |
-| ---- | ---- | ------------- | ----------- |
-| currentFolderId | `string` | null | (**Deprecated:** in 2.1.0) |
-| dropdownHideMyFiles | `boolean` | false | (**Deprecated:** in 2.1.0) |
-| dropdownSiteList | [`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) | null | (**Deprecated:** in 2.1.0) |
-| imageResolver | `ImageResolver` | null | (**Deprecated:** in 2.1.0) |
-| pageSize | `number` |  | (**Deprecated:** in 2.1.0) |
-| rowFilter | `RowFilter` | null | (**Deprecated:** in 2.1.0) |
-| title | `string` | null | (**Deprecated:** in 2.1.0) |
 
 ## Details
 
@@ -50,7 +25,7 @@ more information).
 Unlike most components, the Content Node Selector is typically shown in a dialog box
 rather than the main page and you are responsible for opening the dialog yourself. You can use the
 [Angular Material Dialog](https://material.angular.io/components/dialog/overview) for this,
-as shown in the usage example. ADF provides the [`ContentNodeSelectorComponentData`](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) interface
+as shown in the usage example. ADF provides the [`ContentNodeSelectorComponentData`](../../content-services/content-node-selector/content-node-selector.component-data.interface.ts) interface
 to work with the Dialog's
 [data option](https://material.angular.io/components/dialog/overview#sharing-data-with-the-dialog-component-):
 
@@ -129,7 +104,7 @@ openSelectorDialog() {
 }
 ```
 
-All the results will be streamed to the select [subject](http://reactivex.io/rxjs/manual/overview.html#subject) present in the [`ContentNodeSelectorComponentData`](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) object passed to the dialog.
+All the results will be streamed to the select [subject](http://reactivex.io/rxjs/manual/overview.html#subject) present in the [`ContentNodeSelectorComponentData`](../../content-services/content-node-selector/content-node-selector.component-data.interface.ts) object passed to the dialog.
 When the dialog action is selected by clicking, the `data.select` stream will be completed.
 
 ### RowFilter and ImageResolver
@@ -144,7 +119,7 @@ section of the Document List page to learn how these functions are implemented.
 
 ### Using the breadcrumbTransform function
 
-The `breadcrumbTransform` property of [`ContentNodeSelectorComponentData`](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) lets you modify
+The `breadcrumbTransform` property of [`ContentNodeSelectorComponentData`](../../content-services/content-node-selector/content-node-selector.component-data.interface.ts) lets you modify
 the Node object that is used to generate the
 list of breadcrumbs. You can use this, for example, to remove path elements that are not
 relevant to the use case. See the [Breadcrumb component](breadcrumb.component.md) page for an
