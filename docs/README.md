@@ -12,7 +12,8 @@ its main source file. Note that ADF is developed continuously, so the source fil
 
 See the [Version Index](versionIndex.md) for a list of components ordered by
 the ADF version where they were introduced. You can see the full details of each release
-in the [Release notes](release-notes/README.md) section.
+in the [Release notes](release-notes/README.md) section. The [roadmap](roadmap.md)
+contains a preview of features we hope to release in future versions of ADF.
 
 Components are sometimes marked with an icon to show their status. No icon indicates
 that the component is complete and suitable for normal use. The other status levels are:
