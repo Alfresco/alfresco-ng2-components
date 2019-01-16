@@ -34,7 +34,9 @@ describe('AppConfigService', () => {
         },
         files: {
             'excluded': ['excluded']
-        }
+        },
+        logLevel: 'silent',
+        alfrescoRepositoryName: 'alfresco-1'
     };
 
     beforeEach(() => {
@@ -127,6 +129,7 @@ describe('AppConfigService', () => {
 
     it('should load external settings', () => {
         appConfigService.load().then((config) => {
+
             expect(config).toEqual(mockResponse);
         });
     });

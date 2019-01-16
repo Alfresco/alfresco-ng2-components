@@ -23,8 +23,8 @@ import { StorageService } from './storage.service';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
 export enum UserPreferenceValues {
-    PaginationSize = 'PAGINATION_SIZE',
-    Locale = 'LOCALE',
+    PaginationSize = 'paginationSize',
+    Locale = 'locale',
     SupportedPageSizes = 'supportedPageSizes'
 }
 
@@ -172,7 +172,7 @@ export class UserPreferencesService {
      * @returns Default locale language code
      */
     public getDefaultLocale(): string {
-        return this.appConfig.get<string>('locale') || this.translate.getBrowserCultureLang() || 'en';
+        return this.appConfig.get<string>(UserPreferenceValues.Locale) || this.translate.getBrowserCultureLang() || 'en';
     }
 
 }
