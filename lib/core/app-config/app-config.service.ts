@@ -152,10 +152,10 @@ export class AppConfigService {
                         resolve(this.config);
                     }
                 );
-            } else if(this.status === Status.LOADED){
+            } else if (this.status === Status.LOADED) {
                 resolve(this.config);
-            }else if(this.status === Status.LOADING){
-                this.onLoad.subscribe(()=>{
+            } else if (this.status === Status.LOADING) {
+                this.onLoad.subscribe(() => {
                     resolve(this.config);
                 });
             }

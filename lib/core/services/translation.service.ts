@@ -52,7 +52,7 @@ export class TranslationService {
         }
 
         userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
-            if(locale) {
+            if (locale) {
                 this.userLang = locale;
                 this.use(this.userLang);
             }
