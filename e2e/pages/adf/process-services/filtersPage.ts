@@ -22,7 +22,6 @@ import { DataTablePage } from '../dataTablePage';
 export class FiltersPage {
 
     activeFilter = element(by.css('mat-list-item[class*="active"]'));
-    nameColumn = by.css('div[class*="adf-datatable-body"] div[class*="adf-datatable-row"] div[class*="--text"] span');
     dataTable = new DataTablePage();
 
     getActiveFilter() {
@@ -38,11 +37,11 @@ export class FiltersPage {
     }
 
     sortByName(sortOrder) {
-        this.dataTable.sortByColumn(sortOrder, this.nameColumn);
+        this.dataTable.sortByColumn(sortOrder, 'name');
     }
 
     getAllRowsNameColumn() {
-        return this.dataTable.getAllRowsColumnValues(this.nameColumn);
+        return this.dataTable.getAllRowsColumnValues('Name');
     }
 
 }

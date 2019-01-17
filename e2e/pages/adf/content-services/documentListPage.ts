@@ -15,74 +15,43 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { by, element, ElementFinder, browser } from 'protractor';
 import { DataTablePage } from '../dataTablePage';
 import { Util } from '../../../util/util';
 
 export class DocumentListPage {
 
-    dataTable = new DataTablePage();
-    deleteContentElement = element(by.css('button[data-automation-id*="DELETE"]'));
-    metadataAction = element(by.css('button[data-automation-id*="METADATA"]'));
-    versionManagerAction = element(by.css('button[data-automation-id*="VERSIONS"]'));
-    moveContentElement = element(by.css('button[data-automation-id*="MOVE"]'));
-    copyContentElement = element(by.css('button[data-automation-id*="COPY"]'));
-    lockContentElement = element(by.css('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]'));
-    downloadContent = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
+    rootElement: ElementFinder;
     actionMenu = element(by.css('div[role="menu"]'));
     optionButton = by.css('button[data-automation-id*="action_menu_"]');
-    rows = by.css('div[id="document-list-container"] div[class*="adf-datatable-body"] div[class*="adf-datatable-row"]');
+    dataTable = new DataTablePage(this.rootElement);
+
+    constructor(rootElement: ElementFinder = element.all(by.css('adf-upload-drag-area adf-document-list')).first()) {
+        this.rootElement = rootElement;
+    }
+
+    clickRowToSelectWithRoot(rowName) {
+        return this.dataTable.clickRowToSelectWithRoot(rowName);
+    }
+
+    clickOnActionMenuWithRoot(content) {
+        this.dataTable.getRowByRowNameWithRoot(content).element(this.optionButton).click();
+        Util.waitUntilElementIsVisible(this.actionMenu);
+        browser.sleep(500);
+        return this;
+    }
 
     dataTablePage() {
-        return new DataTablePage();
+        return new DataTablePage(this.rootElement);
     }
 
-    deleteContent(content) {
-        this.clickOnActionMenu(content);
-        this.waitForContentOptions();
-        this.deleteContentElement.click();
-    }
-
-    checkDeleteIsDisabled(content) {
-        this.clickOnActionMenu(content);
-        this.waitForContentOptions();
-        let disabledDelete = element(by.css(`button[data-automation-id*='DELETE'][disabled='true']`));
-        Util.waitUntilElementIsVisible(disabledDelete);
-    }
-
-    metadataContent(content) {
-        this.clickOnActionMenu(content);
-        this.waitForContentOptions();
-        this.metadataAction.click();
-    }
-
-    versionManagerContent(content) {
-        this.clickOnActionMenu(content);
-        this.waitForContentOptions();
-        this.versionManagerAction.click();
-    }
-
-    copyContent(content) {
-        this.clickOnActionMenu(content);
-        this.copyContentElement.click();
-    }
-
-    lockContent(content) {
-        this.clickOnActionMenu(content);
-        this.lockContentElement.click();
-    }
-
-    waitForContentOptions() {
-        Util.waitUntilElementIsVisible(this.copyContentElement);
-        Util.waitUntilElementIsVisible(this.moveContentElement);
-        Util.waitUntilElementIsVisible(this.deleteContentElement);
-        Util.waitUntilElementIsVisible(this.downloadContent);
+    getAllRowsNameColumn() {
+        return this.dataTable.getAllRowsColumnValues('Display name');
     }
 
     clickOnActionMenu(content) {
         this.dataTable.getRowByRowName(content).element(this.optionButton).click();
         Util.waitUntilElementIsVisible(this.actionMenu);
-        browser.sleep(500);
         return this;
     }
 
@@ -101,17 +70,5 @@ export class DocumentListPage {
     pressContextMenuActionNamed(actionName) {
         let actionButton = this.checkContextActionIsVisible(actionName);
         actionButton.click();
-    }
-
-    checkLockedIcon(content) {
-        let lockIcon = element(by.cssContainingText('div[filename="' + content + '"] mat-icon', 'lock'));
-        Util.waitUntilElementIsVisible(lockIcon);
-        return this;
-    }
-
-    checkUnlockedIcon(content) {
-        let lockIcon = element(by.cssContainingText('div[filename="' + content + '"] mat-icon', 'lock_open'));
-        Util.waitUntilElementIsVisible(lockIcon);
-        return this;
     }
 }

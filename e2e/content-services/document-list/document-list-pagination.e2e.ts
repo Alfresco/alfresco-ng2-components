@@ -28,6 +28,7 @@ import { Util } from '../../util/util';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
+import { browser } from 'protractor';
 
 describe('Document List - Pagination', function () {
     let pagination = {
@@ -54,10 +55,10 @@ describe('Document List - Pagination', function () {
     let navigationBarPage = new NavigationBarPage();
 
     let acsUser = new AcsUserModel();
-    let newFolderModel = new FolderModel({ 'name': 'newFolder' });
+    let newFolderModel = new FolderModel({'name': 'newFolder'});
     let fileNames = [], nrOfFiles = 20, currentPage = 1, secondSetOfFiles = [], secondSetNumber = 25;
-    let folderTwoModel = new FolderModel({ 'name': 'folderTwo' });
-    let folderThreeModel = new FolderModel({ 'name': 'folderThree' });
+    let folderTwoModel = new FolderModel({'name': 'folderTwo'});
+    let folderThreeModel = new FolderModel({'name': 'folderThree'});
 
     beforeAll(async (done) => {
         let uploadActions = new UploadActions();
@@ -265,8 +266,8 @@ describe('Document List - Pagination', function () {
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
-        contentServicesPage.getElementsDisplayedName().then(function (list) {
-            contentServicesPage.checkElementsSortedAsc(list);
+        contentServicesPage.getElementsDisplayedName().then((elements) => {
+            contentServicesPage.checkElementsSortedAsc(elements);
         });
 
         contentServicesPage.sortByName(false);

@@ -90,7 +90,7 @@ describe('Version component', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         contentServicesPage.navigateToDocumentList();
-        contentListPage.versionManagerContent(txtFileModel.name);
+        contentServicesPage.versionManagerContent(txtFileModel.name);
 
         done();
     });

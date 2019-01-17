@@ -30,6 +30,10 @@ export class ProcessListCloudComponent {
         return this.dataTable;
     }
 
+    getAllRowsNameColumn() {
+        return this.dataTable.getAllRowsColumnValues('Name');
+    }
+
     checkProcessListIsLoaded() {
         Util.waitUntilElementIsVisible(this.processList);
         return this;

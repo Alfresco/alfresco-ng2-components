@@ -99,7 +99,7 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C280561] Should be able to delete a file via dropdown menu', () => {
-            contentListPage.deleteContent(pdfFileModel.name);
+            contentServicesPage.deleteContent(pdfFileModel.name);
             contentListPage.dataTablePage().checkContentIsNotDisplayed(pdfFileModel.name);
             pdfUploadedNode = null;
         });
@@ -107,7 +107,7 @@ describe('Document List Component - Actions', () => {
         it('[C280562] Should be able to delete multiple files via dropdown menu', () => {
             contentListPage.dataTablePage().clickRowToSelect(pdfFileModel.name);
             contentListPage.dataTablePage().clickRowToSelect(testFileModel.name);
-            contentListPage.deleteContent(pdfFileModel.name);
+            contentServicesPage.deleteContent(pdfFileModel.name);
             contentListPage.dataTablePage().checkContentIsNotDisplayed(pdfFileModel.name);
             contentListPage.dataTablePage().checkContentIsDisplayed(testFileModel.name);
         });
@@ -173,7 +173,7 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C260123] Should be able to delete a folder using context menu', () => {
-            contentListPage.deleteContent(folderName);
+            contentServicesPage.deleteContent(folderName);
             contentListPage.dataTablePage().checkContentIsNotDisplayed(folderName);
             uploadedFolder = null;
         });
@@ -191,7 +191,7 @@ describe('Document List Component - Actions', () => {
         it('[C260138] Should be able to copy a folder', () => {
             browser.driver.sleep(15000);
 
-            contentListPage.copyContent(folderName);
+            contentServicesPage.copyContent(folderName);
             contentServicesPage.typeIntoNodeSelectorSearchField(secondFolderName);
             contentServicesPage.clickContentNodeSelectorResult(secondFolderName);
             contentServicesPage.clickCopyButton();

@@ -240,16 +240,20 @@ describe('Document List Component', () => {
 
         beforeAll(async (done) => {
 
-            acsUser = new AcsUserModel();
+            let user = new AcsUserModel();
 
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await this.alfrescoJsApi.core.peopleApi.addPerson(user);
 
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await this.alfrescoJsApi.login(user.id, user.password);
             fileANode = await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileA.location, fakeFileA.name, '-my-');
             fileBNode = await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileB.location, fakeFileB.name, '-my-');
             fileCNode = await uploadActions.uploadFile(this.alfrescoJsApi, fakeFileC.location, fakeFileC.name, '-my-');
+
+            loginPage.loginToContentServicesUsingUserModel(user);
+            contentServicesPage.goToDocumentList();
+
             done();
         });
 
@@ -268,39 +272,27 @@ describe('Document List Component', () => {
         });
 
         it('[C260112] Should be able to sort by name (Ascending)', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.sortAndCheckListIsOrderedByName('asc');
+            expect(contentServicesPage.sortAndCheckListIsOrderedByName('asc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272770] Should be able to sort by name (Descending)', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.sortAndCheckListIsOrderedByName('desc');
+            expect(contentServicesPage.sortAndCheckListIsOrderedByName('desc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272771] Should be able to sort by author (Ascending)', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc');
+            expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor('asc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272772] Should be able to sort by author (Descending)', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc');
+            expect(contentServicesPage.sortAndCheckListIsOrderedByAuthor('desc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272773] Should be able to sort by date (Ascending)', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.sortAndCheckListIsOrderedByCreated('asc');
+            expect(contentServicesPage.sortAndCheckListIsOrderedByCreated('asc')).toBe(true, 'List is not sorted.');
         });
 
         it('[C272774] Should be able to sort by date (Descending)', () => {
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
-            contentServicesPage.goToDocumentList();
-            contentServicesPage.sortAndCheckListIsOrderedByCreated('desc');
+            expect(contentServicesPage.sortAndCheckListIsOrderedByCreated('desc')).toBe(true, 'List is not sorted.');
         });
     });
 

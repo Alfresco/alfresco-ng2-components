@@ -19,7 +19,6 @@ import { by, element } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { DocumentListPage } from '../../pages/adf/content-services/documentListPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -36,7 +35,6 @@ describe('Version Properties', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const contentListPage = new DocumentListPage();
     const versionManagePage = new VersionManagePage();
 
     let acsUser = new AcsUserModel();
@@ -75,7 +73,7 @@ describe('Version Properties', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         contentServicesPage.navigateToDocumentList();
-        contentListPage.versionManagerContent(txtFileModel.name);
+        contentServicesPage.versionManagerContent(txtFileModel.name);
 
         done();
     });

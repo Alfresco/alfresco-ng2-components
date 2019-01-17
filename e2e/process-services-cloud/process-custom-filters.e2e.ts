@@ -92,14 +92,14 @@ describe('Process list cloud', () => {
         it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async() => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('RUNNING')
                 .setSortFilterDropDown('NAME').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().getAllRowsNameColumn().then(function (list) {
+            processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
                 let initialList = list.slice(0);
                 list.sort();
                 expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
             });
 
             processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().getAllRowsNameColumn().then(function (list) {
+            processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
                 let initialList = list.slice(0);
                 list.sort();
                 list.reverse();

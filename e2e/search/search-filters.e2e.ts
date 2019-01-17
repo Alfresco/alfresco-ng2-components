@@ -149,7 +149,7 @@ describe('Search Filters', () => {
 
         let bucketNumberForFilter = searchFiltersPage.fileTypeCheckListFiltersPage().getBucketNumberOfFilterType(filter.type);
 
-        let resultFileNames = contentList.dataTablePage().getAllRowsNameColumn();
+        let resultFileNames = contentList.getAllRowsNameColumn();
 
         expect(bucketNumberForFilter).not.toEqual('0');
 

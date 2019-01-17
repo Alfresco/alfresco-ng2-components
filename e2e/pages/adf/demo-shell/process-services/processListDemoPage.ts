@@ -32,7 +32,7 @@ export class ProcessListDemoPage {
     dataTable = new DataTablePage();
 
     getDisplayedProcessesNames() {
-        return this.dataTable.getAllRowsNameColumn();
+        return this.dataTable.getAllRowsColumnValues('Name');
     }
 
     selectSorting(sort) {

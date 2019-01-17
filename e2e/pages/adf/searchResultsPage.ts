@@ -71,11 +71,11 @@ export class SearchResultsPage {
     }
 
     deleteContent(content) {
-        this.contentList.deleteContent(content);
+        this.contentServices.deleteContent(content);
     }
 
     checkDeleteIsDisabled(content) {
-        this.contentList.checkDeleteIsDisabled(content);
+        this.contentServices.checkDeleteIsDisabled(content);
         this.closeActionButton();
     }
 

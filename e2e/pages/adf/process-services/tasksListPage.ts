@@ -29,6 +29,10 @@ export class TasksListPage {
         return this.dataTable;
     }
 
+    getAllRowsNameColumn() {
+        return this.dataTable.getAllRowsColumnValues('Name');
+    }
+
     checkTaskListIsLoaded() {
         Util.waitUntilElementIsVisible(this.taskList);
         return this;

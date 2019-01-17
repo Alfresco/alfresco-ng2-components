@@ -105,12 +105,14 @@ describe('Process List - Pagination', function () {
             done();
         });
 
-        it('[C261042] Should display default pagination', function () {
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
+        beforeEach(async (done) => {
+            await navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
+            done();
+        });
 
+        it('[C261042] Should display default pagination', function () {
             page = 1;
             totalPages = 1;
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -128,7 +130,6 @@ describe('Process List - Pagination', function () {
         it('[C261043] Should be possible to Items per page to 15', function () {
             page = 1;
             totalPages = 2;
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -170,7 +171,6 @@ describe('Process List - Pagination', function () {
         it('[C261044] Should be possible to Items per page to 10', function () {
             page = 1;
             totalPages = 2;
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -212,7 +212,6 @@ describe('Process List - Pagination', function () {
         it('[C261047] Should be possible to Items per page to 20', function () {
             page = 1;
             totalPages = 1;
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -242,7 +241,6 @@ describe('Process List - Pagination', function () {
             let showing;
             page = 1;
             totalPages = 4;
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -317,7 +315,6 @@ describe('Process List - Pagination', function () {
             let showing;
             page = 1;
             totalPages = 2;
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processDetailsPage.checkProcessTitleIsDisplayed();
             processFiltersPage.waitForTableBody();
@@ -368,7 +365,6 @@ describe('Process List - Pagination', function () {
         });
 
         it('[C261048] Should be possible to sort processes by name', function () {
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();
@@ -388,7 +384,6 @@ describe('Process List - Pagination', function () {
         });
 
         it('[C286260] Should keep sorting when changing \'Items per page\'', function () {
-            navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickProcessButton();
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             processDetailsPage.checkProcessTitleIsDisplayed();

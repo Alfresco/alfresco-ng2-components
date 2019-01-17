@@ -66,14 +66,77 @@ export class ContentServicesPage {
     copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
     searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
-    nameColumn = by.css('div[class*="datatable-body"] div[class*="adf-data-table-cell"][title="Display name"]');
-    nameColumnHeader = by.css('div[data-automation-id="auto_id_name"]');
-    createdByColumn = by.css('div[class*="--text"][title="Created by"] span');
-    sizeColumn = by.css('div[id*="document-list-container"] div[class*="adf-datatable-row"] .adf-filesize-cell');
-    createdByColumnHeader = by.css('div[data-automation-id*="auto_id_createdByUser"]');
-    createdColumn = by.css('div[class*="--date"] span');
-    createdColumnHeader = by.css('div[data-automation-id*="auto_id_createdAt"]');
+    nameColumnHeader = 'name';
+    createdByColumnHeader = 'createdByUser.displayName';
+    createdColumnHeader = 'createdAt';
+    deleteContentElement = element(by.css('button[data-automation-id*="DELETE"]'));
+    metadataAction = element(by.css('button[data-automation-id*="METADATA"]'));
+    versionManagerAction = element(by.css('button[data-automation-id*="VERSIONS"]'));
+    moveContentElement = element(by.css('button[data-automation-id*="MOVE"]'));
+    copyContentElement = element(by.css('button[data-automation-id*="COPY"]'));
+    lockContentElement = element(by.css('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]'));
+    downloadContent = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
 	siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-select']`));
+
+    checkLockedIcon(content) {
+        let lockIcon = element(by.cssContainingText('div[filename="' + content + '"] mat-icon', 'lock'));
+        Util.waitUntilElementIsVisible(lockIcon);
+        return this;
+    }
+
+    checkUnlockedIcon(content) {
+        let lockIcon = element(by.cssContainingText('div[filename="' + content + '"] mat-icon', 'lock_open'));
+        Util.waitUntilElementIsVisible(lockIcon);
+        return this;
+    }
+
+    checkDeleteIsDisabled(content) {
+        this.contentList.clickOnActionMenu(content);
+        this.waitForContentOptions();
+        let disabledDelete = element(by.css(`button[data-automation-id*='DELETE'][disabled='true']`));
+        Util.waitUntilElementIsVisible(disabledDelete);
+    }
+
+    deleteContent(content) {
+        this.contentList.clickOnActionMenu(content);
+        this.waitForContentOptions();
+        this.deleteContentElement.click();
+    }
+
+    metadataContent(content) {
+        this.contentList.clickOnActionMenu(content);
+        this.waitForContentOptions();
+        this.metadataAction.click();
+    }
+
+    versionManagerContent(content) {
+        this.contentList.clickOnActionMenu(content);
+        this.waitForContentOptions();
+        this.versionManagerAction.click();
+    }
+
+    copyContent(content) {
+        this.contentList.clickOnActionMenu(content);
+        this.copyContentElement.click();
+    }
+
+    lockContent(content) {
+        this.contentList.clickOnActionMenuWithRoot(content);
+        this.lockContentElement.click();
+    }
+
+    deleteContentWithRoot(content) {
+        this.contentList.clickOnActionMenuWithRoot(content);
+        this.waitForContentOptions();
+        this.deleteContentElement.click();
+    }
+
+    waitForContentOptions() {
+        Util.waitUntilElementIsVisible(this.copyContentElement);
+        Util.waitUntilElementIsVisible(this.moveContentElement);
+        Util.waitUntilElementIsVisible(this.deleteContentElement);
+        Util.waitUntilElementIsVisible(this.downloadContent);
+    }
 
     getUploadAreaDocumentList() {
         return new ContentListPage(element(by.css('adf-upload-drag-area')));
@@ -103,15 +166,16 @@ export class ContentServicesPage {
     getElementsDisplayedCreated() {
         let deferred = protractor.promise.defer();
         let fileCreatedLocator = this.contentList.dataTablePage().getColumnLocator('Created');
-        Util.waitUntilElementIsVisible(element.all(fileCreatedLocator).first());
+        let allFilesCreated = element.all(fileCreatedLocator);
+        Util.waitUntilElementIsVisible(allFilesCreated.first());
         let initialList = [];
 
-        element.all(fileCreatedLocator).each((item) => {
+        allFilesCreated.each((item) => {
             item.getAttribute('title').then((dateText) => {
-                if (dateText !== '') {
-                    let date = new Date(dateText);
-                    initialList.push(date);
-                }
+            if (dateText !== '') {
+                let date = new Date(dateText);
+                initialList.push(date);
+            }
             });
         }).then(function () {
             deferred.fulfill(initialList);
@@ -123,10 +187,11 @@ export class ContentServicesPage {
     getElementsDisplayedSize() {
         let deferred = protractor.promise.defer();
         let fileSizeLocator = this.contentList.dataTablePage().getColumnLocator('Size');
-        Util.waitUntilElementIsVisible(element.all(fileSizeLocator).first());
+        let allSizes = element.all(fileSizeLocator);
+        Util.waitUntilElementIsVisible(allSizes.first());
         let initialList = [];
 
-        element.all(fileSizeLocator).each(function (item) {
+        allSizes.each((item) => {
             item.getAttribute('title').then((sizeText) => {
                 if (sizeText !== '') {
                     let size = Number(sizeText);
@@ -142,16 +207,18 @@ export class ContentServicesPage {
 
     getElementsDisplayedAuthor(alfrescoJsApi) {
         let deferred = protractor.promise.defer();
+        let initialList = [];
         let idList = this.getElementsDisplayedId();
         let numberOfElements = this.numberOfResultsDisplayed();
         this.nodeActions.getNodesDisplayed(alfrescoJsApi, idList, numberOfElements).then((nodes) => {
-            let initialList = [];
-
-            nodes.forEach((item) => {
-                if (item.entry.createdByUser.id !== '') {
-                    initialList.push(item.entry.createdByUser.id);
-                }
+            nodes.each((item) => {
+                item.entry.createdByUser.id.then((author) => {
+                    if (author !== '') {
+                        initialList.push(author);
+                    }
+                });
             });
+        }).then(function () {
             deferred.fulfill(initialList);
         });
 
@@ -161,11 +228,12 @@ export class ContentServicesPage {
     getElementsDisplayedName() {
         let deferred = protractor.promise.defer();
         let fileNameLocator = this.contentList.dataTablePage().getColumnLocator('Display name');
-        Util.waitUntilElementIsVisible(element.all(fileNameLocator).first());
+        let allFilesNames = element.all(fileNameLocator);
+        Util.waitUntilElementIsVisible(allFilesNames.first());
         let initialList = [];
 
-        element.all(fileNameLocator).each((item) => {
-            item.getText().then(function (name) {
+        allFilesNames.each((item) => {
+            item.getText().then((name) => {
                 if (name !== '') {
                     initialList.push(name);
                 }
@@ -180,10 +248,11 @@ export class ContentServicesPage {
     getElementsDisplayedId() {
         let deferred = protractor.promise.defer();
         let fileIdLocator = this.contentList.dataTablePage().getColumnLocator('Node id');
-        Util.waitUntilElementIsVisible(element.all(fileIdLocator).first());
+        let allFilesId = element.all(fileIdLocator);
+        Util.waitUntilElementIsVisible(allFilesId.first());
         let initialList = [];
 
-        element.all(fileIdLocator).each((item) => {
+        allFilesId.each((item) => {
             item.getText().then(function (text) {
                 if (text !== '') {
                     initialList.push(text);
@@ -303,7 +372,7 @@ export class ContentServicesPage {
     }
 
     getAllRowsNameColumn() {
-        return this.contentList.dataTablePage().getAllRowsNameColumn();
+        return this.contentList.getAllRowsNameColumn();
     }
 
     sortByName(sortOrder) {
@@ -328,19 +397,19 @@ export class ContentServicesPage {
     }
 
     async checkListIsSortedByNameColumn(sortOrder) {
-        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.nameColumn);
+        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, 'Display name');
     }
 
     async checkListIsSortedByCreatedColumn(sortOrder) {
-        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.createdColumn);
+        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, 'Created');
     }
 
     async checkListIsSortedByAuthorColumn(sortOrder) {
-        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.createdByColumn);
+        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, 'Created by');
     }
 
     async checkListIsSortedBySizeColumn(sortOrder) {
-        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, this.sizeColumn);
+        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, 'Size');
     }
 
     sortAndCheckListIsOrderedByAuthor(sortOrder) {
@@ -465,11 +534,6 @@ export class ContentServicesPage {
         return this.uploadFileButton.isEnabled();
     }
 
-    deleteContent(content) {
-        this.contentList.deleteContent(content);
-        return this;
-    }
-
     getErrorMessage() {
         Util.waitUntilElementIsVisible(this.errorSnackBar);
         let deferred = protractor.promise.defer();
@@ -477,10 +541,6 @@ export class ContentServicesPage {
             deferred.fulfill(text);
         });
         return deferred.promise;
-    }
-
-    checkItemInDocList(fileName) {
-        Util.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="text_${fileName}"]`)));
     }
 
     enableInfiniteScrolling() {
@@ -564,11 +624,7 @@ export class ContentServicesPage {
     }
 
     getColumnValueForRow(file, columnName) {
-        let row = this.contentList.dataTablePage().getRowByRowName(file);
-        Util.waitUntilElementIsVisible(row);
-        let rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
-        Util.waitUntilElementIsVisible(rowColumn);
-        return rowColumn.getText();
+        return this.contentList.dataTablePage().getColumnValueForRow(file, columnName);
     }
 
     async getStyleValueForRowText(rowName, styleName) {

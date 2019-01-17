@@ -122,7 +122,7 @@ describe('Create folder directive', function () {
 
         contentServicesPage.checkContentIsDisplayed(folderName);
 
-        contentListPage.metadataContent(folderName);
+        contentServicesPage.metadataContent(folderName);
 
         expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('this is the description');
     });

@@ -18,11 +18,11 @@
 import { element, by } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
-import { DocumentListPage } from '../../pages/adf/content-services/documentListPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 import { NotificationPage } from '../../pages/adf/notificationPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
@@ -40,11 +40,11 @@ import CONSTANTS = require('../../util/constants');
 describe('Version component permissions', () => {
 
     const loginPage = new LoginPage();
-    const contentListPage = new DocumentListPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialog();
     const notificationPage = new NotificationPage();
+    const contentServices = new ContentServicesPage();
     let site;
 
     let acsUser = new AcsUserModel();
@@ -158,7 +158,7 @@ describe('Version component permissions', () => {
         });
 
         it('[C277200] should a user with Manager permission be able to upload a new version for a file with different creator', () => {
-            contentListPage.versionManagerContent(differentCreatorFile.name);
+            contentServices.versionManagerContent(differentCreatorFile.name);
 
             versionManagePage.showNewVersionButton.click();
 
@@ -179,7 +179,7 @@ describe('Version component permissions', () => {
         });
 
         it('[C277204] Should a user with Manager permission not be able to upload a new version for a locked file', () => {
-            contentListPage.versionManagerContent(lockFileModel.name);
+            contentServices.versionManagerContent(lockFileModel.name);
 
             versionManagePage.showNewVersionButton.click();
 
@@ -193,7 +193,7 @@ describe('Version component permissions', () => {
         });
 
         it('[C277196] Should a user with Manager permission be able to upload a new version for the created file', () => {
-            contentListPage.versionManagerContent(sameCreatorFile.name);
+            contentServices.versionManagerContent(sameCreatorFile.name);
 
             versionManagePage.showNewVersionButton.click();
 
@@ -225,13 +225,13 @@ describe('Version component permissions', () => {
         });
 
         it('[C277197] Should a user with Consumer permission not be able to upload a new version for a file with different creator', () => {
-            contentListPage.versionManagerContent(differentCreatorFile.name);
+            contentServices.versionManagerContent(differentCreatorFile.name);
 
             notificationPage.checkNotifyContains(`You don't have access to do this`);
         });
 
         it('[C277201] Should a user with Consumer permission not be able to upload a new version for a locked file', () => {
-            contentListPage.versionManagerContent(lockFileModel.name);
+            contentServices.versionManagerContent(lockFileModel.name);
 
             notificationPage.checkNotifyContains(`You don't have access to do this`);
         });
@@ -265,7 +265,7 @@ describe('Version component permissions', () => {
         });
 
         it('[C277177] Should a user with Contributor permission be able to upload a new version for the created file', () => {
-            contentListPage.versionManagerContent(sameCreatorFile.name);
+            contentServices.versionManagerContent(sameCreatorFile.name);
 
             versionManagePage.showNewVersionButton.click();
 
@@ -286,13 +286,13 @@ describe('Version component permissions', () => {
         });
 
         it('[C277198] Should a user with Contributor permission not be able to upload a new version for a file with different creator', () => {
-            contentListPage.versionManagerContent(differentCreatorFile.name);
+            contentServices.versionManagerContent(differentCreatorFile.name);
 
             notificationPage.checkNotifyContains(`You don't have access to do this`);
         });
 
         it('[C277202] Should a user with Contributor permission not be able to upload a new version for a locked file', () => {
-            contentListPage.versionManagerContent(lockFileModel.name);
+            contentServices.versionManagerContent(lockFileModel.name);
 
             notificationPage.checkNotifyContains(`You don't have access to do this`);
         });
@@ -325,7 +325,7 @@ describe('Version component permissions', () => {
         });
 
         it('[C277195] Should a user with Collaborator permission be able to upload a new version for the created file', () => {
-            contentListPage.versionManagerContent(sameCreatorFile.name);
+            contentServices.versionManagerContent(sameCreatorFile.name);
 
             versionManagePage.showNewVersionButton.click();
 
@@ -346,7 +346,7 @@ describe('Version component permissions', () => {
         });
 
         it('[C277203] Should a user with Collaborator permission not be able to upload a new version for a locked file', () => {
-            contentListPage.versionManagerContent(lockFileModel.name);
+            contentServices.versionManagerContent(lockFileModel.name);
 
             versionManagePage.showNewVersionButton.click();
 
@@ -360,7 +360,7 @@ describe('Version component permissions', () => {
         });
 
         it('[C277199] should a user with Collaborator permission be able to upload a new version for a file with different creator', () => {
-            contentListPage.versionManagerContent(differentCreatorFile.name);
+            contentServices.versionManagerContent(differentCreatorFile.name);
 
             versionManagePage.showNewVersionButton.click();
 
