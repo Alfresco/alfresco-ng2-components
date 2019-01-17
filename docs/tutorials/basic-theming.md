@@ -5,7 +5,9 @@ Level: Beginner
 
 # Basic theming
 
-As detailed in the [user guide page about theming](../user-guide/theming.md), you can easily customize the [Cascading Style Sheets](https://en.wikipedia.org/wiki/Cascading_Style_Sheets) used by an ADF application. In this tutorial you will see how to modify the CSS, using a step-by-step approach. The focus of this tutorial is [ADF apps built using Yeoman](./creating-the-app-using-yeoman.md), but you can use the same principles to customize the themes in any ADF application.
+In this tutorial you will see how to theme an ADF app by modifying the CSS. 
+
+As detailed in the [user guide page about theming](../user-guide/theming.md), you can easily customize the [Cascading Style Sheets](https://en.wikipedia.org/wiki/Cascading_Style_Sheets) used by an ADF application. The focus of this tutorial is [ADF apps built using Yeoman](./creating-the-app-using-yeoman.md), but you can use the same principles to customize the themes in any ADF application.
 
 ## About the `adf-core` theming 
 

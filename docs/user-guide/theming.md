@@ -5,6 +5,8 @@ Added: v2.0.0
 
 # Theming an ADF app
 
+**Theming** is the process of adding your own color scheme to add style to an existing design.
+
 The [Material Design](https://material.io/guidelines/material-design/introduction.html)
 specification doesn't specify a single color scheme. Instead it uses the concept
 of color **themes** to allow designers some flexibility in their choice of colors.

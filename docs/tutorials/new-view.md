@@ -5,7 +5,9 @@ Level: Beginner
 
 # Adding a new view
 
-Every application developed in Angular is a single page application where the concepts of *view* and *routing* play a key role in the user experience. Being a single page application, the navigation between the different layouts (called *views*) is enabled through the *routing*. In this tutorial you will learn how to create a new view in your application and how to access it using a defined endpoint.
+In this tutorial you will learn how to create a new view in your application and how to access it using a defined endpoint.
+
+Every application developed in Angular is a single page application where the concepts of *view* and *routing* play a key role in the user experience. Being a single page application, the navigation between the different layouts (called *views*) is enabled through the *routing*. 
 
 ## Creating a view
 

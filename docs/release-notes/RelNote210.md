@@ -71,7 +71,7 @@ Below are the most important new features of this release:
 -   Start form process pre-filling value
 -   Task List - Support custom HTML template and static columns
 -   Sidebar action menu
--   Infinite pagination component enhancement
+-   [Infinite pagination component](../core/infinite-pagination.component.md) enhancement
 -   App drop-down dialog selector
 -   JS-API Governance
 -   Documentation enhancements
@@ -137,7 +137,7 @@ You then need to pass the node via the input values object along with the other 
         'field_one': 'example text'
     };
 
-Note that in the object above, the key file is the name of the attach file field in the start form of the process. The value of the file property must be a [`MinimalNodeEntryEntity`](../content-services/document-library.model.md):
+Note that in the object above, the key file is the name of the attach file field in the start form of the process. The value of the file property must be a `MinimalNodeEntryEntity`:
 
     <adf-start-process
         [values]="formValues"
@@ -290,7 +290,7 @@ For more information about this functionality see the following links:
 
 ### 12. Documentation
 
-The Properties tables in the [documentation](https://alfresco.github.io/adf-component-catalog/) are now updated with the type and the default value of any property.
+The Properties tables in the documentation are now updated with the type and the default value of any property.
 
 ## CI changes
 
@@ -315,7 +315,7 @@ Below you can find a brief list of references to help you start to use the new r
 
 [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
 
-[Component catalog](https://alfresco.github.io/adf-component-catalog/)
+Component catalog
 
 [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
 
@@ -365,7 +365,7 @@ Release Notes - Apps Development Framework - Version 2.1.
 
 -   \[[ADF-1752](https://issues.alfresco.com/jira/browse/ADF-1752)] - allowInfoDrawer property does not disable the feature when showInfoDrawer is set to true
 -   \[[ADF-1882](https://issues.alfresco.com/jira/browse/ADF-1882)] - Preview uploaded content in APS fails in form
--   \[[ADF-1888](https://issues.alfresco.com/jira/browse/ADF-1888)] - ExternalContent is not exported in ActivitiFormModule
+-   \[[ADF-1888](https://issues.alfresco.com/jira/browse/ADF-1888)] - [ExternalContent](../../lib/core/form/components/widgets/core/external-content.ts) is not exported in ActivitiFormModule
 -   \[[ADF-1889](https://issues.alfresco.com/jira/browse/ADF-1889)] - Viewer does not render PDF renditions unless urlFile ends with .pdf
 -   \[[ADF-1926](https://issues.alfresco.com/jira/browse/ADF-1926)] - [`Form`](../../lib/process-services/task-list/models/form.model.ts) is not exported from ActivitiTaskListModule
 -   \[[ADF-1959](https://issues.alfresco.com/jira/browse/ADF-1959)] - Apps with description appear with larger size on the Processes Services page
@@ -407,7 +407,7 @@ Release Notes - Apps Development Framework - Version 2.1.
 -   \[[ADF-2209](https://issues.alfresco.com/jira/browse/ADF-2209)] - The 'Complete' button of a task that has a form is not properly field with colour when hover
 -   \[[ADF-2210](https://issues.alfresco.com/jira/browse/ADF-2210)] - Dynamic Table title is not aligned properly
 -   \[[ADF-2213](https://issues.alfresco.com/jira/browse/ADF-2213)] - Amount Widget is not aligned
--   \[[ADF-2221](https://issues.alfresco.com/jira/browse/ADF-2221)] - Search fails on Content Node Selector
+-   \[[ADF-2221](https://issues.alfresco.com/jira/browse/ADF-2221)] - Search fails on Content [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Selector
 -   \[[ADF-2222](https://issues.alfresco.com/jira/browse/ADF-2222)] - The user profile window is not visible when only Content Services is enabled
 
 ### New Feature
