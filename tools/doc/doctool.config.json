@@ -72,6 +72,7 @@
         "document-library.model": "NodePaging",
         "dynamic.component": "DynamicExtensionComponent",
         "form-field-validator.interface": "FormFieldValidator",
+        "group-initial.pipe": "InitialGroupNamePipe",
         "header.component": "HeaderLayoutComponent",
         "inherited-button.directive": "InheritPermissionDirective",
         "library.dialog": "LibraryDialogComponent",

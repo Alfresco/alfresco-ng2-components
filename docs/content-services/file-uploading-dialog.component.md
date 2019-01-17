@@ -39,3 +39,4 @@ This component should be used in combination with the
 
 -   [Upload button component](upload-button.component.md)
 -   [Upload drag area component](upload-drag-area.component.md)
+-   [File upload error pipe](../content-services/file-upload-error.pipe.md)
