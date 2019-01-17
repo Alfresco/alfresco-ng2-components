@@ -81,7 +81,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| _File upload error pipe_ | _Not currently documented_ | [Source](../../lib/content-services/upload/pipes/file-upload-error.pipe.ts) |
+| [File upload error pipe](file-upload-error.pipe.md) | Converts an upload error code to an error message. | [Source](../../lib/content-services/upload/pipes/file-upload-error.pipe.ts) |
 
 ## Services
 
