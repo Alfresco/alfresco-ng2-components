@@ -64,15 +64,17 @@ export class SearchCheckListPage {
 
     checkSearchFilterInputIsDisplayed() {
         Util.waitUntilElementIsVisible(this.filter.all(this.inputBy).first());
+        return this;
     }
 
     searchInFilter(option) {
-        let inputElement = this.filter.all(this.inputBy).first();
         Util.waitUntilElementIsClickable(this.filter);
+        let inputElement = this.filter.all(this.inputBy).first();
         Util.waitUntilElementIsClickable(inputElement);
 
         inputElement.clear();
         this.filter.all(this.inputBy).first().sendKeys(option);
+        return this;
     }
 
     checkShowLessButtonIsNotDisplayed() {
@@ -120,7 +122,7 @@ export class SearchCheckListPage {
     }
 
     getBucketNumberOfFilterType(option) {
-        let fileTypeFilter = this.filter.element(by.css('mat-checkbox[data-automation-id*=".' + option + '"] span'));
+        let fileTypeFilter = this.filter.all(by.css('mat-checkbox[data-automation-id*=".' + option + '"] span')).first();
         Util.waitUntilElementIsVisible(fileTypeFilter);
         let bucketNumber = fileTypeFilter.getText().then((valueOfBucket) => {
             let numberOfBucket = valueOfBucket.split('(')[1];
