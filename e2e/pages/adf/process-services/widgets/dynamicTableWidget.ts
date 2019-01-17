@@ -35,8 +35,7 @@ export class DynamicTableWidget {
     calendarContent = element(by.css('div[class="mat-datetimepicker-calendar-content"]'));
     saveButton = element(by.cssContainingText('button span', 'Save'));
     errorMessage = element(by.css('div[class="adf-error-text"]'));
-    dateWidget = element.all(by.css('button[aria-label="Open calendar"]')).first();
-    calendarNumber = element.all(by.css('td div'));
+    dateWidget = element.all(by.css('mat-datepicker-toggle button')).first();
     tableRow = element.all(by.css('tbody tr'));
     dataTableInput = element(by.id('id'));
 
@@ -134,16 +133,8 @@ export class DynamicTableWidget {
         return this.dateWidget.click();
     }
 
-    getDateCalendarNumber(date) {
-        return this.calendarNumber.get(date).click();
-    }
-
     getTableRow(rowNumber) {
         return Util.waitUntilElementIsVisible(this.tableRow.get(rowNumber));
-    }
-
-    waitForCalendarToDisappear() {
-        Util.waitUntilElementIsNotVisible(this.calendarNumber);
     }
 
     checkItemIsPresent(item) {
