@@ -75,10 +75,9 @@ export class PeopleCloudComponent implements OnInit {
     @ViewChild('userInput')
     private userInput: ElementRef<HTMLInputElement>;
 
-    private _selectedUsers: IdentityUserModel[] = [];
     private _searchUsers: IdentityUserModel[] = [];
-    private selectedUsers: BehaviorSubject<IdentityUserModel[]>;
-    private searchUsers: BehaviorSubject<IdentityUserModel[]>;
+    private selectedUsersSubject: BehaviorSubject<IdentityUserModel[]>;
+    private searchUsersSubject: BehaviorSubject<IdentityUserModel[]>;
     selectedUsers$: Observable<IdentityUserModel[]>;
     searchUsers$: Observable<IdentityUserModel[]>;
 
@@ -91,13 +90,14 @@ export class PeopleCloudComponent implements OnInit {
     isFocused: boolean;
 
     constructor(private identityUserService: IdentityUserService) {
-        this.selectedUsers = new BehaviorSubject<IdentityUserModel[]>(this._selectedUsers);
-        this.searchUsers = new BehaviorSubject<IdentityUserModel[]>(this._searchUsers);
-        this.selectedUsers$ = this.selectedUsers.asObservable();
-        this.searchUsers$ = this.searchUsers.asObservable();
+        this.searchUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this._searchUsers);
+        this.searchUsers$ = this.searchUsersSubject.asObservable();
     }
 
     ngOnInit() {
+        this.selectedUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this.preSelectUsers);
+        this.selectedUsers$ = this.selectedUsersSubject.asObservable();
+
         if (this.hasPreSelectUsers()) {
             this.loadPreSelectUsers();
         }
@@ -147,7 +147,7 @@ export class PeopleCloudComponent implements OnInit {
             })
         ).subscribe((user) => {
             this._searchUsers.push(user);
-            this.searchUsers.next(this._searchUsers);
+            this.searchUsersSubject.next(this._searchUsers);
         });
     }
 
@@ -164,9 +164,9 @@ export class PeopleCloudComponent implements OnInit {
     }
 
     private isUserAlreadySelected(user: IdentityUserModel): boolean {
-        if (this._selectedUsers && this._selectedUsers.length > 0) {
-            const result = this._selectedUsers.find((selectedUser) => {
-                return selectedUser.id === user.id;
+        if (this.preSelectUsers && this.preSelectUsers.length > 0) {
+            const result = this.preSelectUsers.find((selectedUser) => {
+                return selectedUser.id === user.id || selectedUser.email  === user.email;
             });
 
             return !!result;
@@ -175,12 +175,7 @@ export class PeopleCloudComponent implements OnInit {
     }
 
     private loadPreSelectUsers() {
-        if (this.isMultipleMode()) {
-            if (this.preSelectUsers && this.preSelectUsers.length > 0) {
-                this.selectedUsers.next(this.preSelectUsers);
-            }
-        } else {
-            this.selectedUsers.next(this.preSelectUsers);
+        if (!this.isMultipleMode()) {
             this.searchUserCtrl.setValue(this.preSelectUsers[0]);
         }
     }
@@ -197,8 +192,8 @@ export class PeopleCloudComponent implements OnInit {
         if (this.isMultipleMode()) {
 
             if (!this.isUserAlreadySelected(user)) {
-                this._selectedUsers.push(user);
-                this.selectedUsers.next(this._selectedUsers);
+                this.preSelectUsers.push(user);
+                this.selectedUsersSubject.next(this.preSelectUsers);
                 this.selectUser.emit(user);
             }
 
@@ -214,9 +209,9 @@ export class PeopleCloudComponent implements OnInit {
 
     onRemove(user: IdentityUserModel) {
         this.removeUser.emit(user);
-        const indexToRemove = this._selectedUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
-        this._selectedUsers.splice(indexToRemove, 1);
-        this.selectedUsers.next(this._selectedUsers);
+        const indexToRemove = this.preSelectUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
+        this.preSelectUsers.splice(indexToRemove, 1);
+        this.selectedUsersSubject.next(this.preSelectUsers);
     }
 
     getDisplayName(user): string {
@@ -233,7 +228,7 @@ export class PeopleCloudComponent implements OnInit {
 
     private resetSearchUsers() {
         this._searchUsers = [];
-        this.searchUsers.next(this._searchUsers);
+        this.searchUsersSubject.next(this._searchUsers);
     }
 
     private setError() {
