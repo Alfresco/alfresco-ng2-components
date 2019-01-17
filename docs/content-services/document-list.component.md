@@ -121,7 +121,7 @@ have at least the following properties as part of the `Event.detail` property va
 ```ts
 {
     sender: DocumentListComponent,
-    node: MinimalNodeEntity
+    node: NodeEntry
 }
 ```
 
@@ -202,7 +202,7 @@ You can use any of the following options to set the folder that the Document Lis
 
 #### Node ID
 
-The unique identifier of the Node. Gets automatically updated when you perform navigation to other folders.
+The unique identifier of the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md). Gets automatically updated when you perform navigation to other folders.
 
 #### Repository aliases
 
@@ -475,7 +475,7 @@ documentation for a full explanation of the component lifecycle.
 ### Underlying node object
 
 The [Document List component](../content-services/document-list.component.md) assigns an instance of 
-[MinimalNode](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/MinimalNode.md)
+[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)
 (defined in the [Alfresco JS API](https://github.com/Alfresco/alfresco-js-api)) as the data context
 for each row. You can make use of the properties of this object when defining custom columns:
 
@@ -870,7 +870,6 @@ This will give the following output:
 -   [Infinite pagination component](../core/infinite-pagination.component.md)
 -   [Sites dropdown component](sites-dropdown.component.md)
 -   [Metadata indicators](../user-guide/metadata-indicators.md)
--   [Document library model](document-library.model.md)
 -   [Nodes api service](../core/nodes-api.service.md)
 -   [Breadcrumb component](breadcrumb.component.md)
 -   [Content action component](content-action.component.md)

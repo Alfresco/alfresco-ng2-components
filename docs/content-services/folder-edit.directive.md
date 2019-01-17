@@ -2,7 +2,7 @@
 Title: Folder Edit directive
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-10
+Last reviewed: 2019-01-16
 ---
 
 # [Folder Edit directive](../../lib/content-services/folder-directive/folder-edit.directive.ts "Defined in folder-edit.directive.ts")
@@ -32,7 +32,7 @@ Allows folders to be edited.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| folder | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  | Folder node to edit. |
+| folder | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | Folder node to edit. |
 | title | `string` | null | Title of folder edit dialog. |
 
 ### Events
@@ -40,7 +40,7 @@ Allows folders to be edited.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs (eg, a folder with same name already exists). |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when the folder has been edited successfully. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` | Emitted when the folder has been edited successfully. |
 
 ## Details
 

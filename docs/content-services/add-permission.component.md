@@ -2,7 +2,7 @@
 Title: Add Permission Component
 Added: v2.4.0
 Status: Active
-Last reviewed: 2018-11-19
+Last reviewed: 2019-01-16
 ---
 
 # [Add Permission Component](../../lib/content-services/permission-manager/components/add-permission/add-permission.component.ts "Defined in add-permission.component.ts")
@@ -34,7 +34,7 @@ Searches for people or groups to add to the current node permissions.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs during the update. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when the node is updated successfully. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` | Emitted when the node is updated successfully. |
 
 ## Details
 

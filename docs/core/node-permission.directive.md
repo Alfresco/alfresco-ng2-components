@@ -42,13 +42,13 @@ Selectively disables an HTML element or Angular component.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| nodes | [`MinimalNodeEntity`](../content-services/document-library.model.md)`[]` | \[] | Nodes to check permission for. |
-| permission | `string` | null | Node permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions). |
+| nodes | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` | \[] | Nodes to check permission for. |
+| permission | `string` | null | [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions). |
 
 ## Details
 
 The [Node Permission directive](../core/node-permission.directive.md) lets you disable an HTML element or Angular component
-by taking a collection of [`MinimalNodeEntity`](../content-services/document-library.model.md) instances and checking their permissions.
+by taking a collection of [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md) instances and checking their permissions.
 
 The decorated element will be disabled if:
 

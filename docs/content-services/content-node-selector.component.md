@@ -22,7 +22,7 @@ more information).
 
 ### Showing the dialog
 
-Unlike most components, the Content Node Selector is typically shown in a dialog box
+Unlike most components, the Content [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Selector is typically shown in a dialog box
 rather than the main page and you are responsible for opening the dialog yourself. You can use the
 [Angular Material Dialog](https://material.angular.io/components/dialog/overview) for this,
 as shown in the usage example. ADF provides the [`ContentNodeSelectorComponentData`](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) interface
@@ -30,17 +30,18 @@ to work with the Dialog's
 [data option](https://material.angular.io/components/dialog/overview#sharing-data-with-the-dialog-component-):
 
 ```ts
-interface ContentNodeSelectorComponentData {
+export interface ContentNodeSelectorComponentData {
     title: string;
     actionName?: string;
     currentFolderId: string;
     dropdownHideMyFiles?: boolean;
     dropdownSiteList?: SitePaging;
-    rowFilter?: RowFilter;
-    imageResolver?: ImageResolver;
-    isSelectionValid?: (entry: MinimalNodeEntryEntity) => boolean;
+    rowFilter?: any;
+    imageResolver?: any;
+    isSelectionValid?: (entry: Node) => boolean;
     breadcrumbTransform?: (node) => any;
-    select: EventEmitter<MinimalNodeEntryEntity[]>;
+    excludeSiteContent?: string[];
+    select: Subject<Node[]>;
 }
 ```
 
@@ -50,7 +51,7 @@ The properties are described in the table below:
 | ---- | ---- | ------------- | ----------- |
 | title | `string` | "" | Dialog title |
 | actionName | `string` | "" | Text to appear on the dialog's main action button ("Move", "Copy", etc) |
-| currentFolderId | `string` | `null` | Node ID of the folder currently listed. |
+| currentFolderId | `string` | `null` | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) ID of the folder currently listed. |
 | dropdownHideMyFiles | `boolean` | `false` | Hide the "My Files" option added to the site list by default. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
 | dropdownSiteList | [`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) | `null` | Custom site for site dropdown same as siteList. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
 | rowFilter | [`RowFilter`](../../lib/content-services/document-list/data/row-filter.model.ts) | `null` | Custom row filter function. See the [Document List component](document-list.component.md#custom-row-filter) for more information. |
@@ -58,7 +59,7 @@ The properties are described in the table below:
 | pageSize | `number` |  | Number of items shown per page in the list. |
 | isSelectionValid | [`ValidationFunction`](../../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) | `defaultValidation` | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
 | breadcrumbTransform | `(node: any) => any` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
-| select | [`EventEmitter<MinimalNodeEntryEntity[]>`](../content-services/document-library.model.md) |  | Event emitted with the current node selection when the dialog closes |
+| select | [`Subject<Node>`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | Event emitted with the current node selection when the dialog closes |
 
 If you don't want to manage the dialog yourself then it is easier to use the
 [Content Node Selector Panel component](content-node-selector-panel.component.md), or the
@@ -80,7 +81,7 @@ openSelectorDialog() {
         title: "Choose an item",
         actionName: "Choose",
         currentFolderId: someFolderId,
-        select: new Subject<MinimalNodeEntryEntity[]>()
+        select: new Subject<Node[]>()
     };
 
     this.dialog.open(
@@ -91,7 +92,7 @@ openSelectorDialog() {
         }
     );
 
-    data.select.subscribe((selections: MinimalNodeEntryEntity[]) => {
+    data.select.subscribe((selections: Node[]) => {
         // Use or store selection...
     }, 
     (error)=>{
@@ -109,7 +110,7 @@ When the dialog action is selected by clicking, the `data.select` stream will be
 
 ### RowFilter and ImageResolver
 
-The Content Node Selector uses a [Document List](document-list.component.md) to display the
+The Content [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Selector uses a [Document List](document-list.component.md) to display the
 items that the user can choose. As with the standard Document List, you can supply a custom
 **row filter** function (to hide items that can't be chosen) and a custom **image resolver**
 function (to select an image to show in a particular list cell). For example, you could use
@@ -120,7 +121,7 @@ section of the Document List page to learn how these functions are implemented.
 ### Using the breadcrumbTransform function
 
 The `breadcrumbTransform` property of [`ContentNodeSelectorComponentData`](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) lets you modify
-the Node object that is used to generate the
+the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) object that is used to generate the
 list of breadcrumbs. You can use this, for example, to remove path elements that are not
 relevant to the use case. See the [Breadcrumb component](breadcrumb.component.md) page for an
 example of how to use this function.

@@ -2,7 +2,7 @@
 Title: Dropdown Breadcrumb Component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-06-08
+Last reviewed: 2019-01-16
 ---
 
 # [Dropdown Breadcrumb Component](../../lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts "Defined in dropdown-breadcrumb.component.ts")
@@ -26,7 +26,7 @@ Indicates the current position within a navigation hierarchy using a dropdown me
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| folderNode | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) | null | Active node, builds UI based on folderNode.path.elements collection. |
+| folderNode | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) | null | Active node, builds UI based on folderNode.path.elements collection. |
 | maxItems | `number` |  | Maximum number of nodes to display before wrapping them with a dropdown element. |
 | root | `string` | null | (optional) Name of the root element of the breadcrumb. You can use this property to rename "Company Home" to "Personal Files" for example. You can use an i18n resource key for the property value. |
 | rootId | `string` | null | (optional) The id of the root element. You can use this property to set a custom element the breadcrumb should start with. |
@@ -37,7 +37,7 @@ Indicates the current position within a navigation hierarchy using a dropdown me
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| navigate | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PathElementEntity`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when the user clicks on a breadcrumb. |
+| navigate | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the user clicks on a breadcrumb. |
 
 ## Details
 

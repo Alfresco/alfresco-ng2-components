@@ -22,10 +22,10 @@ Manages Task Instances.
     -   _taskId:_ `string`  - The task to assign
     -   _requestNode:_ `any`  - User or group to assign the task to
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../lib/process-services/task-list/models/task-details.model.ts)`>` - Details of the assigned task
--   **assignTaskByUserId**(taskId: `string`, userId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../lib/process-services/task-list/models/task-details.model.ts)`>`<br/>
+-   **assignTaskByUserId**(taskId: `string`, userId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../lib/process-services/task-list/models/task-details.model.ts)`>`<br/>
     Assigns a task to a user.
     -   _taskId:_ `string`  - ID of the task to assign
-    -   _userId:_ `number`  - ID of the user to assign the task to
+    -   _userId:_ `string`  - ID of the user to assign the task to
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../lib/process-services/task-list/models/task-details.model.ts)`>` - Details of the assigned task
 -   **attachFormToATask**(taskId: `string`, formId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Attaches a form to a task.
@@ -226,7 +226,7 @@ limited the found set to five items.
 
 ```ts
 import { TaskListService, TaskDetailsModel, TaskQueryRequestRepresentationModel, TaskListModel, Form } from '@alfresco/adf-process-services';
-import { TaskUpdateRepresentation } from 'alfresco-js-api';
+import { TaskUpdateRepresentation } from '@alfresco/js-api';
 
 export class SomePageComponent implements OnInit {
 

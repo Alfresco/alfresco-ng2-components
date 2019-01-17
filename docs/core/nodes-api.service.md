@@ -2,7 +2,7 @@
 Title: Nodes Api service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-13
+Last reviewed: 2019-01-16
 ---
 
 # [Nodes Api service](../../lib/core/services/nodes-api.service.ts "Defined in nodes-api.service.ts")
@@ -24,43 +24,43 @@ Accesses and manipulates ACS document nodes using their node IDs.
 
 ### Methods
 
--   **createFolder**(parentNodeId: `string`, nodeBody: `any`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
+-   **createFolder**(parentNodeId: `string`, nodeBody: `any`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
     Creates a new folder node inside a parent folder.
     -   _parentNodeId:_ `string`  - ID of the parent folder node
     -   _nodeBody:_ `any`  - Data for the new folder
     -   _options:_ `any`  - Optional parameters supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Details of the new folder
--   **createNode**(parentNodeId: `string`, nodeBody: `any`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Details of the new folder
+-   **createNode**(parentNodeId: `string`, nodeBody: `any`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
     Creates a new document node inside a folder.
     -   _parentNodeId:_ `string`  - ID of the parent folder node
     -   _nodeBody:_ `any`  - Data for the new node
     -   _options:_ `any`  - Optional parameters supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Details of the new node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Details of the new node
 -   **deleteNode**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Moves a node to the trashcan.
     -   _nodeId:_ `string`  - ID of the target node
     -   _options:_ `any`  - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Empty result that notifies when the deletion is complete
--   **getNode**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
+-   **getNode**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
     Gets the stored information about a node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _options:_ `any`  - Optional parameters supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Node information
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Node information
 -   **getNodeChildren**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
     Gets the items contained in a folder node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _options:_ `any`  - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of child items from the folder
--   **restoreNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
+-   **restoreNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
     Restores a node previously moved to the trashcan.
     -   _nodeId:_ `string`  - ID of the node to restore
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Details of the restored node
--   **updateNode**(nodeId: `string`, nodeBody: `any`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Details of the restored node
+-   **updateNode**(nodeId: `string`, nodeBody: `any`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
     Updates the information about a node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _nodeBody:_ `any`  - New data for the node
     -   _options:_ `any`  - Optional parameters supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Updated node information
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Updated node information
 
 ## Details
 
@@ -85,12 +85,10 @@ for more information.
 
 ### Getting node information
 
-The `getNode` method gives access to the MinimalNode object that represents the
+The `getNode` method gives access to the [MinimalNode](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) object that represents the
 details of a node:
 
 ```ts
-interface MinimalNodeEntryEntity extends MinimalNode {
-}
 interface MinimalNode extends Node {
    id: string;
    parentId: string;
@@ -112,18 +110,18 @@ This provides useful information about the node, such as its name, creation and
 modification dates, etc. Also, the `id` and `parentId` properties contain the node
 ID strings for the current node and its enclosing folder.
 
-Sometimes, a MinimalNode is provided directly, for example, the `folderNode` property
+Sometimes, a [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) is provided directly, for example, the `folderNode` property
 of a [Document List component](../content-services/document-list.component.md) or the data context of a
 [Document List row](../content-services/document-list.component.md#underlying-node-object). In these cases,
 you might pass the `id` or `parentId` as a [route parameter](https://angular.io/guide/router)
 to a page describing the node in full detail. The component receiving the node ID can
-use the [Nodes Api service](../core/nodes-api.service.md) to "decode" the ID string into a [`MinimalNodeEntryEntity`](../content-services/document-library.model.md):
+use the [Nodes Api service](../core/nodes-api.service.md) to "decode" the ID string into a `MinimalNode`:
 
 ```ts
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NodesApiService } from '@alfresco/adf-core';
-import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNode } from '@alfresco/js-api';
     ...
 
 export class RepositoryDetailsPageComponent implements OnInit {
@@ -139,8 +137,8 @@ export class RepositoryDetailsPageComponent implements OnInit {
 
  ngOnInit() {
    this.nodeId = this.activatedRoute.snapshot.params['node-id'];
-   this.nodeService.getNode(this.nodeId).subscribe((entry: MinimalNodeEntryEntity) => {
-     const node: MinimalNodeEntryEntity = entry;
+   this.nodeService.getNode(this.nodeId).subscribe((entry: MinimalNode) => {
+     const node: MinimalNode = entry;
      this.nodeName = node.name;
      this.isFile = node.isFile;
         ...
@@ -155,9 +153,7 @@ page in the Alfresco JS API docs for more information.
 ### Getting folder node contents
 
 The `getNodeChildren` method returns the contents of a folder
-as a list of items. See the [Paging section](../content-services/document-library.model.md#paging)
-of [Document Library model](../content-services/document-library.model.md) for
-more information about the structure of the list. Also, the
+as a list of items. The
 [getNodeChildren](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodesApi.md#getNodeChildren)
 page in the Alfresco JS API gives more information about the structure of the
 `options` parameter.
@@ -191,7 +187,6 @@ pages in the Alfresco JS API for further details and options. Note that you can 
 
 ## See also
 
--   [Document library model](../content-services/document-library.model.md)
 -   [Deleted nodes api service](deleted-nodes-api.service.md)
 -   [Document list component](../content-services/document-list.component.md)
 -   [Node service](node.service.md)
