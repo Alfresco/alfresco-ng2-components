@@ -5,7 +5,9 @@ Level: Basic
 
 # Adding a new component
 
-By definition, a _component_ controls a patch of screen called a _view_. For example, individual components define and control menus, tabs, forms, buttons and every simple or complex portion ofan application's layout. In this tutorial, you will learn how to create a component using [Angular CLI](https://cli.angular.io/) within an existing application.
+In this tutorial, you will learn how to create a component using [Angular CLI](https://cli.angular.io/) within an existing application.
+
+By definition, a _component_ controls a patch of screen called a _view_. For example, individual components define and control menus, tabs, forms, buttons and every simple or complex portion of an application's layout. 
 
 ## Creating a component
 

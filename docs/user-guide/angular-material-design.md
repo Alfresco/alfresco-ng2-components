@@ -4,6 +4,8 @@ Title: Angular Material Design
 
 # Angular Material Design
 
+This page describes the Angular Material Design library and how it is used in ADF.
+ 
 Google's
 [Material Design](https://material.io/guidelines/material-design/introduction.html)
 is an example of a _design language_, a

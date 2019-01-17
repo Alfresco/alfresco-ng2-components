@@ -72,7 +72,7 @@ Below are the most important new features of this release:
 
 With ADF 2.4.0 we support SSO as login for CS and PS both of which include native support for using Keycloak.
 For more information about how to configure SSO on ADF please refer to:
-[the SSO section of the Login component docs.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/login.component.md#sso-login)
+[the SSO section of the Login component docs.](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/core/login.component.md#single-sign-on-sso)
 
 **Please note that the SSO support requires ACS 6.0, APS 1.9 or later using Keycloak.**
 
@@ -123,7 +123,7 @@ You can still override it from the parent component using `<ng-template>`.
 
 ### ProcessList Empty Page
 
-In the version 2.4, the [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) uses the empty state component if there are no available processes.   
+In the version 2.4, the [`ProcessList`](../../lib/process-services/mock/process/process.model.mock.ts) uses the empty state component if there are no available processes.  
 You can still override it from the parent component using `<ng-template>`.
 
 ![Process list Empty Page](images/Screen+Shot+2018-06-25+at+11.16.57.png)
@@ -215,7 +215,7 @@ Below you can find a brief list of references to help you start using the new re
 
 -   [Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
 -   [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
--   [Component catalog](https://alfresco.github.io/adf-component-catalog/)
+-   Component catalog
 -   [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
 -   [ADF examples](https://github.com/Alfresco/adf-examples)
 -   [List of all components](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components)
@@ -314,7 +314,7 @@ Release Notes - Apps Development Framework - Version 2.4.0
 -   \[[ADF-2726](https://issues.alfresco.com/jira/browse/ADF-2726)] - Not able to view a file from the attach file widget.
 -   \[[ADF-2739](https://issues.alfresco.com/jira/browse/ADF-2739)] - Breadcrumb issue if the folder name is too big.
 -   \[[ADF-2760](https://issues.alfresco.com/jira/browse/ADF-2760)] - Background colour for document lists is not white
--   \[[ADF-2766](https://issues.alfresco.com/jira/browse/ADF-2766)] - Download Node Directive does not work with Shared Links
+-   \[[ADF-2766](https://issues.alfresco.com/jira/browse/ADF-2766)] - Download [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Directive does not work with Shared Links
 -   \[[ADF-2767](https://issues.alfresco.com/jira/browse/ADF-2767)] - Side nav is not responsive
 -   \[[ADF-2771](https://issues.alfresco.com/jira/browse/ADF-2771)] - [Sidebar action menu component](../core/sidebar-action-menu.component.md) - UX review
 -   \[[ADF-2772](https://issues.alfresco.com/jira/browse/ADF-2772)] - Sidenav Layout - UX review

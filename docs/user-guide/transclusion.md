@@ -6,7 +6,9 @@ Added: v2.6.0
 # Transclusion
 
 Several components in ADF make use of **transclusion**, which is the technique
-of incorporating user-supplied content in the body of a standard component. In
+of incorporating user-supplied content in the body of a standard component.
+
+In
 most cases, this is used to make small customizations (for example, the various
 list components let you supply custom content to show when the list is empty).
 However, there are also a few "containers" whose entire content is set by the user

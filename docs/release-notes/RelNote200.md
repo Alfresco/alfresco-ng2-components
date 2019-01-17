@@ -69,7 +69,8 @@ Please note the only major version valid for the package @alfresco/adf-insights 
 While this release had a high focus on stabilization and bug fixes, we have also introduced new and enhanced features. These include a completely revamped [Viewer component,](../core/viewer.component.md) a new metadata component and file versioning. Also, ADF is now localized into 11 different languages. In total we have closed around 242 issues in JIRA.
 
 Since we follow [SEMVER](https://semver.org), we can only introduce breaking changes in major releases. We learned a lot and we needed to restructure and rename components to make things easier moving forward. You can see all the details about the breaking changes below.
-We have continued to expand and rewrite our documentation. We now have a [new component catalog](https://alfresco.github.io/adf-component-catalog/) running that we hope you'll enjoy.
+We have continued to expand and rewrite our documentation. We now have a new component catalog
+running that we hope you'll enjoy.
 
 The Yeoman generators have been updated. We now ship three small [Angular CLI](https://cli.angular.io)
 based applications to help get you started.
@@ -231,7 +232,7 @@ For more details please refer to [Upload button documentation](../content-servic
 
 ### 8. Register Alfresco file type icons within the mat-icon
 
-All the ADF MIME type icons are now registered into the MatIconRegistry. This improvement allows you to use all the icons through the mat-icon tag:
+All the ADF MIME type icons are now registered into the [MatIconRegistry](https://material.angular.io/components/icon/api). This improvement allows you to use all the icons through the mat-icon tag:
 
 ![](images/Untitled.gif)
 
@@ -255,7 +256,7 @@ The [log service](../core/log.service.md) provides 6 level of logs: TRACE, DEBUG
 
 ### 10. Favorite node directive
 
-The NodeFavoriteDirective instance can be bound to a button to retrieve and manage a favorites node list:
+The [NodeFavoriteDirective](../core/node-favorite.directive.md) instance can be bound to a button to retrieve and manage a favorites node list:
 
     <button mat-icon-button
             #favorite="adfFavorite"
@@ -475,18 +476,18 @@ The **extension-viewer** tag (used to extend the viewer behavior to open extensi
 
 | Properties | Description |
 | ---------- | ----------- |
-| enabled |  Deprecated in 1.6.0 in favor of disabled input property |
-| showNotificationBar  | Deprecated in 1.6.0 you can use [`UploadService`](../core/upload.service.md) events and [`NotificationService`](../core/notification.service.md) api instead. |
-| currentFolderPath  | Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead. |
-| rootFolderId  | Deprecated in 1.6.0, this property is not used for couple of releases already. Use parentId instead |
+| enabled | Deprecated in 1.6.0 in favor of disabled input property |
+| showNotificationBar | Deprecated in 1.6.0 you can use [`UploadService`](../core/upload.service.md) events and [`NotificationService`](../core/notification.service.md) api instead. |
+| currentFolderPath | Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead. |
+| rootFolderId | Deprecated in 1.6.0, this property is not used for couple of releases already. Use parentId instead |
 
 **adf-upload-button :**
 
 | Properties | Description |
 | ---------- | ----------- |
-| showNotificationBar  | Deprecated in 1.6.0 you can use [`UploadService`](../core/upload.service.md) events and NotificationService api instead. |
-| currentFolderPath  | Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead. |
-| disableWithNoPermission  | Deprecated in 1.8.0, use the button with combination of adf-node-permission directive |
+| showNotificationBar | Deprecated in 1.6.0 you can use [`UploadService`](../core/upload.service.md) events and [NotificationService](../core/notification.service.md) api instead. |
+| currentFolderPath | Deprecated in 1.6.0, this property is not used for couple of releases already. Use rootFolderId instead. |
+| disableWithNoPermission | Deprecated in 1.8.0, use the button with combination of adf-node-permission directive |
 
 ### Internal pagination has been removed from the DocumentList
 
@@ -555,7 +556,7 @@ Below you can find a brief list of references to help you start to use the new r
 
 [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
 
-[Component catalog](https://alfresco.github.io/adf-component-catalog/)
+Component catalog
 
 [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
 
@@ -583,7 +584,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1633](https://issues.alfresco.com/jira/browse/ADF-1633)] - [Login] redirect to original path upon successful login
 -   \[[ADF-1694](https://issues.alfresco.com/jira/browse/ADF-1694)] - Date-picker i18n support
 -   \[[ADF-1723](https://issues.alfresco.com/jira/browse/ADF-1723)] - [Service][logservice](../core/log.service.md) configuration
--   \[[ADF-1729](https://issues.alfresco.com/jira/browse/ADF-1729)] - [Directive] Mark Node as Favorite Directive
+-   \[[ADF-1729](https://issues.alfresco.com/jira/browse/ADF-1729)] - [Directive] Mark [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) as Favorite Directive
 -   \[[ADF-1745](https://issues.alfresco.com/jira/browse/ADF-1745)] - [Directive] Delete multiple nodes directive
 -   \[[ADF-1749](https://issues.alfresco.com/jira/browse/ADF-1749)] - [Task List][process list] - Customizable template using the app.config.json
 -   \[[ADF-1750](https://issues.alfresco.com/jira/browse/ADF-1750)] - [Viewer] Content projection for "Open With" and "More actions"

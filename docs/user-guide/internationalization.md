@@ -7,7 +7,9 @@ Added: v2.2.0
 
 Internationalization (abbreviated to i18n) is the process of providing UI messages
 and captions in different human languages to make them easier for readers of those
-languages to understand. ADF provides full support for i18n in apps. The process does
+languages to understand.
+
+ADF provides full support for i18n in apps. The process does
 require some extra effort in planning and designing the UI but once implemented, it is
 fairly straightforward to maintain.
 
@@ -236,20 +238,20 @@ preferences can only be saved by the app when it runs, they will not immediately
 the app launches for the first time. The app uses the following priorities to determine
 the locale language for the first launch:
 
-1. If the `locale` property is set in `app.config.json` then this will be used.
-1. If there is no `locale` property then the browser's language setting will be used instead.
-1. If neither of the first two options is available then English will be used by default.
+1.  If the `locale` property is set in `app.config.json` then this will be used.
+2.  If there is no `locale` property then the browser's language setting will be used instead.
+3.  If neither of the first two options is available then English will be used by default.
 
 The table below illustrates how the selection is made:
 
 | User Preference | `locale` in `app.config.json` | Browser language | Default | Result |
-| -- | -- | -- | -- | -- |
+| --------------- | ----------------------------- | ---------------- | ------- | ------ |
 | X | X | X | en | en |
 | X | X | jp | en | jp |
 | X | fr | jp | en | fr |
 | it | fr | jp | en | it |
 
-The translation service probes the browser culture first, for example `en-GB`.
+The [translation service](../core/translation.service.md) probes the browser culture first, for example `en-GB`.
 If the `en-GB.json` file does not exist, the service falls back to the language id: `en`.
 
 Once the locale language is determined, it is saved to the user preferences and this saved value

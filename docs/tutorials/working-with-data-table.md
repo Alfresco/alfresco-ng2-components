@@ -5,24 +5,26 @@ Level: Intermediate
 
 # Working with a Data Table
 
-In this tutorial you will learn how to populate a [`DataTable` component](https://alfresco.github.io/adf-component-catalog/components/DataTableComponent.html) with custom data from a generic back-end service or third party API. As an example we are going to use data from one of the available services on Alfresco Content Services. However, the procedure is much the same if want to use an Alfresco Process Services endpoint or a third party API.
+In this tutorial you will learn how to populate a DataTable component.
+
+The custom data for the table generally comes from a generic back-end service or third party API. As an example we are going to use data from one of the available services on Alfresco Content Services. However, the procedure is much the same if want to use an Alfresco Process Services endpoint or a third party API.
 
 ## Prerequisites and data source
 
 Before diving deep into the technical description of the
-[`DataTable` component](https://alfresco.github.io/adf-component-catalog/components/DataTableComponent.html),
+[DataTable component](../core/datatable.component.md),
 let's start with a description of the development environment and its prerequisites.
 
 In this tutorial we will start from an existing ADF application set up to use (at least) Alfresco Content
 Services as a service layer. For convenience and relevance to the Data Table, we suggest using the
 [Alfresco Example Content Application](https://github.com/Alfresco/alfresco-content-app). This application
-is well documented [here](https://alfresco.github.io/alfresco-content-app/#/), and you can choose to
+is well documented, and you can choose to
 [build it from the source code](https://alfresco.github.io/alfresco-content-app/#/build) or
 [run it in a Docker container](https://alfresco.github.io/alfresco-content-app/#/docker).
 However, if you prefer to create a brand new ADF application from scratch then you should still be able
 to follow the tutorial without difficulty.
 
-For this tutorial, the endpoint used to populate the [Data Table component](../../lib/core/datatable/components/datatable/datatable.component.ts) is the
+For this tutorial, the endpoint used to populate the [DataTable component](../../lib/core/datatable/components/datatable/datatable.component.ts) is the
 [`/people` service](https://api-explorer.alfresco.com/api-explorer/#!/people/listPeople) which lists
 all users available in an Alfresco Content Services instance. The `/people` service is suitable for the
 purpose of this tutorial because it is available by default in the Alfresco Content Services REST API.
@@ -169,7 +171,7 @@ of the DataTable, and even smaller components like Attachment List, Comment List
 Content Selector are also based on it.
 
 Looking at the
-[documentation](https://alfresco.github.io/adf-component-catalog/components/DataTableComponent.html),
+[documentation](../core/datatable.component.md),
 we can see that it has a lot of different options, including single/multi selection, click events,
 context menus, actions and keyboard navigation.
 
@@ -199,7 +201,7 @@ access to all the data in the row, if required. When you click a row, you should
 ## DataTable columns
 
 Let's dig a bit deeper into the different options for rendering columns within the DataTable. The documentation for the
-[Data Column component](https://alfresco.github.io/adf-component-catalog/components/DataColumnComponent.html)
+[Data Column component](../core/data-column.component.md)
 is quite in-depth and has lots of examples. We highly recommend checking it out.
 
 From the documentation we can see that the [Data Column component](../core/data-column.component.md) has quite a few properties but the

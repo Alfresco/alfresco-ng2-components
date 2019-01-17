@@ -5,9 +5,7 @@ Added: v2.0.0
 
 # ADF Typography
 
-## What is typography?
-
-Typography configuration lets you change the style of the text in your ADF app
+Typography configuration lets you change the style of the text in your ADF app.
 
 ## Customization
 

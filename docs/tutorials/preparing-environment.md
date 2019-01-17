@@ -5,16 +5,18 @@ Level: Beginner
 
 # Preparing the development environment
 
-Here you will find the prerequisites for all the tutorials and descriptions of the entire documentation. This document contains the development environment description, along with the details of the suggested versions for each tool, library and module.
+Here you will find the prerequisites for all the tutorials and descriptions of the entire documentation.
+
+This document contains the development environment description, along with the details of the suggested versions for each tool, library and module.
 
 ## Node.js
 
-[Node.js](https://nodejs.org) is a JavaScript runtime built using an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js uses [npm](https://www.npmjs.com/) as a public registry and package system.
+[Node.js](https://nodejs.org) is a JavaScript runtime built using an event-driven, non-blocking I/O model that makes it lightweight and efficient. [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md).js uses [npm](https://www.npmjs.com/) as a public registry and package system.
 
 You need the latest `node.js` from either the `8.x` or `9.x` branch.
 To check the version, run the following command in a terminal. 
 
-	node -v
+    node -v
 
 ## Angular CLI
 
@@ -24,15 +26,15 @@ Version 1.6.6 seems to be the most stable version currently. Earlier and later v
 
 If you already have `Angular CLI` installed check the version by running:
 
-	ng --version
+    ng --version
 
 To globally install `Angular CLI` version globally 1.6.6 run:
 
-	sudo npm install -g @angular/cli@1.6.6
+    sudo npm install -g @angular/cli@1.6.6
 
 ## Code Editor
 
-We recommend [Visual Studio Code](http://code.visualstudio.com) - it's a free, lightweight and *very* powerful tool from Microsoft that works well for Angular development.
+We recommend [Visual Studio Code](http://code.visualstudio.com) - it's a free, lightweight and _very_ powerful tool from Microsoft that works well for Angular development.
 
 ## Alfresco Content Services (optional)
 
@@ -52,24 +54,24 @@ Please note that ADF applications are compatible with [Alfresco Process Services
 
 You can check if you have `Yeoman` installed by running `yo --version`. If this is not in your system then you can install it by running:
 
-	sudo npm install -g yo
+    sudo npm install -g yo
 
 (The `sudo` command is not required on Windows but you may need to ensure you are running a command
 prompt with Administrator privileges).
 
 Install the latest version of the `generator-alfresco-adf-app` using the following command.
 
-	sudo npm install -g generator-alfresco-adf-app
+    sudo npm install -g generator-alfresco-adf-app
 
 If you have an earlier version of the generator installed then it usually a good idea to uninstall it before reinstalling the latest version. This is especially true if you installed the generator packages before ADF 2.0 because the packages were renamed for this version.
 
 Uninstall previous versions with:
 
-	sudo npm uninstall generator-alfresco-adf-app
+    sudo npm uninstall generator-alfresco-adf-app
 
 ...for versions after ADF 2.0 and:
 
-	sudo npm uninstall generator-ng2-alfresco-app
+    sudo npm uninstall generator-ng2-alfresco-app
 
 ...for versions before ADF 2.0.	
 
