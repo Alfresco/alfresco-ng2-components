@@ -46,6 +46,7 @@ export class FileViewComponent implements OnInit {
     allowRightSidebar = true;
     allowLeftSidebar = true;
     moreActions = true;
+    moreActionsMenu = false;
     customName = false;
     fileUrlSwitch = false;
     showLeftSidebar = null;
@@ -121,6 +122,10 @@ export class FileViewComponent implements OnInit {
 
     toggleOpenMoreActions() {
         this.moreActions = !this.moreActions;
+    }
+
+    toggleMoreActionsMenu() {
+        this.moreActionsMenu = !this.moreActionsMenu;
     }
 
     toggleShowRightSidebar() {

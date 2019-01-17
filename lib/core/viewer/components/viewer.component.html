@@ -100,20 +100,6 @@
                     <mat-icon>fullscreen</mat-icon>
                 </button>
 
-                <ng-container *ngIf="mnuMoreActions">
-                    <button
-                        id="adf-viewer-moreactions"
-                        mat-icon-button
-                        [matMenuTriggerFor]="mnuMoreActions"
-                        title="{{ 'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate }}"
-                        data-automation-id="adf-toolbar-more-actions">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #mnuMoreActions="matMenu" [overlapTrigger]="false">
-                        <ng-content select="adf-viewer-more-actions"></ng-content>
-                    </mat-menu>
-                </ng-container>
-
                 <ng-container *ngIf="allowRightSidebar">
                     <adf-toolbar-divider></adf-toolbar-divider>
 
@@ -126,6 +112,20 @@
                         <mat-icon>info_outline</mat-icon>
                     </button>
 
+                </ng-container>
+
+                <ng-container *ngIf="mnuMoreActions">
+                    <button
+                        id="adf-viewer-moreactions"
+                        mat-icon-button
+                        [matMenuTriggerFor]="mnuMoreActions"
+                        title="{{ 'ADF_VIEWER.ACTIONS.MORE_ACTIONS' | translate }}"
+                        data-automation-id="adf-toolbar-more-actions">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #mnuMoreActions="matMenu" [overlapTrigger]="false">
+                        <ng-content select="adf-viewer-more-actions"></ng-content>
+                    </mat-menu>
                 </ng-container>
 
             </adf-toolbar>
