@@ -2,7 +2,7 @@
 Title: Node Permission service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-14
+Last reviewed: 2019-01-16
 ---
 
 # [Node Permission service](../../lib/content-services/permission-manager/services/node-permission.service.ts "Defined in node-permission.service.ts")
@@ -13,36 +13,36 @@ Manages role permissions for content nodes.
 
 ### Methods
 
--   **getGroupMemberByGroupName**(groupName: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<GroupMemberPaging>`<br/>
+-   **getGroupMemberByGroupName**(groupName: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`GroupMemberPaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/GroupMemberPaging.md)`>`<br/>
     Gets all members related to a group name.
     -   _groupName:_ `string`  - Name of group to look for members
     -   _opts:_ `any`  - (Optional) Extra options supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<GroupMemberPaging>` - List of members
--   **getNodeRoles**(node: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`GroupMemberPaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/GroupMemberPaging.md)`>` - List of members
+-   **getNodeRoles**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>`<br/>
     Gets a list of roles for the current node.
-    -   _node:_ [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)  - The target node
+    -   _node:_ [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)  - The target node
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>` - Array of strings representing the roles
--   **removePermission**(node: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md), permissionToRemove: `PermissionElement`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
+-   **removePermission**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md), permissionToRemove: `PermissionElement`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>`<br/>
     Removes a permission setting from a node.
-    -   _node:_ [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)  - ID of the target node
+    -   _node:_ [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)  - ID of the target node
     -   _permissionToRemove:_ `PermissionElement`  - Permission setting to remove
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Node with modified permissions
--   **updateLocallySetPermissions**(node: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md), nodes: [`MinimalNodeEntity`](../content-services/document-library.model.md)`[]`, nodeRole: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` - Node with modified permissions
+-   **updateLocallySetPermissions**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md), nodes: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]`, nodeRole: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>`<br/>
     Updates the locally set permissions for a node.
-    -   _node:_ [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)  - ID of the target node
-    -   _nodes:_ [`MinimalNodeEntity`](../content-services/document-library.model.md)`[]`  - Permission settings
+    -   _node:_ [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)  - ID of the target node
+    -   _nodes:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]`  - Permission settings
     -   _nodeRole:_ `string[]`  - Permission role
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Node with updated permissions
--   **updateNodePermissions**(nodeId: `string`, permissionList: [`MinimalNodeEntity`](../content-services/document-library.model.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` - Node with updated permissions
+-   **updateNodePermissions**(nodeId: `string`, permissionList: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>`<br/>
     Update permissions for a node.
     -   _nodeId:_ `string`  - ID of the target node
-    -   _permissionList:_ [`MinimalNodeEntity`](../content-services/document-library.model.md)`[]`  - New permission settings
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Node with updated permissions
--   **updatePermissionRole**(node: [`MinimalNodeEntryEntity`](../content-services/document-library.model.md), updatedPermissionRole: `PermissionElement`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>`<br/>
+    -   _permissionList:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]`  - New permission settings
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` - Node with updated permissions
+-   **updatePermissionRole**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md), updatedPermissionRole: `PermissionElement`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>`<br/>
     Updates the permission role for a node.
-    -   _node:_ [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)  - Target node
+    -   _node:_ [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)  - Target node
     -   _updatedPermissionRole:_ `PermissionElement`  - Permission role to update or add
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` - Node with updated permission
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` - Node with updated permission
 
 ## Details
 

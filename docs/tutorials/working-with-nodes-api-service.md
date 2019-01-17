@@ -5,15 +5,17 @@ Level: Intermediate
 
 # Working with the Nodes API Service
 
-In this tutorial you will learn how to use the [`NodesApiService`](../core/nodes-api.service.md). We have developed some practical examples to show you how to interact with an instance of Alfresco Content Services without using the REST endpoints directly. With this approach the [`NodesApiService`](../core/nodes-api.service.md) is used as an abstraction layer, defined by one of the services in the ADF Core library.
+In this tutorial you will learn how to use the [`NodesApiService`](../core/nodes-api.service.md).
+
+We have developed some practical examples to show you how to interact with an instance of Alfresco Content Services without using the REST endpoints directly. With this approach the [`NodesApiService`](../core/nodes-api.service.md) is used as an abstraction layer, defined by one of the services in the ADF Core library.
 
 ## Contents
 
 -   [Preparing the development environment](#preparing-the-development-environment)
 -   [Basic examples of usage](#basic-examples-of-usage)
--   [About the ](#about-the-nodesapiservice)
+-   [About the NodesApiService](#about-the-nodesapiservice)
     -   [Observables](#observables)
-    -   [MinimalNodeEntryEntity](#minimalnodeentryentity)
+    -   [MinimalNode](#minimalnode)
     -   [NodePaging](#nodepaging)
 -   [Retrieving info and metadata from a node](#retrieving-info-and-metadata-from-a-node)
 -   [Retrieving the node's children](#retrieving-the-nodes-children)
@@ -71,9 +73,7 @@ property that represents the [`NodesApiService`](../core/nodes-api.service.md) i
 
 ## About the NodesApiService
 
-Before going further, let's introduce the [`NodesApiService`](../core/nodes-api.service.md) class. For further details about the
-implementation, see the
-[component catalog page](https://alfresco.github.io/adf-component-catalog/injectables/NodesApiService.html).
+Before going further, let's introduce the [`NodesApiService`](../core/nodes-api.service.md) class.
 As you can see, the available methods are easy to understand and they should be all you need to
 manage the nodes of your content repository.
 
@@ -94,10 +94,10 @@ this.nodesApi.getNode(nodeId).subscribe(
 );
 ```
 
-### MinimalNodeEntryEntity
+### MinimalNode
 
-All the methods that manage content nodes return an [`Observable`](http://reactivex.io/documentation/observable.html) of the [`MinimalNodeEntryEntity`](../content-services/document-library.model.md)
-class. [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) is used to represent the node's content. See the
+All the methods that manage content nodes return an [`Observable`](http://reactivex.io/documentation/observable.html) of the [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)
+class. [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) is used to represent the node's content. See the
 [official documentation](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)
 for further details.
 

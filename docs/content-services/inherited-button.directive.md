@@ -2,7 +2,7 @@
 Title: Inherit Permission directive
 Added: v2.3.0
 Status: Active
-Last reviewed: 2018-11-20
+Last reviewed: 2019-01-16
 ---
 
 # [Inherit Permission directive](../../lib/content-services/permission-manager/components/inherited-button.directive.ts "Defined in inherited-button.directive.ts")
@@ -31,7 +31,7 @@ Update the current node by adding/removing the inherited permissions.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| updated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when the node is updated. |
+| updated | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` | Emitted when the node is updated. |
 
 ## Details
 

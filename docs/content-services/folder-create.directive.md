@@ -2,7 +2,7 @@
 Title: Folder Create directive
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-20
+Last reviewed: 2019-01-16
 ---
 
 # [Folder Create directive](../../lib/content-services/folder-directive/folder-create.directive.ts "Defined in folder-create.directive.ts")
@@ -41,7 +41,7 @@ Creates folders.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs (eg, a folder with same name already exists). |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when the folder is created successfully. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` | Emitted when the folder is created successfully. |
 
 ## Details
 

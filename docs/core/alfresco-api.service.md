@@ -2,7 +2,7 @@
 Title: Alfresco Api Service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-04-13
+Last reviewed: 2019-01-17
 ---
 
 # [Alfresco Api Service](../../lib/core/services/alfresco-api.service.ts "Defined in alfresco-api.service.ts")
@@ -47,7 +47,7 @@ export class MyComponent implements OnInit {
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| nodeUpdated | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`MinimalNodeEntryEntity`](../content-services/document-library.model.md)`>` | Emitted when a node updates. |
+| nodeUpdated | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` | Emitted when a node updates. |
 
 ## Details
 

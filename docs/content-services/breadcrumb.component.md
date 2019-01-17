@@ -2,7 +2,7 @@
 Title: Breadcrumb Component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-06-08
+Last reviewed: 2019-01-16
 ---
 
 # [Breadcrumb Component](../../lib/content-services/breadcrumb/breadcrumb.component.ts "Defined in breadcrumb.component.ts")
@@ -26,7 +26,7 @@ Indicates the current position within a navigation hierarchy.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| folderNode | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) | null | Active node, builds UI based on folderNode.path.elements collection. |
+| folderNode | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) | null | Active node, builds UI based on folderNode.path.elements collection. |
 | maxItems | `number` |  | Maximum number of nodes to display before wrapping them with a dropdown element. |
 | root | `string` | null | (optional) Name of the root element of the breadcrumb. You can use this property to rename "Company Home" to "Personal Files" for example. You can use an i18n resource key for the property value. |
 | rootId | `string` | null | (optional) The id of the root element. You can use this property to set a custom element the breadcrumb should start with. |
@@ -37,7 +37,7 @@ Indicates the current position within a navigation hierarchy.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| navigate | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PathElementEntity`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when the user clicks on a breadcrumb. |
+| navigate | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the user clicks on a breadcrumb. |
 
 ## Details
 
@@ -48,7 +48,7 @@ removed and kept in a menu as with the
 
 ### Using the transform function
 
-The function supplied in the `transform` property lets you modify the Node object that the component
+The function supplied in the `transform` property lets you modify the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) object that the component
 uses to find the "crumbs" for the list. You can use this, for example, to remove unwanted items from
 the list by altering the node's `path.elements` property.
 
@@ -75,7 +75,7 @@ initialization:
 A transform function to remove the "Sites" folder from the path would look something like this:
 
 ```ts
-    private changeBreadcrumbPath(node: MinimalNodeEntryEntity) {
+    private changeBreadcrumbPath(node: Node) {
 
         if (node && node.path && node.path.elements) {
             const elements = node.path.elements;
