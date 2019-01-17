@@ -63,7 +63,7 @@ Below are the most important new features of this release:
 -   Inherit permission button
 -   Share File
 -   Lock File
--   Comment a Node
+-   Comment a [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)
 -   Inherit Permission Button
 -   [Permission List Component](../content-services/permission-list.component.md)
 -   [Sidenav Layout Component](../core/sidenav-layout.component.md)
@@ -232,7 +232,7 @@ Below you can find a brief list of references to help youstart to use the new re
 
 [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
 
-[Component catalog](https://alfresco.github.io/adf-component-catalog/)
+Component catalog
 
 [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
 
@@ -316,7 +316,7 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2368](https://issues.alfresco.com/jira/browse/ADF-2368)] - Manage file version is updating wrong files.
 -   \[[ADF-2373](https://issues.alfresco.com/jira/browse/ADF-2373)] - User should be able to see just the sites in which is member in SiteList drop-down
 -   \[[ADF-2393](https://issues.alfresco.com/jira/browse/ADF-2393)] - Error when deleting a folder when Infinite scrolling is enabled and all items are loaded
--   \[[ADF-2397](https://issues.alfresco.com/jira/browse/ADF-2397)] - Sometimes Load more on Content Node Selector does not load next page of results
+-   \[[ADF-2397](https://issues.alfresco.com/jira/browse/ADF-2397)] - Sometimes Load more on Content [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Selector does not load next page of results
 -   \[[ADF-2414](https://issues.alfresco.com/jira/browse/ADF-2414)] - Translation missing for warning message on Login Page
 -   \[[ADF-2421](https://issues.alfresco.com/jira/browse/ADF-2421)] - CLONE - Unable to copy / move a file from Recent or Favorites when user has only granular permissions on the file
 -   \[[ADF-2428](https://issues.alfresco.com/jira/browse/ADF-2428)] - \[Demo shell Unable to view document metadata from document list view
@@ -329,7 +329,7 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2454](https://issues.alfresco.com/jira/browse/ADF-2454)] - Login dialog icon and header text not centered correctly
 -   \[[ADF-2455](https://issues.alfresco.com/jira/browse/ADF-2455)] - Document List does not render thumbnails
 -   \[[ADF-2461](https://issues.alfresco.com/jira/browse/ADF-2461)] - Pdf viewer worker are not unregistered
--   \[[ADF-2465](https://issues.alfresco.com/jira/browse/ADF-2465)] - Sometimes, navigating using the breadcrumb opens another folder instead of the clicked one - after search performed on the Content Node Selector
+-   \[[ADF-2465](https://issues.alfresco.com/jira/browse/ADF-2465)] - Sometimes, navigating using the breadcrumb opens another folder instead of the clicked one - after search performed on the Content [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Selector
 -   \[[ADF-2468](https://issues.alfresco.com/jira/browse/ADF-2468)] - Error message displayed in console when navigating to tag page
 -   \[[ADF-2470](https://issues.alfresco.com/jira/browse/ADF-2470)] - Search API implementation is incomplete
 -   \[[ADF-2480](https://issues.alfresco.com/jira/browse/ADF-2480)] - Document List is not refreshed after deleting a file
@@ -349,10 +349,10 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2604](https://issues.alfresco.com/jira/browse/ADF-2604)] - Incorrect definitions for Enums
 -   \[[ADF-2607](https://issues.alfresco.com/jira/browse/ADF-2607)] - Task [`Form`](../../lib/process-services/task-list/models/form.model.ts) - Number Widget placeholder no longer displayed
 -   \[[ADF-2624](https://issues.alfresco.com/jira/browse/ADF-2624)] - All metadata card component children display parent info drawer tooltip
--   \[[ADF-2625](https://issues.alfresco.com/jira/browse/ADF-2625)] - Node name not updated when changing its value in metadata component
+-   \[[ADF-2625](https://issues.alfresco.com/jira/browse/ADF-2625)] - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) name not updated when changing its value in metadata component
 -   \[[ADF-2628](https://issues.alfresco.com/jira/browse/ADF-2628)] - Metadata editors miss tooltips
 -   \[[ADF-2630](https://issues.alfresco.com/jira/browse/ADF-2630)] - demo shell: tabs of the info drawer are not translated
--   \[[ADF-2634](https://issues.alfresco.com/jira/browse/ADF-2634)] - Node Version List actions are not localised
+-   \[[ADF-2634](https://issues.alfresco.com/jira/browse/ADF-2634)] - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Version List actions are not localised
 -   \[[ADF-2636](https://issues.alfresco.com/jira/browse/ADF-2636)] - Console gives an error when trying to load ADF on safari
 -   \[[ADF-2660](https://issues.alfresco.com/jira/browse/ADF-2660)] - ADF [Process Service](../process-services/process.service.md) lib is not importing the content dependency
 -   \[[ADF-2662](https://issues.alfresco.com/jira/browse/ADF-2662)] - [Settings Component] Still able to sign in when changing APS or ACS URLS to invalid URL
@@ -397,7 +397,7 @@ Release Notes - Apps Development Framework - Version 2.3.0
 -   \[[ADF-2394](https://issues.alfresco.com/jira/browse/ADF-2394)] - Process List Component - Should expose the mutiSelect property
 -   \[[ADF-2405](https://issues.alfresco.com/jira/browse/ADF-2405)] - [Process Service](../process-services/process.service.md) - Add a new method to get all process definition versions
 -   \[[ADF-2412](https://issues.alfresco.com/jira/browse/ADF-2412)] - Task List - refactoring
--   \[[ADF-2417](https://issues.alfresco.com/jira/browse/ADF-2417)] - Remove the default Node ID from tag page in demo-shell
+-   \[[ADF-2417](https://issues.alfresco.com/jira/browse/ADF-2417)] - Remove the default [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) ID from tag page in demo-shell
 -   \[[ADF-2424](https://issues.alfresco.com/jira/browse/ADF-2424)] - Docker file size decreasing
 -   \[[ADF-2462](https://issues.alfresco.com/jira/browse/ADF-2462)] - Automatic PR script after any beta release
 -   \[[ADF-2471](https://issues.alfresco.com/jira/browse/ADF-2471)] - Create smoke tests to cover Colour change component

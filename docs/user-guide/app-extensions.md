@@ -45,7 +45,7 @@ a place in the app where the actual content will be supplied dynamically.
 ADF provides a number of features that offer extension points or help
 with extensibility in general:
 
--   **Components**: The [Dynamic component](../extensions/dynamic.component.md) and Dynamic Tab component
+-   **Components**: The [Dynamic component](../extensions/dynamic.component.md) and [Dynamic Tab component](../extensions/dynamic-tab.component.md)
     have no content of their own but they have an `id` property that
     references a registered component extension ID. The referenced component
     will be added as a child of the Dynamic component at runtime.
@@ -79,7 +79,7 @@ with extensibility in general:
 ## Setting up an app for extensibility
 
 You can register component classes for use with the [Dynamic component](../extensions/dynamic.component.md)
-or Dynamic Tab component using the `setComponents` method of the
+or [Dynamic Tab component](../extensions/dynamic-tab.component.md) using the `setComponents` method of the
 [Extension service](../extensions/extension.service.md) (see the Dynamic component page for further details
 and code samples). The service also has `setAuthGuards` and
 `setEvaluators` methods that behave analogously.
@@ -174,7 +174,7 @@ The `actions` array has the following structure:
 ```
 
 The [Extension service](../extensions/extension.service.md) defines a `getActionById` method that returns an
-`ActionRef` object corresponding to an item from this array.
+[`ActionRef`](../../lib/extensions/src/lib/config/action.extensions.ts) object corresponding to an item from this array.
 
 The `type` property refers to an action type that must be provided by the
 app (eg, the "SNACKBAR_INFO" in the example presumably just shows a standard snackbar

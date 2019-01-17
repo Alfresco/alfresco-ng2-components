@@ -5,6 +5,8 @@ Added: v2.0.0
 
 # Form Extensibility and Customization
 
+This page describes how you can customize ADF forms to your own specification.
+
 _Note: it is assumed you are familiar with Alfresco Process Services (powered by Activiti) form definition structure._
 
 -   How components and widgets are rendered on a [`Form`](../../lib/process-services/task-list/models/form.model.ts)

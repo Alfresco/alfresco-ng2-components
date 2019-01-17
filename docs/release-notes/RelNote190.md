@@ -350,7 +350,7 @@ Release Notes - Apps Development Framework - Version 1.9.
 -   \[[ADF-1249](https://issues.alfresco.com/jira/browse/ADF-1249)] - Remove mdl from ng2-activiti-diagrams
 -   \[[ADF-1250](https://issues.alfresco.com/jira/browse/ADF-1250)] - Remove mdl from ng2-activiti-analytics
 -   \[[ADF-1251](https://issues.alfresco.com/jira/browse/ADF-1251)] - Remove mdl from demo shell
--   \[[ADF-1492](https://issues.alfresco.com/jira/browse/ADF-1492)] - Document List - Export [`ContentNodeSelectorComponent`](../content-services/content-node-selector.component.md) and ContentNodeSelectorComponentData
+-   \[[ADF-1492](https://issues.alfresco.com/jira/browse/ADF-1492)] - Document List - Export [`ContentNodeSelectorComponent`](../content-services/content-node-selector.component.md) and [ContentNodeSelectorComponentData](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts)
 -   \[[ADF-1496](https://issues.alfresco.com/jira/browse/ADF-1496)] - Remove "Disable upload button when user has no permissions" switch.
 -   \[[ADF-1504](https://issues.alfresco.com/jira/browse/ADF-1504)] - Rename UserInfoComponentModule to [`UserInfoModule`](../../lib/core/userinfo/userinfo.module.ts)
 -   \[[ADF-1515](https://issues.alfresco.com/jira/browse/ADF-1515)] - Internationalization - ADF strings review

@@ -139,7 +139,7 @@ For more information about this component please refer to the
 
 ### NotificationService customizability improvement
 
-The NotificationService now exposes a new input parameter to allow a full customization of the notification message: 
+The [NotificationService](../core/notification.service.md) now exposes a new input parameter to allow a full customization of the notification message: 
 
 -   Direction : Text layout direction for the snack bar.
 -   Duration : The length of time in milliseconds to wait before automatically dismissing the snack bar.
@@ -194,7 +194,7 @@ Below you can find a brief list of references to help you start using the new re
 
 [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
 
-[Component catalog](https://alfresco.github.io/adf-component-catalog/)
+Component catalog
 
 [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
 

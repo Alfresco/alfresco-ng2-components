@@ -5,7 +5,9 @@ Level: Basic
 
 # Creating your Alfresco JavaScript application
 
-In this tutorial you will learn how to create an application in JavaScript from scratch to interact with Alfresco. This is a "getting started" task that should enable you to start developing your own JavaScript application on top of Alfresco Content Services or Alfresco Process Services.
+In this tutorial you will learn how to create an application in JavaScript from scratch to interact with Alfresco.
+
+This is a "getting started" task that should enable you to start developing your own JavaScript application on top of Alfresco Content Services or Alfresco Process Services.
 
 The tutorial uses Alfresco Content Services for demonstration purposes, but development on
 top of Alfresco Process Services follows exactly the same principles.
@@ -24,7 +26,7 @@ If you don't have an instance of Alfresco Content Services up and running, see
 [Preparing the development environment](./preparing-environment.md)
 to learn how to set it up.
 
-You will need the `npm` client to download the requested Node libraries (also explained in
+You will need the `npm` client to download the requested [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) libraries (also explained in
 [Preparing the development environment](./preparing-environment.md)).
 
 ## Creating the JavaScript application
@@ -95,7 +97,7 @@ To deploy the  `my-js-app` application into the Alfresco Content Services Docker
     // List the active containers into your environment.
     docker container ls
 
-	// Copy the CONTAINER_ID of the image with name 'alfresco/alfresco-content-repository-community:...'.
+    // Copy the CONTAINER_ID of the image with name 'alfresco/alfresco-content-repository-community:...'.
 
     // Open a shell into the container.
     docker exec -i -t <CONTAINER_ID> /bin/bash
@@ -103,10 +105,10 @@ To deploy the  `my-js-app` application into the Alfresco Content Services Docker
     // Create the 'my-js-app' folder into the Tomcat's webapps folder.
     mkdir webapps/my-js-app
 
-	// Back to the host's shell.
+    // Back to the host's shell.
     exit
 
-	// Copy the 'my-js-app' folder into the Tomcat's webapps folder.
+    // Copy the 'my-js-app' folder into the Tomcat's webapps folder.
     docker cp ../my-js-app <CONTAINER_ID>:/usr/local/tomcat/webapps
 
 This is all you need to deploy the JavaScript application into the same Tomcat instance as

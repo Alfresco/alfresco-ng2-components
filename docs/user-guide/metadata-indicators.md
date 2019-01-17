@@ -57,9 +57,9 @@ The component will expose a `metadata` property we can use from the outside and 
 
 ```html
 <adf-metadata-icons [metadata]="nodeMetadata"></adf-metadata-icons>
-``` 
+```
 
-As you have seen earlier the DataColumn binds to `properties` property of the node, and maps the runtime value as the `value` local variable within the template. 
+As you have seen earlier the [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) binds to `properties` property of the node, and maps the runtime value as the `value` local variable within the template. 
 Next we propagate the `value` reference to the `<adf-metadata-icons>` component as `metadata` property.
 
 ```html

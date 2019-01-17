@@ -13,7 +13,6 @@ on an item below to see the corresponding guide page.
 -   [Angular Material Design](angular-material-design.md)
 -   [Form Extensibility and Customisation](extensibility.md)
 -   [Internationalization in ADF](internationalization.md)
--   [App extensions](app-extensions.md)
 -   [Theming](theming.md)
 -   [Transclusion](transclusion.md)
 -   [Typography](typography.md)

@@ -5,7 +5,9 @@ Level: Basic
 
 # Creating your ADF application using Yeoman
 
-In this tutorial you are going to see how to create an ADF application from scratch, using the [Yeoman scaffolding tool](http://yeoman.io/). This is a "getting started" task that should enable you to start developing your own ADF application.
+In this tutorial you are going to see how to create an ADF application from scratch, using the [Yeoman scaffolding tool](http://yeoman.io/).
+
+This is a "getting started" task that should enable you to start developing your own ADF application.
 
 ## Prerequisites
 

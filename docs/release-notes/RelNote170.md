@@ -246,8 +246,8 @@ Two new methods has been added into the alfresco-js-api to support retrieve the 
 
 | API | Name | HTTP method | URL | Description |
 | --- | ---- | ----------- | --- | ----------- |
-| _ActivitiPublicRestApi.TaskApi_ | [**getTaskAuditJson**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditJson) | **GET**  | /api/enterprise/tasks/{taskId}/audit | Retrieve audit infromation in json format |
-| _ActivitiPublicRestApi.TaskApi_ | [**getTaskAuditPdf**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditPdf) | **GET**  | /app/rest/tasks/{taskId}/audit | Retrieve the task audit infromation in pdf format |
+| _ActivitiPublicRestApi.TaskApi_ | [**getTaskAuditJson**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditJson) | **GET** | /api/enterprise/tasks/{taskId}/audit | Retrieve audit infromation in json format |
+| _ActivitiPublicRestApi.TaskApi_ | [**getTaskAuditPdf**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditPdf) | **GET** | /app/rest/tasks/{taskId}/audit | Retrieve the task audit infromation in pdf format |
 
 For further details about those endepoints please refer to the [official documentation](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/TaskApi.md) 
 
@@ -264,7 +264,7 @@ The list below is the list of the new services added in 1.7.0:
 -   [`SharedLinksApiService`](../core/shared-links-api.service.md)
 -   SitesApiService
 -   [`ThumbnailService`](../core/thumbnail.service.md)
--   [`SearchService`](../../lib/core/services/search.service.ts)
+-   [`SearchService`](../core/search.service.md)
 
 ### 18. Code Contribution Guide and CLA
 
@@ -379,7 +379,7 @@ Release Notes - Apps Development Framework - Version 1.7.
 -   \[[ADF-1169](https://issues.alfresco.com/jira/browse/ADF-1169)] - [Start Task] - Missing date validation
 -   \[[ADF-1175](https://issues.alfresco.com/jira/browse/ADF-1175)] - Start Process and Start Task Forms don't close when Cancel button is clicked
 -   \[[ADF-1190](https://issues.alfresco.com/jira/browse/ADF-1190)] - Task form - Unable to view task form when the process does not have variables
--   \[[ADF-1199](https://issues.alfresco.com/jira/browse/ADF-1199)] - [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) is missing the "allowableOperations" property
+-   \[[ADF-1199](https://issues.alfresco.com/jira/browse/ADF-1199)] - `MinimalNodeEntryEntity` is missing the "allowableOperations" property
 -   \[[ADF-1200](https://issues.alfresco.com/jira/browse/ADF-1200)] - The URL validation error message is still displayed after changing the invalid url with a valid one
 -   \[[ADF-1201](https://issues.alfresco.com/jira/browse/ADF-1201)] - 508 Compliance Resolution for the App tiles. - 2131 Github
 -   \[[ADF-1216](https://issues.alfresco.com/jira/browse/ADF-1216)] - The included packages are not displayed in [About Component](../core/about.component.md) if the user is logged only on Content Services
