@@ -8,9 +8,37 @@
     .adf-cloud-start-task-heading {
         border-bottom: $header-border;
         margin-bottom: 10px;
+
         .mat-card-title {
             font-weight: bold;
             font-size: 18px;
+        }
+    }
+
+    .adf-cloud-date-error-container {
+        position: absolute;
+        height: 20px;
+        margin-top: 12px;
+        width: 100%;
+
+        & > div {
+            display: flex;
+            flex-flow: row;
+            justify-content: flex-start;
+        }
+
+        .adf-error-text {
+            padding-right: 8px;
+            height: 16px;
+            font-size: 12px;
+            line-height: 1.33;
+            color: mat-color($warn);
+            width: auto;
+        }
+
+        .adf-error-icon {
+            font-size: 17px;
+            color: mat-color($warn);
         }
     }
 
