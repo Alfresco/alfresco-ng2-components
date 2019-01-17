@@ -19,6 +19,7 @@ Adds a drag and drop area to upload files to ACS.
 -   [Details](#details)
     -   [Intercepting uploads](#intercepting-uploads)
     -   [Example](#example)
+-   [See also](#see-also)
 
 ## Basic Usage
 
@@ -134,3 +135,9 @@ export class MyComponent {
 
 The example above shows a confirmation dialog every time a user uploads more than 1 file.
 This could be either a selection of 2 or more files, or a folder with multiple entries.
+
+## See also
+
+-   [File uploading dialog component](../content-services/file-uploading-dialog.component.md)
+-   [Upload button component](../content-services/upload-button.component.md)
+-   [File upload error pipe](../content-services/file-upload-error.pipe.md)

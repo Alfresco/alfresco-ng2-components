@@ -283,7 +283,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| _File upload error pipe_ | _Not currently documented_ | [Source](../lib/content-services/upload/pipes/file-upload-error.pipe.ts) |
+| [File upload error pipe](content-services/file-upload-error.pipe.md) | Converts an upload error code to an error message. | [Source](../lib/content-services/upload/pipes/file-upload-error.pipe.ts) |
 
 ## Services
 
@@ -399,7 +399,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| _Group initial pipe_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts) |
+| [Group initial pipe](process-services-cloud/group-initial.pipe.md) | Extracts the initial character from a group name. | [Source](../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts) |
 
 ## Services
 
