@@ -65,7 +65,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Content node share directive](content-node-share.directive.md) | Creates and manages public shared links for files. | [Source](../../lib/content-services/content-node-share/content-node-share.directive.ts) |
-| [Node lock directive](node-lock.directive.md) | Locks a node. | [Source](../../lib/content-services/directives/node-lock.directive.ts) |
+| [Node lock directive](node-lock.directive.md) | Locks or unlocks a node. | [Source](../../lib/content-services/directives/node-lock.directive.ts) |
 | [Folder create directive](folder-create.directive.md) | Creates folders. | [Source](../../lib/content-services/folder-directive/folder-create.directive.ts) |
 | [Folder edit directive](folder-edit.directive.md) | Allows folders to be edited. | [Source](../../lib/content-services/folder-directive/folder-edit.directive.ts) |
 | [Inherited button directive](inherited-button.directive.md) | Update the current node by adding/removing the inherited permissions. | [Source](../../lib/content-services/permission-manager/components/inherited-button.directive.ts) |
@@ -75,8 +75,13 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Document library model](document-library.model.md) | Defines classes for use with the Content Services node API. | [Source](../../lib/content-services/document-list/models/document-library.model.ts) |
 | [Permissions style model](permissions-style.model.md) | Sets custom CSS styles for rows of a Document List according to the item's permissions. | [Source](../../lib/content-services/document-list/models/permissions-style.model.ts) |
+
+## Pipes
+
+| Name | Description | Source link |
+| ---- | ----------- | ----------- |
+| _File upload error pipe_ | _Not currently documented_ | [Source](../../lib/content-services/upload/pipes/file-upload-error.pipe.ts) |
 
 ## Services
 
