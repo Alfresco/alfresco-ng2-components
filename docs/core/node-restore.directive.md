@@ -2,7 +2,7 @@
 Title: Node Restore directive
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-13
+Last reviewed: 2019-01-16
 ---
 
 # [Node Restore directive](../../lib/core/directives/node-restore.directive.ts "Defined in node-restore.directive.ts")

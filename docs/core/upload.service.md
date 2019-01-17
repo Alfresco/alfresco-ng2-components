@@ -2,7 +2,7 @@
 Title: Upload Service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-12
+Last reviewed: 2019-01-16
 ---
 
 # [Upload Service](../../lib/core/services/upload.service.ts "Defined in upload.service.ts")

@@ -2,7 +2,7 @@
 Title: Login component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-13
+Last reviewed: 2019-01-16
 ---
 
 # [Login component](../../lib/core/login/components/login.component.ts "Defined in login.component.ts")
@@ -24,7 +24,7 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
     -   [Customizing validation rules](#customizing-validation-rules)
     -   [Call an external identity provider to fetch the auth token](#call-an-external-identity-provider-to-fetch-the-auth-token)
     -   [Controlling form submit execution behaviour](#controlling-form-submit-execution-behaviour)
-    -   [SSO login](#sso-login)
+    -   [Single Sign-On (SSO)](#single-sign-on-sso)
 -   [See Also](#see-also)
 
 ## Basic usage
@@ -98,7 +98,7 @@ with custom input fields handled by your application or parent component:
 
 ### Handling events
 
-**[app.component](../../demo-shell/src/app/app.component.ts).html**
+**app.component.html**
 
 ```html
 <adf-login 
@@ -107,7 +107,7 @@ with custom input fields handled by your application or parent component:
 </adf-login>
 ```
 
-**[app.component](../../demo-shell/src/app/app.component.ts).ts**
+**app.component.ts**
 
 ```ts
 export class AppComponent {
@@ -302,8 +302,8 @@ automatically to the authorization server when the user is not logged-in
 You can also enable automatic redirection to OAuth provider
 by utilising the following properties:
 
-* silentLogin
-* redirectSilentIframeUri
+-   silentLogin
+-   redirectSilentIframeUri
 
 ```json
 {
