@@ -69,8 +69,7 @@ export class NodeFavoriteDirective implements OnChanges {
             const batch = this.favorites.map((selected) => {
                 // shared files have nodeId
                 const id = selected.entry.nodeId || selected.entry.id;
-
-                return from(this.alfrescoApiService.favoritesApi.removeFavoriteSite('-me-', id));
+                return from(this.alfrescoApiService.favoritesApi.favoritesApi.deleteFavorite('-me-', id));
             });
 
             forkJoin(batch).subscribe(

@@ -175,7 +175,7 @@ describe('NodeFavoriteDirective', () => {
         let addFavoriteSpy;
 
         beforeEach(() => {
-            removeFavoriteSpy = spyOn(alfrescoApiService.getInstance().core.favoritesApi, 'removeFavoriteSite').and.callThrough();
+            removeFavoriteSpy = spyOn(alfrescoApiService.getInstance().core.favoritesApi.favoritesApi, 'deleteFavorite').and.callThrough();
             addFavoriteSpy = spyOn(alfrescoApiService.getInstance().core.favoritesApi, 'addFavorite').and.callThrough();
         });
 
