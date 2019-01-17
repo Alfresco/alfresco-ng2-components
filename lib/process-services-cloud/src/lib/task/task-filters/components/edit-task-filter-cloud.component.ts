@@ -57,7 +57,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
 
     /** Toggles the filter actions. */
     @Input()
-    toggleFilterActions = true;
+    showFilterActions = true;
 
     /** Toggles the title. */
     @Input()
@@ -100,7 +100,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     formHasBeenChanged = false;
     editTaskFilterForm: FormGroup;
     taskFilterProperties: any[] = [];
-    showFilterActions: boolean = false;
+    toggleFilterActions: boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -260,16 +260,16 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         return name.replace(regExt, '-');
     }
 
-    toggleActions(): boolean {
-        return this.toggleFilterActions;
+    showActions(): boolean {
+        return this.showFilterActions;
     }
 
     onExpand(event: any) {
-        this.showFilterActions = true;
+        this.toggleFilterActions = true;
     }
 
     onClose(event: any) {
-        this.showFilterActions = false;
+        this.toggleFilterActions = false;
     }
 
     isDateType(property: TaskFilterProperties): boolean {

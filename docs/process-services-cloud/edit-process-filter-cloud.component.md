@@ -27,7 +27,7 @@ Shows Process Filter Details.
 | appName | `string` |  | (required) The name of the application. |
 | id | `string` |  | (required) Id of the process instance filter. |
 | filterProperties | `string []` | `['state', 'sort', 'order']` | List of process filter properties to display. |
-| toggleFilterActions | `boolean` | `true` | Toggles edit process filter actions. |
+| showFilterActions | `boolean` | `true` | Toggles edit process filter actions. |
 | showTitle | `boolean` | `true` | Toggles edit process filter title. |
 
 ### Events

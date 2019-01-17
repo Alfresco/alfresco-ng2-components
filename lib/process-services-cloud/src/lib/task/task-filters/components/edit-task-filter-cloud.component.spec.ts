@@ -135,7 +135,7 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
 
         it('should disable save button if the task filter is not changed', async(() => {
-            component.showFilterActions = true;
+            component.toggleFilterActions = true;
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.detectChanges();
@@ -146,7 +146,7 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
 
         it('should disable saveAs button if the task filter is not changed', async(() => {
-            component.showFilterActions = true;
+            component.toggleFilterActions = true;
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.detectChanges();
@@ -157,7 +157,7 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
 
         it('should enable delete button by default', async(() => {
-            component.showFilterActions = true;
+            component.toggleFilterActions = true;
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -298,7 +298,7 @@ describe('EditTaskFilterCloudComponent', () => {
         });
 
         it('should emit save event and save the filter on click save button', async(() => {
-            component.showFilterActions = true;
+            component.toggleFilterActions = true;
             const saveFilterSpy = spyOn(service, 'updateFilter').and.returnValue(fakeFilter);
             let saveSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -321,7 +321,7 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
 
         it('should emit delete event and delete the filter on click of delete button', async(() => {
-            component.showFilterActions = true;
+            component.toggleFilterActions = true;
             const deleteFilterSpy = spyOn(service, 'deleteFilter').and.callThrough();
             let deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -341,7 +341,7 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
 
         it('should emit saveAs event and add filter on click saveAs button', async(() => {
-            component.showFilterActions = true;
+            component.toggleFilterActions = true;
             const saveAsFilterSpy = spyOn(service, 'addFilter').and.callThrough();
             let saveAsSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();

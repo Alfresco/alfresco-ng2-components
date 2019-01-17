@@ -82,7 +82,7 @@ export class ProcessFilterProperties {
         if (obj) {
             this.label = obj.label || null;
             this.type = obj.type || null;
-            this.value = obj.value || null;
+            this.value = obj.value || '';
             this.key = obj.key || null;
             this.options$ = obj.options || null;
         }

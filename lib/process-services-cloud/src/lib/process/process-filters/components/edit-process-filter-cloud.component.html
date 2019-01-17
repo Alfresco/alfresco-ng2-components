@@ -4,8 +4,8 @@
             <mat-panel-title fxLayoutAlign="space-between center" id="adf-edit-process-filter-title-id">{{processFilter.name | translate}}</mat-panel-title>
             <mat-panel-description fxLayoutAlign="space-between center" id="adf-edit-process-filter-sub-title-id">
                 <span *ngIf="showTitle"> {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}</span>
-                <div *ngIf="toggleActions()" class="adf-cloud-edit-task-filter-actions">
-                    <ng-container *ngIf="showFilterActions">
+                <div *ngIf="showActions()" class="adf-cloud-edit-task-filter-actions">
+                    <ng-container *ngIf="toggleFilterActions">
                         <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE' | translate}}" [disabled]="!formHasBeenChanged" id="adf-save-id" (click)="onSave()">
                             <mat-icon>save</mat-icon>
                         </button>

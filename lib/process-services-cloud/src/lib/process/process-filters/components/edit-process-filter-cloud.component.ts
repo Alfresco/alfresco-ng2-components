@@ -57,7 +57,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     filterProperties: string[] = EditProcessFilterCloudComponent.DEFAULT_PROCESS_FILTER_PROPERTIES; // default ['state', 'sort', 'order']
 
     @Input()
-    toggleFilterActions = true;
+    showFilterActions = true;
 
     @Input()
     showTitle = true;
@@ -81,7 +81,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     ];
 
     status = [
-        { label: 'ALL', value: 'ALL' },
+        { label: 'ALL', value: '' },
         { label: 'RUNNING', value: 'RUNNING' },
         { label: 'COMPLETED', value: 'COMPLETED' }
     ];
@@ -90,7 +90,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     formHasBeenChanged = false;
     editProcessFilterForm: FormGroup;
     processFilterProperties: any[] = [];
-    showFilterActions: boolean = false;
+    toggleFilterActions: boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -271,16 +271,16 @@ export class EditProcessFilterCloudComponent implements OnChanges {
         return name.replace(regExt, '-');
     }
 
-    toggleActions(): boolean {
-        return this.toggleFilterActions;
+    showActions(): boolean {
+        return this.showFilterActions;
     }
 
     onExpand(event: any) {
-        this.showFilterActions = true;
+        this.toggleFilterActions = true;
     }
 
     onClose(event: any) {
-        this.showFilterActions = false;
+        this.toggleFilterActions = false;
     }
 
     isDateType(property: ProcessFilterProperties): boolean {
