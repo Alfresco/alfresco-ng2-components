@@ -177,6 +177,7 @@ export class PeopleCloudComponent implements OnInit {
     private loadPreSelectUsers() {
         if (!this.isMultipleMode()) {
             this.searchUserCtrl.setValue(this.preSelectUsers[0]);
+            this.preSelectUsers = [];
         }
     }
 
