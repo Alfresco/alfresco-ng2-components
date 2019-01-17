@@ -2,7 +2,7 @@
 Title: Process Instance List
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-05-24
+Last reviewed: 2019-01-16
 ---
 
 # [Process Instance List](../../lib/process-services/process-list/components/process-list.component.ts "Defined in process-list.component.ts")
@@ -23,7 +23,7 @@ Renders a list containing all the process instances matched by the parameters sp
 
 ## Basic Usage
 
-**[app.component](../../demo-shell/src/app/app.component.ts).html**
+**app.component.html**
 
 ```html
 <adf-process-instance-list
@@ -52,11 +52,12 @@ when the process list is empty:
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | The id of the app. |
-| data | `DataTableAdapter` |  | Data source to define the datatable. |
+| data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source to define the datatable. |
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row |
 | page | `number` | 0 | The page number of the processes to fetch. |
+| presetColumn | `string` |  | Custom preset column schema in JSON format. |
 | processDefinitionId | `string` |  | The Definition Id of the process. |
-| processInstanceId | `number` |  |  | The id of the process instance. |
+| processInstanceId | `number \| string` |  | The id of the process instance. |
 | selectFirstRow | `boolean` | true | Toggles default selection of the first row |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | size | `number` |  | The number of processes to fetch in each page. |
@@ -69,7 +70,7 @@ when the process list is empty:
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<ProcessListModel>` | Emitted when the list of process instances has been loaded successfully from the server. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessListModel`](../../lib/process-services/process-list/models/process-list.model.ts)`>` | Emitted when the list of process instances has been loaded successfully from the server. |
 
 ## Details
 

@@ -2,7 +2,7 @@
 Title: User Preferences Service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-20
+Last reviewed: 2019-01-16
 ---
 
 # [User Preferences Service](../../lib/core/services/user-preferences.service.ts "Defined in user-preferences.service.ts")

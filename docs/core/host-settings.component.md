@@ -2,7 +2,7 @@
 Title: Host settings component
 Added: v2.0.0
 Status: Internal
-Last reviewed: 2018-09-13
+Last reviewed: 2019-01-16
 ---
 
 # [Host settings component](../../lib/core/settings/host-settings.component.ts "Defined in host-settings.component.ts")

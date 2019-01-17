@@ -2,7 +2,7 @@
 Title: Form component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-14
+Last reviewed: 2019-01-16
 ---
 
 # [Form component](../../lib/core/form/components/form.component.ts "Defined in form.component.ts")
@@ -58,7 +58,7 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 | disableStartProcessButton | `boolean` | false | If true then the `Start Process` outcome button is shown but it will be disabled. |
 | fieldValidators | [`FormFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` | \[] | Contains a list of form field validator instances. |
 | form | [`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts) |  | Underlying [form model](../../lib/core/form/components/widgets/core/form.model.ts) instance. |
-| formId | `string` |  | The id of the form definition to load and display with custom values. |
+| formId | `number` |  | The id of the form definition to load and display with custom values. |
 | formName | `string` |  | Name of the form definition to load and display with custom values. |
 | nameNode | `string` |  | Name to assign to the new node where the metadata are stored. |
 | nodeId | `string` |  | Content Services node ID for the form metadata. |
@@ -77,6 +77,7 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
 | executeOutcome | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../lib/core/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
 | formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
 | formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when form content is clicked. |
@@ -84,7 +85,6 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 | formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../core/form-field.model.md)`[]>` | Emitted when the supplied form values have a validation error. |
 | formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
 | formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
 
 ## Details
 
