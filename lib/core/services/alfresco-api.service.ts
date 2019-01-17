@@ -138,6 +138,6 @@ export class AlfrescoApiService {
     }
 
     isDifferentConfig(lastConfig: AlfrescoApiConfig, newConfig: AlfrescoApiConfig) {
-        return JSON.stringify(lastConfig) !== JSON.stringify(newConfig)
+        return JSON.stringify(lastConfig) !== JSON.stringify(newConfig);
     }
 }
