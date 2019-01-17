@@ -36,7 +36,7 @@ described below.
     An example implementation is given below:
 
     ```ts
-    import { QueryBody } from 'alfresco-js-api';
+    import { QueryBody } from '@alfresco/js-api';
     import { SearchConfigurationInterface } from '@alfresco/adf-core';
 
     export class TestSearchConfigurationService implements SearchConfigurationInterface {

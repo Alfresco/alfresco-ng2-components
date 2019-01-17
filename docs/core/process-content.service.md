@@ -380,7 +380,7 @@ The response format is the same as for the `getProcessRelatedContent` method, se
 ## Importing
 
 ```ts
-import { RelatedContentRepresentation } from 'alfresco-js-api';
+import { RelatedContentRepresentation } from '@alfresco/js-api';
 import { ProcessContentService } from '@alfresco/adf-core';
 
 export class SomePageComponent implements OnInit {

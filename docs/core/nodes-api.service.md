@@ -121,7 +121,7 @@ use the [Nodes Api service](../core/nodes-api.service.md) to "decode" the ID str
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NodesApiService } from '@alfresco/adf-core';
-import { MinimalNode } from 'alfresco-js-api';
+import { MinimalNode } from '@alfresco/js-api';
     ...
 
 export class RepositoryDetailsPageComponent implements OnInit {
