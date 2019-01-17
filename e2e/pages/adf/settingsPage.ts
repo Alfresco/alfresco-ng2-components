@@ -22,7 +22,7 @@ import { element, by, browser } from 'protractor';
 export class SettingsPage {
 
     settingsURL = TestConfig.adf.url + TestConfig.adf.port + '/settings';
-    providerDropdown = element(by.css('mat-select[aria-label="Provider"] div[class="mat-select-arrow-wrapper"]'));
+    providerDropdown = element(by.css('mat-select[id="adf-provider-selector"] div[class="mat-select-arrow-wrapper"]'));
     ecmAndBpm = {
         option: element(by.xpath('//SPAN[@class="mat-option-text"][contains(text(),"ALL")]')),
         text: 'ALL'
