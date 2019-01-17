@@ -2,7 +2,7 @@
 Title: Content Action component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-20
+Last reviewed: 2019-01-17
 ---
 
 # [Content Action component](../../lib/content-services/document-list/components/content-action/content-action.component.ts "Defined in content-action.component.ts")
@@ -122,8 +122,7 @@ will trigger the same action.) You can also add your own handler by implementing
 
 Note that you can use _both_ a built-in handler and your own `execute`
 function in the same action. The `execute` function is passed a [`NodeMinimalEntry`](../../lib/content-services/document-list/models/document-library.model.ts) as its
-parameter (see the [Document Library model](document-library.model.md) page for more
-information) which contains full details of the item that the action is operating on. For
+parameter. For
 example, with `handler="delete"` you could use `execute` to show a message with the name,
 type, and other details of the item just deleted:
 
@@ -354,7 +353,7 @@ your component class:
 ```ts
 export class MyComponent {
 
-    canDownloadNode = (node: MinimalNodeEntity): boolean => {
+    canDownloadNode = (node: Node): boolean => {
         if (node && node.entry && node.entry.name === 'For Sale.docx') {
             return true;
         }
@@ -410,7 +409,7 @@ The code above relies on the `isCustomActionDisabled` property of a `Function` t
 ```ts
 export class MyComponent {
 
-    isCustomActionDisabled = (node: MinimalNodeEntity): boolean => {
+    isCustomActionDisabled = (node: Node): boolean => {
         if (node && node.entry && node.entry.name === 'custom') {
             return false;
         }

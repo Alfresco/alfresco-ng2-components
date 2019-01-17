@@ -173,7 +173,7 @@ for more information about installing and using the source code.
 | [Page title service](core/page-title.service.md) | Sets the page title. | [Source](../lib/core/services/page-title.service.ts) |
 | [People content service](core/people-content.service.md) | Gets information about a Content Services user.   | [Source](../lib/core/services/people-content.service.ts) |
 | [People process service](core/people-process.service.md) | Gets information about Process Services users. | [Source](../lib/core/services/people-process.service.ts) |
-| [Renditions service](core/renditions.service.md) ![Deprecated](docassets/images/DeprecatedIcon.png) | Manages prearranged conversions of content to different formats. | [Source](../lib/core/services/renditions.service.ts) |
+| [Renditions service](core/renditions.service.md) | Manages prearranged conversions of content to different formats. | [Source](../lib/core/services/renditions.service.ts) |
 | [Search configuration service](core/search-configuration.service.md) | Provides fine control of parameters to a search. | [Source](../lib/core/services/search-configuration.service.ts) |
 | [Search service](core/search.service.md) | Accesses the Content Services Search API. | [Source](../lib/core/services/search.service.ts) |
 | [Shared links api service](core/shared-links-api.service.md) | Finds shared links to Content Services items. | [Source](../lib/core/services/shared-links-api.service.ts) |
@@ -200,7 +200,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Data Table Adapter interface](core/datatable-adapter.interface.md) | Defines how table data is supplied to DataTable and Tasklist components. | [Source](../lib/core/datatable/data/datatable-adapter.ts) |
-| [Form Field Validator interface](core/form-field-validator.interface.md) | Defines how the input fields of Form and Task Details components are validated. | [Source](../lib/core/form/components/widgets/core/form-field-validator.ts) |
+| [Form Field Validator interface](core/form-field-validator.interface.md) | Defines how the input fields of [`Form`](../../lib/process-services/task-list/models/form.model.ts) and Task Details components are validated. | [Source](../lib/core/form/components/widgets/core/form-field-validator.ts) |
 | [Search Configuration interface](core/search-configuration.interface.md) | Provides fine control of parameters to a search. | [Source](../lib/core/services/search-configuration.service.ts) |
 
 [(Back to Contents)](#contents)
@@ -267,7 +267,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Content node share directive](content-services/content-node-share.directive.md) | Creates and manages public shared links for files. | [Source](../lib/content-services/content-node-share/content-node-share.directive.ts) |
-| [Node lock directive](content-services/node-lock.directive.md) | Locks a node. | [Source](../lib/content-services/directives/node-lock.directive.ts) |
+| [Node lock directive](content-services/node-lock.directive.md) | Locks or unlocks a node. | [Source](../lib/content-services/directives/node-lock.directive.ts) |
 | [Folder create directive](content-services/folder-create.directive.md) | Creates folders. | [Source](../lib/content-services/folder-directive/folder-create.directive.ts) |
 | [Folder edit directive](content-services/folder-edit.directive.md) | Allows folders to be edited. | [Source](../lib/content-services/folder-directive/folder-edit.directive.ts) |
 | [Inherited button directive](content-services/inherited-button.directive.md) | Update the current node by adding/removing the inherited permissions. | [Source](../lib/content-services/permission-manager/components/inherited-button.directive.ts) |
@@ -277,8 +277,13 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Document library model](content-services/document-library.model.md) | Defines classes for use with the Content Services node API. | [Source](../lib/content-services/document-list/models/document-library.model.ts) |
 | [Permissions style model](content-services/permissions-style.model.md) | Sets custom CSS styles for rows of a Document List according to the item's permissions. | [Source](../lib/content-services/document-list/models/permissions-style.model.ts) |
+
+## Pipes
+
+| Name | Description | Source link |
+| ---- | ----------- | ----------- |
+| _File upload error pipe_ | _Not currently documented_ | [Source](../lib/content-services/upload/pipes/file-upload-error.pipe.ts) |
 
 ## Services
 
@@ -302,7 +307,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Search Widget interface](content-services/search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../lib/content-services/search/search-widget.interface.ts) |
+| [Search Widget interface](content-services/search-widget.interface.md) | Specifies required properties for [Search filter component](../content-services/search-filter.component.md) widgets. | [Source](../lib/content-services/search/search-widget.interface.ts) |
 
 [(Back to Contents)](#contents)
 
@@ -320,10 +325,10 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Apps list component](process-services/apps-list.component.md) | Shows all available apps. | [Source](../lib/process-services/app-list/apps-list.component.ts) |
-| [Create process attachment component](process-services/create-process-attachment.component.md) | Displays Upload Component (Drag and Click) to upload the attachment to a specified process instance | [Source](../lib/process-services/attachment/create-process-attachment.component.ts) |
-| [Create task attachment component](process-services/create-task-attachment.component.md) | Displays Upload Component (Drag and Click) to upload the attachment to a specified task | [Source](../lib/process-services/attachment/create-task-attachment.component.ts) |
-| [Process attachment list component](process-services/process-attachment-list.component.md) | Displays attached documents on a specified process instance | [Source](../lib/process-services/attachment/process-attachment-list.component.ts) |
-| [Task attachment list component](process-services/task-attachment-list.component.md) | Displays attached documents on a specified task. | [Source](../lib/process-services/attachment/task-attachment-list.component.ts) |
+| [Create process attachment component](process-services/create-process-attachment.component.md) | Displays an Upload Component (Drag and Click) to upload the attachment to a specified process instance. | [Source](../lib/process-services/attachment/create-process-attachment.component.ts) |
+| [Create task attachment component](process-services/create-task-attachment.component.md) | Displays an Upload Component (Drag and Click) to upload the attachment to a specified task. | [Source](../lib/process-services/attachment/create-task-attachment.component.ts) |
+| [Process attachment list component](process-services/process-attachment-list.component.md) | Displays documents attached to a specified process instance. | [Source](../lib/process-services/attachment/process-attachment-list.component.ts) |
+| [Task attachment list component](process-services/task-attachment-list.component.md) | Displays documents attached to a specified task. | [Source](../lib/process-services/attachment/task-attachment-list.component.ts) |
 | [People component](process-services/people.component.md) | Displays users involved with a specified task | [Source](../lib/process-services/people/components/people/people.component.ts) |
 | [People list component](process-services/people-list.component.md) | Shows a list of users (people). | [Source](../lib/process-services/people/components/people-list/people-list.component.ts) |
 | [People search component](process-services/people-search.component.md) | Searches users/people. | [Source](../lib/process-services/people/components/people-search/people-search.component.ts) |
@@ -336,7 +341,7 @@ for more information about installing and using the source code.
 | [Start process component](process-services/start-process.component.md) | Starts a process. | [Source](../lib/process-services/process-list/components/start-process.component.ts) |
 | [Attach form component](process-services/attach-form.component.md) | This component can be used when there is no form attached to a task and you want to add one. | [Source](../lib/process-services/task-list/components/attach-form.component.ts) |
 | [Checklist component](process-services/checklist.component.md) | Shows the checklist task functionality. | [Source](../lib/process-services/task-list/components/checklist.component.ts) |
-| [Start task component](process-services/start-task.component.md) | Creates/Starts a new task for the specified app | [Source](../lib/process-services/task-list/components/start-task.component.ts) |
+| [Start task component](process-services/start-task.component.md) | Creates/Starts a new task for the specified app. | [Source](../lib/process-services/task-list/components/start-task.component.ts) |
 | [Task details component](process-services/task-details.component.md) | Shows the details of the task ID passed in as input. | [Source](../lib/process-services/task-list/components/task-details.component.ts) |
 | [Task filters component](process-services/task-filters.component.md) | Shows all available filters. | [Source](../lib/process-services/task-list/components/task-filters.component.ts) |
 | [Task header component](process-services/task-header.component.md) | Shows all the information related to a task. | [Source](../lib/process-services/task-list/components/task-header.component.ts) |
@@ -347,7 +352,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Process audit directive](process-services/process-audit.directive.md) | Fetches the Process Audit information the PDF or JSON format. | [Source](../lib/process-services/process-list/components/process-audit.directive.ts) |
+| [Process audit directive](process-services/process-audit.directive.md) | Fetches the Process Audit information in PDF or JSON format. | [Source](../lib/process-services/process-list/components/process-audit.directive.ts) |
 | [Task audit directive](process-services/task-audit.directive.md) | Fetches the Task Audit information in PDF or JSON format. | [Source](../lib/process-services/task-list/components/task-audit.directive.ts) |
 
 ## Services
@@ -377,16 +382,24 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [App list cloud component](process-services-cloud/app-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all deployed cloud application instances. | [Source](../lib/process-services-cloud/src/lib/app/components/app-list-cloud.component.ts) |
+| [Group cloud component](process-services-cloud/group-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches Groups. | [Source](../lib/process-services-cloud/src/lib/group/components/group-cloud.component.ts) |
 | [Edit process filter cloud component](process-services-cloud/edit-process-filter-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows Process Filter Details. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts) |
 | [Process filters cloud component](process-services-cloud/process-filters-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Lists all available process filters and allows to select a filter. | [Source](../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.ts) |
 | [Process list cloud component](process-services-cloud/process-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.ts) |
 | [Start process cloud component](process-services-cloud/start-process-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Starts a process. | [Source](../lib/process-services-cloud/src/lib/process/start-process/components/start-process-cloud.component.ts) |
+| [People cloud component](process-services-cloud/people-cloud.component.md) | An autosuggest input control that allows single or multiple users to be selected based on the input parameters. | [Source](../lib/process-services-cloud/src/lib/task/start-task/components/people-cloud/people-cloud.component.ts) |
 | [Start task cloud component](process-services-cloud/start-task-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Creates/starts a new task for the specified app. | [Source](../lib/process-services-cloud/src/lib/task/start-task/components/start-task-cloud.component.ts) |
 | [Edit task filter cloud component](process-services-cloud/edit-task-filter-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Edits Task Filter Details. | [Source](../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filter-cloud.component.ts) |
 | [Task filters cloud component](process-services-cloud/task-filters-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all available filters. | [Source](../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.ts) |
+| [Task header cloud component](process-services-cloud/task-header-cloud.component.md) | Shows all the information related to a task. | [Source](../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts) |
 | [Task list cloud component](process-services-cloud/task-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts) |
 | _App details cloud component_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/app/components/app-details-cloud.component.ts) |
-| _People cloud component_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/task/start-task/components/people-cloud/people-cloud.component.ts) |
+
+## Pipes
+
+| Name | Description | Source link |
+| ---- | ----------- | ----------- |
+| _Group initial pipe_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts) |
 
 ## Services
 
@@ -397,6 +410,9 @@ for more information about installing and using the source code.
 | [Start task cloud service](process-services-cloud/start-task-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Starts standalone tasks.  | [Source](../lib/process-services-cloud/src/lib/task/start-task/services/start-task-cloud.service.ts) |
 | [Task filter cloud service](process-services-cloud/task-filter-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manages task filters.  | [Source](../lib/process-services-cloud/src/lib/task/task-filters/services/task-filter-cloud.service.ts) |
 | _Apps process cloud service_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/app/services/apps-process-cloud.service.ts) |
+| _Group cloud service_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts) |
+| _Process list cloud service_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts) |
+| _Task header cloud service_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/task/task-header/services/task-header-cloud.service.ts) |
 | _Task list cloud service_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/task/task-list/services/task-list-cloud.service.ts) |
 
 <!--process-services-cloud end-->
@@ -418,7 +434,6 @@ for more information about installing and using the source code.
 | ---- | ----------- | ----------- |
 | [Dynamic component](extensions/dynamic.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays dynamically-loaded extension components. | [Source](../lib/extensions/src/lib/components/dynamic-component/dynamic.component.ts) |
 | [Dynamic tab component](extensions/dynamic-tab.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays dynamically-loaded extensions with tabs. | [Source](../lib/extensions/src/lib/components/dynamic-tab/dynamic-tab.component.ts) |
-| _Dynamic column component_ | _Not currently documented_ | [Source](../lib/extensions/src/lib/components/dynamic-column/dynamic-column.component.ts) |
 
 ## Services
 

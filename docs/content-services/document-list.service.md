@@ -27,7 +27,7 @@ Implements node operations used by the [Document List component](../content-serv
     -   **Returns** `string` - Path to the icon file
 -   **getDocumentThumbnailUrl**(node: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)): `string`<br/>
     Get thumbnail URL for the given document node.
-    -   _node:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)  - Node to get URL for.
+    -   _node:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to get URL for.
     -   **Returns** `string` - Thumbnail URL string
 -   **getFolder**(folder: `string`, opts?: `any`, includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
     Gets the folder node with the specified relative name path below the root node.
@@ -61,9 +61,6 @@ This service makes extensive use of the Alfresco JS API. In particular,
 see the
 [Nodes API](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodesApi.md#getNodeChildren)
 for further details of the types, options and the underlying REST architecture.
-
-Also, the [Document Library model](document-library.model.md) in the ADF docs has
-more information about related classes.
 
 ### Moving, copying and deleting nodes
 

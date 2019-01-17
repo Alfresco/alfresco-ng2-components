@@ -2,7 +2,7 @@
 Title: Content Metadata Card component
 Added: v2.1.0
 Status: Active
-Last reviewed: 2018-08-07
+Last reviewed: 2019-01-16
 ---
 
 # [Content Metadata Card component](../../lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts "Defined in content-metadata-card.component.ts")
@@ -30,9 +30,10 @@ Displays and edits metadata related to a node.
 | ---- | ---- | ------------- | ----------- |
 | displayEmpty | `boolean` | false | (optional) This flag displays/hides empty metadata fields. |
 | multi | `boolean` | false | (optional) This flag allows the component to display more than one accordion at a time. |
-| node | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  | (required) The node entity to fetch metadata about |
+| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | (required) The node entity to fetch metadata about |
 | preset | `string` |  | (required) Name of the metadata preset, which defines aspects and their properties. |
 | readOnly | `boolean` | false | (optional) This flag sets the metadata in read only mode preventing changes. |
+| displayDefaultProperties | `boolean` |  | (optional) This flag displays/hides the metadata properties. |
 
 ## Details
 

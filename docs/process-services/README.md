@@ -17,10 +17,10 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Apps list component](apps-list.component.md) | Shows all available apps. | [Source](../../lib/process-services/app-list/apps-list.component.ts) |
-| [Create process attachment component](create-process-attachment.component.md) | Displays Upload Component (Drag and Click) to upload the attachment to a specified process instance | [Source](../../lib/process-services/attachment/create-process-attachment.component.ts) |
-| [Create task attachment component](create-task-attachment.component.md) | Displays Upload Component (Drag and Click) to upload the attachment to a specified task | [Source](../../lib/process-services/attachment/create-task-attachment.component.ts) |
-| [Process attachment list component](process-attachment-list.component.md) | Displays attached documents on a specified process instance | [Source](../../lib/process-services/attachment/process-attachment-list.component.ts) |
-| [Task attachment list component](task-attachment-list.component.md) | Displays attached documents on a specified task. | [Source](../../lib/process-services/attachment/task-attachment-list.component.ts) |
+| [Create process attachment component](create-process-attachment.component.md) | Displays an Upload Component (Drag and Click) to upload the attachment to a specified process instance. | [Source](../../lib/process-services/attachment/create-process-attachment.component.ts) |
+| [Create task attachment component](create-task-attachment.component.md) | Displays an Upload Component (Drag and Click) to upload the attachment to a specified task. | [Source](../../lib/process-services/attachment/create-task-attachment.component.ts) |
+| [Process attachment list component](process-attachment-list.component.md) | Displays documents attached to a specified process instance. | [Source](../../lib/process-services/attachment/process-attachment-list.component.ts) |
+| [Task attachment list component](task-attachment-list.component.md) | Displays documents attached to a specified task. | [Source](../../lib/process-services/attachment/task-attachment-list.component.ts) |
 | [People component](people.component.md) | Displays users involved with a specified task | [Source](../../lib/process-services/people/components/people/people.component.ts) |
 | [People list component](people-list.component.md) | Shows a list of users (people). | [Source](../../lib/process-services/people/components/people-list/people-list.component.ts) |
 | [People search component](people-search.component.md) | Searches users/people. | [Source](../../lib/process-services/people/components/people-search/people-search.component.ts) |
@@ -33,7 +33,7 @@ for more information about installing and using the source code.
 | [Start process component](start-process.component.md) | Starts a process. | [Source](../../lib/process-services/process-list/components/start-process.component.ts) |
 | [Attach form component](attach-form.component.md) | This component can be used when there is no form attached to a task and you want to add one. | [Source](../../lib/process-services/task-list/components/attach-form.component.ts) |
 | [Checklist component](checklist.component.md) | Shows the checklist task functionality. | [Source](../../lib/process-services/task-list/components/checklist.component.ts) |
-| [Start task component](start-task.component.md) | Creates/Starts a new task for the specified app | [Source](../../lib/process-services/task-list/components/start-task.component.ts) |
+| [Start task component](start-task.component.md) | Creates/Starts a new task for the specified app. | [Source](../../lib/process-services/task-list/components/start-task.component.ts) |
 | [Task details component](task-details.component.md) | Shows the details of the task ID passed in as input. | [Source](../../lib/process-services/task-list/components/task-details.component.ts) |
 | [Task filters component](task-filters.component.md) | Shows all available filters. | [Source](../../lib/process-services/task-list/components/task-filters.component.ts) |
 | [Task header component](task-header.component.md) | Shows all the information related to a task. | [Source](../../lib/process-services/task-list/components/task-header.component.ts) |
@@ -44,7 +44,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Process audit directive](process-audit.directive.md) | Fetches the Process Audit information the PDF or JSON format. | [Source](../../lib/process-services/process-list/components/process-audit.directive.ts) |
+| [Process audit directive](process-audit.directive.md) | Fetches the Process Audit information in PDF or JSON format. | [Source](../../lib/process-services/process-list/components/process-audit.directive.ts) |
 | [Task audit directive](task-audit.directive.md) | Fetches the Task Audit information in PDF or JSON format. | [Source](../../lib/process-services/task-list/components/task-audit.directive.ts) |
 
 ## Services

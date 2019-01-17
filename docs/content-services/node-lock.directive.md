@@ -2,12 +2,12 @@
 Title: Node Lock directive
 Added: v2.2.0
 Status: Active
-Last reviewed: 2018-11-20
+Last reviewed: 2019-01-17
 ---
 
 # [Node Lock directive](../../lib/content-services/directives/node-lock.directive.ts "Defined in node-lock.directive.ts")
 
-Locks a node.
+Locks or unlocks a node.
 
 ## Basic Usage
 
@@ -23,7 +23,7 @@ Locks a node.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| node | [`MinimalNodeEntryEntity`](../content-services/document-library.model.md) |  | Node to lock/unlock. |
+| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to lock/unlock. |
 
 ## Details
 

@@ -43,7 +43,7 @@ Starts a process.
 | processDefinitionName | `string` |  | (optional) Definition name of the process to start. |
 | processFilterSelector | `boolean` | true | (optional) Parameter to enable selection of process when filtering. |
 | showSelectProcessDropdown | `boolean` | true | Hide or show the process selection dropdown. |
-| values | `FormValues` |  | Parameter to pass form field values in the start form if one is associated. |
+| values | [`FormValues`](../../lib/core/form/components/widgets/core/form-values.ts) |  | Parameter to pass form field values in the start form if one is associated. |
 | variables | [`ProcessInstanceVariable`](../../lib/process-services/process-list/models/process-instance-variable.model.ts)`[]` |  | Variables in the input to the process [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md). |
 
 ### Events
@@ -126,7 +126,7 @@ to _alfresco-1002_ as follows:
 You then need to pass the node as the input `values` object with the other properties:
 
 ```ts
-let node: MinimalNodeEntryEntity = null;
+let node: MinimalNode = null;
 
  this.nodesApiService.getNode(NODE_ID).subscribe((minimalNode) => this.node = minimalNode);
 
@@ -159,7 +159,7 @@ const values: FormValues = {
 ```
 
 Note that in the object above, the key `file` is the name of the attach file field in the start form of the process. The value of the `file` property must be a
-[`MinimalNodeEntryEntity`](../content-services/document-library.model.md):
+[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md):
 
 ```html
 <adf-start-process 
