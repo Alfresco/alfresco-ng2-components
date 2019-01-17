@@ -16,10 +16,12 @@
  */
 
 import { browser, by, element, protractor } from 'protractor';
+import { DataTablePage } from '../dataTablePage';
 import { Util } from '../../../util/util';
 
 export class ContentListPage {
 
+    dataTable = new DataTablePage();
     deleteContentElement = element(by.css('button[data-automation-id*="DELETE"]'));
     metadataAction = element(by.css('button[data-automation-id*="METADATA"]'));
     versionManagerAction = element(by.css('button[data-automation-id*="VERSIONS"]'));
@@ -41,6 +43,10 @@ export class ContentListPage {
     emptyFolderMessage = element(by.css('div[class="adf-empty-folder-this-space-is-empty"]'));
     table = element.all(by.css('adf-datatable')).first();
     tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
+
+    getFileHyperlink(fileName) {
+        return this.dataTable.getFileHyperlink(fileName);
+    }
 
     getColumnLocator(column) {
         return by.css(`div[id*='document-list-container'] div[class*='adf-datatable-row'] div[title='${column}'] span`);
