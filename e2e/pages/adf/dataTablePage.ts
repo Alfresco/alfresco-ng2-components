@@ -44,6 +44,10 @@ export class DataTablePage {
         this.list = this.rootElement.all(by.css(`div[class*=adf-datatable-body] div[class*=adf-datatable-row]`));
     }
 
+    getFileHyperlink(filename) {
+        return element(by.cssContainingText('adf-name-column[class*="adf-datatable-link"] span', filename));
+    }
+
     getAllDisplayedRows() {
         return element.all(this.rows).count();
     }

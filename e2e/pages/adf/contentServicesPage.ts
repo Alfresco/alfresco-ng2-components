@@ -66,19 +66,19 @@ export class ContentServicesPage {
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
 
     clickFileHyperlink(fileName) {
-        let hyperlink = element(by.cssContainingText('adf-name-column[class*="adf-datatable-link"] span', fileName));
+        let hyperlink = this.contentList.getFileHyperlink(fileName);
         Util.waitUntilElementIsClickable(hyperlink);
         hyperlink.click();
         return this;
     }
 
     checkFileHyperlinkIsEnabled(fileName) {
-        let hyperlink = element(by.cssContainingText('adf-name-column[class*="adf-datatable-link"] span', fileName));
+        let hyperlink = this.contentList.getFileHyperlink(fileName);
         Util.waitUntilElementIsVisible(hyperlink);
         return this;
     }
 
-    enableHyperlinkNavigation() {
+    clickHyperlinkNavigationToggle() {
         let hyperlinkToggle = element(by.cssContainingText('.mat-slide-toggle-content', 'Hyperlink navigation'));
         Util.waitUntilElementIsVisible(hyperlinkToggle);
         hyperlinkToggle.click();
