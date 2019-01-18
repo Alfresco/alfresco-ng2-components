@@ -20,7 +20,7 @@ import { SettingsPage } from '../pages/adf/settingsPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/processCloudDemoPage';
+import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { StartProcessPage } from '../pages/adf/process-services/startProcessPage';
 import { Util } from '../util/util';
 describe('Start Process', () => {
@@ -35,8 +35,8 @@ describe('Start Process', () => {
     const processName255Characters = Util.generateRandomString(255);
     const processNameBiggerThen255Characters = Util.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
-    const requiredError = 'Process Name is required';
-    const requiredProcessError = 'Process Definition is required';
+    const requiredError = 'Process Name is required', requiredProcessError = 'Process Definition is required';
+    const processDefinition = 'processwithvariables';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
     const appName = 'simple-app', noProcessApp = 'noprocessapp';
     let silentLogin;
@@ -97,7 +97,7 @@ describe('Start Process', () => {
         processCloudDemoPage.clickOnProcessFilters();
 
         processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-        expect(processCloudDemoPage.checkActiveFilterActive()).toBe('Running Processes');
+        expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
         processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(processName);
 
     });
@@ -109,12 +109,18 @@ describe('Start Process', () => {
 
         startProcessPage.clearField(startProcessPage.processNameInput);
         startProcessPage.enterProcessName(processName);
+
+        startProcessPage.clearField(startProcessPage.processDefinition);
+        startProcessPage.blur(startProcessPage.processDefinition);
+        startProcessPage.checkValidationErrorIsDisplayed(requiredProcessError);
+
+        startProcessPage.selectFromProcessDropdown(processDefinition);
         startProcessPage.checkStartProcessButtonIsEnabled();
         startProcessPage.clickStartProcessButton();
         processCloudDemoPage.clickOnProcessFilters();
 
         processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
-        expect(processCloudDemoPage.checkActiveFilterActive()).toBe('Running Processes');
+        expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
         processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(processName);
 
     });
