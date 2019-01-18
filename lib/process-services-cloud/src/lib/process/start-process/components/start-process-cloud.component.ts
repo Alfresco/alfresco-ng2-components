@@ -36,6 +36,8 @@ import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model
 })
 export class StartProcessCloudComponent implements OnChanges, OnInit {
 
+    MAX_LENGTH: number = 255;
+
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
 
@@ -76,7 +78,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     processForm: FormGroup;
     processPayloadCloud = new ProcessPayloadCloud();
     filteredProcesses: ProcessDefinitionCloud[] = [];
+    maxProcessInstanceNameLength: number = this.MAX_LENGTH;
     isLoading = false;
+    errorMessage: string;
+    private validationMessages = { required: 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.PROCESS_NAME_REQUIRED',
+    maxlength: 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.MAXIMUM_LENGTH' };
 
     constructor(private startProcessCloudService: StartProcessCloudService,
                 private formBuilder: FormBuilder) {
@@ -84,10 +90,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     ngOnInit() {
         this.processForm = this.formBuilder.group({
-            processInstanceName: new FormControl(this.name, Validators.required),
+            processInstanceName: new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxProcessInstanceNameLength)]),
             processDefinition: new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
         });
 
+        this.setProcessNameValidationMessage();
         this.processDefinition.valueChanges
             .pipe(debounceTime(300))
             .subscribe((processDefinitionName) => {
@@ -225,6 +232,20 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
             return processDefinitionNameError ? { 'invalid name': true } : null;
         };
+    }
+
+    setProcessNameValidationMessage() {
+        this.processInstanceName.valueChanges.subscribe((val) => {
+            this.setValidationMessage(this.processInstanceName);
+        });
+    }
+
+    setValidationMessage(control: AbstractControl): void {
+        this.errorMessage = '';
+        if ((control.touched || control.dirty) && control.errors) {
+            this.errorMessage = Object.keys(control.errors).map((key) =>
+              this.validationMessages[key]).join('');
+          }
     }
 
     get processInstanceName(): AbstractControl {

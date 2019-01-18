@@ -15,8 +15,8 @@
                     matInput
                     formControlName="processInstanceName" 
                     id="processName">
-                <mat-error *ngIf="processInstanceName.hasError('required')">
-                    {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.PROCESS_NAME_REQUIRED' | translate }}
+                <mat-error id="adf-process-name-error-message" *ngIf="errorMessage">
+                    {{ errorMessage | translate : { characters : maxProcessInstanceNameLength } }}
                 </mat-error>
             </mat-form-field>
 
