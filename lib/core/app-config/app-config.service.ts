@@ -63,7 +63,7 @@ export class AppConfigService {
     };
 
     status: Status = Status.INIT;
-    private onLoadSubject: Subject<any>;
+    protected onLoadSubject: Subject<any>;
     onLoad: Observable<any>;
 
     constructor(private http: HttpClient) {

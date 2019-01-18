@@ -10,7 +10,7 @@ node_js:
 
 install:
     echo "no install"
-    
+
 branches:
   only:
   - master
