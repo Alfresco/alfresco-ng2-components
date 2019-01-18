@@ -36,6 +36,12 @@ export class TaskHeaderCloudService {
         this.contextRoot = this.appConfigService.get('bpmHost', '');
     }
 
+    /**
+     * Gets details of a task.
+     * @param appName Name of the app
+     * @param taskId ID of the task whose details you want
+     * @returns Task details
+     */
     getTaskById(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
         if (appName && taskId) {
 
@@ -58,6 +64,13 @@ export class TaskHeaderCloudService {
         }
     }
 
+    /**
+     * Updates the details (name, description, due date) for a task.
+     * @param appName Name of the app
+     * @param taskId ID of the task to update
+     * @param updatePayload Data to update the task
+     * @returns Updated task details
+     */
     updateTask(appName: string, taskId: string, updatePayload: any): any {
         if (appName && taskId) {
 
@@ -82,6 +95,13 @@ export class TaskHeaderCloudService {
         }
     }
 
+    /**
+     * Claims a task for an assignee.
+     * @param appName Name of the app
+     * @param taskId ID of the task to claim
+     * @param assignee User to assign the task to
+     * @returns Details of the claimed task
+     */
     claimTask(appName: string, taskId: string, assignee: string): any {
         if (appName && taskId) {
 
@@ -104,6 +124,12 @@ export class TaskHeaderCloudService {
         }
     }
 
+    /**
+     * Un-claims a task.
+     * @param appName Name of the app
+     * @param taskId ID of the task to unclaim
+     * @returns Details of the task that was unclaimed
+     */
     unclaimTask(appName: string, taskId: string): any {
         if (appName && taskId) {
 

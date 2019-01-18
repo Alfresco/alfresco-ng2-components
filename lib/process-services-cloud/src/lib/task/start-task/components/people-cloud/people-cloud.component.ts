@@ -44,11 +44,11 @@ export class PeopleCloudComponent implements OnInit {
     static MODE_SINGLE = 'single';
     static MODE_MULTIPLE = 'multiple';
 
-    /** Name of the application. If specified, shows the users who have access to the app. */
+    /** Name of the application. If specified, this shows the users who have access to the app. */
     @Input()
     appName: string;
 
-    /** Mode of the user selection (single/multiple). */
+    /** User selection mode (single/multiple). */
     @Input()
     mode: string = PeopleCloudComponent.MODE_SINGLE;
 
@@ -56,7 +56,11 @@ export class PeopleCloudComponent implements OnInit {
     @Input()
     roles: string[];
 
-    /** Array of users to be pre-selected. Pre-select all users in multi selection mode and only the first user of the array in single selection mode. */
+    /**
+     * Array of users to be pre-selected. All users in the
+     * array are pre-selected in multi selection mode, but only the first user
+     * is pre-selected in single selection mode.
+     */
     @Input()
     preSelectUsers: IdentityUserModel[];
 

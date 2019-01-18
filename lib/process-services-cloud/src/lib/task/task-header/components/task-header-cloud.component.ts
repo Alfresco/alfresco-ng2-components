@@ -38,7 +38,7 @@ import { TaskDetailsCloudModel } from '../../start-task/models/task-details-clou
 })
 export class TaskHeaderCloudComponent implements OnInit {
 
-    /** (Required) The appName */
+    /** (Required) The name of the application. */
     @Input()
     appName: string;
 
@@ -46,7 +46,7 @@ export class TaskHeaderCloudComponent implements OnInit {
     @Input()
     taskId: string;
 
-    /** The id of the task. */
+    /** Toggles Read Only Mode. This disables click selection and editing for all cells. */
     @Input()
     readOnly: boolean = false;
 
