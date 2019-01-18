@@ -66,7 +66,7 @@ export interface ProcessFilterActionType {
     id: string;
 }
 
-export interface FilterOptions {
+export interface ProcessFilterOptions {
     label?: string;
     value?: string;
 }
@@ -76,7 +76,7 @@ export class ProcessFilterProperties {
     type: string; // text|date|select
     value: string;
     key: string;
-    options$: Observable<FilterOptions[]>;
+    options$: Observable<ProcessFilterOptions[]>;
 
     constructor(obj?: any) {
         if (obj) {
