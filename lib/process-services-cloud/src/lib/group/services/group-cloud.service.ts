@@ -67,7 +67,7 @@ export class GroupCloudService {
             );
     }
 
-    checkGroupHasClientRoleMapping(groupId: string, clientId: string): Observable<any> {
+    getClientRoles(groupId: string, clientId: string): Observable<any[]> {
         const url = this.groupClientRoleMappingApi(groupId, clientId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
@@ -76,7 +76,11 @@ export class GroupCloudService {
                     url, httpMethod, pathParams, queryParams,
                     headerParams, formParams, bodyParam,
                     contentTypes, accepts, Object, null, null)
-                ).pipe(
+                );
+    }
+
+    checkGroupHasClientApp(groupId: string, clientId: string): Observable<boolean> {
+        return this.getClientRoles(groupId, clientId).pipe(
                     map((response: any[]) => {
                         if (response && response.length > 0) {
                             return true;
@@ -85,6 +89,28 @@ export class GroupCloudService {
                     }),
                     catchError((err) => this.handleError(err))
             );
+    }
+
+    checkGroupHasAnyClientAppRole(groupId: string, clientId: string, roleNames: string[]): Observable<boolean> {
+        return this.getClientRoles(groupId, clientId).pipe(
+            map((clientRoles: any[]) => {
+                let hasRole = false;
+                if (clientRoles.length > 0) {
+                    roleNames.forEach((roleName) => {
+                        const role = clientRoles.find((availableRole) => {
+                            return availableRole.name === roleName;
+                        });
+
+                        if (role) {
+                            hasRole = true;
+                            return;
+                        }
+                    });
+                }
+                return hasRole;
+            }),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     private groupClientRoleMappingApi(groupId: string, clientId: string): any {
