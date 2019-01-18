@@ -25,7 +25,7 @@ import { of } from 'rxjs';
 
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
-import { ProcessFilterCloudModel, ProcessFilterActionType, FilterOptions, ProcessFilterProperties } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel, ProcessFilterActionType, ProcessFilterProperties, ProcessFilterOptions } from '../models/process-filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
@@ -196,10 +196,10 @@ export class EditProcessFilterCloudComponent implements OnChanges {
         return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }
 
-    getRunningApplications(): Observable<FilterOptions[]> {
+    getRunningApplications(): Observable<ProcessFilterOptions[]> {
         return this.appsProcessCloudService.getDeployedApplicationsByStatus(EditProcessFilterCloudComponent.APP_RUNNING_STATUS).pipe(
             map((applications: ApplicationInstanceModel[]) => {
-                let options: FilterOptions[] = [];
+                let options: ProcessFilterOptions[] = [];
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
                         options.push({ label: application.name, value: application.name });
