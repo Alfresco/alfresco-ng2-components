@@ -44,8 +44,6 @@
         "DownloadEntry": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-core-rest-api/docs/DownloadEntry.md",
         "GroupMemberPaging": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/GroupMemberPaging.md",
         "MinimalNode": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md",
-        "MinimalNodeEntity": "../content-services/document-library.model.md",
-        "MinimalNodeEntryEntity": "../content-services/document-library.model.md",
         "Node": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md",
         "NodeEntry": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md",
         "ProcessInstanceFilterRepresentation": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md",
