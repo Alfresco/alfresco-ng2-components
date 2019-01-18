@@ -33,6 +33,7 @@ export class AppsProcessCloudService {
 
     /**
      * Gets a list of deployed apps for this user by status.
+     * @param status Required status value
      * @returns The list of deployed apps
      */
     getDeployedApplicationsByStatus(status: string): Observable<ApplicationInstanceModel[]> {

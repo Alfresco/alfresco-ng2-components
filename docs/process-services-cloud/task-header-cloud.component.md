@@ -1,4 +1,11 @@
-# [Task Header component](../../lib/process-services-cloud/task-header/components/task-header-cloud.component.ts "Defined in task-header.component.ts")
+---
+Title: Task Header Cloud Component
+Added: v3.0.0
+Status: Experimental
+Last reviewed: 2019-01-18
+---
+
+# [Task Header Cloud Component](../../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts "Defined in task-header-cloud.component.ts")
 
 Shows all the information related to a task.
 
@@ -19,9 +26,9 @@ Shows all the information related to a task.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appName | `string` |  | (required) The name of the application. |
-| taskId | `string` |  | (required) The id of the Task. |
-| readOnly | `boolean` | false | Flag to set the component in Read Only Mode. This mode makes all the cells not clickable and not editable. |
+| appName | `string` |  | (Required) The name of the application. |
+| readOnly | `boolean` | false | Toggles Read Only Mode. This disables click selection and editing for all cells. |
+| taskId | `string` |  | (Required) The id of the task. |
 
 ### Events
 
