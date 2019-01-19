@@ -53,8 +53,9 @@ export class UserPreferencesService {
 
     private initUserPreferenceStatus() {
         this.set(UserPreferenceValues.Locale, (this.locale || this.getDefaultLocale()));
-        this.set(UserPreferenceValues.PaginationSize, this.appConfig.get('pagination.size', this.defaults.paginationSize));
-        this.set(UserPreferenceValues.SupportedPageSizes, this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes));
+        this.set(UserPreferenceValues.PaginationSize, this.paginationSize || this.appConfig.get('pagination.size', this.defaults.paginationSize));
+        this.set(UserPreferenceValues.SupportedPageSizes,  JSON.stringify(this.supportedPageSizes) ||
+            this.appConfig.get('pagination.supportedPageSizes', JSON.stringify(this.defaults.supportedPageSizes)));
     }
 
     /**
@@ -145,8 +146,18 @@ export class UserPreferencesService {
      * Gets an array containing the available page sizes.
      * @returns Array of page size values
      */
-    getDefaultPageSizes(): number[] {
-        return this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes];
+    get supportedPageSizes(): number[] {
+        let supportedPageSizes = this.get(UserPreferenceValues.SupportedPageSizes);
+
+        if (supportedPageSizes) {
+            return JSON.parse(supportedPageSizes);
+        } else {
+            return this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes];
+        }
+    }
+
+    set supportedPageSizes(value: number[]) {
+        this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(value));
     }
 
     /** Pagination size. */
@@ -155,7 +166,7 @@ export class UserPreferencesService {
     }
 
     get paginationSize(): number {
-        return Number(this.get(UserPreferenceValues.PaginationSize, this.userPreferenceStatus[UserPreferenceValues.PaginationSize])) || this.defaults.paginationSize;
+        return Number(this.get(UserPreferenceValues.PaginationSize, this.userPreferenceStatus[UserPreferenceValues.PaginationSize]));
     }
 
     /** Current locale setting. */

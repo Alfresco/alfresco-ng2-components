@@ -95,7 +95,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         }
 
         if (!this.supportedPageSizes) {
-            this.supportedPageSizes =  this.userPreferencesService.getDefaultPageSizes();
+            this.supportedPageSizes =  this.userPreferencesService.supportedPageSizes;
         }
 
         if (this.target) {
