@@ -23,7 +23,7 @@ import {
     SearchApi,
     Node
 } from '@alfresco/js-api';
-import { AlfrescoApiCompatibility } from '@alfresco/js-api';
+import { AlfrescoApiCompatibility, AlfrescoApiConfig } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs';
@@ -41,6 +41,8 @@ export class AlfrescoApiService {
     nodeUpdated = new Subject<Node>();
 
     protected alfrescoApi: AlfrescoApiCompatibility;
+
+    lastConfig: AlfrescoApiConfig;
 
     getInstance(): AlfrescoApiCompatibility {
         return this.alfrescoApi;
@@ -126,11 +128,16 @@ export class AlfrescoApiService {
             oauth2: oauth
         };
 
-        if (this.alfrescoApi) {
+        if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, config)) {
+            this.lastConfig = config;
             this.alfrescoApi.configureJsApi(config);
         } else {
+            this.lastConfig = config;
             this.alfrescoApi = new AlfrescoApiCompatibility(config);
         }
     }
 
+    isDifferentConfig(lastConfig: AlfrescoApiConfig, newConfig: AlfrescoApiConfig) {
+        return JSON.stringify(lastConfig) !== JSON.stringify(newConfig);
+    }
 }

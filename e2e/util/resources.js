@@ -489,6 +489,10 @@ exports.Files = {
         IMG_FOLDER: {
             folder_location: "/resources/adf/allFileTypes/images",
             folder_name: "images"
+        },
+        IMG_RENDITION_FOLDER: {
+            folder_location: "/resources/adf/allFileTypes/images-rendition",
+            folder_name: "images-rendition"
         }
     },
 

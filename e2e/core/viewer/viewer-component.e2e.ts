@@ -24,9 +24,9 @@ import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
 
+import CONSTANTS = require('../../util/constants');
 import resources = require('../../util/resources');
 import { Util } from '../../util/util';
-import CONSTANTS = require('../../util/constants');
 
 import { FileModel } from '../../models/ACS/fileModel';
 import { FolderModel } from '../../models/ACS/folderModel';
@@ -87,6 +87,11 @@ describe('Viewer', () => {
     let imgFolderInfo = new FolderModel({
         'name': resources.Files.ADF_DOCUMENTS.IMG_FOLDER.folder_name,
         'location': resources.Files.ADF_DOCUMENTS.IMG_FOLDER.folder_location
+    });
+
+    let imgRenditionFolderInfo = new FolderModel({
+        'name': resources.Files.ADF_DOCUMENTS.IMG_RENDITION_FOLDER.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.IMG_RENDITION_FOLDER.folder_location
     });
 
     beforeAll(async (done) => {
@@ -340,13 +345,17 @@ describe('Viewer', () => {
 
     describe('Image Folder Uploaded', () => {
 
-        let uploadedImages;
-        let imgFolderUploaded;
+        let uploadedImages, uploadedImgRenditionFolderInfo;
+        let imgFolderUploaded, imgFolderRenditionUploaded;
 
         beforeAll(async (done) => {
             imgFolderUploaded = await uploadActions.createFolder(this.alfrescoJsApi, imgFolderInfo.name, '-my-');
 
             uploadedImages = await uploadActions.uploadFolder(this.alfrescoJsApi, imgFolderInfo.location, imgFolderUploaded.entry.id);
+
+            imgFolderRenditionUploaded = await uploadActions.createFolder(this.alfrescoJsApi, imgRenditionFolderInfo.name, imgFolderUploaded.entry.id);
+
+            uploadedImgRenditionFolderInfo = await uploadActions.uploadFolder(this.alfrescoJsApi, imgRenditionFolderInfo.location, imgFolderRenditionUploaded.entry.id);
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             contentServicesPage.goToDocumentList();
@@ -363,6 +372,16 @@ describe('Viewer', () => {
             contentServicesPage.navigateToFolder('images');
 
             uploadedImages.forEach((currentFile) => {
+                if (currentFile.entry.name !== '.DS_Store') {
+                    contentServicesPage.doubleClickRow(currentFile.entry.name);
+                    viewerPage.checkImgViewerIsDisplayed();
+                    viewerPage.clickCloseButton();
+                }
+            });
+
+            contentServicesPage.navigateToFolder('images-rendition');
+
+            uploadedImgRenditionFolderInfo.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
                     contentServicesPage.doubleClickRow(currentFile.entry.name);
                     viewerPage.checkFileIsLoaded();
@@ -387,7 +406,7 @@ describe('Viewer', () => {
 
             wordFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, wordFileInfo.location, wordFileInfo.name, '-my-');
 
-            pngFileShared = await this.alfrescoJsApi.core.sharedlinksApi.addSharedLink({'nodeId': pngFileUploaded.entry.id});
+            pngFileShared = await this.alfrescoJsApi.core.sharedlinksApi.addSharedLink({ 'nodeId': pngFileUploaded.entry.id });
 
             done();
         });

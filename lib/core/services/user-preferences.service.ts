@@ -23,8 +23,8 @@ import { StorageService } from './storage.service';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
 export enum UserPreferenceValues {
-    PaginationSize = 'PAGINATION_SIZE',
-    Locale = 'LOCALE',
+    PaginationSize = 'paginationSize',
+    Locale = 'locale',
     SupportedPageSizes = 'supportedPageSizes'
 }
 
@@ -52,9 +52,9 @@ export class UserPreferencesService {
     }
 
     private initUserPreferenceStatus() {
-        this.userPreferenceStatus[UserPreferenceValues.Locale] = this.locale || this.getDefaultLocale();
-        this.userPreferenceStatus[UserPreferenceValues.PaginationSize] = this.appConfig.get('pagination.size', this.defaults.paginationSize);
-        this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes] = this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
+        this.set(UserPreferenceValues.Locale, (this.locale || this.getDefaultLocale()));
+        this.set(UserPreferenceValues.PaginationSize, this.paginationSize);
+        this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(this.supportedPageSizes));
     }
 
     /**
@@ -145,8 +145,18 @@ export class UserPreferencesService {
      * Gets an array containing the available page sizes.
      * @returns Array of page size values
      */
-    getDefaultPageSizes(): number[] {
-        return this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes];
+    get supportedPageSizes(): number[] {
+        let supportedPageSizes = this.get(UserPreferenceValues.SupportedPageSizes);
+
+        if (supportedPageSizes) {
+            return JSON.parse(supportedPageSizes);
+        } else {
+            return this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
+        }
+    }
+
+    set supportedPageSizes(value: number[]) {
+        this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(value));
     }
 
     /** Pagination size. */
@@ -155,12 +165,18 @@ export class UserPreferencesService {
     }
 
     get paginationSize(): number {
-        return Number(this.get(UserPreferenceValues.PaginationSize, this.userPreferenceStatus[UserPreferenceValues.PaginationSize])) || this.defaults.paginationSize;
+        let paginationSize = this.get(UserPreferenceValues.PaginationSize);
+
+        if (paginationSize) {
+            return Number(paginationSize);
+        } else {
+            return Number(this.appConfig.get('pagination.size', this.defaults.paginationSize));
+        }
     }
 
     /** Current locale setting. */
     get locale(): string {
-        return this.get(UserPreferenceValues.Locale, this.userPreferenceStatus[UserPreferenceValues.Locale]);
+        return this.get(UserPreferenceValues.Locale);
     }
 
     set locale(value: string) {
@@ -172,7 +188,7 @@ export class UserPreferencesService {
      * @returns Default locale language code
      */
     public getDefaultLocale(): string {
-        return this.appConfig.get<string>('locale') || this.translate.getBrowserCultureLang() || 'en';
+        return this.appConfig.get<string>(UserPreferenceValues.Locale) || this.translate.getBrowserCultureLang() || 'en';
     }
 
 }
