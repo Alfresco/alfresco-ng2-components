@@ -53,9 +53,8 @@ export class UserPreferencesService {
 
     private initUserPreferenceStatus() {
         this.set(UserPreferenceValues.Locale, (this.locale || this.getDefaultLocale()));
-        this.set(UserPreferenceValues.PaginationSize, this.paginationSize || this.appConfig.get('pagination.size', this.defaults.paginationSize));
-        this.set(UserPreferenceValues.SupportedPageSizes,  JSON.stringify(this.supportedPageSizes) ||
-            this.appConfig.get('pagination.supportedPageSizes', JSON.stringify(this.defaults.supportedPageSizes)));
+        this.set(UserPreferenceValues.PaginationSize, this.paginationSize);
+        this.set(UserPreferenceValues.SupportedPageSizes, JSON.stringify(this.supportedPageSizes));
     }
 
     /**
@@ -152,7 +151,7 @@ export class UserPreferencesService {
         if (supportedPageSizes) {
             return JSON.parse(supportedPageSizes);
         } else {
-            return this.userPreferenceStatus[UserPreferenceValues.SupportedPageSizes];
+            return this.appConfig.get('pagination.supportedPageSizes', this.defaults.supportedPageSizes);
         }
     }
 
@@ -166,12 +165,18 @@ export class UserPreferencesService {
     }
 
     get paginationSize(): number {
-        return Number(this.get(UserPreferenceValues.PaginationSize, this.userPreferenceStatus[UserPreferenceValues.PaginationSize]));
+        let paginationSize = this.get(UserPreferenceValues.PaginationSize);
+
+        if (paginationSize) {
+            return Number(paginationSize);
+        } else {
+            return Number(this.appConfig.get('pagination.size', this.defaults.paginationSize));
+        }
     }
 
     /** Current locale setting. */
     get locale(): string {
-        return this.get(UserPreferenceValues.Locale, this.userPreferenceStatus[UserPreferenceValues.Locale]);
+        return this.get(UserPreferenceValues.Locale);
     }
 
     set locale(value: string) {

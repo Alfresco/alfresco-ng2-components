@@ -59,10 +59,12 @@ describe('UserPreferencesService', () => {
         }
     });
 
-    it('should get default pagination from app config', () => {
+    it('should get default pagination from app config', (done) => {
         appConfig.config.pagination.size = 0;
-        appConfig.load();
-        expect(preferences.defaults.paginationSize).toBe(0);
+        appConfig.load().then(()=>{
+            expect(preferences.paginationSize).toBe(0);
+            done();
+        });
     });
 
     it('should return supported page sizes defined in the app config', () => {
