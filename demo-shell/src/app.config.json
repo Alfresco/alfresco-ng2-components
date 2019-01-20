@@ -8,6 +8,7 @@
     "providers": "ALL",
     "contextRootBpm": "activiti-app",
     "authType" : "BASIC",
+    "locale" : "en",
     "oauth2": {
       "host": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
       "clientId": "alfresco",

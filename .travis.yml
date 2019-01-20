@@ -8,6 +8,9 @@ node_js:
  # Use the explicit NodeJS LTS version 8.9.4 to avoid any automatic upgrade of the version.
   - '8.9.4'
 
+install:
+    echo "no install"
+
 branches:
   only:
   - master

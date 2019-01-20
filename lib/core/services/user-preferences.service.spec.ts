@@ -19,22 +19,25 @@ import { TestBed } from '@angular/core/testing';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfigService } from '../app-config/app-config.service';
 import { StorageService } from './storage.service';
-import { UserPreferencesService } from './user-preferences.service';
+import { UserPreferencesService, UserPreferenceValues } from './user-preferences.service';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { AppConfigServiceMock } from '../mock/app-config.service.mock';
 
 describe('UserPreferencesService', () => {
 
-    const defaultPaginationSize: number = 25;
     const supportedPaginationSize = [5, 10, 15, 20];
     let preferences: UserPreferencesService;
     let storage: StorageService;
-    let appConfig: AppConfigService;
+    let appConfig: AppConfigServiceMock;
     let translate: TranslateService;
     let changeDisposable: any;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [CoreTestingModule],
+        providers: [
+            { provide: AppConfigService, useClass: AppConfigServiceMock }
+        ]
     });
 
     beforeEach(() => {
@@ -56,13 +59,17 @@ describe('UserPreferencesService', () => {
         }
     });
 
-    it('should get default pagination from app config', () => {
+    it('should get default pagination from app config', (done) => {
         appConfig.config.pagination.size = 0;
-        expect(preferences.defaults.paginationSize).toBe(defaultPaginationSize);
+        appConfig.load().then(() => {
+            expect(preferences.paginationSize).toBe(0);
+            done();
+        });
     });
 
     it('should return supported page sizes defined in the app config', () => {
-        const supportedPages = preferences.getDefaultPageSizes();
+        const supportedPages = preferences.supportedPageSizes;
+        appConfig.load();
         expect(supportedPages).toEqual(supportedPaginationSize);
     });
 
@@ -105,16 +112,6 @@ describe('UserPreferencesService', () => {
         expect(storage.getItem(propertyKey)).toBe('valueA');
     });
 
-    it('should store custom pagination settings for default prefix', () => {
-        preferences.paginationSize = 5;
-        expect(preferences.paginationSize).toBe(5);
-    });
-
-    it('should return default paginationSize value', () => {
-        preferences.set('PAGINATION_SIZE', 0);
-        expect(preferences.paginationSize).toBe(defaultPaginationSize);
-    });
-
     it('should return as default locale the app.config locate as first', () => {
         appConfig.config.locale = 'fake-locate-config';
         spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locate-browser');
@@ -141,7 +138,7 @@ describe('UserPreferencesService', () => {
     it('should stream the page size value when is set', (done) => {
         preferences.paginationSize = 5;
         changeDisposable = preferences.onChange.subscribe((userPreferenceStatus) => {
-            expect(userPreferenceStatus.PAGINATION_SIZE).toBe(5);
+            expect(userPreferenceStatus[UserPreferenceValues.PaginationSize]).toBe(5);
             done();
         });
     });

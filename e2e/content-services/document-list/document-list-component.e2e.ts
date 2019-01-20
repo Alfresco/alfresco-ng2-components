@@ -112,7 +112,7 @@ describe('Document List Component', () => {
         it('[C279925] Should display translated message when accessing a file without permissions if language is changed', () => {
             loginPage.loginToContentServicesUsingUserModel(acsUser);
             navBar.openLanguageMenu();
-            navBar.chooseLanguage('Italian');
+            navBar.chooseLanguage('Italiano');
             browser.sleep(2000);
             browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
             expect(errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
