@@ -352,8 +352,8 @@ export class ContentServicesPage {
         return this;
     }
 
-    doubleClickRow(folder) {
-        this.contentList.doubleClickRow(folder);
+    doubleClickRow(nodeName) {
+        this.contentList.doubleClickRow(nodeName);
         return this;
     }
 

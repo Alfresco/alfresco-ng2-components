@@ -81,7 +81,6 @@ saveScreenshots = async function (alfrescoJsApi, retryCount) {
 
             let safeFileName = fileName.replace(new RegExp('"', 'g'), '');
 
-            console.log('file.name' + fileName);
             try {
                 await alfrescoJsApi.upload.uploadFile(
                     file,
@@ -266,8 +265,6 @@ exports.config = {
             }
 
             let filenameReport = `ProtractorTestReport-${FOLDER.replace('/', '')}-${retryCount}`;
-
-            console.log(filenameReport);
 
             let output = '';
             let savePath = `${projectRoot}/e2e-output/junit-report/`;
