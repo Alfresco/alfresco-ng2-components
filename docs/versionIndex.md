@@ -10,6 +10,7 @@ of components organized by ADF libraries.
 
 ## Versions
 
+-   [v3.0.0](#v300)
 -   [v2.6.0](#v260)
 -   [v2.5.0](#v250)
 -   [v2.4.0](#v240)
@@ -18,11 +19,62 @@ of components organized by ADF libraries.
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
+## v3.0.0
+
+**Release:** Forthcoming<br/>
+
+### Components added
+
+<!--v300 start-->
+
+-   [App list cloud component](process-services-cloud/app-list-cloud.component.md)
+-   [Apps process cloud service](process-services-cloud/apps-process-cloud.service.md)
+-   [Dynamic tab component](extensions/dynamic-tab.component.md)
+-   [Dynamic component](extensions/dynamic.component.md)
+-   [Edit process filter cloud component](process-services-cloud/edit-process-filter-cloud.component.md)
+-   [Edit task filter cloud component](process-services-cloud/edit-task-filter-cloud.component.md)
+-   [Extension service](extensions/extension.service.md)
+-   [File upload error pipe](content-services/file-upload-error.pipe.md)
+-   [Format space pipe](core/format-space.pipe.md)
+-   [Full name pipe](core/full-name.pipe.md)
+-   [Group cloud component](process-services-cloud/group-cloud.component.md)
+-   [Group initial pipe](process-services-cloud/group-initial.pipe.md)
+-   [Icon component](core/icon.component.md)
+-   [Identity user service](core/identity-user.service.md)
+-   [Jwt helper service](core/jwt-helper.service.md)
+-   [People cloud component](process-services-cloud/people-cloud.component.md)
+-   [Process filter cloud service](process-services-cloud/process-filter-cloud.service.md)
+-   [Process filters cloud component](process-services-cloud/process-filters-cloud.component.md)
+-   [Process list cloud component](process-services-cloud/process-list-cloud.component.md)
+-   [Start process cloud component](process-services-cloud/start-process-cloud.component.md)
+-   [Start process cloud service](process-services-cloud/start-process-cloud.service.md)
+-   [Start task cloud component](process-services-cloud/start-task-cloud.component.md)
+-   [Start task cloud service](process-services-cloud/start-task-cloud.service.md)
+-   [Task filter cloud service](process-services-cloud/task-filter-cloud.service.md)
+-   [Task filters cloud component](process-services-cloud/task-filters-cloud.component.md)
+-   [Task header cloud component](process-services-cloud/task-header-cloud.component.md)
+-   [Task header cloud service](process-services-cloud/task-header-cloud.service.md)
+-   [Task list cloud component](process-services-cloud/task-list-cloud.component.md)
+-   [Tree view component](content-services/tree-view.component.md)
+
+<!--v300 end-->
+
+### Components retired
+
+| Name | Reason | Alternative |
+| -- | -- | -- |
+| Accordion component | Superseded by Angular `<mat-accordion>` | See the [Angular Expansion Panel](https://material.angular.io/components/expansion/overview#accordion) component for details. |
+| Accordion group component | Superseded by Angular `<mat-expansion-panel>` | See the [Angular Expansion Panel](https://material.angular.io/components/expansion/overview#accordion) component for details. |
+
+([Back to top](#versions))
+
 ## v2.6.0
 
 **Released:** 2018-10-04 ([Release notes](release-notes/RelNote260.md))<br/>
 **APS compatible version:** v1.6.4+<br/>
 **ACS compatible version:** v5.2.3<br/>
+
+### Components added
 
 <!--v260 start-->
 
@@ -32,17 +84,23 @@ of components organized by ADF libraries.
 
 <!--v260 end-->
 
+([Back to top](#versions))
+
 ## v2.5.0
 
 **Released:** 2018-08-14 ([Release notes](release-notes/RelNote250.md))<br/>
 **APS compatible version:** v1.6.4+<br/>
 **ACS compatible version:** v5.2.3<br/>
 
+### Components added
+
 <!--v250 start-->
 
 -   [Header component](core/header.component.md)
 
 <!--v250 end-->
+
+([Back to top](#versions))
 
 ## v2.4.0
 
@@ -188,9 +246,9 @@ of components organized by ADF libraries.
 -   [Diagram component](insights/diagram.component.md)
 -   [Discovery api service](core/discovery-api.service.md)
 -   [Document actions service](content-services/document-actions.service.md)
--   [Document library model](content-services/document-library.model.md)
 -   [Document list component](content-services/document-list.component.md)
 -   [Document list service](content-services/document-list.service.md)
+-   [Download zip service](core/download-zip.service.md)
 -   [Dropdown breadcrumb component](content-services/dropdown-breadcrumb.component.md)
 -   [Ecm user model](core/ecm-user.model.md)
 -   [Ecm user service](core/ecm-user.service.md)
