@@ -1,6 +1,6 @@
 <form>
 <mat-form-field class="adf-people-cloud">
-    <mat-label id="assignee-id">{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE' | translate}}</mat-label>
+    <mat-label id="assignee-id">{{ (title || 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE') | translate}}</mat-label>
     <mat-chip-list #userChipList *ngIf="isMultipleMode(); else singleSelection">
       <mat-chip
         *ngFor="let user of selectedUsers$ | async"
