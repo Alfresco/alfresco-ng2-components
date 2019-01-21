@@ -189,6 +189,10 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.assigneeName = assignee ? assignee.username : '';
     }
 
+    onAssigneeRemove() {
+        this.assigneeName = '';
+    }
+
     onCandiateGroupSelect(candidateGroup: any) {
         if (candidateGroup.name) {
             this.candidateGroupNames.push(candidateGroup.name);
