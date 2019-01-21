@@ -79,4 +79,14 @@ export class Tasks {
         return task;
     }
 
+    async getTask(taskId, appName) {
+        const path = '/' + appName + '-query/v1/tasks/' + taskId;
+        const method = 'GET';
+
+        const queryParams = {}, postBody = {};
+
+        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+        return data;
+    }
+
 }
