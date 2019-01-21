@@ -42,7 +42,6 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     isAlive = true;
     responseFacetQueries: ResponseFacetQueryList = null;
     responseFacetFields: FacetField[] = null;
-    // responseFacets: any[] = null;
 
     private facetQueriesPageSize = this.DEFAULT_PAGE_SIZE;
     facetQueriesLabel: string = 'Facet Queries';
@@ -117,10 +116,8 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private updateSelectedBuckets() {
         if (this.responseFacetFields) {
-        // if (this.responseFacets) {
             this.selectedBuckets = [];
             for (let field of this.responseFacetFields) {
-            // for (let field of this.responseFacets) {
                 if (field.buckets) {
                     this.selectedBuckets.push(
                         ...this.queryBuilder.getUserFacetBuckets(field.field)
@@ -208,23 +205,22 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         const context = data.list.context;
 
         if (context) {
-            this.parseFacets(context);
-            // this.parseFacetFields(context);
+            this.parseFacetFields(context);
             this.parseFacetQueries(context);
         } else {
             this.responseFacetQueries = null;
             this.responseFacetFields = null;
-            // this.responseFacets = null;
         }
     }
 
-    private parseFacets(context: ResultSetContext) {
+    private parseFacetFields(context: ResultSetContext) {
         if (!this.responseFacetFields) {
             const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
 
             this.responseFacetFields = configFacetFields.map((field) => {
                 const responseField = (context.facets || []).find((response) => response.label === field.label);
                 const responseBuckets: FacetFieldBucket[] = ((responseField && responseField.buckets) || []).map((respBucket) => {
+                    // todo: remove this section as it seems it is never called
                     const selectedBucket = this.selectedBuckets.find((selBucket) =>
                         selBucket.bucket.label === respBucket.label && selBucket.field.field === field.field);
                             // todo: why not find by field label: ... && selBucket.field.label === field.label); ?
