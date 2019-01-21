@@ -42,6 +42,8 @@ export class TaskDetailsCloudModel {
     managerOfCandidateGroup: boolean;
     memberOfCandidateGroup: boolean;
     memberOfCandidateUsers: boolean;
+    candidateUsers: string[];
+    candidateGroups: string[];
 
     constructor(obj?: any) {
         if (obj) {
@@ -69,6 +71,8 @@ export class TaskDetailsCloudModel {
             this.managerOfCandidateGroup = obj.managerOfCandidateGroup || null;
             this.memberOfCandidateGroup = obj.memberOfCandidateGroup || null;
             this.memberOfCandidateUsers = obj.memberOfCandidateUsers || null;
+            this.candidateUsers = obj.candidateUsers || null;
+            this.candidateGroups = obj.candidateGroups || null;
         }
     }
 }
