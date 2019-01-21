@@ -156,3 +156,16 @@ of a property when the app config is loaded:
         console.log(logLevelValue); //this will be 'trace';
     });
 ```
+
+## XMLHttpRequest.withCredentials
+
+In the configuration file, you can enable [XMLHttpRequest.withCredentials](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials)
+for @alfresco/js-api calls and PDF Viewer.
+
+```json
+{
+    "auth": {
+      "withCredentials": true
+    }
+}
+```

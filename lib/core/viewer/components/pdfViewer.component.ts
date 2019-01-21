@@ -30,6 +30,7 @@ import { LogService } from '../../services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdfViewer-password-dialog';
 import { MatDialog } from '@angular/material';
+import { AppConfigService } from './../../app-config/app-config.service';
 
 declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
@@ -99,7 +100,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     constructor(
         private dialog: MatDialog,
         private renderingQueueServices: RenderingQueueServices,
-        private logService: LogService) {
+        private logService: LogService,
+        private appConfigService: AppConfigService) {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
@@ -129,9 +131,14 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     }
 
     executePdf(src) {
-
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
-        this.loadingTask = pdfjsLib.getDocument(src);
+
+        const options = {
+            url: src,
+            withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
+        };
+
+        this.loadingTask = pdfjsLib.getDocument(options);
 
         this.loadingTask.onPassword = (callback, reason) => {
             this.onPdfPassword(callback, reason);
