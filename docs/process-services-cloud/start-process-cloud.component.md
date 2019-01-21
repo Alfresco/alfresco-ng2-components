@@ -26,6 +26,7 @@ Starts a process.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | (required) Name of the app. |
+| maxNameLength | `number` |  | Maximum length of the process name. |
 | name | `string` | "" | Name of the process. |
 | processDefinitionName | `string` |  | Name of the process definition. |
 | showSelectProcessDropdown | `boolean` | true | Show/hide the process dropdown list. |
