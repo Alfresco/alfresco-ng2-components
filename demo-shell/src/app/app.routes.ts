@@ -340,11 +340,6 @@ export const appRoutes: Routes = [
                 loadChildren: 'app/components/task-list-demo/task-list.module#AppTaskListModule'
             },
             {
-                path: 'task-list-cloud',
-                canActivate: [AuthGuard],
-                loadChildren: 'app/components/task-list-cloud/task-list-cloud.module#TaskListCloudDemoModule'
-            },
-            {
                 path: 'process-list',
                 canActivate: [AuthGuardBpm],
                 loadChildren: 'app/components/process-list-demo/process-list.module#AppProcessListModule'
