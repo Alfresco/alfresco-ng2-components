@@ -22,7 +22,7 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 import { GroupModel, GroupSearchParam } from '../models/group.model';
 import { GroupCloudService } from '../services/group-cloud.service';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
-import { distinctUntilChanged, switchMap, flatMap, mergeMap, filter, tap } from 'rxjs/operators';
+import { distinctUntilChanged, switchMap, mergeMap, filter, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-cloud-group',
@@ -44,11 +44,13 @@ export class GroupCloudComponent implements OnInit {
     static MODE_SINGLE = 'single';
     static MODE_MULTIPLE = 'multiple';
 
-    @ViewChild('groupInput') groupInput: ElementRef<HTMLInputElement>;
-
     /** Name of the application. If specified this shows the users who have access to the app. */
     @Input()
     appName: string;
+
+    /** Title of the field */
+    @Input()
+    title: string;
 
     /** User selection mode (single/multiple). */
     @Input()
@@ -58,6 +60,10 @@ export class GroupCloudComponent implements OnInit {
     @Input()
     preSelectGroups: GroupModel[] = [];
 
+    /** Role names of the groups to be listed. */
+    @Input()
+    roles: string[];
+
     /** Emitted when a group is selected. */
     @Output()
     selectGroup: EventEmitter<GroupModel> = new EventEmitter<GroupModel>();
@@ -65,6 +71,9 @@ export class GroupCloudComponent implements OnInit {
     /** Emitted when a group is removed. */
     @Output()
     removeGroup: EventEmitter<GroupModel> = new EventEmitter<GroupModel>();
+
+    @ViewChild('groupInput')
+    private groupInput: ElementRef<HTMLInputElement>;
 
     private selectedGroups: GroupModel[] = [];
 
@@ -86,6 +95,8 @@ export class GroupCloudComponent implements OnInit {
 
     searchedValue = '';
 
+    isFocused: boolean;
+
     constructor(private groupService: GroupCloudService) {
         this.selectedGroupsSubject = new BehaviorSubject<GroupModel[]>(this.selectedGroups);
         this.searchGroupsSubject = new BehaviorSubject<GroupModel[]>(this.searchGroups);
@@ -94,7 +105,9 @@ export class GroupCloudComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loadPreSelectGroups();
+        if (this.hasPreSelectGroups()) {
+            this.loadPreSelectGroups();
+        }
         this.initSearch();
 
         if (this.appName) {
@@ -112,6 +125,17 @@ export class GroupCloudComponent implements OnInit {
 
     initSearch() {
         this.searchGroupsControl.valueChanges.pipe(
+            filter((value) => {
+                return typeof value === 'string';
+            }),
+            tap((value) => {
+                this.searchedValue = value;
+                if (value) {
+                    this.setError();
+                } else {
+                    this.clearError();
+                }
+             }),
             debounceTime(500),
             distinctUntilChanged(),
             tap(() => {
@@ -119,14 +143,21 @@ export class GroupCloudComponent implements OnInit {
             }),
             switchMap((inputValue) => {
                 const queryParams = this.createSearchParam(inputValue);
-                return this.findGroupsByName(queryParams);
+                return this.groupService.findGroupsByName(queryParams);
+            }),
+            mergeMap((groups) => {
+                return groups;
             }),
             filter((group: any) => {
                 return !this.isGroupAlreadySelected(group);
             }),
             mergeMap((group: any) => {
-                if (this.clientId) {
-                    return this.checkGroupHasClientRoleMapping(group);
+                if (this.appName) {
+                    return this.checkGroupHasAccess(group.id).pipe(
+                        mergeMap((hasRole) => {
+                            return hasRole ? of(group) : of();
+                        })
+                    );
                 } else {
                     return of(group);
                 }
@@ -138,53 +169,30 @@ export class GroupCloudComponent implements OnInit {
         });
     }
 
-    findGroupsByName(searchParam: GroupSearchParam): Observable<GroupModel> {
-        return this.groupService.findGroupsByName(searchParam).pipe(
-            flatMap((groups: GroupModel[]) => {
-                this.searchedValue = searchParam.name;
-                if (this.searchedValue && !this.hasGroups(groups)) {
-                    this.setError();
-                }
-                return groups;
-            })
-        );
-    }
-
-    checkGroupHasClientRoleMapping(group: GroupModel): Observable<GroupModel> {
-        return this.groupService.checkGroupHasClientRoleMapping(group.id, this.clientId).pipe(
-            mergeMap((hasRole: boolean) => {
-                if (hasRole) {
-                    return of(group);
-                } else {
-                    this.setError();
-                    return of();
-                }
-            })
-        );
+    checkGroupHasAccess(groupId: string): Observable<boolean> {
+        if (this.hasRoles()) {
+            return this.groupService.checkGroupHasAnyClientAppRole(groupId, this.clientId, this.roles);
+        } else {
+            return this.groupService.checkGroupHasClientApp(groupId, this.clientId);
+        }
     }
 
     isGroupAlreadySelected(group: GroupModel): boolean {
-        if (this.hasGroups(this.selectedGroups)) {
-            const result = this.selectedGroups.filter((selectedGroup: GroupModel) => {
-                return selectedGroup.id === group.id;
-            });
-            if (this.hasGroups(result)) {
-                return true;
-            }
-        }
-        return false;
+        const result = this.selectedGroups.find((selectedGroup: GroupModel) => {
+            return selectedGroup.id === group.id;
+        });
+
+        return !!result;
     }
 
     private loadPreSelectGroups() {
-        if (this.hasGroups(this.preSelectGroups)) {
-            if (this.isMultipleMode()) {
-                this.preSelectGroups.forEach((group: GroupModel) => {
-                    this.selectedGroups.push(group);
-                });
-            } else {
-                this.searchGroupsControl.setValue(this.preSelectGroups[0]);
-                this.onSelect(this.preSelectGroups[0]);
-            }
+        if (this.isMultipleMode()) {
+            this.preSelectGroups.forEach((group: GroupModel) => {
+                this.selectedGroups.push(group);
+            });
+        } else {
+            this.searchGroupsControl.setValue(this.preSelectGroups[0]);
+            this.onSelect(this.preSelectGroups[0]);
         }
     }
 
@@ -226,30 +234,17 @@ export class GroupCloudComponent implements OnInit {
         return group ? group.name : '';
     }
 
-    private hasGroups(groups: GroupModel[]): boolean {
-        return groups && groups.length > 0;
+    private hasPreSelectGroups(): boolean {
+        return this.preSelectGroups && this.preSelectGroups.length > 0;
     }
 
-    createSearchParam(value: any): GroupSearchParam {
-        let queryParams: GroupSearchParam = { name: '' };
-        if (this.isString(value)) {
-            queryParams.name = value.trim();
-        } else {
-            queryParams.name = value.name.trim();
-        }
+    private createSearchParam(value: string): GroupSearchParam {
+        const queryParams: GroupSearchParam = { name: value };
         return queryParams;
     }
 
-    isString(value: any): boolean {
-        return typeof value === 'string';
-    }
-
-    setValidationError() {
-        if (this.hasGroups(this.searchGroups)) {
-            this.clearError();
-        } else {
-            this.setError();
-        }
+    private hasRoles(): boolean {
+        return this.roles && this.roles.length > 0;
     }
 
     private disableSearch() {
@@ -270,5 +265,13 @@ export class GroupCloudComponent implements OnInit {
 
     hasError(): boolean {
         return this.searchGroupsControl && this.searchGroupsControl.errors && this.searchGroupsControl.errors.invalid;
+    }
+
+    setFocus(isFocused: boolean) {
+        this.isFocused = isFocused;
+    }
+
+    hasErrorMessage(): boolean {
+        return !this.isFocused && this.hasError();
     }
 }
