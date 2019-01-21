@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { PipeTransform, Pipe } from "@angular/core";
+import { PipeTransform, Pipe } from '@angular/core';
 
 @Pipe({
     name: 'fileType',
@@ -23,9 +23,9 @@ import { PipeTransform, Pipe } from "@angular/core";
 })
 export class FileTypePipe implements PipeTransform {
 
-    transform(value: string,) {
+    transform(value: string) {
 
-        if( value == null || value == undefined ) {
+        if ( value == null || value === undefined ) {
             return '';
         } else {
             const fileInfo = value.substring(value.lastIndexOf('/') + 1).replace(/\.[a-z]+/, '');
