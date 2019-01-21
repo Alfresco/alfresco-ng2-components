@@ -64,7 +64,7 @@ export class PeopleCloudComponent implements OnInit, AfterViewInit {
     @Input()
     preSelectUsers: IdentityUserModel[];
 
-    /** Title for input control.  */
+    /** Title for the input control.  */
     @Input()
     title: string;
 
@@ -285,9 +285,7 @@ export class PeopleCloudComponent implements OnInit, AfterViewInit {
     }
 
     private resetSingleModeSelection() {
-        if (this.hasSelectedUsers()) {
-            this.onRemove(this.selectedUsers[0]);
-        }
+        this.onRemove(this.selectedUsers[0]);
     }
 
     private hasSelectedUsers(): boolean {

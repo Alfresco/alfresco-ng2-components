@@ -28,7 +28,7 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 | mode | `string` |  | User selection mode (single/multiple). |
 | preSelectUsers | [`IdentityUserModel`](../../lib/core/userinfo/models/identity-user.model.ts)`[]` |  | Array of users to be pre-selected. All users in the array are pre-selected in multi selection mode, but only the first user is pre-selected in single selection mode. |
 | roles | `string[]` |  | Role names of the users to be listed. |
-| title | `string` |  | Title for input control. |
+| title | `string` |  | Title for the input control. |
 
 ### Events
 
