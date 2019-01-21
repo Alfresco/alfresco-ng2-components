@@ -149,9 +149,9 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     public saveTask() {
         this.submitted = true;
         const newTask = Object.assign(this.taskForm.value);
-        newTask.appName = this.getAppName();
-        newTask.dueDate = this.getDueDate();
-        newTask.assignee = this.getAssigneeName();
+        newTask.appName = this.appName;
+        newTask.dueDate = this.dueDate;
+        newTask.assignee = this.assigneeName;
         newTask.candidateGroups = this.candidateGroupNames;
         this.createNewTask(new TaskDetailsCloudModel(newTask));
     }
@@ -172,14 +172,6 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     public onCancel() {
         this.cancel.emit();
-    }
-
-    private getDueDate(): Date {
-        return this.dueDate;
-    }
-
-    private getAppName(): string {
-        return this.appName ? this.appName : '';
     }
 
     onDateChanged(newDateValue) {
