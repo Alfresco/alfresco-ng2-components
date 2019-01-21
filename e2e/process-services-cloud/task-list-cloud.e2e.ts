@@ -45,16 +45,15 @@ describe('Task List - Properties', () => {
 
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
     const createdTaskName = Util.generateRandomString(), notDisplayedTaskName = Util.generateRandomString(),
-        assignedTaskName = Util.generateRandomString();
+        assignedTaskName = Util.generateRandomString(), multipleTaskName = Util.generateRandomString();
     const simpleApp = 'simple-app';
-    const shortSimpleAppName = 'simple';
     const candidateUserApp = 'candidateuserapp';
-    let createdTask, notDisplayedTask, assignedTask;
+    let createdTask, notDisplayedTask, assignedTask, multipleTask;
     let invalidName = 'invalidName', invalidTaskId = '0000';
     let currentDate = DateUtil.formatDate('MM/DD/YYYY');
 
     let noTasksFoundMessage = 'No Tasks Found';
-    let processDefinition, processInstance, processInstanceTask;
+    let processDefinition, processInstance;
 
     beforeAll(async (done) => {
         let silentLogin = false;
@@ -65,7 +64,10 @@ describe('Task List - Properties', () => {
         await tasksService.init(user, password);
         createdTask = await tasksService.createStandaloneTask(createdTaskName, simpleApp);
 
+        multipleTask = await tasksService.createStandaloneTask(multipleTaskName, simpleApp);
+
         notDisplayedTask = await tasksService.createStandaloneTask(notDisplayedTaskName, candidateUserApp);
+
         assignedTask = await tasksService.createStandaloneTask(assignedTaskName, simpleApp);
         await tasksService.claimTask(assignedTask.entry.id, simpleApp);
 
@@ -83,7 +85,7 @@ describe('Task List - Properties', () => {
     });
 
     //failing due to ADF-3893
-    it('[C280515] Should be able to see only the tasks of a specific app when typing the exact app name in the appName field', () => {
+    it('[C291895] Should be able to see only the tasks of a specific app when typing the exact app name in the appName field', () => {
         taskListCloudDemoPage.clickResetButton();
 
         taskListCloudDemoPage.typeAppName(simpleApp).typeCurrentDate(currentDate);
@@ -94,17 +96,17 @@ describe('Task List - Properties', () => {
     });
 
     //failing due to ADF-3914
-    it('[C280515] Should be able to see No tasks found when typing only a part of the app name in the appName field', () => {
+    it('[C291896] Should be able to see No tasks found when typing not existent app name in the appName field', () => {
         taskListCloudDemoPage.clickResetButton();
 
-        taskListCloudDemoPage.typeAppName(shortSimpleAppName);
-        expect(taskListCloudDemoPage.getAppName()).toEqual(shortSimpleAppName);
+        taskListCloudDemoPage.typeAppName(invalidTaskId);
+        expect(taskListCloudDemoPage.getAppName()).toEqual(invalidTaskId);
 
         expect(taskListCloudDemoPage.taskListCloud().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
     });
 
     //failing due to ADF-3915
-    it('[C280570] Should be able to see only the tasks with specific name when typing the name in the task name field', () => {
+    it('[C291905] Should be able to see only the tasks with specific name when typing the name in the task name field', () => {
         taskListCloudDemoPage.clickResetButton();
 
         taskListCloudDemoPage.typeAppName(simpleApp).typeTaskName(createdTaskName);
@@ -125,7 +127,7 @@ describe('Task List - Properties', () => {
     });
 
     //failing due to ADF-3915
-    it('[C280629] Should be able to see only the task with specific taskId when typing it in the task Id field', () => {
+    it('[C291906] Should be able to see only the task with specific taskId when typing it in the task Id field', () => {
         taskListCloudDemoPage.clickResetButton();
 
         taskListCloudDemoPage.typeAppName(simpleApp).typeTaskId(createdTask.entry.id);
@@ -136,7 +138,7 @@ describe('Task List - Properties', () => {
     });
 
     //failing due to ADF-3914
-    it('[C280630] Should be able to see No tasks found when typing an invalid taskId', () => {
+    it('[C291907] Should be able to see No tasks found when typing an invalid taskId', () => {
         taskListCloudDemoPage.clickResetButton();
 
         taskListCloudDemoPage.typeAppName(simpleApp).typeTaskId(invalidTaskId);
@@ -146,7 +148,7 @@ describe('Task List - Properties', () => {
     });
 
     //failing due to ADF-3915, ADF-3916
-    it('[C286622] Should be able to see only tasks that are part of a specific process when processDefinitionId is set', () => {
+    it('[C291908] Should be able to see only tasks that are part of a specific process when processDefinitionId is set', () => {
         taskListCloudDemoPage.clickResetButton();
 
         taskListCloudDemoPage.typeAppName(simpleApp).typeProcessDefinitionId(processDefinition.list.entries[0].entry.key);
@@ -159,7 +161,7 @@ describe('Task List - Properties', () => {
     });
 
     //failing due to ADF-3914
-    it('[C286623] Should be able to see No tasks found when typing an invalid processDefinitionId', () => {
+    it('[C291909] Should be able to see No tasks found when typing an invalid processDefinitionId', () => {
         taskListCloudDemoPage.clickResetButton();
 
         taskListCloudDemoPage.typeAppName(simpleApp).typeProcessDefinitionId(invalidTaskId);
@@ -168,7 +170,7 @@ describe('Task List - Properties', () => {
     });
 
     //failing due to ADF-3915
-    it('[C286622] Should be able to see only tasks that are part of a specific process when processInstanceId is set', () => {
+    it('[C291910] Should be able to see only tasks that are part of a specific process when processInstanceId is set', () => {
         taskListCloudDemoPage.clickResetButton();
 
         taskListCloudDemoPage.typeAppName(simpleApp).typeProcessInstanceId(processInstance.entry.id);
@@ -181,7 +183,7 @@ describe('Task List - Properties', () => {
     });
 
     //failing due to ADF-3914
-    it('[C286623] Should be able to see No tasks found when typing an invalid processInstanceId', () => {
+    it('[C291911] Should be able to see No tasks found when typing an invalid processInstanceId', () => {
         taskListCloudDemoPage.clickResetButton();
 
         taskListCloudDemoPage.typeProcessInstanceId(invalidTaskId);
@@ -191,10 +193,10 @@ describe('Task List - Properties', () => {
     });
 
     //failing due to ADF-3915
-    it('[C286622] Should be able to see only tasks that are assigned to a specific user when assignee is set', () => {
+    it('[C291912] Should be able to see only tasks that are assigned to a specific user when assignee is set', () => {
         taskListCloudDemoPage.clickResetButton();
 
-        taskListCloudDemoPage.typeAppName(simpleApp).typeAssignee('admin.adf');//poate pot sa il iau de undeva
+        taskListCloudDemoPage.typeAppName(simpleApp).typeAssignee('admin.adf');
         expect(taskListCloudDemoPage.getAssignee()).toEqual('admin.adf');
 
         taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsDisplayedByName(assignedTask.entry.name);
@@ -202,7 +204,7 @@ describe('Task List - Properties', () => {
     });
 
     //failing due to ADF-3914
-    fit('[C286623] Should be able to see No tasks found when typing an invalid user to assignee field', () => {
+    fit('[C291913] Should be able to see No tasks found when typing an invalid user to assignee field', () => {
         taskListCloudDemoPage.clickResetButton();
 
         taskListCloudDemoPage.typeAppName(simpleApp).typeAssignee(invalidTaskId);
@@ -212,7 +214,7 @@ describe('Task List - Properties', () => {
     });
 
     //failing due to ADF-3915, ADF-3893
-    it('[C286622] Should not be able to select any row when selection mode is set to None', () => {
+    it('[C291914] Should not be able to select any row when selection mode is set to None', () => {
         taskListCloudDemoPage.clickResetButton();
 
         taskListCloudDemoPage.typeAppName(simpleApp).typeCurrentDate(currentDate).selectSelectionMode('None');
@@ -222,4 +224,62 @@ describe('Task List - Properties', () => {
         taskListCloudDemoPage.taskListCloud().getDataTable().checkNoRowIsSelected();
     });
 
+    //failing due to ADF-3915, ADF-3893
+    it('[C291918] Should be able to select only one row when selection mode is set to Single', () => {
+        taskListCloudDemoPage.clickResetButton();
+
+        taskListCloudDemoPage.typeAppName(simpleApp).typeCurrentDate(currentDate).selectSelectionMode('Single');
+        expect(taskListCloudDemoPage.getAppName()).toEqual(simpleApp);
+
+        taskListCloudDemoPage.taskListCloud().getDataTable().selectRowByRowName(createdTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsSelectedByName(createdTaskName);
+        expect(taskListCloudDemoPage.taskListCloud().getDataTable().getNumberOfSelectedRows()).toEqual(1);
+        taskListCloudDemoPage.taskListCloud().getDataTable().selectRowByRowName(assignedTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsSelectedByName(assignedTaskName);
+        expect(taskListCloudDemoPage.taskListCloud().getDataTable().getNumberOfSelectedRows()).toEqual(1);
+    });
+
+    //failing due to ADF-3915, ADF-3893
+    it('[C291919] Should be able to select only one row when selection mode is set to Multiple', () => {
+        taskListCloudDemoPage.clickResetButton();
+
+        taskListCloudDemoPage.typeAppName(simpleApp).typeCurrentDate(currentDate).selectSelectionMode('Multiple');
+        expect(taskListCloudDemoPage.getAppName()).toEqual(simpleApp);
+
+        taskListCloudDemoPage.taskListCloud().getDataTable().selectRowByRowName(createdTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsSelectedByName(createdTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().selectRowByNameWithKeyboard(assignedTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsSelectedByName(createdTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsSelectedByName(assignedTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsNotSelectedByName(multipleTaskName);
+    });
+
+
+    it('[C291916] Should be able to select multiple row when multiselect is true', () => {
+        taskListCloudDemoPage.clickResetButton();
+
+        taskListCloudDemoPage.typeAppName(simpleApp).enableMultiSelect();
+        expect(taskListCloudDemoPage.getAppName()).toEqual(simpleApp);
+
+        taskListCloudDemoPage.taskListCloud().getDataTable().clickCheckboxByName(createdTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsCheckedByName(createdTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().clickCheckboxByName(assignedTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsCheckedByName(assignedTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsNotCheckedByName(multipleTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().clickCheckboxByName(assignedTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsNotCheckedByName(assignedTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsCheckedByName(createdTaskName);
+    });
+
+    it('[C291915] Should be possible select all the rows when multiselect is true', () => {
+        taskListCloudDemoPage.clickResetButton();
+
+        taskListCloudDemoPage.typeAppName(simpleApp).enableMultiSelect();
+        expect(taskListCloudDemoPage.getAppName()).toEqual(simpleApp);
+
+        taskListCloudDemoPage.taskListCloud().getDataTable().checkAllRows();
+        taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsCheckedByName(createdTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().clickCheckboxByName(assignedTaskName);
+        taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsCheckedByName(multipleTaskName);
+    });
 });

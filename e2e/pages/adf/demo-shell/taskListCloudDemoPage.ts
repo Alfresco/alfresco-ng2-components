@@ -18,11 +18,14 @@
 import { Util } from '../../../util/util';
 import { TaskListCloudComponent } from '../process-cloud/taskListCloudComponent';
 import { PaginationPage } from '../paginationPage';
+import { FormControllersPage } from '../material/formControllersPage';
 import { element, by } from 'protractor';
 
 export class TaskListCloudDemoPage {
 
     taskListCloudPage: TaskListCloudComponent = new TaskListCloudComponent();
+    formControllersPage = new FormControllersPage();
+
     appName = element(by.css("input[data-automation-id='appName-input']"));
     itemsPerPage = element(by.css("input[data-automation-id='items per page']"));
     itemsPerPageForm = element(by.css("mat-form-field[data-automation-id='items per page']"));
@@ -39,6 +42,7 @@ export class TaskListCloudDemoPage {
     taskId = element(by.css("input[data-automation-id='task-id']"));
     modeDropDownArrow = element(by.css("mat-form-field[data-automation-id='mode'] div[class*='arrow']"));
     modeSelector = element(by.css("div[class*='mat-select-panel']"));
+    multiSelectionSwitch = element(by.css("mat-slide-toggle[data-automation-id='multiSelection']"));
 
     taskListCloud(): TaskListCloudComponent {
         return this.taskListCloudPage;
@@ -122,6 +126,14 @@ export class TaskListCloudDemoPage {
         Util.waitUntilElementIsVisible(modeElement);
         modeElement.click();
         return this;
+    }
+
+    enableMultiSelect() {
+        this.formControllersPage.enableToggle(this.multiSelectionSwitch);
+    }
+
+    disableMultiSelect() {
+        this.formControllersPage.enableToggle(this.multiSelectionSwitch);
     }
 
     clickOnSelectionModeDropDownArrow() {
