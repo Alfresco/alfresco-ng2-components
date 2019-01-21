@@ -51,6 +51,23 @@ describe('PeopleCloudComponent', () => {
         expect(component instanceof PeopleCloudComponent).toBeTruthy();
     });
 
+    it('should show default title when title is not given', async(() => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const labelElement = element.querySelector('label');
+            expect(labelElement.innerText).toBe('ADF_TASK_LIST.START_TASK.FORM.LABEL.ASSIGNEE');
+        });
+    }));
+
+    it('should show the title instead of default title when title is given', async(() => {
+        component.title = 'Mock Title';
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const labelElement = element.querySelector('label');
+            expect(labelElement.innerText).toBe('Mock Title');
+        });
+    }));
+
     it('should show the users if the typed result match', async(() => {
         component.searchUsers$ = of(<IdentityUserModel[]> mockUsers);
         fixture.detectChanges();
@@ -62,7 +79,6 @@ describe('PeopleCloudComponent', () => {
         inputHTMLElement.value = 'M';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('mat-option'))).toBeDefined();
         });
     }));
@@ -101,7 +117,6 @@ describe('PeopleCloudComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             inputHTMLElement.blur();
-            fixture.detectChanges();
             const errorMessage = element.querySelector('.adf-start-task-cloud-error-message');
             expect(errorMessage).not.toBeNull();
             expect(errorMessage.textContent).toContain('ADF_CLOUD_START_TASK.ERROR.MESSAGE');
@@ -129,7 +144,7 @@ describe('PeopleCloudComponent', () => {
     it('should pre-select all preSelectUsers when mode=multiple', async(() => {
         spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
         component.mode = 'multiple';
-        component.preSelectUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
+        component.preSelectUsers = <any> [mockUsers[1], mockUsers[2]];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -168,6 +183,48 @@ describe('PeopleCloudComponent', () => {
             const selectedUser = component.searchUserCtrl.value;
             expect(selectedUser).toBeNull();
         });
+    }));
+
+    it('should emit select event for all preSelectUsers when mode=multiple', async(() => {
+        spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
+        const selectUserSpy = spyOn(component.selectUser, 'emit');
+        component.mode = 'multiple';
+        component.preSelectUsers = <any> [mockUsers[1], mockUsers[2]];
+
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(selectUserSpy).toHaveBeenCalledTimes(2);
+        });
+    }));
+
+    it('should emit select event for first preSelectUser when mode=single', async(() => {
+        spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
+        const selectUserSpy = spyOn(component.selectUser, 'emit');
+        component.preSelectUsers = <any> [mockUsers[1], mockUsers[2]];
+
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(selectUserSpy).toHaveBeenCalledTimes(1);
+        });
+    }));
+
+    it('should emit removeUser when a selected user is removed if mode=single', async(() => {
+        spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
+        const removeUserSpy = spyOn(component.removeUser, 'emit');
+
+        component.preSelectUsers = <any> [mockUsers[1], mockUsers[2]];
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+            inputHTMLElement.focus();
+            inputHTMLElement.value = '';
+            inputHTMLElement.dispatchEvent(new Event('input'));
+
+            fixture.detectChanges();
+            expect(removeUserSpy).toHaveBeenCalledWith(mockUsers[1]);
+        });
+
     }));
 
     it('should emit removeUser when a selected user is removed if mode=multiple', async(() => {
