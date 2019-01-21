@@ -33,10 +33,10 @@ import {
 import { PeopleCloudComponent } from './people-cloud/people-cloud.component';
 
 @Component({
-  selector: 'adf-cloud-start-task',
-  templateUrl: './start-task-cloud.component.html',
-  styleUrls: ['./start-task-cloud.component.scss'],
-  providers: [
+    selector: 'adf-cloud-start-task',
+    templateUrl: './start-task-cloud.component.html',
+    styleUrls: ['./start-task-cloud.component.scss'],
+    providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
     encapsulation: ViewEncapsulation.None
@@ -123,7 +123,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     buildForm() {
         this.taskForm = this.formBuilder.group({
-            name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength())]),
+            name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
             priority: new FormControl(),
             description: new FormControl()
         });
@@ -131,7 +131,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     private getMaxNameLength(): number {
         return this.maxNameLength > StartTaskCloudComponent.MAX_NAME_LENGTH ?
-             StartTaskCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
+            StartTaskCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
     }
 
     private loadCurrentUser() {
@@ -158,7 +158,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
                     this.submitted = false;
                     this.error.emit(err);
                     this.logService.error('An error occurred while creating new task');
-            });
+                });
     }
 
     public onCancel() {
@@ -190,6 +190,12 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     onAssigneeSelect(assignee: IdentityUserModel) {
         this.assigneeName = assignee ? assignee.username : '';
+    }
+
+    public whitespaceValidator(control: FormControl) {
+        const isWhitespace = (control.value || '').trim().length === 0;
+        const isValid = !isWhitespace;
+        return isValid ? null : { 'whitespace': true };
     }
 
     get nameController(): AbstractControl {

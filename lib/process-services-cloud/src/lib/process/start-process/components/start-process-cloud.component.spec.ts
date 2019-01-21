@@ -376,5 +376,29 @@ describe('StartProcessCloudComponent', () => {
 
             component.startProcess();
         });
+
+        it('should emit error when process name exceeds maximum length', () => {
+            component.maxNameLength = 2;
+            component.ngOnInit();
+            fixture.detectChanges();
+            let processInstanceName = component.processForm.controls['processInstanceName'];
+            processInstanceName.setValue('task');
+            fixture.detectChanges();
+            expect(processInstanceName.valid).toBeFalsy();
+            processInstanceName.setValue('ta');
+            fixture.detectChanges();
+            expect(processInstanceName.valid).toBeTruthy();
+        });
+
+        it('should emit error when process name field is empty', () => {
+            fixture.detectChanges();
+            let processInstanceName = component.processForm.controls['processInstanceName'];
+            processInstanceName.setValue('');
+            fixture.detectChanges();
+            expect(processInstanceName.valid).toBeFalsy();
+            processInstanceName.setValue('task');
+            fixture.detectChanges();
+            expect(processInstanceName.valid).toBeTruthy();
+        });
     });
 });

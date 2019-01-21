@@ -1,4 +1,4 @@
-<mat-accordion>
+<mat-accordion *ngIf="processFilter">
     <mat-expansion-panel>
         <mat-expansion-panel-header id="adf-edit-process-filter-expansion-header">
             <mat-panel-title id="adf-edit-process-filter-title-id">{{processFilter.name | translate}}</mat-panel-title>

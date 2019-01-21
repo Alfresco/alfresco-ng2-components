@@ -36,12 +36,18 @@ import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model
 })
 export class StartProcessCloudComponent implements OnChanges, OnInit {
 
+    static MAX_NAME_LENGTH: number = 255;
+
     @ViewChild(MatAutocompleteTrigger)
     inputAutocomplete: MatAutocompleteTrigger;
 
     /** (required) Name of the app. */
     @Input()
     appName: string;
+
+    /** Maximum length of the process name. */
+    @Input()
+    maxNameLength: number = StartProcessCloudComponent.MAX_NAME_LENGTH;
 
     /** Name of the process. */
     @Input()
@@ -77,14 +83,13 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     processPayloadCloud = new ProcessPayloadCloud();
     filteredProcesses: ProcessDefinitionCloud[] = [];
     isLoading = false;
-
     constructor(private startProcessCloudService: StartProcessCloudService,
                 private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
         this.processForm = this.formBuilder.group({
-            processInstanceName: new FormControl(this.name, Validators.required),
+            processInstanceName: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
             processDefinition: new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
         });
 
@@ -103,6 +108,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
             this.appName = changes['appName'].currentValue;
             this.loadProcessDefinitions();
         }
+    }
+
+    private getMaxNameLength(): number {
+        return this.maxNameLength > StartProcessCloudComponent.MAX_NAME_LENGTH ?
+            StartProcessCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
     }
 
     setProcessDefinitionOnForm(processDefinitionName: string) {
@@ -225,6 +235,12 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
             return processDefinitionNameError ? { 'invalid name': true } : null;
         };
+    }
+
+    public whitespaceValidator(control: FormControl) {
+        const isWhitespace = (control.value || '').trim().length === 0;
+        const isValid = !isWhitespace;
+        return isValid ? null : { 'whitespace': true };
     }
 
     get processInstanceName(): AbstractControl {
