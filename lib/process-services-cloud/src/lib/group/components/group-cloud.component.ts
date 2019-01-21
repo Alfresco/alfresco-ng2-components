@@ -97,6 +97,8 @@ export class GroupCloudComponent implements OnInit {
 
     isFocused: boolean;
 
+    isDisabled: boolean;
+
     constructor(private groupService: GroupCloudService) {
         this.selectedGroupsSubject = new BehaviorSubject<GroupModel[]>(this.selectedGroups);
         this.searchGroupsSubject = new BehaviorSubject<GroupModel[]>(this.searchGroups);
@@ -108,6 +110,7 @@ export class GroupCloudComponent implements OnInit {
         if (this.hasPreSelectGroups()) {
             this.loadPreSelectGroups();
         }
+
         this.initSearch();
 
         if (this.appName) {
@@ -164,7 +167,6 @@ export class GroupCloudComponent implements OnInit {
             })
         ).subscribe((searchedGroup) => {
             this.searchGroups.push(searchedGroup);
-            this.clearError();
             this.searchGroupsSubject.next(this.searchGroups);
         });
     }
@@ -249,10 +251,12 @@ export class GroupCloudComponent implements OnInit {
 
     private disableSearch() {
         this.searchGroupsControl.disable();
+        this.isDisabled = true;
     }
 
     private enableSearch() {
         this.searchGroupsControl.enable();
+        this.isDisabled = false;
     }
 
     private setError() {

@@ -1,6 +1,7 @@
 <div class="adf-cloud-group">
 <mat-form-field>
-    <mat-chip-list #groupChipList *ngIf="isMultipleMode()" data-automation-id="adf-cloud-group-chip-list" class="apa-group-chip-list">
+    <mat-label>{{ (title || 'ADF_CLOUD_GROUPS.SEARCH-GROUP') | translate }}</mat-label>
+    <mat-chip-list #groupChipList *ngIf="isMultipleMode()" [disabled]="isDisabled" data-automation-id="adf-cloud-group-chip-list" class="apa-group-chip-list">
       <mat-chip
         *ngFor="let group of selectedGroups$ | async"
         (removed)="onRemove(group)"
@@ -8,11 +9,11 @@
         {{group.name}}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
-      <input
-        placeholder="{{ (title || 'ADF_CLOUD_GROUPS.SEARCH-GROUP') | translate }}"
+      <input matInput
         [formControl]="searchGroupsControl"
         class="adf-group-input"
         id="group-name"
+        [disabled]="isDisabled"
         data-automation-id="adf-cloud-group-search-input"
         (focus)="setFocus(true)"
         (blur)="setFocus(false)"
@@ -22,13 +23,12 @@
 
     <input *ngIf="!isMultipleMode()"
       matInput
-      placeholder="{{ (title || 'ADF_CLOUD_GROUPS.SEARCH-GROUP') | translate }}"
       class="adf-group-input"
       data-automation-id="adf-cloud-group-search-input"
       (focus)="setFocus(true)"
       (blur)="setFocus(false)"
       [formControl]="searchGroupsControl"
-      [matAutocomplete]="auto" #groupInput>
+      [matAutocomplete]="auto">
 
     <mat-autocomplete
       #auto="matAutocomplete"
