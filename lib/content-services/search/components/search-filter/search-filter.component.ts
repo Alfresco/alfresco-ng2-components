@@ -26,6 +26,7 @@ import { FacetField } from '../../facet-field.interface';
 import { SearchFilterList } from './models/search-filter-list.model';
 import { takeWhile } from 'rxjs/operators';
 import { ResultSetPaging } from '@alfresco/js-api';
+import { ResultSetContext } from 'alfresco-js-api-node';
 
 @Component({
     selector: 'adf-search-filter',
@@ -41,6 +42,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     isAlive = true;
     responseFacetQueries: ResponseFacetQueryList = null;
     responseFacetFields: FacetField[] = null;
+    // responseFacets: any[] = null;
 
     private facetQueriesPageSize = this.DEFAULT_PAGE_SIZE;
     facetQueriesLabel: string = 'Facet Queries';
@@ -115,8 +117,10 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private updateSelectedBuckets() {
         if (this.responseFacetFields) {
+        // if (this.responseFacets) {
             this.selectedBuckets = [];
             for (let field of this.responseFacetFields) {
+            // for (let field of this.responseFacets) {
                 if (field.buckets) {
                     this.selectedBuckets.push(
                         ...this.queryBuilder.getUserFacetBuckets(field.field)
@@ -204,32 +208,37 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         const context = data.list.context;
 
         if (context) {
-            this.parseFacetFields(context);
-            this.parseFacetQueries(context);
+            this.parseFacets(context);
+            // this.parseFacetFields(context);
+            // this.parseFacetQueries(context);
         } else {
             this.responseFacetQueries = null;
             this.responseFacetFields = null;
+            // this.responseFacets = null;
         }
     }
 
-    private parseFacetFields(context: any) {
+    private parseFacets(context: ResultSetContext) {
         if (!this.responseFacetFields) {
             const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
 
             this.responseFacetFields = configFacetFields.map((field) => {
-                const responseField = (context.facetsFields || []).find((response) => response.label === field.label);
-                const buckets: FacetFieldBucket[] = ((responseField && responseField.buckets) || []).map((bucket) => {
-                    const selectedBucket = this.selectedBuckets.find((facetBucket) =>
-                        facetBucket.bucket.label === bucket.label && facetBucket.field.field === field.field);
+                const responseField = (context.facets || []).find((response) => response.label === field.label);
+                const responseBuckets: FacetFieldBucket[] = ((responseField && responseField.buckets) || []).map((respBucket) => {
+                    const selectedBucket = this.selectedBuckets.find((selBucket) =>
+                        selBucket.bucket.label === respBucket.label && selBucket.field.field === field.field);
+                            // todo: why not find by field label: ... && selBucket.field.label === field.label); ?
 
+                    respBucket['count'] = respBucket.metrics[0].value.count || 0;
                     return <FacetFieldBucket> {
-                        ...bucket,
+                        ...respBucket,
                         checked: !!selectedBucket,
-                        display: bucket.display,
-                        label: bucket.label
+                        display: respBucket.display,
+                        label: respBucket.label
                     };
                 });
-                const bucketList = new SearchFilterList<FacetFieldBucket>(buckets, field.pageSize);
+
+                const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
                 bucketList.filter = (bucket: FacetFieldBucket): boolean => {
                     if (bucket && bucketList.filterText) {
                         const pattern = (bucketList.filterText || '').toLowerCase();
@@ -238,7 +247,8 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                     }
                     return true;
                 };
-                return {
+
+                return <FacetField> {
                     ...field,
                     label: field.label,
                     pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
@@ -252,22 +262,23 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             this.responseFacetFields = this.responseFacetFields
                 .map((field) => {
 
-                    let responseField = (context.facetsFields || []).find((response) => response.label === field.label);
+                    let responseField = (context.facets || []).find((response) => response.label === field.label);
 
                     (field && field.buckets && field.buckets.items || [])
                         .map((bucket) => {
                             const responseBucket = ((responseField && responseField.buckets) || []).find((respBucket) => respBucket.label === bucket.label);
 
-                            bucket.count = responseBucket ? responseBucket.count : 0;
+                            bucket.count = responseBucket ? responseBucket.metrics[0].value.count : 0;
                             return bucket;
                         });
 
                     return field;
                 });
+
         }
     }
 
-    private parseFacetQueries(context: any) {
+     parseFacetQueries(context: any) {
         const responseQueries = this.getFacetQueryMap(context);
         if (this.queryBuilder.config.facetQueries) {
             const bkpResponseFacetQueries =  Object.assign({}, this.responseFacetQueries);

@@ -240,7 +240,7 @@ export class SearchQueryBuilderService {
         }
 
         if (query) {
-            const result: QueryBody = {
+            const result: QueryBody = <QueryBody> {
                 query: {
                     query: query,
                     language: 'afts'
@@ -254,6 +254,7 @@ export class SearchQueryBuilderService {
                 sort: this.sort
             };
 
+            result['facetFormat'] = 'V2';
             return result;
         }
 
