@@ -83,14 +83,13 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     processPayloadCloud = new ProcessPayloadCloud();
     filteredProcesses: ProcessDefinitionCloud[] = [];
     isLoading = false;
-
     constructor(private startProcessCloudService: StartProcessCloudService,
                 private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
         this.processForm = this.formBuilder.group({
-            processInstanceName: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength())]),
+            processInstanceName: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
             processDefinition: new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
         });
 
@@ -113,7 +112,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
     private getMaxNameLength(): number {
         return this.maxNameLength > StartProcessCloudComponent.MAX_NAME_LENGTH ?
-        StartProcessCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
+            StartProcessCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
     }
 
     setProcessDefinitionOnForm(processDefinitionName: string) {
@@ -236,6 +235,12 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
 
             return processDefinitionNameError ? { 'invalid name': true } : null;
         };
+    }
+
+    public whitespaceValidator(control: FormControl) {
+        const isWhitespace = (control.value || '').trim().length === 0;
+        const isValid = !isWhitespace;
+        return isValid ? null : { 'whitespace': true };
     }
 
     get processInstanceName(): AbstractControl {
