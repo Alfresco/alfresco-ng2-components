@@ -66,7 +66,7 @@ export class PeopleCloudComponent implements OnInit, AfterViewInit {
 
     /** Title for input control.  */
     @Input()
-    title: string
+    title: string;
 
     /** Emitted when a user is selected. */
     @Output()
@@ -97,6 +97,8 @@ export class PeopleCloudComponent implements OnInit, AfterViewInit {
     clientId: string;
 
     isFocused: boolean;
+
+    isDisabled: boolean;
 
     constructor(private identityUserService: IdentityUserService) {
         this.searchUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this.searchUsers);
@@ -130,11 +132,12 @@ export class PeopleCloudComponent implements OnInit, AfterViewInit {
             tap((value) => {
                 if (value) {
                     this.setError();
-                    if (this.isSingleMode() && this.hasSelectedUsers()) {
-                        this.resetSingleModeSelection();
-                    }
                 } else {
                     this.clearError();
+                }
+
+                if (this.isSingleMode() && this.hasSelectedUsers()) {
+                    this.resetSingleModeSelection();
                 }
              }),
             debounceTime(500),
@@ -225,7 +228,7 @@ export class PeopleCloudComponent implements OnInit, AfterViewInit {
 
     onRemove(user: IdentityUserModel) {
         this.removeUser.emit(user);
-        const indexToRemove = this.selectedUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
+        const indexToRemove = this.selectedUsers.findIndex((selectedUser) => { return selectedUser.id === user.id || selectedUser.email === user.email; });
         this.selectedUsers.splice(indexToRemove, 1);
         this.selectedUsersSubject.next(this.selectedUsers);
     }
@@ -273,16 +276,18 @@ export class PeopleCloudComponent implements OnInit, AfterViewInit {
 
     private disableSearch() {
         this.searchUserCtrl.disable();
+        this.isDisabled = true;
     }
 
     private enableSearch() {
         this.searchUserCtrl.enable();
+        this.isDisabled = false;
     }
 
     private resetSingleModeSelection() {
         if (this.hasSelectedUsers()) {
-            this.onRemove(this.searchUsers[0]);
-        } 
+            this.onRemove(this.selectedUsers[0]);
+        }
     }
 
     private hasSelectedUsers(): boolean {
