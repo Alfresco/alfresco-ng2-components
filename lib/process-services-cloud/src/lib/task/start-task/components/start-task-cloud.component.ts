@@ -31,6 +31,7 @@ import {
     UserPreferenceValues
 } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from './people-cloud/people-cloud.component';
+import { GroupCloudComponent } from '../../../../lib/group/public-api';
 
 @Component({
     selector: 'adf-cloud-start-task',
@@ -75,6 +76,9 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     @ViewChild('peopleInput')
     assignee: PeopleCloudComponent;
 
+    @ViewChild('groupInput')
+    candidateGroups: GroupCloudComponent;
+
     users$: Observable<any[]>;
 
     taskId: string;
@@ -85,6 +89,8 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     assigneeName: string;
     candidateGroups: string [] = [];
+
+    candidateGroupNames: string[] = [];
 
     dateError: boolean;
 
@@ -145,9 +151,8 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         const newTask = Object.assign(this.taskForm.value);
         newTask.appName = this.getAppName();
         newTask.dueDate = this.getDueDate();
-        newTask.assignee = this.assigneeName;
-
-        newTask.candidateGroups = this.candidateGroups;
+        newTask.assignee = this.getAssigneeName();
+        newTask.candidateGroups = this.candidateGroupNames;
         this.createNewTask(new TaskDetailsCloudModel(newTask));
     }
 
@@ -192,24 +197,16 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.assigneeName = assignee ? assignee.username : '';
     }
 
-    onRemoveUser() {
-        this.assigneeName = null;
+    onCandiateGroupSelect(candidateGroup: any) {
+        if (candidateGroup.name) {
+            this.candidateGroupNames.push(candidateGroup.name);
+        }
     }
 
-    onSelectGroup(group) {
-        this.candidateGroups.push(group.name);
-    }
-
-    onRemoveGroup(group) {
-        this.candidateGroups = this.candidateGroups.filter( (name) => {
-            return name !== group.name;
-        });
-    }
-
-    public whitespaceValidator(control: FormControl) {
-        const isWhitespace = (control.value || '').trim().length === 0;
-        const isValid = !isWhitespace;
-        return isValid ? null : { 'whitespace': true };
+    onCandiateGroupRemove(candidateGroup: any) {
+        if (candidateGroup.name) {
+            this.candidateGroupNames.splice(this.candidateGroupNames.indexOf(candidateGroup.name), 1);
+        }
     }
 
     get nameController(): AbstractControl {
