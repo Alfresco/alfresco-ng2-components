@@ -210,7 +210,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         if (context) {
             this.parseFacets(context);
             // this.parseFacetFields(context);
-            // this.parseFacetQueries(context);
+            this.parseFacetQueries(context);
         } else {
             this.responseFacetQueries = null;
             this.responseFacetFields = null;
@@ -278,7 +278,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
     }
 
-     parseFacetQueries(context: any) {
+     private parseFacetQueries(context: any) {
         const responseQueries = this.getFacetQueryMap(context);
         if (this.queryBuilder.config.facetQueries) {
             const bkpResponseFacetQueries =  Object.assign({}, this.responseFacetQueries);
@@ -316,7 +316,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private getFacetQueryMap(context: any): { [key: string]: any } {
         const result = {};
 
-        (context.facetQueries || []).forEach((query) => {
+        const responseField = (context.facets || []).find((response) => response.type === 'query');
+        (responseField.buckets || []).forEach((query) => {
+            query.count = query.metrics[0].value.count || 0;
             result[query.label] = query;
         });
 
