@@ -104,6 +104,7 @@
                                     </mat-icon>
                                     <ng-template #no_selected_row>
                                         <img
+                                            [attr.aria-label]="iconType(data.getValue(row, col))"
                                             alt="{{ iconAltTextKey(data.getValue(row, col)) | translate }}"
                                             src="{{ data.getValue(row, col) }}"
                                             (error)="onImageLoadingError($event, row)">

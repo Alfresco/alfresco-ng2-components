@@ -535,6 +535,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return value ? 'ICONS.' + value.substring(value.lastIndexOf('/') + 1).replace(/\.[a-z]+/, '') : '';
     }
 
+    iconType(value: string): string {
+        return this.iconAltTextKey(value).split('_').pop();
+    }
+
     isColumnSorted(col: DataColumn, direction: string): boolean {
         if (col && direction) {
             let sorting = this.data.getSorting();
