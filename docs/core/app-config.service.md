@@ -66,22 +66,6 @@ Example of the default settings file content:
 Note that the settings in the example above are the default ones supplied with the server.
 You can override the values in your custom `app.config.json` file if necessary. 
 
-You can change the path or name of the configuration file when importing the [`CoreModule`](../../lib/core/core.module.ts) in your main application.
-
-```ts
-...
-@NgModule({
-    imports: [
-        ...
-        CoreModule.forRoot({
-            appConfigFile: 'app.production.config.json'
-        })
-    ],
-    ...
-}
-export class AppModule { }
-```
-
 Below is a simple example of using the [`AppConfigService`](../core/app-config.service.md) in practice. 
 
 **[app.component](../../demo-shell/src/app/app.component.ts).ts**
