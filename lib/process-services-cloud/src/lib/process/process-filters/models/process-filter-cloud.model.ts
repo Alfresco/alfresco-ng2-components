@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs';
-
 export class ProcessFilterCloudModel {
     id: string;
     name: string;
@@ -64,27 +62,4 @@ export class ProcessFilterCloudModel {
 export interface ProcessFilterActionType {
     actionType: string;
     id: string;
-}
-
-export interface ProcessFilterOptions {
-    label?: string;
-    value?: string;
-}
-
-export class ProcessFilterProperties {
-    label: string;
-    type: string; // text|date|select
-    value: string;
-    key: string;
-    options$: Observable<ProcessFilterOptions[]>;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.label = obj.label || null;
-            this.type = obj.type || null;
-            this.value = obj.value || '';
-            this.key = obj.key || null;
-            this.options$ = obj.options || null;
-        }
-    }
 }
