@@ -21,7 +21,7 @@
 
     <div class="adf-pdf-viewer__content">
         <div [id]="randomPdfId+'-viewer-pdf-viewer'" class="adf-viewer-pdf-viewer" (window:resize)="onResize()">
-            <div [id]="randomPdfId+'-viewer-viewerPdf'" class="adf-pdfViewer">
+            <div [id]="randomPdfId+'-viewer-viewerPdf'" class="adf-pdfViewer" role="document" tabindex="0" aria-expanded="true">
                 <div id="loader-container" class="adf-loader-container">
                     <div class="adf-loader-item">
                         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
