@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { FavoriteBody, NodeEntry } from '@alfresco/js-api';
+import { FavoriteBody, NodeEntry, SharedLinkEntry, Node, SharedLink } from '@alfresco/js-api';
 import { Observable, from, forkJoin, of } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { catchError, map } from 'rxjs/operators';
@@ -66,9 +66,9 @@ export class NodeFavoriteDirective implements OnChanges {
         const every = this.favorites.every((selected) => selected.entry.isFavorite);
 
         if (every) {
-            const batch = this.favorites.map((selected) => {
+            const batch = this.favorites.map((selected: NodeEntry | SharedLinkEntry) => {
                 // shared files have nodeId
-                const id = selected.entry.nodeId || selected.entry.id;
+                const id = (<SharedLinkEntry> selected).entry.nodeId || selected.entry.id;
 
                 return from(this.alfrescoApiService.favoritesApi.removeFavoriteSite('-me-', id));
             });
@@ -123,8 +123,8 @@ export class NodeFavoriteDirective implements OnChanges {
         return selection.map((selected: NodeEntry) => this.getFavorite(selected));
     }
 
-    private getFavorite(selected: NodeEntry): Observable<any> {
-        const node = selected.entry;
+    private getFavorite(selected: NodeEntry | SharedLinkEntry): Observable<any> {
+        const node: Node | SharedLink = selected.entry;
 
         // ACS 6.x with 'isFavorite' include
         if (node && node.hasOwnProperty('isFavorite')) {
@@ -132,8 +132,8 @@ export class NodeFavoriteDirective implements OnChanges {
         }
 
         // ACS 5.x and 6.x without 'isFavorite' include
-        const { name, isFile, isFolder } = node;
-        const id =  node.id;
+        const { name, isFile, isFolder } = <Node> node;
+        const id =  (<SharedLink> node).nodeId || node.id;
 
         const promise = this.alfrescoApiService.favoritesApi.getFavorite('-me-', id);
 
