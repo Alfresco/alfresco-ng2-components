@@ -89,4 +89,14 @@ export class Tasks {
         return data;
     }
 
+    async createStandaloneSubtask(taskId, appName, name) {
+        const path = '/' + appName + '-rb/v1/tasks/' + taskId + '/subtask';
+        const method = 'POST';
+
+        const queryParams = {}, postBody = {'name': name, 'payloadType': 'CreateTaskPayload'};
+
+        const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+        return data;
+    }
+
 }
