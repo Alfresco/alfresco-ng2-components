@@ -30,4 +30,5 @@ export interface ContentNodeSelectorComponentData {
     breadcrumbTransform?: (node) => any;
     excludeSiteContent?: string[];
     select: Subject<Node[]>;
+    modifier?: string;
 }

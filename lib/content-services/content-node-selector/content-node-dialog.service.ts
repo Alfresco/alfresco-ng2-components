@@ -146,7 +146,8 @@ export class ContentNodeDialogService {
                 rowFilter: this.rowFilter.bind(this, contentEntry.id),
                 isSelectionValid: this.isCopyMoveSelectionValid.bind(this),
                 excludeSiteContent: excludeSiteContent || ContentNodeDialogService.nonDocumentSiteContent,
-                select: select
+                select: select,
+                modifier: 'createdByUser'
             };
 
             this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
