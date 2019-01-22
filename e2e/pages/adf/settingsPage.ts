@@ -17,7 +17,7 @@
 
 import TestConfig = require('../../test.config');
 import { Util } from '../../util/util';
-import { element, by, browser } from 'protractor';
+import {element, by, browser, protractor} from 'protractor';
 
 export class SettingsPage {
 
@@ -49,6 +49,8 @@ export class SettingsPage {
     implicitFlowLabel = element(by.css('mat-slide-toggle[name="implicitFlow"] label'));
     implicitFlowElement = element(by.css('mat-slide-toggle[name="implicitFlow"]'));
     applyButton = element(by.css('button[data-automation-id*="host-button"]'));
+    backButton = element(by.cssContainingText('button span[class="mat-button-wrapper"]', 'Back'));
+    validationMessage = element(by.cssContainingText('mat-error', 'This field is required'));
 
     goToSettingsPage() {
         browser.waitForAngularEnabled(true);
@@ -63,6 +65,22 @@ export class SettingsPage {
         Util.waitUntilElementIsVisible(option);
         option.click();
         return expect(this.selectedOption.getText()).toEqual(selected);
+    }
+
+    getBpmText() {
+        return this.bpm.option;
+    }
+
+    getBpmOption() {
+        return this.bpm.option;
+    }
+
+    getEcmOption() {
+        return this.ecm.option;
+    }
+
+    getEcmAndBpmOption() {
+        return this.ecmAndBpm.option;
     }
 
     setProviderEcmBpm() {
@@ -101,6 +119,11 @@ export class SettingsPage {
         return this;
     }
 
+    async clickBackButton() {
+        Util.waitUntilElementIsVisible(this.backButton);
+        await this.backButton.click();
+    }
+
     async clickSsoRadioButton () {
         Util.waitUntilElementIsVisible(this.ssoRadioButton);
         await this.ssoRadioButton.click();
@@ -123,6 +146,26 @@ export class SettingsPage {
         Util.waitUntilElementIsVisible(this.bpmText);
         await this.bpmText.clear();
         await this.bpmText.sendKeys(processServiceURL);
+    }
+
+    async setContentServicesURL (contentServiceURL) {
+        Util.waitUntilElementIsClickable(this.ecmText);
+        this.ecmText.clear();
+        this.ecmText.sendKeys(contentServiceURL);
+    }
+
+    clearContentServicesURL () {
+        Util.waitUntilElementIsVisible(this.ecmText);
+        this.ecmText.clear();
+        this.ecmText.sendKeys('a');
+        this.ecmText.sendKeys(protractor.Key.BACK_SPACE);
+    }
+
+    clearProcessServicesURL () {
+        Util.waitUntilElementIsVisible(this.bpmText);
+        this.bpmText.clear();
+        this.bpmText.sendKeys('a');
+        this.bpmText.sendKeys(protractor.Key.BACK_SPACE);
     }
 
     async setAuthHost (authHostURL) {
@@ -160,7 +203,16 @@ export class SettingsPage {
         return Promise.resolve();
     }
 
+    checkApplyButtonIsDisabled() {
+        Util.waitUntilElementIsVisible(this.applyButton.getAttribute('disabled'));
+        return this;
+    }
+
     checkProviderDropdownIsDisplayed() {
         Util.waitUntilElementIsVisible(this.providerDropdown);
+    }
+
+    checkValidationMessageIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.validationMessage);
     }
 }
