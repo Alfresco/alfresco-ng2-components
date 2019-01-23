@@ -62,7 +62,13 @@ export class ContentListPage {
     }
 
     getRowsName(content) {
-        let row = this.rootElement.element(by.css(`adf-datatable span[title='${content}']`));
+        let row = element.all(by.css(`adf-document-list span[title='${content}']`)).first();
+        Util.waitUntilElementIsVisible(row);
+        return row;
+    }
+
+    getRowsNameWithRoot(content) {
+        let row = this.rootElement.all(by.css(`adf-datatable span[title='${content}']`)).first();
         Util.waitUntilElementIsVisible(row);
         return row;
     }
@@ -70,6 +76,11 @@ export class ContentListPage {
     getRowByRowName(content) {
         Util.waitUntilElementIsVisible(this.getRowsName(content).element(this.rowByRowName));
         return this.getRowsName(content).element(this.rowByRowName);
+    }
+
+    getRowByRowNameWithRoot(content) {
+        Util.waitUntilElementIsVisible(this.getRowsNameWithRoot(content).element(this.rowByRowName));
+        return this.getRowsNameWithRoot(content).element(this.rowByRowName);
     }
 
     getCellByNameAndColumn(content, columnName) {
@@ -138,7 +149,7 @@ export class ContentListPage {
     }
 
     lockContent(content) {
-        this.clickOnActionMenu(content);
+        this.clickOnActionMenuWithRoot(content);
         this.lockContentElement.click();
     }
 
@@ -151,6 +162,13 @@ export class ContentListPage {
 
     clickOnActionMenu(content) {
         this.getRowByRowName(content).element(this.optionButton).click();
+        Util.waitUntilElementIsVisible(this.actionMenu);
+        browser.sleep(500);
+        return this;
+    }
+
+    clickOnActionMenuWithRoot(content) {
+        this.getRowByRowNameWithRoot(content).element(this.optionButton).click();
         Util.waitUntilElementIsVisible(this.actionMenu);
         browser.sleep(500);
         return this;
@@ -328,6 +346,11 @@ export class ContentListPage {
         Util.waitUntilElementIsVisible(isRowSelected);
     }
 
+    checkRowIsSelectedWithRoot(content) {
+        let isRowSelected = this.getRowsNameWithRoot(content).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        Util.waitUntilElementIsVisible(isRowSelected);
+    }
+
     checkContentIsDisplayed(content) {
         Util.waitUntilElementIsVisible(this.getRowByRowName(content));
         return this;
@@ -368,6 +391,13 @@ export class ContentListPage {
         let row = this.getRowByRowName(rowName);
         browser.actions().keyDown(protractor.Key.COMMAND).click(row).perform();
         this.checkRowIsSelected(rowName);
+        return this;
+    }
+
+    clickRowToSelectWithRoot(rowName) {
+        let row = this.getRowByRowNameWithRoot(rowName);
+        browser.actions().keyDown(protractor.Key.COMMAND).click(row).perform();
+        this.checkRowIsSelectedWithRoot(rowName);
         return this;
     }
 

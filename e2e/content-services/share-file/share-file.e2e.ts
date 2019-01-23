@@ -85,7 +85,7 @@ describe('Share file', () => {
 
             contentServicesPage.waitForTableBody();
 
-            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentListPage.clickRowToSelectWithRoot(pngFileModel.name);
 
             done();
         });
@@ -163,7 +163,7 @@ describe('Share file', () => {
         });
 
         it('[C286565] Should open file when logged user access shared link', async () => {
-            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentListPage.clickRowToSelectWithRoot(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickShareLinkButton();
@@ -174,7 +174,7 @@ describe('Share file', () => {
         });
 
         it('[C287803] Should the URL be kept the same when opening the share dialog multiple times', async () => {
-            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentListPage.clickRowToSelectWithRoot(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickShareLinkButton();
@@ -192,7 +192,7 @@ describe('Share file', () => {
         });
 
         it('[C286539] Should open file when non-logged user access shared link', async () => {
-            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentListPage.clickRowToSelectWithRoot(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.checkShareLinkIsDisplayed();
