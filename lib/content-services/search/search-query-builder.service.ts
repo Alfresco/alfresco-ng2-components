@@ -50,7 +50,6 @@ export class SearchQueryBuilderService {
     paging: { maxItems?: number; skipCount?: number } = null;
     sorting: Array<SearchSortingDefinition> = [];
 
-    protected userFacetQueries: FacetQuery[] = [];
     protected userFacetBuckets: { [key: string]: Array<FacetFieldBucket> } = {};
 
     get userQuery(): string {
@@ -81,36 +80,9 @@ export class SearchQueryBuilderService {
             this.categories = (this.config.categories || []).filter((category) => category.enabled);
             this.filterQueries = this.config.filterQueries || [];
             this.userFacetBuckets = {};
-            this.userFacetQueries = [];
             if (this.config.sorting) {
                 this.sorting = this.config.sorting.defaults || [];
             }
-        }
-    }
-
-    /**
-     * Adds a facet query.
-     * @param query Query to add
-     */
-    addUserFacetQuery(query: FacetQuery) {
-        if (query) {
-            const existing = this.userFacetQueries.find((facetQuery) => facetQuery.label === query.label);
-            if (existing) {
-                existing.query = query.query;
-            } else {
-                this.userFacetQueries.push({ ...query });
-            }
-        }
-    }
-
-    /**
-     * Removes an existing facet query.
-     * @param query Query to remove
-     */
-    removeUserFacetQuery(query: FacetQuery) {
-        if (query) {
-            this.userFacetQueries = this.userFacetQueries
-                .filter((facetQuery) => facetQuery.label !== query.label);
         }
     }
 
@@ -334,13 +306,6 @@ export class SearchQueryBuilderService {
         let result = [this.userQuery, query]
             .filter((entry) => entry)
             .join(' AND ');
-
-        if (this.userFacetQueries && this.userFacetQueries.length > 0) {
-            const combined = this.userFacetQueries
-                .map((userQuery) => userQuery.query)
-                .join(' OR ');
-            result += ` AND (${combined})`;
-        }
 
         if (this.userFacetBuckets) {
             Object.keys(this.userFacetBuckets).forEach((key) => {
