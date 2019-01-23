@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ContentListPage } from '../pages/adf/dialog/contentListPage';
+import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 
 import { LockFilePage } from '../pages/adf/lockFilePage';
 
@@ -32,13 +32,13 @@ import resources = require('../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
-import { browser } from 'protractor';
 
 describe('Lock File', () => {
 
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    const contentList = new ContentListPage();
+    const contentServicesPage = new ContentServicesPage();
+    const contentList = contentServicesPage.getUploadAreaDocumentList();
     const lockFilePage = new LockFilePage();
 
     let adminUser = new AcsUserModel();
@@ -337,10 +337,6 @@ describe('Lock File', () => {
         });
 
         it('[C286617] Owner of the locked file should be able to delete if Allow owner to modify is checked', () => {
-            loginPage.loginToContentServicesUsingUserModel(adminUser);
-
-            navigationBarPage.openContentServicesFolder(documentLibrary);
-
             contentList.lockContent(pngFileToLock.name);
 
             lockFilePage.checkLockFileCheckboxIsDisplayed();
@@ -348,7 +344,7 @@ describe('Lock File', () => {
             lockFilePage.clickAllowOwnerCheckbox();
             lockFilePage.clickSaveButton();
 
-            contentList.deleteContent(pngFileToBeLocked.entry.name);
+            contentList.deleteContentWithRoot(pngFileToBeLocked.entry.name);
             contentList.checkContentIsNotDisplayed(pngFileToBeLocked.entry.name);
         });
 

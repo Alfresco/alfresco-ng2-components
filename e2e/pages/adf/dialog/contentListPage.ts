@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor } from 'protractor';
+import { ElementFinder, browser, by, element, protractor } from 'protractor';
 import { DataTablePage } from '../dataTablePage';
 import { Util } from '../../../util/util';
 
 export class ContentListPage {
 
+    rootElement: ElementFinder;
     dataTable = new DataTablePage();
     deleteContentElement = element(by.css('button[data-automation-id*="DELETE"]'));
     metadataAction = element(by.css('button[data-automation-id*="METADATA"]'));
@@ -44,6 +45,10 @@ export class ContentListPage {
     table = element.all(by.css('adf-datatable')).first();
     tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
 
+    constructor(rootElement: ElementFinder = element(by.css('adf-document-list'))) {
+        this.rootElement = rootElement;
+    }
+
     getFileHyperlink(fileName) {
         return this.dataTable.getFileHyperlink(fileName);
     }
@@ -62,9 +67,20 @@ export class ContentListPage {
         return row;
     }
 
+    getRowsNameWithRoot(content) {
+        let row = this.rootElement.all(by.css(`adf-datatable span[title='${content}']`)).first();
+        Util.waitUntilElementIsVisible(row);
+        return row;
+    }
+
     getRowByRowName(content) {
         Util.waitUntilElementIsVisible(this.getRowsName(content).element(this.rowByRowName));
         return this.getRowsName(content).element(this.rowByRowName);
+    }
+
+    getRowByRowNameWithRoot(content) {
+        Util.waitUntilElementIsVisible(this.getRowsNameWithRoot(content).element(this.rowByRowName));
+        return this.getRowsNameWithRoot(content).element(this.rowByRowName);
     }
 
     getCellByNameAndColumn(content, columnName) {
@@ -103,6 +119,12 @@ export class ContentListPage {
         this.deleteContentElement.click();
     }
 
+    deleteContentWithRoot(content) {
+        this.clickOnActionMenuWithRoot(content);
+        this.waitForContentOptions();
+        this.deleteContentElement.click();
+    }
+
     checkDeleteIsDisabled(content) {
         this.clickOnActionMenu(content);
         this.waitForContentOptions();
@@ -133,7 +155,7 @@ export class ContentListPage {
     }
 
     lockContent(content) {
-        this.clickOnActionMenu(content);
+        this.clickOnActionMenuWithRoot(content);
         this.lockContentElement.click();
     }
 
@@ -146,6 +168,13 @@ export class ContentListPage {
 
     clickOnActionMenu(content) {
         this.getRowByRowName(content).element(this.optionButton).click();
+        Util.waitUntilElementIsVisible(this.actionMenu);
+        browser.sleep(500);
+        return this;
+    }
+
+    clickOnActionMenuWithRoot(content) {
+        this.getRowByRowNameWithRoot(content).element(this.optionButton).click();
         Util.waitUntilElementIsVisible(this.actionMenu);
         browser.sleep(500);
         return this;
@@ -323,6 +352,11 @@ export class ContentListPage {
         Util.waitUntilElementIsVisible(isRowSelected);
     }
 
+    checkRowIsSelectedWithRoot(content) {
+        let isRowSelected = this.getRowsNameWithRoot(content).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        Util.waitUntilElementIsVisible(isRowSelected);
+    }
+
     checkContentIsDisplayed(content) {
         Util.waitUntilElementIsVisible(this.getRowByRowName(content));
         return this;
@@ -363,6 +397,13 @@ export class ContentListPage {
         let row = this.getRowByRowName(rowName);
         browser.actions().keyDown(protractor.Key.COMMAND).click(row).perform();
         this.checkRowIsSelected(rowName);
+        return this;
+    }
+
+    clickRowToSelectWithRoot(rowName) {
+        let row = this.getRowByRowNameWithRoot(rowName);
+        browser.actions().keyDown(protractor.Key.COMMAND).click(row).perform();
+        this.checkRowIsSelectedWithRoot(rowName);
         return this;
     }
 
