@@ -30,30 +30,27 @@ import { AcsUserModel } from '../models/ACS/acsUserModel';
 describe('Settings component', () => {
 
     const loginPage = new LoginPage();
-    const contentServicesPage = new ContentServicesPage();
-    const contentListPage = new ContentListPage();
     const settingsPage = new SettingsPage();
-    const navigationBarPage = new NavigationBarPage();
-    const viewerPage = new ViewerPage();
+
     let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
     });
 
-    let acsUser = new AcsUserModel();
-
 
     describe('Settings component', () => {
-        it('[C245641] Should navigate User back to Login screen', () => {
+        beforeEach( (done) => {
             settingsPage.goToSettingsPage();
+            done();
+        });
+        
+        it('[C245641] Should navigate User back to Login screen', () => {
             settingsPage.clickBackButton();
             loginPage.waitForElements();
 
         });
 
         it('[C245641] Should not save BPM Settings changes when User clicks Back button', () => {
-            settingsPage.goToSettingsPage();
-
             settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
             settingsPage.setProcessServicesURL('http://adfdev.envalfresco1.com');
             settingsPage.clickBackButton();
@@ -65,7 +62,6 @@ describe('Settings component', () => {
         });
 
         it('[C245641] Should not save ECM Settings changes when User clicks Back button', () => {
-            settingsPage.goToSettingsPage();
             settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
             settingsPage.setContentServicesURL('http://adfdev.envalfresco1.com');
             settingsPage.clickBackButton();
@@ -77,7 +73,6 @@ describe('Settings component', () => {
         });
 
         it('[C245641] Should save ALL Settings changes when User clicks Apply button', () => {
-            settingsPage.goToSettingsPage();
             settingsPage.setProviderEcmBpm();
             loginPage.waitForElements();
             settingsPage.goToSettingsPage();
@@ -88,7 +83,6 @@ describe('Settings component', () => {
         });
 
         it('[C245641] Should have field validation for Content Services Url', () => {
-            settingsPage.goToSettingsPage();
             settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
             settingsPage.clearContentServicesURL();
             settingsPage.ecmText.sendKeys(protractor.Key.TAB);
@@ -97,7 +91,6 @@ describe('Settings component', () => {
         });
 
         it('[C245641] Should have field validation for Process Services Url', () => {
-            settingsPage.goToSettingsPage();
             settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
             settingsPage.clearProcessServicesURL();
             settingsPage.bpmText.sendKeys(protractor.Key.TAB);
@@ -106,10 +99,21 @@ describe('Settings component', () => {
         });
 
         it('[C245641] Should not be able to sign in with invalid Content Services Url', () => {
-            settingsPage.goToSettingsPage();
             settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
-            settingsPage.setContentServicesURL('http://localhost:7070')
-            settingsPage.clickApply()
+            settingsPage.setContentServicesURL('http://localhost:7070');
+            settingsPage.clickApply();
+            loginPage.waitForElements();
+            loginPage.enterUsername(adminUserModel.id);
+            loginPage.enterPassword(adminUserModel.password);
+            loginPage.clickSignInButton();
+            expect(loginPage.getLoginError()).toMatch('Request has been terminated ' +
+                'Possible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.');
+        });
+
+        it('[C245641] Should not be able to sign in with invalid Process Services Url', () => {
+            settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
+            settingsPage.setProcessServicesURL('http://localhost:7070');
+            settingsPage.clickApply();
             loginPage.waitForElements();
             loginPage.enterUsername(adminUserModel.id);
             loginPage.enterPassword(adminUserModel.password);
