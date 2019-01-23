@@ -336,6 +336,17 @@ describe('HostSettingsComponent', () => {
             bpmUrlInput.dispatchEvent(new Event('input'));
         });
 
+        it('should have a required identityUrl and invalid form when the identityUrl is missing', (done) => {
+            component.form.statusChanges.subscribe((status: string) => {
+                expect(status).toEqual('INVALID');
+                expect(component.identityHost.hasError('required')).toBeTruthy();
+                done();
+            });
+
+            identityUrlInput.value = '';
+            identityUrlInput.dispatchEvent(new Event('input'));
+        });
+
         it('should have an invalid form when the identity url inserted is wrong', (done) => {
             const url = 'wrong';
 
