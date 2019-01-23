@@ -43,6 +43,7 @@ export class SettingsPage {
     ecmText = element(by.css('input[data-automation-id*="ecmHost"]'));
     bpmText = element(by.css('input[data-automation-id*="bpmHost"]'));
     authHostText = element(by.css('input[id="oauthHost"]'));
+    identityHostText = element(by.css('input[id="identityHost"]'));
     ssoRadioButton = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
     silentLoginToggleLabel = element(by.css('mat-slide-toggle[name="silentLogin"] label'));
     silentLoginToggleElement = element(by.css('mat-slide-toggle[name="silentLogin"]'));
@@ -106,7 +107,7 @@ export class SettingsPage {
         await this.ssoRadioButton.click();
     }
 
-    async setProviderBpmSso (processServiceURL, authHost, silentLogin = true, implicitFlow = true ) {
+    async setProviderBpmSso (processServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true ) {
         this.goToSettingsPage();
         this.setProvider(this.bpm.option, this.bpm.text);
         Util.waitUntilElementIsVisible(this.bpmText);
@@ -114,6 +115,7 @@ export class SettingsPage {
         await this.clickSsoRadioButton();
         await this.setProcessServicesURL(processServiceURL);
         await this.setAuthHost(authHost);
+        await this.setIdentityHost(identityHost);
         await this.setSilentLogin(silentLogin);
         await this.setImplicitFlow(implicitFlow);
         await this.clickApply();
@@ -129,6 +131,12 @@ export class SettingsPage {
         Util.waitUntilElementIsVisible(this.authHostText);
         await this.authHostText.clear();
         await this.authHostText.sendKeys(authHostURL);
+    }
+
+    async setIdentityHost (identityHost) {
+        Util.waitUntilElementIsVisible(this.identityHostText);
+        await this.identityHostText.clear();
+        await this.identityHostText.sendKeys(identityHost);
     }
 
     async clickApply () {
