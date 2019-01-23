@@ -2,7 +2,7 @@
 Title: Identity user service
 Added: v3.0.0
 Status: Active
-Last reviewed: 2019-01-09
+Last reviewed: 2019-01-23
 ---
 
 # [Identity user service](../../lib/core/userinfo/services/identity-user.service.ts "Defined in identity-user.service.ts")
@@ -13,6 +13,41 @@ Gets OAuth2 personal details and roles for users.
 
 ### Methods
 
+-   **checkUserHasAnyApplicationRole**(userId: `string`, applicationName: `string`, roleNames: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
+    Checks if a user has any application role.
+    -   _userId:_ `string`  - ID of the target user
+    -   _applicationName:_ `string`  - Name of the application
+    -   _roleNames:_ `string[]`  - List of role names to check for
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>` - True if the user has one or more of the roles, false otherwise
+-   **checkUserHasAnyClientAppRole**(userId: `string`, clientId: `string`, roleNames: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
+    Checks whether a user has any of the client app roles.
+    -   _userId:_ `string`  - ID of the target user
+    -   _clientId:_ `string`  - ID of the client app
+    -   _roleNames:_ `string[]`  - List of role names to check for
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>` - True if the user has one or more of the roles, false otherwise
+-   **checkUserHasApplicationAccess**(userId: `string`, applicationName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
+    Checks if a user has access to an application.
+    -   _userId:_ `string`  - ID of the user
+    -   _applicationName:_ `string`  - Name of the application
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>` - True if the user has access, false otherwise
+-   **checkUserHasClientApp**(userId: `string`, clientId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
+    Checks whether user has access to a client app.
+    -   _userId:_ `string`  - ID of the target user
+    -   _clientId:_ `string`  - ID of the client app
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>` - True if the user has access, false otherwise
+-   **findUsersByName**(search: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    Find users based on search input.
+    -   _search:_ `string`  - Search query string
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - List of users
+-   **getClientIdByApplicationName**(applicationName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string>`<br/>
+    Gets the client ID for an application.
+    -   _applicationName:_ `string`  - Name of the application
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string>` - Client ID string
+-   **getClientRoles**(userId: `string`, clientId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any[]>`<br/>
+    Get client roles of a user for a particular client.
+    -   _userId:_ `string`  - ID of the target user
+    -   _clientId:_ `string`  - ID of the client app
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any[]>` - List of client roles
 -   **getCurrentUserInfo**(): [`IdentityUserModel`](../../lib/core/userinfo/models/identity-user.model.ts)<br/>
     Gets the name and other basic details of the current user.
     -   **Returns** [`IdentityUserModel`](../../lib/core/userinfo/models/identity-user.model.ts) - The user's details

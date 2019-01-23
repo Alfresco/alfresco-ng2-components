@@ -25,23 +25,23 @@ Edits Task Filter Details.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | (required) Name of the app. |
-| id | `string` | "" | (required) The id of the Task filter. |
-| filterProperties | `string []` | `['state', 'assignment', 'sort', 'order']` | List of task filter properties to display. |
-| toggleFilterActions | `boolean` | `true` | Toggles edit task filter actions. |
-| showTitle | `boolean` | `true` | Toggles edit task filter title. |
+| filterProperties | `string[]` |  | List of task filter properties to display. |
+| id | `string` |  | (required) ID of the task filter. |
+| showTitle | `boolean` | true | Toggles the title. |
+| toggleFilterActions | `boolean` | true | Toggles the filter actions. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterActionType`](../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter action occurs (i.e Save, Save As, Delete). |
-| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a task filter property changes. |
+| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when an task filter property changes. |
 
 ## Details
 
 ### Editing APS2 task filter
 
-Use the application name and task filter id property to edit task filter properties:
+Use the `appName` and `id` properties to edit task filter properties:
 
 ```html
 <adf-cloud-edit-task-filter
@@ -54,10 +54,10 @@ By default these below properties are displayed:
 
 **_state_**, **_assignment_**, **_sort_**, **_order_**.
 
-However, you can also choose which properties to show using a input property
-`filterProperties`:
+However, you can also choose which properties to show using the
+`filterProperties` input property:
 
-Populate the filterProperties in the component class:
+Populate the `filterProperties` in the component class:
 
 ```ts
 import { UserProcessModel } from '@alfresco/adf-core';
@@ -91,8 +91,7 @@ With this configuration, only the four listed properties will be shown.
 </adf-cloud-edit-task-filter>
 ```
 
-
-All Available properties are:
+The available properties are:
 
 **_appName_**, **_state_**, **_assignment_**, **_sort_**, **_order_**, **_processDefinitionId_**, **_processInstanceId_**, **_dueAfter_**, **_dueBefore_**, **_claimedDateFrom_**, **_claimedDateTo_**, **_createdDateFrom_**, **_createdDateTo_**, **_taskName_**, **_parentTaskId_**, **_priority_**, **_standAlone_**, **_lastModifiedFrom_**, **_lastModifiedTo_**, **_owner_**, **_dueDateFrom_**, **_dueDateTo_**.
 
