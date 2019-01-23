@@ -74,7 +74,7 @@ describe('User Info component', () => {
         done();
     });
 
-    it('[C260111] Should display UserInfo when Process Services and Content Services are enabled', () => {
+    xit('[C260111] Should display UserInfo when Process Services and Content Services are enabled', () => {
         loginPage.goToLoginPage();
         settingsPage.setProviderEcmBpm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
