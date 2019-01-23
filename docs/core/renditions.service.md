@@ -2,28 +2,61 @@
 Title: Renditions service
 Added: v2.0.0
 Status: Active
+Last reviewed: 2019-01-23
 ---
 
 # [Renditions service](../../lib/core/services/renditions.service.ts "Defined in renditions.service.ts")
 
 Manages prearranged conversions of content to different formats.
 
-## Methods
+## Class members
 
-`isRenditionAvailable(nodeId: string, encoding: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
-Has the specified rendition been set up for this item?
+### Methods
 
-`isConversionPossible(nodeId: string, encoding: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
-Is it possible to convert this item to the specified format?
-
-`getRenditionUrl(nodeId: string, encoding: string): string`<br/>
-Gets a URL linking to a rendition.
-
-`getRenditionsListByNodeId(nodeId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<RenditionPaging>`<br/>
-Gets all available renditions for an item.
-
-`convert(nodeId: string, encoding: string, pollingInterval: number = 1000)`<br/>
-Performs a format conversion on an item directly.
+-   **convert**(nodeId: `string`, encoding: `string`, pollingInterval: `number` = `1000`, retries: `number` = `5`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Object>`<br/>
+    Repeatedly attempts to create a rendition, through to success or failure.
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _encoding:_ `string`  - Name of the rendition encoding
+    -   _pollingInterval:_ `number`  - Time interval (in milliseconds) between checks for completion
+    -   _retries:_ `number`  - Number of attempts to make before declaring failure
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<Object>` - True if the rendition was created, false otherwise
+-   **createRendition**(nodeId: `string`, encoding: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<__type>`<br/>
+    Creates a rendition for a node.
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _encoding:_ `string`  - Name of the rendition encoding
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<__type>` - Null response to indicate completion
+-   **generateRenditionForNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    Generates a rendition for a node using the first available encoding.
+    -   _nodeId:_ `string`  - ID of the target node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null response to indicate completion
+-   **getAvailableRenditionForNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionEntry.md)`>`<br/>
+    Gets the first available rendition found for a node.
+    -   _nodeId:_ `string`  - ID of the target node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionEntry.md)`>` - Information object for the rendition
+-   **getRendition**(nodeId: `string`, encoding: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionEntry.md)`>`<br/>
+    Gets information about a rendition of a node.
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _encoding:_ `string`  - Name of the rendition encoding
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionEntry.md)`>` - Information object about the rendition
+-   **getRenditionUrl**(nodeId: `string`, encoding: `string`): `string`<br/>
+    Gets a URL linking to the specified rendition of a node.
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _encoding:_ `string`  - Name of the rendition encoding
+    -   **Returns** `string` - URL string
+-   **getRenditionsListByNodeId**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionPaging.md)`>`<br/>
+    Gets a list of all renditions for a node.
+    -   _nodeId:_ `string`  - ID of the target node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionPaging.md)`>` - Paged list of rendition details
+-   **isConversionPossible**(nodeId: `string`, encoding: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
+    Checks if the node can be converted using the specified rendition.
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _encoding:_ `string`  - Name of the rendition encoding
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>` - True if the node can be converted, false otherwise
+-   **isRenditionAvailable**(nodeId: `string`, encoding: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
+    Checks if the specified rendition is available for a node.
+    -   _nodeId:_ `string`  - ID of the target node
+    -   _encoding:_ `string`  - Name of the rendition encoding
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>` - True if the rendition is available, false otherwise
 
 ## Details
 
@@ -42,5 +75,5 @@ in the ADF API. The `encoding` identifies the conversion performed by the rendit
 See the
 [Renditions API page](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionsApi.md#createRendition)
 in the Alfresco JS API for more information about the
-[RenditionPaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionPaging.md)
+[`RenditionPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionPaging.md)
 class and other implementation details.
