@@ -197,7 +197,7 @@ describe('GroupCloudComponent', () => {
     }));
 
     it('should list groups who have access to the app when appName is specified', async(() => {
-        component.applicationName = 'sample-app';
+        component.appName = 'sample-app';
         fixture.detectChanges();
         let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
@@ -213,7 +213,7 @@ describe('GroupCloudComponent', () => {
 
     it('should not list groups who do not have access to the app when appName is specified', async(() => {
         checkGroupHasClientRoleMappingSpy.and.returnValue(of(false));
-        component.applicationName = 'sample-app';
+        component.appName = 'sample-app';
 
         fixture.detectChanges();
         let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('[data-automation-id="adf-cloud-group-search-input"]');
