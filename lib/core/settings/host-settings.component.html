@@ -53,10 +53,15 @@
                             {{ 'CORE.HOST_SETTINGS.REQUIRED'| translate }}
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field *ngIf="hasIdentity" class="adf-full-width" floatLabel="Identity Host">
+                </mat-card-content>
+            </ng-container>
+
+            <ng-container *ngIf="isOAUTH()">
+                <mat-card-content>
+                    <mat-form-field class="adf-full-width" floatLabel="Identity Host">
                         <mat-label>Identity Host</mat-label>
                         <input matInput name="identityHost" id="identityHost" formControlName="identityHost"
-                               placeholder="http(s)://host|ip:port(/path)">
+                                placeholder="http(s)://host|ip:port(/path)">
                         <mat-error *ngIf="identityHost.hasError('pattern')">
                             {{ 'CORE.HOST_SETTINGS.NOT_VALID'| translate }}
                         </mat-error>

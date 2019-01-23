@@ -43,7 +43,6 @@ export class HostSettingsComponent implements OnInit {
     providers: string[] = ['BPM', 'ECM', 'ALL'];
 
     showSelectProviders = true;
-    hasIdentity = false;
 
     form: FormGroup;
 
@@ -83,13 +82,16 @@ export class HostSettingsComponent implements OnInit {
 
         if (authType === 'OAUTH') {
             this.addOAuthFormGroup();
+            this.addIdentityHostFormControl();
         }
 
         this.form.get('authType').valueChanges.subscribe((value) => {
             if (value === 'BASIC') {
                 this.form.removeControl('oauthConfig');
+                this.form.removeControl('identityHost');
             } else {
                 this.addOAuthFormGroup();
+                this.addIdentityHostFormControl();
             }
         });
 
@@ -102,14 +104,11 @@ export class HostSettingsComponent implements OnInit {
     private removeFormGroups() {
         this.form.removeControl('bpmHost');
         this.form.removeControl('ecmHost');
-        this.form.removeControl('identityHost');
-        this.hasIdentity = false;
     }
 
     private addFormGroups() {
         this.addBPMFormControl();
         this.addECMFormControl();
-        this.addIdentityHostFormControl();
     }
 
     private addOAuthFormGroup() {
@@ -125,11 +124,8 @@ export class HostSettingsComponent implements OnInit {
     }
 
     private addIdentityHostFormControl() {
-        if ((this.isOAUTH()) && !this.identityHost) {
-            const identityHostFormControl = this.createIdentityFormControl();
-            this.form.addControl('identityHost', identityHostFormControl);
-            this.hasIdentity = true;
-        }
+        const identityHostFormControl = this.createIdentityFormControl();
+        this.form.addControl('identityHost', identityHostFormControl);
     }
 
     private addECMFormControl() {
