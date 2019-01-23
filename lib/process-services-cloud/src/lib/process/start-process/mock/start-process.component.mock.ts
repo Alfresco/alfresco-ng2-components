@@ -37,14 +37,14 @@ export let fakeProcessDefinitions: ProcessDefinitionCloud[] = [
         appVersion: 0,
         id: 'NewProcess:1',
         key: 'NewProcess 1',
-        name: 'NewProcess 1',
+        name: 'NewProcess 1'
     }),
     new ProcessDefinitionCloud({
         appName: 'myApp',
         appVersion: 0,
         id: 'NewProcess:2',
         key: 'NewProcess 2',
-        name: 'NewProcess 2',
+        name: 'NewProcess 2'
     })
 ];
 
