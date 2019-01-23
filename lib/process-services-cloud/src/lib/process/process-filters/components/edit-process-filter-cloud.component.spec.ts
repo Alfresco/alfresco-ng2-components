@@ -37,15 +37,15 @@ describe('EditProcessFilterCloudComponent', () => {
     let fixture: ComponentFixture<EditProcessFilterCloudComponent>;
     let dialog: MatDialog;
     let appsService: AppsProcessCloudService;
-    let getDeployedApplicationsByStatusSpy: jasmine.Spy;
+    let getRunningApplicationsSpy: jasmine.Spy;
     let getProcessFilterByIdSpy: jasmine.Spy;
 
     let fakeFilter = new ProcessFilterCloudModel({
         name: 'FakeRunningProcess',
         icon: 'adjust',
-        id: 10,
+        id: 'mock-process-filter-id',
         state: 'RUNNING',
-        appName: 'app-name',
+        appName: 'mock-app-name',
         processDefinitionId: 'process-def-id',
         assignment: 'fake-involved',
         order: 'ASC',
@@ -69,7 +69,7 @@ describe('EditProcessFilterCloudComponent', () => {
             name: 'fake-name'
         }); }});
         getProcessFilterByIdSpy = spyOn(service, 'getProcessFilterById').and.returnValue(fakeFilter);
-        getDeployedApplicationsByStatusSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
+        getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
     });
 
     it('should create EditProcessFilterCloudComponent', () => {
@@ -77,8 +77,8 @@ describe('EditProcessFilterCloudComponent', () => {
     });
 
     it('should fetch process instance filter by id', async(() => {
-        let change = new SimpleChange(undefined, '10', true);
-        component.ngOnChanges({ 'id': change });
+        let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+        component.ngOnChanges({'id': processFilterIDchange});
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -92,8 +92,8 @@ describe('EditProcessFilterCloudComponent', () => {
     }));
 
     it('should display filter name as title', () => {
-        let change = new SimpleChange(undefined, '10', true);
-        component.ngOnChanges({ 'id': change });
+        let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+        component.ngOnChanges({'id': processFilterIDchange});
         fixture.detectChanges();
         const title = fixture.debugElement.nativeElement.querySelector('#adf-edit-process-filter-title-id');
         const subTitle = fixture.debugElement.nativeElement.querySelector('#adf-edit-process-filter-sub-title-id');
@@ -106,8 +106,8 @@ describe('EditProcessFilterCloudComponent', () => {
     describe('EditProcessFilter form', () => {
 
         beforeEach(() => {
-            let change = new SimpleChange(undefined, '10', true);
-            component.ngOnChanges({ 'id': change });
+            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({'id': processFilterIDchange});
             fixture.detectChanges();
         });
 
@@ -238,21 +238,9 @@ describe('EditProcessFilterCloudComponent', () => {
             });
         }));
 
-        it('should able to fetch running applications', async(() => {
-            component.appName = 'mock-app-name';
-            component.filterProperties = ['appName'];
-            let change = new SimpleChange(undefined, 'mock-process-id', true);
-            component.ngOnChanges({ 'id': change });
-            const appController = component.editProcessFilterForm.get('appName');
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(appController).toBeDefined();
-                expect(appController.value).toBe('mock-app-name' );
-                expect(getDeployedApplicationsByStatusSpy).toHaveBeenCalled();
-            });
-        }));
-
         it('should able to build a editProcessFilter form with default properties if input is empty', async(() => {
+            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({'id': processFilterIDchange});
             component.filterProperties = [];
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -271,28 +259,45 @@ describe('EditProcessFilterCloudComponent', () => {
                 expect(orderController.value).toBe('ASC');
             });
         }));
+    });
 
-        it('should able to build a editProcessFilter form with given input properties', async(() => {
-            getProcessFilterByIdSpy.and.returnValue({ processDefinitionId: 'process-instance-id', startDate: 'Fri Jan 04 2019 19:16:32 GMT+0530 (IST)' });
-            component.appName = 'mock-app-name';
-            component.filterProperties = ['appName', 'processDefinitionId', 'startDate'];
-            let change = new SimpleChange(undefined, 'mock-task-id', true);
-            component.ngOnChanges({ 'id': change });
+    describe('Process filterProperties', () => {
+
+        beforeEach(() => {
+            component.filterProperties = ['appName', 'processInstanceId', 'processName'];
+            fixture.detectChanges();
+        });
+
+        it('should able to fetch running applications when appName property defined in the input', async(() => {
+            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({'id': processFilterIDchange});
             const appController = component.editProcessFilterForm.get('appName');
-            const dueDateController = component.editProcessFilterForm.get('startDate');
-            const processInsIdController = component.editProcessFilterForm.get('processDefinitionId');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
+                expect(getRunningApplicationsSpy).toHaveBeenCalled();
+                expect(appController).toBeDefined();
+                expect(appController.value).toBe('mock-app-name');
+            });
+        }));
+
+        it('should able to build a editProcessFilter form with given input properties', async(() => {
+            fixture.detectChanges();
+            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({'id': processFilterIDchange});
+            fixture.detectChanges();
+            const appController = component.editProcessFilterForm.get('appName');
+            const processNameController = component.editProcessFilterForm.get('processName');
+            const processInsIdController = component.editProcessFilterForm.get('processDefinitionId');
+            fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(getDeployedApplicationsByStatusSpy).toHaveBeenCalled();
+                expect(getRunningApplicationsSpy).toHaveBeenCalled();
                 expect(component.processFilterProperties).toBeDefined();
                 expect(component.editProcessFilterForm).toBeDefined();
                 expect(component.processFilterProperties.length).toBe(3);
                 expect(appController).toBeDefined();
-                expect(dueDateController).toBeDefined();
+                expect(processNameController).toBeDefined();
                 expect(processInsIdController).toBeDefined();
                 expect(appController.value).toBe('mock-app-name');
-                expect(processInsIdController.value).toBe('process-instance-id');
             });
         }));
     });
@@ -300,9 +305,9 @@ describe('EditProcessFilterCloudComponent', () => {
     describe('edit filter actions', () => {
 
         beforeEach(() => {
-            let change = new SimpleChange(undefined, '10', true);
-            component.ngOnChanges({ 'id': change });
-            component.filterProperties = ['state'];
+            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({'id': processFilterIDchange});
+            fixture.detectChanges();
         });
 
         it('should emit save event and save the filter on click save button', async(() => {

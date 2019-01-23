@@ -539,12 +539,12 @@
             ]
         }
     },
-    "adf-edit-task-filter": {
+    "edit-task-filter": {
         "properties": [
             "state", "assignment", "sort", "order"
         ]
     },
-    "adf-edit-process-filter": {
+    "edit-process-filter": {
         "properties": [
             "state", "sort", "order", "processName"
         ]

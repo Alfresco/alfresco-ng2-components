@@ -18,14 +18,12 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { MatDialog } from '@angular/material';
-import { Observable } from 'rxjs/internal/Observable';
-import { debounceTime, filter, map } from 'rxjs/operators';
+import { debounceTime, filter } from 'rxjs/operators';
 import moment from 'moment-es6';
-import { of } from 'rxjs';
 
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
-import { ProcessFilterCloudModel, ProcessFilterActionType, ProcessFilterProperties, ProcessFilterOptions } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel, ProcessFilterActionType, ProcessFilterProperties } from '../models/process-filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
@@ -40,7 +38,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     public static ACTION_SAVE = 'SAVE';
     public static ACTION_SAVE_AS = 'SAVE_AS';
     public static ACTION_DELETE = 'DELETE';
-
+    public static APPLICATION_NAME: string = 'appName';
     public static APP_RUNNING_STATUS: string = 'Running';
     public static DEFAULT_PROCESS_FILTER_PROPERTIES = ['state', 'sort', 'order'];
     public FORMAT_DATE: string = 'DD/MM/YYYY';
@@ -53,6 +51,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     @Input()
     id: string;
 
+    /** List of process filter properties to display */
     @Input()
     filterProperties: string[] = EditProcessFilterCloudComponent.DEFAULT_PROCESS_FILTER_PROPERTIES; // default ['state', 'sort', 'order']
 
@@ -87,6 +86,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     ];
 
     directions = [{ label: 'ASC', value: 'ASC' }, { label: 'DESC', value: 'DESC' }];
+    applicationNames: any[] = [];
     formHasBeenChanged = false;
     editProcessFilterForm: FormGroup;
     processFilterProperties: any[] = [];
@@ -102,8 +102,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         const id = changes['id'];
         if (id && id.currentValue !== id.previousValue) {
-            this.retrieveProcessFilter();
-            this.initProcessFilterProperties(this.processFilter);
+            this.processFilterProperties = this.createAndFilterProperties();
             this.buildForm(this.processFilterProperties);
         }
     }
@@ -127,8 +126,8 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     /**
      * Return process instance filter by application name and filter id
      */
-    retrieveProcessFilter() {
-        this.processFilter = new ProcessFilterCloudModel(this.processFilterCloudService.getProcessFilterById(this.appName, this.id));
+    retrieveProcessFilter(): ProcessFilterCloudModel {
+        return new ProcessFilterCloudModel(this.processFilterCloudService.getProcessFilterById(this.appName, this.id));
     }
 
     /**
@@ -136,21 +135,32 @@ export class EditProcessFilterCloudComponent implements OnChanges {
      */
     onFilterChange() {
         this.editProcessFilterForm.valueChanges
-        .pipe(debounceTime(500), filter(() => this.isFormValid()))
+            .pipe(debounceTime(500), filter(() => this.isFormValid()))
             .subscribe((formValues: ProcessFilterCloudModel) => {
                 this.changedProcessFilter = new ProcessFilterCloudModel(Object.assign({}, this.processFilter, formValues));
                 this.formHasBeenChanged = !this.compareFilters(this.changedProcessFilter, this.processFilter);
                 this.filterChange.emit(this.changedProcessFilter);
-        });
+            });
     }
 
-    initProcessFilterProperties(processFilter: ProcessFilterCloudModel) {
-        if (this.filterProperties && this.filterProperties.length > 0) {
-            const defaultProperties = this.defaultProcessFilterProperties(processFilter);
-            this.processFilterProperties = defaultProperties.filter((filterProperty: ProcessFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty));
-        } else {
-            this.processFilterProperties = EditProcessFilterCloudComponent.DEFAULT_PROCESS_FILTER_PROPERTIES;
+    createAndFilterProperties() {
+        this.checkMandatoryFilterProperties();
+        if (this.checkForApplicationNameProperty()) {
+            this.getRunningApplications();
         }
+        this.processFilter = this.retrieveProcessFilter();
+        const defaultProperties = this.createProcessFilterProperties(this.processFilter);
+        return defaultProperties.filter((filterProperty: ProcessFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty));
+    }
+
+    checkMandatoryFilterProperties() {
+        if (this.filterProperties === undefined || this.filterProperties.length === 0) {
+            this.filterProperties = EditProcessFilterCloudComponent.DEFAULT_PROCESS_FILTER_PROPERTIES;
+        }
+    }
+
+    checkForApplicationNameProperty(): boolean {
+        return this.filterProperties ? this.filterProperties.indexOf(EditProcessFilterCloudComponent.APPLICATION_NAME) >= 0 : false;
     }
 
     private isValidProperty(filterProperties: string[], filterProperty: ProcessFilterProperties): boolean {
@@ -196,17 +206,15 @@ export class EditProcessFilterCloudComponent implements OnChanges {
         return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }
 
-    getRunningApplications(): Observable<ProcessFilterOptions[]> {
-        return this.appsProcessCloudService.getDeployedApplicationsByStatus(EditProcessFilterCloudComponent.APP_RUNNING_STATUS).pipe(
-            map((applications: ApplicationInstanceModel[]) => {
-                let options: ProcessFilterOptions[] = [];
+    getRunningApplications() {
+        this.appsProcessCloudService.getDeployedApplicationsByStatus(EditProcessFilterCloudComponent.APP_RUNNING_STATUS)
+            .subscribe((applications: ApplicationInstanceModel[]) => {
                 if (applications && applications.length > 0) {
                     applications.map((application) => {
-                        options.push({ label: application.name, value: application.name });
+                        this.applicationNames.push({ label: application.name, value: application.name });
                     });
                 }
-                return options;
-            }));
+            });
     }
 
     /**
@@ -295,14 +303,14 @@ export class EditProcessFilterCloudComponent implements OnChanges {
         return property.type === 'text';
     }
 
-    defaultProcessFilterProperties(currentProcessFilter: ProcessFilterCloudModel): ProcessFilterProperties[] {
+    createProcessFilterProperties(currentProcessFilter: ProcessFilterCloudModel): ProcessFilterProperties[] {
         return [
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_NAME',
                 type: 'select',
                 key: 'appName',
-                value: this.appName || '',
-                options: this.getRunningApplications()
+                value: currentProcessFilter.appName || '',
+                options: this.applicationNames
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.INITIATOR',
@@ -315,21 +323,21 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                 type: 'select',
                 key: 'state',
                 value: currentProcessFilter.state || this.status[0].value,
-                options: of(this.status)
+                options: this.status
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COLUMN',
                 type: 'select',
                 key: 'sort',
                 value: currentProcessFilter.sort || this.columns[0].value,
-                options: of(this.columns)
+                options: this.columns
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DIRECTION',
                 type: 'select',
                 key: 'order',
                 value: currentProcessFilter.order || this.directions[0].value,
-                options: of(this.directions)
+                options: this.directions
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME',

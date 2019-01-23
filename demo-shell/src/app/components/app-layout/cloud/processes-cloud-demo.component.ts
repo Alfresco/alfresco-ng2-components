@@ -33,7 +33,7 @@ import { CloudLayoutService } from './services/cloud-layout.service';
 })
 export class ProcessesCloudDemoComponent implements OnInit {
 
-    static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter.properties';
+    static PROCESS_FILTER_PROPERTY_KEYS = 'edit-process-filter.properties';
 
     @ViewChild('processCloud')
     processCloud: ProcessListCloudComponent;
@@ -47,7 +47,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     filterId: string = '';
     sortArray: any = [];
     selectedRow: any;
-    processFilterProperties: any[];
+    processFilterProperties: any[] = [];
 
     editedFilter: ProcessFilterCloudModel;
 

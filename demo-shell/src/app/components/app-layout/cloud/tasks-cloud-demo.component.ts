@@ -41,7 +41,7 @@ export class TasksCloudDemoComponent implements OnInit {
 
     sortArray: TaskListCloudSortingModel[];
     editedFilter: TaskFilterCloudModel;
-    taskFilterProperties: any[];
+    taskFilterProperties: any[] = [];
 
     filterId;
 
