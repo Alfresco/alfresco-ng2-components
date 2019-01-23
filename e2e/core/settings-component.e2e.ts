@@ -16,16 +16,10 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { ContentServicesPage } from '../pages/adf/contentServicesPage';
-import { ContentListPage } from '../pages/adf/dialog/contentListPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ViewerPage } from '../pages/adf/viewerPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
-import {browser, element, protractor} from "protractor";
+import { browser, element, protractor } from 'protractor';
 import TestConfig = require('../test.config');
-
 import { AcsUserModel } from '../models/ACS/acsUserModel';
-
 
 describe('Settings component', () => {
 
@@ -37,13 +31,12 @@ describe('Settings component', () => {
         'password': TestConfig.adf.adminPassword
     });
 
-
     describe('Settings component', () => {
         beforeEach( (done) => {
             settingsPage.goToSettingsPage();
             done();
         });
-        
+
         it('[C245641] Should navigate User back to Login screen', () => {
             settingsPage.clickBackButton();
             loginPage.waitForElements();
@@ -124,5 +117,3 @@ describe('Settings component', () => {
 
     });
 });
-
-
