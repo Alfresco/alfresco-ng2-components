@@ -310,6 +310,7 @@ export class SearchQueryBuilderService {
     protected get facetQueries(): FacetQuery[] {
         if (this.hasFacetQueries) {
             return this.config.facetQueries.queries.map((query) => {
+                query.group = query.group || this.config.facetQueries.label || 'Facet Queries';
                 return <FacetQuery> { ...query };
             });
         }
