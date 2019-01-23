@@ -84,6 +84,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     submitted = false;
 
     assigneeName: string;
+    candidateGroups: string [] = [];
 
     dateError: boolean;
 
@@ -145,6 +146,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         newTask.appName = this.getAppName();
         newTask.dueDate = this.getDueDate();
         newTask.assignee = this.assigneeName;
+        newTask.candidateGroups = this.candidateGroups;
         this.createNewTask(new TaskDetailsCloudModel(newTask));
     }
 
@@ -191,6 +193,16 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     onRemoveUser() {
         this.assigneeName = null;
+    }
+
+    onSelectGroup(group) {
+        this.candidateGroups.push(group.name);
+    }
+
+    onRemoveGroup(group) {
+        this.candidateGroups = this.candidateGroups.filter( (name) => {
+            return name !== group.name;
+        });
     }
 
     public whitespaceValidator(control: FormControl) {

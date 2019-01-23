@@ -13,7 +13,7 @@ Searches Groups.
 
 ```html
 <adf-cloud-group
-    [applicationName]="'simple-app'"
+    [appName]="'simple-app'"
     [mode]="'multiple'">
 </adf-cloud-group>
 ```
@@ -26,7 +26,7 @@ Searches Groups.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| applicationName | `string` |  | Name of the application. If specified this shows the users who have access to the app. |
+| appName | `string` |  | Name of the application. If specified this shows the users who have access to the app. |
 | mode | `string` |  | User selection mode (single/multiple). |
 | preSelectGroups | [`GroupModel`](../../process-services-cloud/src/lib/group/models/group.model.ts)`[]` | \[] | Array of users to be pre-selected. This pre-selects all users in multi selection mode and only the first user of the array in single selection mode. |
 

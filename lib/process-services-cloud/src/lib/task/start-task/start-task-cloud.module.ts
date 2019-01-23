@@ -25,6 +25,8 @@ import { StartTaskCloudComponent } from './components/start-task-cloud.component
 import { StartTaskCloudService } from './services/start-task-cloud.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PeopleCloudComponent } from './components/people-cloud/people-cloud.component';
+import { GroupCloudComponent } from '../../group/components/group-cloud.component';
+import { InitialGroupNamePipe } from '../../group/pipe/group-initial.pipe';
 
 @NgModule({
     imports: [
@@ -43,13 +45,15 @@ import { PeopleCloudComponent } from './components/people-cloud/people-cloud.com
         ReactiveFormsModule,
         FormModule
     ],
-    declarations: [StartTaskCloudComponent, PeopleCloudComponent],
+    declarations: [StartTaskCloudComponent, PeopleCloudComponent, GroupCloudComponent, InitialGroupNamePipe],
     providers: [
         StartTaskCloudService
      ],
     exports: [
         StartTaskCloudComponent,
-        PeopleCloudComponent
+        PeopleCloudComponent,
+        GroupCloudComponent,
+        InitialGroupNamePipe
     ]
 })
 export class StartTaskCloudModule { }

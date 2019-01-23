@@ -64,6 +64,10 @@
                 <div fxFlex>
                     <adf-cloud-people #peopleInput *ngIf="currentUser" [appName]="appName" [preSelectUsers]="[currentUser]" (selectUser)="onAssigneeSelect($event)" (removeUser)="onRemoveUser()"></adf-cloud-people>
                 </div>
+
+                <div fxFlex>
+                    <adf-cloud-group #groupInput *ngIf="currentUser" [mode]="'multiple'" [appName]="appName" (selectGroup)="onSelectGroup($event)" (removeGroup)="onRemoveGroup($event)"></adf-cloud-group>
+                </div>
             </div>
     </mat-card-content>
 
