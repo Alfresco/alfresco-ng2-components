@@ -36,7 +36,7 @@ describe('Share file', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const contentListPage = new ContentListPage(element(by.css('adf-upload-drag-area')));
+    const contentListPage = contentServicesPage.getUploadAreaDocumentList();
     const shareDialog = new ShareDialog();
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();

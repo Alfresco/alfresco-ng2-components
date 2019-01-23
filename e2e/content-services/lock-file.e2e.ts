@@ -32,7 +32,6 @@ import resources = require('../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
-import { browser } from 'protractor';
 
 describe('Lock File', () => {
 
