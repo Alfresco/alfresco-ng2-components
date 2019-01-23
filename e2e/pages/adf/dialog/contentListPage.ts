@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor } from 'protractor';
+import { ElementFinder, browser, by, element, protractor } from 'protractor';
 import { DataTablePage } from '../dataTablePage';
 import { Util } from '../../../util/util';
 
 export class ContentListPage {
 
+    rootElement: ElementFinder;
     dataTable = new DataTablePage();
     deleteContentElement = element(by.css('button[data-automation-id*="DELETE"]'));
     metadataAction = element(by.css('button[data-automation-id*="METADATA"]'));
@@ -44,6 +45,10 @@ export class ContentListPage {
     table = element.all(by.css('adf-datatable')).first();
     tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
 
+    constructor(rootElement: ElementFinder = element(by.css('adf-document-list'))) {
+        this.rootElement = rootElement;
+    }
+
     getFileHyperlink(fileName) {
         return this.dataTable.getFileHyperlink(fileName);
     }
@@ -57,7 +62,7 @@ export class ContentListPage {
     }
 
     getRowsName(content) {
-        let row = element.all(by.css(`adf-document-list span[title='${content}']`)).first();
+        let row = this.rootElement.element(by.css(`adf-datatable span[title='${content}']`));
         Util.waitUntilElementIsVisible(row);
         return row;
     }
