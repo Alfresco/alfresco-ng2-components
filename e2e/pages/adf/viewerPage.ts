@@ -29,6 +29,7 @@ export class ViewerPage {
     closeButton = element(by.css('button[data-automation-id="adf-toolbar-back"]'));
     fileName = element(by.id('adf-viewer-display-name'));
     infoButton = element(by.css('button[data-automation-id="adf-toolbar-sidebar"]'));
+    moreActionsMenu = element(by.css('button[data-automation-id="adf-toolbar-more-actions"]'));
     leftSideBarButton = element(by.css('button[data-automation-id="adf-toolbar-left-sidebar"]'));
     previousPageButton = element(by.id('viewer-previous-page-button'));
     nextPageButton = element(by.id('viewer-next-page-button'));
@@ -62,6 +63,7 @@ export class ViewerPage {
     activeTab = element(by.css('div[class*="mat-tab-label-active"]'));
     toolbarSwitch = element(by.id('adf-switch-toolbar'));
     toolbar = element(by.id('adf-viewer-toolbar'));
+    buttonList = element.all(by.css('#adf-viewer-toolbar button[data-automation-id^="adf-toolbar-"][id^="adf-viewer-"]'));
     datatableHeader = element(by.css('div.adf-datatable-header'));
     goBackSwitch = element(by.id('adf-switch-goback'));
 
@@ -109,6 +111,11 @@ export class ViewerPage {
 
     getZoom() {
         return this.percentage.getText();
+    }
+
+    getButtonListInToolbar() {
+        let list = [ this.downloadButton, this.printButton, this.fullScreenButton ];
+        return list;
     }
 
     exitFullScreen() {
