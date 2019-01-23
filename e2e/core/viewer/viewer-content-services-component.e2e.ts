@@ -271,16 +271,20 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    fit('[C279922] Should display the buttons in order in the adf viewer toolbar', () => {
-        viewerPage.viewFile(pptFile.name);
-
-        expect(viewerPage.buttonList).toBe(viewerPage.getButtonListInToolbar());
-        // expect(viewerPage.buttonList[1]).toEqual(viewerPage.printButton);
-        // expect(viewerPage.buttonList[2]).toEqual(viewerPage.fullScreenButton);
-        // expect(viewerPage.buttonList[3]).toEqual(viewerPage.infoButton);
-        // expect(viewerPage.buttonList[4]).toEqual(viewerPage.moreActionsMenu);
-
-        //viewerPage.clickCloseButton();
+   fit('[C279922] Should display the buttons in order in the adf viewer toolbar', () => {
+       viewerPage.viewFile(pdfFile.name);
+       viewerPage.checkLeftSideBarIsNotDisplayed();
+       viewerPage.clickLeftSidebarButton();
+       viewerPage.checkLeftSideBarIsDisplayed();
+       viewerPage.enableMoreActionsMenu();
+       viewerPage.checkCloseButtonIsDisplayed();
+       expect(viewerPage.buttonList.count()).toBe(5);
+       expect(viewerPage.buttonList.get(0).getAttribute('title')).toEqual(viewerPage.downloadButton.getAttribute('title'));
+       expect(viewerPage.buttonList.get(1).getAttribute('title')).toEqual(viewerPage.printButton.getAttribute('title'));
+       expect(viewerPage.buttonList.get(2).getAttribute('title')).toEqual(viewerPage.fullScreenButton.getAttribute('title'));
+       expect(viewerPage.buttonList.get(3).getAttribute('title')).toEqual(viewerPage.infoButton.getAttribute('title'));
+       expect(viewerPage.buttonList.get(4).getAttribute('title')).toEqual(viewerPage.moreActionsMenu.getAttribute('title'));
+       viewerPage.clickCloseButton();
     });
 
     it('[C260053] Should display first page, toolbar and pagination when opening a .docx file', () => {
