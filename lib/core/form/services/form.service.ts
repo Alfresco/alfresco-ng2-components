@@ -484,7 +484,7 @@ export class FormService {
 
     /**
      * Gets the ID of a form.
-     * @param res Object representing a form
+     * @param form Object representing a form
      * @returns ID string
      */
     getFormId(form: any): string {

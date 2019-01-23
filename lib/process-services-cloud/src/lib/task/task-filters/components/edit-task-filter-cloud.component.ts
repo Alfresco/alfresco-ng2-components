@@ -51,6 +51,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     @Input()
     id: string;
 
+    /** List of task filter properties to display. */
     @Input()
     filterProperties: string[] = EditTaskFilterCloudComponent.DEFAULT_TASK_FILTER_PROPERTIES; // default ['state', 'assignment', 'sort', 'order']
 

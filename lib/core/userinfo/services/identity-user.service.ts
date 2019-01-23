@@ -44,6 +44,7 @@ export class IdentityUserService {
 
     /**
      * Gets the name and other basic details of the current user.
+     * @returns The user's details
      */
     getCurrentUserInfo(): IdentityUserModel {
         const familyName = this.getValueFromToken<string>(IdentityUserService.FAMILY_NAME);
@@ -56,6 +57,8 @@ export class IdentityUserService {
 
     /**
      * Gets a named value from the user access token.
+     * @param key Key name of the field to retrieve
+     * @returns Value from the token
      */
     getValueFromToken<T>(key: string): T {
         let value;
@@ -69,6 +72,8 @@ export class IdentityUserService {
 
     /**
      * Find users based on search input.
+     * @param search Search query string
+     * @returns List of users
      */
     findUsersByName(search: string): Observable<any> {
         if (search === '') {
@@ -87,6 +92,9 @@ export class IdentityUserService {
 
     /**
      * Get client roles of a user for a particular client.
+     * @param userId ID of the target user
+     * @param clientId ID of the client app
+     * @returns List of client roles
      */
     getClientRoles(userId: string, clientId: string): Observable<any[]> {
         const url = this.buildUserClientRoleMapping(userId, clientId);
@@ -102,6 +110,9 @@ export class IdentityUserService {
 
     /**
      * Checks whether user has access to a client app.
+     * @param userId ID of the target user
+     * @param clientId ID of the client app
+     * @returns True if the user has access, false otherwise
      */
     checkUserHasClientApp(userId: string, clientId: string): Observable<boolean> {
         return this.getClientRoles(userId, clientId).pipe(
@@ -115,7 +126,11 @@ export class IdentityUserService {
     }
 
     /**
-     * Checks whether user has any of client app role.
+     * Checks whether a user has any of the client app roles.
+     * @param userId ID of the target user
+     * @param clientId ID of the client app
+     * @param roleNames List of role names to check for
+     * @returns True if the user has one or more of the roles, false otherwise
      */
     checkUserHasAnyClientAppRole(userId: string, clientId: string, roleNames: string[]): Observable<boolean> {
         return this.getClientRoles(userId, clientId).pipe(
@@ -139,7 +154,9 @@ export class IdentityUserService {
     }
 
     /**
-     * Get client id for an application.
+     * Gets the client ID for an application.
+     * @param applicationName Name of the application
+     * @returns Client ID string
      */
     getClientIdByApplicationName(applicationName: string): Observable<string> {
         const url = this.buildGetClientsUrl();
@@ -158,10 +175,10 @@ export class IdentityUserService {
     }
 
     /**
-     * Checks a user has access to an application
-     * @param userId Id of the user
+     * Checks if a user has access to an application.
+     * @param userId ID of the user
      * @param applicationName Name of the application
-     * @returns Boolean
+     * @returns True if the user has access, false otherwise
      */
     checkUserHasApplicationAccess(userId: string, applicationName: string): Observable<boolean> {
         return this.getClientIdByApplicationName(applicationName).pipe(
@@ -172,7 +189,11 @@ export class IdentityUserService {
     }
 
     /**
-     * Checks a user has any application role
+     * Checks if a user has any application role.
+     * @param userId ID of the target user
+     * @param applicationName Name of the application
+     * @param roleNames List of role names to check for
+     * @returns True if the user has one or more of the roles, false otherwise
      */
     checkUserHasAnyApplicationRole(userId: string, applicationName: string, roleNames: string[]): Observable<boolean> {
         return this.getClientIdByApplicationName(applicationName).pipe(
@@ -184,6 +205,7 @@ export class IdentityUserService {
 
     /**
      * Gets details for all users.
+     * @returns Array of user info objects
      */
     getUsers(): Observable<IdentityUserModel[]> {
         const url = this.buildUserUrl();
@@ -203,6 +225,8 @@ export class IdentityUserService {
 
     /**
      * Gets a list of roles for a user.
+     * @param userId ID of the user
+     * @returns Array of role info objects
      */
     getUserRoles(userId: string): Observable<IdentityRoleModel[]> {
         const url = this.buildRolesUrl(userId);
@@ -222,6 +246,8 @@ export class IdentityUserService {
 
     /**
      * Gets an array of users (including the current user) who have any of the roles in the supplied list.
+     * @param roleNames List of role names to look for
+     * @returns Array of user info objects
      */
     async getUsersByRolesWithCurrentUser(roleNames: string[]): Promise<IdentityUserModel[]> {
         const filteredUsers: IdentityUserModel[] = [];
@@ -241,6 +267,8 @@ export class IdentityUserService {
 
     /**
      * Gets an array of users (not including the current user) who have any of the roles in the supplied list.
+     * @param roleNames List of role names to look for
+     * @returns Array of user info objects
      */
     async getUsersByRolesWithoutCurrentUser(roleNames: string[]): Promise<IdentityUserModel[]> {
         const filteredUsers: IdentityUserModel[] = [];

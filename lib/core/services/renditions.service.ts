@@ -29,6 +29,11 @@ export class RenditionsService {
     constructor(private apiService: AlfrescoApiService) {
     }
 
+    /**
+     * Gets the first available rendition found for a node.
+     * @param nodeId ID of the target node
+     * @returns Information object for the rendition
+     */
     getAvailableRenditionForNode(nodeId: string): Observable<RenditionEntry> {
         return from(this.apiService.renditionsApi.getRenditions(nodeId)).pipe(
             map((availableRenditions: RenditionPaging) => {
@@ -39,6 +44,11 @@ export class RenditionsService {
             }));
     }
 
+    /**
+     * Generates a rendition for a node using the first available encoding.
+     * @param nodeId ID of the target node
+     * @returns Null response to indicate completion
+     */
     generateRenditionForNode(nodeId: string): Observable<any> {
         return this.getAvailableRenditionForNode(nodeId).pipe(
             map((rendition: RenditionEntry) => {
@@ -51,6 +61,12 @@ export class RenditionsService {
         );
     }
 
+    /**
+     * Checks if the specified rendition is available for a node.
+     * @param nodeId ID of the target node
+     * @param encoding Name of the rendition encoding
+     * @returns True if the rendition is available, false otherwise
+     */
     isRenditionAvailable(nodeId: string, encoding: string): Observable<boolean> {
         return new Observable((observer) => {
             this.getRendition(nodeId, encoding).subscribe(
@@ -70,6 +86,12 @@ export class RenditionsService {
         });
     }
 
+    /**
+     * Checks if the node can be converted using the specified rendition.
+     * @param nodeId ID of the target node
+     * @param encoding Name of the rendition encoding
+     * @returns True if the node can be converted, false otherwise
+     */
     isConversionPossible(nodeId: string, encoding: string): Observable<boolean> {
         return new Observable((observer) => {
             this.getRendition(nodeId, encoding).subscribe(
@@ -85,22 +107,53 @@ export class RenditionsService {
         });
     }
 
+    /**
+     * Gets a URL linking to the specified rendition of a node.
+     * @param nodeId ID of the target node
+     * @param encoding Name of the rendition encoding
+     * @returns URL string
+     */
     getRenditionUrl(nodeId: string, encoding: string): string {
         return this.apiService.contentApi.getRenditionUrl(nodeId, encoding);
     }
 
+    /**
+     * Gets information about a rendition of a node.
+     * @param nodeId ID of the target node
+     * @param encoding Name of the rendition encoding
+     * @returns Information object about the rendition
+     */
     getRendition(nodeId: string, encoding: string): Observable<RenditionEntry> {
         return from(this.apiService.renditionsApi.getRendition(nodeId, encoding));
     }
 
+    /**
+     * Gets a list of all renditions for a node.
+     * @param nodeId ID of the target node
+     * @returns Paged list of rendition details
+     */
     getRenditionsListByNodeId(nodeId: string): Observable<RenditionPaging> {
         return from(this.apiService.renditionsApi.getRenditions(nodeId));
     }
 
+    /**
+     * Creates a rendition for a node.
+     * @param nodeId ID of the target node
+     * @param encoding Name of the rendition encoding
+     * @returns Null response to indicate completion
+     */
     createRendition(nodeId: string, encoding: string): Observable<{}> {
         return from(this.apiService.renditionsApi.createRendition(nodeId, { id: encoding }));
     }
 
+    /**
+     * Repeatedly attempts to create a rendition, through to success or failure.
+     * @param nodeId ID of the target node
+     * @param encoding Name of the rendition encoding
+     * @param pollingInterval Time interval (in milliseconds) between checks for completion
+     * @param retries Number of attempts to make before declaring failure
+     * @returns True if the rendition was created, false otherwise
+     */
     convert(nodeId: string, encoding: string, pollingInterval: number = 1000, retries: number = 5) {
         return this.createRendition(nodeId, encoding)
             .pipe(
