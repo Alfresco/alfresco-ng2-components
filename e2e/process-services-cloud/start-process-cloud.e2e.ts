@@ -56,7 +56,7 @@ describe('Start Process', () => {
         done();
     });
 
-    it('[C291857] Should be possible to cancel a task', () => {
+    it('[C291857] Should be possible to cancel a process', () => {
         appListCloudComponent.checkAppIsDisplayed(appName);
         appListCloudComponent.goToApp(appName);
         processCloudDemoPage.openNewProcessForm();
@@ -74,6 +74,7 @@ describe('Start Process', () => {
         startProcessPage.checkStartProcessButtonIsEnabled();
 
         startProcessPage.enterProcessName(processNameBiggerThen255Characters);
+        startProcessPage.blur(startProcessPage.processNameInput);
         startProcessPage.checkValidationErrorIsDisplayed(lengthValidationError);
         startProcessPage.checkStartProcessButtonIsDisabled();
     });
