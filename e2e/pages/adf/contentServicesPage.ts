@@ -65,6 +65,10 @@ export class ContentServicesPage {
     searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
 
+    getUploadAreaDocumentList() {
+        return new ContentListPage(element(by.css('adf-upload-drag-area')));
+    }
+
     clickFileHyperlink(fileName) {
         let hyperlink = this.contentList.getFileHyperlink(fileName);
         Util.waitUntilElementIsClickable(hyperlink);

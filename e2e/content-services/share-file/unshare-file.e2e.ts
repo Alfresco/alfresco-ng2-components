@@ -35,7 +35,7 @@ describe('Unshare file', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const contentListPage = new ContentListPage();
+    const contentListPage = contentServicesPage.getUploadAreaDocumentList();
     let navBar = new NavigationBarPage();
     const errorPage = new ErrorPage();
     const shareDialog = new ShareDialog();
@@ -118,7 +118,7 @@ describe('Unshare file', () => {
         });
 
         it('[C286550] Should display unshare confirmation dialog', () => {
-            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentListPage.clickRowToSelectWithRoot(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickUnShareFile();
@@ -126,7 +126,7 @@ describe('Unshare file', () => {
         });
 
         it('[C286551] Should be able to cancel unshare action', () => {
-            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentListPage.clickRowToSelectWithRoot(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickUnShareFile();
@@ -136,7 +136,7 @@ describe('Unshare file', () => {
         });
 
         it('[C286552] Should be able to confirm unshare action', async () => {
-            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentListPage.clickRowToSelectWithRoot(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickUnShareFile();
@@ -146,7 +146,7 @@ describe('Unshare file', () => {
         });
 
         it('[C280556] Should redirect to 404 when trying to access an unshared file', async () => {
-            contentListPage.clickRowToSelect(pngFileModel.name);
+            contentListPage.clickRowToSelectWithRoot(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             let sharedLink = await shareDialog.getShareLink();
