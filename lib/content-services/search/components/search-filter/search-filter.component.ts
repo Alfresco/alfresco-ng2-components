@@ -172,7 +172,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                         .map((bucket) => {
                             const responseBucket = ((responseField && responseField.buckets) || []).find((respBucket) => respBucket.label === bucket.label);
 
-                            bucket.count = responseBucket ? responseBucket.metrics[0].value.count : 0;
+                            bucket.count = responseBucket ? this.getCountValue(responseBucket) : 0;
                             return bucket;
                         });
 
@@ -183,13 +183,13 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private parseFacetQueries(context: any): FacetField[] {
         const configFacetQueries = this.queryBuilder.config.facetQueries && this.queryBuilder.config.facetQueries.queries || [];
-        const configGroups = configFacetQueries.map((query) => query['group'] || '' );
+        const configGroups = configFacetQueries.map((query) => this.queryBuilder.getQueryGroup(query) );
         const configGroupSet = new Set(configGroups);
 
         const result = [];
 
         configGroupSet.forEach((group) => {
-            const responseField = (context.facets || []).find((response) => response.label && response.label === group);
+            const responseField = (context.facets || []).find((response) => response.type === 'query' && response.label === group);
             const responseBuckets = this.getResponseBuckets(responseField);
 
             const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, this.facetQueriesPageSize);
@@ -218,7 +218,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
 
         return configFacetFields.map((field) => {
-            const responseField = (context.facets || []).find((response) => response.label === field.label);
+            const responseField = (context.facets || []).find((response) =>  response.type === 'field' && response.label === field.label);
             const responseBuckets = this.getResponseBuckets(responseField);
 
             const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
@@ -244,7 +244,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private getResponseBuckets(responseField): FacetFieldBucket[] {
         return ((responseField && responseField.buckets) || []).map((respBucket) => {
 
-            respBucket['count'] = respBucket.metrics[0].value.count || 0;
+            respBucket['count'] = this.getCountValue(respBucket);
             return <FacetFieldBucket> {
                 ...respBucket,
                 checked: false,
@@ -252,5 +252,10 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 label: respBucket.label
             };
         });
+    }
+
+    private getCountValue(bucket): number {
+        return (!!bucket && !!bucket.metrics && bucket.metrics[0] && bucket.metrics[0].value && bucket.metrics[0].value.count)
+            || 0;
     }
 }

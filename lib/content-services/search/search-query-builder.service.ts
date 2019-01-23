@@ -282,12 +282,16 @@ export class SearchQueryBuilderService {
     protected get facetQueries(): FacetQuery[] {
         if (this.hasFacetQueries) {
             return this.config.facetQueries.queries.map((query) => {
-                query.group = query.group || this.config.facetQueries.label || 'Facet Queries';
+                query.group = this.getQueryGroup(query);
                 return <FacetQuery> { ...query };
             });
         }
 
         return null;
+    }
+
+    getQueryGroup(query) {
+        return query.group || this.config.facetQueries.label || 'Facet Queries';
     }
 
     protected getFinalQuery(): string {

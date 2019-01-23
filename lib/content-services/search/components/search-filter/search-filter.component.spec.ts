@@ -20,10 +20,8 @@ import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { AppConfigService, TranslationMock } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { FacetFieldBucket } from '../../facet-field-bucket.interface';
-import { FacetQuery } from '../../facet-query.interface';
 import { FacetField } from '../../facet-field.interface';
 import { SearchFilterList } from './models/search-filter-list.model';
-import { ResponseFacetQueryList } from './models/response-facet-query-list.model';
 
 describe('SearchFilterComponent', () => {
 
@@ -84,24 +82,26 @@ describe('SearchFilterComponent', () => {
 
     it('should unselect facet query and update builder', () => {
         spyOn(queryBuilder, 'update').and.stub();
-        spyOn(queryBuilder, 'removeUserFacetQuery').and.callThrough();
+        spyOn(queryBuilder, 'removeUserFacetBucket').and.callThrough();
 
         const event: any = { checked: false };
-        const query: FacetQuery = { checked: true, label: 'q1', query: 'query1' };
+        const query = { checked: true, label: 'q1', filterQuery: 'query1' };
+        const field = { type: 'query', label: 'label1', buckets: [ query ] };
 
-        component.onToggleFacetQuery(event, query);
+        component.onToggleBucket(event, <any> field, <any> query);
 
         expect(query.checked).toBeFalsy();
-        expect(queryBuilder.removeUserFacetQuery).toHaveBeenCalledWith(query);
+        expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledWith(field, query);
         expect(queryBuilder.update).toHaveBeenCalled();
     });
 
     it('should fetch facet queries from response payload', () => {
-        component.responseFacetQueries = null;
+        component.responseFacets = null;
 
         queryBuilder.config = {
             categories: [],
             facetQueries: {
+                label: 'label1',
                 queries: [
                     { label: 'q1', query: 'query1' },
                     { label: 'q2', query: 'query2' }
@@ -110,29 +110,35 @@ describe('SearchFilterComponent', () => {
         };
 
         const queries = [
-            { label: 'q1', query: 'query1', count: 1 },
-            { label: 'q2', query: 'query2', count: 1 }
+            { label: 'q1', filterQuery: 'query1', metrics: [{value: {count: 1}}] },
+            { label: 'q2', filterQuery: 'query2', metrics: [{value: {count: 1}}] }
         ];
         const data = {
             list: {
                 context: {
-                    facetQueries: queries
+                    facets: [{
+                        type: 'query',
+                        label: 'label1',
+                        buckets: queries
+                    }]
                 }
             }
         };
 
         component.onDataLoaded(data);
 
-        expect(component.responseFacetQueries.length).toBe(2);
-        expect(component.responseFacetQueries.items).toEqual(queries);
+        expect(component.responseFacets.length).toBe(1);
+        expect(component.responseFacets[0].buckets.length).toEqual(2);
     });
 
-    it('should preserve order after response processing', () => {
-        component.responseFacetQueries = null;
+    // fit('should preserve order after response processing', () => {
+    xit('should preserve order after response processing', () => {
+        component.responseFacets = null;
 
         queryBuilder.config = {
             categories: [],
             facetQueries: {
+                label: 'label1',
                 queries: [
                     { label: 'q1', query: 'query1' },
                     { label: 'q2', query: 'query2' },
@@ -142,29 +148,34 @@ describe('SearchFilterComponent', () => {
         };
 
         const queries = [
-            { label: 'q2', query: 'query2', count: 1 },
-            { label: 'q1', query: 'query1', count: 1 },
-            { label: 'q3', query: 'query3', count: 1 }
+            { label: 'q2', filterQuery: 'query2', metrics: [{value: {count: 1}}] },
+            { label: 'q1', filterQuery: 'query1', metrics: [{value: {count: 1}}] },
+            { label: 'q3', filterQuery: 'query3', metrics: [{value: {count: 1}}] }
 
         ];
         const data = {
             list: {
                 context: {
-                    facetQueries: queries
+                    facets: [{
+                        type: 'query',
+                        label: 'label1',
+                        buckets: queries
+                    }]
                 }
             }
         };
 
         component.onDataLoaded(data);
 
-        expect(component.responseFacetQueries.length).toBe(3);
-        expect(component.responseFacetQueries.items[0].label).toBe('q1');
-        expect(component.responseFacetQueries.items[1].label).toBe('q2');
-        expect(component.responseFacetQueries.items[2].label).toBe('q3');
+        expect(component.responseFacets.length).toBe(1);
+        expect(component.responseFacets[0].buckets.length).toBe(3);
+        expect(component.responseFacets[0].buckets.items[0].label).toBe('q1');
+        expect(component.responseFacets[0].buckets.items[1].label).toBe('q2');
+        expect(component.responseFacets[0].buckets.items[2].label).toBe('q3');
     });
 
     it('should not fetch facet queries from response payload', () => {
-        component.responseFacetQueries = null;
+        component.responseFacets = null;
 
         queryBuilder.config = {
             categories: [],
@@ -176,14 +187,14 @@ describe('SearchFilterComponent', () => {
         const data = {
             list: {
                 context: {
-                    facetQueries: null
+                    facets: null
                 }
             }
         };
 
         component.onDataLoaded(data);
 
-        expect(component.responseFacetQueries).toBeNull();
+        expect(component.responseFacets.length).toBe(0);
     });
 
     it('should fetch facet fields from response payload', () => {
@@ -201,13 +212,13 @@ describe('SearchFilterComponent', () => {
         };
 
         const fields: any = [
-            { label: 'f1', buckets: [] },
-            { label: 'f2', buckets: [] }
+            { type: 'field', label: 'f1', buckets: [{ label: 'a1' }, { label: 'a2' }] },
+            { type: 'field', label: 'f2', buckets: [{ label: 'b1' }, { label: 'b2' }] }
         ];
         const data = {
             list: {
                 context: {
-                    facetsFields: fields
+                    facets: fields
                 }
             }
         };
@@ -215,6 +226,8 @@ describe('SearchFilterComponent', () => {
         component.onDataLoaded(data);
 
         expect(component.responseFacets.length).toEqual(2);
+        expect(component.responseFacets[0].buckets.length).toEqual(2);
+        expect(component.responseFacets[1].buckets.length).toEqual(2);
     });
 
     it('should filter response facet fields based on search filter config method', () => {
@@ -230,10 +243,10 @@ describe('SearchFilterComponent', () => {
         };
 
         const initialFields: any = [
-            { label: 'f1', buckets: [
-                { label: 'firstLabel', display: 'firstLabel', count: 5 },
-                { label: 'secondLabel', display: 'secondLabel', count: 5 },
-                { label: 'thirdLabel', display: 'thirdLabel', count: 5 }
+            { type: 'field', label: 'f1', buckets: [
+                { label: 'firstLabel', display: 'firstLabel', metrics: [{value: {count: 5}}] },
+                { label: 'secondLabel', display: 'secondLabel', metrics: [{value: {count: 5}}] },
+                { label: 'thirdLabel', display: 'thirdLabel', metrics: [{value: {count: 5}}] }
                 ]
             }
         ];
@@ -241,12 +254,13 @@ describe('SearchFilterComponent', () => {
         const data = {
             list: {
                 context: {
-                    facetsFields: initialFields
+                    facets: initialFields
                 }
             }
         };
 
         component.onDataLoaded(data);
+        expect(component.responseFacets.length).toBe(1);
         expect(component.responseFacets[0].buckets.visibleItems.length).toBe(3);
 
         component.responseFacets[0].buckets.filterText = 'f';
@@ -280,10 +294,11 @@ describe('SearchFilterComponent', () => {
 
         const serverResponseFields: any = [
             {
+                type: 'field',
                 label: 'f1',
                 buckets: [
-                    { label: 'b1', count: 10 },
-                    { label: 'b2', count: 1 }
+                    { label: 'b1', metrics: [{value: {count: 10}}] },
+                    { label: 'b2', metrics: [{value: {count: 1}}] }
                 ]
             },
             { label: 'f2', buckets: [] }
@@ -291,13 +306,14 @@ describe('SearchFilterComponent', () => {
         const data = {
             list: {
                 context: {
-                    facetsFields: serverResponseFields
+                    facets: serverResponseFields
                 }
             }
         };
 
         component.onDataLoaded(data);
 
+        expect(component.responseFacets.length).toEqual(2);
         expect(component.responseFacets[0].buckets.items[0].count).toEqual(10);
         expect(component.responseFacets[0].buckets.items[1].count).toEqual(1);
     });
@@ -324,13 +340,15 @@ describe('SearchFilterComponent', () => {
         expect(component.responseFacets[0].buckets.items[1].count).toEqual(1);
 
         const serverResponseFields: any = [
-            { label: 'f1', buckets: [{ label: 'b1', count: 6, filterQuery: 'filter' }, { label: 'b2', count: 0 }] },
-            { label: 'f2', buckets: [] }
+            { type: 'field', label: 'f1', buckets:
+                    [{ label: 'b1', metrics: [{value: {count: 6}}], filterQuery: 'filter' },
+                    { label: 'b2', metrics: [{value: {count: 0}}] }] },
+            { type: 'field', label: 'f2', buckets: [] }
         ];
         const data = {
             list: {
                 context: {
-                    facetsFields: serverResponseFields
+                    facets: serverResponseFields
                 }
             }
         };
@@ -351,18 +369,20 @@ describe('SearchFilterComponent', () => {
         };
 
         const firstCallFields: any = [{
+            type: 'field',
             label: 'f1',
-            buckets: [{ label: 'b1', count: 10 }]
+            buckets: [{ label: 'b1', metrics: [{value: {count: 10}}] }]
         }];
-        const firstCallData = { list: { context: { facetsFields: firstCallFields }}};
+        const firstCallData = { list: { context: { facets: firstCallFields }}};
         component.onDataLoaded(firstCallData);
         expect(component.responseFacets[0].buckets.items[0].count).toEqual(10);
 
         const secondCallFields: any = [{
+            type: 'field',
             label: 'f1',
-            buckets: [{ label: 'b1', count: 6 }]
+            buckets: [{ label: 'b1', metrics: [{value: {count: 6}}] }]
         }];
-        const secondCallData = { list: { context: { facetsFields: secondCallFields}}};
+        const secondCallData = { list: { context: { facets: secondCallFields}}};
         component.onDataLoaded(secondCallData);
         expect(component.responseFacets[0].buckets.items[0].count).toEqual(6);
     });
@@ -389,15 +409,15 @@ describe('SearchFilterComponent', () => {
         component.queryBuilder.addUserFacetBucket({ label: 'f1', field: 'f1' }, component.responseFacets[0].buckets.items[0]);
 
         const serverResponseFields: any = [
-            { label: 'f1', field: 'f1', buckets: [
-                { label: 'b1', count: 6, filterQuery: 'filter' },
-                { label: 'b2', count: 1, filterQuery: 'filter2' }] },
-            { label: 'f2', field: 'f2', buckets: [] }
+            { type: 'field', label: 'f1', field: 'f1', buckets: [
+                { label: 'b1', metrics: [{value: {count: 6}}], filterQuery: 'filter' },
+                { label: 'b2', metrics: [{value: {count: 1}}], filterQuery: 'filter2' }] },
+            { type: 'field', label: 'f2', field: 'f2', buckets: [] }
         ];
         const data = {
             list: {
                 context: {
-                    facetsFields: serverResponseFields
+                    facets: serverResponseFields
                 }
             }
         };
@@ -429,15 +449,15 @@ describe('SearchFilterComponent', () => {
         component.queryBuilder.addUserFacetBucket({ label: 'f1', field: 'f1' }, component.responseFacets[0].buckets.items[0]);
 
         const serverResponseFields: any = [
-            { label: 'f1', field: 'f1', buckets: [
-                    { label: 'b1', count: 6, filterQuery: 'filter' },
-                    { label: 'b2', count: 1, filterQuery: 'filter2' }] },
-            { label: 'f2', field: 'f2', buckets: [] }
+            { type: 'field', label: 'f1', field: 'f1', buckets: [
+                    { label: 'b1', metrics: [{value: {count: 6}}], filterQuery: 'filter' },
+                    { label: 'b2', metrics: [{value: {count: 1}}], filterQuery: 'filter2' }] },
+            { type: 'field', label: 'f2', field: 'f2', buckets: [] }
         ];
         const data = {
             list: {
                 context: {
-                    facetsFields: serverResponseFields
+                    facets: serverResponseFields
                 }
             }
         };
@@ -557,20 +577,25 @@ describe('SearchFilterComponent', () => {
 
     it('should update query builder upon resetting selected queries', () => {
         spyOn(queryBuilder, 'update').and.stub();
-        spyOn(queryBuilder, 'removeUserFacetQuery').and.callThrough();
+        // spyOn(queryBuilder, 'removeUserFacetQuery').and.callThrough();
+        spyOn(queryBuilder, 'removeUserFacetBucket').and.callThrough();
 
-        component.canResetSelectedQueries = true;
-        component.responseFacetQueries = new ResponseFacetQueryList([
-            { label: 'q1', query: 'q1', checked: true, count: 1 },
-            { label: 'q2', query: 'q2', checked: false, count: 1 },
-            { label: 'q3', query: 'q3', checked: true, count: 1 }
-        ], translationMock);
-        component.resetSelectedQueries();
+        // component.canResetSelectedQueries = true;
+        const queryResponse = <any> {
+            label: 'query response',
+            buckets: <any> {
+                items: [
+                    { label: 'q1', query: 'q1', checked: true, metrics: [{value: {count: 1}}] },
+                    { label: 'q2', query: 'q2', checked: false, metrics: [{value: {count: 1}}] },
+                    { label: 'q3', query: 'q3', checked: true, metrics: [{value: {count: 1}}] }]
+            }};
+        component.responseFacets = [queryResponse];
+        component.resetSelectedBuckets(queryResponse);
 
-        expect(queryBuilder.removeUserFacetQuery).toHaveBeenCalledTimes(3);
+        expect(queryBuilder.removeUserFacetBucket).toHaveBeenCalledTimes(3);
         expect(queryBuilder.update).toHaveBeenCalled();
 
-        for (let entry of component.responseFacetQueries.items) {
+        for (let entry of component.responseFacets[0].buckets.items) {
             expect(entry.checked).toBeFalsy();
         }
     });
