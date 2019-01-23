@@ -39,12 +39,12 @@ describe('Start Task', () => {
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    const appName = 'task-app';
+    const appName = 'simple-app';
     let silentLogin;
 
     beforeAll((done) => {
         silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, silentLogin);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
         loginSSOPage.clickOnSSOButton();
         loginSSOPage.loginAPS(user, password);
         navigationBarPage.navigateToProcessServicesCloudPage();
@@ -96,7 +96,18 @@ describe('Start Task', () => {
         startTask.addDueDate('invalid date')
                  .blur(startTask.dueDate)
                  .validateDate(dateValidationError)
-                 .checkStartButtonIsDisabled();
+                 .checkStartButtonIsDisabled()
+                 .clickCancelButton();
+    });
+
+    it('[C290182] Should be possible to assign the task to another user (ADF-3828 issue)', () => {
+        tasksCloudDemoPage.openNewTaskForm();
+        startTask.addName(standaloneTaskName)
+                 .addAssignee('devops user')
+                 .clickStartButton();
+        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(standaloneTaskName);
     });
 
 });
