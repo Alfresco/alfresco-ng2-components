@@ -337,10 +337,6 @@ describe('Lock File', () => {
         });
 
         it('[C286617] Owner of the locked file should be able to delete if Allow owner to modify is checked', () => {
-            loginPage.loginToContentServicesUsingUserModel(adminUser);
-
-            navigationBarPage.openContentServicesFolder(documentLibrary);
-
             contentList.lockContent(pngFileToLock.name);
 
             lockFilePage.checkLockFileCheckboxIsDisplayed();
@@ -348,7 +344,7 @@ describe('Lock File', () => {
             lockFilePage.clickAllowOwnerCheckbox();
             lockFilePage.clickSaveButton();
 
-            contentList.deleteContent(pngFileToBeLocked.entry.name);
+            contentList.deleteContentWithRoot(pngFileToBeLocked.entry.name);
             contentList.checkContentIsNotDisplayed(pngFileToBeLocked.entry.name);
         });
 

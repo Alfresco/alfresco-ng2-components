@@ -119,6 +119,12 @@ export class ContentListPage {
         this.deleteContentElement.click();
     }
 
+    deleteContentWithRoot(content) {
+        this.clickOnActionMenuWithRoot(content);
+        this.waitForContentOptions();
+        this.deleteContentElement.click();
+    }
+
     checkDeleteIsDisabled(content) {
         this.clickOnActionMenu(content);
         this.waitForContentOptions();
