@@ -32,10 +32,6 @@ export class TaskQueryCloudRequestModel {
     priority?: number;
     processDefinitionId?: string;
     processInstanceId?: string;
-    serviceFullName?: string;
-    serviceName?: string;
-    serviceType?: string;
-    serviceVersion?: string;
     status?: string;
     maxItems: number;
     skipCount: number;
@@ -57,10 +53,6 @@ export class TaskQueryCloudRequestModel {
             this.priority = obj.priority;
             this.processDefinitionId = obj.processDefinitionId;
             this.processInstanceId = obj.processInstanceId;
-            this.serviceFullName = obj.serviceFullName;
-            this.serviceName = obj.serviceName;
-            this.serviceType = obj.serviceType;
-            this.serviceVersion = obj.serviceVersion;
             this.status = obj.status;
             this.maxItems = obj.maxItems;
             this.skipCount = obj.skipCount;

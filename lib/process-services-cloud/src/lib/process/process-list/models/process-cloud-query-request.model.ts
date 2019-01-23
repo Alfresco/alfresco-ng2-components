@@ -26,10 +26,6 @@ export class ProcessQueryCloudRequestModel {
    name?: string;
    processDefinitionId?: string;
    processDefinitionKey?: string;
-   serviceFullName?: string;
-   serviceName?: string;
-   serviceType?: string;
-   serviceVersion?: string;
    status?: string;
    startDate?: string;
    businessKey?: string;
@@ -49,10 +45,6 @@ export class ProcessQueryCloudRequestModel {
            this.name = obj.name;
            this.processDefinitionId = obj.processDefinitionId;
            this.processDefinitionKey = obj.processDefinitionKey;
-           this.serviceFullName = obj.serviceFullName;
-           this.serviceName = obj.serviceName;
-           this.serviceType = obj.serviceType;
-           this.serviceVersion = obj.serviceVersion;
            this.status = obj.status;
            this.startDate = obj.startDate;
            this.businessKey = obj.businessKey;

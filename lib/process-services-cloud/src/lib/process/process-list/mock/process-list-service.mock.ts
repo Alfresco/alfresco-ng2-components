@@ -22,12 +22,8 @@ export const fakeProcessCloudList = {
         entries: [
             {
                 entry: {
-                    serviceName: 'simple-app-rb',
-                    serviceFullName: 'simple-app-rb',
-                    serviceVersion: '',
                     appName: 'easy-peasy-japanesey',
                     appVersion: '',
-                    serviceType: null,
                     id: '69eddfa7-d781-11e8-ae24-0a58646001fa',
                     name: 'starring',
                     description: null,
@@ -44,12 +40,8 @@ export const fakeProcessCloudList = {
             },
             {
                 entry: {
-                    serviceName: 'simple-app-rb',
-                    serviceFullName: 'simple-app-rb',
-                    serviceVersion: '',
                     appName: 'easy-peasy-japanesey',
                     appVersion: '',
-                    serviceType: null,
                     id: '8b3f625f-d781-11e8-ae24-0a58646001fa',
                     name: null,
                     description: null,
@@ -66,12 +58,8 @@ export const fakeProcessCloudList = {
             },
             {
                 entry: {
-                    serviceName: 'simple-app-rb',
-                    serviceFullName: 'simple-app-rb',
-                    serviceVersion: '',
                     appName: 'easy-peasy-japanesey',
                     appVersion: '',
-                    serviceType: null,
                     id: '87c12637-d783-11e8-ae24-0a58646001fa',
                     name: null,
                     description: null,

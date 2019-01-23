@@ -67,22 +67,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     processDefinitionKey: string = '';
 
-    /** Filter the processes to display only the ones with this serviceFullName value. */
-    @Input()
-    serviceFullName: string = '';
-
-    /** Filter the processes to display only the ones with this serviceName value. */
-    @Input()
-    serviceName: string = '';
-
-    /** Filter the processes to display only the ones with this serviceType value. */
-    @Input()
-    serviceType: string = '';
-
-    /** Filter the processes to display only the ones with this serviceVersion value. */
-    @Input()
-    serviceVersion: string = '';
-
     /** Filter the processes to display only the ones with this status. */
     @Input()
     status: string = '';
@@ -282,10 +266,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             name: this.name,
             processDefinitionId: this.processDefinitionId,
             processDefinitionKey: this.processDefinitionKey,
-            serviceFullName: this.serviceFullName,
-            serviceName: this.serviceName,
-            serviceType: this.serviceType,
-            serviceVersion: this.serviceVersion,
             status: this.status,
             businessKey: this.businessKey,
             sorting: this.sorting

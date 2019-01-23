@@ -19,12 +19,8 @@ import { TaskDetailsCloudModel } from '../../start-task/models/task-details-clou
 
 export const taskDetailsCloudMock = new TaskDetailsCloudModel(
     {
-        'serviceName': 'task-app-rb',
-        'serviceFullName': 'task-app-rb',
-        'serviceVersion': '',
         'appName': 'task-app',
         'appVersion': '',
-        'serviceType': null,
         'id': '68d54a8f-01f3-11e9-8e36-0a58646002ad',
         'assignee': 'Wilbur Adams',
         'name': 'This is a new task ',
