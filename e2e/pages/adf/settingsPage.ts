@@ -17,7 +17,7 @@
 
 import TestConfig = require('../../test.config');
 import { Util } from '../../util/util';
-import {element, by, browser, protractor} from 'protractor';
+import { element, by, browser, protractor } from 'protractor';
 
 export class SettingsPage {
 
