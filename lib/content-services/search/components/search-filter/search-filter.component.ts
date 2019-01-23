@@ -38,7 +38,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private DEFAULT_PAGE_SIZE = 5;
 
     isAlive = true;
-    responseFacetFields: FacetField[] = null;
+    responseFacets: FacetField[] = null;
 
     private facetQueriesPageSize = this.DEFAULT_PAGE_SIZE;
     facetQueriesLabel: string = 'Facet Queries';
@@ -82,9 +82,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     }
 
     private updateSelectedBuckets() {
-        if (this.responseFacetFields) {
+        if (this.responseFacets) {
             this.selectedBuckets = [];
-            for (let field of this.responseFacetFields) {
+            for (let field of this.responseFacets) {
                 if (field.buckets) {
                     this.selectedBuckets.push(
                         ...this.queryBuilder.getUserFacetBuckets(field.field)
@@ -150,45 +150,20 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         const context = data.list.context;
 
         if (context) {
-            this.parseFacetFields(context);
+            this.parseFacets(context);
         } else {
-            this.responseFacetFields = null;
+            this.responseFacets = null;
         }
     }
 
-    private parseFacetFields(context: ResultSetContext) {
-        if (!this.responseFacetFields) {
-            const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
-
-            this.responseFacetFields = configFacetFields.map((field) => {
-                const responseField = (context.facets || []).find((response) => response.label === field.label);
-                const responseBuckets = this.getResponseBuckets(responseField);
-
-                const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
-                bucketList.filter = (bucket: FacetFieldBucket): boolean => {
-                    if (bucket && bucketList.filterText) {
-                        const pattern = (bucketList.filterText || '').toLowerCase();
-                        const label = (this.translationService.instant(bucket.display) || this.translationService.instant(bucket.label)).toLowerCase();
-                        return this.queryBuilder.config.filterWithContains ? label.indexOf(pattern) !== -1 : label.startsWith(pattern);
-                    }
-                    return true;
-                };
-
-                return <FacetField> {
-                    ...field,
-                    label: field.label,
-                    pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
-                    currentPageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
-                    buckets: bucketList
-                };
-            });
-
+    private parseFacets(context: ResultSetContext) {
+        if (!this.responseFacets) {
+            const responseFacetFields = this.parseFacetFields(context);
             const responseGroupedFacetQueries = this.parseFacetQueries(context);
-            this.responseFacetFields = this.responseFacetFields.concat(...responseGroupedFacetQueries);
+            this.responseFacets = responseFacetFields.concat(...responseGroupedFacetQueries);
 
         } else {
-
-            this.responseFacetFields = this.responseFacetFields
+            this.responseFacets = this.responseFacets
                 .map((field) => {
 
                     let responseField = (context.facets || []).find((response) => response.label === field.label);
@@ -237,6 +212,33 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         });
 
         return result;
+    }
+
+    private parseFacetFields(context: any): FacetField[] {
+        const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
+
+        return configFacetFields.map((field) => {
+            const responseField = (context.facets || []).find((response) => response.label === field.label);
+            const responseBuckets = this.getResponseBuckets(responseField);
+
+            const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
+            bucketList.filter = (bucket: FacetFieldBucket): boolean => {
+                if (bucket && bucketList.filterText) {
+                    const pattern = (bucketList.filterText || '').toLowerCase();
+                    const label = (this.translationService.instant(bucket.display) || this.translationService.instant(bucket.label)).toLowerCase();
+                    return this.queryBuilder.config.filterWithContains ? label.indexOf(pattern) !== -1 : label.startsWith(pattern);
+                }
+                return true;
+            };
+
+            return <FacetField> {
+                ...field,
+                label: field.label,
+                pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
+                currentPageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
+                buckets: bucketList
+            };
+        });
     }
 
     private getResponseBuckets(responseField): FacetFieldBucket[] {

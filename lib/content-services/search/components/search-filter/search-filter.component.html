@@ -16,8 +16,8 @@
         </adf-search-widget-container>
     </mat-expansion-panel>
 
-    <ng-container *ngIf="responseFacetFields">
-        <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+field.label" *ngFor="let field of responseFacetFields"
+    <ng-container *ngIf="responseFacets">
+        <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+field.label" *ngFor="let field of responseFacets"
                              [expanded]="facetFieldsExpanded">
             <mat-expansion-panel-header>
                 <mat-panel-title>{{ field.label | translate }}</mat-panel-title>
