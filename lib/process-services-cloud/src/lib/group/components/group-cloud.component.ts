@@ -48,7 +48,7 @@ export class GroupCloudComponent implements OnInit {
 
     /** Name of the application. If specified this shows the users who have access to the app. */
     @Input()
-    applicationName: string;
+    appName: string;
 
     /** User selection mode (single/multiple). */
     @Input()
@@ -97,14 +97,14 @@ export class GroupCloudComponent implements OnInit {
         this.loadPreSelectGroups();
         this.initSearch();
 
-        if (this.applicationName) {
+        if (this.appName) {
             this.disableSearch();
             this.loadClientId();
         }
     }
 
     private async loadClientId() {
-        this.clientId = await this.groupService.getClientIdByApplicationName(this.applicationName).toPromise();
+        this.clientId = await this.groupService.getClientIdByApplicationName(this.appName).toPromise();
         if (this.clientId) {
             this.enableSearch();
         }

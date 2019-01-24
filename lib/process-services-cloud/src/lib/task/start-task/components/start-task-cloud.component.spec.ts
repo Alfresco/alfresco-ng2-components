@@ -125,7 +125,7 @@ describe('StartTaskCloudComponent', () => {
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const taskRequest = new TaskDetailsCloudModel({ name: 'fakeName', assignee: 'currentUser'});
+                const taskRequest = new TaskDetailsCloudModel({ name: 'fakeName', assignee: 'currentUser', candidateGroups: []});
                 expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest);
             });
         }));
@@ -137,7 +137,7 @@ describe('StartTaskCloudComponent', () => {
             createTaskButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const taskRequest = new TaskDetailsCloudModel({ name: 'fakeName', assignee: 'currentUser'});
+                const taskRequest = new TaskDetailsCloudModel({ name: 'fakeName', assignee: 'currentUser', candidateGroups: []});
                 expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest);
             });
         }));

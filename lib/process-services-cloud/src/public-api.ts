@@ -19,3 +19,4 @@ export * from './lib/process-services-cloud.module';
 export * from './lib/app/public-api';
 export * from './lib/process/public-api';
 export * from './lib/task/public-api';
+export * from './lib/group/public-api';
