@@ -277,13 +277,7 @@ describe('Content Services Viewer', () => {
        viewerPage.clickLeftSidebarButton();
        viewerPage.checkLeftSideBarIsDisplayed();
        viewerPage.enableMoreActionsMenu();
-       viewerPage.checkCloseButtonIsDisplayed();
-       expect(viewerPage.buttonList.count()).toBe(5);
-       expect(viewerPage.buttonList.get(0).getAttribute('title')).toEqual(viewerPage.downloadButton.getAttribute('title'));
-       expect(viewerPage.buttonList.get(1).getAttribute('title')).toEqual(viewerPage.printButton.getAttribute('title'));
-       expect(viewerPage.buttonList.get(2).getAttribute('title')).toEqual(viewerPage.fullScreenButton.getAttribute('title'));
-       expect(viewerPage.buttonList.get(3).getAttribute('title')).toEqual(viewerPage.infoButton.getAttribute('title'));
-       expect(viewerPage.buttonList.get(4).getAttribute('title')).toEqual(viewerPage.moreActionsMenu.getAttribute('title'));
+       viewerPage.checkButtonOrderInViewerToolbar();
        viewerPage.clickCloseButton();
     });
 

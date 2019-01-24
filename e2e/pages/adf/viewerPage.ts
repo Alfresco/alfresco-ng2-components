@@ -186,6 +186,16 @@ export class ViewerPage {
         Util.waitUntilElementIsVisible(this.closeButton);
     }
 
+    checkButtonOrderInViewerToolbar() {
+        this.checkToolbarIsDisplayed();
+        expect(this.buttonList.count()).toBe(5);
+        expect(this.buttonList.get(0).getAttribute('title')).toEqual(this.downloadButton.getAttribute('title'));
+        expect(this.buttonList.get(1).getAttribute('title')).toEqual(this.printButton.getAttribute('title'));
+        expect(this.buttonList.get(2).getAttribute('title')).toEqual(this.fullScreenButton.getAttribute('title'));
+        expect(this.buttonList.get(3).getAttribute('title')).toEqual(this.infoButton.getAttribute('title'));
+        expect(this.buttonList.get(4).getAttribute('title')).toEqual(this.moreActionsMenu.getAttribute('title'));
+    }
+
     checkDownloadButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.downloadButton);
     }
