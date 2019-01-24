@@ -22,12 +22,8 @@ export const fakeTaskCloudList = {
         entries: [
             {
                 entry: {
-                    serviceName: 'maurizio-test-rb',
-                    serviceFullName: 'maurizio-test-rb',
-                    serviceVersion:  '',
                     appName: 'save-the-cheerleader',
                     appVersion: '',
-                    serviceType: null,
                     id: '890b0e1c-c252-11e8-b5c5-0a58646004c7',
                     assignee: null,
                     name: 'SimpleStandaloneTask',
@@ -50,12 +46,8 @@ export const fakeTaskCloudList = {
             },
             {
                 entry: {
-                    serviceName: 'maurizio-test-rb',
-                    serviceFullName: 'maurizio-test-rb',
-                    serviceVersion:  '',
                     appName: 'save-the-cheerleader',
                     appVersion: '',
-                    serviceType: null,
                     id: '8962cb0e-c252-11e8-b5c5-0a58646004c7',
                     assignee: null,
                     name: 'SimpleStandaloneTask',
@@ -92,12 +84,8 @@ export let fakeGlobalTask = {
         entries: [
             {
                 entry: {
-                    serviceName: 'test-ciprian2-rb',
-                    serviceFullName: 'test-ciprian2-rb',
-                    serviceVersion: '',
                     appName: 'test-ciprian2',
                     appVersion: '',
-                    serviceType: null,
                     id: '11fe013d-c263-11e8-b75b-0a5864600540',
                     assignee: null,
                     name: 'standalone-subtask',

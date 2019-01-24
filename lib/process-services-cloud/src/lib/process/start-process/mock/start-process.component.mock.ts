@@ -22,10 +22,6 @@ import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model
 export let fakeProcessInstance = new ProcessInstanceCloud({
     appName: 'simple-app',
     appVersion: '',
-    serviceName: 'simple-app-rb',
-    serviceFullName: 'simple-app-rb',
-    serviceType: 'runtime-bundle',
-    serviceVersion: '',
     id: 'd0b30377-dc5a-11e8-ae24-0a58646001fa',
     name: 'My Process Name',
     startDate: '2018-10-30T15:45:24.136+0000',
@@ -41,22 +37,14 @@ export let fakeProcessDefinitions: ProcessDefinitionCloud[] = [
         appVersion: 0,
         id: 'NewProcess:1',
         key: 'NewProcess 1',
-        name: 'NewProcess 1',
-        serviceFullName: 'myApp-rb',
-        serviceName: 'myApp-rb',
-        serviceType: 'runtime-bundle',
-        serviceVersion: null
+        name: 'NewProcess 1'
     }),
     new ProcessDefinitionCloud({
         appName: 'myApp',
         appVersion: 0,
         id: 'NewProcess:2',
         key: 'NewProcess 2',
-        name: 'NewProcess 2',
-        serviceFullName: 'myApp-rb',
-        serviceName: 'myApp-rb',
-        serviceType: 'runtime-bundle',
-        serviceVersion: null
+        name: 'NewProcess 2'
     })
 ];
 

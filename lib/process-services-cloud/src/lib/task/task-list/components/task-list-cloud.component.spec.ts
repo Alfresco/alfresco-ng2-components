@@ -133,12 +133,8 @@ describe('TaskListCloudComponent', () => {
             expect(component.rows).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.rows.length).toEqual(1);
-            expect(component.rows[0].entry['serviceName']).toEqual('test-ciprian2-rb');
-            expect(component.rows[0].entry['serviceFullName']).toEqual('test-ciprian2-rb');
-            expect(component.rows[0].entry['serviceVersion']).toBe('');
             expect(component.rows[0].entry['appName']).toBe('test-ciprian2');
             expect(component.rows[0].entry['appVersion']).toBe('');
-            expect(component.rows[0].entry['serviceType']).toBeNull();
             expect(component.rows[0].entry['id']).toBe('11fe013d-c263-11e8-b75b-0a5864600540');
             expect(component.rows[0].entry['assignee']).toBeNull();
             expect(component.rows[0].entry['name']).toEqual('standalone-subtask');
