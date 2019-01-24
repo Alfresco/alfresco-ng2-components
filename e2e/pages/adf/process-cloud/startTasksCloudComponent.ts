@@ -57,6 +57,7 @@ export class StartTasksCloudComponent {
 
     addAssignee(name) {
         Util.waitUntilElementIsVisible(this.assignee);
+        this.assignee.clear();
         this.assignee.sendKeys(name);
         this.selectAssigneeFromList(name);
         return this;
