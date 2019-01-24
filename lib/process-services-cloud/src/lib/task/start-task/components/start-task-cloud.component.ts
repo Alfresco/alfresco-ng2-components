@@ -142,8 +142,8 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     public saveTask() {
         this.submitted = true;
         const newTask = Object.assign(this.taskForm.value);
-        newTask.appName = this.getAppName();
-        newTask.dueDate = this.getDueDate();
+        newTask.appName = this.appName;
+        newTask.dueDate = this.dueDate;
         newTask.assignee = this.assigneeName;
         this.createNewTask(new TaskDetailsCloudModel(newTask));
     }
@@ -166,14 +166,6 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.cancel.emit();
     }
 
-    private getDueDate(): Date {
-        return this.dueDate;
-    }
-
-    private getAppName(): string {
-        return this.appName ? this.appName : '';
-    }
-
     onDateChanged(newDateValue) {
         this.dateError = false;
 
@@ -189,8 +181,8 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.assigneeName = assignee ? assignee.username : '';
     }
 
-    onRemoveUser() {
-        this.assigneeName = null;
+    onAssigneeRemove() {
+        this.assigneeName = '';
     }
 
     public whitespaceValidator(control: FormControl) {
