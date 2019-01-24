@@ -146,6 +146,10 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
     }
 
+    shouldExpand(field: FacetField): boolean {
+        return field.type === 'query' ? this.facetQueriesExpanded : this.facetFieldsExpanded;
+    }
+
     onDataLoaded(data: any) {
         const context = data.list.context;
 
@@ -179,6 +183,34 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                     return field;
                 });
         }
+    }
+
+    private parseFacetFields(context: ResultSetContext): FacetField[] {
+        const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
+
+        return configFacetFields.map((field) => {
+            const responseField = (context.facets || []).find((response) => response.type === 'field' && response.label === field.label);
+            const responseBuckets = this.getResponseBuckets(responseField);
+
+            const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
+            bucketList.filter = (bucket: FacetFieldBucket): boolean => {
+                if (bucket && bucketList.filterText) {
+                    const pattern = (bucketList.filterText || '').toLowerCase();
+                    const label = (this.translationService.instant(bucket.display) || this.translationService.instant(bucket.label)).toLowerCase();
+                    return this.queryBuilder.config.filterWithContains ? label.indexOf(pattern) !== -1 : label.startsWith(pattern);
+                }
+                return true;
+            };
+
+            return <FacetField> {
+                ...field,
+                type: responseField.type,
+                label: field.label,
+                pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
+                currentPageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
+                buckets: bucketList
+            };
+        });
     }
 
     private parseFacetQueries(context: ResultSetContext): FacetField[] {
@@ -222,34 +254,6 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         return result;
     }
 
-    private parseFacetFields(context: ResultSetContext): FacetField[] {
-        const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
-
-        return configFacetFields.map((field) => {
-            const responseField = (context.facets || []).find((response) => response.type === 'field' && response.label === field.label);
-            const responseBuckets = this.getResponseBuckets(responseField);
-
-            const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
-            bucketList.filter = (bucket: FacetFieldBucket): boolean => {
-                if (bucket && bucketList.filterText) {
-                    const pattern = (bucketList.filterText || '').toLowerCase();
-                    const label = (this.translationService.instant(bucket.display) || this.translationService.instant(bucket.label)).toLowerCase();
-                    return this.queryBuilder.config.filterWithContains ? label.indexOf(pattern) !== -1 : label.startsWith(pattern);
-                }
-                return true;
-            };
-
-            return <FacetField> {
-                ...field,
-                type: responseField.type,
-                label: field.label,
-                pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
-                currentPageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
-                buckets: bucketList
-            };
-        });
-    }
-
     private getResponseBuckets(responseField: GenericFacetResponse): FacetFieldBucket[] {
         return ((responseField && responseField.buckets) || []).map((respBucket) => {
 
@@ -281,9 +285,5 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private getCountValue(bucket: GenericBucket): number {
         return (!!bucket && !!bucket.metrics && bucket.metrics[0] && bucket.metrics[0].value && bucket.metrics[0].value.count)
             || 0;
-    }
-
-    shouldExpand(field: FacetField): boolean {
-        return field.type === 'query' ? this.facetQueriesExpanded : this.facetFieldsExpanded;
     }
 }

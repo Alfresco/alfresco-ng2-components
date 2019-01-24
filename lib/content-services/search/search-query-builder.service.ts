@@ -255,6 +255,10 @@ export class SearchQueryBuilderService {
         return [];
     }
 
+    getQueryGroup(query) {
+        return query.group || this.config.facetQueries.label || 'Facet Queries';
+    }
+
     /**
      * Checks if FacetQueries has been defined
      * @returns True if defined, false otherwise
@@ -288,10 +292,6 @@ export class SearchQueryBuilderService {
         }
 
         return null;
-    }
-
-    getQueryGroup(query) {
-        return query.group || this.config.facetQueries.label || 'Facet Queries';
     }
 
     protected getFinalQuery(): string {
