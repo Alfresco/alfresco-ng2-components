@@ -31,7 +31,7 @@ describe('Settings component', () => {
         'password': TestConfig.adf.adminPassword
     });
 
-    describe('Settings component', () => {
+    describe('Should be able to change Urls in the Settings', () => {
         beforeEach( (done) => {
             settingsPage.goToSettingsPage();
             done();
