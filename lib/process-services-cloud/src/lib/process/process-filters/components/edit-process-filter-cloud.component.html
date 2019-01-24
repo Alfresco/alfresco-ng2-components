@@ -4,7 +4,7 @@
             <mat-panel-title fxLayoutAlign="space-between center" id="adf-edit-process-filter-title-id">{{processFilter.name | translate}}</mat-panel-title>
             <mat-panel-description fxLayoutAlign="space-between center" id="adf-edit-process-filter-sub-title-id">
                 <span *ngIf="showTitle"> {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}</span>
-                <div *ngIf="showActions()" class="adf-cloud-edit-task-filter-actions">
+                <div *ngIf="showActions()" class="adf-cloud-edit-process-filter-actions">
                     <ng-container *ngIf="toggleFilterActions">
                         <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE' | translate}}" [disabled]="!formHasBeenChanged" id="adf-save-id" (click)="onSave()">
                             <mat-icon>save</mat-icon>
@@ -22,24 +22,24 @@
         <form [formGroup]="editProcessFilterForm">
             <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">
             <ng-container *ngFor="let processFilterProperty of processFilterProperties">
-                <mat-form-field fxFlex="23%" *ngIf="isSelectType(processFilterProperty)">
+                <mat-form-field fxFlex="23%" *ngIf="isSelectType(processFilterProperty)" [attr.data-automation-id]="processFilterProperty.key">
                     <mat-select
                         placeholder="{{processFilterProperty.label | translate}}"
                         [formControlName]="processFilterProperty.key"
                         [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
-                        <mat-option *ngFor="let propertyOption of processFilterProperty.options" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-task-property-options' + processFilterProperty.key">
+                        <mat-option *ngFor="let propertyOption of processFilterProperty.options" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options' + processFilterProperty.key">
                             {{ propertyOption.label }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field fxFlex="23%" *ngIf="isTextType(processFilterProperty)">
+                <mat-form-field fxFlex="23%" *ngIf="isTextType(processFilterProperty)" [attr.data-automation-id]="processFilterProperty.key">
                     <input matInput
                     [formControlName]="processFilterProperty.key"
                     type="text"
                     placeholder="{{processFilterProperty.label | translate}}"
                     [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"/>
                 </mat-form-field>
-                <mat-form-field fxFlex="23%" *ngIf="isDateType(processFilterProperty)">
+                <mat-form-field fxFlex="23%" *ngIf="isDateType(processFilterProperty)" [attr.data-automation-id]="processFilterProperty.key">
                     <mat-label>{{processFilterProperty.label | translate}}</mat-label>
                         <input
                             matInput
