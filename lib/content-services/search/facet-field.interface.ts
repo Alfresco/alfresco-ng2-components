@@ -30,4 +30,5 @@ export interface FacetField {
     pageSize?: number;
     currentPageSize?: number;
     checked?: boolean;
+    type?: string;
 }

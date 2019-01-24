@@ -18,7 +18,7 @@
 
     <ng-container *ngIf="responseFacets">
         <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+field.label" *ngFor="let field of responseFacets"
-                             [expanded]="facetFieldsExpanded">
+                             [expanded]="shouldExpand(field)">
             <mat-expansion-panel-header>
                 <mat-panel-title>{{ field.label | translate }}</mat-panel-title>
             </mat-expansion-panel-header>

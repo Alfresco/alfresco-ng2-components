@@ -210,6 +210,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             };
 
             result.push(<FacetField> {
+                type: responseField.type,
                 field: group,
                 label: group,
                 pageSize: this.DEFAULT_PAGE_SIZE,
@@ -240,6 +241,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
             return <FacetField> {
                 ...field,
+                type: responseField.type,
                 label: field.label,
                 pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
                 currentPageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
@@ -279,5 +281,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private getCountValue(bucket): number {
         return (!!bucket && !!bucket.metrics && bucket.metrics[0] && bucket.metrics[0].value && bucket.metrics[0].value.count)
             || 0;
+    }
+
+    shouldExpand(field) {
+        return field.type === 'query' ? this.facetQueriesExpanded : this.facetFieldsExpanded;
     }
 }
