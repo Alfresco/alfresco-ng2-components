@@ -300,7 +300,7 @@ describe('SearchFilterComponent', () => {
                     { label: 'b2', metrics: [{value: {count: 1}}] }
                 ]
             },
-            { label: 'f2', buckets: [] }
+            { type: 'field', label: 'f2', buckets: [] }
         ];
         const data = {
             list: {
@@ -311,7 +311,6 @@ describe('SearchFilterComponent', () => {
         };
 
         component.onDataLoaded(data);
-
         expect(component.responseFacets.length).toEqual(2);
         expect(component.responseFacets[0].buckets.items[0].count).toEqual(10);
         expect(component.responseFacets[0].buckets.items[1].count).toEqual(1);
@@ -330,11 +329,10 @@ describe('SearchFilterComponent', () => {
         };
 
         const initialFields: any = [
-            { label: 'f1', buckets: { items: [{ label: 'b1', count: 10, filterQuery: 'filter' }, { label: 'b2', count: 1 }]} },
-            { label: 'f2', buckets: [] }
+            { type: 'field', label: 'f1', buckets: { items: [{ label: 'b1', count: 10, filterQuery: 'filter' }, { label: 'b2', count: 1 }]} },
+            { type: 'field', label: 'f2', buckets: [] }
         ];
         component.responseFacets = initialFields;
-
         expect(component.responseFacets[0].buckets.items[0].count).toEqual(10);
         expect(component.responseFacets[0].buckets.items[1].count).toEqual(1);
 
@@ -353,7 +351,6 @@ describe('SearchFilterComponent', () => {
         };
 
         component.onDataLoaded(data);
-
         expect(component.responseFacets[0].buckets.items[0].count).toEqual(6);
         expect(component.responseFacets[0].buckets.items[1].count).toEqual(0);
     });
