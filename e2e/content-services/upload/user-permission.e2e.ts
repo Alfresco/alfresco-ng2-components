@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
+import { browser } from 'protractor';
 
 import { Util } from '../../util/util';
 
@@ -34,7 +34,6 @@ import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 
 import AlfrescoApi = require('alfresco-js-api-node');
-import { DropActions } from '../../actions/drop.actions';
 import CONSTANTS = require('../../util/constants');
 
 describe('Upload - User permission', () => {
@@ -121,11 +120,8 @@ describe('Upload - User permission', () => {
         it('[C212861] Should not be allowed to Drag and drop a file/folder in a folder with consumer permissions', () => {
             contentServicesPage.checkDragAndDropDIsDisplayed();
 
-            let dragAndDrop = new DropActions();
-            let dragAndDropArea = contentServicesPage.dragAndDrop;
-
-            dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
-            dragAndDrop.dropFolder(dragAndDropArea, folder.location);
+            contentServicesPage.dragAndDropFile(emptyFile.location);
+            contentServicesPage.dragAndDropFolder(folder.location);
 
             contentServicesPage.checkContentIsDisplayed(emptyFile.name);
             contentServicesPage.checkContentIsDisplayed(folder.name);
@@ -134,8 +130,8 @@ describe('Upload - User permission', () => {
 
             browser.sleep(3000);
 
-            dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
-            dragAndDrop.dropFolder(dragAndDropArea, folder.location);
+            contentServicesPage.dragAndDropFile(emptyFile.location);
+            contentServicesPage.dragAndDropFolder(folder.location);
 
             let fileInTheUploadedFolder = 'share_profile_pic.png';
 
@@ -147,14 +143,11 @@ describe('Upload - User permission', () => {
         });
 
         it('[C291921] Should display tooltip for uploading files without permissions', () => {
-            let dragAndDrop = new DropActions();
-            let dragAndDropArea = contentServicesPage.dragAndDrop;
-
             navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
             contentServicesPage.checkDragAndDropDIsDisplayed();
 
-            dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
+            contentServicesPage.dragAndDropFile(emptyFile.location);
 
             uploadDialog.fileIsError(emptyFile.name);
 
@@ -215,12 +208,8 @@ describe('Upload - User permission', () => {
         it('[C260130] Should be allowed to Drag and drop a file/folder in a folder with manager permissions', () => {
             contentServicesPage.checkDragAndDropDIsDisplayed();
 
-            let dragAndDrop = new DropActions();
-
-            let dragAndDropArea = element.all(by.css('adf-upload-drag-area div')).first();
-
-            dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
-            dragAndDrop.dropFolder(dragAndDropArea, folder.location);
+            contentServicesPage.dragAndDropFile(emptyFile.location);
+            contentServicesPage.dragAndDropFolder(folder.location);
 
             let fileInTheUploadedFolder = 'share_profile_pic.png';
 
