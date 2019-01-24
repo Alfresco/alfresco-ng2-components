@@ -44,7 +44,7 @@ describe('Start Task', () => {
 
     beforeAll((done) => {
         silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, silentLogin);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
         loginSSOPage.clickOnSSOButton();
         loginSSOPage.loginAPS(user, password);
         navigationBarPage.navigateToProcessServicesCloudPage();
@@ -96,7 +96,18 @@ describe('Start Task', () => {
         startTask.addDueDate('invalid date')
                  .blur(startTask.dueDate)
                  .validateDate(dateValidationError)
-                 .checkStartButtonIsDisabled();
+                 .checkStartButtonIsDisabled()
+                 .clickCancelButton();
+    });
+
+    it('[C290182] Should be possible to assign the task to another user', () => {
+        tasksCloudDemoPage.openNewTaskForm();
+        startTask.addName(standaloneTaskName)
+                 .addAssignee('User')
+                 .clickStartButton();
+        tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
+        expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(standaloneTaskName);
     });
 
 });
