@@ -188,8 +188,15 @@ export class ContentServicesPage {
     checkElementsSortedAsc(elements) {
         let sorted = true;
         let i = 0;
+        let compareNumbers = false;
+
+        if (elements && elements[0] && typeof elements[0] === 'number') {
+            compareNumbers = true;
+        }
         while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
-            if (JSON.stringify(elements[i]) > JSON.stringify(elements[i + 1])) {
+            const left = compareNumbers ? elements[i] : JSON.stringify(elements[i]);
+            const right = compareNumbers ? elements[i + 1] : JSON.stringify(elements[i + 1]);
+            if (left > right) {
                 sorted = false;
             }
             i++;
