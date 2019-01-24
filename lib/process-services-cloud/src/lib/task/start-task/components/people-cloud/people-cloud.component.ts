@@ -206,7 +206,7 @@ export class PeopleCloudComponent implements OnInit {
             this.userInput.nativeElement.value = '';
             this.searchUserCtrl.setValue('');
         }
-        
+
         this.selectedUsers.push(user);
         this.selectedUsersSubject.next(this.selectedUsers);
         this.selectUser.emit(user);

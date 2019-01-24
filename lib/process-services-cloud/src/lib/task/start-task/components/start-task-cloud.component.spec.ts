@@ -40,7 +40,7 @@ describe('StartTaskCloudComponent', () => {
     let fixture: ComponentFixture<StartTaskCloudComponent>;
     let service: StartTaskCloudService;
     let identityService: IdentityUserService;
-    let element: HTMLElement;
+    let element: any;
     let createNewTaskSpy: jasmine.Spy;
 
     setupTestBed({
@@ -115,29 +115,38 @@ describe('StartTaskCloudComponent', () => {
             expect(successSpy).not.toHaveBeenCalled();
         });
 
-        it('should assign task to the logged in user when invalid assignee is selected', async(() => {
+        it('should disable start task button when assignee is invalid', async(() => {
             component.taskForm.controls['name'].setValue('fakeName');
             fixture.detectChanges();
-            const assigneeInput = <HTMLElement> element.querySelector('input.adf-cloud-input');
-            assigneeInput.nodeValue = 'a';
+
+            const assigneeInput = <HTMLInputElement> element.querySelector('input.adf-cloud-input');
+            assigneeInput.focus();
+            assigneeInput.value = 'invalid';
+            assigneeInput.dispatchEvent(new Event('input'));
             fixture.detectChanges();
-            const createTaskButton = <HTMLElement> element.querySelector('#button-start');
-            createTaskButton.click();
-            fixture.detectChanges();
+
             fixture.whenStable().then(() => {
-                const taskRequest = new TaskDetailsCloudModel({ name: 'fakeName', assignee: 'currentUser'});
-                expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest);
+                const createTaskButton = element.querySelector('#button-start');
+                expect(createTaskButton.disabled).toBeTruthy();
             });
         }));
 
-        it('should assign task to the logged in user when assignee is not selected', async(() => {
+        it('should create task without asssignee when assignee is not selected', async(() => {
             component.taskForm.controls['name'].setValue('fakeName');
             fixture.detectChanges();
+
+            const assigneeInput = <HTMLInputElement> element.querySelector('input.adf-cloud-input');
+            assigneeInput.focus();
+            assigneeInput.value = '';
+            assigneeInput.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
             let createTaskButton = <HTMLElement> element.querySelector('#button-start');
             createTaskButton.click();
+
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const taskRequest = new TaskDetailsCloudModel({ name: 'fakeName', assignee: 'currentUser'});
+                const taskRequest = new TaskDetailsCloudModel({ name: 'fakeName'});
                 expect(createNewTaskSpy).toHaveBeenCalledWith(taskRequest);
             });
         }));
