@@ -576,10 +576,8 @@ describe('SearchFilterComponent', () => {
 
     it('should update query builder upon resetting selected queries', () => {
         spyOn(queryBuilder, 'update').and.stub();
-        // spyOn(queryBuilder, 'removeUserFacetQuery').and.callThrough();
         spyOn(queryBuilder, 'removeUserFacetBucket').and.callThrough();
 
-        // component.canResetSelectedQueries = true;
         const queryResponse = <any> {
             label: 'query response',
             buckets: <any> {
