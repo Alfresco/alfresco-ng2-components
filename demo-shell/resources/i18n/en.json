@@ -220,7 +220,7 @@
     "FACET_QUERIES": {
       "MY_FACET_QUERIES": "My facet queries",
       "CREATED_THIS_YEAR": "1.Created This Year",
-      "MIMETYPE": "2.Type",
+      "MIMETYPE": "2.Type: HTML",
       "XTRASMALL": "3.Size: xtra small",
       "SMALL": "4.Size: small",
       "MEDIUM": "5.Size: medium",

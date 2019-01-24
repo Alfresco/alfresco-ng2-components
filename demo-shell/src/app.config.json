@@ -121,7 +121,7 @@
         "pageSize": 5,
         "queries": [
           { "query": "created:2018", "label": "SEARCH.FACET_QUERIES.CREATED_THIS_YEAR" },
-          { "query": "content.mimetype", "label": "SEARCH.FACET_QUERIES.MIMETYPE", "group":"Type facet queries" },
+          { "query": "content.mimetype:text/html", "label": "SEARCH.FACET_QUERIES.MIMETYPE", "group":"Type facet queries" },
           { "query": "content.size:[0 TO 10240]", "label": "SEARCH.FACET_QUERIES.XTRASMALL", "group":"Size facet queries"},
           { "query": "content.size:[10240 TO 102400]", "label": "SEARCH.FACET_QUERIES.SMALL", "group":"Size facet queries"},
           { "query": "content.size:[102400 TO 1048576]", "label": "SEARCH.FACET_QUERIES.MEDIUM", "group":"Size facet queries" },

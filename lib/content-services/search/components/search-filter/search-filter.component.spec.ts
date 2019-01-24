@@ -131,8 +131,7 @@ describe('SearchFilterComponent', () => {
         expect(component.responseFacets[0].buckets.length).toEqual(2);
     });
 
-    // fit('should preserve order after response processing', () => {
-    xit('should preserve order after response processing', () => {
+    it('should preserve order after response processing', () => {
         component.responseFacets = null;
 
         queryBuilder.config = {
