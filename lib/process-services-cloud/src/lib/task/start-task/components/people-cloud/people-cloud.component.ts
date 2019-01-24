@@ -123,6 +123,9 @@ export class PeopleCloudComponent implements OnInit {
                 if (value) {
                     this.setError();
                 } else {
+                    if (!this.isMultipleMode()) {
+                        this.removeUser.emit();
+                    }
                     this.clearError();
                 }
              }),

@@ -136,6 +136,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     private loadCurrentUser() {
         this.currentUser = this.identityUserService.getCurrentUserInfo();
+        this.assigneeName = this.currentUser.username;
     }
 
     public saveTask() {
@@ -143,7 +144,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         const newTask = Object.assign(this.taskForm.value);
         newTask.appName = this.getAppName();
         newTask.dueDate = this.getDueDate();
-        newTask.assignee = this.getAssigneeName();
+        newTask.assignee = this.assigneeName;
         this.createNewTask(new TaskDetailsCloudModel(newTask));
     }
 
@@ -173,10 +174,6 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         return this.appName ? this.appName : '';
     }
 
-    private getAssigneeName(): string {
-        return this.assigneeName ? this.assigneeName : this.currentUser.username;
-    }
-
     onDateChanged(newDateValue) {
         this.dateError = false;
 
@@ -190,6 +187,10 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     onAssigneeSelect(assignee: IdentityUserModel) {
         this.assigneeName = assignee ? assignee.username : '';
+    }
+
+    onRemoveUser() {
+        this.assigneeName = null;
     }
 
     public whitespaceValidator(control: FormControl) {
