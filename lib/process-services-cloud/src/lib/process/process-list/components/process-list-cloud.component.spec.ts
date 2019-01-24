@@ -129,12 +129,8 @@ describe('ProcessListCloudComponent', () => {
             expect(res).toBeDefined();
             expect(component.rows).toBeDefined();
             expect(component.rows.length).toEqual(3);
-            expect(component.rows[0].entry['serviceName']).toEqual('simple-app-rb');
-            expect(component.rows[0].entry['serviceFullName']).toEqual('simple-app-rb');
-            expect(component.rows[0].entry['serviceVersion']).toBe('');
             expect(component.rows[0].entry['appName']).toBe('easy-peasy-japanesey');
             expect(component.rows[0].entry['appVersion']).toBe('');
-            expect(component.rows[0].entry['serviceType']).toBeNull();
             expect(component.rows[0].entry['id']).toBe('69eddfa7-d781-11e8-ae24-0a58646001fa');
             expect(component.rows[0].entry['name']).toEqual('starring');
             expect(component.rows[0].entry['description']).toBeNull();

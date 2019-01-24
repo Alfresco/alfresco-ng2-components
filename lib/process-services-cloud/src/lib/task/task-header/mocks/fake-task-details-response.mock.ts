@@ -17,12 +17,8 @@
 
 export const fakeTaskDetailsCloud = {
     'entry': {
-        'serviceName': 'task-app-rb',
-        'serviceFullName': 'task-app-rb',
-        'serviceVersion': '',
         'appName': 'task-app',
         'appVersion': '',
-        'serviceType': null,
         'id': '68d54a8f',
         'assignee': 'Phil Woods',
         'name': 'This is a new task ',

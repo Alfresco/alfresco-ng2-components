@@ -62,10 +62,6 @@ when the process list is empty:
 | processDefinitionKey | `string` | "" | Filter the processes to display only the ones with this process definition key. |
 | selectFirstRow | `boolean` | true | Toggles default selection of the first row |
 | selectionMode | `string` | "single" | Row selection mode. Can be "none", "single" or "multiple". For multiple mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| serviceFullName | `string` | "" | Filter the processes to display only the ones with this serviceFullName value. |
-| serviceName | `string` | "" | Filter the processes to display only the ones with this serviceName value. |
-| serviceType | `string` | "" | Filter the processes to display only the ones with this serviceType value. |
-| serviceVersion | `string` | "" | Filter the processes to display only the ones with this serviceVersion value. |
 | sorting | [`ProcessListCloudSortingModel`](../../lib/process-services-cloud/src/lib/process/process-list/models/process-list-sorting.model.ts)`[]` |  | Array of objects specifying the sort order and direction for the list. The sort parameters are for BE sorting. |
 | status | `string` | "" | Filter the processes to display only the ones with this status. |
 
@@ -91,7 +87,7 @@ You can define a custom schema for the list in the `app.config.json` file and ac
                     "key": "name",
                     "type": "text",
                     "title": "name",
-                    "sortable": true         
+                    "sortable": true
             }],
             "default": [
                 {

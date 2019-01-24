@@ -36,12 +36,8 @@ export class TaskDetailsCloudModel {
     priority: number;
     processDefinitionId: string;
     processInstanceId: string;
-    serviceType: any;
     status: string;
     standAlone: boolean;
-    serviceName: string;
-    serviceFullName: string;
-    serviceVersion: string;
     managerOfCandidateGroup: boolean;
     memberOfCandidateGroup: boolean;
     memberOfCandidateUsers: boolean;
@@ -66,13 +62,8 @@ export class TaskDetailsCloudModel {
             this.priority = obj.priority || null;
             this.processDefinitionId = obj.processDefinitionId || null;
             this.processInstanceId = obj.processInstanceId || null;
-            this.serviceType = obj.serviceType || null;
             this.status = obj.status || null;
             this.standAlone = obj.standAlone || null;
-            this.serviceName = obj.serviceName || null;
-            this.serviceName = obj.serviceName || null;
-            this.serviceFullName = obj.serviceFullName || null;
-            this.serviceVersion = obj.serviceVersion || null;
             this.managerOfCandidateGroup = obj.managerOfCandidateGroup || null;
             this.memberOfCandidateGroup = obj.memberOfCandidateGroup || null;
             this.memberOfCandidateUsers = obj.memberOfCandidateUsers || null;

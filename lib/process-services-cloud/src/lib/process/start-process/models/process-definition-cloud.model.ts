@@ -22,10 +22,6 @@ export class ProcessDefinitionCloud {
     appVersion: number;
     version: number;
     name: string;
-    serviceFullName: string;
-    serviceName: string;
-    serviceType: string;
-    serviceVersion: string;
 
     constructor(obj?: any) {
         this.id = obj && obj.id || null;
@@ -34,9 +30,5 @@ export class ProcessDefinitionCloud {
         this.key = obj && obj.key || null;
         this.version = obj && obj.version || 0;
         this.appVersion = obj && obj.appVersion || 0;
-        this.serviceFullName = obj && obj.serviceFullName || null;
-        this.serviceType = obj && obj.serviceType || null;
-        this.serviceName = obj && obj.serviceName || null;
-        this.serviceVersion = obj && obj.serviceVersion || null;
     }
 }
