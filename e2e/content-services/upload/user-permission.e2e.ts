@@ -122,7 +122,7 @@ describe('Upload - User permission', () => {
             contentServicesPage.checkDragAndDropDIsDisplayed();
 
             let dragAndDrop = new DropActions();
-            let dragAndDropArea = element.all(by.css('adf-upload-drag-area div')).first();
+            let dragAndDropArea = contentServicesPage.dragAndDrop;
 
             dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
             dragAndDrop.dropFolder(dragAndDropArea, folder.location);
@@ -144,6 +144,23 @@ describe('Upload - User permission', () => {
 
             contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
             contentServicesPage.checkContentIsNotDisplayed(folder.name);
+        });
+
+        it('[C291921] Should display tooltip for uploading files without permissions', () => {
+            let dragAndDrop = new DropActions();
+            let dragAndDropArea = contentServicesPage.dragAndDrop;
+
+            navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
+
+            contentServicesPage.checkDragAndDropDIsDisplayed();
+
+            dragAndDrop.dropFile(dragAndDropArea, emptyFile.location);
+
+            uploadDialog.fileIsError(emptyFile.name);
+
+            uploadDialog.displayTooltip();
+
+            expect(uploadDialog.getTooltip()).toEqual('Insufficient permissions to upload in this location [403]');
         });
 
         it('[C279915] Should not be allowed to upload a file in folder with consumer permissions', () => {
