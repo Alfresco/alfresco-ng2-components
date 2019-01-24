@@ -27,10 +27,13 @@ export class CloudLayoutService {
     private filterTask$: Observable<any>;
     private filterProcessSubject: BehaviorSubject<any> = new BehaviorSubject({index: 0});
     private filterProcess$: Observable<any>;
+    private selectionSubject: BehaviorSubject<any> = new BehaviorSubject({multiselect: false});
+    private selection$: Observable<any>;
 
     constructor() {
         this.filterTask$ = this.filterTaskSubject.asObservable();
         this.filterProcess$ = this.filterProcessSubject.asObservable();
+        this.selection$ = this.selectionSubject.asObservable();
     }
 
     getCurrentTaskFilterParam() {
@@ -47,5 +50,13 @@ export class CloudLayoutService {
 
     setCurrentProcessFilterParam(param) {
         this.filterProcessSubject.next(param);
+    }
+
+    getCurrentSelectionParam() {
+        return this.selection$;
+    }
+
+    setCurrentSelectionParam(param) {
+        this.selectionSubject.next(param);
     }
 }

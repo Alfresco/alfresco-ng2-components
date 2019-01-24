@@ -19,7 +19,18 @@
                                 (rowClick)="onRowClick($event)"
                                 #processCloud>
         </adf-cloud-process-list>
-        <adf-pagination [target]="processCloud" (changePageSize)="onChangePageSize($event)">
+        <adf-pagination 
+            [target]="processCloud" 
+            (changePageSize)="onChangePageSize($event)"
+            (nextPage)="resetSelectedRows()"
+            (prevPage)="resetSelectedRows()">
         </adf-pagination>
     </div>
+</div>
+
+<div *ngIf="testingMode">
+    Selected rows:
+    <ul>
+        <li *ngFor="let row of selectedRows">{{ row.id }}</li>
+    </ul>
 </div>

@@ -48,6 +48,9 @@ export class ProcessesCloudDemoComponent implements OnInit {
     filterId: string = '';
     sortArray: any = [];
     selectedRow: any;
+    multiselect: boolean;
+    selectedRows: string[] = [];
+    testingMode = false;
     processFilterProperties: any[] = [];
 
     editedFilter: ProcessFilterCloudModel;
@@ -75,10 +78,21 @@ export class ProcessesCloudDemoComponent implements OnInit {
             this.onFilterChange(params);
             this.filterId = params.id;
         });
+
+        this.cloudLayoutService.getCurrentSelectionParam()
+            .subscribe(
+                (selection) => {
+                    this.multiselect = selection.multiselect;
+                }
+            );
     }
 
     onChangePageSize(event) {
         this.userPreference.paginationSize = event.maxItems;
+    }
+
+    resetSelectedRows() {
+        this.selectedRows = [];
     }
 
     onRowClick($event) {
@@ -96,4 +110,8 @@ export class ProcessesCloudDemoComponent implements OnInit {
             this.router.navigate([`/cloud/${this.applicationName}/processes/`], { queryParams: filterAction.filter });
         }
      }
+
+     onRowsSelected(nodes) {
+        this.selectedRows = nodes.map((node) => node.obj.entry);
+    }
 }

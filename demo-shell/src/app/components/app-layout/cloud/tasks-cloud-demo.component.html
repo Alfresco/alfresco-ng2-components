@@ -16,10 +16,21 @@
             [status]="editedFilter.state"
             [assignee]="editedFilter.assignment"
             [sorting]="sortArray"
-            (rowClick)="onRowClick($event)">
+            [multiselect]="multiselect"
+            (rowClick)="onRowClick($event)"
+            (rowsSelected)="onRowsSelected($event)">
         </adf-cloud-task-list>
         <adf-pagination [target]="taskCloud"
-                        (changePageSize)="onChangePageSize($event)">
+                        (changePageSize)="onChangePageSize($event)"
+                        (nextPage)="resetSelectedRows()"
+                        (prevPage)="resetSelectedRows()">
         </adf-pagination>
     </div>
+</div>
+
+<div *ngIf="testingMode">
+    Selected rows:
+    <ul>
+        <li *ngFor="let row of selectedRows" [attr.data-automation-id]="row.id">{{ row.name }}</li>
+    </ul>
 </div>

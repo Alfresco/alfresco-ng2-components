@@ -44,6 +44,9 @@ export class TasksCloudDemoComponent implements OnInit {
     taskFilterProperties: any[] = [];
 
     filterId;
+    multiselect: boolean;
+    selectedRows: string[] = [];
+    testingMode = false;
 
     constructor(
         private cloudLayoutService: CloudLayoutService,
@@ -69,14 +72,31 @@ export class TasksCloudDemoComponent implements OnInit {
             this.onFilterChange(params);
             this.filterId = params.id;
         });
+
+        this.cloudLayoutService.getCurrentSelectionParam()
+            .subscribe(
+                (selection) => {
+                    this.multiselect = selection.multiselect;
+                }
+            );
     }
 
     onChangePageSize(event) {
         this.userPreference.paginationSize = event.maxItems;
     }
 
+    resetSelectedRows() {
+        this.selectedRows = [];
+    }
+
     onRowClick(taskId) {
-        this.router.navigate([`/cloud/${this.applicationName}/task-details/${taskId}`]);
+        if (!this.multiselect) {
+            this.router.navigate([`/cloud/${this.applicationName}/task-details/${taskId}`]);
+        }
+    }
+
+    onRowsSelected(nodes) {
+        this.selectedRows = nodes.map((node) => node.obj.entry);
     }
 
     onFilterChange(filter: any) {
