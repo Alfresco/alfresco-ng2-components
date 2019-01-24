@@ -170,6 +170,25 @@ describe('PeopleCloudComponent', () => {
         });
     }));
 
+    it('should emit removeUser when a selected user is removed if mode=single', async(() => {
+        spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
+        const removeUserSpy = spyOn(component.removeUser, 'emit');
+
+        component.preSelectUsers = <any> [mockUsers[1]];
+        fixture.detectChanges();
+
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.value = '';
+        inputHTMLElement.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(removeUserSpy).toHaveBeenCalledWith(mockUsers[1]);
+        });
+
+    }));
+
     it('should emit removeUser when a selected user is removed if mode=multiple', async(() => {
         spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
         let removeUserSpy = spyOn(component.removeUser, 'emit');
