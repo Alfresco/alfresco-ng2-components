@@ -22,7 +22,7 @@ import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
-import { fakeGlobalTask, fakeCustomSchema, fakeTaskCloudList } from '../mock/fakeTaskResponseMock';
+import { fakeGlobalTask, fakeCustomSchema } from '../mock/fakeTaskResponseMock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskListCloudModule } from '../task-list-cloud.module';
@@ -160,21 +160,6 @@ describe('TaskListCloudComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should return a currentId null when the taskList is empty', () => {
-        component.selectTask(null);
-        expect(component.getCurrentId()).toBeNull();
-    });
-
-    it('should return selected id for the selected task', () => {
-        component.rows = [
-            { entry: { id: '999', name: 'Fake-name' } },
-            { entry: { id: '888', name: 'Fake-name-888' } }
-        ];
-        component.selectTask('888');
-        expect(component.rows).toBeDefined();
-        expect(component.currentInstanceId).toEqual('888');
-    });
-
     it('should reload tasks when reload() is called', (done) => {
         component.applicationName = 'fake';
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
@@ -208,33 +193,6 @@ describe('TaskListCloudComponent', () => {
         beforeEach(() => {
             component.rows = fakeGlobalTask.list.entries;
             fixture.detectChanges();
-        });
-
-        it('should NOT reload the tasks if the landingTaskId is the same of the current task', () => {
-            spyOn(component, 'reload').and.stub();
-            component.currentInstanceId = '999';
-            component.rows = [{ entry: { id: '999', name: 'Fake-name' } }];
-            const landingTaskId = '999';
-            let change = new SimpleChange('999', landingTaskId, true);
-            component.ngOnChanges({ 'landingTaskId': change });
-            expect(component.reload).not.toHaveBeenCalled();
-            expect(component.rows.length).toEqual(1);
-        });
-
-        it('should reload the tasks if the loadingTaskId is different from the current task', (done) => {
-            component.currentInstanceId = '999';
-            component.rows = [{ id: '999', name: 'Fake-name' }];
-            const landingTaskId = '888';
-            let change = new SimpleChange(null, landingTaskId, true);
-            component.applicationName = 'fake';
-            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeTaskCloudList));
-            component.success.subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(component.rows).toBeDefined();
-                expect(component.rows.length).toEqual(2);
-                done();
-            });
-            component.ngOnChanges({ 'landingTaskId': change });
         });
 
         it('should NOT reload the task list when no parameters changed', () => {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnChanges, AfterContentInit, ContentChild, Output, EventEmitter, SimpleChanges, SimpleChange, Input } from '@angular/core';
+import { Component, ViewEncapsulation, OnChanges, AfterContentInit, ContentChild, Output, EventEmitter, SimpleChanges, Input } from '@angular/core';
 import { DataTableSchema, PaginatedComponent,
          EmptyCustomContentDirective, AppConfigService,
          UserPreferencesService, PaginationModel,
@@ -25,7 +25,6 @@ import { BehaviorSubject } from 'rxjs';
 import { processCloudPresetsDefaultModel } from '../models/process-cloud-preset.model';
 import { ProcessQueryCloudRequestModel } from '../models/process-cloud-query-request.model';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
-import { NodeEntry } from '@alfresco/js-api';
 @Component({
     selector: 'adf-cloud-process-list',
     templateUrl: './process-list-cloud.component.html',
@@ -74,18 +73,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     /** Filter the tasks to display only the ones with this businessKey value. */
     @Input()
     businessKey: string = '';
-
-    /** Toggles default selection of the first row */
-    @Input()
-    selectFirstRow: boolean = true;
-
-    /**
-     * Define which task id should be selected after reloading.
-     * If the task id doesn't exist or nothing is passed then the first
-     * task will be selected.
-     */
-    @Input()
-    landingTaskId: string;
 
     /**
      * Row selection mode. Can be "none", "single" or "multiple".
@@ -151,8 +138,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.isPropertyChanged(changes) &&
-            !this.isEqualToCurrentId(changes['landingTaskId'])) {
+        if (this.isPropertyChanged(changes)) {
             this.reload();
         }
     }
@@ -175,7 +161,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         this.processListCloudService.getProcessByRequest(requestNode).subscribe(
             (processes) => {
                 this.rows = processes.list.entries;
-                this.selectTask(this.landingTaskId);
                 this.success.emit(processes);
                 this.isLoading = false;
                 this.pagination.next(processes.list.pagination);
@@ -183,10 +168,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
                 this.error.emit(error);
                 this.isLoading = false;
             });
-    }
-
-    private isEqualToCurrentId(landingTaskChanged: SimpleChange): boolean {
-        return landingTaskChanged && this.currentInstanceId === landingTaskChanged.currentValue;
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {
@@ -199,26 +180,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             }
         }
         return false;
-    }
-
-    selectTask(taskIdSelected: string) {
-        if (!this.isListEmpty()) {
-            let dataRow: any = null;
-            if (taskIdSelected) {
-                dataRow = this.rows.find((currentRow: NodeEntry) => {
-                    return currentRow.entry.id === taskIdSelected;
-                });
-            }
-            if (!dataRow && this.selectFirstRow) {
-                dataRow = this.rows[0];
-            }
-            if (dataRow) {
-                dataRow.isSelected = true;
-                this.currentInstanceId = dataRow.entry.id;
-            }
-        } else {
-            this.currentInstanceId = null;
-        }
     }
 
     isListEmpty(): boolean {
