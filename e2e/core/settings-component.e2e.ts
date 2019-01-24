@@ -37,10 +37,9 @@ describe('Settings component', () => {
             done();
         });
 
-        it('[C245641] Should navigate User back to Login screen', () => {
+        it('[C245641] Should navigate User from Settings page to Login screen', () => {
             settingsPage.clickBackButton();
             loginPage.waitForElements();
-
         });
 
         it('[C245641] Should not save BPM Settings changes when User clicks Back button', () => {
@@ -49,8 +48,8 @@ describe('Settings component', () => {
             settingsPage.clickBackButton();
             loginPage.waitForElements();
             settingsPage.goToSettingsPage();
-            expect(settingsPage.selectedOption.getText()).not.toEqual('BPM', 'The Settings changes are saved');
-            expect(settingsPage.bpmText.getText()).not.toEqual('http://adfdev.envalfresco1.com', 'The Settings changes are saved');
+            expect(settingsPage.getSelectedOptionText()).not.toEqual('BPM', 'The Settings changes are saved');
+            expect(settingsPage.getBpmHostUrl()).not.toEqual('http://adfdev.envalfresco1.com', 'The Settings changes are saved');
 
         });
 
@@ -60,8 +59,8 @@ describe('Settings component', () => {
             settingsPage.clickBackButton();
             loginPage.waitForElements();
             settingsPage.goToSettingsPage();
-            expect(settingsPage.selectedOption.getText()).not.toEqual('ECM', 'The Settings changes are saved');
-            expect(settingsPage.bpmText.getText()).not.toEqual('http://adfdev.envalfresco1.com', 'The Settings changes are saved');
+            expect(settingsPage.getSelectedOptionText()).not.toEqual('ECM', 'The Settings changes are saved');
+            expect(settingsPage.getBpmHostUrl()).not.toEqual('http://adfdev.envalfresco1.com', 'The Settings changes are saved');
 
         });
 
@@ -69,9 +68,9 @@ describe('Settings component', () => {
             settingsPage.setProviderEcmBpm();
             loginPage.waitForElements();
             settingsPage.goToSettingsPage();
-            expect(settingsPage.selectedOption.getText()).toEqual('ALL', 'The Settings changes are not saved');
-            expect(settingsPage.bpmText.getAttribute('value')).toEqual('http://adfdev.envalfresco.com', 'The BPM Settings changes are not saved');
-            expect(settingsPage.ecmText.getAttribute('value')).toEqual('http://adfdev.envalfresco.com', 'The ECM Settings changes are not saved');
+            expect(settingsPage.getSelectedOptionText()).toEqual('ALL', 'The Settings changes are not saved');
+            expect(settingsPage.getBpmHostUrl()).toEqual('http://adfdev.envalfresco.com', 'The BPM Settings changes are not saved');
+            expect(settingsPage.getEcmHostUrl()).toEqual('http://adfdev.envalfresco.com', 'The ECM Settings changes are not saved');
 
         });
 

@@ -67,8 +67,16 @@ export class SettingsPage {
         return expect(this.selectedOption.getText()).toEqual(selected);
     }
 
-    getBpmText() {
-        return this.bpm.option;
+    getSelectedOptionText() {
+        return this.selectedOption.getText();
+    }
+
+    getBpmHostUrl() {
+        return this.bpmText.getAttribute('value');
+    }
+
+    getEcmHostUrl() {
+        return this.ecmText.getAttribute('value');
     }
 
     getBpmOption() {
