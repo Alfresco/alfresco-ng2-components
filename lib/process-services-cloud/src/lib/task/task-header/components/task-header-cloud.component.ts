@@ -149,6 +149,7 @@ export class TaskHeaderCloudComponent implements OnInit {
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME',
                     value: this.parentTaskName,
+                    default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT'),
                     key: 'parentName'
                 }
             ),
