@@ -79,7 +79,8 @@ export class PeopleCloudComponent implements OnInit {
     @ViewChild('userInput')
     private userInput: ElementRef<HTMLInputElement>;
 
-    private _searchUsers: IdentityUserModel[] = [];
+    private selectedUsers: IdentityUserModel[] = [];
+    private searchUsers: IdentityUserModel[] = [];
     private selectedUsersSubject: BehaviorSubject<IdentityUserModel[]>;
     private searchUsersSubject: BehaviorSubject<IdentityUserModel[]>;
     selectedUsers$: Observable<IdentityUserModel[]>;
@@ -94,12 +95,12 @@ export class PeopleCloudComponent implements OnInit {
     isFocused: boolean;
 
     constructor(private identityUserService: IdentityUserService) {
-        this.searchUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this._searchUsers);
+        this.searchUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this.searchUsers);
         this.searchUsers$ = this.searchUsersSubject.asObservable();
     }
 
     ngOnInit() {
-        this.selectedUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this.preSelectUsers);
+        this.selectedUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this.selectedUsers);
         this.selectedUsers$ = this.selectedUsersSubject.asObservable();
 
         if (this.hasPreSelectUsers()) {
@@ -128,6 +129,10 @@ export class PeopleCloudComponent implements OnInit {
                     }
                     this.clearError();
                 }
+
+                if (this.isSingleMode() && this.hasSelectedUsers()) {
+                    this.resetSingleModeSelection();
+                }
              }),
             debounceTime(500),
             distinctUntilChanged(),
@@ -153,8 +158,8 @@ export class PeopleCloudComponent implements OnInit {
                 }
             })
         ).subscribe((user) => {
-            this._searchUsers.push(user);
-            this.searchUsersSubject.next(this._searchUsers);
+            this.searchUsers.push(user);
+            this.searchUsersSubject.next(this.searchUsers);
         });
     }
 
@@ -171,8 +176,8 @@ export class PeopleCloudComponent implements OnInit {
     }
 
     private isUserAlreadySelected(user: IdentityUserModel): boolean {
-        if (this.preSelectUsers && this.preSelectUsers.length > 0) {
-            const result = this.preSelectUsers.find((selectedUser) => {
+        if (this.selectedUsers && this.selectedUsers.length > 0) {
+            const result = this.selectedUsers.find((selectedUser) => {
                 return selectedUser.id === user.id || selectedUser.email  === user.email;
             });
 
@@ -184,7 +189,7 @@ export class PeopleCloudComponent implements OnInit {
     private loadPreSelectUsers() {
         if (!this.isMultipleMode()) {
             this.searchUserCtrl.setValue(this.preSelectUsers[0]);
-            this.preSelectUsers = [];
+            this.onSelect(this.preSelectUsers[0]);
         }
     }
 
@@ -198,18 +203,13 @@ export class PeopleCloudComponent implements OnInit {
 
     onSelect(user: IdentityUserModel) {
         if (this.isMultipleMode()) {
-
-            if (!this.isUserAlreadySelected(user)) {
-                this.preSelectUsers.push(user);
-                this.selectedUsersSubject.next(this.preSelectUsers);
-                this.selectUser.emit(user);
-            }
-
             this.userInput.nativeElement.value = '';
             this.searchUserCtrl.setValue('');
-        } else {
-            this.selectUser.emit(user);
         }
+        
+        this.selectedUsers.push(user);
+        this.selectedUsersSubject.next(this.selectedUsers);
+        this.selectUser.emit(user);
 
         this.clearError();
         this.resetSearchUsers();
@@ -217,9 +217,9 @@ export class PeopleCloudComponent implements OnInit {
 
     onRemove(user: IdentityUserModel) {
         this.removeUser.emit(user);
-        const indexToRemove = this.preSelectUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
-        this.preSelectUsers.splice(indexToRemove, 1);
-        this.selectedUsersSubject.next(this.preSelectUsers);
+        const indexToRemove = this.selectedUsers.findIndex((selectedUser) => { return selectedUser.id === user.id; });
+        this.selectedUsers.splice(indexToRemove, 1);
+        this.selectedUsersSubject.next(this.selectedUsers);
     }
 
     getDisplayName(user): string {
@@ -230,13 +230,17 @@ export class PeopleCloudComponent implements OnInit {
         return this.mode === PeopleCloudComponent.MODE_MULTIPLE;
     }
 
+    isSingleMode(): boolean {
+        return this.mode === PeopleCloudComponent.MODE_SINGLE;
+    }
+
     private hasPreSelectUsers(): boolean {
         return this.preSelectUsers && this.preSelectUsers.length > 0;
     }
 
     private resetSearchUsers() {
-        this._searchUsers = [];
-        this.searchUsersSubject.next(this._searchUsers);
+        this.searchUsers = [];
+        this.searchUsersSubject.next(this.searchUsers);
     }
 
     private setError() {
@@ -265,6 +269,16 @@ export class PeopleCloudComponent implements OnInit {
 
     private enableSearch() {
         this.searchUserCtrl.enable();
+    }
+
+    private resetSingleModeSelection() {
+        if (this.hasSelectedUsers()) {
+            this.onRemove(this.selectedUsers[0]);
+        }
+    }
+
+     private hasSelectedUsers(): boolean {
+        return this.selectedUsers && this.selectedUsers.length > 0;
     }
 
 }
