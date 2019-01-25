@@ -32,6 +32,11 @@ export class ShareDataRow implements DataRow {
         return this.obj;
     }
 
+    set node(value: NodeEntry) {
+        this.obj = value;
+        this.cache = {};
+    }
+
     constructor(private obj: NodeEntry,
                 private contentService: ContentService,
                 private permissionsStyle: PermissionStyleModel[],

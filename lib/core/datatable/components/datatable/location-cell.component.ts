@@ -15,9 +15,16 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    OnInit,
+    ViewEncapsulation
+} from '@angular/core';
 import { PathInfoEntity } from '@alfresco/js-api';
 import { DataTableCellComponent } from './datatable-cell.component';
+import { AlfrescoApiService } from '../../../services/alfresco-api.service';
 
 @Component({
     selector: 'adf-location-cell',
@@ -25,36 +32,39 @@ import { DataTableCellComponent } from './datatable-cell.component';
     template: `
         <ng-container>
             <a href="" [title]="tooltip" [routerLink]="link">
-                {{ displayText }}
+                {{ value$ | async }}
             </a>
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-location-cell' }
 })
-export class LocationCellComponent extends DataTableCellComponent implements OnInit {
-
+export class LocationCellComponent extends DataTableCellComponent
+    implements OnInit {
     @Input()
     link: any[];
 
-    @Input()
-    displayText: string = '';
+    constructor(apiService: AlfrescoApiService) {
+        super(apiService);
+    }
 
     /** @override */
     ngOnInit() {
-        if (!this.value && this.column && this.column.key && this.row && this.data) {
-            const path: PathInfoEntity = this.data.getValue(this.row, this.column);
+        if (this.column && this.column.key && this.row && this.data) {
+            const path: PathInfoEntity = this.data.getValue(
+                this.row,
+                this.column
+            );
 
             if (path && path.name && path.elements) {
-                this.value = path;
-                this.displayText = path.name.split('/').pop();
+                this.value$.next(path.name.split('/').pop());
 
                 if (!this.tooltip) {
                     this.tooltip = path.name;
                 }
 
                 const parent = path.elements[path.elements.length - 1];
-                this.link = [ this.column.format, parent.id ];
+                this.link = [this.column.format, parent.id];
             }
         }
     }
