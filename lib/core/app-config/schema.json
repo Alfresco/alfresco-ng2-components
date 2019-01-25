@@ -833,6 +833,24 @@
         "OAUTH"
       ]
     },
+    "baseShareUrl": {
+      "description": "Custom url for shared links",
+      "type": "string"
+    },
+    "locale": {
+      "description": "Default application locale",
+      "type": "string"
+    },
+    "auth": {
+      "description": "Custom authentication settings",
+      "type": "object",
+      "properties": {
+        "withCredentials": {
+          "description": "Toggle XMLHttpRequest.withCredentials for @alfresco/js-api and PDF Viewer",
+          "type": "boolean"
+        }
+      }
+    },
     "oauth2": {
       "description": "AUTH configuration parameters",
       "type": "object",

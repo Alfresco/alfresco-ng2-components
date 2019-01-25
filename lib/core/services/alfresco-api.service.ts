@@ -117,7 +117,7 @@ export class AlfrescoApiService {
             oauth.redirectUriLogout = window.location.origin + (oauth.redirectUriLogout || '/');
         }
 
-        const config = {
+        const config = new AlfrescoApiConfig({
             provider: this.appConfig.get<string>(AppConfigValues.PROVIDERS),
             hostEcm: this.appConfig.get<string>(AppConfigValues.ECMHOST),
             hostBpm: this.appConfig.get<string>(AppConfigValues.BPMHOST),
@@ -125,8 +125,9 @@ export class AlfrescoApiService {
             contextRootBpm: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTBPM),
             contextRoot: this.appConfig.get<string>(AppConfigValues.CONTEXTROOTECM),
             disableCsrf: this.appConfig.get<boolean>(AppConfigValues.DISABLECSRF),
+            withCredentials: this.appConfig.get<boolean>(AppConfigValues.AUTH_WITH_CREDENTIALS, false),
             oauth2: oauth
-        };
+        });
 
         if (this.alfrescoApi && this.isDifferentConfig(this.lastConfig, config)) {
             this.lastConfig = config;
@@ -135,6 +136,7 @@ export class AlfrescoApiService {
             this.lastConfig = config;
             this.alfrescoApi = new AlfrescoApiCompatibility(config);
         }
+
     }
 
     isDifferentConfig(lastConfig: AlfrescoApiConfig, newConfig: AlfrescoApiConfig) {

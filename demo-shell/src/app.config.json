@@ -3,12 +3,14 @@
     "ecmHost": "{protocol}//{hostname}{:port}",
     "bpmHost": "{protocol}//{hostname}{:port}",
     "identityHost": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
-    "baseShareUrl": null,
     "loginRoute": "login",
     "providers": "ALL",
     "contextRootBpm": "activiti-app",
     "authType" : "BASIC",
     "locale" : "en",
+    "auth": {
+      "withCredentials": false
+    },
     "oauth2": {
       "host": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
       "clientId": "alfresco",
