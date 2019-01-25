@@ -53,7 +53,7 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
     @Input()
     row: DataRow;
 
-    value$ = new BehaviorSubject<string>('');
+    value$ = new BehaviorSubject<any>('');
 
     @Input()
     tooltip: string;
