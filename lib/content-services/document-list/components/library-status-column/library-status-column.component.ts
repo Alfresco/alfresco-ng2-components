@@ -15,42 +15,73 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { AlfrescoApiService } from '@alfresco/adf-core';
+import { Subscription, BehaviorSubject } from 'rxjs';
+import { Node } from '@alfresco/js-api';
+import { ShareDataRow } from '../../data/share-data-row.model';
 
 @Component({
-  selector: 'adf-library-status-column',
-  template: `
-    <span title="{{ displayText | translate }}">
-      {{ displayText | translate }}
-    </span>
-  `,
-  host: { class: 'adf-library-status-column' }
+    selector: 'adf-library-status-column',
+    template: `
+        <span title="{{ (displayText$ | async) | translate }}">
+            {{ (displayText$ | async) | translate }}
+        </span>
+    `,
+    host: { class: 'adf-library-status-column' }
 })
-export class LibraryStatusColumnComponent implements OnInit {
-  @Input()
-  context: any;
+export class LibraryStatusColumnComponent implements OnInit, OnDestroy {
+    @Input()
+    context: any;
 
-  displayText: string;
+    displayText$ = new BehaviorSubject<string>('');
 
-  ngOnInit() {
-    const node = this.context.row.node;
-    if (node && node.entry) {
-      const visibility: string = node.entry.visibility;
+    private sub: Subscription;
 
-      switch (visibility.toUpperCase()) {
-        case 'PUBLIC':
-          this.displayText = 'LIBRARY.VISIBILITY.PUBLIC';
-          break;
-        case 'PRIVATE':
-          this.displayText = 'LIBRARY.VISIBILITY.PRIVATE';
-          break;
-        case 'MODERATED':
-          this.displayText = 'LIBRARY.VISIBILITY.MODERATED';
-          break;
-        default:
-          this.displayText = 'UNKNOWN';
-          break;
-      }
+    constructor(private api: AlfrescoApiService) {}
+
+    ngOnInit() {
+        this.updateValue();
+
+        this.sub = this.api.nodeUpdated.subscribe((node: Node) => {
+            const row: ShareDataRow = this.context.row;
+            if (row) {
+                const { entry } = row.node;
+
+                if (entry === node) {
+                    row.node = { entry };
+                    this.updateValue();
+                }
+            }
+        });
     }
-  }
+
+    protected updateValue() {
+        const node = this.context.row.node;
+        if (node && node.entry) {
+            const visibility: string = node.entry.visibility;
+
+            switch (visibility.toUpperCase()) {
+                case 'PUBLIC':
+                    this.displayText$.next('LIBRARY.VISIBILITY.PUBLIC');
+                    break;
+                case 'PRIVATE':
+                    this.displayText$.next('LIBRARY.VISIBILITY.PRIVATE');
+                    break;
+                case 'MODERATED':
+                    this.displayText$.next('LIBRARY.VISIBILITY.MODERATED');
+                    break;
+                default:
+                    this.displayText$.next('UNKNOWN');
+                    break;
+            }
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.sub) {
+            this.sub.unsubscribe();
+            this.sub = null;
+        }
+    }
 }

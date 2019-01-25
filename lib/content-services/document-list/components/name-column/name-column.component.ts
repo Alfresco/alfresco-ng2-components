@@ -16,50 +16,81 @@
  */
 
 import {
-  Component,
-  Input,
-  OnInit,
-  ChangeDetectionStrategy,
-  ViewEncapsulation,
-  ElementRef
+    Component,
+    Input,
+    OnInit,
+    ChangeDetectionStrategy,
+    ViewEncapsulation,
+    ElementRef,
+    OnDestroy
 } from '@angular/core';
 import { NodeEntry } from '@alfresco/js-api';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { AlfrescoApiService } from '@alfresco/adf-core';
+import { Node } from '@alfresco/js-api';
+import { ShareDataRow } from '../../data/share-data-row.model';
 
 @Component({
-  selector: 'adf-name-column',
-  template: `
-    <span title="{{ node | adfNodeNameTooltip }}" (click)="onClick()">
-      {{ displayText }}
-    </span>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  host: { class: 'adf-datatable-cell adf-datatable-link adf-name-column' }
+    selector: 'adf-name-column',
+    template: `
+        <span title="{{ node | adfNodeNameTooltip }}" (click)="onClick()">
+            {{ displayText$ | async }}
+        </span>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-datatable-cell adf-datatable-link adf-name-column' }
 })
-export class NameColumnComponent implements OnInit {
-  @Input()
-  context: any;
+export class NameColumnComponent implements OnInit, OnDestroy {
+    @Input()
+    context: any;
 
-  displayText: string;
-  node: NodeEntry;
+    displayText$ = new BehaviorSubject<string>('');
+    node: NodeEntry;
 
-  constructor(private element: ElementRef) {}
+    private sub: Subscription;
 
-  ngOnInit() {
-    this.node = this.context.row.node;
-    if (this.node && this.node.entry) {
-      this.displayText = this.node.entry.name || this.node.entry.id;
+    constructor(private element: ElementRef, private api: AlfrescoApiService) {}
+
+    ngOnInit() {
+        this.updateValue();
+
+        this.sub = this.api.nodeUpdated.subscribe((node: Node) => {
+            const row: ShareDataRow = this.context.row;
+            if (row) {
+                const { entry } = row.node;
+
+                if (entry === node) {
+                    row.node = { entry };
+                    this.updateValue();
+                }
+            }
+        });
     }
-  }
 
-  onClick() {
-    this.element.nativeElement.dispatchEvent(
-      new CustomEvent('name-click', {
-        bubbles: true,
-        detail: {
-          node: this.node
+    protected updateValue() {
+        this.node = this.context.row.node;
+
+        if (this.node && this.node.entry) {
+            this.displayText$.next(this.node.entry.name || this.node.entry.id);
         }
-      })
-    );
-  }
+    }
+
+    onClick() {
+        this.element.nativeElement.dispatchEvent(
+            new CustomEvent('name-click', {
+                bubbles: true,
+                detail: {
+                    node: this.node
+                }
+            })
+        );
+    }
+
+    ngOnDestroy() {
+        if (this.sub) {
+            this.sub.unsubscribe();
+            this.sub = null;
+        }
+    }
 }

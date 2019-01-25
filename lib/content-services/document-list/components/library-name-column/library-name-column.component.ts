@@ -16,75 +16,105 @@
  */
 
 import {
-  Component,
-  ChangeDetectionStrategy,
-  ViewEncapsulation,
-  OnInit,
-  Input,
-  ElementRef
+    Component,
+    ChangeDetectionStrategy,
+    ViewEncapsulation,
+    OnInit,
+    Input,
+    ElementRef,
+    OnDestroy
 } from '@angular/core';
-import { NodeEntry } from '@alfresco/js-api';
+import { NodeEntry, Node } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
+import { AlfrescoApiService } from '@alfresco/adf-core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
-  selector: 'adf-library-name-column',
-  template: `
-    <span title="{{ displayTooltip }}" (click)="onClick()">
-      {{ displayText }}
-    </span>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
-  host: { class: 'adf-datatable-cell adf-datatable-link adf-library-name-column' }
+    selector: 'adf-library-name-column',
+    template: `
+        <span title="{{ displayTooltip$ | async }}" (click)="onClick()">
+            {{ displayText$ | async }}
+        </span>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    host: {
+        class: 'adf-datatable-cell adf-datatable-link adf-library-name-column'
+    }
 })
-export class LibraryNameColumnComponent implements OnInit {
-  @Input()
-  context: any;
+export class LibraryNameColumnComponent implements OnInit, OnDestroy {
+    @Input()
+    context: any;
 
-  displayTooltip: string;
-  displayText: string;
-  node: NodeEntry;
+    displayTooltip$ = new BehaviorSubject<string>('');
+    displayText$ = new BehaviorSubject<string>('');
+    node: NodeEntry;
 
-  constructor(private element: ElementRef) {}
+    private sub: Subscription;
 
-  ngOnInit() {
-    this.node = this.context.row.node;
-    const rows: Array<ShareDataRow> = this.context.data.rows || [];
-    if (this.node && this.node.entry) {
-      this.displayText = this.makeLibraryTitle(this.node.entry, rows);
-      this.displayTooltip = this.makeLibraryTooltip(this.node.entry);
+    constructor(private element: ElementRef, private api: AlfrescoApiService) {}
+
+    ngOnInit() {
+        this.updateValue();
+
+        this.sub = this.api.nodeUpdated.subscribe((node: Node) => {
+            const row: ShareDataRow = this.context.row;
+            if (row) {
+                const { entry } = row.node;
+
+                if (entry === node) {
+                    row.node = { entry };
+                    this.updateValue();
+                }
+            }
+        });
     }
-  }
 
-  onClick() {
-    this.element.nativeElement.dispatchEvent(
-      new CustomEvent('name-click', {
-        bubbles: true,
-        detail: {
-          node: this.node
+    protected updateValue() {
+        this.node = this.context.row.node;
+        const rows: Array<ShareDataRow> = this.context.data.rows || [];
+        if (this.node && this.node.entry) {
+            this.displayText$.next(this.makeLibraryTitle(this.node.entry, rows));
+            this.displayTooltip$.next(this.makeLibraryTooltip(this.node.entry));
         }
-      })
-    );
-  }
-
-  makeLibraryTooltip(library: any): string {
-    const { description, title } = library;
-
-    return description || title || '';
-  }
-
-  makeLibraryTitle(library: any, rows: Array<ShareDataRow>): string {
-    const entries = rows.map((r: ShareDataRow) => r.node.entry);
-    const { title, id } = library;
-
-    let isDuplicate = false;
-
-    if (entries) {
-      isDuplicate = entries.some((entry: any) => {
-        return entry.id !== id && entry.title === title;
-      });
     }
 
-    return isDuplicate ? `${title} (${id})` : `${title}`;
-  }
+    onClick() {
+        this.element.nativeElement.dispatchEvent(
+            new CustomEvent('name-click', {
+                bubbles: true,
+                detail: {
+                    node: this.node
+                }
+            })
+        );
+    }
+
+    makeLibraryTooltip(library: any): string {
+        const { description, title } = library;
+
+        return description || title || '';
+    }
+
+    makeLibraryTitle(library: any, rows: Array<ShareDataRow>): string {
+        const entries = rows.map((r: ShareDataRow) => r.node.entry);
+        const { title, id } = library;
+
+        let isDuplicate = false;
+
+        if (entries) {
+            isDuplicate = entries.some((entry: any) => {
+                return entry.id !== id && entry.title === title;
+            });
+        }
+
+        return isDuplicate ? `${title} (${id})` : `${title}`;
+    }
+
+    ngOnDestroy() {
+        if (this.sub) {
+            this.sub.unsubscribe();
+            this.sub = null;
+        }
+    }
 }
