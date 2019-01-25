@@ -22,14 +22,14 @@ Shows all available apps.
 ### [Transclusions](../user-guide/transclusion.md)
 
 You can show custom content when there are no apps available by supplying an
-`<adf-empty-custom-content>` section:
+`<adf-custom-empty-content>` section:
 
 ```html
 <adf-apps
     [layoutType]="'GRID'">
-        <adf-empty-custom-content>
+        <adf-custom-empty-content>
             No Apps present
-        </adf-empty-custom-content>
+        </adf-custom-empty-content>
 </adf-apps>
 ```
 

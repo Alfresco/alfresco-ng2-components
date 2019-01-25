@@ -2,14 +2,14 @@ adf-upload-drag-area {
     overflow: hidden;
 }
 
-.upload-border {
+.adf-upload-border {
     vertical-align: middle;
     text-align: center;
     width: 100%;
     box-sizing: border-box;
 }
 
-.file-draggable__input-focus {
-    color: #2196F3;
-    border: 1px dashed #2196F3;
+.adf-file-draggable__input-focus {
+    color: #2196f3;
+    border: 1px dashed #2196f3;
 }

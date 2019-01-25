@@ -35,8 +35,11 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     multi: true
 };
 
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
 @Directive({
-    selector: '[textMask]',
+    selector: '[adf-text-mask], [textMask]',
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class InputMaskDirective implements OnChanges, ControlValueAccessor {

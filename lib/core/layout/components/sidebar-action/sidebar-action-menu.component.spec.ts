@@ -58,11 +58,11 @@ describe('SidebarActionMenuComponent', () => {
 @Component({
     template: `
     <adf-sidebar-action-menu [expanded]="expanded" [title]="title">
-    <mat-icon sidebar-menu-title-icon>arrow_drop_down</mat-icon>
-    <div sidebar-menu-expand-icon>
+    <mat-icon adf-sidebar-menu-title-icon>arrow_drop_down</mat-icon>
+    <div adf-sidebar-menu-expand-icon>
         <mat-icon>queue</mat-icon>
     </div>
-    <div sidebar-menu-options>
+    <div adf-sidebar-menu-options>
         <button mat-menu-item>
             <mat-icon>assignment</mat-icon>
             <span>Option1</span>
@@ -122,7 +122,7 @@ describe('Custom SidebarActionMenuComponent', () => {
         expect(title.textContent).toBe('FakeTitle');
     });
 
-    it('should render the sidebar-menu-options', () => {
+    it('should render the adf-sidebar-menu-options', () => {
         fixture.detectChanges();
         const actionButton = fixture.nativeElement.querySelector('.adf-sidebar-action-menu-button');
         const options = fixture.nativeElement.querySelectorAll('.adf-sidebar-action-menu-options');

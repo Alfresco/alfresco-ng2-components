@@ -20,7 +20,10 @@ import { Point } from './../models/point';
 import { RaphaelBase } from './../raphael-base';
 import { RaphaelService } from './../raphael.service';
 
-@Directive({selector: 'raphael-icon-google-drive-publish'})
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
+@Directive({selector: 'adf-raphael-icon-google-drive-publish, raphael-icon-google-drive-publish'})
 export class RaphaelIconGoogleDrivePublishDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;

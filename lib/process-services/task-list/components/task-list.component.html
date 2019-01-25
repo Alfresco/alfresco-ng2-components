@@ -12,25 +12,27 @@
             (row-unselect)="onRowUnselect($event)"
             (rowClick)="onRowClick($event)"
             (row-keyup)="onRowKeyUp($event)">
-            <loading-content-template>
+            <adf-loading-content-template>
                 <ng-template>
                     <!--Add your custom loading template here-->
                     <mat-progress-spinner
-                    class="adf-task-list-loading-margin"
-                    [color]="'primary'"
-                    [mode]="'indeterminate'">
+                        *ngIf="!customLoadingContent"
+                        class="adf-task-list-loading-margin"
+                        [color]="'primary'"
+                        [mode]="'indeterminate'">
                     </mat-progress-spinner>
+                    <ng-content select="adf-custom-loading-content-template"></ng-content>
                 </ng-template>
-            </loading-content-template>
-            <no-content-template>
+            </adf-loading-content-template>
+            <adf-no-content-template>
                 <ng-template>
-                    <adf-empty-content *ngIf="!emptyCustomContent"
+                    <adf-empty-content *ngIf="!customEmptyContent"
                         icon="assignment"
                         [title]="'ADF_TASK_LIST.LIST.MESSAGES.TITLE' | translate"
                         [subtitle]="'ADF_TASK_LIST.LIST.MESSAGES.SUBTITLE' | translate">
                     </adf-empty-content>
-                    <ng-content select="adf-empty-custom-content"></ng-content>
+                    <ng-content select="adf-custom-empty-content-template"></ng-content>
                 </ng-template>
-            </no-content-template>
+            </adf-no-content-template>
         </adf-datatable>
 </ng-container>

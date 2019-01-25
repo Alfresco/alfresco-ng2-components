@@ -19,13 +19,13 @@
 
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
-    OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild, ViewEncapsulation
+    OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
 
 import {
     ContentService, DataCellEvent, DataColumn, DataRowActionEvent, DataSorting, DataTableComponent,
     DisplayMode, ObjectDataColumn, PaginatedComponent, AppConfigService, DataColumnListComponent,
-    UserPreferencesService, PaginationModel, ThumbnailService
+    UserPreferencesService, PaginationModel, ThumbnailService, CustomLoadingContentTemplateDirective, CustomNoPermissionTemplateDirective, CustomEmptyContentTemplateDirective
 } from '@alfresco/adf-core';
 
 import { Node, NodeEntry, NodePaging } from '@alfresco/js-api';
@@ -59,6 +59,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
+
+    @ContentChild(CustomLoadingContentTemplateDirective)
+    customLoadingContent: CustomLoadingContentTemplateDirective;
+
+    @ContentChild(CustomNoPermissionTemplateDirective)
+    customNoPermissionsTemplate: CustomNoPermissionTemplateDirective;
+
+    @ContentChild(CustomEmptyContentTemplateDirective)
+    customNoContentTemplate: CustomEmptyContentTemplateDirective;
 
     /** Include additional information about the node in the server request. For example: association, isLink, isLocked and others. */
     @Input()
@@ -212,8 +221,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     dataTable: DataTableComponent;
 
     actions: ContentActionModel[] = [];
-    emptyFolderTemplate: TemplateRef<any>;
-    noPermissionTemplate: TemplateRef<any>;
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
     noPermission: boolean = false;
@@ -281,24 +288,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this._pagination = new BehaviorSubject<PaginationModel>(defaultPagination);
         }
         return this._pagination;
-    }
-
-    isEmptyTemplateDefined(): boolean {
-        if (this.dataTable) {
-            if (this.emptyFolderTemplate) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    isNoPermissionTemplateDefined(): boolean {
-        if (this.dataTable) {
-            if (this.noPermissionTemplate) {
-                return true;
-            }
-        }
-        return false;
     }
 
     isMobile(): boolean {

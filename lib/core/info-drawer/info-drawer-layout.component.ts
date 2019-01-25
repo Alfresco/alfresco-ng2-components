@@ -26,6 +26,9 @@ import { Component, Directive, ViewEncapsulation } from '@angular/core';
 })
 export class InfoDrawerLayoutComponent {}
 
-@Directive({ selector: '[info-drawer-title]' }) export class InfoDrawerTitleDirective {}
-@Directive({ selector: '[info-drawer-buttons]' }) export class InfoDrawerButtonsDirective {}
-@Directive({ selector: '[info-drawer-content]' }) export class InfoDrawerContentDirective {}
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
+@Directive({ selector: '[adf-info-drawer-title], [info-drawer-title]' }) export class InfoDrawerTitleDirective {}
+@Directive({ selector: '[adf-info-drawer-buttons], [info-drawer-buttons]' }) export class InfoDrawerButtonsDirective {}
+@Directive({ selector: '[adf-info-drawer-content], [info-drawer-content]' }) export class InfoDrawerContentDirective {}

@@ -12,7 +12,7 @@ Adds a context menu to a component.
 ## Basic Usage
 
 ```html
-<my-component [context-menu]="menuItems"></my-component>
+<my-component [adf-context-menu]="menuItems"></my-component>
 <adf-context-menu-holder></context-menu-holder>
 ```
 

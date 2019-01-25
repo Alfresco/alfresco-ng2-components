@@ -19,17 +19,17 @@ Displays a sidebar-action menu information panel.
 There are three regions where you can add your own content in `<div>` elements with
 the following names:
 
--   sidebar-menu-title-icon
--   sidebar-menu-options
--   sidebar-menu-expand-icon
+-   adf-sidebar-menu-title-icon
+-   adf-sidebar-menu-options
+-   adf-sidebar-menu-expand-icon
 
 ```html
 <adf-sidebar-action-menu>
-    <mat-icon sidebar-menu-title-icon>arrow_drop_down</mat-icon>
-    <div sidebar-menu-expand-icon>
+    <mat-icon adf-sidebar-menu-title-icon>arrow_drop_down</mat-icon>
+    <div adf-sidebar-menu-expand-icon>
         <mat-icon>queue</mat-icon>
     </div>
-    <div sidebar-menu-options>
+    <div adf-sidebar-menu-options>
         <button mat-menu-item>
             <mat-icon>assignment</mat-icon>
             <span>Button Name</span>

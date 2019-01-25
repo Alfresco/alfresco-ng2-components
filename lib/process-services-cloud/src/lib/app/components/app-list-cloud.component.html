@@ -19,7 +19,7 @@
 </div>
 <ng-template #noApps>
     <div class="adf-app-list-empty">
-        <ng-content select="adf-empty-custom-content" *ngIf="hasEmptyCustomContentTemplate; else defaultEmptyTemplate"
+        <ng-content select="adf-custom-empty-content" *ngIf="hasEmptyCustomContentTemplate; else defaultEmptyTemplate"
             class="adf-custom-empty-template">
         </ng-content>
 

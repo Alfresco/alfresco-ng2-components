@@ -64,12 +64,12 @@ example:
 
 ```html
 <adf-task-details [taskId]="taskId">
-    <no-task-details-template>
+    <adf-no-task-details-template>
         <ng-template>
              <h1>Sorry, no tasks here</h1>
              <img src="example.jpg">
         </ng-template>
-    </no-task-details-template>
+    </adf-no-task-details-template>
 </adf-task-details>    
 ```
 

@@ -22,7 +22,10 @@ import { RaphaelService } from './raphael.service';
 
 declare let Raphael: any;
 
-@Directive({selector: 'raphael-flow-arrow'})
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
+@Directive({selector: 'adf-raphael-flow-arrow, raphael-flow-arrow'})
 export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;

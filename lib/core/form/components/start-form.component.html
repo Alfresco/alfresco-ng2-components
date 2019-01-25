@@ -18,7 +18,7 @@
         </mat-card-content>
         <mat-card-content class="adf-start-form-actions" *ngIf="showOutcomeButtons && form.hasOutcomes()"
                           #outcomesContainer>
-            <ng-content select="[form-custom-button]"></ng-content>
+            <ng-content select="[adf-form-custom-button]"></ng-content>
             <button *ngFor="let outcome of form.outcomes"
                     mat-button
                     [attr.data-automation-id]="'adf-form-' + outcome.name  | lowercase"

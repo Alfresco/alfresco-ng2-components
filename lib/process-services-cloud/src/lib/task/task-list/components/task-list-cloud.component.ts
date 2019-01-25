@@ -19,7 +19,7 @@ import { Component, ViewEncapsulation, OnChanges, Input, SimpleChanges, Output, 
 import { AppConfigService, UserPreferencesService,
          DataTableSchema, UserPreferenceValues,
          PaginatedComponent, PaginationModel,
-         DataRowEvent, EmptyCustomContentDirective } from '@alfresco/adf-core';
+         DataRowEvent, CustomEmptyContentTemplateDirective } from '@alfresco/adf-core';
 import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { BehaviorSubject } from 'rxjs';
@@ -38,8 +38,8 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     static PRESET_KEY = 'adf-cloud-task-list.presets';
 
-    @ContentChild(EmptyCustomContentDirective)
-    emptyCustomContent: EmptyCustomContentDirective;
+    @ContentChild(CustomEmptyContentTemplateDirective)
+    emptyCustomContent: CustomEmptyContentTemplateDirective;
 
     /** The name of the application. */
     @Input()

@@ -8,7 +8,7 @@
                         <adf-sidebar-action-menu [expanded]="true" [width]="205"
                                                  title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
                             <mat-icon sidebar-menu-title-icon>arrow_drop_down</mat-icon>
-                            <div sidebar-menu-options>
+                            <div adf-sidebar-menu-options>
                                 <button mat-menu-item data-automation-id="btn-start-task" (click)="navigateStartTask()">
                                     <mat-icon>assessment</mat-icon>
                                     <span>{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.NEW_TASK' | translate}}</span>
@@ -120,7 +120,7 @@
                         <adf-sidebar-action-menu [expanded]="true" [width]="205"
                                                  title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
                             <mat-icon sidebar-menu-title-icon>arrow_drop_down</mat-icon>
-                            <div sidebar-menu-options>
+                            <div adf-sidebar-menu-options>
                                 <button mat-menu-item data-automation-id="btn-start-process"
                                         (click)="navigateStartProcess()">
                                     <mat-icon>assessment</mat-icon>

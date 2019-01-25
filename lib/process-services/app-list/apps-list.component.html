@@ -43,7 +43,7 @@
 
 <ng-template #empty>
     <div class="adf-app-list-empty" *ngIf="isEmpty()">
-        <ng-content select="adf-empty-custom-content" *ngIf="hasEmptyCustomContentTemplate; else defaultEmptyTemplate" class="adf-custom-empty-template"></ng-content>
+        <ng-content select="adf-custom-empty-content" *ngIf="hasEmptyCustomContentTemplate; else defaultEmptyTemplate" class="adf-custom-empty-template"></ng-content>
 
         <ng-template #defaultEmptyTemplate>
             <adf-empty-content

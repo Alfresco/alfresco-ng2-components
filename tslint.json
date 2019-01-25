@@ -157,6 +157,12 @@
       "adf",
       "kebab-case"
     ],
+    "directive-selector": [
+      true,
+      ["element", "attribute"],
+      "adf",
+      "kebab-case"
+    ],
     "naming-convention": [
       {
         "type": "enumMember",

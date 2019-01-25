@@ -37,6 +37,7 @@ Displays the documents from a repository.
     -   [Custom image resolver](#custom-image-resolver)
     -   [Custom 'empty folder' template](#custom-empty-folder-template)
     -   [Custom 'permission denied' template](#custom-permission-denied-template)
+    -   [Custom 'loading' template](#custom-loading-template)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -827,11 +828,9 @@ However, you can change this by defining your own custom HTML template:
 
 ```html
 <adf-document-list ...>
-    <empty-folder-content>
-        <ng-template>
-            <h1>Sorry, no content here</h1>
-        </ng-template>
-    </empty-folder-content>
+    <adf-custom-empty-content-template>
+        <h1>Sorry, no content here</h1>
+    </adf-custom-empty-content-template>
 </adf-document-list>
 ```
 
@@ -850,17 +849,36 @@ You can change this by defining your own custom HTML template:
 
 ```html
 <adf-document-list ...>
-    <no-permission-content>
-        <ng-template>
-            <h1>You don't have permissions</h1>
-        </ng-template>
-    </no-permission-content>
+    <adf-custom-no-permission-template>
+        <h1>You don't have permissions</h1>
+    </adf-custom-no-permission-template>
 </adf-document-list>
 ```
 
 This will give the following output:
 
 ![Custom no permission](../docassets/images/no-permission-custom.png)
+
+### Custom 'loading' template
+
+By default, the Document List shows the following content when the content is loading:
+
+![Default loading](../docassets/images/default-loading.png)
+
+You can change this by defining your own custom HTML template:
+
+```html
+<adf-document-list ...>
+    <adf-custom-loading-content-template>
+        Loading Content
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </adf-custom-loading-content-template>
+</adf-document-list>
+```
+
+This will give the following output:
+
+![Custom loading](../docassets/images/custom-loading.png)
 
 ## See also
 

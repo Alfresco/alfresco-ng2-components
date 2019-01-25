@@ -15,22 +15,9 @@
  * limitations under the License.
  */
 
-import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular/core';
-import { DocumentListComponent } from './../document-list.component';
+import { Directive } from '@angular/core';
 
 @Directive({
-    selector: 'empty-folder-content'
+    selector: 'adf-custom-loading-content-template'
 })
-export class EmptyFolderContentDirective implements AfterContentInit {
-
-    @ContentChild(TemplateRef)
-    template: any;
-
-    constructor(private documentList: DocumentListComponent) {
-    }
-
-    ngAfterContentInit() {
-        this.documentList.emptyFolderTemplate = this.template;
-        this.documentList.dataTable.noContentTemplate = this.template;
-    }
-}
+export class CustomLoadingContentTemplateDirective {}

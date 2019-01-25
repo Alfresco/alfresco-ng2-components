@@ -24,7 +24,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 @Component({
     selector: 'adf-test-component',
     template: `
-        <div id="target" [context-menu]="actions" [context-menu-enabled]="true"></div>
+        <div id="target" [adf-context-menu]="actions" [adf-context-menu-enabled]="true"></div>
     `
 })
 class TestComponent {
