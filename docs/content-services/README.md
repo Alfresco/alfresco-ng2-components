@@ -58,6 +58,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Confirm dialog](confirm.dialog.md) | Requests a yes/no choice from the user. | [Source](../../lib/content-services/dialogs/confirm.dialog.ts) |
 | [Library dialog](library.dialog.md) | Creates a new Content Services document library/site. | [Source](../../lib/content-services/dialogs/library/library.dialog.ts) |
 
 ## Directives
