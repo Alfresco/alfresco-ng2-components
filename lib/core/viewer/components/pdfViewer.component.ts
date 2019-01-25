@@ -24,15 +24,23 @@ import {
     OnChanges,
     OnDestroy,
     ViewEncapsulation,
-    EventEmitter
+    EventEmitter,
+    SimpleChanges
 } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { LogService } from '../../services/log.service';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfPasswordDialogComponent } from './pdfViewer-password-dialog';
-import { MatDialog } from '@angular/material';
+import { AppConfigService } from './../../app-config/app-config.service';
 
 declare const pdfjsLib: any;
 declare const pdfjsViewer: any;
+
+export interface PdfDocumentOptions {
+    url?: string;
+    data?: any;
+    withCredentials?: boolean;
+}
 
 @Component({
     selector: 'adf-pdf-viewer',
@@ -99,7 +107,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     constructor(
         private dialog: MatDialog,
         private renderingQueueServices: RenderingQueueServices,
-        private logService: LogService) {
+        private logService: LogService,
+        private appConfigService: AppConfigService) {
         // needed to preserve "this" context
         this.onPageChange = this.onPageChange.bind(this);
         this.onPagesLoaded = this.onPagesLoaded.bind(this);
@@ -107,20 +116,28 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         this.randomPdfId = this.generateUuid();
     }
 
-    ngOnChanges(changes) {
-        let blobFile = changes['blobFile'];
+    ngOnChanges(changes: SimpleChanges) {
+        const blobFile = changes['blobFile'];
 
         if (blobFile && blobFile.currentValue) {
-            let reader = new FileReader();
+            const reader = new FileReader();
             reader.onload = () => {
-                this.executePdf(reader.result);
+                const options = {
+                    data: reader.result,
+                    withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
+                };
+                this.executePdf(options);
             };
             reader.readAsArrayBuffer(blobFile.currentValue);
         }
 
-        let urlFile = changes['urlFile'];
+        const urlFile = changes['urlFile'];
         if (urlFile && urlFile.currentValue) {
-            this.executePdf(urlFile.currentValue);
+            const options = {
+                url: urlFile.currentValue,
+                withCredentials: this.appConfigService.get<boolean>('auth.withCredentials', undefined)
+            };
+            this.executePdf(options);
         }
 
         if (!this.urlFile && !this.blobFile) {
@@ -128,10 +145,10 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    executePdf(src) {
-
+    executePdf(pdfOptions: PdfDocumentOptions) {
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
-        this.loadingTask = pdfjsLib.getDocument(src);
+
+        this.loadingTask = pdfjsLib.getDocument(pdfOptions);
 
         this.loadingTask.onPassword = (callback, reason) => {
             this.onPdfPassword(callback, reason);

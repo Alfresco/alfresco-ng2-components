@@ -36,7 +36,8 @@ export enum AppConfigValues {
     ALFRESCO_REPOSITORY_NAME = 'alfrescoRepositoryName',
     LOG_LEVEL = 'logLevel',
     LOGIN_ROUTE = 'loginRoute',
-    DISABLECSRF = 'disableCSRF'
+    DISABLECSRF = 'disableCSRF',
+    AUTH_WITH_CREDENTIALS = 'auth.withCredentials'
 }
 
 export enum Status {
