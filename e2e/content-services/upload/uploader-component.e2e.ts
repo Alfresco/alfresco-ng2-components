@@ -183,17 +183,24 @@ describe('Upload component', () => {
             .checkContentIsDisplayed(docxFileModel.name);
 
         uploadDialog.fileIsUploaded(docxFileModel.name).checkCloseButtonIsDisplayed();
-        expect(uploadDialog.getTitleText()).toEqual('Uploaded 1 / 1');
         expect(uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
         expect(uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
         uploadDialog.minimizeUploadDialog().dialogIsMinimized();
-        expect(uploadDialog.getTitleText()).toEqual('Uploaded 1 / 1');
         expect(uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
         expect(uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
         uploadDialog.maximizeUploadDialog().dialogIsDisplayed().fileIsUploaded(docxFileModel.name);
-        expect(uploadDialog.getTitleText()).toEqual('Uploaded 1 / 1');
         expect(uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
         expect(uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
+        uploadDialog.checkCloseButtonIsDisplayed().clickOnCloseButton().dialogIsNotDisplayed();
+    });
+
+    it('[C291902] Should be shown upload counter display in dialog box', () => {
+        contentServicesPage
+            .uploadFile(docxFileModel.location)
+            .checkContentIsDisplayed(docxFileModel.name);
+
+        uploadDialog.fileIsUploaded(docxFileModel.name).checkCloseButtonIsDisplayed();
+        expect(uploadDialog.getTitleText()).toEqual('Uploaded 1 / 1');
         uploadDialog.checkCloseButtonIsDisplayed().clickOnCloseButton().dialogIsNotDisplayed();
     });
 
