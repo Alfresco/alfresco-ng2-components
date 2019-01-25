@@ -23,7 +23,6 @@ import {
     CardViewBaseItemModel,
     TranslationService,
     AppConfigService,
-    CardViewMapItemModel,
     UpdateNotification,
     CardViewUpdateService,
     StorageService
@@ -59,16 +58,18 @@ export class TaskHeaderCloudComponent implements OnInit {
     unclaim: EventEmitter<any> = new EventEmitter<any>();
 
     taskDetails: TaskDetailsCloudModel = new TaskDetailsCloudModel();
-    properties: CardViewItem [];
+    properties: CardViewItem[];
     inEdit: boolean = false;
+    parentTaskName: string;
     private currentUser: string;
 
-    constructor(private taskHeaderCloudService: TaskHeaderCloudService,
-                private translationService: TranslationService,
-                private appConfig: AppConfigService,
-                private cardViewUpdateService: CardViewUpdateService,
-                private storage: StorageService) {
-    }
+    constructor(
+        private taskHeaderCloudService: TaskHeaderCloudService,
+        private translationService: TranslationService,
+        private appConfig: AppConfigService,
+        private cardViewUpdateService: CardViewUpdateService,
+        private storage: StorageService
+    ) { }
 
     ngOnInit() {
         this.loadCurrentBpmUserId();
@@ -86,11 +87,15 @@ export class TaskHeaderCloudComponent implements OnInit {
         this.taskHeaderCloudService.getTaskById(appName, taskId).subscribe(
             (taskDetails) => {
                 this.taskDetails = taskDetails;
-                this.refreshData();
+                if (this.taskDetails.parentTaskId) {
+                    this.loadParentName(this.taskDetails.parentTaskId);
+                } else {
+                    this.refreshData();
+                }
             });
     }
 
-    private initDefaultProperties(parentInfoMap) {
+    private initDefaultProperties() {
         return [
             new CardViewTextItemModel(
                 {
@@ -140,13 +145,12 @@ export class TaskHeaderCloudComponent implements OnInit {
                     key: 'created'
                 }
             ),
-            new CardViewMapItemModel(
+            new CardViewTextItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME',
-                    value: parentInfoMap,
-                    key: 'parentName',
+                    value: this.parentTaskName,
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT'),
-                    clickable: this.isReadOnlyMode()
+                    key: 'parentName'
                 }
             ),
             new CardViewTextItemModel(
@@ -159,7 +163,7 @@ export class TaskHeaderCloudComponent implements OnInit {
             new CardViewDateItemModel(
                 {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.END_DATE',
-                    value: this.taskDetails.claimedDate,
+                    value: '',
                     key: 'endDate'
                 }
             ),
@@ -188,7 +192,7 @@ export class TaskHeaderCloudComponent implements OnInit {
      */
     refreshData() {
         if (this.taskDetails) {
-            const defaultProperties = this.initDefaultProperties(this.getParentInfo());
+            const defaultProperties = this.initDefaultProperties();
             const filteredProperties: string[] = this.appConfig.get('adf-cloud-task-header.presets.properties');
             this.properties = defaultProperties.filter((cardItem) => this.isValidSelection(filteredProperties, cardItem));
         }
@@ -209,14 +213,18 @@ export class TaskHeaderCloudComponent implements OnInit {
             );
     }
 
-    getParentInfo() {
-        if (this.taskDetails.processInstanceId && this.taskDetails.processDefinitionId) {
-            return new Map([[this.taskDetails.processInstanceId, this.taskDetails.processDefinitionId]]);
-        }
+    private loadParentName(taskId) {
+        this.taskHeaderCloudService.getTaskById(this.appName, taskId)
+            .subscribe(
+                (taskDetails) => {
+                    this.parentTaskName = taskDetails.name;
+                    this.refreshData();
+                }
+            );
     }
 
     isCompleted() {
-        return  this.taskDetails && this.taskDetails.status === 'completed';
+        return this.taskDetails && this.taskDetails.status === 'completed';
     }
 
     isTaskClaimable(): boolean {
