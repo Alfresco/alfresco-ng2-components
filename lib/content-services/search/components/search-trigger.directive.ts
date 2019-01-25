@@ -41,7 +41,11 @@ export const SEARCH_AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     multi: true
 };
 
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
 @Directive({
+    // tslint:disable-next-line:directive-selector
     selector: `input[searchAutocomplete], textarea[searchAutocomplete]`,
     host: {
         'role': 'combobox',

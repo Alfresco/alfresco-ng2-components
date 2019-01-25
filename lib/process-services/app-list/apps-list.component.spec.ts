@@ -243,9 +243,9 @@ describe('AppsListComponent', () => {
 @Component({
     template: `
     <adf-apps>
-        <adf-empty-custom-content>
+        <adf-custom-empty-content>
             <p id="custom-id">No Apps</p>
-        </adf-empty-custom-content>
+        </adf-custom-empty-content>
     </adf-apps>
        `
 })

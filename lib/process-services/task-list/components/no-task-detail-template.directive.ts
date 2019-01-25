@@ -23,8 +23,11 @@ import {
 } from '@angular/core';
 import { TaskDetailsComponent } from './task-details.component';
 
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
 @Directive({
-    selector: 'no-task-details-template'
+    selector: 'adf-no-task-details-template, no-task-details-template'
 })
 export class NoTaskDetailsTemplateDirective implements AfterContentInit {
 

@@ -12,7 +12,7 @@ Provides drag-and-drop features for an element such as a `div`.
 ## Basic Usage
 
 ```html
-<div [file-draggable]="true" id="DragAndDropBorder" class="drag-and-drop-border"
+<div [adf-file-draggable]="true" id="DragAndDropBorder" class="drag-and-drop-border"
      (filesDropped)="onFilesDropped($event)"
      (folderEntityDropped)="onFolderEntityDropped($event)"
      dropzone="" webkitdropzone="*" #dragAndDropArea>

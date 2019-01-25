@@ -23,8 +23,11 @@ import {
 } from '@angular/core';
 import { LoginComponent } from '../components/login.component';
 
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
 @Directive({
-    selector: 'login-footer'
+    selector: 'adf-login-footer, login-footer'
 })
 export class LoginFooterDirective implements AfterContentInit {
 

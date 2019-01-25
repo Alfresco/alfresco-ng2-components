@@ -17,5 +17,8 @@
 
 import { Directive } from '@angular/core';
 
-@Directive({ selector: 'people-search-title' })
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
+@Directive({ selector: 'adf-people-search-title, people-search-title' })
 export class PeopleSearchTitleDirective { }

@@ -18,8 +18,11 @@
 import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular/core';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
 @Directive({
-    selector: 'loading-content-template'
+    selector: 'adf-loading-content-template, loading-content-template'
 })
 export class LoadingContentTemplateDirective implements AfterContentInit {
 

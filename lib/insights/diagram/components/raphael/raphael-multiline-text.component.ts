@@ -20,7 +20,10 @@ import { Point } from './models/point';
 import { RaphaelBase } from './raphael-base';
 import { RaphaelService } from './raphael.service';
 
-@Directive({ selector: 'raphael-multiline-text' })
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
+@Directive({ selector: 'adf-raphael-multiline-text, raphael-multiline-text' })
 export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;

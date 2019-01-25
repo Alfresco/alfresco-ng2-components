@@ -34,14 +34,14 @@ Renders a list containing all the process instances matched by the parameters sp
 
 ### [Transclusions](../user-guide/transclusion.md)
 
-Any content inside an `<adf-empty-custom-content>` sub-component will be shown
+Any content inside an `<adf-custom-empty-content>` sub-component will be shown
 when the process list is empty:
 
 ```html
 <adf-process-instance-list>
-    <adf-empty-custom-content>
+    <adf-custom-empty-content>
         Your Content
-    </adf-empty-custom-content>
+    </adf-custom-empty-content>
 <adf-process-instance-list>
 ```
 

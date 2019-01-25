@@ -18,8 +18,11 @@
 import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular/core';
 import { DataTableComponent } from '../components/datatable/datatable.component';
 
+/**
+ * Directive selectors without adf- prefix will be deprecated on 3.0.0
+ */
 @Directive({
-    selector: 'no-content-template'
+    selector: 'adf-no-content-template, no-content-template'
 })
 export class NoContentTemplateDirective implements AfterContentInit {
 

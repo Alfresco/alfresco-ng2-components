@@ -89,8 +89,8 @@
                      tabindex="0"
                      (click)="onRowClick(row, $event)"
                      (keydown.enter)="onEnterKeyPressed(row, $event)"
-                     [context-menu]="getContextMenuActions(row, col)"
-                     [context-menu-enabled]="contextMenu">
+                     [adf-context-menu]="getContextMenuActions(row, col)"
+                     [adf-context-menu-enabled]="contextMenu">
                     <div *ngIf="!col.template" class="adf-cell-container">
                         <ng-container [ngSwitch]="col.type">
                             <div *ngSwitchCase="'image'" class="adf-cell-value">
