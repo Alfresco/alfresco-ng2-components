@@ -130,7 +130,8 @@ export class EditProcessFilterCloudComponent implements OnChanges {
      */
     onSave() {
         this.processFilterCloudService.updateFilter(this.changedProcessFilter);
-        this.action.emit({actionType: EditProcessFilterCloudComponent.ACTION_SAVE, id: this.changedProcessFilter.id});
+        this.formHasBeenChanged = this.compareFilters(this.changedProcessFilter, this.processFilter);
+        this.action.emit({actionType: EditProcessFilterCloudComponent.ACTION_SAVE, filter: this.changedProcessFilter});
     }
 
     /**
@@ -138,7 +139,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
      */
     onDelete() {
         this.processFilterCloudService.deleteFilter(this.processFilter);
-        this.action.emit({actionType: EditProcessFilterCloudComponent.ACTION_DELETE, id: this.processFilter.id});
+        this.action.emit({actionType: EditProcessFilterCloudComponent.ACTION_DELETE, filter: this.processFilter});
     }
 
     /**
@@ -164,7 +165,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                     };
                 const filter = Object.assign({}, this.changedProcessFilter, newFilter);
                 this.processFilterCloudService.addFilter(filter);
-                this.action.emit({actionType: EditProcessFilterCloudComponent.ACTION_SAVE_AS, id: filter.id});
+                this.action.emit({actionType: EditProcessFilterCloudComponent.ACTION_SAVE_AS, filter: filter});
             }
         });
     }

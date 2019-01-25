@@ -23,7 +23,7 @@ import {
     ProcessFiltersCloudComponent
 } from '@alfresco/adf-process-services-cloud';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserPreferencesService } from '@alfresco/adf-core';
 import { CloudLayoutService } from './services/cloud-layout.service';
 
@@ -32,6 +32,8 @@ import { CloudLayoutService } from './services/cloud-layout.service';
     styleUrls: ['./processes-cloud-demo.component.scss']
 })
 export class ProcessesCloudDemoComponent implements OnInit {
+
+    public static ACTION_SAVE_AS = 'SAVE_AS';
 
     @ViewChild('processCloud')
     processCloud: ProcessListCloudComponent;
@@ -50,6 +52,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private cloudLayoutService: CloudLayoutService,
         private userPreference: UserPreferencesService) {
     }
@@ -75,12 +78,15 @@ export class ProcessesCloudDemoComponent implements OnInit {
         this.selectedRow = $event;
     }
 
-    onFilterChange(query: any) {
-        this.editedFilter = Object.assign({}, query);
+    onFilterChange(filter: any) {
+        this.editedFilter = Object.assign({}, filter);
         this.sortArray = [new ProcessListCloudSortingModel({ orderBy: this.editedFilter.sort, direction: this.editedFilter.order })];
     }
 
-    onProcessFilterAction(filter: any) {
-        this.cloudLayoutService.setCurrentProcessFilterParam({id: filter.id});
-     }
+    onProcessFilterAction(filterAction: any) {
+        this.cloudLayoutService.setCurrentProcessFilterParam({ id: filterAction.filter.id });
+        if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_SAVE_AS) {
+            this.router.navigate([`/cloud/${this.applicationName}/processes/`], { queryParams: filterAction.filter });
+        }
+    }
 }
