@@ -160,7 +160,7 @@ jobs:
           script:
             AFFECTED_E2E="$(./scripts/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e")";
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
-            if [[ $AFFECTED_LIBS =~ "content-services$" || $AFFECTED_E2E = "e2e" ]];
+            if [[ $AFFECTED_LIBS =~ "content-services$" || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b -save --folder search --skip-lint --use-dist  || exit 1;);
             fi
