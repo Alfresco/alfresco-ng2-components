@@ -55,12 +55,10 @@ when the process list is empty:
 | businessKey | `string` | "" | Filter the tasks to display only the ones with this businessKey value. |
 | id | `string` | "" | Filter the processes to display only the ones with this ID. |
 | initiator | `string` | "" | Name of the initiator of the process. |
-| landingTaskId | `string` |  | Define which task id should be selected after reloading. If the task id doesn't exist or nothing is passed then the first task will be selected. |
 | multiselect | `boolean` | false | Toggles multiple row selection and renders checkboxes at the beginning of each row |
 | name | `string` | "" | Filter the processes to display only the ones with this name. |
 | processDefinitionId | `string` | "" | Filter the processes to display only the ones with this process definition ID. |
 | processDefinitionKey | `string` | "" | Filter the processes to display only the ones with this process definition key. |
-| selectFirstRow | `boolean` | true | Toggles default selection of the first row |
 | selectionMode | `string` | "single" | Row selection mode. Can be "none", "single" or "multiple". For multiple mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | sorting | [`ProcessListCloudSortingModel`](../../lib/process-services-cloud/src/lib/process/process-list/models/process-list-sorting.model.ts)`[]` |  | Array of objects specifying the sort order and direction for the list. The sort parameters are for BE sorting. |
 | status | `string` | "" | Filter the processes to display only the ones with this status. |

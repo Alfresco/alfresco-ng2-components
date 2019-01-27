@@ -56,7 +56,6 @@ when the task list is empty:
 | createdDate | `string` | "" | Filter the tasks. Display only tasks created on the supplied date. |
 | dueDate | `string` | "" | Filter the tasks. Display only tasks with dueDate equal to the supplied date. |
 | id | `string` | "" | Filter the tasks. Display only tasks with id equal to the supplied value. |
-| landingTaskId | `string` |  | Define which task id should be selected after reloading. If the task id doesn't exist or nothing is passed then the first task will be selected. |
 | multiselect | `boolean` | false | Toggles multiple row selection, rendering a checkbox at the beginning of each row. |
 | name | `string` | "" | Filter the tasks. Display only tasks with the supplied name. |
 | parentTaskId | `string` | "" | Filter the tasks. Display only tasks with parentTaskId equal to the supplied value. |
