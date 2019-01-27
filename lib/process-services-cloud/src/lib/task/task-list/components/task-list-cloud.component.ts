@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnChanges, Input, SimpleChanges, Output, EventEmitter, ContentChild, AfterContentInit, SimpleChange } from '@angular/core';
+import { Component, ViewEncapsulation, OnChanges, Input, SimpleChanges, Output, EventEmitter, ContentChild, AfterContentInit } from '@angular/core';
 import { AppConfigService, UserPreferencesService,
          DataTableSchema, UserPreferenceValues,
          PaginatedComponent, PaginationModel,
@@ -24,7 +24,6 @@ import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model'
 import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { BehaviorSubject } from 'rxjs';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
-import { NodeEntry } from '@alfresco/js-api';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 
 @Component({
@@ -84,13 +83,6 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     /** Filter the tasks. Display only tasks with status equal to the supplied value. */
     @Input()
     status: string = '';
-
-    /**
-     * Define which task id should be selected after reloading. If the task id doesn't
-     * exist or nothing is passed then the first task will be selected.
-     */
-    @Input()
-    landingTaskId: string;
 
     /**
      * Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
@@ -154,8 +146,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.isPropertyChanged(changes) &&
-            !this.isEqualToCurrentId(changes['landingTaskId'])) {
+        if (this.isPropertyChanged(changes)) {
             this.reload();
         }
     }
@@ -166,10 +157,6 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     getCurrentId(): string {
         return this.currentInstanceId;
-    }
-
-    isEqualToCurrentId(landingTaskChanged: SimpleChange): boolean {
-        return landingTaskChanged && this.currentInstanceId === landingTaskChanged.currentValue;
     }
 
     private isPropertyChanged(changes: SimpleChanges): boolean {
@@ -198,7 +185,6 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         this.taskListCloudService.getTaskByRequest(requestNode).subscribe(
             (tasks) => {
                 this.rows = tasks.list.entries;
-                this.selectTask(this.landingTaskId);
                 this.success.emit(tasks);
                 this.isLoading = false;
                 this.pagination.next(tasks.list.pagination);
@@ -206,23 +192,6 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
                 this.error.emit(error);
                 this.isLoading = false;
             });
-    }
-
-    selectTask(taskIdSelected: string) {
-        if (!this.isListEmpty()) {
-            let dataRow: any = null;
-            if (taskIdSelected) {
-                dataRow = this.rows.find((currentRow: NodeEntry) => {
-                    return currentRow.entry.id === taskIdSelected;
-                });
-            }
-            if (dataRow) {
-                dataRow.isSelected = true;
-                this.currentInstanceId = dataRow.entry.id;
-            }
-        } else {
-            this.currentInstanceId = null;
-        }
     }
 
     isListEmpty(): boolean {
