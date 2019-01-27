@@ -15,10 +15,15 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
 import { DynamicExtensionComponent } from './components/dynamic-component/dynamic.component';
 import { DynamicTabComponent } from './components/dynamic-tab/dynamic-tab.component';
 import { DynamicColumnComponent } from './components/dynamic-column/dynamic-column.component';
+import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
+import { AppExtensionService } from './services/app-extension.service';
+
+export function setupExtensions(service: AppExtensionService): Function {
+    return () => service.load();
+}
 
 @NgModule({
     declarations: [
@@ -32,4 +37,24 @@ import { DynamicColumnComponent } from './components/dynamic-column/dynamic-colu
         DynamicColumnComponent
     ]
 })
-export class ExtensionsModule {}
+export class ExtensionsModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: ExtensionsModule,
+            providers: [
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: setupExtensions,
+                    deps: [AppExtensionService],
+                    multi: true
+                }
+            ]
+        };
+    }
+
+    static forChild(): ModuleWithProviders {
+        return {
+            ngModule: ExtensionsModule
+        };
+    }
+}

@@ -10,7 +10,6 @@
   "$dependencies": [
     "@some/library1"
   ],
-
   "features": {
     "custom": {
       "key": "value"

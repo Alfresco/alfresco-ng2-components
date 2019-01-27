@@ -29,6 +29,7 @@ export * from './lib/config/viewer.extensions';
 export * from './lib/services/extension-loader.service';
 export * from './lib/services/extension.service';
 export * from './lib/services/component-register.service';
+export * from './lib/services/app-extension.service';
 
 export * from './lib/store/states/navigation.state';
 export * from './lib/store/states/profile.state';
