@@ -93,6 +93,6 @@ With this configuration, only the four listed properties will be shown.
 
 The available properties are:
 
-**_appName_**, **_state_**, **_assignment_**, **_sort_**, **_order_**, **_processDefinitionId_**, **_processInstanceId_**, **_dueAfter_**, **_dueBefore_**, **_claimedDateFrom_**, **_claimedDateTo_**, **_createdDateFrom_**, **_createdDateTo_**, **_taskName_**, **_parentTaskId_**, **_priority_**, **_standAlone_**, **_lastModifiedFrom_**, **_lastModifiedTo_**, **_owner_**, **_dueDateFrom_**, **_dueDateTo_**.
+**_appName_**, **_state_**, **_assignment_**, **_sort_**, **_order_**, **_processDefinitionId_**, **_processInstanceId_**, **_taskName_**, **_parentTaskId_**, **_priority_**, **_standAlone_**, **_lastModifiedFrom_**, **_lastModifiedTo_**, **_owner_**.
 
 ![edit-task-filter-cloud](../docassets/images/edit-task-filter-cloud.component.png)

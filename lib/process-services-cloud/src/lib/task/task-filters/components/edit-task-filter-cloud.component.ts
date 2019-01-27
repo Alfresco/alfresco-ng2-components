@@ -331,42 +331,6 @@ export class EditTaskFilterCloudComponent implements OnChanges {
                 value: currentTaskFilter.processInstanceId || ''
             }),
             new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_AFTER',
-                type: 'date',
-                key: 'dueAfter',
-                value: ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_BEFORE',
-                type: 'date',
-                key: 'dueBefore',
-                value: ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CLAIMED_DATE_FROM',
-                type: 'date',
-                key: 'claimedDateFrom',
-                value: ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CLAIMED_DATE_TO',
-                type: 'date',
-                key: 'claimedDateTo',
-                value: ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE_FORM',
-                type: 'date',
-                key: 'createdDateFrom',
-                value: ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE_TO',
-                type: 'date',
-                key: 'createdDateTo',
-                value: ''
-            }),
-            new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.TASK_NAME',
                 type: 'text',
                 key: 'taskName',
@@ -409,18 +373,6 @@ export class EditTaskFilterCloudComponent implements OnChanges {
                 type: 'text',
                 key: 'owner',
                 value: currentTaskFilter.owner || ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE_FROM',
-                type: 'date',
-                key: 'dueDateFrom',
-                value: ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE_TO',
-                type: 'date',
-                key: 'dueDateTo',
-                value: ''
             })
         ];
     }

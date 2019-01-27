@@ -265,13 +265,13 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
 
         it('should able to build a editTaskFilter form with given input properties', async(() => {
-            getTaskFilterSpy.and.returnValue({ processInstanceId: 'process-instance-id', dueBefore: 'Fri Jan 04 2019 19:16:32 GMT+0530 (IST)' });
+            getTaskFilterSpy.and.returnValue({ processInstanceId: 'process-instance-id', priority: '12' });
             component.appName = 'mock-app-name';
-            component.filterProperties = ['appName', 'processInstanceId', 'dueBefore'];
+            component.filterProperties = ['appName', 'processInstanceId', 'priority'];
             let change = new SimpleChange(undefined, 'mock-task-id', true);
             component.ngOnChanges({ 'id': change });
             const appController = component.editTaskFilterForm.get('appName');
-            const dueDateController = component.editTaskFilterForm.get('dueBefore');
+            const propertyController = component.editTaskFilterForm.get('priority');
             const processInsIdController = component.editTaskFilterForm.get('processInstanceId');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -281,7 +281,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 expect(component.editTaskFilterForm).toBeDefined();
                 expect(component.taskFilterProperties.length).toBe(3);
                 expect(appController).toBeDefined();
-                expect(dueDateController).toBeDefined();
+                expect(propertyController.value).toBe('12');
                 expect(processInsIdController).toBeDefined();
                 expect(appController.value).toBe('mock-app-name');
                 expect(processInsIdController.value).toBe('process-instance-id');
