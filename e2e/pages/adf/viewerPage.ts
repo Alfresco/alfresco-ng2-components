@@ -186,8 +186,12 @@ export class ViewerPage {
         Util.waitUntilElementIsVisible(this.closeButton);
     }
 
-    getLastButtonDisplayed() {
-        return this.lastButton;
+    getLastButtonTitle() {
+        return this.lastButton.getAttribute('title');
+    }
+
+    getMoreActionsMenuTitle() {
+        return this.moreActionsMenu.getAttribute('title');
     }
 
     checkDownloadButtonIsDisplayed() {
