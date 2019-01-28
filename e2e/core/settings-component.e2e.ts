@@ -25,6 +25,8 @@ describe('Settings component', () => {
 
     const loginPage = new LoginPage();
     const settingsPage = new SettingsPage();
+    const loginError = 'Request has been terminated ' +
+        'Possible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.';
 
     let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
@@ -69,8 +71,8 @@ describe('Settings component', () => {
             loginPage.waitForElements();
             settingsPage.goToSettingsPage();
             expect(settingsPage.getSelectedOptionText()).toEqual('ALL', 'The Settings changes are not saved');
-            expect(settingsPage.getBpmHostUrl()).toEqual('http://adfdev.envalfresco.com', 'The BPM Settings changes are not saved');
-            expect(settingsPage.getEcmHostUrl()).toEqual('http://adfdev.envalfresco.com', 'The ECM Settings changes are not saved');
+            expect(settingsPage.getBpmHostUrl()).toEqual(TestConfig.adf.url, 'The BPM Settings changes are not saved');
+            expect(settingsPage.getEcmHostUrl()).toEqual(TestConfig.adf.url, 'The ECM Settings changes are not saved');
 
         });
 
@@ -98,8 +100,7 @@ describe('Settings component', () => {
             loginPage.enterUsername(adminUserModel.id);
             loginPage.enterPassword(adminUserModel.password);
             loginPage.clickSignInButton();
-            expect(loginPage.getLoginError()).toMatch('Request has been terminated ' +
-                'Possible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.');
+            expect(loginPage.getLoginError()).toMatch(loginError);
         });
 
         it('[C291952] Should not be able to sign in with invalid Process Services Url', () => {
@@ -110,8 +111,7 @@ describe('Settings component', () => {
             loginPage.enterUsername(adminUserModel.id);
             loginPage.enterPassword(adminUserModel.password);
             loginPage.clickSignInButton();
-            expect(loginPage.getLoginError()).toMatch('Request has been terminated ' +
-                'Possible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.');
+            expect(loginPage.getLoginError()).toMatch(loginError);
         });
 
     });
