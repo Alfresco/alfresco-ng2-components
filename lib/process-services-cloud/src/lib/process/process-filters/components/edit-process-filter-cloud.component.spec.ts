@@ -265,10 +265,10 @@ describe('EditProcessFilterCloudComponent', () => {
 
         beforeEach(() => {
             component.filterProperties = ['appName', 'processInstanceId', 'processName'];
-            fixture.detectChanges();
         });
 
         it('should able to fetch running applications when appName property defined in the input', async(() => {
+            fixture.detectChanges();
             let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
             component.ngOnChanges({'id': processFilterIDchange});
             const appController = component.editProcessFilterForm.get('appName');
@@ -282,12 +282,14 @@ describe('EditProcessFilterCloudComponent', () => {
 
         it('should able to build a editProcessFilter form with given input properties', async(() => {
             fixture.detectChanges();
+            getProcessFilterByIdSpy.and.returnValue({ appName: 'mock-app-name', processInstanceId: 'process-instance-id', processName: 'mock-process-name' });
             let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
             component.ngOnChanges({'id': processFilterIDchange});
             fixture.detectChanges();
             const appController = component.editProcessFilterForm.get('appName');
             const processNameController = component.editProcessFilterForm.get('processName');
-            const processInsIdController = component.editProcessFilterForm.get('processDefinitionId');
+            const processInsIdController = component.editProcessFilterForm.get('processInstanceId');
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(getRunningApplicationsSpy).toHaveBeenCalled();

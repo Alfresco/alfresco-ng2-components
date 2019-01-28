@@ -258,11 +258,11 @@ describe('EditTaskFilterCloudComponent', () => {
     describe('Task filterProperties', () => {
 
         beforeEach(() => {
-            component.filterProperties = ['appName', 'processInstanceId', 'dueBefore'];
-            fixture.detectChanges();
+            component.filterProperties = ['appName', 'processInstanceId', 'priority'];
         });
 
         it('should able to fetch running applications when appName property defined in the input', async(() => {
+            fixture.detectChanges();
             let taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
             component.ngOnChanges({ 'id': taskFilterIDchange});
             const appController = component.editTaskFilterForm.get('appName');
@@ -275,19 +275,22 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
 
         it('should able to build a editTaskFilter form with given input properties', async(() => {
+            fixture.detectChanges();
+            getTaskFilterSpy.and.returnValue({ appName: 'mock-app-name', processInstanceId: 'process-instance-id', priority: '12' });
             let taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
             component.ngOnChanges({ 'id': taskFilterIDchange});
             fixture.detectChanges();
             const appController = component.editTaskFilterForm.get('appName');
-            const propertyController = component.editTaskFilterForm.get('priority');
+            const priorityController = component.editTaskFilterForm.get('priority');
             const processInsIdController = component.editTaskFilterForm.get('processInstanceId');
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 expect(component.taskFilterProperties).toBeDefined();
                 expect(component.editTaskFilterForm).toBeDefined();
                 expect(component.taskFilterProperties.length).toBe(3);
                 expect(appController).toBeDefined();
-                expect(propertyController.value).toBe('12');
+                expect(priorityController.value).toBe('12');
                 expect(processInsIdController).toBeDefined();
                 expect(appController.value).toBe('mock-app-name');
             });
