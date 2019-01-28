@@ -72,7 +72,7 @@ export class SearchConfiguration {
                 'pageSize': 5,
                 'queries': [
                     {'query': 'created:2018', 'label': '1.Created This Year'},
-                    {'query': 'content.mimetype', 'label': '2.Type'},
+                    {'query': 'content.mimetype:text/html', 'label': '2.Type: HTML'},
                     {'query': 'content.size:[0 TO 10240]', 'label': '3.Size: xtra small'},
                     {'query': 'content.size:[10240 TO 102400]', 'label': '4.Size: small'},
                     {'query': 'content.size:[102400 TO 1048576]', 'label': '5.Size: medium'},

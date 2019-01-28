@@ -76,7 +76,7 @@ A typical configuration is shown below:
             "pageSize": 4,
             "queries": [
                 { "query": "created:2018", "label": "Created This Year" },
-                { "query": "content.mimetype", "label": "Type" },
+                { "query": "content.mimetype:text/html", "label": "Type: HTML" },
                 { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small"},
                 { "query": "content.size:[10240 TO 102400]", "label": "Size: small"},
                 { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium" },
@@ -298,7 +298,7 @@ These provide custom categories based on admin-defined facet queries.
             "expanded": true,
             "queries": [
                 { "query": "created:2018", "label": "Created This Year" },
-                { "query": "content.mimetype", "label": "Type" },
+                { "query": "content.mimetype:text/html", "label": "Type: HTML" },
                 { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small"},
                 { "query": "content.size:[10240 TO 102400]", "label": "Size: small"},
                 { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium" },
