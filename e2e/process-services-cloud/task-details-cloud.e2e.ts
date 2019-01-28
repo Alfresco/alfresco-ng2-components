@@ -30,7 +30,7 @@ import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { TaskDetailsCloudComponent } from '../pages/adf/process-cloud/TaskDetailsCloudComponent'
+import { TaskDetailsCloudComponent } from '../pages/adf/process-cloud/TaskDetailsCloudComponent';
 
 describe('Task Header cloud component', () => {
 
@@ -38,7 +38,7 @@ describe('Task Header cloud component', () => {
     let basicCreatedTaskName = Util.generateRandomString(), completedTaskName = Util.generateRandomString();
     let basicCreatedTask, basicCreatedDate, completedTask, completedCreatedDate, subTask, subTaskCreatedDate;
     const simpleApp = 'simple-app';
-    let priority = 30, description="descriptionTask", dateFormat = 'MMM DD YYYY';
+    let priority = 30, description = 'descriptionTask', formatDate = 'MMM DD YYYY';
 
     let taskDetailsCloudPage = new TaskDetailsCloudComponent();
 
@@ -61,19 +61,19 @@ describe('Task Header cloud component', () => {
         let createdTaskId = await tasksService.createStandaloneTask(basicCreatedTaskName, simpleApp);
         await tasksService.claimTask(createdTaskId.entry.id, simpleApp);
         basicCreatedTask = await tasksService.getTask(createdTaskId.entry.id, simpleApp);
-        basicCreatedDate = moment(basicCreatedTask.entry.createdDate).format(dateFormat);
+        basicCreatedDate = moment(basicCreatedTask.entry.createdDate).format(formatDate);
 
         let completedTaskId = await tasksService.createStandaloneTask(completedTaskName,
             simpleApp, {priority: priority, description: description, dueDate: basicCreatedTask.entry.createdDate});
         await tasksService.claimTask(completedTaskId.entry.id, simpleApp);
         await tasksService.completeTask(completedTaskId.entry.id, simpleApp);
         completedTask = await tasksService.getTask(completedTaskId.entry.id, simpleApp);
-        completedCreatedDate = moment(completedTask.entry.createdDate).format(dateFormat);
+        completedCreatedDate = moment(completedTask.entry.createdDate).format(formatDate);
 
         let subTaskId = await tasksService.createStandaloneSubtask(createdTaskId.entry.id, simpleApp, Util.generateRandomString());
         await tasksService.claimTask(subTaskId.entry.id, simpleApp);
         subTask = await tasksService.getTask(subTaskId.entry.id, simpleApp);
-        subTaskCreatedDate = moment(subTask.entry.createdDate).format(dateFormat);
+        subTaskCreatedDate = moment(subTask.entry.createdDate).format(formatDate);
 
         done();
     });
@@ -95,11 +95,11 @@ describe('Task Header cloud component', () => {
         expect(taskDetailsCloudPage.getStatus()).toEqual(basicCreatedTask.entry.status);
         expect(taskDetailsCloudPage.getPriority()).toEqual(basicCreatedTask.entry.priority === 0 ? '' : basicCreatedTask.entry.priority.toString());
         expect(taskDetailsCloudPage.getCategory()).toEqual(basicCreatedTask.entry.category === null ?
-            CONSTANTS.TASK_DETAILS.NO_CATEGORY: basicCreatedTask.entry.category);
+            CONSTANTS.TASK_DETAILS.NO_CATEGORY : basicCreatedTask.entry.category);
         expect(taskDetailsCloudPage.getDueDate()).toEqual(basicCreatedTask.entry.dueDate === null ?
-            CONSTANTS.TASK_DETAILS.NO_DATE: basicCreatedDate);
+            CONSTANTS.TASK_DETAILS.NO_DATE : basicCreatedDate);
         expect(taskDetailsCloudPage.getCreated()).toEqual(basicCreatedDate);
-        expect(taskDetailsCloudPage.getAssignee()).toEqual(basicCreatedTask.entry.assignee === null ? '': basicCreatedTask.entry.assignee);
+        expect(taskDetailsCloudPage.getAssignee()).toEqual(basicCreatedTask.entry.assignee === null ? '' : basicCreatedTask.entry.assignee);
         expect(taskDetailsCloudPage.getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
         expect(taskDetailsCloudPage.getParentTaskId())
             .toEqual(basicCreatedTask.entry.parentTaskId === null ? '' : basicCreatedTask.entry.parentTaskId);
@@ -115,11 +115,11 @@ describe('Task Header cloud component', () => {
         expect(taskDetailsCloudPage.getStatus()).toEqual(completedTask.entry.status);
         expect(taskDetailsCloudPage.getPriority()).toEqual(completedTask.entry.priority === '0' ? '' : completedTask.entry.priority.toString());
         expect(taskDetailsCloudPage.getCategory()).toEqual(completedTask.entry.category === null ?
-            CONSTANTS.TASK_DETAILS.NO_CATEGORY: completedTask.entry.category);
+            CONSTANTS.TASK_DETAILS.NO_CATEGORY : completedTask.entry.category);
         expect(taskDetailsCloudPage.getDueDate()).toEqual(completedTask.entry.dueDate === null ?
-            CONSTANTS.TASK_DETAILS.NO_DATE: completedCreatedDate);
+            CONSTANTS.TASK_DETAILS.NO_DATE : completedCreatedDate);
         expect(taskDetailsCloudPage.getCreated()).toEqual(completedCreatedDate);
-        expect(taskDetailsCloudPage.getAssignee()).toEqual(completedTask.entry.assignee === null ? '': completedTask.entry.assignee);
+        expect(taskDetailsCloudPage.getAssignee()).toEqual(completedTask.entry.assignee === null ? '' : completedTask.entry.assignee);
         expect(taskDetailsCloudPage.getParentName()).toEqual(CONSTANTS.TASK_DETAILS.NO_PARENT);
         expect(taskDetailsCloudPage.getParentTaskId())
             .toEqual(completedTask.entry.parentTaskId === null ? '' : completedTask.entry.parentTaskId);
@@ -135,11 +135,11 @@ describe('Task Header cloud component', () => {
         expect(taskDetailsCloudPage.getStatus()).toEqual(subTask.entry.status);
         expect(taskDetailsCloudPage.getPriority()).toEqual(subTask.entry.priority === 0 ? '' : subTask.entry.priority.toString());
         expect(taskDetailsCloudPage.getCategory()).toEqual(subTask.entry.category === null ?
-            CONSTANTS.TASK_DETAILS.NO_CATEGORY: subTask.entry.category);
+            CONSTANTS.TASK_DETAILS.NO_CATEGORY : subTask.entry.category);
         expect(taskDetailsCloudPage.getDueDate()).toEqual(subTask.entry.dueDate === null ?
-            CONSTANTS.TASK_DETAILS.NO_DATE: subTaskCreatedDate);
+            CONSTANTS.TASK_DETAILS.NO_DATE : subTaskCreatedDate);
         expect(taskDetailsCloudPage.getCreated()).toEqual(subTaskCreatedDate);
-        expect(taskDetailsCloudPage.getAssignee()).toEqual(subTask.entry.assignee === null ? '': subTask.entry.assignee);
+        expect(taskDetailsCloudPage.getAssignee()).toEqual(subTask.entry.assignee === null ? '' : subTask.entry.assignee);
         expect(taskDetailsCloudPage.getParentName()).toEqual(basicCreatedTask.entry.name);
         expect(taskDetailsCloudPage.getParentTaskId())
             .toEqual(subTask.entry.parentTaskId === null ? '' : subTask.entry.parentTaskId);
