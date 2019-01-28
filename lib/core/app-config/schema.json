@@ -1000,7 +1000,7 @@
               "type": "boolean"
             },
             "mincount": {
-              "description": "This specifies the minimum count required for a facet query to be included in the response. The default value is 1.",
+              "description": "This specifies the minimum count required for a facet query to be displayed. The default value is 1.",
               "type": "number"
             },
             "queries": {
