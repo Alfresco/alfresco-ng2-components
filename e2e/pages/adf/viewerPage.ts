@@ -62,7 +62,7 @@ export class ViewerPage {
     activeTab = element(by.css('div[class*="mat-tab-label-active"]'));
     toolbarSwitch = element(by.id('adf-switch-toolbar'));
     toolbar = element(by.id('adf-viewer-toolbar'));
-    buttonList = element.all(by.css('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]'));
+    lastButton = element.all(by.css('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]')).last();
     datatableHeader = element(by.css('div.adf-datatable-header'));
     goBackSwitch = element(by.id('adf-switch-goback'));
 
@@ -186,14 +186,8 @@ export class ViewerPage {
         Util.waitUntilElementIsVisible(this.closeButton);
     }
 
-    checkButtonOrderInViewerToolbar() {
-        this.checkToolbarIsDisplayed();
-        expect(this.buttonList.count()).toBe(5);
-        expect(this.buttonList.get(0).getAttribute('title')).toEqual(this.downloadButton.getAttribute('title'));
-        expect(this.buttonList.get(1).getAttribute('title')).toEqual(this.printButton.getAttribute('title'));
-        expect(this.buttonList.get(2).getAttribute('title')).toEqual(this.fullScreenButton.getAttribute('title'));
-        expect(this.buttonList.get(3).getAttribute('title')).toEqual(this.infoButton.getAttribute('title'));
-        expect(this.buttonList.get(4).getAttribute('title')).toEqual(this.moreActionsMenu.getAttribute('title'));
+    getLastButtonDisplayed() {
+        return this.lastButton;
     }
 
     checkDownloadButtonIsDisplayed() {

@@ -277,7 +277,8 @@ describe('Content Services Viewer', () => {
         viewerPage.clickLeftSidebarButton();
         viewerPage.checkLeftSideBarIsDisplayed();
         viewerPage.enableMoreActionsMenu();
-        viewerPage.checkButtonOrderInViewerToolbar();
+        viewerPage.checkToolbarIsDisplayed()
+        expect(viewerPage.getLastButtonDisplayed().getAttribute('title')).toEqual(viewerPage.moreActionsMenu.getAttribute('title'));
         viewerPage.clickCloseButton();
     });
 
