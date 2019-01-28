@@ -279,6 +279,12 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 display: respBucket.display,
                 label: respBucket.label
             };
+        }).filter((bucket) => {
+            let mincount = this.queryBuilder.config.facetQueries.mincount;
+            if (mincount === undefined) {
+                    mincount = 1;
+            }
+            return bucket.count >= mincount;
         });
     }
 

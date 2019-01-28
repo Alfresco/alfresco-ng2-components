@@ -31,6 +31,7 @@ export interface SearchConfiguration {
         label?: string;
         pageSize?: number;
         expanded?: boolean;
+        mincount?: number;
         queries: Array<FacetQuery>;
     };
     facetFields?: {

@@ -988,16 +988,20 @@
           ],
           "properties": {
             "label": {
-              "description": "Category label text",
+              "description": "Label text for the default facet queries group",
               "type": "string"
             },
             "pageSize": {
-              "description": "Default page size of the category",
+              "description": "Default page size for the facet queries groups",
               "type": "number"
             },
             "expanded": {
-              "description": "Toggles expanded state of the category",
+              "description": "Toggles expanded state of the facet queries groups",
               "type": "boolean"
+            },
+            "mincount": {
+              "description": "This specifies the minimum count required for a facet query to be included in the response. The default value is 1.",
+              "type": "number"
             },
             "queries": {
               "description": "List of custom facet queries",
@@ -1013,6 +1017,10 @@
                     "type": "string"
                   },
                   "label": {
+                    "type": "string"
+                  },
+                  "group": {
+                    "description": "The group that the facet query belongs to. If no group is defined, the facet query will appear under the default facet queries group label",
                     "type": "string"
                   }
                 }

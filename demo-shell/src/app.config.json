@@ -120,6 +120,7 @@
         "label": "SEARCH.FACET_QUERIES.MY_FACET_QUERIES",
         "pageSize": 5,
         "expanded": true,
+        "mincount": 1,
         "queries": [
           { "query": "created:2018", "label": "SEARCH.FACET_QUERIES.CREATED_THIS_YEAR" },
           { "query": "content.mimetype:text/html", "label": "SEARCH.FACET_QUERIES.MIMETYPE", "group":"Type facet queries" },
