@@ -97,7 +97,6 @@
       "PROCESS_DEF_ID": "ProcessDefinitionId",
       "STATUS": "Status",
       "ASSIGNMENT": "Assignment",
-      "COLUMN": "Column",
       "DIRECTION": "Direction",
       "PROCESS_INSTANCE_ID": "ProcessInstanceId",
       "DUE_BEFORE": "DueBefore",
@@ -114,7 +113,8 @@
       "LAST_MODIFIED_TO": "LastModifiedTo",
       "OWNER": "Owner",
       "DUE_DATE_TO": "DueDateTo",
-      "DUE_DATE_FROM": "DueDateFrom"
+      "DUE_DATE_FROM": "DueDateFrom",
+      "SORT": "Sort"
 
 
     },
