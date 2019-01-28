@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
 
 @Component({
@@ -24,7 +24,7 @@ import { ApplicationInstanceModel } from '../models/application-instance.model';
   styleUrls: ['./app-details-cloud.component.scss']
 })
 
-export class AppDetailsCloudComponent {
+export class AppDetailsCloudComponent implements OnInit {
 
   @Input()
   applicationInstance: ApplicationInstanceModel;
@@ -34,11 +34,26 @@ export class AppDetailsCloudComponent {
 
   constructor() {}
 
+  ngOnInit() {
+    if ( !this.isValidApplication() ) {
+      this.setDefaultProperties();
+    }
+  }
+
   /**
    * Pass the selected app as next
    * @param app
    */
   public onSelectApp(app: ApplicationInstanceModel): void {
     this.selectedApp.emit(app);
+  }
+
+  private isValidApplication(): Boolean {
+    return this.applicationInstance.icon !== undefined && this.applicationInstance.theme !== undefined;
+  }
+
+  private setDefaultProperties(): void {
+    this.applicationInstance.theme = ApplicationInstanceModel.DEFAULT_THEME;
+    this.applicationInstance.icon = ApplicationInstanceModel.DEFAULT_ICON;
   }
 }
