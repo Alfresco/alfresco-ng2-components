@@ -98,7 +98,7 @@ export class FilterParamsModel {
 
 export interface FilterActionType {
     actionType: string;
-    id: string;
+    filter: TaskFilterCloudModel;
 }
 
 export interface FilterOptions {

@@ -77,7 +77,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     columns = [
         {value: 'id', label: 'ID'},
         {value: 'name', label: 'NAME'},
-        {value: 'createdDate', label: 'Created Date'},
+        {value: 'createdDate', label: 'CREATED DATE'},
         {value: 'priority', label: 'PRIORITY'},
         {value: 'processDefinitionId', label: 'PROCESS DEFINITION ID'}
       ];
@@ -215,12 +215,13 @@ export class EditTaskFilterCloudComponent implements OnChanges {
 
     onSave() {
         this.taskFilterCloudService.updateFilter(this.changedTaskFilter);
-        this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_SAVE, id: this.changedTaskFilter.id});
+        this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_SAVE, filter: this.changedTaskFilter});
+        this.formHasBeenChanged = this.compareFilters(this.changedTaskFilter, this.taskFilter);
     }
 
     onDelete() {
         this.taskFilterCloudService.deleteFilter(this.taskFilter);
-        this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_DELETE, id: this.taskFilter.id});
+        this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_DELETE, filter: this.taskFilter});
     }
 
     onSaveAs() {
@@ -243,7 +244,8 @@ export class EditTaskFilterCloudComponent implements OnChanges {
                                 };
                 const resultFilter = Object.assign({}, this.changedTaskFilter, newFilter);
                 this.taskFilterCloudService.addFilter(resultFilter);
-                this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_SAVE_AS, id: resultFilter.id});
+                this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_SAVE_AS, filter: resultFilter});
+
             }
         });
     }
@@ -311,7 +313,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
                 value: currentTaskFilter.processDefinitionId || ''
             }),
             new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COLUMN',
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.SORT',
                 type: 'select',
                 key: 'sort',
                 value: currentTaskFilter.sort || this.columns[0].value,
