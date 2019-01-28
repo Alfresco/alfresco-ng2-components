@@ -85,7 +85,7 @@ describe('Task Header cloud component', () => {
         done();
     });
 
-    it('[C260506] Should display task details for standalone task - Task App', async () => {
+    it('[C291943] Should display task details for assigned task', async () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(basicCreatedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByContentName(basicCreatedTaskName);
@@ -105,7 +105,7 @@ describe('Task Header cloud component', () => {
             .toEqual(basicCreatedTask.entry.parentTaskId === null ? '' : basicCreatedTask.entry.parentTaskId);
     });
 
-    it('[C260506] Should display task details for standalone task - Task App', async () => {
+    it('[C291944] Should display task details for completed task', async () => {
         tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByContentName(completedTaskName);
@@ -125,8 +125,7 @@ describe('Task Header cloud component', () => {
             .toEqual(completedTask.entry.parentTaskId === null ? '' : completedTask.entry.parentTaskId);
     });
 
-    //failing due to ADF-3940
-    it('[C260506] Should display task details for standalone task - Task App', async () => {
+    it('[C291945] Should Parent Name and Parent Id not be empty in task details for sub task', async () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(subTask.entry.name);
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByContentName(subTask.entry.name);

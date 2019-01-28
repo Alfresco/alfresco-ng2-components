@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { AppSettingsToggles } from './dialog/appSettingsToggles';
 import { Util } from '../../../util/util';
-import { element, by, protractor, browser } from 'protractor';
+import { element, by } from 'protractor';
 
 export class TaskDetailsCloudComponent {
 
@@ -32,17 +31,6 @@ export class TaskDetailsCloudComponent {
     endDateField = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
     idField = element.all(by.css('span[data-automation-id*="id"] span')).first();
     descriptionField = element(by.css('span[data-automation-id*="description"] span'));
-
-    //taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
-    //taskDetailsSection = element(by.css('div[data-automation-id="adf-tasks-details"]'));
-    //taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
-    //taskDetailsTitle = element(by.css('h2[class="adf-activiti-task-details__header"] span'));
-    //emptyTaskDetails = element(by.css('adf-task-details > div > div'));
-
-    /*getTaskDetailsTitle() {
-        Util.waitUntilElementIsVisible(this.taskDetailsTitle);
-        return this.taskDetailsTitle.getText();
-    }*/
 
     getAssignee() {
         Util.waitUntilElementIsVisible(this.assigneeField);
@@ -98,49 +86,5 @@ export class TaskDetailsCloudComponent {
         Util.waitUntilElementIsVisible(this.dueDateField);
         return this.dueDateField.getText();
     }
-
-    /*getTitle() {
-        Util.waitUntilElementIsVisible(this.activitiesTitle);
-        return this.activitiesTitle.getText();
-    }
-
-    taskInfoDrawerIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.taskDetailsInfoDrawer);
-    }
-
-    taskInfoDrawerIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.taskDetailsInfoDrawer);
-    }
-
-    checkTaskDetails() {
-        Util.waitUntilElementIsVisible(this.taskDetailsSection);
-        return this.taskDetailsSection.getText();
-    }
-
-    checkTaskDetailsEmpty() {
-        Util.waitUntilElementIsVisible(this.taskDetailsEmptySection);
-        return this.taskDetailsEmptySection.getText();
-    }
-
-    checkTaskDetailsDisplayed() {
-        Util.waitUntilElementIsVisible(this.taskDetailsSection);
-        Util.waitUntilElementIsVisible(this.formNameField);
-        Util.waitUntilElementIsVisible(this.assigneeField);
-        Util.waitUntilElementIsVisible(this.statusField);
-        Util.waitUntilElementIsVisible(this.categoryField);
-        Util.waitUntilElementIsVisible(this.parentNameField);
-        Util.waitUntilElementIsVisible(this.createdField);
-        Util.waitUntilElementIsVisible(this.idField);
-        Util.waitUntilElementIsVisible(this.descriptionField);
-        Util.waitUntilElementIsVisible(this.dueDateField);
-        Util.waitUntilElementIsVisible(this.activitiesTitle);
-
-        return this.taskDetailsSection.getText();
-    }
-
-    getEmptyTaskDetailsMessage() {
-        Util.waitUntilElementIsVisible(this.emptyTaskDetails);
-        return this.emptyTaskDetails.getText();
-    }*/
 
 }
