@@ -36,7 +36,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 
-xdescribe('Viewer', () => {
+describe('Viewer', () => {
 
     let viewerPage = new ViewerPage();
     let navigationBarPage = new NavigationBarPage();
@@ -203,7 +203,7 @@ xdescribe('Viewer', () => {
 
     });
 
-    describe('PowerPoint Folder Uploaded', () => {
+    xdescribe('PowerPoint Folder Uploaded', () => {
 
         let uploadedPpt;
         let pptFolderUploaded;
@@ -430,7 +430,7 @@ xdescribe('Viewer', () => {
             viewerPage.checkImgContainerIsDisplayed();
         });
 
-        it('[C260106] Should be able to open a Word file shared via API', () => {
+        xit('[C260106] Should be able to open a Word file shared via API', () => {
             contentServicesPage.navigateToDocumentList();
 
             contentList.clickRowToSelect(wordFileInfo.name);
