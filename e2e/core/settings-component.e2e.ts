@@ -42,7 +42,7 @@ describe('Settings component', () => {
             loginPage.waitForElements();
         });
 
-        it('[C245641] Should not save BPM Settings changes when User clicks Back button', () => {
+        it('[C291946] Should not save BPM Settings changes when User clicks Back button', () => {
             settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
             settingsPage.setProcessServicesURL('http://adfdev.envalfresco1.com');
             settingsPage.clickBackButton();
@@ -53,7 +53,7 @@ describe('Settings component', () => {
 
         });
 
-        it('[C245641] Should not save ECM Settings changes when User clicks Back button', () => {
+        it('[C291947] Should not save ECM Settings changes when User clicks Back button', () => {
             settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
             settingsPage.setContentServicesURL('http://adfdev.envalfresco1.com');
             settingsPage.clickBackButton();
@@ -64,7 +64,7 @@ describe('Settings component', () => {
 
         });
 
-        it('[C245641] Should save ALL Settings changes when User clicks Apply button', () => {
+        it('[C291948] Should save ALL Settings changes when User clicks Apply button', () => {
             settingsPage.setProviderEcmBpm();
             loginPage.waitForElements();
             settingsPage.goToSettingsPage();
@@ -74,7 +74,7 @@ describe('Settings component', () => {
 
         });
 
-        it('[C245641] Should have field validation for Content Services Url', () => {
+        it('[C291949] Should have field validation for Content Services Url', () => {
             settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
             settingsPage.clearContentServicesURL();
             settingsPage.ecmText.sendKeys(protractor.Key.TAB);
@@ -82,7 +82,7 @@ describe('Settings component', () => {
             settingsPage.checkApplyButtonIsDisabled();
         });
 
-        it('[C245641] Should have field validation for Process Services Url', () => {
+        it('[C291950] Should have field validation for Process Services Url', () => {
             settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
             settingsPage.clearProcessServicesURL();
             settingsPage.bpmText.sendKeys(protractor.Key.TAB);
@@ -90,7 +90,7 @@ describe('Settings component', () => {
             settingsPage.checkApplyButtonIsDisabled();
         });
 
-        it('[C245641] Should not be able to sign in with invalid Content Services Url', () => {
+        it('[C291951] Should not be able to sign in with invalid Content Services Url', () => {
             settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
             settingsPage.setContentServicesURL('http://localhost:7070');
             settingsPage.clickApply();
@@ -102,7 +102,7 @@ describe('Settings component', () => {
                 'Possible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.');
         });
 
-        it('[C245641] Should not be able to sign in with invalid Process Services Url', () => {
+        it('[C291952] Should not be able to sign in with invalid Process Services Url', () => {
             settingsPage.setProvider(settingsPage.getBpmOption(), 'BPM');
             settingsPage.setProcessServicesURL('http://localhost:7070');
             settingsPage.clickApply();
