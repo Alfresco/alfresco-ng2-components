@@ -23,7 +23,7 @@ import {
     ProcessFiltersCloudComponent
 } from '@alfresco/adf-process-services-cloud';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 import { CloudLayoutService } from './services/cloud-layout.service';
 
@@ -33,6 +33,7 @@ import { CloudLayoutService } from './services/cloud-layout.service';
 })
 export class ProcessesCloudDemoComponent implements OnInit {
 
+    public static ACTION_SAVE_AS = 'SAVE_AS';
     static PROCESS_FILTER_PROPERTY_KEYS = 'edit-process-filter.properties';
 
     @ViewChild('processCloud')
@@ -53,6 +54,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private cloudLayoutService: CloudLayoutService,
         private userPreference: UserPreferencesService,
         private appConfig: AppConfigService) {
@@ -88,7 +90,10 @@ export class ProcessesCloudDemoComponent implements OnInit {
         this.sortArray = [new ProcessListCloudSortingModel({ orderBy: this.editedFilter.sort, direction: this.editedFilter.order })];
     }
 
-    onProcessFilterAction(filter: any) {
-        this.cloudLayoutService.setCurrentProcessFilterParam({id: filter.id});
+    onProcessFilterAction(filterAction: any) {
+        this.cloudLayoutService.setCurrentProcessFilterParam({id: filterAction.id});
+        if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_SAVE_AS) {
+            this.router.navigate([`/cloud/${this.applicationName}/processes/`], { queryParams: filterAction.filter });
+        }
      }
 }

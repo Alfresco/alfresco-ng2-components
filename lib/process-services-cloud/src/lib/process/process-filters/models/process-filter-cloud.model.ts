@@ -61,7 +61,7 @@ export class ProcessFilterCloudModel {
 
 export interface ProcessFilterActionType {
     actionType: string;
-    id: string;
+    filter: ProcessFilterCloudModel;
 }
 
 export interface ProcessFilterOptions {

@@ -222,7 +222,8 @@ export class EditProcessFilterCloudComponent implements OnChanges {
      */
     onSave() {
         this.processFilterCloudService.updateFilter(this.changedProcessFilter);
-        this.action.emit({ actionType: EditProcessFilterCloudComponent.ACTION_SAVE, id: this.changedProcessFilter.id });
+        this.action.emit({ actionType: EditProcessFilterCloudComponent.ACTION_SAVE, filter: this.changedProcessFilter });
+        this.formHasBeenChanged = this.compareFilters(this.changedProcessFilter, this.processFilter);
     }
 
     /**
@@ -230,7 +231,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
      */
     onDelete() {
         this.processFilterCloudService.deleteFilter(this.processFilter);
-        this.action.emit({ actionType: EditProcessFilterCloudComponent.ACTION_DELETE, id: this.processFilter.id });
+        this.action.emit({ actionType: EditProcessFilterCloudComponent.ACTION_DELETE, filter: this.processFilter });
     }
 
     /**
@@ -254,9 +255,9 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                     id: filterId,
                     key: 'custom-' + filterKey
                 };
-                const changedFilter: ProcessFilterCloudModel = Object.assign({}, this.changedProcessFilter, newFilter);
-                this.processFilterCloudService.addFilter(changedFilter);
-                this.action.emit({ actionType: EditProcessFilterCloudComponent.ACTION_SAVE_AS, id: changedFilter.id });
+                const resultFilter: ProcessFilterCloudModel = Object.assign({}, this.changedProcessFilter, newFilter);
+                this.processFilterCloudService.addFilter(resultFilter);
+                this.action.emit({ actionType: EditProcessFilterCloudComponent.ACTION_SAVE_AS, filter: resultFilter });
             }
         });
     }
@@ -326,7 +327,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                 options: this.status
             }),
             new ProcessFilterProperties({
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COLUMN',
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.SORT',
                 type: 'select',
                 key: 'sort',
                 value: currentProcessFilter.sort || this.columns[0].value,
