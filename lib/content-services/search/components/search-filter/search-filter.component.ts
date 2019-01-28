@@ -189,7 +189,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
 
         return configFacetFields.map((field) => {
-            const responseField = (context.facets || []).find((response) => response.type === 'field' && response.label === field.label);
+            const responseField = (context.facets || []).find((response) => response.type === 'field' && response.label === field.label) || {};
             const responseBuckets = this.getResponseBuckets(responseField);
 
             const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
@@ -228,7 +228,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         const result = [];
 
         Object.keys(configGroups).forEach((group) => {
-            const responseField = (context.facets || []).find((response) => response.type === 'query' && response.label === group);
+            const responseField = (context.facets || []).find((response) => response.type === 'query' && response.label === group) || {};
             const responseBuckets = this.getResponseQueryBuckets(responseField, configGroups[group]);
 
             const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, this.facetQueriesPageSize);
