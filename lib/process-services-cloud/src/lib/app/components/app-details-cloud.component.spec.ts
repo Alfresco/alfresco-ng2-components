@@ -65,6 +65,6 @@ describe('AppDetailsCloudComponent', () => {
         const icon = fixture.nativeElement.querySelector('.adf-app-listgrid-item-card-logo-icon');
 
         expect(theme).toEqual(ApplicationInstanceModel.DEFAULT_THEME);
-        expect(document).toBeTruthy(icon);
+        expect(icon).toBeTruthy(icon);
     });
 });
