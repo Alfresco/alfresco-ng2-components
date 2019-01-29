@@ -113,6 +113,19 @@ describe('Start Task', () => {
     it('[C291953] Assignee field should display the logged user as default', () => {
         tasksCloudDemoPage.openNewTaskForm();
         expect(startTask.getAssignee()).toContain('Admin', 'does not contain Admin');
+        startTask.clickCancelButton();
+    });
+
+    it('[C291956] Should be able to create a new standalone task without assignee', () => {
+        tasksCloudDemoPage.openNewTaskForm();
+        startTask.addName(standaloneTaskName);
+        startTask.clearField(startTask.assignee);
+        startTask.clickStartButton();
+        tasksCloudDemoPage.editTaskFilterCloudComponent()
+            .clickCustomiseFilterHeader()
+            .setStateFilterDropDown('CREATED')
+            .clearAssignment();
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(standaloneTaskName);
     });
 
 });
