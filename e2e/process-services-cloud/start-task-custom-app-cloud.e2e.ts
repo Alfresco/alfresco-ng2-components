@@ -103,11 +103,16 @@ describe('Start Task', () => {
     it('[C290182] Should be possible to assign the task to another user', () => {
         tasksCloudDemoPage.openNewTaskForm();
         startTask.addName(standaloneTaskName)
-                 .addAssignee('User')
+                 .addAssignee('Super Admin')
                  .clickStartButton();
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(standaloneTaskName);
+    });
+
+    it('[C291953] Assignee field should display the logged user as default', () => {
+        tasksCloudDemoPage.openNewTaskForm();
+        expect(startTask.getAssignee()).toContain('Admin', 'does not contain Admin');
     });
 
 });

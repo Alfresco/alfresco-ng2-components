@@ -73,7 +73,7 @@ export class StartTasksCloudComponent {
 
     getAssignee() {
         Util.waitUntilElementIsVisible(this.assignee);
-        return this.assignee.getAttribute('placeholder');
+        return this.assignee.getAttribute('value');
     }
 
     clickStartButton() {
