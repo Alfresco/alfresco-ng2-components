@@ -41,6 +41,27 @@
                 <mat-icon>info</mat-icon>
             </button>
         </mat-list-item>
+
+        <mat-list-item (click)="taskListCloudConfClick()">
+            <a matLine id="adf-task-list-cloud-conf">Task List Cloud</a>
+            <button mat-icon-button>
+                <mat-icon>info</mat-icon>
+            </button>
+        </mat-list-item>
+
+        <mat-list-item (click)="editProcessFilterConfClick()">	
+            <a matLine id="adf-edit-process-filter-conf">Edit process filter</a>	
+            <button mat-icon-button>	
+                <mat-icon>info</mat-icon>	
+            </button>	
+        </mat-list-item>	
+
+         <mat-list-item (click)="editTaskFilterConfClick()">	
+            <a matLine id="adf-edit-task-filter-conf">Edit task filter</a>	
+            <button mat-icon-button>	
+                <mat-icon>info</mat-icon>	
+            </button>	
+        </mat-list-item>
     </mat-nav-list>
 
     <div>

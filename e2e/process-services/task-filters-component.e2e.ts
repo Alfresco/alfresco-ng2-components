@@ -26,7 +26,7 @@ import { TasksListPage } from '../pages/adf/process-services/tasksListPage';
 import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
 import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigationBarPage';
 import { AppSettingsToggles } from '../pages/adf/process-services/dialog/appSettingsToggles';
-import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/taskFiltersDemoPage';
+import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/taskFiltersDemoPage';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { AppsActions } from '../actions/APS/apps.actions';

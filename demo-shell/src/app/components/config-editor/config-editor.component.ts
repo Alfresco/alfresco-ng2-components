@@ -106,6 +106,24 @@ export class ConfigEditorComponent {
         this.indentCode();
     }
 
+    taskListCloudConfClick() {
+        this.code = JSON.stringify(this.appConfig.config['adf-cloud-task-list']);
+        this.field = 'adf-cloud-task-list';
+        this.indentCode();
+    }
+
+    editProcessFilterConfClick() {
+        this.code = JSON.stringify(this.appConfig.config['edit-process-filter']);
+        this.field = 'edit-process-filter';
+        this.indentCode();
+    }
+
+     editTaskFilterConfClick() {
+        this.code = JSON.stringify(this.appConfig.config['edit-task-filter']);
+        this.field = 'edit-task-filter';
+        this.indentCode();
+    }
+
     indentCode() {
         setTimeout(() => {
             this.editor.getAction('editor.action.formatDocument').run();

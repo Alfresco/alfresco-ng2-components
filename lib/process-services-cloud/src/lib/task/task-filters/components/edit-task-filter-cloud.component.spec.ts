@@ -39,14 +39,14 @@ describe('EditTaskFilterCloudComponent', () => {
     let fixture: ComponentFixture<EditTaskFilterCloudComponent>;
     let dialog: MatDialog;
     let getTaskFilterSpy: jasmine.Spy;
-    let getDeployedApplicationsByStatusSpy: jasmine.Spy;
+    let getRunningApplicationsSpy: jasmine.Spy;
 
     let fakeFilter = new TaskFilterCloudModel({
         name: 'FakeInvolvedTasks',
         icon: 'adjust',
-        id: 10,
+        id: 'mock-task-filter-id',
         state: 'CREATED',
-        appName: 'app-name',
+        appName: 'mock-app-name',
         processDefinitionId: 'process-def-id',
         assignment: 'fake-involved',
         order: 'ASC',
@@ -70,7 +70,8 @@ describe('EditTaskFilterCloudComponent', () => {
             name: 'fake-name'
         }); }});
         getTaskFilterSpy = spyOn(service, 'getTaskFilterById').and.returnValue(fakeFilter);
-        getDeployedApplicationsByStatusSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
+        getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
+        fixture.detectChanges();
     });
 
     it('should create EditTaskFilterCloudComponent', () => {
@@ -78,10 +79,11 @@ describe('EditTaskFilterCloudComponent', () => {
     });
 
     it('should fetch task filter by taskId', async(() => {
-        let change = new SimpleChange(undefined, '10', true);
-        component.ngOnChanges({ 'id': change });
+        let taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+        component.ngOnChanges({ 'id': taskFilterIDchange});
         fixture.detectChanges();
         fixture.whenStable().then(() => {
+            expect(getTaskFilterSpy).toHaveBeenCalled();
             expect(component.taskFilter.name).toEqual('FakeInvolvedTasks');
             expect(component.taskFilter.icon).toEqual('adjust');
             expect(component.taskFilter.state).toEqual('CREATED');
@@ -91,8 +93,8 @@ describe('EditTaskFilterCloudComponent', () => {
     }));
 
     it('should display filter name as title', () => {
-        let change = new SimpleChange(undefined, '10', true);
-        component.ngOnChanges({ 'id': change });
+        let taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+        component.ngOnChanges({ 'id': taskFilterIDchange});
         fixture.detectChanges();
         const title = fixture.debugElement.nativeElement.querySelector('#adf-edit-task-filter-title-id');
         const subTitle = fixture.debugElement.nativeElement.querySelector('#adf-edit-task-filter-sub-title-id');
@@ -105,8 +107,8 @@ describe('EditTaskFilterCloudComponent', () => {
     describe('EditTaskFilter form', () => {
 
         beforeEach(() => {
-            let change = new SimpleChange(undefined, '10', true);
-            component.ngOnChanges({ 'id': change });
+            let taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({'id': taskFilterIDchange});
             fixture.detectChanges();
         });
 
@@ -135,7 +137,7 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
 
         it('should disable save button if the task filter is not changed', async(() => {
-            component.showFilterActions = true;
+            component.toggleFilterActions = true;
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.detectChanges();
@@ -146,7 +148,7 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
 
         it('should disable saveAs button if the task filter is not changed', async(() => {
-            component.showFilterActions = true;
+            component.toggleFilterActions = true;
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.detectChanges();
@@ -157,7 +159,7 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
 
         it('should enable delete button by default', async(() => {
-            component.showFilterActions = true;
+            component.toggleFilterActions = true;
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
@@ -230,27 +232,15 @@ describe('EditTaskFilterCloudComponent', () => {
             });
         }));
 
-        it('should able to fetch running applications', async(() => {
-            component.appName = 'mock-app-name';
-            component.filterProperties = ['appName', 'processInstanceId', 'dueBefore'];
-            let change = new SimpleChange(undefined, 'mock-task-id', true);
-            component.ngOnChanges({ 'id': change });
-            const appController = component.editTaskFilterForm.get('appName');
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(appController).toBeDefined();
-                expect(appController.value).toBe('mock-app-name' );
-                expect(getDeployedApplicationsByStatusSpy).toHaveBeenCalled();
-            });
-        }));
-
         it('should able to build a editTaskFilter form with default properties if input is empty', async(() => {
+            let taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIDchange});
             component.filterProperties = [];
             fixture.detectChanges();
+            const stateController = component.editTaskFilterForm.get('state');
+            const sortController = component.editTaskFilterForm.get('sort');
+            const orderController = component.editTaskFilterForm.get('order');
             fixture.whenStable().then(() => {
-                const stateController = component.editTaskFilterForm.get('state');
-                const sortController = component.editTaskFilterForm.get('sort');
-                const orderController = component.editTaskFilterForm.get('order');
                 fixture.detectChanges();
                 expect(component.taskFilterProperties).toBeDefined();
                 expect(component.taskFilterProperties.length).toBe(4);
@@ -263,28 +253,46 @@ describe('EditTaskFilterCloudComponent', () => {
                 expect(orderController.value).toBe('ASC');
             });
         }));
+    });
+
+    describe('Task filterProperties', () => {
+
+        beforeEach(() => {
+            component.filterProperties = ['appName', 'processInstanceId', 'priority'];
+        });
+
+        it('should able to fetch running applications when appName property defined in the input', async(() => {
+            fixture.detectChanges();
+            let taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIDchange});
+            const appController = component.editTaskFilterForm.get('appName');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(getRunningApplicationsSpy).toHaveBeenCalled();
+                expect(appController).toBeDefined();
+                expect(appController.value).toBe('mock-app-name');
+            });
+        }));
 
         it('should able to build a editTaskFilter form with given input properties', async(() => {
-            getTaskFilterSpy.and.returnValue({ processInstanceId: 'process-instance-id', dueBefore: 'Fri Jan 04 2019 19:16:32 GMT+0530 (IST)' });
-            component.appName = 'mock-app-name';
-            component.filterProperties = ['appName', 'processInstanceId', 'dueBefore'];
-            let change = new SimpleChange(undefined, 'mock-task-id', true);
-            component.ngOnChanges({ 'id': change });
+            fixture.detectChanges();
+            getTaskFilterSpy.and.returnValue({ appName: 'mock-app-name', processInstanceId: 'process-instance-id', priority: '12' });
+            let taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIDchange});
+            fixture.detectChanges();
             const appController = component.editTaskFilterForm.get('appName');
-            const dueDateController = component.editTaskFilterForm.get('dueBefore');
+            const priorityController = component.editTaskFilterForm.get('priority');
             const processInsIdController = component.editTaskFilterForm.get('processInstanceId');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(getDeployedApplicationsByStatusSpy).toHaveBeenCalled();
                 expect(component.taskFilterProperties).toBeDefined();
                 expect(component.editTaskFilterForm).toBeDefined();
                 expect(component.taskFilterProperties.length).toBe(3);
                 expect(appController).toBeDefined();
-                expect(dueDateController).toBeDefined();
+                expect(priorityController.value).toBe('12');
                 expect(processInsIdController).toBeDefined();
                 expect(appController.value).toBe('mock-app-name');
-                expect(processInsIdController.value).toBe('process-instance-id');
             });
         }));
     });
@@ -292,13 +300,14 @@ describe('EditTaskFilterCloudComponent', () => {
     describe('edit filter actions', () => {
 
         beforeEach(() => {
-            let change = new SimpleChange(undefined, '10', true);
-            component.ngOnChanges({ 'id': change });
-            component.filterProperties = ['state'];
+            let taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIDchange});
+            fixture.detectChanges();
+
         });
 
         it('should emit save event and save the filter on click save button', async(() => {
-            component.showFilterActions = true;
+            component.toggleFilterActions = true;
             const saveFilterSpy = spyOn(service, 'updateFilter').and.returnValue(fakeFilter);
             let saveSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -321,7 +330,7 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
 
         it('should emit delete event and delete the filter on click of delete button', async(() => {
-            component.showFilterActions = true;
+            component.toggleFilterActions = true;
             const deleteFilterSpy = spyOn(service, 'deleteFilter').and.callThrough();
             let deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
@@ -341,7 +350,7 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
 
         it('should emit saveAs event and add filter on click saveAs button', async(() => {
-            component.showFilterActions = true;
+            component.toggleFilterActions = true;
             const saveAsFilterSpy = spyOn(service, 'addFilter').and.callThrough();
             let saveAsSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();

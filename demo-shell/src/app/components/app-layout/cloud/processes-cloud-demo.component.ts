@@ -22,9 +22,8 @@ import {
     ProcessListCloudSortingModel,
     ProcessFiltersCloudComponent
 } from '@alfresco/adf-process-services-cloud';
-
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserPreferencesService } from '@alfresco/adf-core';
+import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 import { CloudLayoutService } from './services/cloud-layout.service';
 
 @Component({
@@ -34,6 +33,8 @@ import { CloudLayoutService } from './services/cloud-layout.service';
 export class ProcessesCloudDemoComponent implements OnInit {
 
     public static ACTION_SAVE_AS = 'SAVE_AS';
+
+    static PROCESS_FILTER_PROPERTY_KEYS = 'edit-process-filter.properties';
 
     @ViewChild('processCloud')
     processCloud: ProcessListCloudComponent;
@@ -47,6 +48,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     filterId: string = '';
     sortArray: any = [];
     selectedRow: any;
+    processFilterProperties: any[] = [];
 
     editedFilter: ProcessFilterCloudModel;
 
@@ -54,7 +56,12 @@ export class ProcessesCloudDemoComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private cloudLayoutService: CloudLayoutService,
-        private userPreference: UserPreferencesService) {
+        private userPreference: UserPreferencesService,
+        private appConfig: AppConfigService) {
+        const properties = this.appConfig.get<Array<any>>(ProcessesCloudDemoComponent.PROCESS_FILTER_PROPERTY_KEYS);
+        if (properties) {
+            this.processFilterProperties = properties;
+        }
     }
 
     ngOnInit() {

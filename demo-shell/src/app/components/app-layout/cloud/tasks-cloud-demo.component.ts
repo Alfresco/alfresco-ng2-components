@@ -17,14 +17,18 @@
 
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { TaskListCloudComponent, TaskListCloudSortingModel, TaskFilterCloudModel } from '@alfresco/adf-process-services-cloud';
-import { UserPreferencesService } from '@alfresco/adf-core';
+import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CloudLayoutService } from './services/cloud-layout.service';
+
 @Component({
     templateUrl: 'tasks-cloud-demo.component.html',
     styleUrls: ['tasks-cloud-demo.component.scss']
 })
 export class TasksCloudDemoComponent implements OnInit {
+
+    public static ACTION_SAVE_AS = 'SAVE_AS';
+    static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter.properties';
 
     @ViewChild('taskCloud')
     taskCloud: TaskListCloudComponent;
@@ -37,6 +41,7 @@ export class TasksCloudDemoComponent implements OnInit {
 
     sortArray: TaskListCloudSortingModel[];
     editedFilter: TaskFilterCloudModel;
+    taskFilterProperties: any[] = [];
 
     filterId;
 
@@ -44,7 +49,13 @@ export class TasksCloudDemoComponent implements OnInit {
         private cloudLayoutService: CloudLayoutService,
         private route: ActivatedRoute,
         private router: Router,
-        private userPreference: UserPreferencesService) {
+        private userPreference: UserPreferencesService,
+        private appConfig: AppConfigService) {
+
+        const properties = this.appConfig.get<Array<any>>(TasksCloudDemoComponent.TASK_FILTER_PROPERTY_KEYS);
+        if (properties) {
+            this.taskFilterProperties = properties;
+        }
     }
 
     ngOnInit() {
@@ -70,10 +81,13 @@ export class TasksCloudDemoComponent implements OnInit {
 
     onFilterChange(filter: any) {
         this.editedFilter = Object.assign({}, filter);
-        this.sortArray = [new TaskListCloudSortingModel({ orderBy: this.editedFilter.sort, direction: this.editedFilter.order})];
+        this.sortArray = [new TaskListCloudSortingModel({ orderBy: this.editedFilter.sort, direction: this.editedFilter.order })];
     }
 
-    onTaskFilterAction(filter: any) {
-       this.cloudLayoutService.setCurrentTaskFilterParam({id: filter.id});
+    onTaskFilterAction(filterAction: any) {
+        this.cloudLayoutService.setCurrentTaskFilterParam({ id: filterAction.filter.id });
+        if (filterAction.actionType === TasksCloudDemoComponent.ACTION_SAVE_AS) {
+            this.router.navigate([`/cloud/${this.applicationName}/tasks/`], { queryParams: filterAction.filter });
+        }
     }
 }

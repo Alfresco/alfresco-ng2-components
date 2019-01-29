@@ -39,7 +39,7 @@ describe('Start Task', () => {
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-    const appName = 'task-app';
+    const appName = 'simple-app';
     let silentLogin;
 
     beforeAll((done) => {

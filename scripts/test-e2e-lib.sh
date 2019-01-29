@@ -184,8 +184,3 @@ else
          ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
     fi
 fi
-
-
-
-
-

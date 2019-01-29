@@ -16,6 +16,7 @@
  */
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CloudLayoutService } from './services/cloud-layout.service';
 
 @Component({
     selector: 'app-cloud-layout',
@@ -27,12 +28,30 @@ export class CloudLayoutComponent implements OnInit {
     displayMenu = true;
     applicationName: string;
 
-    constructor(private router: Router, private route: ActivatedRoute) {
-    }
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute,
+        private cloudLayoutService: CloudLayoutService
+    ) {}
 
     ngOnInit() {
+        let root: string = '';
         this.route.params.subscribe((params) => {
             this.applicationName = params.applicationName;
+        });
+
+        if (this.route.snapshot && this.route.snapshot.firstChild) {
+            root = this.route.snapshot.firstChild.url[0].path;
+        }
+
+        this.route.queryParams.subscribe((params) => {
+            if (root === 'tasks' && params.id) {
+                this.cloudLayoutService.setCurrentTaskFilterParam({ id: params.id });
+            }
+
+            if (root === 'processes' && params.id) {
+                this.cloudLayoutService.setCurrentProcessFilterParam({ id: params.id });
+            }
         });
     }
 

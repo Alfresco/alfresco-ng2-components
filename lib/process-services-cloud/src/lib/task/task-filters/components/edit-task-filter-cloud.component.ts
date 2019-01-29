@@ -16,21 +16,20 @@
  */
 
 import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { AbstractControl , FormGroup, FormBuilder } from '@angular/forms';
-import { TaskFilterCloudModel, FilterActionType, TaskFilterProperties, FilterOptions } from './../models/filter-cloud.model';
+import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
+import { TaskFilterCloudModel, FilterActionType, TaskFilterProperties } from './../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { MatDialog } from '@angular/material';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
 import { TranslationService } from '@alfresco/adf-core';
-import { debounceTime, map, filter } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import moment from 'moment-es6';
 
 @Component({
-  selector: 'adf-cloud-edit-task-filter',
-  templateUrl: './edit-task-filter-cloud.component.html',
+    selector: 'adf-cloud-edit-task-filter',
+    templateUrl: './edit-task-filter-cloud.component.html',
     styleUrls: ['./edit-task-filter-cloud.component.scss']
 })
 export class EditTaskFilterCloudComponent implements OnChanges {
@@ -40,6 +39,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     public static ACTION_DELETE = 'DELETE';
     public static APP_RUNNING_STATUS: string = 'RUNNING';
     public static MIN_VALUE = 1;
+    public static APPLICATION_NAME: string = 'appName';
     public static DEFAULT_TASK_FILTER_PROPERTIES = ['state', 'assignment', 'sort', 'order'];
     public FORMAT_DATE: string = 'DD/MM/YYYY';
 
@@ -57,7 +57,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
 
     /** Toggles the filter actions. */
     @Input()
-    toggleFilterActions = true;
+    showFilterActions = true;
 
     /** Toggles the title. */
     @Input()
@@ -75,21 +75,21 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     changedTaskFilter: TaskFilterCloudModel;
 
     columns = [
-        {value: 'id', label: 'ID'},
-        {value: 'name', label: 'NAME'},
-        {value: 'createdDate', label: 'Created Date'},
-        {value: 'priority', label: 'PRIORITY'},
-        {value: 'processDefinitionId', label: 'PROCESS DEFINITION ID'}
-      ];
+        { value: 'id', label: 'ID' },
+        { value: 'name', label: 'NAME' },
+        { value: 'createdDate', label: 'Created Date' },
+        { value: 'priority', label: 'PRIORITY' },
+        { value: 'processDefinitionId', label: 'PROCESS DEFINITION ID' }
+    ];
 
     status = [
-        {label: 'ALL', value: ''},
-        {label: 'CREATED', value: 'CREATED'},
-        {label: 'CANCELLED', value: 'CANCELLED'},
-        {label: 'ASSIGNED', value: 'ASSIGNED'},
-        {label: 'SUSPENDED', value: 'SUSPENDED'},
-        {label: 'COMPLETED', value: 'COMPLETED'},
-        {label: 'DELETED', value: 'DELETED'}
+        { label: 'ALL', value: '' },
+        { label: 'CREATED', value: 'CREATED' },
+        { label: 'CANCELLED', value: 'CANCELLED' },
+        { label: 'ASSIGNED', value: 'ASSIGNED' },
+        { label: 'SUSPENDED', value: 'SUSPENDED' },
+        { label: 'COMPLETED', value: 'COMPLETED' },
+        { label: 'DELETED', value: 'DELETED' }
     ];
 
     directions = [
@@ -97,10 +97,11 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         { label: 'DESC', value: 'DESC' }
     ];
 
+    applicationNames: any[] = [];
     formHasBeenChanged = false;
     editTaskFilterForm: FormGroup;
     taskFilterProperties: any[] = [];
-    showFilterActions: boolean = false;
+    toggleFilterActions: boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -108,19 +109,18 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         private translateService: TranslationService,
         private taskFilterCloudService: TaskFilterCloudService,
         private appsProcessCloudService: AppsProcessCloudService) {
-        }
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         const id = changes['id'];
         if (id && id.currentValue !== id.previousValue) {
-            this.retrieveTaskFilter();
-            this.initTaskFilterProperties(this.taskFilter);
+            this.taskFilterProperties = this.createAndFilterProperties();
             this.buildForm(this.taskFilterProperties);
         }
     }
 
-    retrieveTaskFilter() {
-        this.taskFilter = new TaskFilterCloudModel(this.taskFilterCloudService.getTaskFilterById(this.appName, this.id));
+    retrieveTaskFilter(): TaskFilterCloudModel {
+        return new TaskFilterCloudModel(this.taskFilterCloudService.getTaskFilterById(this.appName, this.id));
     }
 
     buildForm(taskFilterProperties: TaskFilterProperties[]) {
@@ -141,26 +141,37 @@ export class EditTaskFilterCloudComponent implements OnChanges {
      */
     onFilterChange() {
         this.editTaskFilterForm.valueChanges
-        .pipe(debounceTime(500),
-            filter(() => this.isFormValid()))
+            .pipe(debounceTime(500),
+                filter(() => this.isFormValid()))
             .subscribe((formValues: TaskFilterCloudModel) => {
                 this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, formValues));
                 this.formHasBeenChanged = !this.compareFilters(this.changedTaskFilter, this.taskFilter);
                 this.filterChange.emit(this.changedTaskFilter);
-        });
+            });
     }
 
-    initTaskFilterProperties(taskFilter: TaskFilterCloudModel) {
-        if (this.filterProperties && this.filterProperties.length > 0) {
-            const defaultProperties = this.defaultTaskFilterProperties(taskFilter);
-            this.taskFilterProperties = defaultProperties.filter((filterProperty) => this.isValidProperty(this.filterProperties, filterProperty));
-        } else {
-            this.taskFilterProperties = EditTaskFilterCloudComponent.DEFAULT_TASK_FILTER_PROPERTIES;
+    createAndFilterProperties(): TaskFilterProperties[] {
+        this.checkMandatoryFilterProperties();
+        if (this.checkForApplicationNameProperty()) {
+            this.getRunningApplications();
+        }
+        this.taskFilter = this.retrieveTaskFilter();
+        const defaultProperties = this.createTaskFilterProperties(this.taskFilter);
+        return defaultProperties.filter((filterProperty: TaskFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty));
+    }
+
+    checkMandatoryFilterProperties() {
+        if (this.filterProperties === undefined || this.filterProperties.length === 0) {
+            this.filterProperties = EditTaskFilterCloudComponent.DEFAULT_TASK_FILTER_PROPERTIES;
         }
     }
 
     private isValidProperty(filterProperties: string[], filterProperty: any): boolean {
         return filterProperties ? filterProperties.indexOf(filterProperty.key) >= 0 : true;
+    }
+
+    checkForApplicationNameProperty(): boolean {
+        return this.filterProperties ? this.filterProperties.indexOf(EditTaskFilterCloudComponent.APPLICATION_NAME) >= 0 : false;
     }
 
     isFormValid(): boolean {
@@ -200,27 +211,26 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         return JSON.stringify(editedQuery).toLowerCase() === JSON.stringify(currentQuery).toLowerCase();
     }
 
-    getRunningApplications(): Observable<FilterOptions[]> {
-        return this.appsProcessCloudService.getDeployedApplicationsByStatus(EditTaskFilterCloudComponent.APP_RUNNING_STATUS).pipe(
-            map((applications: ApplicationInstanceModel[]) => {
+    getRunningApplications() {
+        this.appsProcessCloudService.getDeployedApplicationsByStatus(EditTaskFilterCloudComponent.APP_RUNNING_STATUS)
+            .subscribe((applications: ApplicationInstanceModel[]) => {
                 if (applications && applications.length > 0) {
-                    let options: FilterOptions[] = [];
                     applications.map((application) => {
-                        options.push({ label: application.name, value: application.name });
+                        this.applicationNames.push({ label: application.name, value: application.name });
                     });
-                    return options;
                 }
-            }));
+            });
     }
 
     onSave() {
         this.taskFilterCloudService.updateFilter(this.changedTaskFilter);
-        this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_SAVE, id: this.changedTaskFilter.id});
+        this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_SAVE, filter: this.changedTaskFilter});
+        this.formHasBeenChanged = this.compareFilters(this.changedTaskFilter, this.taskFilter);
     }
 
     onDelete() {
         this.taskFilterCloudService.deleteFilter(this.taskFilter);
-        this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_DELETE, id: this.taskFilter.id});
+        this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_DELETE, filter: this.taskFilter});
     }
 
     onSaveAs() {
@@ -231,19 +241,20 @@ export class EditTaskFilterCloudComponent implements OnChanges {
             height: 'auto',
             minWidth: '30%'
         });
-        dialogRef.afterClosed().subscribe( (result) => {
+        dialogRef.afterClosed().subscribe((result) => {
             if (result && result.action === TaskFilterDialogCloudComponent.ACTION_SAVE) {
                 const filterId = Math.random().toString(36).substr(2, 9);
                 const filterKey = this.getSanitizeFilterName(result.name);
                 const newFilter = {
-                                    name: result.name,
-                                    icon: result.icon,
-                                    id: filterId,
-                                    key: 'custom-' + filterKey
-                                };
+                    name: result.name,
+                    icon: result.icon,
+                    id: filterId,
+                    key: 'custom-' + filterKey
+                };
                 const resultFilter = Object.assign({}, this.changedTaskFilter, newFilter);
                 this.taskFilterCloudService.addFilter(resultFilter);
-                this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_SAVE_AS, id: resultFilter.id});
+                this.action.emit({actionType: EditTaskFilterCloudComponent.ACTION_SAVE_AS, filter: resultFilter});
+
             }
         });
     }
@@ -258,16 +269,16 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         return name.replace(regExt, '-');
     }
 
-    toggleActions(): boolean {
-        return this.toggleFilterActions;
+    showActions(): boolean {
+        return this.showFilterActions;
     }
 
     onExpand(event: any) {
-        this.showFilterActions = true;
+        this.toggleFilterActions = true;
     }
 
     onClose(event: any) {
-        this.showFilterActions = false;
+        this.toggleFilterActions = false;
     }
 
     isDateType(property: TaskFilterProperties): boolean {
@@ -282,21 +293,21 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         return property.type === 'text';
     }
 
-    defaultTaskFilterProperties(currentTaskFilter: TaskFilterCloudModel): TaskFilterProperties[] {
+    createTaskFilterProperties(currentTaskFilter: TaskFilterCloudModel): TaskFilterProperties[] {
         return [
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.APP_NAME',
                 type: 'select',
                 key: 'appName',
-                value: this.appName || '',
-                options: this.getRunningApplications()
+                value: currentTaskFilter.appName || '',
+                options: this.applicationNames
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'state',
                 value: currentTaskFilter.state || this.status[0].value,
-                options: of(this.status)
+                options: this.status
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.ASSIGNMENT',
@@ -311,60 +322,24 @@ export class EditTaskFilterCloudComponent implements OnChanges {
                 value: currentTaskFilter.processDefinitionId || ''
             }),
             new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COLUMN',
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.SORT',
                 type: 'select',
                 key: 'sort',
                 value: currentTaskFilter.sort || this.columns[0].value,
-                options: of(this.columns)
+                options: this.columns
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DIRECTION',
                 type: 'select',
                 key: 'order',
                 value: currentTaskFilter.order || this.directions[0].value,
-                options: of(this.directions)
+                options: this.directions
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_INSTANCE_ID',
                 type: 'text',
                 key: 'processInstanceId',
                 value: currentTaskFilter.processInstanceId || ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_AFTER',
-                type: 'date',
-                key: 'dueAfter',
-                value: ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_BEFORE',
-                type: 'date',
-                key: 'dueBefore',
-                value: ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CLAIMED_DATE_FROM',
-                type: 'date',
-                key: 'claimedDateFrom',
-                value: ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CLAIMED_DATE_TO',
-                type: 'date',
-                key: 'claimedDateTo',
-                value: ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE_FORM',
-                type: 'date',
-                key: 'createdDateFrom',
-                value: ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.CREATED_DATE_TO',
-                type: 'date',
-                key: 'createdDateTo',
-                value: ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.TASK_NAME',
@@ -409,18 +384,6 @@ export class EditTaskFilterCloudComponent implements OnChanges {
                 type: 'text',
                 key: 'owner',
                 value: currentTaskFilter.owner || ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE_FROM',
-                type: 'date',
-                key: 'dueDateFrom',
-                value: ''
-            }),
-            new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE_TO',
-                type: 'date',
-                key: 'dueDateTo',
-                value: ''
             })
         ];
     }

@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs';
-
 export class TaskFilterCloudModel  {
     id: string;
     name: string;
@@ -98,7 +96,7 @@ export class FilterParamsModel {
 
 export interface FilterActionType {
     actionType: string;
-    id: string;
+    filter: TaskFilterCloudModel;
 }
 
 export interface FilterOptions {
@@ -108,10 +106,10 @@ export interface FilterOptions {
 
 export class TaskFilterProperties {
     label: string;
-    type: string; // text|date|select
+    type: string;
     value: string;
     key: string;
-    options$: Observable<FilterOptions[]>;
+    options: FilterOptions[];
 
     constructor(obj?: any) {
         if (obj) {
@@ -119,7 +117,7 @@ export class TaskFilterProperties {
             this.type = obj.type || null;
             this.value = obj.value || null;
             this.key = obj.key || null;
-            this.options$ = obj.options || null;
+            this.options = obj.options || null;
         }
     }
 }

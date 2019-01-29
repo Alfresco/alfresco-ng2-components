@@ -178,40 +178,6 @@ describe('ProcessListCloudComponent', () => {
         component.onRowClick(rowEvent);
     });
 
-    describe('component changes', () => {
-
-        beforeEach(() => {
-            component.rows = fakeProcessCloudList.list.entries;
-            fixture.detectChanges();
-        });
-
-        it('should NOT reload the tasks if the landingTaskId is the same of the current task', () => {
-            spyOn(component, 'reload').and.stub();
-            component.currentInstanceId = '999';
-            component.rows = [{ entry: { id: '999', name: 'Fake-name' } }];
-            const landingTaskId = '999';
-            let change = new SimpleChange('999', landingTaskId, true);
-            component.ngOnChanges({ 'landingTaskId': change });
-            expect(component.reload).not.toHaveBeenCalled();
-            expect(component.rows.length).toEqual(1);
-        });
-
-        it('should reload the tasks if the loadingTaskId is different from the current task', (done) => {
-            component.currentInstanceId = '999';
-            component.rows = [{ id: '999', name: 'Fake-name' }];
-            const landingTaskId = '888';
-            let change = new SimpleChange(null, landingTaskId, true);
-            component.applicationName = 'fake';
-            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-            component.success.subscribe((res) => {
-                expect(res).toBeDefined();
-                expect(component.rows).toBeDefined();
-                expect(component.rows.length).toEqual(3);
-                done();
-            });
-            component.ngOnChanges({ 'landingTaskId': change });
-        });
-    });
     describe('Injecting custom colums for tasklist - CustomTaskListComponent', () => {
 
         let fixtureCustom: ComponentFixture<CustomTaskListComponent>;
