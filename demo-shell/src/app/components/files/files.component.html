@@ -226,16 +226,12 @@
                 (permissionError)="handlePermissionError($event)"
                 (name-click)="documentList.onNodeDblClick($event.detail?.node)">
                 <adf-custom-no-permission-template *ngIf="enableCustomPermissionMessage">
-                    <ng-template>
                         <h1>You don't have permissions</h1>
-                    </ng-template>
                 </adf-custom-no-permission-template>
                 <adf-custom-empty-content-template *ngIf="disableDragArea">
-                    <ng-template>
                         <div class="adf-empty_template">
                             <div class="adf-no-result-message">{{ 'SEARCH.NO_RESULT' | translate }}</div>
                         </div>
-                    </ng-template>
                 </adf-custom-empty-content-template>
                 <data-columns>
                     <data-column
