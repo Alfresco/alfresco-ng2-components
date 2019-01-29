@@ -28,9 +28,7 @@ export class CloudBreadcrumbsComponent implements OnInit {
   applicationName: string;
   filterName: string;
 
-  constructor(
-    private route: ActivatedRoute
-  ) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.parent.params.subscribe((

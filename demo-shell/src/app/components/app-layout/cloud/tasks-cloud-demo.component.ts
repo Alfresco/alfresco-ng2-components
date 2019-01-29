@@ -46,7 +46,7 @@ export class TasksCloudDemoComponent implements OnInit {
     filterId;
     multiselect: boolean;
     selectedRows: string[] = [];
-    testingMode = false;
+    testingMode: boolean;
 
     constructor(
         private cloudLayoutService: CloudLayoutService,
@@ -73,10 +73,15 @@ export class TasksCloudDemoComponent implements OnInit {
             this.filterId = params.id;
         });
 
-        this.cloudLayoutService.getCurrentSelectionParam()
+        this.cloudLayoutService.getCurrentSettings()
             .subscribe(
                 (selection) => {
-                    this.multiselect = selection.multiselect;
+                    if (selection.multiselect !== undefined) {
+                        this.multiselect = selection.multiselect;
+                    }
+                    if (selection.testingMode !== undefined) {
+                        this.testingMode = selection.testingMode;
+                    }
                 }
             );
     }
