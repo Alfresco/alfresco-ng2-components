@@ -86,7 +86,7 @@ constructor(queryBuilder: SearchQueryBuilderService) {
 
 }
 ```
-> **Note:** Since ADF 3.0.0, the query contains the `"facetFormat": "V2"` parameter so that all the responses have the same structure even if coming from facetFields, from un-grouped facetQueries, from grouped facetQueries or from facetIntervals.
+> **Note:** Since ADF 3.0.0, the query contains the `"facetFormat": "V2"` parameter so that all the responses have the same structure even if coming from search queries containing facetFields, facetQueries, grouped facetQueries or facetIntervals.
 
 ## See also
 

@@ -33,6 +33,10 @@ export class SearchFiltersPage {
     typeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type"]'));
     sizeRangeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Content Size (range)"]'));
     sizeSliderFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Content Size"]'));
+    facetQueriesDefaultGroup = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_QUERIES.MY_FACET_QUERIES"],' +
+        'mat-expansion-panel[data-automation-id="expansion-panel-My facet queries"]'));
+    facetQueriesTypeGroup = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type facet queries"]'));
+    facetQueriesSizeGroup = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Size facet queries"]'));
 
     checkSearchFiltersIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchFilters);
@@ -89,6 +93,29 @@ export class SearchFiltersPage {
     checkNameFilterIsDisplayed() {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.nameFilter);
         return this;
+    }
+
+    checkDefaultFacetQueryGroupIsDisplayed() {
+        this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesDefaultGroup);
+        return this;
+    }
+
+    checkTypeFacetQueryGroupIsDisplayed() {
+        this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesTypeGroup);
+        return this;
+    }
+
+    checkSizeFacetQueryGroupIsDisplayed() {
+        this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesSizeGroup);
+        return this;
+    }
+
+    isTypeFacetQueryGroupPresent() {
+        return this.facetQueriesTypeGroup.isPresent();
+    }
+
+    isSizeFacetQueryGroupPresent() {
+        return this.facetQueriesSizeGroup.isPresent();
     }
 
     clickCheckListFilter() {
