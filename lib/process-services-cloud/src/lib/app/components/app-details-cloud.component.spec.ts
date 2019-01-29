@@ -22,7 +22,7 @@ import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppDetailsCloudComponent } from './app-details-cloud.component';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { AppListCloudModule } from '../app-list-cloud.module';
-import { ApplicationInstanceModel } from 'index';
+import { ApplicationInstanceModel } from '../models/application-instance.model';
 
 describe('AppDetailsCloudComponent', () => {
 
