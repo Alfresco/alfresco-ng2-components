@@ -91,7 +91,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     }
 
     onProcessFilterAction(filterAction: any) {
-        this.cloudLayoutService.setCurrentProcessFilterParam({id: filterAction.id});
+        this.cloudLayoutService.setCurrentProcessFilterParam({id: filterAction.filter.id});
         if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_SAVE_AS) {
             this.router.navigate([`/cloud/${this.applicationName}/processes/`], { queryParams: filterAction.filter });
         }
