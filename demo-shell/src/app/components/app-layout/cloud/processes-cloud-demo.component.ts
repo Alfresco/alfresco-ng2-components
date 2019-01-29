@@ -50,7 +50,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     selectedRow: any;
     multiselect: boolean;
     selectedRows: string[] = [];
-    testingMode = false;
+    testingMode: boolean;
     processFilterProperties: any[] = [];
 
     editedFilter: ProcessFilterCloudModel;
@@ -79,10 +79,15 @@ export class ProcessesCloudDemoComponent implements OnInit {
             this.filterId = params.id;
         });
 
-        this.cloudLayoutService.getCurrentSelectionParam()
+        this.cloudLayoutService.getCurrentSettings()
             .subscribe(
                 (selection) => {
-                    this.multiselect = selection.multiselect;
+                    if (selection.multiselect !== undefined) {
+                        this.multiselect = selection.multiselect;
+                    }
+                    if (selection.testingMode !== undefined) {
+                        this.testingMode = selection.testingMode;
+                    }
                 }
             );
     }

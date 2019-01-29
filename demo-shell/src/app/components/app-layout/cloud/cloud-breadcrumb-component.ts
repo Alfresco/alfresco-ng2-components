@@ -17,7 +17,6 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CloudLayoutService } from './services/cloud-layout.service';
 
 @Component({
   selector: 'app-cloud-breadcrumbs',
@@ -28,11 +27,9 @@ export class CloudBreadcrumbsComponent implements OnInit {
 
   applicationName: string;
   filterName: string;
-  multiselect = false;
 
   constructor(
-    private route: ActivatedRoute,
-    private cloudLayoutService: CloudLayoutService
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -45,18 +42,5 @@ export class CloudBreadcrumbsComponent implements OnInit {
         this.filterName = params.filterName;
       }
     });
-  }
-
-  toggleMultiselect() {
-    this.multiselect = !this.multiselect;
-    this.setCurrentSelection();
-  }
-
-  onSelectionModeChange() {
-    this.setCurrentSelection();
-  }
-
-  setCurrentSelection() {
-    this.cloudLayoutService.setCurrentSelectionParam({multiselect: this.multiselect});
   }
 }

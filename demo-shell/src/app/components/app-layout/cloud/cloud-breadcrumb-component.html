@@ -5,13 +5,4 @@
       <div class="adf-filter-crumb"> {{filterName | translate}}</div>
     </div>
   </div>
-
-  <div fxFlex fxLayoutAlign="end">
-    <mat-checkbox 
-      [color]="'primary'" 
-      [checked]="multiselect"
-      (change)="toggleMultiselect()"
-      data-automation-id="multiSelection">
-    </mat-checkbox>
-  </div>
 </adf-toolbar>
