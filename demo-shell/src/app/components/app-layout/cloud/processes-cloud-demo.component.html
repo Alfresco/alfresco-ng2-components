@@ -2,6 +2,7 @@
     <adf-cloud-edit-process-filter
         [appName]="applicationName"
         [id]="filterId"
+        [filterProperties]="processFilterProperties"
         (filterChange)="onFilterChange($event)"
         (action)="onProcessFilterAction($event)">
     </adf-cloud-edit-process-filter>
@@ -9,6 +10,7 @@
         <adf-cloud-process-list fxFlex class="adf-cloud-layout-overflow"
                                 [applicationName]="editedFilter.appName"
                                 [status]="editedFilter.state"
+                                [name]="editedFilter.processName"
                                 [sorting]="sortArray"
                                 (rowClick)="onRowClick($event)"
                                 #processCloud>

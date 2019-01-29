@@ -21,11 +21,19 @@ export class ProcessFilterCloudModel {
     key: string;
     icon: string;
     index: number;
-    processDefinitionId: string;
     appName: string;
+    processName: string;
+    initiator: string;
     state: string;
     sort: string;
     order: string;
+    processDefinitionId: string;
+    processDefinitionKey: string;
+    processInstanceId: string;
+    startDate: Date;
+    lastModified: Date;
+    lastModifiedTo: Date;
+    lastModifiedFrom: Date;
 
     constructor(obj?: any) {
         if (obj) {
@@ -35,15 +43,46 @@ export class ProcessFilterCloudModel {
             this.icon = obj.icon || null;
             this.index = obj.index || null;
             this.appName = obj.appName || null;
-            this.processDefinitionId = obj.processDefinitionId || null;
+            this.processName = obj.processName || null;
+            this.initiator = obj.initiator || null;
             this.state = obj.state || null;
             this.sort = obj.sort || null;
             this.order = obj.order || null;
+            this.processDefinitionId = obj.processDefinitionId || null;
+            this.processDefinitionKey = obj.processDefinitionKey || null;
+            this.processInstanceId = obj.processInstanceId || null;
+            this.startDate = obj.startDate || null;
+            this.lastModified = obj.lastModified || null;
+            this.lastModifiedTo = obj.lastModifiedTo || null;
+            this.lastModifiedFrom = obj.lastModifiedFrom || null;
         }
     }
 }
 
 export interface ProcessFilterActionType {
     actionType: string;
-    id: string;
+    filter: ProcessFilterCloudModel;
+}
+
+export interface ProcessFilterOptions {
+    label?: string;
+    value?: string;
+}
+
+export class ProcessFilterProperties {
+    label: string;
+    type: string;
+    value: string;
+    key: string;
+    options: ProcessFilterOptions[];
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.label = obj.label || null;
+            this.type = obj.type || null;
+            this.value = obj.value || '';
+            this.key = obj.key || null;
+            this.options = obj.options || null;
+        }
+    }
 }

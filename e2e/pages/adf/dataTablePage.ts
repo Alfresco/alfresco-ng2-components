@@ -243,10 +243,12 @@ export class DataTablePage {
 
     checkSpinnerIsDisplayed() {
         Util.waitUntilElementIsPresent(this.spinner);
+        return this;
     }
 
     checkSpinnerIsNotDisplayed() {
         Util.waitUntilElementIsNotOnPage(this.spinner);
+        return this;
     }
 
     checkRowIsDisplayedByName(filename) {

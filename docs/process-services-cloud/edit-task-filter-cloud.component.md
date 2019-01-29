@@ -25,10 +25,10 @@ Edits Task Filter Details.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | (required) Name of the app. |
-| filterProperties | `string[]` |  | List of task filter properties to display. |
-| id | `string` |  | (required) ID of the task filter. |
-| showTitle | `boolean` | true | Toggles the title. |
-| toggleFilterActions | `boolean` | true | Toggles the filter actions. |
+| id | `string` | "" | (required) The id of the Task filter. |
+| filterProperties | `string []` | `['state', 'assignment', 'sort', 'order']` | List of task filter properties to display. |
+| showFilterActions | `boolean` | `true` | Toggles edit task filter actions. |
+| showTitle | `boolean` | `true` | Toggles edit task filter title. |
 
 ### Events
 

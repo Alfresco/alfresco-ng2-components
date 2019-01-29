@@ -19,7 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { MatDialog } from '@angular/material';
 import { of } from 'rxjs';
@@ -28,20 +28,24 @@ import { EditProcessFilterCloudComponent } from './edit-process-filter-cloud.com
 import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
+import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
+import { fakeApplicationInstance } from './../../../app/mock/app-model.mock';
 
 describe('EditProcessFilterCloudComponent', () => {
     let component: EditProcessFilterCloudComponent;
     let service: ProcessFilterCloudService;
-    let identityService: IdentityUserService;
     let fixture: ComponentFixture<EditProcessFilterCloudComponent>;
     let dialog: MatDialog;
+    let appsService: AppsProcessCloudService;
+    let getRunningApplicationsSpy: jasmine.Spy;
+    let getProcessFilterByIdSpy: jasmine.Spy;
 
     let fakeFilter = new ProcessFilterCloudModel({
         name: 'FakeRunningProcess',
         icon: 'adjust',
-        id: 10,
+        id: 'mock-process-filter-id',
         state: 'RUNNING',
-        appName: 'app-name',
+        appName: 'mock-app-name',
         processDefinitionId: 'process-def-id',
         assignment: 'fake-involved',
         order: 'ASC',
@@ -57,14 +61,15 @@ describe('EditProcessFilterCloudComponent', () => {
         fixture = TestBed.createComponent(EditProcessFilterCloudComponent);
         component = fixture.componentInstance;
         service = TestBed.get(ProcessFilterCloudService);
-        identityService = TestBed.get(IdentityUserService);
+        appsService = TestBed.get(AppsProcessCloudService);
         dialog = TestBed.get(MatDialog);
         spyOn(dialog, 'open').and.returnValue({ afterClosed() { return of({
             action: ProcessFilterDialogCloudComponent.ACTION_SAVE,
             icon: 'icon',
             name: 'fake-name'
         }); }});
-        spyOn(service, 'getProcessFilterById').and.returnValue(fakeFilter);
+        getProcessFilterByIdSpy = spyOn(service, 'getProcessFilterById').and.returnValue(fakeFilter);
+        getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
     });
 
     it('should create EditProcessFilterCloudComponent', () => {
@@ -72,12 +77,12 @@ describe('EditProcessFilterCloudComponent', () => {
     });
 
     it('should fetch process instance filter by id', async(() => {
-        let change = new SimpleChange(undefined, '10', true);
-        component.ngOnChanges({ 'id': change });
-        fixture.detectChanges();
+        let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+        component.ngOnChanges({'id': processFilterIDchange});
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
+            expect(getProcessFilterByIdSpy).toHaveBeenCalled();
             expect(component.processFilter.name).toEqual('FakeRunningProcess');
             expect(component.processFilter.icon).toEqual('adjust');
             expect(component.processFilter.state).toEqual('RUNNING');
@@ -87,27 +92,26 @@ describe('EditProcessFilterCloudComponent', () => {
     }));
 
     it('should display filter name as title', () => {
-        let change = new SimpleChange(undefined, '10', true);
-        component.ngOnChanges({ 'id': change });
-        fixture.detectChanges();
+        let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+        component.ngOnChanges({'id': processFilterIDchange});
         fixture.detectChanges();
         const title = fixture.debugElement.nativeElement.querySelector('#adf-edit-process-filter-title-id');
         const subTitle = fixture.debugElement.nativeElement.querySelector('#adf-edit-process-filter-sub-title-id');
         expect(title).toBeDefined();
         expect(subTitle).toBeDefined();
         expect(title.innerText).toEqual('FakeRunningProcess');
-        expect(subTitle.innerText).toEqual('ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE');
+        expect(subTitle.innerText.trim()).toEqual('ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE');
     });
 
     describe('EditProcessFilter form', () => {
 
         beforeEach(() => {
-            let change = new SimpleChange(undefined, '10', true);
-            component.ngOnChanges({ 'id': change });
+            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({'id': processFilterIDchange});
             fixture.detectChanges();
         });
 
-        it('should define editProcessFilter form', () => {
+        it('should defined editProcessFilter form', () => {
             expect(component.editProcessFilterForm).toBeDefined();
         });
 
@@ -129,6 +133,7 @@ describe('EditProcessFilterCloudComponent', () => {
         }));
 
         it('should disable save button if the process filter is not changed', async(() => {
+            component.toggleFilterActions = true;
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.detectChanges();
@@ -139,6 +144,7 @@ describe('EditProcessFilterCloudComponent', () => {
         }));
 
         it('should disable saveAs button if the process filter is not changed', async(() => {
+            component.toggleFilterActions = true;
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.detectChanges();
@@ -149,6 +155,7 @@ describe('EditProcessFilterCloudComponent', () => {
         }));
 
         it('should enable delete button by default', async(() => {
+            component.toggleFilterActions = true;
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.detectChanges();
@@ -159,33 +166,35 @@ describe('EditProcessFilterCloudComponent', () => {
         }));
 
         it('should display current process filter details', async(() => {
-            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                let stateElement = fixture.debugElement.nativeElement.querySelector('#adf-process-filter-state-id');
-                let sortElement = fixture.debugElement.nativeElement.querySelector('#adf-process-filter-sort-id');
-                let orderElement = fixture.debugElement.nativeElement.querySelector('#adf-process-filter-order-id');
+                let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+                expansionPanel.click();
+                fixture.detectChanges();
+                let stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-state"]');
+                let sortElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-sort"]');
+                let orderElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-order"]');
                 expect(stateElement).toBeDefined();
                 expect(sortElement).toBeDefined();
                 expect(orderElement).toBeDefined();
-                expect(stateElement.innerText.trim()).toBe('ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STATUS');
-                expect(sortElement.innerText.trim()).toBe('ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COLUMN');
-                expect(orderElement.innerText.trim()).toBe('ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DIRECTION');
+                expect(stateElement.innerText.trim()).toBe('RUNNING');
+                expect(sortElement.innerText.trim()).toBe('ID');
+                expect(orderElement.innerText.trim()).toBe('ASC');
             });
         }));
 
         it('should enable save button if the process filter is changed', async(() => {
+            fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const stateElement = fixture.debugElement.query(By.css('#adf-process-filter-state-id .mat-select-trigger')).nativeElement;
+            let stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-state"] .mat-select-trigger');
             stateElement.click();
             fixture.detectChanges();
+            const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-id');
+            const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+            options[2].nativeElement.click();
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-id');
-                const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                options[2].nativeElement.click();
-                fixture.detectChanges();
                 expect(saveButton.disabled).toBe(false);
             });
         }));
@@ -194,7 +203,7 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const stateElement = fixture.debugElement.query(By.css('#adf-process-filter-state-id .mat-select-trigger')).nativeElement;
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-state"] .mat-select-trigger');
             stateElement.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -207,7 +216,7 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const sortElement = fixture.debugElement.query(By.css('#adf-process-filter-sort-id .mat-select-trigger')).nativeElement;
+            const sortElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-sort"] .mat-select-trigger');
             sortElement.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -220,7 +229,7 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const orderElement = fixture.debugElement.query(By.css('#adf-process-filter-order-id .mat-select-trigger')).nativeElement;
+            const orderElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-order"] .mat-select-trigger');
             orderElement.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -228,48 +237,117 @@ describe('EditProcessFilterCloudComponent', () => {
                 expect(orderOptions.length).toEqual(2);
             });
         }));
+
+        it('should able to build a editProcessFilter form with default properties if input is empty', async(() => {
+            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({'id': processFilterIDchange});
+            component.filterProperties = [];
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const stateController = component.editProcessFilterForm.get('state');
+                const sortController = component.editProcessFilterForm.get('sort');
+                const orderController = component.editProcessFilterForm.get('order');
+                fixture.detectChanges();
+                expect(component.processFilterProperties).toBeDefined();
+                expect(component.processFilterProperties.length).toBe(3);
+                expect(component.editProcessFilterForm).toBeDefined();
+                expect(stateController).toBeDefined();
+                expect(sortController).toBeDefined();
+                expect(orderController).toBeDefined();
+                expect(stateController.value).toBe('RUNNING');
+                expect(sortController.value).toBe('id');
+                expect(orderController.value).toBe('ASC');
+            });
+        }));
+    });
+
+    describe('Process filterProperties', () => {
+
+        beforeEach(() => {
+            component.filterProperties = ['appName', 'processInstanceId', 'processName'];
+        });
+
+        it('should able to fetch running applications when appName property defined in the input', async(() => {
+            fixture.detectChanges();
+            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({'id': processFilterIDchange});
+            const appController = component.editProcessFilterForm.get('appName');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(getRunningApplicationsSpy).toHaveBeenCalled();
+                expect(appController).toBeDefined();
+                expect(appController.value).toBe('mock-app-name');
+            });
+        }));
+
+        it('should able to build a editProcessFilter form with given input properties', async(() => {
+            fixture.detectChanges();
+            getProcessFilterByIdSpy.and.returnValue({ appName: 'mock-app-name', processInstanceId: 'process-instance-id', processName: 'mock-process-name' });
+            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({'id': processFilterIDchange});
+            fixture.detectChanges();
+            const appController = component.editProcessFilterForm.get('appName');
+            const processNameController = component.editProcessFilterForm.get('processName');
+            const processInsIdController = component.editProcessFilterForm.get('processInstanceId');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(getRunningApplicationsSpy).toHaveBeenCalled();
+                expect(component.processFilterProperties).toBeDefined();
+                expect(component.editProcessFilterForm).toBeDefined();
+                expect(component.processFilterProperties.length).toBe(3);
+                expect(appController).toBeDefined();
+                expect(processNameController).toBeDefined();
+                expect(processInsIdController).toBeDefined();
+                expect(appController.value).toBe('mock-app-name');
+            });
+        }));
     });
 
     describe('edit filter actions', () => {
 
         beforeEach(() => {
-            let change = new SimpleChange(undefined, '10', true);
-            component.ngOnChanges({ 'id': change });
+            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({'id': processFilterIDchange});
+            fixture.detectChanges();
         });
 
         it('should emit save event and save the filter on click save button', async(() => {
-            spyOn(identityService, 'getCurrentUserInfo').and.returnValue({username: 'currentUser'});
+            component.toggleFilterActions = true;
             const saveFilterSpy = spyOn(service, 'updateFilter').and.returnValue(fakeFilter);
             let saveSpy: jasmine.Spy = spyOn(component.action, 'emit');
+
             fixture.detectChanges();
-            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const stateElement = fixture.debugElement.query(By.css('#adf-process-filter-state-id .mat-select-trigger')).nativeElement;
+            fixture.detectChanges();
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-state"] .mat-select-trigger');
             stateElement.click();
             fixture.detectChanges();
+            const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-id');
+            const stateOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+            stateOptions[2].nativeElement.click();
+            saveButton.click();
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-id');
-                const stateOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                stateOptions[2].nativeElement.click();
-                fixture.detectChanges();
-                saveButton.click();
-                fixture.detectChanges();
                 expect(saveFilterSpy).toHaveBeenCalled();
                 expect(saveSpy).toHaveBeenCalled();
             });
         }));
 
         it('should emit delete event and delete the filter on click of delete button', async(() => {
-            spyOn(identityService, 'getCurrentUserInfo').and.returnValue({username: 'currentUser'});
+            component.toggleFilterActions = true;
             const deleteFilterSpy = spyOn(service, 'deleteFilter').and.callThrough();
             let deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
-            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+
+            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const stateElement = fixture.debugElement.query(By.css('#adf-process-filter-state-id .mat-select-trigger')).nativeElement;
+            fixture.detectChanges();
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-state"] .mat-select-trigger');
             stateElement.click();
             fixture.detectChanges();
-            let deleteButton = fixture.debugElement.nativeElement.querySelector('#adf-delete-id');
+            const deleteButton = fixture.debugElement.nativeElement.querySelector('#adf-delete-id');
             deleteButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -279,13 +357,15 @@ describe('EditProcessFilterCloudComponent', () => {
         }));
 
         it('should emit saveAs event and add filter on click saveAs button', async(() => {
-            spyOn(identityService, 'getCurrentUserInfo').and.returnValue({username: 'currentUser'});
+            component.toggleFilterActions = true;
             const saveAsFilterSpy = spyOn(service, 'addFilter').and.callThrough();
             let saveAsSpy: jasmine.Spy = spyOn(component.action, 'emit');
             fixture.detectChanges();
-            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+
+            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const stateElement = fixture.debugElement.query(By.css('#adf-process-filter-state-id .mat-select-trigger')).nativeElement;
+            fixture.detectChanges();
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-state"] .mat-select-trigger');
             stateElement.click();
             fixture.detectChanges();
             const saveButton = fixture.debugElement.nativeElement.querySelector('#adf-save-as-id');

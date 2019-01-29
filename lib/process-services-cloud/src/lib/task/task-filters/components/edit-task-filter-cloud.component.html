@@ -4,8 +4,8 @@
             <mat-panel-title fxLayoutAlign="space-between center" id="adf-edit-task-filter-title-id">{{taskFilter.name | translate}}</mat-panel-title>
             <mat-panel-description fxLayoutAlign="space-between center" id="adf-edit-task-filter-sub-title-id">
                 <span *ngIf="showTitle">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.TITLE' | translate}}</span>
-                <div *ngIf="toggleActions()" class="adf-cloud-edit-task-filter-actions">
-                    <ng-container *ngIf="showFilterActions">
+                <div *ngIf="showActions()" class="adf-cloud-edit-task-filter-actions">
+                    <ng-container *ngIf="toggleFilterActions">
                         <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE' | translate}}" id="adf-save-id" [disabled]="!formHasBeenChanged" (click)="onSave()">
                             <mat-icon>save</mat-icon>
                         </button>
@@ -22,24 +22,24 @@
         <form [formGroup]="editTaskFilterForm">
             <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="start center">
             <ng-container *ngFor="let taskFilterProperty of taskFilterProperties">
-                <mat-form-field fxFlex="23%" *ngIf="isSelectType(taskFilterProperty)">
+                <mat-form-field fxFlex="23%" *ngIf="isSelectType(taskFilterProperty)" [attr.data-automation-id]="taskFilterProperty.key">
                     <mat-select
                         placeholder="{{taskFilterProperty.label | translate}}"
                         [formControlName]="taskFilterProperty.key"
                         [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key">
-                        <mat-option *ngFor="let propertyOption of taskFilterProperty.options$ | async" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-task-property-options' + taskFilterProperty.key">
+                        <mat-option *ngFor="let propertyOption of taskFilterProperty.options" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-task-property-options' + taskFilterProperty.key">
                             {{ propertyOption.label }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field fxFlex="23%" *ngIf="isTextType(taskFilterProperty)">
+                <mat-form-field fxFlex="23%" *ngIf="isTextType(taskFilterProperty)" [attr.data-automation-id]="taskFilterProperty.key">
                     <input matInput
                     [formControlName]="taskFilterProperty.key"
                     type="text"
                     placeholder="{{taskFilterProperty.label | translate}}"
                     [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key"/>
                 </mat-form-field>
-                <mat-form-field fxFlex="23%" *ngIf="isDateType(taskFilterProperty)">
+                <mat-form-field fxFlex="23%" *ngIf="isDateType(taskFilterProperty)" [attr.data-automation-id]="taskFilterProperty.key">
                     <mat-label>{{taskFilterProperty.label | translate}}</mat-label>
                         <input
                             matInput

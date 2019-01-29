@@ -35,13 +35,22 @@ export class CloudLayoutComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        let root: string = '';
         this.route.params.subscribe((params) => {
             this.applicationName = params.applicationName;
         });
 
+        if (this.route.snapshot && this.route.snapshot.firstChild) {
+            root = this.route.snapshot.firstChild.url[0].path;
+        }
+
         this.route.queryParams.subscribe((params) => {
-            if (params.id) {
+            if (root === 'tasks' && params.id) {
                 this.cloudLayoutService.setCurrentTaskFilterParam({ id: params.id });
+            }
+
+            if (root === 'processes' && params.id) {
+                this.cloudLayoutService.setCurrentProcessFilterParam({ id: params.id });
             }
         });
     }
