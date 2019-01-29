@@ -34,6 +34,7 @@ export class ExtensionService {
     rules: Array<RuleRef> = [];
     routes: Array<RouteRef> = [];
     actions: Array<ActionRef> = [];
+    features: Array<any> = [];
 
     authGuards: { [key: string]: Type<{}> } = {};
     evaluators: { [key: string]: RuleEvaluator } = {};
@@ -41,7 +42,8 @@ export class ExtensionService {
     constructor(
         private loader: ExtensionLoaderService,
         private componentRegister: ComponentRegisterService
-    ) {}
+    ) {
+    }
 
     /**
      * Loads and registers an extension config file and plugins (specified by path properties).
@@ -75,6 +77,12 @@ export class ExtensionService {
         this.rules = this.loader.getRules(config);
         this.actions = this.loader.getActions(config);
         this.routes = this.loader.getRoutes(config);
+        this.features = this.loader.getFeatures(config);
+    }
+
+    getFeature(key: string): any {
+        let properties: string[] = Array.isArray(key) ? [key] : key.split('.');
+        return properties.reduce((prev, curr) => prev && prev[curr], this.features);
     }
 
     /**

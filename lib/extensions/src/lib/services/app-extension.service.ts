@@ -19,7 +19,6 @@ import { Injectable } from '@angular/core';
 import { ExtensionConfig, ExtensionRef } from '../config/extension.config';
 import { ExtensionService } from '../services/extension.service';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { LogService } from '@alfresco/adf-core';
 
 @Injectable({
     providedIn: 'root'
@@ -29,7 +28,7 @@ export class AppExtensionService {
 
     references$: Observable<ExtensionRef[]>;
 
-    constructor(private extensionService: ExtensionService, private logService: LogService) {
+    constructor(protected extensionService: ExtensionService) {
         this.references$ = this._references.asObservable();
     }
 
@@ -40,11 +39,8 @@ export class AppExtensionService {
 
     setup(config: ExtensionConfig) {
         if (!config) {
-            this.logService.error('Extension configuration not found');
             return;
         }
-
-        this.logService.log('loaded extension config', config);
 
         const references = (config.$references || [])
             .filter((entry) => typeof entry === 'object')

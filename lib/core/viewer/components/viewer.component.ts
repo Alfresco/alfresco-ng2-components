@@ -31,6 +31,7 @@ import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { Subscription } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
+import { ExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 
 @Component({
     selector: 'adf-viewer',
@@ -211,6 +212,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     sidebarRightTemplateContext: { node: Node } = { node: null };
     sidebarLeftTemplateContext: { node: Node } = { node: null };
     fileTitle: string;
+    viewerExtensions: Array<ViewerExtensionRef> = [];
 
     private cacheBusterNumber;
 
@@ -220,7 +222,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private extensions = {
         image: ['png', 'jpg', 'jpeg', 'gif', 'bpm', 'svg'],
         media: ['wav', 'mp4', 'mp3', 'webm', 'ogg'],
-        text: ['txt', 'xml', 'js', 'html', 'json', 'ts', 'css', 'md'],
+        text: ['txt', 'xml', 'html', 'json', 'ts', 'css', 'md'],
         pdf: ['pdf']
     };
 
@@ -236,6 +238,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 private viewUtils: ViewUtilService,
                 private logService: LogService,
                 private location: Location,
+                private extensionService: ExtensionService,
                 private el: ElementRef) {
     }
 
@@ -247,6 +250,15 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.subscriptions.push(
             this.apiService.nodeUpdated.subscribe((node) => this.onNodeUpdated(node))
         );
+
+        this.extensionLoad();
+    }
+
+    private extensionLoad() {
+        this.viewerExtensions = this.extensionService.getFeature('viewer.content');
+        this.viewerExtensions.forEach((currentViewerExtension: ViewerExtensionRef) => {
+            this.externalExtensions.push(currentViewerExtension.fileExtension);
+        });
     }
 
     ngOnDestroy() {

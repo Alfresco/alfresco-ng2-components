@@ -78,9 +78,11 @@ import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/st
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
 import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-settings.component';
+import { AcaMonacoModule } from 'adf-monaco-extension';
 
 @NgModule({
     imports: [
+        AcaMonacoModule,
         BrowserModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
@@ -93,6 +95,7 @@ import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-sett
         ContentModule.forRoot(),
         InsightsModule.forRoot(),
         ProcessModule.forRoot(),
+        ProcessServicesCloudModule,
         ExtensionsModule.forRoot(),
         ThemePickerModule,
         ChartsModule,

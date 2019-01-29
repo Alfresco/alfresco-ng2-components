@@ -1,9 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/Alfresco/alfresco-content-app/blob/development/extension.schema.json",
+  "id": "https://github.com/Alfresco/alfresco-ng2-components/tree/master/lib/extensions/config/schema/extension.schema.json",
   "title": "ACA Extension Schema",
-  "description": "Provides a validation schema for ACA extensions",
-
+  "description": "Provides a validation schema for extensions plugin JSON",
   "definitions": {
     "ruleRef": {
       "type": "object",

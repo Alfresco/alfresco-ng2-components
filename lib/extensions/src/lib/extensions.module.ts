@@ -18,6 +18,7 @@
 import { DynamicExtensionComponent } from './components/dynamic-component/dynamic.component';
 import { DynamicTabComponent } from './components/dynamic-tab/dynamic-tab.component';
 import { DynamicColumnComponent } from './components/dynamic-column/dynamic-column.component';
+import { PreviewExtensionComponent } from './components/viewer/preview-extension.component';
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { AppExtensionService } from './services/app-extension.service';
 
@@ -29,12 +30,14 @@ export function setupExtensions(service: AppExtensionService): Function {
     declarations: [
         DynamicExtensionComponent,
         DynamicTabComponent,
-        DynamicColumnComponent
+        DynamicColumnComponent,
+        PreviewExtensionComponent
     ],
     exports: [
         DynamicExtensionComponent,
         DynamicTabComponent,
-        DynamicColumnComponent
+        DynamicColumnComponent,
+        PreviewExtensionComponent
     ]
 })
 export class ExtensionsModule {

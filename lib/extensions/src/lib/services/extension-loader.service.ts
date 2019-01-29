@@ -140,6 +140,13 @@ export class ExtensionLoaderService {
         return [];
     }
 
+    getFeatures(config: ExtensionConfig): any {
+        if (config) {
+            return config.features || [];
+        }
+        return [];
+    }
+
     protected setActionDefaults(action: ContentActionRef): ContentActionRef {
         if (action) {
             action.type = action.type || ContentActionType.default;

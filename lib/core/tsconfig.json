@@ -20,11 +20,11 @@
     "baseUrl": "./",
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@alfresco/adf-process-services": [
-        "../process-services"
+      "@alfresco/adf-extensions": [
+        "../extensions"
       ],
-      "@alfresco/adf-content-services": [
-        "../content-services"
+      "@alfresco/adf-extensions": [
+        "../extensions"
       ]
     },
     "lib": [

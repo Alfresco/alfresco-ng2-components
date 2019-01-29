@@ -169,6 +169,7 @@
             <div  *ngIf="!isLoading"  class="adf-viewer-main" fxFlexOrder="1" fxFlex="1 1 auto">
                 <div class="adf-viewer-layout-content adf-viewer__fullscreen-container">
                     <div class="adf-viewer-content-container" [ngSwitch]="viewerType">
+
                         <ng-container *ngSwitchCase="'pdf'">
                             <adf-pdf-viewer [thumbnailsTemplate]="thumbnailsTemplate" [allowThumbnails]="allowThumbnails" [blobFile]="blobFile" [urlFile]="urlFileContent" [nameFile]="displayName"></adf-pdf-viewer>
                         </ng-container>
@@ -195,8 +196,22 @@
                         </ng-container>
 
                         <ng-container *ngSwitchCase="'custom'">
+
+                            <ng-container  *ngFor="let ext of viewerExtensions">
+                                <adf-preview-extension
+                                    *ngIf="extension === ext.fileExtension"
+                                    [id]="ext.component"
+                                    [node]="node"
+                                    [url]="urlFileContent"
+                                    [extension]="extension"
+                                    [attr.data-automation-id]="ext.component">
+                                </adf-preview-extension>
+                            </ng-container>
+
                             <span class="adf-viewer-custom-content" *ngFor="let extensionTemplate of extensionTemplates">
-                                <ng-template *ngIf="extensionTemplate.isVisible" [ngTemplateOutlet]="extensionTemplate.template" [ngTemplateOutletContext]="{ urlFileContent: urlFileContent, extension:extension }">
+                                <ng-template *ngIf="extensionTemplate.isVisible"
+                                             [ngTemplateOutlet]="extensionTemplate.template"
+                                             [ngTemplateOutletContext]="{ urlFileContent: urlFileContent, extension:extension }">
                                 </ng-template>
                             </span>
                         </ng-container>
