@@ -23,8 +23,8 @@ import {
     ProcessFiltersCloudComponent
 } from '@alfresco/adf-process-services-cloud';
 
-import { ActivatedRoute } from '@angular/router';
-import { UserPreferencesService } from '@alfresco/adf-core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 import { CloudLayoutService } from './services/cloud-layout.service';
 
 @Component({
@@ -32,6 +32,9 @@ import { CloudLayoutService } from './services/cloud-layout.service';
     styleUrls: ['./processes-cloud-demo.component.scss']
 })
 export class ProcessesCloudDemoComponent implements OnInit {
+
+    public static ACTION_SAVE_AS = 'SAVE_AS';
+    static PROCESS_FILTER_PROPERTY_KEYS = 'edit-process-filter.properties';
 
     @ViewChild('processCloud')
     processCloud: ProcessListCloudComponent;
@@ -45,13 +48,20 @@ export class ProcessesCloudDemoComponent implements OnInit {
     filterId: string = '';
     sortArray: any = [];
     selectedRow: any;
+    processFilterProperties: any[] = [];
 
     editedFilter: ProcessFilterCloudModel;
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private cloudLayoutService: CloudLayoutService,
-        private userPreference: UserPreferencesService) {
+        private userPreference: UserPreferencesService,
+        private appConfig: AppConfigService) {
+        const properties = this.appConfig.get<Array<any>>(ProcessesCloudDemoComponent.PROCESS_FILTER_PROPERTY_KEYS);
+        if (properties) {
+            this.processFilterProperties = properties;
+        }
     }
 
     ngOnInit() {
@@ -80,7 +90,10 @@ export class ProcessesCloudDemoComponent implements OnInit {
         this.sortArray = [new ProcessListCloudSortingModel({ orderBy: this.editedFilter.sort, direction: this.editedFilter.order })];
     }
 
-    onProcessFilterAction(filter: any) {
-        this.cloudLayoutService.setCurrentProcessFilterParam({id: filter.id});
+    onProcessFilterAction(filterAction: any) {
+        this.cloudLayoutService.setCurrentProcessFilterParam({id: filterAction.filter.id});
+        if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_SAVE_AS) {
+            this.router.navigate([`/cloud/${this.applicationName}/processes/`], { queryParams: filterAction.filter });
+        }
      }
 }

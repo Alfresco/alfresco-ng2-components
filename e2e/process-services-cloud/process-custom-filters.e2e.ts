@@ -98,6 +98,7 @@ describe('Process list cloud', () => {
         it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async() => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('RUNNING')
                 .setSortFilterDropDown('ID').setOrderFilterDropDown('ASC');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
             processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
                 let initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
@@ -107,6 +108,7 @@ describe('Process list cloud', () => {
             });
 
             processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
             processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
                 let initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {

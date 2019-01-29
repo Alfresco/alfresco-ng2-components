@@ -27,6 +27,7 @@ import { ProcessFilterCloudService } from './services/process-filter-cloud.servi
 import { HttpClientModule } from '@angular/common/http';
 import { EditProcessFilterCloudComponent } from './components/edit-process-filter-cloud.component';
 import { ProcessFilterDialogCloudComponent } from './components/process-filter-dialog-cloud.component';
+import { AppListCloudModule } from './../../app/app-list-cloud.module';
 @NgModule({
     imports: [
         FormsModule,
@@ -40,7 +41,8 @@ import { ProcessFilterDialogCloudComponent } from './components/process-filter-d
             }
         }),
         FlexLayoutModule,
-        MaterialModule
+        MaterialModule,
+        AppListCloudModule
     ],
     declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
     exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],

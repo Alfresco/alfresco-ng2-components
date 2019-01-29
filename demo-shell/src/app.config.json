@@ -539,6 +539,16 @@
             ]
         }
     },
+    "edit-task-filter": {
+        "properties": [
+            "state", "assignment", "sort", "order"
+        ]
+    },
+    "edit-process-filter": {
+        "properties": [
+            "state", "sort", "order", "processName"
+        ]
+    },
     "content-metadata": {
         "presets": {
             "default": {
