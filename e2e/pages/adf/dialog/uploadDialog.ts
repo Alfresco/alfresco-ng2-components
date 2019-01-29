@@ -159,6 +159,10 @@ export class UploadDialog {
         return this;
     }
 
+    async checkUploadCompleted() {
+        return (await this.numberOfCurrentFilesUploaded()) === (await this.numberOfInitialFilesUploaded());
+    }
+
     numberOfCurrentFilesUploaded() {
         let deferred = protractor.promise.defer();
         this.getTitleText().then((text) => {
