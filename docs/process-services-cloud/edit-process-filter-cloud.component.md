@@ -41,7 +41,7 @@ Shows Process Filter Details.
 
 ### Editing APS2 process filter
 
-Use the application name and process filter id property to edit process filter properties:
+Use the `appName` and `id` properties to choose which process filter to edit:
 
 ```html
 <adf-cloud-edit-process-filter
@@ -49,14 +49,32 @@ Use the application name and process filter id property to edit process filter p
     [appName]="applicationName">
 </adf-cloud-edit-process-filter>
 ```
-By default these below properties are displayed:
 
-**_state_**, **_sort_**, **_order_**.
+### Filter properties
 
-However, you can also choose which properties to show using an input property
-`filterProperties`:
+You can supply various *filter properties* to choose which processes
+will be found by a filter. The full set of properties is given below:
 
-Populate the filterProperties in the component class:
+| Name | Description |
+| -- | -- |
+| **_appName_** | Name of the app |
+| **_initiator_** | ID of the user who initiated the process |
+| **_state_** | Execution state of the process. |
+| **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself) |
+| **_order_** | Sort ordering of the filter results (this doesn't participate in the filtering itself) |
+| **_processDefinitionId_** | Process definition ID |
+| **_processDefinitionKey_** | Process definition key |
+| **_processInstanceId_** | Process instance ID |
+| **_startDate_** | Date the process was started |
+| **_lastModified_** | Date the process was last modified |
+| **_lastModifiedFrom_** | Finds processes modified *after* this date |
+| **_lastModifiedTo_** | Finds processes modified *before* this date |
+
+By default, the **_state_**, **_sort_** and **_order_** properties are
+displayed in the editor. However, you can also choose which properties
+to show using the `filterProperties` array.
+For example, the code below initializes the editor with the **_appName_**,
+**_processInstanceId_**, **_startDate_** and **_lastModified_** properties:
 
 ```ts
 import { UserProcessModel } from '@alfresco/adf-core';
@@ -67,7 +85,7 @@ export class SomeComponent implements OnInit {
         "appName",
         "processInstanceId",
         "startDate",
-        "startedAfter"];
+        "lastModified"];
 
     onFilterChange(filter: ProcessFilterCloudModel) {
         console.log('On filter change: ', filter);
@@ -89,10 +107,5 @@ With this configuration, only the four listed properties will be shown.
     (action)="onAction($event)">
 </adf-cloud-edit-process-filter>
 ```
-
-
-All Available properties are:
-
-**_appName_**, **_initiator_**, **_state_**, **_sort_**, **_order_**, **_processDefinitionId_**, **_processDefinitionKey_**, **_processInstanceId_**, **_startDate_**, **_lastModified_**, **_lastModifiedFrom_**, **_lastModifiedTo_**.
 
 ![edit-process-filter-cloud](../docassets/images/edit-process-filter-cloud.component.png)
