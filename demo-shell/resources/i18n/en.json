@@ -88,7 +88,10 @@
     "SEARCH_SERVICE_APPROACH": "Check this to disable the input property and configure using the service",
     "HEADER_DATA": "Header Data",
     "TREE_VIEW": "Tree View",
-    "ICONS": "Icons"
+    "ICONS": "Icons",
+    "PEOPLE_GROUPS_CLOUD": "People/Group Cloud",
+    "PEOPLE_CLOUD": "People Cloud Component",
+    "GROUPS_CLOUD": "Groups Cloud Component"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -280,6 +283,10 @@
   },
   "TASK_LIST_CLOUD_DEMO": {
     "CUSTOMIZE_FILTERS": "Customise your filter"
+  },
+  "PEOPLE_GROUPS_CLOUD": {
+    "MULTIPLE_VALUES": "Multiple values",
+    "PRESELECTED_VALUE": "Preselected value"
   },
   "ABOUT": {
     "TITLE": "Plugins",

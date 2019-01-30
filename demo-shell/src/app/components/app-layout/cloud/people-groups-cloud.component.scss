@@ -1,0 +1,15 @@
+.adf {
+    &-people-groups-section {
+        mat-card-title {
+            font-size:18px;
+            font-weight: bold;
+        }
+        mat-checkbox {
+            margin:0 10px;
+        }
+
+        mat-card-content .adf-preselect-value {
+            width: calc(100vw - 405px);
+        }
+    }
+}
