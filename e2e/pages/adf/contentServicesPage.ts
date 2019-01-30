@@ -22,6 +22,7 @@ import { CreateFolderDialog } from './dialog/createFolderDialog';
 import { CreateLibraryDialog } from './dialog/createLibraryDialog';
 import { NavigationBarPage } from './navigationBarPage';
 import { NodeActions } from '../../actions/ACS/node.actions';
+import { DropActions } from '../../actions/drop.actions';
 import { by, element, protractor, $$, browser } from 'protractor';
 
 import path = require('path');
@@ -32,6 +33,7 @@ export class ContentServicesPage {
     createFolderDialog = new CreateFolderDialog();
     nodeActions = new NodeActions();
     createLibraryDialog = new CreateLibraryDialog();
+    dragAndDropAction = new DropActions();
     uploadBorder = element(by.id('document-list-container'));
     tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
     contentServices = element(by.css('a[data-automation-id="Content Services"]'));
@@ -536,6 +538,16 @@ export class ContentServicesPage {
 
     checkDragAndDropDIsDisplayed() {
         Util.waitUntilElementIsVisible(this.dragAndDrop);
+    }
+
+    dragAndDropFile(file) {
+        this.checkDragAndDropDIsDisplayed();
+        this.dragAndDropAction.dropFile(this.dragAndDrop, file);
+    }
+
+    dragAndDropFolder(folder) {
+        this.checkDragAndDropDIsDisplayed();
+        this.dragAndDropAction.dropFolder(this.dragAndDrop, folder);
     }
 
     checkLockIsDisplayedForElement(name) {
