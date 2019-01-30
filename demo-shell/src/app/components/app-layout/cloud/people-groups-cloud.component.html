@@ -12,8 +12,7 @@
             </mat-form-field>
         </div>
         <div>
-            <adf-cloud-people [appName]="appName" [preSelectUsers]="people.preSelectedValue" [mode]="people.mode"
-                (removeUser)="onRemoveUser($event)"></adf-cloud-people>
+            <adf-cloud-people [appName]="appName" [preSelectUsers]="people.preSelectedValue" [mode]="people.mode"></adf-cloud-people>
         </div>
 
         <div class="adf-people-list" *ngIf="canShowPeopleList()">

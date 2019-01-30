@@ -18,7 +18,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
 import { PeopleCloudComponent, GroupCloudComponent, GroupModel } from '@alfresco/adf-process-services-cloud';
-import { IdentityUserModel } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-people-groups-cloud',
@@ -30,8 +29,7 @@ export class PeopleGroupCloudComponent {
 
     people: any = {
         mode: PeopleCloudComponent.MODE_SINGLE,
-        preSelectedValue: [],
-        selectedPeopleList: []
+        preSelectedValue: []
 
     };
     groups: any = {
@@ -83,10 +81,6 @@ export class PeopleGroupCloudComponent {
 
     canShowPeopleList() {
         return this.people.mode === GroupCloudComponent.MODE_MULTIPLE;
-    }
-
-    onRemoveUser(people: IdentityUserModel) {
-        this.people.selectedPeopleList = this.people.selectedPeopleList.filter((value: any) => value.id !== people.id);
     }
 
     onRemoveGroup(group: GroupModel) {
