@@ -117,7 +117,7 @@ describe('Settings component', () => {
         });
     });
 
-    describe('Settings Component - BPM Basic Authentication', () => {
+    describe('Settings Component - Basic Authentication', () => {
         beforeAll( (done) => {
             settingsPage.goToSettingsPage();
             settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
