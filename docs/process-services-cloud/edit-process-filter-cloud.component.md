@@ -9,12 +9,17 @@ Last reviewed: 2019-01-08
 
 Shows Process Filter Details.
 
+![edit-process-filter-cloud](../docassets/images/edit-process-filter-cloud.component.png)
+
 ## Basic Usage
 
 ```html
-<adf-cloud-edit-process-filter 
+<adf-cloud-edit-process-filter
     [id]="processFilterId"
-    [appName]="applicationName">
+    [appName]="applicationName"
+    [filterProperties]="filterProperties"
+    (filterChange)="onFilterChange($event)"
+    (action)="onAction($event)">
 </adf-cloud-edit-process-filter>
 ```
 
@@ -52,8 +57,9 @@ Use the `appName` and `id` properties to choose which process filter to edit:
 
 ### Filter properties
 
-You can supply various *filter properties* to choose which processes
-will be found by a filter. The full set of properties is given below:
+You can supply various *filter properties* to edit that will determine 
+which processes are found by a filter. The full set of properties is
+given below:
 
 | Name | Description |
 | -- | -- |
@@ -97,15 +103,3 @@ export class SomeComponent implements OnInit {
 ```
 
 With this configuration, only the four listed properties will be shown.
-
-```html
-<adf-cloud-edit-process-filter
-    [id]="processFilterId"
-    [appName]="applicationName"
-    [filterProperties]="filterProperties"
-    (filterChange)="onFilterChange($event)"
-    (action)="onAction($event)">
-</adf-cloud-edit-process-filter>
-```
-
-![edit-process-filter-cloud](../docassets/images/edit-process-filter-cloud.component.png)
