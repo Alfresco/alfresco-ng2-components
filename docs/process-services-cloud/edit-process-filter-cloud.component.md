@@ -44,7 +44,7 @@ Shows Process Filter Details.
 
 ## Details
 
-### Editing APS2 process filter
+### Editing APS2 process filters
 
 Use the `appName` and `id` properties to choose which process filter to edit:
 
@@ -66,7 +66,7 @@ given below:
 | **_appName_** | Name of the app |
 | **_initiator_** | ID of the user who initiated the process |
 | **_state_** | Execution state of the process. |
-| **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself) |
+| **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself). Can be "id", "name", "status" or "startDate". |
 | **_order_** | Sort ordering of the filter results (this doesn't participate in the filtering itself) |
 | **_processDefinitionId_** | Process definition ID |
 | **_processDefinitionKey_** | Process definition key |
@@ -103,3 +103,6 @@ export class SomeComponent implements OnInit {
 ```
 
 With this configuration, only the four listed properties will be shown.
+
+**Note:** Currently, the `sort` property has a limited set of properties
+to choose from: **_id_**, **_name_**, **_status_** and **_startDate_**.
