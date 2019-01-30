@@ -6,14 +6,8 @@
                 <span *ngIf="showTitle">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.TITLE' | translate}}</span>
                 <div *ngIf="showActions()" class="adf-cloud-edit-task-filter-actions">
                     <ng-container *ngIf="toggleFilterActions">
-                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE' | translate}}" id="adf-save-id" [disabled]="!formHasBeenChanged" (click)="onSave()">
-                            <mat-icon>save</mat-icon>
-                        </button>
-                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE_AS' | translate}}" id="adf-save-as-id" [disabled]="!formHasBeenChanged" (click)="onSaveAs()">
-                            <mat-icon>unarchive</mat-icon>
-                        </button>
-                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.DELETE' | translate}}" id="adf-delete-id" (click)="onDelete()">
-                            <mat-icon>delete</mat-icon>
+                        <button *ngFor="let filterAction of taskFilterActions" mat-icon-button matTooltip="{{ filterAction.tooltip | translate}}" id="adf-save-id" [disabled]="hasFormChanged(filterAction)" (click)="executeFilterAction(filterAction)">
+                            <mat-icon>{{filterAction.icon}}</mat-icon>
                         </button>
                     </ng-container>
                 </div>
