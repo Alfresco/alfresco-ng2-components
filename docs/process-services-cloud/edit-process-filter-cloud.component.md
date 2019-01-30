@@ -2,7 +2,7 @@
 Title: Edit Process Filter Cloud component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-01-08
+Last reviewed: 2019-01-30
 ---
 
 # [Edit Process Filter Cloud component](../../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts "Defined in edit-process-filter-cloud.component.ts")
@@ -106,3 +106,7 @@ With this configuration, only the four listed properties will be shown.
 
 **Note:** Currently, the `sort` property has a limited set of properties
 to choose from: **_id_**, **_name_**, **_status_** and **_startDate_**.
+
+## See also
+
+- [Edit task filter cloud component](edit-task-filter-cloud.component.md)
