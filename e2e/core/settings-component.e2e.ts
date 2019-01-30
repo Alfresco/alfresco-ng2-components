@@ -20,6 +20,8 @@ import { SettingsPage } from '../pages/adf/settingsPage';
 import { browser, protractor } from 'protractor';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
+import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import TestConfig = require('../test.config');
 
 describe('Settings component', () => {
@@ -27,6 +29,8 @@ describe('Settings component', () => {
     const loginPage = new LoginPage();
     const settingsPage = new SettingsPage();
     const navigationBarPage = new NavigationBarPage();
+    const processServicesPage = new ProcessServicesPage();
+    const contentServicesPage = new ContentServicesPage();
     const loginError = 'Request has been terminated ' +
         'Possible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.';
 
@@ -156,9 +160,8 @@ describe('Settings component', () => {
             loginPage.enterPassword(adminUserModel.password);
             loginPage.clickSignInButton();
             navigationBarPage.navigateToProcessServicesPage();
-            browser.getCurrentUrl().then((url) => {
-                expect(url).toBe(TestConfig.adf.url + '/activiti');
-            });
+            processServicesPage.checkApsContainer();
+            processServicesPage.checkAppIsDisplayed('Task App');
             navigationBarPage.navigateToSettingsPage();
             expect(settingsPage.getSelectedOptionText()).toBe('BPM');
             settingsPage.checkBasicAuthRadioIsSelected();
@@ -169,9 +172,8 @@ describe('Settings component', () => {
             settingsPage.clickBackButton();
             loginPage.waitForElements();
             browser.get(TestConfig.adf.url + '/activiti');
-            browser.getCurrentUrl().then((url) => {
-                expect(url).toBe(TestConfig.adf.url + '/activiti');
-            });
+            processServicesPage.checkApsContainer();
+            processServicesPage.checkAppIsDisplayed('Task App');
         });
 
         it('[C277752] Should allow the User to login to Content Services using the ECM selection on Settings page', () => {
@@ -186,9 +188,7 @@ describe('Settings component', () => {
             loginPage.enterPassword(adminUserModel.password);
             loginPage.clickSignInButton();
             navigationBarPage.clickContentServicesButton();
-            browser.getCurrentUrl().then((url) => {
-                expect(url).toBe(TestConfig.adf.url + '/files');
-            });
+            contentServicesPage.checkAcsContainer();
             navigationBarPage.navigateToSettingsPage();
             expect(settingsPage.getSelectedOptionText()).toBe('ECM');
             settingsPage.checkBasicAuthRadioIsSelected();
@@ -199,9 +199,7 @@ describe('Settings component', () => {
             settingsPage.clickBackButton();
             loginPage.waitForElements();
             browser.get(TestConfig.adf.url + '/files');
-            browser.getCurrentUrl().then((url) => {
-                expect(url).toBe(TestConfig.adf.url + '/files');
-            });
+            contentServicesPage.checkAcsContainer();
         });
 
         it('[C277753] Should allow the User to login to both Process Services and Content Services using the ALL selection on Settings Page', () => {
@@ -216,13 +214,10 @@ describe('Settings component', () => {
             loginPage.enterPassword(adminUserModel.password);
             loginPage.clickSignInButton();
             navigationBarPage.clickContentServicesButton();
-            browser.getCurrentUrl().then((url) => {
-                expect(url).toBe(TestConfig.adf.url + '/files');
-            });
+            contentServicesPage.checkAcsContainer();
             navigationBarPage.navigateToProcessServicesPage();
-            browser.getCurrentUrl().then((url) => {
-                expect(url).toBe(TestConfig.adf.url + '/activiti');
-            });
+            processServicesPage.checkApsContainer();
+            processServicesPage.checkAppIsDisplayed('Task App');
             navigationBarPage.navigateToSettingsPage();
             expect(settingsPage.getSelectedOptionText()).toBe('ALL');
             settingsPage.checkBasicAuthRadioIsSelected();
@@ -234,13 +229,10 @@ describe('Settings component', () => {
             settingsPage.clickBackButton();
             loginPage.waitForElements();
             browser.get(TestConfig.adf.url + '/files');
-            browser.getCurrentUrl().then((url) => {
-                expect(url).toBe(TestConfig.adf.url + '/files');
-            });
+            contentServicesPage.checkAcsContainer();
             browser.get(TestConfig.adf.url + '/activiti');
-            browser.getCurrentUrl().then((url) => {
-                expect(url).toBe(TestConfig.adf.url + '/activiti');
-            });
+            processServicesPage.checkApsContainer();
+            processServicesPage.checkAppIsDisplayed('Task App');
         });
     });
 });
