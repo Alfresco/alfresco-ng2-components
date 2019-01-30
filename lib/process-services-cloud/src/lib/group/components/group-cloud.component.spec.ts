@@ -34,7 +34,8 @@ describe('GroupCloudComponent', () => {
     let service: GroupCloudService;
     let findGroupsByNameSpy: jasmine.Spy;
     let getClientIdByApplicationNameSpy: jasmine.Spy;
-    let checkGroupHasClientRoleMappingSpy: jasmine.Spy;
+    let checkGroupHasAccessSpy: jasmine.Spy;
+    let checkGroupHasGivenRoleSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, GroupCloudModule],
@@ -48,7 +49,8 @@ describe('GroupCloudComponent', () => {
         service = TestBed.get(GroupCloudService);
         findGroupsByNameSpy = spyOn(service, 'findGroupsByName').and.returnValue(of(mockGroups));
         getClientIdByApplicationNameSpy = spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client-id'));
-        checkGroupHasClientRoleMappingSpy = spyOn(service, 'checkGroupHasClientRoleMapping').and.returnValue(of(true));
+        checkGroupHasAccessSpy = spyOn(service, 'checkGroupHasClientApp').and.returnValue(of(true));
+        checkGroupHasGivenRoleSpy = spyOn(service, 'checkGroupHasGivenRole').and.returnValue(of(true));
         component.appName = 'mock-app-name';
     });
 
@@ -105,7 +107,7 @@ describe('GroupCloudComponent', () => {
 
     it('should show an error message if the group is invalid', async(() => {
         fixture.detectChanges();
-        checkGroupHasClientRoleMappingSpy.and.returnValue(of(false));
+        checkGroupHasAccessSpy.and.returnValue(of(false));
         findGroupsByNameSpy.and.returnValue(of([]));
         fixture.detectChanges();
         const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
@@ -212,7 +214,7 @@ describe('GroupCloudComponent', () => {
     }));
 
     it('should not list groups who do not have access to the app when appName is specified', async(() => {
-        checkGroupHasClientRoleMappingSpy.and.returnValue(of(false));
+        checkGroupHasAccessSpy.and.returnValue(of(false));
         component.appName = 'sample-app';
 
         fixture.detectChanges();
@@ -228,9 +230,43 @@ describe('GroupCloudComponent', () => {
         });
     }));
 
+    it('should filter groups when roles are specified', async(() => {
+        checkGroupHasGivenRoleSpy.and.returnValue(of(true));
+        component.roles = ['mock-role-1', 'mock-role-2'];
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.value = 'M';
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const groupsList = fixture.debugElement.queryAll(By.css('mat-option'));
+            expect(groupsList.length).toBe(mockGroups.length);
+            expect(checkGroupHasGivenRoleSpy).toHaveBeenCalled();
+        });
+    }));
+
+    it('should return groups when roles are not specified', async(() => {
+        checkGroupHasGivenRoleSpy.and.returnValue(of(false));
+        component.roles = [];
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.value = 'M';
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            const groupsList = fixture.debugElement.queryAll(By.css('mat-option'));
+            expect(groupsList.length).toBe(mockGroups.length);
+            expect(checkGroupHasGivenRoleSpy).not.toHaveBeenCalled();
+        });
+    }));
+
     it('should validate access to the app when appName is specified', async(() => {
         findGroupsByNameSpy.and.returnValue(of(mockGroups));
-        checkGroupHasClientRoleMappingSpy.and.returnValue(of(true));
+        checkGroupHasAccessSpy.and.returnValue(of(true));
         fixture.detectChanges();
         let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
         inputHTMLElement.focus();
@@ -239,7 +275,7 @@ describe('GroupCloudComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(checkGroupHasClientRoleMappingSpy).toHaveBeenCalledTimes(mockGroups.length);
+            expect(checkGroupHasAccessSpy).toHaveBeenCalledTimes(mockGroups.length);
         });
     }));
 
@@ -252,7 +288,7 @@ describe('GroupCloudComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(checkGroupHasClientRoleMappingSpy).not.toHaveBeenCalled();
+            expect(checkGroupHasAccessSpy).not.toHaveBeenCalled();
         });
     }));
 });

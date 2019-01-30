@@ -20,7 +20,7 @@ import { from, of, Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { GroupSearchParam } from '../models/group.model';
+import { GroupSearchParam, GroupModel } from '../models/group.model';
 
 @Injectable({
     providedIn: 'root'
@@ -48,6 +48,40 @@ export class GroupCloudService {
         )).pipe(
             catchError((err) => this.handleError(err))
         );
+    }
+
+    getGroupDetailsById(groupId: string) {
+        const url = this.getGroupsApi() + '/' + groupId;
+        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+            url, httpMethod, pathParams, queryParams,
+            headerParams, formParams, bodyParam,
+            contentTypes, accepts, Object, null, null)
+        )).pipe(
+            catchError((err) => this.handleError(err))
+        );
+    }
+
+    checkGroupHasGivenRole(groupId: string, roleNames: string[]): Observable<boolean>  {
+        return this.getGroupDetailsById(groupId).pipe(map((response: GroupModel) => {
+            let availableGroupRoles = [];
+            let hasRole = false;
+            availableGroupRoles = response.realmRoles;
+            if (availableGroupRoles && availableGroupRoles.length > 0) {
+                roleNames.forEach((roleName: string) => {
+                    const role = availableGroupRoles.find((availableRole) => {
+                        return roleName === availableRole;
+                    });
+                    if (role) {
+                        hasRole = true;
+                        return;
+                    }
+                });
+            }
+            return hasRole;
+        }));
     }
 
     getClientIdByApplicationName(applicationName: string): Observable<string> {

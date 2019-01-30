@@ -38,12 +38,11 @@ export class TaskDetailsCloudModel {
     processInstanceId: string;
     status: string;
     standAlone: boolean;
-    candidateGroups: string [];
+    candidateUsers: string[];
+    candidateGroups: string[];
     managerOfCandidateGroup: boolean;
     memberOfCandidateGroup: boolean;
     memberOfCandidateUsers: boolean;
-    candidateUsers: string[];
-    candidateGroups: string[];
 
     constructor(obj?: any) {
         if (obj) {
@@ -67,12 +66,11 @@ export class TaskDetailsCloudModel {
             this.processInstanceId = obj.processInstanceId || null;
             this.status = obj.status || null;
             this.standAlone = obj.standAlone || null;
+            this.candidateUsers = obj.candidateUsers || null;
             this.candidateGroups = obj.candidateGroups || null;
             this.managerOfCandidateGroup = obj.managerOfCandidateGroup || null;
             this.memberOfCandidateGroup = obj.memberOfCandidateGroup || null;
             this.memberOfCandidateUsers = obj.memberOfCandidateUsers || null;
-            this.candidateUsers = obj.candidateUsers || null;
-            this.candidateGroups = obj.candidateGroups || null;
         }
     }
 }

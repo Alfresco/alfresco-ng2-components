@@ -88,7 +88,6 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     submitted = false;
 
     assigneeName: string;
-    candidateGroups: string [] = [];
 
     candidateGroupNames: string[] = [];
 
@@ -201,8 +200,14 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     onCandiateGroupRemove(candidateGroup: any) {
         if (candidateGroup.name) {
-            this.candidateGroupNames.splice(this.candidateGroupNames.indexOf(candidateGroup.name), 1);
+            this.candidateGroupNames = this.candidateGroupNames.filter((name: string) => { return name !== candidateGroup.name; });
         }
+    }
+
+    public whitespaceValidator(control: FormControl) {
+        const isWhitespace = (control.value || '').trim().length === 0;
+        const isValid = !isWhitespace;
+        return isValid ? null : { 'whitespace': true };
     }
 
     get nameController(): AbstractControl {

@@ -62,7 +62,7 @@ export class GroupCloudComponent implements OnInit {
 
     /** Role names of the groups to be listed. */
     @Input()
-    roles: string[];
+    roles: string[] = [];
 
     /** Emitted when a group is selected. */
     @Output()
@@ -138,7 +138,7 @@ export class GroupCloudComponent implements OnInit {
                 } else {
                     this.clearError();
                 }
-             }),
+            }),
             debounceTime(500),
             distinctUntilChanged(),
             tap(() => {
@@ -161,6 +161,8 @@ export class GroupCloudComponent implements OnInit {
                             return hasRole ? of(group) : of();
                         })
                     );
+                } else if (this.hasRoles()) {
+                    return this.filterGroupsByGivenRole(group);
                 } else {
                     return of(group);
                 }
@@ -196,6 +198,14 @@ export class GroupCloudComponent implements OnInit {
             this.searchGroupsControl.setValue(this.preSelectGroups[0]);
             this.onSelect(this.preSelectGroups[0]);
         }
+    }
+
+    filterGroupsByGivenRole(group: GroupModel): Observable<GroupModel> {
+        return this.groupService.checkGroupHasGivenRole(group.id, this.roles).pipe(
+            mergeMap((hasRole) => {
+                return hasRole ? of(group) : of();
+            })
+        );
     }
 
     onSelect(selectedGroup: GroupModel) {
@@ -260,7 +270,7 @@ export class GroupCloudComponent implements OnInit {
     }
 
     private setError() {
-        this.searchGroupsControl.setErrors({invalid: true});
+        this.searchGroupsControl.setErrors({ invalid: true });
     }
 
     private clearError() {
