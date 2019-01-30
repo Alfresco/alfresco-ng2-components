@@ -62,9 +62,10 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
             }
         }
 
-        this.setValue(
-            this.getSelectedValue()
-        );
+        const initialValue = this.getSelectedValue();
+        if (initialValue) {
+            this.setValue(initialValue);
+        }
     }
 
     private getSelectedValue(): string {
