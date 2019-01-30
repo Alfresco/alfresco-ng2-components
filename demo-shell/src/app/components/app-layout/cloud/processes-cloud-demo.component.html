@@ -2,7 +2,9 @@
     <adf-cloud-edit-process-filter
         [appName]="appName"
         [id]="filterId"
-        [filterProperties]="processFilterProperties"
+        [filterProperties]="processFilterProperties.filterProperties"
+        [sortProperties]="processFilterProperties.sortProperties"
+        [actions]="processFilterProperties.actions"
         (filterChange)="onFilterChange($event)"
         (action)="onProcessFilterAction($event)">
     </adf-cloud-edit-process-filter>

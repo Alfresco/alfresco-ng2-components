@@ -575,6 +575,12 @@
             "state", "assignment", "sort", "order"
         ]
     },
+    "adf-edit-process-filter": {
+        "filterProperties": [ "state", "sort", "order", "processName" ],
+        "sortProperties": [ "id", "name", "status", "startDate" ],
+        "actions": ["save", "saveAs", "delete"]
+
+    },
     "content-metadata": {
         "presets": {
             "default": {

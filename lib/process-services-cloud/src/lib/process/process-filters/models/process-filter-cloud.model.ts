@@ -64,6 +64,20 @@ export interface ProcessFilterActionType {
     filter: ProcessFilterCloudModel;
 }
 
+export class ProcessFilterAction {
+    actionType: string;
+    icon: string;
+    tooltip: string;
+
+     constructor(obj?: any) {
+        if (obj) {
+            this.actionType = obj.actionType || null;
+            this.icon = obj.icon || null;
+            this.tooltip = obj.tooltip || null;
+        }
+    }
+}
+
 export interface ProcessFilterOptions {
     label?: string;
     value?: string;

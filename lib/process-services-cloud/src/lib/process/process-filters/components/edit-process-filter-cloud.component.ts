@@ -23,7 +23,7 @@ import moment from 'moment-es6';
 
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
-import { ProcessFilterCloudModel, ProcessFilterActionType, ProcessFilterProperties } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel, ProcessFilterActionType, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions } from '../models/process-filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
@@ -41,6 +41,8 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     public static APPLICATION_NAME: string = 'appName';
     public static APP_RUNNING_STATUS: string = 'Running';
     public static DEFAULT_PROCESS_FILTER_PROPERTIES = ['state', 'sort', 'order'];
+    public static DEFAULT_SORT_PROPERTIES = ['id', 'name', 'status', 'startDate'];
+    public static DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
     public FORMAT_DATE: string = 'DD/MM/YYYY';
 
     /** The name of the application. */
@@ -62,6 +64,14 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     /** Toggles editing of the process filter title. */
     @Input()
     showTitle = true;
+
+    /** List of sort properties to display. */
+    @Input()
+    sortProperties: string[] = [];
+
+    /** List of sort actions. */
+    @Input()
+    actions: string[] = EditProcessFilterCloudComponent.DEFAULT_ACTIONS;
 
     /** Emitted when a process instance filter property changes. */
     @Output()
@@ -91,7 +101,8 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     applicationNames: any[] = [];
     formHasBeenChanged = false;
     editProcessFilterForm: FormGroup;
-    processFilterProperties: any[] = [];
+    processFilterProperties: ProcessFilterProperties[] = [];
+    processFilterActions: ProcessFilterAction[] = [];
     toggleFilterActions: boolean = false;
 
     constructor(
@@ -105,6 +116,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
         const id = changes['id'];
         if (id && id.currentValue !== id.previousValue) {
             this.processFilterProperties = this.createAndFilterProperties();
+            this.processFilterActions = this.createAndFilterActions();
             this.buildForm(this.processFilterProperties);
         }
     }
@@ -145,7 +157,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
             });
     }
 
-    createAndFilterProperties() {
+    createAndFilterProperties(): ProcessFilterProperties[] {
         this.checkMandatoryFilterProperties();
         if (this.checkForApplicationNameProperty()) {
             this.applicationNames = [];
@@ -168,6 +180,36 @@ export class EditProcessFilterCloudComponent implements OnChanges {
 
     private isValidProperty(filterProperties: string[], filterProperty: ProcessFilterProperties): boolean {
         return filterProperties ? filterProperties.indexOf(filterProperty.key) >= 0 : true;
+    }
+
+    createSortProperties(): any {
+        this.checkMandatorySortProperties();
+        const sortProperties = this.sortProperties.map((property: string) => {
+            return <ProcessFilterOptions> { label: property.charAt(0).toUpperCase() + property.slice(1), value: property };
+        });
+        return sortProperties;
+    }
+
+    checkMandatorySortProperties() {
+        if (this.sortProperties === undefined || this.sortProperties.length === 0) {
+            this.sortProperties = EditProcessFilterCloudComponent.DEFAULT_SORT_PROPERTIES;
+        }
+    }
+
+    createAndFilterActions() {
+        this.checkMandatoryActions();
+        const actions = this.createFilterActions();
+        return actions.filter((action: ProcessFilterAction) => this.isValidAction(this.actions, action));
+    }
+
+     checkMandatoryActions() {
+        if (this.actions === undefined || this.actions.length === 0) {
+            this.actions = EditProcessFilterCloudComponent.DEFAULT_ACTIONS;
+        }
+    }
+
+     private isValidAction(actions: string[], action: any): boolean {
+        return actions ? actions.indexOf(action.actionType) >= 0 : true;
     }
 
     isFormValid(): boolean {
@@ -218,6 +260,16 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                     });
                 }
             });
+    }
+
+    executeFilterActions(action: ProcessFilterAction): void {
+        if (action.actionType === EditProcessFilterCloudComponent.DEFAULT_ACTIONS[0]) {
+            this.onSave();
+        } else if (action.actionType === EditProcessFilterCloudComponent.DEFAULT_ACTIONS[1]) {
+            this.onSaveAs();
+        } else if (action.actionType === EditProcessFilterCloudComponent.DEFAULT_ACTIONS[2]) {
+            this.onDelete();
+        }
     }
 
     /**
@@ -307,6 +359,38 @@ export class EditProcessFilterCloudComponent implements OnChanges {
         return property.type === 'text';
     }
 
+    hasFormChanged(action: any): boolean {
+        if (action.actionType === EditProcessFilterCloudComponent.DEFAULT_ACTIONS[0]) {
+            return !this.formHasBeenChanged;
+        }
+        if (action.actionType === EditProcessFilterCloudComponent.DEFAULT_ACTIONS[1]) {
+            return !this.formHasBeenChanged;
+        }
+        if (action.actionType === EditProcessFilterCloudComponent.DEFAULT_ACTIONS[2]) {
+            return false;
+        }
+    }
+
+     createFilterActions(): ProcessFilterAction[] {
+        return [
+            new ProcessFilterAction({
+                actionType: EditProcessFilterCloudComponent.DEFAULT_ACTIONS[0],
+                icon: 'save',
+                tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE'
+            }),
+            new ProcessFilterAction({
+                actionType: EditProcessFilterCloudComponent.DEFAULT_ACTIONS[1],
+                icon: 'unarchive',
+                tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE_AS'
+            }),
+            new ProcessFilterAction({
+                actionType: EditProcessFilterCloudComponent.DEFAULT_ACTIONS[2],
+                icon: 'delete',
+                tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.DELETE'
+            })
+        ];
+    }
+
     createProcessFilterProperties(currentProcessFilter: ProcessFilterCloudModel): ProcessFilterProperties[] {
         return [
             new ProcessFilterProperties({
@@ -369,8 +453,8 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.SORT',
                 type: 'select',
                 key: 'sort',
-                value: currentProcessFilter.sort || this.columns[0].value,
-                options: this.columns
+                value: currentProcessFilter.sort || this.createSortProperties[0].value,
+                options: this.createSortProperties()
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DIRECTION',
