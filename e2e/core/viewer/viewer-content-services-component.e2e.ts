@@ -271,7 +271,7 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
-    it('[C279922] Should display the buttons in order in the adf viewer toolbar', () => {
+    it('[C291903] Should display the buttons in order in the adf viewer toolbar', () => {
         viewerPage.viewFile(pdfFile.name);
         viewerPage.checkLeftSideBarIsNotDisplayed();
         viewerPage.clickLeftSidebarButton();
