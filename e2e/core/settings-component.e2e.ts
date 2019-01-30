@@ -127,10 +127,14 @@ describe('Settings component', () => {
             done();
         });
 
-        it('[C277751] Should allow the User to login to Process Services using the BPM selection on Settings page', () => {
+        beforeEach( (done) => {
             loginPage.goToLoginPage();
             loginPage.clickSettingsIcon();
             settingsPage.checkProviderDropdownIsDisplayed();
+            done();
+        });
+
+        it('[C277751] Should allow the User to login to Process Services using the BPM selection on Settings page', () => {
             settingsPage.checkProviderOptions();
             settingsPage.checkBasicAuthRadioIsSelected();
             settingsPage.checkSsoRadioIsNotSelected();
@@ -171,9 +175,6 @@ describe('Settings component', () => {
         });
 
         it('[C277752] Should allow the User to login to Content Services using the ECM selection on Settings page', () => {
-            loginPage.goToLoginPage();
-            loginPage.clickSettingsIcon();
-            settingsPage.checkProviderDropdownIsDisplayed();
             settingsPage.setProvider(settingsPage.getEcmOption(), 'ECM');
             settingsPage.clickBackButton();
             loginPage.waitForElements();
@@ -204,9 +205,6 @@ describe('Settings component', () => {
         });
 
         it('[C277753] Should allow the User to login to both Process Services and Content Services using the ALL selection on Settings Page', () => {
-            loginPage.goToLoginPage();
-            loginPage.clickSettingsIcon();
-            settingsPage.checkProviderDropdownIsDisplayed();
             settingsPage.setProvider(settingsPage.getEcmAndBpmOption(), 'ALL');
             settingsPage.clickBackButton();
             loginPage.waitForElements();
