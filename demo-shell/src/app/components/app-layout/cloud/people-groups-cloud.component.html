@@ -12,7 +12,7 @@
             </mat-form-field>
         </div>
         <div>
-            <adf-cloud-people [appName]="appName" [preSelectUsers]="people.preSelectedValue" [mode]="people.mode"></adf-cloud-people>
+            <adf-cloud-people [preSelectUsers]="people.preSelectedValue" [mode]="people.mode"></adf-cloud-people>
         </div>
 
         <div class="adf-people-list" *ngIf="canShowPeopleList()">
@@ -36,7 +36,7 @@
             <mat-checkbox (change)="onChangeGroupsMode($event)">{{ 'PEOPLE_GROUPS_CLOUD.MULTIPLE_VALUES' | translate }}</mat-checkbox>
         </div>
         <div>
-            <adf-cloud-group [mode]="groups.mode" [preSelectGroups]="groups.preSelectedValue" [appName]="appName"
+            <adf-cloud-group [mode]="groups.mode" [preSelectGroups]="groups.preSelectedValue"
                 (selectGroup)="onSelectGroup($event)" (removeGroup)="onRemoveGroup($event)"></adf-cloud-group>
         </div>
 
