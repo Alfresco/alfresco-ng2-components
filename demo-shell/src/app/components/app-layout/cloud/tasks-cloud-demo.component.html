@@ -9,6 +9,10 @@
     <div fxLayout="column" fxFlex fxLayoutAlign="space-between" *ngIf="editedFilter">
         <adf-cloud-task-list #taskCloud
             [applicationName]="editedFilter.appName"
+            [processDefinitionId]="editedFilter.processDefinitionId"
+            [processInstanceId]="editedFilter.processInstanceId"
+            [name]="editedFilter.taskName"
+            [parentTaskId]="editedFilter.parentTaskId"
             [status]="editedFilter.state"
             [assignee]="editedFilter.assignment"
             [sorting]="sortArray"
