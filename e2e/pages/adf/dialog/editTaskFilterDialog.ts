@@ -35,6 +35,7 @@ export class EditTaskFilterDialog {
     }
 
     checkSaveButtonIsEnabled() {
+        Util.waitUntilElementIsVisible(this.componentElement.element(this.saveButtonLocator));
         return this.componentElement.element(this.saveButtonLocator).isEnabled();
     }
 
@@ -47,6 +48,7 @@ export class EditTaskFilterDialog {
     }
 
     checkCancelButtonIsEnabled() {
+        Util.waitUntilElementIsVisible(this.componentElement.element(this.cancelButtonLocator));
         return this.componentElement.element(this.cancelButtonLocator).isEnabled();
     }
 
