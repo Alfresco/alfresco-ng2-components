@@ -165,10 +165,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private parseFacets(context: ResultSetContext) {
         if (!this.responseFacets) {
-            const responseFacetFields = this.parseFacetFields(context);
-            const responseFacetIntervals = this.parseFacetIntervals(context);
-            const responseGroupedFacetQueries = this.parseFacetQueries(context);
-            this.responseFacets = responseFacetFields.concat(...responseGroupedFacetQueries, ...responseFacetIntervals);
+            this.parseFacetFields(context);
+            this.parseFacetIntervals(context);
+            this.parseFacetQueries(context);
 
         } else {
             this.responseFacets = this.responseFacets
@@ -189,8 +188,8 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
     }
 
-    private parseFacetItems(context: ResultSetContext, configFacetFields: FacetField[], itemType: string): FacetField[] {
-        return configFacetFields.map((field) => {
+    private parseFacetItems(context: ResultSetContext, configFacetFields: FacetField[], itemType: string) {
+        configFacetFields.forEach((field) => {
             const responseField = (context.facets || []).find((response) => response.type === itemType && response.label === field.label) || {};
             const responseBuckets = this.getResponseBuckets(responseField, field)
                 .filter(this.getFilterByMinCount(field.mincount));
@@ -205,28 +204,32 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 return true;
             };
 
-            return <FacetField> {
+            //
+            if (!this.responseFacets) {
+                this.responseFacets = [];
+            }
+            this.responseFacets.push(<FacetField> {
                 ...field,
                 type: responseField.type,
                 label: field.label,
                 pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
                 currentPageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
                 buckets: bucketList
-            };
+            });
         });
     }
 
-    private parseFacetFields(context: ResultSetContext): FacetField[] {
+    private parseFacetFields(context: ResultSetContext) {
         const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
-        return this.parseFacetItems(context, configFacetFields, 'field');
+        this.parseFacetItems(context, configFacetFields, 'field');
     }
 
-    private parseFacetIntervals(context: ResultSetContext): FacetField[] {
+    private parseFacetIntervals(context: ResultSetContext) {
         const configFacetIntervals = this.queryBuilder.config.facetIntervals && this.queryBuilder.config.facetIntervals.intervals || [];
-        return this.parseFacetItems(context, configFacetIntervals, 'interval');
+        this.parseFacetItems(context, configFacetIntervals, 'interval');
     }
 
-    private parseFacetQueries(context: ResultSetContext): FacetField[] {
+    private parseFacetQueries(context: ResultSetContext) {
         const configFacetQueries = this.queryBuilder.config.facetQueries && this.queryBuilder.config.facetQueries.queries || [];
         const configGroups = configFacetQueries.reduce((acc, query) => {
             const group = this.queryBuilder.getQueryGroup(query);
@@ -238,7 +241,6 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             return acc;
         }, []);
 
-        const result = [];
         const mincount = this.queryBuilder.config.facetQueries && this.queryBuilder.config.facetQueries.mincount;
         const mincountFilter = this.getFilterByMinCount(mincount);
 
@@ -257,7 +259,11 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 return true;
             };
 
-            result.push(<FacetField> {
+            //
+            if (!this.responseFacets) {
+                this.responseFacets = [];
+            }
+            this.responseFacets.push(<FacetField> {
                 field: group,
                 type: responseField.type,
                 label: group,
@@ -267,7 +273,6 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             });
         });
 
-        return result;
     }
 
     private getResponseBuckets(responseField: GenericFacetResponse, configField: FacetField): FacetFieldBucket[] {
