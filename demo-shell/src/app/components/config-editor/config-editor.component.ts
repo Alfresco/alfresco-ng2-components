@@ -123,7 +123,7 @@ export class ConfigEditorComponent {
         this.field = 'edit-task-filter';
         this.indentCode();
     }
-    
+
     processListCloudConfClick() {
         this.code = JSON.stringify(this.appConfig.config['adf-cloud-process-list']);
         this.field = 'adf-cloud-process-list';
