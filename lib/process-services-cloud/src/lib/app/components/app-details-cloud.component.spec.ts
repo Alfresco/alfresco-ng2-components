@@ -57,7 +57,7 @@ describe('AppDetailsCloudComponent', () => {
         expect(component.selectedApp.emit).toHaveBeenCalledWith(fakeApplicationInstance[0]);
     });
 
-    it('should render card with default icon and theme', () => {
+    it('should render card with default icon and theme when are not provided', () => {
         component.applicationInstance = fakeApplicationInstance[2];
         fixture.detectChanges();
 
