@@ -18,7 +18,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { SitePaging, SiteEntry, MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { ContentNodeDialogService, ShareDataRow, RowFilter } from '@alfresco/adf-content-services';
-import { DataRow, DataColumn, ThumbnailService,  } from '@alfresco/adf-core';
+import { DataRow, DataColumn, ThumbnailService } from '@alfresco/adf-core';
 
 @Component({
     templateUrl: './content-node-selector.component.html',
