@@ -18,9 +18,9 @@
 import { FormControllersPage } from './material/formControllersPage';
 
 import { Util } from '../../util/util';
-import TestConfig = require('../../test.config');
 import { SettingsPage } from './settingsPage';
-import { element, by, protractor, browser } from 'protractor';
+import { browser, by, element, protractor } from 'protractor';
+import TestConfig = require('../../test.config');
 
 export class LoginPage {
 
@@ -50,6 +50,7 @@ export class LoginPage {
     logoSwitch = element(by.id('adf-toggle-logo'));
     header = element(by.id('adf-header'));
     settingsPage = new SettingsPage();
+    settingsIcon = element(by.cssContainingText('a[data-automation-id="settings"] mat-icon', 'settings'));
 
     waitForElements() {
         Util.waitUntilElementIsVisible(this.txtUsername);
@@ -169,6 +170,11 @@ export class LoginPage {
     clickSignInButton() {
         Util.waitUntilElementIsVisible(this.signInButton);
         this.signInButton.click();
+    }
+
+    clickSettingsIcon() {
+        Util.waitUntilElementIsVisible(this.settingsIcon);
+        this.settingsIcon.click();
     }
 
     showPassword() {

@@ -17,7 +17,7 @@
 
 import TestConfig = require('../../test.config');
 import { Util } from '../../util/util';
-import { element, by, browser } from 'protractor';
+import { browser, by, element, protractor } from 'protractor';
 
 export class SettingsPage {
 
@@ -39,16 +39,19 @@ export class SettingsPage {
         option: element(by.xpath('//SPAN[@class="mat-option-text"][contains(text(),"OAUTH")]')),
         text: 'OAUTH'
     };
-    selectedOption = element.all(by.css('span[class*="ng-star-inserted"]')).first();
+    selectedOption = element(by.css('span[class*="mat-select-value-text"]'));
     ecmText = element(by.css('input[data-automation-id*="ecmHost"]'));
     bpmText = element(by.css('input[data-automation-id*="bpmHost"]'));
     authHostText = element(by.css('input[id="oauthHost"]'));
-    ssoRadioButton = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
+    ssoRadioButton = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'SSO'));
+    basicAuthRadioButton = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'Basic Authentication'));
     silentLoginToggleLabel = element(by.css('mat-slide-toggle[name="silentLogin"] label'));
     silentLoginToggleElement = element(by.css('mat-slide-toggle[name="silentLogin"]'));
     implicitFlowLabel = element(by.css('mat-slide-toggle[name="implicitFlow"] label'));
     implicitFlowElement = element(by.css('mat-slide-toggle[name="implicitFlow"]'));
     applyButton = element(by.css('button[data-automation-id*="host-button"]'));
+    backButton = element(by.cssContainingText('button span[class="mat-button-wrapper"]', 'Back'));
+    validationMessage = element(by.cssContainingText('mat-error', 'This field is required'));
 
     goToSettingsPage() {
         browser.waitForAngularEnabled(true);
@@ -63,6 +66,30 @@ export class SettingsPage {
         Util.waitUntilElementIsVisible(option);
         option.click();
         return expect(this.selectedOption.getText()).toEqual(selected);
+    }
+
+    getSelectedOptionText() {
+        return this.selectedOption.getText();
+    }
+
+    getBpmHostUrl() {
+        return this.bpmText.getAttribute('value');
+    }
+
+    getEcmHostUrl() {
+        return this.ecmText.getAttribute('value');
+    }
+
+    getBpmOption() {
+        return this.bpm.option;
+    }
+
+    getEcmOption() {
+        return this.ecm.option;
+    }
+
+    getEcmAndBpmOption() {
+        return this.ecmAndBpm.option;
     }
 
     setProviderEcmBpm() {
@@ -101,6 +128,11 @@ export class SettingsPage {
         return this;
     }
 
+    async clickBackButton() {
+        Util.waitUntilElementIsVisible(this.backButton);
+        await this.backButton.click();
+    }
+
     async clickSsoRadioButton () {
         Util.waitUntilElementIsVisible(this.ssoRadioButton);
         await this.ssoRadioButton.click();
@@ -121,8 +153,28 @@ export class SettingsPage {
 
     async setProcessServicesURL (processServiceURL) {
         Util.waitUntilElementIsVisible(this.bpmText);
-        await this.bpmText.clear();
-        await this.bpmText.sendKeys(processServiceURL);
+        this.bpmText.clear();
+        this.bpmText.sendKeys(processServiceURL);
+    }
+
+    async setContentServicesURL (contentServiceURL) {
+        Util.waitUntilElementIsClickable(this.ecmText);
+        this.ecmText.clear();
+        this.ecmText.sendKeys(contentServiceURL);
+    }
+
+    clearContentServicesURL () {
+        Util.waitUntilElementIsVisible(this.ecmText);
+        this.ecmText.clear();
+        this.ecmText.sendKeys('a');
+        this.ecmText.sendKeys(protractor.Key.BACK_SPACE);
+    }
+
+    clearProcessServicesURL () {
+        Util.waitUntilElementIsVisible(this.bpmText);
+        this.bpmText.clear();
+        this.bpmText.sendKeys('a');
+        this.bpmText.sendKeys(protractor.Key.BACK_SPACE);
     }
 
     async setAuthHost (authHostURL) {
@@ -160,7 +212,52 @@ export class SettingsPage {
         return Promise.resolve();
     }
 
+    checkApplyButtonIsDisabled() {
+        Util.waitUntilElementIsVisible(this.applyButton.getAttribute('disabled'));
+        return this;
+    }
+
     checkProviderDropdownIsDisplayed() {
         Util.waitUntilElementIsVisible(this.providerDropdown);
+    }
+
+    checkValidationMessageIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.validationMessage);
+    }
+
+    checkProviderOptions() {
+        Util.waitUntilElementIsVisible(this.providerDropdown);
+        this.providerDropdown.click();
+        Util.waitUntilElementIsVisible(this.ecmAndBpm.option);
+        Util.waitUntilElementIsVisible(this.ecm.option);
+        Util.waitUntilElementIsVisible(this.bpm.option);
+    }
+
+    getBasicAuthRadioButton() {
+        Util.waitUntilElementIsVisible(this.basicAuthRadioButton);
+        return this.basicAuthRadioButton;
+    }
+
+    getSsoRadioButton() {
+        Util.waitUntilElementIsVisible(this.ssoRadioButton);
+        return this.ssoRadioButton;
+    }
+
+    getBackButton() {
+        Util.waitUntilElementIsVisible(this.backButton);
+        return this.backButton;
+    }
+
+    getApplyButton() {
+        Util.waitUntilElementIsVisible(this.applyButton);
+        return this.applyButton;
+    }
+
+    checkBasicAuthRadioIsSelected() {
+        expect(this.getBasicAuthRadioButton().getAttribute('class')).toContain('mat-radio-checked');
+    }
+
+    checkSsoRadioIsNotSelected() {
+        expect(this.getSsoRadioButton().getAttribute('class')).not.toContain('mat-radio-checked');
     }
 }
