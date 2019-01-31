@@ -149,6 +149,35 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
     }
 
+    resetAllSelectedBuckets() {
+        this.responseFacets.forEach((field) => {
+            if (field && field.buckets) {
+                for (let bucket of field.buckets.items) {
+                    bucket.checked = false;
+                    this.queryBuilder.removeUserFacetBucket(field, bucket);
+                }
+                this.updateSelectedBuckets();
+            }
+        });
+        this.queryBuilder.update();
+    }
+
+    resetAll() {
+        this.resetAllSelectedBuckets();
+        this.responseFacets = null;
+    }
+
+    canResetBuckets() {
+        return this.responseFacets && !this.selectedBuckets.length;
+    }
+
+    resetBuckets() {
+        if (this.canResetBuckets()) {
+            this.responseFacets = null;
+            this.queryBuilder.update();
+        }
+    }
+
     shouldExpand(field: FacetField): boolean {
         return this.facetExpanded[field.type] || this.facetExpanded['default'];
     }
