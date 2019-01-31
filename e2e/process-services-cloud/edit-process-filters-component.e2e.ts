@@ -20,12 +20,9 @@ import TestConfig = require('../test.config');
 import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/tasksCloudDemoPage';
-import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/processCloudDemoPage';
-import { AppListCloudComponent } from '../pages/adf/process_cloud/appListCloudComponent';
-import { Util } from '../util/util';
-
-import { Tasks } from '../actions/APS-cloud/tasks';
+import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
+import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
+import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
 
 describe('Edit process filters cloud', () => {
 
@@ -37,13 +34,12 @@ describe('Edit process filters cloud', () => {
         let tasksCloudDemoPage = new TasksCloudDemoPage();
         let processCloudDemoPage = new ProcessCloudDemoPage();
 
-        const path = '/auth/realms/springboot';
         let silentLogin;
         const simpleApp = 'simple-app';
 
         beforeAll(async () => {
             silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostSso, TestConfig.adf.hostSso + path, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, silentLogin);
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         });
@@ -65,7 +61,7 @@ describe('Edit process filters cloud', () => {
             done();
         });
 
-        it('[C291804] Delete Save and Save as actions should be displayed when clicking on custom filter header', () => {
+        fit('[C291804] Delete Save and Save as actions should be displayed when clicking on custom filter header', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
@@ -77,7 +73,7 @@ describe('Edit process filters cloud', () => {
             expect(processCloudDemoPage.editProcessFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(true);
         });
 
-        it('[C291805] New process filter is added when clicking Save As button', () => {
+        fit('[C291805] New process filter is added when clicking Save As button', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('ID');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
@@ -93,6 +89,8 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('START DATE');
             processCloudDemoPage.customProcessFilter('custom-new').clickProcessFilter();
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
             processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
         });
