@@ -2,7 +2,9 @@
     <adf-cloud-edit-task-filter
         [appName]="appName"
         [id]="filterId"
-        [filterProperties]="taskFilterProperties"
+        [filterProperties]="taskFilterProperties.filterProperties"
+        [sortProperties]="taskFilterProperties.sortProperties"
+        [actions]="taskFilterProperties.actions"
         (action)="onTaskFilterAction($event)"
         (filterChange)="onFilterChange($event)">
     </adf-cloud-edit-task-filter>

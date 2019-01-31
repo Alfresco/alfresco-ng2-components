@@ -28,7 +28,7 @@ import { CloudLayoutService } from './services/cloud-layout.service';
 export class TasksCloudDemoComponent implements OnInit {
 
     public static ACTION_SAVE_AS = 'SAVE_AS';
-    static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter.properties';
+    static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
 
     @ViewChild('taskCloud')
     taskCloud: TaskListCloudComponent;
@@ -41,7 +41,7 @@ export class TasksCloudDemoComponent implements OnInit {
 
     sortArray: TaskListCloudSortingModel[];
     editedFilter: TaskFilterCloudModel;
-    taskFilterProperties: any[] = [];
+    taskFilterProperties: any  = { filterProperties: [], sortProperties: [], actions: [] };
 
     filterId;
     multiselect: boolean;

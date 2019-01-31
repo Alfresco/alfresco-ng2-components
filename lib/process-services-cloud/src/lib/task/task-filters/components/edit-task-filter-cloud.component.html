@@ -6,7 +6,7 @@
                 <span *ngIf="showTitle">{{ 'ADF_CLOUD_EDIT_TASK_FILTER.TITLE' | translate}}</span>
                 <div *ngIf="showActions()" class="adf-cloud-edit-task-filter-actions">
                     <ng-container *ngIf="toggleFilterActions">
-                        <button *ngFor="let filterAction of taskFilterActions" mat-icon-button matTooltip="{{ filterAction.tooltip | translate}}" id="adf-save-id" [disabled]="hasFormChanged(filterAction)" (click)="executeFilterAction(filterAction)">
+                        <button *ngFor="let filterAction of taskFilterActions" mat-icon-button matTooltip="{{ filterAction.tooltip | translate}}" [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType" [disabled]="hasFormChanged(filterAction)" (click)="executeFilterActions(filterAction)">
                             <mat-icon>{{filterAction.icon}}</mat-icon>
                         </button>
                     </ng-container>
@@ -21,7 +21,7 @@
                         placeholder="{{taskFilterProperty.label | translate}}"
                         [formControlName]="taskFilterProperty.key"
                         [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key">
-                        <mat-option *ngFor="let propertyOption of taskFilterProperty.options" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-task-property-options' + taskFilterProperty.key">
+                        <mat-option *ngFor="let propertyOption of taskFilterProperty.options" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-task-property-options-' + taskFilterProperty.key">
                             {{ propertyOption.label }}
                         </mat-option>
                     </mat-select>
@@ -44,8 +44,8 @@
                             [(ngModel)]="dateFilter[taskFilterProperty.key]"
                             [ngModelOptions]="{standalone: true}"
                             [attr.data-automation-id]="'adf-cloud-edit-task-property-' + taskFilterProperty.key">
-                    <mat-datepicker-toggle matSuffix [for]="dateController" [attr.data-automation-id]="'adf-cloud-edit-task-property-date-toggle' + taskFilterProperty.key"></mat-datepicker-toggle>
-                    <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-task-property-date-picker' + taskFilterProperty.key"></mat-datepicker>
+                    <mat-datepicker-toggle matSuffix [for]="dateController" [attr.data-automation-id]="'adf-cloud-edit-task-property-date-toggle-' + taskFilterProperty.key"></mat-datepicker-toggle>
+                    <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-task-property-date-picker-' + taskFilterProperty.key"></mat-datepicker>
                     <div class="adf-edit-task-filter-date-error-container">
                         <div *ngIf="hasError(taskFilterProperty)">
                             <div class="adf-error-text">{{'ADF_TASK_LIST.START_TASK.FORM.ERROR.DATE'|translate}}</div>

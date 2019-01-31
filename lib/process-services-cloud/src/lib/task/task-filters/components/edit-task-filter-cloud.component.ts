@@ -262,7 +262,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
             });
     }
 
-    executeFilterAction(action: TaskFilterAction): void {
+    executeFilterActions(action: TaskFilterAction): void {
         if (action.actionType === EditTaskFilterCloudComponent.DEFAULT_ACTIONS[0]) {
             this.onSave();
         } else if (action.actionType === EditTaskFilterCloudComponent.DEFAULT_ACTIONS[1]) {
