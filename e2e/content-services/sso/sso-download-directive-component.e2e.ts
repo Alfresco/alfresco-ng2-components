@@ -32,37 +32,31 @@ describe('SSO - Download Directive', () => {
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
+    let pdfUploadedFile, pngUploadedFile;
+
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: TestConfig.adf.url
+    });
 
     beforeAll(async(done) => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: TestConfig.adf.url
-        });
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
+        pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
 
-        let pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
-
-        Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
-
-        Object.assign(pngFileModel, pngUploadedFile.entry);
+        pngUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
 
         done();
     });
 
     afterAll(async (done) => {
-        let nodesPromise = await contentServicesPage.getContentList().getAllNodeIdInList();
-
-        nodesPromise.forEach(async (currentNodePromise) => {
-            await currentNodePromise.then(async (currentNode) => {
-                if (currentNode && currentNode !== 'Node id') {
-                    await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, currentNode);
-                }
-            });
-        });
-
+        try {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pdfUploadedFile.entry.id);
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, pngUploadedFile.entry.id);
+        } catch (error) {
+        }
         done();
     });
 
