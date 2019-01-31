@@ -343,7 +343,6 @@ describe('EditTaskFilterCloudComponent', () => {
         }));
     });
 
-
     describe('filter actions', () => {
 
         it('should display default filter actions', async(() => {

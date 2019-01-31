@@ -124,8 +124,9 @@
       "LAST_MODIFIED_FROM": "LastModifiedFrom",
       "LAST_MODIFIED_TO": "LastModifiedTo",
       "OWNER": "Owner",
-
-      "SORT": "Sort"
+      "DUE_DATE": "DueDate",
+      "SORT": "Sort",
+      "START_DATE": "StartDate"
     },
     "DIALOG": {
       "TITLE": "Save filter as",
