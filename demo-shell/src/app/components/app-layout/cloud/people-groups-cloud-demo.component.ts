@@ -16,58 +16,46 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material';
 import { PeopleCloudComponent, GroupCloudComponent, GroupModel } from '@alfresco/adf-process-services-cloud';
+import { MatRadioChange } from '@angular/material';
 
 @Component({
     selector: 'app-people-groups-cloud',
-    templateUrl: './people-groups-cloud.component.html',
-    styleUrls: ['./people-groups-cloud.component.scss'],
+    templateUrl: './people-groups-cloud-demo.component.html',
+    styleUrls: ['./people-groups-cloud-demo.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class PeopleGroupCloudComponent {
+export class PeopleGroupCloudDemoComponent {
 
-    people: any = {
-        mode: PeopleCloudComponent.MODE_SINGLE,
-        preSelectedValue: []
+    peopleMode: string = PeopleCloudComponent.MODE_SINGLE;
+    preSelectUsers: any = [];
 
-    };
-    groups: any = {
-        mode: GroupCloudComponent.MODE_SINGLE,
-        preSelectedValue: [],
-        selectedGroupList: []
-    };
+    groupMode: string = GroupCloudComponent.MODE_SINGLE;
+    preSelectGroup: any = [];
+    selectedGroupList: any = [];
 
     setPeoplePreselectValue(value: string) {
         if (this.isStringArray(value)) {
-            this.people.preSelectedValue = JSON.parse(value);
+            this.preSelectUsers = JSON.parse(value);
         } else if (value.length === 0) {
-            this.people.preSelectedValue = [];
+            this.preSelectUsers = [];
         }
     }
 
     setGroupsPreselectValue(value: string) {
         if (this.isStringArray(value)) {
-            this.groups.preSelectedValue = JSON.parse(value);
+            this.preSelectGroup = JSON.parse(value);
         } else if (value.length === 0) {
-            this.groups.preSelectedValue = [];
+            this.preSelectGroup = [];
         }
     }
 
-    onChangePeopleMode(event: MatCheckboxChange) {
-        if (event.checked) {
-            this.people.mode = PeopleCloudComponent.MODE_MULTIPLE;
-        } else {
-            this.people.mode = PeopleCloudComponent.MODE_SINGLE;
-        }
+    onChangePeopleMode(event: MatRadioChange) {
+       this.peopleMode = event.value;
     }
 
-    onChangeGroupsMode(event: MatCheckboxChange) {
-        if (event.checked) {
-            this.groups.mode = GroupCloudComponent.MODE_MULTIPLE;
-        } else {
-            this.groups.mode = GroupCloudComponent.MODE_SINGLE;
-        }
+    onChangeGroupsMode(event: MatRadioChange) {
+        this.groupMode = event.value;
     }
 
     isStringArray(str: string) {
@@ -80,16 +68,32 @@ export class PeopleGroupCloudComponent {
     }
 
     canShowPeopleList() {
-        return this.people.mode === GroupCloudComponent.MODE_MULTIPLE;
+        return this.peopleMode === GroupCloudComponent.MODE_MULTIPLE;
     }
 
     onRemoveGroup(group: GroupModel) {
-        this.groups.selectedGroupList = this.groups.selectedGroupList.filter((value: any) => value.id !== group.id);
+        this.selectedGroupList = this.selectedGroupList.filter((value: any) => value.id !== group.id);
     }
 
     onSelectGroup(group: GroupModel) {
-        if (this.groups.mode === GroupCloudComponent.MODE_MULTIPLE) {
-            this.groups.selectedGroupList.push(group);
+        if (this.groupMode === GroupCloudComponent.MODE_MULTIPLE) {
+            this.selectedGroupList.push(group);
         }
+    }
+
+    get peopleSingleMode() {
+        return PeopleCloudComponent.MODE_SINGLE;
+    }
+
+    get peopleMultipleMode() {
+        return PeopleCloudComponent.MODE_MULTIPLE;
+    }
+
+    get groupSingleMode() {
+        return GroupCloudComponent.MODE_SINGLE;
+    }
+
+    get groupMultipleMode() {
+        return GroupCloudComponent.MODE_MULTIPLE;
     }
 }

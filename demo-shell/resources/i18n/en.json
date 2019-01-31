@@ -285,7 +285,8 @@
     "CUSTOMIZE_FILTERS": "Customise your filter"
   },
   "PEOPLE_GROUPS_CLOUD": {
-    "MULTIPLE_VALUES": "Multiple values",
+    "SINGLE": "Single",
+    "MULTI": "Multi",
     "PRESELECTED_VALUE": "Preselected value"
   },
   "ABOUT": {

@@ -76,7 +76,7 @@ import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-clo
 import { CloudFiltersDemoComponent } from './components/app-layout/cloud/cloud-filters-demo.component';
 import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
 import { DocumentListDemoComponent } from './components/document-list/document-list-demo.component';
-import { PeopleGroupCloudComponent } from './components/app-layout/cloud/people-groups-cloud.component';
+import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
 
 @NgModule({
     imports: [
@@ -138,7 +138,7 @@ import { PeopleGroupCloudComponent } from './components/app-layout/cloud/people-
         CloudBreadcrumbsComponent,
         CloudFiltersDemoComponent,
         DocumentListDemoComponent,
-        PeopleGroupCloudComponent
+        PeopleGroupCloudDemoComponent
     ],
     providers: [
         {
