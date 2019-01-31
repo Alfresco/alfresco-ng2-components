@@ -109,6 +109,11 @@ export class SearchFilterList<T> implements Iterable<T> {
         this.filterText = '';
     }
 
+    addItem(item) {
+        this.items.push(item);
+        this.filteredItems.push(item);
+    }
+
     [Symbol.iterator](): Iterator<T> {
         let pointer = 0;
         let items = this.visibleItems;
