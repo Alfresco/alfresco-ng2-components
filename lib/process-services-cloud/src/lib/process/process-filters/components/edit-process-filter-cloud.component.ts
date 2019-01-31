@@ -61,11 +61,11 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     @Input()
     showTitle = true;
 
-    /** Emitted when an process instance filter property changes. */
+    /** Emitted when a process instance filter property changes. */
     @Output()
     filterChange: EventEmitter<ProcessFilterCloudModel> = new EventEmitter();
 
-    /** Emitted when an filter action occurs i.e Save, SaveAs, Delete. */
+    /** Emitted when a filter action occurs i.e Save, SaveAs, Delete. */
     @Output()
     action: EventEmitter<ProcessFilterActionType> = new EventEmitter();
 
