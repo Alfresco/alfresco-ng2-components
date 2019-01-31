@@ -28,6 +28,8 @@ import { FolderModel } from '../../models/ACS/folderModel';
 
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
+import { Util } from '../../util/util';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
@@ -41,6 +43,7 @@ describe('Upload component', () => {
     let loginPage = new LoginPage();
     let acsUser = new AcsUserModel();
     let uploadActions = new UploadActions();
+    let navigationBarPage = new NavigationBarPage();
 
     let firstPdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
@@ -434,6 +437,26 @@ describe('Upload component', () => {
         contentServicesPage.doubleClickRow(folderTwo.name).checkContentIsDisplayed(uploadedFileInFolderTwo.name);
 
         uploadToggles.disableFolderUpload();
+    });
+
+    it('[C291921] Should display tooltip for uploading files on a not found location', async () => {
+        let folderName = Util.generateRandomString(8);
+
+        let folderUploadedModel = await browser.controlFlow().execute(async () => {
+            return await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
+        });
+
+        navigationBarPage.openContentServicesFolder(folderUploadedModel.entry.id);
+        contentServicesPage.checkUploadButton();
+
+        browser.controlFlow().execute(async () => {
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, folderUploadedModel.entry.id);
+        });
+
+        contentServicesPage.uploadFile(pdfFileModel.location);
+
+        uploadDialog.displayTooltip();
+        expect(uploadDialog.getTooltip()).toEqual('Upload location no longer exists [404]');
     });
 
 });

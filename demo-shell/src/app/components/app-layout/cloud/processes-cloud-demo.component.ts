@@ -34,7 +34,7 @@ import { CloudLayoutService } from './services/cloud-layout.service';
 export class ProcessesCloudDemoComponent implements OnInit {
 
     public static ACTION_SAVE_AS = 'SAVE_AS';
-    static PROCESS_FILTER_PROPERTY_KEYS = 'edit-process-filter.properties';
+    static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter.properties';
 
     @ViewChild('processCloud')
     processCloud: ProcessListCloudComponent;

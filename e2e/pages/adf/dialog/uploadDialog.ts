@@ -16,6 +16,7 @@
  */
 
 import { Util } from '../../../util/util';
+import { element, by, protractor, browser } from 'protractor';
 
 export class UploadDialog {
 
@@ -24,7 +25,8 @@ export class UploadDialog {
     minimizedDialog = element(by.css('div[class*="upload-dialog--minimized"]'));
     uploadedStatusIcon = by.css('mat-icon[class*="status--done"]');
     cancelledStatusIcon = by.css('div[class*="status--cancelled"]');
-    errorStatusIcon = by.css('div[class*="status--error"]');
+    errorStatusIcon = by.css('div[class*="status--error"] mat-icon');
+    errorTooltip = element(by.css('div.mat-tooltip'));
     cancelWhileUploadingIcon = by.css('mat-icon[class*="adf-file-uploading-row__action adf-file-uploading-row__action--cancel"]');
     rowByRowName = by.xpath('ancestor::adf-file-uploading-list-row');
     title = element(by.css('span[class*="upload-dialog__title"]'));
@@ -183,6 +185,16 @@ export class UploadDialog {
         Util.waitUntilElementIsVisible(this.maximizeButton);
         this.maximizeButton.click();
         return this;
+    }
+
+    displayTooltip() {
+        Util.waitUntilElementIsVisible(element(this.errorStatusIcon));
+        browser.actions().mouseMove(element(this.errorStatusIcon)).perform();
+    }
+
+    getTooltip() {
+        Util.waitUntilElementIsVisible(this.errorTooltip);
+        return this.errorTooltip.getText();
     }
 
 }

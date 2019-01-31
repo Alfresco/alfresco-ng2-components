@@ -271,6 +271,17 @@ describe('Content Services Viewer', () => {
         viewerPage.clickCloseButton();
     });
 
+    it('[C291903] Should display the buttons in order in the adf viewer toolbar', () => {
+        viewerPage.viewFile(pdfFile.name);
+        viewerPage.checkLeftSideBarIsNotDisplayed();
+        viewerPage.clickLeftSidebarButton();
+        viewerPage.checkLeftSideBarIsDisplayed();
+        viewerPage.enableMoreActionsMenu();
+        viewerPage.checkToolbarIsDisplayed();
+        expect(viewerPage.getLastButtonTitle()).toEqual(viewerPage.getMoreActionsMenuTitle());
+        viewerPage.clickCloseButton();
+    });
+
     it('[C260053] Should display first page, toolbar and pagination when opening a .docx file', () => {
         viewerPage.viewFile(docxFile.name);
         viewerPage.checkZoomInButtonIsDisplayed();
