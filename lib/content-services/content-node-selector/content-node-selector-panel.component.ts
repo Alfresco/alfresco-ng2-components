@@ -60,12 +60,20 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     @Input()
     dropdownSiteList: SitePaging = null;
 
+    _rowFilter: RowFilter;
+
     /** Custom row filter function. See the
      * [Document List component](document-list.component.md#custom-row-filter)
      * for more information.
      */
     @Input()
-    rowFilter: RowFilter = null;
+    set rowFilter(rowFilter: RowFilter) {
+        this._rowFilter = this.getRowFilter(rowFilter);
+    }
+
+    get rowFilter(): RowFilter {
+        return this._rowFilter || this.getRowFilter();
+    }
 
     /** Custom list of site content componentIds.
      * Used to filter out the corresponding items from the displayed nodes
@@ -165,23 +173,14 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
         this.excludeSiteContent = this.excludeSiteContent ? this.excludeSiteContent : [];
-        if (!this.rowFilter) {
-            this.rowFilter = this.getRowFilter(this.rowFilter);
-        }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.rowFilter) {
-            this.rowFilter = this.getRowFilter(this.rowFilter);
-        }
-    }
-
-    private getRowFilter(initialFilterFunction): RowFilter {
-        if (!initialFilterFunction) {
-            initialFilterFunction = () => true;
+    private getRowFilter(filter?: RowFilter): RowFilter {
+        if (!filter) {
+            filter = () => true;
         }
         return (value: ShareDataRow, index: number, array: ShareDataRow[]) => {
-            return initialFilterFunction(value, index, array) &&
+            return filter(value, index, array) &&
                 !this.isExcludedSiteContent(value);
         };
     }

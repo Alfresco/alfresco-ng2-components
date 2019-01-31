@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeEntry, Node, SiteEntry, SitePaging } from '@alfresco/js-api';
@@ -98,6 +98,25 @@ describe('ContentNodeSelectorComponent', () => {
 
         describe('Parameters', () => {
 
+            let documentListService,
+                sitesService;
+
+            beforeEach(() => {
+                documentListService = TestBed.get(DocumentListService);
+                sitesService = TestBed.get(SitesService);
+                spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
+                spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
+                spyOn(sitesService, 'getSites').and.returnValue(of({
+                    list: {
+                        entries: [<SiteEntry> { entry: { guid: 'namek', id: 'namek' } },
+                            <SiteEntry> { entry: { guid: 'blog', id: 'blog' } }]
+                    }
+                }));
+                spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
+                component.currentFolderId = 'cat-girl-nuku-nuku';
+                fixture.detectChanges();
+            });
+
             it('should trigger the select event when selection has been made', (done) => {
                 const expectedNode = <Node> {};
                 component.select.subscribe((nodes) => {
@@ -113,8 +132,8 @@ describe('ContentNodeSelectorComponent', () => {
                 component.excludeSiteContent = ['blog'];
                 fixture.detectChanges();
 
-                const testSiteContent = new Node({id: 'blog-id', properties: { 'st:componentId': 'blog' }});
-                expect(component.rowFilter(<any> {node: {entry: testSiteContent}}, null, null))
+                const testSiteContent = new Node({ id: 'blog-id', properties: { 'st:componentId': 'blog' } });
+                expect(component.rowFilter(<any> { node: { entry: testSiteContent } }, null, null))
                     .toBe(false, 'did not filter out blog');
             });
 
@@ -128,16 +147,20 @@ describe('ContentNodeSelectorComponent', () => {
                 };
 
                 component.excludeSiteContent = ['blog'];
-                component.ngOnChanges({rowFilter: new SimpleChange(null, filterFunction1, true)});
+                component.rowFilter = filterFunction1;
                 fixture.detectChanges();
 
-                const testSiteContent = new Node({id: 'blog-id', properties: {'st:componentId': 'blog'}, isFile: true});
-                expect(component.rowFilter(<any> {node: {entry: testSiteContent}}, null, null))
+                const testSiteContent = new Node({
+                    id: 'blog-id',
+                    properties: { 'st:componentId': 'blog' },
+                    isFile: true
+                });
+                expect(component.rowFilter(<any> { node: { entry: testSiteContent } }, null, null))
                     .toBe(false, 'did not filter out blog with filterFunction1');
 
-                component.ngOnChanges({rowFilter: new SimpleChange(filterFunction1, filterFunction2, false)});
+                component.rowFilter = filterFunction2;
                 fixture.detectChanges();
-                expect(component.rowFilter(<any> {node: {entry: testSiteContent}}, null, null))
+                expect(component.rowFilter(<any> { node: { entry: testSiteContent } }, null, null))
                     .toBe(false, 'did not filter out blog with filterFunction2');
             });
 
@@ -573,15 +596,34 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should pass through the rowFilter to the documentList', () => {
-                const filter = () => {
+                let filter = (shareDataRow: ShareDataRow) => {
+                    if (shareDataRow.node.entry.name === 'impossible-name') {
+                        return true;
+                    }
                 };
+
                 component.rowFilter = filter;
 
                 fixture.detectChanges();
 
                 let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
                 expect(documentList).not.toBeNull('Document list should be shown');
-                expect(documentList.componentInstance.rowFilter).toBe(filter);
+                expect(documentList.componentInstance.rowFilter({
+                    node: {
+                        entry: new Node({
+                            name: 'impossible-name',
+                            id: 'name'
+                        })
+                    }
+                }))
+                    .toBe(filter(<ShareDataRow> {
+                        node: {
+                            entry: new Node({
+                                name: 'impossible-name',
+                                id: 'name'
+                            })
+                        }
+                    }));
             });
 
             it('should pass through the imageResolver to the documentList', () => {
