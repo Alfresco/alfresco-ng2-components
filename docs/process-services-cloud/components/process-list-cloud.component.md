@@ -53,6 +53,9 @@ when the process list is empty:
 | appName | `string` | "" | The name of the application. |
 | appVersion | `string` | "" | The related application version. |
 | businessKey | `string` | "" | Filter the tasks to display only the ones with this businessKey value. |
+| startDate | `string` | "" | Filter the processes. Display only process start on the supplied date. |
+| lastModifiedFrom | `string` | "" | Filter the processes. Display only processes with lastModifiedFrom equal to the supplied date. |
+| lastModifiedTo | `string` | "" | Filter the processes. Display only processes with lastModifiedTo equal to the supplied date. |
 | id | `string` | "" | Filter the processes to display only the ones with this ID. |
 | initiator | `string` | "" | Name of the initiator of the process. |
 | multiselect | `boolean` | false | Toggles multiple row selection and renders checkboxes at the beginning of each row |

@@ -178,6 +178,51 @@ describe('ProcessListCloudComponent', () => {
         component.onRowClick(rowEvent);
     });
 
+    describe('component changes', () => {
+
+        beforeEach(() => {
+            component.rows = fakeProcessCloudList.list.entries;
+            fixture.detectChanges();
+        });
+
+        it('should NOT reload the task list when no parameters changed', () => {
+            component.rows = null;
+            component.ngOnChanges({});
+            fixture.detectChanges();
+            expect(component.isListEmpty()).toBeTruthy();
+        });
+
+        it('should reload the task list when input id parameter changed', () => {
+            const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            component.applicationName = 'mock-app-name';
+            const appNameChange = new SimpleChange(undefined, 'mock-app-name', true);
+            const processIdChange = new SimpleChange(undefined, 'mock-process-id', true);
+            component.ngOnChanges({ 'id': processIdChange,  'applicationName': appNameChange});
+            fixture.detectChanges();
+            expect(component.isListEmpty()).toBeFalsy();
+            expect(getProcessByRequestSpy).toHaveBeenCalled();
+        });
+
+        it('should reload the task list when input parameters changed', () => {
+            const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            component.applicationName = 'mock-app-name';
+            component.status = 'mock-status';
+            component.initiator = 'mock-initiator';
+            const appNameChange = new SimpleChange(undefined, 'mock-app-name', true);
+            const statusChange = new SimpleChange(undefined, 'mock-status', true);
+            const initiatorChange = new SimpleChange(undefined, 'mock-initiator', true);
+
+            component.ngOnChanges({
+                'applicationName': appNameChange,
+                'assignee': initiatorChange,
+                'status': statusChange
+            });
+            fixture.detectChanges();
+            expect(component.isListEmpty()).toBeFalsy();
+            expect(getProcessByRequestSpy).toHaveBeenCalled();
+        });
+    });
+
     describe('Injecting custom colums for tasklist - CustomTaskListComponent', () => {
 
         let fixtureCustom: ComponentFixture<CustomTaskListComponent>;
