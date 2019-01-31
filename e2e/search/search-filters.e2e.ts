@@ -180,7 +180,7 @@ describe('Search Filters', () => {
             .checkCheckListOptionIsDisplayed('Administrator');
     });
 
-    it('[] Should group search facets under specified labels', () => {
+    it('[C291980] Should group search facets under specified labels', () => {
         browser.get(TestConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed()
@@ -188,7 +188,7 @@ describe('Search Filters', () => {
             .checkSizeFacetQueryGroupIsDisplayed();
     });
 
-    it('[] Should group search facets under the default label, by default', () => {
+    it('[C291981] Should group search facets under the default label, by default', () => {
         browser.refresh();
 
         navigationBar.clickConfigEditorButton();
