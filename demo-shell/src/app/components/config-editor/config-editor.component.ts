@@ -113,14 +113,14 @@ export class ConfigEditorComponent {
     }
 
     editProcessFilterConfClick() {
-        this.code = JSON.stringify(this.appConfig.config['edit-process-filter']);
-        this.field = 'edit-process-filter';
+        this.code = JSON.stringify(this.appConfig.config['adf-edit-process-filter']);
+        this.field = 'adf-edit-process-filter';
         this.indentCode();
     }
 
-    editTaskFilterConfClick() {
-        this.code = JSON.stringify(this.appConfig.config['edit-task-filter']);
-        this.field = 'edit-task-filter';
+     editTaskFilterConfClick() {
+        this.code = JSON.stringify(this.appConfig.config['adf-edit-task-filter']);
+        this.field = 'adf-edit-task-filter';
         this.indentCode();
     }
 
