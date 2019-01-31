@@ -22,7 +22,8 @@ describe('SSO - Download Directive', () => {
     let silentLogin;
     let implicitFlow;
     let uploadActions = new UploadActions();
-    let user = new AcsUserModel();
+
+
 
     let firstPdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
@@ -41,10 +42,6 @@ describe('SSO - Download Directive', () => {
         });
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
-        await this.alfrescoJsApi.core.peopleApi.addPerson(user);
-
-        await this.alfrescoJsApi.login(user.id, user.password);
 
         let pdfUploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
 
@@ -82,7 +79,7 @@ describe('SSO - Download Directive', () => {
         implicitFlow = true;
         settingsPage.setProviderEcmSso(silentLogin, implicitFlow);
         loginSsoPage.clickOnSSOButton();
-        loginSsoPage.loginAPS(user.id, user.password);
+        loginSsoPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
         browser.sleep(20000);
