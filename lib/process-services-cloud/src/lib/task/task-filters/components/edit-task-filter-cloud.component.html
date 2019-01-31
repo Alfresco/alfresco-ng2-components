@@ -53,6 +53,14 @@
                         </div>
                     </div>
                 </mat-form-field>
+                <div fxFlex="23%" class="adf-edit-task-filter-checkbox" *ngIf="isCheckBoxType(taskFilterProperty)">
+                <mat-checkbox
+                    color="primary"
+                    [formControlName]="taskFilterProperty.key"
+                    [attr.data-automation-id]="taskFilterProperty.key">
+                    {{taskFilterProperty.label | translate}}
+                </mat-checkbox>
+                </div>
             </ng-container>
         </div>
         </form>

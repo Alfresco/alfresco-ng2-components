@@ -2,6 +2,11 @@
 
     $warn: map-get($theme, warn);
 
+    .adf-edit-task-filter-checkbox {
+        font-size: 16px;
+        padding-top: 10px;
+    }
+
     .adf-edit-task-filter-date-error-container {
         position: absolute;
         height: 20px;

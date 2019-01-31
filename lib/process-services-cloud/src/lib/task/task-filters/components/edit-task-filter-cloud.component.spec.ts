@@ -214,7 +214,7 @@ describe('EditTaskFilterCloudComponent', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                expect(sortOptions.length).toEqual(5);
+                expect(sortOptions.length).toEqual(4);
             });
         }));
 
@@ -253,16 +253,9 @@ describe('EditTaskFilterCloudComponent', () => {
                 expect(orderController.value).toBe('ASC');
             });
         }));
-    });
-
-    describe('Task filterProperties', () => {
-
-        beforeEach(() => {
-            component.filterProperties = ['appName', 'processInstanceId', 'priority'];
-            fixture.detectChanges();
-        });
 
         it('should able to fetch running applications when appName property defined in the input', async(() => {
+            component.filterProperties = ['appName', 'processInstanceId', 'priority'];
             fixture.detectChanges();
             let taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
             component.ngOnChanges({ 'id': taskFilterIDchange});
@@ -272,27 +265,6 @@ describe('EditTaskFilterCloudComponent', () => {
                 expect(getRunningApplicationsSpy).toHaveBeenCalled();
                 expect(appController).toBeDefined();
                 expect(appController.value).toBe('mock-app-name');
-            });
-        }));
-
-        it('should able to build a editTaskFilter form with given input properties', async(() => {
-            getTaskFilterSpy.and.returnValue({ appName: 'mock-app-name', processInstanceId: 'process-instance-id', priority: '12' });
-            let taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
-            component.ngOnChanges({ 'id': taskFilterIDchange});
-            const appController = component.editTaskFilterForm.get('appName');
-            const priorityController = component.editTaskFilterForm.get('priority');
-            const processInsIdController = component.editTaskFilterForm.get('processInstanceId');
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(component.taskFilterProperties).toBeDefined();
-                expect(component.editTaskFilterForm).toBeDefined();
-                expect(component.taskFilterProperties.length).toBe(3);
-                expect(appController).toBeDefined();
-                expect(priorityController).toBeDefined();
-                expect(processInsIdController).toBeDefined();
-                expect(appController.value).toBe('mock-app-nam');
-                expect(priorityController.value).toBe('12');
             });
         }));
     });
@@ -314,7 +286,7 @@ describe('EditTaskFilterCloudComponent', () => {
                 const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 expect(sortController).toBeDefined();
                 expect(sortController.value).toBe('id');
-                expect(sortOptions.length).toEqual(5);
+                expect(sortOptions.length).toEqual(4);
             });
         }));
 
@@ -339,6 +311,27 @@ describe('EditTaskFilterCloudComponent', () => {
                 expect(component.sortProperties.length).toBe(3);
                 expect(sortController.value).toBe('my-custom-sort');
                 expect(sortOptions.length).toEqual(3);
+            });
+        }));
+
+        it('should display default sort properties if input is empty', async(() => {
+            let taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIDchange});
+            fixture.detectChanges();
+            component.sortProperties = [];
+            fixture.detectChanges();
+            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            fixture.detectChanges();
+            let sortElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"]');
+            sortElement.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const sortController = component.editTaskFilterForm.get('sort');
+                const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                expect(sortController).toBeDefined();
+                expect(sortController.value).toBe('id');
+                expect(sortOptions.length).toEqual(4);
             });
         }));
     });
@@ -385,6 +378,30 @@ describe('EditTaskFilterCloudComponent', () => {
                 expect(component.taskFilterActions.length).toBe(1);
                 expect(saveButton).toBeDefined();
                 expect(saveButton.disabled).toBeTruthy();
+            });
+        }));
+
+        it('should display default filter actions if input is empty', async(() => {
+            component.toggleFilterActions = true;
+            component.actions = [];
+            let taskFilterIDchange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIDchange});
+            fixture.detectChanges();
+            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const saveAsButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+                const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
+                expect(component.taskFilterActions).toBeDefined();
+                expect(component.taskFilterActions.length).toBe(3);
+                expect(saveButton).toBeDefined();
+                expect(saveAsButton).toBeDefined();
+                expect(deleteButton).toBeDefined();
+                expect(saveButton.disabled).toBeTruthy();
+                expect(saveAsButton.disabled).toBeTruthy(false);
+                expect(deleteButton.disabled).toBe(false);
             });
         }));
     });

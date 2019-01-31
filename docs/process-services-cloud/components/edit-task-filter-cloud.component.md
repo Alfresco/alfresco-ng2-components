@@ -90,6 +90,7 @@ given below:
 | **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself). Can be "id", "name", "createdDate", "priority", "processDefinitionId". |
 | **_order_** | Sort ordering of the filter results it can be ASC or DESC (doesn't participate in the filtering itself). |
 
+
 By default, the **_state_**, **_assignment_**, **_sort_** and **_order_** properties
 are displayed in the editor. However, you can also choose which properties
 to show using the `filterProperties` array. For example, the code below initializes
@@ -119,7 +120,7 @@ export class SomeComponent implements OnInit {
 With this configuration, only the four listed properties will be shown.
 
 **Note:** Currently, the `sort` property has a limited set of properties
-to choose from: **_id_**, **_name_**, **_status_** and **_startDate_**.
+to choose from: **_id_**, **_createdDate_**, **_name_**, **_priority_**.
 
 ## See also
 

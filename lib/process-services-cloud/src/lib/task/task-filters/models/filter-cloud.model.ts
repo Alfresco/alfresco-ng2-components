@@ -34,7 +34,7 @@ export class TaskFilterCloudModel  {
     taskName: string;
     parentTaskId: string;
     priority: number;
-    standAlone: any;
+    standAlone: boolean;
     lastModifiedFrom: Date;
     lastModifiedTo: Date;
 
@@ -46,14 +46,15 @@ export class TaskFilterCloudModel  {
             this.icon = obj.icon || null;
             this.index = obj.index || null;
             this.appName = obj.appName || null;
-            this.processDefinitionId = obj.processDefinitionId || null;
             this.state = obj.state || null;
             this.sort = obj.sort || null;
             this.assignment = obj.assignment || null;
             this.order = obj.order || null;
+            this.owner = obj.owner || null;
+            this.processDefinitionId = obj.processDefinitionId || null;
+            this.processInstanceId = obj.processInstanceId || null;
             this.createdDate = obj.createdDate || null;
             this.dueDate = obj.dueDate || null;
-            this.processInstanceId = obj.processInstanceId || null;
             this.taskName = obj.taskName || null;
             this.parentTaskId = obj.parentTaskId || null;
             this.owner = obj.owner;
@@ -108,7 +109,7 @@ export interface FilterOptions {
 export class TaskFilterProperties {
     label: string;
     type: string;
-    value: string;
+    value: any;
     key: string;
     options: FilterOptions[];
 
