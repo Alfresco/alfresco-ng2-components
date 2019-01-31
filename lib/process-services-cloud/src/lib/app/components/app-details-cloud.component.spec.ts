@@ -65,6 +65,14 @@ describe('AppDetailsCloudComponent', () => {
         const icon = fixture.nativeElement.querySelector('.adf-app-listgrid-item-card-logo-icon');
 
         expect(theme).toEqual(ApplicationInstanceModel.DEFAULT_THEME);
-        expect(icon).toBeTruthy(icon);
+        expect(icon).toBeTruthy();
+    });
+
+    it('should render card with a non ApplicationInstanceModel input object', () => {
+        component.applicationInstance =  { name: 'application-new-3', createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending' };
+        fixture.detectChanges();
+        const app = fixture.nativeElement.querySelector('.mat-card');
+        expect(app).toBeTruthy();
+
     });
 });
