@@ -16,10 +16,10 @@
  */
 
 import { Util } from '../../util/util';
-import TestConfig = require('../../test.config');
-import { element, by, browser } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { ProcessServicesPage } from './process-services/processServicesPage';
 import { AppListCloudComponent } from './process-cloud/appListCloudComponent';
+import TestConfig = require('../../test.config');
 
 export class NavigationBarPage {
 
@@ -45,6 +45,7 @@ export class NavigationBarPage {
     treeViewButton = element(by.css('a[data-automation-id="Tree View"]'));
     iconsButton = element(by.css('a[data-automation-id="Icons"]'));
     customSourcesButton = element(by.css('a[data-automation-id="Custom Sources"]'));
+    settingsButton = element(by.css('a[data-automation-id="Settings"]'));
 
     navigateToDatatable() {
         Util.waitUntilElementIsVisible(this.dataTableButton);
@@ -75,6 +76,12 @@ export class NavigationBarPage {
     navigateToProcessServicesCloudPage() {
         Util.waitUntilElementIsVisible(this.processServicesCloudButton);
         this.processServicesCloudButton.click();
+        return new AppListCloudComponent();
+    }
+
+    navigateToSettingsPage() {
+        Util.waitUntilElementIsVisible(this.settingsButton);
+        this.settingsButton.click();
         return new AppListCloudComponent();
     }
 
