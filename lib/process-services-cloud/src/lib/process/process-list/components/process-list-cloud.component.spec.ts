@@ -185,24 +185,6 @@ describe('ProcessListCloudComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should NOT reload the task list when no parameters changed', () => {
-            component.rows = null;
-            component.ngOnChanges({});
-            fixture.detectChanges();
-            expect(component.isListEmpty()).toBeTruthy();
-        });
-
-        it('should reload the task list when input id parameter changed', () => {
-            const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-            component.applicationName = 'mock-app-name';
-            const appNameChange = new SimpleChange(undefined, 'mock-app-name', true);
-            const processIdChange = new SimpleChange(undefined, 'mock-process-id', true);
-            component.ngOnChanges({ 'id': processIdChange,  'applicationName': appNameChange});
-            fixture.detectChanges();
-            expect(component.isListEmpty()).toBeFalsy();
-            expect(getProcessByRequestSpy).toHaveBeenCalled();
-        });
-
         it('should reload the task list when input parameters changed', () => {
             const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
             component.applicationName = 'mock-app-name';

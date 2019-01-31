@@ -45,10 +45,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     appName: string = '';
 
-    /** The related application version. */
-    @Input()
-    appVersion: string = '';
-
     /** Name of the initiator of the process. */
     @Input()
     initiator: string = '';
@@ -234,7 +230,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     private createRequestNode(): ProcessQueryCloudRequestModel {
         let requestNode = {
             appName: this.appName,
-            appVersion: this.appVersion,
             maxItems: this.size,
             skipCount: this.skipCount,
             initiator: this.initiator,
@@ -244,7 +239,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             processDefinitionKey: this.processDefinitionKey,
             status: this.status,
             businessKey: this.businessKey,
-            startDate: this.startDate,
             lastModifiedFrom: this.lastModifiedFrom,
             lastModifiedTo: this.lastModifiedTo,
             sorting: this.sorting
