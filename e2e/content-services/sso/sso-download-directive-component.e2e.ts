@@ -5,12 +5,10 @@ import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { LoginSSOPage } from '../../pages/adf/loginSSOPage';
 import { LoginPage } from '../../pages/adf/loginPage';
-import { AcsUserModel } from "../../models/ACS/acsUserModel";
 import { UploadActions } from "../../actions/ACS/upload.actions";
 import { FileModel } from "../../models/ACS/fileModel";
 import resources = require('../../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
-import {Test} from "tslint";
 
 describe('SSO - Download Directive', () => {
 
@@ -77,12 +75,11 @@ describe('SSO - Download Directive', () => {
     it('[C261050] Should be possible login in the PS with SSO', () => {
         silentLogin = false;
         implicitFlow = true;
-        settingsPage.setProviderEcmSso(silentLogin, implicitFlow);
+        settingsPage.setProviderEcmSso(TestConfig.adf.hostECM, TestConfig.adf.hostSso, silentLogin, implicitFlow);
         loginSsoPage.clickOnSSOButton();
         loginSsoPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
-        browser.sleep(20000);
     });
 
 });

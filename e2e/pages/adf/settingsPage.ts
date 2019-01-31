@@ -153,15 +153,14 @@ export class SettingsPage {
         await this.clickApply();
     }
 
-    async setProviderEcmSso (silentLogin = true, implicitFlow = true ) {
+    async setProviderEcmSso (processServiceURL, authHost, silentLogin = true, implicitFlow = true ) {
         this.goToSettingsPage();
         this.setProvider(this.ecm.option, this.ecm.text);
         Util.waitUntilElementIsVisible(this.ecmText);
         Util.waitUntilElementIsNotOnPage(this.bpmText);
         await this.clickSsoRadioButton();
         await this.setContentServicesURL(TestConfig.adf.url);
-        await this.setIdentityHost(TestConfig.adf.url + '/auth/admin/realms/alfresco');
-        await this.setAuthHost(TestConfig.adf.url + '/auth/realms/alfresco');
+        await this.setAuthHost(authHost);
         await this.setClientId('alfresco');
         await this.setSilentLogin(silentLogin);
         await this.setImplicitFlow(implicitFlow);

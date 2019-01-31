@@ -23,6 +23,7 @@ show_help() {
     echo "-dev or --dev run it against local development environment it will deploy on localhost:4200 the current version of your branch"
     echo "-host or --host URL of the Front end to test"
     echo "-host_bpm URL of the Back end to test"
+    echo "-host_ecm URL of the Back end to test"
     echo "-host_identity URL of the identity service backend to test"
     echo "-host_sso the entire path including the name of the realm"
     echo "-save  save the error screenshot in the remote env"
@@ -48,6 +49,10 @@ set_host(){
 
 set_host_bpm(){
     HOST_BPM=$1
+}
+
+set_host_ecm(){
+    HOST_ECM=$1
 }
 
 set_host_sso(){
@@ -133,6 +138,7 @@ while [[ $1 == -* ]]; do
       -s|--seleniumServer) set_selenium $2; shift 2;;
       -host|--host)  set_host $2; shift 2;;
       -host_bpm|--host_bpm) set_host_bpm $2; shift 2;;
+      -host_ecm|--host_ecm) set_host_ecm $2; shift 2;;
       -host_sso|--host_sso) set_host_sso $2; shift 2;;
       -host_identity|--host_identity) set_host_identity $2; shift 2;;
       -sl|--skip-lint)  skip_lint; shift;;
@@ -146,6 +152,7 @@ rm -rf ./e2e/downloads/
 rm -rf ./e2e-output/screenshots/
 
 export URL_HOST_BPM_ADF=$HOST_BPM
+export URL_HOST_ECM_ADF=$HOST_ECM
 export URL_HOST_SSO_ADF=$HOST_SSO
 export URL_HOST_IDENTITY=$HOST_IDENTITY
 export URL_HOST_ADF=$HOST
