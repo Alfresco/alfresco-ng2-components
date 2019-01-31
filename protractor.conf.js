@@ -302,6 +302,7 @@ exports.config = {
                 provider: 'ECM',
                 hostEcm: TestConfig.adf.url
             });
+
             alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             await saveScreenshots(alfrescoJsApi, retryCount);

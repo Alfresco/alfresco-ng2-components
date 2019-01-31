@@ -43,6 +43,7 @@ export class SettingsPage {
     ecmText = element(by.css('input[data-automation-id*="ecmHost"]'));
     bpmText = element(by.css('input[data-automation-id*="bpmHost"]'));
     authHostText = element(by.css('input[id="oauthHost"]'));
+    identityHostText = element(by.css('input[id="identityHost"]'));
     ssoRadioButton = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'SSO'));
     basicAuthRadioButton = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'Basic Authentication'));
     silentLoginToggleLabel = element(by.css('mat-slide-toggle[name="silentLogin"] label'));
@@ -52,6 +53,7 @@ export class SettingsPage {
     applyButton = element(by.css('button[data-automation-id*="host-button"]'));
     backButton = element(by.cssContainingText('button span[class="mat-button-wrapper"]', 'Back'));
     validationMessage = element(by.cssContainingText('mat-error', 'This field is required'));
+    clientId = element(by.id('clientId'));
 
     goToSettingsPage() {
         browser.waitForAngularEnabled(true);
@@ -151,6 +153,21 @@ export class SettingsPage {
         await this.clickApply();
     }
 
+    async setProviderEcmSso (silentLogin = true, implicitFlow = true ) {
+        this.goToSettingsPage();
+        this.setProvider(this.ecm.option, this.ecm.text);
+        Util.waitUntilElementIsVisible(this.ecmText);
+        Util.waitUntilElementIsNotOnPage(this.bpmText);
+        await this.clickSsoRadioButton();
+        await this.setContentServicesURL(TestConfig.adf.url);
+        await this.setIdentityHost(TestConfig.adf.url + '/auth/admin/realms/alfresco');
+        await this.setAuthHost(TestConfig.adf.url + '/auth/realms/alfresco');
+        await this.setClientId('alfresco');
+        await this.setSilentLogin(silentLogin);
+        await this.setImplicitFlow(implicitFlow);
+        await this.clickApply();
+    }
+
     async setProcessServicesURL (processServiceURL) {
         Util.waitUntilElementIsVisible(this.bpmText);
         this.bpmText.clear();
@@ -161,6 +178,12 @@ export class SettingsPage {
         Util.waitUntilElementIsClickable(this.ecmText);
         this.ecmText.clear();
         this.ecmText.sendKeys(contentServiceURL);
+    }
+
+    async setClientId (clientId) {
+        Util.waitUntilElementIsClickable(this.clientId);
+        this.clientId.clear();
+        this.clientId.sendKeys(clientId);
     }
 
     clearContentServicesURL () {
@@ -181,6 +204,12 @@ export class SettingsPage {
         Util.waitUntilElementIsVisible(this.authHostText);
         await this.authHostText.clear();
         await this.authHostText.sendKeys(authHostURL);
+    }
+
+    async setIdentityHost (authHostURL) {
+        Util.waitUntilElementIsVisible(this.identityHostText);
+        await this.identityHostText.clear();
+        await this.identityHostText.sendKeys(authHostURL);
     }
 
     async clickApply () {
