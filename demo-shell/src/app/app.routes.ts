@@ -47,6 +47,7 @@ import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-clo
 import { StartTaskCloudDemoComponent } from './components/app-layout/cloud/start-task-cloud-demo.component';
 import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
 import { DocumentListDemoComponent } from './components/document-list/document-list-demo.component';
+import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -145,6 +146,10 @@ export const appRoutes: Routes = [
                     {
                         path: '',
                         component: AppsCloudDemoComponent
+                    },
+                    {
+                        path: 'people-group-cloud',
+                        component: PeopleGroupCloudDemoComponent
                     },
                     {
                         path: ':applicationName',
