@@ -253,7 +253,7 @@ describe('Login component', () => {
     });
 
     it('[C291854] Should be possible login in valid credentials', () => {
-        browser.get('http://adfdev.envalfresco.com');
+        browser.get(TestConfig.adf.url);
         loginPage.waitForElements();
         expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
         loginPage.enterUsername(invalidUsername);
