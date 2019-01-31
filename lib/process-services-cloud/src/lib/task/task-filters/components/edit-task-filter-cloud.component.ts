@@ -63,7 +63,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     @Input()
     showTitle = true;
 
-    /** Emitted when an task filter property changes. */
+    /** Emitted when a task filter property changes. */
     @Output()
     filterChange: EventEmitter<TaskFilterCloudModel> = new EventEmitter();
 
