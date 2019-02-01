@@ -137,6 +137,7 @@
     "TITLE": "Customize your filter",
     "LABEL": {
       "APP_NAME": "ApplicationName",
+      "PROCESS_INS_ID": "ProcessInstanceId",
       "STATUS": "Status",
       "INITIATOR": "Initiator",
       "ASSIGNMENT": "Assignment",

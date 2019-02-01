@@ -23,6 +23,7 @@ export class ProcessFilterCloudModel {
     index: number;
     appName: string;
     processName: string;
+    processInstanceId: string;
     initiator: string;
     status: string;
     sort: string;
@@ -41,6 +42,7 @@ export class ProcessFilterCloudModel {
             this.icon = obj.icon || null;
             this.index = obj.index || null;
             this.appName = obj.appName || null;
+            this.processInstanceId = obj.processInstanceId || null;
             this.processName = obj.processName || null;
             this.initiator = obj.initiator || null;
             this.status = obj.status || null;
