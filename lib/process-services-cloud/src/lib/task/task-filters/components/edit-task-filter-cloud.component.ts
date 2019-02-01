@@ -85,12 +85,8 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
 
     status = [
         { label: 'ALL', value: '' },
-        { label: 'CREATED', value: 'CREATED' },
-        { label: 'CANCELLED', value: 'CANCELLED' },
-        { label: 'ASSIGNED', value: 'ASSIGNED' },
-        { label: 'SUSPENDED', value: 'SUSPENDED' },
-        { label: 'COMPLETED', value: 'COMPLETED' },
-        { label: 'DELETED', value: 'DELETED' }
+        { label: 'RUNNING', value: 'RUNNING' },
+        { label: 'COMPLETED', value: 'COMPLETED' }
     ];
 
     directions = [
