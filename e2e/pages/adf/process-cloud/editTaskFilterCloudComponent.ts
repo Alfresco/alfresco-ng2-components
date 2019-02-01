@@ -41,7 +41,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setStateFilterDropDown(option) {
-        this.clickOnDropDownArrow('status');
+        this.clickOnDropDownArrow('state');
 
         let stateElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(stateElement);
