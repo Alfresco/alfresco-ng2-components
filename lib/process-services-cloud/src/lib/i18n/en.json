@@ -7,7 +7,10 @@
     },
     "PROPERTIES": {
       "NAME": "Name",
-      "CREATED": "Created"
+      "CREATED": "Created",
+      "STATUS": "Status",
+      "START_DATE": "Start Date",
+      "ID": "Id"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Start Process",
@@ -58,6 +61,11 @@
     "PROPERTIES": {
       "NAME": "Name",
       "ASSIGNEE": "Assignee",
+      "ID": "Id",
+      "STATUS": "Status",
+      "PRIORITY": "Priority",
+      "CREATED_DATE": "Created Date",
+      "LAST_MODIFIED": "Last Modified",
       "CREATED": "Created"
     },
     "LIST": {
