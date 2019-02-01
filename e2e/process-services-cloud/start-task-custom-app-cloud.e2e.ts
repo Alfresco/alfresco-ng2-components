@@ -139,7 +139,7 @@ describe('Start Task', () => {
         tasksCloudDemoPage.editTaskFilterCloudComponent()
             .clickCustomiseFilterHeader()
             .setStateFilterDropDown('CREATED')
-            .clearAssignment();
+            .clearAssignee();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
     });
 
@@ -152,7 +152,7 @@ describe('Start Task', () => {
         startTask.clickStartButton();
         tasksCloudDemoPage.editTaskFilterCloudComponent()
             .clickCustomiseFilterHeader()
-            .clearAssignment()
+            .clearAssignee()
             .setStateFilterDropDown('CREATED');
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);

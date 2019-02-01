@@ -571,7 +571,7 @@
         }
     },
     "adf-edit-task-filter": {
-        "filterProperties": [ "state", "assignment", "sort", "order" ],
+        "filterProperties": [ "status", "assignee", "sort", "order" ],
         "sortProperties": [ "id", "name", "createdDate", "priority", "processDefinitionId" ],
         "actions": [ "save", "saveAs", "delete" ]
     },

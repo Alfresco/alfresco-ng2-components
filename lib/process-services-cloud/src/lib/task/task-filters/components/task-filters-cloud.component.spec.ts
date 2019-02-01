@@ -36,24 +36,24 @@ describe('TaskFiltersCloudComponent', () => {
             key: 'fake-involved-tasks',
             icon: 'adjust',
             id: 10,
-            state: 'open',
-            assignment: 'fake-involved'
+            status: 'open',
+            assignee: 'fake-involved'
         }),
         new TaskFilterCloudModel({
             name: 'FakeMyTasks1',
             key: 'fake-my-tast1',
             icon: 'done',
             id: 11,
-            state: 'open',
-            assignment: 'fake-assignee'
+            status: 'open',
+            assignee: 'fake-assignee'
         }),
         new TaskFilterCloudModel({
             name: 'FakeMyTasks2',
             key: 'fake-my-tast2',
             icon: 'inbox',
             id: 12,
-            state: 'open',
-            assignment: 'fake-assignee'
+            status: 'open',
+            assignee: 'fake-assignee'
         })
     ];
 

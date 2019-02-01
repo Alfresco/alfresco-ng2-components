@@ -140,7 +140,7 @@
       "APP_NAME": "ApplicationName",
       "STATUS": "Status",
       "INITIATOR": "Initiator",
-      "ASSIGNMENT": "Assignment",
+      "ASSIGNMENT": "Assignee",
       "SORT": "Sort",
       "DIRECTION": "Direction",
       "PROCESS_DEF_ID": "ProcessDefinitionId",

@@ -23,7 +23,7 @@ export class EditTaskFilterCloudComponent {
 
     customiseFilter = element(by.id('adf-edit-task-filter-title-id'));
     selectedOption = element.all(by.css('mat-option[class*="mat-selected"]')).first();
-    assignment = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignment"]'));
+    assignee = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignee"]'));
     priority = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-priority"]'));
     taskName = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
     processDefinitionId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
@@ -32,9 +32,9 @@ export class EditTaskFilterCloudComponent {
     lastModifiedTo = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedTo"]'));
     parentTaskId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-parentTaskId"]'));
     owner = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-owner"]'));
-    saveButton = element(by.css('button[id="adf-save-id"]'));
-    saveAsButton = element(by.css('button[id="adf-save-as-id"]'));
-    deleteButton = element(by.css('button[id="adf-delete-id"]'));
+    saveButton = element(by.css('[data-automation-id="adf-filter-action-save"]'));
+    saveAsButton = element(by.css('[data-automation-id="adf-filter-action-saveAs"]'));
+    deleteButton = element(by.css('[data-automation-id="adf-filter-action-delete"]'));
 
     editTaskFilter = new EditTaskFilterDialog();
 
@@ -99,12 +99,12 @@ export class EditTaskFilterCloudComponent {
         Util.waitUntilElementIsVisible(this.selectedOption);
     }
 
-    setAssignment(option) {
-        return this.setProperty('assignment', option);
+    setAssignee(option) {
+        return this.setProperty('assignee', option);
     }
 
-    getAssignment() {
-        return this.assignment.getText();
+    get() {
+        return this.assignee.getText();
     }
 
     setPriority(option) {
@@ -200,8 +200,8 @@ export class EditTaskFilterCloudComponent {
         return this;
     }
 
-    clearAssignment() {
-        this.clearField(this.assignment);
+    clearAssignee() {
+        this.clearField(this.assignee);
         return this;
     }
 

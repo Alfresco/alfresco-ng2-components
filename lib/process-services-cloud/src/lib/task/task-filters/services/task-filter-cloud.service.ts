@@ -166,8 +166,8 @@ export class TaskFilterCloudService {
             key: 'my-tasks',
             icon: 'inbox',
             appName: appName,
-            state: 'ASSIGNED',
-            assignment: username,
+            status: 'ASSIGNED',
+            assignee: username,
             sort: 'createdDate',
             order: 'DESC'
         });
@@ -184,8 +184,8 @@ export class TaskFilterCloudService {
             key: 'completed-tasks',
             icon: 'done',
             appName: appName,
-            state: 'COMPLETED',
-            assignment: '',
+            status: 'COMPLETED',
+            assignee: '',
             sort: 'createdDate',
             order: 'DESC'
         });

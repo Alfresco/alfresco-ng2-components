@@ -22,9 +22,9 @@ export class TaskFilterCloudModel  {
     icon: string;
     index: number;
     appName: string;
-    state: string;
+    status: string;
     sort: string;
-    assignment: string;
+    assignee: string;
     order: string;
     owner: string;
     processDefinitionId: string;
@@ -46,9 +46,9 @@ export class TaskFilterCloudModel  {
             this.icon = obj.icon || null;
             this.index = obj.index || null;
             this.appName = obj.appName || null;
-            this.state = obj.state || null;
+            this.status = obj.status || null;
             this.sort = obj.sort || null;
-            this.assignment = obj.assignment || null;
+            this.assignee = obj.assignee || null;
             this.order = obj.order || null;
             this.owner = obj.owner || null;
             this.processDefinitionId = obj.processDefinitionId || null;
