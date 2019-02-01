@@ -82,6 +82,8 @@ module.exports = {
          * @config adf.ACSAPIContextRoot {String}  
          */
         apiContextRoot: "/alfresco/api/-default-/public",
+
+        clientIdSso: "alfresco",
     },
 
     adf_aps: {
@@ -107,7 +109,9 @@ module.exports = {
          * The BPM API context required for calls  
          * @config adf.APSAPIContextRoot {String}  
          */
-        apiContextRoot: "/activiti-app"
+        apiContextRoot: "/activiti-app",
+
+        clientIdSso: "activiti",
     }
 
 };
