@@ -187,19 +187,26 @@ describe('Edit process filters cloud', () => {
 
         it('[C291810] Process filter should not be created when process filter dialog is closed', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
+            processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('ID');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('Cancel');
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().getFilterName()).toEqual('Cancel');
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clickOnCancelButton();
             processCloudDemoPage.customProcessFilter('Cancel').checkProcessFilterNotDisplayed();
             expect(processCloudDemoPage.getActiveFilterName()).toEqual('All Processes');
             processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
+            expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
+            expect(processCloudDemoPage.getActiveFilterName()).toEqual('All Processes');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('START DATE');
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
         });
 
         it('[C291811] Save button of process filter dialog should be disabled when process name is empty', () => {
@@ -211,7 +218,6 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
-            expect(processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().getFilterName()).toEqual('All Processes');
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clearFilterName();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().getFilterName()).toEqual('');
             expect(processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().checkSaveButtonIsEnabled()).toEqual(false);
