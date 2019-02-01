@@ -63,7 +63,7 @@ import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
-import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
+import { ProcessServicesCloudModule, GroupCloudModule } from '@alfresco/adf-process-services-cloud';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { AppExtensionsModule } from './extensions/extensions.module';
 import { CloudLayoutComponent } from './components/app-layout/cloud/cloud-layout.component';
@@ -76,6 +76,7 @@ import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-clo
 import { CloudFiltersDemoComponent } from './components/app-layout/cloud/cloud-filters-demo.component';
 import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
 import { DocumentListDemoComponent } from './components/document-list/document-list-demo.component';
+import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
 
 @NgModule({
     imports: [
@@ -95,7 +96,8 @@ import { DocumentListDemoComponent } from './components/document-list/document-l
         ChartsModule,
         MonacoEditorModule.forRoot(),
         ProcessServicesCloudModule,
-        AppExtensionsModule.forRoot()
+        AppExtensionsModule.forRoot(),
+        GroupCloudModule
     ],
     declarations: [
         AppComponent,
@@ -135,7 +137,8 @@ import { DocumentListDemoComponent } from './components/document-list/document-l
         StartProcessCloudDemoComponent,
         CloudBreadcrumbsComponent,
         CloudFiltersDemoComponent,
-        DocumentListDemoComponent
+        DocumentListDemoComponent,
+        PeopleGroupCloudDemoComponent
     ],
     providers: [
         {

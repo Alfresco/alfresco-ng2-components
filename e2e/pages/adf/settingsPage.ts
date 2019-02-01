@@ -42,6 +42,7 @@ export class SettingsPage {
     selectedOption = element(by.css('span[class*="mat-select-value-text"]'));
     ecmText = element(by.css('input[data-automation-id*="ecmHost"]'));
     bpmText = element(by.css('input[data-automation-id*="bpmHost"]'));
+    clientIdText = element(by.css('input[id="clientId"]'));
     authHostText = element(by.css('input[id="oauthHost"]'));
     ssoRadioButton = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'SSO'));
     basicAuthRadioButton = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'Basic Authentication'));
@@ -144,6 +145,7 @@ export class SettingsPage {
         Util.waitUntilElementIsVisible(this.bpmText);
         Util.waitUntilElementIsNotOnPage(this.ecmText);
         await this.clickSsoRadioButton();
+        await this.setClientId();
         await this.setProcessServicesURL(processServiceURL);
         await this.setAuthHost(authHost);
         await this.setSilentLogin(silentLogin);
@@ -155,6 +157,12 @@ export class SettingsPage {
         Util.waitUntilElementIsVisible(this.bpmText);
         this.bpmText.clear();
         this.bpmText.sendKeys(processServiceURL);
+    }
+
+    async setClientId () {
+        Util.waitUntilElementIsVisible(this.clientIdText);
+        this.clientIdText.clear();
+        this.clientIdText.sendKeys(TestConfig.adf_aps.clientIdSso);
     }
 
     async setContentServicesURL (contentServiceURL) {
