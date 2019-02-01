@@ -31,7 +31,7 @@ import {
     AppConfigService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
-import { Node } from '@alfresco/js-api';
+import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { from, zip, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
@@ -166,9 +166,9 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         }
     }
 
-    downloadContent(file: any): void {
+    downloadContent(file: File | RelatedContentRepresentation): void {
         if (this.isTemporaryFile(file)) {
-            this.contentService.downloadBlob(file, file.name);
+            this.contentService.downloadBlob(file.contentBlob, file.name);
         } else {
             this.processContentService.getFileRawContent(file.id).subscribe(
                 (blob: Blob) => {
