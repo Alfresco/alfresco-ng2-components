@@ -140,31 +140,32 @@ export class SettingsPage {
         await this.ssoRadioButton.click();
     }
 
-    async setProviderBpmSso (processServiceURL, authHost, silentLogin = true, implicitFlow = true ) {
+    setProviderBpmSso (processServiceURL, authHost, silentLogin = true, implicitFlow = true ) {
         this.goToSettingsPage();
         this.setProvider(this.bpm.option, this.bpm.text);
         Util.waitUntilElementIsVisible(this.bpmText);
         Util.waitUntilElementIsNotOnPage(this.ecmText);
-        await this.clickSsoRadioButton();
-        await this.setProcessServicesURL(processServiceURL);
-        await this.setAuthHost(authHost);
-        await this.setSilentLogin(silentLogin);
-        await this.setImplicitFlow(implicitFlow);
-        await this.clickApply();
+        this.clickSsoRadioButton();
+        this.setProcessServicesURL(processServiceURL);
+        this.setAuthHost(authHost);
+        this.setSilentLogin(silentLogin);
+        this.setImplicitFlow(implicitFlow);
+        this.clickApply();
     }
 
-    async setProviderEcmSso (processServiceURL, authHost, silentLogin = true, implicitFlow = true ) {
+    setProviderEcmSso (processServiceURL, authHost, identityHost, silentLogin, implicitFlow ) {
         this.goToSettingsPage();
         this.setProvider(this.ecm.option, this.ecm.text);
         Util.waitUntilElementIsVisible(this.ecmText);
         Util.waitUntilElementIsNotOnPage(this.bpmText);
-        await this.clickSsoRadioButton();
-        await this.setContentServicesURL(TestConfig.adf.url);
-        await this.setAuthHost(authHost);
-        await this.setClientId('alfresco');
-        await this.setSilentLogin(silentLogin);
-        await this.setImplicitFlow(implicitFlow);
-        await this.clickApply();
+        this.clickSsoRadioButton();
+        this.setContentServicesURL(TestConfig.adf.url);
+        this.setAuthHost(authHost);
+        this.setIdentityHost(identityHost);
+        this.setClientId('alfresco');
+        this.setSilentLogin(silentLogin);
+        this.setImplicitFlow(implicitFlow);
+        this.clickApply();
     }
 
     async setProcessServicesURL (processServiceURL) {
@@ -199,16 +200,16 @@ export class SettingsPage {
         this.bpmText.sendKeys(protractor.Key.BACK_SPACE);
     }
 
-    async setAuthHost (authHostURL) {
+    setAuthHost (authHostURL) {
         Util.waitUntilElementIsVisible(this.authHostText);
-        await this.authHostText.clear();
-        await this.authHostText.sendKeys(authHostURL);
+        this.authHostText.clear();
+        this.authHostText.sendKeys(authHostURL);
     }
 
-    async setIdentityHost (authHostURL) {
+    setIdentityHost (identityHostURL) {
         Util.waitUntilElementIsVisible(this.identityHostText);
-        await this.identityHostText.clear();
-        await this.identityHostText.sendKeys(authHostURL);
+        this.identityHostText.clear();
+        this.identityHostText.sendKeys(identityHostURL);
     }
 
     async clickApply () {

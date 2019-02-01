@@ -66,6 +66,8 @@ export class ContentServicesPage {
     copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
     searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
+    downloadButton = element(by.css('button[title="Download"]'));
+    multiSelectToggle = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
 
     getUploadAreaDocumentList() {
         return new ContentListPage(element(by.css('adf-upload-drag-area')));
@@ -683,5 +685,15 @@ export class ContentServicesPage {
     clickShareButton() {
         Util.waitUntilElementIsClickable(this.shareNodeButton);
         this.shareNodeButton.click();
+    }
+
+    clickDownloadButton() {
+        Util.waitUntilElementIsClickable(this.downloadButton);
+        this.downloadButton.click();
+    }
+
+    clickMultiSelectToggle() {
+        Util.waitUntilElementIsClickable(this.multiSelectToggle);
+        this.multiSelectToggle.click();
     }
 }

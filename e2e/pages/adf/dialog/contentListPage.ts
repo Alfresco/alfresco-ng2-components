@@ -400,6 +400,12 @@ export class ContentListPage {
         return this;
     }
 
+    clickAllRowsCheckbox() {
+        let checkbox = element.all(by.css('div[class*="adf-datatable-table-cell-header"] mat-checkbox')).first();
+        Util.waitUntilElementIsVisible(checkbox);
+        checkbox.click();
+    }
+
     clickRowToSelectWithRoot(rowName) {
         let row = this.getRowByRowNameWithRoot(rowName);
         browser.actions().keyDown(protractor.Key.COMMAND).click(row).perform();
