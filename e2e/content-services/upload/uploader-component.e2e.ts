@@ -142,8 +142,9 @@ describe('Upload component', () => {
     it('[C260173] Should be able to upload folder when enabled', () => {
         uploadToggles.enableFolderUpload();
         contentServicesPage.uploadFolder(folderOne.location);
-
-        contentServicesPage.checkContentIsDisplayed(folderOne.name);
+        uploadDialog.checkUploadCompleted().then(() => {
+            contentServicesPage.checkContentIsDisplayed(folderOne.name);
+        });
         expect(contentServicesPage.getFolderButtonTooltip()).toEqual('Custom tooltip');
         uploadDialog.fileIsUploaded(uploadedFileInFolder.name);
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
@@ -422,7 +423,10 @@ describe('Upload component', () => {
     it('[C279882] Should be possible Upload a folder in a folder', () => {
         uploadToggles.enableFolderUpload();
         browser.driver.sleep(1000);
-        contentServicesPage.uploadFolder(folderOne.location).checkContentIsDisplayed(folderOne.name);
+        contentServicesPage.uploadFolder(folderOne.location);
+        uploadDialog.checkUploadCompleted().then(() => {
+            contentServicesPage.checkContentIsDisplayed(folderOne.name);
+        });
         uploadDialog.fileIsUploaded(uploadedFileInFolder.name);
 
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
@@ -430,7 +434,10 @@ describe('Upload component', () => {
 
         uploadToggles.enableFolderUpload();
         browser.driver.sleep(1000);
-        contentServicesPage.uploadFolder(folderTwo.location).checkContentIsDisplayed(folderTwo.name);
+        contentServicesPage.uploadFolder(folderTwo.location);
+        uploadDialog.checkUploadCompleted().then(() => {
+            contentServicesPage.checkContentIsDisplayed(folderTwo.name);
+        });
         uploadDialog.fileIsUploaded(uploadedFileInFolderTwo.name);
 
         uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
