@@ -128,9 +128,10 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then( (list) => {
-
                 let initialList = list.slice(0);
-                list.sort();
+                list.sort(function (firstStr, secondStr) {
+                    return firstStr.localeCompare(secondStr);
+                });
                 expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
             });
 
@@ -139,7 +140,9 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then( (list) => {
                 let initialList = list.slice(0);
-                list.sort();
+                list.sort(function (firstStr, secondStr) {
+                    return firstStr.localeCompare(secondStr);
+                });
                 list.reverse();
                 expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
             });
