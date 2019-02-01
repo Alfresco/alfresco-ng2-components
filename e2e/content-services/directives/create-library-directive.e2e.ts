@@ -208,9 +208,8 @@ describe('Create library directive', function () {
 
         createLibraryDialog.typeLibraryName(name);
         createLibraryDialog.typeLibraryId(libraryId);
-            expect(createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
-            expect(createLibraryDialog.getErrorMessage()).toMatch('Title must be at least 2 characters long');
-
+        expect(createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
+        expect(createLibraryDialog.getErrorMessage()).toMatch('Title must be at least 2 characters long');
     });
 
     it('[C291793] Should display error for Name field filled in with spaces only', () => {
