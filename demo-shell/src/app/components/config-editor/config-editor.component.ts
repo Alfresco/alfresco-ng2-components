@@ -124,6 +124,12 @@ export class ConfigEditorComponent {
         this.indentCode();
     }
 
+    processListCloudConfClick() {
+        this.code = JSON.stringify(this.appConfig.config['adf-cloud-process-list']);
+        this.field = 'adf-cloud-process-list';
+        this.indentCode();
+    }
+
     indentCode() {
         setTimeout(() => {
             this.editor.getAction('editor.action.formatDocument').run();
