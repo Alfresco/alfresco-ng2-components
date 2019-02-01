@@ -81,8 +81,8 @@ given below:
 | **_state_** | Execution state of the process. |
 | **_processDefinitionId_** | Process definition ID |
 | **_processDefinitionKey_** | Process definition key |
-| **_lastModifiedFrom_** | Finds processes modified _after_ this date |
-| **_lastModifiedTo_** | Finds processes modified _before_ this date |
+| **_lastModified_** | Date the process was last modified |
+| **_startDate_** | Date the process was started |
 | **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself). Can be "id", "name", "status" or "startDate". |
 | **_order_** | Sort ordering of the filter results (this doesn't participate in the filtering itself) |
 
