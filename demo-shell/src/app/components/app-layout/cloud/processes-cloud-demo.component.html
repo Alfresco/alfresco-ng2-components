@@ -16,6 +16,7 @@
                                 [status]="editedFilter.state"
                                 [name]="editedFilter.processName"
                                 [sorting]="sortArray"
+                                [multiselect]="multiselect"
                                 (rowClick)="onRowClick($event)"
                                 #processCloud>
         </adf-cloud-process-list>
@@ -25,12 +26,11 @@
             (nextPage)="resetSelectedRows()"
             (prevPage)="resetSelectedRows()">
         </adf-pagination>
+        <div *ngIf="testingMode">
+            Selected rows:
+            <ul>
+                <li *ngFor="let row of selectedRows">{{ row.id }}</li>
+            </ul>
+        </div>
     </div>
-</div>
-
-<div *ngIf="testingMode">
-    Selected rows:
-    <ul>
-        <li *ngFor="let row of selectedRows">{{ row.id }}</li>
-    </ul>
 </div>

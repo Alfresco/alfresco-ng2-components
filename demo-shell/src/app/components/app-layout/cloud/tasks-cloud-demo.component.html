@@ -25,12 +25,11 @@
                         (nextPage)="resetSelectedRows()"
                         (prevPage)="resetSelectedRows()">
         </adf-pagination>
+        <div *ngIf="testingMode">
+            Selected rows:
+            <ul>
+                <li *ngFor="let row of selectedRows" [attr.data-automation-id]="row.id">{{ row.name }}</li>
+            </ul>
+        </div>
     </div>
-</div>
-
-<div *ngIf="testingMode">
-    Selected rows:
-    <ul>
-        <li *ngFor="let row of selectedRows" [attr.data-automation-id]="row.id">{{ row.name }}</li>
-    </ul>
 </div>
