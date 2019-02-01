@@ -62,7 +62,7 @@ describe('AppListCloudComponent', () => {
         fixture.whenStable().then(() => {
             component.apps$.subscribe((response: ApplicationInstanceModel[]) => {
                 expect(response).toBeDefined();
-                expect(response.length).toEqual(2);
+                expect(response.length).toEqual(3);
                 expect(response[0].name).toEqual('application-new-1');
                 expect(response[0].status).toEqual('Running');
                 expect(response[0].icon).toEqual('favorite_border');
@@ -106,7 +106,7 @@ describe('AppListCloudComponent', () => {
             expect(adfCloudDetailsElement).toBeDefined();
             expect(adfCloudDetailsElement).not.toBeNull();
 
-            expect(adfCloudDetailsElement.length).toEqual(2);
+            expect(adfCloudDetailsElement.length).toEqual(3);
             expect(component.isGrid()).toBe(true);
             expect(component.isList()).toBe(false);
 
@@ -146,7 +146,7 @@ describe('AppListCloudComponent', () => {
             expect(appListElement).toBeDefined();
             expect(appListElement).not.toBeNull();
 
-            expect(appListItemElement.length).toEqual(2);
+            expect(appListItemElement.length).toEqual(3);
             expect(component.isGrid()).toBe(false);
             expect(component.isList()).toBe(true);
 
