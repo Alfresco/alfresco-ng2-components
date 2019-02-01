@@ -140,44 +140,44 @@ export class SettingsPage {
         await this.ssoRadioButton.click();
     }
 
-    setProviderBpmSso (processServiceURL, authHost, silentLogin = true, implicitFlow = true ) {
-        this.goToSettingsPage();
-        this.setProvider(this.bpm.option, this.bpm.text);
+    async setProviderBpmSso (processServiceURL, authHost, silentLogin = true, implicitFlow = true ) {
+        await this.goToSettingsPage();
+        await this.setProvider(this.bpm.option, this.bpm.text);
         Util.waitUntilElementIsVisible(this.bpmText);
         Util.waitUntilElementIsNotOnPage(this.ecmText);
-        this.clickSsoRadioButton();
-        this.setProcessServicesURL(processServiceURL);
-        this.setAuthHost(authHost);
-        this.setSilentLogin(silentLogin);
-        this.setImplicitFlow(implicitFlow);
-        this.clickApply();
+        await this.clickSsoRadioButton();
+        await this.setProcessServicesURL(processServiceURL);
+        await this.setAuthHost(authHost);
+        await this.setSilentLogin(silentLogin);
+        await this.setImplicitFlow(implicitFlow);
+        await this.clickApply();
     }
 
-    setProviderEcmSso (processServiceURL, authHost, identityHost, silentLogin, implicitFlow ) {
-        this.goToSettingsPage();
-        this.setProvider(this.ecm.option, this.ecm.text);
+    async setProviderEcmSso (contentServicesURL, authHost, identityHost, silentLogin = true, implicitFlow  = true) {
+        await this.goToSettingsPage();
+        await this.setProvider(this.ecm.option, this.ecm.text);
         Util.waitUntilElementIsVisible(this.ecmText);
         Util.waitUntilElementIsNotOnPage(this.bpmText);
-        this.clickSsoRadioButton();
-        this.setContentServicesURL(TestConfig.adf.url);
-        this.setAuthHost(authHost);
-        this.setIdentityHost(identityHost);
-        this.setClientId('alfresco');
-        this.setSilentLogin(silentLogin);
-        this.setImplicitFlow(implicitFlow);
-        this.clickApply();
+        await this.clickSsoRadioButton();
+        await this.setContentServicesURL(contentServicesURL);
+        await this.setAuthHost(authHost);
+        await this.setIdentityHost(identityHost);
+        await this.setClientId('alfresco');
+        await this.setSilentLogin(silentLogin);
+        await this.setImplicitFlow(implicitFlow);
+        await this.clickApply();
     }
 
     async setProcessServicesURL (processServiceURL) {
         Util.waitUntilElementIsVisible(this.bpmText);
-        this.bpmText.clear();
-        this.bpmText.sendKeys(processServiceURL);
+        await this.bpmText.clear();
+        await this.bpmText.sendKeys(processServiceURL);
     }
 
     async setContentServicesURL (contentServiceURL) {
-        Util.waitUntilElementIsClickable(this.ecmText);
-        this.ecmText.clear();
-        this.ecmText.sendKeys(contentServiceURL);
+        Util.waitUntilElementIsVisible(this.ecmText);
+        await this.ecmText.clear();
+        await this.ecmText.sendKeys(contentServiceURL);
     }
 
     async setClientId (clientId) {

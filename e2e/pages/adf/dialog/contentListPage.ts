@@ -62,7 +62,7 @@ export class ContentListPage {
     }
 
     getRowsName(content) {
-        let row = element.all(by.css(`adf-document-list span[title='${content}']`)).first();
+        let row = element.all(by.css(`#document-list-container div[filename="${content}"]`)).first();
         Util.waitUntilElementIsVisible(row);
         return row;
     }
@@ -330,9 +330,8 @@ export class ContentListPage {
     doubleClickRow(selectRow) {
         let row = this.getRowsName(selectRow);
         Util.waitUntilElementIsVisible(row);
-        Util.waitUntilElementIsClickable(row);
         row.click();
-        Util.waitUntilElementIsVisible(this.getRowByRowName(selectRow).element(by.css(`div[class*='--image'] mat-icon[svgicon*='selected']`)));
+        this.checkRowIsSelected(selectRow);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
         return this;
     }
@@ -348,7 +347,7 @@ export class ContentListPage {
     }
 
     checkRowIsSelected(content) {
-        let isRowSelected = this.getRowsName(content).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        let isRowSelected = element.all(by.css(`div[class*='is-selected'] span[title='${content}']`)).first();
         Util.waitUntilElementIsVisible(isRowSelected);
     }
 
@@ -394,8 +393,9 @@ export class ContentListPage {
     }
 
     clickRowToSelect(rowName) {
-        let row = this.getRowByRowName(rowName);
-        browser.actions().keyDown(protractor.Key.COMMAND).click(row).perform();
+        let row = this.getRowsName(rowName);
+        Util.waitUntilElementIsVisible(row);
+        row.click();
         this.checkRowIsSelected(rowName);
         return this;
     }
