@@ -23,10 +23,10 @@ export class EditTaskFilterCloudComponent {
 
     customiseFilter = element(by.id('adf-edit-task-filter-title-id'));
     selectedOption = element(by.css('mat-option[class*="mat-selected"]'));
-    assignment = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignment"]'));
-    saveButton = element(by.css('button[id="adf-save-id"]'));
-    saveAsButton = element(by.css('button[id="adf-save-as-id"]'));
-    deleteButton = element(by.css('button[id="adf-delete-id"]'));
+    assignment = element(by.css('mat-form-field[data-automation-id="assignment"] input'));
+    saveButton = element(by.css('button[data-automation-id="Save"]'));
+    saveAsButton = element(by.css('button[data-automation-id="Save as"]'));
+    deleteButton = element(by.css('button[data-automation-id="Delete"]'));
 
     editTaskFilter = new EditTaskFilterDialog();
 
@@ -41,7 +41,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setStateFilterDropDown(option) {
-        this.clickOnDropDownArrow('state');
+        this.clickOnDropDownArrow('status');
 
         let stateElement = element.all(by.cssContainingText('mat-option span', option)).first();
         Util.waitUntilElementIsClickable(stateElement);
@@ -51,7 +51,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     getStateFilterDropDownValue() {
-        return element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-state'] span")).getText();
+        return element(by.css("mat-form-field[data-automation-id='status'] span")).getText();
     }
 
     setSortFilterDropDown(option) {
@@ -65,9 +65,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     getSortFilterDropDownValue() {
-        let elementSort = element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-sort'] span"));
-        Util.waitUntilElementIsVisible(elementSort);
-        return elementSort.getText();
+        return element(by.css("mat-form-field[data-automation-id='sort'] span")).getText();
     }
 
     setOrderFilterDropDown(option) {
@@ -81,7 +79,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     getOrderFilterDropDownValue() {
-        return element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-order'] span")).getText();
+        return element(by.css("mat-form-field[data-automation-id='order'] span")).getText();
     }
 
     clickOnDropDownArrow(option) {
@@ -119,17 +117,14 @@ export class EditTaskFilterCloudComponent {
     }
 
     checkSaveButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.saveButton);
         return this.saveButton.isEnabled();
     }
 
     checkSaveAsButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.saveButton);
         return this.saveAsButton.isEnabled();
     }
 
     checkDeleteButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.saveButton);
         return this.deleteButton.isEnabled();
     }
 
