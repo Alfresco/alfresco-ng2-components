@@ -129,7 +129,7 @@ describe('GroupCloudService', () => {
 
     it('should return true if group has given role', (done) => {
         spyOn(service, 'getGroupDetailsById').and.returnValue(of(mockGroup));
-        service.checkGroupHasGivenRole('mock-group-id', ['MOCK-ADMIN-ROLE']).subscribe(
+        service.checkGroupHasRole('mock-group-id', ['MOCK-ADMIN-ROLE']).subscribe(
             (res: boolean) => {
                 expect(res).toBeDefined();
                 expect(res).toBeTruthy();
@@ -140,7 +140,7 @@ describe('GroupCloudService', () => {
 
     it('should return false if group does not have given role', (done) => {
         spyOn(service, 'getGroupDetailsById').and.returnValue(of(mockGroup));
-        service.checkGroupHasGivenRole('mock-group-id', ['MOCK-ADMIN-MODELER']).subscribe(
+        service.checkGroupHasRole('mock-group-id', ['MOCK-ADMIN-MODELER']).subscribe(
             (res: boolean) => {
                 expect(res).toBeDefined();
                 expect(res).toBeFalsy();

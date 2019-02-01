@@ -64,7 +64,7 @@ export class GroupCloudService {
         );
     }
 
-    checkGroupHasGivenRole(groupId: string, roleNames: string[]): Observable<boolean>  {
+    checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean>  {
         return this.getGroupDetailsById(groupId).pipe(map((response: GroupModel) => {
             let availableGroupRoles = [];
             let hasRole = false;

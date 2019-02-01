@@ -61,7 +61,6 @@
                     </div>
                 </mat-form-field>
                 <adf-cloud-people fxFlex #peopleInput *ngIf="currentUser"
-                    *ngIf="currentUser"
                     [appName]="appName"
                     [preSelectUsers]="[currentUser]"
                     (selectUser)="onAssigneeSelect($event)"

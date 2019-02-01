@@ -50,7 +50,7 @@ describe('GroupCloudComponent', () => {
         findGroupsByNameSpy = spyOn(service, 'findGroupsByName').and.returnValue(of(mockGroups));
         getClientIdByApplicationNameSpy = spyOn(service, 'getClientIdByApplicationName').and.returnValue(of('mock-client-id'));
         checkGroupHasAccessSpy = spyOn(service, 'checkGroupHasClientApp').and.returnValue(of(true));
-        checkGroupHasGivenRoleSpy = spyOn(service, 'checkGroupHasGivenRole').and.returnValue(of(true));
+        checkGroupHasGivenRoleSpy = spyOn(service, 'checkGroupHasRole').and.returnValue(of(true));
         component.appName = 'mock-app-name';
     });
 

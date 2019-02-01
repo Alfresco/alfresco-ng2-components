@@ -162,7 +162,7 @@ export class GroupCloudComponent implements OnInit {
                         })
                     );
                 } else if (this.hasRoles()) {
-                    return this.filterGroupsByGivenRole(group);
+                    return this.filterGroupsByRoles(group);
                 } else {
                     return of(group);
                 }
@@ -200,8 +200,8 @@ export class GroupCloudComponent implements OnInit {
         }
     }
 
-    filterGroupsByGivenRole(group: GroupModel): Observable<GroupModel> {
-        return this.groupService.checkGroupHasGivenRole(group.id, this.roles).pipe(
+    filterGroupsByRoles(group: GroupModel): Observable<GroupModel> {
+        return this.groupService.checkGroupHasRole(group.id, this.roles).pipe(
             mergeMap((hasRole) => {
                 return hasRole ? of(group) : of();
             })
