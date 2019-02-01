@@ -196,7 +196,6 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         this.parseFacetFields(context);
         this.parseFacetIntervals(context);
         this.parseFacetQueries(context);
-
     }
 
     private parseFacetItems(context: ResultSetContext, configFacetFields: FacetField[], itemType: string) {
@@ -209,15 +208,27 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             if (alreadyExistingField) {
 
                 const alreadyExistingBuckets = alreadyExistingField.buckets && alreadyExistingField.buckets.items || [];
+
+                const shouldDelete = [];
                 alreadyExistingBuckets
                     .map((bucket) => {
                         const responseBucket = ((responseField && responseField.buckets) || []).find((respBucket) => respBucket.label === bucket.label);
 
+                        if (!responseBucket) {
+                            shouldDelete.push(bucket);
+                        }
                         bucket.count = responseBucket ? this.getCountValue(responseBucket) : 0;
                         return bucket;
                     });
+                const hasSelection = this.selectedBuckets
+                    .find((selBuckets) => alreadyExistingField.label === selBuckets.field.label && alreadyExistingField.type === selBuckets.field.type);
 
-                // add only the new ones to the existing'SearchFilterList' and update the already existing ones:
+                if (!hasSelection && shouldDelete.length) {
+                    shouldDelete.forEach((bucket) => {
+                        alreadyExistingField.buckets.deleteItem(bucket);
+                    });
+                }
+
                 responseBuckets.forEach((respBucket) => {
                     const existingBucket = alreadyExistingBuckets.find((oldBucket) => oldBucket.label === respBucket.label);
 
@@ -243,7 +254,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 }
                 this.responseFacets.push(<FacetField> {
                     ...field,
-                    type: responseField.type,
+                    type: responseField.type || itemType,
                     label: field.label,
                     pageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
                     currentPageSize: field.pageSize | this.DEFAULT_PAGE_SIZE,
@@ -287,15 +298,27 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             if (alreadyExistingField) {
 
                 const alreadyExistingBuckets = alreadyExistingField.buckets && alreadyExistingField.buckets.items || [];
+
+                const shouldDelete = [];
                 alreadyExistingBuckets
                     .map((bucket) => {
                         const responseBucket = ((responseField && responseField.buckets) || []).find((respBucket) => respBucket.label === bucket.label);
 
+                        if (!responseBucket) {
+                            shouldDelete.push(bucket);
+                        }
                         bucket.count = responseBucket ? this.getCountValue(responseBucket) : 0;
                         return bucket;
                     });
+                const hasSelection = this.selectedBuckets
+                    .find((selBuckets) => alreadyExistingField.label === selBuckets.field.label && alreadyExistingField.type === selBuckets.field.type);
 
-                // add only the new ones to the existing'SearchFilterList' and update the already existing ones:
+                if (!hasSelection && shouldDelete.length) {
+                    shouldDelete.forEach((bucket) => {
+                        alreadyExistingField.buckets.deleteItem(bucket);
+                    });
+                }
+
                 responseBuckets.forEach((respBucket) => {
                     const existingBucket = alreadyExistingBuckets.find((oldBucket) => oldBucket.label === respBucket.label);
 
@@ -321,7 +344,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 }
                 this.responseFacets.push(<FacetField> {
                     field: group,
-                    type: responseField.type,
+                    type: responseField.type || 'query',
                     label: group,
                     pageSize: this.DEFAULT_PAGE_SIZE,
                     currentPageSize: this.DEFAULT_PAGE_SIZE,

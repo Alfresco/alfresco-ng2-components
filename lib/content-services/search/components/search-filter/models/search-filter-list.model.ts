@@ -114,6 +114,13 @@ export class SearchFilterList<T> implements Iterable<T> {
         this.filteredItems.push(item);
     }
 
+    deleteItem(item) {
+        const removeIndex = this.items.indexOf(item);
+
+        this.items.splice(removeIndex, 1);
+        this.filteredItems.splice(removeIndex, 1);
+    }
+
     [Symbol.iterator](): Iterator<T> {
         let pointer = 0;
         let items = this.visibleItems;

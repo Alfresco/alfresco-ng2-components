@@ -3,7 +3,7 @@
     <button *ngIf="responseFacets && selectedBuckets.length"
             mat-button
             color="primary"
-            matTooltip="This will remove all selections and all empty items"
+            matTooltip="This will reset all selections and all filters"
             matTooltipPosition="right"
             (click)="resetAll()">
         {{ 'RESET ALL' | translate }}
@@ -16,13 +16,6 @@
             matTooltipPosition="right"
             (click)="resetAllSelectedBuckets()">
         {{ 'clear all selections' | translate }}
-    </button><button *ngIf="canResetBuckets()"
-            mat-button
-            color="primary"
-            matTooltip="This will remove all empty items"
-            matTooltipPosition="right"
-            (click)="resetBuckets()">
-        {{ 'reset buckets' | translate }}
     </button>
     <mat-expansion-panel
         *ngFor="let category of queryBuilder.categories"
