@@ -32,7 +32,7 @@ export class LoginDialogService {
     /**
      * Opens a dialog to choose a file to upload.
      * @param action Name of the action to show in the title
-     * @param contentEntry Item to upload
+     * @param title Title for the dialog
      * @returns Information about the chosen file(s)
      */
     openLogin(actionName: string, title: string): Observable<string> {
