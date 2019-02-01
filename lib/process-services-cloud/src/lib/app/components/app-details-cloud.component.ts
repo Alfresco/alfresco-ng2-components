@@ -41,4 +41,18 @@ export class AppDetailsCloudComponent {
   public onSelectApp(app: ApplicationInstanceModel): void {
     this.selectedApp.emit(app);
   }
+
+  public getTheme() {
+    if ( !this.applicationInstance.theme ) {
+      return ApplicationInstanceModel.DEFAULT_THEME;
+    }
+    return this.applicationInstance.theme;
+  }
+
+  public getIcon() {
+    if ( !this.applicationInstance.icon ) {
+      return ApplicationInstanceModel.DEFAULT_ICON;
+    }
+    return this.applicationInstance.icon;
+  }
 }
