@@ -60,18 +60,16 @@
                         </div>
                     </div>
                 </mat-form-field>
-                <adf-cloud-people fxFlex #peopleInput *ngIf="currentUser" [appName]="appName" [preSelectUsers]="[currentUser]" (selectUser)="onAssigneeSelect($event)" (removeUser)="onRemoveUser()"></adf-cloud-people>
-            </div>
-
                 <adf-cloud-people fxFlex #peopleInput *ngIf="currentUser"
-                        [appName]="appName"
-                        [preSelectUsers]="[currentUser]"
-                        (selectUser)="onAssigneeSelect($event)"
-                        (removeUser)="onAssigneeRemove()"></adf-cloud-people>
+                    *ngIf="currentUser"
+                    [appName]="appName"
+                    [preSelectUsers]="[currentUser]"
+                    (selectUser)="onAssigneeSelect($event)"
+                    (removeUser)="onRemoveUser()"></adf-cloud-people>
             </div>
 
             <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
-                <adf-cloud-group fxFlex #groupInput
+                <adf-cloud-group fxFlex #groupInput *ngIf="currentUser"
                     [mode]="'multiple'"
                     [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.CANDIDATE_GROUP'"
                     [appName]="appName"
