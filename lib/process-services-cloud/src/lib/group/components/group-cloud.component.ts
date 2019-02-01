@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, OnInit, Output, EventEmitter, ViewChild, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ElementRef, OnInit, Output, EventEmitter, ViewChild, ViewEncapsulation, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, of, BehaviorSubject } from 'rxjs';
@@ -39,7 +39,7 @@ import { distinctUntilChanged, switchMap, mergeMap, filter, tap } from 'rxjs/ope
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class GroupCloudComponent implements OnInit {
+export class GroupCloudComponent implements OnInit, OnChanges {
 
     static MODE_SINGLE = 'single';
     static MODE_MULTIPLE = 'multiple';
@@ -119,13 +119,18 @@ export class GroupCloudComponent implements OnInit {
         }
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.preSelectGroups) {
+            this.loadPreSelectGroups();
+        }
+    }
+
     private async loadClientId() {
         this.clientId = await this.groupService.getClientIdByApplicationName(this.appName).toPromise();
         if (this.clientId) {
             this.enableSearch();
         }
     }
-
     initSearch() {
         this.searchGroupsControl.valueChanges.pipe(
             filter((value) => {
@@ -206,6 +211,18 @@ export class GroupCloudComponent implements OnInit {
                 return hasRole ? of(group) : of();
             })
         );
+    private loadPreSelectGroups() {
+        if (this.hasGroups(this.preSelectGroups)) {
+            if (this.isMultipleMode()) {
+                this.selectedGroups.length = 0;
+                this.preSelectGroups.forEach((group: GroupModel) => {
+                    this.selectedGroups.push(group);
+                });
+            } else {
+                this.searchGroupsControl.setValue(this.preSelectGroups[0]);
+                this.onSelect(this.preSelectGroups[0]);
+            }
+        }
     }
 
     onSelect(selectedGroup: GroupModel) {

@@ -51,6 +51,12 @@
             <mat-form-field class="adf-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }}</mat-label>
                 <input matInput (input)="setGroupRoles($event)" placeholder="['ACTIVITI_ADMIN']" />
+                <mat-radio-button class="adf-people-single-mode" checked="true" value="{{ groupSingleMode }}">{{ 'PEOPLE_GROUPS_CLOUD.SINGLE' | translate }}</mat-radio-button>
+                <mat-radio-button class="adf-people-multiple-mode" value="{{ groupMultipleMode }}">{{ 'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
+            </mat-radio-group>
+            <mat-form-field class="adf-preselect-value">
+                <mat-label>{{ DEFAULT_GROUP_PLACEHOLDER }}</mat-label>
+                <input matInput (input)="setGroupsPreselectValue($event)" />
             </mat-form-field>
         </div>
         <div>
@@ -58,9 +64,9 @@
                 (removeGroup)="onRemoveGroup($event)"></adf-cloud-group>
         </div>
 
-        <div class="adf-group-list">
+        <div class="adf-group-list" *ngIf="canShowGroupList()">
             <mat-list role="list">
-                <mat-list-item *ngFor="let item of selectedGroupList" role="listitem">
+                <mat-list-item *ngFor="let item of preSelectGroup" role="listitem">
                     <mat-icon mat-list-icon>group</mat-icon>
                     {{ item.name }}
                 </mat-list-item>
