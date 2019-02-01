@@ -127,14 +127,17 @@ export class EditProcessFilterCloudComponent {
     }
 
     checkSaveButtonIsEnabled() {
+        Util.waitUntilElementIsVisible(this.saveButton);
         return this.saveButton.isEnabled();
     }
 
     checkSaveAsButtonIsEnabled() {
+        Util.waitUntilElementIsVisible(this.saveAsButton);
         return this.saveAsButton.isEnabled();
     }
 
     checkDeleteButtonIsEnabled() {
+        Util.waitUntilElementIsVisible(this.deleteButton);
         return this.deleteButton.isEnabled();
     }
 
