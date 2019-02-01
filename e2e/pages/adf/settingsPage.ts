@@ -234,7 +234,7 @@ export class SettingsPage {
 
         const isChecked = (await this.implicitFlowElement.getAttribute('class')).includes('mat-checked');
 
-        if (isChecked && !enableToggle || !isChecked && enableToggle) {
+        if ((isChecked && !enableToggle) || (!isChecked && enableToggle)) {
             return this.implicitFlowLabel.click();
         }
 
