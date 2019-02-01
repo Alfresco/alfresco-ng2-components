@@ -89,8 +89,12 @@ export class EditProcessFilterCloudComponent implements OnChanges {
 
     status = [
         { label: 'ALL', value: '' },
+        { label: 'CREATED', value: 'CREATED' },
         { label: 'RUNNING', value: 'RUNNING' },
-        { label: 'COMPLETED', value: 'COMPLETED' }
+        { label: 'SUSPENDED', value: 'SUSPENDED' },
+        { label: 'CANCELLED', value: 'CANCELLED' },
+        { label: 'COMPLETED', value: 'COMPLETED' },
+        { label: 'DELETED', value: 'DELETED' }
     ];
 
     directions = [{ label: 'ASC', value: 'ASC' }, { label: 'DESC', value: 'DESC' }];
