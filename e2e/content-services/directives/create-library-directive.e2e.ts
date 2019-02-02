@@ -202,6 +202,16 @@ describe('Create library directive', function () {
         }
     });
 
+    it('[C291985] Should not accept less than one character name for Library name', () => {
+        let name = 'x';
+        let libraryId = 'My New Library';
+
+        createLibraryDialog.typeLibraryName(name);
+        createLibraryDialog.typeLibraryId(libraryId);
+        expect(createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
+        expect(createLibraryDialog.getErrorMessage()).toMatch('Title must be at least 2 characters long');
+    });
+
     it('[C291793] Should display error for Name field filled in with spaces only', () => {
         let name = '    ';
         let libraryId = Util.generateRandomString();
