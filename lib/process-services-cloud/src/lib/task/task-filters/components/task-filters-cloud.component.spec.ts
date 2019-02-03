@@ -19,43 +19,17 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { from, Observable } from 'rxjs';
-import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
+import { FilterParamsModel } from '../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFiltersCloudComponent } from './task-filters-cloud.component';
 import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
+import { fakeGlobalFilter } from '../mock/task-filters-cloud.mock';
 
 describe('TaskFiltersCloudComponent', () => {
 
     let taskFilterService: TaskFilterCloudService;
-
-    let fakeGlobalFilter = [
-        new TaskFilterCloudModel({
-            name: 'FakeInvolvedTasks',
-            key: 'fake-involved-tasks',
-            icon: 'adjust',
-            id: 10,
-            status: 'open',
-            assignee: 'fake-involved'
-        }),
-        new TaskFilterCloudModel({
-            name: 'FakeMyTasks1',
-            key: 'fake-my-tast1',
-            icon: 'done',
-            id: 11,
-            status: 'open',
-            assignee: 'fake-assignee'
-        }),
-        new TaskFilterCloudModel({
-            name: 'FakeMyTasks2',
-            key: 'fake-my-tast2',
-            icon: 'inbox',
-            id: 12,
-            status: 'open',
-            assignee: 'fake-assignee'
-        })
-    ];
 
     let fakeGlobalFilterObservable =
         new Observable(function(observer) {

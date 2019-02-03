@@ -26,11 +26,11 @@ import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { fakeApplicationInstance } from '../../../app/mock/app-model.mock';
-import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
 import { EditTaskFilterCloudComponent } from './edit-task-filter-cloud.component';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
+import { fakeFilter } from '../mock/task-filters-cloud.mock';
 
 describe('EditTaskFilterCloudComponent', () => {
     let component: EditTaskFilterCloudComponent;
@@ -40,18 +40,6 @@ describe('EditTaskFilterCloudComponent', () => {
     let dialog: MatDialog;
     let getTaskFilterSpy: jasmine.Spy;
     let getRunningApplicationsSpy: jasmine.Spy;
-
-    let fakeFilter = new TaskFilterCloudModel({
-        name: 'FakeInvolvedTasks',
-        icon: 'adjust',
-        id: 'mock-task-filter-id',
-        status: 'CREATED',
-        appName: 'mock-app-name',
-        processDefinitionId: 'process-def-id',
-        assignee: 'fake-involved',
-        order: 'ASC',
-        sort: 'id'
-    });
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
