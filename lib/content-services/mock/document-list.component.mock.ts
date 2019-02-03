@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-export const fakeNodeWithCreatePermission = {
+import { Node } from '@alfresco/js-api';
+
+export const fakeNodeWithCreatePermission =  new Node({
     isFile: false,
     createdByUser: { id: 'admin', displayName: 'Administrator' },
     modifiedAt: '2017-06-08T13:53:46.495Z',
@@ -36,9 +38,9 @@ export const fakeNodeWithCreatePermission = {
     id: '70e1cc6a-6918-468a-b84a-1048093b06fd',
     properties: {},
     allowableOperations: ['delete', 'update', 'create']
-};
+});
 
-export const fakeNodeWithNoPermission = {
+export const fakeNodeWithNoPermission = new Node({
     isFile: false,
     createdByUser: { id: 'admin', displayName: 'Administrator' },
     modifiedAt: '2017-06-08T13:53:46.495Z',
@@ -59,7 +61,7 @@ export const fakeNodeWithNoPermission = {
     name: 'Test',
     id: '70e1cc6a-6918-468a-b84a-1048093b06fd',
     properties: {}
-};
+});
 
 export const fakeNodeAnswerWithEntries = {
     'list': {
