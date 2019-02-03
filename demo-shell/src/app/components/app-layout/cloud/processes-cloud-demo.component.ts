@@ -33,7 +33,7 @@ import { CloudLayoutService } from './services/cloud-layout.service';
 })
 export class ProcessesCloudDemoComponent implements OnInit {
 
-    public static ACTION_SAVE_AS = 'SAVE_AS';
+    public static ACTION_SAVE_AS = 'saveAs';
     static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter';
 
     @ViewChild('processCloud')

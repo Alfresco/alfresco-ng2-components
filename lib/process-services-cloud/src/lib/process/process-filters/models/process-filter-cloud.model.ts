@@ -24,7 +24,7 @@ export class ProcessFilterCloudModel {
     appName: string;
     processName: string;
     initiator: string;
-    state: string;
+    status: string;
     sort: string;
     order: string;
     processDefinitionId: string;
@@ -45,7 +45,7 @@ export class ProcessFilterCloudModel {
             this.appName = obj.appName || null;
             this.processName = obj.processName || null;
             this.initiator = obj.initiator || null;
-            this.state = obj.state || null;
+            this.status = obj.status || null;
             this.sort = obj.sort || null;
             this.order = obj.order || null;
             this.processDefinitionId = obj.processDefinitionId || null;
@@ -59,21 +59,18 @@ export class ProcessFilterCloudModel {
     }
 }
 
-export interface ProcessFilterActionType {
-    actionType: string;
-    filter: ProcessFilterCloudModel;
-}
-
 export class ProcessFilterAction {
     actionType: string;
     icon: string;
     tooltip: string;
+    filter: ProcessFilterCloudModel;
 
      constructor(obj?: any) {
         if (obj) {
             this.actionType = obj.actionType || null;
             this.icon = obj.icon || null;
             this.tooltip = obj.tooltip || null;
+            this.filter = obj.filter || null;
         }
     }
 }

@@ -44,10 +44,9 @@ describe('EditProcessFilterCloudComponent', () => {
         name: 'FakeRunningProcess',
         icon: 'adjust',
         id: 'mock-process-filter-id',
-        state: 'RUNNING',
+        status: 'RUNNING',
         appName: 'mock-app-name',
         processDefinitionId: 'process-def-id',
-        assignment: 'fake-involved',
         order: 'ASC',
         sort: 'id'
     });
@@ -85,7 +84,7 @@ describe('EditProcessFilterCloudComponent', () => {
             expect(getProcessFilterByIdSpy).toHaveBeenCalled();
             expect(component.processFilter.name).toEqual('FakeRunningProcess');
             expect(component.processFilter.icon).toEqual('adjust');
-            expect(component.processFilter.state).toEqual('RUNNING');
+            expect(component.processFilter.status).toEqual('RUNNING');
             expect(component.processFilter.order).toEqual('ASC');
             expect(component.processFilter.sort).toEqual('id');
         });
@@ -118,7 +117,7 @@ describe('EditProcessFilterCloudComponent', () => {
         it('should create editProcessFilter form', async(() => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const stateController = component.editProcessFilterForm.get('state');
+                const stateController = component.editProcessFilterForm.get('status');
                 const sortController = component.editProcessFilterForm.get('sort');
                 const orderController = component.editProcessFilterForm.get('order');
                 expect(component.editProcessFilterForm).toBeDefined();
@@ -171,7 +170,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
                 expansionPanel.click();
                 fixture.detectChanges();
-                let stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-state"]');
+                let stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"]');
                 let sortElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-sort"]');
                 let orderElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-order"]');
                 expect(stateElement).toBeDefined();
@@ -187,7 +186,7 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            let stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-state"] .mat-select-trigger');
+            let stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"] .mat-select-trigger');
             stateElement.click();
             fixture.detectChanges();
             const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
@@ -203,7 +202,7 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
-            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-state"] .mat-select-trigger');
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"] .mat-select-trigger');
             stateElement.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -244,7 +243,7 @@ describe('EditProcessFilterCloudComponent', () => {
             component.filterProperties = [];
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const stateController = component.editProcessFilterForm.get('state');
+                const stateController = component.editProcessFilterForm.get('status');
                 const sortController = component.editProcessFilterForm.get('sort');
                 const orderController = component.editProcessFilterForm.get('order');
                 fixture.detectChanges();
@@ -415,7 +414,6 @@ describe('EditProcessFilterCloudComponent', () => {
             });
         }));
 
-
         it('should display default filter actions when input is empty', async(() => {
             let processFilterIdchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
             component.ngOnChanges({ 'id': processFilterIdchange});
@@ -459,7 +457,7 @@ describe('EditProcessFilterCloudComponent', () => {
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.detectChanges();
-            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-state"] .mat-select-trigger');
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"] .mat-select-trigger');
             stateElement.click();
             fixture.detectChanges();
             const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
@@ -482,7 +480,7 @@ describe('EditProcessFilterCloudComponent', () => {
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.detectChanges();
-            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-state"] .mat-select-trigger');
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"] .mat-select-trigger');
             stateElement.click();
             fixture.detectChanges();
             const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
@@ -503,7 +501,7 @@ describe('EditProcessFilterCloudComponent', () => {
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
             fixture.detectChanges();
-            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-state"] .mat-select-trigger');
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"] .mat-select-trigger');
             stateElement.click();
             fixture.detectChanges();
             const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');

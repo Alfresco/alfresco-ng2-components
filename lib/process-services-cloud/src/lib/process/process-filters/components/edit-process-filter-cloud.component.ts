@@ -23,7 +23,7 @@ import moment from 'moment-es6';
 
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
-import { ProcessFilterCloudModel, ProcessFilterActionType, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions } from '../models/process-filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
@@ -35,15 +35,15 @@ import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud
 })
 export class EditProcessFilterCloudComponent implements OnChanges {
 
-    public static ACTION_SAVE = 'SAVE';
-    public static ACTION_SAVE_AS = 'SAVE_AS';
-    public static ACTION_DELETE = 'DELETE';
+    public static ACTION_SAVE = 'save';
+    public static ACTION_SAVE_AS = 'saveAs';
+    public static ACTION_DELETE = 'delete';
     public static APPLICATION_NAME: string = 'appName';
     public static APP_RUNNING_STATUS: string = 'Running';
     public static LAST_MODIFIED: string = 'lastModified';
     public static SORT: string = 'sort';
     public static ORDER: string = 'order';
-    public static DEFAULT_PROCESS_FILTER_PROPERTIES = ['state', 'sort', 'order'];
+    public static DEFAULT_PROCESS_FILTER_PROPERTIES = ['status', 'sort', 'order'];
     public static DEFAULT_SORT_PROPERTIES = ['id', 'name', 'status', 'startDate'];
     public static DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
     public FORMAT_DATE: string = 'DD/MM/YYYY';
@@ -58,7 +58,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
 
     /** List of process filter properties to display */
     @Input()
-    filterProperties: string[] = EditProcessFilterCloudComponent.DEFAULT_PROCESS_FILTER_PROPERTIES; // default ['state', 'sort', 'order']
+    filterProperties: string[] = EditProcessFilterCloudComponent.DEFAULT_PROCESS_FILTER_PROPERTIES; // default ['status', 'sort', 'order']
 
     /** Toggles editing of process filter actions. */
     @Input()
@@ -82,7 +82,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
 
     /** Emitted when a filter action occurs i.e Save, SaveAs, Delete. */
     @Output()
-    action: EventEmitter<ProcessFilterActionType> = new EventEmitter();
+    action: EventEmitter<ProcessFilterAction> = new EventEmitter();
 
     processFilter: ProcessFilterCloudModel;
     changedProcessFilter: ProcessFilterCloudModel;
@@ -112,6 +112,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
         const id = changes['id'];
         if (id && id.currentValue !== id.previousValue) {
             this.processFilterProperties = this.createAndFilterProperties();
+            this.processFilterActions = this.createAndFilterActions();
             this.buildForm(this.processFilterProperties);
         }
     }
@@ -153,7 +154,6 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     }
 
     createAndFilterProperties(): ProcessFilterProperties[] {
-        this.processFilterActions = this.createAndFilterActions();
         this.checkMandatoryFilterProperties();
         if (this.checkForApplicationNameProperty()) {
             this.applicationNames = [];
@@ -285,36 +285,38 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     }
 
     executeFilterActions(action: ProcessFilterAction): void {
-        if (action.actionType === EditProcessFilterCloudComponent.DEFAULT_ACTIONS[0]) {
-            this.onSave();
-        } else if (action.actionType === EditProcessFilterCloudComponent.DEFAULT_ACTIONS[1]) {
-            this.onSaveAs();
-        } else if (action.actionType === EditProcessFilterCloudComponent.DEFAULT_ACTIONS[2]) {
-            this.onDelete();
+        if (action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE) {
+            this.save(action);
+        } else if (action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE_AS) {
+            this.saveAs(action);
+        } else if (action.actionType === EditProcessFilterCloudComponent.ACTION_DELETE) {
+            this.delete(action);
         }
     }
 
     /**
      * Save a process instance filter
      */
-    onSave() {
+    save(saveAction: ProcessFilterAction) {
         this.processFilterCloudService.updateFilter(this.changedProcessFilter);
-        this.action.emit({ actionType: EditProcessFilterCloudComponent.ACTION_SAVE, filter: this.changedProcessFilter });
+        saveAction.filter = this.changedProcessFilter;
+        this.action.emit(saveAction);
         this.formHasBeenChanged = this.compareFilters(this.changedProcessFilter, this.processFilter);
     }
 
     /**
      * Delete a process instance filter
      */
-    onDelete() {
+    delete(deleteAction: ProcessFilterAction) {
         this.processFilterCloudService.deleteFilter(this.processFilter);
-        this.action.emit({ actionType: EditProcessFilterCloudComponent.ACTION_DELETE, filter: this.processFilter });
+        deleteAction.filter = this.processFilter;
+        this.action.emit(deleteAction);
     }
 
     /**
      * Save As a process instance filter
      */
-    onSaveAs() {
+    saveAs(saveAsAction: ProcessFilterAction) {
         const dialogRef = this.dialog.open(ProcessFilterDialogCloudComponent, {
             data: {
                 name: this.translateService.instant(this.processFilter.name)
@@ -334,7 +336,8 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                 };
                 const resultFilter: ProcessFilterCloudModel = Object.assign({}, this.changedProcessFilter, newFilter);
                 this.processFilterCloudService.addFilter(resultFilter);
-                this.action.emit({ actionType: EditProcessFilterCloudComponent.ACTION_SAVE_AS, filter: resultFilter });
+                saveAsAction.filter = resultFilter;
+                this.action.emit(saveAsAction);
             }
         });
     }
@@ -382,13 +385,13 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     }
 
     hasFormChanged(action: any): boolean {
-        if (action.actionType === EditProcessFilterCloudComponent.DEFAULT_ACTIONS[0]) {
+        if (action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE) {
             return !this.formHasBeenChanged;
         }
-        if (action.actionType === EditProcessFilterCloudComponent.DEFAULT_ACTIONS[1]) {
+        if (action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE_AS) {
             return !this.formHasBeenChanged;
         }
-        if (action.actionType === EditProcessFilterCloudComponent.DEFAULT_ACTIONS[2]) {
+        if (action.actionType === EditProcessFilterCloudComponent.ACTION_DELETE) {
             return false;
         }
     }
@@ -396,17 +399,17 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     createFilterActions(): ProcessFilterAction[] {
         return [
             new ProcessFilterAction({
-                actionType: EditProcessFilterCloudComponent.DEFAULT_ACTIONS[0],
+                actionType: EditProcessFilterCloudComponent.ACTION_SAVE,
                 icon: 'save',
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE'
             }),
             new ProcessFilterAction({
-                actionType: EditProcessFilterCloudComponent.DEFAULT_ACTIONS[1],
+                actionType: EditProcessFilterCloudComponent.ACTION_SAVE_AS,
                 icon: 'unarchive',
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE_AS'
             }),
             new ProcessFilterAction({
-                actionType: EditProcessFilterCloudComponent.DEFAULT_ACTIONS[2],
+                actionType: EditProcessFilterCloudComponent.ACTION_DELETE,
                 icon: 'delete',
                 tooltip: 'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.DELETE'
             })
@@ -460,8 +463,8 @@ export class EditProcessFilterCloudComponent implements OnChanges {
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STATUS',
                 type: 'select',
-                key: 'state',
-                value: currentProcessFilter.state || this.status[0].value,
+                key: 'status',
+                value: currentProcessFilter.status || this.status[0].value,
                 options: this.status
             }),
             new ProcessFilterProperties({
