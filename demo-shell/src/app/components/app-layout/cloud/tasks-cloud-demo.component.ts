@@ -27,7 +27,7 @@ import { CloudLayoutService } from './services/cloud-layout.service';
 })
 export class TasksCloudDemoComponent implements OnInit {
 
-    public static ACTION_SAVE_AS = 'SAVE_AS';
+    public static ACTION_SAVE_AS = 'saveAs';
     static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
 
     @ViewChild('taskCloud')

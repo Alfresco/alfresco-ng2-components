@@ -82,21 +82,18 @@ export class FilterParamsModel {
     }
 }
 
-export interface FilterActionType {
-    actionType: string;
-    filter: TaskFilterCloudModel;
-}
-
 export class TaskFilterAction {
     actionType: string;
     icon: string;
     tooltip: string;
+    filter: TaskFilterCloudModel;
 
     constructor(obj?: any) {
         if (obj) {
             this.actionType = obj.actionType || null;
             this.icon = obj.icon || null;
             this.tooltip = obj.tooltip || null;
+            this.filter = obj.filter || null;
         }
     }
 }

@@ -17,7 +17,7 @@
 
 import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
-import { TaskFilterCloudModel, FilterActionType, TaskFilterProperties, FilterOptions, TaskFilterAction } from './../models/filter-cloud.model';
+import { TaskFilterCloudModel, TaskFilterProperties, FilterOptions, TaskFilterAction } from './../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { MatDialog, DateAdapter } from '@angular/material';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
@@ -35,18 +35,15 @@ import { Moment } from 'moment';
 })
 export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
 
-    public static ACTION_SAVE = 'SAVE';
-    public static ACTION_SAVE_AS = 'SAVE_AS';
-    public static ACTION_DELETE = 'DELETE';
+    public static ACTION_SAVE = 'save';
+    public static ACTION_SAVE_AS = 'saveAs';
+    public static ACTION_DELETE = 'delete';
     public static APP_RUNNING_STATUS: string = 'RUNNING';
     public static MIN_VALUE = 1;
     public static APPLICATION_NAME: string = 'appName';
     public static LAST_MODIFIED: string = 'lastModified';
     public static SORT: string = 'sort';
     public static ORDER: string = 'order';
-    public static SAVE: string = 'save';
-    public static SAVE_AS: string = 'saveAs';
-    public static DELETE: string = 'delete';
     public static DEFAULT_TASK_FILTER_PROPERTIES = ['status', 'assignee', 'sort', 'order'];
     public static DEFAULT_SORT_PROPERTIES = ['id', 'name', 'createdDate', 'priority'];
     public static DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
@@ -68,7 +65,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
     @Input()
     sortProperties: string[] = EditTaskFilterCloudComponent.DEFAULT_SORT_PROPERTIES;
 
-    /** List of sort actions. */
+    /** List of task filter actions. */
     @Input()
     actions: string[] = EditTaskFilterCloudComponent.DEFAULT_ACTIONS;
 
@@ -86,7 +83,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
 
     /** Emitted when a filter action occurs (i.e Save, Save As, Delete). */
     @Output()
-    action: EventEmitter<FilterActionType> = new EventEmitter();
+    action: EventEmitter<TaskFilterAction> = new EventEmitter();
 
     taskFilter: TaskFilterCloudModel;
     changedTaskFilter: TaskFilterCloudModel;
@@ -296,27 +293,29 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
     }
 
     executeFilterActions(action: TaskFilterAction): void {
-        if (action.actionType === EditTaskFilterCloudComponent.SAVE) {
-            this.save();
-        } else if (action.actionType === EditTaskFilterCloudComponent.SAVE_AS) {
-            this.saveAs();
-        } else if (action.actionType === EditTaskFilterCloudComponent.DELETE) {
-            this.delete();
+        if (action.actionType === EditTaskFilterCloudComponent.ACTION_SAVE) {
+            this.save(action);
+        } else if (action.actionType === EditTaskFilterCloudComponent.ACTION_SAVE_AS) {
+            this.saveAs(action);
+        } else if (action.actionType === EditTaskFilterCloudComponent.ACTION_DELETE) {
+            this.delete(action);
         }
     }
 
-    save() {
+    save(saveAction: TaskFilterAction) {
         this.taskFilterCloudService.updateFilter(this.changedTaskFilter);
-        this.action.emit({ actionType: EditTaskFilterCloudComponent.ACTION_SAVE, filter: this.changedTaskFilter });
+        saveAction.filter = this.changedTaskFilter;
+        this.action.emit(saveAction);
         this.formHasBeenChanged = this.compareFilters(this.changedTaskFilter, this.taskFilter);
     }
 
-    delete() {
+    delete(deleteAction: TaskFilterAction) {
         this.taskFilterCloudService.deleteFilter(this.taskFilter);
-        this.action.emit({ actionType: EditTaskFilterCloudComponent.ACTION_DELETE, filter: this.taskFilter });
+        deleteAction.filter = this.taskFilter;
+        this.action.emit(deleteAction);
     }
 
-    saveAs() {
+    saveAs(saveAsAction: TaskFilterAction) {
         const dialogRef = this.dialog.open(TaskFilterDialogCloudComponent, {
             data: {
                 name: this.translateService.instant(this.taskFilter.name)
@@ -336,7 +335,8 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
                 };
                 const resultFilter = Object.assign({}, this.changedTaskFilter, newFilter);
                 this.taskFilterCloudService.addFilter(resultFilter);
-                this.action.emit({ actionType: EditTaskFilterCloudComponent.ACTION_SAVE_AS, filter: resultFilter });
+                saveAsAction.filter = resultFilter;
+                this.action.emit(saveAsAction);
 
             }
         });
@@ -381,13 +381,13 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
     }
 
     hasFormChanged(action: any): boolean {
-        if (action.actionType === EditTaskFilterCloudComponent.SAVE) {
+        if (action.actionType === EditTaskFilterCloudComponent.ACTION_SAVE) {
             return !this.formHasBeenChanged;
         }
-        if (action.actionType === EditTaskFilterCloudComponent.SAVE_AS) {
+        if (action.actionType === EditTaskFilterCloudComponent.ACTION_SAVE_AS) {
             return !this.formHasBeenChanged;
         }
-        if (action.actionType === EditTaskFilterCloudComponent.DELETE) {
+        if (action.actionType === EditTaskFilterCloudComponent.ACTION_DELETE) {
             return false;
         }
     }
@@ -395,17 +395,17 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
     createFilterActions(): TaskFilterAction[] {
         return [
             new TaskFilterAction({
-                actionType: EditTaskFilterCloudComponent.DEFAULT_ACTIONS[0],
+                actionType: EditTaskFilterCloudComponent.ACTION_SAVE,
                 icon: 'save',
                 tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE'
             }),
             new TaskFilterAction({
-                actionType: EditTaskFilterCloudComponent.DEFAULT_ACTIONS[1],
+                actionType: EditTaskFilterCloudComponent.ACTION_SAVE_AS,
                 icon: 'unarchive',
                 tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.SAVE_AS'
             }),
             new TaskFilterAction({
-                actionType: EditTaskFilterCloudComponent.DEFAULT_ACTIONS[2],
+                actionType: EditTaskFilterCloudComponent.ACTION_DELETE,
                 icon: 'delete',
                 tooltip: 'ADF_CLOUD_EDIT_TASK_FILTER.TOOL_TIP.DELETE'
             })
