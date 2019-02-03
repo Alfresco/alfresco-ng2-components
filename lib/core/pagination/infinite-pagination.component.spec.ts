@@ -131,7 +131,7 @@ describe('InfinitePaginationComponent', () => {
             fixture.detectChanges();
 
             component.loadMore.subscribe((newPagination: Pagination) => {
-                expect(newPagination.skipCount).toBe(0);
+                expect(newPagination.skipCount).toBe(10);
                 done();
             });
 
@@ -166,8 +166,8 @@ describe('InfinitePaginationComponent', () => {
             component.onLoadMore();
 
             expect(spyTarget).toHaveBeenCalledWith({
-                maxItems: 444 + 25,
-                skipCount: 0,
+                maxItems: 444,
+                skipCount: 25,
                 totalItems: 888,
                 hasMoreItems: true,
                 merge: true
@@ -182,8 +182,8 @@ describe('InfinitePaginationComponent', () => {
             component.onLoadMore();
 
             expect(spyTarget).toHaveBeenCalledWith({
-                maxItems: 444 + component.pageSize,
-                skipCount: 0,
+                maxItems: 444,
+                skipCount: 7,
                 totalItems: 888,
                 hasMoreItems: true,
                 merge: true
