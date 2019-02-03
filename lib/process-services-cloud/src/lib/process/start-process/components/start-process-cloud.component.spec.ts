@@ -196,7 +196,7 @@ describe('StartProcessCloudComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                expect(component.processPayloadCloud.processInstanceName).toBeNull();
+                expect(component.processPayloadCloud.name).toBeNull();
             });
         }));
 
