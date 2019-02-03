@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { setupTestBed } from '@alfresco/adf-core';
@@ -52,8 +52,8 @@ describe('DropdownBreadcrumb', () => {
     }
 
     function triggerComponentChange(fakeNodeData) {
-        const change = new SimpleChange(null, fakeNodeData, true);
-        component.ngOnChanges({ 'folderNode': change });
+        component.folderNode = fakeNodeData;
+        component.ngOnChanges(null);
         fixture.detectChanges();
     }
 

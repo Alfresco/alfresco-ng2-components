@@ -232,7 +232,7 @@ export class ContentNodeDialogService {
         return null;
     }
 
-    private rowFilter(currentNodeId, row: ShareDataRow): boolean {
+    private rowFilter(currentNodeId: string, row: ShareDataRow): boolean {
         const node: Node = row.node.entry;
 
         if (node.id === currentNodeId || node.isFile) {

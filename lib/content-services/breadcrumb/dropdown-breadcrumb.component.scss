@@ -10,6 +10,7 @@
         }
 
         &-dropdown-breadcrumb-trigger {
+            height: 0px;
             cursor: pointer;
             padding: 0;
             border: none;
@@ -19,10 +20,6 @@
                 color: mat-color($primary);
                 outline: none;
             }
-        }
-
-        &-dropdown-breadcrumb-item-chevron {
-            margin-top: 5px;
         }
 
         &-dropdown-breadcrumb-trigger.adf-isRoot {
