@@ -16,8 +16,11 @@
  */
 import { ApplicationInstanceModel } from '../models/application-instance.model';
 export let fakeApplicationInstance = [
-   new ApplicationInstanceModel(
-       { name: 'application-new-1', createdAt: '2018-09-21T12:31:39.000Z', status: 'Running', theme: 'theme-2', icon: 'favorite_border' }),
-   new ApplicationInstanceModel(
-       { name: 'application-new-2', createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending', theme: 'theme-2', icon: 'favorite_border' })
+    new ApplicationInstanceModel(
+        { name: 'application-new-1', createdAt: '2018-09-21T12:31:39.000Z', status: 'Running', theme: 'theme-2', icon: 'favorite_border' }),
+    new ApplicationInstanceModel(
+        { name: 'application-new-2', createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending', theme: 'theme-2', icon: 'favorite_border' }),
+    new ApplicationInstanceModel(
+        { name: 'application-new-3', createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending' })
+
 ];

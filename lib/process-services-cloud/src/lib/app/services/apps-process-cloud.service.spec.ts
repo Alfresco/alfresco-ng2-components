@@ -42,7 +42,7 @@ describe('AppsProcessCloudService', () => {
         service.getDeployedApplicationsByStatus('fake').subscribe(
             (res: ApplicationInstanceModel[]) => {
                 expect(res).toBeDefined();
-                expect(res.length).toEqual(2);
+                expect(res.length).toEqual(3);
                 expect(res).toEqual(fakeApplicationInstance);
                 expect(res[0]).toEqual(fakeApplicationInstance[0]);
                 expect(res[0].name).toEqual('application-new-1');

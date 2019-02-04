@@ -175,7 +175,8 @@ describe('Upload - User permission', () => {
         it('[C279916] Should not be allowed to upload a folder in folder with consumer permissions', () => {
             uploadToggles.enableFolderUpload();
 
-            contentServicesPage.uploadFolder(folder.location).checkContentIsDisplayed(folder.name);
+            contentServicesPage.uploadFolder(folder.location)
+                .checkContentIsDisplayed(folder.name);
 
             let fileInTheUploadedFolder = 'share_profile_pic.png';
 
@@ -227,6 +228,9 @@ describe('Upload - User permission', () => {
             uploadToggles.enableFolderUpload();
 
             contentServicesPage.uploadFolder(folder.location);
+            uploadDialog.checkUploadCompleted().then(() => {
+                contentServicesPage.checkContentIsDisplayed(folder.name);
+            });
 
             let fileInTheUploadedFolder = 'share_profile_pic.png';
 

@@ -529,7 +529,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     onInfiniteScrolling(): void {
         this.infiniteScrolling = !this.infiniteScrolling;
         this.infinitePaginationComponent.reset();
-        this.documentList.reload();
     }
 
     canDownloadNode(node: MinimalNodeEntity): boolean {

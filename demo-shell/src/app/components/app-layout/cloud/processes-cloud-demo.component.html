@@ -18,12 +18,6 @@
                                 [sorting]="sortArray"
                                 (rowClick)="onRowClick($event)"
                                 #processCloud>
-            <data-columns>
-                <data-column key="entry.id" title="Id"></data-column>
-                <data-column key="entry.name" title="Name"></data-column>
-                <data-column key="entry.status" title="Status"></data-column>
-                <data-column key="entry.startDate" title="Start Date" type="date" format="timeAgo"></data-column>
-            </data-columns>
         </adf-cloud-process-list>
         <adf-pagination [target]="processCloud" (changePageSize)="onChangePageSize($event)">
         </adf-pagination>

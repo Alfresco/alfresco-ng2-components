@@ -22,6 +22,7 @@ import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppDetailsCloudComponent } from './app-details-cloud.component';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { AppListCloudModule } from '../app-list-cloud.module';
+import { ApplicationInstanceModel } from '../models/application-instance.model';
 
 describe('AppDetailsCloudComponent', () => {
 
@@ -54,5 +55,24 @@ describe('AppDetailsCloudComponent', () => {
         const app = fixture.nativeElement.querySelector('.mat-card');
         app.click();
         expect(component.selectedApp.emit).toHaveBeenCalledWith(fakeApplicationInstance[0]);
+    });
+
+    it('should render card with default icon and theme when are not provided', () => {
+        component.applicationInstance = fakeApplicationInstance[2];
+        fixture.detectChanges();
+
+        const theme = fixture.nativeElement.querySelector('.adf-app-listgrid-item-card').getAttribute('ng-reflect-ng-class');
+        const icon = fixture.nativeElement.querySelector('.adf-app-listgrid-item-card-logo-icon');
+
+        expect(theme).toEqual(ApplicationInstanceModel.DEFAULT_THEME);
+        expect(icon).toBeTruthy();
+    });
+
+    it('should render card with a non ApplicationInstanceModel input object', () => {
+        component.applicationInstance =  { name: 'application-new-3', createdAt: '2018-09-21T12:31:39.000Z', status: 'Pending' };
+        fixture.detectChanges();
+        const app = fixture.nativeElement.querySelector('.mat-card');
+        expect(app).toBeTruthy();
+
     });
 });

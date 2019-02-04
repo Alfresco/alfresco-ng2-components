@@ -17,16 +17,15 @@
 
 export class ProcessPayloadCloud {
     processDefinitionKey: string;
-    processInstanceName: string;
+    name: string;
     businessKey: string;
     variables: Map<string, object>[];
-    payloadType: string;
+    payloadType: string = 'StartProcessPayload';
 
     constructor(obj?: any) {
         this.processDefinitionKey = obj && obj.processDefinitionKey ? obj.processDefinitionKey : null;
-        this.processInstanceName = obj && obj.processInstanceName ? obj.processInstanceName : null;
+        this.name = obj && obj.name ? obj.name : null;
         this.businessKey = obj && obj.businessKey ? obj.businessKey : null;
         this.variables = obj && obj.variables ? obj.variables : null;
-        this.payloadType = obj && obj.valueUrl ? obj.payloadType : null;
     }
 }

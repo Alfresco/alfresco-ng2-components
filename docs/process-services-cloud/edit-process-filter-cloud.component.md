@@ -11,6 +11,17 @@ Shows Process Filter Details.
 
 ![edit-process-filter-cloud](../docassets/images/edit-process-filter-cloud.component.png)
 
+## Contents
+
+-   [Basic Usage](#basic-usage)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Editing APS2 process filters](#editing-aps2-process-filters)
+    -   [Filter properties](#filter-properties)
+-   [See also](#see-also)
+
 ## Basic Usage
 
 ```html
@@ -29,11 +40,11 @@ Shows Process Filter Details.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appName | `string` |  | (required) The name of the application. |
-| id | `string` |  | (required) Id of the process instance filter. |
-| filterProperties | `string []` | `['state', 'sort', 'order']` | List of process filter properties to display. |
-| showFilterActions | `boolean` | `true` | Toggles edit process filter actions. |
-| showTitle | `boolean` | `true` | Toggles edit process filter title. |
+| appName | `string` |  | The name of the application. |
+| filterProperties | `string[]` |  | List of process filter properties to display |
+| id | `string` |  | Id of the process instance filter. |
+| showFilterActions | `boolean` | true | Toggles editing of process filter actions. |
+| showTitle | `boolean` | true | Toggles editing of the process filter title. |
 
 ### Events
 
@@ -57,12 +68,12 @@ Use the `appName` and `id` properties to choose which process filter to edit:
 
 ### Filter properties
 
-You can supply various *filter properties* to edit that will determine 
+You can supply various _filter properties_ to edit that will determine 
 which processes are found by a filter. The full set of properties is
 given below:
 
 | Name | Description |
-| -- | -- |
+| ---- | ----------- |
 | **_appName_** | Name of the app |
 | **_initiator_** | ID of the user who initiated the process |
 | **_state_** | Execution state of the process. |
@@ -73,8 +84,8 @@ given below:
 | **_processInstanceId_** | Process instance ID |
 | **_startDate_** | Date the process was started |
 | **_lastModified_** | Date the process was last modified |
-| **_lastModifiedFrom_** | Finds processes modified *after* this date |
-| **_lastModifiedTo_** | Finds processes modified *before* this date |
+| **_lastModifiedFrom_** | Finds processes modified _after_ this date |
+| **_lastModifiedTo_** | Finds processes modified _before_ this date |
 
 By default, the **_state_**, **_sort_** and **_order_** properties are
 displayed in the editor. However, you can also choose which properties
@@ -109,4 +120,4 @@ to choose from: **_id_**, **_name_**, **_status_** and **_startDate_**.
 
 ## See also
 
-- [Edit task filter cloud component](edit-task-filter-cloud.component.md)
+-   [Edit task filter cloud component](edit-task-filter-cloud.component.md)

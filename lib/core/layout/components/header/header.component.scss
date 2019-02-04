@@ -12,19 +12,37 @@
         .adf-menu-icon {
             position: relative;
             margin-left: -11px;
-            margin-right: 3px;
+            margin-right: 0;
+
+            .mat-icon {
+                font-size: 29px;
+                padding: 0 5px 0 0;
+            }
         }
 
         .adf-app-logo {
             position: relative;
             height: 28px;
             width: 28px;
-            margin-right: 6px;
+            vertical-align: middle;
+            margin-left: 6px;
+            margin-top: -3px;
         }
 
         .adf-app-title {
             cursor: pointer;
             outline: none;
+            margin-left: 6px;
+            letter-spacing: -0.3px;
+            font-weight: 100;
+        }
+
+        .adf-toolbar-divider {
+            margin: 0 5px;
+
+            & > div {
+                background-color: mat-color($background, card, 1);
+            }
         }
 
         .adf-header-delimiter {

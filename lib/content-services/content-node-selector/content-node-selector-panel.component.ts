@@ -16,10 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import {
-    AlfrescoApiService, HighlightDirective, UserPreferencesService,
-    PaginatedComponent, PaginationModel
-} from '@alfresco/adf-core';
+import { AlfrescoApiService, HighlightDirective, UserPreferencesService, PaginationModel } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { DocumentListComponent, PaginationStrategy } from '../document-list/components/document-list.component';
@@ -30,6 +27,7 @@ import { debounceTime } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { ShareDataRow } from '../document-list';
+import { NodeEntry } from '@alfresco/js-api/src/api/content-rest-api/model/nodeEntry';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -42,7 +40,7 @@ const defaultValidation = () => true;
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-content-node-selector-panel' }
 })
-export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedComponent {
+export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /** Node ID of the folder currently listed. */
     @Input()
@@ -271,20 +269,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     }
 
     /**
-     * Loads the next batch of search results
-     *
-     * @param event Pagination object
-     */
-    updatePagination(pagination: Pagination): void {
-        this.infiniteScroll = true;
-        this.skipCount = pagination.skipCount;
-
-        if (this.searchTerm.length > 0) {
-            this.querySearch();
-        }
-    }
-
-    /**
      * Perform the call to searchService with the proper parameters
      */
     private querySearch(): void {
@@ -322,16 +306,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
         }
 
         this.pagination.next(nodePaging.list.pagination);
-        this.highlight();
-    }
-
-    /**
-     * Highlight the actual search term in the next frame
-     */
-    highlight(): void {
-        setTimeout(() => {
-            this.highlighter.highlight(this.searchTerm);
-        }, 0);
     }
 
     /**
@@ -346,7 +320,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     /**
      * Attempts to set the currently loaded node
      */
-    onFolderLoaded(nodePaging: NodePaging): void {
+    onFolderLoaded(): void {
         if (!this.showingSearchResults) {
             this.attemptNodeSelection(this.documentList.folderNode);
         }
@@ -413,8 +387,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
             };
 
             this.apiService.nodesApi.getNode(node.guid, options)
-                .then((documentLibrary) => {
-                    this.documentList.performCustomSourceNavigation(documentLibrary);
+                .then((nodeEntry: NodeEntry) => {
+                    this.documentList.navigateTo(nodeEntry.entry);
                 });
         }
     }
