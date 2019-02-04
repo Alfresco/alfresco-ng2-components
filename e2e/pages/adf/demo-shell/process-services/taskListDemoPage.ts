@@ -35,7 +35,7 @@ export class TaskListDemoPage {
     dueBefore = element(by.css("input[data-automation-id='due before']"));
     dueAfter = element(by.css("input[data-automation-id='due after']"));
     taskId = element(by.css("input[data-automation-id='task id']"));
-    stateDropDownArrow = element(by.css("mat-form-field[data-automation-id='state'] div[class*='arrow']"));
+    statusDropDownArrow = element(by.css("mat-form-field[data-automation-id='status'] div[class*='arrow']"));
     stateSelector = element(by.css("div[class*='mat-select-panel']"));
     sortDropDownArrow = element(by.css("mat-form-field[data-automation-id='sort'] div[class*='arrow']"));
     sortSelector = element(by.css("div[class*='mat-select-panel']"));
@@ -193,7 +193,7 @@ export class TaskListDemoPage {
     }
 
     selectState(state) {
-        this.clickOnStateDropDownArrow();
+        this.clickOnStatusDropDownArrow();
 
         let stateElement = element.all(by.cssContainingText('mat-option span', state)).first();
         Util.waitUntilElementIsClickable(stateElement);
@@ -202,9 +202,9 @@ export class TaskListDemoPage {
         return this;
     }
 
-    clickOnStateDropDownArrow() {
-        Util.waitUntilElementIsVisible(this.stateDropDownArrow);
-        this.stateDropDownArrow.click();
+    clickOnStatusDropDownArrow() {
+        Util.waitUntilElementIsVisible(this.statusDropDownArrow);
+        this.statusDropDownArrow.click();
         Util.waitUntilElementIsVisible(this.stateSelector);
     }
 
