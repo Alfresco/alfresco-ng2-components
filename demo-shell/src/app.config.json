@@ -546,7 +546,7 @@
     },
     "adf-edit-process-filter": {
         "properties": [
-            "state", "sort", "order", "processName"
+            "state", "sort", "order"
         ]
     },
     "content-metadata": {
@@ -579,7 +579,7 @@
                 {
                     "key": "entry.status",
                     "type": "text",
-                    "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.NAME",
+                    "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.STATUS",
                     "sortable": true
                 },
                 {
