@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { SitePaging, SiteEntry, MinimalNodeEntryEntity } from '@alfresco/js-api';
-import { ContentNodeDialogService, ShareDataRow } from '@alfresco/adf-content-services';
+import { ContentNodeDialogService, ShareDataRow, RowFilter } from '@alfresco/adf-content-services';
 import { DataRow, DataColumn, ThumbnailService } from '@alfresco/adf-core';
 
 @Component({
@@ -40,7 +40,7 @@ export class ContentNodeSelectorComponent {
     customSideTitle = '';
     actualPageSize = 2;
 
-    rowFilterFunction: any = null;
+    rowFilterFunction: RowFilter = null;
     excludeSiteContentList: string[] = ContentNodeDialogService.nonDocumentSiteContent;
     customImageResolver: any = null;
 
