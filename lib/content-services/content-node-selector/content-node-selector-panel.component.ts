@@ -60,7 +60,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     @Input()
     dropdownSiteList: SitePaging = null;
 
-    _rowFilter: RowFilter;
+    _rowFilter: RowFilter = defaultValidation;
 
     /** Custom row filter function. See the
      * [Document List component](document-list.component.md#custom-row-filter)
@@ -68,18 +68,27 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      */
     @Input()
     set rowFilter(rowFilter: RowFilter) {
-        this._rowFilter = this.getRowFilter(rowFilter);
+        this.createRowFilter(rowFilter);
     }
 
     get rowFilter(): RowFilter {
-        return this._rowFilter || this.getRowFilter();
+        return this._rowFilter;
     }
+
+    _excludeSiteContent: string[] = [];
 
     /** Custom list of site content componentIds.
      * Used to filter out the corresponding items from the displayed nodes
      */
     @Input()
-    excludeSiteContent: string[] = [];
+    set excludeSiteContent(excludeSiteContent: string[]) {
+        this._excludeSiteContent = excludeSiteContent;
+        this.createRowFilter(this._rowFilter);
+    }
+
+    get excludeSiteContent(): string[] {
+        return this._excludeSiteContent;
+    }
 
     /** Custom image resolver function. See the
      * [Document List component](document-list.component.md#custom-row-filter)
@@ -172,14 +181,13 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
-        this.excludeSiteContent = this.excludeSiteContent ? this.excludeSiteContent : [];
     }
 
-    private getRowFilter(filter?: RowFilter): RowFilter {
+    private createRowFilter(filter?: RowFilter) {
         if (!filter) {
             filter = () => true;
         }
-        return (value: ShareDataRow, index: number, array: ShareDataRow[]) => {
+        this._rowFilter = (value: ShareDataRow, index: number, array: ShareDataRow[]) => {
             return filter(value, index, array) &&
                 !this.isExcludedSiteContent(value);
         };
@@ -187,11 +195,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     private isExcludedSiteContent(row: ShareDataRow): boolean {
         const entry = row.node.entry;
-        if (this.excludeSiteContent.length &&
+        if (this._excludeSiteContent.length &&
             entry &&
             entry.properties &&
             entry.properties['st:componentId']) {
-            const excludedItem = this.excludeSiteContent.find(
+            const excludedItem = this._excludeSiteContent.find(
                 (id: string) => entry.properties['st:componentId'] === id
             );
             return !!excludedItem;

@@ -112,7 +112,6 @@ describe('ContentNodeSelectorComponent', () => {
                             <SiteEntry> { entry: { guid: 'blog', id: 'blog' } }]
                     }
                 }));
-                spyOn(component.documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
                 component.currentFolderId = 'cat-girl-nuku-nuku';
                 fixture.detectChanges();
             });
@@ -624,6 +623,20 @@ describe('ContentNodeSelectorComponent', () => {
                             })
                         }
                     }));
+            });
+
+            it('should pass through the excludeSiteContent to the rowFilter of the documentList', () => {
+                component.excludeSiteContent = ['blog'];
+
+                fixture.detectChanges();
+
+                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+                expect(documentList).not.toBeNull('Document list should be shown');
+                expect(documentList.componentInstance.rowFilter).toBeTruthy('Document list should have had a rowFilter');
+
+                const testSiteContent = new Node({ id: 'blog-id', properties: { 'st:componentId': 'blog' } });
+                expect(documentList.componentInstance.rowFilter(<any> { node: { entry: testSiteContent } }, null, null))
+                    .toBe(false);
             });
 
             it('should pass through the imageResolver to the documentList', () => {
