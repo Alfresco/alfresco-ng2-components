@@ -50,7 +50,7 @@ export class EditTaskFilterCloudComponent {
         return this;
     }
 
-    getStateFilterDropDownValue() {
+    getStatusFilterDropDownValue() {
         return element(by.css("mat-form-field[data-automation-id='status'] span")).getText();
     }
 

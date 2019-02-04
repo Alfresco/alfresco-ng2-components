@@ -48,18 +48,18 @@ export class EditTaskFilterCloudComponent {
         return this;
     }
 
-    setStateFilterDropDown(option) {
-        this.clickOnDropDownArrow('state');
+    setStatusFilterDropDown(option) {
+        this.clickOnDropDownArrow('status');
 
-        let stateElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsVisible(stateElement);
-        Util.waitUntilElementIsClickable(stateElement);
-        stateElement.click();
+        let statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        Util.waitUntilElementIsVisible(statusElement);
+        Util.waitUntilElementIsClickable(statusElement);
+        statusElement.click();
         return this;
     }
 
-    getStateFilterDropDownValue() {
-        return element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-state'] span")).first().getText();
+    getStatusFilterDropDownValue() {
+        return element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-status'] span")).first().getText();
     }
 
     setSortFilterDropDown(option) {

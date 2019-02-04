@@ -138,7 +138,7 @@ describe('Start Task', () => {
         startTask.checkStartButtonIsEnabled();
         tasksCloudDemoPage.editTaskFilterCloudComponent()
             .clickCustomiseFilterHeader()
-            .setStateFilterDropDown('CREATED')
+            .setStatusFilterDropDown('CREATED')
             .clearAssignee();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
     });
@@ -153,7 +153,7 @@ describe('Start Task', () => {
         tasksCloudDemoPage.editTaskFilterCloudComponent()
             .clickCustomiseFilterHeader()
             .clearAssignee()
-            .setStateFilterDropDown('CREATED');
+            .setStatusFilterDropDown('CREATED');
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
         let taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
