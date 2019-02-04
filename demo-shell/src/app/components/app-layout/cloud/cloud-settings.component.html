@@ -1,0 +1,18 @@
+<div fxFlex fxLayout="column" class="adf-settings-container">
+    <mat-checkbox [color]="'primary'" [checked]="multiselect" (change)="toggleMultiselect()" data-automation-id="multiSelection">
+        {{ 'SETTINGS_CLOUD.MULTISELECTION' | translate }}
+    </mat-checkbox>
+    <mat-checkbox [color]="'primary'" [checked]="testingMode" (change)="toggleTestingMode()" data-automation-id="testingMode">
+        {{ 'SETTINGS_CLOUD.TESTING_MODE' | translate }}
+    </mat-checkbox>
+    <mat-form-field>
+        <mat-label>
+            {{ 'SETTINGS_CLOUD.SELECTION_MODE' | translate }}
+        </mat-label>
+        <mat-select [(ngModel)]="selectionMode" (selectionChange)="onSelectionModeChange()">
+            <mat-option *ngFor="let option of selectionModeOptions" [value]="option.value">
+                {{ option.title }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>

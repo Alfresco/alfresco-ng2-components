@@ -5,6 +5,8 @@
         [selectionMode]="selectionMode"
         [multiselect]="multiselect"
         (rowClick)="onRowClick($event)"
+        (row-select)="onRowSelect($event)"
+        (row-unselect)="onRowUnselect($event)"
         (row-keyup)="onRowKeyUp($event)">
         <adf-loading-content-template>
             <ng-template>
