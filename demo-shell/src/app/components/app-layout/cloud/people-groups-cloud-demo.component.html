@@ -40,9 +40,13 @@
                 <mat-radio-button class="adf-people-single-mode" value="{{ groupSingleMode }}">{{ 'PEOPLE_GROUPS_CLOUD.SINGLE' | translate }}</mat-radio-button>
                 <mat-radio-button class="adf-people-multiple-mode" value="{{ groupMultipleMode }}">{{ 'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
             </mat-radio-group>
+            <mat-form-field>
+                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }}</mat-label>
+                <input matInput (input)="setGroupRoles($event.target.value)" />
+            </mat-form-field>
         </div>
         <div>
-            <adf-cloud-group [mode]="groupMode" [preSelectGroups]="preSelectGroup" (selectGroup)="onSelectGroup($event)"
+            <adf-cloud-group [mode]="groupMode" [roles]="roles" [preSelectGroups]="preSelectGroup" (selectGroup)="onSelectGroup($event)"
                 (removeGroup)="onRemoveGroup($event)"></adf-cloud-group>
         </div>
 

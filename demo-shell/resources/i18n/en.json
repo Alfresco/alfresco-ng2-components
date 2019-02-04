@@ -292,7 +292,8 @@
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "Single",
     "MULTI": "Multi",
-    "PRESELECTED_VALUE": "Preselected value"
+    "PRESELECTED_VALUE": "Preselected value",
+    "ROLE": "['ACTIVITI_ADMIN']"
   },
   "ABOUT": {
     "TITLE": "Plugins",

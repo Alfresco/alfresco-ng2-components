@@ -12,8 +12,15 @@
             }
         }
 
-        mat-card-content .adf-preselect-value {
-            width: calc(100% - 160px);
+        mat-card-content {
+            .adf-groud-preselected-value {
+                width: calc(100% - 500px);
+                margin-right: 15px;
+            }
+
+            .adf-preselect-value {
+                width: calc(100% - 306px);
+            }
         }
     }
 }
