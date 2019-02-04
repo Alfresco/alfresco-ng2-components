@@ -23,8 +23,7 @@ import { FacetFieldBucket } from '../../facet-field-bucket.interface';
 import { FacetField } from '../../facet-field.interface';
 import { SearchFilterList } from './models/search-filter-list.model';
 import { takeWhile } from 'rxjs/operators';
-import { ResultSetPaging } from '@alfresco/js-api';
-import { GenericBucket, GenericFacetResponse, ResultSetContext } from 'alfresco-js-api-node';
+import { ResultSetPaging, GenericBucket, GenericFacetResponse, ResultSetContext } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-search-filter',
