@@ -176,6 +176,22 @@ describe('DataTable', () => {
         expect(element.querySelector('.adf-datatable-header')).toBe(null);
     });
 
+    it('should hide the header if noPermission is true', () => {
+        let newData = new ObjectDataTableAdapter(
+        );
+
+        dataTable.noPermission = true;
+        dataTable.loading = false;
+
+        dataTable.ngOnChanges({
+            data: new SimpleChange(null, newData, false)
+        });
+
+        fixture.detectChanges();
+
+        expect(element.querySelector('.adf-datatable-header')).toBe(null);
+    });
+
     it('should show the header if showHeader is true', () => {
         let newData = new ObjectDataTableAdapter(
             [
