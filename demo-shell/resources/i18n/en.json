@@ -304,5 +304,10 @@
       "RUNTIME": "Runtime",
       "DESCRIPTION": "Description"
     }
+  },
+  "SETTINGS_CLOUD": {
+      "MULTISELECTION": "Multiselection",
+      "TESTING_MODE": "Testing Mode",
+      "SELECTION_MODE": "Selection Mode"
   }
 }
