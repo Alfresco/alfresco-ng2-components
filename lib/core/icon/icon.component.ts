@@ -21,7 +21,6 @@ import {
     ViewEncapsulation,
     ChangeDetectionStrategy
 } from '@angular/core';
-import { ThumbnailService } from '../services/thumbnail.service';
 import { ThemePalette } from '@angular/material';
 
 @Component({
@@ -47,14 +46,10 @@ export class IconComponent {
     @Input()
     set value(value: string) {
         this._value = value || 'settings';
-        this._isCustom =
-            this._value.includes(':') ||
-            this.thumbnailService.mimeTypeIcons[value];
+        this._isCustom = this._value.includes(':');
     }
 
     get isCustom(): boolean {
         return this._isCustom;
     }
-
-    constructor(private thumbnailService: ThumbnailService) {}
 }
