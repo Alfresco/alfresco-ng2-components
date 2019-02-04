@@ -38,7 +38,7 @@ export class AuthGuardBpm implements CanActivate, CanActivateChild {
     }
 
     checkLogin(redirectUrl: string): boolean {
-        let withCredentialsMode = this.appConfigService.get<boolean>('auth.withCredentials', false)
+        let withCredentialsMode = this.appConfigService.get<boolean>('auth.withCredentials', false);
 
         if (this.authService.isBpmLoggedIn() || withCredentialsMode) {
             return true;

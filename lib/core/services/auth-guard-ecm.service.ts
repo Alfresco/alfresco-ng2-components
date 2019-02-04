@@ -42,7 +42,7 @@ export class AuthGuardEcm implements CanActivate {
     }
 
     checkLogin(redirectUrl: string): boolean {
-        let withCredentialsMode = this.appConfigService.get<boolean>('auth.withCredentials', false)
+        let withCredentialsMode = this.appConfigService.get<boolean>('auth.withCredentials', false);
 
         if (this.authService.isEcmLoggedIn() || withCredentialsMode) {
             return true;
