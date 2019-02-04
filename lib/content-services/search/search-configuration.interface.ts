@@ -38,6 +38,9 @@ export interface SearchConfiguration {
         expanded?: boolean;
         fields: Array<FacetField>;
     };
+    facetIntervals?: {
+        intervals: Array<any>;
+    };
     sorting?: {
         options: Array<SearchSortingDefinition>;
         defaults: Array<SearchSortingDefinition>;

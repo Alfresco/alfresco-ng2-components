@@ -162,8 +162,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private parseFacets(context: ResultSetContext) {
         if (!this.responseFacets) {
             const responseFacetFields = this.parseFacetFields(context);
+            const responseFacetIntervals = this.parseFacetIntervals(context);
             const responseGroupedFacetQueries = this.parseFacetQueries(context);
-            this.responseFacets = responseFacetFields.concat(...responseGroupedFacetQueries);
+            this.responseFacets = responseFacetFields.concat(...responseGroupedFacetQueries, ...responseFacetIntervals);
 
         } else {
             this.responseFacets = this.responseFacets
@@ -184,11 +185,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
     }
 
-    private parseFacetFields(context: ResultSetContext): FacetField[] {
-        const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
-
+    private parseFacetItems(context: ResultSetContext, configFacetFields, itemType): FacetField[] {
         return configFacetFields.map((field) => {
-            const responseField = (context.facets || []).find((response) => response.type === 'field' && response.label === field.label) || {};
+            const responseField = (context.facets || []).find((response) => response.type === itemType && response.label === field.label) || {};
             const responseBuckets = this.getResponseBuckets(responseField);
 
             const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
@@ -210,6 +209,16 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 buckets: bucketList
             };
         });
+    }
+
+    private parseFacetFields(context: ResultSetContext): FacetField[] {
+        const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
+        return this.parseFacetItems(context, configFacetFields, 'field');
+    }
+
+    private parseFacetIntervals(context: ResultSetContext): FacetField[] {
+        const configFacetIntervals = this.queryBuilder.config.facetIntervals && this.queryBuilder.config.facetIntervals.intervals || [];
+        return this.parseFacetItems(context, configFacetIntervals, 'interval');
     }
 
     private parseFacetQueries(context: ResultSetContext): FacetField[] {

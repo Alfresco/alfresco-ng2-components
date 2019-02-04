@@ -222,6 +222,7 @@ export class SearchQueryBuilderService {
                 fields: this.config.fields,
                 filterQueries: this.filterQueries,
                 facetQueries: this.facetQueries,
+                facetIntervals: this.facetIntervals,
                 facetFields: this.facetFields,
                 sort: this.sort
             };
@@ -278,6 +279,20 @@ export class SearchQueryBuilderService {
         return false;
     }
 
+    /**
+     * Checks if FacetIntervals has been defined
+     * @returns True if defined, false otherwise
+     */
+    get hasFacetIntervals(): boolean {
+        if (this.config
+            && this.config.facetIntervals
+            && this.config.facetIntervals.intervals
+            && this.config.facetIntervals.intervals.length > 0) {
+            return true;
+        }
+        return false;
+    }
+
     protected get sort(): RequestSortDefinitionInner[] {
         return this.sorting.map((def) => {
             return new RequestSortDefinitionInner({
@@ -294,6 +309,14 @@ export class SearchQueryBuilderService {
                 query.group = this.getQueryGroup(query);
                 return <FacetQuery> { ...query };
             });
+        }
+
+        return null;
+    }
+
+    protected get facetIntervals(): any {
+        if (this.hasFacetIntervals) {
+            return this.config.facetIntervals;
         }
 
         return null;
