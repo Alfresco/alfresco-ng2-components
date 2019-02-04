@@ -51,6 +51,16 @@ describe('AuthGuardService ECM', () => {
         expect(authGuard.canActivate(null, router)).toBeTruthy();
     }));
 
+    it('if the alfresco js api is configured with withCredentials true should canActivate be true', async(() => {
+        spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
+        appConfigService.config.auth = {};
+        appConfigService.config.auth.withCredentials = true;
+
+        const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
+
+        expect(authGuard.canActivate(null, router)).toBeTruthy();
+    }));
+
     it('if the alfresco js api is NOT logged in should canActivate be false', async(() => {
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(false);
         spyOn(routerService, 'navigate').and.stub();

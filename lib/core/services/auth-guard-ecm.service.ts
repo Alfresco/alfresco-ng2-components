@@ -27,9 +27,10 @@ import { OauthConfigModel } from '../models/oauth-config.model';
     providedIn: 'root'
 })
 export class AuthGuardEcm implements CanActivate {
+
     constructor(private authService: AuthenticationService,
                 private router: Router,
-                private appConfig: AppConfigService) {
+                private appConfigService: AppConfigService) {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -41,7 +42,9 @@ export class AuthGuardEcm implements CanActivate {
     }
 
     checkLogin(redirectUrl: string): boolean {
-        if (this.authService.isEcmLoggedIn()) {
+        let withCredentialsMode = this.appConfigService.get<boolean>('auth.withCredentials', false)
+
+        if (this.authService.isEcmLoggedIn() || withCredentialsMode) {
             return true;
         }
 
@@ -55,13 +58,13 @@ export class AuthGuardEcm implements CanActivate {
     }
 
     isOAuthWithoutSilentLogin() {
-        let oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+        let oauth: OauthConfigModel = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
         return this.authService.isOauth() && oauth.silentLogin === false;
     }
 
     private getRouteDestinationForLogin(): string {
-        return this.appConfig &&
-            this.appConfig.get<string>(AppConfigValues.LOGIN_ROUTE) ?
-            this.appConfig.get<string>(AppConfigValues.LOGIN_ROUTE) : 'login';
+        return this.appConfigService &&
+        this.appConfigService.get<string>(AppConfigValues.LOGIN_ROUTE) ?
+            this.appConfigService.get<string>(AppConfigValues.LOGIN_ROUTE) : 'login';
     }
 }
