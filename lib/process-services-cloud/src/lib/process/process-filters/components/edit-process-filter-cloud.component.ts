@@ -60,6 +60,14 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     @Input()
     filterProperties: string[] = EditProcessFilterCloudComponent.DEFAULT_PROCESS_FILTER_PROPERTIES; // default ['status', 'sort', 'order']
 
+    /** List of sort properties to display. */
+    @Input()
+    sortProperties: string[] = EditProcessFilterCloudComponent.DEFAULT_SORT_PROPERTIES;
+
+    /** List of sort actions. */
+    @Input()
+    actions: string[] = EditProcessFilterCloudComponent.DEFAULT_ACTIONS;
+
     /** Toggles editing of process filter actions. */
     @Input()
     showFilterActions = true;
@@ -67,14 +75,6 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     /** Toggles editing of the process filter title. */
     @Input()
     showTitle = true;
-
-    /** List of sort properties to display. */
-    @Input()
-    sortProperties: string[] = [];
-
-    /** List of sort actions. */
-    @Input()
-    actions: string[] = EditProcessFilterCloudComponent.DEFAULT_ACTIONS;
 
     /** Emitted when a process instance filter property changes. */
     @Output()

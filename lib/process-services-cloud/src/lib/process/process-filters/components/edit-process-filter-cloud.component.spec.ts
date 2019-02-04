@@ -236,6 +236,9 @@ describe('EditProcessFilterCloudComponent', () => {
                 expect(orderOptions.length).toEqual(2);
             });
         }));
+    });
+
+    describe('Process filterProperties', () => {
 
         it('should able to build a editProcessFilter form with default properties if input is empty', async(() => {
             let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
@@ -248,7 +251,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 const orderController = component.editProcessFilterForm.get('order');
                 fixture.detectChanges();
                 expect(component.processFilterProperties).toBeDefined();
-                expect(component.processFilterProperties.length).toBe(3);
+                expect(component.processFilterProperties.length).toBe(4);
                 expect(component.editProcessFilterForm).toBeDefined();
                 expect(stateController).toBeDefined();
                 expect(sortController).toBeDefined();
@@ -258,9 +261,6 @@ describe('EditProcessFilterCloudComponent', () => {
                 expect(orderController.value).toBe('ASC');
             });
         }));
-    });
-
-    describe('Process filterProperties', () => {
 
         it('should able to fetch running applications when appName property defined in the input', async(() => {
             fixture.detectChanges();
@@ -277,25 +277,15 @@ describe('EditProcessFilterCloudComponent', () => {
             });
         }));
 
-        it('should able to build a editProcessFilter form with given input properties', async(() => {
-            getProcessFilterByIdSpy.and.returnValue({ appName: 'mock-app-name', processName: 'mock-process-name' });
-            fixture.detectChanges();
+        it('should able to filter filterProperties when input is defined', async(() => {
+            component.id = 'mock-process-filter-id';
             let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
             component.ngOnChanges({'id': processFilterIDchange});
-            fixture.detectChanges();
             component.filterProperties = ['appName', 'processName'];
-            fixture.detectChanges();
-            const appController = component.editProcessFilterForm.get('appName');
-            const processNameController = component.editProcessFilterForm.get('processName');
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                expect(getRunningApplicationsSpy).toHaveBeenCalled();
-                expect(component.processFilterProperties).toBeDefined();
-                expect(component.editProcessFilterForm).toBeDefined();
-                expect(component.processFilterProperties.length).toBe(3);
-                expect(appController).toBeDefined();
-                expect(processNameController).toBeDefined();
+                expect(component.processFilterProperties.length).toBe(2);
             });
         }));
     });
@@ -303,6 +293,7 @@ describe('EditProcessFilterCloudComponent', () => {
     describe('sort properties', () => {
 
         it('should display default sort properties', async(() => {
+            fixture.detectChanges();
             let processFilterIdchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
             component.ngOnChanges({ 'id': processFilterIdchange});
             fixture.detectChanges();
@@ -317,53 +308,33 @@ describe('EditProcessFilterCloudComponent', () => {
                 const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 expect(sortController).toBeDefined();
                 expect(sortController.value).toBe('id');
-                expect(sortOptions.length).toEqual(5);
+                expect(sortOptions.length).toEqual(4);
             });
         }));
 
         it('should display sort properties when sort properties are specified', async(() => {
-            getProcessFilterByIdSpy.and.returnValue({ sort: 'my-custom-sort', priority: '12' });
+            component.sortProperties = ['id', 'processName', 'processDefinitionId'];
             fixture.detectChanges();
             let processFilterIdchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
             component.ngOnChanges({ 'id': processFilterIdchange});
             fixture.detectChanges();
-            component.sortProperties = ['id', 'processName', 'processDefinitionId'];
-            fixture.detectChanges();
-            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
-            fixture.detectChanges();
-            let sortElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-sort"]');
-            sortElement.click();
-            fixture.detectChanges();
             fixture.whenStable().then(() => {
+                fixture.detectChanges();
                 const sortController = component.editProcessFilterForm.get('sort');
-                const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 expect(sortController).toBeDefined();
                 expect(component.sortProperties).toBeDefined();
                 expect(component.sortProperties.length).toBe(3);
-                expect(sortController.value).toBe('my-custom-sort');
-                expect(sortOptions.length).toEqual(3);
             });
         }));
 
         it('should display default sort properties if input is empty', async(() => {
+            component.sortProperties = [];
+            fixture.detectChanges();
             let processFilterIdchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
             component.ngOnChanges({ 'id': processFilterIdchange});
             fixture.detectChanges();
-            component.sortProperties = [];
-            fixture.detectChanges();
-            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
-            fixture.detectChanges();
-            let sortElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-sort"]');
-            sortElement.click();
-            fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const sortController = component.editProcessFilterForm.get('sort');
-                const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-                expect(sortController).toBeDefined();
-                expect(sortController.value).toBe('id');
-                expect(sortOptions.length).toEqual(5);
+                expect(component.sortProperties.length).toBe(4);
             });
         }));
     });
@@ -373,7 +344,6 @@ describe('EditProcessFilterCloudComponent', () => {
         it('should display default filter actions', async(() => {
             let processFilterIdchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
             component.ngOnChanges({ 'id': processFilterIdchange});
-            fixture.detectChanges();
             component.toggleFilterActions = true;
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
@@ -396,21 +366,16 @@ describe('EditProcessFilterCloudComponent', () => {
         }));
 
         it('should display filter actions when input actions are specified', async(() => {
-            let processFilterIdchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
-            component.ngOnChanges({ 'id': processFilterIdchange});
             fixture.detectChanges();
-            component.toggleFilterActions = true;
             component.actions = ['save'];
             fixture.detectChanges();
-            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
+            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({ 'id': processFilterIDchange});
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+                fixture.detectChanges();
                 expect(component.processFilterActions).toBeDefined();
                 expect(component.processFilterActions.length).toBe(1);
-                expect(saveButton).toBeDefined();
-                expect(saveButton.disabled).toBeTruthy();
             });
         }));
 
