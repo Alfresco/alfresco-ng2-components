@@ -209,21 +209,8 @@ export class GroupCloudComponent implements OnInit, OnChanges {
         return this.groupService.checkGroupHasRole(group.id, this.roles).pipe(
             mergeMap((hasRole) => {
                 return hasRole ? of(group) : of();
-            })
-        );
-    private loadPreSelectGroups() {
-        if (this.hasGroups(this.preSelectGroups)) {
-            if (this.isMultipleMode()) {
-                this.selectedGroups.length = 0;
-                this.preSelectGroups.forEach((group: GroupModel) => {
-                    this.selectedGroups.push(group);
-                });
-            } else {
-                this.searchGroupsControl.setValue(this.preSelectGroups[0]);
-                this.onSelect(this.preSelectGroups[0]);
-            }
-        }
-    }
+        })
+    )};
 
     onSelect(selectedGroup: GroupModel) {
         if (this.isMultipleMode()) {
