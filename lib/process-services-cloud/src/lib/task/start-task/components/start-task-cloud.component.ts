@@ -31,6 +31,7 @@ import {
     UserPreferenceValues
 } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from './people-cloud/people-cloud.component';
+import { GroupCloudComponent } from '../../../../lib/group/public-api';
 
 @Component({
     selector: 'adf-cloud-start-task',
@@ -75,6 +76,9 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     @ViewChild('peopleInput')
     assignee: PeopleCloudComponent;
 
+    @ViewChild('groupInput')
+    candidateGroups: GroupCloudComponent;
+
     users$: Observable<any[]>;
 
     taskId: string;
@@ -84,7 +88,8 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     submitted = false;
 
     assigneeName: string;
-    candidateGroups: string [] = [];
+
+    candidateGroupNames: string[] = [];
 
     dateError: boolean;
 
@@ -143,11 +148,10 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     public saveTask() {
         this.submitted = true;
         const newTask = Object.assign(this.taskForm.value);
-        newTask.appName = this.getAppName();
-        newTask.dueDate = this.getDueDate();
+        newTask.appName = this.appName;
+        newTask.dueDate = this.dueDate;
         newTask.assignee = this.assigneeName;
-
-        newTask.candidateGroups = this.candidateGroups;
+        newTask.candidateGroups = this.candidateGroupNames;
         this.createNewTask(new TaskDetailsCloudModel(newTask));
     }
 
@@ -169,14 +173,6 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.cancel.emit();
     }
 
-    private getDueDate(): Date {
-        return this.dueDate;
-    }
-
-    private getAppName(): string {
-        return this.appName ? this.appName : '';
-    }
-
     onDateChanged(newDateValue) {
         this.dateError = false;
 
@@ -192,18 +188,20 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.assigneeName = assignee ? assignee.username : '';
     }
 
-    onRemoveUser() {
-        this.assigneeName = null;
+    onAssigneeRemove() {
+        this.assigneeName = '';
     }
 
-    onSelectGroup(group) {
-        this.candidateGroups.push(group.name);
+    onCandiateGroupSelect(candidateGroup: any) {
+        if (candidateGroup.name) {
+            this.candidateGroupNames.push(candidateGroup.name);
+        }
     }
 
-    onRemoveGroup(group) {
-        this.candidateGroups = this.candidateGroups.filter( (name) => {
-            return name !== group.name;
-        });
+    onCandiateGroupRemove(candidateGroup: any) {
+        if (candidateGroup.name) {
+            this.candidateGroupNames = this.candidateGroupNames.filter((name: string) => { return name !== candidateGroup.name; });
+        }
     }
 
     public whitespaceValidator(control: FormControl) {

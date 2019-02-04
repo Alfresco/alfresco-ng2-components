@@ -38,7 +38,8 @@ export class TaskDetailsCloudModel {
     processInstanceId: string;
     status: string;
     standAlone: boolean;
-    candidateGroups: string [];
+    candidateUsers: string[];
+    candidateGroups: string[];
     managerOfCandidateGroup: boolean;
     memberOfCandidateGroup: boolean;
     memberOfCandidateUsers: boolean;
@@ -65,6 +66,7 @@ export class TaskDetailsCloudModel {
             this.processInstanceId = obj.processInstanceId || null;
             this.status = obj.status || null;
             this.standAlone = obj.standAlone || null;
+            this.candidateUsers = obj.candidateUsers || null;
             this.candidateGroups = obj.candidateGroups || null;
             this.managerOfCandidateGroup = obj.managerOfCandidateGroup || null;
             this.memberOfCandidateGroup = obj.memberOfCandidateGroup || null;
