@@ -343,7 +343,7 @@ describe('SearchQueryBuilder', () => {
             ],
             facetQueries: {
                 queries: [
-                    { query: 'q1', label: 'q2' }
+                    { query: 'q1', label: 'q2', group: 'group-name' }
                 ]
             }
         };

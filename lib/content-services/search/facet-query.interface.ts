@@ -21,4 +21,5 @@ export interface FacetQuery {
 
     checked?: boolean;
     count?: number;
+    group?: string;
 }
