@@ -19,6 +19,7 @@ import { NgModule } from '@angular/core';
 import { IconComponent } from './icon.component';
 import { MatIconModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
+import { ThumbnailService } from '../services/thumbnail.service';
 
 @NgModule({
     imports: [
@@ -30,6 +31,9 @@ import { CommonModule } from '@angular/common';
     ],
     exports: [
         IconComponent
+    ],
+    providers: [
+        ThumbnailService
     ]
 })
 export class IconModule {}

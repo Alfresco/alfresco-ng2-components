@@ -71,10 +71,11 @@ In the HTML, you can now use the icon as shown below:
 
 ### Thumbnail Service
 
-You can also use icons registered with the [Thumbnail Service](thumbnail.service.md):
+You can also reference the icons registered with the [Thumbnail Service](thumbnail.service.md)
+by utilising the `adf:` namespace.
 
 ```html
-<adf-icon value="image/gif"></adf-icon>
+<adf-icon value="adf:image/gif"></adf-icon>
 ```
 
 ## See also
