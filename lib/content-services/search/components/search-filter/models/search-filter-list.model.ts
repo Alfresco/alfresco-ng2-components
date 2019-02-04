@@ -111,7 +111,7 @@ export class SearchFilterList<T> implements Iterable<T> {
 
     addItem(item) {
         this.items.push(item);
-        this.filteredItems.push(item);
+        this.applyFilter();
     }
 
     deleteItem(item) {
