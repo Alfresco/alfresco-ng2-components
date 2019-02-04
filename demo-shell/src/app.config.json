@@ -138,9 +138,18 @@
             "label":"TheCreated",
             "field":"cm:created",
             "sets":[
-              { "label":"lastYear", "start":"2016", "end":"2017", "endInclusive":false },
+              { "label":"lastYear", "start":"2017", "end":"2018", "endInclusive":false },
               { "label":"currentYear", "start":"NOW/YEAR", "end":"NOW/YEAR+1YEAR" },
               { "label":"earlier", "start":"*", "end":"2016", "endInclusive":false }
+            ]
+          },
+          {
+            "label":"TheModified",
+            "field":"cm:modified",
+            "sets":[
+              { "label":"2016", "start":"2016", "end":"2017", "endInclusive":false },
+              { "label":"currently", "start":"2017", "end":"NOW/YEAR+1YEAR" },
+              { "label":"earlierThan2016", "start":"*", "end":"2016", "endInclusive":false }
             ]
           }
         ]

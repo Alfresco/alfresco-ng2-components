@@ -980,6 +980,59 @@
             }
           }
         },
+        "facetIntervals": {
+          "type": "object",
+          "required": [
+            "intervals"
+          ],
+          "properties": {
+            "intervals": {
+              "description": "List of facet intervals",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "label",
+                  "field",
+                  "sets"
+                ],
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "field": {
+                    "type": "string"
+                  },
+                  "sets": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "label",
+                        "start",
+                        "end"
+                      ],
+                      "properties": {
+                        "label": {
+                          "type": "string"
+                        },
+                        "start": {
+                          "type": "string"
+                        },
+                        "end": {
+                          "type": "string"
+                        },
+                        "endInclusive": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "facetQueries": {
           "type": "object",
           "required": [
