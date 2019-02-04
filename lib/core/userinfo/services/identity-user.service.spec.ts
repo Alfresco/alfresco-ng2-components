@@ -247,4 +247,26 @@ describe('IdentityUserService', () => {
             }
         );
     });
+
+    it('should return true if user has given role', (done) => {
+        spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
+        service.checkUserHasRole('mock-user-id', ['MOCK-ROLE-1']).subscribe(
+            (res: boolean) => {
+                expect(res).toBeDefined();
+                expect(res).toBeTruthy();
+                done();
+            }
+        );
+    });
+
+    it('should return false if user does not have given role', (done) => {
+        spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
+        service.checkUserHasRole('mock-user-id', ['MOCK-ROLE-10']).subscribe(
+            (res: boolean) => {
+                expect(res).toBeDefined();
+                expect(res).toBeFalsy();
+                done();
+            }
+        );
+    });
 });
