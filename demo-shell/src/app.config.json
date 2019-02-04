@@ -544,11 +544,6 @@
             "state", "assignment", "sort", "order"
         ]
     },
-    "adf-edit-process-filter": {
-        "properties": [
-            "state", "sort", "order"
-        ]
-    },
     "content-metadata": {
         "presets": {
             "default": {
