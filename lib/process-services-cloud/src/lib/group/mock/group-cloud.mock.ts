@@ -102,3 +102,9 @@ export let applicationDetailsMockApi = {
         }
     }
 };
+
+export let mockGroup = new GroupModel({
+    id: 'mock-id', name: 'Mock Group', path: '/mock', realmRoles: ['MOCK-ADMIN-ROLE', 'MOCK-USER-ROLE', 'MOCK-ROLE-1']
+});
+
+export let clientRoles = [ 'MOCK-ADMIN-ROLE', 'MOCK-USER-ROLE'];

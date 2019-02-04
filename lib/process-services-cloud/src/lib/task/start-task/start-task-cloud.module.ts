@@ -43,7 +43,8 @@ import { GroupCloudModule } from '../../group/group-cloud.module';
         FormsModule,
         ReactiveFormsModule,
         GroupCloudModule,
-        FormModule
+        FormModule,
+        GroupCloudModule
     ],
     declarations: [StartTaskCloudComponent, PeopleCloudComponent],
     providers: [

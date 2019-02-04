@@ -49,6 +49,7 @@
           "DESCRIPTION": "Description",
           "ATTACHFORM": "Attach Form",
           "ASSIGNEE": "Assignee",
+          "CANDIDATE_GROUP": "Candidate Group",
           "FORM": "Form",
           "DATE": "Choose Date"
         },
