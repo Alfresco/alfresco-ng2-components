@@ -33,7 +33,7 @@ export class PeopleGroupCloudDemoComponent {
     groupMode: string = GroupCloudComponent.MODE_SINGLE;
     preSelectGroup: any = [];
     selectedGroupList: any = [];
-    roles:any;
+    roles: any;
 
     setPeoplePreselectValue(value: string) {
         if (this.isStringArray(value)) {
@@ -51,7 +51,7 @@ export class PeopleGroupCloudDemoComponent {
         }
     }
 
-    setGroupRoles(value:string) {
+    setGroupRoles(value: string) {
         if (this.isStringArray(value)) {
             this.roles = JSON.parse(value);
         } else {
