@@ -169,8 +169,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit {
     startProcess() {
         this.isLoading = true;
 
-        this.processPayloadCloud.processInstanceName = this.processInstanceName.value;
-        this.processPayloadCloud.payloadType = 'StartProcessPayload';
+        this.processPayloadCloud.name = this.processInstanceName.value;
         if (this.variables) {
             this.processPayloadCloud.variables = this.variables;
         }

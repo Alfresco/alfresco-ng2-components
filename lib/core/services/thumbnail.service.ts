@@ -157,7 +157,10 @@ export class ThumbnailService {
 
     constructor(public contentService: ContentService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
         Object.keys(this.mimeTypeIcons).forEach((key) => {
-            matIconRegistry.addSvgIcon(key, sanitizer.bypassSecurityTrustResourceUrl(this.mimeTypeIcons[key]));
+            const url = sanitizer.bypassSecurityTrustResourceUrl(this.mimeTypeIcons[key]);
+
+            matIconRegistry.addSvgIcon(key, url);
+            matIconRegistry.addSvgIconInNamespace('adf', key, url);
         });
     }
 

@@ -153,6 +153,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     createAndFilterProperties(): TaskFilterProperties[] {
         this.checkMandatoryFilterProperties();
         if (this.checkForApplicationNameProperty()) {
+            this.applicationNames = [];
             this.getRunningApplications();
         }
         this.taskFilter = this.retrieveTaskFilter();

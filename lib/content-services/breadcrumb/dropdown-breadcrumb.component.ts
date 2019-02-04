@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSelect } from '@angular/material';
 import { PathElementEntity, Node } from '@alfresco/js-api';
 import { BreadcrumbComponent } from './breadcrumb.component';
@@ -37,24 +37,13 @@ export class DropdownBreadcrumbComponent extends BreadcrumbComponent implements 
     currentNode: PathElementEntity;
     previousNodes: PathElementEntity[];
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.folderNode) {
-            let node: Node = null;
-            node = this.transform ? this.transform(changes.folderNode.currentValue) : changes.folderNode.currentValue;
-            this.route = this.parseRoute(node);
-        }
-
-        if (changes.transform) {
-            let node = this.transform ? this.transform(this.folderNode) : this.folderNode;
-            this.route = this.parseRoute(node);
-        }
-        this.recalculateNodes();
-    }
-
     /**
      * Calculate the current and previous nodes from the route array
      */
     protected recalculateNodes(): void {
+        let node: Node = this.transform ? this.transform(this.folderNode) : this.folderNode;
+
+        this.route = this.parseRoute(node);
         this.currentNode = this.route[this.route.length - 1];
         this.previousNodes = this.route.slice(0, this.route.length - 1).reverse();
     }

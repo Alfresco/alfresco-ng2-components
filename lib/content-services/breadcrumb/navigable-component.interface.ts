@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { Node } from '@alfresco/js-api';
+
 export interface NavigableComponentInterface {
-    navigateTo(nodeId: string);
+    navigateTo(node: Node | string);
 }

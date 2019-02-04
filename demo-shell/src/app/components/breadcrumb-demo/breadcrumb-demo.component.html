@@ -76,6 +76,13 @@
         </div>
     </adf-toolbar>
 
+    <h2>6. Dropdown Breadcrumb</h2>
+
+    <adf-dropdown-breadcrumb fxHide fxShow.lt-sm="true"
+                             class="adf-files-breadcrumb"
+                             [target]="documentList">
+    </adf-dropdown-breadcrumb>
+
     <div class="adf-content">
         <adf-document-list #documentList currentFolderId="-my-">
         </adf-document-list>

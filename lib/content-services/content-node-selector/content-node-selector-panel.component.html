@@ -53,12 +53,12 @@
         data-automation-id="content-node-selector-content-list">
         <adf-document-list
             #documentList
-            adf-highlight
-            adf-highlight-selector="adf-name-location-cell .adf-name-location-cell-name"
+            [adf-highlight]="searchTerm"
+            adf-highlight-selector=".adf-name-location-cell-name"
             [showHeader]="false"
             [node]="nodes"
             [maxItems]="pageSize"
-            [rowFilter]="rowFilter"
+            [rowFilter]="_rowFilter"
             [imageResolver]="imageResolver"
             [currentFolderId]="folderIdToShow"
             selectionMode="single"
@@ -66,7 +66,7 @@
             [contentActions]="false"
             [allowDropFiles]="false"
             (folderChange)="onFolderChange()"
-            (ready)="onFolderLoaded($event)"
+            (ready)="onFolderLoaded()"
             (node-dblclick)="onNodeDoubleClick($event)"
             data-automation-id="content-node-selector-document-list">
 
@@ -82,7 +82,7 @@
                     </ng-template>
                 </data-column>
                 <data-column key="modifiedAt" type="date" format="timeAgo" class="adf-content-selector-modified-cell"></data-column>
-                <data-column key="modifiedByUser.displayName" type="text" class="adf-content-selector-modifier-cell"></data-column>
+                <data-column key="createdByUser.displayName" type="text" class="adf-content-selector-modifier-cell"></data-column>
                 <data-column key="visibility" type="text"></data-column>
             </data-columns>
 

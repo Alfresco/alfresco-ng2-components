@@ -148,6 +148,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     createAndFilterProperties() {
         this.checkMandatoryFilterProperties();
         if (this.checkForApplicationNameProperty()) {
+            this.applicationNames = [];
             this.getRunningApplications();
         }
         this.processFilter = this.retrieveProcessFilter();

@@ -16,10 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import {
-    AlfrescoApiService, HighlightDirective, UserPreferencesService,
-    PaginatedComponent, PaginationModel
-} from '@alfresco/adf-core';
+import { AlfrescoApiService, HighlightDirective, UserPreferencesService, PaginationModel } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { DocumentListComponent, PaginationStrategy } from '../document-list/components/document-list.component';
@@ -30,6 +27,7 @@ import { debounceTime } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { ShareDataRow } from '../document-list';
+import { NodeEntry } from '@alfresco/js-api/src/api/content-rest-api/model/nodeEntry';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -42,7 +40,7 @@ const defaultValidation = () => true;
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-content-node-selector-panel' }
 })
-export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedComponent {
+export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /** Node ID of the folder currently listed. */
     @Input()
@@ -62,18 +60,35 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     @Input()
     dropdownSiteList: SitePaging = null;
 
+    _rowFilter: RowFilter = defaultValidation;
+
     /** Custom row filter function. See the
      * [Document List component](document-list.component.md#custom-row-filter)
      * for more information.
      */
     @Input()
-    rowFilter: RowFilter = null;
+    set rowFilter(rowFilter: RowFilter) {
+        this.createRowFilter(rowFilter);
+    }
+
+    get rowFilter(): RowFilter {
+        return this._rowFilter;
+    }
+
+    _excludeSiteContent: string[] = [];
 
     /** Custom list of site content componentIds.
      * Used to filter out the corresponding items from the displayed nodes
      */
     @Input()
-    excludeSiteContent: string[] = [];
+    set excludeSiteContent(excludeSiteContent: string[]) {
+        this._excludeSiteContent = excludeSiteContent;
+        this.createRowFilter(this._rowFilter);
+    }
+
+    get excludeSiteContent(): string[] {
+        return this._excludeSiteContent;
+    }
 
     /** Custom image resolver function. See the
      * [Document List component](document-list.component.md#custom-row-filter)
@@ -166,27 +181,25 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
-        this.excludeSiteContent = this.excludeSiteContent ? this.excludeSiteContent : [];
-        this.rowFilter = this.getRowFilter(this.rowFilter);
     }
 
-    private getRowFilter(initialFilterFunction): RowFilter {
-        if (!initialFilterFunction) {
-            initialFilterFunction = () => true;
+    private createRowFilter(filter?: RowFilter) {
+        if (!filter) {
+            filter = () => true;
         }
-        return (value: ShareDataRow, index: number, array: ShareDataRow[]) => {
-            return initialFilterFunction(value, index, array) &&
+        this._rowFilter = (value: ShareDataRow, index: number, array: ShareDataRow[]) => {
+            return filter(value, index, array) &&
                 !this.isExcludedSiteContent(value);
         };
     }
 
     private isExcludedSiteContent(row: ShareDataRow): boolean {
         const entry = row.node.entry;
-        if (this.excludeSiteContent.length &&
+        if (this._excludeSiteContent.length &&
             entry &&
             entry.properties &&
             entry.properties['st:componentId']) {
-            const excludedItem = this.excludeSiteContent.find(
+            const excludedItem = this._excludeSiteContent.find(
                 (id: string) => entry.properties['st:componentId'] === id
             );
             return !!excludedItem;
@@ -271,20 +284,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     }
 
     /**
-     * Loads the next batch of search results
-     *
-     * @param event Pagination object
-     */
-    updatePagination(pagination: Pagination): void {
-        this.infiniteScroll = true;
-        this.skipCount = pagination.skipCount;
-
-        if (this.searchTerm.length > 0) {
-            this.querySearch();
-        }
-    }
-
-    /**
      * Perform the call to searchService with the proper parameters
      */
     private querySearch(): void {
@@ -322,16 +321,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
         }
 
         this.pagination.next(nodePaging.list.pagination);
-        this.highlight();
-    }
-
-    /**
-     * Highlight the actual search term in the next frame
-     */
-    highlight(): void {
-        setTimeout(() => {
-            this.highlighter.highlight(this.searchTerm);
-        }, 0);
     }
 
     /**
@@ -346,7 +335,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     /**
      * Attempts to set the currently loaded node
      */
-    onFolderLoaded(nodePaging: NodePaging): void {
+    onFolderLoaded(): void {
         if (!this.showingSearchResults) {
             this.attemptNodeSelection(this.documentList.folderNode);
         }
@@ -413,8 +402,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
             };
 
             this.apiService.nodesApi.getNode(node.guid, options)
-                .then((documentLibrary) => {
-                    this.documentList.performCustomSourceNavigation(documentLibrary);
+                .then((nodeEntry: NodeEntry) => {
+                    this.documentList.navigateTo(nodeEntry.entry);
                 });
         }
     }

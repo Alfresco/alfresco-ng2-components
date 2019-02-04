@@ -50,6 +50,6 @@ export let fakeProcessDefinitions: ProcessDefinitionCloud[] = [
 
 export let fakeProcessPayload = new ProcessPayloadCloud({
     processDefinitionKey: 'NewProcess:1',
-    processInstanceName: 'NewProcess 1',
+    name: 'NewProcess 1',
     payloadType: 'string'
 });
