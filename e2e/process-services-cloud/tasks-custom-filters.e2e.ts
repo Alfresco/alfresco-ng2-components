@@ -93,7 +93,7 @@ describe('Task filters cloud', () => {
             done();
         });
 
-        it('[C290045] Should display only tasks with Assigned state when Assigned is selected from state dropdown', () => {
+        it('[C290045] Should display only tasks with Assigned status when Assigned is selected from status dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('ASSIGNED');
 
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assignedTaskName);
@@ -102,7 +102,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
         });
 
-        it('[C290061] Should display only tasks with Completed state when Completed is selected from state dropdown', () => {
+        it('[C290061] Should display only tasks with Completed status when Completed is selected from status dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent()
                 .clickCustomiseFilterHeader()
                 .setStatusFilterDropDown('COMPLETED');
@@ -113,7 +113,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
         });
 
-        it('[C290139] Should display only tasks with all states when All is selected from state dropdown', () => {
+        it('[C290139] Should display only tasks with all statuses when All is selected from status dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee()
                 .setStatusFilterDropDown('ALL');
 
@@ -123,7 +123,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
         });
 
-        it('[C290154] Should display only tasks with suspended states when Suspended is selected from state dropdown', () => {
+        it('[C290154] Should display only tasks with suspended statuses when Suspended is selected from status dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee()
                 .setStatusFilterDropDown('SUSPENDED');
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(suspendedTasks.list.entries[0].entry.id);
@@ -133,8 +133,8 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
          });
 
-        it('[C290060] Should display only tasks with Created state when Created is selected from state dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStateFilterDropDown('CREATED');
+        it('[C290060] Should display only tasks with Created status when Created is selected from status dropdown', () => {
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignee().setStatusFilterDropDown('CREATED');
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
