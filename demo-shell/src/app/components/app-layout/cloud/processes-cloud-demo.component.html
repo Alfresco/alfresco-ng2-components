@@ -16,8 +16,10 @@
                                 [status]="editedFilter.state"
                                 [name]="editedFilter.processName"
                                 [sorting]="sortArray"
+                                [selectionMode]="selectionMode"
                                 [multiselect]="multiselect"
                                 (rowClick)="onRowClick($event)"
+                                (rowsSelected)="onRowsSelected($event)"
                                 #processCloud>
         </adf-cloud-process-list>
         <adf-pagination 

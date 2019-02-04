@@ -36,21 +36,6 @@
     </div>
   </mat-tab>
   <mat-tab label="{{'PS_CLOUD_TAB.SETTINGS_TAB' | translate}}">
-    <div fxFlex fxLayout="column" class="adf-settings-container">
-        <mat-checkbox
-        [color]="'primary'" 
-        [checked]="multiselect"
-        (change)="toggleMultiselect()"
-        data-automation-id="multiSelection">
-        Multiselection
-      </mat-checkbox>
-      <mat-checkbox
-        [color]="'primary'" 
-        [checked]="testingMode"
-        (change)="toggleTestingMode()"
-        data-automation-id="testingMode">
-        Testing Mode
-    </mat-checkbox>
-    </div>
+      <app-cloud-settings></app-cloud-settings>
   </mat-tab>
 </mat-tab-group>

@@ -47,6 +47,7 @@ export class TasksCloudDemoComponent implements OnInit {
     multiselect: boolean;
     selectedRows: string[] = [];
     testingMode: boolean;
+    selectionMode: string;
 
     constructor(
         private cloudLayoutService: CloudLayoutService,
@@ -74,16 +75,19 @@ export class TasksCloudDemoComponent implements OnInit {
         });
 
         this.cloudLayoutService.getCurrentSettings()
-            .subscribe(
-                (selection) => {
-                    if (selection.multiselect !== undefined) {
-                        this.multiselect = selection.multiselect;
-                    }
-                    if (selection.testingMode !== undefined) {
-                        this.testingMode = selection.testingMode;
-                    }
-                }
-            );
+            .subscribe((settings) => this.setCurrentSettings(settings));
+    }
+
+    setCurrentSettings(settings) {
+        if (settings.multiselect !== undefined) {
+            this.multiselect = settings.multiselect;
+        }
+        if (settings.testingMode !== undefined) {
+            this.testingMode = settings.testingMode;
+        }
+        if (settings.selectionMode !== undefined) {
+            this.selectionMode = settings.selectionMode;
+        }
     }
 
     onChangePageSize(event) {
@@ -95,12 +99,13 @@ export class TasksCloudDemoComponent implements OnInit {
     }
 
     onRowClick(taskId) {
-        if (!this.multiselect) {
+        if (!this.multiselect && this.selectionMode !== 'multiple') {
             this.router.navigate([`/cloud/${this.applicationName}/task-details/${taskId}`]);
         }
     }
 
     onRowsSelected(nodes) {
+        this.resetSelectedRows();
         this.selectedRows = nodes.map((node) => node.obj.entry);
     }
 

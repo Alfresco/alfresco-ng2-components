@@ -23,11 +23,17 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class CloudLayoutService {
 
+    private settings = {
+        multiselect: false,
+        testingMode: false,
+        selectionMode: 'single'
+    };
+
     private filterTaskSubject: BehaviorSubject<any> = new BehaviorSubject({index: 0});
     private filterTask$: Observable<any>;
     private filterProcessSubject: BehaviorSubject<any> = new BehaviorSubject({index: 0});
     private filterProcess$: Observable<any>;
-    private settingsSubject: BehaviorSubject<any> = new BehaviorSubject({multiselect: false, testingMode: false});
+    private settingsSubject: BehaviorSubject<any> = new BehaviorSubject(this.settings);
     private settings$: Observable<any>;
 
     constructor() {

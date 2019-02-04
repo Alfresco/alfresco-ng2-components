@@ -49,6 +49,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     sortArray: any = [];
     selectedRow: any;
     multiselect: boolean;
+    selectionMode: string;
     selectedRows: string[] = [];
     testingMode: boolean;
     processFilterProperties: any[] = [];
@@ -80,16 +81,19 @@ export class ProcessesCloudDemoComponent implements OnInit {
         });
 
         this.cloudLayoutService.getCurrentSettings()
-            .subscribe(
-                (selection) => {
-                    if (selection.multiselect !== undefined) {
-                        this.multiselect = selection.multiselect;
-                    }
-                    if (selection.testingMode !== undefined) {
-                        this.testingMode = selection.testingMode;
-                    }
-                }
-            );
+            .subscribe((settings) => this.setCurrentSettings(settings));
+    }
+
+    setCurrentSettings(settings) {
+        if (settings.multiselect !== undefined) {
+            this.multiselect = settings.multiselect;
+        }
+        if (settings.testingMode !== undefined) {
+            this.testingMode = settings.testingMode;
+        }
+        if (settings.selectionMode !== undefined) {
+            this.selectionMode = settings.selectionMode;
+        }
     }
 
     onChangePageSize(event) {
@@ -110,13 +114,14 @@ export class ProcessesCloudDemoComponent implements OnInit {
     }
 
     onProcessFilterAction(filterAction: any) {
-        this.cloudLayoutService.setCurrentProcessFilterParam({id: filterAction.filter.id});
+        this.cloudLayoutService.setCurrentProcessFilterParam({ id: filterAction.filter.id });
         if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_SAVE_AS) {
             this.router.navigate([`/cloud/${this.applicationName}/processes/`], { queryParams: filterAction.filter });
         }
-     }
+    }
 
-     onRowsSelected(nodes) {
+    onRowsSelected(nodes) {
+        this.resetSelectedRows();
         this.selectedRows = nodes.map((node) => node.obj.entry);
     }
 }
