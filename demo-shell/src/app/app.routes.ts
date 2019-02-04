@@ -46,7 +46,7 @@ import { AppsCloudDemoComponent } from './components/app-layout/cloud/apps-cloud
 import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-cloud-demo.component';
 import { StartTaskCloudDemoComponent } from './components/app-layout/cloud/start-task-cloud-demo.component';
 import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
-import { DocumentListDemoComponent } from './components/document-list/document-list-demo.component';
+import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
 
 export const appRoutes: Routes = [
@@ -341,8 +341,8 @@ export const appRoutes: Routes = [
                 loadChildren: 'app/components/lazy-loading/lazy-loading.module#LazyLoadingModule'
             },
             {
-                path: 'document-list',
-                component: DocumentListDemoComponent
+                path: 'template-list',
+                component: TemplateDemoComponent
             },
             {
                 path: 'task-list',

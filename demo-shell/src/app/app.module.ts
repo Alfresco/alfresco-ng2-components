@@ -75,7 +75,7 @@ import { CloudBreadcrumbsComponent } from './components/app-layout/cloud/cloud-b
 import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-cloud-demo.component';
 import { CloudFiltersDemoComponent } from './components/app-layout/cloud/cloud-filters-demo.component';
 import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
-import { DocumentListDemoComponent } from './components/document-list/document-list-demo.component';
+import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
 import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-settings.component';
 
@@ -138,7 +138,7 @@ import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-sett
         StartProcessCloudDemoComponent,
         CloudBreadcrumbsComponent,
         CloudFiltersDemoComponent,
-        DocumentListDemoComponent,
+        TemplateDemoComponent,
         PeopleGroupCloudDemoComponent,
         CloudSettingsComponent
     ],
