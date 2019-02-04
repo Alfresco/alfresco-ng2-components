@@ -13,7 +13,6 @@
         [isSelectionValid]="data?.isSelectionValid"
         [breadcrumbTransform]="data?.breadcrumbTransform"
         [excludeSiteContent]="data?.excludeSiteContent"
-        [modifier]="data?.modifier"
         (select)="onSelect($event)">
     </adf-content-node-selector-panel>
 </mat-dialog-content>
@@ -32,4 +31,3 @@
         data-automation-id="content-node-selector-actions-choose">{{ buttonActionName | translate }}
     </button>
 </mat-dialog-actions>
-
