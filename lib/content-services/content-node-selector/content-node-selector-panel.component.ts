@@ -195,7 +195,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     private isExcludedSiteContent(row: ShareDataRow): boolean {
         const entry = row.node.entry;
-        if (this._excludeSiteContent.length &&
+        if (this._excludeSiteContent && this._excludeSiteContent.length &&
             entry &&
             entry.properties &&
             entry.properties['st:componentId']) {
@@ -368,7 +368,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      * @param entry
      */
     private attemptNodeSelection(entry: Node): void {
-        if (this.isSelectionValid(entry)) {
+        if (entry && this.isSelectionValid(entry)) {
             this.chosenNode = entry;
         } else {
             this.resetChosenNode();

@@ -42,6 +42,7 @@ describe('AuthGuardService BPM', () => {
         appConfigService = TestBed.get(AppConfigService);
 
         appConfigService.config.providers = 'BPM';
+        appConfigService.config.auth = {};
     });
 
     it('if the alfresco js api is logged in should canActivate be true', async(() => {
@@ -53,7 +54,6 @@ describe('AuthGuardService BPM', () => {
 
     it('if the alfresco js api is configured with withCredentials true should canActivate be true', async(() => {
         spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
-        appConfigService.config.auth = {};
         appConfigService.config.auth.withCredentials = true;
 
         const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
