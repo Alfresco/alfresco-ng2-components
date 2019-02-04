@@ -32,7 +32,7 @@ export class CloudLayoutComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private cloudLayoutService: CloudLayoutService
-    ) {}
+    ) { }
 
     ngOnInit() {
         let root: string = '';

@@ -77,6 +77,7 @@ import { CloudFiltersDemoComponent } from './components/app-layout/cloud/cloud-f
 import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
+import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-settings.component';
 
 @NgModule({
     imports: [
@@ -138,7 +139,8 @@ import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/peo
         CloudBreadcrumbsComponent,
         CloudFiltersDemoComponent,
         TemplateDemoComponent,
-        PeopleGroupCloudDemoComponent
+        PeopleGroupCloudDemoComponent,
+        CloudSettingsComponent
     ],
     providers: [
         {

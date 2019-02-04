@@ -192,6 +192,10 @@
     "TASK-AUDIT-LOG": "Task Audit log",
     "TASK-SHOW-HEADER": "Show details header"
   },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "App",
+    "SETTINGS_TAB": "Settings"
+  },
   "FORM-LIST": {
     "STORE": "Store",
     "RESTORE": "Restore"
@@ -301,5 +305,10 @@
       "RUNTIME": "Runtime",
       "DESCRIPTION": "Description"
     }
+  },
+  "SETTINGS_CLOUD": {
+      "MULTISELECTION": "Multiselection",
+      "TESTING_MODE": "Testing Mode",
+      "SELECTION_MODE": "Selection Mode"
   }
 }
