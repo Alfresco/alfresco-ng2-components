@@ -28,7 +28,8 @@ Provides a universal way of rendering registered and named icons.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| value | `string` |  | Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. |
+| value | `string` | | Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. |
+| color | ThemePalette | |Theme color palette for the component. |
 
 ## Details
 
