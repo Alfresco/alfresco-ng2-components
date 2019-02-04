@@ -124,12 +124,12 @@ export class EditTaskFilterCloudComponent {
     }
 
     checkSaveAsButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.saveButton);
+        Util.waitUntilElementIsVisible(this.saveAsButton);
         return this.saveAsButton.isEnabled();
     }
 
     checkDeleteButtonIsEnabled() {
-        Util.waitUntilElementIsVisible(this.saveButton);
+        Util.waitUntilElementIsVisible(this.deleteButton);
         return this.deleteButton.isEnabled();
     }
 
