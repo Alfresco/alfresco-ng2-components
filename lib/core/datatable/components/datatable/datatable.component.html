@@ -3,7 +3,7 @@
     *ngIf="data" class="adf-full-width"
     [class.adf-data-table-card]="display === 'gallery'"
     [class.adf-data-table]="display === 'list'"
-    [class.adf-data-table--empty]="isEmpty()">
+    [class.adf-data-table--empty]="!isHeaderVisible()">
     <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup">
         <div class="adf-datatable-row" *ngIf="display === 'list'" role="row">
             <!-- Actions (left) -->
@@ -214,7 +214,7 @@
         <div *ngIf="loading"
              [class.adf-datatable-row]="display === 'list'"
              [class.adf-data-table-card-loading]="display === 'gallery'">
-            <div class="adf-datatable-table-cell">
+            <div class="adf-no-content-container adf-datatable-table-cell">
                 <ng-template *ngIf="loadingTemplate"
                              ngFor [ngForOf]="[data]"
                              [ngForTemplate]="loadingTemplate">

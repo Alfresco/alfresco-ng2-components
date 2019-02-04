@@ -20,10 +20,10 @@ import { DocumentListComponent } from '@alfresco/adf-content-services';
 import { ObjectDataTableAdapter } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'app-document-list',
-    templateUrl: './document-list-demo.component.html'
+    selector: 'app-template-list',
+    templateUrl: './template-demo.component.html'
 })
-export class DocumentListDemoComponent implements AfterViewChecked {
+export class TemplateDemoComponent implements AfterViewChecked {
 
     @ViewChild('defaultDocumentList')
     defaultDocumentListComponent: DocumentListComponent;

@@ -69,6 +69,7 @@
     "DATATABLE": "Datatable",
     "DATATABLE_LAZY": "Datatable (Lazy)",
     "DOCUMENT_LIST": "Document List",
+    "TEMPLATE": "Template",
     "FORM": "Form",
     "FORM_LIST": "Form List",
     "FORM_LOADING": "Form Loading",
