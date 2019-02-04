@@ -74,8 +74,8 @@ To setup the correct back-end services, change into the directory of your app (`
 
 ## Using the application
 
-Now that you ADF application is correctly configured, start it running the  `npm start`  command from a terminal, double checking you are located into the project folder (in our case  `myApp`). The execution of the command takes a couple of seconds and a browser will automatically open at  `http://localhost:4200/`.
+Now that your ADF application is correctly configured, start it by running the  `npm start`  command from a terminal, double checking you are located into the project folder (in our case  `myApp`). The execution of the command takes a couple of seconds and a browser will automatically open at  `http://localhost:4200/`.
 
-As you can see from the user interface, the Alfresco ADF application is really straightforward and basic. This is a precise requirement for this example, because it focuses the attention on the comprehension of the basis, instead of containing complex features that will be part of an intermediate/expert learning path. Below a screenshot of how the home page looks like.
+As you can see from the user interface, the Alfresco ADF application is really straightforward and basic. This is a precise requirement for this example, because it focuses the attention on the comprehension of the basics, instead of containing complex features that will be part of an intermediate/expert learning path. Below a screenshot of how the home page looks like.
 
 ![yeoman_start](../docassets/images/yeoman_start.png)
