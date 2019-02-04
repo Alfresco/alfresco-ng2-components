@@ -20,9 +20,6 @@ Stores information from all the custom search and faceted search widgets, compil
     Adds a facet bucket to a field.
     -   _field:_ [`FacetField`](../../content-services/search/facet-field.interface.ts)  - The target field
     -   _bucket:_ [`FacetFieldBucket`](../../content-services/search/facet-field-bucket.interface.ts)  - Bucket to add
--   **addUserFacetQuery**(query: [`FacetQuery`](../../content-services/search/facet-query.interface.ts))<br/>
-    Adds a facet query.
-    -   _query:_ [`FacetQuery`](../../content-services/search/facet-query.interface.ts)  - Query to add
 -   **buildQuery**(): `QueryBody`<br/>
     Builds the current query.
     -   **Returns** `QueryBody` - The finished query
@@ -53,9 +50,6 @@ Stores information from all the custom search and faceted search widgets, compil
     Removes an existing bucket from a field.
     -   _field:_ [`FacetField`](../../content-services/search/facet-field.interface.ts)  - The target field
     -   _bucket:_ [`FacetFieldBucket`](../../content-services/search/facet-field-bucket.interface.ts)  - Bucket to remove
--   **removeUserFacetQuery**(query: [`FacetQuery`](../../content-services/search/facet-query.interface.ts))<br/>
-    Removes an existing facet query.
-    -   _query:_ [`FacetQuery`](../../content-services/search/facet-query.interface.ts)  - Query to remove
 -   **resetToDefaults**()<br/>
     Resets the query to the defaults specified in the app config.
 -   **update**()<br/>
@@ -92,6 +86,7 @@ constructor(queryBuilder: SearchQueryBuilderService) {
 
 }
 ```
+> **Note:** Since ADF 3.0.0, the query contains the `"facetFormat": "V2"` parameter so that all the responses have the same structure even if coming from search queries containing facetFields, facetQueries, grouped facetQueries or facetIntervals.
 
 ## See also
 

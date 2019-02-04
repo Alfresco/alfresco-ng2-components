@@ -29,9 +29,7 @@ import { SearchModule } from '../../search.module';
 class TestComponent {
 
     searchFilter = {
-        selectedFacetQueries : [],
         selectedBuckets: [],
-        unselectFacetQuery() {},
         unselectFacetBucket() {}
     };
 }
@@ -48,13 +46,15 @@ describe('SearchChipListComponent', () => {
         ]
     });
 
-    xit('should remove items from the search filter', () => {
+    it('should remove items from the search filter', () => {
         const fixture = TestBed.createComponent(TestComponent);
         const component: TestComponent = fixture.componentInstance;
 
-        spyOn(component.searchFilter, 'unselectFacetQuery').and.stub();
+        spyOn(component.searchFilter, 'unselectFacetBucket').and.stub();
 
-        component.searchFilter.selectedFacetQueries = [{ id: 1 }, { id: 2 }];
+        const selectedBucket1 = {field: { id: 1 }, bucket: {label: 'bucket1'}};
+        const selectedBucket2 = {field: { id: 2 }, bucket: {label: 'bucket2'}};
+        component.searchFilter.selectedBuckets = [selectedBucket1, selectedBucket2];
 
         fixture.detectChanges();
 
@@ -64,7 +64,7 @@ describe('SearchChipListComponent', () => {
         closeButtons[0].click();
         fixture.detectChanges();
 
-        expect(component.searchFilter.unselectFacetQuery).toHaveBeenCalledWith({ id: 1 });
+        expect(component.searchFilter.unselectFacetBucket).toHaveBeenCalledWith(selectedBucket1.field, selectedBucket1.bucket);
     });
 
 });
