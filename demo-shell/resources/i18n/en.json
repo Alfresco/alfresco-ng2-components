@@ -60,16 +60,16 @@
     "BREADCRUMB": "Breadcrumb",
     "NOTIFICATIONS": "Notifications",
     "TASK_LIST": "Task List",
+    "TASK_LIST_CLOUD": "Task List Cloud",
     "PROCESS_LIST": "Process List",
     "PROCESS_CLOUD": "Process Cloud",
+    "PROCESS_LIST_CLOUD": "Process List Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",
     "CUSTOM_SOURCES": "Custom Sources",
     "DATATABLE": "Datatable",
     "DATATABLE_LAZY": "Datatable (Lazy)",
-    "DOCUMENT_LIST": "Document List",
-    "TEMPLATE": "Template",
     "FORM": "Form",
     "FORM_LIST": "Form List",
     "FORM_LOADING": "Form Loading",
@@ -89,10 +89,7 @@
     "SEARCH_SERVICE_APPROACH": "Check this to disable the input property and configure using the service",
     "HEADER_DATA": "Header Data",
     "TREE_VIEW": "Tree View",
-    "ICONS": "Icons",
-    "PEOPLE_GROUPS_CLOUD": "People/Group Cloud",
-    "PEOPLE_CLOUD": "People Cloud Component",
-    "GROUPS_CLOUD": "Groups Cloud Component"
+    "ICONS": "Icons"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -192,10 +189,6 @@
     "TASK-AUDIT-LOG": "Task Audit log",
     "TASK-SHOW-HEADER": "Show details header"
   },
-  "PS_CLOUD_TAB": {
-    "APPS_TAB": "App",
-    "SETTINGS_TAB": "Settings"
-  },
   "FORM-LIST": {
     "STORE": "Store",
     "RESTORE": "Restore"
@@ -228,7 +221,7 @@
     "FACET_QUERIES": {
       "MY_FACET_QUERIES": "My facet queries",
       "CREATED_THIS_YEAR": "1.Created This Year",
-      "MIMETYPE": "2.Type: HTML",
+      "MIMETYPE": "2.Type",
       "XTRASMALL": "3.Size: xtra small",
       "SMALL": "4.Size: small",
       "MEDIUM": "5.Size: medium",
@@ -289,11 +282,6 @@
   "TASK_LIST_CLOUD_DEMO": {
     "CUSTOMIZE_FILTERS": "Customise your filter"
   },
-  "PEOPLE_GROUPS_CLOUD": {
-    "SINGLE": "Single",
-    "MULTI": "Multi",
-    "PRESELECTED_VALUE": "Preselected value"
-  },
   "ABOUT": {
     "TITLE": "Plugins",
     "TABLE_HEADERS": {
@@ -305,10 +293,5 @@
       "RUNTIME": "Runtime",
       "DESCRIPTION": "Description"
     }
-  },
-  "SETTINGS_CLOUD": {
-      "MULTISELECTION": "Multiselection",
-      "TESTING_MODE": "Testing Mode",
-      "SELECTION_MODE": "Selection Mode"
   }
 }

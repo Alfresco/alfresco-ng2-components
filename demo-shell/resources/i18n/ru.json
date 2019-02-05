@@ -7,7 +7,7 @@
       "VERSIONS": "Версии"
     },
     "HOME": {
-      "TITLE": "Компоненты Angular для Alfresco",
+      "TITLE": "Угловые компоненты для Alfresco",
       "DOCUMENTATION": "Документация"
     },
     "LOGOUT": {
@@ -19,7 +19,7 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Разрешить удаление",
       "SHOW_COMMENTS": "Показать комментарии к версиям",
-      "ALLOW_DOWNLOAD": "Разрешить загрузку",
+      "ALLOW_DOWNLOAD": "Включить загрузку версий",
       "READ_ONLY": "Только чтение",
       "COMMENTS": "Показать комментарии"
     },
@@ -60,7 +60,10 @@
     "BREADCRUMB": "Иерархия",
     "NOTIFICATIONS": "Оповещения",
     "TASK_LIST": "Список задач",
+    "TASK_LIST_CLOUD": "Список задач в облаке",
     "PROCESS_LIST": "Список процессов",
+    "PROCESS_CLOUD": "Процесс в облаке",
+    "PROCESS_LIST_CLOUD": "Список процессов в облаке",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Войти",
@@ -84,7 +87,9 @@
     "WORD_TO_SEARCH": "Искать слово",
     "SEARCH_CREATED_BY": "Создано пользователем",
     "SEARCH_SERVICE_APPROACH": "Установите флажок, чтобы отключить свойство ввода и настроить, используя службу.",
-    "HEADER_DATA": "Данные заголовка"
+    "HEADER_DATA": "Данные заголовка",
+    "TREE_VIEW": "Иерархическое представление",
+    "ICONS": "Значки"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -100,6 +105,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Выбор нескольких вариантов (с флажками)",
     "THUMBNAILS": "Включить эскизы",
+    "ALLOW_DROP_FILES": "Включить перетаскивание файлов в папку",
     "MULTIPLE_FILE_UPLOAD": "Загрузка нескольких файлов",
     "FOLDER_UPLOAD": "Загрузка папки",
     "CUSTOM_FILTER": "Пользовательский фильтр расширений",
@@ -118,6 +124,7 @@
       "DISPLAY_NAME": "Отображаемое имя",
       "IS_LOCKED": "Блокировка",
       "TAG": "Метка",
+      "NODE_ID": "Идентификатор узла",
       "CREATED_BY": "Создано пользователем",
       "CREATED_ON": "Дата создания",
       "CREATED": "Создано",
@@ -137,10 +144,12 @@
       "THEME": "Выберите тему",
       "SHOW_VERSION": "Показать версию",
       "HIDE_VERSION": "Скрыть версию",
-      "LISTVIEW": "Режим просмотра списка"
+      "LISTVIEW": "Режим просмотра списка",
+      "CREATE_LIBRARY": "Создание библиотеки"
     },
     "ACTIONS": {
       "VERSIONS": "Управление версиями",
+      "LOCK": "Блокировка",
       "METADATA": "Информация",
       "DOWNLOAD": "Скачать",
       "PERMISSION": "Право",
@@ -201,7 +210,25 @@
   },
   "SEARCH": {
     "RESULTS": "Результаты поиска",
-    "NO_RESULT": "Результаты не найдены"
+    "NO_RESULT": "Результаты не найдены",
+    "FACET_FIELDS": {
+      "TYPE": "1: тип",
+      "SIZE": "2: размер",
+      "CREATOR": "3: автор",
+      "MODIFIER": "4: редактор",
+      "CREATED": "5: создано"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "Мои фасетные запросы",
+      "CREATED_THIS_YEAR": "1. Создано в этом году",
+      "MIMETYPE": "2. Тип",
+      "XTRASMALL": "3. Размер: крайне малый",
+      "SMALL": "4. Размер: малый",
+      "MEDIUM": "5. Размер: средний",
+      "LARGE": "6. Размер: большой",
+      "XTRALARGE": "7. Размер: очень большой",
+      "XXTRALARGE": "8. Размер: огромный"
+    }
   },
   "SOCIAL": {
     "LIKE": "Компонент \"Нравится\"",
@@ -220,16 +247,51 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",
       "APP_ID_TYPE_ERROR": "Идентификатор приложения должен быть числом",
-      "NUMBER_TYPE_ERROR": "Значение должно быть числом"
+      "NUMBER_TYPE_ERROR": "Значение должно быть числом",
+      "NUMBER_GREATER_THAN": "Значение должно быть больше или равно {{ value }}"
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Начальная страница"
     }
   },
   "PROCESS_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",
-    "APP_ID_TYPE_ERROR": "Идентификатор приложения должен быть числом"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",
+      "APP_ID_TYPE_ERROR": "Идентификатор приложения должен быть числом",
+      "NUMBER_GREATER_THAN": "Значение должно быть больше или равно {{ value }}"
+    }
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Перевод пользовательского заголовка один",
-  "GROUP-TITLE2-TRANSLATION-KEY": "Перевод пользовательского заголовка два"
+  "GROUP-TITLE2-TRANSLATION-KEY": "Перевод пользовательского заголовка два",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "Диск ACS заполнен",
+      "DESCRIPTION": "Объем данных превысил максимально допустимое значение, установленное для сети или системы",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Назад на главную"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "CUSTOMIZE_FILTERS": "Настройка фильтра"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Настройка фильтра"
+  },
+  "ABOUT": {
+    "TITLE": "Подключаемые модули",
+    "TABLE_HEADERS": {
+      "ID": "Идентификатор",
+      "NAME": "Имя",
+      "VERSION": "Версия",
+      "VENDOR": "Поставщик",
+      "LICENSE": "Лицензия",
+      "RUNTIME": "Среда выполнения",
+      "DESCRIPTION": "Описание"
+    }
+  }
 }

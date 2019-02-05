@@ -140,8 +140,7 @@
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "取消上传",
-      "UPLOAD_COMPLETED": "已上传 {{completed}} 个/共 {{total}} 个",
-      "UPLOAD_PROGRESS": "正在上传 {{completed}} 个/共 {{total}} 个",
+      "UPLOAD_PROGRESS": "已上传 {{completed}} 个/共 {{total}} 个",
       "UPLOAD_ERROR": "{{total}} 个未成功上传",
       "UPLOAD_ERRORS": "{{total}} 个未成功上传",
       "PROGRESS": "正在上传...",
@@ -153,6 +152,16 @@
     },
     "ACTION": {
       "UNDO": "撤消"
+    },
+    "ERRORS": {
+      "GENERIC": "上传不成功。如果此问题仍然存在，请联系 IT 人员",
+      "500": "内部服务器错误，请重试或联系 IT 支持人员 [500]",
+      "504": "服务器超时，请重试或联系 IT 支持人员 [504]",
+      "403": "权限不足，无法在此位置中进行上传 [403]",
+      "404": "上传位置不再存在 [404]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "上传错误"
     }
   },
   "WEBSCRIPT": {
@@ -254,11 +263,13 @@
     }
   },
   "SHARE": {
+    "PUBLIC-LINK": "公共链接",
     "DIALOG-TITLE": "共享",
     "DESCRIPTION": "单击下面的链接以将其复制到剪贴板。",
     "TITLE": "要共享的链接",
     "EXPIRES": "到期日期",
     "CLIPBOARD-MESSAGE": "已复制到剪贴板的链接",
+    "CLOSE": "关闭",
     "CONFIRMATION": {
       "DIALOG-TITLE": "删除此共享链接",
       "MESSAGE": "此链接将被删除，下次共享此文件时将会创建新链接",
@@ -288,15 +299,21 @@
       "NOT-ALLOWED": "不允许更改权限"
     }
   },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "未提供节点 ID！"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "创建库",
       "CREATE": "创建",
+      "UPDATE": "更新",
+      "EDIT": "编辑",
       "CANCEL": "取消",
       "FORM": {
         "DESCRIPTION": "说明",
         "SITE_ID": "库 ID",
-        "NAME": "名称"
+        "NAME": "名称",
+        "VISIBILITY": "可见性"
       }
     },
     "ROLE": {
@@ -310,14 +327,23 @@
       "PUBLIC": "公共",
       "MODERATED": "适中"
     },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "库名已在使用中"
+    },
     "ERRORS": {
-      "GENERIC": "我们遇到了问题",
-      "EXISTENT_SITE": "此库 ID 不可用。请尝试使用其他库。",
+      "GENERIC": "我们遇到一个问题",
+      "EXISTENT_SITE": "此库 ID 不可用。请尝试使用其他库 ID。",
       "CONFLICT": "此库 ID 已被使用。请检查回收站。",
       "ID_TOO_LONG": "对 URL 名称使用 72 个字符或更少字符",
       "DESCRIPTION_TOO_LONG": "对描述使用 512 个字符或更少字符",
       "TITLE_TOO_LONG": "对标题使用 256 个字符或更少字符",
-      "ILLEGAL_CHARACTERS": "仅使用数字和字母"
+      "TITLE_TOO_SHORT": "标题长度必须至少为 2 个字符",
+      "ILLEGAL_CHARACTERS": "仅使用数字和字母",
+      "ONLY_SPACES": "文档库名称不能只包含空格",
+      "LIBRARY_UPDATE_ERROR": "更新库属性时发生错误"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "已更新库属性"
     }
   }
 }

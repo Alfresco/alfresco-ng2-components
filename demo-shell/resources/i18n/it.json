@@ -19,7 +19,7 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Consenti eliminazione",
       "SHOW_COMMENTS": "Mostra commenti sulle versioni",
-      "ALLOW_DOWNLOAD": "Abilita download",
+      "ALLOW_DOWNLOAD": "Abilita download versioni",
       "READ_ONLY": "Sola lettura",
       "COMMENTS": "Mostra commenti"
     },
@@ -60,7 +60,10 @@
     "BREADCRUMB": "Breadcrumb",
     "NOTIFICATIONS": "Notifiche",
     "TASK_LIST": "Elenco attività",
+    "TASK_LIST_CLOUD": "Cloud elenco di compiti",
     "PROCESS_LIST": "Elenco processi",
+    "PROCESS_CLOUD": "Cloud processo",
+    "PROCESS_LIST_CLOUD": "Cloud elenco processi",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",
@@ -84,7 +87,9 @@
     "WORD_TO_SEARCH": "Termine di ricerca",
     "SEARCH_CREATED_BY": "Creato da",
     "SEARCH_SERVICE_APPROACH": "Selezionare per disattivare la proprietà di input ed eseguire la configurazione utilizzando il servizio",
-    "HEADER_DATA": "Dati intestazione"
+    "HEADER_DATA": "Dati intestazione",
+    "TREE_VIEW": "Vista struttura",
+    "ICONS": "Icone"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -100,6 +105,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Selezione multipla (con caselle di spunta)",
     "THUMBNAILS": "Abilita anteprime",
+    "ALLOW_DROP_FILES": "Abilita trascinamento di file in una cartella",
     "MULTIPLE_FILE_UPLOAD": "Caricamento di file multipli",
     "FOLDER_UPLOAD": "Caricamento cartelle",
     "CUSTOM_FILTER": "Filtro estensioni personalizzato",
@@ -118,6 +124,7 @@
       "DISPLAY_NAME": "Nome visualizzato",
       "IS_LOCKED": "Blocca",
       "TAG": "Tag",
+      "NODE_ID": "ID nodo",
       "CREATED_BY": "Creato da",
       "CREATED_ON": "Creato il",
       "CREATED": "Creato",
@@ -137,10 +144,12 @@
       "THEME": "Seleziona un tema",
       "SHOW_VERSION": "Mostra versione",
       "HIDE_VERSION": "Nascondi versione",
-      "LISTVIEW": "Modalità vista elenco"
+      "LISTVIEW": "Modalità vista elenco",
+      "CREATE_LIBRARY": "Crea libreria"
     },
     "ACTIONS": {
       "VERSIONS": "Gestione versioni",
+      "LOCK": "Blocca",
       "METADATA": "Informazioni",
       "DOWNLOAD": "Download",
       "PERMISSION": "Permesso",
@@ -201,7 +210,25 @@
   },
   "SEARCH": {
     "RESULTS": "Risultati della ricerca",
-    "NO_RESULT": "Nessun risultato trovato"
+    "NO_RESULT": "Nessun risultato trovato",
+    "FACET_FIELDS": {
+      "TYPE": "1. Tipo",
+      "SIZE": "2. Dimensioni",
+      "CREATOR": "3. Autore",
+      "MODIFIER": "4. Modificatore",
+      "CREATED": "5. Creati"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "Le mie query filtri",
+      "CREATED_THIS_YEAR": "1. Creati quest'anno",
+      "MIMETYPE": "2. Tipo",
+      "XTRASMALL": "3. Dimensioni: extra piccolo",
+      "SMALL": "4. Dimensioni: piccolo",
+      "MEDIUM": "5. Dimensioni: medio",
+      "LARGE": "6. Dimensioni: grande",
+      "XTRALARGE": "7. Dimensioni: extra grande",
+      "XXTRALARGE": "8. Dimensioni: extra extra grande"
+    }
   },
   "SOCIAL": {
     "LIKE": "Componente Like",
@@ -220,16 +247,51 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Inserisci ID app",
       "APP_ID_TYPE_ERROR": "L'ID app deve essere un numero",
-      "NUMBER_TYPE_ERROR": "Il valore deve essere un numero"
+      "NUMBER_TYPE_ERROR": "Il valore deve essere un numero",
+      "NUMBER_GREATER_THAN": "Il valore deve essere maggiore o uguale a {{ value }}"
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Inizia da pagina"
     }
   },
   "PROCESS_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Inserisci ID app",
-    "APP_ID_TYPE_ERROR": "L'ID app deve essere un numero"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Inserisci ID app",
+      "APP_ID_TYPE_ERROR": "L'ID app deve essere un numero",
+      "NUMBER_GREATER_THAN": "Il valore deve essere maggiore o uguale a {{ value }}"
+    }
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Custom Title Translation One",
-  "GROUP-TITLE2-TRANSLATION-KEY": "Custom Title Translation Two"
+  "GROUP-TITLE2-TRANSLATION-KEY": "Custom Title Translation Two",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "Dico ACS pieno",
+      "DESCRIPTION": "Il contenuto supera il limite di archiviazione complessivo configurato per la rete o il sistema",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Torna alla home"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "DEMO CLOUD ELENCO PROCESSI",
+    "CUSTOMIZE_FILTERS": "Personalizza il filtro"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Personalizza il filtro"
+  },
+  "ABOUT": {
+    "TITLE": "Plug-in",
+    "TABLE_HEADERS": {
+      "ID": "ID",
+      "NAME": "Nome",
+      "VERSION": "Versione",
+      "VENDOR": "Fornitore",
+      "LICENSE": "Licenza",
+      "RUNTIME": "Runtime",
+      "DESCRIPTION": "Descrizione"
+    }
+  }
 }

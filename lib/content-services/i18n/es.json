@@ -140,8 +140,7 @@
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "Carga cancelada",
-      "UPLOAD_COMPLETED": "Cargados {{ completed }} / {{ total }}",
-      "UPLOAD_PROGRESS": "Cargando {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Cargados {{ completed }} / {{ total }}",
       "UPLOAD_ERROR": "Error en carga {{ total }}",
       "UPLOAD_ERRORS": "Error en {{ total }} cargas",
       "PROGRESS": "Carga en curso...",
@@ -153,6 +152,16 @@
     },
     "ACTION": {
       "UNDO": "Deshacer"
+    },
+    "ERRORS": {
+      "GENERIC": "Error de carga; póngase en contacto con el equipo de TI si el problema continúa",
+      "500": "Error de servidor interno; vuelva a intentarlo o póngase en contacto con el equipo de TI",
+      "504": "Se ha agotado el tiempo de espera del servidor; póngase en contacto con el equipo de asistencia de TI [504]",
+      "403": "Permisos insuficientes para cargar en esta ubicación [403]",
+      "404": "La ubicación de carga ya no existe [404]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Error de carga"
     }
   },
   "WEBSCRIPT": {
@@ -170,7 +179,7 @@
     "RESULTS": {
       "SUMMARY": "{{numResults}} resultados encontrados para {{searchTerm}}",
       "NONE": "No se han encontrado resultados para {{searchTerm}}",
-      "ERROR": "Se ha producido un problema durante la búsqueda; vuelva a intentarlo.",
+      "ERROR": "Se ha surgido un problema durante la búsqueda; vuelva a intentarlo.",
       "COLUMNS": {
         "NAME": "Nombre a mostrar",
         "MODIFIED_BY": "Modificado por",
@@ -254,11 +263,13 @@
     }
   },
   "SHARE": {
+    "PUBLIC-LINK": "Enlace público",
     "DIALOG-TITLE": "Compartir",
     "DESCRIPTION": "Haga clic en el siguiente enlace para copiar al portapapeles.",
     "TITLE": "Enlace para compartir",
     "EXPIRES": "Caduca el",
     "CLIPBOARD-MESSAGE": "Enlace copiado al portapapeles",
+    "CLOSE": "Cerrar",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Eliminar este enlace compartido",
       "MESSAGE": "Este enlace será eliminado. Se creará un enlace nuevo la próxima vez que comparta este fichero.",
@@ -288,15 +299,21 @@
       "NOT-ALLOWED": "No puede cambiar los permisos"
     }
   },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "No se ha especificado un ID de nodo."
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Crear biblioteca",
       "CREATE": "Crear",
+      "UPDATE": "Actualizar",
+      "EDIT": "Editar",
       "CANCEL": "Cancelar",
       "FORM": {
         "DESCRIPTION": "Descripción",
         "SITE_ID": "ID de biblioteca",
-        "NAME": "Nombre"
+        "NAME": "Nombre",
+        "VISIBILITY": "Visibilidad"
       }
     },
     "ROLE": {
@@ -310,14 +327,23 @@
       "PUBLIC": "Público",
       "MODERATED": "Moderado"
     },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "Nombre de biblioteca ya en uso"
+    },
     "ERRORS": {
-      "GENERIC": "Se ha producido un error",
-      "EXISTENT_SITE": "La ID de biblioteca no está disponible. Pruebe una biblioteca diferente.",
+      "GENERIC": "Ha surgido un problema",
+      "EXISTENT_SITE": "Esta ID de biblioteca no está disponible. Pruebe con otra ID distinta.",
       "CONFLICT": "Esta ID de biblioteca ya está utilizada. Compruebe la papelera.",
       "ID_TOO_LONG": "Utilice como máximo 72 caracteres para el nombre de la URL",
       "DESCRIPTION_TOO_LONG": "Utilice como máximo 512 caracteres para la descripción",
       "TITLE_TOO_LONG": "Utilice como máximo 256 caracteres para el título",
-      "ILLEGAL_CHARACTERS": "Use solo números y letras"
+      "TITLE_TOO_SHORT": "El título debe tener al menos 2 caracteres",
+      "ILLEGAL_CHARACTERS": "Use solo números y letras",
+      "ONLY_SPACES": "El nombre de biblioteca no puede tener solo espacios",
+      "LIBRARY_UPDATE_ERROR": "Error al actualizar las propiedades de la biblioteca"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Propiedades de la biblioteca actualizadas"
     }
   }
 }

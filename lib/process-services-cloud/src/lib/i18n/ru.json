@@ -1,0 +1,185 @@
+{
+  "ADF_CLOUD_PROCESS_LIST": {
+    "MESSAGES": {
+      "TITLE": "Процессы не найдены",
+      "SUBTITLE": "Создайте новый процесс, который вы сможете легко найти позже",
+      "NONE": "Фильтр экземпляров процессов не найден."
+    },
+    "PROPERTIES": {
+      "NAME": "Имя",
+      "CREATED": "Создано"
+    },
+    "ADF_CLOUD_START_PROCESS": {
+      "BUTTON": "Запуск процесса",
+      "NO_PROCESS_DEFINITIONS": "Невозможно начать процесс, поскольку нет определений процесса",
+      "FORM": {
+        "TITLE": "Запуск процесса",
+        "LABEL": {
+          "TYPE": "Выбрать процесс",
+          "NAME": "Имя процесса"
+        },
+        "TYPE_PLACEHOLDER": "Выбрать элемент...",
+        "ACTION": {
+          "START": "Запуск процесса",
+          "CANCEL": "Отмена"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Не удалось загрузить определения процесса, проверьте, есть ли у вас доступ.",
+        "START": "Не удалось начать новый экземпляр процесса, проверьте, есть ли у вас доступ.",
+        "PROCESS_NAME_REQUIRED": "Требуется имя процесса",
+        "PROCESS_DEFINITION_REQUIRED": "Требуется определение процесса",
+        "MAXIMUM_LENGTH": "Превышение длины, макс. символов: {{characters}}"
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_LIST": {
+    "APPS": {
+      "TITLE": "Приложения не найдены",
+      "SUBTITLE": "Создайте новое приложение, которое вы сможете легко найти позже"
+    },
+    "START_TASK": {
+      "FORM": {
+        "TITLE": "Начать задачу",
+        "LABEL": {
+          "NAME": "Имя",
+          "DESCRIPTION": "Описание",
+          "ATTACHFORM": "Прикрепить форму",
+          "ASSIGNEE": "Исполнитель",
+          "FORM": "Форма",
+          "DATE": "Выбрать дату"
+        },
+        "ACTION": {
+          "START": "Начать",
+          "CANCEL": "Отмена"
+        }
+      }
+    },
+    "PROPERTIES": {
+      "NAME": "Имя",
+      "ASSIGNEE": "Исполнитель",
+      "CREATED": "Создано"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "Задачи не найдены",
+        "SUBTITLE": "Создать новую задачу для быстрого поиска позже",
+        "NONE": "Списков задач не найдено"
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_FILTERS": {
+    "MY_TASKS": "Мои задачи",
+    "COMPLETED_TASKS": "Завершенные задачи"
+  },
+  "ADF_CLOUD_PROCESS_FILTERS": {
+    "ALL_PROCESSES": "Все процессы",
+    "RUNNING_PROCESSES": "Запущенные процессы",
+    "COMPLETED_PROCESSES": "Завершенные процессы"
+  },
+  "ADF_CLOUD_START_TASK": {
+    "ERROR": {
+      "MESSAGE": "Введите другое значение",
+      "REQUIRED": "Обязательное поле",
+      "DATE": "Формат даты ДД/ММ/ГГГГ",
+      "MAXIMUM_LENGTH": "Превышение длины, макс. символов: {{characters}}."
+    }
+  },
+  "ADF_CLOUD_EDIT_TASK_FILTER": {
+    "TITLE": "Настройка фильтра",
+    "TOOL_TIP": {
+      "SAVE": "Сохранить фильтр",
+      "SAVE_AS": "Сохранить фильтр как",
+      "DELETE": "Удалить фильтр"
+    },
+    "LABEL": {
+      "APP_NAME": "Название приложения",
+      "PROCESS_DEF_ID": "Идентификатор определения процесса",
+      "STATUS": "Статус",
+      "ASSIGNMENT": "Назначение",
+      "COLUMN": "Столбец",
+      "DIRECTION": "Направление",
+      "PROCESS_INSTANCE_ID": "Идентификатор экземпляра процесса",
+      "DUE_BEFORE": "Срок: до",
+      "DUE_AFTER": "Срок: после",
+      "CLAIMED_DATE_FROM": "ClaimedDateFrom",
+      "CLAIMED_DATE_TO": "ClaimedDateTo",
+      "CREATED_DATE_FORM": "Начальная дата создания",
+      "CREATED_DATE_TO": "Конечная дата создания",
+      "TASK_NAME": "Имя задачи",
+      "PARENT_TASK_ID": "Идентификатор родительской задачи",
+      "PRIORITY": "Приоритет",
+      "STAND_ALONE": "Автономный",
+      "LAST_MODIFIED_FROM": "Начальная дата последнего изменения",
+      "LAST_MODIFIED_TO": "Конечная дата последнего изменения",
+      "OWNER": "Владелец",
+      "DUE_DATE_TO": "Начальная дата срока",
+      "DUE_DATE_FROM": "Конечная дата срока"
+    },
+    "DIALOG": {
+      "TITLE": "Сохранить фильтр как",
+      "SAVE": "Сохранить",
+      "CANCEL": "Отмена"
+    }
+  },
+  "ADF_CLOUD_EDIT_PROCESS_FILTER": {
+    "TITLE": "Настройка фильтра",
+    "STATUS": "Выберите состояние",
+    "ASSIGNMENT": "НАЗНАЧЕНИЕ",
+    "COLUMN": "Выберите столбец",
+    "DIRECTION": "Выберите направление",
+    "TOOL_TIP": {
+      "SAVE": "Сохранить фильтр",
+      "SAVE_AS": "Сохранить фильтр как",
+      "DELETE": "Удалить фильтр"
+    },
+    "LABEL": {
+      "STATUS": "Статус",
+      "ASSIGNMENT": "Назначение",
+      "COLUMN": "Столбец",
+      "DIRECTION": "Направление"
+    },
+    "DIALOG": {
+      "TITLE": "Сохранить фильтр как",
+      "SAVE": "Сохранить",
+      "CANCEL": "Отмена"
+    }
+  },
+  "ADF_CLOUD_GROUPS": {
+    "SEARCH-GROUP": "Группы",
+    "ERROR": {
+      "NOT_FOUND": "Не найдена группа с именем {{groupName}}"
+    }
+  },
+  "ADF_CLOUD_TASK_HEADER": {
+    "BUTTON": {
+      "CLAIM": "Принять",
+      "UNCLAIM": "Повторно поставить в очередь"
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Задача",
+      "THUMBNAIL": "Эскиз",
+      "DURATION": "Продолжительность",
+      "PARENT_TASK_ID": "Идентификатор родительского задания",
+      "NAME": "Имя",
+      "ASSIGNEE": "Исполнитель",
+      "ASSIGNEE_DEFAULT": "Нет исполнителя",
+      "PRIORITY": "Приоритет",
+      "DUE_DATE": "Срок",
+      "DUE_DATE_DEFAULT": "Нет срока",
+      "STATUS": "Статус",
+      "CATEGORY": "Категория",
+      "CATEGORY_DEFAULT": "Нет категории",
+      "PARENT_NAME": "Имя родительского элемента",
+      "PARENT_NAME_DEFAULT": "Нет родительского элемента",
+      "CREATED_BY": "Создано пользователем",
+      "CREATED": "Создано",
+      "END_DATE": "Дата окончания",
+      "ID": "Идентификатор",
+      "DESCRIPTION": "Описание",
+      "DESCRIPTION_DEFAULT": "Нет описания",
+      "FORM_NAME": "Имя формы",
+      "FORM_NAME_DEFAULT": "Без формы"
+    }
+  }
+}

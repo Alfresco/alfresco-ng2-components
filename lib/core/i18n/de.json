@@ -29,6 +29,9 @@
     }
   },
   "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Firmenlogo"
+    },
     "FILE_SIZE": {
       "BYTES": "Bytes",
       "KB": "KB",
@@ -298,7 +301,7 @@
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "Es ist ein Fehler aufgetreten.",
+      "TITLE": "Es ist ein Problem aufgetreten.",
       "DESCRIPTION": "Es scheint ein Fehler aufgetreten zu sein.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
@@ -325,6 +328,60 @@
       },
       "RETURN_BUTTON": {
         "TEXT": "Zurück zur Startseite"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "Servereinstellungen",
+      "DESCRIPTION": "Die unten angegebenen Wert stammen von AppConfigService",
+      "CONTENT_SERVICE_HOST": "Alfresco Content Services-URL: {{ value }}",
+      "PROCESS_SERVICE_HOST": "Alfresco Process Services-URL: {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "Produktversionen",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "Edition",
+        "VERSION": "Version",
+        "LICENSE": "Lizenz",
+        "STATUS": "Status",
+        "MODULES": "Module"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Quellcode",
+      "DESCRIPTION": "Sie führen das Projekt auf Grundlage des folgenden Commits aus:"
+    },
+    "PACKAGES": {
+      "TITLE": "Pakete",
+      "DESCRIPTION": "Aktuelles Projekt verwendet die folgenden ADF-Bibliotheken:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "ID",
+        "TITLE": "Titel",
+        "DESCRIPTION": "Beschreibung",
+        "INSTALL_DATE": "Installationsdatum",
+        "INSTALL_STATE": "Installationsstatus",
+        "VERSION_MIN": "Nebenversion",
+        "VERSION_MAX": "Hauptversion"
+      },
+      "STATUS": {
+        "READ_ONLY": "Schreibgeschützt",
+        "AUDIT_ENABLED": "Ist Audit aktiviert",
+        "QUICK_SHARE_ENABLED": "Ist Quick Share aktiviert",
+        "THUMBNAIL_ENABLED": "Erstellung von Miniaturansicht"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "Erteilt am",
+        "EXPIRES_AT": "Abgelaufen am",
+        "REMAINING_DAYS": "Verbleibende Tage",
+        "HOLDER": "Inhaber",
+        "MODE": "Modus",
+        "CLUSTER_ENABLED": "Ist Cluster aktiviert",
+        "CRYPTODOC_ENABLED": "Ist Cryptodoc aktiviert"
       }
     }
   }

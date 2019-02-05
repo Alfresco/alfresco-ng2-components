@@ -7,10 +7,7 @@
     },
     "PROPERTIES": {
       "NAME": "Name",
-      "CREATED": "Created",
-      "STATUS": "Status",
-      "START_DATE": "Start Date",
-      "ID": "Id"
+      "CREATED": "Created"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Start Process",
@@ -49,7 +46,6 @@
           "DESCRIPTION": "Description",
           "ATTACHFORM": "Attach Form",
           "ASSIGNEE": "Assignee",
-          "CANDIDATE_GROUP": "Candidate Group",
           "FORM": "Form",
           "DATE": "Choose Date"
         },
@@ -62,11 +58,6 @@
     "PROPERTIES": {
       "NAME": "Name",
       "ASSIGNEE": "Assignee",
-      "ID": "Id",
-      "STATUS": "Status",
-      "PRIORITY": "Priority",
-      "CREATED_DATE": "Created Date",
-      "LAST_MODIFIED": "Last Modified",
       "CREATED": "Created"
     },
     "LIST": {
@@ -106,6 +97,7 @@
       "PROCESS_DEF_ID": "ProcessDefinitionId",
       "STATUS": "Status",
       "ASSIGNMENT": "Assignment",
+      "COLUMN": "Column",
       "DIRECTION": "Direction",
       "PROCESS_INSTANCE_ID": "ProcessInstanceId",
       "DUE_BEFORE": "DueBefore",
@@ -122,8 +114,7 @@
       "LAST_MODIFIED_TO": "LastModifiedTo",
       "OWNER": "Owner",
       "DUE_DATE_TO": "DueDateTo",
-      "DUE_DATE_FROM": "DueDateFrom",
-      "SORT": "Sort"
+      "DUE_DATE_FROM": "DueDateFrom"
 
 
     },
@@ -135,29 +126,20 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "Customize your filter",
-    "LABEL": {
-      "APP_NAME": "ApplicationName",
-      "STATUS": "Status",
-      "INITIATOR": "Initiator",
-      "ASSIGNMENT": "Assignment",
-      "SORT": "Sort",
-      "DIRECTION": "Direction",
-      "PROCESS_DEF_ID": "ProcessDefinitionId",
-      "PROCESS_DEF_KEY": "ProcessDefinitionKey",
-      "PROCESS_INS_ID": "ProcessInstanceId",
-      "START_DATE": "StartDate",
-      "LAST_MODIFIED": "LastModified",
-      "LAST_MODIFIED_DATE_FORM": "LastModifiedFrom",
-      "LAST_MODIFIED_TO": "LastModifiedTo",
-      "PROCESS_NAME": "ProcessName"
-    },
-    "ERROR": {
-      "DATE": "Date format DD/MM/YYYY"
-    },
+    "STATUS": "Select a status",
+    "ASSIGNMENT": "ASSIGNMENT",
+    "COLUMN": "Select a column",
+    "DIRECTION": "Select a direction",
     "TOOL_TIP": {
       "SAVE": "Save filter",
       "SAVE_AS": "Save filter as",
       "DELETE": "Delete filter"
+    },
+    "LABEL": {
+      "STATUS": "Status",
+      "ASSIGNMENT": "Assignment",
+      "COLUMN": "Column",
+      "DIRECTION": "Direction"
     },
     "DIALOG": {
       "TITLE": "Save filter as",

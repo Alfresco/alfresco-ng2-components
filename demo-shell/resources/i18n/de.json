@@ -19,7 +19,7 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Löschen zulassen",
       "SHOW_COMMENTS": "Anmerkungen zu Versionen einblenden",
-      "ALLOW_DOWNLOAD": "Download zulassen",
+      "ALLOW_DOWNLOAD": "Herunterladen von Version aktivieren",
       "READ_ONLY": "Schreibgeschützt",
       "COMMENTS": "Kommentare anzeigen"
     },
@@ -60,7 +60,10 @@
     "BREADCRUMB": "Breadcrumb",
     "NOTIFICATIONS": "Benachrichtigungen",
     "TASK_LIST": "Aufgabenliste",
+    "TASK_LIST_CLOUD": "Task List Cloud",
     "PROCESS_LIST": "Prozessliste",
+    "PROCESS_CLOUD": "Prozess-Cloud",
+    "PROCESS_LIST_CLOUD": "Process List Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Anmelden",
@@ -84,7 +87,9 @@
     "WORD_TO_SEARCH": "Suchbegriff",
     "SEARCH_CREATED_BY": "Erstellt von",
     "SEARCH_SERVICE_APPROACH": "Aktivieren Sie diese Option, um die Eingabeeigenschaft zu deaktivieren und die Nutzung des Services zu konfigurieren",
-    "HEADER_DATA": "Headerdaten"
+    "HEADER_DATA": "Headerdaten",
+    "TREE_VIEW": "Strukturansicht",
+    "ICONS": "Symbole"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -100,6 +105,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Mehrfachauswahl (mit Kontrollkästchen)",
     "THUMBNAILS": "Miniaturansichten aktivieren",
+    "ALLOW_DROP_FILES": "Ablegen von Dateien in Ordner aktivieren",
     "MULTIPLE_FILE_UPLOAD": "Mehrere Dateien hochladen",
     "FOLDER_UPLOAD": "Ordner hochladen",
     "CUSTOM_FILTER": "Filter für benutzerdefinierte Erweiterungen",
@@ -118,6 +124,7 @@
       "DISPLAY_NAME": "Namen anzeigen",
       "IS_LOCKED": "Sperren",
       "TAG": "Tag",
+      "NODE_ID": "Node-ID",
       "CREATED_BY": "Erstellt von",
       "CREATED_ON": "Erstellt am",
       "CREATED": "Erstellt",
@@ -137,10 +144,12 @@
       "THEME": "Farbschema auswählen",
       "SHOW_VERSION": "Version anzeigen",
       "HIDE_VERSION": "Version ausblenden",
-      "LISTVIEW": "Listenansichtsmodus"
+      "LISTVIEW": "Listenansichtsmodus",
+      "CREATE_LIBRARY": "Bibliothek erstellen"
     },
     "ACTIONS": {
       "VERSIONS": "Versionen verwalten",
+      "LOCK": "Sperren",
       "METADATA": "Info",
       "DOWNLOAD": "Herunterladen",
       "PERMISSION": "Berechtigung",
@@ -201,7 +210,25 @@
   },
   "SEARCH": {
     "RESULTS": "Ergebnisse durchsuchen",
-    "NO_RESULT": "Keine Ergebnisse gefunden"
+    "NO_RESULT": "Keine Ergebnisse gefunden",
+    "FACET_FIELDS": {
+      "TYPE": "1:Typ",
+      "SIZE": "2:Größe",
+      "CREATOR": "3:Erstellt von",
+      "MODIFIER": "4:Bearbeitet von",
+      "CREATED": "5:Erstellt am"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "Meine Facet-Abfragen",
+      "CREATED_THIS_YEAR": "1.Dieses Jahr erstellt",
+      "MIMETYPE": "2.Typ",
+      "XTRASMALL": "3.Größe: sehr klein",
+      "SMALL": "4.Größe: klein",
+      "MEDIUM": "5.Größe: mittel",
+      "LARGE": "6.Größe: groß",
+      "XTRALARGE": "7.Größe: sehr groß",
+      "XXTRALARGE": "8.Größe: extrem groß"
+    }
   },
   "SOCIAL": {
     "LIKE": "Like-Komponente",
@@ -220,16 +247,51 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "App-ID einfügen",
       "APP_ID_TYPE_ERROR": "App-ID muss eine Zahl sein",
-      "NUMBER_TYPE_ERROR": "Wert muss Zahl sein"
+      "NUMBER_TYPE_ERROR": "Wert muss Zahl sein",
+      "NUMBER_GREATER_THAN": "Wert muss größer oder gleich {{ value }} sein"
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Startseite"
     }
   },
   "PROCESS_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "App-ID einfügen",
-    "APP_ID_TYPE_ERROR": "App-ID muss eine Zahl sein"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "App-ID einfügen",
+      "APP_ID_TYPE_ERROR": "App-ID muss eine Zahl sein",
+      "NUMBER_GREATER_THAN": "Wert muss größer oder gleich {{ value }} sein"
+    }
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Übersetzung benutzerdefinierter Titel 1",
-  "GROUP-TITLE2-TRANSLATION-KEY": "Übersetzung benutzerdefinierter Titel 2"
+  "GROUP-TITLE2-TRANSLATION-KEY": "Übersetzung benutzerdefinierter Titel 2",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "ACS-Datenträger voll",
+      "DESCRIPTION": "Inhalt übersteigt die für das Netzwerk oder System konfigurierte Gesamtspeicherbegrenzung",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Zurück zur Startseite"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "CUSTOMIZE_FILTERS": "Ihren Filter anpassen"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Ihren Filter anpassen"
+  },
+  "ABOUT": {
+    "TITLE": "Plugins",
+    "TABLE_HEADERS": {
+      "ID": "ID",
+      "NAME": "Name",
+      "VERSION": "Version",
+      "VENDOR": "Hersteller",
+      "LICENSE": "Lizenz",
+      "RUNTIME": "Laufzeit",
+      "DESCRIPTION": "Beschreibung"
+    }
+  }
 }

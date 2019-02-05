@@ -29,6 +29,9 @@
     }
   },
   "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Logo azienda"
+    },
     "FILE_SIZE": {
       "BYTES": "byte",
       "KB": "KB",
@@ -325,6 +328,60 @@
       },
       "RETURN_BUTTON": {
         "TEXT": "Torna alla home"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "Impostazioni server",
+      "DESCRIPTION": "I valori seguenti sono stati recuperati dal servizio di configurazione dell'applicazione",
+      "CONTENT_SERVICE_HOST": "URL di Alfresco Content Services: {{ value }}",
+      "PROCESS_SERVICE_HOST": "URL di Alfresco Process Services: {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "Versioni prodotto",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "Edizione",
+        "VERSION": "Versione",
+        "LICENSE": "Licenza",
+        "STATUS": "Stato",
+        "MODULES": "Moduli"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Codice sorgente",
+      "DESCRIPTION": "Il progetto è in esecuzione in base al commit seguente:"
+    },
+    "PACKAGES": {
+      "TITLE": "Pacchetti",
+      "DESCRIPTION": "Il progetto corrente usa le seguenti librerie di ADF:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "ID",
+        "TITLE": "Titolo",
+        "DESCRIPTION": "Descrizione",
+        "INSTALL_DATE": "Data installazione",
+        "INSTALL_STATE": "Stato installazione",
+        "VERSION_MIN": "Minimo versioni",
+        "VERSION_MAX": "Massimo versioni"
+      },
+      "STATUS": {
+        "READ_ONLY": "Sola lettura",
+        "AUDIT_ENABLED": "Controllo abilitato",
+        "QUICK_SHARE_ENABLED": "Quick Share abilitata",
+        "THUMBNAIL_ENABLED": "Generazione miniatura"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "Emissione",
+        "EXPIRES_AT": "Scadenza",
+        "REMAINING_DAYS": "Giorni residui",
+        "HOLDER": "Titolare",
+        "MODE": "Modo",
+        "CLUSTER_ENABLED": "Cluster abilitato",
+        "CRYPTODOC_ENABLED": "Crittografia documenti abilitata"
       }
     }
   }

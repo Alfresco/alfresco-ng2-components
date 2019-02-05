@@ -19,7 +19,7 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Tillat sletting",
       "SHOW_COMMENTS": "Vis kommentarer om versjoner",
-      "ALLOW_DOWNLOAD": "Tillat nedlasting",
+      "ALLOW_DOWNLOAD": "Aktiver versjonsnedlasting",
       "READ_ONLY": "Skrivebeskyttet",
       "COMMENTS": "Vis kommentarer"
     },
@@ -60,7 +60,10 @@
     "BREADCRUMB": "Søkebane",
     "NOTIFICATIONS": "Varsler",
     "TASK_LIST": "Oppgaveliste",
+    "TASK_LIST_CLOUD": "Task List Cloud",
     "PROCESS_LIST": "Prosessliste",
+    "PROCESS_CLOUD": "Activiti Cloud",
+    "PROCESS_LIST_CLOUD": "Process List Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Logg på",
@@ -84,7 +87,9 @@
     "WORD_TO_SEARCH": "Søkeord",
     "SEARCH_CREATED_BY": "Opprettet av",
     "SEARCH_SERVICE_APPROACH": "Velg dette for å deaktivere inndataegenskapen og konfigurere ved hjelp av tjenesten",
-    "HEADER_DATA": "Overskriftsdata"
+    "HEADER_DATA": "Overskriftsdata",
+    "TREE_VIEW": "Trevisning",
+    "ICONS": "Ikoner"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -100,6 +105,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multivalg (med avskrysningsbokser)",
     "THUMBNAILS": "Aktiver miniatyrbilder",
+    "ALLOW_DROP_FILES": "Aktiver Slipp filer i en mappe",
     "MULTIPLE_FILE_UPLOAD": "Opplasting av flere filer",
     "FOLDER_UPLOAD": "Opplasting av mappe",
     "CUSTOM_FILTER": "Tilpasset utvidelsesfilter",
@@ -118,6 +124,7 @@
       "DISPLAY_NAME": "Vis navn",
       "IS_LOCKED": "Lås",
       "TAG": "Tagg",
+      "NODE_ID": "Node-ID",
       "CREATED_BY": "Opprettet av",
       "CREATED_ON": "Opprettet",
       "CREATED": "Opprettet",
@@ -137,10 +144,12 @@
       "THEME": "Velg et tema",
       "SHOW_VERSION": "Vis versjon",
       "HIDE_VERSION": "Skjul versjon",
-      "LISTVIEW": "Listevisningsmodus"
+      "LISTVIEW": "Listevisningsmodus",
+      "CREATE_LIBRARY": "Opprett bibliotek"
     },
     "ACTIONS": {
       "VERSIONS": "Administrer versjoner",
+      "LOCK": "Lås",
       "METADATA": "Info",
       "DOWNLOAD": "Last ned",
       "PERMISSION": "Tillatelse",
@@ -201,7 +210,25 @@
   },
   "SEARCH": {
     "RESULTS": "Søkeresultater",
-    "NO_RESULT": "Ingen resultater funnet"
+    "NO_RESULT": "Ingen resultater funnet",
+    "FACET_FIELDS": {
+      "TYPE": "1:Type",
+      "SIZE": "2:Størrelse",
+      "CREATOR": "3:Oppretter",
+      "MODIFIER": "4:Modifikator",
+      "CREATED": "5:Opprettet"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "Mine egenskapsspørringer",
+      "CREATED_THIS_YEAR": "1.Opprettet i år",
+      "MIMETYPE": "2.Type",
+      "XTRASMALL": "3.Størrelse: xtra small",
+      "SMALL": "4.Størrelse: small",
+      "MEDIUM": "5.Størrelse: medium",
+      "LARGE": "6.Størrelse: large",
+      "XTRALARGE": "7.Størrelse: xtra large",
+      "XXTRALARGE": "8.Størrelse: XX large"
+    }
   },
   "SOCIAL": {
     "LIKE": "Like komponent",
@@ -220,16 +247,51 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Sett inn app-ID",
       "APP_ID_TYPE_ERROR": "App-ID må være et tall",
-      "NUMBER_TYPE_ERROR": "Verdien må være et tall"
+      "NUMBER_TYPE_ERROR": "Verdien må være et tall",
+      "NUMBER_GREATER_THAN": "Verdien må være høyere enn eller lik {{ value }}"
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Starter side"
     }
   },
   "PROCESS_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Sett inn app-ID",
-    "APP_ID_TYPE_ERROR": "App-ID må være et tall"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Sett inn app-ID",
+      "APP_ID_TYPE_ERROR": "App-ID må være et tall",
+      "NUMBER_GREATER_THAN": "Verdien må være høyere enn eller lik {{ value }}"
+    }
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Egendefinert tittel, oversettelse én",
-  "GROUP-TITLE2-TRANSLATION-KEY": "Egendefinert tittel, oversettelse to"
+  "GROUP-TITLE2-TRANSLATION-KEY": "Egendefinert tittel, oversettelse to",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "ACS-disk er full",
+      "DESCRIPTION": "Innhold overgår samlet lagringskvotegrense konfigurert for nettverket eller systemet",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Tilbake til startsiden"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "CUSTOMIZE_FILTERS": "Tilpass filteret ditt"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Tilpass filteret ditt"
+  },
+  "ABOUT": {
+    "TITLE": "Plugin-moduler",
+    "TABLE_HEADERS": {
+      "ID": "ID",
+      "NAME": "Navn",
+      "VERSION": "Versjon",
+      "VENDOR": "Leverandør",
+      "LICENSE": "Lisens",
+      "RUNTIME": "Kjøretid",
+      "DESCRIPTION": "Beskrivelse"
+    }
+  }
 }

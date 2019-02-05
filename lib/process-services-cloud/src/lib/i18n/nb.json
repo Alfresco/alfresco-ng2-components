@@ -1,0 +1,185 @@
+{
+  "ADF_CLOUD_PROCESS_LIST": {
+    "MESSAGES": {
+      "TITLE": "Ingen prosesser funnet",
+      "SUBTITLE": "Opprett en ny prosess som er lett å finne senere",
+      "NONE": "Ingen prosesstilfellefilter valgt."
+    },
+    "PROPERTIES": {
+      "NAME": "Navn",
+      "CREATED": "Opprettet"
+    },
+    "ADF_CLOUD_START_PROCESS": {
+      "BUTTON": "Start prosess",
+      "NO_PROCESS_DEFINITIONS": "Du kan ikke starte en prosess fordi det ikke finnes noen tilgjengelige prosessdefinisjoner",
+      "FORM": {
+        "TITLE": "Start prosess",
+        "LABEL": {
+          "TYPE": "Velg prosess",
+          "NAME": "Prosessnavn"
+        },
+        "TYPE_PLACEHOLDER": "Velg én...",
+        "ACTION": {
+          "START": "Start prosess",
+          "CANCEL": "Avbryt"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Kan ikke laste prosessdefinisjoner, kontroller om du har tilgang.",
+        "START": "Kan ikke start nytt prosesstilfelle, kontroller om du har tilgang.",
+        "PROCESS_NAME_REQUIRED": "Prosessnavn er påkrevd",
+        "PROCESS_DEFINITION_REQUIRED": "Prosessdefinisjon er påkrevd",
+        "MAXIMUM_LENGTH": "Lengde overskredet, maks {{characters}} tegn."
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_LIST": {
+    "APPS": {
+      "TITLE": "Ingen applikasjoner funnet",
+      "SUBTITLE": "Opprett en ny applikasjon som er lett å finne senere"
+    },
+    "START_TASK": {
+      "FORM": {
+        "TITLE": "Start oppgave",
+        "LABEL": {
+          "NAME": "Navn",
+          "DESCRIPTION": "Beskrivelse",
+          "ATTACHFORM": "Legg ved skjema",
+          "ASSIGNEE": "Tilordnet",
+          "FORM": "Skjema",
+          "DATE": "Velg dato"
+        },
+        "ACTION": {
+          "START": "Start",
+          "CANCEL": "Avbryt"
+        }
+      }
+    },
+    "PROPERTIES": {
+      "NAME": "Navn",
+      "ASSIGNEE": "Tilordnet",
+      "CREATED": "Opprettet"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "Fant ingen oppgaver",
+        "SUBTITLE": "Opprett en ny oppgave som du lett kan finne igjen senere",
+        "NONE": "Ingen oppgavelister funnet"
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_FILTERS": {
+    "MY_TASKS": "Mine oppgaver",
+    "COMPLETED_TASKS": "Fullførte oppgaver"
+  },
+  "ADF_CLOUD_PROCESS_FILTERS": {
+    "ALL_PROCESSES": "Alle prosesser",
+    "RUNNING_PROCESSES": "Kjørende prosesser",
+    "COMPLETED_PROCESSES": "Fullførte prosesser"
+  },
+  "ADF_CLOUD_START_TASK": {
+    "ERROR": {
+      "MESSAGE": "Angi en annen verdi",
+      "REQUIRED": "Felt er obligatorisk",
+      "DATE": "Datoformat DD/MM/ÅÅÅÅ",
+      "MAXIMUM_LENGTH": "Lengde overskredet, maks {{characters}} tegn."
+    }
+  },
+  "ADF_CLOUD_EDIT_TASK_FILTER": {
+    "TITLE": "Tilpass filteret ditt",
+    "TOOL_TIP": {
+      "SAVE": "Lagre filter",
+      "SAVE_AS": "Lagre filter som",
+      "DELETE": "Slett filter"
+    },
+    "LABEL": {
+      "APP_NAME": "Programnavn",
+      "PROCESS_DEF_ID": "Prosessdefinisjons-ID",
+      "STATUS": "Status",
+      "ASSIGNMENT": "Oppgave",
+      "COLUMN": "Kolonne",
+      "DIRECTION": "Retning",
+      "PROCESS_INSTANCE_ID": "Prosessforekomst-ID",
+      "DUE_BEFORE": "Forfaller før",
+      "DUE_AFTER": "Forfaller etter",
+      "CLAIMED_DATE_FROM": "ClaimedDateFrom",
+      "CLAIMED_DATE_TO": "ClaimedDateTo",
+      "CREATED_DATE_FORM": "CreatedDateFrom",
+      "CREATED_DATE_TO": "CreatedDateTo",
+      "TASK_NAME": "Oppgavenavn",
+      "PARENT_TASK_ID": "Overordnet oppgave-ID",
+      "PRIORITY": "Prioritet",
+      "STAND_ALONE": "Frittstående",
+      "LAST_MODIFIED_FROM": "Sist endret fra",
+      "LAST_MODIFIED_TO": "Sist endret til",
+      "OWNER": "Eier",
+      "DUE_DATE_TO": "Forfallsdato til",
+      "DUE_DATE_FROM": "Forfallsdato fra"
+    },
+    "DIALOG": {
+      "TITLE": "Lagre filter som",
+      "SAVE": "Lagre",
+      "CANCEL": "Avbryt"
+    }
+  },
+  "ADF_CLOUD_EDIT_PROCESS_FILTER": {
+    "TITLE": "Tilpass filteret ditt",
+    "STATUS": "Velg en status",
+    "ASSIGNMENT": "Oppgave",
+    "COLUMN": "Velg en kolonne",
+    "DIRECTION": "Velg en retning",
+    "TOOL_TIP": {
+      "SAVE": "Lagre filter",
+      "SAVE_AS": "Lagre filter som",
+      "DELETE": "Slett filter"
+    },
+    "LABEL": {
+      "STATUS": "Status",
+      "ASSIGNMENT": "Oppgave",
+      "COLUMN": "Kolonne",
+      "DIRECTION": "Retning"
+    },
+    "DIALOG": {
+      "TITLE": "Lagre filter som",
+      "SAVE": "Lagre",
+      "CANCEL": "Avbryt"
+    }
+  },
+  "ADF_CLOUD_GROUPS": {
+    "SEARCH-GROUP": "Grupper",
+    "ERROR": {
+      "NOT_FOUND": "Fant ingen gruppe med navnet {{groupName}}"
+    }
+  },
+  "ADF_CLOUD_TASK_HEADER": {
+    "BUTTON": {
+      "CLAIM": "Krev",
+      "UNCLAIM": "Legg tilbake i kø"
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Oppgave",
+      "THUMBNAIL": "Miniatyrbilde",
+      "DURATION": "Varighet",
+      "PARENT_TASK_ID": "Overordnet oppgave-ID",
+      "NAME": "Navn",
+      "ASSIGNEE": "Tilordnet",
+      "ASSIGNEE_DEFAULT": "Ingen tilordnet",
+      "PRIORITY": "Prioritet",
+      "DUE_DATE": "Forfallsdato",
+      "DUE_DATE_DEFAULT": "Ingen fristdato",
+      "STATUS": "Status",
+      "CATEGORY": "Kategori",
+      "CATEGORY_DEFAULT": "Ingen kategori",
+      "PARENT_NAME": "Navn på overordnet",
+      "PARENT_NAME_DEFAULT": "Ingen overordnet",
+      "CREATED_BY": "Opprettet av",
+      "CREATED": "Opprettet",
+      "END_DATE": "Sluttdato",
+      "ID": "ID",
+      "DESCRIPTION": "Beskrivelse",
+      "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
+      "FORM_NAME": "Skjemaets navn",
+      "FORM_NAME_DEFAULT": "Ikke noe skjema"
+    }
+  }
+}
