@@ -212,7 +212,15 @@ exports.config = {
 
         browser.manage().window().setSize(width, height);
 
-        jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
+        jasmine.getEnv().addReporter(
+            new SpecReporter({
+                spec: {
+                    displayStacktrace: true,
+                    displayDuration: true
+                }
+            })
+        );
+
         let generatedSuiteName = Math.random().toString(36).substr(2, 5);
         let junitReporter = new jasmineReporters.JUnitXmlReporter({
             consolidateAll: true,
