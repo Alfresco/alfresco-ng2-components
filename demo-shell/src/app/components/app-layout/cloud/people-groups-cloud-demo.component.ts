@@ -28,26 +28,28 @@ import { MatRadioChange } from '@angular/material';
 export class PeopleGroupCloudDemoComponent {
 
     peopleMode: string = PeopleCloudComponent.MODE_SINGLE;
-    preSelectUsers: any = [];
+    preSelectUsers: string[] = [];
+    peopleRoles: string[] = [];
 
     groupMode: string = GroupCloudComponent.MODE_SINGLE;
-    preSelectGroup: any = [];
-    selectedGroupList: any = [];
+    preSelectGroup: string[] = [];
+    selectedGroupList: GroupModel[] = [];
+    groupRoles: string[];
 
-    setPeoplePreselectValue(value: string) {
-        if (this.isStringArray(value)) {
-            this.preSelectUsers = JSON.parse(value);
-        } else if (value.length === 0) {
-            this.preSelectUsers = [];
-        }
+    setPeoplePreselectValue(event: any) {
+        this.preSelectUsers = this.getArrayFromString(event.target.value);
     }
 
-    setGroupsPreselectValue(value: string) {
-        if (this.isStringArray(value)) {
-            this.preSelectGroup = JSON.parse(value);
-        } else if (value.length === 0) {
-            this.preSelectGroup = [];
-        }
+    setGroupsPreselectValue(event: any) {
+        this.preSelectGroup = this.getArrayFromString(event.target.value);
+    }
+
+    setPeopleRoles(event: any) {
+        this.peopleRoles = this.getArrayFromString(event.target.value);
+    }
+
+    setGroupRoles(event: any) {
+        this.groupRoles = this.getArrayFromString(event.target.value);
     }
 
     onChangePeopleMode(event: MatRadioChange) {
@@ -64,6 +66,15 @@ export class PeopleGroupCloudDemoComponent {
             return Array.isArray(result);
         } catch (e) {
             return false;
+        }
+    }
+
+    private getArrayFromString(value: string) {
+
+        if (this.isStringArray(value)) {
+            return JSON.parse(value);
+        } else {
+            return [];
         }
     }
 
