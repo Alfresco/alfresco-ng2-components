@@ -15,7 +15,11 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD
 import { Component, ElementRef, OnInit, Output, EventEmitter, ViewChild, ViewEncapsulation, Input, SimpleChanges, OnChanges } from '@angular/core';
+=======
+import { Component, ElementRef, OnInit, Output, EventEmitter, ViewChild, ViewEncapsulation, Input, OnChanges, SimpleChanges } from '@angular/core';
+>>>>>>> [ADF4006] People/CloudDemoComponent add preselected value validations
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, of, BehaviorSubject } from 'rxjs';
@@ -173,6 +177,41 @@ export class GroupCloudComponent implements OnInit, OnChanges {
             this.searchGroups.push(searchedGroup);
             this.searchGroupsSubject.next(this.searchGroups);
         });
+    }
+
+    private loadMultiplePreselectGroups() {
+
+        this.filterPreselectGroups().then( (filteredPreSelectGroups) => {
+            this.clearError();
+            filteredPreSelectGroups.map( (group) => {
+                if (!group.valid) {
+                    this.preSelectGroups = this.preSelectGroups.filter( (item: GroupModel) => item.name !== group.data.name);
+                    this.setError();
+                }
+            });
+            this.selectedGroupsSubject.next(this.preSelectGroups);
+        });
+    }
+
+    private filterPreselectGroups() {
+        let promises: Promise<any>[] = [];
+
+        this.preSelectGroups.forEach((group: GroupModel) => {
+            promises.push(new Promise((resolve, revoke) => {
+                const queryParam = this.createSearchParam(group.name);
+                this.groupService.findGroupsByName(queryParam).subscribe( (result) => {
+                    resolve({
+                        valid : this.groupExists(result, queryParam),
+                        data: group
+                    });
+                });
+            }));
+        });
+        return Promise.all(promises);
+    }
+
+    private groupExists(result: any, queryParam: any) {
+        return result.length > 0 && result[0].name === queryParam.name;
     }
 
     checkGroupHasAccess(groupId: string): Observable<boolean> {

@@ -117,9 +117,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     private initSearch() {
         this.searchUserCtrl.valueChanges.pipe(
-            filter((value) => {
-                return typeof value === 'string';
-            }),
+            debounceTime(500),
+            distinctUntilChanged(),
             tap((value) => {
                 if (value) {
                     this.setError();
@@ -130,12 +129,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
                     this.clearError();
                 }
              }),
-            debounceTime(500),
-            distinctUntilChanged(),
             tap(() => {
                 this.resetSearchUsers();
             }),
-            switchMap((search) => this.identityUserService.findUsersByName(search)),
+            switchMap((search) => this.identityUserService.findUsersByName(this.getSearchParam(search))),
             mergeMap((users) => {
                 return users;
             }),
@@ -158,7 +155,16 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         ).subscribe((user) => {
             this._searchUsers.push(user);
             this.searchUsersSubject.next(this._searchUsers);
+            this.clearError();
         });
+    }
+
+    private getSearchParam(search) {
+        if (typeof search === 'string') {
+            return search;
+        } else {
+            return `${search.firstName} ${search.lastName}`;
+        }
     }
 
     private checkUserHasAccess(userId: string): Observable<boolean> {
@@ -195,6 +201,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     private loadPreSelectUsers() {
         if (!this.isMultipleMode()) {
             this.searchUserCtrl.setValue(this.preSelectUsers[0]);
+            this.onSelect(this.preSelectUsers[0]);
             this.preSelectUsers = [];
         } else {
             this.selectedUsersSubject.next(this.preSelectUsers);
