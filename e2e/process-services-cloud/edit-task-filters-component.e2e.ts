@@ -43,7 +43,7 @@ describe('Edit task filters cloud', () => {
 
         beforeAll(async () => {
             silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
@@ -62,9 +62,6 @@ describe('Edit task filters cloud', () => {
 
         afterEach((done) => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Created Date');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Created Date');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveButton();
             done();
         });
 

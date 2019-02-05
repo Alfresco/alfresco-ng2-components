@@ -52,11 +52,11 @@ describe('Universal Icon component', function () {
 
     it('[C291872] Should display the icons on the page', () => {
 
-        expect(iconsPage.locateLigatureIcon('alarm').isDisplayed()).toBe(true, 'Ligature icon is not displayed');
+        expect(iconsPage.locateLigatureIcon('folder').isDisplayed()).toBe(true, 'Ligature icon is not displayed');
 
         expect(iconsPage.locateCustomIcon('adf:move_file').isDisplayed()).toBe(true, 'Named icon is not displayed');
 
-        expect(iconsPage.locateCustomIcon('image/gif').isDisplayed()).toBe(true, 'Thumbnail service icon is not displayed');
+        expect(iconsPage.locateCustomIcon('adf:folder').isDisplayed()).toBe(true, 'Thumbnail service icon is not displayed');
     });
 
 });
