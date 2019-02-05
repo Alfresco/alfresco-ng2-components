@@ -58,7 +58,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
 
     /** List of process filter properties to display */
     @Input()
-    filterProperties: string[] = EditProcessFilterCloudComponent.DEFAULT_PROCESS_FILTER_PROPERTIES; // default ['status', 'sort', 'order']
+    filterProperties: string[] = EditProcessFilterCloudComponent.DEFAULT_PROCESS_FILTER_PROPERTIES;
 
     /** List of sort properties to display. */
     @Input()
