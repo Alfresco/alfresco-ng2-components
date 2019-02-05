@@ -1,4 +1,4 @@
-<mat-card class="adf-people-groups-section">
+<mat-card class="adf-section">
     <mat-card-title>
         {{ 'APP_LAYOUT.PEOPLE_CLOUD' | translate}}
     </mat-card-title>
@@ -6,16 +6,22 @@
     <mat-card-content>
         <div class="people-control-options">
             <mat-radio-group (change)="onChangePeopleMode($event)">
-                <mat-radio-button class="adf-people-single-mode" value="{{ peopleSingleMode }}">{{ 'PEOPLE_GROUPS_CLOUD.SINGLE' | translate }}</mat-radio-button>
-                <mat-radio-button class="adf-people-multiple-mode" value="{{ peopleMultipleMode }}">{{ 'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
+                <mat-radio-button class="adf-people-single-mode" value="{{ peopleSingleMode }}">{{
+                    'PEOPLE_GROUPS_CLOUD.SINGLE' | translate }}</mat-radio-button>
+                <mat-radio-button class="adf-people-multiple-mode" value="{{ peopleMultipleMode }}">{{
+                    'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
             </mat-radio-group>
             <mat-form-field class="adf-preselect-value">
+                <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }}</mat-label>
+                <input matInput (input)="setPeopleRoles($event)" placeholder="['ACTIVITI_ADMIN']" />
+            </mat-form-field>
+            <mat-form-field class="adf-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.PRESELECTED_VALUE' | translate }}</mat-label>
-                <input matInput (input)="setPeoplePreselectValue($event.target.value)" />
+                <input matInput (input)="setPeoplePreselectValue($event)" />
             </mat-form-field>
         </div>
         <div>
-            <adf-cloud-people [preSelectUsers]="preSelectUsers" [mode]="peopleMode"></adf-cloud-people>
+            <adf-cloud-people [preSelectUsers]="preSelectUsers" [roles]="peopleRoles" [mode]="peopleMode"></adf-cloud-people>
         </div>
 
         <div class="adf-people-list" *ngIf="canShowPeopleList()">
@@ -29,7 +35,7 @@
     </mat-card-content>
 </mat-card>
 
-<mat-card class="adf-people-groups-section">
+<mat-card class="adf-section">
     <mat-card-title>
         {{ 'APP_LAYOUT.GROUPS_CLOUD' | translate}}
     </mat-card-title>
@@ -37,12 +43,14 @@
     <mat-card-content>
         <div class="groups-control-options">
             <mat-radio-group (change)="onChangeGroupsMode($event)">
-                <mat-radio-button class="adf-people-single-mode" value="{{ groupSingleMode }}">{{ 'PEOPLE_GROUPS_CLOUD.SINGLE' | translate }}</mat-radio-button>
-                <mat-radio-button class="adf-people-multiple-mode" value="{{ groupMultipleMode }}">{{ 'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
+                <mat-radio-button class="adf-people-single-mode" value="{{ groupSingleMode }}">{{
+                    'PEOPLE_GROUPS_CLOUD.SINGLE' | translate }}</mat-radio-button>
+                <mat-radio-button class="adf-people-multiple-mode" value="{{ groupMultipleMode }}">{{
+                    'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
             </mat-radio-group>
             <mat-form-field class="adf-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }}</mat-label>
-                <input matInput (input)="setGroupRoles($event.target.value)" />
+                <input matInput (input)="setGroupRoles($event)" placeholder="['ACTIVITI_ADMIN']" />
             </mat-form-field>
         </div>
         <div>

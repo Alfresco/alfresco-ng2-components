@@ -1,5 +1,5 @@
 .adf {
-    &-people-groups-section {
+    &-section {
         mat-card-title {
             font-size:18px;
             font-weight: bold;
@@ -13,13 +13,9 @@
         }
 
         mat-card-content {
-            .adf-group-preselected-value {
-                width: calc(100% - 500px);
-                margin-right: 15px;
-            }
 
             .adf-preselect-value {
-                width: calc(100% - 306px);
+                margin-right: 15px;
             }
         }
     }
