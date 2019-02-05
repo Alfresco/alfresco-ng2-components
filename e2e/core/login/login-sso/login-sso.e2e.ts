@@ -36,13 +36,13 @@ describe('Login component - SSO', () => {
 
     it('[C261050] Should be possible login in the PS with SSO', () => {
         silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, silentLogin);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
         loginApsPage.clickOnSSOButton();
         loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
     });
 
     it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', () => {
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity);
         loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
     });
 });
