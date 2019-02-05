@@ -208,16 +208,6 @@ export class CoreModuleLazy {
         TemplateModule,
         SortingPickerModule,
         IconModule
-    ],
-    providers: [
-        {
-            provide: APP_INITIALIZER,
-            useFactory: startupServiceFactory,
-            deps: [
-                AlfrescoApiService
-            ],
-            multi: true
-        }
     ]
 })
 export class CoreModule {
