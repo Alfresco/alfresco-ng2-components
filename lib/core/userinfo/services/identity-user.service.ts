@@ -231,12 +231,12 @@ export class IdentityUserService {
     getUserRoles(userId: string): Observable<IdentityRoleModel[]> {
         const url = this.buildRolesUrl(userId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
-            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
         return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
                     url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam, authNames,
-                    contentTypes, accepts, null, null)
+                    headerParams, formParams, bodyParam,
+                    contentTypes, accepts, Object, null, null)
                 ).pipe(
                     map((response: IdentityRoleModel[]) => {
                         return response;
@@ -300,6 +300,24 @@ export class IdentityUserService {
         });
 
         return hasAnyRole;
+    }
+
+    checkUserHasRole(userId: string, roleNames: string[]): Observable<boolean>  {
+        return this.getUserRoles(userId).pipe(map((userRoles: IdentityRoleModel[]) => {
+            let hasRole = false;
+            if (userRoles && userRoles.length > 0) {
+                roleNames.forEach((roleName: string) => {
+                    const role = userRoles.find((userRole) => {
+                        return roleName === userRole.name;
+                    });
+                    if (role) {
+                        hasRole = true;
+                        return;
+                    }
+                });
+            }
+            return hasRole;
+        }));
     }
 
     private buildUserUrl(): any {
