@@ -402,7 +402,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
             this.apiService.nodesApi.getNode(node.guid, options)
                 .then((nodeEntry: NodeEntry) => {
-                    this.documentList.navigateTo(nodeEntry.entry);
+                    this.documentList.performCustomSourceNavigation(nodeEntry.entry);
                 });
         }
     }
