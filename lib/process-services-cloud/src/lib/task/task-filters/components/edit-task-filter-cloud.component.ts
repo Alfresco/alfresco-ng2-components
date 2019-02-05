@@ -59,7 +59,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
 
     /** List of task filter properties to display. */
     @Input()
-    filterProperties: string[] = EditTaskFilterCloudComponent.DEFAULT_TASK_FILTER_PROPERTIES; // default ['status', 'assignee', 'sort', 'order']
+    filterProperties: string[] = EditTaskFilterCloudComponent.DEFAULT_TASK_FILTER_PROPERTIES;
 
     /** List of sort properties to display. */
     @Input()
