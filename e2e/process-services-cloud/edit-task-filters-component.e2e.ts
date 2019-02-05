@@ -62,9 +62,6 @@ describe('Edit task filters cloud', () => {
 
         afterEach((done) => {
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('Created Date');
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Created Date');
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickSaveButton();
             done();
         });
 
