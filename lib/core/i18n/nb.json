@@ -29,6 +29,9 @@
     }
   },
   "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Selskapslogo"
+    },
     "FILE_SIZE": {
       "BYTES": "Byte",
       "KB": "KB",
@@ -298,7 +301,7 @@
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "Det oppstod en feil",
+      "TITLE": "Vi støtte på et problem.",
       "DESCRIPTION": "Noe gikk galt.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
@@ -325,6 +328,60 @@
       },
       "RETURN_BUTTON": {
         "TEXT": "Tilbake til startsiden"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "Serverinnstillinger",
+      "DESCRIPTION": "Verdiene nedenfor er tatt fra AppConfigService",
+      "CONTENT_SERVICE_HOST": "URL til Alfresco Content Services: {{ value }}",
+      "PROCESS_SERVICE_HOST": "URL til Alfresco Process Services: {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "Produktversjoner",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "Utgave",
+        "VERSION": "Versjon",
+        "LICENSE": "Lisens",
+        "STATUS": "Status",
+        "MODULES": "Moduler"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Kildekode",
+      "DESCRIPTION": "Du kjører prosjektet basert på følgende forpliktelse:"
+    },
+    "PACKAGES": {
+      "TITLE": "Pakker",
+      "DESCRIPTION": "Gjeldende prosjekt bruker følgende ADF-biblioteker:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "ID",
+        "TITLE": "Tittel",
+        "DESCRIPTION": "Beskrivelse",
+        "INSTALL_DATE": "Installasjonsdato",
+        "INSTALL_STATE": "Installeringstilstand",
+        "VERSION_MIN": "Mindre versjon",
+        "VERSION_MAX": "Maks versjon"
+      },
+      "STATUS": {
+        "READ_ONLY": "Skrivebeskyttet",
+        "AUDIT_ENABLED": "Er aktivert for revisjon",
+        "QUICK_SHARE_ENABLED": "Er aktivert for Quick Share",
+        "THUMBNAIL_ENABLED": "Generering av miniatyrbilde"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "Utstedt",
+        "EXPIRES_AT": "Utløper",
+        "REMAINING_DAYS": "Gjenstående dager",
+        "HOLDER": "Innehaver",
+        "MODE": "Modus",
+        "CLUSTER_ENABLED": "Er klyngeaktivert",
+        "CRYPTODOC_ENABLED": "Er Cryptodoc-aktivert"
       }
     }
   }

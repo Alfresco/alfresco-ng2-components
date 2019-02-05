@@ -27,6 +27,8 @@
     "PROPERTIES": {
       "TASK_NAME": "タスク",
       "THUMBNAIL": "サムネイル",
+      "DURATION": "期間",
+      "PARENT_TASK_ID": "親タスク ID",
       "NAME": "名前",
       "ASSIGNEE": "担当者",
       "ASSIGNEE_DEFAULT": "担当者なし",
@@ -40,6 +42,7 @@
       "PARENT_NAME_DEFAULT": "親なし",
       "CREATED_BY": "作成者",
       "CREATED": "作成日",
+      "END_DATE": "終了日",
       "ID": "ID",
       "DESCRIPTION": "説明",
       "DESCRIPTION_DEFAULT": "説明なし",
@@ -91,7 +94,13 @@
         "NONE": "関わっているメンバーなし"
       },
       "CHECKLIST": {
-        "NONE": "チェックリストなし"
+        "NONE": "チェックリストなし",
+        "DIALOG": {
+          "TITLE": "タスクの選択",
+          "CANCEL-BUTTON": "キャンセル",
+          "ADD-BUTTON": "チェックリストの追加",
+          "PLACEHOLDER": "名前"
+        }
       },
       "ERROR": {
         "TITLE": "処理を完了できませんでした",
@@ -105,6 +114,7 @@
       }
     },
     "START_TASK": {
+      "DEFAULT_NAME": "あなたのデフォルトのタスク",
       "BUTTON": "タスクの作成",
       "FORM": {
         "TITLE": "タスクの開始",
@@ -121,8 +131,10 @@
           "START": "開始",
           "CANCEL": "キャンセル"
         },
-        "DATE": {
-          "ERROR": "日付形式: YYYY/MM/DD"
+        "ERROR": {
+          "REQUIRED": "必須フィールドです",
+          "DATE": "日付形式: YYYY/MM/DD",
+          "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。"
         }
       }
     },
@@ -274,7 +286,8 @@
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "プロセス定義を読み込めませんでした。アクセス権があることを確認してください。",
-        "START": "新しいプロセスインスタンスを開始できませんでした。アクセス権があることを確認してください。"
+        "START": "新しいプロセスインスタンスを開始できませんでした。アクセス権があることを確認してください。",
+        "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。"
       }
     },
     "PROCESS-ATTACHMENT": {

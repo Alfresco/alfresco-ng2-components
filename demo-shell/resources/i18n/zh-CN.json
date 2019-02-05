@@ -19,7 +19,7 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "允许删除",
       "SHOW_COMMENTS": "显示有关版本的注释",
-      "ALLOW_DOWNLOAD": "允许下载",
+      "ALLOW_DOWNLOAD": "启用版本下载",
       "READ_ONLY": "只读",
       "COMMENTS": "显示注释"
     },
@@ -60,7 +60,10 @@
     "BREADCRUMB": "面包屑",
     "NOTIFICATIONS": "通知",
     "TASK_LIST": "任务列表",
+    "TASK_LIST_CLOUD": "Task List Cloud",
     "PROCESS_LIST": "流程列表",
+    "PROCESS_CLOUD": "Process Cloud",
+    "PROCESS_LIST_CLOUD": "Process List Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "登录",
@@ -84,7 +87,9 @@
     "WORD_TO_SEARCH": "搜索词",
     "SEARCH_CREATED_BY": "创建者",
     "SEARCH_SERVICE_APPROACH": "选中此项以禁用输入属性并使用服务进行配置",
-    "HEADER_DATA": "标头数据"
+    "HEADER_DATA": "标头数据",
+    "TREE_VIEW": "树视图",
+    "ICONS": "图标"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -100,6 +105,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "多选（含复选框）",
     "THUMBNAILS": "启用缩略图",
+    "ALLOW_DROP_FILES": "在文件夹中启用“文件拖放”",
     "MULTIPLE_FILE_UPLOAD": "上传多个文件",
     "FOLDER_UPLOAD": "文件夹上传",
     "CUSTOM_FILTER": "自定义扩展过滤器",
@@ -118,6 +124,7 @@
       "DISPLAY_NAME": "显示名称",
       "IS_LOCKED": "锁定",
       "TAG": "标签",
+      "NODE_ID": "节点 ID",
       "CREATED_BY": "创建者",
       "CREATED_ON": "创建日期",
       "CREATED": "已创建",
@@ -137,10 +144,12 @@
       "THEME": "选择主题",
       "SHOW_VERSION": "显示版本",
       "HIDE_VERSION": "隐藏版本",
-      "LISTVIEW": "列表视图模式"
+      "LISTVIEW": "列表视图模式",
+      "CREATE_LIBRARY": "创建库"
     },
     "ACTIONS": {
       "VERSIONS": "管理版本",
+      "LOCK": "锁定",
       "METADATA": "信息",
       "DOWNLOAD": "下载",
       "PERMISSION": "权限",
@@ -201,7 +210,25 @@
   },
   "SEARCH": {
     "RESULTS": "搜索结果",
-    "NO_RESULT": "未找到结果"
+    "NO_RESULT": "未找到结果",
+    "FACET_FIELDS": {
+      "TYPE": "1：类型",
+      "SIZE": "2：字号",
+      "CREATOR": "3：创建者",
+      "MODIFIER": "4：修改者",
+      "CREATED": "5：已创建"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "我的分面查询",
+      "CREATED_THIS_YEAR": "1. 今年创建",
+      "MIMETYPE": "2. 类型",
+      "XTRASMALL": "3. 字号：超小",
+      "SMALL": "4. 字号：小",
+      "MEDIUM": "5. 字号：中等",
+      "LARGE": "6. 字号：大",
+      "XTRALARGE": "7. 字号：特大",
+      "XXTRALARGE": "8. 字号：超大"
+    }
   },
   "SOCIAL": {
     "LIKE": "点赞组件",
@@ -220,16 +247,51 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "插入应用程序 ID",
       "APP_ID_TYPE_ERROR": "应用程序 ID 必须为数字",
-      "NUMBER_TYPE_ERROR": "值必须是数字"
+      "NUMBER_TYPE_ERROR": "值必须是数字",
+      "NUMBER_GREATER_THAN": "值必须大于或等于 {{ value }}"
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "开始页面"
     }
   },
   "PROCESS_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "插入应用程序 ID",
-    "APP_ID_TYPE_ERROR": "应用程序 ID 必须为数字"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "插入应用程序 ID",
+      "APP_ID_TYPE_ERROR": "应用程序 ID 必须为数字",
+      "NUMBER_GREATER_THAN": "值必须大于或等于 {{ value }}"
+    }
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "自定义标题翻译 1",
-  "GROUP-TITLE2-TRANSLATION-KEY": "自定义标题翻译 2"
+  "GROUP-TITLE2-TRANSLATION-KEY": "自定义标题翻译 2",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "ACS 磁盘已满",
+      "DESCRIPTION": "内容超出为网络或系统配置的总存储配额限制",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "返回到主页"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "CUSTOMIZE_FILTERS": "自定义您的筛选器"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "自定义您的筛选器"
+  },
+  "ABOUT": {
+    "TITLE": "插件",
+    "TABLE_HEADERS": {
+      "ID": "ID",
+      "NAME": "名称",
+      "VERSION": "版本",
+      "VENDOR": "供应商",
+      "LICENSE": "许可证",
+      "RUNTIME": "运行时",
+      "DESCRIPTION": "说明"
+    }
+  }
 }

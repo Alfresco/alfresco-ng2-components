@@ -19,7 +19,7 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Verwijderen toestaan",
       "SHOW_COMMENTS": "Opmerkingen over versies tonen",
-      "ALLOW_DOWNLOAD": "Downloaden toestaan",
+      "ALLOW_DOWNLOAD": "Versiedownload inschakelen",
       "READ_ONLY": "Alleen-lezen",
       "COMMENTS": "Opmerkingen weergeven"
     },
@@ -60,7 +60,10 @@
     "BREADCRUMB": "Navigatiepad",
     "NOTIFICATIONS": "Meldingen",
     "TASK_LIST": "Lijst met taken",
+    "TASK_LIST_CLOUD": "Task List Cloud",
     "PROCESS_LIST": "Lijst met processen",
+    "PROCESS_CLOUD": "Process Cloud",
+    "PROCESS_LIST_CLOUD": "Process List Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Aanmelden",
@@ -84,7 +87,9 @@
     "WORD_TO_SEARCH": "Zoekterm",
     "SEARCH_CREATED_BY": "Gemaakt door",
     "SEARCH_SERVICE_APPROACH": "Schakel dit in om de invoereigenschap uit te schakelen en om te configureren via de service",
-    "HEADER_DATA": "Koptekstgegevens"
+    "HEADER_DATA": "Koptekstgegevens",
+    "TREE_VIEW": "Structuurweergave",
+    "ICONS": "Pictogrammen"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -100,6 +105,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multiselect (met selectievakjes)",
     "THUMBNAILS": "Miniaturen inschakelen",
+    "ALLOW_DROP_FILES": "Bestanden neerzetten in een map inschakelen",
     "MULTIPLE_FILE_UPLOAD": "Meerdere bestanden uploaden",
     "FOLDER_UPLOAD": "Map uploaden",
     "CUSTOM_FILTER": "Aangepast extensiefilter",
@@ -118,6 +124,7 @@
       "DISPLAY_NAME": "Getoonde naam",
       "IS_LOCKED": "Vergrendeling",
       "TAG": "Tag",
+      "NODE_ID": "Node-id",
       "CREATED_BY": "Gemaakt door",
       "CREATED_ON": "Gemaakt op",
       "CREATED": "Gemaakt",
@@ -137,10 +144,12 @@
       "THEME": "Een thema selecteren",
       "SHOW_VERSION": "Versie weergeven",
       "HIDE_VERSION": "Versie verbergen",
-      "LISTVIEW": "Lijstweergavemodus"
+      "LISTVIEW": "Lijstweergavemodus",
+      "CREATE_LIBRARY": "Bibliotheek maken"
     },
     "ACTIONS": {
       "VERSIONS": "Versies beheren",
+      "LOCK": "Vergrendeling",
       "METADATA": "Info",
       "DOWNLOAD": "Downloaden",
       "PERMISSION": "Machtiging",
@@ -201,7 +210,25 @@
   },
   "SEARCH": {
     "RESULTS": "Zoekresultaten",
-    "NO_RESULT": "Geen resultaten gevonden"
+    "NO_RESULT": "Geen resultaten gevonden",
+    "FACET_FIELDS": {
+      "TYPE": "1:Type",
+      "SIZE": "2:Grootte",
+      "CREATOR": "3:Maker",
+      "MODIFIER": "4:Gewijzigd door",
+      "CREATED": "5:Gemaakt"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "Mijn facetquery's",
+      "CREATED_THIS_YEAR": "1.Dit jaar gemaakt",
+      "MIMETYPE": "2.Type",
+      "XTRASMALL": "3.Grootte: extra klein",
+      "SMALL": "4.Grootte: klein",
+      "MEDIUM": "5.Grootte: middelgroot",
+      "LARGE": "6.Grootte: groot",
+      "XTRALARGE": "7.Grootte: extra groot",
+      "XXTRALARGE": "8.Grootte: XX groot"
+    }
   },
   "SOCIAL": {
     "LIKE": "'Vind ik leuk'-component",
@@ -220,16 +247,51 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "App-id invoegen",
       "APP_ID_TYPE_ERROR": "App-id moet een getal zijn",
-      "NUMBER_TYPE_ERROR": "Waarde moet een getal zijn"
+      "NUMBER_TYPE_ERROR": "Waarde moet een getal zijn",
+      "NUMBER_GREATER_THAN": "Waarde moet groter zijn dan of gelijk zijn aan {{ value }}"
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Beginpagina"
     }
   },
   "PROCESS_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "App-id invoegen",
-    "APP_ID_TYPE_ERROR": "App-id moet een getal zijn"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "App-id invoegen",
+      "APP_ID_TYPE_ERROR": "App-id moet een getal zijn",
+      "NUMBER_GREATER_THAN": "Waarde moet groter zijn dan of gelijk zijn aan {{ value }}"
+    }
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Aangepaste titel vertaling één",
-  "GROUP-TITLE2-TRANSLATION-KEY": "Aangepaste titel vertaling twee"
+  "GROUP-TITLE2-TRANSLATION-KEY": "Aangepaste titel vertaling twee",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "ACS-schijf vol",
+      "DESCRIPTION": "Content overschrijdt de totale opslaglimiet die is geconfigureerd voor het netwerk of systeem",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Terug naar Home"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "CUSTOMIZE_FILTERS": "Uw filter aanpassen"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Uw filter aanpassen"
+  },
+  "ABOUT": {
+    "TITLE": "Plug-ins",
+    "TABLE_HEADERS": {
+      "ID": "Id",
+      "NAME": "Naam",
+      "VERSION": "Versie",
+      "VENDOR": "Leverancier",
+      "LICENSE": "Licentie",
+      "RUNTIME": "Runtime",
+      "DESCRIPTION": "Beschrijving"
+    }
+  }
 }

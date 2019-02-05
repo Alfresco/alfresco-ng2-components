@@ -29,6 +29,9 @@
     }
   },
   "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Bedrijfslogo"
+    },
     "FILE_SIZE": {
       "BYTES": "bytes",
       "KB": "KB",
@@ -298,7 +301,7 @@
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "Er is een fout opgetreden.",
+      "TITLE": "Er is een probleem opgetreden.",
       "DESCRIPTION": "Er is waarschijnlijk iets fout gegaan.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
@@ -325,6 +328,60 @@
       },
       "RETURN_BUTTON": {
         "TEXT": "Terug naar Home"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "Serverinstellingen",
+      "DESCRIPTION": "De onderstaande waarden zijn afkomstig uit de AppConfigService",
+      "CONTENT_SERVICE_HOST": "Alfresco Content Services-URL: {{ value }}",
+      "PROCESS_SERVICE_HOST": "Alfresco Process Services-URL: {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "Productversies",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "Editie",
+        "VERSION": "Versie",
+        "LICENSE": "Licentie",
+        "STATUS": "Status",
+        "MODULES": "Modules"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Broncode",
+      "DESCRIPTION": "U voert het project uit op basis van de volgende doorvoer:"
+    },
+    "PACKAGES": {
+      "TITLE": "Pakketten",
+      "DESCRIPTION": "Voor het huidige project worden de volgende ADF-bibliotheken gebruikt:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "Id",
+        "TITLE": "Titel",
+        "DESCRIPTION": "Beschrijving",
+        "INSTALL_DATE": "Installatiedatum",
+        "INSTALL_STATE": "Installatiestatus",
+        "VERSION_MIN": "Versie met kleine wijzigingen",
+        "VERSION_MAX": "Versie met belangrijke wijzigingen"
+      },
+      "STATUS": {
+        "READ_ONLY": "Alleen-lezen",
+        "AUDIT_ENABLED": "Is ingeschakeld voor audits",
+        "QUICK_SHARE_ENABLED": "Is ingeschakeld voor Quick Share",
+        "THUMBNAIL_ENABLED": "Miniatuurgeneratie"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "Verleend op",
+        "EXPIRES_AT": "Vervalt op",
+        "REMAINING_DAYS": "Resterende dagen",
+        "HOLDER": "Houder",
+        "MODE": "Modus",
+        "CLUSTER_ENABLED": "Is ingeschakeld voor clusters",
+        "CRYPTODOC_ENABLED": "Is ingeschakeld voor Cryptodoc"
       }
     }
   }

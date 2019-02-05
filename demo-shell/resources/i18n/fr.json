@@ -19,7 +19,7 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Autoriser la suppression",
       "SHOW_COMMENTS": "Afficher les commentaires sur les versions",
-      "ALLOW_DOWNLOAD": "Autoriser le téléchargement",
+      "ALLOW_DOWNLOAD": "Activer le téléchargement de la version",
       "READ_ONLY": "Lecture seule",
       "COMMENTS": "Afficher les commentaires"
     },
@@ -60,7 +60,10 @@
     "BREADCRUMB": "Fil d'Ariane",
     "NOTIFICATIONS": "Notifications",
     "TASK_LIST": "Liste des tâches",
+    "TASK_LIST_CLOUD": "Task List Cloud",
     "PROCESS_LIST": "Liste des processus",
+    "PROCESS_CLOUD": "Activiti Cloud",
+    "PROCESS_LIST_CLOUD": "Process List Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Connexion",
@@ -84,7 +87,9 @@
     "WORD_TO_SEARCH": "Mot recherché",
     "SEARCH_CREATED_BY": "Créé par",
     "SEARCH_SERVICE_APPROACH": "Cochez cette option pour désactiver la propriété d'entrée et configurer à partir du service",
-    "HEADER_DATA": "Données d'en-tête"
+    "HEADER_DATA": "Données d'en-tête",
+    "TREE_VIEW": "Arborescence",
+    "ICONS": "Icônes"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -100,6 +105,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Sélection multiple (avec cases à cocher)",
     "THUMBNAILS": "Activer les miniatures",
+    "ALLOW_DROP_FILES": "Activer l'option déposer des fichiers dans un dossier",
     "MULTIPLE_FILE_UPLOAD": "Importation de fichiers multiples",
     "FOLDER_UPLOAD": "Importation de dossier",
     "CUSTOM_FILTER": "Filtre d'extensions personnalisées",
@@ -118,6 +124,7 @@
       "DISPLAY_NAME": "Nom affiché",
       "IS_LOCKED": "Verrouiller",
       "TAG": "Tag",
+      "NODE_ID": "ID du nœud",
       "CREATED_BY": "Créé par",
       "CREATED_ON": "Créé le",
       "CREATED": "Créé",
@@ -137,10 +144,12 @@
       "THEME": "Sélectionner un thème",
       "SHOW_VERSION": "Afficher la version",
       "HIDE_VERSION": "Masquer la version",
-      "LISTVIEW": "Mode Liste"
+      "LISTVIEW": "Mode Liste",
+      "CREATE_LIBRARY": "Créer une Bibliothèque"
     },
     "ACTIONS": {
       "VERSIONS": "Gérer les versions",
+      "LOCK": "Verrouiller",
       "METADATA": "Informations",
       "DOWNLOAD": "Télécharger",
       "PERMISSION": "Droit d'accès",
@@ -201,7 +210,25 @@
   },
   "SEARCH": {
     "RESULTS": "Résultats de la recherche",
-    "NO_RESULT": "Aucun résultat trouvé"
+    "NO_RESULT": "Aucun résultat trouvé",
+    "FACET_FIELDS": {
+      "TYPE": "1:Type",
+      "SIZE": "2:Taille",
+      "CREATOR": "3:Créateur",
+      "MODIFIER": "4:Modificateur",
+      "CREATED": "5:Créé"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "Mes recherches avec filtre",
+      "CREATED_THIS_YEAR": "1.Créé cette année",
+      "MIMETYPE": "2.Type",
+      "XTRASMALL": "3.Taille : très petit",
+      "SMALL": "4.Taille : petit",
+      "MEDIUM": "5.Taille : moyen",
+      "LARGE": "6.Taille : gros",
+      "XTRALARGE": "7.Taille : très gros",
+      "XXTRALARGE": "8.Taille : énorme"
+    }
   },
   "SOCIAL": {
     "LIKE": "Composant J'aime",
@@ -220,16 +247,51 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Insérer l'ID d'application",
       "APP_ID_TYPE_ERROR": "L'ID d'application doit être un numéro",
-      "NUMBER_TYPE_ERROR": "La valeur doit être un numéro"
+      "NUMBER_TYPE_ERROR": "La valeur doit être un numéro",
+      "NUMBER_GREATER_THAN": "La valeur doit être égale ou supérieure à {{ value }}"
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Démarrage de la page"
     }
   },
   "PROCESS_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Insérer l'ID d'application",
-    "APP_ID_TYPE_ERROR": "L'ID d'application doit être un numéro"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Insérer l'ID d'application",
+      "APP_ID_TYPE_ERROR": "L'ID d'application doit être un numéro",
+      "NUMBER_GREATER_THAN": "La valeur doit être égale ou supérieure à {{ value }}"
+    }
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Titre personnalisé traduction un",
-  "GROUP-TITLE2-TRANSLATION-KEY": "Titre personnalisé traduction deux"
+  "GROUP-TITLE2-TRANSLATION-KEY": "Titre personnalisé traduction deux",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "Disque ACS plein",
+      "DESCRIPTION": "Le contenu dépasse le quota maximum de stockage configuré pour le réseau ou système",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Retour à l'accueil"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "CUSTOMIZE_FILTERS": "Personnaliser votre filtre"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Personnaliser votre filtre"
+  },
+  "ABOUT": {
+    "TITLE": "Plugins",
+    "TABLE_HEADERS": {
+      "ID": "ID",
+      "NAME": "Nom",
+      "VERSION": "Version",
+      "VENDOR": "Fournisseur",
+      "LICENSE": "Licence",
+      "RUNTIME": "Java Runtime",
+      "DESCRIPTION": "Description"
+    }
+  }
 }

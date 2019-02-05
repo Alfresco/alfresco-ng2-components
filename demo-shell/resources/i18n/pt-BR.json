@@ -19,7 +19,7 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Permitir apagar",
       "SHOW_COMMENTS": "Mostrar comentários em versões",
-      "ALLOW_DOWNLOAD": "Permitir download",
+      "ALLOW_DOWNLOAD": "Ativar download da versão",
       "READ_ONLY": "Somente leitura",
       "COMMENTS": "Mostrar comentários"
     },
@@ -60,7 +60,10 @@
     "BREADCRUMB": "Trilha de navegação",
     "NOTIFICATIONS": "Notificações",
     "TASK_LIST": "Lista de tarefas",
+    "TASK_LIST_CLOUD": "Task List Cloud",
     "PROCESS_LIST": "Lista de processos",
+    "PROCESS_CLOUD": "Process Cloud",
+    "PROCESS_LIST_CLOUD": "Process List Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",
@@ -84,7 +87,9 @@
     "WORD_TO_SEARCH": "Pesquisar palavras",
     "SEARCH_CREATED_BY": "Criado por",
     "SEARCH_SERVICE_APPROACH": "Marque essa opção para desativar a inserção e configurar a utilização do serviço",
-    "HEADER_DATA": "Dados do cabeçalho"
+    "HEADER_DATA": "Dados do cabeçalho",
+    "TREE_VIEW": "Exibição em árvore",
+    "ICONS": "Ícones"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -99,7 +104,8 @@
   },
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Seleção Múltipla (com caixas de seleção)",
-    "THUMBNAILS": "Ativar miniaturas",
+    "THUMBNAILS": "Ativar Miniaturas",
+    "ALLOW_DROP_FILES": "Ativar Soltar Arquivos em uma pasta",
     "MULTIPLE_FILE_UPLOAD": "Carregamento de Vários Arquivos",
     "FOLDER_UPLOAD": "Carregamento de Pasta",
     "CUSTOM_FILTER": "Filtro de extensões personalizado",
@@ -118,6 +124,7 @@
       "DISPLAY_NAME": "Nome de exibição",
       "IS_LOCKED": "Bloqueio",
       "TAG": "Marca",
+      "NODE_ID": "ID do nó",
       "CREATED_BY": "Criado por",
       "CREATED_ON": "Criado em",
       "CREATED": "Criado",
@@ -137,10 +144,12 @@
       "THEME": "Selecionar um tema",
       "SHOW_VERSION": "Mostrar versão",
       "HIDE_VERSION": "Ocultar versão",
-      "LISTVIEW": "Modo de exibição em lista"
+      "LISTVIEW": "Modo de exibição em lista",
+      "CREATE_LIBRARY": "Criar biblioteca"
     },
     "ACTIONS": {
       "VERSIONS": "Gerenciar versões",
+      "LOCK": "Bloqueio",
       "METADATA": "Informações",
       "DOWNLOAD": "Download",
       "PERMISSION": "Permissão",
@@ -201,7 +210,25 @@
   },
   "SEARCH": {
     "RESULTS": "Resultados da pesquisa",
-    "NO_RESULT": "Nenhum resultado encontrado"
+    "NO_RESULT": "Nenhum resultado encontrado",
+    "FACET_FIELDS": {
+      "TYPE": "1:Tipo",
+      "SIZE": "2:Tamanho",
+      "CREATOR": "3:Criador",
+      "MODIFIER": "4:Modificador",
+      "CREATED": "5:Criado"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "Minhas consultas de faceta",
+      "CREATED_THIS_YEAR": "1.Criado este ano",
+      "MIMETYPE": "2.Tipo",
+      "XTRASMALL": "3.Tamanho: muito pequeno",
+      "SMALL": "4.Tamanho: pequeno",
+      "MEDIUM": "5.Tamanho: médio",
+      "LARGE": "6.Tamanho: grande",
+      "XTRALARGE": "7.Tamanho: muito grande",
+      "XXTRALARGE": "8.Tamanho: extragrande"
+    }
   },
   "SOCIAL": {
     "LIKE": "Componente Like",
@@ -220,16 +247,51 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Inserir ID do aplicativo",
       "APP_ID_TYPE_ERROR": "O ID do aplicativo deve ser um número",
-      "NUMBER_TYPE_ERROR": "O valor deve ser um número"
+      "NUMBER_TYPE_ERROR": "O valor deve ser um número",
+      "NUMBER_GREATER_THAN": "O valor deve ser maior ou igual a {{ value }}"
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Iniciando a página"
     }
   },
   "PROCESS_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Inserir ID do Aplicativo",
-    "APP_ID_TYPE_ERROR": "O ID do aplicativo deve ser um número"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Inserir ID do aplicativo",
+      "APP_ID_TYPE_ERROR": "O ID do aplicativo deve ser um número",
+      "NUMBER_GREATER_THAN": "O valor deve ser maior ou igual a {{ value }}"
+    }
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Tradução um de título personalizado",
-  "GROUP-TITLE2-TRANSLATION-KEY": "Tradução dois de título personalizado"
+  "GROUP-TITLE2-TRANSLATION-KEY": "Tradução dois de título personalizado",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "Disco ACS cheio",
+      "DESCRIPTION": "O conteúdo excede o limite de armazenamento geral configurado para a rede ou o sistema",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Voltar para a página inicial"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "CUSTOMIZE_FILTERS": "Personalizar seu filtro"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Personalizar seu filtro"
+  },
+  "ABOUT": {
+    "TITLE": "Plugins",
+    "TABLE_HEADERS": {
+      "ID": "ID",
+      "NAME": "Nome",
+      "VERSION": "Versão",
+      "VENDOR": "Fornecedor",
+      "LICENSE": "Licença",
+      "RUNTIME": "Tempo de execução",
+      "DESCRIPTION": "Descrição"
+    }
+  }
 }

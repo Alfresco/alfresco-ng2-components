@@ -27,6 +27,8 @@
     "PROPERTIES": {
       "TASK_NAME": "任务",
       "THUMBNAIL": "缩略图",
+      "DURATION": "持续时间",
+      "PARENT_TASK_ID": "父任务 ID",
       "NAME": "名称",
       "ASSIGNEE": "被指派者",
       "ASSIGNEE_DEFAULT": "没有被分派人",
@@ -40,6 +42,7 @@
       "PARENT_NAME_DEFAULT": "没有父类别",
       "CREATED_BY": "创建者",
       "CREATED": "已创建",
+      "END_DATE": "结束日期",
       "ID": "ID",
       "DESCRIPTION": "说明",
       "DESCRIPTION_DEFAULT": "没有描述",
@@ -91,7 +94,13 @@
         "NONE": "未包含任何人"
       },
       "CHECKLIST": {
-        "NONE": "没有检查表"
+        "NONE": "没有检查表",
+        "DIALOG": {
+          "TITLE": "新建勾选项",
+          "CANCEL-BUTTON": "取消",
+          "ADD-BUTTON": "添加核对清单",
+          "PLACEHOLDER": "名称"
+        }
       },
       "ERROR": {
         "TITLE": "无法完成该操作",
@@ -105,6 +114,7 @@
       }
     },
     "START_TASK": {
+      "DEFAULT_NAME": "我的默认任务",
       "BUTTON": "创建任务",
       "FORM": {
         "TITLE": "启动任务",
@@ -121,8 +131,10 @@
           "START": "开始",
           "CANCEL": "取消"
         },
-        "DATE": {
-          "ERROR": "日期格式 DD/MM/YYYY"
+        "ERROR": {
+          "REQUIRED": "必填字段",
+          "DATE": "日期格式 (DD/MM/YYYY)",
+          "MAXIMUM_LENGTH": "超出长度，最多 {{characters}} 字符"
         }
       }
     },
@@ -274,7 +286,8 @@
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "无法加载流程定义，请确定您是否有访问权限。",
-        "START": "无法启动新流程实例，请确定您是否有访问权限。"
+        "START": "无法启动新流程实例，请确定您是否有访问权限。",
+        "MAXIMUM_LENGTH": "超出长度，最多 {{characters}} 字符"
       }
     },
     "PROCESS-ATTACHMENT": {

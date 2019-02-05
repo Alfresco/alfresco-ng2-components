@@ -1,0 +1,185 @@
+{
+  "ADF_CLOUD_PROCESS_LIST": {
+    "MESSAGES": {
+      "TITLE": "Aucun processus trouvé",
+      "SUBTITLE": "Créer un nouveau processus auquel vous pourrez accéder facilement par la suite",
+      "NONE": "Aucun filtre d'instances de processus sélectionné."
+    },
+    "PROPERTIES": {
+      "NAME": "Nom",
+      "CREATED": "Créé"
+    },
+    "ADF_CLOUD_START_PROCESS": {
+      "BUTTON": "Démarrer le processus",
+      "NO_PROCESS_DEFINITIONS": "Impossible de démarrer un processus car aucune définition de processus n'est disponible",
+      "FORM": {
+        "TITLE": "Démarrer le processus",
+        "LABEL": {
+          "TYPE": "Sélectionner un processus",
+          "NAME": "Nom de processus"
+        },
+        "TYPE_PLACEHOLDER": "Choisissez une valeur...",
+        "ACTION": {
+          "START": "Démarrer le processus",
+          "CANCEL": "Annuler"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Impossible de charger les définitions de processus ; vérifiez que vous avez les droits d'accès.",
+        "START": "Impossible de démarrer la nouvelle instance de processus ; vérifiez que vous avez les droits d'accès.",
+        "PROCESS_NAME_REQUIRED": "Le nom du processus est obligatoire",
+        "PROCESS_DEFINITION_REQUIRED": "La définition du processus est obligatoire",
+        "MAXIMUM_LENGTH": "Longueur dépassée, {{characters}} caractères max."
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_LIST": {
+    "APPS": {
+      "TITLE": "Aucune application trouvée",
+      "SUBTITLE": "Créer une nouvelle application à laquelle vous pourrez accéder facilement par la suite"
+    },
+    "START_TASK": {
+      "FORM": {
+        "TITLE": "Démarrer la tâche",
+        "LABEL": {
+          "NAME": "Nom",
+          "DESCRIPTION": "Description",
+          "ATTACHFORM": "Joindre un formulaire",
+          "ASSIGNEE": "Personne assignée",
+          "FORM": "Formulaire",
+          "DATE": "Choisir la date"
+        },
+        "ACTION": {
+          "START": "Démarrer",
+          "CANCEL": "Annuler"
+        }
+      }
+    },
+    "PROPERTIES": {
+      "NAME": "Nom",
+      "ASSIGNEE": "Personne assignée",
+      "CREATED": "Créé"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "Aucune tâche trouvée",
+        "SUBTITLE": "Créer une nouvelle tâche facilement accessible ultérieurement",
+        "NONE": "Aucune liste de tâches trouvée"
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_FILTERS": {
+    "MY_TASKS": "Mes tâches",
+    "COMPLETED_TASKS": "Tâches terminées"
+  },
+  "ADF_CLOUD_PROCESS_FILTERS": {
+    "ALL_PROCESSES": "Tous les processus",
+    "RUNNING_PROCESSES": "Processus en cours",
+    "COMPLETED_PROCESSES": "Processus achevés"
+  },
+  "ADF_CLOUD_START_TASK": {
+    "ERROR": {
+      "MESSAGE": "Saisir une valeur différente",
+      "REQUIRED": "Champ obligatoire",
+      "DATE": "Format de date JJ/MM/AAAA",
+      "MAXIMUM_LENGTH": "Longueur dépassée, {{characters}} caractères max."
+    }
+  },
+  "ADF_CLOUD_EDIT_TASK_FILTER": {
+    "TITLE": "Personnaliser votre filtre",
+    "TOOL_TIP": {
+      "SAVE": "Enregistrer le filtre",
+      "SAVE_AS": "Enregistrer le filtre sous",
+      "DELETE": "Supprimer le filtre"
+    },
+    "LABEL": {
+      "APP_NAME": "Nom de l'application",
+      "PROCESS_DEF_ID": "ID de la définition du processus",
+      "STATUS": "Statut",
+      "ASSIGNMENT": "Affectation",
+      "COLUMN": "Colonne",
+      "DIRECTION": "Direction",
+      "PROCESS_INSTANCE_ID": "ID de l'instance de processus",
+      "DUE_BEFORE": "Echéance avant le",
+      "DUE_AFTER": "Echéance après le",
+      "CLAIMED_DATE_FROM": "ClaimedDateFrom",
+      "CLAIMED_DATE_TO": "ClaimedDateTo",
+      "CREATED_DATE_FORM": "Date de création à partir du",
+      "CREATED_DATE_TO": "Date de création jusqu'au",
+      "TASK_NAME": "Nom de la tâche",
+      "PARENT_TASK_ID": "ID de la tâche parent",
+      "PRIORITY": "Priorité",
+      "STAND_ALONE": "Autonome",
+      "LAST_MODIFIED_FROM": "Date de dernière modification à partir du",
+      "LAST_MODIFIED_TO": "Date de dernière modification jusqu'au",
+      "OWNER": "Propriétaire",
+      "DUE_DATE_TO": "Date d'échéance à partir du",
+      "DUE_DATE_FROM": "Date d'échéance jusqu'au"
+    },
+    "DIALOG": {
+      "TITLE": "Enregistrer le filtre sous",
+      "SAVE": "Enregistrer",
+      "CANCEL": "Annuler"
+    }
+  },
+  "ADF_CLOUD_EDIT_PROCESS_FILTER": {
+    "TITLE": "Personnaliser votre filtre",
+    "STATUS": "Sélectionner un statut",
+    "ASSIGNMENT": "Affectation",
+    "COLUMN": "Sélectionner une colonne",
+    "DIRECTION": "Sélectionner une direction",
+    "TOOL_TIP": {
+      "SAVE": "Enregistrer le filtre",
+      "SAVE_AS": "Enregistrer le filtre sous",
+      "DELETE": "Supprimer le filtre"
+    },
+    "LABEL": {
+      "STATUS": "Statut",
+      "ASSIGNMENT": "Affectation",
+      "COLUMN": "Colonne",
+      "DIRECTION": "Direction"
+    },
+    "DIALOG": {
+      "TITLE": "Enregistrer le filtre sous",
+      "SAVE": "Enregistrer",
+      "CANCEL": "Annuler"
+    }
+  },
+  "ADF_CLOUD_GROUPS": {
+    "SEARCH-GROUP": "Groupes",
+    "ERROR": {
+      "NOT_FOUND": "Aucun groupe nommé {{groupName}} n'a été trouvé"
+    }
+  },
+  "ADF_CLOUD_TASK_HEADER": {
+    "BUTTON": {
+      "CLAIM": "Se l'attribuer",
+      "UNCLAIM": "Replacer dans la file d'attente"
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Tâche",
+      "THUMBNAIL": "Miniature",
+      "DURATION": "Durée",
+      "PARENT_TASK_ID": "ID de la tâche parent",
+      "NAME": "Nom",
+      "ASSIGNEE": "Personne assignée",
+      "ASSIGNEE_DEFAULT": "Aucune personne assignée",
+      "PRIORITY": "Priorité",
+      "DUE_DATE": "Date d'échéance",
+      "DUE_DATE_DEFAULT": "Aucune date",
+      "STATUS": "Statut",
+      "CATEGORY": "Catégorie",
+      "CATEGORY_DEFAULT": "Aucune catégorie",
+      "PARENT_NAME": "Nom du parent",
+      "PARENT_NAME_DEFAULT": "Aucun parent",
+      "CREATED_BY": "Créé par",
+      "CREATED": "Créé",
+      "END_DATE": "Date de fin",
+      "ID": "ID",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_DEFAULT": "Aucune description",
+      "FORM_NAME": "Nom du formulaire",
+      "FORM_NAME_DEFAULT": "Aucun formulaire"
+    }
+  }
+}

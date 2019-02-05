@@ -19,7 +19,7 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "削除を許可する",
       "SHOW_COMMENTS": "バージョンに関するコメントを表示",
-      "ALLOW_DOWNLOAD": "ダウンロードを許可する",
+      "ALLOW_DOWNLOAD": "バージョンのダウンロードを許可",
       "READ_ONLY": "読取り専用",
       "COMMENTS": "コメントを表示する"
     },
@@ -60,7 +60,10 @@
     "BREADCRUMB": "階層リンク",
     "NOTIFICATIONS": "通知",
     "TASK_LIST": "タスクリスト",
+    "TASK_LIST_CLOUD": "Task List Cloud",
     "PROCESS_LIST": "プロセスリスト",
+    "PROCESS_CLOUD": "Process Cloud",
+    "PROCESS_LIST_CLOUD": "Process List Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "ログイン",
@@ -84,7 +87,9 @@
     "WORD_TO_SEARCH": "語句の検索",
     "SEARCH_CREATED_BY": "作成者",
     "SEARCH_SERVICE_APPROACH": "入力プロパティを無効にし、サービスを使って設定する場合は、このチェックボックスをオンにします",
-    "HEADER_DATA": "ヘッダーの日付"
+    "HEADER_DATA": "ヘッダーの日付",
+    "TREE_VIEW": "ツリービュー",
+    "ICONS": "アイコン"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -100,6 +105,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "複数選択 (チェックボックスを使用)",
     "THUMBNAILS": "サムネイルを有効にする",
+    "ALLOW_DROP_FILES": "フォルダへのドラッグ&ドロップを許可",
     "MULTIPLE_FILE_UPLOAD": "複数ファイルのアップロード",
     "FOLDER_UPLOAD": "フォルダのアップロード",
     "CUSTOM_FILTER": "カスタム拡張子フィルタ",
@@ -118,6 +124,7 @@
       "DISPLAY_NAME": "表示名",
       "IS_LOCKED": "ロック",
       "TAG": "タグ",
+      "NODE_ID": "ノード ID",
       "CREATED_BY": "作成者",
       "CREATED_ON": "作成日",
       "CREATED": "作成日",
@@ -137,10 +144,12 @@
       "THEME": "テーマを選択してください",
       "SHOW_VERSION": "バージョンを表示する",
       "HIDE_VERSION": "バージョンを隠す",
-      "LISTVIEW": "一覧表示モード"
+      "LISTVIEW": "一覧表示モード",
+      "CREATE_LIBRARY": "ライブラリの作成"
     },
     "ACTIONS": {
       "VERSIONS": "バージョンの管理",
+      "LOCK": "ロック",
       "METADATA": "情報",
       "DOWNLOAD": "ダウンロード",
       "PERMISSION": "権限",
@@ -201,7 +210,25 @@
   },
   "SEARCH": {
     "RESULTS": "検索結果",
-    "NO_RESULT": "一致するアイテムはありません"
+    "NO_RESULT": "一致するアイテムはありません",
+    "FACET_FIELDS": {
+      "TYPE": "1:種類",
+      "SIZE": "2:サイズ",
+      "CREATOR": "3:作成者",
+      "MODIFIER": "4:変更者",
+      "CREATED": "5:作成日"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "あなたのファセットクエリ",
+      "CREATED_THIS_YEAR": "1.今年作成",
+      "MIMETYPE": "2.種類",
+      "XTRASMALL": "3.サイズ: 極小",
+      "SMALL": "4.サイズ: 小",
+      "MEDIUM": "5.サイズ: 中",
+      "LARGE": "6.サイズ: 大",
+      "XTRALARGE": "7.サイズ: 特大",
+      "XXTRALARGE": "8.サイズ: 超特大"
+    }
   },
   "SOCIAL": {
     "LIKE": "[いいね!] コンポーネント",
@@ -220,16 +247,51 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "アプリケーション ID を挿入する",
       "APP_ID_TYPE_ERROR": "アプリケーション ID は数字でなければなりません",
-      "NUMBER_TYPE_ERROR": "値は数字でなければなりません"
+      "NUMBER_TYPE_ERROR": "値は数字でなければなりません",
+      "NUMBER_GREATER_THAN": "値は {{ value }} 以上でなければなりません"
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "開始ページ"
     }
   },
   "PROCESS_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "アプリケーション ID を挿入する",
-    "APP_ID_TYPE_ERROR": "アプリケーション ID は番号でなければなりません"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "アプリケーション ID を挿入してください",
+      "APP_ID_TYPE_ERROR": "アプリケーション ID は数字でなければなりません",
+      "NUMBER_GREATER_THAN": "値は {{ value }} 以上でなければなりません"
+    }
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "カスタムのタイトル翻訳 1",
-  "GROUP-TITLE2-TRANSLATION-KEY": "カスタムのタイトル翻訳 2"
+  "GROUP-TITLE2-TRANSLATION-KEY": "カスタムのタイトル翻訳 2",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "ACS のディスクがいっぱいです",
+      "DESCRIPTION": "コンテンツのサイズが、ネットワークまたはシステムに設定されているストレージクォータの上限を超えています。",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "ホームへ戻る"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "CUSTOMIZE_FILTERS": "フィルタのカスタマイズ"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "フィルタのカスタマイズ"
+  },
+  "ABOUT": {
+    "TITLE": "プラグイン",
+    "TABLE_HEADERS": {
+      "ID": "ID",
+      "NAME": "名前",
+      "VERSION": "バージョン",
+      "VENDOR": "ベンダー",
+      "LICENSE": "ライセンス",
+      "RUNTIME": "ランタイム",
+      "DESCRIPTION": "説明"
+    }
+  }
 }

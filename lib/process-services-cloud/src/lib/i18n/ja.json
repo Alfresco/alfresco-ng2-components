@@ -1,0 +1,185 @@
+{
+  "ADF_CLOUD_PROCESS_LIST": {
+    "MESSAGES": {
+      "TITLE": "プロセスが見つかりません",
+      "SUBTITLE": "後で簡単に見つけられるよう、新しいプロセスを作成してください",
+      "NONE": "プロセスインスタンスのフィルタが選択されていません。"
+    },
+    "PROPERTIES": {
+      "NAME": "名前",
+      "CREATED": "作成日"
+    },
+    "ADF_CLOUD_START_PROCESS": {
+      "BUTTON": "プロセスの開始",
+      "NO_PROCESS_DEFINITIONS": "使用できるプロセス定義がないため、プロセスを開始できません",
+      "FORM": {
+        "TITLE": "プロセスの開始",
+        "LABEL": {
+          "TYPE": "プロセスの選択",
+          "NAME": "プロセス名"
+        },
+        "TYPE_PLACEHOLDER": "1 つ選択してください...",
+        "ACTION": {
+          "START": "プロセスの開始",
+          "CANCEL": "キャンセル"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "プロセス定義を読み込めませんでした。アクセス権があることを確認してください。",
+        "START": "新しいプロセスインスタンスを開始できませんでした。アクセス権があることを確認してください。",
+        "PROCESS_NAME_REQUIRED": "プロセス名を入力してください",
+        "PROCESS_DEFINITION_REQUIRED": "プロセス定義を指定してください",
+        "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。"
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_LIST": {
+    "APPS": {
+      "TITLE": "アプリケーションが見つかりません",
+      "SUBTITLE": "後で簡単に見つけられるよう、新しいアプリケーションを作成してください"
+    },
+    "START_TASK": {
+      "FORM": {
+        "TITLE": "タスクの開始",
+        "LABEL": {
+          "NAME": "名前",
+          "DESCRIPTION": "説明",
+          "ATTACHFORM": "フォームの添付",
+          "ASSIGNEE": "担当者",
+          "FORM": "フォーム",
+          "DATE": "日付の選択"
+        },
+        "ACTION": {
+          "START": "開始",
+          "CANCEL": "キャンセル"
+        }
+      }
+    },
+    "PROPERTIES": {
+      "NAME": "名前",
+      "ASSIGNEE": "担当者",
+      "CREATED": "作成日"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "タスクが見つかりません",
+        "SUBTITLE": "後で簡単に見つけられるよう、新しいタスクを作成してください",
+        "NONE": "タスクリストが見つかりません"
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_FILTERS": {
+    "MY_TASKS": "あなたのタスク",
+    "COMPLETED_TASKS": "完了済みタスク"
+  },
+  "ADF_CLOUD_PROCESS_FILTERS": {
+    "ALL_PROCESSES": "すべてのプロセス",
+    "RUNNING_PROCESSES": "実行中のプロセス",
+    "COMPLETED_PROCESSES": "完了済みのプロセス"
+  },
+  "ADF_CLOUD_START_TASK": {
+    "ERROR": {
+      "MESSAGE": "別の値を入力してください",
+      "REQUIRED": "必須フィールドです",
+      "DATE": "日付形式: YYYY/MM/DD",
+      "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。"
+    }
+  },
+  "ADF_CLOUD_EDIT_TASK_FILTER": {
+    "TITLE": "フィルタのカスタマイズ",
+    "TOOL_TIP": {
+      "SAVE": "フィルタの保存",
+      "SAVE_AS": "フィルタに名前を付けて保存",
+      "DELETE": "フィルタの削除"
+    },
+    "LABEL": {
+      "APP_NAME": "アプリケーション名",
+      "PROCESS_DEF_ID": "プロセス定義 ID",
+      "STATUS": "ステータス",
+      "ASSIGNMENT": "割り当て",
+      "COLUMN": "列",
+      "DIRECTION": "昇順/降順",
+      "PROCESS_INSTANCE_ID": "プロセスインスタンス ID",
+      "DUE_BEFORE": "期限前",
+      "DUE_AFTER": "期限後",
+      "CLAIMED_DATE_FROM": "ClaimedDateFrom",
+      "CLAIMED_DATE_TO": "ClaimedDateTo",
+      "CREATED_DATE_FORM": "作成日 - 開始",
+      "CREATED_DATE_TO": "作成日 - 終了",
+      "TASK_NAME": "タスク名",
+      "PARENT_TASK_ID": "親タスク ID",
+      "PRIORITY": "優先度",
+      "STAND_ALONE": "単独",
+      "LAST_MODIFIED_FROM": "最終変更日 - 開始",
+      "LAST_MODIFIED_TO": "最終変更日 - 終了",
+      "OWNER": "所有者",
+      "DUE_DATE_TO": "期限 - 終了",
+      "DUE_DATE_FROM": "期限 - 開始"
+    },
+    "DIALOG": {
+      "TITLE": "フィルタに名前を付けて保存",
+      "SAVE": "保存",
+      "CANCEL": "キャンセル"
+    }
+  },
+  "ADF_CLOUD_EDIT_PROCESS_FILTER": {
+    "TITLE": "フィルタのカスタマイズ",
+    "STATUS": "ステータスを選択してください",
+    "ASSIGNMENT": "割り当て",
+    "COLUMN": "列を選択してください",
+    "DIRECTION": "昇順/降順を選択してください",
+    "TOOL_TIP": {
+      "SAVE": "フィルタの保存",
+      "SAVE_AS": "フィルタに名前を付けて保存",
+      "DELETE": "フィルタの削除"
+    },
+    "LABEL": {
+      "STATUS": "ステータス",
+      "ASSIGNMENT": "割り当て",
+      "COLUMN": "列",
+      "DIRECTION": "昇順/降順"
+    },
+    "DIALOG": {
+      "TITLE": "フィルタに名前を付けて保存",
+      "SAVE": "保存",
+      "CANCEL": "キャンセル"
+    }
+  },
+  "ADF_CLOUD_GROUPS": {
+    "SEARCH-GROUP": "グループ",
+    "ERROR": {
+      "NOT_FOUND": "{{groupName}} という名前のグループは見つかりませんでした"
+    }
+  },
+  "ADF_CLOUD_TASK_HEADER": {
+    "BUTTON": {
+      "CLAIM": "要求",
+      "UNCLAIM": "キューへ戻す"
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "タスク",
+      "THUMBNAIL": "サムネイル",
+      "DURATION": "期間",
+      "PARENT_TASK_ID": "親タスク ID",
+      "NAME": "名前",
+      "ASSIGNEE": "担当者",
+      "ASSIGNEE_DEFAULT": "担当者なし",
+      "PRIORITY": "優先度",
+      "DUE_DATE": "期限",
+      "DUE_DATE_DEFAULT": "期限なし",
+      "STATUS": "ステータス",
+      "CATEGORY": "カテゴリ",
+      "CATEGORY_DEFAULT": "カテゴリなし",
+      "PARENT_NAME": "親名",
+      "PARENT_NAME_DEFAULT": "親なし",
+      "CREATED_BY": "作成者",
+      "CREATED": "作成日",
+      "END_DATE": "終了日",
+      "ID": "ID",
+      "DESCRIPTION": "説明",
+      "DESCRIPTION_DEFAULT": "説明なし",
+      "FORM_NAME": "フォームの名前",
+      "FORM_NAME_DEFAULT": "フォームなし"
+    }
+  }
+}

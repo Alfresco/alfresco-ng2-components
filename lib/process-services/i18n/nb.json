@@ -27,6 +27,8 @@
     "PROPERTIES": {
       "TASK_NAME": "Oppgave",
       "THUMBNAIL": "Miniatyrbilde",
+      "DURATION": "Varighet",
+      "PARENT_TASK_ID": "Overordnet oppgave-ID",
       "NAME": "Navn",
       "ASSIGNEE": "Tilordnet",
       "ASSIGNEE_DEFAULT": "Ingen tilordnet",
@@ -40,6 +42,7 @@
       "PARENT_NAME_DEFAULT": "Ingen overordnet",
       "CREATED_BY": "Opprettet av",
       "CREATED": "Opprettet",
+      "END_DATE": "Sluttdato",
       "ID": "ID",
       "DESCRIPTION": "Beskrivelse",
       "DESCRIPTION_DEFAULT": "Ingen beskrivelse",
@@ -91,7 +94,13 @@
         "NONE": "Ingen involvert"
       },
       "CHECKLIST": {
-        "NONE": "Ingen sjekkliste"
+        "NONE": "Ingen sjekkliste",
+        "DIALOG": {
+          "TITLE": "Ny avmerking",
+          "CANCEL-BUTTON": "Avbryt",
+          "ADD-BUTTON": "Legg til sjekkliste",
+          "PLACEHOLDER": "Navn"
+        }
       },
       "ERROR": {
         "TITLE": "Kan ikke fullføre handlingen",
@@ -105,6 +114,7 @@
       }
     },
     "START_TASK": {
+      "DEFAULT_NAME": "Mine standardoppgaver",
       "BUTTON": "Opprett oppgave",
       "FORM": {
         "TITLE": "Start oppgave",
@@ -121,8 +131,10 @@
           "START": "Start",
           "CANCEL": "Avbryt"
         },
-        "DATE": {
-          "ERROR": "Datoformat dd/mm/åååå"
+        "ERROR": {
+          "REQUIRED": "Felt er obligatorisk",
+          "DATE": "Datoformat DD/MM/ÅÅÅÅ",
+          "MAXIMUM_LENGTH": "Lengde overskredet, maks {{characters}} tegn."
         }
       }
     },
@@ -274,7 +286,8 @@
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Kan ikke laste prosessdefinisjoner, kontroller om du har tilgang.",
-        "START": "Kan ikke start nytt prosesstilfelle, kontroller om du har tilgang."
+        "START": "Kan ikke start nytt prosesstilfelle, kontroller om du har tilgang.",
+        "MAXIMUM_LENGTH": "Lengde overskredet, maks {{characters}} tegn."
       }
     },
     "PROCESS-ATTACHMENT": {

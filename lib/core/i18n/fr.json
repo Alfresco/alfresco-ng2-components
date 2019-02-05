@@ -29,6 +29,9 @@
     }
   },
   "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Logo de l'entreprise"
+    },
     "FILE_SIZE": {
       "BYTES": "Octets",
       "KB": "Ko",
@@ -298,7 +301,7 @@
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "Une erreur est survenue.",
+      "TITLE": "Un problème est survenu.",
       "DESCRIPTION": "Il semble qu'une erreur soit survenue.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
@@ -325,6 +328,60 @@
       },
       "RETURN_BUTTON": {
         "TEXT": "Retour à l'accueil"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "Paramètres du serveur",
+      "DESCRIPTION": "Les valeurs ci-dessous proviennent d'AppConfigService",
+      "CONTENT_SERVICE_HOST": "URL d'Alfresco Content Services : {{ value }}",
+      "PROCESS_SERVICE_HOST": "URL d'Alfresco Process Services : {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "Versions du produit",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "Edition",
+        "VERSION": "Version",
+        "LICENSE": "Licence",
+        "STATUS": "Statut",
+        "MODULES": "Modules"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Code source",
+      "DESCRIPTION": "Vous exécutez le projet d'après la soumission suivante :"
+    },
+    "PACKAGES": {
+      "TITLE": "Packages",
+      "DESCRIPTION": "Le projet actuel utilise les bibliothèques ADF suivantes :"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "ID",
+        "TITLE": "Titre",
+        "DESCRIPTION": "Description",
+        "INSTALL_DATE": "Date d'installation",
+        "INSTALL_STATE": "Statut de l'installation",
+        "VERSION_MIN": "Version mineure",
+        "VERSION_MAX": "Version majeure"
+      },
+      "STATUS": {
+        "READ_ONLY": "Lecture seule",
+        "AUDIT_ENABLED": "L'audit est-il activé",
+        "QUICK_SHARE_ENABLED": "Quick Share est-il activé",
+        "THUMBNAIL_ENABLED": "Création de miniature"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "Accordée le",
+        "EXPIRES_AT": "Expire le",
+        "REMAINING_DAYS": "Jours restants",
+        "HOLDER": "Titulaire",
+        "MODE": "Mode",
+        "CLUSTER_ENABLED": "Le cluster est-il activé",
+        "CRYPTODOC_ENABLED": "Cryptodoc est-il activé"
       }
     }
   }

@@ -29,6 +29,9 @@
     }
   },
   "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Logo da empresa"
+    },
     "FILE_SIZE": {
       "BYTES": "Bytes",
       "KB": "KB",
@@ -298,7 +301,7 @@
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "Ocorreu um erro.",
+      "TITLE": "Encontramos um problema.",
       "DESCRIPTION": "Parece que ocorreu um erro.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
@@ -325,6 +328,60 @@
       },
       "RETURN_BUTTON": {
         "TEXT": "Voltar para a página inicial"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "Configurações do servidor",
+      "DESCRIPTION": "Os valores abaixo são retirados do AppConfigService",
+      "CONTENT_SERVICE_HOST": "URL do Alfresco Content Services: {{ value }}",
+      "PROCESS_SERVICE_HOST": "URL do Alfresco Process Services: {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "Versões do produto",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "Edição",
+        "VERSION": "Versão",
+        "LICENSE": "Licença",
+        "STATUS": "Status",
+        "MODULES": "Módulos"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Código da origem",
+      "DESCRIPTION": "Você está executando o projeto com base no seguinte:"
+    },
+    "PACKAGES": {
+      "TITLE": "Pacotes",
+      "DESCRIPTION": "O projeto atual está usando as bibliotecas ADF seguintes:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "ID",
+        "TITLE": "Título",
+        "DESCRIPTION": "Descrição",
+        "INSTALL_DATE": "Data da instalação",
+        "INSTALL_STATE": "Estado da instalação",
+        "VERSION_MIN": "Versão secundária",
+        "VERSION_MAX": "Versão principal"
+      },
+      "STATUS": {
+        "READ_ONLY": "Somente leitura",
+        "AUDIT_ENABLED": "Com auditoria ativado",
+        "QUICK_SHARE_ENABLED": "Com Quick Share ativado",
+        "THUMBNAIL_ENABLED": "Geração em miniatura"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "Lançada em",
+        "EXPIRES_AT": "Expira em",
+        "REMAINING_DAYS": "Dias restantes",
+        "HOLDER": "Proprietário",
+        "MODE": "Modo",
+        "CLUSTER_ENABLED": "Com cluster ativado",
+        "CRYPTODOC_ENABLED": "Com cryptodoc ativado"
       }
     }
   }

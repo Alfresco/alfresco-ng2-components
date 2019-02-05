@@ -1,0 +1,185 @@
+{
+  "ADF_CLOUD_PROCESS_LIST": {
+    "MESSAGES": {
+      "TITLE": "找不到进程",
+      "SUBTITLE": "创建您想要今后轻松查找的新进程",
+      "NONE": "未选择进程实例过滤器。"
+    },
+    "PROPERTIES": {
+      "NAME": "名称",
+      "CREATED": "已创建"
+    },
+    "ADF_CLOUD_START_PROCESS": {
+      "BUTTON": "启动流程",
+      "NO_PROCESS_DEFINITIONS": "无法启动流程，因为没有可用的流程定义",
+      "FORM": {
+        "TITLE": "启动流程",
+        "LABEL": {
+          "TYPE": "选择流程",
+          "NAME": "流程名称"
+        },
+        "TYPE_PLACEHOLDER": "选择一个...",
+        "ACTION": {
+          "START": "启动流程",
+          "CANCEL": "取消"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "无法加载流程定义，请确定您是否有访问权限。",
+        "START": "无法启动新流程实例，请确定您是否有访问权限。",
+        "PROCESS_NAME_REQUIRED": "流程名称必填",
+        "PROCESS_DEFINITION_REQUIRED": "流程定义必填",
+        "MAXIMUM_LENGTH": "超出长度，最多 {{characters}} 字符"
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_LIST": {
+    "APPS": {
+      "TITLE": "找不到应用程序",
+      "SUBTITLE": "创建您想要今后轻松查找的新应用程序"
+    },
+    "START_TASK": {
+      "FORM": {
+        "TITLE": "启动任务",
+        "LABEL": {
+          "NAME": "名称",
+          "DESCRIPTION": "说明",
+          "ATTACHFORM": "附加表单",
+          "ASSIGNEE": "被指派者",
+          "FORM": "表单",
+          "DATE": "选择日期"
+        },
+        "ACTION": {
+          "START": "开始",
+          "CANCEL": "取消"
+        }
+      }
+    },
+    "PROPERTIES": {
+      "NAME": "名称",
+      "ASSIGNEE": "被指派者",
+      "CREATED": "已创建"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "找不到任务",
+        "SUBTITLE": "创建您希望稍后轻松找到的新任务",
+        "NONE": "未找到任务列表"
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_FILTERS": {
+    "MY_TASKS": "我的任务",
+    "COMPLETED_TASKS": "完成的任务"
+  },
+  "ADF_CLOUD_PROCESS_FILTERS": {
+    "ALL_PROCESSES": "所有流程",
+    "RUNNING_PROCESSES": "正在运行的流程",
+    "COMPLETED_PROCESSES": "已完成流程"
+  },
+  "ADF_CLOUD_START_TASK": {
+    "ERROR": {
+      "MESSAGE": "使用其他值",
+      "REQUIRED": "必填字段",
+      "DATE": "日期格式 (DD/MM/YYYY)",
+      "MAXIMUM_LENGTH": "超出长度，最多 {{characters}} 字符"
+    }
+  },
+  "ADF_CLOUD_EDIT_TASK_FILTER": {
+    "TITLE": "自定义您的筛选器",
+    "TOOL_TIP": {
+      "SAVE": "保存筛选器",
+      "SAVE_AS": "另存筛选器为",
+      "DELETE": "删除筛选器"
+    },
+    "LABEL": {
+      "APP_NAME": "应用程序名称",
+      "PROCESS_DEF_ID": "流程定义 ID",
+      "STATUS": "状态",
+      "ASSIGNMENT": "分配",
+      "COLUMN": "列",
+      "DIRECTION": "排序方向",
+      "PROCESS_INSTANCE_ID": "流程实例 ID",
+      "DUE_BEFORE": "截止至",
+      "DUE_AFTER": "截止自",
+      "CLAIMED_DATE_FROM": "ClaimedDateFrom",
+      "CLAIMED_DATE_TO": "ClaimedDateTo",
+      "CREATED_DATE_FORM": "创建日期自",
+      "CREATED_DATE_TO": "创建日期至",
+      "TASK_NAME": "任务名称",
+      "PARENT_TASK_ID": "父任务 ID",
+      "PRIORITY": "优先级",
+      "STAND_ALONE": "独立",
+      "LAST_MODIFIED_FROM": "上一次修改开始日期",
+      "LAST_MODIFIED_TO": "上一次修改结束日期",
+      "OWNER": "所有者",
+      "DUE_DATE_TO": "截止日期至",
+      "DUE_DATE_FROM": "截止日期自"
+    },
+    "DIALOG": {
+      "TITLE": "另存筛选器为",
+      "SAVE": "保存",
+      "CANCEL": "取消"
+    }
+  },
+  "ADF_CLOUD_EDIT_PROCESS_FILTER": {
+    "TITLE": "自定义您的筛选器",
+    "STATUS": "选择一个状态",
+    "ASSIGNMENT": "分配",
+    "COLUMN": "选择一列",
+    "DIRECTION": "选择排序方向",
+    "TOOL_TIP": {
+      "SAVE": "保存筛选器",
+      "SAVE_AS": "另存筛选器为",
+      "DELETE": "删除筛选器"
+    },
+    "LABEL": {
+      "STATUS": "状态",
+      "ASSIGNMENT": "分配",
+      "COLUMN": "列",
+      "DIRECTION": "排序方向"
+    },
+    "DIALOG": {
+      "TITLE": "另存筛选器为",
+      "SAVE": "保存",
+      "CANCEL": "取消"
+    }
+  },
+  "ADF_CLOUD_GROUPS": {
+    "SEARCH-GROUP": "分组",
+    "ERROR": {
+      "NOT_FOUND": "未找到具有名称 {{groupName}} 的分组"
+    }
+  },
+  "ADF_CLOUD_TASK_HEADER": {
+    "BUTTON": {
+      "CLAIM": "申领",
+      "UNCLAIM": "重新排队"
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "任务",
+      "THUMBNAIL": "缩略图",
+      "DURATION": "持续时间",
+      "PARENT_TASK_ID": "父任务 ID",
+      "NAME": "名称",
+      "ASSIGNEE": "被指派者",
+      "ASSIGNEE_DEFAULT": "没有被分派人",
+      "PRIORITY": "优先级",
+      "DUE_DATE": "截止日期",
+      "DUE_DATE_DEFAULT": "没有日期",
+      "STATUS": "状态",
+      "CATEGORY": "类别",
+      "CATEGORY_DEFAULT": "没有类别",
+      "PARENT_NAME": "父类别名称",
+      "PARENT_NAME_DEFAULT": "没有父类别",
+      "CREATED_BY": "创建者",
+      "CREATED": "已创建",
+      "END_DATE": "结束日期",
+      "ID": "ID",
+      "DESCRIPTION": "说明",
+      "DESCRIPTION_DEFAULT": "没有描述",
+      "FORM_NAME": "表单名称",
+      "FORM_NAME_DEFAULT": "无表单"
+    }
+  }
+}
