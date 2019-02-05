@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { PeopleCloudComponent, GroupCloudComponent, GroupModel } from '@alfresco/adf-process-services-cloud';
-import { MatRadioChange, MatChipInputEvent } from '@angular/material';
+import { MatRadioChange } from '@angular/material';
 
 @Component({
     selector: 'app-people-groups-cloud',
@@ -44,7 +44,7 @@ export class PeopleGroupCloudDemoComponent {
         this.preSelectGroup = this.getArrayFromString(event.target.value);
     }
 
-    setPeopleRoles(event:any) {
+    setPeopleRoles(event: any) {
         this.peopleRoles = this.getArrayFromString(event.target.value);
     }
 
