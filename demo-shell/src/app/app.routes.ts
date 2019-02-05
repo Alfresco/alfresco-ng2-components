@@ -85,11 +85,12 @@ export const appRoutes: Routes = [
     {
         path: 'breadcrumb',
         canActivate: [AuthGuardEcm],
+        component: AppLayoutComponent,
         loadChildren: 'app/components/breadcrumb-demo/breadcrumb-demo.module#AppBreadcrumbModule'
     },
     {
         path: 'notifications',
-        component: AppLayoutComponent ,
+        component: AppLayoutComponent,
         children: [
             {
                 path: '',
@@ -99,7 +100,7 @@ export const appRoutes: Routes = [
     },
     {
         path: 'config-editor',
-        component: AppLayoutComponent ,
+        component: AppLayoutComponent,
         children: [
             {
                 path: '',
@@ -109,7 +110,7 @@ export const appRoutes: Routes = [
     },
     {
         path: 'card-view',
-        component: AppLayoutComponent ,
+        component: AppLayoutComponent,
         children: [
             {
                 path: '',

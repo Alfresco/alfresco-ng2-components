@@ -4,7 +4,7 @@
     [class.adf-data-table-card]="display === 'gallery'"
     [class.adf-data-table]="display === 'list'"
     [class.adf-data-table--empty]="!isHeaderVisible()">
-    <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup">
+    <div *ngIf="showHeader && isHeaderVisible()" class="adf-datatable-header" role="rowgroup">
         <div class="adf-datatable-row" *ngIf="display === 'list'" role="row">
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-table-cell-header">
