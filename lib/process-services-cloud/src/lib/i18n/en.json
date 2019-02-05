@@ -108,12 +108,6 @@
       "ASSIGNMENT": "Assignment",
       "DIRECTION": "Direction",
       "PROCESS_INSTANCE_ID": "ProcessInstanceId",
-      "DUE_BEFORE": "DueBefore",
-      "DUE_AFTER": "DueAfter",
-      "CLAIMED_DATE_FROM": "ClaimedDateFrom",
-      "CLAIMED_DATE_TO": "ClaimedDateTo",
-      "CREATED_DATE_FORM": "CreatedDateFrom",
-      "CREATED_DATE_TO": "CreatedDateTo",
       "TASK_NAME": "TaskName",
       "PARENT_TASK_ID": "ParentTaskId",
       "PRIORITY": "Priority",
@@ -121,8 +115,6 @@
       "LAST_MODIFIED_FROM": "LastModifiedFrom",
       "LAST_MODIFIED_TO": "LastModifiedTo",
       "OWNER": "Owner",
-      "DUE_DATE_TO": "DueDateTo",
-      "DUE_DATE_FROM": "DueDateFrom",
       "SORT": "Sort"
 
 
