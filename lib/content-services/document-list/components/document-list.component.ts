@@ -821,7 +821,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private resetNewFolderPagination() {
-        // this.folderNode = null;
         this.pagination.value.skipCount = 0;
     }
 
