@@ -148,6 +148,8 @@ export class PeopleCloudComponent implements OnInit {
                             return hasRole ? of(user) : of();
                         })
                     );
+                } else if (this.hasRoles()) {
+                    return this.filterUsersByRoles(user);
                 } else {
                     return of(user);
                 }
@@ -168,6 +170,14 @@ export class PeopleCloudComponent implements OnInit {
 
     private hasRoles(): boolean {
         return this.roles && this.roles.length > 0;
+    }
+
+    filterUsersByRoles(user: IdentityUserModel): Observable<IdentityUserModel> {
+        return this.identityUserService.checkUserHasRole(user.id, this.roles).pipe(
+            mergeMap((hasRole) => {
+                return hasRole ? of(user) : of();
+            })
+        );
     }
 
     private isUserAlreadySelected(user: IdentityUserModel): boolean {

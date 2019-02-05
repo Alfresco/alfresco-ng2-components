@@ -248,4 +248,50 @@ describe('PeopleCloudComponent', () => {
         });
     }));
 
+    it('should return true if user has any specified role', async(() => {
+        const checkUserHasRoleSpy = spyOn(identityService, 'checkUserHasRole').and.returnValue(of(true));
+        component.roles = ['mock-role-1'];
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.value = 'M';
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(checkUserHasRoleSpy).toHaveBeenCalled();
+        });
+    }));
+
+    it('should return false if user does not have any specified role', async(() => {
+        const checkUserHasRoleSpy = spyOn(identityService, 'checkUserHasRole').and.returnValue(of(false));
+        component.appName = '';
+        component.roles = ['mock-role-10'];
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.value = 'M';
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(checkUserHasRoleSpy).toHaveBeenCalled();
+        });
+    }));
+
+    it('should not fire checkUserHasRole when roles are not specified', async(() => {
+        const checkUserHasRoleSpy = spyOn(identityService, 'checkUserHasRole').and.returnValue(of(false));
+        component.appName = '';
+        component.roles = [];
+        fixture.detectChanges();
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        inputHTMLElement.focus();
+        inputHTMLElement.value = 'M';
+        inputHTMLElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(checkUserHasRoleSpy).not.toHaveBeenCalled();
+        });
+    }));
 });
