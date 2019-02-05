@@ -497,6 +497,7 @@
         @include flex-column;
         justify-content: center;
         align-items: center;
+        height: inherit;
 
         .adf-datatable-body {
             .adf-datatable-row {

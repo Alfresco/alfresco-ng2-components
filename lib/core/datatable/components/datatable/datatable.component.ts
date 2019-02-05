@@ -641,7 +641,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     isHeaderVisible() {
-        return this.showHeader && !this.loading && !this.isEmpty() && !this.noPermission;
+        return !this.loading && !this.isEmpty() && !this.noPermission;
     }
 
     private emitRowSelectionEvent(name: string, row: DataRow) {
