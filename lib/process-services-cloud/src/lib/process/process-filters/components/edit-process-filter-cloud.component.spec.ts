@@ -321,86 +321,10 @@ describe('EditProcessFilterCloudComponent', () => {
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 const sortController = component.editProcessFilterForm.get('sort');
+                const sortProperties = component.processFilterProperties[1].options;
+                fixture.detectChanges();
                 expect(sortController).toBeDefined();
-                expect(component.sortProperties).toBeDefined();
-                expect(component.sortProperties.length).toBe(3);
-            });
-        }));
-
-        it('should display default sort properties if input is empty', async(() => {
-            component.sortProperties = [];
-            fixture.detectChanges();
-            let processFilterIdchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
-            component.ngOnChanges({ 'id': processFilterIdchange});
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(component.sortProperties.length).toBe(4);
-            });
-        }));
-    });
-
-    describe('filter actions', () => {
-
-        it('should display default filter actions', async(() => {
-            let processFilterIdchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
-            component.ngOnChanges({ 'id': processFilterIdchange});
-            component.toggleFilterActions = true;
-            fixture.detectChanges();
-            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const saveAsButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-                const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
-                const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
-                expect(component.processFilterActions).toBeDefined();
-                expect(component.processFilterActions.length).toBe(3);
-                expect(saveButton).toBeDefined();
-                expect(saveAsButton).toBeDefined();
-                expect(deleteButton).toBeDefined();
-                expect(saveButton.disabled).toBeTruthy();
-                expect(saveAsButton.disabled).toBeTruthy(false);
-                expect(deleteButton.disabled).toBe(false);
-            });
-        }));
-
-        it('should display filter actions when input actions are specified', async(() => {
-            fixture.detectChanges();
-            component.actions = ['save'];
-            fixture.detectChanges();
-            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
-            component.ngOnChanges({ 'id': processFilterIDchange});
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                expect(component.processFilterActions).toBeDefined();
-                expect(component.processFilterActions.length).toBe(1);
-            });
-        }));
-
-        it('should display default filter actions when input is empty', async(() => {
-            let processFilterIdchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
-            component.ngOnChanges({ 'id': processFilterIdchange});
-            fixture.detectChanges();
-            component.actions = [];
-            component.toggleFilterActions = true;
-            fixture.detectChanges();
-            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const saveAsButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-                const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
-                const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
-                expect(component.processFilterActions).toBeDefined();
-                expect(component.processFilterActions.length).toBe(3);
-                expect(saveButton).toBeDefined();
-                expect(saveAsButton).toBeDefined();
-                expect(deleteButton).toBeDefined();
-                expect(saveButton.disabled).toBeTruthy();
-                expect(saveAsButton.disabled).toBeTruthy(false);
-                expect(deleteButton.disabled).toBe(false);
+                expect(sortProperties.length).toBe(3);
             });
         }));
     });
@@ -479,6 +403,64 @@ describe('EditProcessFilterCloudComponent', () => {
                 expect(saveAsFilterSpy).toHaveBeenCalled();
                 expect(saveAsSpy).toHaveBeenCalled();
                 expect(dialog.open).toHaveBeenCalled();
+            });
+        }));
+
+        it('should display default filter actions', async(() => {
+            fixture.detectChanges();
+            component.toggleFilterActions = true;
+            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const saveAsButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+                const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
+                expect(component.processFilterActions).toBeDefined();
+                expect(component.processFilterActions.length).toBe(3);
+                expect(saveButton).toBeDefined();
+                expect(saveAsButton).toBeDefined();
+                expect(deleteButton).toBeDefined();
+                expect(saveButton.disabled).toBeTruthy();
+                expect(saveAsButton.disabled).toBeTruthy(false);
+                expect(deleteButton.disabled).toBe(false);
+            });
+        }));
+
+        it('should filter actions when input actions are specified', async(() => {
+            component.actions = ['save'];
+            fixture.detectChanges();
+            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({'id': processFilterIDchange});
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(component.processFilterActions).toBeDefined();
+                expect(component.actions.length).toBe(1);
+                expect(component.processFilterActions.length).toBe(1);
+            });
+        }));
+
+        it('should display default filter actions when input is empty', async(() => {
+            fixture.detectChanges();
+            component.actions = [];
+            component.toggleFilterActions = true;
+            fixture.detectChanges();
+            let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const saveAsButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+                const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
+                expect(component.processFilterActions).toBeDefined();
+                expect(component.processFilterActions.length).toBe(3);
+                expect(saveButton).toBeDefined();
+                expect(saveAsButton).toBeDefined();
+                expect(deleteButton).toBeDefined();
+                expect(saveButton.disabled).toBeTruthy();
+                expect(saveAsButton.disabled).toBeTruthy(false);
+                expect(deleteButton.disabled).toBe(false);
             });
         }));
     });
