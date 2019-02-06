@@ -292,7 +292,7 @@
   "PEOPLE_GROUPS_CLOUD": {
     "SINGLE": "Single Selection",
     "MULTI": "Multiple Selection",
-    "PRESELECTED_VALUE": "Preselected value",
+    "PRESELECTED_VALUE": "Preselect: ",
     "ROLE": "Roles: "
   },
   "ABOUT": {
