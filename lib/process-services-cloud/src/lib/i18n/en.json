@@ -114,7 +114,7 @@
       "APP_NAME": "ApplicationName",
       "PROCESS_DEF_ID": "ProcessDefinitionId",
       "STATUS": "Status",
-      "ASSIGNMENT": "Assignment",
+      "ASSIGNMENT": "Assignee",
       "DIRECTION": "Direction",
       "PROCESS_INSTANCE_ID": "ProcessInstanceId",
       "TASK_NAME": "TaskName",

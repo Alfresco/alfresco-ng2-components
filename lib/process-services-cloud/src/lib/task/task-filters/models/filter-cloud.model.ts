@@ -57,7 +57,6 @@ export class TaskFilterCloudModel  {
             this.dueDate = obj.dueDate || null;
             this.taskName = obj.taskName || null;
             this.parentTaskId = obj.parentTaskId || null;
-            this.owner = obj.owner;
             this.priority = obj.priority || null;
             this.standAlone = obj.standAlone || null;
             this.lastModifiedFrom = obj.lastModifiedFrom || null;
