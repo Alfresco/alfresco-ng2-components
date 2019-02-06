@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { AlfrescoApiService, HighlightDirective, UserPreferencesService, PaginationModel } from '@alfresco/adf-core';
+import { HighlightDirective, UserPreferencesService, PaginationModel } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
@@ -27,7 +27,6 @@ import { debounceTime } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { ShareDataRow } from '../document-list';
-import { NodeEntry } from '@alfresco/js-api/src/api/content-rest-api/model/nodeEntry';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -148,7 +147,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     searchInput: FormControl = new FormControl();
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
-                private apiService: AlfrescoApiService,
                 private customResourcesService: CustomResourcesService,
                 private preferences: UserPreferencesService) {
         this.searchInput.valueChanges
@@ -388,22 +386,5 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      */
     onNodeSelect(event: any): void {
         this.attemptNodeSelection(event.detail.node.entry);
-    }
-
-    onNodeDoubleClick(customEvent: CustomEvent) {
-        const node: any = customEvent.detail.node.entry;
-
-        if (node && node.guid) {
-            const options = {
-                maxItems: this.pageSize,
-                skipCount: this.skipCount,
-                include: ['path', 'properties', 'allowableOperations']
-            };
-
-            this.apiService.nodesApi.getNode(node.guid, options)
-                .then((nodeEntry: NodeEntry) => {
-                    this.documentList.navigateTo(nodeEntry.entry);
-                });
-        }
     }
 }
