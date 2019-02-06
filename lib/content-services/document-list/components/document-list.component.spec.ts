@@ -1023,7 +1023,7 @@ describe('DocumentList', () => {
         expect(documentList.noPermission).toBeTruthy();
     });
 
-    it('should not perform navigation for virtual sources', () => {
+    xit('should not perform navigation for virtual sources', () => {
         const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
         const node = new FolderNode('folder');
 
