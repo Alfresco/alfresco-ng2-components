@@ -51,9 +51,7 @@
             <mat-form-field class="adf-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }}</mat-label>
                 <input matInput (input)="setGroupRoles($event)" placeholder="['ACTIVITI_ADMIN']" />
-                <mat-radio-button class="adf-people-single-mode" checked="true" value="{{ groupSingleMode }}">{{ 'PEOPLE_GROUPS_CLOUD.SINGLE' | translate }}</mat-radio-button>
-                <mat-radio-button class="adf-people-multiple-mode" value="{{ groupMultipleMode }}">{{ 'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
-            </mat-radio-group>
+            </mat-form-field>
             <mat-form-field class="adf-preselect-value">
                 <mat-label>{{ DEFAULT_GROUP_PLACEHOLDER }}</mat-label>
                 <input matInput (input)="setGroupsPreselectValue($event)" />

@@ -209,8 +209,8 @@ export class GroupCloudComponent implements OnInit, OnChanges {
         return this.groupService.checkGroupHasRole(group.id, this.roles).pipe(
             mergeMap((hasRole) => {
                 return hasRole ? of(group) : of();
-        })
-    )};
+        }));
+    }
 
     onSelect(selectedGroup: GroupModel) {
         if (this.isMultipleMode()) {
