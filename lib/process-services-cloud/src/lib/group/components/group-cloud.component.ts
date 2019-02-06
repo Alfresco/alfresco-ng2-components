@@ -107,9 +107,6 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        if (this.hasPreSelectGroups()) {
-            this.loadPreSelectGroups();
-        }
 
         this.initSearch();
 
@@ -120,7 +117,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.preSelectGroups) {
+        if (changes.preSelectGroups && this.hasPreSelectGroups()) {
             this.loadPreSelectGroups();
         }
     }
@@ -196,9 +193,11 @@ export class GroupCloudComponent implements OnInit, OnChanges {
 
     private loadPreSelectGroups() {
         if (this.isMultipleMode()) {
+            this.selectedGroups = [];
             this.preSelectGroups.forEach((group: GroupModel) => {
                 this.selectedGroups.push(group);
             });
+            this.selectedGroupsSubject.next(this.selectedGroups);
         } else {
             this.searchGroupsControl.setValue(this.preSelectGroups[0]);
             this.onSelect(this.preSelectGroups[0]);

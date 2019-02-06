@@ -28,7 +28,7 @@ import { MatRadioChange } from '@angular/material';
 export class PeopleGroupCloudDemoComponent {
 
     DEFAULT_GROUP_PLACEHOLDER: string = `[{"id": "1", "name":"activitiUserGroup"}]`;
-    DEFAULT_PEOPLE_PLACEHOLDER: string = `[{"id": "122", "firstName":"activitiUserGroup", "lastName": "last name"}]`;
+    DEFAULT_PEOPLE_PLACEHOLDER: string = `[{"email": "example@alfresco.com", "firstName":"Administrator", "lastName": "ADF"}]`;
 
     peopleMode: string = PeopleCloudComponent.MODE_SINGLE;
     preSelectUsers: string[] = [];

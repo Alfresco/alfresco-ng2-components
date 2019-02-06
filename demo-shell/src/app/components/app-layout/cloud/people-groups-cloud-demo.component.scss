@@ -16,6 +16,11 @@
 
             .adf-preselect-value {
                 margin-right: 15px;
+                min-width: 330px;
+
+                &-full {
+                    width:60%;
+                }
             }
         }
     }
