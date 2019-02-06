@@ -28,7 +28,6 @@ for more information about installing and using the source code.
 | [Task filters cloud component](task-filters-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all available filters. | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.ts) |
 | [Task header cloud component](task-header-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all the information related to a task. | [Source](../../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts) |
 | [Task list cloud component](task-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts) |
-| _App details cloud component_ | _Not currently documented_ | [Source](../../lib/process-services-cloud/src/lib/app/components/app-details-cloud.component.ts) |
 
 ## Pipes
 
@@ -41,13 +40,13 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Apps process cloud service](apps-process-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Gets details of deployed apps for the current user.  | [Source](../../lib/process-services-cloud/src/lib/app/services/apps-process-cloud.service.ts) |
+| [Group cloud service](group-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches and gets information for groups.  | [Source](../../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts) |
 | [Process filter cloud service](process-filter-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manage Process Filters, which are pre-configured Process Instance queries.  | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/services/process-filter-cloud.service.ts) |
+| [Process list cloud service](process-list-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches processes.  | [Source](../../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts) |
 | [Start process cloud service](start-process-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Gets process definitions and starts processes.  | [Source](../../lib/process-services-cloud/src/lib/process/start-process/services/start-process-cloud.service.ts) |
 | [Start task cloud service](start-task-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Starts standalone tasks.  | [Source](../../lib/process-services-cloud/src/lib/task/start-task/services/start-task-cloud.service.ts) |
 | [Task filter cloud service](task-filter-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manages task filters.  | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/services/task-filter-cloud.service.ts) |
 | [Task header cloud service](task-header-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manages cloud tasks.  | [Source](../../lib/process-services-cloud/src/lib/task/task-header/services/task-header-cloud.service.ts) |
-| _Group cloud service_ | _Not currently documented_ | [Source](../../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts) |
-| _Process list cloud service_ | _Not currently documented_ | [Source](../../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts) |
-| _Task list cloud service_ | _Not currently documented_ | [Source](../../lib/process-services-cloud/src/lib/task/task-list/services/task-list-cloud.service.ts) |
+| [Task list cloud service](task-list-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches tasks.  | [Source](../../lib/process-services-cloud/src/lib/task/task-list/services/task-list-cloud.service.ts) |
 
 <!--process-services-cloud end-->

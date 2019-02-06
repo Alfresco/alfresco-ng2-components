@@ -147,13 +147,16 @@
         "layout-container",
         "search-",
         "empty-custom-content",
+        "custom-empty-content",
         "view-util",
         "clipboard",
         "external-alfresco",
         "content-node-share",
         "tree-view",
         "dialog",
-        "[Cc]olumn"
+        "[Cc]olumn",
+        "app-details-cloud",
+        "dynamic-tab"
     ],
     "fileCheckerFilter": [
         "README",
