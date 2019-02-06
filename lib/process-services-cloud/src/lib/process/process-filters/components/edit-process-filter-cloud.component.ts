@@ -317,6 +317,18 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                 options: this.applicationNames
             }),
             new ProcessFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_INS_ID',
+                type: 'text',
+                key: 'processInstanceId',
+                value: ''
+            }),
+            new ProcessFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME',
+                type: 'text',
+                key: 'processName',
+                value: currentProcessFilter.processName || ''
+            }),
+            new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.INITIATOR',
                 type: 'text',
                 key: 'initiator',
@@ -328,26 +340,6 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                 key: 'state',
                 value: currentProcessFilter.state || this.status[0].value,
                 options: this.status
-            }),
-            new ProcessFilterProperties({
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.SORT',
-                type: 'select',
-                key: 'sort',
-                value: currentProcessFilter.sort || this.columns[0].value,
-                options: this.columns
-            }),
-            new ProcessFilterProperties({
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DIRECTION',
-                type: 'select',
-                key: 'order',
-                value: currentProcessFilter.order || this.directions[0].value,
-                options: this.directions
-            }),
-            new ProcessFilterProperties({
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME',
-                type: 'text',
-                key: 'processName',
-                value: currentProcessFilter.processName || ''
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_ID',
@@ -362,24 +354,6 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                 value: currentProcessFilter.processDefinitionKey || ''
             }),
             new ProcessFilterProperties({
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_INS_ID',
-                type: 'text',
-                key: 'processInstanceId',
-                value: ''
-            }),
-            new ProcessFilterProperties({
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.START_DATE',
-                type: 'date',
-                key: 'startDate',
-                value: ''
-            }),
-            new ProcessFilterProperties({
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.LAST_MODIFIED',
-                type: 'date',
-                key: 'lastModified',
-                value: ''
-            }),
-            new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.LAST_MODIFIED_DATE_FORM',
                 type: 'date',
                 key: 'lastModifiedFrom',
@@ -390,6 +364,20 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                 type: 'date',
                 key: 'lastModifiedTo',
                 value: ''
+            }),
+            new ProcessFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.SORT',
+                type: 'select',
+                key: 'sort',
+                value: currentProcessFilter.sort || this.columns[0].value,
+                options: this.columns
+            }),
+            new ProcessFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DIRECTION',
+                type: 'select',
+                key: 'order',
+                value: currentProcessFilter.order || this.directions[0].value,
+                options: this.directions
             })
         ];
     }

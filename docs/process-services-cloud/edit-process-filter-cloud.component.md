@@ -75,17 +75,16 @@ given below:
 | Name | Description |
 | ---- | ----------- |
 | **_appName_** | Name of the app |
+| **_processInstanceId_** | Process instance ID |
+| **_processName_** | Process name. |
 | **_initiator_** | ID of the user who initiated the process |
 | **_state_** | Execution state of the process. |
-| **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself). Can be "id", "name", "status" or "startDate". |
-| **_order_** | Sort ordering of the filter results (this doesn't participate in the filtering itself) |
 | **_processDefinitionId_** | Process definition ID |
 | **_processDefinitionKey_** | Process definition key |
-| **_processInstanceId_** | Process instance ID |
-| **_startDate_** | Date the process was started |
-| **_lastModified_** | Date the process was last modified |
 | **_lastModifiedFrom_** | Finds processes modified _after_ this date |
 | **_lastModifiedTo_** | Finds processes modified _before_ this date |
+| **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself). Can be "id", "name", "status" or "startDate". |
+| **_order_** | Sort ordering of the filter results (this doesn't participate in the filtering itself) |
 
 By default, the **_state_**, **_sort_** and **_order_** properties are
 displayed in the editor. However, you can also choose which properties
