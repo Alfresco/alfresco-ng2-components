@@ -105,6 +105,9 @@ export class DocumentListService {
             if (opts.skipCount) {
                 params.skipCount = opts.skipCount;
             }
+            if (opts.where) {
+                params.where = opts.where;
+            }
         }
 
         return from(this.apiService.getInstance().nodes.getNodeChildren(rootNodeId, params)).pipe(

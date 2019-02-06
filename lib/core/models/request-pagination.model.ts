@@ -15,20 +15,17 @@
  * limitations under the License.
  */
 
-import { Node, SitePaging } from '@alfresco/js-api';
-import { Subject } from 'rxjs';
+export class RequestPaginationModel {
 
-export interface ContentNodeSelectorComponentData {
-    title: string;
-    actionName?: string;
-    currentFolderId: string;
-    dropdownHideMyFiles?: boolean;
-    dropdownSiteList?: SitePaging;
-    rowFilter?: any;
-    where?: string;
-    imageResolver?: any;
-    isSelectionValid?: (entry: Node) => boolean;
-    breadcrumbTransform?: (node) => any;
-    excludeSiteContent?: string[];
-    select: Subject<Node[]>;
+    skipCount?: number;
+
+    maxItems?: number;
+
+    merge?: boolean = false;
+
+    constructor(input?: any) {
+        if (input) {
+            Object.assign(this, input);
+        }
+    }
 }

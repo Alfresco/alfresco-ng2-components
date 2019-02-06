@@ -37,6 +37,7 @@ export interface ContentNodeSelectorComponentData {
     dropdownHideMyFiles?: boolean;
     dropdownSiteList?: SitePaging;
     rowFilter?: any;
+    where?: string;
     imageResolver?: any;
     isSelectionValid?: (entry: Node) => boolean;
     breadcrumbTransform?: (node) => any;
@@ -55,6 +56,7 @@ The properties are described in the table below:
 | dropdownHideMyFiles | `boolean` | `false` | Hide the "My Files" option added to the site list by default. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
 | dropdownSiteList | [`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) | `null` | Custom site for site dropdown same as siteList. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
 | rowFilter | [`RowFilter`](../../lib/content-services/document-list/data/row-filter.model.ts) | `null` | Custom row filter function. See the [Document List component](document-list.component.md#custom-row-filter) for more information. |
+| where | `string` | `null` | Custom where filter function. See the [Document List component](document-list.component.md) for more information. |
 | imageResolver | [`ImageResolver`](../../lib/content-services/document-list/data/image-resolver.model.ts) | `null` | Custom image resolver function. See the [Document List component](document-list.component.md#custom-row-filter) for more information. |
 | pageSize | `number` |  | Number of items shown per page in the list. |
 | isSelectionValid | [`ValidationFunction`](../../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) | `defaultValidation` | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |

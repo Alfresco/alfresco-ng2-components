@@ -517,7 +517,7 @@ describe('ContentNodeSelectorComponent', () => {
 
             it('should clear the search field, nodes and chosenNode when clicking on the X (clear) icon', () => {
                 component.chosenNode = <Node> {};
-                component.nodes = {
+                component.nodePaging = {
                     list: {
                         entries: [{ entry: component.chosenNode }]
                     }
@@ -528,7 +528,7 @@ describe('ContentNodeSelectorComponent', () => {
                 component.clear();
 
                 expect(component.searchTerm).toBe('');
-                expect(component.nodes).toEqual(null);
+                expect(component.nodePaging).toEqual(null);
                 expect(component.chosenNode).toBeNull();
                 expect(component.showingSearchResults).toBeFalsy();
             });

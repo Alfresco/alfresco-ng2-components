@@ -20,15 +20,15 @@ import { Pagination } from '@alfresco/js-api';
 export class PaginationModel extends Pagination {
     merge?: boolean;
 
-    constructor(obj?: any) {
-        super(obj);
-        if (obj) {
-            this.count = obj.count;
-            this.hasMoreItems = obj.hasMoreItems ? obj.hasMoreItems : false;
-            this.merge = obj.merge ? obj.merge : false;
-            this.totalItems = obj.totalItems;
-            this.skipCount = obj.skipCount;
-            this.maxItems = obj.maxItems;
+    constructor(input?: any) {
+        super(input);
+        if (input) {
+            this.count = input.count;
+            this.hasMoreItems = input.hasMoreItems ? input.hasMoreItems : false;
+            this.merge = input.merge ? input.merge : false;
+            this.totalItems = input.totalItems;
+            this.skipCount = input.skipCount;
+            this.maxItems = input.maxItems;
         }
     }
 }

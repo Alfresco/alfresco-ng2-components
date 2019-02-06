@@ -245,11 +245,11 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
     }
 
-    public loadPage(page: NodePaging, merge: boolean = false) {
+    public loadPage(nodePaging: NodePaging, merge: boolean = false) {
         let shareDataRows: ShareDataRow[] = [];
 
-        if (page && page.list) {
-            let nodeEntries: NodeEntry[] = page.list.entries;
+        if (nodePaging && nodePaging.list) {
+            let nodeEntries: NodeEntry[] = nodePaging.list.entries;
             if (nodeEntries && nodeEntries.length > 0) {
                 shareDataRows = nodeEntries.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle, this.thumbnailService));
 
