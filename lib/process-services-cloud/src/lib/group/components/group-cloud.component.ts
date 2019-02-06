@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, OnInit, Output, EventEmitter, ViewChild, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ElementRef, OnInit, Output, EventEmitter, ViewChild, ViewEncapsulation, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, of, BehaviorSubject } from 'rxjs';
@@ -39,7 +39,7 @@ import { distinctUntilChanged, switchMap, mergeMap, filter, tap } from 'rxjs/ope
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class GroupCloudComponent implements OnInit {
+export class GroupCloudComponent implements OnInit, OnChanges {
 
     static MODE_SINGLE = 'single';
     static MODE_MULTIPLE = 'multiple';
@@ -107,9 +107,6 @@ export class GroupCloudComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.hasPreSelectGroups()) {
-            this.loadPreSelectGroups();
-        }
 
         this.initSearch();
 
@@ -119,13 +116,18 @@ export class GroupCloudComponent implements OnInit {
         }
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.preSelectGroups && this.hasPreSelectGroups()) {
+            this.loadPreSelectGroups();
+        }
+    }
+
     private async loadClientId() {
         this.clientId = await this.groupService.getClientIdByApplicationName(this.appName).toPromise();
         if (this.clientId) {
             this.enableSearch();
         }
     }
-
     initSearch() {
         this.searchGroupsControl.valueChanges.pipe(
             filter((value) => {
@@ -191,9 +193,11 @@ export class GroupCloudComponent implements OnInit {
 
     private loadPreSelectGroups() {
         if (this.isMultipleMode()) {
+            this.selectedGroups = [];
             this.preSelectGroups.forEach((group: GroupModel) => {
                 this.selectedGroups.push(group);
             });
+            this.selectedGroupsSubject.next(this.selectedGroups);
         } else {
             this.searchGroupsControl.setValue(this.preSelectGroups[0]);
             this.onSelect(this.preSelectGroups[0]);
@@ -204,8 +208,7 @@ export class GroupCloudComponent implements OnInit {
         return this.groupService.checkGroupHasRole(group.id, this.roles).pipe(
             mergeMap((hasRole) => {
                 return hasRole ? of(group) : of();
-            })
-        );
+        }));
     }
 
     onSelect(selectedGroup: GroupModel) {
