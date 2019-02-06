@@ -66,6 +66,7 @@ Displays the documents from a repository.
 | emptyFolderImageUrl | `string` |  | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
 | imageResolver | `any \| null` | null | Custom image resolver |
 | includeFields | `string[]` |  | Include additional information about the node in the server request. For example: association, isLink, isLocked and others. |
+| where | `string` |  |  filter the Node list using the where condition of the rest api for example (isFolder=true) see the rest api documentation for more information. |
 | loading | `boolean` | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
 | locationFormat | `string` | "/" | The default route for all the location-based columns (if declared). |
 | maxItems | `number` |  | Default value is stored into user preference settings use it only if you are not using the pagination |

@@ -17,8 +17,9 @@
 
 import { PaginationModel } from '../models/pagination.model';
 import { BehaviorSubject } from 'rxjs';
+import { RequestPaginationModel } from '../models/request-pagination.model';
 
 export interface PaginatedComponent {
     pagination: BehaviorSubject<PaginationModel>;
-    updatePagination(pagination: PaginationModel);
+    updatePagination(requestPaginationModel: RequestPaginationModel);
 }

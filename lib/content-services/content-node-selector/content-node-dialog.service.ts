@@ -143,7 +143,7 @@ export class ContentNodeDialogService {
                 actionName: action,
                 currentFolderId: contentEntry.parentId,
                 imageResolver: this.imageResolver.bind(this),
-                rowFilter: this.rowFilter.bind(this, contentEntry.id),
+                where: '(isFolder=true)',
                 isSelectionValid: this.isCopyMoveSelectionValid.bind(this),
                 excludeSiteContent: excludeSiteContent || ContentNodeDialogService.nonDocumentSiteContent,
                 select: select
@@ -186,7 +186,7 @@ export class ContentNodeDialogService {
             currentFolderId: contentEntry.id,
             imageResolver: this.imageResolver.bind(this),
             isSelectionValid: this.hasPermissionOnNodeFolder.bind(this),
-            rowFilter: this.rowFilter.bind(this, contentEntry.id),
+            where: '(isFolder=true)',
             select: select
         };
 
@@ -230,16 +230,6 @@ export class ContentNodeDialogService {
         }
 
         return null;
-    }
-
-    private rowFilter(currentNodeId: string, row: ShareDataRow): boolean {
-        const node: Node = row.node.entry;
-
-        if (node.id === currentNodeId || node.isFile) {
-            return false;
-        } else {
-            return true;
-        }
     }
 
     private isNodeFile(entry: Node): boolean {
