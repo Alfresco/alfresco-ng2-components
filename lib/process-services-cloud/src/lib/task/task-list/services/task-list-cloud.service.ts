@@ -32,6 +32,11 @@ export class TaskListCloudService {
     contentTypes = ['application/json'];
     accepts = ['application/json'];
 
+    /**
+     * Finds a task using an object with optional query properties.
+     * @param requestNode Query object
+     * @returns Task information
+     */
     getTaskByRequest(requestNode: TaskQueryCloudRequestModel): Observable<any> {
         if (requestNode.appName) {
             let queryUrl = this.buildQueryUrl(requestNode);

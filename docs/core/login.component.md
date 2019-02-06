@@ -2,7 +2,7 @@
 Title: Login component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2019-01-16
+Last reviewed: 2019-02-06
 ---
 
 # [Login component](../../lib/core/login/components/login.component.ts "Defined in login.component.ts")
@@ -25,6 +25,7 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
     -   [Call an external identity provider to fetch the auth token](#call-an-external-identity-provider-to-fetch-the-auth-token)
     -   [Controlling form submit execution behaviour](#controlling-form-submit-execution-behaviour)
     -   [Single Sign-On (SSO)](#single-sign-on-sso)
+    -   [Kerberos](#kerberos)
 -   [See Also](#see-also)
 
 ## Basic usage
@@ -334,6 +335,18 @@ must contain the full URI value:
 
 > In the default ADF application configurations the `silent-refresh.html` file
 > gets automatically copied to the application output when building for production.
+
+### Kerberos
+
+Setting the `withCredentials` property to true in the `auth` section of
+`app.config.json` will enable Kerberos and bypass the normal login:
+
+```json
+{
+  "auth": {
+    "withCredentials": "true"
+  },
+```
 
 ## See Also
 

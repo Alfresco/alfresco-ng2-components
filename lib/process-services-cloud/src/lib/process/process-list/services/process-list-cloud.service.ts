@@ -30,6 +30,11 @@ export class ProcessListCloudService {
                 private logService: LogService) {
     }
 
+    /**
+     * Finds a process using an object with optional query properties.
+     * @param requestNode Query object
+     * @returns Process information
+     */
     getProcessByRequest(requestNode: ProcessQueryCloudRequestModel): Observable<any> {
         if (requestNode.appName) {
             let queryUrl = this.buildQueryUrl(requestNode);

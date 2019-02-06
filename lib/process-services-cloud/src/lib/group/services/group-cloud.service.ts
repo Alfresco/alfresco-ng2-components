@@ -33,6 +33,11 @@ export class GroupCloudService {
         private logService: LogService
     ) {}
 
+    /**
+     * Finds groups filtered by name.
+     * @param searchParams Object containing the name filter string
+     * @returns List of group information
+     */
     findGroupsByName(searchParams: GroupSearchParam): Observable<any> {
         if (searchParams.name === '') {
             return of([]);
@@ -50,6 +55,11 @@ export class GroupCloudService {
         );
     }
 
+    /**
+     * Gets details for a specified group.
+     * @param groupId ID of the target group
+     * @returns Group details
+     */
     getGroupDetailsById(groupId: string) {
         const url = this.getGroupsApi() + '/' + groupId;
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
@@ -64,6 +74,12 @@ export class GroupCloudService {
         );
     }
 
+    /**
+     * Check that a group has one or more roles from the supplied list.
+     * @param groupId ID of the target group
+     * @param roleNames Array of role names
+     * @returns True if the group has one or more of the roles, false otherwise
+     */
     checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean>  {
         return this.getGroupDetailsById(groupId).pipe(map((response: GroupModel) => {
             let availableGroupRoles = [];
@@ -84,6 +100,11 @@ export class GroupCloudService {
         }));
     }
 
+    /**
+     * Gets the client ID using the app name.
+     * @param applicationName Name of the app
+     * @returns client ID string
+     */
     getClientIdByApplicationName(applicationName: string): Observable<string> {
         const url = this.getApplicationIdApi();
         const httpMethod = 'GET', pathParams = {}, queryParams = {clientId: applicationName}, bodyParam = {}, headerParams = {}, formParams = {},
@@ -101,6 +122,12 @@ export class GroupCloudService {
             );
     }
 
+    /**
+     * Gets client roles.
+     * @param groupId ID of the target group
+     * @param clientId ID of the client
+     * @returns List of roles
+     */
     getClientRoles(groupId: string, clientId: string): Observable<any[]> {
         const url = this.groupClientRoleMappingApi(groupId, clientId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
@@ -113,6 +140,12 @@ export class GroupCloudService {
                 );
     }
 
+    /**
+     * Checks if a group has a client app.
+     * @param groupId ID of the target group
+     * @param clientId ID of the client
+     * @returns True if the group has the client app, false otherwise
+     */
     checkGroupHasClientApp(groupId: string, clientId: string): Observable<boolean> {
         return this.getClientRoles(groupId, clientId).pipe(
                     map((response: any[]) => {
@@ -125,6 +158,13 @@ export class GroupCloudService {
             );
     }
 
+    /**
+     * Check if a group has any of the client app roles in the supplied list.
+     * @param groupId ID of the target group
+     * @param clientId ID of the client
+     * @param roleNames Array of role names to check
+     * @returns True if the group has one or more of the roles, false otherwise
+     */
     checkGroupHasAnyClientAppRole(groupId: string, clientId: string, roleNames: string[]): Observable<boolean> {
         return this.getClientRoles(groupId, clientId).pipe(
             map((clientRoles: any[]) => {

@@ -31,7 +31,6 @@ backend services have been tested with each released version of ADF.
 
 -   [App list cloud component](process-services-cloud/app-list-cloud.component.md)
 -   [Apps process cloud service](process-services-cloud/apps-process-cloud.service.md)
--   [Dynamic tab component](extensions/dynamic-tab.component.md)
 -   [Dynamic component](extensions/dynamic.component.md)
 -   [Edit process filter cloud component](process-services-cloud/edit-process-filter-cloud.component.md)
 -   [Edit task filter cloud component](process-services-cloud/edit-task-filter-cloud.component.md)
@@ -40,6 +39,7 @@ backend services have been tested with each released version of ADF.
 -   [Format space pipe](core/format-space.pipe.md)
 -   [Full name pipe](core/full-name.pipe.md)
 -   [Group cloud component](process-services-cloud/group-cloud.component.md)
+-   [Group cloud service](process-services-cloud/group-cloud.service.md)
 -   [Group initial pipe](process-services-cloud/group-initial.pipe.md)
 -   [Icon component](core/icon.component.md)
 -   [Identity user service](core/identity-user.service.md)
@@ -48,6 +48,7 @@ backend services have been tested with each released version of ADF.
 -   [Process filter cloud service](process-services-cloud/process-filter-cloud.service.md)
 -   [Process filters cloud component](process-services-cloud/process-filters-cloud.component.md)
 -   [Process list cloud component](process-services-cloud/process-list-cloud.component.md)
+-   [Process list cloud service](process-services-cloud/process-list-cloud.service.md)
 -   [Start process cloud component](process-services-cloud/start-process-cloud.component.md)
 -   [Start process cloud service](process-services-cloud/start-process-cloud.service.md)
 -   [Start task cloud component](process-services-cloud/start-task-cloud.component.md)
@@ -57,6 +58,7 @@ backend services have been tested with each released version of ADF.
 -   [Task header cloud component](process-services-cloud/task-header-cloud.component.md)
 -   [Task header cloud service](process-services-cloud/task-header-cloud.service.md)
 -   [Task list cloud component](process-services-cloud/task-list-cloud.component.md)
+-   [Task list cloud service](process-services-cloud/task-list-cloud.service.md)
 -   [Tree view component](content-services/tree-view.component.md)
 
 <!--v300 end-->
