@@ -25,6 +25,7 @@ import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { Component } from '@angular/core';
 import { PaginationModel } from '../models/pagination.model';
+import { RequestPaginationModel } from '../models/request-pagination.model';
 
 @Component({
     template: ``
@@ -152,7 +153,7 @@ describe('InfinitePaginationComponent', () => {
             expect(loadingSpinner).toBeNull();
         });
 
-        it('should trigger the loadMore event with the proper pagination object', (done) => {
+        it('should trigger the loadMore event with skipcount 0 to reload all the elements', (done) => {
             pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
 
             component.target.pagination.next(pagination);
@@ -162,7 +163,25 @@ describe('InfinitePaginationComponent', () => {
             fixture.detectChanges();
 
             component.loadMore.subscribe((newPagination: Pagination) => {
-                expect(newPagination.skipCount).toBe(5);
+                expect(newPagination.skipCount).toBe(0);
+                done();
+            });
+
+            let loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
+            loadMoreButton.triggerEventHandler('click', {});
+        });
+
+        it('should trigger the loadMore event with merge false to reload all the elements', (done) => {
+            pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
+
+            component.target.pagination.next(pagination);
+
+            component.isLoading = false;
+            component.pageSize = 5;
+            fixture.detectChanges();
+
+            component.loadMore.subscribe((newPagination: RequestPaginationModel) => {
+                expect(newPagination.merge).toBe(false);
                 done();
             });
 
@@ -197,10 +216,10 @@ describe('InfinitePaginationComponent', () => {
             component.onLoadMore();
 
             expect(spyTarget).toHaveBeenCalledWith({
-                skipCount: 25,
+                skipCount: 0,
                 maxItems: 25,
                 hasMoreItems: false,
-                merge: true
+                merge: false
             });
         });
 
@@ -213,9 +232,9 @@ describe('InfinitePaginationComponent', () => {
 
             expect(spyTarget).toHaveBeenCalledWith({
                 maxItems: 7,
-                skipCount: 7,
+                skipCount: 0,
                 hasMoreItems: false,
-                merge: true
+                merge: false
             });
         });
 
