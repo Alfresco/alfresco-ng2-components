@@ -15,20 +15,26 @@
  * limitations under the License.
  */
 
-import { Node, SitePaging } from '@alfresco/js-api';
-import { Subject } from 'rxjs';
+export class RequestPaginationModel {
+    /**
+     * An integer describing how many entities exist in the collection before
+     those included in this list. If there was no **skipCount** parameter then the
+     default value is 0.
 
-export interface ContentNodeSelectorComponentData {
-    title: string;
-    actionName?: string;
-    currentFolderId: string;
-    dropdownHideMyFiles?: boolean;
-    dropdownSiteList?: SitePaging;
-    rowFilter?: any;
-    where?: string;
-    imageResolver?: any;
-    isSelectionValid?: (entry: Node) => boolean;
-    breadcrumbTransform?: (node) => any;
-    excludeSiteContent?: string[];
-    select: Subject<Node[]>;
+     */
+    skipCount?: number;
+    /**
+     * The value of the **maxItems** parameter used to generate this list.
+     If there was no **maxItems** parameter then the default value is 100.
+
+     */
+    maxItems?: number;
+
+    merge?: boolean = false;
+
+    constructor(input?: any) {
+        if (input) {
+            Object.assign(this, input);
+        }
+    }
 }

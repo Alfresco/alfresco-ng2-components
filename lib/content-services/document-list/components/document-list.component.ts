@@ -54,6 +54,7 @@ import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 import { CustomResourcesService } from './../services/custom-resources.service';
 import { NavigableComponentInterface } from '../../breadcrumb/navigable-component.interface';
 import { RowFilter } from '../data/row-filter.model';
+import { RequestPaginationModel } from '../../../core/models/request-pagination.model';
 
 export enum PaginationStrategy {
     Finite,
@@ -87,6 +88,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     /** Include additional information about the node in the server request. For example: association, isLink, isLocked and others. */
     @Input()
     includeFields: string[];
+
+
+    /** filter the Node list using the where condition of the rest api for example (isFolder=true) see the rest api documentation for more information. */
+    @Input()
+    where: string;
 
     /** Change the display mode of the table. Can be "list" or "gallery". */
     @Input()
@@ -260,7 +266,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     // @deprecated 3.0.0
     folderNode: Node;
 
-    private _pagination: BehaviorSubject<PaginationModel>;
+    private _pagination: PaginationModel;
+    private $pagination: BehaviorSubject<PaginationModel>;
+
     private layoutPresets = {};
     private subscriptions: Subscription[] = [];
     private rowMenuCache: { [key: string]: ContentActionModel[] } = {};
@@ -310,17 +318,17 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     get pagination(): BehaviorSubject<PaginationModel> {
-        if (!this._pagination) {
+        if (!this.$pagination) {
             let maxItems = this.maxItems || this.preferences.paginationSize;
-            let defaultPagination = <PaginationModel> {
+            this._pagination = <PaginationModel> {
                 maxItems: maxItems,
                 skipCount: 0,
                 totalItems: 0,
                 hasMoreItems: false
             };
-            this._pagination = new BehaviorSubject<PaginationModel>(defaultPagination);
+            this.$pagination = new BehaviorSubject<PaginationModel>(this._pagination);
         }
-        return this._pagination;
+        return this.$pagination;
     }
 
     isMobile(): boolean {
@@ -412,7 +420,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.loadFolder();
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
-                this.data.loadPage(changes.node.currentValue);
+                this.data.loadPage(changes.node.currentValue, this._pagination.merge);
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.imageResolver) {
                 this.data.setImageResolver(changes.imageResolver.currentValue);
@@ -424,7 +432,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.ngZone.run(() => {
             this.resetSelection();
             if (this.node) {
-                this.data.loadPage(this.node, this.pagination.getValue().merge);
+                this.data.loadPage(this.node, this._pagination.merge);
                 this.onDataReady(this.node);
             } else {
                 this.loadFolder();
@@ -579,7 +587,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     loadFolder() {
-        if (!this.pagination.getValue().merge) {
+        if (!this._pagination.merge) {
             this.setLoadingState(true);
         }
 
@@ -593,31 +601,34 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     loadFolderByNodeId(nodeId: string) {
         if (this.customResourcesService.isCustomSource(nodeId)) {
             this.updateCustomSourceData(nodeId);
-            this.customResourcesService.loadFolderByNodeId(nodeId, this.pagination.getValue(), this.includeFields)
-                .subscribe((page: NodePaging) => {
-                    this.onPageLoaded(page);
+            this.customResourcesService.loadFolderByNodeId(nodeId, this._pagination, this.includeFields)
+                .subscribe((nodePaging: NodePaging) => {
+                    this.onPageLoaded(nodePaging);
                 }, (err) => {
                     this.error.emit(err);
                 });
         } else {
-            let pagination = this.pagination.getValue();
+
             this.documentListService.getFolder(null, {
-                maxItems: pagination.maxItems,
-                skipCount: pagination.skipCount,
-                rootFolderId: nodeId
+                maxItems: this._pagination.maxItems,
+                skipCount: this._pagination.skipCount,
+                rootFolderId: nodeId,
+                where: this.where
             }, this.includeFields)
                 .subscribe((nodePaging: NodePaging) => {
-                    this.data.loadPage(nodePaging, this.pagination.getValue().merge);
-                    this.setLoadingState(false);
-                    this.onDataReady(nodePaging);
-                    this.documentListService.getFolderNode(nodeId, this.includeFields).subscribe((nodeEntry: NodeEntry) => {
-                        this.folderNode = nodeEntry.entry;
-                        this.$folderNode.next(this.folderNode);
-                    });
+                    this.onPageLoaded(nodePaging);
+                    this.getSourceNodeWithPath(nodeId);
                 }, (err) => {
                     this.handleError(err);
                 });
         }
+    }
+
+    getSourceNodeWithPath(nodeId: string) {
+        this.documentListService.getFolderNode(nodeId, this.includeFields).subscribe((nodeEntry: NodeEntry) => {
+            this.folderNode = nodeEntry.entry;
+            this.$folderNode.next(this.folderNode);
+        });
     }
 
     resetSelection() {
@@ -628,7 +639,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onPageLoaded(nodePaging: NodePaging) {
         if (nodePaging) {
-            this.data.loadPage(nodePaging, this.pagination.getValue().merge);
+            this.data.loadPage(nodePaging, this._pagination.merge);
             this.setLoadingState(false);
             this.onDataReady(nodePaging);
         }
@@ -787,12 +798,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     private onDataReady(nodePaging: NodePaging) {
         this.ready.emit(nodePaging);
-
         this.pagination.next(nodePaging.list.pagination);
     }
 
-    updatePagination(pagination: PaginationModel) {
-        this.pagination.next(pagination);
+    updatePagination(requestPaginationModel: RequestPaginationModel) {
+        this._pagination.maxItems = requestPaginationModel.maxItems;
+        this._pagination.merge = requestPaginationModel.merge;
+        this._pagination.skipCount = requestPaginationModel.skipCount;
         this.reload();
     }
 

@@ -39,6 +39,7 @@ Opens a Content [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develo
 | isSelectionValid | `ValidationFunction` | defaultValidation | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
 | pageSize | `number` |  | Number of items shown per page in the list. |
 | rowFilter | `RowFilter` | null | Custom row filter function. See the [Document List component](document-list.component.md#custom-row-filter) for more information. |
+| where | `string` | `null` | Custom where filter function. See the [Document List component](document-list.component.md) for more information. |
 
 ### Events
 

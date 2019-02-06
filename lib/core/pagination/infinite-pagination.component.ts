@@ -27,6 +27,7 @@ import { PaginatedComponent } from './paginated-component.interface';
 import { Subscription } from 'rxjs';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { PaginationModel } from '../models/pagination.model';
+import { RequestPaginationModel } from '../models/request-pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
 
 @Component({
@@ -38,12 +39,6 @@ import { UserPreferencesService, UserPreferenceValues } from '../services/user-p
     encapsulation: ViewEncapsulation.None
 })
 export class InfinitePaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
-
-    static DEFAULT_PAGINATION: PaginationModel = {
-        skipCount: 0,
-        hasMoreItems: false,
-        merge: true
-    };
 
     /** Component that provides custom pagination support. */
     @Input()
@@ -59,9 +54,14 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     /** Emitted when the "Load More" button is clicked. */
     @Output()
-    loadMore: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
+    loadMore: EventEmitter<RequestPaginationModel> = new EventEmitter<RequestPaginationModel>();
 
     pagination: PaginationModel;
+
+    requestPaginationModel: RequestPaginationModel = {
+        skipCount: 0,
+        merge: true
+    };
 
     private paginationSubscription: Subscription;
 
@@ -73,6 +73,11 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
             this.paginationSubscription = this.target.pagination.subscribe((pagination) => {
                 this.isLoading = false;
                 this.pagination = pagination;
+
+                if (!this.pagination.hasMoreItems) {
+                    this.pagination.hasMoreItems = false;
+                }
+
                 this.cdr.detectChanges();
             });
         }
@@ -80,26 +85,18 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
         this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
             this.pageSize = this.pageSize || pagSize;
         });
-
-        if (!this.pagination) {
-            this.pagination = InfinitePaginationComponent.DEFAULT_PAGINATION;
-        }
     }
 
     onLoadMore() {
-        this.pagination.skipCount += this.pageSize;
-        this.pagination.merge = true;
-        this.loadMore.next(this.pagination);
+        this.requestPaginationModel.skipCount += this.pageSize;
+        this.requestPaginationModel.merge = true;
+        this.requestPaginationModel.maxItems = this.pageSize;
 
-        if (this.pagination.skipCount >= this.pagination.totalItems || !this.pagination.hasMoreItems) {
-            this.pagination.hasMoreItems = false;
-        }
+        this.loadMore.next(this.requestPaginationModel);
 
         if (this.target) {
-            this.target.pagination.value.merge = this.pagination.merge;
-            this.target.pagination.value.skipCount = this.pagination.skipCount;
             this.isLoading = true;
-            this.target.updatePagination(<PaginationModel> this.pagination);
+            this.target.updatePagination(<RequestPaginationModel> this.requestPaginationModel);
         }
     }
 

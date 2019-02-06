@@ -19,7 +19,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsul
 import { AlfrescoApiService, HighlightDirective, UserPreferencesService, PaginationModel } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging } from '@alfresco/js-api';
-import { DocumentListComponent, PaginationStrategy } from '../document-list/components/document-list.component';
+import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
 import { ContentNodeSelectorService } from './content-node-selector.service';
@@ -61,6 +61,13 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     dropdownSiteList: SitePaging = null;
 
     _rowFilter: RowFilter = defaultValidation;
+
+    /** Custom where filter function. See the
+     * [Document List component](document-list.component.md)
+     * for more information.
+     */
+    @Input()
+    where: string;
 
     /** Custom row filter function. See the
      * [Document List component](document-list.component.md#custom-row-filter)
@@ -125,7 +132,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     @ViewChild(HighlightDirective)
     highlighter: HighlightDirective;
 
-    nodes: NodePaging | null = null;
+    nodePaging: NodePaging | null = null;
     siteId: null | string;
     searchTerm: string = '';
     showingSearchResults: boolean = false;
@@ -133,7 +140,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     inDialog: boolean = false;
     _chosenNode: Node = null;
     folderIdToShow: string | null = null;
-    paginationStrategy: PaginationStrategy = PaginationStrategy.Infinite;
     pagination: BehaviorSubject<PaginationModel>;
 
     skipCount: number = 0;
@@ -255,7 +261,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      */
     clearSearch() {
         this.searchTerm = '';
-        this.nodes = null;
+        this.nodePaging = null;
         this.skipCount = 0;
         this.chosenNode = null;
         this.showingSearchResults = false;
@@ -276,7 +282,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      * Load the first page of a new search result
      */
     private startNewSearch(): void {
-        this.nodes = null;
+        this.nodePaging = null;
         this.skipCount = 0;
         this.chosenNode = null;
         this.folderIdToShow = null;
@@ -313,14 +319,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         this.showingSearchResults = true;
         this.loadingSearchResults = false;
 
-        // DocumentList hack, since data displaying for preloaded nodes is a little bit messy there
-        if (!this.nodes) {
-            this.nodes = nodePaging;
-        } else {
-            this.documentList.data.loadPage(nodePaging, true);
-        }
-
-        this.pagination.next(nodePaging.list.pagination);
+        this.nodePaging = nodePaging;
     }
 
     /**

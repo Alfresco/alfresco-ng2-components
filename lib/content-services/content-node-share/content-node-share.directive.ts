@@ -48,13 +48,13 @@ export class NodeSharedDirective implements OnChanges {
 
     constructor(private dialog: MatDialog, private zone: NgZone) {}
 
-    shareNode(node: NodeEntry) {
-        if (node && node.entry && node.entry.isFile) {
+    shareNode(nodeEntry: NodeEntry) {
+        if (nodeEntry && nodeEntry.entry && nodeEntry.entry.isFile) {
             this.dialog.open(ShareDialogComponent, {
                 width: '600px',
                 panelClass: 'adf-share-link-dialog',
                 data: {
-                    node: node,
+                    node: nodeEntry,
                     baseShareUrl: this.baseShareUrl
                 }
             });
@@ -63,7 +63,7 @@ export class NodeSharedDirective implements OnChanges {
 
     ngOnChanges() {
         this.zone.onStable.subscribe(() => {
-            if (this.node) {
+            if (this.node && this.node.entry) {
                 this.isFile = this.node.entry.isFile;
                 this.isShared = this.node.entry.properties['qshare:sharedId'];
             }
