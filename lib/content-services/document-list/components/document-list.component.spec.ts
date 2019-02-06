@@ -941,7 +941,10 @@ describe('DocumentList', () => {
     it('should load folder by ID on init', () => {
         spyOn(documentList, 'loadFolder').and.returnValue(Promise.resolve());
 
-        documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, '1d26e465-dea3-42f3-b415-faa8364b9692', true) });
+        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+
+        fixture.detectChanges();
+
         expect(documentList.loadFolder).toHaveBeenCalled();
     });
 
@@ -1261,12 +1264,12 @@ describe('DocumentList', () => {
     });
 
     it('should add includeFields in the server request when present', () => {
-        fixture.detectChanges();
-        documentList.currentFolderId = 'fake-id';
-        documentList.includeFields = ['test-include'];
         spyOn(documentListService, 'getFolder').and.callThrough();
 
-        documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, '-root-', false) });
+        documentList.includeFields = ['test-include'];
+        documentList.currentFolderId = 'fake-id';
+
+        fixture.detectChanges();
 
         expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
             where: undefined,
@@ -1277,13 +1280,13 @@ describe('DocumentList', () => {
     });
 
     it('should add where in the server request when present', () => {
-        fixture.detectChanges();
-        documentList.currentFolderId = 'fake-id';
-        documentList.includeFields = ['test-include'];
-        documentList.where = '(isFolder=true)';
         spyOn(documentListService, 'getFolder').and.callThrough();
 
-        documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, '-root-', false) });
+        documentList.includeFields = ['test-include'];
+        documentList.where = '(isFolder=true)';
+        documentList.currentFolderId = 'fake-id';
+
+        fixture.detectChanges();
 
         expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
             where: '(isFolder=true)',
