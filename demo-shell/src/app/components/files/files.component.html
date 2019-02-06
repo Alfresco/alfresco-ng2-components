@@ -35,7 +35,7 @@
         <adf-upload-drag-area fxFlex="1 1 auto"
                               [disabled]="disableDragArea"
                               [acceptedFilesType]="getFileFiltering()"
-                              [rootFolderId]="getDocumentListCurrentFolderId()"
+                              [rootFolderId]="currentFolderId"
                               [versioning]="versioning"
                               [adf-node-permission]="'create'"
                               [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []"
@@ -77,7 +77,7 @@
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}"
                         (error)="openSnackMessage($event)"
                         (success)="documentList.reload()"
-                        [adf-create-folder]="getDocumentListCurrentFolderId()"
+                        [adf-create-folder]="currentFolderId"
                         matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}">
                         <mat-icon>create_new_folder</mat-icon>
                     </button>
@@ -166,7 +166,7 @@
                     </button>
                     <button mat-menu-item
                             (error)="openSnackMessage($event)"
-                            [adf-create-folder]="getDocumentListCurrentFolderId()">
+                            [adf-create-folder]="currentFolderId">
                         <mat-icon>create_new_folder</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}</span>
                     </button>
@@ -531,7 +531,7 @@
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-document-list-enable-drop-files" [color]="'primary'" (click)="toggleAllowDropFiles()" >
+            <mat-slide-toggle id="adf-document-list-enable-drop-files" [color]="'primary'" [(ngModel)]="allowDropFiles" (click)="toggleAllowDropFiles()" >
                 {{'DOCUMENT_LIST.ALLOW_DROP_FILES' | translate}}
             </mat-slide-toggle>
         </section>
