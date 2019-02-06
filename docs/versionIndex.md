@@ -6,7 +6,9 @@ Title: Version index
 
 Below are the details of all released versions of ADF since general
 availability (v2.0.0). See the [main index page](README.md) for a list
-of components organized by ADF libraries.
+of components organized by ADF libraries. See the
+[version compatibility page](compatibility.md) for full details of which
+backend services have been tested with each released version of ADF.
 
 ## Versions
 
