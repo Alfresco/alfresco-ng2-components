@@ -16,18 +16,9 @@
  */
 
 export class RequestPaginationModel {
-    /**
-     * An integer describing how many entities exist in the collection before
-     those included in this list. If there was no **skipCount** parameter then the
-     default value is 0.
 
-     */
     skipCount?: number;
-    /**
-     * The value of the **maxItems** parameter used to generate this list.
-     If there was no **maxItems** parameter then the default value is 100.
 
-     */
     maxItems?: number;
 
     merge?: boolean = false;

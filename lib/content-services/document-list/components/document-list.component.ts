@@ -89,7 +89,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     includeFields: string[];
 
-
     /** filter the Node list using the where condition of the rest api for example (isFolder=true) see the rest api documentation for more information. */
     @Input()
     where: string;

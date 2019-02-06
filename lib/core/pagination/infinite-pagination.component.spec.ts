@@ -124,7 +124,7 @@ describe('InfinitePaginationComponent', () => {
             expect(loadMoreButton).toBeNull();
         });
 
-        fit('should  show the load more button if there are  more elements to load', (done) => {
+        it('should  show the load more button if there are  more elements to load', (done) => {
             pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
 
             component.target.updatePagination(pagination);
@@ -138,7 +138,7 @@ describe('InfinitePaginationComponent', () => {
             fixture.whenStable().then(() => {
                 let loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
                 expect(loadMoreButton).not.toBeNull();
-                done()
+                done();
             });
         });
 
