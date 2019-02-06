@@ -57,6 +57,7 @@ Displays the documents from a repository.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| \_rowFilter | `RowFilter \| null` | null | Custom row filter |
 | allowDropFiles | `boolean` | false | Toggle file drop support for rows (see [Upload Directive](../core/upload.directive.md) for further details) |
 | contentActions | `boolean` | false | Toggles content actions for each row |
 | contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |
@@ -66,7 +67,6 @@ Displays the documents from a repository.
 | emptyFolderImageUrl | `string` |  | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
 | imageResolver | `any \| null` | null | Custom image resolver |
 | includeFields | `string[]` |  | Include additional information about the node in the server request. For example: association, isLink, isLocked and others. |
-| where | `string` |  |  filter the Node list using the where condition of the rest api for example (isFolder=true) see the rest api documentation for more information. |
 | loading | `boolean` | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
 | locationFormat | `string` | "/" | The default route for all the location-based columns (if declared). |
 | maxItems | `number` |  | Default value is stored into user preference settings use it only if you are not using the pagination |
@@ -75,7 +75,6 @@ Displays the documents from a repository.
 | navigationMode | `string` |  | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
 | node | [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) | null | The Document list will show all the nodes contained in the [NodePaging](../../lib/content-services/document-list/models/document-library.model.ts) entity |
 | permissionsStyle | [`PermissionStyleModel`](../../lib/content-services/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
-| rowFilter | `any \| null` | null | Custom row filter |
 | rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
 | rowStyleClass | `string` |  | The CSS class to apply to every row |
 | selectionMode | `string` | "single" | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
@@ -83,6 +82,8 @@ Displays the documents from a repository.
 | sorting | `string[]` | ['name', 'asc'] | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
 | sortingMode | `string` | "client" | Defines sorting mode. Can be either `client` (items in the list are sorted client-side) or `server` (the ordering supplied by the server is used without further client-side sorting). Note that the `server` option _does not_ request the server to sort the data before delivering it. |
 | thumbnails | `boolean` | false | Show document thumbnails rather than icons |
+| where | `string` |  | Filters the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information. |
+| rowFilter | `RowFilter` |  | Custom row filter |
 
 ### Events
 
