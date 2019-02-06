@@ -231,7 +231,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     toggleAllowDropFiles() {
-        this.allowDropFiles = !this.allowDropFiles;
         this.documentList.reload();
     }
 
@@ -432,10 +431,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onSiteChange(site: SiteEntry) {
         this.currentFolderId = site.entry.guid;
-    }
-
-    getDocumentListCurrentFolderId() {
-        return this.documentList.currentFolderId || DEFAULT_FOLDER_TO_SHOW;
     }
 
     hasSelection(selection: Array<MinimalNodeEntity>): boolean {

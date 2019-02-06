@@ -57,11 +57,6 @@ import { CustomResourcesService } from './../services/custom-resources.service';
 import { NavigableComponentInterface } from '../../breadcrumb/navigable-component.interface';
 import { RowFilter } from '../data/row-filter.model';
 
-export enum PaginationStrategy {
-    Finite,
-    Infinite
-}
-
 @Component({
     selector: 'adf-document-list',
     styleUrls: ['./document-list.component.scss'],
@@ -203,7 +198,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this._rowFilter = rowFilter;
         if (this.data) {
             this.data.setFilter(this._rowFilter);
-            if (this.currentFolderId) {
+            if (this._currentFolderId) {
                 this.reload();
             }
         }
@@ -217,9 +212,25 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     imageResolver: any | null = null;
 
+    _currentFolderId: string = null;
+
     /** The ID of the folder node to display or a reserved string alias for special sources */
     @Input()
-    currentFolderId: string = null;
+    set currentFolderId(currentFolderId: string) {
+        if (this._currentFolderId !== currentFolderId) {
+            this._currentFolderId = currentFolderId;
+            if (this.data) {
+                this.data.loadPage(null, false);
+            }
+
+            this.resetNewFolderPagination();
+            this.loadFolder();
+        }
+    }
+
+    get currentFolderId(): string {
+        return this._currentFolderId;
+    }
 
     /** The Document list will show all the nodes contained in the NodePaging entity */
     @Input()
@@ -391,7 +402,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
         let columns = this.data.getColumns();
         if (!columns || columns.length === 0) {
-            this.setupDefaultColumns(this.currentFolderId);
+            this.setupDefaultColumns(this._currentFolderId);
         }
     }
 
@@ -413,16 +424,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             }
         }
 
-        if (changes.currentFolderId &&
-            changes.currentFolderId.currentValue &&
-            changes.currentFolderId.currentValue !== changes.currentFolderId.previousValue) {
-            if (this.data) {
-                this.data.loadPage(null, false);
-            }
-
-            this.resetNewFolderPagination();
-            this.loadFolder();
-        } else if (this.data) {
+        if (this.data) {
             if (changes.node && changes.node.currentValue) {
                 let merge = this._pagination ? this._pagination.merge : false;
 
@@ -528,15 +530,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     navigateTo(node: Node | string): boolean {
         if (typeof node === 'string') {
             this.resetNewFolderPagination();
-            this.currentFolderId = node;
+            this._currentFolderId = node;
             this.folderChange.emit(new NodeEntryEvent(<Node> { id: node }));
             this.reload();
             return true;
         } else {
             if (this.canNavigateFolder(node)) {
                 this.resetNewFolderPagination();
-                this.currentFolderId = this.getNodeFolderDestinationId(node);
-                this.folderChange.emit(new NodeEntryEvent(<Node> { id: this.currentFolderId }));
+                this._currentFolderId = this.getNodeFolderDestinationId(node);
+                this.folderChange.emit(new NodeEntryEvent(<Node> { id: this._currentFolderId }));
                 this.reload();
                 return true;
             }
@@ -554,7 +556,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     updateCustomSourceData(nodeId: string): void {
-        this.currentFolderId = nodeId;
+        this._currentFolderId = nodeId;
     }
 
     /**
@@ -598,10 +600,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
 
         if (!this.hasCustomLayout) {
-            this.setupDefaultColumns(this.currentFolderId);
+            this.setupDefaultColumns(this._currentFolderId);
         }
 
-        this.loadFolderByNodeId(this.currentFolderId);
+        this.loadFolderByNodeId(this._currentFolderId);
     }
 
     loadFolderByNodeId(nodeId: string) {

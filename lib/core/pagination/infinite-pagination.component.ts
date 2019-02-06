@@ -88,9 +88,9 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     }
 
     onLoadMore() {
-        this.requestPaginationModel.skipCount += this.pageSize;
-        this.requestPaginationModel.merge = true;
-        this.requestPaginationModel.maxItems = this.pageSize;
+        this.requestPaginationModel.skipCount = 0;
+        this.requestPaginationModel.merge = false;
+        this.requestPaginationModel.maxItems += this.pageSize;
 
         this.loadMore.next(this.requestPaginationModel);
 
