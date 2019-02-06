@@ -64,10 +64,7 @@ given below:
 | Name | Description |
 | -- | -- |
 | **_appName_** | Name of the app |
-| **_initiator_** | ID of the user who initiated the process |
 | **_state_** | Execution state of the task. |
-| **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself). Can be "id", "name", "status" or "startDate". |
-| **_order_** | Sort ordering of the filter results (this doesn't participate in the filtering itself) |
 | **_assignment_** | User the task is assigned to |
 | **_taskName_** | Name of the task |
 | **_parentTaskId_** | ID of the task's parent task |
@@ -77,11 +74,10 @@ given below:
 | **_processDefinitionId_** | Process definition ID |
 | **_processDefinitionKey_** | Process definition key |
 | **_processInstanceId_** | Process instance ID |
-| **_startDate_** | Date the task was started |
-| **_lastModified_** | Date the task was last modified |
 | **_lastModifiedFrom_** | Finds tasks modified *after* this date |
 | **_lastModifiedTo_** | Finds tasks modified *before* this date |
-
+| **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself). Can be "id", "name", "createdDate", "priority", "processDefinitionId". |
+| **_order_** | Sort ordering of the filter results it can be ASC or DESC (doesn't participate in the filtering itself). |
 
 By default, the **_state_**, **_assignment_**, **_sort_** and **_order_** properties
 are displayed in the editor. However, you can also choose which properties
