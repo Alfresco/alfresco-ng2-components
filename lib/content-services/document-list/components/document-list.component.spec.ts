@@ -1036,20 +1036,6 @@ describe('DocumentList', () => {
         });
     });
 
-    it('should be able to perform navigation for virtual sources', () => {
-        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
-        const node = new FolderNode('folder');
-
-        documentList.currentFolderId = 'node-id';
-        spyOn(documentList, 'loadFolder').and.stub();
-        expect(documentList.performCustomSourceNavigation(node.entry)).toBeFalsy();
-
-        sources.forEach((source) => {
-            documentList.currentFolderId = source;
-            expect(documentList.performCustomSourceNavigation(node.entry)).toBeTruthy();
-        });
-    });
-
     it('should fetch trashcan', () => {
         spyOn(apiService.nodesApi, 'getDeletedNodes').and.returnValue(Promise.resolve(null));
 

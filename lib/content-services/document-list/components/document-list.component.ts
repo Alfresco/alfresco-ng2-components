@@ -539,17 +539,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return false;
     }
 
-    performCustomSourceNavigation(node: Node): boolean {
-        if (this.customResourcesService.isCustomSource(this.currentFolderId)) {
-            this.resetNewFolderPagination();
-            this.currentFolderId = this.getNodeFolderDestinationId(node);
-            this.folderChange.emit(new NodeEntryEvent(<Node> { id: this.currentFolderId }));
-            this.reload();
-            return true;
-        }
-        return false;
-    }
-
     private getNodeFolderDestinationId(node: Node) {
         return this.isLinkFolder(node) ? node.properties['cm:destination'] : node.id;
     }
@@ -789,9 +778,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     canNavigateFolder(node: Node): boolean {
         let canNavigateFolder: boolean = false;
 
-        if (this.customResourcesService.isCustomSource(this.currentFolderId)) {
-            canNavigateFolder = false;
-        } else if (node && node.isFolder) {
+        if (node && node.isFolder) {
             canNavigateFolder = true;
         }
 
