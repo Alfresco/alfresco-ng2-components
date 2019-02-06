@@ -39,7 +39,8 @@ import {
     ThumbnailService,
     CustomLoadingContentTemplateDirective,
     CustomNoPermissionTemplateDirective,
-    CustomEmptyContentTemplateDirective
+    CustomEmptyContentTemplateDirective,
+    RequestPaginationModel
 } from '@alfresco/adf-core';
 
 import { Node, NodeEntry, NodePaging } from '@alfresco/js-api';
@@ -54,7 +55,6 @@ import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 import { CustomResourcesService } from './../services/custom-resources.service';
 import { NavigableComponentInterface } from '../../breadcrumb/navigable-component.interface';
 import { RowFilter } from '../data/row-filter.model';
-import { RequestPaginationModel } from '../../../core/models/request-pagination.model';
 
 export enum PaginationStrategy {
     Finite,
