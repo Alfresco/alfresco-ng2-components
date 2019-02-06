@@ -281,6 +281,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private customResourcesService: CustomResourcesService,
                 private contentService: ContentService,
                 private thumbnailService: ThumbnailService) {
+
+        this._pagination = <PaginationModel> {
+            maxItems: this.maxItems || this.preferences.paginationSize,
+            skipCount: 0,
+            totalItems: 0,
+            hasMoreItems: false
+        };
     }
 
     getContextActions(node: NodeEntry) {
@@ -318,13 +325,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     get pagination(): BehaviorSubject<PaginationModel> {
         if (!this.$pagination) {
-            let maxItems = this.maxItems || this.preferences.paginationSize;
-            this._pagination = <PaginationModel> {
-                maxItems: maxItems,
-                skipCount: 0,
-                totalItems: 0,
-                hasMoreItems: false
-            };
             this.$pagination = new BehaviorSubject<PaginationModel>(this._pagination);
         }
         return this.$pagination;
@@ -419,7 +419,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.loadFolder();
         } else if (this.data) {
             if (changes.node && changes.node.currentValue) {
-                this.data.loadPage(changes.node.currentValue, this._pagination.merge);
+                let merge = this._pagination ? this._pagination.merge : false;
+
+                this.data.loadPage(changes.node.currentValue, merge);
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.imageResolver) {
                 this.data.setImageResolver(changes.imageResolver.currentValue);

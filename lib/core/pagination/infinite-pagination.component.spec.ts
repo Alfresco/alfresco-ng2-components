@@ -111,27 +111,26 @@ describe('InfinitePaginationComponent', () => {
             expect(loadMoreButton).not.toBeNull();
         });
 
-        it('should NOT show the load more button if there are no more elements to load', () => {
-            pagination = { maxItems: 444, skipCount: 25, totalItems: 30, hasMoreItems: true };
+        it('should NOT show the load more button if there are no more elements to load', (done) => {
+            pagination = { maxItems: 444, skipCount: 25, totalItems: 30, hasMoreItems: false };
 
-            component.target.updatePagination(pagination);
+            component.target.pagination.next(pagination);
 
             fixture.detectChanges();
 
             component.onLoadMore();
 
-            let loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
-            expect(loadMoreButton).toBeNull();
+            fixture.whenStable().then(() => {
+                let loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
+                expect(loadMoreButton).toBeNull();
+                done();
+            });
         });
 
         it('should  show the load more button if there are  more elements to load', (done) => {
             pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
 
-            component.target.updatePagination(pagination);
-
-            fixture.detectChanges();
-
-            component.onLoadMore();
+            component.target.pagination.next(pagination);
 
             fixture.detectChanges();
 
@@ -154,15 +153,16 @@ describe('InfinitePaginationComponent', () => {
         });
 
         it('should trigger the loadMore event with the proper pagination object', (done) => {
-            pagination.hasMoreItems = true;
-            pagination.skipCount = 5;
-            component.target.updatePagination(pagination);
+            pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
+
+            component.target.pagination.next(pagination);
+
             component.isLoading = false;
             component.pageSize = 5;
             fixture.detectChanges();
 
             component.loadMore.subscribe((newPagination: Pagination) => {
-                expect(newPagination.skipCount).toBe(10);
+                expect(newPagination.skipCount).toBe(5);
                 done();
             });
 
@@ -197,10 +197,9 @@ describe('InfinitePaginationComponent', () => {
             component.onLoadMore();
 
             expect(spyTarget).toHaveBeenCalledWith({
-                maxItems: 444,
                 skipCount: 25,
-                totalItems: 888,
-                hasMoreItems: true,
+                maxItems: 25,
+                hasMoreItems: false,
                 merge: true
             });
         });
@@ -213,10 +212,9 @@ describe('InfinitePaginationComponent', () => {
             component.onLoadMore();
 
             expect(spyTarget).toHaveBeenCalledWith({
-                maxItems: 444,
+                maxItems: 7,
                 skipCount: 7,
-                totalItems: 888,
-                hasMoreItems: true,
+                hasMoreItems: false,
                 merge: true
             });
         });

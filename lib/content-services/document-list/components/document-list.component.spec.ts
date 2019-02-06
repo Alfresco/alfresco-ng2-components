@@ -1269,6 +1269,24 @@ describe('DocumentList', () => {
         documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, '-root-', false) });
 
         expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
+            where: undefined,
+            maxItems: 25,
+            skipCount: 0,
+            rootFolderId: 'fake-id'
+        }, ['test-include']);
+    });
+
+    it('should add where in the server request when present', () => {
+        fixture.detectChanges();
+        documentList.currentFolderId = 'fake-id';
+        documentList.includeFields = ['test-include'];
+        documentList.where = '(isFolder=true)';
+        spyOn(documentListService, 'getFolder').and.callThrough();
+
+        documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, '-root-', false) });
+
+        expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
+            where: '(isFolder=true)',
             maxItems: 25,
             skipCount: 0,
             rootFolderId: 'fake-id'
