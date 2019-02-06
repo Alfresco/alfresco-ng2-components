@@ -62,7 +62,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     _rowFilter: RowFilter = defaultValidation;
 
-    /** Custom where filter function. See the
+    /** Custom *where* filter function. See the
      * [Document List component](document-list.component.md)
      * for more information.
      */
