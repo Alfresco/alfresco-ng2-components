@@ -40,7 +40,8 @@ import {
     CustomLoadingContentTemplateDirective,
     CustomNoPermissionTemplateDirective,
     CustomEmptyContentTemplateDirective,
-    RequestPaginationModel
+    RequestPaginationModel,
+    AlfrescoApiService
 } from '@alfresco/adf-core';
 
 import { Node, NodeEntry, NodePaging } from '@alfresco/js-api';
@@ -280,7 +281,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private preferences: UserPreferencesService,
                 private customResourcesService: CustomResourcesService,
                 private contentService: ContentService,
-                private thumbnailService: ThumbnailService) {
+                private thumbnailService: ThumbnailService,
+                private alfrescoApiService: AlfrescoApiService) {
 
         this._pagination = <PaginationModel> {
             maxItems: this.maxItems || this.preferences.paginationSize,
@@ -712,6 +714,17 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
             if (nodeEntry.entry.isFolder) {
                 this.navigateTo(nodeEntry.entry);
+            }
+
+            if (nodeEntry.entry['guid']) {
+                const options = {
+                    include: this.includeFields
+                };
+
+                this.alfrescoApiService.nodesApi.getNode(nodeEntry.entry['guid'], options)
+                    .then((node: NodeEntry) => {
+                        this.navigateTo(node.entry);
+                    });
             }
         }
     }
