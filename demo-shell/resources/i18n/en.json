@@ -290,10 +290,10 @@
     "CUSTOMIZE_FILTERS": "Customise your filter"
   },
   "PEOPLE_GROUPS_CLOUD": {
-    "SINGLE": "Single",
-    "MULTI": "Multi",
-    "PRESELECTED_VALUE": "Preselect value",
-    "ROLE": "Preselect roles"
+    "SINGLE": "Single Selection",
+    "MULTI": "Multiple Selection",
+    "PRESELECTED_VALUE": "Preselect: ",
+    "ROLE": "Roles: "
   },
   "ABOUT": {
     "TITLE": "Plugins",

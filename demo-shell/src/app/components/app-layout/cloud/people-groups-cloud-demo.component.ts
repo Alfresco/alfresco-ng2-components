@@ -27,12 +27,15 @@ import { MatRadioChange } from '@angular/material';
 })
 export class PeopleGroupCloudDemoComponent {
 
+    DEFAULT_GROUP_PLACEHOLDER: string = `[{"id": "1", "name":"activitiUserGroup"}]`;
+    DEFAULT_PEOPLE_PLACEHOLDER: string = `[{"email": "example@alfresco.com", "firstName":"Administrator", "lastName": "ADF"}]`;
+
     peopleMode: string = PeopleCloudComponent.MODE_SINGLE;
     preSelectUsers: string[] = [];
     peopleRoles: string[] = [];
 
     groupMode: string = GroupCloudComponent.MODE_SINGLE;
-    preSelectGroup: string[] = [];
+    preSelectGroup: GroupModel[] = [];
     selectedGroupList: GroupModel[] = [];
     groupRoles: string[];
 
@@ -54,10 +57,12 @@ export class PeopleGroupCloudDemoComponent {
 
     onChangePeopleMode(event: MatRadioChange) {
        this.peopleMode = event.value;
+       this.preSelectUsers = [...this.preSelectUsers];
     }
 
     onChangeGroupsMode(event: MatRadioChange) {
         this.groupMode = event.value;
+        this.preSelectGroup = [...this.preSelectGroup];
     }
 
     isStringArray(str: string) {
@@ -82,13 +87,17 @@ export class PeopleGroupCloudDemoComponent {
         return this.peopleMode === GroupCloudComponent.MODE_MULTIPLE;
     }
 
+    canShowGroupList() {
+        return this.groupMode === GroupCloudComponent.MODE_MULTIPLE;
+    }
+
     onRemoveGroup(group: GroupModel) {
-        this.selectedGroupList = this.selectedGroupList.filter((value: any) => value.id !== group.id);
+        this.preSelectGroup = this.preSelectGroup.filter((value: any) => value.id !== group.id);
     }
 
     onSelectGroup(group: GroupModel) {
         if (this.groupMode === GroupCloudComponent.MODE_MULTIPLE) {
-            this.selectedGroupList.push(group);
+            this.preSelectGroup.push(group);
         }
     }
 

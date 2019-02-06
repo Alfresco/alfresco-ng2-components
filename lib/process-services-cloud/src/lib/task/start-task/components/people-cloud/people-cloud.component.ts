@@ -16,7 +16,7 @@
  */
 
 import { FormControl } from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input, ViewChild, ElementRef, SimpleChanges, OnChanges } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter } from 'rxjs/operators';
 import { FullNamePipe, IdentityUserModel, IdentityUserService } from '@alfresco/adf-core';
@@ -39,7 +39,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     encapsulation: ViewEncapsulation.None
 })
 
-export class PeopleCloudComponent implements OnInit {
+export class PeopleCloudComponent implements OnInit, OnChanges {
 
     static MODE_SINGLE = 'single';
     static MODE_MULTIPLE = 'multiple';
@@ -101,16 +101,17 @@ export class PeopleCloudComponent implements OnInit {
     ngOnInit() {
         this.selectedUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this.preSelectUsers);
         this.selectedUsers$ = this.selectedUsersSubject.asObservable();
-
-        if (this.hasPreSelectUsers()) {
-            this.loadPreSelectUsers();
-        }
-
         this.initSearch();
 
         if (this.appName) {
             this.disableSearch();
             this.loadClientId();
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.preSelectUsers && this.hasPreSelectUsers()) {
+            this.loadPreSelectUsers();
         }
     }
 
@@ -195,6 +196,8 @@ export class PeopleCloudComponent implements OnInit {
         if (!this.isMultipleMode()) {
             this.searchUserCtrl.setValue(this.preSelectUsers[0]);
             this.preSelectUsers = [];
+        } else {
+            this.selectedUsersSubject.next(this.preSelectUsers);
         }
     }
 
