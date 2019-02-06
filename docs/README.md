@@ -10,11 +10,6 @@ section discusses particular techniques in depth. The other sections are referen
 libraries. Click the name of an item to see its documentation or click the source link to see
 its main source file. Note that ADF is developed continuously, so the source files for some items may be listed here before their documentation is available.
 
-See the [Version Index](versionIndex.md) for a list of components ordered by
-the ADF version where they were introduced. You can see the full details of each release
-in the [Release notes](release-notes/README.md) section. The [roadmap](roadmap.md)
-contains a preview of features we hope to release in future versions of ADF.
-
 Components are sometimes marked with an icon to show their status. No icon indicates
 that the component is complete and suitable for normal use. The other status levels are:
 
@@ -27,6 +22,18 @@ that the component is complete and suitable for normal use. The other status lev
 
 There is also a set of ADF tutorials that describe how to accomplish tasks step-by-step.
 See the [Tutorials index](tutorials/README.md) for the full list.
+
+A few other pages of information are also available:
+
+-   The [Version Index](versionIndex.md) has a list of components ordered by
+    the ADF version where they were introduced.
+-   The [Release notes](release-notes/README.md) section has details of all
+    the features introduced and bugs fixed with each release.
+-   The [Version compatibility](compatibility.md) page shows which versions
+    of Alfresco's backend servies (ACS and APS) are compatible with each released
+    version of ADF.
+-   The [Roadmap](roadmap.md)
+    contains a preview of features we hope to release in future versions of ADF.
 
 ## Contents
 
