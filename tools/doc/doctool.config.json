@@ -44,13 +44,13 @@
         "Subject": "http://reactivex.io/documentation/subject.html",
         "AppDefinitionRepresentation": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/AppDefinitionRepresentation.md",
         "DeletedNodesPaging": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/DeletedNodesPaging.md",
-        "DownloadBodyCreate": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-core-rest-api/docs/DownloadBodyCreate.md",
-        "DownloadEntry": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-core-rest-api/docs/DownloadEntry.md",
+        "DownloadBodyCreate": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/DownloadBodyCreate.md",
+        "DownloadEntry": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/DownloadEntry.md",
         "GroupMemberPaging": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/GroupMemberPaging.md",
         "MinimalNode": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md",
         "Node": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md",
         "NodeEntry": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md",
-        "ProcessInstanceFilterRepresentation": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md",
+        "ProcessInstanceFilterRepresentation": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/ProcessInstanceFilterRepresentation.md",
         "RelatedContentRepresentation": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/RelatedContentRepresentation.md",
         "RenditionEntry": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionEntry.md",
         "RenditionPaging": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionPaging.md",
@@ -58,8 +58,8 @@
         "SitePaging": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md",
         "TagEntry": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagEntry.md",
         "TagPaging": "https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md",
-        "UserProcessInstanceFilterRepresentation": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-activiti-rest-api/docs/UserProcessInstanceFilterRepresentation.md",
-        "UserRepresentation": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-activiti-rest-api/docs/UserRepresentation.md"
+        "UserProcessInstanceFilterRepresentation": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/UserProcessInstanceFilterRepresentation.md",
+        "UserRepresentation": "https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/UserRepresentation.md"
     },
     "typeNameExceptions": {
         "activiti-alfresco.service": "ActivitiContentService",
