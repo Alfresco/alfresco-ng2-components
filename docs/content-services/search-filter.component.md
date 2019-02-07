@@ -354,11 +354,13 @@ The default page size of 5 will be used if you set the value to 0 or omit it ent
 
 ### Facet Intervals
 
+These provide custom categories based on admin defined ranges inside `intervals`. What is wanted for every interval can be specified exactly, and having overlapping ranges could be possible.
+
 #### FacetIntervals Properties
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 |intervals|array|Specifies the fields to facet by interval.|
-Note: `sets` (Sets the intervals for all fields.) is not yet supported.
+Note: `sets` parameter from Search API (Sets the intervals for all fields) is not yet supported.
 
 
 ```json
@@ -390,6 +392,10 @@ Note: `sets` (Sets the intervals for all fields.) is not yet supported.
 }
 ```
 > **Note:** Just like on the `facetFields`, make sure that the `label` properties do not contain empty spaces, as this would cause unexpected behavior.
+
+Each interval defined is collected into its collapsible category. The top code snippet will result in the following display of the facet intervals:
+
+![Facet Intervals](../docassets/images/search-facet-intervals.png)
 
 ## See also
 
