@@ -20,18 +20,17 @@ Provides authentication to ACS and APS.
 -   **getBearerExcludedUrls**(): `string[]`<br/>
     Gets the set of URLs that the token bearer is excluded from.
     -   **Returns** `string[]` - Array of URL strings
--   **getBpmLoggedUser**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-activiti-rest-api/docs/UserRepresentation.md)`>`<br/>
+-   **getBpmLoggedUser**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/UserRepresentation.md)`>`<br/>
     Gets information about the user currently logged into APS.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/alfresco-activiti-rest-api/docs/UserRepresentation.md)`>` - User information
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/UserRepresentation.md)`>` - User information
 -   **getBpmUsername**(): `string`<br/>
     Gets the BPM username
     -   **Returns** `string` - The BPM username
 -   **getEcmUsername**(): `string`<br/>
     Gets the ECM username.
     -   **Returns** `string` - The ECM username
--   **getRedirect**(provider: `string`): `string`<br/>
+-   **getRedirect**(): `string`<br/>
     Gets the URL to redirect to after login.
-    -   _provider:_ `string`  - Service provider. Can be "ECM", "BPM" or "ALL".
     -   **Returns** `string` - The redirect URL
 -   **getTicketBpm**(): `string|null`<br/>
     Gets the BPM ticket stored in the Storage.

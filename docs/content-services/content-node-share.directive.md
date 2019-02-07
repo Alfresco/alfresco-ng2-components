@@ -36,7 +36,7 @@ Creates and manages public shared links for files.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | baseShareUrl | `string` |  | Prefix to add to the generated link. |
-| node | [`MinimalNodeEntity`](../content-services/document-library.model.md) |  | Node to share. |
+| node | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md) |  | [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to share. |
 
 ## Details
 

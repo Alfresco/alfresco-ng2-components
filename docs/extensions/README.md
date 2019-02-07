@@ -17,7 +17,6 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Dynamic component](dynamic.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Displays dynamically-loaded extension components. | [Source](../../lib/extensions/src/lib/components/dynamic-component/dynamic.component.ts) |
-| [Dynamic tab component](dynamic-tab.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Displays dynamically-loaded extensions with tabs. | [Source](../../lib/extensions/src/lib/components/dynamic-tab/dynamic-tab.component.ts) |
 
 ## Services
 

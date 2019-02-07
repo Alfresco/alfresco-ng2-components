@@ -175,7 +175,7 @@ backend services have been tested with each released version of ADF.
 
 <!--v220 start-->
 
--   [Node download directive](content-services/node-download.directive.md)
+-   [Node download directive](core/node-download.directive.md)
 -   [Node lock directive](content-services/node-lock.directive.md)
 
 <!--v220 end-->
