@@ -742,17 +742,21 @@ describe('ContentNodeSelectorComponent', () => {
                 });
 
                 it('button callback should load the next batch of folder results when there is no searchTerm', () => {
-                    const skipCount = 5;
-
                     component.searchTerm = '';
                     fixture.detectChanges();
 
-                    component.getNextPageOfSearch({ skipCount });
+                    component.getNextPageOfSearch({
+                        hasMoreItems: false,
+                        skipCount: 10,
+                        maxItems: 45,
+                        totalItems: 0
+                    });
+
                     fixture.detectChanges();
                     expect(component.searchTerm).toBe('');
 
                     expect(component.infiniteScroll).toBeTruthy();
-                    expect(component.skipCount).toBe(skipCount);
+                    expect(component.pagination.maxItems).toBe(45);
                     expect(searchSpy).not.toHaveBeenCalled();
                 });
 

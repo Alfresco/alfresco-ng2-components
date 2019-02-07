@@ -104,6 +104,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     reset() {
         this.pagination.skipCount = 0;
+        this.pagination.maxItems = this.pageSize;
         this.target.updatePagination(this.pagination);
     }
 
