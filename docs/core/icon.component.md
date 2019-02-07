@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-10
 ---
 
-# [Icon Component](../../core/icon/icon.component.ts "Defined in icon.component.ts")
+# [Icon Component](../../lib/core/icon/icon.component.ts "Defined in icon.component.ts")
 
 Provides a universal way of rendering registered and named icons.
 
@@ -28,8 +28,8 @@ Provides a universal way of rendering registered and named icons.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| value | `string` | | Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. |
-| color | ThemePalette | |Theme color palette for the component. |
+| color | `ThemePalette` |  | Theme color palette for the component. |
+| value | `string` |  | Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. |
 
 ## Details
 

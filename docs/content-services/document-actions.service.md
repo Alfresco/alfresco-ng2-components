@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# [Document Actions service](../../content-services/document-list/services/document-actions.service.ts "Defined in document-actions.service.ts")
+# [Document Actions service](../../lib/content-services/document-list/services/document-actions.service.ts "Defined in document-actions.service.ts")
 
 Implements the document menu actions for the [Document List component](../content-services/document-list.component.md).
 
