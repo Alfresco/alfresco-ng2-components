@@ -15,11 +15,7 @@
  * limitations under the License.
  */
 
-<<<<<<< HEAD
 import { Component, ElementRef, OnInit, Output, EventEmitter, ViewChild, ViewEncapsulation, Input, SimpleChanges, OnChanges } from '@angular/core';
-=======
-import { Component, ElementRef, OnInit, Output, EventEmitter, ViewChild, ViewEncapsulation, Input, OnChanges, SimpleChanges } from '@angular/core';
->>>>>>> [ADF4006] People/CloudDemoComponent add preselected value validations
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, of, BehaviorSubject } from 'rxjs';
@@ -233,9 +229,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     private loadPreSelectGroups() {
         if (this.isMultipleMode()) {
             this.selectedGroups = [];
-            this.preSelectGroups.forEach((group: GroupModel) => {
-                this.selectedGroups.push(group);
-            });
+            this.loadMultiplePreselectGroups()
             this.selectedGroupsSubject.next(this.selectedGroups);
         } else {
             this.searchGroupsControl.setValue(this.preSelectGroups[0]);
