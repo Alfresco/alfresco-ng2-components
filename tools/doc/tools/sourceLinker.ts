@@ -5,7 +5,7 @@ import { select } from "unist-util-select";
 import * as ngHelpers from "../ngHelpers";
 
 
-const angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(interface)|(model)|(pipe)|(service)|(widget))/;
+const angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(dialog)|(directive)|(interface)|(model)|(pipe)|(service)|(widget))/;
 
 
 export function processDocs(mdCache, aggData, errorMessages) {

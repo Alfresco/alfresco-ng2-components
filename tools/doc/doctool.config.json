@@ -20,6 +20,9 @@
             "typeLinker",
             "toc"
         ],
+        "check": [
+            "fileChecker"
+        ],
         "dev": [
             "toc"
         ]
@@ -65,6 +68,7 @@
         "auth-guard.service": "AuthGuard",
         "card-item-types.service": "CardItemTypeService",
         "card-view-item.interface": "CardViewItem",
+        "confirm.dialog": "ConfirmDialogComponent",
         "content-node-share.directive": "NodeSharedDirective",
         "content.widget": "ContentWidgetComponent",
         "create-task-attachment.component": "AttachmentComponent",
@@ -160,7 +164,9 @@
     ],
     "fileCheckerFilter": [
         "README",
+        "compatibility",
         "release-notes",
+        "roadmap",
         "tutorials",
         "user-guide",
         "versionIndex"

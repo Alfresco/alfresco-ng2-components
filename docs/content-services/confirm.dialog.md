@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-22
 ---
 
-# [Confirm dialog component](../../lib/content-services/dialogs/library/library.dialog.ts "Defined in library.dialog.ts")
+# [Confirm dialog component](../../lib/content-services/dialogs/confirm.dialog.ts "Defined in confirm.dialog.ts")
 
 Requests a yes/no choice from the user.
 
