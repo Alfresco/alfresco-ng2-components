@@ -229,7 +229,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     private loadPreSelectGroups() {
         if (this.isMultipleMode()) {
             this.selectedGroups = [];
-            this.loadMultiplePreselectGroups()
+            this.loadMultiplePreselectGroups();
             this.selectedGroupsSubject.next(this.selectedGroups);
         } else {
             this.searchGroupsControl.setValue(this.preSelectGroups[0]);
