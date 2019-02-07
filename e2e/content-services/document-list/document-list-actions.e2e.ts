@@ -85,7 +85,7 @@ describe('Document List Component - Actions', () => {
             done();
         });
 
-        it('[C213257] Should be able to copy a file', () => {
+        fit('[C213257] Should be able to copy a file', () => {
             browser.driver.sleep(15000);
 
             contentListPage.rightClickOnRowNamed(pdfUploadedNode.entry.name);
