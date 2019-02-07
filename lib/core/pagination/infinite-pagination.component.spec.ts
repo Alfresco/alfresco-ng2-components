@@ -217,7 +217,7 @@ describe('InfinitePaginationComponent', () => {
 
             expect(spyTarget).toHaveBeenCalledWith({
                 skipCount: 0,
-                maxItems: 25,
+                maxItems: 50,
                 hasMoreItems: false,
                 merge: false
             });
@@ -231,7 +231,7 @@ describe('InfinitePaginationComponent', () => {
             component.onLoadMore();
 
             expect(spyTarget).toHaveBeenCalledWith({
-                maxItems: 7,
+                maxItems: 14,
                 skipCount: 0,
                 hasMoreItems: false,
                 merge: false

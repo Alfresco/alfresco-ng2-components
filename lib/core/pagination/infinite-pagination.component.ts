@@ -84,6 +84,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
         this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
             this.pageSize = this.pageSize || pagSize;
+            this.requestPaginationModel.maxItems = this.pageSize;
         });
     }
 
@@ -91,11 +92,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
         this.requestPaginationModel.skipCount = 0;
         this.requestPaginationModel.merge = false;
 
-        if (!this.requestPaginationModel.maxItems) {
-            this.requestPaginationModel.maxItems = this.pageSize;
-        } else {
-            this.requestPaginationModel.maxItems += this.pageSize;
-        }
+        this.requestPaginationModel.maxItems += this.pageSize;
 
         this.loadMore.next(this.requestPaginationModel);
 
