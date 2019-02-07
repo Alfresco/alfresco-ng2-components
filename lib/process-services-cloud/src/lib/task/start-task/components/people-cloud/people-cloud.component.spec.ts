@@ -31,6 +31,7 @@ describe('PeopleCloudComponent', () => {
     let identityService: IdentityUserService;
     let findUsersSpy: jasmine.Spy;
     let checkUserHasAccessSpy: jasmine.Spy;
+    let loadClientsByApplicationNameSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
@@ -44,7 +45,7 @@ describe('PeopleCloudComponent', () => {
         identityService = TestBed.get(IdentityUserService);
         findUsersSpy = spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
         checkUserHasAccessSpy = spyOn(identityService, 'checkUserHasClientApp').and.returnValue(of(true));
-        spyOn(identityService, 'getClientIdByApplicationName').and.returnValue(of('mock-client-id'));
+        loadClientsByApplicationNameSpy = spyOn(identityService, 'getClientIdByApplicationName').and.returnValue(of('mock-client-id'));
     });
 
     it('should create PeopleCloudComponent', () => {
@@ -292,6 +293,26 @@ describe('PeopleCloudComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(checkUserHasRoleSpy).not.toHaveBeenCalled();
+        });
+    }));
+
+    it('should load the clients if appName change', async( () => {
+        component.appName = 'ADF';
+        fixture.detectChanges();
+        fixture.whenStable().then( () => {
+            fixture.detectChanges();
+            expect(loadClientsByApplicationNameSpy).toHaveBeenCalled();
+        });
+    }));
+
+    it('should filter users if appName change', async(() => {
+        component.appName = '';
+        fixture.detectChanges();
+        component.appName = 'ADF';
+        fixture.detectChanges();
+        fixture.whenStable().then( () => {
+            fixture.detectChanges();
+            expect(checkUserHasAccessSpy).toHaveBeenCalled();
         });
     }));
 });

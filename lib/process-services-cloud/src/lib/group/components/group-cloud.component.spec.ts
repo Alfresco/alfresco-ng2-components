@@ -26,6 +26,7 @@ import { GroupCloudService } from '../services/group-cloud.service';
 import { setupTestBed, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { mockGroups } from '../mock/group-cloud.mock';
 import { GroupModel } from '../models/group.model';
+import { SimpleChange } from '@angular/core';
 
 describe('GroupCloudComponent', () => {
     let component: GroupCloudComponent;
@@ -59,6 +60,9 @@ describe('GroupCloudComponent', () => {
     });
 
     it('should be able to fetch client id', async(() => {
+        component.ngOnChanges( {
+            appName: new SimpleChange(null, component.appName, true)
+        });
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             expect(getClientIdByApplicationNameSpy).toHaveBeenCalled();
@@ -289,6 +293,24 @@ describe('GroupCloudComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(checkGroupHasAccessSpy).not.toHaveBeenCalled();
+        });
+    }));
+
+    it('should load the clients if appName change', async( () => {
+        component.appName = 'ADF';
+        fixture.detectChanges();
+        fixture.whenStable().then( () => {
+            fixture.detectChanges();
+            expect(getClientIdByApplicationNameSpy).toHaveBeenCalled();
+        });
+    }));
+
+    it('should filter users if appName change', async(() => {
+        component.appName = 'ADF';
+        fixture.detectChanges();
+        fixture.whenStable().then( () => {
+            fixture.detectChanges();
+            expect(checkGroupHasAccessSpy).toHaveBeenCalled();
         });
     }));
 });

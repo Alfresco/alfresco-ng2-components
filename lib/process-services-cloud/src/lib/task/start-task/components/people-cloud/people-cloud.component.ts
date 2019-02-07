@@ -109,12 +109,16 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
             this.loadPreSelectUsers();
         }
 
-        if (changes.appName && this.appName && this.appName.length > 0) {
+        if (changes.appName && this.isAppNameChanged(changes.appName)) {
             this.disableSearch();
             this.loadClientId();
         } else {
             this.enableSearch();
         }
+    }
+
+    private isAppNameChanged(change) {
+        return change.previousValue !== change.currentValue && this.appName && this.appName.length > 0;
     }
 
     private initSearch() {
