@@ -41,10 +41,11 @@ import {
     CustomNoPermissionTemplateDirective,
     CustomEmptyContentTemplateDirective,
     RequestPaginationModel,
-    AlfrescoApiService
+    AlfrescoApiService,
+    UserPreferenceValues
 } from '@alfresco/adf-core';
 
-import { Node, NodeEntry, NodePaging } from '@alfresco/js-api';
+import { Node, NodeEntry, NodePaging, Pagination } from '@alfresco/js-api';
 import { Subject, BehaviorSubject, Subscription, of } from 'rxjs';
 import { ShareDataRow } from './../data/share-data-row.model';
 import { ShareDataTableAdapter } from './../data/share-datatable-adapter';
@@ -68,7 +69,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
-    static DEFAULT_PAGE_SIZE: number = 20;
+
+    static DEFAULT_PAGINATION: Pagination = new Pagination({
+        hasMoreItems: false,
+        skipCount: 0,
+        maxItems: 25,
+        totalItems: 0
+    });
 
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
@@ -222,10 +229,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this._currentFolderId = currentFolderId;
             if (this.data) {
                 this.data.loadPage(null, false);
+                this.resetNewFolderPagination();
             }
 
             if (this._currentFolderId) {
-                this.resetNewFolderPagination();
                 this.loadFolder();
             }
         }
@@ -241,7 +248,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /** Default value is stored into user preference settings use it only if you are not using the pagination */
     @Input()
-    maxItems: number;
+    maxItems: number = DocumentListComponent.DEFAULT_PAGINATION.maxItems;
 
     /** Emitted when the user clicks a list node */
     @Output()
@@ -283,8 +290,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     // @deprecated 3.0.0
     folderNode: Node;
 
-    private _pagination: PaginationModel;
-    private $pagination: BehaviorSubject<PaginationModel>;
+    private _pagination: PaginationModel = DocumentListComponent.DEFAULT_PAGINATION;
+    pagination: BehaviorSubject<PaginationModel> = new BehaviorSubject<PaginationModel>(DocumentListComponent.DEFAULT_PAGINATION);
 
     private layoutPresets = {};
     private subscriptions: Subscription[] = [];
@@ -295,20 +302,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private ngZone: NgZone,
                 private elementRef: ElementRef,
                 private appConfig: AppConfigService,
-                private preferences: UserPreferencesService,
+                private userPreferencesService: UserPreferencesService,
                 private customResourcesService: CustomResourcesService,
                 private contentService: ContentService,
                 private thumbnailService: ThumbnailService,
                 private alfrescoApiService: AlfrescoApiService) {
 
-        this.maxItems = this.maxItems ? this.maxItems : this.preferences.paginationSize;
-
-        this._pagination = <PaginationModel> {
-            maxItems: this.maxItems,
-            skipCount: 0,
-            totalItems: 0,
-            hasMoreItems: false
-        };
+        this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
+            this.maxItems = this._pagination.maxItems = pagSize;
+        });
     }
 
     getContextActions(node: NodeEntry) {
@@ -342,13 +344,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     private getLayoutPreset(name: string = 'default'): DataColumn[] {
         return (this.layoutPresets[name] || this.layoutPresets['default']).map((col) => new ObjectDataColumn(col));
-    }
-
-    get pagination(): BehaviorSubject<PaginationModel> {
-        if (!this.$pagination) {
-            this.$pagination = new BehaviorSubject<PaginationModel>(this._pagination);
-        }
-        return this.$pagination;
     }
 
     isMobile(): boolean {

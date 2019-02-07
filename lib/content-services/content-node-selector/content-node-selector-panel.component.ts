@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { HighlightDirective, UserPreferencesService, PaginationModel } from '@alfresco/adf-core';
+import { HighlightDirective, UserPreferencesService, PaginationModel, UserPreferenceValues, InfinitePaginationComponent } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
@@ -24,7 +24,6 @@ import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { debounceTime } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { ShareDataRow } from '../document-list';
 
@@ -40,6 +39,13 @@ const defaultValidation = () => true;
     host: { 'class': 'adf-content-node-selector-panel' }
 })
 export class ContentNodeSelectorPanelComponent implements OnInit {
+
+    static DEFAULT_PAGINATION: Pagination = new Pagination({
+        maxItems: 25,
+        skipCount: 0,
+        totalItems: 0,
+        hasMoreItems: false
+    });
 
     /** Node ID of the folder currently listed. */
     @Input()
@@ -105,7 +111,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /** Number of items shown per page in the list. */
     @Input()
-    pageSize: number;
+    pageSize: number = ContentNodeSelectorPanelComponent.DEFAULT_PAGINATION.maxItems;
 
     /** Function used to decide if the selected node has permission to be selected.
      * Default value is a function that always returns true.
@@ -139,16 +145,19 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     inDialog: boolean = false;
     _chosenNode: Node = null;
     folderIdToShow: string | null = null;
-    pagination: BehaviorSubject<PaginationModel>;
 
-    skipCount: number = 0;
+    pagination: PaginationModel = ContentNodeSelectorPanelComponent.DEFAULT_PAGINATION;
+
+    @ViewChild(InfinitePaginationComponent)
+    infinitePaginationComponent: InfinitePaginationComponent;
+
     infiniteScroll: boolean = false;
     debounceSearch: number = 200;
     searchInput: FormControl = new FormControl();
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private customResourcesService: CustomResourcesService,
-                private preferences: UserPreferencesService) {
+                private userPreferencesService: UserPreferencesService) {
         this.searchInput.valueChanges
             .pipe(
                 debounceTime(this.debounceSearch)
@@ -156,15 +165,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
             .subscribe((searchValue) => {
                 this.search(searchValue);
             });
-        this.pageSize = this.preferences.paginationSize;
 
-        let defaultPagination = <PaginationModel> {
-            maxItems: this.pageSize,
-            skipCount: 0,
-            totalItems: 0,
-            hasMoreItems: false
-        };
-        this.pagination = new BehaviorSubject<PaginationModel>(defaultPagination);
+        this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
+            this.pageSize = pagSize;
+        });
+
     }
 
     set chosenNode(value: Node) {
@@ -260,7 +265,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     clearSearch() {
         this.searchTerm = '';
         this.nodePaging = null;
-        this.skipCount = 0;
+        this.pagination.maxItems = this.pageSize;
+        this.infinitePaginationComponent.reset();
         this.chosenNode = null;
         this.showingSearchResults = false;
     }
@@ -281,7 +287,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      */
     private startNewSearch(): void {
         this.nodePaging = null;
-        this.skipCount = 0;
+        this.pagination.maxItems = this.pageSize;
+        this.infinitePaginationComponent.reset();
         this.chosenNode = null;
         this.folderIdToShow = null;
         this.querySearch();
@@ -296,14 +303,14 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         if (this.customResourcesService.hasCorrespondingNodeIds(this.siteId)) {
             this.customResourcesService.getCorrespondingNodeIds(this.siteId)
                 .subscribe((nodeIds) => {
-                        this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize, nodeIds)
+                        this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, nodeIds)
                             .subscribe(this.showSearchResults.bind(this));
                     },
                     () => {
                         this.showSearchResults({ list: { entries: [] } });
                     });
         } else {
-            this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize)
+            this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems)
                 .subscribe(this.showSearchResults.bind(this));
         }
     }
@@ -350,9 +357,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      *
      * @param event Pagination object
      */
-    getNextPageOfSearch(event: Pagination): void {
+    getNextPageOfSearch(pagination: Pagination): void {
         this.infiniteScroll = true;
-        this.skipCount = event.skipCount;
+        this.pagination = pagination;
 
         if (this.searchTerm.length > 0) {
             this.querySearch();
