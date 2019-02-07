@@ -301,8 +301,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private thumbnailService: ThumbnailService,
                 private alfrescoApiService: AlfrescoApiService) {
 
+        this.maxItems = this.maxItems ? this.maxItems : this.preferences.paginationSize;
+
         this._pagination = <PaginationModel> {
-            maxItems: this.maxItems || this.preferences.paginationSize,
+            maxItems: this.maxItems,
             skipCount: 0,
             totalItems: 0,
             hasMoreItems: false
@@ -834,7 +836,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private resetNewFolderPagination() {
-        this.pagination.value.skipCount = 0;
+        this._pagination.skipCount = 0;
+        this._pagination.maxItems = this.maxItems;
     }
 
     ngOnDestroy() {
