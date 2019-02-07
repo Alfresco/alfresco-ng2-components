@@ -45,11 +45,11 @@ a place in the app where the actual content will be supplied dynamically.
 ADF provides a number of features that offer extension points or help
 with extensibility in general:
 
--   **Components**: The [Dynamic component](../extensions/dynamic.component.md) and [Dynamic Tab component](../extensions/dynamic-tab.component.md)
-    have no content of their own but they have an `id` property that
+-   **Components**: The [Dynamic component](../extensions/dynamic.component.md)
+    has no content of its own but it has an `id` property that
     references a registered component extension ID. The referenced component
     will be added as a child of the Dynamic component at runtime.
--   **Routes**: These are registered as key/ID strings that resolve to standard
+-   **Routes**: These are registered as  key/ID strings that resolve to standard
     Angular routes. This feature can be used, say, that a click on a list item
     should send the user _somewhere_ but leave the actual destination up to the
     developer.
@@ -79,7 +79,7 @@ with extensibility in general:
 ## Setting up an app for extensibility
 
 You can register component classes for use with the [Dynamic component](../extensions/dynamic.component.md)
-or [Dynamic Tab component](../extensions/dynamic-tab.component.md) using the `setComponents` method of the
+using the `setComponents` method of the
 [Extension service](../extensions/extension.service.md) (see the Dynamic component page for further details
 and code samples). The service also has `setAuthGuards` and
 `setEvaluators` methods that behave analogously.

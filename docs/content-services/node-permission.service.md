@@ -49,7 +49,7 @@ Manages role permissions for content nodes.
 This service requires the Content Services Groups API, which is available from version 5.2.1.
 
 See the
-[Groups API docs](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/GroupssApi.md)
+[Groups API docs](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/GroupsApi.md)
 in the Alfresco JS API for more information about the types returned by
 the methods and for the implementation of the REST API the service is
 based on.

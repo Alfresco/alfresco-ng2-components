@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-07
 ---
 
-# [Translation service](../../core/services/translation.service.ts "Defined in translation.service.ts")
+# [Translation service](../../lib/core/services/translation.service.ts "Defined in translation.service.ts")
 
 Supports localisation.
 
