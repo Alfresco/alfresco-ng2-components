@@ -224,8 +224,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 this.data.loadPage(null, false);
             }
 
-            this.resetNewFolderPagination();
-            this.loadFolder();
+            if (this._currentFolderId) {
+                this.resetNewFolderPagination();
+                this.loadFolder();
+            }
         }
     }
 
