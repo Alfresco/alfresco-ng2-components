@@ -985,6 +985,7 @@
           "required": [
             "intervals"
           ],
+          "additionalProperties": false,
           "properties": {
             "intervals": {
               "description": "List of facet intervals",

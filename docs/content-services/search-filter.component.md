@@ -352,6 +352,43 @@ The default page size of 5 will be used if you set the value to 0 or omit it ent
 
 ![Facet Queries](../docassets/images/search-facet-queries.png)
 
+### Facet Intervals
+
+#### FacetIntervals Properties
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+|intervals|array|Specifies the fields to facet by interval.|
+Note: `sets` (Sets the intervals for all fields.) is not yet supported.
+
+
+```json
+{
+    "search": {
+      "facetIntervals":{
+        "intervals":[
+          {
+            "label":"TheCreated",
+            "field":"cm:created",
+            "sets":[
+              { "label":"lastYear", "start":"2017", "end":"2018", "endInclusive":false },
+              { "label":"currentYear", "start":"NOW/YEAR", "end":"NOW/YEAR+1YEAR" },
+              { "label":"earlier", "start":"*", "end":"2017", "endInclusive":false }
+            ]
+          },
+          {
+            "label":"TheModified",
+            "field":"cm:modified",
+            "sets":[
+              { "label":"2016", "start":"2017", "end":"2018", "endInclusive":false },
+              { "label":"currentYear", "start":"NOW/YEAR", "end":"NOW/YEAR+1YEAR" },
+              { "label":"earlierThan2017", "start":"*", "end":"2017", "endInclusive":false }
+            ]
+          }
+        ]
+      }
+  }
+}
+```
 ## See also
 
 -   [Search Query Builder service](search-query-builder.service.md)
