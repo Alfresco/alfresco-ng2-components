@@ -20,7 +20,7 @@ import { from, of, Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { GroupSearchParam, GroupModel } from '../models/group.model';
+import { GroupSearchParam, GroupRoleModel } from '../models/group.model';
 
 @Injectable({
     providedIn: 'root'
@@ -60,8 +60,8 @@ export class GroupCloudService {
      * @param groupId ID of the target group
      * @returns Group details
      */
-    getGroupDetailsById(groupId: string) {
-        const url = this.getGroupsApi() + '/' + groupId;
+    getGroupRoles(groupId: string): Observable<GroupRoleModel[]> {
+        const url = this.buildRolesUrl(groupId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
@@ -81,14 +81,12 @@ export class GroupCloudService {
      * @returns True if the group has one or more of the roles, false otherwise
      */
     checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean>  {
-        return this.getGroupDetailsById(groupId).pipe(map((response: GroupModel) => {
-            let availableGroupRoles = [];
+        return this.getGroupRoles(groupId).pipe(map((groupRoles: GroupRoleModel[]) => {
             let hasRole = false;
-            availableGroupRoles = response.realmRoles;
-            if (availableGroupRoles && availableGroupRoles.length > 0) {
+            if (groupRoles && groupRoles.length > 0) {
                 roleNames.forEach((roleName: string) => {
-                    const role = availableGroupRoles.find((availableRole) => {
-                        return roleName === availableRole;
+                    const role = groupRoles.find((groupRole) => {
+                        return roleName === groupRole.name;
                     });
                     if (role) {
                         hasRole = true;
@@ -197,6 +195,10 @@ export class GroupCloudService {
 
     private getGroupsApi() {
         return `${this.appConfigService.get('identityHost')}/groups`;
+    }
+
+    private buildRolesUrl(groupId: string): any {
+        return `${this.appConfigService.get('identityHost')}/groups/${groupId}/role-mappings/realm/composite`;
     }
 
     /**
