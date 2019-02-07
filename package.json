@@ -143,6 +143,7 @@
     "karma-mocha-reporter": "2.2.5",
     "karma-remap-istanbul": "0.6.0",
     "karma-systemjs": "0.16.0",
+    "license-checker": "^25.0.1",
     "lite-server": "^2.4.0",
     "markdown-toc": "^1.2.0",
     "markdownlint-cli": "^0.12.0",
