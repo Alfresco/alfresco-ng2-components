@@ -1295,4 +1295,24 @@ describe('DocumentList', () => {
             rootFolderId: 'fake-id'
         }, ['test-include']);
     });
+
+    it('should reset the pagination when enter in a new folder', () => {
+        let folder = new FolderNode();
+        documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
+        documentList.updatePagination({
+            maxItems: 10,
+            skipCount: 10
+        });
+
+        spyOn(documentListService, 'getFolder').and.callThrough();
+
+        documentList.onNodeClick(folder);
+
+        expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
+            maxItems: 25,
+            skipCount: 0,
+            rootFolderId: 'folder-id',
+            where: undefined
+        }, undefined);
+    });
 });
