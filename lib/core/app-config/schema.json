@@ -998,9 +998,11 @@
                 ],
                 "properties": {
                   "label": {
+                    "description": "This specifies the label to use to identify the field facet.",
                     "type": "string"
                   },
                   "field": {
+                    "description": "This specifies the field to facet on.",
                     "type": "string"
                   },
                   "sets": {
@@ -1014,15 +1016,23 @@
                       ],
                       "properties": {
                         "label": {
+                          "description": "This specifies the label to use to identify the set.",
                           "type": "string"
                         },
                         "start": {
+                          "description": "This specifies the start of the range.",
                           "type": "string"
                         },
                         "end": {
+                          "description": "This specifies the end of the range.",
                           "type": "string"
                         },
+                        "startInclusive": {
+                          "description": "When true, the set will include values greater or equal to 'start'. The default value is true.",
+                          "type": "boolean"
+                        },
                         "endInclusive": {
+                          "description": "When true, the set will include values less than or equal to 'end'. The default value is true.",
                           "type": "boolean"
                         }
                       }
