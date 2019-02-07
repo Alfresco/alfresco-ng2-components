@@ -176,16 +176,15 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     }
 
     private loadMultiplePreselectGroups() {
-
+        this.clearError();
         this.filterPreselectGroups().then( (filteredPreSelectGroups) => {
-            this.clearError();
-            filteredPreSelectGroups.map( (group) => {
-                if (!group.valid) {
-                    this.preSelectGroups = this.preSelectGroups.filter( (item: GroupModel) => item.name !== group.data.name);
-                    this.setError();
+            const groups = filteredPreSelectGroups.reduce( (acc, group) => {
+                if (group.valid) {
+                    acc.push(group.data);
                 }
-            });
-            this.selectedGroupsSubject.next(this.preSelectGroups);
+                return acc;
+            }, []);
+            this.selectedGroupsSubject.next(groups);
         });
     }
 

@@ -159,6 +159,40 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         });
     }
 
+    private loadMultiplePreselectUsers() {
+        this.clearError();
+        this.filterPreselectUsers().then( (filteredPreSelectUsers) => {
+            const users = filteredPreSelectUsers.reduce( (acc, user) => {
+                if (user.valid) {
+                    acc.push(user.data);
+                }
+                return acc;
+            }, []);
+            this.selectedUsersSubject.next(users);
+        });
+    }
+
+    private filterPreselectUsers() {
+        let promises: Promise<any>[] = [];
+
+        this.preSelectUsers.forEach((user: IdentityUserModel) => {
+            promises.push(new Promise((resolve, revoke) => {
+                const queryParam = this.getSearchParam(user);
+                this.identityUserService.findUsersByName(queryParam).subscribe( (result) => {
+                    resolve({
+                        valid : this.userExists(result, user),
+                        data: user
+                    });
+                });
+            }));
+        });
+        return Promise.all(promises);
+    }
+
+    private userExists(result: any, user: IdentityUserModel) {
+        return result.length > 0 && result[0].id === user.id
+    }
+
     private getSearchParam(search) {
         if (typeof search === 'string') {
             return search;
@@ -204,7 +238,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
             this.onSelect(this.preSelectUsers[0]);
             this.preSelectUsers = [];
         } else {
-            this.selectedUsersSubject.next(this.preSelectUsers);
+            this.loadMultiplePreselectUsers();
         }
     }
 
