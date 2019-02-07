@@ -389,6 +389,8 @@ Note: `sets` (Sets the intervals for all fields.) is not yet supported.
   }
 }
 ```
+> **Note:** Just like on the `facetFields`, make sure that the `label` properties do not contain empty spaces, as this would cause unexpected behavior.
+
 ## See also
 
 -   [Search Query Builder service](search-query-builder.service.md)
