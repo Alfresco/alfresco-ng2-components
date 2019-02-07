@@ -33,11 +33,13 @@ export class PeopleGroupCloudDemoComponent {
     peopleMode: string = PeopleCloudComponent.MODE_SINGLE;
     preSelectUsers: string[] = [];
     peopleRoles: string[] = [];
+    peopleAppName: string;
 
     groupMode: string = GroupCloudComponent.MODE_SINGLE;
     preSelectGroup: GroupModel[] = [];
     selectedGroupList: GroupModel[] = [];
     groupRoles: string[];
+    groupAppName: string;
 
     setPeoplePreselectValue(event: any) {
         this.preSelectUsers = this.getArrayFromString(event.target.value);
@@ -53,6 +55,14 @@ export class PeopleGroupCloudDemoComponent {
 
     setGroupRoles(event: any) {
         this.groupRoles = this.getArrayFromString(event.target.value);
+    }
+
+    setPeopleAppName(event: any) {
+        this.peopleAppName = event.target.value;
+    }
+
+    setGroupAppName(event: any) {
+        this.groupAppName = event.target.value;
     }
 
     onChangePeopleMode(event: MatRadioChange) {

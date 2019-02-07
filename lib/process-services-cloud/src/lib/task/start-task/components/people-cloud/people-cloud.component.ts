@@ -102,16 +102,18 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         this.selectedUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this.preSelectUsers);
         this.selectedUsers$ = this.selectedUsersSubject.asObservable();
         this.initSearch();
-
-        if (this.appName) {
-            this.disableSearch();
-            this.loadClientId();
-        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.preSelectUsers && this.hasPreSelectUsers()) {
             this.loadPreSelectUsers();
+        }
+
+        if (changes.appName && this.appName && this.appName.length > 0) {
+            this.disableSearch();
+            this.loadClientId();
+        } else {
+            this.enableSearch();
         }
     }
 
@@ -202,6 +204,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     private async loadClientId() {
+
         this.clientId = await this.identityUserService.getClientIdByApplicationName(this.appName).toPromise();
 
         if (this.clientId) {

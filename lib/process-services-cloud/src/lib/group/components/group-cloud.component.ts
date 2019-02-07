@@ -107,18 +107,19 @@ export class GroupCloudComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-
         this.initSearch();
-
-        if (this.appName) {
-            this.disableSearch();
-            this.loadClientId();
-        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.preSelectGroups && this.hasPreSelectGroups()) {
             this.loadPreSelectGroups();
+        }
+
+        if (changes.appName && this.appName && this.appName.length > 0) {
+            this.disableSearch();
+            this.loadClientId();
+        } else {
+            this.enableSearch();
         }
     }
 

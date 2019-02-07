@@ -16,13 +16,17 @@
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }} ['ACTIVITI_ADMIN', "ACTIVITI_USER"]</mat-label>
                 <input matInput (input)="setPeopleRoles($event)" />
             </mat-form-field>
-            <mat-form-field class="adf-preselect-value full">
+            <mat-form-field class="adf-preselect-value-big">
+                    <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.APP_NAME' | translate }}</mat-label>
+                    <input matInput (input)="setPeopleAppName($event)" />
+                </mat-form-field>
+            <mat-form-field class="adf-preselect-value-full">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.PRESELECTED_VALUE' | translate }}: {{ DEFAULT_PEOPLE_PLACEHOLDER }}</mat-label>
                 <input matInput (input)="setPeoplePreselectValue($event)" />
             </mat-form-field>
         </div>
         <div>
-            <adf-cloud-people [preSelectUsers]="preSelectUsers" [roles]="peopleRoles" [mode]="peopleMode"></adf-cloud-people>
+            <adf-cloud-people [preSelectUsers]="preSelectUsers" [appName]="peopleAppName" [roles]="peopleRoles" [mode]="peopleMode"></adf-cloud-people>
         </div>
 
         <div class="adf-people-list" *ngIf="canShowPeopleList()">
@@ -54,13 +58,17 @@
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }} ['ACTIVITI_ADMIN', "ACTIVITI_USER"]</mat-label>
                 <input matInput (input)="setGroupRoles($event)" />
             </mat-form-field>
-            <mat-form-field class="adf-preselect-value full">
+            <mat-form-field class="adf-preselect-value-big">
+                    <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.APP_NAME' | translate }}</mat-label>
+                    <input matInput (input)="setGroupAppName($event)" />
+            </mat-form-field>
+            <mat-form-field class="adf-preselect-value-full">
                 <mat-label>Preselect: {{ DEFAULT_GROUP_PLACEHOLDER }}</mat-label>
                 <input matInput (input)="setGroupsPreselectValue($event)" />
             </mat-form-field>
         </div>
         <div>
-            <adf-cloud-group [mode]="groupMode" [roles]="groupRoles" [preSelectGroups]="preSelectGroup" (selectGroup)="onSelectGroup($event)"
+            <adf-cloud-group [mode]="groupMode" [roles]="groupRoles" [appName]="groupAppName" [preSelectGroups]="preSelectGroup" (selectGroup)="onSelectGroup($event)"
                 (removeGroup)="onRemoveGroup($event)"></adf-cloud-group>
         </div>
 
