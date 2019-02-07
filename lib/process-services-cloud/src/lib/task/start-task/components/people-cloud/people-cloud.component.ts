@@ -190,7 +190,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     private userExists(result: any, user: IdentityUserModel) {
-        return result.length > 0 && result[0].id === user.id
+        return result.length > 0 && result[0].id === user.id;
     }
 
     private getSearchParam(search) {
