@@ -56,6 +56,7 @@ import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 import { CustomResourcesService } from './../services/custom-resources.service';
 import { NavigableComponentInterface } from '../../breadcrumb/navigable-component.interface';
 import { RowFilter } from '../data/row-filter.model';
+import { Observable } from 'rxjs/index';
 
 @Component({
     selector: 'adf-document-list',
@@ -624,19 +625,24 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 where: this.where
             }, this.includeFields)
                 .subscribe((nodePaging: NodePaging) => {
-                    this.onPageLoaded(nodePaging);
-                    this.getSourceNodeWithPath(nodeId);
+                    this.getSourceNodeWithPath(nodeId).subscribe((nodeEntry: NodeEntry) => {
+                        this.onPageLoaded(nodePaging);
+                    });
                 }, (err) => {
                     this.handleError(err);
                 });
         }
     }
 
-    getSourceNodeWithPath(nodeId: string) {
-        this.documentListService.getFolderNode(nodeId, this.includeFields).subscribe((nodeEntry: NodeEntry) => {
+    getSourceNodeWithPath(nodeId: string): Observable<NodeEntry> {
+        let getSourceObservable = this.documentListService.getFolderNode(nodeId, this.includeFields);
+
+        getSourceObservable.subscribe((nodeEntry: NodeEntry) => {
             this.folderNode = nodeEntry.entry;
             this.$folderNode.next(this.folderNode);
         });
+
+        return getSourceObservable;
     }
 
     resetSelection() {
