@@ -247,7 +247,7 @@ describe('ProcessAttachmentListComponent', () => {
         component.ngOnChanges({'processInstanceId': change});
         expect(getProcessRelatedContentSpy).toHaveBeenCalled();
         expect(getProcessRelatedContentSpy).toHaveBeenCalledWith('123', isRelatedContent);
-    })
+    });
 
     describe('change detection', () => {
 
