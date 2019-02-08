@@ -16,7 +16,7 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -49,7 +49,6 @@ import { DialogModule } from './dialogs/dialog.module';
 import { PipeModule } from './pipes/pipe.module';
 
 import { AlfrescoApiService } from './services/alfresco-api.service';
-import { LogService } from './services/log.service';
 import { TranslateLoaderService } from './services/translate-loader.service';
 import { TranslationService } from './services/translation.service';
 import { startupServiceFactory } from './services/startup-service-factory';
@@ -59,9 +58,15 @@ import { IconModule } from './icon/icon.module';
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateLoaderService(http);
 }
-
 @NgModule({
     imports: [
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient]
+            }
+        }),
         AboutModule,
         ViewerModule,
         SidenavLayoutModule,
@@ -91,13 +96,6 @@ export function createTranslateLoader(http: HttpClient) {
         ButtonsMenuModule,
         TemplateModule,
         IconModule,
-        TranslateModule.forChild({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient, LogService]
-            }
-        }),
         SortingPickerModule
     ],
     exports: [
@@ -127,7 +125,7 @@ export function createTranslateLoader(http: HttpClient) {
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
-        TranslateModule,
+        // TranslateModule,
         ButtonsMenuModule,
         TemplateModule,
         SortingPickerModule,
@@ -139,6 +137,13 @@ export class CoreModuleLazy {
 
 @NgModule({
     imports: [
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient]
+            }
+        }),
         AboutModule,
         ViewerModule,
         SidenavLayoutModule,
@@ -167,13 +172,6 @@ export class CoreModuleLazy {
         ButtonsMenuModule,
         TemplateModule,
         IconModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient, LogService]
-            }
-        }),
         SortingPickerModule
     ],
     exports: [
@@ -203,7 +201,7 @@ export class CoreModuleLazy {
         InfoDrawerModule,
         DataColumnModule,
         DataTableModule,
-        TranslateModule,
+        // TranslateModule,
         ButtonsMenuModule,
         TemplateModule,
         SortingPickerModule,

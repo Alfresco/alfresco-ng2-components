@@ -19,8 +19,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../material.module';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TemplateModule, TranslateLoaderService, FormModule, PipeModule } from '@alfresco/adf-core';
+import { TemplateModule, FormModule, PipeModule, CoreModule } from '@alfresco/adf-core';
 import { StartTaskCloudComponent } from './components/start-task-cloud.component';
 import { StartTaskCloudService } from './services/start-task-cloud.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,12 +30,6 @@ import { GroupCloudModule } from '../../group/group-cloud.module';
     imports: [
       CommonModule,
       PipeModule,
-      TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useClass: TranslateLoaderService
-            }
-        }),
         TemplateModule,
         FlexLayoutModule,
         MaterialModule,
@@ -44,7 +37,8 @@ import { GroupCloudModule } from '../../group/group-cloud.module';
         ReactiveFormsModule,
         GroupCloudModule,
         FormModule,
-        GroupCloudModule
+        GroupCloudModule,
+        CoreModule.forChild()
     ],
     declarations: [StartTaskCloudComponent, PeopleCloudComponent],
     providers: [

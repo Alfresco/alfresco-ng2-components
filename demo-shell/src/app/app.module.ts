@@ -23,7 +23,7 @@ import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule } from '@alfresco/adf-core';
+import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule, TranslateLoaderService } from '@alfresco/adf-core';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { LoginComponent } from './components/login/login.component';
@@ -78,6 +78,7 @@ import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/st
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
 import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-settings.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -98,7 +99,10 @@ import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-sett
         MonacoEditorModule.forRoot(),
         ProcessServicesCloudModule,
         AppExtensionsModule.forRoot(),
-        GroupCloudModule
+        GroupCloudModule,
+        TranslateModule.forRoot({
+            loader: { provide: TranslateLoader, useClass: TranslateLoaderService }
+          })
     ],
     declarations: [
         AppComponent,

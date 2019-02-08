@@ -21,8 +21,7 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TaskFiltersCloudComponent } from './components/task-filters-cloud.component';
 import { MaterialModule } from '../../material.module';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateLoaderService, LogService, StorageService } from '@alfresco/adf-core';
+import { LogService, StorageService, CoreModule } from '@alfresco/adf-core';
 import { TaskFilterCloudService } from './services/task-filter-cloud.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EditTaskFilterCloudComponent } from './components/edit-task-filter-cloud.component';
@@ -36,14 +35,9 @@ import { AppListCloudModule } from './../../app/app-list-cloud.module';
         HttpClientModule,
         CommonModule,
         FlexLayoutModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useClass: TranslateLoaderService
-            }
-        }),
         MaterialModule,
-        AppListCloudModule
+        AppListCloudModule,
+        CoreModule.forChild()
     ],
     declarations: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent, TaskFilterDialogCloudComponent],
     exports: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent],
