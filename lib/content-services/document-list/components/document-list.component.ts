@@ -70,7 +70,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
 
-    static DEFAULT_PAGINATION: Pagination = new Pagination({
+    DEFAULT_PAGINATION: Pagination = new Pagination({
         hasMoreItems: false,
         skipCount: 0,
         maxItems: 25,
@@ -248,7 +248,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /** Default value is stored into user preference settings use it only if you are not using the pagination */
     @Input()
-    maxItems: number = DocumentListComponent.DEFAULT_PAGINATION.maxItems;
+    maxItems: number = this.DEFAULT_PAGINATION.maxItems;
 
     /** Emitted when the user clicks a list node */
     @Output()
@@ -290,8 +290,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     // @deprecated 3.0.0
     folderNode: Node;
 
-    private _pagination: PaginationModel = DocumentListComponent.DEFAULT_PAGINATION;
-    pagination: BehaviorSubject<PaginationModel> = new BehaviorSubject<PaginationModel>(DocumentListComponent.DEFAULT_PAGINATION);
+    private _pagination: PaginationModel = this.DEFAULT_PAGINATION;
+    pagination: BehaviorSubject<PaginationModel> = new BehaviorSubject<PaginationModel>(this.DEFAULT_PAGINATION);
 
     private layoutPresets = {};
     private subscriptions: Subscription[] = [];
