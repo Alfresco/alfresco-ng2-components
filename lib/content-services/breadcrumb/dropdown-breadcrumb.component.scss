@@ -1,23 +1,42 @@
 @mixin adf-breadcrumb-dropdown-theme($theme) {
     $primary: map-get($theme, primary);
     $dropdownHorizontalOffset: 30px;
+    $foreground: map-get($theme, foreground);
 
     .adf {
         &-dropdown-breadcrumb {
             display: flex;
-            justify-content: flex-start;
-            width: 100%;
+            flex: 1;
+            line-height: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+            color: mat-color($foreground, text, 0.54);
+            overflow: hidden;
+            margin-top: 10px;
+
+            .mat-icon {
+                height: 35px;
+            }
+
+            &-container {
+                margin: 0;
+                padding: 0;
+                list-style-type: none;
+                cursor: default;
+                display: flex;
+                overflow: hidden;
+            }
         }
 
         &-dropdown-breadcrumb-trigger {
-            height: 0;
             cursor: pointer;
             padding: 0;
             border: none;
             background: transparent;
+            width: 25px;
 
             &:focus {
-                color: mat-color($primary);
                 outline: none;
             }
         }
@@ -46,11 +65,6 @@
             text-overflow: ellipsis;
             display: inline-block;
             width: 75%;
-            line-height: 27px;
-        }
-
-        &-current-folder.adf-isRoot {
-            margin-left: 0;
         }
 
         &-dropdown-breadcrumb-path-option.mat-option {
