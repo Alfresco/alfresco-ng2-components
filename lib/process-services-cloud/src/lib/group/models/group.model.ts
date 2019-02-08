@@ -39,3 +39,16 @@ export class GroupModel {
 export interface GroupSearchParam {
     name?: string;
 }
+
+export class GroupRoleModel {
+
+    id?: string;
+    name: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.id = obj.id || null;
+            this.name = obj.name || null;
+        }
+    }
+}

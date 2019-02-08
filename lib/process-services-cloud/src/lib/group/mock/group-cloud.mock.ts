@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { GroupModel } from '../models/group.model';
+import { GroupModel, GroupRoleModel } from '../models/group.model';
 
 export let mockGroup1 = new GroupModel({
     id: 'mock-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []
@@ -103,8 +103,10 @@ export let applicationDetailsMockApi = {
     }
 };
 
-export let mockGroup = new GroupModel({
-    id: 'mock-id', name: 'Mock Group', path: '/mock', realmRoles: ['MOCK-ADMIN-ROLE', 'MOCK-USER-ROLE', 'MOCK-ROLE-1']
-});
+export let groupRoles = [
+    new GroupRoleModel({id: 'mock-id', name: 'MOCK-ADMIN-ROLE'}),
+    new GroupRoleModel({id: 'mock-id', name: 'MOCK-USER-ROLE'}),
+    new GroupRoleModel({id: 'mock-id', name: 'MOCK-ROLE-1'})
+];
 
 export let clientRoles = [ 'MOCK-ADMIN-ROLE', 'MOCK-USER-ROLE'];
