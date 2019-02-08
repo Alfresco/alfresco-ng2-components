@@ -136,7 +136,7 @@ jobs:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "core$" || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 --host_sso "$E2E_HOST_SSO" --host_bpm "$E2E_HOST_BPM" --host_identity "$E2E_HOST_IDENTITY" -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b --folder core --skip-lint --use-dist || exit 1;);
+                (./scripts/test-e2e-lib.sh -host localhost:4200 --host_sso "$E2E_HOST_SSO" --host_bpm "$E2E_HOST_BPM" --host_identity "$E2E_HOST_IDENTITY" -proxy "$E2E_HOST_PREVIOUS" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b --folder core --skip-lint --use-dist || exit 1;);
             fi
         - stage: e2e Test # Test process-services
           name: process-services
@@ -145,7 +145,7 @@ jobs:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "process-services$" || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b --folder process-services --skip-lint --use-dist || exit 1;);
+                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST_PREVIOUS" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b --folder process-services --skip-lint --use-dist || exit 1;);
             fi
         - stage: e2e Test # Test content-services
           name: content-services
@@ -154,7 +154,7 @@ jobs:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "content-services$" || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b --folder content-services --skip-lint --use-dist || exit 1;);
+                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST_PREVIOUS" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b --folder content-services --skip-lint --use-dist || exit 1;);
             fi
         - stage: e2e Test # Test search
           name: search
@@ -163,16 +163,7 @@ jobs:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "content-services$" || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b --folder search --skip-lint --use-dist  || exit 1;);
-            fi
-        - stage: e2e Test # Test process-services-cloud
-          name: process-services-cloud
-          script:
-            AFFECTED_E2E="$(./scripts/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e")";
-            AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
-            if [[ $AFFECTED_LIBS =~ "process-services-cloud$" || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
-            then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 --host_sso "$E2E_HOST_SSO" --host_bpm "$E2E_HOST_BPM" --host_identity "$E2E_HOST_IDENTITY" -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b --folder process-services-cloud --skip-lint --use-dist  || exit 1;);
+                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST_PREVIOUS" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b --folder search --skip-lint --use-dist  || exit 1;);
             fi
         - stage: e2e Test # Test insights
           name: insights
@@ -181,7 +172,7 @@ jobs:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "process-services-cloud$" || $AFFECTED_E2E = "e2e" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
-                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b --folder insights --skip-lint --use-dist  || exit 1;);
+                (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST_PREVIOUS" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b --folder insights --skip-lint --use-dist  || exit 1;);
             fi
         - stage: Create Docker PR
           script: node ./scripts/move-dist-folder.js --base-href $TRAVIS_BUILD_NUMBER && (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1)
