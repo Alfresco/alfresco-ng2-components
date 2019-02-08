@@ -255,6 +255,11 @@ export class SearchQueryBuilderService {
         return [];
     }
 
+    /**
+     * Gets the query group.
+     * @param query Target query
+     * @returns Query group
+     */
     getQueryGroup(query) {
         return query.group || this.config.facetQueries.label || 'Facet Queries';
     }

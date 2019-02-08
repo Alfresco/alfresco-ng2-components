@@ -2,7 +2,7 @@
 Title: Identity user service
 Added: v3.0.0
 Status: Active
-Last reviewed: 2019-01-23
+Last reviewed: 2019-02-08
 ---
 
 # [Identity user service](../../lib/core/userinfo/services/identity-user.service.ts "Defined in identity-user.service.ts")
@@ -35,6 +35,11 @@ Gets OAuth2 personal details and roles for users.
     -   _userId:_ `string`  - ID of the target user
     -   _clientId:_ `string`  - ID of the client app
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>` - True if the user has access, false otherwise
+-   **checkUserHasRole**(userId: `string`, roleNames: `string[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
+    Checks if a user has one of the roles from a list.
+    -   _userId:_ `string`  - ID of the target user
+    -   _roleNames:_ `string[]`  - Array of roles to check for
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>` - True if the user has one of the roles, false otherwise
 -   **findUsersByName**(search: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Find users based on search input.
     -   _search:_ `string`  - Search query string

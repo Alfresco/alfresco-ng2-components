@@ -20,7 +20,7 @@ for more information about installing and using the source code.
 | [Dropdown breadcrumb component](dropdown-breadcrumb.component.md) | Indicates the current position within a navigation hierarchy using a dropdown menu. | [Source](../../lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts) |
 | [Content metadata component](content-metadata.component.md) | Displays and edits metadata related to a node. | [Source](../../lib/content-services/content-metadata/components/content-metadata/content-metadata.component.ts) |
 | [Content metadata card component](content-metadata-card.component.md) | Displays and edits metadata related to a node. | [Source](../../lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts) |
-| [Content node selector panel component](content-node-selector-panel.component.md) | Opens a Content Node Selector in its own dialog window. | [Source](../../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) |
+| [Content node selector panel component](content-node-selector-panel.component.md) | Opens a Content Node Selector  in its own dialog window. | [Source](../../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) |
 | [Content node selector component](content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../../lib/content-services/content-node-selector/content-node-selector.component.ts) |
 | [Content action component](content-action.component.md) | Adds options to a Document List actions menu for a particular content type. | [Source](../../lib/content-services/document-list/components/content-action/content-action.component.ts) |
 | [Document list component](document-list.component.md) | Displays the documents from a repository. | [Source](../../lib/content-services/document-list/components/document-list.component.ts) |
@@ -76,6 +76,8 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Image resolver model](image-resolver.model.md) | Defines the Image Resolver function used by the Document List Component. | [Source](../../lib/content-services/document-list/data/image-resolver.model.ts) |
+| [Row filter model](row-filter.model.md) | Defines the Row Filter function used by the Document List Component. | [Source](../../lib/content-services/document-list/data/row-filter.model.ts) |
 | [Permissions style model](permissions-style.model.md) | Sets custom CSS styles for rows of a Document List according to the item's permissions. | [Source](../../lib/content-services/document-list/models/permissions-style.model.ts) |
 
 ## Pipes
