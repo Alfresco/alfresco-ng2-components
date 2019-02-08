@@ -35,6 +35,7 @@ export class IconComponent {
     private _value = '';
     private _isCustom = false;
 
+    /** Theme color palette for the component. */
     @Input()
     color: ThemePalette;
 

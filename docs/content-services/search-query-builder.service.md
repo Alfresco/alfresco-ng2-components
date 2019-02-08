@@ -37,10 +37,9 @@ Stores information from all the custom search and faceted search widgets, compil
     Gets the primary sorting definition.
     -   **Returns** [`SearchSortingDefinition`](../../lib/content-services/search/search-sorting-definition.interface.ts) - The primary sorting definition
 -   **getQueryGroup**(query: `any`): `any`<br/>
-
-    -   _query:_ `any`  - 
-    -   **Returns** `any` - 
-
+    Gets the query group.
+    -   _query:_ `any`  - Target query
+    -   **Returns** `any` - Query group
 -   **getSortingOptions**(): [`SearchSortingDefinition`](../../lib/content-services/search/search-sorting-definition.interface.ts)`[]`<br/>
     Gets all pre-configured sorting options that users can choose from.
     -   **Returns** [`SearchSortingDefinition`](../../lib/content-services/search/search-sorting-definition.interface.ts)`[]` - Pre-configured sorting options

@@ -31,7 +31,7 @@ export class LoginDialogService {
 
     /**
      * Opens a dialog to choose a file to upload.
-     * @param action Name of the action to show in the title
+     * @param actionName Name of the action to show in the title
      * @param title Title for the dialog
      * @returns Information about the chosen file(s)
      */

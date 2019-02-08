@@ -2,7 +2,7 @@
 Title: Icon Component
 Added: v3.0.0
 Status: Active
-Last reviewed: 2019-01-10
+Last reviewed: 2019-02-08
 ---
 
 # [Icon Component](../../lib/core/icon/icon.component.ts "Defined in icon.component.ts")
@@ -72,7 +72,7 @@ In the HTML, you can now use the icon as shown below:
 ### Thumbnail Service
 
 You can also reference the icons registered with the [Thumbnail Service](thumbnail.service.md)
-by utilising the `adf:` namespace.
+using the `adf:` namespace.
 
 ```html
 <adf-icon value="adf:image/gif"></adf-icon>
