@@ -16,7 +16,13 @@
  */
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { HighlightDirective, UserPreferencesService, PaginationModel, UserPreferenceValues, InfinitePaginationComponent } from '@alfresco/adf-core';
+import {
+    HighlightDirective,
+    UserPreferencesService,
+    PaginationModel,
+    UserPreferenceValues,
+    InfinitePaginationComponent
+} from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
@@ -40,7 +46,7 @@ const defaultValidation = () => true;
 })
 export class ContentNodeSelectorPanelComponent implements OnInit {
 
-    static DEFAULT_PAGINATION: Pagination = new Pagination({
+    DEFAULT_PAGINATION: Pagination = new Pagination({
         maxItems: 25,
         skipCount: 0,
         totalItems: 0,
@@ -111,7 +117,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
 
     /** Number of items shown per page in the list. */
     @Input()
-    pageSize: number = ContentNodeSelectorPanelComponent.DEFAULT_PAGINATION.maxItems;
+    pageSize: number = this.DEFAULT_PAGINATION.maxItems;
 
     /** Function used to decide if the selected node has permission to be selected.
      * Default value is a function that always returns true.
@@ -146,7 +152,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     _chosenNode: Node = null;
     folderIdToShow: string | null = null;
 
-    pagination: PaginationModel = ContentNodeSelectorPanelComponent.DEFAULT_PAGINATION;
+    pagination: PaginationModel = this.DEFAULT_PAGINATION;
 
     @ViewChild(InfinitePaginationComponent)
     infinitePaginationComponent: InfinitePaginationComponent;
