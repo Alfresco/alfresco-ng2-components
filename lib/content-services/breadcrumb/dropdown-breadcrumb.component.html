@@ -1,4 +1,4 @@
-<ng-container *ngIf="route.length > 0">
+<ng-container *ngIf="route.length > 0" class="adf-dropdown-breadcrumb-container">
 
     <button
         tabindex="0"
@@ -7,27 +7,30 @@
         data-automation-id="dropdown-breadcrumb-trigger">
         <mat-icon [class.adf-isRoot]="!hasPreviousNodes()">folder</mat-icon>
     </button>
+
     <mat-icon class="adf-dropdown-breadcrumb-item-chevron">chevron_right</mat-icon>
 
-    <mat-select
-        #dropdown
-        *ngIf="hasPreviousNodes()"
-        class="adf-dropdown-breadcrumb-path"
-        tabindex="0"
-        data-automation-id="dropdown-breadcrumb-path" >
-
-        <mat-option
-            *ngFor="let node of previousNodes;"
-            (click)="onRoutePathClick(node, $event)"
-            class="adf-dropdown-breadcrumb-path-option"
+    <div class="adf-dropdown-breadcrumb-path">
+        <mat-select
+            #dropdown
+            *ngIf="hasPreviousNodes()"
             tabindex="0"
-            data-automation-class="dropdown-breadcrumb-path-option">
-            {{ node.name | translate }}
-        </mat-option>
-    </mat-select>
+            data-automation-id="dropdown-breadcrumb-path">
+
+            <mat-option
+                *ngFor="let node of previousNodes;"
+                (click)="onRoutePathClick(node, $event)"
+                class="adf-dropdown-breadcrumb-path-option"
+                tabindex="0"
+                data-automation-class="dropdown-breadcrumb-path-option">
+                {{ node.name | translate }}
+            </mat-option>
+        </mat-select>
+    </div>
 
     <span
         class="adf-current-folder"
         [class.adf-isRoot]="!hasPreviousNodes()"
-        data-automation-id="current-folder">{{ currentNode.name }}</span>
+        data-automation-id="current-folder">{{ currentNode.name }}
+    </span>
 </ng-container>
