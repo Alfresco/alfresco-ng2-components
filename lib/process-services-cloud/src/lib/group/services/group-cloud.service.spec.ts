@@ -34,10 +34,10 @@ import {
     mockError,
     roleMappingApi,
     noRoleMappingApi,
-    mockGroup,
+    groupRoles,
     clientRoles
 } from '../mock/group-cloud.mock';
-import { GroupSearchParam, GroupModel } from '../models/group.model';
+import { GroupSearchParam } from '../models/group.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
 
@@ -93,30 +93,32 @@ describe('GroupCloudService', () => {
         });
     });
 
-    it('should fetch group by userId', (done) => {
-        spyOn(service, 'getGroupDetailsById').and.returnValue(of(mockGroup));
-        service.getGroupDetailsById('mock-group-id').subscribe(
-            (res: GroupModel) => {
+    it('should able to fetch group roles by groupId', (done) => {
+        spyOn(service, 'getGroupRoles').and.returnValue(of(groupRoles));
+        service.getGroupRoles('mock-group-id').subscribe(
+            (res: any) => {
                 expect(res).toBeDefined();
-                expect(res.name).toEqual('Mock Group');
-                expect(res.realmRoles).toEqual(mockGroup.realmRoles);
+                expect(res.length).toEqual(3);
+                expect(res[0].name).toEqual('MOCK-ADMIN-ROLE');
+                expect(res[1].name).toEqual('MOCK-USER-ROLE');
+                expect(res[2].name).toEqual('MOCK-ROLE-1');
                 done();
             }
         );
     });
 
-    it('Should not fetch group if error occurred', (done) => {
+    it('Should not able to fetch group roles if error occurred', (done) => {
         const errorResponse = new HttpErrorResponse({
             error: 'Mock Error',
             status: 404, statusText: 'Not Found'
         });
 
-        spyOn(service, 'getGroupDetailsById').and.returnValue(throwError(errorResponse));
+        spyOn(service, 'getGroupRoles').and.returnValue(throwError(errorResponse));
 
-        service.getGroupDetailsById('mock-group-id')
+        service.getGroupRoles('mock-group-id')
             .subscribe(
                 () => {
-                    fail('expected an error, not group');
+                    fail('expected an error, not group roles');
                 },
                 (error) => {
                     expect(error.status).toEqual(404);
@@ -128,7 +130,7 @@ describe('GroupCloudService', () => {
     });
 
     it('should return true if group has given role', (done) => {
-        spyOn(service, 'getGroupDetailsById').and.returnValue(of(mockGroup));
+        spyOn(service, 'getGroupRoles').and.returnValue(of(groupRoles));
         service.checkGroupHasRole('mock-group-id', ['MOCK-ADMIN-ROLE']).subscribe(
             (res: boolean) => {
                 expect(res).toBeDefined();
@@ -139,7 +141,7 @@ describe('GroupCloudService', () => {
     });
 
     it('should return false if group does not have given role', (done) => {
-        spyOn(service, 'getGroupDetailsById').and.returnValue(of(mockGroup));
+        spyOn(service, 'getGroupRoles').and.returnValue(of(groupRoles));
         service.checkGroupHasRole('mock-group-id', ['MOCK-ADMIN-MODELER']).subscribe(
             (res: boolean) => {
                 expect(res).toBeDefined();
