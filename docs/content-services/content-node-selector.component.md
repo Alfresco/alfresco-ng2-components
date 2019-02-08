@@ -22,7 +22,7 @@ more information).
 
 ### Showing the dialog
 
-Unlike most components, the Content [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Selector is typically shown in a dialog box
+Unlike most components, the [Content Node Selector Component](content-node-selector.component.md) is typically shown in a dialog box
 rather than the main page and you are responsible for opening the dialog yourself. You can use the
 [Angular Material Dialog](https://material.angular.io/components/dialog/overview) for this,
 as shown in the usage example. ADF provides the [`ContentNodeSelectorComponentData`](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) interface
