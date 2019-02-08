@@ -111,7 +111,8 @@ export class ProcessAttachmentListComponent implements OnChanges, AfterContentIn
         if (processInstanceId) {
             this.reset();
             this.isLoading = true;
-            this.activitiContentService.getProcessRelatedContent(processInstanceId).subscribe(
+            const opts: any['isRelatedContent'] =  'true';
+            this.activitiContentService.getProcessRelatedContent(processInstanceId, opts).subscribe(
                 (res: any) => {
                     res.data.forEach((content) => {
                         this.attachments.push({

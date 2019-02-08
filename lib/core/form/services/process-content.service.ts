@@ -128,10 +128,11 @@ export class ProcessContentService {
     /**
      * Gets related content items for a process instance.
      * @param processId ID of the target process
+     * @param opts Options supported by JS-API
      * @returns Metadata for the content
      */
-    getProcessRelatedContent(processId: string): Observable<any> {
-        return from(this.contentApi.getRelatedContentForProcessInstance(processId))
+    getProcessRelatedContent(processId: string, opts?: any): Observable<any> {
+        return from(this.contentApi.getRelatedContentForProcessInstance(processId, opts))
             .pipe(catchError((err) => this.handleError(err)));
     }
 
