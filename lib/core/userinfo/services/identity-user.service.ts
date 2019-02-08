@@ -302,6 +302,12 @@ export class IdentityUserService {
         return hasAnyRole;
     }
 
+    /**
+     * Checks if a user has one of the roles from a list.
+     * @param userId ID of the target user
+     * @param roleNames Array of roles to check for
+     * @returns True if the user has one of the roles, false otherwise
+     */
     checkUserHasRole(userId: string, roleNames: string[]): Observable<boolean>  {
         return this.getUserRoles(userId).pipe(map((userRoles: IdentityRoleModel[]) => {
             let hasRole = false;

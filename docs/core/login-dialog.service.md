@@ -2,7 +2,7 @@
 Title: Login Dialog service
 Added: v2.6.0
 Status: Active
-Last reviewed: 2018-10-02
+Last reviewed: 2019-02-08
 ---
 
 # [Login Dialog service](../../lib/core/services/login-dialog.service.ts "Defined in login-dialog.service.ts")

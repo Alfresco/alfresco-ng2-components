@@ -197,10 +197,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     loading: boolean = false;
 
-    /** Custom row filter */
+    /** @hidden */
     @Input()
     _rowFilter: RowFilter | null = null;
 
+    /**
+     * Custom function to choose whether to show or hide rows.
+     * See the [Row Filter Model](row-filter.model.md) page for
+     * more information.
+     */
     @Input()
     set rowFilter(rowFilter: RowFilter) {
         this._rowFilter = rowFilter;
@@ -216,7 +221,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         return this._rowFilter;
     }
 
-    /** Custom image resolver */
+    /**
+     * Custom function to choose image file paths to show. See the
+     * [Image Resolver Model](image-resolver.model.md) page for
+     * more information.
+     */
     @Input()
     imageResolver: any | null = null;
 
@@ -246,7 +255,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     node: NodePaging = null;
 
-    /** Default value is stored into user preference settings use it only if you are not using the pagination */
+    /** Default value is stored in the user preference settings. Use this only if you are not using pagination. */
     @Input()
     maxItems: number = this.DEFAULT_PAGINATION.maxItems;
 

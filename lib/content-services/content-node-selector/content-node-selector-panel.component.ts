@@ -64,9 +64,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     @Input()
     dropdownHideMyFiles: boolean = false;
 
-    /** Custom site for site dropdown same as siteList. See the
-     * [Sites Dropdown component](sites-dropdown.component.md)
-     * for more information.
+    /** Custom site for site dropdown. This is the same as the `siteList`.
+     * property of the Sites Dropdown component (see its doc page
+     * for more information).
      */
     @Input()
     dropdownSiteList: SitePaging = null;
@@ -74,14 +74,15 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     _rowFilter: RowFilter = defaultValidation;
 
     /** Custom *where* filter function. See the
-     * [Document List component](document-list.component.md)
+     * Document List component
      * for more information.
      */
     @Input()
     where: string;
 
-    /** Custom row filter function. See the
-     * [Document List component](document-list.component.md#custom-row-filter)
+    /**
+     * Custom row filter function. See the
+     * [Row Filter Model](row-filter.model.md) page
      * for more information.
      */
     @Input()
@@ -108,8 +109,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         return this._excludeSiteContent;
     }
 
-    /** Custom image resolver function. See the
-     * [Document List component](document-list.component.md#custom-row-filter)
+    /**
+     * Custom image resolver function. See the
+     * [Image Resolver Model](image-resolver.model.md) page
      * for more information.
      */
     @Input()

@@ -55,9 +55,9 @@ The properties are described in the table below:
 | currentFolderId | `string` | `null` | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) ID of the folder currently listed. |
 | dropdownHideMyFiles | `boolean` | `false` | Hide the "My Files" option added to the site list by default. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
 | dropdownSiteList | [`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) | `null` | Custom site for site dropdown same as siteList. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
-| rowFilter | [`RowFilter`](../../lib/content-services/document-list/data/row-filter.model.ts) | `null` | Custom row filter function. See the [Document List component](document-list.component.md#custom-row-filter) for more information. |
+| rowFilter | [`RowFilter`](../../lib/content-services/document-list/data/row-filter.model.ts) | `null` | Custom row filter function. See the [Row Filter Model](row-filter.model.md) page for more information. |
 | where | `string` | `null` | Custom *where* filter function. See the [Document List component](document-list.component.md) for more information. |
-| imageResolver | [`ImageResolver`](../../lib/content-services/document-list/data/image-resolver.model.ts) | `null` | Custom image resolver function. See the [Document List component](document-list.component.md#custom-row-filter) for more information. |
+| imageResolver | [`ImageResolver`](../../lib/content-services/document-list/data/image-resolver.model.ts) | `null` | Custom image resolver function. See the [Image Resolver Model](image-resolver.model.md) page for more information. |
 | pageSize | `number` |  | Number of items shown per page in the list. |
 | isSelectionValid | [`ValidationFunction`](../../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) | `defaultValidation` | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
 | breadcrumbTransform | `(node: any) => any` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
@@ -112,13 +112,14 @@ When the dialog action is selected by clicking, the `data.select` stream will be
 
 ### RowFilter and ImageResolver
 
-The Content [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Selector uses a [Document List](document-list.component.md) to display the
+The [Content Node Selector](content-node-selector.component.md) uses a
+[Document List](document-list.component.md) to display the
 items that the user can choose. As with the standard Document List, you can supply a custom
 **row filter** function (to hide items that can't be chosen) and a custom **image resolver**
 function (to select an image to show in a particular list cell). For example, you could use
 a row filter to hide document nodes in a folder selector. See the
-[Advanced Usage and Customization](document-list.component.md#advanced-usage-and-customization)
-section of the Document List page to learn how these functions are implemented.
+[Row Filter Model](row-filter.model.md) and [Image Resolver Model](image-resolver.model.md)
+pages for more information.
 
 ### Using the breadcrumbTransform function
 
