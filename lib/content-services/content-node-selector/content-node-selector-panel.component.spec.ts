@@ -741,6 +741,38 @@ describe('ContentNodeSelectorComponent', () => {
                     expect(pagination).toBeNull();
                 });
 
+                it('Should infinite pagination target be null when we use it for search ', fakeAsync(() => {
+                    component.showingSearchResults = true;
+
+                    typeToSearchBox('shenron');
+
+                    tick(debounceSearch);
+
+                    fixture.detectChanges();
+
+                    tick(debounceSearch);
+
+                    expect(component.infinitePaginationComponent.target).toBeNull();
+                }));
+
+                it('Should infinite pagination target be present when search finish', fakeAsync(() => {
+                    component.showingSearchResults = true;
+
+                    typeToSearchBox('shenron');
+
+                    tick(debounceSearch);
+
+                    fixture.detectChanges();
+
+                    typeToSearchBox('');
+
+                    tick(debounceSearch);
+
+                    fixture.detectChanges();
+
+                    expect(component.infinitePaginationComponent.target).not.toBeNull();
+                }));
+
                 it('button callback should load the next batch of folder results when there is no searchTerm', () => {
                     component.searchTerm = '';
                     fixture.detectChanges();

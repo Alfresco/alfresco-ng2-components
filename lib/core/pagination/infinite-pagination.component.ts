@@ -29,6 +29,7 @@ import { PaginationComponentInterface } from './pagination-component.interface';
 import { PaginationModel } from '../models/pagination.model';
 import { RequestPaginationModel } from '../models/request-pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
+import { Pagination } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-infinite-pagination',
@@ -39,6 +40,12 @@ import { UserPreferencesService, UserPreferenceValues } from '../services/user-p
     encapsulation: ViewEncapsulation.None
 })
 export class InfinitePaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
+
+    static DEFAULT_PAGINATION: Pagination = new Pagination({
+        skipCount: 0,
+        maxItems: 25,
+        totalItems: 0
+    });
 
     /** Component that provides custom pagination support. */
     @Input()
@@ -56,7 +63,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     @Output()
     loadMore: EventEmitter<RequestPaginationModel> = new EventEmitter<RequestPaginationModel>();
 
-    pagination: PaginationModel;
+    pagination: PaginationModel = InfinitePaginationComponent.DEFAULT_PAGINATION;
 
     requestPaginationModel: RequestPaginationModel = {
         skipCount: 0,
@@ -105,7 +112,10 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     reset() {
         this.pagination.skipCount = 0;
         this.pagination.maxItems = this.pageSize;
-        this.target.updatePagination(this.pagination);
+
+        if(this.target) {
+            this.target.updatePagination(this.pagination);
+        }
     }
 
     ngOnDestroy() {

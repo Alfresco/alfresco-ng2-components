@@ -21,7 +21,7 @@ import {
     UserPreferencesService,
     PaginationModel,
     UserPreferenceValues,
-    InfinitePaginationComponent
+    InfinitePaginationComponent, PaginatedComponent
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging } from '@alfresco/js-api';
@@ -161,6 +161,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     debounceSearch: number = 200;
     searchInput: FormControl = new FormControl();
 
+    target: PaginatedComponent;
+
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private customResourcesService: CustomResourcesService,
                 private userPreferencesService: UserPreferencesService) {
@@ -281,6 +283,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      * Update the result list depending on the criteria
      */
     private updateResults(): void {
+        this.target = this.searchTerm.length > 0 ? null : this.documentList;
+
         if (this.searchTerm.length === 0) {
             this.clear();
         } else {
