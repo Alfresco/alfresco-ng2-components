@@ -194,6 +194,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.target = this.documentList;
         this.folderIdToShow = this.currentFolderId;
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
@@ -232,6 +233,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     siteChanged(chosenSite: SiteEntry): void {
         this.siteId = chosenSite.entry.guid;
         this.updateResults();
+
     }
 
     /**
@@ -274,7 +276,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         this.searchTerm = '';
         this.nodePaging = null;
         this.pagination.maxItems = this.pageSize;
-        this.infinitePaginationComponent.reset();
         this.chosenNode = null;
         this.showingSearchResults = false;
     }
@@ -298,7 +299,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     private startNewSearch(): void {
         this.nodePaging = null;
         this.pagination.maxItems = this.pageSize;
-        this.infinitePaginationComponent.reset();
+        if (this.target) {
+            this.infinitePaginationComponent.reset();
+        }
         this.chosenNode = null;
         this.folderIdToShow = null;
         this.querySearch();

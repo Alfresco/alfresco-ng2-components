@@ -47,9 +47,29 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
         totalItems: 0
     });
 
+    _target: PaginatedComponent;
+
     /** Component that provides custom pagination support. */
     @Input()
-    target: PaginatedComponent;
+    set target(target: PaginatedComponent) {
+        if (target) {
+            this._target = target;
+            this.paginationSubscription = target.pagination.subscribe((pagination: PaginationModel) => {
+                this.isLoading = false;
+                this.pagination = pagination;
+
+                if (!this.pagination.hasMoreItems) {
+                    this.pagination.hasMoreItems = false;
+                }
+
+                this.cdr.detectChanges();
+            });
+        }
+    }
+
+    get target() {
+        return this._target;
+    }
 
     /** Number of items that are added with each "load more" event. */
     @Input()
@@ -76,19 +96,6 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     }
 
     ngOnInit() {
-        if (this.target) {
-            this.paginationSubscription = this.target.pagination.subscribe((pagination: PaginationModel) => {
-                this.isLoading = false;
-                this.pagination = pagination;
-
-                if (!this.pagination.hasMoreItems) {
-                    this.pagination.hasMoreItems = false;
-                }
-
-                this.cdr.detectChanges();
-            });
-        }
-
         this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
             this.pageSize = this.pageSize || pagSize;
             this.requestPaginationModel.maxItems = this.pageSize;
@@ -103,9 +110,9 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
         this.loadMore.next(this.requestPaginationModel);
 
-        if (this.target) {
+        if (this._target) {
             this.isLoading = true;
-            this.target.updatePagination(<RequestPaginationModel> this.requestPaginationModel);
+            this._target.updatePagination(<RequestPaginationModel> this.requestPaginationModel);
         }
     }
 
@@ -113,8 +120,8 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
         this.pagination.skipCount = 0;
         this.pagination.maxItems = this.pageSize;
 
-        if(this.target) {
-            this.target.updatePagination(this.pagination);
+        if (this._target) {
+            this._target.updatePagination(this.pagination);
         }
     }
 
