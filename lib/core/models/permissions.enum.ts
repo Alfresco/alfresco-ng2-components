@@ -17,14 +17,12 @@
 
  /* spellchecker: disable */
 export class PermissionsEnum extends String {
-    static DELETE: string = 'delete';
-    static UPDATE: string = 'update';
-    static CREATE: string = 'create';
-    static COPY: string = 'copy';
-    static LOCK: string = 'lock';
-    static UPDATEPERMISSIONS: string = 'updatePermissions';
-    static NOT_DELETE: string = '!delete';
-    static NOT_UPDATE: string = '!update';
-    static NOT_CREATE: string = '!create';
-    static NOT_UPDATEPERMISSIONS: string = '!updatePermissions';
+    static CONTRIBUTOR: string = 'Contributor';
+    static CONSUMER: string = 'Consumer';
+    static COLLABORATOR: string = 'Collaborator';
+    static MANAGER: string = 'Manager';
+    static NOT_CONTRIBUTOR: string = '!Contributor';
+    static NOT_CONSUMER: string = '!Consumer';
+    static NOT_COLLABORATOR: string = '!Collaborator';
+    static NOT_MANAGER: string = '!Manager';
 }

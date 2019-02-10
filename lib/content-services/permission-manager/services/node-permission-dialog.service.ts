@@ -22,7 +22,7 @@ import { AddPermissionDialogComponent } from '../components/add-permission/add-p
 import { AddPermissionDialogData } from '../components/add-permission/add-permission-dialog-data.interface';
 import { NodeEntry, Node } from '@alfresco/js-api';
 import { NodePermissionService } from './node-permission.service';
-import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
+import { ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { switchMap } from 'rxjs/operators';
 
 @Injectable({
@@ -42,7 +42,7 @@ export class NodePermissionDialogService {
      * @returns Node with updated permissions
      */
     openAddPermissionDialog(node: Node, title?: string): Observable<NodeEntry[]> {
-        if (this.contentService.hasPermission(node, PermissionsEnum.UPDATEPERMISSIONS)) {
+        if (this.contentService.hasAllowableOperations(node, AllowableOperationsEnum.UPDATEPERMISSIONS)) {
             const confirm = new Subject<NodeEntry[]>();
 
             confirm.subscribe({

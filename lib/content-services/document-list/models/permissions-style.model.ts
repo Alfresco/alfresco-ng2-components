@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { PermissionsEnum } from '@alfresco/adf-core';
+import { AllowableOperationsEnum } from '@alfresco/adf-core';
 
 export class PermissionStyleModel {
     css: string;
-    permission: PermissionsEnum;
+    permission: AllowableOperationsEnum;
     isFolder: boolean = true;
     isFile: boolean = true;
 
-    constructor(css: string, permission: PermissionsEnum, isFile: boolean = true, isFolder: boolean = true) {
+    constructor(css: string, permission: AllowableOperationsEnum, isFile: boolean = true, isFolder: boolean = true) {
         this.css = css;
         this.permission = permission;
         this.isFile = isFile;

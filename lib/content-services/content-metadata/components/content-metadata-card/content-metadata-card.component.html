@@ -12,7 +12,7 @@
     </mat-card-content>
     <mat-card-footer class="adf-content-metadata-card-footer" fxLayout="row" fxLayoutAlign="space-between stretch">
         <div>
-            <button *ngIf="!readOnly && hasPermission()"
+            <button *ngIf="!readOnly && hasAllowableOperations()"
                 mat-icon-button
                 (click)="toggleEdit()"
                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"

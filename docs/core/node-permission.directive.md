@@ -25,7 +25,7 @@ Selectively disables an HTML element or Angular component.
 ```html
 <adf-toolbar title="toolbar example">
     <button mat-icon-button
-            adf-node-permission="delete"
+            adf-check-allowable-operation="delete"
             [adf-nodes]="documentList.selection">
         <mat-icon>delete</mat-icon>
     </button>
@@ -65,7 +65,7 @@ node in the selection:
 ```html
 <adf-toolbar title="toolbar example">
     <button mat-icon-button
-            adf-node-permission="delete"
+            adf-check-allowable-operation="delete"
             [adf-nodes]="documentList.selection">
         <mat-icon>delete</mat-icon>
     </button>
@@ -89,7 +89,7 @@ for example). You can also use it in much the same way as you would with an HTML
 <alfresco-upload-drag-area
         [rootFolderId]="..."
         [versioning]="..."
-        [adf-node-permission]="'create'"
+        [adf-check-allowable-operation]="'create'"
         [adf-nodes]="getCurrentDocumentListNode()">
  ...
 </alfresco-upload-drag-area>
