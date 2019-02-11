@@ -102,7 +102,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
         GroupCloudModule,
         TranslateModule.forRoot({
             loader: { provide: TranslateLoader, useClass: TranslateLoaderService }
-          })
+        })
     ],
     declarations: [
         AppComponent,

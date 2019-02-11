@@ -16,11 +16,9 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-
 import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { MaterialModule } from './material.module';
 import { AboutModule } from './about/about.module';
@@ -49,101 +47,14 @@ import { DialogModule } from './dialogs/dialog.module';
 import { PipeModule } from './pipes/pipe.module';
 
 import { AlfrescoApiService } from './services/alfresco-api.service';
-import { TranslateLoaderService } from './services/translate-loader.service';
 import { TranslationService } from './services/translation.service';
 import { startupServiceFactory } from './services/startup-service-factory';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { IconModule } from './icon/icon.module';
 
-export function createTranslateLoader(http: HttpClient) {
-    return new TranslateLoaderService(http);
-}
 @NgModule({
     imports: [
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient]
-            }
-        }),
-        AboutModule,
-        ViewerModule,
-        SidenavLayoutModule,
-        PipeModule,
-        CommonModule,
-        DirectiveModule,
-        DialogModule,
-        ClipboardModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        HostSettingsModule,
-        UserInfoModule,
-        MaterialModule,
-        AppConfigModule,
-        PaginationModule,
-        ToolbarModule,
-        ContextMenuModule,
-        CardViewModule,
-        FormModule,
-        CommentsModule,
-        LoginModule,
-        LanguageMenuModule,
-        InfoDrawerModule,
-        DataColumnModule,
-        DataTableModule,
-        ButtonsMenuModule,
-        TemplateModule,
-        IconModule,
-        SortingPickerModule
-    ],
-    exports: [
-        AboutModule,
-        ViewerModule,
-        SidenavLayoutModule,
-        PipeModule,
-        CommonModule,
-        DirectiveModule,
-        DialogModule,
-        ClipboardModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        HostSettingsModule,
-        UserInfoModule,
-        MaterialModule,
-        AppConfigModule,
-        PaginationModule,
-        ToolbarModule,
-        ContextMenuModule,
-        CardViewModule,
-        FormModule,
-        CommentsModule,
-        LoginModule,
-        LanguageMenuModule,
-        InfoDrawerModule,
-        DataColumnModule,
-        DataTableModule,
         TranslateModule,
-        ButtonsMenuModule,
-        TemplateModule,
-        SortingPickerModule,
-        IconModule
-    ]
-})
-export class CoreModuleLazy {
-}
-
-@NgModule({
-    imports: [
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient]
-            }
-        }),
         AboutModule,
         ViewerModule,
         SidenavLayoutModule,
@@ -153,7 +64,6 @@ export class CoreModuleLazy {
         DialogModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule,
         HostSettingsModule,
         UserInfoModule,
         MaterialModule,
@@ -185,7 +95,6 @@ export class CoreModuleLazy {
         ClipboardModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule,
         HostSettingsModule,
         UserInfoModule,
         MaterialModule,
@@ -227,7 +136,7 @@ export class CoreModule {
 
     static forChild(): ModuleWithProviders {
         return {
-            ngModule: CoreModuleLazy
+            ngModule: CoreModule
         };
     }
 
