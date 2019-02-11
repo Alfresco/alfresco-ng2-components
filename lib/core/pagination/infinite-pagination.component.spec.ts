@@ -23,7 +23,7 @@ import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { PaginationModel } from '../models/pagination.model';
 import { RequestPaginationModel } from '../models/request-pagination.model';
 
@@ -57,6 +57,7 @@ describe('InfinitePaginationComponent', () => {
     let fixture: ComponentFixture<InfinitePaginationComponent>;
     let component: InfinitePaginationComponent;
     let pagination: Pagination;
+    let changeDetectorRef: ChangeDetectorRef;
 
     setupTestBed({
         imports: [CoreTestingModule],
@@ -68,6 +69,7 @@ describe('InfinitePaginationComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(InfinitePaginationComponent);
         component = fixture.componentInstance;
+        changeDetectorRef = fixture.componentRef.injector.get(ChangeDetectorRef);
 
         component.target = TestBed.createComponent(TestPaginatedComponent).componentInstance;
         pagination = {
@@ -86,7 +88,7 @@ describe('InfinitePaginationComponent', () => {
             pagination.hasMoreItems = true;
             component.isLoading = true;
             component.target = null;
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
 
             let loadingSpinner = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-spinner"]'));
             expect(loadingSpinner).not.toBeNull();
@@ -96,7 +98,7 @@ describe('InfinitePaginationComponent', () => {
             pagination.hasMoreItems = true;
             component.target.updatePagination(pagination);
             component.isLoading = false;
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
 
             let loadingSpinner = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-spinner"]'));
             expect(loadingSpinner).toBeNull();
@@ -106,7 +108,7 @@ describe('InfinitePaginationComponent', () => {
             pagination.hasMoreItems = true;
             component.target.updatePagination(pagination);
             component.isLoading = false;
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
 
             let loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
             expect(loadMoreButton).not.toBeNull();
@@ -117,7 +119,7 @@ describe('InfinitePaginationComponent', () => {
 
             component.target.pagination.next(pagination);
 
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
 
             component.onLoadMore();
 
@@ -133,7 +135,7 @@ describe('InfinitePaginationComponent', () => {
 
             component.target.pagination.next(pagination);
 
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
 
             fixture.whenStable().then(() => {
                 let loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
@@ -145,7 +147,7 @@ describe('InfinitePaginationComponent', () => {
         it('should NOT show anything if pagination has NO more items', () => {
             pagination.hasMoreItems = false;
             component.target.updatePagination(pagination);
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
 
             let loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
             expect(loadMoreButton).toBeNull();
@@ -160,7 +162,7 @@ describe('InfinitePaginationComponent', () => {
 
             component.isLoading = false;
             component.pageSize = 5;
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
 
             component.loadMore.subscribe((newPagination: Pagination) => {
                 expect(newPagination.skipCount).toBe(0);
@@ -178,7 +180,7 @@ describe('InfinitePaginationComponent', () => {
 
             component.isLoading = false;
             component.pageSize = 5;
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
 
             component.loadMore.subscribe((newPagination: RequestPaginationModel) => {
                 expect(newPagination.merge).toBe(false);
