@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppsProcessCloudService } from './apps-process-cloud.service';
 import { fakeApplicationInstance } from '../mock/app-model.mock';
@@ -29,7 +29,7 @@ describe('AppsProcessCloudService', () => {
     let service: AppsProcessCloudService;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule],
+        imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule],
         providers: [AppsProcessCloudService]
     });
 

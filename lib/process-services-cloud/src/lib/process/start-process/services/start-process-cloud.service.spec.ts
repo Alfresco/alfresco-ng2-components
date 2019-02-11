@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import {
     AlfrescoApiService,
@@ -36,7 +36,7 @@ describe('StartTaskCloudService', () => {
     let service: StartProcessCloudService;
 
     setupTestBed({
-        imports: [ProcessCloudModule],
+        imports: [CoreModule.forRoot(), ProcessCloudModule],
         providers: [StartProcessCloudService, AlfrescoApiService, AppConfigService, LogService, StorageService]
     });
 

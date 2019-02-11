@@ -17,7 +17,7 @@
 
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 
 import { fakeApplicationInstance } from '../mock/app-model.mock';
@@ -35,7 +35,7 @@ describe('AppListCloudComponent', () => {
     let getAppsSpy: jasmine.Spy;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, AppListCloudModule],
+        imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule, AppListCloudModule],
         providers: [AppsProcessCloudService]
     });
 
