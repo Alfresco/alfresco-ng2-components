@@ -1081,6 +1081,7 @@
                     "type": "string"
                   },
                   "label": {
+                    "description": "Unique identifier for the query",
                     "type": "string"
                   },
                   "group": {

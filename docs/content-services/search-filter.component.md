@@ -393,7 +393,7 @@ Note: `sets` parameter from Search API (Sets the intervals for all fields) is no
 ```
 > **Note:** Just like on the `facetFields`, make sure that the `label` properties do not contain empty spaces, as this would cause unexpected behavior.
 
-Each interval defined is collected into its collapsible category. The top code snippet will result in the following display of the facet intervals:
+Each interval defined is collected into its collapsible category identified uniquely by its `label`. The top code snippet will result in the following display of the facet intervals:
 
 ![Facet Intervals](../docassets/images/search-facet-intervals.png)
 
