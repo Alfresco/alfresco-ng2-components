@@ -118,7 +118,7 @@ export class FolderActionsService {
         let handlerObservable: Observable<any>;
 
         if (this.canExecuteAction(node)) {
-            if (this.contentService.hasPermission(node.entry, permission)) {
+            if (this.contentService.hasAllowableOperations(node.entry, permission)) {
                 handlerObservable = this.documentListService.deleteNode(node.entry.id);
                 handlerObservable.subscribe(() => {
                     if (target && typeof target.reload === 'function') {

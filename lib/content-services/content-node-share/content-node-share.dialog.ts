@@ -123,7 +123,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     }
 
     get canUpdate() {
-        return this.contentService.hasPermission(this.data.node.entry, 'update');
+        return this.contentService.hasAllowableOperations(this.data.node.entry, 'update');
     }
 
     private openConfirmationDialog() {

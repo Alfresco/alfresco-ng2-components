@@ -20,11 +20,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ContentApi, MinimalNode, Node, NodeEntry } from '@alfresco/js-api';
 import { Observable, Subject, from, throwError } from 'rxjs';
 import { FolderCreatedEvent } from '../events/folder-created.event';
-import { PermissionsEnum } from '../models/permissions.enum';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthenticationService } from './authentication.service';
 import { LogService } from './log.service';
 import { catchError } from 'rxjs/operators';
+import { PermissionsEnum } from '../models/permissions.enum';
+import { AllowableOperationsEnum } from '../models/allowable-operations.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -172,49 +173,65 @@ export class ContentService {
     }
 
     /**
+     * Checks if the user has permission on that node
+     * @param node Node to check permissions
+     * @param permission
+     * @returns True if the user has the required permissions, false otherwise
+     */
+    hasPermissions(node: Node, permission: PermissionsEnum | string): boolean {
+        let hasPermissions = false;
+
+        if (node && node.permissions && node.permissions.locallySet) {
+            if (permission && permission.startsWith('!')) {
+                hasPermissions = node.permissions.locallySet.find((currentPermission) => currentPermission.name === permission.replace('!', '')) ? false : true;
+            } else {
+                hasPermissions = node.permissions.locallySet.find((currentPermission) => currentPermission.name === permission) ? true : false;
+            }
+
+        } else {
+            if (permission && permission.startsWith('!')) {
+                hasPermissions = true;
+            }
+        }
+
+        return hasPermissions;
+    }
+
+    /**
      * Checks if the user has permissions on that node
      * @param node Node to check allowableOperations
      * @param permission Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
      * @returns True if the user has the required permissions, false otherwise
      */
-    hasPermission(node: Node, permission: PermissionsEnum | string): boolean {
-        let hasPermission = false;
+    hasAllowableOperations(node: Node, allowableOperation: AllowableOperationsEnum | string): boolean {
+        let hasAllowableOperations = false;
 
-        if (this.hasAllowableOperations(node)) {
-            if (permission && permission.startsWith('!')) {
-                hasPermission = node.allowableOperations.find((currentPermission) => currentPermission === permission.replace('!', '')) ? false : true;
+        if (node && node.allowableOperations) {
+            if (allowableOperation && allowableOperation.startsWith('!')) {
+                hasAllowableOperations = node.allowableOperations.find((currentOperation) => currentOperation === allowableOperation.replace('!', '')) ? false : true;
             } else {
-                hasPermission = node.allowableOperations.find((currentPermission) => currentPermission === permission) ? true : false;
+                hasAllowableOperations = node.allowableOperations.find((currentOperation) => currentOperation === allowableOperation) ? true : false;
             }
 
         } else {
-            if (permission && permission.startsWith('!')) {
-                hasPermission = true;
+            if (allowableOperation && allowableOperation.startsWith('!')) {
+                hasAllowableOperations = true;
             }
         }
 
-        if (permission === PermissionsEnum.COPY) {
-            hasPermission = true;
+        if (allowableOperation === AllowableOperationsEnum.COPY) {
+            hasAllowableOperations = true;
         }
 
-        if (permission === PermissionsEnum.LOCK) {
-            hasPermission = node.isFile;
+        if (allowableOperation === AllowableOperationsEnum.LOCK) {
+            hasAllowableOperations = node.isFile;
 
-            if (node.isLocked && this.hasAllowableOperations(node)) {
-                hasPermission = !!~node.allowableOperations.indexOf('updatePermissions');
+            if (node.isLocked && node.allowableOperations) {
+                hasAllowableOperations = !!~node.allowableOperations.indexOf('updatePermissions');
             }
         }
 
-        return hasPermission;
-    }
-
-    /**
-     * Checks if the node has the properties allowableOperations
-     * @param node Node to check allowableOperations
-     * @returns True if the node has the property, false otherwise
-     */
-    hasAllowableOperations(node: any): boolean {
-        return node && node.allowableOperations ? true : false;
+        return hasAllowableOperations;
     }
 
     private handleError(error: any) {

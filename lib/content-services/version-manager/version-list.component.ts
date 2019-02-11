@@ -71,11 +71,11 @@ export class VersionListComponent implements OnChanges {
     }
 
     canUpdate(): boolean {
-        return this.contentService.hasPermission(this.node, 'update') && this.versions.length > 1;
+        return this.contentService.hasAllowableOperations(this.node, 'update') && this.versions.length > 1;
     }
 
     canDelete(): boolean {
-        return this.contentService.hasPermission(this.node, 'delete') && this.versions.length > 1;
+        return this.contentService.hasAllowableOperations(this.node, 'delete') && this.versions.length > 1;
     }
 
     restore(versionId) {

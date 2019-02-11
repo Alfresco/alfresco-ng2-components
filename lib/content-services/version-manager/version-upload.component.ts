@@ -48,7 +48,7 @@ export class VersionUploadComponent {
     }
 
     canUpload(): boolean {
-        return this.contentService.hasPermission(this.node, 'update');
+        return this.contentService.hasAllowableOperations(this.node, 'update');
     }
 
     isMajorVersion(): boolean {

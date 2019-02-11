@@ -17,7 +17,7 @@
 
 /* tslint:disable:no-input-rename  */
 import { Directive, Input, Output, EventEmitter } from '@angular/core';
-import { NodesApiService, ContentService, PermissionsEnum } from '@alfresco/adf-core';
+import { NodesApiService, ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 
 @Directive({
@@ -47,7 +47,7 @@ export class InheritPermissionDirective {
 
     onInheritPermissionClicked() {
         this.nodeService.getNode(this.nodeId).subscribe((node: Node) => {
-            if (this.contentService.hasPermission(node, PermissionsEnum.UPDATEPERMISSIONS)) {
+            if (this.contentService.hasAllowableOperations(node, AllowableOperationsEnum.UPDATEPERMISSIONS)) {
                 const nodeBody = { permissions: { isInheritanceEnabled: !node.permissions.isInheritanceEnabled } };
                 this.nodeService.updateNode(this.nodeId, nodeBody, { include: ['permissions'] }).subscribe((nodeUpdated: Node) => {
                     this.updated.emit(nodeUpdated);
