@@ -39,7 +39,7 @@ describe('LibraryDialogComponent', () => {
     };
 
     setupTestBed({
-        imports: [NoopAnimationsModule, CoreModule, ReactiveFormsModule],
+        imports: [NoopAnimationsModule, CoreModule.forRoot(), ReactiveFormsModule],
         declarations: [LibraryDialogComponent],
         providers: [
             {
