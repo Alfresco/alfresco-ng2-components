@@ -84,6 +84,7 @@
                 height: 200px;
                 overflow: auto;
                 border: 1px solid mat-color($foreground, base, 0.07);
+                padding: 1px;
 
                 .adf-highlight {
                     color: mat-color($primary);

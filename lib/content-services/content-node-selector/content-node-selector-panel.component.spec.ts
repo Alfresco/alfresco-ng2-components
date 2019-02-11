@@ -116,6 +116,10 @@ describe('ContentNodeSelectorComponent', () => {
                 fixture.detectChanges();
             });
 
+            it('should the document list use the server ordering', () => {
+                expect(component.documentList.sorting).toBe('server');
+            });
+
             it('should trigger the select event when selection has been made', (done) => {
                 const expectedNode = <Node> {};
                 component.select.subscribe((nodes) => {
@@ -350,6 +354,13 @@ describe('ContentNodeSelectorComponent', () => {
                 const expectedDefaultFolderNode = <NodeEntry> { entry: { path: { elements: [] } } };
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(expectedDefaultFolderNode));
+                spyOn(documentListService, 'getFolder').and.returnValue(of({
+                    list: {
+                        pagination: {},
+                        entries: [],
+                        source: {}
+                    }
+                }));
 
                 const sitesService = TestBed.get(SitesService);
                 spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
@@ -364,6 +375,8 @@ describe('ContentNodeSelectorComponent', () => {
                     });
 
                 component.currentFolderId = 'cat-girl-nuku-nuku';
+                component.documentList.ngOnInit();
+
                 fixture.detectChanges();
             });
 
@@ -774,6 +787,44 @@ describe('ContentNodeSelectorComponent', () => {
                     const spinnerSelector = By.css('[data-automation-id="content-node-selector-search-pagination"] [data-automation-id="adf-infinite-pagination-spinner"]');
                     const paginationLoading = fixture.debugElement.query(spinnerSelector);
                     expect(paginationLoading).not.toBeNull();
+                }));
+
+                it('Should infinite pagination target be null when we use it for search ', fakeAsync(() => {
+                    component.showingSearchResults = true;
+
+                    typeToSearchBox('shenron');
+
+                    tick(debounceSearch);
+
+                    fixture.detectChanges();
+
+                    tick(debounceSearch);
+
+                    expect(component.target).toBeNull();
+                }));
+
+                it('Should infinite pagination target be present when search finish', fakeAsync(() => {
+                    component.showingSearchResults = true;
+
+                    typeToSearchBox('shenron');
+
+                    tick(debounceSearch);
+
+                    fixture.detectChanges();
+
+                    typeToSearchBox('');
+
+                    tick(debounceSearch);
+
+                    fixture.detectChanges();
+
+                    expect(component.target).not.toBeNull();
+                }));
+
+                it('Should infinite pagination target on init be the document list', fakeAsync(() => {
+                    component.showingSearchResults = true;
+
+                    expect(component.target).toEqual(component.documentList);
                 }));
             });
         });

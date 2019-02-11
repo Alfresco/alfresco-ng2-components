@@ -29,6 +29,7 @@ import { PaginationComponentInterface } from './pagination-component.interface';
 import { PaginationModel } from '../models/pagination.model';
 import { RequestPaginationModel } from '../models/request-pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
+import { Pagination } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-infinite-pagination',
@@ -40,9 +41,35 @@ import { UserPreferencesService, UserPreferenceValues } from '../services/user-p
 })
 export class InfinitePaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
 
+    static DEFAULT_PAGINATION: Pagination = new Pagination({
+        skipCount: 0,
+        maxItems: 25,
+        totalItems: 0
+    });
+
+    _target: PaginatedComponent;
+
     /** Component that provides custom pagination support. */
     @Input()
-    target: PaginatedComponent;
+    set target(target: PaginatedComponent) {
+        if (target) {
+            this._target = target;
+            this.paginationSubscription = target.pagination.subscribe((pagination: PaginationModel) => {
+                this.isLoading = false;
+                this.pagination = pagination;
+
+                if (!this.pagination.hasMoreItems) {
+                    this.pagination.hasMoreItems = false;
+                }
+
+                this.cdr.detectChanges();
+            });
+        }
+    }
+
+    get target() {
+        return this._target;
+    }
 
     /** Number of items that are added with each "load more" event. */
     @Input()
@@ -56,7 +83,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     @Output()
     loadMore: EventEmitter<RequestPaginationModel> = new EventEmitter<RequestPaginationModel>();
 
-    pagination: PaginationModel;
+    pagination: PaginationModel = InfinitePaginationComponent.DEFAULT_PAGINATION;
 
     requestPaginationModel: RequestPaginationModel = {
         skipCount: 0,
@@ -69,19 +96,6 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     }
 
     ngOnInit() {
-        if (this.target) {
-            this.paginationSubscription = this.target.pagination.subscribe((pagination: PaginationModel) => {
-                this.isLoading = false;
-                this.pagination = pagination;
-
-                if (!this.pagination.hasMoreItems) {
-                    this.pagination.hasMoreItems = false;
-                }
-
-                this.cdr.detectChanges();
-            });
-        }
-
         this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
             this.pageSize = this.pageSize || pagSize;
             this.requestPaginationModel.maxItems = this.pageSize;
@@ -96,16 +110,19 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
         this.loadMore.next(this.requestPaginationModel);
 
-        if (this.target) {
+        if (this._target) {
             this.isLoading = true;
-            this.target.updatePagination(<RequestPaginationModel> this.requestPaginationModel);
+            this._target.updatePagination(<RequestPaginationModel> this.requestPaginationModel);
         }
     }
 
     reset() {
         this.pagination.skipCount = 0;
         this.pagination.maxItems = this.pageSize;
-        this.target.updatePagination(this.pagination);
+
+        if (this._target) {
+            this._target.updatePagination(this.pagination);
+        }
     }
 
     ngOnDestroy() {

@@ -21,7 +21,7 @@ import {
     UserPreferencesService,
     PaginationModel,
     UserPreferenceValues,
-    InfinitePaginationComponent
+    InfinitePaginationComponent, PaginatedComponent
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging } from '@alfresco/js-api';
@@ -163,6 +163,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     debounceSearch: number = 200;
     searchInput: FormControl = new FormControl();
 
+    target: PaginatedComponent;
+
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private customResourcesService: CustomResourcesService,
                 private userPreferencesService: UserPreferencesService) {
@@ -194,6 +196,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.target = this.documentList;
         this.folderIdToShow = this.currentFolderId;
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
@@ -232,6 +235,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     siteChanged(chosenSite: SiteEntry): void {
         this.siteId = chosenSite.entry.guid;
         this.updateResults();
+
     }
 
     /**
@@ -274,7 +278,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
         this.searchTerm = '';
         this.nodePaging = null;
         this.pagination.maxItems = this.pageSize;
-        this.infinitePaginationComponent.reset();
         this.chosenNode = null;
         this.showingSearchResults = false;
     }
@@ -283,6 +286,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
      * Update the result list depending on the criteria
      */
     private updateResults(): void {
+        this.target = this.searchTerm.length > 0 ? null : this.documentList;
+
         if (this.searchTerm.length === 0) {
             this.clear();
         } else {
@@ -296,7 +301,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit {
     private startNewSearch(): void {
         this.nodePaging = null;
         this.pagination.maxItems = this.pageSize;
-        this.infinitePaginationComponent.reset();
+        if (this.target) {
+            this.infinitePaginationComponent.reset();
+        }
         this.chosenNode = null;
         this.folderIdToShow = null;
         this.querySearch();
