@@ -28,7 +28,7 @@ Renders a list containing all the tasks matched by the parameters specified.
 
 ```html
 <adf-cloud-task-list
-    [applicationName]="'APPLICATION-NAME'" >
+    [appName]="'APPLICATION-NAME'" >
 </adf-cloud-task-list>
 ```
 
@@ -153,7 +153,7 @@ You can use an HTML-based schema and an `app.config.json` custom schema declarat
 
 ```html
 <adf-cloud-task-list
-    [applicationName]="'ApplicationName'">
+    [appName]="'ApplicationName'">
     <data-columns>
         <data-column key="assignee" title="Assignee" class="full-width name-column">
             <ng-template let-entry="$implicit">
@@ -187,7 +187,7 @@ The Tasklist also supports pagination as shown in the example below:
 
 ```html
 <adf-cloud-task-list #taskCloud
-                        [applicationName]="'APPLICATION-NAME'">
+                        [appName]="'APPLICATION-NAME'">
 </adf-cloud-task-list>
 <adf-pagination [target]="taskCloud"
                 (changePageSize)="onChangePageSize($event)">
