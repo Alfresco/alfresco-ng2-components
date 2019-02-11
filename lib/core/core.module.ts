@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, TranslateStore, TranslateService } from '@ngx-translate/core';
 
 import { MaterialModule } from './material.module';
 import { AboutModule } from './about/about.module';
@@ -51,6 +51,7 @@ import { TranslationService } from './services/translation.service';
 import { startupServiceFactory } from './services/startup-service-factory';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { IconModule } from './icon/icon.module';
+import { TranslateLoaderService } from './services/translate-loader.service';
 
 @NgModule({
     imports: [
@@ -122,6 +123,9 @@ export class CoreModule {
         return {
             ngModule: CoreModule,
             providers: [
+                TranslateStore,
+                TranslateService,
+                { provide: TranslateLoader, useClass: TranslateLoaderService },
                 {
                     provide: APP_INITIALIZER,
                     useFactory: startupServiceFactory,
