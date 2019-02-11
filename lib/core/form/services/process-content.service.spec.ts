@@ -196,13 +196,4 @@ describe('ProcessContentService', () => {
             done();
         });
     });
-
-    it('should call the getProcessRelatedContent with opts parameter', () => {
-        const processId = '37608';
-        const isRelatedContent =  'true';
-        service.getProcessRelatedContent(processId, isRelatedContent).subscribe( (result) => {
-            expect(result.size).toEqual(0);
-        });
-    });
-
 });
