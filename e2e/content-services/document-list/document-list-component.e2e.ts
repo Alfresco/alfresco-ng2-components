@@ -365,23 +365,6 @@ describe('Document List Component', () => {
         done();
     });
 
-    it('[C268119] - ygj letters rendering in document list', async (done) => {
-        acsUser = new AcsUserModel();
-        /* cspell:disable-next-line */
-        let folderName = 'ggggggjjjjjjjjjjjjyyyyyy';
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-        uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.clickOnContentServices();
-        let lineHeight = await contentServicesPage.getStyleValueForRowText(folderName, 'line-height');
-        let fontSize = await contentServicesPage.getStyleValueForRowText(folderName, 'font-size');
-        let actualFontValue = (parseInt(fontSize, 10) * 1.12).toFixed(2);
-        expect(lineHeight).toBe(actualFontValue + 'px');
-        done();
-    });
-
     it('[C279970] Should display Islocked field for folders', async (done) => {
         acsUser = new AcsUserModel();
         let folderNameA = `MEESEEKS_${Util.generateRandomString(5)}_LOOK_AT_ME`;
