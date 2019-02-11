@@ -263,7 +263,7 @@ describe('ProcessAttachmentListComponent', () => {
 
         it('should fetch new attachments when processInstanceId changed', () => {
             component.ngOnChanges({ 'processInstanceId': change });
-            expect(getProcessRelatedContentSpy).toHaveBeenCalledWith('456');
+            expect(getProcessRelatedContentSpy).toHaveBeenCalledWith('456', 'true');
         });
 
         it('should NOT fetch new attachments when empty changeset made', () => {
