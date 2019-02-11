@@ -122,7 +122,7 @@ export class DocumentActionsService {
         let handlerObservable;
 
         if (this.canExecuteAction(node)) {
-            if (this.contentService.hasPermission(node.entry, permission)) {
+            if (this.contentService.hasAllowableOperations(node.entry, permission)) {
                 handlerObservable = this.documentListService.deleteNode(node.entry.id);
                 handlerObservable.subscribe(() => {
                     let message = this.translation.instant('CORE.DELETE_NODE.SINGULAR', { name: node.entry.name });

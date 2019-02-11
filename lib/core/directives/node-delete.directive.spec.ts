@@ -44,7 +44,7 @@ class TestComponent {
 
 @Component({
     template: `
-        <div id="delete-component" [adf-node-permission]="selection"
+        <div id="delete-component" [adf-check-allowable-operation]="selection"
              [adf-delete]="selection"
              (delete)="onDelete($event)">
         </div>`
@@ -335,7 +335,7 @@ describe('NodeDeleteDirective', () => {
             });
         });
 
-        it('should not enable the button if adf-node-permission is present', (done) => {
+        it('should not enable the button if adf-check-allowable-operation is present', (done) => {
             elementWithPermissions.nativeElement.disabled = false;
             componentWithPermissions.selection = [];
 

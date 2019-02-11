@@ -263,8 +263,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.onCreateFolder = this.contentService.folderCreate.subscribe((value) => this.onFolderAction(value));
         this.onEditFolder = this.contentService.folderEdit.subscribe((value) => this.onFolderAction(value));
 
-        // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));
-        // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_CREATE, false, true));
+        // this.permissionsStyle.push(new PermissionStyleModel('document-list__create', AllowableOperationsEnum.CREATE));
+        // this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', AllowableOperationsEnum.NOT_CREATE, false, true));
     }
 
     ngOnDestroy() {
@@ -399,7 +399,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         const showComments = this.showVersionComments;
         const allowDownload = this.allowVersionDownload;
 
-        if (this.contentService.hasPermission(contentEntry, 'update')) {
+        if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
                 data: { contentEntry: contentEntry, showComments: showComments, allowDownload: allowDownload },
                 panelClass: 'adf-version-manager-dialog',
@@ -414,7 +414,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     onManageMetadata(event) {
         const contentEntry = event.value.entry;
 
-        if (this.contentService.hasPermission(contentEntry, 'update')) {
+        if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
             this.dialog.open(MetadataDialogAdapterComponent, {
                 data: {
                     contentEntry: contentEntry,
@@ -444,7 +444,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     userHasPermissionToManageVersions(): boolean {
         const selection: Array<MinimalNodeEntity> = this.documentList.selection;
-        return this.contentService.hasPermission(selection[0].entry, 'update');
+        return this.contentService.hasAllowableOperations(selection[0].entry, 'update');
     }
 
     getNodeNameTooltip(row: DataRow, col: DataColumn): string {
@@ -459,7 +459,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             const entry = selection[0].entry;
 
             if (entry && entry.isFolder) {
-                return this.contentService.hasPermission(entry, 'update');
+                return this.contentService.hasAllowableOperations(entry, 'update');
             }
         }
         return false;
@@ -467,7 +467,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     canCreateContent(parentNode: MinimalNodeEntryEntity): boolean {
         if (parentNode) {
-            return this.contentService.hasPermission(parentNode, 'create');
+            return this.contentService.hasAllowableOperations(parentNode, 'create');
         }
         return false;
     }

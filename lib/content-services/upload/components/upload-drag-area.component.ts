@@ -16,8 +16,8 @@
  */
 
 import {
-    EXTENDIBLE_COMPONENT, FileInfo, FileModel, FileUtils, NodePermissionSubject,
-    NotificationService, TranslationService, UploadService, ContentService, PermissionsEnum
+    EXTENDIBLE_COMPONENT, FileInfo, FileModel, FileUtils, NodeAllowableOperationSubject,
+    NotificationService, TranslationService, UploadService, ContentService, AllowableOperationsEnum
 } from '@alfresco/adf-core';
 import { Component, forwardRef, ViewEncapsulation, NgZone } from '@angular/core';
 import { UploadBase } from './base-upload/upload-base';
@@ -32,7 +32,7 @@ import { UploadBase } from './base-upload/upload-base';
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class UploadDragAreaComponent extends UploadBase implements NodePermissionSubject {
+export class UploadDragAreaComponent extends UploadBase implements NodeAllowableOperationSubject {
 
     constructor(protected uploadService: UploadService,
                 protected translationService: TranslationService,
@@ -94,7 +94,7 @@ export class UploadDragAreaComponent extends UploadBase implements NodePermissio
     onUploadFiles(event: CustomEvent) {
         event.stopPropagation();
         event.preventDefault();
-        let isAllowed: boolean = this.contentService.hasPermission(event.detail.data.obj.entry, PermissionsEnum.CREATE);
+        let isAllowed: boolean = this.contentService.hasAllowableOperations(event.detail.data.obj.entry, AllowableOperationsEnum.CREATE);
         if (isAllowed) {
             let fileInfo: FileInfo[] = event.detail.files;
             if (this.isTargetNodeFolder(event)) {

@@ -60,10 +60,10 @@ Accesses app-generated data objects via URLs and file downloads.
     Checks if the node has the properties allowableOperations
     -   _node:_ `any`  - Node to check allowableOperations
     -   **Returns** `boolean` - True if the node has the property, false otherwise
--   **hasPermission**(node: `Node`, permission: [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
+-   **hasAllowableOperations**(node: `Node`, permission: [`AllowableOperationsEnum`](../../lib/core/models/allowable-operations.enum.ts)`|string`): `boolean`<br/>
     Checks if the user has permissions on that node
     -   _node:_ `Node`  - Node to check allowableOperations
-    -   _permission:_ [`PermissionsEnum`](../../lib/core/models/permissions.enum.ts)`|string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
+    -   _permission:_ [`AllowableOperationsEnum`](../../lib/core/models/allowable-operations.enum.ts)`|string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
     -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
 
 ## Details

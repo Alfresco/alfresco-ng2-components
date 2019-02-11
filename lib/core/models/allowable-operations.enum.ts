@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
-export * from './file.model';
-export * from './allowable-operations.enum';
-export * from './permissions.enum';
-export * from './product-version.model';
-export * from './user-process.model';
-export * from './comment.model';
-export * from './ecm-company.model';
-export * from './redirection.model';
-export * from './pagination.model';
-export * from './oauth-config.model';
-export * from './request-pagination.model';
+ /* spellchecker: disable */
+export class AllowableOperationsEnum extends String {
+    static DELETE: string = 'delete';
+    static UPDATE: string = 'update';
+    static CREATE: string = 'create';
+    static COPY: string = 'copy';
+    static LOCK: string = 'lock';
+    static UPDATEPERMISSIONS: string = 'updatePermissions';
+    static NOT_DELETE: string = '!delete';
+    static NOT_UPDATE: string = '!update';
+    static NOT_CREATE: string = '!create';
+    static NOT_UPDATEPERMISSIONS: string = '!updatePermissions';
+}

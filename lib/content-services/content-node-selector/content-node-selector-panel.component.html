@@ -65,6 +65,7 @@
             [contextMenuActions]="false"
             [contentActions]="false"
             [allowDropFiles]="false"
+            [sorting]="'server'"
             [where]="where"
             (folderChange)="onFolderChange()"
             (ready)="onFolderLoaded()"
@@ -89,7 +90,7 @@
         </adf-document-list>
 
         <adf-infinite-pagination
-            [target]="documentList"
+            [target]="target"
             [loading]="loadingSearchResults"
             (loadMore)="getNextPageOfSearch($event)"
             data-automation-id="content-node-selector-search-pagination">
