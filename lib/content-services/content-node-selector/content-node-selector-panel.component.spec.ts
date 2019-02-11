@@ -782,10 +782,10 @@ describe('ContentNodeSelectorComponent', () => {
 
             const entry: Node = <Node> {};
             const nodePage: NodePaging = <NodePaging> { list: {}, pagination: {} };
-            let hasPermission;
+            let hasAllowableOperations;
 
             function returnHasPermission(): boolean {
-                return hasPermission;
+                return hasAllowableOperations;
             }
 
             beforeEach(() => {
@@ -800,7 +800,7 @@ describe('ContentNodeSelectorComponent', () => {
                 });
 
                 it('should NOT be null after selecting node with the necessary permissions', async(() => {
-                    hasPermission = true;
+                    hasAllowableOperations = true;
                     component.documentList.folderNode = entry;
 
                     component.select.subscribe((nodes) => {
@@ -814,7 +814,7 @@ describe('ContentNodeSelectorComponent', () => {
                 }));
 
                 it('should be null after selecting node without the necessary permissions', async(() => {
-                    hasPermission = false;
+                    hasAllowableOperations = false;
                     component.documentList.folderNode = entry;
 
                     component.select.subscribe((nodes) => {
@@ -828,7 +828,7 @@ describe('ContentNodeSelectorComponent', () => {
                 }));
 
                 it('should NOT be null after clicking on a node (with the right permissions) in the list (onNodeSelect)', async(() => {
-                    hasPermission = true;
+                    hasAllowableOperations = true;
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -841,7 +841,7 @@ describe('ContentNodeSelectorComponent', () => {
                 }));
 
                 it('should remain null when clicking on a node (with the WRONG permissions) in the list (onNodeSelect)', async(() => {
-                    hasPermission = false;
+                    hasAllowableOperations = false;
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -856,7 +856,7 @@ describe('ContentNodeSelectorComponent', () => {
                 it('should become null when clicking on a node (with the WRONG permissions) after previously selecting a right node', async(() => {
                     component.select.subscribe((nodes) => {
 
-                        if (hasPermission) {
+                        if (hasAllowableOperations) {
                             expect(nodes).toBeDefined();
                             expect(nodes).not.toBeNull();
                             expect(component.chosenNode).not.toBeNull();
@@ -868,17 +868,17 @@ describe('ContentNodeSelectorComponent', () => {
                         }
                     });
 
-                    hasPermission = true;
+                    hasAllowableOperations = true;
                     component.onNodeSelect({ detail: { node: { entry } } });
                     fixture.detectChanges();
 
-                    hasPermission = false;
+                    hasAllowableOperations = false;
                     component.onNodeSelect({ detail: { node: { entry } } });
                     fixture.detectChanges();
                 }));
 
                 it('should be null when the chosenNode is reset', async(() => {
-                    hasPermission = true;
+                    hasAllowableOperations = true;
                     component.onNodeSelect({ detail: { node: { entry: <Node> {} } } });
                     fixture.detectChanges();
 

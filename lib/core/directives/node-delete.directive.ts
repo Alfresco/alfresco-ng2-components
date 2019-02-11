@@ -76,7 +76,7 @@ export class NodeDeleteDirective implements OnChanges {
         if (!this.selection || (this.selection && this.selection.length === 0)) {
             this.setDisableAttribute(true);
         } else {
-            if (!this.elementRef.nativeElement.hasAttribute('adf-node-permission')) {
+            if (!this.elementRef.nativeElement.hasAttribute('adf-check-allowable-operation')) {
                 this.setDisableAttribute(false);
             }
         }

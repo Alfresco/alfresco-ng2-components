@@ -17,16 +17,16 @@
 
 import { ChangeDetectorRef, Component, ElementRef, SimpleChange } from '@angular/core';
 import { ContentService } from './../services/content.service';
-import { NodePermissionDirective, NodePermissionSubject } from './node-permission.directive';
+import { CheckAllowableOperationDirective, NodeAllowableOperationSubject } from './check-allowable-operation.directive';
 
 @Component({
     selector: 'adf-text-subject'
 })
-class TestComponent implements NodePermissionSubject {
+class TestComponent implements NodeAllowableOperationSubject {
     disabled: boolean = false;
 }
 
-describe('NodePermissionDirective', () => {
+describe('CheckAllowableOperationDirective', () => {
 
     let changeDetectorMock: ChangeDetectorRef;
 
@@ -37,7 +37,7 @@ describe('NodePermissionDirective', () => {
     describe('HTML nativeElement as subject', () => {
 
         it('updates element once it is loaded', () => {
-            const directive = new NodePermissionDirective(null, null, null, changeDetectorMock);
+            const directive = new CheckAllowableOperationDirective(null, null, null, changeDetectorMock);
             spyOn(directive, 'updateElement').and.stub();
 
             const nodes = [{}, {}];
@@ -48,7 +48,7 @@ describe('NodePermissionDirective', () => {
         });
 
         it('updates element on nodes change', () => {
-            const directive = new NodePermissionDirective(null, null, null, changeDetectorMock);
+            const directive = new CheckAllowableOperationDirective(null, null, null, changeDetectorMock);
             spyOn(directive, 'updateElement').and.stub();
 
             const nodes = [{}, {}];
@@ -59,7 +59,7 @@ describe('NodePermissionDirective', () => {
         });
 
         it('updates element only on subsequent change', () => {
-            const directive = new NodePermissionDirective(null, null, null, changeDetectorMock);
+            const directive = new CheckAllowableOperationDirective(null, null, null, changeDetectorMock);
             spyOn(directive, 'updateElement').and.stub();
 
             const nodes = [{}, {}];
@@ -72,7 +72,7 @@ describe('NodePermissionDirective', () => {
         it('enables decorated element', () => {
             const renderer = jasmine.createSpyObj('renderer', ['removeAttribute']);
             const elementRef = new ElementRef({});
-            const directive = new NodePermissionDirective(elementRef, renderer, null, changeDetectorMock);
+            const directive = new CheckAllowableOperationDirective(elementRef, renderer, null, changeDetectorMock);
 
             directive.enableElement();
 
@@ -82,7 +82,7 @@ describe('NodePermissionDirective', () => {
         it('disables decorated element', () => {
             const renderer = jasmine.createSpyObj('renderer', ['setAttribute']);
             const elementRef = new ElementRef({});
-            const directive = new NodePermissionDirective(elementRef, renderer, null, changeDetectorMock);
+            const directive = new CheckAllowableOperationDirective(elementRef, renderer, null, changeDetectorMock);
 
             directive.disableElement();
 
@@ -90,7 +90,7 @@ describe('NodePermissionDirective', () => {
         });
 
         it('disables element when nodes not available', () => {
-            const directive = new NodePermissionDirective(null, null, null, changeDetectorMock);
+            const directive = new CheckAllowableOperationDirective(null, null, null, changeDetectorMock);
             spyOn(directive, 'disableElement').and.stub();
 
             directive.nodes = null;
@@ -102,9 +102,9 @@ describe('NodePermissionDirective', () => {
 
         it('enables element when all nodes have expected permission', () => {
             const contentService = new ContentService(null, null, null, null);
-            spyOn(contentService, 'hasPermission').and.returnValue(true);
+            spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
 
-            const directive = new NodePermissionDirective(null, null, contentService, changeDetectorMock);
+            const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock);
             spyOn(directive, 'enableElement').and.stub();
 
             directive.nodes = <any> [{}, {}];
@@ -115,9 +115,9 @@ describe('NodePermissionDirective', () => {
 
         it('disables element when one of the nodes have no permission', () => {
             const contentService = new ContentService(null, null, null, null);
-            spyOn(contentService, 'hasPermission').and.returnValue(false);
+            spyOn(contentService, 'hasAllowableOperations').and.returnValue(false);
 
-            const directive = new NodePermissionDirective(null, null, contentService, changeDetectorMock);
+            const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock);
             spyOn(directive, 'disableElement').and.stub();
 
             directive.nodes = <any> [{}, {}];
@@ -131,12 +131,12 @@ describe('NodePermissionDirective', () => {
 
         it('disables decorated component', () => {
             const contentService = new ContentService(null, null, null, null);
-            spyOn(contentService, 'hasPermission').and.returnValue(false);
+            spyOn(contentService, 'hasAllowableOperations').and.returnValue(false);
             spyOn(changeDetectorMock, 'detectChanges');
 
             let testComponent = new TestComponent();
             testComponent.disabled = false;
-            const directive = new NodePermissionDirective(null, null, contentService, changeDetectorMock, testComponent);
+            const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock, testComponent);
             directive.nodes = <any> [{}, {}];
 
             directive.updateElement();
@@ -147,12 +147,12 @@ describe('NodePermissionDirective', () => {
 
         it('enables decorated component', () => {
             const contentService = new ContentService(null, null, null, null);
-            spyOn(contentService, 'hasPermission').and.returnValue(true);
+            spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
             spyOn(changeDetectorMock, 'detectChanges');
 
             let testComponent = new TestComponent();
             testComponent.disabled = true;
-            const directive = new NodePermissionDirective(null, null, contentService, changeDetectorMock, testComponent);
+            const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock, testComponent);
             directive.nodes = <any> [{}, {}];
 
             directive.updateElement();

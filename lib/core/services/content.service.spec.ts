@@ -106,35 +106,67 @@ describe('ContentService', () => {
         });
     });
 
-    it('should havePermission be false if allowableOperation is not present in the node', () => {
-        let permissionNode = new Node({});
-        expect(contentService.hasPermission(permissionNode, 'create')).toBeFalsy();
+    describe('AllowableOperations', () => {
+
+        it('should hasAllowableOperations be false if allowableOperation is not present in the node', () => {
+            let permissionNode = new Node({});
+            expect(contentService.hasAllowableOperations(permissionNode, 'create')).toBeFalsy();
+        });
+
+        it('should hasAllowableOperations be true if allowableOperation is present and you have the permission for the request operation', () => {
+            let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'create', 'updatePermissions'] });
+
+            expect(contentService.hasAllowableOperations(permissionNode, 'create')).toBeTruthy();
+        });
+
+        it('should hasAllowableOperations be false if allowableOperation is present but you don\'t have the permission for the request operation', () => {
+            let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
+            expect(contentService.hasAllowableOperations(permissionNode, 'create')).toBeFalsy();
+        });
+
+        it('should hasAllowableOperations works in the opposite way with negate value', () => {
+            let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
+            expect(contentService.hasAllowableOperations(permissionNode, '!create')).toBeTruthy();
+        });
+
+        it('should hasAllowableOperations return false if no permission parameter are passed', () => {
+            let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
+            expect(contentService.hasAllowableOperations(permissionNode, null)).toBeFalsy();
+        });
+
+        it('should havePermission return true if permission parameter is copy', () => {
+            let permissionNode = null;
+            expect(contentService.hasAllowableOperations(permissionNode, 'copy')).toBeTruthy();
+        });
     });
 
-    it('should havePermission be true if allowableOperation is present and you have the permission for the request operation', () => {
-        let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'create', 'updatePermissions'] });
+    describe('Permissions', () => {
 
-        expect(contentService.hasPermission(permissionNode, 'create')).toBeTruthy();
-    });
+        it('should havePermission be false if allowableOperation is not present in the node', () => {
+            let permissionNode = new Node({});
+            expect(contentService.hasPermissions(permissionNode, 'manager')).toBeFalsy();
+        });
 
-    it('should havePermission be false if allowableOperation is present but you don\'t have the permission for the request operation', () => {
-        let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
-        expect(contentService.hasPermission(permissionNode, 'create')).toBeFalsy();
-    });
+        it('should havePermission be true if permissions is present and you have the permission for the request operation', () => {
+            let permissionNode = new Node({ permissions: { locallySet: [{ name: 'manager' }, { name: 'collaborator' }, { name: 'consumer' }] } });
 
-    it('should havePermission works in the opposite way with negate value', () => {
-        let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
-        expect(contentService.hasPermission(permissionNode, '!create')).toBeTruthy();
-    });
+            expect(contentService.hasPermissions(permissionNode, 'manager')).toBeTruthy();
+        });
 
-    it('should havePermission return false id no permission parameter are passed', () => {
-        let permissionNode = new Node({ allowableOperations: ['delete', 'update', 'updatePermissions'] });
-        expect(contentService.hasPermission(permissionNode, null)).toBeFalsy();
-    });
+        it('should havePermission be false if permissions is present but you don\'t have the permission for the request operation', () => {
+            let permissionNode = new Node({ permissions: { locallySet: [{ name: 'collaborator' }, { name: 'consumer' }] } });
+            expect(contentService.hasPermissions(permissionNode, 'manager')).toBeFalsy();
+        });
 
-    it('should havePermission return true if permission parameter is copy', () => {
-        let permissionNode = null;
-        expect(contentService.hasPermission(permissionNode, 'copy')).toBeTruthy();
+        it('should havePermission works in the opposite way with negate value', () => {
+            let permissionNode = new Node({ permissions: { locallySet: [{ name: 'collaborator' }, { name: 'consumer' }] } });
+            expect(contentService.hasPermissions(permissionNode, '!manager')).toBeTruthy();
+        });
+
+        it('should havePermission return false if no permission parameter are passed', () => {
+            let permissionNode = new Node({ permissions: { locallySet: [{ name: 'collaborator' }, { name: 'consumer' }] } });
+            expect(contentService.hasPermissions(permissionNode, null)).toBeFalsy();
+        });
     });
 
     describe('Download blob', () => {

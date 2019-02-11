@@ -19,7 +19,7 @@
 
 import { Directive, ElementRef, Renderer2, HostListener, Input, AfterViewInit } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { PermissionsEnum, ContentService } from '@alfresco/adf-core';
+import { AllowableOperationsEnum, ContentService } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '../content-node-selector/content-node-dialog.service';
 
 @Directive({
@@ -45,7 +45,7 @@ export class NodeLockDirective implements AfterViewInit {
     ) {}
 
     ngAfterViewInit() {
-        const hasPermission = this.contentService.hasPermission(this.node, PermissionsEnum.LOCK);
-        this.renderer.setProperty(this.element.nativeElement, 'disabled', !hasPermission);
+        const hasAllowableOperations = this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.LOCK);
+        this.renderer.setProperty(this.element.nativeElement, 'disabled', !hasAllowableOperations);
     }
 }

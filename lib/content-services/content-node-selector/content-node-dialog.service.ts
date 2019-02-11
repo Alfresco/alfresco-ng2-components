@@ -21,7 +21,7 @@ import { ContentService } from '@alfresco/adf-core';
 import { Subject, Observable, throwError } from 'rxjs';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
 import { Node, NodeEntry, SitePaging } from '@alfresco/js-api';
-import { DataColumn, SitesService, TranslationService, PermissionsEnum } from '@alfresco/adf-core';
+import { DataColumn, SitesService, TranslationService, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
@@ -71,7 +71,7 @@ export class ContentNodeDialogService {
     public openLockNodeDialog(contentEntry: Node): Subject<string> {
         const observable: Subject<string> = new Subject<string>();
 
-        if (this.contentService.hasPermission(contentEntry, PermissionsEnum.LOCK)) {
+        if (this.contentService.hasAllowableOperations(contentEntry, AllowableOperationsEnum.LOCK)) {
             this.dialog.open(NodeLockDialogComponent, {
                 data: {
                     node: contentEntry,
@@ -129,7 +129,7 @@ export class ContentNodeDialogService {
      * @returns Information about files that were copied/moved
      */
     openCopyMoveDialog(action: string, contentEntry: Node, permission?: string, excludeSiteContent?: string[]): Observable<Node[]> {
-        if (this.contentService.hasPermission(contentEntry, permission)) {
+        if (this.contentService.hasAllowableOperations(contentEntry, permission)) {
 
             const select = new Subject<Node[]>();
             select.subscribe({
@@ -185,7 +185,7 @@ export class ContentNodeDialogService {
             actionName: action,
             currentFolderId: contentEntry.id,
             imageResolver: this.imageResolver.bind(this),
-            isSelectionValid: this.hasPermissionOnNodeFolder.bind(this),
+            isSelectionValid: this.hasAllowableOperationsOnNodeFolder.bind(this),
             where: '(isFolder=true)',
             select: select
         };
@@ -225,7 +225,7 @@ export class ContentNodeDialogService {
 
     private imageResolver(row: ShareDataRow, col: DataColumn): string | null {
         const entry: Node = row.node.entry;
-        if (!this.contentService.hasPermission(entry, 'create')) {
+        if (!this.contentService.hasAllowableOperations(entry, 'create')) {
             return this.documentListService.getMimeTypeIcon('disable/folder');
         }
 
@@ -236,8 +236,8 @@ export class ContentNodeDialogService {
         return entry.isFile;
     }
 
-    private hasPermissionOnNodeFolder(entry: Node): boolean {
-        return this.isNodeFolder(entry) && this.contentService.hasPermission(entry, 'create');
+    private hasAllowableOperationsOnNodeFolder(entry: Node): boolean {
+        return this.isNodeFolder(entry) && this.contentService.hasAllowableOperations(entry, 'create');
     }
 
     private isNodeFolder(entry: Node): boolean {
@@ -249,7 +249,7 @@ export class ContentNodeDialogService {
     }
 
     private hasEntityCreatePermission(entry: Node): boolean {
-        return this.contentService.hasPermission(entry, 'create');
+        return this.contentService.hasAllowableOperations(entry, 'create');
     }
 
     private isSite(entry) {
