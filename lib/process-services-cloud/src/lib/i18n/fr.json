@@ -7,7 +7,10 @@
     },
     "PROPERTIES": {
       "NAME": "Nom",
-      "CREATED": "Créé"
+      "CREATED": "Créé",
+      "STATUS": "Statut",
+      "START_DATE": "Date de début",
+      "ID": "ID"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Démarrer le processus",
@@ -46,6 +49,7 @@
           "DESCRIPTION": "Description",
           "ATTACHFORM": "Joindre un formulaire",
           "ASSIGNEE": "Personne assignée",
+          "CANDIDATE_GROUP": "Groupe de candidats",
           "FORM": "Formulaire",
           "DATE": "Choisir la date"
         },
@@ -58,6 +62,11 @@
     "PROPERTIES": {
       "NAME": "Nom",
       "ASSIGNEE": "Personne assignée",
+      "ID": "ID",
+      "STATUS": "Statut",
+      "PRIORITY": "Priorité",
+      "CREATED_DATE": "Date de création",
+      "LAST_MODIFIED": "Dernière modification",
       "CREATED": "Créé"
     },
     "LIST": {
@@ -97,15 +106,8 @@
       "PROCESS_DEF_ID": "ID de la définition du processus",
       "STATUS": "Statut",
       "ASSIGNMENT": "Affectation",
-      "COLUMN": "Colonne",
       "DIRECTION": "Direction",
       "PROCESS_INSTANCE_ID": "ID de l'instance de processus",
-      "DUE_BEFORE": "Echéance avant le",
-      "DUE_AFTER": "Echéance après le",
-      "CLAIMED_DATE_FROM": "ClaimedDateFrom",
-      "CLAIMED_DATE_TO": "ClaimedDateTo",
-      "CREATED_DATE_FORM": "Date de création à partir du",
-      "CREATED_DATE_TO": "Date de création jusqu'au",
       "TASK_NAME": "Nom de la tâche",
       "PARENT_TASK_ID": "ID de la tâche parent",
       "PRIORITY": "Priorité",
@@ -113,8 +115,7 @@
       "LAST_MODIFIED_FROM": "Date de dernière modification à partir du",
       "LAST_MODIFIED_TO": "Date de dernière modification jusqu'au",
       "OWNER": "Propriétaire",
-      "DUE_DATE_TO": "Date d'échéance à partir du",
-      "DUE_DATE_FROM": "Date d'échéance jusqu'au"
+      "SORT": "Trier"
     },
     "DIALOG": {
       "TITLE": "Enregistrer le filtre sous",
@@ -124,20 +125,29 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "Personnaliser votre filtre",
-    "STATUS": "Sélectionner un statut",
-    "ASSIGNMENT": "Affectation",
-    "COLUMN": "Sélectionner une colonne",
-    "DIRECTION": "Sélectionner une direction",
+    "LABEL": {
+      "APP_NAME": "Nom de l'application",
+      "STATUS": "Statut",
+      "INITIATOR": "Initiateur",
+      "ASSIGNMENT": "Affectation",
+      "SORT": "Trier",
+      "DIRECTION": "Direction",
+      "PROCESS_DEF_ID": "ID de la définition du processus",
+      "PROCESS_DEF_KEY": "Clé de définition de processus",
+      "PROCESS_INS_ID": "ID de l'instance de processus",
+      "START_DATE": "Date de début",
+      "LAST_MODIFIED": "Dernière modification",
+      "LAST_MODIFIED_DATE_FORM": "Date de dernière modification à partir du",
+      "LAST_MODIFIED_TO": "Date de dernière modification jusqu'au",
+      "PROCESS_NAME": "Nom du processus"
+    },
+    "ERROR": {
+      "DATE": "Format de date JJ/MM/AAAA"
+    },
     "TOOL_TIP": {
       "SAVE": "Enregistrer le filtre",
       "SAVE_AS": "Enregistrer le filtre sous",
       "DELETE": "Supprimer le filtre"
-    },
-    "LABEL": {
-      "STATUS": "Statut",
-      "ASSIGNMENT": "Affectation",
-      "COLUMN": "Colonne",
-      "DIRECTION": "Direction"
     },
     "DIALOG": {
       "TITLE": "Enregistrer le filtre sous",

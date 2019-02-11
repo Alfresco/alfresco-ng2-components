@@ -7,7 +7,10 @@
     },
     "PROPERTIES": {
       "NAME": "Имя",
-      "CREATED": "Создано"
+      "CREATED": "Создано",
+      "STATUS": "Статус",
+      "START_DATE": "Дата начала",
+      "ID": "Идентификатор"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Запуск процесса",
@@ -46,6 +49,7 @@
           "DESCRIPTION": "Описание",
           "ATTACHFORM": "Прикрепить форму",
           "ASSIGNEE": "Исполнитель",
+          "CANDIDATE_GROUP": "Группа-кандидат",
           "FORM": "Форма",
           "DATE": "Выбрать дату"
         },
@@ -58,6 +62,11 @@
     "PROPERTIES": {
       "NAME": "Имя",
       "ASSIGNEE": "Исполнитель",
+      "ID": "Идентификатор",
+      "STATUS": "Статус",
+      "PRIORITY": "Приоритет",
+      "CREATED_DATE": "Дата создания",
+      "LAST_MODIFIED": "Дата последнего изменения",
       "CREATED": "Создано"
     },
     "LIST": {
@@ -81,7 +90,7 @@
     "ERROR": {
       "MESSAGE": "Введите другое значение",
       "REQUIRED": "Обязательное поле",
-      "DATE": "Формат даты ДД/ММ/ГГГГ",
+      "DATE": "Формат даты ДД.ММ.ГГГГ",
       "MAXIMUM_LENGTH": "Превышение длины, макс. символов: {{characters}}."
     }
   },
@@ -97,15 +106,8 @@
       "PROCESS_DEF_ID": "Идентификатор определения процесса",
       "STATUS": "Статус",
       "ASSIGNMENT": "Назначение",
-      "COLUMN": "Столбец",
       "DIRECTION": "Направление",
       "PROCESS_INSTANCE_ID": "Идентификатор экземпляра процесса",
-      "DUE_BEFORE": "Срок: до",
-      "DUE_AFTER": "Срок: после",
-      "CLAIMED_DATE_FROM": "ClaimedDateFrom",
-      "CLAIMED_DATE_TO": "ClaimedDateTo",
-      "CREATED_DATE_FORM": "Начальная дата создания",
-      "CREATED_DATE_TO": "Конечная дата создания",
       "TASK_NAME": "Имя задачи",
       "PARENT_TASK_ID": "Идентификатор родительской задачи",
       "PRIORITY": "Приоритет",
@@ -113,8 +115,7 @@
       "LAST_MODIFIED_FROM": "Начальная дата последнего изменения",
       "LAST_MODIFIED_TO": "Конечная дата последнего изменения",
       "OWNER": "Владелец",
-      "DUE_DATE_TO": "Начальная дата срока",
-      "DUE_DATE_FROM": "Конечная дата срока"
+      "SORT": "Сортировать"
     },
     "DIALOG": {
       "TITLE": "Сохранить фильтр как",
@@ -124,20 +125,29 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "Настройка фильтра",
-    "STATUS": "Выберите состояние",
-    "ASSIGNMENT": "НАЗНАЧЕНИЕ",
-    "COLUMN": "Выберите столбец",
-    "DIRECTION": "Выберите направление",
+    "LABEL": {
+      "APP_NAME": "Название приложения",
+      "STATUS": "Статус",
+      "INITIATOR": "Инициатор",
+      "ASSIGNMENT": "Назначение",
+      "SORT": "Сортировать",
+      "DIRECTION": "Направление",
+      "PROCESS_DEF_ID": "Идентификатор определения процесса",
+      "PROCESS_DEF_KEY": "Ключ определения процесса",
+      "PROCESS_INS_ID": "Идентификатор экземпляра процесса",
+      "START_DATE": "Дата начала",
+      "LAST_MODIFIED": "Дата последнего изменения",
+      "LAST_MODIFIED_DATE_FORM": "Начальная дата последнего изменения",
+      "LAST_MODIFIED_TO": "Конечная дата последнего изменения",
+      "PROCESS_NAME": "Имя процесса"
+    },
+    "ERROR": {
+      "DATE": "Формат даты ДД.ММ.ГГГГ"
+    },
     "TOOL_TIP": {
       "SAVE": "Сохранить фильтр",
       "SAVE_AS": "Сохранить фильтр как",
       "DELETE": "Удалить фильтр"
-    },
-    "LABEL": {
-      "STATUS": "Статус",
-      "ASSIGNMENT": "Назначение",
-      "COLUMN": "Столбец",
-      "DIRECTION": "Направление"
     },
     "DIALOG": {
       "TITLE": "Сохранить фильтр как",

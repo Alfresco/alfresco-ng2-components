@@ -60,16 +60,16 @@
     "BREADCRUMB": "Fil d'Ariane",
     "NOTIFICATIONS": "Notifications",
     "TASK_LIST": "Liste des tâches",
-    "TASK_LIST_CLOUD": "Task List Cloud",
     "PROCESS_LIST": "Liste des processus",
     "PROCESS_CLOUD": "Activiti Cloud",
-    "PROCESS_LIST_CLOUD": "Process List Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Connexion",
     "CUSTOM_SOURCES": "Sources personnalisées",
     "DATATABLE": "Table de données",
     "DATATABLE_LAZY": "Table de données (différé)",
+    "DOCUMENT_LIST": "Liste de documents",
+    "TEMPLATE": "Modèle",
     "FORM": "Formulaire",
     "FORM_LIST": "Liste de formulaires",
     "FORM_LOADING": "Chargement du formulaire",
@@ -89,7 +89,10 @@
     "SEARCH_SERVICE_APPROACH": "Cochez cette option pour désactiver la propriété d'entrée et configurer à partir du service",
     "HEADER_DATA": "Données d'en-tête",
     "TREE_VIEW": "Arborescence",
-    "ICONS": "Icônes"
+    "ICONS": "Icônes",
+    "PEOPLE_GROUPS_CLOUD": "Cloud des personnes/groupes",
+    "PEOPLE_CLOUD": "Composant cloud des personnes",
+    "GROUPS_CLOUD": "Composant cloud des groupes"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -189,6 +192,10 @@
     "TASK-AUDIT-LOG": "Journal d'audit des tâches",
     "TASK-SHOW-HEADER": "Afficher l'en-tête de détail"
   },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "Application",
+    "SETTINGS_TAB": "Paramètres"
+  },
   "FORM-LIST": {
     "STORE": "Stocker",
     "RESTORE": "Restaurer"
@@ -221,7 +228,7 @@
     "FACET_QUERIES": {
       "MY_FACET_QUERIES": "Mes recherches avec filtre",
       "CREATED_THIS_YEAR": "1.Créé cette année",
-      "MIMETYPE": "2.Type",
+      "MIMETYPE": "2.Type : HTML",
       "XTRASMALL": "3.Taille : très petit",
       "SMALL": "4.Taille : petit",
       "MEDIUM": "5.Taille : moyen",
@@ -276,11 +283,16 @@
     }
   },
   "PROCESS_LIST_CLOUD_DEMO": {
-    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "TITLE": "Process List Cloud Demo",
     "CUSTOMIZE_FILTERS": "Personnaliser votre filtre"
   },
   "TASK_LIST_CLOUD_DEMO": {
     "CUSTOMIZE_FILTERS": "Personnaliser votre filtre"
+  },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Simple",
+    "MULTI": "Multi",
+    "PRESELECTED_VALUE": "Valeur présélectionnée"
   },
   "ABOUT": {
     "TITLE": "Plugins",
@@ -293,5 +305,10 @@
       "RUNTIME": "Java Runtime",
       "DESCRIPTION": "Description"
     }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Multisélection",
+    "TESTING_MODE": "Mode de test",
+    "SELECTION_MODE": "Mode de sélection"
   }
 }

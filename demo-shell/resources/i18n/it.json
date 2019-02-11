@@ -60,16 +60,16 @@
     "BREADCRUMB": "Breadcrumb",
     "NOTIFICATIONS": "Notifiche",
     "TASK_LIST": "Elenco attività",
-    "TASK_LIST_CLOUD": "Cloud elenco di compiti",
     "PROCESS_LIST": "Elenco processi",
     "PROCESS_CLOUD": "Cloud processo",
-    "PROCESS_LIST_CLOUD": "Cloud elenco processi",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",
     "CUSTOM_SOURCES": "Fonti personalizzate",
     "DATATABLE": "Datatable",
     "DATATABLE_LAZY": "Caricamento dati (ottimizzato)",
+    "DOCUMENT_LIST": "Elenco documenti",
+    "TEMPLATE": "Modello",
     "FORM": "Modulo",
     "FORM_LIST": "Elenco moduli",
     "FORM_LOADING": "Caricamento modulo",
@@ -89,7 +89,10 @@
     "SEARCH_SERVICE_APPROACH": "Selezionare per disattivare la proprietà di input ed eseguire la configurazione utilizzando il servizio",
     "HEADER_DATA": "Dati intestazione",
     "TREE_VIEW": "Vista struttura",
-    "ICONS": "Icone"
+    "ICONS": "Icone",
+    "PEOPLE_GROUPS_CLOUD": "Cloud persone/gruppi",
+    "PEOPLE_CLOUD": "Componente Cloud persone",
+    "GROUPS_CLOUD": "Componente Cloud gruppi"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -189,6 +192,10 @@
     "TASK-AUDIT-LOG": "Registro di audit compito",
     "TASK-SHOW-HEADER": "Mostra intestazione dettagli"
   },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "Applicazione",
+    "SETTINGS_TAB": "Impostazioni"
+  },
   "FORM-LIST": {
     "STORE": "Memorizza",
     "RESTORE": "Ripristina"
@@ -221,7 +228,7 @@
     "FACET_QUERIES": {
       "MY_FACET_QUERIES": "Le mie query filtri",
       "CREATED_THIS_YEAR": "1. Creati quest'anno",
-      "MIMETYPE": "2. Tipo",
+      "MIMETYPE": "2.Tipo: HTML",
       "XTRASMALL": "3. Dimensioni: extra piccolo",
       "SMALL": "4. Dimensioni: piccolo",
       "MEDIUM": "5. Dimensioni: medio",
@@ -282,6 +289,11 @@
   "TASK_LIST_CLOUD_DEMO": {
     "CUSTOMIZE_FILTERS": "Personalizza il filtro"
   },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Singolo",
+    "MULTI": "Multiplo",
+    "PRESELECTED_VALUE": "Valore preselezionato"
+  },
   "ABOUT": {
     "TITLE": "Plug-in",
     "TABLE_HEADERS": {
@@ -293,5 +305,10 @@
       "RUNTIME": "Runtime",
       "DESCRIPTION": "Descrizione"
     }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Selezione multipla",
+    "TESTING_MODE": "Modalità di test",
+    "SELECTION_MODE": "Modalità di selezione"
   }
 }

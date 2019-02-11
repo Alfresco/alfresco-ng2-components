@@ -115,9 +115,8 @@
       "LAST_MODIFIED_FROM": "LastModifiedFrom",
       "LAST_MODIFIED_TO": "LastModifiedTo",
       "OWNER": "Owner",
+
       "SORT": "Sort"
-
-
     },
     "DIALOG": {
       "TITLE": "Save filter as",

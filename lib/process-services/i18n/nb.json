@@ -133,7 +133,7 @@
         },
         "ERROR": {
           "REQUIRED": "Felt er obligatorisk",
-          "DATE": "Datoformat DD/MM/ÅÅÅÅ",
+          "DATE": "Datoformat DD.MM.ÅÅÅÅ",
           "MAXIMUM_LENGTH": "Lengde overskredet, maks {{characters}} tegn."
         }
       }

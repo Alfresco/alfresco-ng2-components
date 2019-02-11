@@ -7,7 +7,10 @@
     },
     "PROPERTIES": {
       "NAME": "名前",
-      "CREATED": "作成日"
+      "CREATED": "作成日",
+      "STATUS": "ステータス",
+      "START_DATE": "開始日",
+      "ID": "ID"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "プロセスの開始",
@@ -46,6 +49,7 @@
           "DESCRIPTION": "説明",
           "ATTACHFORM": "フォームの添付",
           "ASSIGNEE": "担当者",
+          "CANDIDATE_GROUP": "候補グループ",
           "FORM": "フォーム",
           "DATE": "日付の選択"
         },
@@ -58,6 +62,11 @@
     "PROPERTIES": {
       "NAME": "名前",
       "ASSIGNEE": "担当者",
+      "ID": "ID",
+      "STATUS": "ステータス",
+      "PRIORITY": "優先度",
+      "CREATED_DATE": "作成日",
+      "LAST_MODIFIED": "最終更新日時",
       "CREATED": "作成日"
     },
     "LIST": {
@@ -81,7 +90,7 @@
     "ERROR": {
       "MESSAGE": "別の値を入力してください",
       "REQUIRED": "必須フィールドです",
-      "DATE": "日付形式: YYYY/MM/DD",
+      "DATE": "日付形式: YYYY-MM-DD",
       "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。"
     }
   },
@@ -97,15 +106,8 @@
       "PROCESS_DEF_ID": "プロセス定義 ID",
       "STATUS": "ステータス",
       "ASSIGNMENT": "割り当て",
-      "COLUMN": "列",
       "DIRECTION": "昇順/降順",
       "PROCESS_INSTANCE_ID": "プロセスインスタンス ID",
-      "DUE_BEFORE": "期限前",
-      "DUE_AFTER": "期限後",
-      "CLAIMED_DATE_FROM": "ClaimedDateFrom",
-      "CLAIMED_DATE_TO": "ClaimedDateTo",
-      "CREATED_DATE_FORM": "作成日 - 開始",
-      "CREATED_DATE_TO": "作成日 - 終了",
       "TASK_NAME": "タスク名",
       "PARENT_TASK_ID": "親タスク ID",
       "PRIORITY": "優先度",
@@ -113,8 +115,7 @@
       "LAST_MODIFIED_FROM": "最終変更日 - 開始",
       "LAST_MODIFIED_TO": "最終変更日 - 終了",
       "OWNER": "所有者",
-      "DUE_DATE_TO": "期限 - 終了",
-      "DUE_DATE_FROM": "期限 - 開始"
+      "SORT": "表示順"
     },
     "DIALOG": {
       "TITLE": "フィルタに名前を付けて保存",
@@ -124,20 +125,29 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "フィルタのカスタマイズ",
-    "STATUS": "ステータスを選択してください",
-    "ASSIGNMENT": "割り当て",
-    "COLUMN": "列を選択してください",
-    "DIRECTION": "昇順/降順を選択してください",
+    "LABEL": {
+      "APP_NAME": "アプリケーション名",
+      "STATUS": "ステータス",
+      "INITIATOR": "開始者",
+      "ASSIGNMENT": "割り当て",
+      "SORT": "表示順",
+      "DIRECTION": "昇順/降順",
+      "PROCESS_DEF_ID": "プロセス定義 ID",
+      "PROCESS_DEF_KEY": "プロセス定義キー",
+      "PROCESS_INS_ID": "プロセスインスタンス ID",
+      "START_DATE": "開始日",
+      "LAST_MODIFIED": "最終更新日時",
+      "LAST_MODIFIED_DATE_FORM": "最終変更日 - 開始",
+      "LAST_MODIFIED_TO": "最終変更日 - 終了",
+      "PROCESS_NAME": "プロセス名"
+    },
+    "ERROR": {
+      "DATE": "日付形式: YYYY-MM-DD"
+    },
     "TOOL_TIP": {
       "SAVE": "フィルタの保存",
       "SAVE_AS": "フィルタに名前を付けて保存",
       "DELETE": "フィルタの削除"
-    },
-    "LABEL": {
-      "STATUS": "ステータス",
-      "ASSIGNMENT": "割り当て",
-      "COLUMN": "列",
-      "DIRECTION": "昇順/降順"
     },
     "DIALOG": {
       "TITLE": "フィルタに名前を付けて保存",

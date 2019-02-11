@@ -7,7 +7,10 @@
     },
     "PROPERTIES": {
       "NAME": "Name",
-      "CREATED": "Erstellt"
+      "CREATED": "Erstellt",
+      "STATUS": "Status",
+      "START_DATE": "Startdatum",
+      "ID": "ID"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Prozess starten",
@@ -46,6 +49,7 @@
           "DESCRIPTION": "Beschreibung",
           "ATTACHFORM": "Formular anhängen",
           "ASSIGNEE": "Zugewiesener Benutzer",
+          "CANDIDATE_GROUP": "Kandidatengruppe",
           "FORM": "Formular",
           "DATE": "Datum auswählen"
         },
@@ -58,6 +62,11 @@
     "PROPERTIES": {
       "NAME": "Name",
       "ASSIGNEE": "Zugewiesener Benutzer",
+      "ID": "ID",
+      "STATUS": "Status",
+      "PRIORITY": "Priorität",
+      "CREATED_DATE": "Datum der Erstellung",
+      "LAST_MODIFIED": "Zuletzt geändert",
       "CREATED": "Erstellt"
     },
     "LIST": {
@@ -97,15 +106,8 @@
       "PROCESS_DEF_ID": "Prozessdefinitions-ID",
       "STATUS": "Status",
       "ASSIGNMENT": "Zuweisung",
-      "COLUMN": "Spalte",
       "DIRECTION": "Richtung",
       "PROCESS_INSTANCE_ID": "Prozessinstanz-ID",
-      "DUE_BEFORE": "Fällig bis",
-      "DUE_AFTER": "Fällig nach",
-      "CLAIMED_DATE_FROM": "Anforderung ab",
-      "CLAIMED_DATE_TO": "ClaimedDateTo",
-      "CREATED_DATE_FORM": "CreatedDateFrom",
-      "CREATED_DATE_TO": "Erstellt bis",
       "TASK_NAME": "Aufgabenname",
       "PARENT_TASK_ID": "Übergeordnete Aufgaben-ID",
       "PRIORITY": "Priorität",
@@ -113,8 +115,7 @@
       "LAST_MODIFIED_FROM": "Zuletzt bearbeitet von",
       "LAST_MODIFIED_TO": "Zuletzt bearbeitet zu",
       "OWNER": "Besitzer",
-      "DUE_DATE_TO": "Fällig bis",
-      "DUE_DATE_FROM": "Fällig ab"
+      "SORT": "Sortieren"
     },
     "DIALOG": {
       "TITLE": "Filter speichern als",
@@ -124,20 +125,29 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "Filter anpassen",
-    "STATUS": "Status auswählen",
-    "ASSIGNMENT": "Zuweisung",
-    "COLUMN": "Spalte auswählen",
-    "DIRECTION": "Richtung auswählen",
+    "LABEL": {
+      "APP_NAME": "Anwendungsname",
+      "STATUS": "Status",
+      "INITIATOR": "Initiator",
+      "ASSIGNMENT": "Zuweisung",
+      "SORT": "Sortieren",
+      "DIRECTION": "Richtung",
+      "PROCESS_DEF_ID": "Prozessdefinitions-ID",
+      "PROCESS_DEF_KEY": "Prozessdefinitionsschlüssel",
+      "PROCESS_INS_ID": "Prozessinstanz-ID",
+      "START_DATE": "Startdatum",
+      "LAST_MODIFIED": "Zuletzt bearbeitet",
+      "LAST_MODIFIED_DATE_FORM": "Zuletzt bearbeitet von",
+      "LAST_MODIFIED_TO": "Zuletzt bearbeitet zu",
+      "PROCESS_NAME": "Prozessname"
+    },
+    "ERROR": {
+      "DATE": "Datumsformat TT.MM.JJJJ"
+    },
     "TOOL_TIP": {
       "SAVE": "Filter speichern",
       "SAVE_AS": "Filter speichern als",
       "DELETE": "Filter löschen"
-    },
-    "LABEL": {
-      "STATUS": "Status",
-      "ASSIGNMENT": "Zuweisung",
-      "COLUMN": "Spalte",
-      "DIRECTION": "Richtung"
     },
     "DIALOG": {
       "TITLE": "Filter speichern als",

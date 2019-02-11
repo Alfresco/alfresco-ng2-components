@@ -60,16 +60,16 @@
     "BREADCRUMB": "Breadcrumb",
     "NOTIFICATIONS": "Benachrichtigungen",
     "TASK_LIST": "Aufgabenliste",
-    "TASK_LIST_CLOUD": "Task List Cloud",
     "PROCESS_LIST": "Prozessliste",
     "PROCESS_CLOUD": "Prozess-Cloud",
-    "PROCESS_LIST_CLOUD": "Process List Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Anmelden",
     "CUSTOM_SOURCES": "Benutzerdefinierte Quellen",
     "DATATABLE": "DataTable",
     "DATATABLE_LAZY": "DataTable (Lazy)",
+    "DOCUMENT_LIST": "Dokumentliste",
+    "TEMPLATE": "Mustervorlage",
     "FORM": "Formular",
     "FORM_LIST": "Formularliste",
     "FORM_LOADING": "Formular laden",
@@ -89,7 +89,10 @@
     "SEARCH_SERVICE_APPROACH": "Aktivieren Sie diese Option, um die Eingabeeigenschaft zu deaktivieren und die Nutzung des Services zu konfigurieren",
     "HEADER_DATA": "Headerdaten",
     "TREE_VIEW": "Strukturansicht",
-    "ICONS": "Symbole"
+    "ICONS": "Symbole",
+    "PEOPLE_GROUPS_CLOUD": "Personen-/Gruppen-Cloud",
+    "PEOPLE_CLOUD": "Personen-Cloud-Komponente",
+    "GROUPS_CLOUD": "Gruppen-Cloud-Komponente"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -189,6 +192,10 @@
     "TASK-AUDIT-LOG": "Aufgaben-Audit-Protokoll",
     "TASK-SHOW-HEADER": "Detailsheader anzeigen"
   },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "Anwendung",
+    "SETTINGS_TAB": "Einstellungen"
+  },
   "FORM-LIST": {
     "STORE": "Speichern",
     "RESTORE": "Wiederherstellen"
@@ -221,7 +228,7 @@
     "FACET_QUERIES": {
       "MY_FACET_QUERIES": "Meine Facet-Abfragen",
       "CREATED_THIS_YEAR": "1.Dieses Jahr erstellt",
-      "MIMETYPE": "2.Typ",
+      "MIMETYPE": "2.Typ: HTML",
       "XTRASMALL": "3.Größe: sehr klein",
       "SMALL": "4.Größe: klein",
       "MEDIUM": "5.Größe: mittel",
@@ -282,6 +289,11 @@
   "TASK_LIST_CLOUD_DEMO": {
     "CUSTOMIZE_FILTERS": "Ihren Filter anpassen"
   },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Einzeln",
+    "MULTI": "Mehrfach",
+    "PRESELECTED_VALUE": "Vorausgewählter Wert"
+  },
   "ABOUT": {
     "TITLE": "Plugins",
     "TABLE_HEADERS": {
@@ -293,5 +305,10 @@
       "RUNTIME": "Laufzeit",
       "DESCRIPTION": "Beschreibung"
     }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Mehrfachauswahl",
+    "TESTING_MODE": "Testmodus",
+    "SELECTION_MODE": "Auswahlmodus"
   }
 }

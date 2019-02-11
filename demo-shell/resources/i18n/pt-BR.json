@@ -60,16 +60,16 @@
     "BREADCRUMB": "Trilha de navegação",
     "NOTIFICATIONS": "Notificações",
     "TASK_LIST": "Lista de tarefas",
-    "TASK_LIST_CLOUD": "Task List Cloud",
     "PROCESS_LIST": "Lista de processos",
     "PROCESS_CLOUD": "Process Cloud",
-    "PROCESS_LIST_CLOUD": "Process List Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Login",
     "CUSTOM_SOURCES": "Origens Personalizadas",
     "DATATABLE": "Datatable",
     "DATATABLE_LAZY": "Datatable (Sob demanda)",
+    "DOCUMENT_LIST": "Lista de Documento",
+    "TEMPLATE": "Modelo",
     "FORM": "Formulário",
     "FORM_LIST": "Lista de Formulário",
     "FORM_LOADING": "Carregamento de formulário",
@@ -89,7 +89,10 @@
     "SEARCH_SERVICE_APPROACH": "Marque essa opção para desativar a inserção e configurar a utilização do serviço",
     "HEADER_DATA": "Dados do cabeçalho",
     "TREE_VIEW": "Exibição em árvore",
-    "ICONS": "Ícones"
+    "ICONS": "Ícones",
+    "PEOPLE_GROUPS_CLOUD": "Nuvem de Pessoas/Grupo",
+    "PEOPLE_CLOUD": "Componente da Nuvem de Pessoas",
+    "GROUPS_CLOUD": "Componente da Nuvem de Grupos"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -189,6 +192,10 @@
     "TASK-AUDIT-LOG": "Log de auditoria de tarefa",
     "TASK-SHOW-HEADER": "Mostrar cabeçalho de detalhes"
   },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "Aplicativo",
+    "SETTINGS_TAB": "Configurações"
+  },
   "FORM-LIST": {
     "STORE": "Armazenar",
     "RESTORE": "Restaurar"
@@ -221,7 +228,7 @@
     "FACET_QUERIES": {
       "MY_FACET_QUERIES": "Minhas consultas de faceta",
       "CREATED_THIS_YEAR": "1.Criado este ano",
-      "MIMETYPE": "2.Tipo",
+      "MIMETYPE": "2.Tipo: HTML",
       "XTRASMALL": "3.Tamanho: muito pequeno",
       "SMALL": "4.Tamanho: pequeno",
       "MEDIUM": "5.Tamanho: médio",
@@ -282,6 +289,11 @@
   "TASK_LIST_CLOUD_DEMO": {
     "CUSTOMIZE_FILTERS": "Personalizar seu filtro"
   },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Único",
+    "MULTI": "Múltiplo",
+    "PRESELECTED_VALUE": "Valor pré-selecionado"
+  },
   "ABOUT": {
     "TITLE": "Plugins",
     "TABLE_HEADERS": {
@@ -293,5 +305,10 @@
       "RUNTIME": "Tempo de execução",
       "DESCRIPTION": "Descrição"
     }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Seleção Múltipla",
+    "TESTING_MODE": "Modo de Teste",
+    "SELECTION_MODE": "Modo de Seleção"
   }
 }

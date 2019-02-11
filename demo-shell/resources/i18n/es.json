@@ -60,16 +60,16 @@
     "BREADCRUMB": "Ruta de navegación",
     "NOTIFICATIONS": "Notificaciones",
     "TASK_LIST": "Lista de tareas",
-    "TASK_LIST_CLOUD": "Lista de tareas en la nube",
     "PROCESS_LIST": "Lista de procesos",
     "PROCESS_CLOUD": "Procesos en la nube",
-    "PROCESS_LIST_CLOUD": "Lista de procesos en la nube",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Iniciar sesión",
     "CUSTOM_SOURCES": "Fuentes personalizadas",
     "DATATABLE": "Tabla de datos",
     "DATATABLE_LAZY": "Tabla de datos (diferida)",
+    "DOCUMENT_LIST": "Lista de documentos",
+    "TEMPLATE": "Plantilla",
     "FORM": "Formulario",
     "FORM_LIST": "Lista de formularios",
     "FORM_LOADING": "Carga de formulario",
@@ -89,7 +89,10 @@
     "SEARCH_SERVICE_APPROACH": "Marque esto para desactivar la propiedad de entrada y configurar el uso del servicio",
     "HEADER_DATA": "Datos de encabezado",
     "TREE_VIEW": "Vista de árbol",
-    "ICONS": "Iconos"
+    "ICONS": "Iconos",
+    "PEOPLE_GROUPS_CLOUD": "Personas/Grupos en la nube",
+    "PEOPLE_CLOUD": "Componente en la nube de personas",
+    "GROUPS_CLOUD": "Componente en la nube de grupos"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -189,6 +192,10 @@
     "TASK-AUDIT-LOG": "Registro de auditoría de tareas",
     "TASK-SHOW-HEADER": "Mostrar encabezado de detalles"
   },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "Aplicación",
+    "SETTINGS_TAB": "Configuración"
+  },
   "FORM-LIST": {
     "STORE": "Almacenar",
     "RESTORE": "Restaurar"
@@ -221,7 +228,7 @@
     "FACET_QUERIES": {
       "MY_FACET_QUERIES": "Mis consultas de faceta",
       "CREATED_THIS_YEAR": "1.Creadas este año",
-      "MIMETYPE": "2.Tipo",
+      "MIMETYPE": "2.Tipo: HTML",
       "XTRASMALL": "3.Tamaño: extrapequeño",
       "SMALL": "4.Tamaño: pequeño",
       "MEDIUM": "5.Tamaño: mediano",
@@ -282,6 +289,11 @@
   "TASK_LIST_CLOUD_DEMO": {
     "CUSTOMIZE_FILTERS": "Personalice su filtro"
   },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Individual",
+    "MULTI": "Múltiple",
+    "PRESELECTED_VALUE": "Valor preseleccionado"
+  },
   "ABOUT": {
     "TITLE": "Complementos",
     "TABLE_HEADERS": {
@@ -293,5 +305,10 @@
       "RUNTIME": "Tiempo de ejecución",
       "DESCRIPTION": "Descripción"
     }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Selección múltiple",
+    "TESTING_MODE": "Modo de prueba",
+    "SELECTION_MODE": "Modo de selección"
   }
 }

@@ -60,16 +60,16 @@
     "BREADCRUMB": "Søkebane",
     "NOTIFICATIONS": "Varsler",
     "TASK_LIST": "Oppgaveliste",
-    "TASK_LIST_CLOUD": "Task List Cloud",
     "PROCESS_LIST": "Prosessliste",
     "PROCESS_CLOUD": "Activiti Cloud",
-    "PROCESS_LIST_CLOUD": "Process List Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Logg på",
     "CUSTOM_SOURCES": "Tilpassede kilder",
     "DATATABLE": "Datatable",
     "DATATABLE_LAZY": "Datatabell (avventende)",
+    "DOCUMENT_LIST": "Dokumentliste",
+    "TEMPLATE": "Mal",
     "FORM": "Skjema",
     "FORM_LIST": "Skjemaliste",
     "FORM_LOADING": "Skjema lastes inn",
@@ -89,7 +89,10 @@
     "SEARCH_SERVICE_APPROACH": "Velg dette for å deaktivere inndataegenskapen og konfigurere ved hjelp av tjenesten",
     "HEADER_DATA": "Overskriftsdata",
     "TREE_VIEW": "Trevisning",
-    "ICONS": "Ikoner"
+    "ICONS": "Ikoner",
+    "PEOPLE_GROUPS_CLOUD": "Person-/gruppesky",
+    "PEOPLE_CLOUD": "Personsky-komponent",
+    "GROUPS_CLOUD": "Gruppesky-kompontent"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -189,6 +192,10 @@
     "TASK-AUDIT-LOG": "Oppgaverevisjonslogg",
     "TASK-SHOW-HEADER": "Vis detaljoverskrift"
   },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "App",
+    "SETTINGS_TAB": "Innstillinger"
+  },
   "FORM-LIST": {
     "STORE": "Lagre",
     "RESTORE": "Gjenopprett"
@@ -221,7 +228,7 @@
     "FACET_QUERIES": {
       "MY_FACET_QUERIES": "Mine egenskapsspørringer",
       "CREATED_THIS_YEAR": "1.Opprettet i år",
-      "MIMETYPE": "2.Type",
+      "MIMETYPE": "2.Type: HTML",
       "XTRASMALL": "3.Størrelse: xtra small",
       "SMALL": "4.Størrelse: small",
       "MEDIUM": "5.Størrelse: medium",
@@ -282,6 +289,11 @@
   "TASK_LIST_CLOUD_DEMO": {
     "CUSTOMIZE_FILTERS": "Tilpass filteret ditt"
   },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Enkel",
+    "MULTI": "Flere",
+    "PRESELECTED_VALUE": "Forhåndsvalgt verdi"
+  },
   "ABOUT": {
     "TITLE": "Plugin-moduler",
     "TABLE_HEADERS": {
@@ -293,5 +305,10 @@
       "RUNTIME": "Kjøretid",
       "DESCRIPTION": "Beskrivelse"
     }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Flervalg",
+    "TESTING_MODE": "Testmodus",
+    "SELECTION_MODE": "Valgmodus"
   }
 }

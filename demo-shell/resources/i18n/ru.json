@@ -60,16 +60,16 @@
     "BREADCRUMB": "Иерархия",
     "NOTIFICATIONS": "Оповещения",
     "TASK_LIST": "Список задач",
-    "TASK_LIST_CLOUD": "Список задач в облаке",
     "PROCESS_LIST": "Список процессов",
     "PROCESS_CLOUD": "Процесс в облаке",
-    "PROCESS_LIST_CLOUD": "Список процессов в облаке",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Войти",
     "CUSTOM_SOURCES": "Пользовательские источники",
     "DATATABLE": "Datatable",
     "DATATABLE_LAZY": "Таблица данных (частичная загрузка)",
+    "DOCUMENT_LIST": "Список документов",
+    "TEMPLATE": "Шаблон",
     "FORM": "Форма",
     "FORM_LIST": "Список форм",
     "FORM_LOADING": "Загрузка формы",
@@ -89,7 +89,10 @@
     "SEARCH_SERVICE_APPROACH": "Установите флажок, чтобы отключить свойство ввода и настроить, используя службу.",
     "HEADER_DATA": "Данные заголовка",
     "TREE_VIEW": "Иерархическое представление",
-    "ICONS": "Значки"
+    "ICONS": "Значки",
+    "PEOPLE_GROUPS_CLOUD": "Облако пользователей/групп",
+    "PEOPLE_CLOUD": "Компонент облака «Пользователи»",
+    "GROUPS_CLOUD": "Компонент облака «Группы»"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -189,6 +192,10 @@
     "TASK-AUDIT-LOG": "Журнал проверки задачи",
     "TASK-SHOW-HEADER": "Показать подробности заголовка"
   },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "Приложение",
+    "SETTINGS_TAB": "Параметры"
+  },
   "FORM-LIST": {
     "STORE": "Хранилище",
     "RESTORE": "Восстановить"
@@ -221,7 +228,7 @@
     "FACET_QUERIES": {
       "MY_FACET_QUERIES": "Мои фасетные запросы",
       "CREATED_THIS_YEAR": "1. Создано в этом году",
-      "MIMETYPE": "2. Тип",
+      "MIMETYPE": "2. Тип HTML",
       "XTRASMALL": "3. Размер: крайне малый",
       "SMALL": "4. Размер: малый",
       "MEDIUM": "5. Размер: средний",
@@ -282,6 +289,11 @@
   "TASK_LIST_CLOUD_DEMO": {
     "CUSTOMIZE_FILTERS": "Настройка фильтра"
   },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Один",
+    "MULTI": "Несколько",
+    "PRESELECTED_VALUE": "Предустановленное значение"
+  },
   "ABOUT": {
     "TITLE": "Подключаемые модули",
     "TABLE_HEADERS": {
@@ -293,5 +305,10 @@
       "RUNTIME": "Среда выполнения",
       "DESCRIPTION": "Описание"
     }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Выбор нескольких",
+    "TESTING_MODE": "Режим тестирования",
+    "SELECTION_MODE": "Режим выбора"
   }
 }

@@ -60,16 +60,16 @@
     "BREADCRUMB": "Navigatiepad",
     "NOTIFICATIONS": "Meldingen",
     "TASK_LIST": "Lijst met taken",
-    "TASK_LIST_CLOUD": "Task List Cloud",
     "PROCESS_LIST": "Lijst met processen",
     "PROCESS_CLOUD": "Process Cloud",
-    "PROCESS_LIST_CLOUD": "Process List Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Aanmelden",
     "CUSTOM_SOURCES": "Aangepaste bronnen",
     "DATATABLE": "Datatable",
     "DATATABLE_LAZY": "Datatable (vertraagd)",
+    "DOCUMENT_LIST": "Lijst met documenten",
+    "TEMPLATE": "Sjabloon",
     "FORM": "Formulier",
     "FORM_LIST": "Formulierlijst",
     "FORM_LOADING": "Formulier laden",
@@ -89,7 +89,10 @@
     "SEARCH_SERVICE_APPROACH": "Schakel dit in om de invoereigenschap uit te schakelen en om te configureren via de service",
     "HEADER_DATA": "Koptekstgegevens",
     "TREE_VIEW": "Structuurweergave",
-    "ICONS": "Pictogrammen"
+    "ICONS": "Pictogrammen",
+    "PEOPLE_GROUPS_CLOUD": "Personen-/groepencloud",
+    "PEOPLE_CLOUD": "Component Personencloud",
+    "GROUPS_CLOUD": "Component Groepencloud"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -189,6 +192,10 @@
     "TASK-AUDIT-LOG": "Auditlog van taak",
     "TASK-SHOW-HEADER": "Detailkoptekst weergeven"
   },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "App",
+    "SETTINGS_TAB": "Instellingen"
+  },
   "FORM-LIST": {
     "STORE": "Opslaan",
     "RESTORE": "Herstellen"
@@ -221,7 +228,7 @@
     "FACET_QUERIES": {
       "MY_FACET_QUERIES": "Mijn facetquery's",
       "CREATED_THIS_YEAR": "1.Dit jaar gemaakt",
-      "MIMETYPE": "2.Type",
+      "MIMETYPE": "2.Type: HTML",
       "XTRASMALL": "3.Grootte: extra klein",
       "SMALL": "4.Grootte: klein",
       "MEDIUM": "5.Grootte: middelgroot",
@@ -282,6 +289,11 @@
   "TASK_LIST_CLOUD_DEMO": {
     "CUSTOMIZE_FILTERS": "Uw filter aanpassen"
   },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Eén",
+    "MULTI": "Multi",
+    "PRESELECTED_VALUE": "Vooraf geselecteerde waarde"
+  },
   "ABOUT": {
     "TITLE": "Plug-ins",
     "TABLE_HEADERS": {
@@ -293,5 +305,10 @@
       "RUNTIME": "Runtime",
       "DESCRIPTION": "Beschrijving"
     }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Multiselectie",
+    "TESTING_MODE": "Testmodus",
+    "SELECTION_MODE": "Selectiemodus"
   }
 }

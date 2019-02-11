@@ -7,7 +7,10 @@
     },
     "PROPERTIES": {
       "NAME": "Nombre",
-      "CREATED": "Creado"
+      "CREATED": "Creado",
+      "STATUS": "Estado",
+      "START_DATE": "Fecha de inicio",
+      "ID": "ID"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Iniciar proceso",
@@ -46,6 +49,7 @@
           "DESCRIPTION": "Descripción",
           "ATTACHFORM": "Adjuntar formulario",
           "ASSIGNEE": "Asignado a",
+          "CANDIDATE_GROUP": "Grupo de candidatos",
           "FORM": "Formulario",
           "DATE": "Elegir fecha"
         },
@@ -58,6 +62,11 @@
     "PROPERTIES": {
       "NAME": "Nombre",
       "ASSIGNEE": "Asignado a",
+      "ID": "ID",
+      "STATUS": "Estado",
+      "PRIORITY": "Prioridad",
+      "CREATED_DATE": "Fecha de creación",
+      "LAST_MODIFIED": "Modificada por última vez",
       "CREATED": "Creado"
     },
     "LIST": {
@@ -97,15 +106,8 @@
       "PROCESS_DEF_ID": "ID de definición de proceso",
       "STATUS": "Estado",
       "ASSIGNMENT": "Asignación",
-      "COLUMN": "Columna",
       "DIRECTION": "Dirección",
       "PROCESS_INSTANCE_ID": "ID de instancia de proceso",
-      "DUE_BEFORE": "Vence antes del",
-      "DUE_AFTER": "Vence después del",
-      "CLAIMED_DATE_FROM": "Fecha de solicitud desde",
-      "CLAIMED_DATE_TO": "Fecha de solicitud hasta",
-      "CREATED_DATE_FORM": "Fecha de creación desde",
-      "CREATED_DATE_TO": "Fecha de creación hasta",
       "TASK_NAME": "Nombre de tarea",
       "PARENT_TASK_ID": "ID de tarea primaria",
       "PRIORITY": "Prioridad",
@@ -113,8 +115,7 @@
       "LAST_MODIFIED_FROM": "Última modificación desde",
       "LAST_MODIFIED_TO": "Última modificación hasta",
       "OWNER": "Propietario",
-      "DUE_DATE_TO": "Fecha de vencimiento hasta",
-      "DUE_DATE_FROM": "Fecha de vencimiento desde"
+      "SORT": "Clasificar"
     },
     "DIALOG": {
       "TITLE": "Guardar filtro como",
@@ -124,20 +125,29 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "Personalice su filtro",
-    "STATUS": "Seleccione un estado",
-    "ASSIGNMENT": "Asignación",
-    "COLUMN": "Seleccione una columna",
-    "DIRECTION": "Seleccione una dirección",
+    "LABEL": {
+      "APP_NAME": "Nombre de aplicación",
+      "STATUS": "Estado",
+      "INITIATOR": "Iniciador",
+      "ASSIGNMENT": "Asignación",
+      "SORT": "Clasificar",
+      "DIRECTION": "Dirección",
+      "PROCESS_DEF_ID": "ID de definición de proceso",
+      "PROCESS_DEF_KEY": "Clave de definición de procesos",
+      "PROCESS_INS_ID": "ID de instancia de proceso",
+      "START_DATE": "Fecha de inicio",
+      "LAST_MODIFIED": "Última modificación",
+      "LAST_MODIFIED_DATE_FORM": "Última modificación desde",
+      "LAST_MODIFIED_TO": "Última modificación hasta",
+      "PROCESS_NAME": "Nombre de proceso"
+    },
+    "ERROR": {
+      "DATE": "Formato de fecha DD/MM/AAAA"
+    },
     "TOOL_TIP": {
       "SAVE": "Guardar filtro",
       "SAVE_AS": "Guardar filtro como",
       "DELETE": "Eliminar filtro"
-    },
-    "LABEL": {
-      "STATUS": "Estado",
-      "ASSIGNMENT": "Asignación",
-      "COLUMN": "Columna",
-      "DIRECTION": "Dirección"
     },
     "DIALOG": {
       "TITLE": "Guardar filtro como",

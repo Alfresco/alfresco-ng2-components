@@ -60,16 +60,16 @@
     "BREADCRUMB": "面包屑",
     "NOTIFICATIONS": "通知",
     "TASK_LIST": "任务列表",
-    "TASK_LIST_CLOUD": "Task List Cloud",
     "PROCESS_LIST": "流程列表",
     "PROCESS_CLOUD": "Process Cloud",
-    "PROCESS_LIST_CLOUD": "Process List Cloud",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "登录",
     "CUSTOM_SOURCES": "自定义来源",
     "DATATABLE": "Datatable",
     "DATATABLE_LAZY": "Datatable（迟缓）",
+    "DOCUMENT_LIST": "文档列表",
+    "TEMPLATE": "模板",
     "FORM": "表单",
     "FORM_LIST": "表单列表",
     "FORM_LOADING": "表单加载",
@@ -89,7 +89,10 @@
     "SEARCH_SERVICE_APPROACH": "选中此项以禁用输入属性并使用服务进行配置",
     "HEADER_DATA": "标头数据",
     "TREE_VIEW": "树视图",
-    "ICONS": "图标"
+    "ICONS": "图标",
+    "PEOPLE_GROUPS_CLOUD": "人员/一组云",
+    "PEOPLE_CLOUD": "人员云组件",
+    "GROUPS_CLOUD": "组云组件"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -189,6 +192,10 @@
     "TASK-AUDIT-LOG": "任务审计日志",
     "TASK-SHOW-HEADER": "显示详细信息标头"
   },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "APP",
+    "SETTINGS_TAB": "设置"
+  },
   "FORM-LIST": {
     "STORE": "存储",
     "RESTORE": "恢复"
@@ -221,7 +228,7 @@
     "FACET_QUERIES": {
       "MY_FACET_QUERIES": "我的分面查询",
       "CREATED_THIS_YEAR": "1. 今年创建",
-      "MIMETYPE": "2. 类型",
+      "MIMETYPE": "2. 类型: HTML",
       "XTRASMALL": "3. 字号：超小",
       "SMALL": "4. 字号：小",
       "MEDIUM": "5. 字号：中等",
@@ -282,6 +289,11 @@
   "TASK_LIST_CLOUD_DEMO": {
     "CUSTOMIZE_FILTERS": "自定义您的筛选器"
   },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "单个",
+    "MULTI": "多个",
+    "PRESELECTED_VALUE": "预选值"
+  },
   "ABOUT": {
     "TITLE": "插件",
     "TABLE_HEADERS": {
@@ -293,5 +305,10 @@
       "RUNTIME": "运行时",
       "DESCRIPTION": "说明"
     }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "多重选择",
+    "TESTING_MODE": "测试模式",
+    "SELECTION_MODE": "选择模式"
   }
 }

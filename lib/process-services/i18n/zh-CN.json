@@ -133,7 +133,7 @@
         },
         "ERROR": {
           "REQUIRED": "必填字段",
-          "DATE": "日期格式 (DD/MM/YYYY)",
+          "DATE": "日期格式 (YYYY/MM/DD)",
           "MAXIMUM_LENGTH": "超出长度，最多 {{characters}} 字符"
         }
       }

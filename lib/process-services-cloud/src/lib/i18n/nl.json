@@ -7,7 +7,10 @@
     },
     "PROPERTIES": {
       "NAME": "Naam",
-      "CREATED": "Gemaakt"
+      "CREATED": "Gemaakt",
+      "STATUS": "Status",
+      "START_DATE": "Begindatum",
+      "ID": "Id"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Proces starten",
@@ -46,6 +49,7 @@
           "DESCRIPTION": "Beschrijving",
           "ATTACHFORM": "Formulier bijvoegen",
           "ASSIGNEE": "Toegewezen persoon",
+          "CANDIDATE_GROUP": "Kandidaatgroep",
           "FORM": "Formulier",
           "DATE": "Datum kiezen"
         },
@@ -58,6 +62,11 @@
     "PROPERTIES": {
       "NAME": "Naam",
       "ASSIGNEE": "Toegewezen persoon",
+      "ID": "Id",
+      "STATUS": "Status",
+      "PRIORITY": "Prioriteit",
+      "CREATED_DATE": "Datum gemaakt",
+      "LAST_MODIFIED": "Laatst gewijzigd",
       "CREATED": "Gemaakt"
     },
     "LIST": {
@@ -97,15 +106,8 @@
       "PROCESS_DEF_ID": "Procesdefinitie-id",
       "STATUS": "Status",
       "ASSIGNMENT": "Toewijzing",
-      "COLUMN": "Kolom",
       "DIRECTION": "Richting",
       "PROCESS_INSTANCE_ID": "Procesinstance-id",
-      "DUE_BEFORE": "Vervaldatum vóór",
-      "DUE_AFTER": "Vervaldatum na",
-      "CLAIMED_DATE_FROM": "ClaimedDateFrom",
-      "CLAIMED_DATE_TO": "ClaimedDateTo",
-      "CREATED_DATE_FORM": "Aanmaakdatum vanaf",
-      "CREATED_DATE_TO": "Aanmaakdatum tot",
       "TASK_NAME": "Taaknaam",
       "PARENT_TASK_ID": "Id bovenliggende taak",
       "PRIORITY": "Prioriteit",
@@ -113,8 +115,7 @@
       "LAST_MODIFIED_FROM": "Laatst veranderd van",
       "LAST_MODIFIED_TO": "Laatst veranderd in",
       "OWNER": "Eigenaar",
-      "DUE_DATE_TO": "Vervaldatum tot",
-      "DUE_DATE_FROM": "Vervaldatum vanaf"
+      "SORT": "Sorteren"
     },
     "DIALOG": {
       "TITLE": "Filter opslaan als",
@@ -124,20 +125,29 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "Uw filter aanpassen",
-    "STATUS": "Selecteer een status",
-    "ASSIGNMENT": "Toewijzing",
-    "COLUMN": "Selecteer een kolom",
-    "DIRECTION": "Selecteer een richting",
+    "LABEL": {
+      "APP_NAME": "Toepassingsnaam",
+      "STATUS": "Status",
+      "INITIATOR": "Initiator",
+      "ASSIGNMENT": "Toewijzing",
+      "SORT": "Sorteren",
+      "DIRECTION": "Richting",
+      "PROCESS_DEF_ID": "Procesdefinitie-id",
+      "PROCESS_DEF_KEY": "Procesdefinitiesleutel",
+      "PROCESS_INS_ID": "Procesinstance-id",
+      "START_DATE": "Begindatum",
+      "LAST_MODIFIED": "Laatst veranderd",
+      "LAST_MODIFIED_DATE_FORM": "Laatst veranderd van",
+      "LAST_MODIFIED_TO": "Laatst veranderd in",
+      "PROCESS_NAME": "Procesnaam"
+    },
+    "ERROR": {
+      "DATE": "Datumnotatie dd-mm-jjjj"
+    },
     "TOOL_TIP": {
       "SAVE": "Filter opslaan",
       "SAVE_AS": "Filter opslaan als",
       "DELETE": "Filter verwijderen"
-    },
-    "LABEL": {
-      "STATUS": "Status",
-      "ASSIGNMENT": "Toewijzing",
-      "COLUMN": "Kolom",
-      "DIRECTION": "Richting"
     },
     "DIALOG": {
       "TITLE": "Filter opslaan als",

@@ -7,7 +7,10 @@
     },
     "PROPERTIES": {
       "NAME": "Navn",
-      "CREATED": "Opprettet"
+      "CREATED": "Opprettet",
+      "STATUS": "Status",
+      "START_DATE": "Startdato",
+      "ID": "ID"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Start prosess",
@@ -46,6 +49,7 @@
           "DESCRIPTION": "Beskrivelse",
           "ATTACHFORM": "Legg ved skjema",
           "ASSIGNEE": "Tilordnet",
+          "CANDIDATE_GROUP": "Kandidatgruppe",
           "FORM": "Skjema",
           "DATE": "Velg dato"
         },
@@ -58,6 +62,11 @@
     "PROPERTIES": {
       "NAME": "Navn",
       "ASSIGNEE": "Tilordnet",
+      "ID": "ID",
+      "STATUS": "Status",
+      "PRIORITY": "Prioritet",
+      "CREATED_DATE": "Opprettelsesdato",
+      "LAST_MODIFIED": "Sist endret",
       "CREATED": "Opprettet"
     },
     "LIST": {
@@ -81,7 +90,7 @@
     "ERROR": {
       "MESSAGE": "Angi en annen verdi",
       "REQUIRED": "Felt er obligatorisk",
-      "DATE": "Datoformat DD/MM/ÅÅÅÅ",
+      "DATE": "Datoformat DD.MM.ÅÅÅÅ",
       "MAXIMUM_LENGTH": "Lengde overskredet, maks {{characters}} tegn."
     }
   },
@@ -97,15 +106,8 @@
       "PROCESS_DEF_ID": "Prosessdefinisjons-ID",
       "STATUS": "Status",
       "ASSIGNMENT": "Oppgave",
-      "COLUMN": "Kolonne",
       "DIRECTION": "Retning",
       "PROCESS_INSTANCE_ID": "Prosessforekomst-ID",
-      "DUE_BEFORE": "Forfaller før",
-      "DUE_AFTER": "Forfaller etter",
-      "CLAIMED_DATE_FROM": "ClaimedDateFrom",
-      "CLAIMED_DATE_TO": "ClaimedDateTo",
-      "CREATED_DATE_FORM": "CreatedDateFrom",
-      "CREATED_DATE_TO": "CreatedDateTo",
       "TASK_NAME": "Oppgavenavn",
       "PARENT_TASK_ID": "Overordnet oppgave-ID",
       "PRIORITY": "Prioritet",
@@ -113,8 +115,7 @@
       "LAST_MODIFIED_FROM": "Sist endret fra",
       "LAST_MODIFIED_TO": "Sist endret til",
       "OWNER": "Eier",
-      "DUE_DATE_TO": "Forfallsdato til",
-      "DUE_DATE_FROM": "Forfallsdato fra"
+      "SORT": "Sorter"
     },
     "DIALOG": {
       "TITLE": "Lagre filter som",
@@ -124,20 +125,29 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "Tilpass filteret ditt",
-    "STATUS": "Velg en status",
-    "ASSIGNMENT": "Oppgave",
-    "COLUMN": "Velg en kolonne",
-    "DIRECTION": "Velg en retning",
+    "LABEL": {
+      "APP_NAME": "Programnavn",
+      "STATUS": "Status",
+      "INITIATOR": "Oppretter",
+      "ASSIGNMENT": "Oppgave",
+      "SORT": "Sorter",
+      "DIRECTION": "Retning",
+      "PROCESS_DEF_ID": "Prosessdefinisjons-ID",
+      "PROCESS_DEF_KEY": "Prosessdefinisjonsnøkkel",
+      "PROCESS_INS_ID": "Prosessforekomst-ID",
+      "START_DATE": "Startdato",
+      "LAST_MODIFIED": "Sist endret",
+      "LAST_MODIFIED_DATE_FORM": "Sist endret fra",
+      "LAST_MODIFIED_TO": "Sist endret til",
+      "PROCESS_NAME": "Prosessnavn"
+    },
+    "ERROR": {
+      "DATE": "Datoformat DD.MM.ÅÅÅÅ"
+    },
     "TOOL_TIP": {
       "SAVE": "Lagre filter",
       "SAVE_AS": "Lagre filter som",
       "DELETE": "Slett filter"
-    },
-    "LABEL": {
-      "STATUS": "Status",
-      "ASSIGNMENT": "Oppgave",
-      "COLUMN": "Kolonne",
-      "DIRECTION": "Retning"
     },
     "DIALOG": {
       "TITLE": "Lagre filter som",

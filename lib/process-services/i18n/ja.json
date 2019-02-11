@@ -133,7 +133,7 @@
         },
         "ERROR": {
           "REQUIRED": "必須フィールドです",
-          "DATE": "日付形式: YYYY/MM/DD",
+          "DATE": "日付形式: YYYY-MM-DD",
           "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。"
         }
       }

@@ -7,7 +7,10 @@
     },
     "PROPERTIES": {
       "NAME": "名称",
-      "CREATED": "已创建"
+      "CREATED": "已创建",
+      "STATUS": "状态",
+      "START_DATE": "启动日期",
+      "ID": "ID"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "启动流程",
@@ -46,6 +49,7 @@
           "DESCRIPTION": "说明",
           "ATTACHFORM": "附加表单",
           "ASSIGNEE": "被指派者",
+          "CANDIDATE_GROUP": "候选人组",
           "FORM": "表单",
           "DATE": "选择日期"
         },
@@ -58,6 +62,11 @@
     "PROPERTIES": {
       "NAME": "名称",
       "ASSIGNEE": "被指派者",
+      "ID": "ID",
+      "STATUS": "状态",
+      "PRIORITY": "优先级",
+      "CREATED_DATE": "创建日期",
+      "LAST_MODIFIED": "最近一次修改时间",
       "CREATED": "已创建"
     },
     "LIST": {
@@ -81,7 +90,7 @@
     "ERROR": {
       "MESSAGE": "使用其他值",
       "REQUIRED": "必填字段",
-      "DATE": "日期格式 (DD/MM/YYYY)",
+      "DATE": "日期格式 (YYYY/MM/DD)",
       "MAXIMUM_LENGTH": "超出长度，最多 {{characters}} 字符"
     }
   },
@@ -97,15 +106,8 @@
       "PROCESS_DEF_ID": "流程定义 ID",
       "STATUS": "状态",
       "ASSIGNMENT": "分配",
-      "COLUMN": "列",
       "DIRECTION": "排序方向",
       "PROCESS_INSTANCE_ID": "流程实例 ID",
-      "DUE_BEFORE": "截止至",
-      "DUE_AFTER": "截止自",
-      "CLAIMED_DATE_FROM": "ClaimedDateFrom",
-      "CLAIMED_DATE_TO": "ClaimedDateTo",
-      "CREATED_DATE_FORM": "创建日期自",
-      "CREATED_DATE_TO": "创建日期至",
       "TASK_NAME": "任务名称",
       "PARENT_TASK_ID": "父任务 ID",
       "PRIORITY": "优先级",
@@ -113,8 +115,7 @@
       "LAST_MODIFIED_FROM": "上一次修改开始日期",
       "LAST_MODIFIED_TO": "上一次修改结束日期",
       "OWNER": "所有者",
-      "DUE_DATE_TO": "截止日期至",
-      "DUE_DATE_FROM": "截止日期自"
+      "SORT": "排序"
     },
     "DIALOG": {
       "TITLE": "另存筛选器为",
@@ -124,20 +125,29 @@
   },
   "ADF_CLOUD_EDIT_PROCESS_FILTER": {
     "TITLE": "自定义您的筛选器",
-    "STATUS": "选择一个状态",
-    "ASSIGNMENT": "分配",
-    "COLUMN": "选择一列",
-    "DIRECTION": "选择排序方向",
+    "LABEL": {
+      "APP_NAME": "应用程序名称",
+      "STATUS": "状态",
+      "INITIATOR": "发起者",
+      "ASSIGNMENT": "分配",
+      "SORT": "排序",
+      "DIRECTION": "排序方向",
+      "PROCESS_DEF_ID": "流程定义 ID",
+      "PROCESS_DEF_KEY": "流程定义的 Key",
+      "PROCESS_INS_ID": "流程实例 ID",
+      "START_DATE": "开始日期",
+      "LAST_MODIFIED": "最近一次修改时间",
+      "LAST_MODIFIED_DATE_FORM": "上一次修改开始日期",
+      "LAST_MODIFIED_TO": "上一次修改结束日期",
+      "PROCESS_NAME": "流程名称"
+    },
+    "ERROR": {
+      "DATE": "日期格式 (YYYY/MM/DD)"
+    },
     "TOOL_TIP": {
       "SAVE": "保存筛选器",
       "SAVE_AS": "另存筛选器为",
       "DELETE": "删除筛选器"
-    },
-    "LABEL": {
-      "STATUS": "状态",
-      "ASSIGNMENT": "分配",
-      "COLUMN": "列",
-      "DIRECTION": "排序方向"
     },
     "DIALOG": {
       "TITLE": "另存筛选器为",
