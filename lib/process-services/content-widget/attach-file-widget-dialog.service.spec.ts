@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { Subject, of } from 'rxjs';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { ProcessModule } from '../process.module';
 
 describe('AttachFileWidgetDialogService', () => {
@@ -30,7 +30,10 @@ describe('AttachFileWidgetDialogService', () => {
     let afterOpenObservable: Subject<any>;
 
     setupTestBed({
-        imports: [ProcessModule.forRoot()]
+        imports: [
+            CoreModule.forRoot(),
+            ProcessModule.forRoot()
+        ]
     });
 
     beforeEach(() => {
