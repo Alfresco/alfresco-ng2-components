@@ -96,8 +96,8 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     }
 
     ngOnInit() {
-        this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
-            this.pageSize = this.pageSize || pagSize;
+        this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pageSize: number) => {
+            this.pageSize = this.pageSize || pageSize;
             this.requestPaginationModel.maxItems = this.pageSize;
         });
     }
