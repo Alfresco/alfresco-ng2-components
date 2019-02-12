@@ -381,6 +381,9 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.TYPEAHEAD:
+                if (!Array.isArray(this.options)) {
+                    this.options = <FormFieldOption[]> Object.keys(this.options).map( (key: any) => <FormFieldOption> this.options[key]);
+                }
                 let taEntry: FormFieldOption[] = this.options.filter((opt) => opt.id === this.value || opt.name === this.value);
                 if (taEntry.length > 0) {
                     this.form.values[this.id] = taEntry[0];
