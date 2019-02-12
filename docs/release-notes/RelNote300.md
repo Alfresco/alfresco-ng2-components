@@ -84,8 +84,6 @@ You can  now choose to filter facet field results using 'contains' instead of 's
 
 ```javascript
 {
-"search":
-
 { "filterWithContains": true }
 }
 ```
@@ -166,7 +164,7 @@ This release of ADF introduces a collection of brand new components re-designed 
 
 The list and the documentation of the all new components services and pipes added : 
 
-## Components
+#### Components
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
@@ -183,13 +181,13 @@ The list and the documentation of the all new components services and pipes adde
 | [Task header cloud component](task-header-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all the information related to a task. | [Source](../../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts) |
 | [Task list cloud component](task-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts) |
 
-## Pipes
+#### Pipes
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Group initial pipe](group-initial.pipe.md) | Extracts the initial character from a group name. | [Source](../../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts) |
 
-## Services
+#### Services
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
