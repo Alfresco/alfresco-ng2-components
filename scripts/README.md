@@ -6,7 +6,6 @@
 - [Ng2 components framework alfresco build](#npm-build-all.sh)
 - [Clean components and Demo](#npm-clean.sh)
 
-
 The Alfresco application development framework comes with a demo project that you can run to get a
 feel of what's available.
 
