@@ -22,7 +22,7 @@ If you want to be updated on the [ADF roadmap](../roadmap.md), check the public 
     -   [JS-API in Typescript](#js-api-in-typescript)
     -   [Angular 7](#angular-7)
     -   [Deprecation removal](#deprecation-removal)
-    -   [Activiti 7 and APS 2 support](#activiti-7-and-aps-2-support)
+    -   [Activiti 7 and APS 2 support](#activiti-7-and-aps-2-support-experimental)
 -   [Localization](#localization)
 -   [References](#references)
 -   [Issues addressed](#issues-addressed)
@@ -43,65 +43,65 @@ If you want to be updated on the [ADF roadmap](../roadmap.md), check the public 
 
 ## Goals for this release
 
-This is a major release of the Alfresco Application Development Framework, developed to speed up the applications in production environments, thanks to a porting of the [JS-API](https://github.com/Alfresco/alfresco-js-api) to Typescript. All the benefits of the Extensibility, initially introduced in [Alfresco Content Application (ACA)](https://github.com/Alfresco/alfresco-content-app) and the Alfresco Digital Workspace (ADW), are now available at the framework level and more enhancements are planned to be introduced in the following releases.
+This is a major release of the Alfresco Application Development Framework, developed to speed up the applications in production environments, thanks to a porting of the [JS-API](https://github.com/Alfresco/alfresco-js-api) to Typescript. All the benefits of [Extensibility](../user-guide/app-extensions.md), initially introduced in [Alfresco Content Application (ACA)](https://github.com/Alfresco/alfresco-content-app) and the Alfresco Digital Workspace (ADW), are now available at the framework level and more enhancements are planned to be introduced in the following releases.
 
-This new major version of Alfresco Application Development Framework has been updated to the latest and the greatest of [Angular 7](https://angular.io/), together with a first iteration on supporting [Activiti 7](https://www.activiti.org/) and the next generation of Alfresco BPM Engines. Also the [Yeoman App Generator](https://github.com/Alfresco/generator-ng2-alfresco-app) has been updated to ship to create five small [Angular CLI](https://cli.angular.io/) based applications to help get you started: one on content only, two on process only (on the current generation of Alfresco BPM Engine and one with the new ones), two on content and process (again, using the current and new generations of Alfresco BPM Engines).
-
-Please report issues with this release in the issue tracker. You can collaborate on this release or share feedback by using the discussion tools on Gitter.
+This new major version of ADF has been updated to the latest and greatest [Angular 7](https://angular.io/), together with a first iteration on supporting [Activiti 7](https://www.activiti.org/) and the next generation of Alfresco BPM Engines. Also the [Yeoman App Generator](https://github.com/Alfresco/generator-ng2-alfresco-app) has been updated to let you create five small [Angular CLI](https://cli.angular.io/) based applications to help get you started: one on content only, two on process only (on the current generation of Alfresco BPM Engine and one with the new ones), two on content and process (again, using the current and next generations of the Alfresco BPM Engines).
 
 Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
 
 Below are the most important new features of this release:
 
--   **Extensibility**
--   **Single Sign On enhancement**
--   **JS-API in Typescript**
--   **Angular 7**
--   **Create Site Component**
--   **Tree view component**
--   **Deprecation removal**
--   **Activiti 7 and APS 2 support (experimental)**
+-   [Extensibility](#extensibility)
+-   [Search enhancement](#search-enhancement)
+-   [Single Sign On enhancement](#single-sign-on-enhancement)
+-   [JS-API in Typescript](#js-api-in-typescript)
+-   [Angular 7](#angular-7)
+-   [Create Library Component](#create-library-component)
+-   [Tree view component](#tree-view-component)
+-   [Deprecation removal](#deprecation-removal)
+-   [Activiti 7 and APS 2 support (experimental)](#activiti-7-and-aps-2-support-experimental)
 
 ### Extensibility
 
-Extensibility has been introduced into the [Alfresco Content Application (ACA)](https://github.com/Alfresco/alfresco-content-app) and the Alfresco Digital Workspace (ADW) first, and then moved to the founding ADF framework, for the benefit of the developers all.
+Extensibility was first introduced into the [Alfresco Content Application (ACA)](https://github.com/Alfresco/alfresco-content-app) and the Alfresco Digital Workspace (ADW), and has now been moved to the main ADF framework, for the benefit of all developers.
 
-The house of the extensibility support in the framework is the **@alfresco/adf-extensions** library. Check the documentation at [this link](https://alfresco.github.io/alfresco-content-app/#/extending/), for further details on how to develop extensions to any ADF application.
+The home of extensibility support in the framework is the **@alfresco/adf-extensions** library. Check the documentation [here](https://alfresco.github.io/alfresco-content-app/#/extending/) for further details on how to add extension features to any ADF application.
 
 ### Search enhancement
 
 #### Grouped facet queries
+
 By default, the queries declared in the `facetQueries` are collected into a single collapsible category.
-This new functionality allow you to group different facet queries under custom labels by using the `group` property on those facet queries:
+This new functionality lets you group different facet queries under custom labels by using the `group` property on those facet queries:
 
 ![Grouped Facet Queries](../docassets/images/search-facet-queries-groups.png)
 
-Please refer to the [search filter component documentation](../content-services/search-filter.component.md#facet-queriesd) for more details.
+Please refer to the [search filter component documentation](../content-services/search-filter.component.md#facet-queries) for more details.
 
 #### filterWithContains
 
-You can  now choose to filter facet field results using 'contains' instead of 'starts with', by using the filterWithContains boolean (default is false):
+You can  now choose to filter facet field results using 'contains' instead of 'starts with', by using the `filterWithContains` boolean property (default is false):
 
-```javascript
+```json
 {
-"search":
-
-{ "filterWithContains": true }
+    "search": { "filterWithContains": true }
 }
 ```
 
 ### Single Sign On enhancement
 
 #### SSO ticket fix
-In order to make the SSO completely works with the new ACS 6.1.0 new exchange token for alf_ticket mechanism has been introduced a new flow in the JS-API that does this operation. 
-For more details about this issue please refer to the [ticket](https://issues.alfresco.com/jira/browse/ADF-3882)
+
+In order to make the SSO work completely with the new ACS 6.1.0, a new exchange token for alf_ticket mechanism has been introduced via a new flow in the JS-API that performs this operation. 
+For more details about this issue please refer to the [this JIRA ticket](https://issues.alfresco.com/jira/browse/ADF-3882).
 
 #### withCredential
-The withCredentials property has been added as a configuration Boolean paramertet in the JS-API and in ADF. 
-That indicates whether or not cross-site Access-Control requests should be made using credentials.
-This configuration is usually needed when you are dailing with **Kerberos**.
 
-For more details please see the link below:
+The `withCredentials` property has been added as a configuration Boolean parameter in the JS-API and in ADF. 
+This indicates whether or not cross-site Access-Control requests should be made using credentials.
+This configuration is usually needed when you are dealing with **Kerberos**.
+
+For more details please see the links below:
 
 - [App config withCredentials configuration](../core/app-config.service.md)
 - [Login component withCredentials behaviour](../core/login.component.md)
@@ -110,40 +110,41 @@ For more details please see the link below:
 
 ### JS-API in Typescript
 
-The [Alfresco JS-API layer](https://github.com/Alfresco/alfresco-js-api) has been rewritten in [TypeScript](https://en.wikipedia.org/wiki/TypeScript) . **The output of the project is still a javascript that you can use**
+The [Alfresco JS-API layer](https://github.com/Alfresco/alfresco-js-api) has been rewritten in [TypeScript](https://en.wikipedia.org/wiki/TypeScript). *Note that the output of the project is still JavaScript code so you can use in the usual way.*
 This rewrite has been necessary to make the JS-API  lighter and  faster with the following benefits:
 
-- Tree shakable
-- Types enhance code quality and readability
-- In the JS-API project now is Simple to generate new code thanks our code generator template.
-- TypeScript provides a number of features that are planned in future version of JavaScript now
-- Intellisense in your IDE is now going to work much better with the JS-API
+- Tree-shakable.
+- Strong typing enhances code quality and readability.
+- In the JS-API project, it is now easier to generate new code thanks our code generator template.
+- TypeScript already provides a number of features that are planned for future version of JavaScript.
+- Intellisense in your IDE will now work much better with the JS-API
 
-Note the old packages name has been deprecated: alfresco-js-api, alfresco-js-api-node 
+Note that the following old package names have been deprecated: **alfresco-js-api**, **alfresco-js-api-node**.
 
 The Node and Browser version are now both in: ***@alfresco/js-api***
- please refer to the official [Alfresco JS-API documenation](https://github.com/Alfresco/alfresco-js-api) to know more about it.
+Refer to the official [Alfresco JS-API documenation](https://github.com/Alfresco/alfresco-js-api) to learn more about this.
 
 ### Angular 7
 
-Alfresco ADF 3.0.0 has been updated to the version 7.0.3 of Angular and Material
-Please refer to the official project CHANGELOG to understand what is new inside:
+Alfresco ADF 3.0.0 has been updated to version 7.0.3 of Angular and Material.
+Refer to the official project CHANGELOG files to find out what's new inside:
 
-- [Angular 7 CHANGELOG](https://github.com/angular/angular/blob/master/CHANGELOG.md). 
-- [Material 7 CHANGELOG](https://github.com/angular/material2/blob/master/CHANGELOG.md). 
+- [Angular 7 CHANGELOG](https://github.com/angular/angular/blob/master/CHANGELOG.md)
+- [Material 7 CHANGELOG](https://github.com/angular/material2/blob/master/CHANGELOG.md)
 
 ### Create library Component
 
-Is now possible creates a new Content Services document library/site with the create library dialog:
+You can now create a new Content Services document library/site with the Create Library dialog:
 
 ![Dropdown sites](../docassets/images/CreateLibraryDialog.png)
 
- For more information about the tree view component please refer to the [component documentation](../content-services/library.dialog.md)
+ For more information about the dialog, see the [component documentation](../content-services/library.dialog.md)
 
 ###  Tree view component
+
 ![TreeView component screenshot](../docassets/images/tree-view.png)
 
-Shows the folder and subfolders of a node as a tree view. For more information about the tree view component please refer to the [component documentation](../content-services/tree-view.component.md)
+Shows the folder and subfolders of a node as a tree view. For more information about the Tree View component, see the [component documentation](../content-services/tree-view.component.md)
     
 #### Basic Usage
 
@@ -156,52 +157,53 @@ Shows the folder and subfolders of a node as a tree view. For more information a
 
 ### Deprecation removal
 
-Following the [SEMVER 2.0](https://semver.org/), ADF 3.0.0 introduces breaking changes only in major versions like this one. For this purpose, all the features, components and services, marked as deprecated in ADF 2.X, have been removed.
+Following the [SEMVER 2.0](https://semver.org/) strategy, ADF 3.0.0 introduces breaking changes only in major versions like this one. For this reason, all the features, components and services, marked as deprecated in ADF 2.X, have been removed.
 
-### Activiti 7 and APS 2 support
+### Activiti 7 and APS 2 support (Experimental)
 
-Since ADF 3.0.0, Alfresco is introducing the support of the new generation of BPM Engines, in both the editions: **Open Source and Enterprise**. This is a first iteration and more coverage of the services will be done in the following versions of ADF. This is the reason why this support is marked as **experimental** for this release.
+From ADF 3.0.0, Alfresco is introducing support for the new generation of BPM Engines, in both the **Open Source** and **Enterprise** editions. This is a first iteration and more coverage of the services will be added in the following versions of ADF. This is the reason why this support is marked as **experimental** for this release.
 
 This release of ADF introduces a collection of brand new components re-designed and implemented from scratch to be compliant with [Activiti 7](https://www.activiti.org/) and the new Enterprise Alfresco BPM Engine (powered by [Activiti 7](https://www.activiti.org/)).
 
-The list and the documentation of the all new components services and pipes added : 
+Below is a list of all new components services and pipes added along with
+links to documentation and source code: 
 
 ## Components
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [App list cloud component](app-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all deployed cloud application instances. | [Source](../../lib/process-services-cloud/src/lib/app/components/app-list-cloud.component.ts) |
-| [Group cloud component](group-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches Groups. | [Source](../../lib/process-services-cloud/src/lib/group/components/group-cloud.component.ts) |
-| [Edit process filter cloud component](edit-process-filter-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows Process Filter Details. | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts) |
-| [Process filters cloud component](process-filters-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Lists all available process filters and allows to select a filter. | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.ts) |
-| [Process list cloud component](process-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.ts) |
-| [Start process cloud component](start-process-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Starts a process. | [Source](../../lib/process-services-cloud/src/lib/process/start-process/components/start-process-cloud.component.ts) |
-| [People cloud component](people-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Allows one or more users to be selected (with auto-suggestion) based on the input parameters. | [Source](../../lib/process-services-cloud/src/lib/task/start-task/components/people-cloud/people-cloud.component.ts) |
-| [Start task cloud component](start-task-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Creates/starts a new task for the specified app. | [Source](../../lib/process-services-cloud/src/lib/task/start-task/components/start-task-cloud.component.ts) |
-| [Edit task filter cloud component](edit-task-filter-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Edits Task Filter Details. | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filter-cloud.component.ts) |
-| [Task filters cloud component](task-filters-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all available filters. | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.ts) |
-| [Task header cloud component](task-header-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all the information related to a task. | [Source](../../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts) |
-| [Task list cloud component](task-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts) |
+| [App list cloud component](../process-services-cloud/app-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all deployed cloud application instances. | [Source](../../lib/process-services-cloud/src/lib/app/components/app-list-cloud.component.ts) |
+| [Group cloud component](../process-services-cloud/group-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches Groups. | [Source](../../lib/process-services-cloud/src/lib/group/components/group-cloud.component.ts) |
+| [Edit process filter cloud component](../process-services-cloud/edit-process-filter-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows Process Filter Details. | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts) |
+| [Process filters cloud component](../process-services-cloud/process-filters-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Lists all available process filters and allows to select a filter. | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/components/process-filters-cloud.component.ts) |
+| [Process list cloud component](../process-services-cloud/process-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Renders a list containing all the process instances matched by the parameters specified. | [Source](../../lib/process-services-cloud/src/lib/process/process-list/components/process-list-cloud.component.ts) |
+| [Start process cloud component](../process-services-cloud/start-process-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Starts a process. | [Source](../../lib/process-services-cloud/src/lib/process/start-process/components/start-process-cloud.component.ts) |
+| [People cloud component](../process-services-cloud/people-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Allows one or more users to be selected (with auto-suggestion) based on the input parameters. | [Source](../../lib/process-services-cloud/src/lib/task/start-task/components/people-cloud/people-cloud.component.ts) |
+| [Start task cloud component](../process-services-cloud/start-task-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Creates/starts a new task for the specified app. | [Source](../../lib/process-services-cloud/src/lib/task/start-task/components/start-task-cloud.component.ts) |
+| [Edit task filter cloud component](../process-services-cloud/edit-task-filter-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Edits Task Filter Details. | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/components/edit-task-filter-cloud.component.ts) |
+| [Task filters cloud component](../process-services-cloud/task-filters-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all available filters. | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.ts) |
+| [Task header cloud component](../process-services-cloud/task-header-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all the information related to a task. | [Source](../../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts) |
+| [Task list cloud component](../process-services-cloud/task-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts) |
 
 ## Pipes
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Group initial pipe](group-initial.pipe.md) | Extracts the initial character from a group name. | [Source](../../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts) |
+| [Group initial pipe](../process-services-cloud/group-initial.pipe.md) | Extracts the initial character from a group name. | [Source](../../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts) |
 
 ## Services
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Apps process cloud service](apps-process-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Gets details of deployed apps for the current user.  | [Source](../../lib/process-services-cloud/src/lib/app/services/apps-process-cloud.service.ts) |
-| [Group cloud service](group-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches and gets information for groups.  | [Source](../../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts) |
-| [Process filter cloud service](process-filter-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manage Process Filters, which are pre-configured Process Instance queries.  | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/services/process-filter-cloud.service.ts) |
-| [Process list cloud service](process-list-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches processes.  | [Source](../../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts) |
-| [Start process cloud service](start-process-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Gets process definitions and starts processes.  | [Source](../../lib/process-services-cloud/src/lib/process/start-process/services/start-process-cloud.service.ts) |
-| [Start task cloud service](start-task-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Starts standalone tasks.  | [Source](../../lib/process-services-cloud/src/lib/task/start-task/services/start-task-cloud.service.ts) |
-| [Task filter cloud service](task-filter-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manages task filters.  | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/services/task-filter-cloud.service.ts) |
-| [Task header cloud service](task-header-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manages cloud tasks.  | [Source](../../lib/process-services-cloud/src/lib/task/task-header/services/task-header-cloud.service.ts) |
-| [Task list cloud service](task-list-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches tasks.  | [Source](../../lib/process-services-cloud/src/lib/task/task-list/services/task-list-cloud.service.ts) |
+| [Apps process cloud service](../process-services-cloud/apps-process-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Gets details of deployed apps for the current user.  | [Source](../../lib/process-services-cloud/src/lib/app/services/apps-process-cloud.service.ts) |
+| [Group cloud service](../process-services-cloud/group-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches and gets information for groups.  | [Source](../../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts) |
+| [Process filter cloud service](../process-services-cloud/process-filter-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manage Process Filters, which are pre-configured Process Instance queries.  | [Source](../../lib/process-services-cloud/src/lib/process/process-filters/services/process-filter-cloud.service.ts) |
+| [Process list cloud service](../process-services-cloud/process-list-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches processes.  | [Source](../../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts) |
+| [Start process cloud service](../process-services-cloud/start-process-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Gets process definitions and starts processes.  | [Source](../../lib/process-services-cloud/src/lib/process/start-process/services/start-process-cloud.service.ts) |
+| [Start task cloud service](../process-services-cloud/start-task-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Starts standalone tasks.  | [Source](../../lib/process-services-cloud/src/lib/task/start-task/services/start-task-cloud.service.ts) |
+| [Task filter cloud service](../process-services-cloud/task-filter-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manages task filters.  | [Source](../../lib/process-services-cloud/src/lib/task/task-filters/services/task-filter-cloud.service.ts) |
+| [Task header cloud service](../process-services-cloud/task-header-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Manages cloud tasks.  | [Source](../../lib/process-services-cloud/src/lib/task/task-header/services/task-header-cloud.service.ts) |
+| [Task list cloud service](../process-services-cloud/task-list-cloud.service.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Searches tasks.  | [Source](../../lib/process-services-cloud/src/lib/task/task-list/services/task-list-cloud.service.ts) |
 
 <!--process-services-cloud end-->
 
@@ -211,16 +213,15 @@ This release includes: French, German, Italian, Spanish, Japanese, Dutch, Norweg
 
 ## References
 
-Below you can find a brief list of references to help you start using the new release.
+Below is a brief list of references to help you start using the new release:
 
-[Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
-[Alfresco ADF Documentation on the Builder Network](../../../)
-[Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
-[ADF examples on GitHub](https://github.com/Alfresco/adf-examples)
-
-[Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
-[Official GitHub Project - alfresco-js-api](https://github.com/Alfresco/alfresco-js-api)
-[Official GitHub Project - generator-ng2-alfresco-app](https://github.com/Alfresco/generator-ng2-alfresco-app)
+- [Getting started guides with Alfresco Application Development Framework](https://community.alfresco.com/community/application-development-framework/pages/get-started)
+- [Alfresco ADF Documentation on the Builder Network](../README.md)
+- [Gitter chat supporting Alfresco ADF](https://gitter.im/Alfresco/alfresco-ng2-components)
+- [ADF examples on GitHub](https://github.com/Alfresco/adf-examples)
+- [Official GitHub Project - alfresco-ng2-components](https://github.com/Alfresco/alfresco-ng2-components)
+- [Official GitHub Project - alfresco-js-api](https://github.com/Alfresco/alfresco-js-api)
+- [Official GitHub Project - generator-ng2-alfresco-app](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
 Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
 
@@ -228,8 +229,8 @@ Please refer to the [official documentation](http://docs.alfresco.com/) for furt
 
 Below the list of JIRA issues, closed for this release.
 
-<h2>        Documentation
-</h2>
+### Documentation
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-3323'>ADF-3323</a>] -         Investigate using DocFX file format with doc tools
 </li>
@@ -266,9 +267,9 @@ Below the list of JIRA issues, closed for this release.
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-4069'>ADF-4069</a>] -         Third party Open Source dependencies for the ADF 3.0 release (and future)
 </li>
 </ul>
-    
-<h2>        Feature
-</h2>
+
+### Feature
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-3039'>ADF-3039</a>] -         Task List - Enanchement
 </li>
@@ -325,9 +326,9 @@ Below the list of JIRA issues, closed for this release.
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-3935'>ADF-3935</a>] -         [Demo-shell] Remove Task List Cloud demo page
 </li>
 </ul>
-                                                                        
-<h2>        Epic
-</h2>
+
+### Epic
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-9'>ADF-9</a>] -         Document List enhancements
 </li>
@@ -348,9 +349,9 @@ Below the list of JIRA issues, closed for this release.
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-3744'>ADF-3744</a>] -         Removal of all the deprecated features in ADF version 2
 </li>
 </ul>
-    
-<h2>        Story
-</h2>
+
+### Story
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-3598'>ADF-3598</a>] -         CLONE - Unshare a Link
 </li>
@@ -363,9 +364,9 @@ Below the list of JIRA issues, closed for this release.
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-3882'>ADF-3882</a>] -         Support for AIS (Identity Services) on ACS 6.1
 </li>
 </ul>
-                                                                                                                                                            
-<h2>        Bug
-</h2>
+
+### Bug
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-1344'>ADF-1344</a>] -         Not possible to set custom &quot;Loading content template&quot; for Document List
 </li>
@@ -552,9 +553,9 @@ Below the list of JIRA issues, closed for this release.
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-4075'>ADF-4075</a>] -         DemoShell - Error when accessing active task in the DemoShell
 </li>
 </ul>
-            
-<h2>        Task
-</h2>
+
+### Task
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-1873'>ADF-1873</a>] -         Remove all deprecated code from ADF 
 </li>
@@ -669,9 +670,9 @@ Below the list of JIRA issues, closed for this release.
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-4067'>ADF-4067</a>] -         [APS2] Application Name input should have the same name in all components
 </li>
 </ul>
-                                
-<h2>        Feature Documentation
-</h2>
+
+### Feature Documentation
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-3693'>ADF-3693</a>] -         Update documentation about task details
 </li>
@@ -682,9 +683,9 @@ Below the list of JIRA issues, closed for this release.
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-3820'>ADF-3820</a>] -         Missing documentation for Create Site functionality
 </li>
 </ul>
-                                
-<h2>        Feature Bug
-</h2>
+
+### Feature Bug
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-3568'>ADF-3568</a>] -         Page field displayes the results for next page
 </li>
@@ -771,9 +772,9 @@ Below the list of JIRA issues, closed for this release.
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-4033'>ADF-4033</a>] -         People/Group Cloud - Not working to filter by role, all result are displayed
 </li>
 </ul>
-    
-<h2>        Feature (Task)
-</h2>
+
+### Feature (Task)
+
 <ul>
 <li>[<a href='https://issues.alfresco.com/jira/browse/ADF-3430'>ADF-3430</a>] -         E2E for using fields to filter Process List
 </li>
@@ -861,4 +862,4 @@ Below the list of JIRA issues, closed for this release.
 
 Please refer to the [Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have any questions about the release, please contact us using [Gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
 
-Thanks to the whole application team and the amazing Alfresco community for the hard work 
+Thanks to the whole application team and the amazing Alfresco community for the hard work.
