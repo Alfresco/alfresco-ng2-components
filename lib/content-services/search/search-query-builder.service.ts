@@ -316,7 +316,15 @@ export class SearchQueryBuilderService {
 
     protected get facetIntervals(): any {
         if (this.hasFacetIntervals) {
-            return this.config.facetIntervals;
+            const configIntervals = this.config.facetIntervals;
+
+            return {
+                intervals: configIntervals.intervals.map((interval) => <any> {
+                    label: interval.label,
+                    field: interval.field,
+                    sets: interval.sets
+                })
+            };
         }
 
         return null;

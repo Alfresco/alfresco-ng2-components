@@ -1038,6 +1038,10 @@
                         }
                       }
                     }
+                  },
+                  "pageSize": {
+                    "type": "number",
+                    "description": "Display page size"
                   }
                 }
               }
