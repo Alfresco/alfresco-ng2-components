@@ -23,6 +23,7 @@ If you want to be updated on the [ADF roadmap](../roadmap.md), check the public 
     -   [Angular 7](#angular-7)
     -   [Deprecation removal](#deprecation-removal)
     -   [Activiti 7 and APS 2 support](#activiti-7-and-aps-2-support-experimental)
+    -   [Icon Component](#icon-component)
 -   [Localization](#localization)
 -   [References](#references)
 -   [Issues addressed](#issues-addressed)
@@ -168,7 +169,7 @@ This release of ADF introduces a collection of brand new components re-designed 
 Below is a list of all new components services and pipes added along with
 links to documentation and source code: 
 
-## Components
+#### Components
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
@@ -185,13 +186,13 @@ links to documentation and source code:
 | [Task header cloud component](../process-services-cloud/task-header-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Shows all the information related to a task. | [Source](../../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts) |
 | [Task list cloud component](../process-services-cloud/task-list-cloud.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts) |
 
-## Pipes
+#### Pipes
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Group initial pipe](../process-services-cloud/group-initial.pipe.md) | Extracts the initial character from a group name. | [Source](../../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts) |
 
-## Services
+#### Services
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
@@ -224,6 +225,23 @@ Below is a brief list of references to help you start using the new release:
 - [Official GitHub Project - generator-ng2-alfresco-app](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
 Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
+
+### Icon Component
+
+Universal icon component that supports Material Ligatures and custom registered SVG icons in the same format.
+
+```html
+<!-- Font ligature -->
+<adf-icon value="alert"></adf-icon>
+
+<!-- ADF Thumbnail Service -->
+<adf-icon value="adf:image/png"></adf-icon>
+
+<!-- Custom icon from MatIconRegistry -->
+<adf-icon value="my-company:my-icon"></adf-icon>
+```
+
+See Icon Component [documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/core/icon.component.md) for more details.
 
 ## Issues addressed
 
