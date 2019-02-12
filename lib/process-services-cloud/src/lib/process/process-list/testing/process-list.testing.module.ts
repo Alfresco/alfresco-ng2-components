@@ -28,13 +28,15 @@ import {
     TranslationService,
     TranslationMock,
     UserPreferencesService,
-    ContextMenuModule
+    ContextMenuModule,
+    CoreModule
 } from '@alfresco/adf-core';
 @NgModule({
     imports: [
         HttpClientModule,
         NoopAnimationsModule,
         ProcessListCloudModule,
+        CoreModule.forRoot(),
         ContextMenuModule
     ],
     providers: [

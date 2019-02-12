@@ -22,21 +22,15 @@ import { CommonModule } from '@angular/common';
 import { AppDetailsCloudComponent } from './components/app-details-cloud.component';
 import { AppListCloudComponent } from './components/app-list-cloud.component';
 import { AppsProcessCloudService } from './services/apps-process-cloud.service';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TemplateModule, TranslateLoaderService } from '@alfresco/adf-core';
+import { TemplateModule, CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
         CommonModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useClass: TranslateLoaderService
-            }
-        }),
         TemplateModule,
         MaterialModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        CoreModule.forChild()
     ],
     declarations: [
         AppListCloudComponent,
