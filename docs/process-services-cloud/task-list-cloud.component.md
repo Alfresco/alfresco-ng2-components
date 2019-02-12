@@ -51,7 +51,7 @@ when the task list is empty:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| applicationName | `string` | "" | The name of the application. |
+| appName | `string` | "" | The name of the application. |
 | assignee | `string` | "" | The assignee of the process. Possible values are: "assignee" (the current user is the assignee), "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value (the current user is involved). |
 | createdDate | `string` | "" | Filter the tasks. Display only tasks created on the supplied date. |
 | dueDate | `string` | "" | Filter the tasks. Display only tasks with dueDate equal to the supplied date. |
@@ -153,7 +153,7 @@ You can use an HTML-based schema and an `app.config.json` custom schema declarat
 
 ```html
 <adf-cloud-task-list
-    [appName]="'ApplicationName'">
+    [appName]="'appName'">
     <data-columns>
         <data-column key="assignee" title="Assignee" class="full-width name-column">
             <ng-template let-entry="$implicit">

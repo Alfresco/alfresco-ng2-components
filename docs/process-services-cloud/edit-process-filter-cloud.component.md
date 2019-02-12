@@ -27,8 +27,8 @@ Shows Process Filter Details.
 ```html
 <adf-cloud-edit-process-filter
     [id]="processFilterId"
-    [appName]="applicationName"
-    [filterProperties]="filterProperties"
+    [appName]="appName"
+    [filterProperties]="filterProperties"s
     (filterChange)="onFilterChange($event)"
     (action)="onAction($event)">
 </adf-cloud-edit-process-filter>
@@ -62,13 +62,13 @@ Use the `appName` and `id` properties to choose which process filter to edit:
 ```html
 <adf-cloud-edit-process-filter
     [id]="processFilterId"
-    [appName]="applicationName">
+    [appName]="appName">
 </adf-cloud-edit-process-filter>
 ```
 
 ### Filter properties
 
-You can supply various _filter properties_ to edit that will determine 
+You can supply various _filter properties_ to edit that will determine
 which processes are found by a filter. The full set of properties is
 given below:
 

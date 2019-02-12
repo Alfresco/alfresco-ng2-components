@@ -51,7 +51,7 @@ when the process list is empty:
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appVersion | `string` | "" | The related application version. |
-| applicationName | `string` | "" | The name of the application. |
+| appName | `string` | "" | The name of the application. |
 | businessKey | `string` | "" | Filter the tasks to display only the ones with this businessKey value. |
 | id | `string` | "" | Filter the processes to display only the ones with this ID. |
 | initiator | `string` | "" | Name of the initiator of the process. |

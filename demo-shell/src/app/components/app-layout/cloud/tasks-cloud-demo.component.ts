@@ -33,7 +33,7 @@ export class TasksCloudDemoComponent implements OnInit {
     @ViewChild('taskCloud')
     taskCloud: TaskListCloudComponent;
 
-    applicationName: string = '';
+    appName: string = '';
 
     isFilterLoaded = false;
 
@@ -65,7 +65,7 @@ export class TasksCloudDemoComponent implements OnInit {
     ngOnInit() {
         this.isFilterLoaded = false;
         this.route.parent.params.subscribe((params) => {
-            this.applicationName = params.applicationName;
+            this.appName = params.appName;
         });
 
         this.route.queryParams.subscribe((params) => {
@@ -100,7 +100,7 @@ export class TasksCloudDemoComponent implements OnInit {
 
     onRowClick(taskId) {
         if (!this.multiselect && this.selectionMode !== 'multiple') {
-            this.router.navigate([`/cloud/${this.applicationName}/task-details/${taskId}`]);
+            this.router.navigate([`/cloud/${this.appName}/task-details/${taskId}`]);
         }
     }
 
@@ -117,7 +117,7 @@ export class TasksCloudDemoComponent implements OnInit {
     onTaskFilterAction(filterAction: any) {
         this.cloudLayoutService.setCurrentTaskFilterParam({ id: filterAction.filter.id });
         if (filterAction.actionType === TasksCloudDemoComponent.ACTION_SAVE_AS) {
-            this.router.navigate([`/cloud/${this.applicationName}/tasks/`], { queryParams: filterAction.filter });
+            this.router.navigate([`/cloud/${this.appName}/tasks/`], { queryParams: filterAction.filter });
         }
     }
 }

@@ -25,7 +25,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CloudBreadcrumbsComponent implements OnInit {
 
-  applicationName: string;
+  appName: string;
   filterName: string;
 
   constructor(private route: ActivatedRoute) { }
@@ -33,7 +33,7 @@ export class CloudBreadcrumbsComponent implements OnInit {
   ngOnInit() {
     this.route.parent.params.subscribe((
       params) => {
-      this.applicationName = params.applicationName;
+      this.appName = params.appName;
     });
     this.route.queryParams.subscribe((params) => {
       if (params.filterName) {

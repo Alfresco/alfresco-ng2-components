@@ -25,7 +25,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TaskDetailsCloudDemoComponent {
 
     taskId: string;
-    applicationName: string;
+    appName: string;
     readOnly = false;
 
     constructor(private route: ActivatedRoute, private router: Router) {
@@ -33,12 +33,12 @@ export class TaskDetailsCloudDemoComponent {
             this.taskId = params.taskId;
         });
         this.route.parent.params.subscribe((params) => {
-            this.applicationName = params.applicationName;
+            this.appName = params.appName;
         });
     }
 
     onGoBack() {
-        this.router.navigate([`/cloud/${this.applicationName}/`]);
+        this.router.navigate([`/cloud/${this.appName}/`]);
 
     }
 }
