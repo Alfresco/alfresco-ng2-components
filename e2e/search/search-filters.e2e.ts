@@ -208,7 +208,7 @@ describe('Search Filters', () => {
         expect(searchFiltersPage.isSizeFacetQueryGroupPresent()).toBe(false);
     });
 
-    it('[] Should display search intervals under specified labels from config', () => {
+    it('[C297509] Should display search intervals under specified labels from config', () => {
         browser.get(TestConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed()
