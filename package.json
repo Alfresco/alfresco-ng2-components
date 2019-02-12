@@ -167,6 +167,7 @@
     "rxjs-tslint-rules": "^4.10.0",
     "sass-loader": "7.1.0",
     "scss-bundle": "2.3.2",
+    "spdx-license-list": "^5.0.0",
     "stylelint": "^9.7.1",
     "systemjs-builder": "0.15.34",
     "traceur": "0.0.111",
