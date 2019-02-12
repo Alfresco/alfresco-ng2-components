@@ -27,6 +27,8 @@
     "PROPERTIES": {
       "TASK_NAME": "Taak",
       "THUMBNAIL": "Miniatuur",
+      "DURATION": "Duur",
+      "PARENT_TASK_ID": "Id bovenliggende taak",
       "NAME": "Naam",
       "ASSIGNEE": "Toegewezen persoon",
       "ASSIGNEE_DEFAULT": "Geen toegewezen persoon",
@@ -40,6 +42,7 @@
       "PARENT_NAME_DEFAULT": "Geen bovenliggend element",
       "CREATED_BY": "Gemaakt door",
       "CREATED": "Gemaakt",
+      "END_DATE": "Einddatum",
       "ID": "Id",
       "DESCRIPTION": "Beschrijving",
       "DESCRIPTION_DEFAULT": "Geen beschrijving",
@@ -91,7 +94,13 @@
         "NONE": "Niemand betrokken"
       },
       "CHECKLIST": {
-        "NONE": "Geen controlelijst"
+        "NONE": "Geen controlelijst",
+        "DIALOG": {
+          "TITLE": "Nieuw vakje geselecteerd",
+          "CANCEL-BUTTON": "Annuleren",
+          "ADD-BUTTON": "Controlelijst toevoegen",
+          "PLACEHOLDER": "Naam"
+        }
       },
       "ERROR": {
         "TITLE": "Kan de actie niet voltooien",
@@ -105,6 +114,7 @@
       }
     },
     "START_TASK": {
+      "DEFAULT_NAME": "Mijn standaardtaak",
       "BUTTON": "Taak maken",
       "FORM": {
         "TITLE": "Taak starten",
@@ -121,8 +131,10 @@
           "START": "Start",
           "CANCEL": "Annuleren"
         },
-        "DATE": {
-          "ERROR": "Datumnotatie dd-mm-jjjj"
+        "ERROR": {
+          "REQUIRED": "Veld vereist",
+          "DATE": "Datumnotatie dd-mm-jjjj",
+          "MAXIMUM_LENGTH": "Lengte overschreden, max. {{characters}} tekens"
         }
       }
     },
@@ -274,7 +286,8 @@
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Kan procesdefinities niet laden, controleer of u over toegang beschikt.",
-        "START": "Kan geen nieuwe procesinstance starten, controleer of u over toegang beschikt."
+        "START": "Kan geen nieuwe procesinstance starten, controleer of u over toegang beschikt.",
+        "MAXIMUM_LENGTH": "Lengte overschreden, max. {{characters}} tekens."
       }
     },
     "PROCESS-ATTACHMENT": {

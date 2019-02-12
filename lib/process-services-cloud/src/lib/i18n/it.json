@@ -2,12 +2,194 @@
   "ADF_CLOUD_PROCESS_LIST": {
     "MESSAGES": {
       "TITLE": "Nessun processo trovato",
-      "SUBTITLE":"Crea un nuovo processo",
-      "NONE": "Nessun filtro per processo selezionato."
+      "SUBTITLE": "Creare un nuovo processo per trovarlo facilmente più tardi",
+      "NONE": "Nessun filtro di istanze di processo selezionato."
+    },
+    "PROPERTIES": {
+      "NAME": "Nome",
+      "CREATED": "Creato",
+      "STATUS": "Stato",
+      "START_DATE": "Data di inizio",
+      "ID": "ID"
+    },
+    "ADF_CLOUD_START_PROCESS": {
+      "BUTTON": "Avvia processo",
+      "NO_PROCESS_DEFINITIONS": "Impossibile avviare un processo poiché non vi sono definizioni di processo disponibili",
+      "FORM": {
+        "TITLE": "Avvia processo",
+        "LABEL": {
+          "TYPE": "Seleziona processo",
+          "NAME": "Nome processo"
+        },
+        "TYPE_PLACEHOLDER": "Effettuare una scelta...",
+        "ACTION": {
+          "START": "Avvia processo",
+          "CANCEL": "Annulla"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Impossibile caricare le definizioni di processo, verifica di disporre dell'accesso.",
+        "START": "Impossibile avviare nuova istanza di processo, verifica di disporre dell'accesso.",
+        "PROCESS_NAME_REQUIRED": "Nome processo obbligatorio",
+        "PROCESS_DEFINITION_REQUIRED": "Definizione processo obbligatoria",
+        "MAXIMUM_LENGTH": "Lunghezza superata, massimo {{characters}} caratteri."
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_LIST": {
+    "APPS": {
+      "TITLE": "Nessuna applicazione trovata",
+      "SUBTITLE": "Creare una nuova applicazione per trovarla facilmente più tardi"
+    },
+    "START_TASK": {
+      "FORM": {
+        "TITLE": "Avvia compito",
+        "LABEL": {
+          "NAME": "Nome",
+          "DESCRIPTION": "Descrizione",
+          "ATTACHFORM": "Allega modulo",
+          "ASSIGNEE": "Assegnatario",
+          "CANDIDATE_GROUP": "Gruppo candidati",
+          "FORM": "Modulo",
+          "DATE": "Seleziona data"
+        },
+        "ACTION": {
+          "START": "Avvia",
+          "CANCEL": "Annulla"
+        }
+      }
+    },
+    "PROPERTIES": {
+      "NAME": "Nome",
+      "ASSIGNEE": "Assegnatario",
+      "ID": "ID",
+      "STATUS": "Stato",
+      "PRIORITY": "Priorità",
+      "CREATED_DATE": "Data di creazione",
+      "LAST_MODIFIED": "Ultima modifica",
+      "CREATED": "Creato"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "Nessuna attività trovata",
+        "SUBTITLE": "Crea una nuova attività da trovare facilmente più tardi",
+        "NONE": "Nessun elenco compiti trovato"
+      }
     }
   },
   "ADF_CLOUD_TASK_FILTERS": {
-    "MY_TASKS": "Miei compiti",
+    "MY_TASKS": "I miei compiti",
     "COMPLETED_TASKS": "Compiti completati"
+  },
+  "ADF_CLOUD_PROCESS_FILTERS": {
+    "ALL_PROCESSES": "Tutti i processi",
+    "RUNNING_PROCESSES": "Processi in esecuzione",
+    "COMPLETED_PROCESSES": "Processi completati"
+  },
+  "ADF_CLOUD_START_TASK": {
+    "ERROR": {
+      "MESSAGE": "Immettere un altro valore",
+      "REQUIRED": "Campo obbligatorio",
+      "DATE": "Formato data GG/MM/AAAA",
+      "MAXIMUM_LENGTH": "Lunghezza superata, massimo {{characters}} caratteri."
+    }
+  },
+  "ADF_CLOUD_EDIT_TASK_FILTER": {
+    "TITLE": "Personalizza i filtri",
+    "TOOL_TIP": {
+      "SAVE": "Salva filtro",
+      "SAVE_AS": "Salva filtro con nome",
+      "DELETE": "Elimina filtro"
+    },
+    "LABEL": {
+      "APP_NAME": "Nome applicazione",
+      "PROCESS_DEF_ID": "ID definizione processo",
+      "STATUS": "Stato",
+      "ASSIGNMENT": "Assegnazione",
+      "DIRECTION": "Direzione",
+      "PROCESS_INSTANCE_ID": "ID istanza processo",
+      "TASK_NAME": "Nome compito",
+      "PARENT_TASK_ID": "ID compito principale",
+      "PRIORITY": "Priorità",
+      "STAND_ALONE": "Autonomo",
+      "LAST_MODIFIED_FROM": "Ultima modifica a partire dal:",
+      "LAST_MODIFIED_TO": "Ultima modifica a fino al:",
+      "OWNER": "Proprietario",
+      "SORT": "Ordina"
+    },
+    "DIALOG": {
+      "TITLE": "Salva filtro con nome",
+      "SAVE": "Salva",
+      "CANCEL": "Annulla"
+    }
+  },
+  "ADF_CLOUD_EDIT_PROCESS_FILTER": {
+    "TITLE": "Personalizza i filtri",
+    "LABEL": {
+      "APP_NAME": "Nome applicazione",
+      "STATUS": "Stato",
+      "INITIATOR": "Iniziatore",
+      "ASSIGNMENT": "Assegnazione",
+      "SORT": "Ordina",
+      "DIRECTION": "Direzione",
+      "PROCESS_DEF_ID": "ID definizione processo",
+      "PROCESS_DEF_KEY": "Chiave definizione processo",
+      "PROCESS_INS_ID": "ID istanza processo",
+      "START_DATE": "Data di inizio",
+      "LAST_MODIFIED": "Ultima modifica",
+      "LAST_MODIFIED_DATE_FORM": "Ultima modifica a partire dal:",
+      "LAST_MODIFIED_TO": "Ultima modifica a fino al:",
+      "PROCESS_NAME": "Nome processo"
+    },
+    "ERROR": {
+      "DATE": "Formato data GG/MM/AAAA"
+    },
+    "TOOL_TIP": {
+      "SAVE": "Salva filtro",
+      "SAVE_AS": "Salva filtro con nome",
+      "DELETE": "Elimina filtro"
+    },
+    "DIALOG": {
+      "TITLE": "Salva filtro con nome",
+      "SAVE": "Salva",
+      "CANCEL": "Annulla"
+    }
+  },
+  "ADF_CLOUD_GROUPS": {
+    "SEARCH-GROUP": "Gruppi",
+    "ERROR": {
+      "NOT_FOUND": "Nessun gruppo trovato con il nome {{groupName}}"
+    }
+  },
+  "ADF_CLOUD_TASK_HEADER": {
+    "BUTTON": {
+      "CLAIM": "Richiedi",
+      "UNCLAIM": "Metti di nuovo in coda"
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Compito",
+      "THUMBNAIL": "Miniatura",
+      "DURATION": "Durata",
+      "PARENT_TASK_ID": "ID compito principale",
+      "NAME": "Nome",
+      "ASSIGNEE": "Assegnatario",
+      "ASSIGNEE_DEFAULT": "Nessun assegnatario",
+      "PRIORITY": "Priorità",
+      "DUE_DATE": "Scadenza",
+      "DUE_DATE_DEFAULT": "Nessuna data",
+      "STATUS": "Stato",
+      "CATEGORY": "Categoria",
+      "CATEGORY_DEFAULT": "Nessuna categoria",
+      "PARENT_NAME": "Nome genitore",
+      "PARENT_NAME_DEFAULT": "Nessun genitore",
+      "CREATED_BY": "Creato da",
+      "CREATED": "Creato",
+      "END_DATE": "Data di fine",
+      "ID": "ID",
+      "DESCRIPTION": "Descrizione",
+      "DESCRIPTION_DEFAULT": "Nessuna descrizione",
+      "FORM_NAME": "Nome modulo",
+      "FORM_NAME_DEFAULT": "Nessun modulo"
+    }
   }
 }

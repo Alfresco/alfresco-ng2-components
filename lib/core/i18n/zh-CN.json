@@ -29,6 +29,9 @@
     }
   },
   "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "公司徽标"
+    },
     "FILE_SIZE": {
       "BYTES": "字节",
       "KB": "KB",
@@ -298,7 +301,7 @@
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "出现错误。",
+      "TITLE": "我们遇到一个问题。",
       "DESCRIPTION": "看似发生错误。",
       "SECONDARY_BUTTON": {
         "TEXT": ""
@@ -325,6 +328,60 @@
       },
       "RETURN_BUTTON": {
         "TEXT": "返回到主页"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "服务器设置",
+      "DESCRIPTION": "以下值均取自 AppConfigService",
+      "CONTENT_SERVICE_HOST": "Alfresco Content Services URL：{{ value }}",
+      "PROCESS_SERVICE_HOST": "Alfresco Process Services URL：{{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "产品版本",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "版本",
+        "VERSION": "版本",
+        "LICENSE": "许可证",
+        "STATUS": "状态",
+        "MODULES": "模块"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "源代码",
+      "DESCRIPTION": "您正在基于以下提交内容运行项目："
+    },
+    "PACKAGES": {
+      "TITLE": "软件包",
+      "DESCRIPTION": "当前项目正在使用以下 ADF 库："
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "ID",
+        "TITLE": "标题",
+        "DESCRIPTION": "说明",
+        "INSTALL_DATE": "安装日期",
+        "INSTALL_STATE": "安装状态",
+        "VERSION_MIN": "次要版本",
+        "VERSION_MAX": "最新版本"
+      },
+      "STATUS": {
+        "READ_ONLY": "只读",
+        "AUDIT_ENABLED": "是否已启用审核",
+        "QUICK_SHARE_ENABLED": "是否已启用 Quick Share",
+        "THUMBNAIL_ENABLED": "缩略图生成"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "发布时间",
+        "EXPIRES_AT": "过期时间",
+        "REMAINING_DAYS": "剩余天数",
+        "HOLDER": "占位符",
+        "MODE": "模式",
+        "CLUSTER_ENABLED": "是否已启用群集",
+        "CRYPTODOC_ENABLED": "是否已启用 Cryptodoc"
       }
     }
   }

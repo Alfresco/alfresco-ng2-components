@@ -27,6 +27,8 @@
     "PROPERTIES": {
       "TASK_NAME": "Tarea",
       "THUMBNAIL": "Miniatura",
+      "DURATION": "Duración",
+      "PARENT_TASK_ID": "ID de tarea primaria",
       "NAME": "Nombre",
       "ASSIGNEE": "Asignado a",
       "ASSIGNEE_DEFAULT": "Sin asignado",
@@ -40,6 +42,7 @@
       "PARENT_NAME_DEFAULT": "Sin elemento primario",
       "CREATED_BY": "Creado por",
       "CREATED": "Creado",
+      "END_DATE": "Fecha de fin",
       "ID": "ID",
       "DESCRIPTION": "Descripción",
       "DESCRIPTION_DEFAULT": "Sin descripción",
@@ -91,7 +94,13 @@
         "NONE": "Ningún participante"
       },
       "CHECKLIST": {
-        "NONE": "No hay lista de comprobación"
+        "NONE": "No hay lista de comprobación",
+        "DIALOG": {
+          "TITLE": "Nueva comprobación",
+          "CANCEL-BUTTON": "Cancelar",
+          "ADD-BUTTON": "Añadir lista de comprobación",
+          "PLACEHOLDER": "Nombre"
+        }
       },
       "ERROR": {
         "TITLE": "No se ha podido finalizar la acción",
@@ -105,6 +114,7 @@
       }
     },
     "START_TASK": {
+      "DEFAULT_NAME": "Mi tarea predeterminada",
       "BUTTON": "Crear tarea",
       "FORM": {
         "TITLE": "Iniciar tarea",
@@ -121,8 +131,10 @@
           "START": "Comenzar",
           "CANCEL": "Cancelar"
         },
-        "DATE": {
-          "ERROR": "Formato de fecha DD/MM/AAAA"
+        "ERROR": {
+          "REQUIRED": "Campo obligatorio",
+          "DATE": "Formato de fecha DD/MM/AAAA",
+          "MAXIMUM_LENGTH": "Longitud excedida, {{characters}} caracteres como máx."
         }
       }
     },
@@ -274,7 +286,8 @@
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "No se han podido cargar las definiciones de procesos; compruebe que tiene acceso.",
-        "START": "No se ha podido iniciar una nueva instancia de proceso; compruebe que tiene acceso."
+        "START": "No se ha podido iniciar una nueva instancia de proceso; compruebe que tiene acceso.",
+        "MAXIMUM_LENGTH": "Longitud excedida, {{characters}} caracteres como máx."
       }
     },
     "PROCESS-ATTACHMENT": {

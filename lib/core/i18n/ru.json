@@ -29,6 +29,9 @@
     }
   },
   "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Логотип компании"
+    },
     "FILE_SIZE": {
       "BYTES": "б",
       "KB": "КБ",
@@ -298,7 +301,7 @@
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "Произошла ошибка.",
+      "TITLE": "Возникла проблема.",
       "DESCRIPTION": "Кажется, что-то пошло не так.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
@@ -325,6 +328,60 @@
       },
       "RETURN_BUTTON": {
         "TEXT": "Назад на главную"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "Параметры сервера",
+      "DESCRIPTION": "Значения ниже получены из AppConfigService",
+      "CONTENT_SERVICE_HOST": "URL-адрес Alfresco Content Services: {{ value }}",
+      "PROCESS_SERVICE_HOST": "URL-адрес Alfresco Process Services: {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "Версии продукта",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "Издание",
+        "VERSION": "Версия",
+        "LICENSE": "Лицензия",
+        "STATUS": "Статус",
+        "MODULES": "Модули"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Исходный код",
+      "DESCRIPTION": "Проект исполняется на основании следующего коммита:"
+    },
+    "PACKAGES": {
+      "TITLE": "Пакеты",
+      "DESCRIPTION": "Текущий проект использует следующие библиотеки ADF:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "Идентификатор",
+        "TITLE": "Заголовок",
+        "DESCRIPTION": "Описание",
+        "INSTALL_DATE": "Дата установки",
+        "INSTALL_STATE": "Состояние установки",
+        "VERSION_MIN": "Младшая версия",
+        "VERSION_MAX": "Макс. версия"
+      },
+      "STATUS": {
+        "READ_ONLY": "Только для чтения",
+        "AUDIT_ENABLED": "Аудит включен",
+        "QUICK_SHARE_ENABLED": "Quick Share включен",
+        "THUMBNAIL_ENABLED": "Создание эскизов"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "Дата выдачи",
+        "EXPIRES_AT": "Дата истечения",
+        "REMAINING_DAYS": "Осталось дней",
+        "HOLDER": "Держатель",
+        "MODE": "Режим",
+        "CLUSTER_ENABLED": "Кластер включен",
+        "CRYPTODOC_ENABLED": "Cryptodoc включен"
       }
     }
   }

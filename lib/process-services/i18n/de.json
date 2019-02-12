@@ -27,6 +27,8 @@
     "PROPERTIES": {
       "TASK_NAME": "Aufgabe",
       "THUMBNAIL": "Miniaturansicht",
+      "DURATION": "Dauer",
+      "PARENT_TASK_ID": "Übergeordnete Aufgaben-ID",
       "NAME": "Name",
       "ASSIGNEE": "Zugewiesener Benutzer",
       "ASSIGNEE_DEFAULT": "Kein zugewiesener Benutzer",
@@ -40,6 +42,7 @@
       "PARENT_NAME_DEFAULT": "Kein übergeordnetes Element",
       "CREATED_BY": "Erstellt von",
       "CREATED": "Erstellt",
+      "END_DATE": "Enddatum",
       "ID": "ID",
       "DESCRIPTION": "Beschreibung",
       "DESCRIPTION_DEFAULT": "Keine Beschreibung",
@@ -91,7 +94,13 @@
         "NONE": "Niemand beteiligt"
       },
       "CHECKLIST": {
-        "NONE": "Keine Prüfliste"
+        "NONE": "Keine Prüfliste",
+        "DIALOG": {
+          "TITLE": "Neue Auswahl",
+          "CANCEL-BUTTON": "Abbrechen",
+          "ADD-BUTTON": "Prüfliste hinzufügen",
+          "PLACEHOLDER": "Name"
+        }
       },
       "ERROR": {
         "TITLE": "Vorgang konnte nicht durchgeführt werden",
@@ -105,6 +114,7 @@
       }
     },
     "START_TASK": {
+      "DEFAULT_NAME": "Meine Standardaufgabe",
       "BUTTON": "Aufgabe erstellen",
       "FORM": {
         "TITLE": "Aufgabe starten",
@@ -121,8 +131,10 @@
           "START": "Start",
           "CANCEL": "Abbrechen"
         },
-        "DATE": {
-          "ERROR": "Datumsformat TT.MM.JJJJ"
+        "ERROR": {
+          "REQUIRED": "Feld erforderlich",
+          "DATE": "Datumsformat TT.MM.JJJJ",
+          "MAXIMUM_LENGTH": "Max. Länge überschritten, max. {{characters}} Zeichen"
         }
       }
     },
@@ -274,7 +286,8 @@
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Prozessdefinitionen konnten nicht geladen werden. Überprüfen Sie, ob Sie über die nötigen Zugriffsrechte verfügen.",
-        "START": "Neue Prozessinstanz konnte nicht gestartet werden. Überprüfen Sie, ob Sie über die nötigen Zugriffsrechte verfügen."
+        "START": "Neue Prozessinstanz konnte nicht gestartet werden. Überprüfen Sie, ob Sie über die nötigen Zugriffsrechte verfügen.",
+        "MAXIMUM_LENGTH": "Max. Länge überschritten, max. {{characters}} Zeichen."
       }
     },
     "PROCESS-ATTACHMENT": {
