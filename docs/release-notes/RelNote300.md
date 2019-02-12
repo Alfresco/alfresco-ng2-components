@@ -79,7 +79,15 @@ In order to make the SSO completely works with the new ACS 6.1.0 new exchange to
 For more details about this issue please refer to the [ticket](https://issues.alfresco.com/jira/browse/ADF-3882)
 
 ## withCredential
+The withCredentials property has been added as a configuration Boolean paramertet in the JS-API and in ADF. 
+That indicates whether or not cross-site Access-Control requests should be made using credentials.
+This configuration is usually needed when you are dailing with **Kerberos**.
 
+For more details please see the link below:
+
+- [App config withCredentials configuration](../core/app-config.service.md)
+- [Login component withCredentials behaviour](../core/login.component.md)
+- [alfresco-js-api withCredentials PR](https://github.com/Alfresco/alfresco-js-api/pull/358/files)
 
 
 ### JS-API in Typescript
