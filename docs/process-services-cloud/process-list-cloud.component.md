@@ -78,7 +78,7 @@ You can define a custom schema for the list in the `app.config.json` file and ac
 `presetColumn` property as shown below:
 
 ```json
-"adf-cloud-process-list": {
+"`adf-cloud-process-list`": {
         "presets": {
             "customSchema": [
             {
@@ -143,6 +143,9 @@ information defined in `app.config.json` as in the example below:
     </data-columns>
 </adf-cloud-process-list>
 ```
+
+These are all the available columns that can be displayed in this component:
+**_appName_**, **_businessKey_**, **_description_**, **_id_**, **_initiator_**, **_lastModified_**, **_processName_**, **_parentId_**, **_processDefinitionId_**, **_processDefinitionKey_**, **_startDate_** and **_status_**.
 
 ### Setting Sorting Order for the list
 
