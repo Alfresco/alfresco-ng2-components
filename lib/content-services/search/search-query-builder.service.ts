@@ -61,7 +61,9 @@ export class SearchQueryBuilderService {
         this._userQuery = value ? `(${value})` : '';
     }
 
-    config: SearchConfiguration;
+    config: SearchConfiguration = {
+        categories: []
+    };
 
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
