@@ -70,15 +70,33 @@ The house of the extensibility support in the framework is the **@alfresco/adf-e
 
 ### Search enhancement
 
-TODO
+#### Grouped facet queries
+By default, the queries declared in the `facetQueries` are collected into a single collapsible category.
+This new functionality allow you to group different facet queries under custom labels by using the `group` property on those facet queries:
+
+![Grouped Facet Queries](../docassets/images/search-facet-queries-groups.png)
+
+Please refer to the [search filter component documentation](../content-services/search-filter.component.md#facet-queriesd) for more details.
+
+#### filterWithContains
+
+You can  now choose to filter facet field results using 'contains' instead of 'starts with', by using the filterWithContains boolean (default is false):
+
+```javascript
+{
+"search":
+
+{ "filterWithContains": true }
+}
+```
 
 ### Single Sign On enhancement
 
-## SSO ticket fix
+#### SSO ticket fix
 In order to make the SSO completely works with the new ACS 6.1.0 new exchange token for alf_ticket mechanism has been introduced a new flow in the JS-API that does this operation. 
 For more details about this issue please refer to the [ticket](https://issues.alfresco.com/jira/browse/ADF-3882)
 
-## withCredential
+#### withCredential
 The withCredentials property has been added as a configuration Boolean paramertet in the JS-API and in ADF. 
 That indicates whether or not cross-site Access-Control requests should be made using credentials.
 This configuration is usually needed when you are dailing with **Kerberos**.
@@ -110,8 +128,9 @@ The Node and Browser version are now both in: ***@alfresco/js-api***
 
 Alfresco ADF 3.0.0 has been updated to the version 7.0.3 of Angular and Material
 Please refer to the official project CHANGELOG to understand what is new inside:
- [Angular 7 CHANGELOG](https://github.com/angular/angular/blob/master/CHANGELOG.md). 
- [Material 7 CHANGELOG](https://github.com/angular/material2/blob/master/CHANGELOG.md). 
+
+- [Angular 7 CHANGELOG](https://github.com/angular/angular/blob/master/CHANGELOG.md). 
+- [Material 7 CHANGELOG](https://github.com/angular/material2/blob/master/CHANGELOG.md). 
 
 ### Create library Component
 
@@ -126,7 +145,7 @@ Is now possible creates a new Content Services document library/site with the cr
 
 Shows the folder and subfolders of a node as a tree view. For more information about the tree view component please refer to the [component documentation](../content-services/tree-view.component.md)
     
-## Basic Usage
+#### Basic Usage
 
 ```html
 <adf-tree-view-list [nodeId]="'74cd8a96-8a21-47e5-9b3b-a1b3e296787d'" 
@@ -841,3 +860,5 @@ Below the list of JIRA issues, closed for this release.
 </ul>
 
 Please refer to the [Alfresco issue tracker](https://issues.alfresco.com/jira/projects/ADF/issues/ADF-581?filter=allopenissues) for other known issues in this release. If you have any questions about the release, please contact us using [Gitter](https://gitter.im/Alfresco/alfresco-ng2-components).
+
+Thanks to the whole application team and the amazing Alfresco community for the hard work 
