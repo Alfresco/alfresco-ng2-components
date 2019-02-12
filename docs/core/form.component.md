@@ -23,6 +23,7 @@ Shows a [`Form`](../../lib/process-services/task-list/models/form.model.ts) from
     -   [Controlling outcome execution behaviour](#controlling-outcome-execution-behaviour)
     -   [Field Validators](#field-validators)
     -   [Common scenarios](#common-scenarios)
+    -   [Alfresco Repositories APS configuration](#alfresco-repositories-aps-configuration)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -342,6 +343,23 @@ In the CSS, you can target any outcome ID and change the style as in this exampl
 ```
 
 ![](../docassets/images/form-style-sample.png)
+
+### Alfresco Repositories APS configuration
+
+APS allows you to configure where to store files and folders in your on-site Alfresco repositories.
+
+If you have your repositories configured like this, you can use the attach file/folder
+form widget to get a file from those repositories and attach it to the Form.
+
+**Note:** your repositories could be configured to be on different servers from the one
+where your front-end is deployed.  Make sure you are using the right Proxy or configuration,
+otherwise you will get a cross-origin resource sharing (CORS) error.
+
+Also, don't forget to set the `providers` property to `ALL` in the `app.config.json` login configuration:
+
+```
+"providers": "ALL",
+```
 
 ## See also
 
