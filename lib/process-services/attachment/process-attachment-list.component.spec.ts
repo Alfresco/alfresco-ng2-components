@@ -240,6 +240,15 @@ describe('ProcessAttachmentListComponent', () => {
         });
     }));
 
+    it('should call getProcessRelatedContent with opt isRelatedContent=true', () => {
+        getProcessRelatedContentSpy.and.returnValue(of(mockAttachment));
+        const change = new SimpleChange(null, '123', true);
+        const isRelatedContent = 'true';
+        component.ngOnChanges({'processInstanceId': change});
+        expect(getProcessRelatedContentSpy).toHaveBeenCalled();
+        expect(getProcessRelatedContentSpy).toHaveBeenCalledWith('123', isRelatedContent);
+    });
+
     describe('change detection', () => {
 
         let change = new SimpleChange('123', '456', true);
@@ -254,7 +263,7 @@ describe('ProcessAttachmentListComponent', () => {
 
         it('should fetch new attachments when processInstanceId changed', () => {
             component.ngOnChanges({ 'processInstanceId': change });
-            expect(getProcessRelatedContentSpy).toHaveBeenCalledWith('456');
+            expect(getProcessRelatedContentSpy).toHaveBeenCalledWith('456', 'true');
         });
 
         it('should NOT fetch new attachments when empty changeset made', () => {
