@@ -23,6 +23,7 @@ If you want to be updated on the [ADF roadmap](../roadmap.md), check the public 
     -   [Angular 7](#angular-7)
     -   [Deprecation removal](#deprecation-removal)
     -   [Activiti 7 and APS 2 support](#activiti-7-and-aps-2-support)
+    -   [Icon Component](#icon-component)
 -   [Localization](#localization)
 -   [References](#references)
 -   [Issues addressed](#issues-addressed)
@@ -221,6 +222,23 @@ Below you can find a brief list of references to help you start using the new re
 [Official GitHub Project - generator-ng2-alfresco-app](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
 Please refer to the [official documentation](http://docs.alfresco.com/) for further details and suggestions.
+
+### Icon Component
+
+Universal icon component that supports Material Ligatures and custom registered SVG icons in the same format.
+
+```html
+<!-- Font ligature -->
+<adf-icon value="alert"></adf-icon>
+
+<!-- ADF Thumbnail Service -->
+<adf-icon value="adf:image/png"></adf-icon>
+
+<!-- Custom icon from MatIconRegistry -->
+<adf-icon value="my-company:my-icon"></adf-icon>
+```
+
+See Icon Component [documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/master/docs/core/icon.component.md) for more details.
 
 ## Issues addressed
 
