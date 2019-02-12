@@ -29,6 +29,9 @@
     }
   },
   "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "Logotipo de la empresa"
+    },
     "FILE_SIZE": {
       "BYTES": "bytes",
       "KB": "KB",
@@ -298,7 +301,7 @@
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "Se ha producido un error.",
+      "TITLE": "Ha surgido un problema.",
       "DESCRIPTION": "Parece que algo ha ido mal.",
       "SECONDARY_BUTTON": {
         "TEXT": ""
@@ -325,6 +328,60 @@
       },
       "RETURN_BUTTON": {
         "TEXT": "Volver al inicio"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "Configuración del servidor",
+      "DESCRIPTION": "Los valores siguientes se han tomado de AppConfigService",
+      "CONTENT_SERVICE_HOST": "URL de Alfresco Content Services: {{ value }}",
+      "PROCESS_SERVICE_HOST": "URL de Alfresco Process Services: {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "Versiones de productos",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "Edición",
+        "VERSION": "Versión",
+        "LICENSE": "Licencia",
+        "STATUS": "Estado",
+        "MODULES": "Módulos"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "Código fuente",
+      "DESCRIPTION": "Está ejecutando el proyecto en función de la siguiente confirmación:"
+    },
+    "PACKAGES": {
+      "TITLE": "Paquetes",
+      "DESCRIPTION": "El proyecto actual utiliza las bibliotecas ADF siguientes:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "ID",
+        "TITLE": "Título",
+        "DESCRIPTION": "Descripción",
+        "INSTALL_DATE": "Fecha de instalación",
+        "INSTALL_STATE": "Estado de instalación",
+        "VERSION_MIN": "Versión menor",
+        "VERSION_MAX": "Versión mayor"
+      },
+      "STATUS": {
+        "READ_ONLY": "Solo lectura",
+        "AUDIT_ENABLED": "Compatible con auditoría",
+        "QUICK_SHARE_ENABLED": "Compatible con Quick Share",
+        "THUMBNAIL_ENABLED": "Generación de miniatura"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "Expedida el",
+        "EXPIRES_AT": "Caduca el",
+        "REMAINING_DAYS": "Días restantes",
+        "HOLDER": "Titular",
+        "MODE": "Modo",
+        "CLUSTER_ENABLED": "Compatible con clústeres",
+        "CRYPTODOC_ENABLED": "Compatible con Cryptodoc"
       }
     }
   }

@@ -140,8 +140,7 @@
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "Opplasting avbrutt",
-      "UPLOAD_COMPLETED": "Opplastet {{ completed }} / {{ total }}",
-      "UPLOAD_PROGRESS": "Opplasting {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Opplastet {{ completed }} / {{ total }}",
       "UPLOAD_ERROR": "{{ total }} mislykket opplasting",
       "UPLOAD_ERRORS": "{{ total }} mislykkede opplastinger",
       "PROGRESS": "Opplasting pågår...",
@@ -153,6 +152,16 @@
     },
     "ACTION": {
       "UNDO": "Angre"
+    },
+    "ERRORS": {
+      "GENERIC": "Opplasting mislyktes. Kontakt IT om dette problemet vedvarer",
+      "500": "Intern serverfeil. Prøv på nytt eller kontakt IT-støtten [500]",
+      "504": "Serveren ble tidsavbrutt. Prøv på nytt eller kontakt IT-støtten [504]",
+      "403": "Ikke tilstrekkelige tillatelser til å laste opp på dette stedet [403]",
+      "404": "Opplastingsstedet finnes ikke lenger [404]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Opplastingsfeil"
     }
   },
   "WEBSCRIPT": {
@@ -170,7 +179,7 @@
     "RESULTS": {
       "SUMMARY": "{{numResults}} resultater funnet for {{searchTerm}}",
       "NONE": "Ingen resultater funnet for {{searchTerm}}",
-      "ERROR": "Det oppstod et problem under søket, prøv på nytt.",
+      "ERROR": "Vi støtte på et problem under søket, prøv på nytt.",
       "COLUMNS": {
         "NAME": "Vis navn",
         "MODIFIED_BY": "Endret av",
@@ -254,11 +263,13 @@
     }
   },
   "SHARE": {
+    "PUBLIC-LINK": "Offentlig lenke",
     "DIALOG-TITLE": "Del",
     "DESCRIPTION": "Klikk på koblingen nedenfor for å kopiere den til utklippstavlen.",
     "TITLE": "Kobling som skal deles",
     "EXPIRES": "Utløper den",
     "CLIPBOARD-MESSAGE": "Kobling kopiert til utklippstavlen",
+    "CLOSE": "Lukk",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Fjern denne delte koblingen",
       "MESSAGE": "Denne koblingen vil bli slettet, og en ny kobling vil bli opprettet neste gang denne filen deles",
@@ -288,15 +299,21 @@
       "NOT-ALLOWED": "Du har ikke lov til å endre tillatelser"
     }
   },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "Ingen node-ID oppgitt!"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Opprett bibliotek",
       "CREATE": "Opprett",
+      "UPDATE": "Oppdater",
+      "EDIT": "Rediger",
       "CANCEL": "Avbryt",
       "FORM": {
         "DESCRIPTION": "Beskrivelse",
         "SITE_ID": "Biblioteks-ID",
-        "NAME": "Navn"
+        "NAME": "Navn",
+        "VISIBILITY": "Synlighet"
       }
     },
     "ROLE": {
@@ -310,14 +327,23 @@
       "PUBLIC": "Offentlig",
       "MODERATED": "Moderert"
     },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "Biblioteknavn er allerede i bruk"
+    },
     "ERRORS": {
       "GENERIC": "Vi støtte på et problem",
-      "EXISTENT_SITE": "Denne biblioteks-ID-en er ikke tilgjengelig. Prøv et annet bibliotek.",
+      "EXISTENT_SITE": "Denne biblioteks-ID-en er ikke tilgjengelig. Prøv en annen biblioteks-ID.",
       "CONFLICT": "Denne biblioteks-ID-en er alt brukt. Sjekk papirkurven.",
       "ID_TOO_LONG": "Bruk 72 tegn eller mindre i URL-navnet",
       "DESCRIPTION_TOO_LONG": "Bruk 512 tegn eller mindre i beskrivelsen",
       "TITLE_TOO_LONG": "Bruk 256 tegn eller mindre i tittelen",
-      "ILLEGAL_CHARACTERS": "Bruk kun tall og bokstaver"
+      "TITLE_TOO_SHORT": "Titttelen må bestå av minst 2 tegn",
+      "ILLEGAL_CHARACTERS": "Bruk kun tall og bokstaver",
+      "ONLY_SPACES": "Biblioteknavn kan ikke inneholde bare mellomrom",
+      "LIBRARY_UPDATE_ERROR": "Det oppstod en feil under oppdatering av bibliotekegenskaper"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Bibliotekegenskaper oppdatert"
     }
   }
 }

@@ -140,8 +140,7 @@
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "Upload cancelado",
-      "UPLOAD_COMPLETED": "Carregados {{ completed }} / {{ total }}",
-      "UPLOAD_PROGRESS": "Carregando {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Carregados {{ completed }} / {{ total }}",
       "UPLOAD_ERROR": "{{ total }} carregamento malsucedido",
       "UPLOAD_ERRORS": "{{ total }} carregamentos malsucedidos",
       "PROGRESS": "Carregamento em andamento...",
@@ -153,6 +152,16 @@
     },
     "ACTION": {
       "UNDO": "Desfazer"
+    },
+    "ERRORS": {
+      "GENERIC": "Não foi possível carregar. Se o problema persistir, entre em contato com a TI",
+      "500": "Erro interno no servidor. Tente novamente ou entre em contato com a TI [500]",
+      "504": "Tempo expirado no servidor, tente novamente ou entre em contato com o suporte de TI [504]",
+      "403": "Permissões insuficientes para carregar neste local [403]",
+      "404": "O local para carregar não existe mais [404]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Erro ao carregar"
     }
   },
   "WEBSCRIPT": {
@@ -254,11 +263,13 @@
     }
   },
   "SHARE": {
+    "PUBLIC-LINK": "Link público",
     "DIALOG-TITLE": "Compartilhar",
     "DESCRIPTION": "Clique no link abaixo para copiar na área de transferência.",
     "TITLE": "Link para compartilhar",
     "EXPIRES": "Expira",
     "CLIPBOARD-MESSAGE": "Link copiado na área de transferência",
+    "CLOSE": "Fechar",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Remover este link compartilhado",
       "MESSAGE": "Este link será excluído. Um novo link será criado na próxima vez que esse arquivo for compartilhado.",
@@ -288,15 +299,21 @@
       "NOT-ALLOWED": "Você não pode alterar permissões"
     }
   },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "Nenhum ID de nó fornecido!"
+  },
   "LIBRARY": {
     "DIALOG": {
-      "CREATE_TITLE": "Criar Biblioteca",
+      "CREATE_TITLE": "Criar biblioteca",
       "CREATE": "Criar",
+      "UPDATE": "Atualizar",
+      "EDIT": "Editar",
       "CANCEL": "Cancelar",
       "FORM": {
         "DESCRIPTION": "Descrição",
         "SITE_ID": "ID de Biblioteca",
-        "NAME": "Nome"
+        "NAME": "Nome",
+        "VISIBILITY": "Visibilidade"
       }
     },
     "ROLE": {
@@ -310,14 +327,23 @@
       "PUBLIC": "Público",
       "MODERATED": "Moderado"
     },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "O nome da biblioteca já está em uso"
+    },
     "ERRORS": {
-      "GENERIC": "Ocorreu um erro",
-      "EXISTENT_SITE": "Este ID de Biblioteca não está disponível. Tente uma Biblioteca diferente.",
+      "GENERIC": "Encontramos um problema",
+      "EXISTENT_SITE": "Este ID de biblioteca não está disponível. Tente um ID de biblioteca diferente.",
       "CONFLICT": "Este ID de Biblioteca já foi usado. Verifique a lixeira.",
       "ID_TOO_LONG": "Use 72 caracteres ou menos para o nome da URL",
       "DESCRIPTION_TOO_LONG": "Use 512 caracteres ou menos para a descrição",
       "TITLE_TOO_LONG": "Use 256 caracteres ou menos para o título",
-      "ILLEGAL_CHARACTERS": "Use somente números e letras"
+      "TITLE_TOO_SHORT": "O título deve ter pelo menos 2 caracteres",
+      "ILLEGAL_CHARACTERS": "Use somente números e letras",
+      "ONLY_SPACES": "O nome da biblioteca não pode conter somente espaços",
+      "LIBRARY_UPDATE_ERROR": "Houve um erro ao atualizar as propriedades da biblioteca"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Propriedades da biblioteca atualizadas"
     }
   }
 }

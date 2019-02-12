@@ -140,8 +140,7 @@
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "Uploaden geannuleerd",
-      "UPLOAD_COMPLETED": "{{ completed }} / {{ total }} geüpload",
-      "UPLOAD_PROGRESS": "Uploaden {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "{{ completed }} / {{ total }} geüpload",
       "UPLOAD_ERROR": "{{ total }} upload mislukt",
       "UPLOAD_ERRORS": "{{ total }} uploads mislukt",
       "PROGRESS": "Upload wordt uitgevoerd...",
@@ -153,6 +152,16 @@
     },
     "ACTION": {
       "UNDO": "Ongedaan maken"
+    },
+    "ERRORS": {
+      "GENERIC": "Uploaden is mislukt. Neem contact op met IT als het probleem zich blijft voordoen",
+      "500": "Interne serverfout, probeer het opnieuw of neem contact op met de IT-ondersteuning [500]",
+      "504": "Er is een time-out opgetreden in de server, probeer het opnieuw of neem contact op met de IT-ondersteuning [504]",
+      "403": "Onvoldoende rechten voor uploaden op deze locatie [403]",
+      "404": "Uploadlocatie bestaat niet meer [404]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Uploadfout"
     }
   },
   "WEBSCRIPT": {
@@ -254,11 +263,13 @@
     }
   },
   "SHARE": {
+    "PUBLIC-LINK": "Openbare koppeling",
     "DIALOG-TITLE": "Delen",
     "DESCRIPTION": "Klik op de onderstaande koppeling om deze te kopiëren naar het klembord.",
     "TITLE": "Koppeling om te delen",
     "EXPIRES": "Verloopt op",
     "CLIPBOARD-MESSAGE": "Koppeling gekopieerd naar het klembord",
+    "CLOSE": "Sluiten",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Deze gedeelde koppeling verwijderen",
       "MESSAGE": "Deze koppeling wordt verwijderd en er wordt een nieuwe koppeling gemaakt de volgende keer dat dit bestand wordt gedeeld",
@@ -288,15 +299,21 @@
       "NOT-ALLOWED": "Het is u niet toegestaan om machtigingen te wijzigen"
     }
   },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "Geen node-id opgegeven!"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Bibliotheek maken",
       "CREATE": "Maken",
+      "UPDATE": "Bijwerken",
+      "EDIT": "Bewerken",
       "CANCEL": "Annuleren",
       "FORM": {
         "DESCRIPTION": "Beschrijving",
         "SITE_ID": "Bibliotheek-id",
-        "NAME": "Naam"
+        "NAME": "Naam",
+        "VISIBILITY": "Zichtbaarheid"
       }
     },
     "ROLE": {
@@ -310,14 +327,23 @@
       "PUBLIC": "Openbaar",
       "MODERATED": "Onder toezicht"
     },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "Bibliotheeknaam wordt al gebruikt"
+    },
     "ERRORS": {
       "GENERIC": "Er is een probleem opgetreden",
-      "EXISTENT_SITE": "Deze bibliotheek-id is niet beschikbaar. Probeer een andere bibliotheek.",
+      "EXISTENT_SITE": "Deze bibliotheek-id is niet beschikbaar. Probeer een andere bibliotheek-id.",
       "CONFLICT": "Deze bibliotheek wordt al gebruikt. Controleer de prullenbak.",
       "ID_TOO_LONG": "Gebruik 72 tekens of minder voor de URL-naam",
       "DESCRIPTION_TOO_LONG": "Gebruik 512 tekens of minder voor de beschrijving",
       "TITLE_TOO_LONG": "Gebruik 256 tekens of minder voor de titel",
-      "ILLEGAL_CHARACTERS": "Gebruik alleen cijfers en letters"
+      "TITLE_TOO_SHORT": "Titel moet minstens 2 tekens lang zijn",
+      "ILLEGAL_CHARACTERS": "Gebruik alleen cijfers en letters",
+      "ONLY_SPACES": "Bibliotheeknaam mag niet alleen uit spaties bestaan",
+      "LIBRARY_UPDATE_ERROR": "Er is een fout opgetreden bij het bijwerken van de bibliotheekeigenschappen"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Bibliotheekeigenschappen bijgewerkt"
     }
   }
 }

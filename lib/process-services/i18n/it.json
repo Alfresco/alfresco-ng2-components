@@ -27,6 +27,8 @@
     "PROPERTIES": {
       "TASK_NAME": "Compito",
       "THUMBNAIL": "Miniatura",
+      "DURATION": "Durata",
+      "PARENT_TASK_ID": "ID compito principale",
       "NAME": "Nome",
       "ASSIGNEE": "Assegnatario",
       "ASSIGNEE_DEFAULT": "Nessun assegnatario",
@@ -40,6 +42,7 @@
       "PARENT_NAME_DEFAULT": "Nessun genitore",
       "CREATED_BY": "Creato da",
       "CREATED": "Creato",
+      "END_DATE": "Data di fine",
       "ID": "ID",
       "DESCRIPTION": "Descrizione",
       "DESCRIPTION_DEFAULT": "Nessuna descrizione",
@@ -92,10 +95,10 @@
       },
       "CHECKLIST": {
         "NONE": "Nessun elenco di controllo",
-        "DIALOG" : {
-          "TITLE": "Nuova Checklist",
-          "CANCEL-BUTTON": "Cancella",
-          "ADD-BUTTON": "Aggiungi Checklist",
+        "DIALOG": {
+          "TITLE": "Nuova verifica",
+          "CANCEL-BUTTON": "Annulla",
+          "ADD-BUTTON": "Aggiungi elenco di controllo",
           "PLACEHOLDER": "Nome"
         }
       },
@@ -111,6 +114,7 @@
       }
     },
     "START_TASK": {
+      "DEFAULT_NAME": "Compito predefinito",
       "BUTTON": "Crea compito",
       "FORM": {
         "TITLE": "Avvia compito",
@@ -127,8 +131,10 @@
           "START": "Avvia",
           "CANCEL": "Annulla"
         },
-        "DATE": {
-          "ERROR": "Formato data GG/MM/AAAA"
+        "ERROR": {
+          "REQUIRED": "Campo obbligatorio",
+          "DATE": "Formato data GG/MM/AAAA",
+          "MAXIMUM_LENGTH": "Lunghezza superata, massimo {{characters}} caratteri."
         }
       }
     },
@@ -280,7 +286,8 @@
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Impossibile caricare le definizioni di processo, verifica di disporre dell'accesso.",
-        "START": "Impossibile avviare nuova istanza di processo, verifica di disporre dell'accesso."
+        "START": "Impossibile avviare nuova istanza di processo, verifica di disporre dell'accesso.",
+        "MAXIMUM_LENGTH": "Lunghezza superata, massimo {{characters}} caratteri."
       }
     },
     "PROCESS-ATTACHMENT": {

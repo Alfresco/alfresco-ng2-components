@@ -140,8 +140,7 @@
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "Hochladen abgebrochen",
-      "UPLOAD_COMPLETED": "Hochgeladen: {{ completed }} / {{ total }}",
-      "UPLOAD_PROGRESS": "Hochladen: {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Hochgeladen: {{ completed }} / {{ total }}",
       "UPLOAD_ERROR": "{{ total }} erfolgreich hochgeladen",
       "UPLOAD_ERRORS": "{{ total }} nicht erfolgreich hochgeladen",
       "PROGRESS": "Hochladen läuft...",
@@ -153,6 +152,16 @@
     },
     "ACTION": {
       "UNDO": "Rückgängig machen"
+    },
+    "ERRORS": {
+      "GENERIC": "Beim Hochladen ist ein Problem aufgetreten. Wenden Sie sich an das IT-Team, wenn das Problem weiterhin besteht.",
+      "500": "Interner Serverfehler. Versuchen Sie es noch einmal oder wenden Sie sich an den IT-Support [500]",
+      "504": "Server-Timeout. Versuchen Sie es noch einmal oder wenden Sie sich an den IT-Support [504]",
+      "403": "Sie verfügen nicht die erforderlichen Benutzerrechte, um etwas an diesen Speicherort hochzuladen [403]",
+      "404": "Speicherort für Upload nicht mehr vorhanden [404]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Fehler beim Hochladen"
     }
   },
   "WEBSCRIPT": {
@@ -254,11 +263,13 @@
     }
   },
   "SHARE": {
+    "PUBLIC-LINK": "Öffentlicher Link",
     "DIALOG-TITLE": "Freigeben",
     "DESCRIPTION": "Auf Link klicken um in die Zwischenablage zu kopieren.",
     "TITLE": "Link zum Teilen",
     "EXPIRES": "Läuft ab am",
     "CLIPBOARD-MESSAGE": "Link in die Zwischenablage kopiert",
+    "CLOSE": "Schließen",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Link in die Zwischenablage kopiert",
       "MESSAGE": "Dieser Link wird gelöscht und ein neuer Link wird erstellt wenn diese Datei das nächste Mal geteilt wird.",
@@ -288,15 +299,21 @@
       "NOT-ALLOWED": "Sie sind nicht zum Ändern von Berechtigungen berechtigt."
     }
   },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "Keine Node-ID angegeben!"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Bibliothek erstellen",
       "CREATE": "Erstellen",
+      "UPDATE": "Aktualisieren",
+      "EDIT": "Bearbeiten",
       "CANCEL": "Abbrechen",
       "FORM": {
         "DESCRIPTION": "Beschreibung",
         "SITE_ID": "Bibliotheks-ID",
-        "NAME": "Name"
+        "NAME": "Name",
+        "VISIBILITY": "Sichtbarkeit"
       }
     },
     "ROLE": {
@@ -310,14 +327,23 @@
       "PUBLIC": "Öffentlich",
       "MODERATED": "Moderiert"
     },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "Bibliotheksname wird bereits verwendet"
+    },
     "ERRORS": {
       "GENERIC": "Es ist ein Problem aufgetreten",
-      "EXISTENT_SITE": "Diese Bibliotheks-ID ist nicht verfügbar. Versuchen Sie es mit einer anderen Bibliothek.",
+      "EXISTENT_SITE": "Diese Bibliotheks-ID ist nicht verfügbar. Versuchen Sie es mit einer anderen Bibliotheks-ID.",
       "CONFLICT": "Diese Bibliotheks-ID wird bereits verwendet. Sehen Sie im Papierkorb nach.",
       "ID_TOO_LONG": "Der URL-Name darf höchstens 72 Zeichen lang sein",
       "DESCRIPTION_TOO_LONG": "Die Beschreibung darf höchstens 512 Zeichen lang sein",
       "TITLE_TOO_LONG": "Der Titel darf höchstens 256 Zeichen lang sein",
-      "ILLEGAL_CHARACTERS": "Verwenden Sie nur Zahlen und Buchstaben"
+      "TITLE_TOO_SHORT": "Titel muss mindestens zwei Zeichen lang sein",
+      "ILLEGAL_CHARACTERS": "Verwenden Sie nur Zahlen und Buchstaben",
+      "ONLY_SPACES": "Bibliotheksname darf nicht nur aus Leerzeichen bestehen.",
+      "LIBRARY_UPDATE_ERROR": "Beim Aktualisieren der Bibliothekseigenschaften ist ein Fehler aufgetreten"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Bibliothekseigenschaften aktualisiert"
     }
   }
 }

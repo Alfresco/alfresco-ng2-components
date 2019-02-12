@@ -140,8 +140,7 @@
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "Caricamento annullato",
-      "UPLOAD_COMPLETED": "Caricato {{ completed }} / {{ total }}",
-      "UPLOAD_PROGRESS": "Caricamento in corso di {{ completed }} / {{ total }}",
+      "UPLOAD_PROGRESS": "Caricato {{ completed }} / {{ total }}",
       "UPLOAD_ERROR": "Caricamento di {{ total }} non eseguito correttamente",
       "UPLOAD_ERRORS": "{{ total }} caricamenti eseguiti correttamente",
       "PROGRESS": "Caricamento in corso...",
@@ -153,6 +152,16 @@
     },
     "ACTION": {
       "UNDO": "Annulla"
+    },
+    "ERRORS": {
+      "GENERIC": "Caricamento non riuscito. Se il problema persiste, contattare l'IT",
+      "500": "Errore interno del server. Riprovare o contattare il supporto IT [500]",
+      "504": "Timeout del server. Riprovare o contattare il supporto IT [504]",
+      "403": "Autorizzazioni insufficienti per caricare in questa posizione [403]",
+      "404": "La posizione di caricamento non esiste più [404]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Carica errore"
     }
   },
   "WEBSCRIPT": {
@@ -254,11 +263,13 @@
     }
   },
   "SHARE": {
+    "PUBLIC-LINK": "Link pubblico",
     "DIALOG-TITLE": "Condividi",
     "DESCRIPTION": "Per copiarlo negli appunti, fai clic sul link seguente.",
     "TITLE": "Link da condividere",
     "EXPIRES": "Scade il",
     "CLIPBOARD-MESSAGE": "Link copiato negli appunti",
+    "CLOSE": "Chiudi",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Rimuovi link condiviso",
       "MESSAGE": "Il link verrà eliminato e verrà creato un nuovo link per il prossimo file condiviso",
@@ -288,15 +299,21 @@
       "NOT-ALLOWED": "Non è consentito modificare le autorizzazioni"
     }
   },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "Nessun ID nodo specificato."
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Crea libreria",
       "CREATE": "Crea",
+      "UPDATE": "Aggiorna",
+      "EDIT": "Modifica",
       "CANCEL": "Annulla",
       "FORM": {
         "DESCRIPTION": "Descrizione",
         "SITE_ID": "ID libreria",
-        "NAME": "Nome"
+        "NAME": "Nome",
+        "VISIBILITY": "Visibilità"
       }
     },
     "ROLE": {
@@ -310,14 +327,23 @@
       "PUBLIC": "Pubblico",
       "MODERATED": "Moderato"
     },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "Nome raccolta già utilizzato"
+    },
     "ERRORS": {
-      "GENERIC": "Si è verificato un errore",
-      "EXISTENT_SITE": "L'ID libreria specificato non è disponibile. Provare con un'altra libreria.",
+      "GENERIC": "Si è verificato un problema",
+      "EXISTENT_SITE": "L'ID raccolta non è disponibile. Provare con un altro ID raccolta.",
       "CONFLICT": "L'ID libreria specificato è già in uso. Verificare il cestino.",
       "ID_TOO_LONG": "Utilizzare 72 caratteri o meno per il nome URL",
       "DESCRIPTION_TOO_LONG": "Utilizzare 512 o meno per la descrizione",
       "TITLE_TOO_LONG": "Utilizzare 256 caratteri o meno per il titolo",
-      "ILLEGAL_CHARACTERS": "Utilizzare solo lettere e numeri"
+      "TITLE_TOO_SHORT": "Il titolo deve contenere almeno 2 caratteri",
+      "ILLEGAL_CHARACTERS": "Utilizzare solo lettere e numeri",
+      "ONLY_SPACES": "Il nome della raccolta non può contenere solo spazi",
+      "LIBRARY_UPDATE_ERROR": "Si è verificato un errore di caricamento delle proprietà della raccolta"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Proprietà della raccolta aggiornate"
     }
   }
 }
