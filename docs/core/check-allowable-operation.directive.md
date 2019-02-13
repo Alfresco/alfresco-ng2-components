@@ -1,11 +1,11 @@
 ---
-Title: Node Permission directive
+Title: Check Allowable Operation directive
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-20
+Last reviewed: 2019-02-13
 ---
 
-# [Node Permission directive](../../lib/core/directives/node-permission.directive.ts "Defined in node-permission.directive.ts")
+# [Check Allowable Operation directive](../../lib/core/directives/check-allowable-operation.directive.ts "Defined in check-allowable-operation.directive.ts")
 
 Selectively disables an HTML element or Angular component.
 
@@ -17,7 +17,7 @@ Selectively disables an HTML element or Angular component.
 -   [Details](#details)
     -   [HTML element example](#html-element-example)
     -   [Angular component example](#angular-component-example)
-    -   [Implementing the NodePermissionSubject interface](#implementing-the-nodepermissionsubject-interface)
+    -   [Implementing the NodeAllowableOperationSubject interface](#implementing-the-nodeallowableoperationsubject-interface)
     -   [Defining your component as an EXTENDIBLE_COMPONENT parent component](#defining-your-component-as-an-extendible_component-parent-component)
 
 ## Basic Usage
@@ -47,7 +47,7 @@ Selectively disables an HTML element or Angular component.
 
 ## Details
 
-The [Node Permission directive](../core/node-permission.directive.md) lets you disable an HTML element or Angular component
+The [Check Allowable Operation Directive](../core/check-allowable-operation.directive.md) lets you disable an HTML element or Angular component
 by taking a collection of [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md) instances and checking their permissions.
 
 The decorated element will be disabled if:
@@ -59,8 +59,7 @@ The decorated element will be disabled if:
 
 A typical use case is to bind a [Document List](../content-services/document-list.component.md)
 selection property to a toolbar button. In the following example, the "Delete" button should
-be disabled if no selection is present or if user does not have permission to delete at least one
-node in the selection:
+be disabled if no selection is present or if user does not have permission to delete at least one node in the selection:
 
 ```html
 <adf-toolbar title="toolbar example">
@@ -81,7 +80,7 @@ one or more documents that they have permission to delete.
 
 ### Angular component example
 
-You can add the directive to any Angular component that implements the [`NodePermissionSubject`](../../lib/core/directives/node-permission.directive.ts)
+You can add the directive to any Angular component that implements the [`NodeAllowableOperationSubject`](../../lib/core/directives/check-allowable-operation.directive.ts)
 interface (the [Upload Drag Area component](../content-services/upload-drag-area.component.md),
 for example). You can also use it in much the same way as you would with an HTML element:
 
@@ -96,21 +95,21 @@ for example). You can also use it in much the same way as you would with an HTML
 ```
 
 To enable your own component to work with this directive, you need to implement the
-[`NodePermissionSubject`](../../lib/core/directives/node-permission.directive.ts) interface and also define it as an
+[`NodeAllowableOperationSubject`](../../lib/core/directives/check-allowable-operation.directive.ts) interface and also define it as an
 [`EXTENDIBLE_COMPONENT`](../../lib/core/interface/injection.tokens.ts)
 parent component,
 as described in the following sections.
 
-### Implementing the NodePermissionSubject interface
+### Implementing the NodeAllowableOperationSubject interface
 
-The component must implement the [`NodePermissionSubject`](../../lib/core/directives/node-permission.directive.ts) interface which means it must have a
+The component must implement the [`NodeAllowableOperationSubject`](../../lib/core/directives/check-allowable-operation.directive.ts) interface which means it must have a
 boolean `disabled` property. This is the property that will be set by the directive:
 
 ```js
 import { NodePermissionSubject } from '@alfresco/adf-core';
 
 @Component({...})
-export class UploadDragAreaComponent implements NodePermissionSubject {
+export class UploadDragAreaComponent implements NodeAllowableOperationSubject {
     public disabled: boolean = false;
 }
 ```
@@ -134,8 +133,7 @@ import { EXTENDIBLE_COMPONENT } from '@alfresco/adf-core';
         { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent)}
     ]
 })
-export class UploadDragAreaComponent implements NodePermissionSubject { ... }
+export class UploadDragAreaComponent implements NodeAllowableOperationSubject { ... }
 ```
 
-**Note:** the usage of **viewProviders** (instead of **providers**) is very important, especially
-if you want to use this directive on a transcluded component.
+**Note:** the usage of **viewProviders** (instead of **providers**) is very important, especially if you want to use this directive on a transcluded component.
