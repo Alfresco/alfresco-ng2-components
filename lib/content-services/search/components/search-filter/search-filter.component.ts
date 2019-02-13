@@ -174,7 +174,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             this.responseFacets = this.responseFacets
                 .map((field) => {
 
-                    let responseField = (context.facets || []).find((response) => response.label === field.label && response.type === field.type);
+                    let responseField = (context.facets || []).find((response) => this.queryBuilder.isSameValueLabels(response.label, field.label) && response.type === field.type);
 
                     (field && field.buckets && field.buckets.items || [])
                         .map((bucket) => {
@@ -191,7 +191,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private parseFacetItems(context: ResultSetContext, configFacetFields, itemType): FacetField[] {
         return configFacetFields.map((field) => {
-            const responseField = (context.facets || []).find((response) => response.type === itemType && response.label === field.label) || {};
+            const responseField = (context.facets || []).find((response) => response.type === itemType && this.queryBuilder.isSameValueLabels(response.label, field.label)) || {};
             const responseBuckets = this.getResponseBuckets(responseField)
                 .filter(this.getFilterByMinCount(field.mincount));
 

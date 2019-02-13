@@ -173,7 +173,7 @@ export class SearchQueryBuilderService {
     getFacetField(label: string): FacetField {
         if (label) {
             const fields = this.config.facetFields.fields || [];
-            const result = fields.find((field) => field.label === label);
+            const result = fields.find((field) => this.isSameValueLabels(field.label, label));
             if (result) {
                 return { ...result };
             }
@@ -383,5 +383,12 @@ export class SearchQueryBuilderService {
         }
 
         return null;
+    }
+
+    isSameValueLabels(label1: string, label2: string) {
+        const wrappingQuotes = /^\"|\"$/g;
+        const cleanLabel1 = label1.replace(wrappingQuotes, '');
+        const cleanLabel2 = label2.replace(wrappingQuotes, '');
+        return cleanLabel1 === cleanLabel2;
     }
 }
