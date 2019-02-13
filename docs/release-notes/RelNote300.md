@@ -60,7 +60,7 @@ Below are the most important new features of this release:
 -   [Create Library Component](#create-library-component)
 -   [Tree view component](#tree-view-component)
 -   [Deprecation removal](#deprecation-removal)
--   [Activiti 7 and APS 2 support (experimental)](#activiti-7-and-aps-2-support-experimental)
+-   [Activiti 7 support (experimental)](#activiti-7-support-experimental)
 
 ### Extensibility
 
