@@ -193,7 +193,7 @@ export class ContentService {
             if (permission === PermissionsEnum.CONSUMER) {
                 hasPermissions = true;
             } else if (permission === PermissionsEnum.NOT_CONSUMER) {
-                hasPermissions = false
+                hasPermissions = false;
             } else if (permission && permission.startsWith('!')) {
                 hasPermissions = true;
             }
