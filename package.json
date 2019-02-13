@@ -55,6 +55,12 @@
     "process services-cloud"
   ],
   "dependencies": {
+    "@alfresco/adf-content-services": "3.0.0",
+    "@alfresco/adf-core": "3.0.0",
+    "@alfresco/adf-extensions": "3.0.0",
+    "@alfresco/adf-insights": "3.0.0",
+    "@alfresco/adf-process-services": "3.0.0",
+    "@alfresco/adf-process-services-cloud": "3.0.0",
     "@alfresco/js-api": "3.0.0",
     "@angular/animations": "7.0.3",
     "@angular/cdk": "7.0.3",
