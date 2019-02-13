@@ -352,6 +352,7 @@ export class SearchQueryBuilderService {
         if (this.userFacetBuckets) {
             Object.keys(this.userFacetBuckets).forEach((key) => {
                 const subQuery = (this.userFacetBuckets[key] || [])
+                    .filter((bucket) => bucket.filterQuery)
                     .map((bucket) => bucket.filterQuery)
                     .join(' OR ');
                 if (subQuery) {

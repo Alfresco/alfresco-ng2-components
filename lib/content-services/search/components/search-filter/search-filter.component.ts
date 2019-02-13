@@ -192,7 +192,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private parseFacetItems(context: ResultSetContext, configFacetFields, itemType): FacetField[] {
         return configFacetFields.map((field) => {
             const responseField = (context.facets || []).find((response) => response.type === itemType && this.queryBuilder.isSameValueLabels(response.label, field.label)) || {};
-            const responseBuckets = this.getResponseBuckets(responseField)
+            const responseBuckets = this.getResponseBuckets(responseField, field.field)
                 .filter(this.getFilterByMinCount(field.mincount));
 
             const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
@@ -270,10 +270,11 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         return result;
     }
 
-    private getResponseBuckets(responseField: GenericFacetResponse): FacetFieldBucket[] {
+    private getResponseBuckets(responseField: GenericFacetResponse, configField: string): FacetFieldBucket[] {
         return ((responseField && responseField.buckets) || []).map((respBucket) => {
 
             respBucket['count'] = this.getCountValue(respBucket);
+            respBucket.filterQuery = respBucket.filterQuery || this.getCorrespondingFilterQuery(configField, respBucket.label);
             return <FacetFieldBucket> {
                 ...respBucket,
                 checked: false,
@@ -311,5 +312,12 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             }
             return bucket.count >= mincount;
         };
+    }
+
+    private getCorrespondingFilterQuery (field: string, bucketLabel: string): string {
+        if (!field || !bucketLabel) {
+            return null;
+        }
+        return `${field}:"${bucketLabel}"`;
     }
 }
