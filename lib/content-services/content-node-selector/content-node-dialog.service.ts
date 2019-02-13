@@ -104,9 +104,7 @@ export class ContentNodeDialogService {
      * @returns Information about the selected folder(s)
      */
     openFolderBrowseDialogBySite(): Observable<Node[]> {
-        return this.siteService.getSites().pipe(switchMap((response: SitePaging) => {
-            return this.openFolderBrowseDialogByFolderId(response.list.entries[0].entry.guid);
-        }));
+        return this.openFolderBrowseDialogByFolderId('-my-');
     }
 
     /**
