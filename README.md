@@ -16,7 +16,6 @@
   </a>
 </p>
 
-
 ## Introduction
 
 See the [Introduction page](INTRODUCTION.md) to get started with the Alfresco Application Development Framework.
