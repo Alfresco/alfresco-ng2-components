@@ -2,7 +2,7 @@
 Title: Content service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-11-13
+Last reviewed: 2019-02-13
 ---
 
 # [Content service](../../lib/core/services/content.service.ts "Defined in content.service.ts")
@@ -56,14 +56,10 @@ Accesses app-generated data objects via URLs and file downloads.
     Gets content for the given node.
     -   _nodeId:_ `string`  - ID of the target node
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Content data
--   **hasAllowableOperations**(node: `any`): `boolean`<br/>
-    Checks if the node has the properties allowableOperations
-    -   _node:_ `any`  - Node to check allowableOperations
-    -   **Returns** `boolean` - True if the node has the property, false otherwise
--   **hasAllowableOperations**(node: `Node`, permission: [`AllowableOperationsEnum`](../../lib/core/models/allowable-operations.enum.ts)`|string`): `boolean`<br/>
+-   **hasAllowableOperations**(node: `Node`, allowableOperation: [`AllowableOperationsEnum`](../../lib/core/models/allowable-operations.enum.ts)`|string`): `boolean`<br/>
     Checks if the user has permissions on that node
     -   _node:_ `Node`  - Node to check allowableOperations
-    -   _permission:_ [`AllowableOperationsEnum`](../../lib/core/models/allowable-operations.enum.ts)`|string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
+    -   _allowableOperation:_ [`AllowableOperationsEnum`](../../lib/core/models/allowable-operations.enum.ts)`|string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
     -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
 
 ## Details

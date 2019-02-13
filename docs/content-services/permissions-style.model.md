@@ -2,6 +2,7 @@
 Title: Permission Style model
 Added: v2.0.0
 Status: Active
+Last reviewed: 2019-02-13
 ---
 
 # [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts "Defined in permissions-style.model.ts")
@@ -28,7 +29,7 @@ and can be applied separately to files and folders by setting `isFile` and `isFo
 
 ### Permissions enum
 
-The [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/models/allowable-operations.enum.ts)
+The [Allowable Operations](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/models/allowable-operations.enum.ts)
 enum contains all the valid permissions for which you can apply custom styles: **DELETE**, **UPDATE**,
 **CREATE**, **UPDATEPERMISSIONS**, **NOT_DELETE**, **NOT_UPDATE**, **NOT_CREATE**, **NOT_UPDATEPERMISSIONS**.
 
