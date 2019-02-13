@@ -22,7 +22,7 @@ If you want to be updated on the [ADF roadmap](../roadmap.md), check the public 
     -   [JS-API in Typescript](#js-api-in-typescript)
     -   [Angular 7](#angular-7)
     -   [Deprecation removal](#deprecation-removal)
-    -   [Activiti 7 and APS 2 support](#activiti-7-and-aps-2-support-experimental)
+    -   [Activiti 7 support](#activiti-7-support-experimental)
     -   [Icon Component](#icon-component)
 -   [Localization](#localization)
 -   [References](#references)
@@ -44,9 +44,9 @@ If you want to be updated on the [ADF roadmap](../roadmap.md), check the public 
 
 ## Goals for this release
 
-This is a major release of the Alfresco Application Development Framework, developed to speed up the applications in production environments, thanks to a porting of the [JS-API](https://github.com/Alfresco/alfresco-js-api) to Typescript. All the benefits of [Extensibility](../user-guide/app-extensions.md), initially introduced in [Alfresco Content Application (ACA)](https://github.com/Alfresco/alfresco-content-app) and the Alfresco Digital Workspace (ADW), are now available at the framework level and more enhancements are planned to be introduced in the following releases.
+This is a major release of the Alfresco Application Development Framework, developed to speed up the applications running in production environments, thanks to a porting of the [JS-API](https://github.com/Alfresco/alfresco-js-api) to Typescript. All the benefits of [Extensibility](../user-guide/app-extensions.md), initially introduced in [Alfresco Content Application (ACA)](https://github.com/Alfresco/alfresco-content-app) and the Alfresco Digital Workspace (ADW), are now available at the framework level and more enhancements are planned to be introduced in the following releases.
 
-This new major version of ADF has been updated to the latest and greatest [Angular 7](https://angular.io/), together with a first iteration on supporting [Activiti 7](https://www.activiti.org/) and the next generation of Alfresco BPM Engines. Also the [Yeoman App Generator](https://github.com/Alfresco/generator-ng2-alfresco-app) has been updated to let you create five small [Angular CLI](https://cli.angular.io/) based applications to help get you started: one on content only, two on process only (on the current generation of Alfresco BPM Engine and one with the new ones), two on content and process (again, using the current and next generations of the Alfresco BPM Engines).
+This new major version of ADF has been updated to the latest and greatest [Angular 7](https://angular.io/), together with a first iteration of support for [Activiti 7](https://www.activiti.org/), the next generation Cloud Native implementation of Activiti. Also the [Yeoman App Generator](https://github.com/Alfresco/generator-ng2-alfresco-app) has been updated to let you create five small [Angular CLI](https://cli.angular.io/) based applications to help get you started: one on content only, two on process only (using APS 1.6.4 or higher or using Activiti 7), two on content and process.
 
 Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
 
@@ -160,11 +160,11 @@ Shows the folder and subfolders of a node as a tree view. For more information a
 
 Following the [SEMVER 2.0](https://semver.org/) strategy, ADF 3.0.0 introduces breaking changes only in major versions like this one. For this reason, all the features, components and services, marked as deprecated in ADF 2.X, have been removed.
 
-### Activiti 7 and APS 2 support (Experimental)
+### Activiti 7 support (Experimental)
 
-From ADF 3.0.0, Alfresco is introducing support for the new generation of BPM Engines, in both the **Open Source** and **Enterprise** editions. This is a first iteration and more coverage of the services will be added in the following versions of ADF. This is the reason why this support is marked as **experimental** for this release.
+From ADF 3.0.0, Alfresco is excited to announce ADF support for [Activiti 7](https://www.activiti.org/). This is a first iteration and more coverage of the services will be added in the following versions of ADF. This is the reason why this support is marked as **experimental** for this release. The next release (3.1) plans on moving from experimental to standard ADF components with more complete coverage. 
 
-This release of ADF introduces a collection of brand new components re-designed and implemented from scratch to be compliant with [Activiti 7](https://www.activiti.org/) and the new Enterprise Alfresco BPM Engine (powered by [Activiti 7](https://www.activiti.org/)).
+This ADF release introduces a collection of brand new components re-designed and implemented from scratch for  [Activiti 7](https://www.activiti.org/).
 
 Below is a list of all new components services and pipes added along with
 links to documentation and source code: 
