@@ -118,10 +118,11 @@ export class ProcessContentService {
     /**
      * Gets related content items for a task instance.
      * @param taskId ID of the target task
+     * @param opts Options supported by JS-API
      * @returns Metadata for the content
      */
-    getTaskRelatedContent(taskId: string): Observable<any> {
-        return from(this.contentApi.getRelatedContentForTask(taskId))
+    getTaskRelatedContent(taskId: string, opts?: any): Observable<any> {
+        return from(this.contentApi.getRelatedContentForTask(taskId, opts))
             .pipe(catchError((err) => this.handleError(err)));
     }
 

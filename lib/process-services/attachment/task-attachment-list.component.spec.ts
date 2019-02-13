@@ -277,7 +277,7 @@ describe('TaskAttachmentList', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 component.ngOnChanges({ 'taskId': change });
-                expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456');
+                expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456', 'true');
                 done();
             });
         });
