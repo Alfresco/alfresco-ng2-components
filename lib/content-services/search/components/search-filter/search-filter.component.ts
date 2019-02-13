@@ -320,4 +320,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
         return `${field}:"${bucketLabel}"`;
     }
+
+    getCleanLabel(label: string) {
+        const wrappingQuotes = /^\"|\"$/g;
+        return label.replace(wrappingQuotes, '');
+    }
 }
