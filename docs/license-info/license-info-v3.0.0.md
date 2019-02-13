@@ -4,7 +4,8 @@ Title: License info, ADF v3.0.0
 
 # License information for ADF v3.0.0
 
-This page lists all third party libraries that ADF v3.0.0 depends on.
+This page lists all third party libraries that ADF v3.0.0 depends on, along
+with links to their licenses.
 
 ## Libraries
 
