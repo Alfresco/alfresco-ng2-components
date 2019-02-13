@@ -167,6 +167,16 @@ describe('ContentService', () => {
             let permissionNode = new Node({ permissions: { locallySet: [{ name: 'collaborator' }, { name: 'consumer' }] } });
             expect(contentService.hasPermissions(permissionNode, null)).toBeFalsy();
         });
+
+        it('should havePermission return true if the permissions is empty and the permission to check is Consumer', () => {
+            let permissionNode = new Node({ permissions: [] });
+            expect(contentService.hasPermissions(permissionNode, 'Consumer')).toBeTruthy();
+        });
+
+        it('should havePermission return false if the permissions is empty and the permission to check is not Consumer', () => {
+            let permissionNode = new Node({ permissions: [] });
+            expect(contentService.hasPermissions(permissionNode, '!Consumer')).toBeFalsy();
+        });
     });
 
     describe('Download blob', () => {

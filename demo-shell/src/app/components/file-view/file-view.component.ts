@@ -52,7 +52,7 @@ export class FileViewComponent implements OnInit {
     showLeftSidebar = null;
     showRightSidebar = false;
     customToolbar = false;
-    isCommentEnabled = true;
+    isCommentDisabled = false;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -68,7 +68,7 @@ export class FileViewComponent implements OnInit {
                 this.nodeApiService.getNode(id).subscribe(
                     (node) => {
                         if (node && node.isFile) {
-                            this.isCommentEnabled = !this.contentServices.hasPermissions(node, PermissionsEnum.NOT_CONSUMER);
+                            this.isCommentDisabled = this.contentServices.hasPermissions(node, PermissionsEnum.CONSUMER);
                             this.nodeId = id;
                             return;
                         }

@@ -21,8 +21,12 @@ export class PermissionsEnum extends String {
     static CONSUMER: string = 'Consumer';
     static COLLABORATOR: string = 'Collaborator';
     static MANAGER: string = 'Manager';
+    static EDITOR: string = 'Editor';
+    static COORDINATOR: string = 'Coordinator';
     static NOT_CONTRIBUTOR: string = '!Contributor';
     static NOT_CONSUMER: string = '!Consumer';
     static NOT_COLLABORATOR: string = '!Collaborator';
     static NOT_MANAGER: string = '!Manager';
+    static NOT_EDITOR: string = '!Editor';
+    static NOT_COORDINATOR: string = '!Coordinator';
 }
