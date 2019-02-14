@@ -19,7 +19,7 @@ import { LoginPage } from '../pages/adf/loginPage';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
 import { PaginationPage } from '../pages/adf/paginationPage';
-import { DocumentListPage } from '../pages/adf/dialog/documentListPage';
+import { DocumentListPage } from '../pages/adf/content-services/documentListPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
@@ -149,7 +149,7 @@ describe('Search Filters', () => {
 
         let bucketNumberForFilter = searchFiltersPage.fileTypeCheckListFiltersPage().getBucketNumberOfFilterType(filter.type);
 
-        let resultFileNames = contentList.getAllRowsNameColumn();
+        let resultFileNames = contentList.getAllRowsColumnValues('Display name');
 
         expect(bucketNumberForFilter).not.toEqual('0');
 

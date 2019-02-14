@@ -137,8 +137,8 @@ describe('Process list cloud', () => {
 
             processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
 
-            expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllDisplayedRows()).toBe(1);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedProcess.entry.id);
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().numberOfRows()).toBe(1);
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
 
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();

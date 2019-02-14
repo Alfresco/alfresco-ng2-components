@@ -22,12 +22,12 @@ import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
-import { TaskListCloudConfiguration } from './taskListCloud.config';
 
 import { Util } from '../util/util';
-import moment = require('moment');
 
 import { Tasks } from '../actions/APS-cloud/tasks';
+import { browser } from 'protractor';
+
 describe('Task list cloud - selection', () => {
 
     describe('Task list cloud - selection', () => {
@@ -67,60 +67,88 @@ describe('Task list cloud - selection', () => {
             done();
         });
 
+        afterEach(async (done) => {
+            await browser.refresh();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+            done();
+        });
+
         it('[C291914] Should not be able to select any row when selection mode is set to None', () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('None');
+            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
             tasksCloudDemoPage.clickAppButton();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByRowName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[0]);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkNoRowIsSelected();
         });
 
         it('[C291918] Should be able to select only one row when selection mode is set to Single', () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Single');
+            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
             tasksCloudDemoPage.clickAppButton();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByRowName(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsSelectedByName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[0]);
             expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByRowName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsSelectedByName(tasks[1]);
+
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[1]);
             expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
         });
 
         it('[C291919] Should be able to select only one row when selection mode is set to Multiple', () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Multiple');
+            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
             tasksCloudDemoPage.clickAppButton();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByRowName(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsSelectedByName(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByNameWithKeyboard(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsSelectedByName(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsSelectedByName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsNotSelectedByName(tasks[2]);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[0]);
+
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().selectRowWithKeyboard(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().checkRowIsSelected(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().checkRowIsNotSelected(tasks[2]);
         });
 
         it('[C291916] Should be able to select multiple row when multiselect is true', () => {
             tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
+            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
             tasksCloudDemoPage.clickAppButton();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsNotCheckedByName(tasks[2]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsNotCheckedByName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[0]);
+
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[1]);
+
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[2]);
+            tasksCloudDemoPage.taskListCloudComponent().checkRowIsNotChecked(tasks[2]);
+            tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().checkRowIsNotChecked(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[0]);
         });
 
         it('[C291915] Should be possible select all the rows when multiselect is true', () => {
             tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
+            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
             tasksCloudDemoPage.clickAppButton();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed().checkAllRows();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[2]);
+            tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[2]);
         });
 
     });

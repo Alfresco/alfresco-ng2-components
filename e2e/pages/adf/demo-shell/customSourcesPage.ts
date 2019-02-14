@@ -17,7 +17,7 @@
 
 import { Util } from '../../../util/util';
 import { element, by } from 'protractor';
-import { ContentListPage } from '../dialog/contentListPage';
+import { DataTableComponentPage } from '../dataTableComponentPage';
 import { NavigationBarPage } from '../navigationBarPage';
 
 let source = {
@@ -38,7 +38,7 @@ let column = {
 
 export class CustomSources {
 
-    contentList = new ContentListPage();
+    dataTable = new DataTableComponentPage();
     navigationBarPage = new NavigationBarPage();
 
     toolbar = element(by.css('app-custom-sources .adf-toolbar-title'));
@@ -67,13 +67,13 @@ export class CustomSources {
     }
 
     checkRowIsDisplayed(rowName) {
-        let row = this.contentList.getRowsName(rowName);
-        Util.waitUntilElementIsVisible(row);
+        return this.dataTable.checkContentIsDisplayed('Name', rowName);
     }
 
     getStatusCell(rowName) {
-        Util.waitUntilElementIsVisible(this.contentList.getCellByNameAndColumn(rowName, column.status));
-        return this.contentList.getCellByNameAndColumn(rowName, column.status).getText();
+        let cell = this.dataTable.getCellByRowAndColumn('Name', rowName, column.status);
+        Util.waitUntilElementIsVisible(cell);
+        return cell.getText();
     }
 
 }

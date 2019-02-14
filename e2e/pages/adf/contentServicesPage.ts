@@ -20,7 +20,6 @@ import { Util } from '../../util/util';
 import { DocumentListPage } from './content-services/documentListPage';
 import { CreateFolderDialog } from './dialog/createFolderDialog';
 import { CreateLibraryDialog } from './dialog/createLibraryDialog';
-import { NavigationBarPage } from './navigationBarPage';
 import { NodeActions } from '../../actions/ACS/node.actions';
 import { DropActions } from '../../actions/drop.actions';
 import { by, element, protractor, $$, browser } from 'protractor';
@@ -29,13 +28,12 @@ import path = require('path');
 
 export class ContentServicesPage {
 
-    contentList = new DocumentListPage();
+    contentList = new DocumentListPage(element.all(by.css('adf-upload-drag-area adf-document-list')).first());
     createFolderDialog = new CreateFolderDialog();
     nodeActions = new NodeActions();
     createLibraryDialog = new CreateLibraryDialog();
     dragAndDropAction = new DropActions();
     uploadBorder = element(by.id('document-list-container'));
-    tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
     contentServices = element(by.css('a[data-automation-id="Content Services"]'));
     currentFolder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
     createFolderButton = element(by.css('button[data-automation-id="create-new-folder"]'));
@@ -76,18 +74,30 @@ export class ContentServicesPage {
     copyContentElement = element(by.css('button[data-automation-id*="COPY"]'));
     lockContentElement = element(by.css('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]'));
     downloadContent = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
-	siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-select']`));
+    siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
+
+    pressContextMenuActionNamed(actionName) {
+        let actionButton = this.checkContextActionIsVisible(actionName);
+        actionButton.click();
+    }
+
+    checkContextActionIsVisible(actionName) {
+        let actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
+        Util.waitUntilElementIsVisible(actionButton);
+        Util.waitUntilElementIsClickable(actionButton);
+        return actionButton;
+    }
+
+    getDocumentList() {
+        return this.contentList;
+    }
 
     checkLockedIcon(content) {
-        let lockIcon = element(by.cssContainingText('div[filename="' + content + '"] mat-icon', 'lock'));
-        Util.waitUntilElementIsVisible(lockIcon);
-        return this;
+        return this.contentList.checkLockedIcon(content);
     }
 
     checkUnlockedIcon(content) {
-        let lockIcon = element(by.cssContainingText('div[filename="' + content + '"] mat-icon', 'lock_open'));
-        Util.waitUntilElementIsVisible(lockIcon);
-        return this;
+        return this.contentList.checkUnlockedIcon(content);
     }
 
     checkDeleteIsDisabled(content) {
@@ -121,14 +131,8 @@ export class ContentServicesPage {
     }
 
     lockContent(content) {
-        this.contentList.clickOnActionMenuWithRoot(content);
+        this.contentList.clickOnActionMenu(content);
         this.lockContentElement.click();
-    }
-
-    deleteContentWithRoot(content) {
-        this.contentList.clickOnActionMenuWithRoot(content);
-        this.waitForContentOptions();
-        this.deleteContentElement.click();
     }
 
     waitForContentOptions() {
@@ -136,10 +140,6 @@ export class ContentServicesPage {
         Util.waitUntilElementIsVisible(this.moveContentElement);
         Util.waitUntilElementIsVisible(this.deleteContentElement);
         Util.waitUntilElementIsVisible(this.downloadContent);
-    }
-
-    getUploadAreaDocumentList() {
-        return new ContentListPage(element(by.css('adf-upload-drag-area')));
     }
 
     clickFileHyperlink(fileName) {
@@ -164,45 +164,11 @@ export class ContentServicesPage {
     }
 
     getElementsDisplayedCreated() {
-        let deferred = protractor.promise.defer();
-        let fileCreatedLocator = this.contentList.dataTablePage().getColumnLocator('Created');
-        let allFilesCreated = element.all(fileCreatedLocator);
-        Util.waitUntilElementIsVisible(allFilesCreated.first());
-        let initialList = [];
-
-        allFilesCreated.each((item) => {
-            item.getAttribute('title').then((dateText) => {
-            if (dateText !== '') {
-                let date = new Date(dateText);
-                initialList.push(date);
-            }
-            });
-        }).then(function () {
-            deferred.fulfill(initialList);
-        });
-
-        return deferred.promise;
+        return this.contentList.dataTablePage().getAllRowsColumnValues('Created');
     }
 
     getElementsDisplayedSize() {
-        let deferred = protractor.promise.defer();
-        let fileSizeLocator = this.contentList.dataTablePage().getColumnLocator('Size');
-        let allSizes = element.all(fileSizeLocator);
-        Util.waitUntilElementIsVisible(allSizes.first());
-        let initialList = [];
-
-        allSizes.each((item) => {
-            item.getAttribute('title').then((sizeText) => {
-                if (sizeText !== '') {
-                    let size = Number(sizeText);
-                    initialList.push(size);
-                }
-            });
-        }).then(function () {
-            deferred.fulfill(initialList);
-        });
-
-        return deferred.promise;
+        return this.contentList.dataTablePage().getAllRowsColumnValues('Size');
     }
 
     getElementsDisplayedAuthor(alfrescoJsApi) {
@@ -211,7 +177,7 @@ export class ContentServicesPage {
         let idList = this.getElementsDisplayedId();
         let numberOfElements = this.numberOfResultsDisplayed();
         this.nodeActions.getNodesDisplayed(alfrescoJsApi, idList, numberOfElements).then((nodes) => {
-            nodes.each((item) => {
+            nodes.forEach((item) => {
                 item.entry.createdByUser.id.then((author) => {
                     if (author !== '') {
                         initialList.push(author);
@@ -226,43 +192,11 @@ export class ContentServicesPage {
     }
 
     getElementsDisplayedName() {
-        let deferred = protractor.promise.defer();
-        let fileNameLocator = this.contentList.dataTablePage().getColumnLocator('Display name');
-        let allFilesNames = element.all(fileNameLocator);
-        Util.waitUntilElementIsVisible(allFilesNames.first());
-        let initialList = [];
-
-        allFilesNames.each((item) => {
-            item.getText().then((name) => {
-                if (name !== '') {
-                    initialList.push(name);
-                }
-            });
-        }).then(function () {
-            deferred.fulfill(initialList);
-        });
-
-        return deferred.promise;
+        return this.contentList.dataTablePage().getAllRowsColumnValues('Display name');
     }
 
     getElementsDisplayedId() {
-        let deferred = protractor.promise.defer();
-        let fileIdLocator = this.contentList.dataTablePage().getColumnLocator('Node id');
-        let allFilesId = element.all(fileIdLocator);
-        Util.waitUntilElementIsVisible(allFilesId.first());
-        let initialList = [];
-
-        allFilesId.each((item) => {
-            item.getText().then(function (text) {
-                if (text !== '') {
-                    initialList.push(text);
-                }
-            });
-        }).then(function () {
-            deferred.fulfill(initialList);
-        });
-
-        return deferred.promise;
+        return this.contentList.dataTablePage().getAllRowsColumnValues('Node id');
     }
 
     checkElementsSortedAsc(elements) {
@@ -337,7 +271,7 @@ export class ContentServicesPage {
     }
 
     waitForTableBody() {
-        Util.waitUntilElementIsVisible(this.tableBody);
+        this.contentList.waitForTableBody();
     }
 
     goToDocumentList() {
@@ -352,14 +286,8 @@ export class ContentServicesPage {
         this.contentServices.click();
     }
 
-    navigateToDocumentList() {
-        let navigationBarPage = new NavigationBarPage();
-        navigationBarPage.clickContentServicesButton();
-        this.checkAcsContainer();
-    }
-
     numberOfResultsDisplayed() {
-        return this.contentList.dataTablePage().getAllDisplayedRows();
+        return this.contentList.dataTablePage().numberOfRows();
     }
 
     currentFolderName() {
@@ -372,7 +300,7 @@ export class ContentServicesPage {
     }
 
     getAllRowsNameColumn() {
-        return this.contentList.getAllRowsNameColumn();
+        return this.contentList.getAllRowsColumnValues('Display name');
     }
 
     sortByName(sortOrder) {
@@ -430,13 +358,8 @@ export class ContentServicesPage {
         return deferred.promise;
     }
 
-    navigateToFolder(folder) {
-        this.contentList.navigateToFolder(folder);
-        return this;
-    }
-
-    doubleClickRow(folder) {
-        this.contentList.dataTablePage().doubleClickRow(folder);
+    doubleClickRow(nodeName) {
+        this.contentList.doubleClickRow(nodeName);
         return this;
     }
 
@@ -462,7 +385,7 @@ export class ContentServicesPage {
     }
 
     checkContentIsDisplayed(content) {
-        this.contentList.dataTablePage().checkContentIsDisplayed(content);
+        this.contentList.dataTablePage().checkContentIsDisplayed('Display name', content);
         return this;
     }
 
@@ -474,7 +397,7 @@ export class ContentServicesPage {
     }
 
     checkContentIsNotDisplayed(content) {
-        this.contentList.dataTablePage().checkContentIsNotDisplayed(content);
+        this.contentList.dataTablePage().checkContentIsNotDisplayed('Display name', content);
         return this;
     }
 
@@ -624,7 +547,7 @@ export class ContentServicesPage {
     }
 
     getColumnValueForRow(file, columnName) {
-        return this.contentList.dataTablePage().getColumnValueForRow(file, columnName);
+        return this.contentList.dataTablePage().getColumnValueForRow('Display name', file, columnName);
     }
 
     async getStyleValueForRowText(rowName, styleName) {
@@ -724,7 +647,7 @@ export class ContentServicesPage {
     }
 
     checkRowIsDisplayed(rowName) {
-        let row = this.contentList.dataTablePage().getRowByRowName(rowName);
+        let row = this.contentList.dataTablePage().getRow('Display name', rowName);
         Util.waitUntilElementIsVisible(row);
     }
 

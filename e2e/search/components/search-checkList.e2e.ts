@@ -16,8 +16,8 @@
  */
 
 import { LoginPage } from '../../pages/adf/loginPage';
+import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
-import { DocumentListPage } from '../../pages/adf/content-services/documentListPage';
 import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
@@ -37,10 +37,10 @@ describe('Search Checklist Component', () => {
 
     const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
-    const contentList =  new DocumentListPage();
     const configEditorPage = new ConfigEditorPage();
     const navigationBarPage = new NavigationBarPage();
     const searchDialog = new SearchDialog();
+    const searchResults = new SearchResultsPage();
 
     let acsUser = new AcsUserModel();
     let uploadActions = new UploadActions();
@@ -106,29 +106,29 @@ describe('Search Checklist Component', () => {
         searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
         searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
 
-        contentList.dataTablePage().checkContentIsDisplayed(nodeNames.folder);
-        contentList.dataTablePage().checkContentIsNotDisplayed(nodeNames.document);
+        searchResults.checkContentIsDisplayed(nodeNames.folder);
+        searchResults.checkContentIsNotDisplayed(nodeNames.document);
 
         searchFiltersPage.checkListFiltersPage().clickClearAllButton();
         searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.folder);
 
-        contentList.dataTablePage().checkContentIsDisplayed(nodeNames.folder);
-        contentList.dataTablePage().checkContentIsDisplayed(nodeNames.document);
+        searchResults.checkContentIsDisplayed(nodeNames.folder);
+        searchResults.checkContentIsDisplayed(nodeNames.document);
 
         searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
         searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
         searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
         searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.document);
 
-        contentList.dataTablePage().checkContentIsDisplayed(nodeNames.folder);
-        contentList.dataTablePage().checkContentIsDisplayed(nodeNames.document);
+        searchResults.checkContentIsDisplayed(nodeNames.folder);
+        searchResults.checkContentIsDisplayed(nodeNames.document);
 
         searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
         searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.document);
         searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.folder);
 
-        contentList.dataTablePage().checkContentIsDisplayed(nodeNames.document);
-        contentList.dataTablePage().checkContentIsNotDisplayed(nodeNames.folder);
+        searchResults.checkContentIsDisplayed(nodeNames.document);
+        searchResults.checkContentIsNotDisplayed(nodeNames.folder);
     });
 
     describe('configuration change', () => {
@@ -325,13 +325,13 @@ describe('Search Checklist Component', () => {
             searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
             searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
 
-            contentList.dataTablePage().checkContentIsDisplayed(nodeNames.folder);
-            contentList.dataTablePage().checkContentIsNotDisplayed(nodeNames.document);
+            searchResults.checkContentIsDisplayed(nodeNames.folder);
+            searchResults.checkContentIsNotDisplayed(nodeNames.document);
 
             searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
 
-            contentList.dataTablePage().checkContentIsNotDisplayed(nodeNames.folder);
-            contentList.dataTablePage().checkContentIsNotDisplayed(nodeNames.document);
+            searchResults.checkContentIsNotDisplayed(nodeNames.folder);
+            searchResults.checkContentIsNotDisplayed(nodeNames.document);
 
             browser.refresh();
         });
@@ -355,14 +355,14 @@ describe('Search Checklist Component', () => {
 
             searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.custom);
 
-            contentList.dataTablePage().checkContentIsNotDisplayed(nodeNames.folder);
-            contentList.dataTablePage().checkContentIsNotDisplayed(nodeNames.document);
+            searchResults.checkContentIsNotDisplayed(nodeNames.folder);
+            searchResults.checkContentIsNotDisplayed(nodeNames.document);
 
             searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
             searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
 
-            contentList.dataTablePage().checkContentIsDisplayed(nodeNames.folder);
-            contentList.dataTablePage().checkContentIsDisplayed(nodeNames.document);
+            searchResults.checkContentIsDisplayed(nodeNames.folder);
+            searchResults.checkContentIsDisplayed(nodeNames.document);
         });
     });
 

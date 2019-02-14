@@ -16,7 +16,7 @@
  */
 
 import { Util } from '../../../../util/util';
-import { DataTablePage } from '../../dataTablePage';
+import { DataTableComponentPage } from '../../dataTableComponentPage';
 import { element, by, protractor } from 'protractor';
 
 export class ProcessListDemoPage {
@@ -29,7 +29,7 @@ export class ProcessListDemoPage {
     stateSelector = element(by.css('mat-select[data-automation-id="state"'));
     sortSelector = element(by.css('mat-select[data-automation-id="sort"'));
 
-    dataTable = new DataTablePage();
+    dataTable = new DataTableComponentPage();
 
     getDisplayedProcessesNames() {
         return this.dataTable.getAllRowsColumnValues('Name');
@@ -76,11 +76,11 @@ export class ProcessListDemoPage {
     }
 
     checkProcessIsNotDisplayed(processName) {
-        return this.dataTable.checkRowIsNotDisplayedByName(processName);
+        return this.dataTable.checkContentIsNotDisplayed('Name', processName);
     }
 
     checkProcessIsDisplayed(processName) {
-        return this.dataTable.checkRowIsDisplayedByName(processName);
+        return this.dataTable.checkContentIsDisplayed('Name', processName);
     }
 
     checkAppIdFieldIsDisplayed() {

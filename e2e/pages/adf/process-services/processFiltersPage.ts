@@ -18,11 +18,11 @@
 import { Util } from '../../../util/util';
 import { element, by } from 'protractor';
 import { StartProcessPage } from './startProcessPage';
-import { DataTablePage } from '../dataTablePage';
+import { DataTableComponentPage } from '../dataTableComponentPage';
 
 export class ProcessFiltersPage {
 
-    dataTable = new DataTablePage();
+    dataTable = new DataTableComponentPage();
     runningFilter = element(by.css('span[data-automation-id="Running_filter"]'));
     completedFilter = element(by.css('div[class="mat-list-text"] > span[data-automation-id="Completed_filter"]'));
     allFilter = element(by.css('span[data-automation-id="All_filter"]'));

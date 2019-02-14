@@ -91,7 +91,7 @@ describe('Document List - Pagination', function () {
 
     it('[C260062] Should use default pagination settings', function () {
         contentServicesPage.goToDocumentList();
-        contentServicesPage.navigateToFolder(newFolderModel.name);
+        contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
@@ -106,7 +106,7 @@ describe('Document List - Pagination', function () {
 
     it('[C274713] Should be able to set Items per page to 20', function () {
         contentServicesPage.goToDocumentList();
-        contentServicesPage.navigateToFolder(newFolderModel.name);
+        contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
@@ -133,7 +133,7 @@ describe('Document List - Pagination', function () {
 
     it('[C260069] Should be able to set Items per page to 5', function () {
         contentServicesPage.goToDocumentList();
-        contentServicesPage.navigateToFolder(newFolderModel.name);
+        contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.five);
@@ -189,7 +189,7 @@ describe('Document List - Pagination', function () {
     it('[C260067] Should be able to set Items per page to 10', function () {
         currentPage = 1;
         contentServicesPage.goToDocumentList();
-        contentServicesPage.navigateToFolder(newFolderModel.name);
+        contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
@@ -226,7 +226,7 @@ describe('Document List - Pagination', function () {
     it('[C260065] Should be able to set Items per page to 15', function () {
         currentPage = 1;
         contentServicesPage.goToDocumentList();
-        contentServicesPage.navigateToFolder(newFolderModel.name);
+        contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         expect(contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
@@ -259,7 +259,7 @@ describe('Document List - Pagination', function () {
 
     it('[C91320] Pagination should preserve sorting', function () {
         contentServicesPage.goToDocumentList();
-        contentServicesPage.navigateToFolder(newFolderModel.name);
+        contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         expect(contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
@@ -303,20 +303,20 @@ describe('Document List - Pagination', function () {
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        contentServicesPage.navigateToFolder(newFolderModel.name);
+        contentServicesPage.doubleClickRow(newFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         expect(contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         contentServicesPage.createNewFolder(folderTwoModel.name).checkContentIsDisplayed(folderTwoModel.name);
-        contentServicesPage.navigateToFolder(folderTwoModel.name);
+        contentServicesPage.doubleClickRow(folderTwoModel.name);
         contentServicesPage.checkPaginationIsNotDisplayed();
     });
 
     it('[C260071] Should be able to change pagination when having 25 files', function () {
         currentPage = 1;
         contentServicesPage.goToDocumentList();
-        contentServicesPage.navigateToFolder(folderThreeModel.name);
+        contentServicesPage.doubleClickRow(folderThreeModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         expect(contentServicesPage.getActiveBreadcrumb()).toEqual(folderThreeModel.name);

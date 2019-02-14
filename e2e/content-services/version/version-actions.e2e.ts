@@ -31,12 +31,14 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { Util } from '../../util/util';
 import path = require('path');
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Version component actions', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
+    const navigationBarPage = new NavigationBarPage();
 
     let acsUser = new AcsUserModel();
 
@@ -73,7 +75,8 @@ describe('Version component actions', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.navigateToDocumentList();
+        navigationBarPage.clickContentServicesButton();
+        contentServicesPage.waitForTableBody();
         contentServicesPage.versionManagerContent(txtFileModel.name);
 
         done();

@@ -16,7 +16,6 @@
  */
 
 import { Util } from '../../util/util';
-import { DocumentListPage } from './content-services/documentListPage';
 
 import { element, by, protractor, browser } from 'protractor';
 
@@ -134,7 +133,7 @@ export class TagPage {
 
     checkTagListIsOrderedAscending() {
         let deferred = protractor.promise.defer();
-        new DocumentListPage().checkListIsSorted(false, this.tagListRowLocator).then((result) => {
+        this.checkListIsSorted(false, this.tagListRowLocator).then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -142,7 +141,7 @@ export class TagPage {
 
     checkTagListByNodeIdIsOrderedAscending() {
         let deferred = protractor.promise.defer();
-        new DocumentListPage().checkListIsSorted(false, this.tagListByNodeIdRowLocator).then((result) => {
+        this.checkListIsSorted(false, this.tagListByNodeIdRowLocator).then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -150,8 +149,28 @@ export class TagPage {
 
     checkTagListContentServicesIsOrderedAscending() {
         let deferred = protractor.promise.defer();
-        new DocumentListPage().checkListIsSorted(false, this.tagListContentServicesRowLocator).then((result) => {
+        this.checkListIsSorted(false, this.tagListContentServicesRowLocator).then((result) => {
             deferred.fulfill(result);
+        });
+        return deferred.promise;
+    }
+
+    checkListIsSorted(sortOrder, locator) {
+        let deferred = protractor.promise.defer();
+        let tagList = element.all(locator);
+        Util.waitUntilElementIsVisible(tagList.first());
+        let initialList = [];
+        tagList.each(function (currentElement) {
+            currentElement.getText().then(function (text) {
+                initialList.push(text);
+            });
+        }).then(function () {
+            let sortedList = initialList;
+            sortedList = sortedList.sort();
+            if (sortOrder === false) {
+                sortedList = sortedList.reverse();
+            }
+            deferred.fulfill(initialList.toString() === sortedList.toString());
         });
         return deferred.promise;
     }

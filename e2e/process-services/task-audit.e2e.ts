@@ -16,8 +16,8 @@
  */
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
+import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 
 import CONSTANTS = require('../util/constants');
 
@@ -32,14 +32,15 @@ import { AppsActions } from '../actions/APS/apps.actions';
 
 import path = require('path');
 import { Util } from '../util/util';
+import { browser } from 'protractor';
 
 describe('Task Audit', () => {
 
     let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
     let processUserModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let taskPage = new TasksPage();
+    const processServices = new ProcessServicesPage();
     let taskTaskApp = 'Audit task task app';
     let taskCustomApp = 'Audit task custom app';
     let taskCompleteCustomApp = 'Audit completed task custom app';
@@ -72,23 +73,28 @@ describe('Task Audit', () => {
         done();
     });
 
+    beforeEach(async (done) => {
+        await browser.get(TestConfig.adf.url + '/activiti');
+        done();
+    });
+
     it('[C260386] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone running task', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        processServices.goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskTaskApp);
+        taskPage.tasksListPage().checkContentIsDisplayed(taskTaskApp);
 
         taskPage.taskDetails().clickAuditLogButton();
         expect(Util.fileExists(auditLogFile, 10)).toBe(true);
     });
 
     it('[C260389] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone completed task', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        processServices.goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskTaskApp);
+        taskPage.tasksListPage().checkContentIsDisplayed(taskTaskApp);
 
         taskPage.completeTaskNoForm();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName(taskTaskApp);
+        taskPage.tasksListPage().selectRow(taskTaskApp);
         expect(taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskTaskApp + ' completed');
 
         taskPage.taskDetails().clickAuditLogButton();
@@ -96,16 +102,16 @@ describe('Task Audit', () => {
     });
 
     it('[C263944] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone completed task', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        processServices.goToTaskApp().clickTasksButton();
 
         taskPage.createNewTask().addName(taskCompleteCustomApp).clickStartButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskCompleteCustomApp);
+        taskPage.tasksListPage().checkContentIsDisplayed(taskCompleteCustomApp);
 
         taskPage.completeTaskNoForm();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName(taskCompleteCustomApp);
+        taskPage.tasksListPage().selectRow(taskCompleteCustomApp);
         expect(taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + taskCompleteCustomApp + ' completed');
 
         taskPage.taskDetails().clickAuditLogButton();
@@ -113,12 +119,12 @@ describe('Task Audit', () => {
     });
 
     it('[C263943] Should Audit file be downloaded when clicking on Task Audit log icon on a custom app standalone running task', () => {
-        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
+        processServices.goToApp(appModel.name).clickTasksButton();
 
         taskPage.createNewTask().addName(taskCustomApp).clickStartButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskCustomApp);
+        taskPage.tasksListPage().checkContentIsDisplayed(taskCustomApp);
 
         taskPage.taskDetails().clickAuditLogButton();
         expect(Util.fileExists(auditLogFile, 10)).toBe(true);

@@ -17,12 +17,12 @@
 
 import { by, element } from 'protractor';
 import { Util } from '../../../util/util';
-import { DataTablePage } from '../dataTablePage';
+import { DataTableComponentPage } from '../dataTableComponentPage';
 
 export class FiltersPage {
 
     activeFilter = element(by.css('mat-list-item[class*="active"]'));
-    dataTable = new DataTablePage();
+    dataTable = new DataTableComponentPage();
 
     getActiveFilter() {
         Util.waitUntilElementIsVisible(this.activeFilter);

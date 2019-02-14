@@ -22,7 +22,7 @@ import { EditTaskFilterDialog } from '../dialog/editTaskFilterDialog';
 export class EditTaskFilterCloudComponent {
 
     customiseFilter = element(by.id('adf-edit-task-filter-title-id'));
-    selectedOption = element(by.css('mat-option[class*="mat-selected"]'));
+    selectedOption = element.all(by.css('mat-option[class*="mat-selected"]')).first();
     assignment = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignment"]'));
     priority = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-priority"]'));
     taskName = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
@@ -52,8 +52,8 @@ export class EditTaskFilterCloudComponent {
         this.clickOnDropDownArrow('state');
 
         let stateElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(stateElement);
         Util.waitUntilElementIsVisible(stateElement);
+        Util.waitUntilElementIsClickable(stateElement);
         stateElement.click();
         return this;
     }
@@ -223,7 +223,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     getAppNameDropDownValue() {
-        let locator = element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span"));
+        let locator = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span")).first();
         Util.waitUntilElementIsVisible(locator);
         return locator.getText();
     }

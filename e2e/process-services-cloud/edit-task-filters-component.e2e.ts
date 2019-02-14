@@ -39,7 +39,7 @@ describe('Edit task filters cloud', () => {
         let silentLogin;
         const simpleApp = 'simple-app';
         const completedTaskName = Util.generateRandomString(), assignedTaskName = Util.generateRandomString();
-        let assignedTask, completedTask;
+        let assignedTask;
 
         beforeAll(async () => {
             silentLogin = false;
@@ -50,7 +50,7 @@ describe('Edit task filters cloud', () => {
             await tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             assignedTask = await tasksService.createStandaloneTask(assignedTaskName, simpleApp);
             await tasksService.claimTask(assignedTask.entry.id, simpleApp);
-            completedTask = await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
+            await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
         });
 
         beforeEach((done) => {
@@ -72,16 +72,16 @@ describe('Edit task filters cloud', () => {
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getStateFilterDropDownValue()).toEqual('ASSIGNED');
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Created Date');
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getOrderFilterDropDownValue()).toEqual('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assignedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getStateFilterDropDownValue()).toEqual('COMPLETED');
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Created Date');
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getOrderFilterDropDownValue()).toEqual('DESC');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
         });
 

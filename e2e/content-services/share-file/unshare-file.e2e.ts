@@ -20,7 +20,6 @@ import { Util } from '../../util/util';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { DocumentListPage } from '../../pages/adf/content-services/documentListPage';
 import { ErrorPage } from '../../pages/adf/errorPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -35,8 +34,8 @@ describe('Unshare file', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const contentListPage = new DocumentListPage();
-    let navBar = new NavigationBarPage();
+    const contentListPage = contentServicesPage.getDocumentList();
+    const navBar = new NavigationBarPage();
     const errorPage = new ErrorPage();
     const shareDialog = new ShareDialog();
     const siteName = `PRIVATE-TEST-SITE-${Util.generateRandomString(5)}`;
@@ -102,7 +101,8 @@ describe('Unshare file', () => {
         nodeId = pngUploadedFile.entry.id;
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.navigateToDocumentList();
+        navBar.clickContentServicesButton();
+        contentServicesPage.waitForTableBody();
         done();
     });
 
@@ -118,7 +118,7 @@ describe('Unshare file', () => {
         });
 
         it('[C286550] Should display unshare confirmation dialog', () => {
-            contentListPage.dataTablePage().clickRowToSelect(pngFileModel.name);
+            contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickUnShareFile();
@@ -126,7 +126,7 @@ describe('Unshare file', () => {
         });
 
         it('[C286551] Should be able to cancel unshare action', () => {
-            contentListPage.dataTablePage().clickRowToSelect(pngFileModel.name);
+            contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickUnShareFile();
@@ -136,7 +136,7 @@ describe('Unshare file', () => {
         });
 
         it('[C286552] Should be able to confirm unshare action', async () => {
-            contentListPage.dataTablePage().clickRowToSelect(pngFileModel.name);
+            contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickUnShareFile();
@@ -146,7 +146,7 @@ describe('Unshare file', () => {
         });
 
         it('[C280556] Should redirect to 404 when trying to access an unshared file', async () => {
-            contentListPage.dataTablePage().clickRowToSelect(pngFileModel.name);
+            contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             let sharedLink = await shareDialog.getShareLink();
@@ -168,8 +168,8 @@ describe('Unshare file', () => {
 
         it('[C286555] Should NOT be able to unshare file without permission', () => {
             navBar.goToSite(testSite);
-            contentListPage.navigateToFolder('documentLibrary');
-            contentListPage.dataTablePage().clickRowToSelect(nodeBody.name);
+            contentListPage.doubleClickRow('documentLibrary');
+            contentListPage.selectRow(nodeBody.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.shareToggleButtonIsChecked();

@@ -71,7 +71,7 @@ describe('Enable infinite scrolling', () => {
     });
 
     it('[C260484] Should be possible to enable infinite scrolling', () => {
-        contentServicesPage.navigateToFolder(folderModel.name);
+        contentServicesPage.doubleClickRow(folderModel.name);
         contentServicesPage.enableInfiniteScrolling();
         contentServicesPage.clickLoadMoreButton();
         for (fileNum; fileNum < nrOfFiles; fileNum++) {

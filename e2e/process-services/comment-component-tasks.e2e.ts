@@ -96,7 +96,7 @@ describe('Comment component for Processes', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName(taskName.completed_task);
+        taskPage.tasksListPage().selectRow(taskName.completed_task);
 
         commentsPage.checkCommentInputIsNotDisplayed();
     });
@@ -119,7 +119,7 @@ describe('Comment component for Processes', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName(taskName.multiple_users);
+        taskPage.tasksListPage().selectRow(taskName.multiple_users);
         taskPage.taskDetails().selectActivityTab();
 
         browser.controlFlow().execute(async() => {
@@ -149,7 +149,7 @@ describe('Comment component for Processes', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName(taskName.multiple_users);
+        taskPage.tasksListPage().selectRow(taskName.multiple_users);
         taskPage.taskDetails().selectActivityTab();
 
         browser.controlFlow().execute(async() => {

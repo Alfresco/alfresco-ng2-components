@@ -16,7 +16,8 @@
  */
 
 import { LoginPage } from '../../pages/adf/loginPage';
-import { DataTablePage } from '../../pages/adf/dataTablePage';
+import { DataTablePage } from '../../pages/adf/demo-shell/dataTablePage';
+import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
 
@@ -25,10 +26,11 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Datatable component', () => {
 
-    let dataTablePage = new DataTablePage();
-    let loginPage = new LoginPage();
-    let acsUser = new AcsUserModel();
-    let navigationBarPage = new NavigationBarPage();
+    const dataTablePage = new DataTablePage();
+    const loginPage = new LoginPage();
+    const acsUser = new AcsUserModel();
+    const navigationBarPage = new NavigationBarPage();
+    const dataTableComponent = new DataTableComponentPage();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -48,11 +50,11 @@ describe('Datatable component', () => {
     });
 
     it('[C91314] Should be possible add new row to the table', () => {
-        dataTablePage.getNumberOfRows().then((result) => {
+        dataTableComponent.numberOfRows().then((result) => {
             dataTablePage.addRow();
-            expect(dataTablePage.getNumberOfRows()).toEqual(result + 1);
+            expect(dataTableComponent.numberOfRows()).toEqual(result + 1);
             dataTablePage.addRow();
-            expect(dataTablePage.getNumberOfRows()).toEqual(result + 2);
+            expect(dataTableComponent.numberOfRows()).toEqual(result + 2);
         });
     });
 
@@ -65,11 +67,11 @@ describe('Datatable component', () => {
     });
 
     it('[C277314] Should filter the table rows when the input filter is passed', () => {
-        expect(dataTablePage.getNumberOfRows()).toEqual(4);
+        expect(dataTableComponent.numberOfRows()).toEqual(4);
         dataTablePage.insertFilter('Name');
-        expect(dataTablePage.getNumberOfRows()).toEqual(3);
+        expect(dataTableComponent.numberOfRows()).toEqual(3);
         dataTablePage.insertFilter('I');
-        expect(dataTablePage.getNumberOfRows()).toEqual(1);
+        expect(dataTableComponent.numberOfRows()).toEqual(1);
     });
 
 });

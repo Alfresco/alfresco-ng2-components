@@ -21,12 +21,12 @@ import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import { DocumentListPage } from '../pages/adf/content-services/documentListPage';
 import AlfrescoApi = require('alfresco-js-api-node');
 import { FileModel } from '../models/ACS/fileModel';
 import { UploadActions } from '../actions/ACS/upload.actions';
 import { Util } from '../util/util';
 import { browser } from 'protractor';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 describe('Permissions Component', function () {
 
@@ -34,10 +34,10 @@ describe('Permissions Component', function () {
     let contentServicesPage = new ContentServicesPage();
     let permissionsPage = new PermissionsPage();
     let uploadActions = new UploadActions();
-    let contentList = new DocumentList();
-    let dataTablePage = new DataTablePage();
+    let contentList = contentServicesPage.getDocumentList();
     let fileOwnerUser, filePermissionUser, file;
     let publicSite, folderName;
+    const navigationBar = new NavigationBarPage();
 
     let fileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -49,7 +49,7 @@ describe('Permissions Component', function () {
         displayName: Util.generateRandomString()
     };
 
-    let groupId;
+    let group;
     let alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: TestConfig.adf.url
@@ -58,72 +58,60 @@ describe('Permissions Component', function () {
     fileOwnerUser = new AcsUserModel();
 
     filePermissionUser = new AcsUserModel();
-    const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.getId() + ' / role -> Contributor';
+    let duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.getId() + ' / role -> Contributor';
 
     beforeAll(async (done) => {
 
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
         await alfrescoJsApi.core.peopleApi.addPerson(fileOwnerUser);
         await alfrescoJsApi.core.peopleApi.addPerson(filePermissionUser);
-        let group = await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
-        groupId = group.entry.id;
+
+        group = await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
         browser.driver.sleep(15000); // wait search get the groups
+
         await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
-        let siteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
-        folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
-        let publicSiteBody = { visibility: 'PUBLIC', title: siteName };
+
+        let siteName = Util.generateRandomString(5);
+        let publicSiteBody = {'title': siteName, 'visibility': 'PUBLIC'};
         publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
+
+        folderName = Util.generateRandomString(5);
         await uploadActions.createFolder(alfrescoJsApi, folderName, publicSite.entry.guid);
+
         done();
     });
 
     afterAll(async (done) => {
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
-        await alfrescoJsApi.core.groupsApi.deleteGroup(groupId);
+        await alfrescoJsApi.core.groupsApi.deleteGroup(group.entry.id);
         done();
     });
 
     describe('Inherit and assigning permissions', function () {
 
-        beforeEach(async (done) => {
+        beforeAll(async (done) => {
             await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
 
             file = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
 
             loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
-            contentServicesPage.goToDocumentList();
-
-            contentList.dataTablePage().checkContentIsDisplayed(fileModel.name);
-            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
-            contentList.dataTablePage().rightClickOnRowNamed(fileModel.name);
-            contentList.pressContextMenuActionNamed('Permission');
 
             done();
         });
 
-        afterEach(async (done) => {
+        afterAll(async (done) => {
             await uploadActions.deleteFilesOrFolder(alfrescoJsApi, file.entry.id);
             done();
         });
 
-        it('[C286272] Should be able to see results when searching for a user', () => {
-            permissionsPage.checkAddPermissionButtonIsDisplayed();
-            permissionsPage.clickAddPermissionButton();
-            permissionsPage.checkAddPermissionDialogIsDisplayed();
-            permissionsPage.checkSearchUserInputIsDisplayed();
-            permissionsPage.searchUserOrGroup('a');
-            permissionsPage.checkResultListIsDisplayed();
-        });
-
-        it('[C276979] Should be able to give permissions to a group of people', () => {
-            permissionsPage.checkAddPermissionButtonIsDisplayed();
-            permissionsPage.clickAddPermissionButton();
-            permissionsPage.checkAddPermissionDialogIsDisplayed();
-            permissionsPage.checkSearchUserInputIsDisplayed();
-            permissionsPage.searchUserOrGroup('GROUP_' + groupBody.id);
-            permissionsPage.clickUserOrGroup('GROUP_' + groupBody.id);
-            permissionsPage.checkUserOrGroupIsAdded('GROUP_' + groupBody.id);
+        beforeEach(() => {
+            navigationBar.clickContentServicesButton();
+            contentServicesPage.checkContentIsDisplayed(fileModel.name);
+            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
+            contentList.rightClickOnRow(fileModel.name);
+            contentServicesPage.pressContextMenuActionNamed('Permission');
         });
 
         it('[C268974] Inherit Permission', () => {
@@ -138,6 +126,26 @@ describe('Permissions Component', function () {
             expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
             permissionsPage.checkPermissionsDatatableIsDisplayed();
         });
+
+        it('[C286272] Should be able to see results when searching for a user', () => {
+            permissionsPage.checkAddPermissionButtonIsDisplayed();
+            permissionsPage.clickAddPermissionButton();
+            permissionsPage.checkAddPermissionDialogIsDisplayed();
+            permissionsPage.checkSearchUserInputIsDisplayed();
+            permissionsPage.searchUserOrGroup('a');
+            permissionsPage.checkResultListIsDisplayed();
+            permissionsPage.clickCloseButton();
+        });
+
+        it('[C276979] Should be able to give permissions to a group of people', () => {
+            permissionsPage.checkAddPermissionButtonIsDisplayed();
+            permissionsPage.clickAddPermissionButton();
+            permissionsPage.checkAddPermissionDialogIsDisplayed();
+            permissionsPage.checkSearchUserInputIsDisplayed();
+            permissionsPage.searchUserOrGroup('GROUP_' + groupBody.id);
+            permissionsPage.clickUserOrGroup('GROUP_' + groupBody.id);
+            permissionsPage.checkUserOrGroupIsAdded('GROUP_' + groupBody.id);
+        });
     });
 
     describe('Changing and duplicate Permissions', function () {
@@ -150,10 +158,10 @@ describe('Permissions Component', function () {
             loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
             contentServicesPage.goToDocumentList();
 
-            contentList.checkContentIsDisplayed(fileModel.name);
+            contentServicesPage.checkContentIsDisplayed(fileModel.name);
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
-            contentList.clickRowMenuActionsButton(fileModel.name);
-            contentList.clickMenuActionNamed('PERMISSION');
+            contentList.rightClickOnRow(fileModel.name);
+            contentServicesPage.pressContextMenuActionNamed('Permission');
             permissionsPage.checkAddPermissionButtonIsDisplayed();
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
@@ -219,10 +227,10 @@ describe('Permissions Component', function () {
         beforeEach(async (done) => {
             loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
             browser.get(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
-            contentList.checkContentIsDisplayed(folderName);
+            contentServicesPage.checkContentIsDisplayed(folderName);
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
-            contentList.clickRowMenuActionsButton(folderName);
-            contentList.clickMenuActionNamed('PERMISSION');
+            contentList.rightClickOnRow(folderName);
+            contentServicesPage.pressContextMenuActionNamed('Permission');
             permissionsPage.checkPermissionInheritedButtonIsDisplayed();
             permissionsPage.checkAddPermissionButtonIsDisplayed();
             permissionsPage.clickAddPermissionButton();

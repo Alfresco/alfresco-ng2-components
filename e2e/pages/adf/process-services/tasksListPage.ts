@@ -16,17 +16,37 @@
  */
 
 import { Util } from '../../../util/util';
-import { DataTablePage } from '../dataTablePage';
+import { DataTableComponentPage } from '../dataTableComponentPage';
 import { by, element } from 'protractor';
 
 export class TasksListPage {
 
     taskList = element(by.css('adf-tasklist'));
     noTasksFound = element.all(by.css("p[class='adf-empty-content__title']")).first();
-    dataTable = new DataTablePage(this.taskList);
+    dataTable = new DataTableComponentPage(this.taskList);
 
     getDataTable() {
         return this.dataTable;
+    }
+
+    getRowsDisplayedWithSameName(taskName) {
+        return this.dataTable.getRowsWithSameColumnValues('Name', taskName);
+    }
+
+    checkContentIsDisplayed(taskName) {
+        return this.dataTable.checkContentIsDisplayed('Name', taskName);
+    }
+
+    checkContentIsNotDisplayed(taskName) {
+        return this.dataTable.checkContentIsNotDisplayed('Name', taskName);
+    }
+
+    checkRowIsSelected(taskName) {
+        return this.dataTable.checkRowIsSelected('Name', taskName);
+    }
+
+    selectRow(taskName) {
+        return this.dataTable.selectRow('Name', taskName);
     }
 
     getAllRowsNameColumn() {

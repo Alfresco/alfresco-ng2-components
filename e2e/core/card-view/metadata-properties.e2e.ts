@@ -16,7 +16,6 @@
  */
 
 import { LoginPage } from '../../pages/adf/loginPage';
-import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 
@@ -29,6 +28,8 @@ import resources = require('../../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { check, uncheck } from '../../util/material';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 
 describe('CardView Component - properties', () => {
 
@@ -46,9 +47,10 @@ describe('CardView Component - properties', () => {
     };
 
     let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
+    let navigationBarPage = new NavigationBarPage();
     let viewerPage = new ViewerPage();
     let metadataViewPage = new MetadataViewPage();
+    const contentServicesPage = new ContentServicesPage();
 
     let acsUser = new AcsUserModel();
 
@@ -80,7 +82,8 @@ describe('CardView Component - properties', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.navigateToDocumentList();
+        navigationBarPage.clickContentServicesButton();
+        contentServicesPage.waitForTableBody();
 
         done();
     });

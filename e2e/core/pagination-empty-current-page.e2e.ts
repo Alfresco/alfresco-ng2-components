@@ -78,7 +78,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
     });
 
     it('[C274710] Should redirect to previous page when current is emptied', () => {
-        contentServicesPage.navigateToFolder(folderModel.name);
+        contentServicesPage.doubleClickRow(folderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
 
