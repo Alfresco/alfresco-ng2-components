@@ -19,12 +19,14 @@ import TestConfig = require('../test.config');
 
 import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
 
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { ConfigEditorPage } from '../pages/adf/configEditorPage';
+import {ProcessListCloudConfiguration} from "./processListCloud.config";
 
 describe('Process list cloud', () => {
 
@@ -32,6 +34,7 @@ describe('Process list cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
+        const configEditor = new ConfigEditorPage();
         let appListCloudComponent = new AppListCloudComponent();
         let processCloudDemoPage = new ProcessCloudDemoPage();
 
@@ -41,6 +44,7 @@ describe('Process list cloud', () => {
         let silentLogin;
         const simpleApp = 'candidateuserapp';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
+        let jsonFile;
 
         beforeAll(async () => {
             silentLogin = false;
@@ -56,6 +60,14 @@ describe('Process list cloud', () => {
         });
 
         beforeEach((done) => {
+            let processListCloudConfiguration = new ProcessListCloudConfiguration();
+            jsonFile = processListCloudConfiguration.getConfiguration();
+            done();
+            navigationBarPage.clickConfigEditorButton();
+            configEditor.clickSearchConfiguration();
+            configEditor.clickClearButton();
+            configEditor.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
@@ -63,11 +75,12 @@ describe('Process list cloud', () => {
 
             processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
-
+            processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
             done();
         });
 
         it('[C291997] Should be able to change the default columns', async() => {
+
             expect(processCloudDemoPage.processListCloudComponent().getNoOfCoulmns()).toBe(13);
         });
 
