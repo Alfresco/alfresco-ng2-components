@@ -23,6 +23,21 @@ export class ProcessListCloudComponent {
 
     processList = element(by.css('adf-cloud-process-list'));
     noProcessFound = element.all(by.css("p[class='adf-empty-content__title']")).first();
+    noOfColumns = element.all(by.css('adf-cloud-process-list adf-datatable .adf-datatable-header .adf-datatable-row .adf-datatable-table-cell-header')).count();
+    id = element(by.css('div[data-automation-id="auto_id_entry.id"]'));
+    name = element(by.css('div[data-automation-id="auto_id_entry.name"]'));
+    status = element(by.css('div[data-automation-id="auto_id_entry.status"]'));
+    startDate = element(by.css('div[data-automation-id="auto_id_entry.startDate"]'));
+    appName = element(by.css('div[data-automation-id="auto_id_entry.appName"]'));
+    businessKey = element(by.css('div[data-automation-id="auto_id_entry.businessKey"]'));
+    description = element(by.css('div[data-automation-id="auto_id_entry.description"]'));
+    initiator = element(by.css('div[data-automation-id="auto_id_entry.initiator"]'));
+    lastModified = element(by.css('div[data-automation-id="auto_id_entry.lastModified"]'));
+    processName = element(by.css('div[data-automation-id="auto_id_entry.processName"]'));
+    processId = element(by.css('div[data-automation-id="auto_id_entry.processId"]'));
+    processDefinitionId = element(by.css('div[data-automation-id="auto_id_entry.processDefinitionId"]'));
+    processDefinitionKey = element(by.css('div[data-automation-id="auto_id_entry.processDefinitionKey"]'));
+
 
     dataTable = new DataTablePage(this.processList);
 
@@ -42,6 +57,10 @@ export class ProcessListCloudComponent {
 
     getAllRowsByColumn(column) {
         return this.dataTable.getAllRowsColumnValues(column);
+    }
+
+    getNoOfCoulmns() {
+        return this.noOfColumns;
     }
 
 }
