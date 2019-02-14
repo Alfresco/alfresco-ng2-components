@@ -78,6 +78,8 @@
                 <div *ngIf="multiselect" class="adf-datatable-table-cell adf-datatable-table-checkbox">
                     <mat-checkbox
                         [checked]="row.isSelected"
+                        [attr.aria-checked]="row.isSelected"
+                        role="checkbox"
                         (change)="onCheckboxChange(row, $event)">
                     </mat-checkbox>
                 </div>
@@ -174,6 +176,7 @@
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item *ngFor="let action of getRowActions(row)"
                                 [attr.data-automation-id]="action.title"
+                                [attr.aria-label]="action.title | translate"
                                 [disabled]="action.disabled"
                                 (click)="onExecuteRowAction(row, action)">
                             <mat-icon *ngIf="action.icon">{{ action.icon }}</mat-icon>
