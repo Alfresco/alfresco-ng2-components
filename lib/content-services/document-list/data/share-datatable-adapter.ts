@@ -118,8 +118,10 @@ export class ShareDataTableAdapter implements DataTableAdapter {
             }
 
             if (node.entry.isFile) {
-                if (this.thumbnails) {
+                if (this.thumbnails && node.entry.nodeType != "app:filelink") {
                     return this.documentListService.getDocumentThumbnailUrl(node);
+                } else if (this.thumbnails && "cm:destination" in node.entry.properties) {
+                    return this.documentListService.getDocumentThumbnailUrl(node.entry.properties["cm:destination"]);
                 }
             }
 
