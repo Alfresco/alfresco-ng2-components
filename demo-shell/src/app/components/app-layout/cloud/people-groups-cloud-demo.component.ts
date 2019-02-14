@@ -27,6 +27,7 @@ import { MatRadioChange } from '@angular/material';
 })
 export class PeopleGroupCloudDemoComponent {
 
+    DEFAULT_FILTER_MODE: string = 'appName';
     DEFAULT_GROUP_PLACEHOLDER: string = `[{"id": "1", "name":"activitiUserGroup"}]`;
     DEFAULT_PEOPLE_PLACEHOLDER: string = `[{"email": "example@alfresco.com", "firstName":"Administrator", "lastName": "ADF"}]`;
 
@@ -34,12 +35,14 @@ export class PeopleGroupCloudDemoComponent {
     preSelectUsers: string[] = [];
     peopleRoles: string[] = [];
     peopleAppName: string;
+    peopleFilterMode: string = this.DEFAULT_FILTER_MODE;
 
     groupMode: string = GroupCloudComponent.MODE_SINGLE;
     preSelectGroup: GroupModel[] = [];
     selectedGroupList: GroupModel[] = [];
     groupRoles: string[];
     groupAppName: string;
+    groupFilterMode: string = this.DEFAULT_FILTER_MODE;
 
     setPeoplePreselectValue(event: any) {
         this.preSelectUsers = this.getArrayFromString(event.target.value);
@@ -73,6 +76,40 @@ export class PeopleGroupCloudDemoComponent {
     onChangeGroupsMode(event: MatRadioChange) {
         this.groupMode = event.value;
         this.preSelectGroup = [...this.preSelectGroup];
+    }
+
+    onChangePeopleFilterMode(event: MatRadioChange) {
+        this.peopleFilterMode = event.value;
+        this.resetPeopleFilter();
+    }
+
+    onChangeGroupsFilterMode(event: MatRadioChange) {
+        this.groupFilterMode = event.value;
+        this.restGroupFilter();
+    }
+
+    isPeopleAppNameSelected() {
+        return this.peopleFilterMode === 'appName';
+    }
+
+    isGroupAppNameSelected() {
+        return this.groupFilterMode === 'appName';
+    }
+
+    resetPeopleFilter() {
+        if (this.isPeopleAppNameSelected()) {
+            this.peopleRoles = [];
+        } else {
+            this.peopleAppName = '';
+        }
+    }
+
+    restGroupFilter() {
+        if (this.isGroupAppNameSelected()) {
+            this.groupRoles = [];
+        } else {
+            this.groupAppName = '';
+        }
     }
 
     isStringArray(str: string) {

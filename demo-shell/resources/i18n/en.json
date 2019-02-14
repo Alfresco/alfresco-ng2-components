@@ -294,7 +294,9 @@
     "MULTI": "Multiple Selection",
     "PRESELECTED_VALUE": "Preselect: ",
     "ROLE": "Roles: ",
-    "APP_NAME": "Aplication Name"
+    "APP_NAME": "Aplication Name",
+    "APP_FILTER_MODE": "Filter by application name",
+    "ROLE_FILTER_MODE": "Filter by role"
   },
   "ABOUT": {
     "TITLE": "Plugins",
