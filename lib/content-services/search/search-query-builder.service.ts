@@ -173,7 +173,7 @@ export class SearchQueryBuilderService {
     getFacetField(label: string): FacetField {
         if (label) {
             const fields = this.config.facetFields.fields || [];
-            const result = fields.find((field) => this.isSameValueLabels(field.label, label));
+            const result = fields.find((field) => this.checkEqualInsideQuotes(field.label, label));
             if (result) {
                 return { ...result };
             }
@@ -386,10 +386,10 @@ export class SearchQueryBuilderService {
         return null;
     }
 
-    isSameValueLabels(label1: string, label2: string) {
+    checkEqualInsideQuotes(value1: string, value2: string): boolean {
         const wrappingQuotes = /^\"|\"$/g;
-        const cleanLabel1 = label1.replace(wrappingQuotes, '');
-        const cleanLabel2 = label2.replace(wrappingQuotes, '');
-        return cleanLabel1 === cleanLabel2;
+        const cleanValue1 = value1.replace(wrappingQuotes, '');
+        const cleanValue2 = value2.replace(wrappingQuotes, '');
+        return cleanValue1 === cleanValue2;
     }
 }

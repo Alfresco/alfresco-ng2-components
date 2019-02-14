@@ -174,7 +174,8 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             this.responseFacets = this.responseFacets
                 .map((field) => {
 
-                    let responseField = (context.facets || []).find((response) => this.queryBuilder.isSameValueLabels(response.label, field.label) && response.type === field.type);
+                    let responseField = (context.facets || [])
+                        .find((response) => this.queryBuilder.checkEqualInsideQuotes(response.label, field.label) && response.type === field.type);
 
                     (field && field.buckets && field.buckets.items || [])
                         .map((bucket) => {
@@ -191,7 +192,8 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private parseFacetItems(context: ResultSetContext, configFacetFields, itemType): FacetField[] {
         return configFacetFields.map((field) => {
-            const responseField = (context.facets || []).find((response) => response.type === itemType && this.queryBuilder.isSameValueLabels(response.label, field.label)) || {};
+            const responseField = (context.facets || [])
+                .find((response) => response.type === itemType && this.queryBuilder.checkEqualInsideQuotes(response.label, field.label)) || {};
             const responseBuckets = this.getResponseBuckets(responseField, field.field)
                 .filter(this.getFilterByMinCount(field.mincount));
 
@@ -270,11 +272,11 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         return result;
     }
 
-    private getResponseBuckets(responseField: GenericFacetResponse, configField: string): FacetFieldBucket[] {
+    private getResponseBuckets(responseField: GenericFacetResponse, configFieldName: string): FacetFieldBucket[] {
         return ((responseField && responseField.buckets) || []).map((respBucket) => {
 
             respBucket['count'] = this.getCountValue(respBucket);
-            respBucket.filterQuery = respBucket.filterQuery || this.getCorrespondingFilterQuery(configField, respBucket.label);
+            respBucket.filterQuery = respBucket.filterQuery || this.getCorrespondingFilterQuery(configFieldName, respBucket.label);
             return <FacetFieldBucket> {
                 ...respBucket,
                 checked: false,
