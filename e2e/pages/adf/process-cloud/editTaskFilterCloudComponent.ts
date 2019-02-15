@@ -24,6 +24,8 @@ export class EditTaskFilterCloudComponent {
     customiseFilter = element(by.id('adf-edit-task-filter-title-id'));
     selectedOption = element(by.css('mat-option[class*="mat-selected"]'));
     assignment = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignment"]'));
+    taskName = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
+    processDefinitionId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
     saveButton = element(by.css('button[id="adf-save-id"]'));
     saveAsButton = element(by.css('button[id="adf-save-as-id"]'));
     deleteButton = element(by.css('button[id="adf-delete-id"]'));
@@ -164,6 +166,44 @@ export class EditTaskFilterCloudComponent {
                 locator.sendKeys(protractor.Key.BACK_SPACE);
             }
         });
+    }
+
+    setAppNameDropDown(option) {
+        this.clickOnDropDownArrow('appName');
+
+        let appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        Util.waitUntilElementIsClickable(appNameElement);
+        Util.waitUntilElementIsVisible(appNameElement);
+        appNameElement.click();
+        return this;
+    }
+
+    getAppNameDropDownValue() {
+        return element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span")).getText();
+    }
+
+    setTaskName(option) {
+        Util.waitUntilElementIsVisible(this.taskName);
+        this.taskName.clear();
+        this.taskName.sendKeys(option);
+        this.taskName.sendKeys(protractor.Key.ENTER);
+        return this;
+    }
+
+    getTaskName() {
+        return this.taskName.getAttribute('value');
+    }
+
+    setProcessDefinitionId(option) {
+        Util.waitUntilElementIsVisible(this.processDefinitionId);
+        this.processDefinitionId.clear();
+        this.processDefinitionId.sendKeys(option);
+        this.processDefinitionId.sendKeys(protractor.Key.ENTER);
+        return this;
+    }
+
+    getTaskName() {
+        return this.processDefinitionId.getAttribute('value');
     }
 
 }
