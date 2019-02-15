@@ -202,8 +202,8 @@ describe('SearchFilterComponent', () => {
         queryBuilder.config = {
             categories: [],
             facetFields: { fields: [
-                { label: 'f1', field: 'f1' },
-                { label: 'f2', field: 'f2' }
+                { label: 'f1', field: 'f1', mincount: 0 },
+                { label: 'f2', field: 'f2', mincount: 0 }
             ]},
             facetQueries: {
                 queries: []
@@ -636,5 +636,49 @@ describe('SearchFilterComponent', () => {
         expect(component.responseFacets.length).toBe(2);
         expect(component.responseFacets[0].buckets.length).toEqual(2);
         expect(component.responseFacets[1].buckets.length).toEqual(2);
+    });
+
+    it('should filter out the fetched facet intervals that have bucket values less than their set mincount', () => {
+        component.responseFacets = null;
+        queryBuilder.config = {
+            categories: [],
+            facetIntervals: {
+                intervals: [
+                    { label: 'test_intervals1', field: 'f1', mincount: 2, sets: [
+                        { label: 'interval1', start: 's1', end: 'e1'},
+                        { label: 'interval2', start: 's2', end: 'e2'}
+                    ]},
+                    { label: 'test_intervals2', field: 'f2', mincount: 5, sets: [
+                        { label: 'interval3', start: 's3', end: 'e3'},
+                        { label: 'interval4', start: 's4', end: 'e4'}
+                    ]}
+                ]
+            }
+        };
+
+        const response1 = [
+            { label: 'interval1', filterQuery: 'query1', metrics: [{ value: { count: 1 }}]},
+            { label: 'interval2', filterQuery: 'query2', metrics: [{ value: { count: 2 }}]}
+        ];
+        const response2 = [
+            { label: 'interval3', filterQuery: 'query3', metrics: [{ value: { count: 3 }}]},
+            { label: 'interval4', filterQuery: 'query4', metrics: [{ value: { count: 4 }}]}
+        ];
+        const data = {
+            list: {
+                context: {
+                    facets: [
+                        { type: 'interval', label: 'test_intervals1', buckets: response1 },
+                        { type: 'interval', label: 'test_intervals2', buckets: response2 }
+                    ]
+                }
+            }
+        };
+
+        component.onDataLoaded(data);
+
+        expect(component.responseFacets.length).toBe(2);
+        expect(component.responseFacets[0].buckets.length).toEqual(1);
+        expect(component.responseFacets[1].buckets.length).toEqual(0);
     });
 });

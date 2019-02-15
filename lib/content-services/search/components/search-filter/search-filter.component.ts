@@ -188,7 +188,8 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private parseFacetItems(context: ResultSetContext, configFacetFields, itemType): FacetField[] {
         return configFacetFields.map((field) => {
             const responseField = (context.facets || []).find((response) => response.type === itemType && response.label === field.label) || {};
-            const responseBuckets = this.getResponseBuckets(responseField);
+            const responseBuckets = this.getResponseBuckets(responseField)
+                .filter(this.getFilterByMinCount(field.mincount));
 
             const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
             bucketList.filter = (bucket: FacetFieldBucket): boolean => {
@@ -234,10 +235,13 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }, []);
 
         const result = [];
+        const mincount = this.queryBuilder.config.facetQueries && this.queryBuilder.config.facetQueries.mincount;
+        const mincountFilter = this.getFilterByMinCount(mincount);
 
         Object.keys(configGroups).forEach((group) => {
             const responseField = (context.facets || []).find((response) => response.type === 'query' && response.label === group) || {};
-            const responseBuckets = this.getResponseQueryBuckets(responseField, configGroups[group]);
+            const responseBuckets = this.getResponseQueryBuckets(responseField, configGroups[group])
+                .filter(mincountFilter);
 
             const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, this.facetQueriesPageSize);
             bucketList.filter = (bucket: FacetFieldBucket): boolean => {
@@ -287,17 +291,21 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 display: respBucket.display,
                 label: respBucket.label
             };
-        }).filter((bucket) => {
-            let mincount = this.queryBuilder.config.facetQueries.mincount;
-            if (mincount === undefined) {
-                    mincount = 1;
-            }
-            return bucket.count >= mincount;
         });
     }
 
     private getCountValue(bucket: GenericBucket): number {
         return (!!bucket && !!bucket.metrics && bucket.metrics[0] && bucket.metrics[0].value && bucket.metrics[0].value.count)
             || 0;
+    }
+
+    private getFilterByMinCount(mincountInput: number) {
+        return (bucket) => {
+            let mincount = mincountInput;
+            if (mincount === undefined) {
+                mincount = 1;
+            }
+            return bucket.count >= mincount;
+        };
     }
 }
