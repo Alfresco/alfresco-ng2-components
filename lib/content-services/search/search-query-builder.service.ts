@@ -387,7 +387,7 @@ export class SearchQueryBuilderService {
     }
 
     checkEqualInsideQuotes(value1: string, value2: string): boolean {
-        const wrappingQuotes = /^\"|\"$/g;
+        const wrappingQuotes = /^\"|\"$|^\'|\'$/g;
         const cleanValue1 = value1.replace(wrappingQuotes, '');
         const cleanValue2 = value2.replace(wrappingQuotes, '');
         return cleanValue1 === cleanValue2;

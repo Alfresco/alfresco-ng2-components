@@ -216,6 +216,21 @@ describe('SearchQueryBuilder', () => {
         expect(field).toBeFalsy();
     });
 
+    it('should fetch facet with escaped label from the config by non-escaped label like the response has', () => {
+        const config: SearchConfiguration = {
+            categories: [],
+            facetFields: { 'fields': [
+                    { 'field': 'content.mimetype', 'mincount': 1, 'label': '"Type"' },
+                    { 'field': 'content.size', 'mincount': 1, 'label': '\'Size\'' }
+                ]}
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        const field = builder.getFacetField('Size');
+
+        expect(field.label).toBe('\'Size\'');
+        expect(field.field).toBe('content.size');
+    });
+
     xit('should build query and raise an event on update', async () => {
         const builder = new SearchQueryBuilderService(buildConfig({}), null);
         const query = {};

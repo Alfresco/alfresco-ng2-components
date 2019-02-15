@@ -324,7 +324,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     }
 
     getCleanLabel(label: string) {
-        const wrappingQuotes = /^\"|\"$/g;
+        const wrappingQuotes = /^\"|\"$|^\'|\'$/g;
         return label.replace(wrappingQuotes, '');
     }
 }
