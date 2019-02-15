@@ -23,7 +23,7 @@ export class ProcessListCloudComponent {
 
     processList = element(by.css('adf-cloud-process-list'));
     noProcessFound = element.all(by.css("p[class='adf-empty-content__title']")).first();
-    noOfColumns = element.all(by.css('adf-cloud-process-list adf-datatable .adf-datatable-header .adf-datatable-row .adf-datatable-table-cell-header')).count();
+    noOfColumns = element.all(by.css('adf-cloud-process-list adf-datatable .adf-datatable-header .adf-datatable-row .adf-datatable-table-cell-header'));
     id = element(by.css('div[data-automation-id="auto_id_entry.id"]'));
     name = element(by.css('div[data-automation-id="auto_id_entry.name"]'));
     status = element(by.css('div[data-automation-id="auto_id_entry.status"]'));
@@ -60,7 +60,72 @@ export class ProcessListCloudComponent {
     }
 
     getNoOfCoulmns() {
-        return this.noOfColumns;
+        return this.noOfColumns.count();
+    }
+
+    checkCloumnIdIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.id);
+        return this;
+    }
+
+    checkCloumnNameIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.name);
+        return this;
+    }
+
+    checkCloumnStatusIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.status);
+        return this;
+    }
+
+    checkCloumnStartDateIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.startDate);
+        return this;
+    }
+
+    checkCloumnAppNameIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.appName);
+        return this;
+    }
+
+    checkCloumnBusinessKeyIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.businessKey);
+        return this;
+    }
+
+    checkCloumnDescriptionIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.description);
+        return this;
+    }
+
+    checkCloumnInitiatorIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.initiator);
+        return this;
+    }
+
+    checkCloumnLastModifiedIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.lastModified);
+        return this;
+    }
+
+    checkCloumnProcessNameIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.processName);
+        return this;
+    }
+
+    checkCloumnProcessIdIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.processId);
+        return this;
+    }
+
+    checkCloumnProcessDefinitionIdIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.processDefinitionId);
+        return this;
+    }
+
+    checkCloumnProcessDefinitionKeyIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.processDefinitionKey);
+        return this;
     }
 
 }

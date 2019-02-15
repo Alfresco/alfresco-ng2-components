@@ -62,4 +62,11 @@ export class ConfigEditorPage {
         Util.waitUntilElementIsClickable(button);
         return button.click();
     }
+
+    clickProcessListCloudConfiguration() {
+        let button = element(by.id('adf-process-list-cloud-conf'));
+        Util.waitUntilElementIsVisible(button);
+        Util.waitUntilElementIsClickable(button);
+        return button.click();
+    }
 }
