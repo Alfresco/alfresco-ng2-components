@@ -23,7 +23,6 @@ export class ProcessListCloudComponent {
 
     processList = element(by.css('adf-cloud-process-list'));
     noProcessFound = element.all(by.css("p[class='adf-empty-content__title']")).first();
-    allColumns = element.all(by.css('adf-cloud-process-list adf-datatable .adf-datatable-header .adf-datatable-row .adf-datatable-table-cell-header'));
     id = element(by.css('div[data-automation-id="auto_id_entry.id"]'));
     name = element(by.css('div[data-automation-id="auto_id_entry.name"]'));
     status = element(by.css('div[data-automation-id="auto_id_entry.status"]'));
@@ -58,12 +57,4 @@ export class ProcessListCloudComponent {
         return this.dataTable.getAllRowsColumnValues(column);
     }
 
-    getNoOfColumns() {
-        return this.allColumns.count();
-    }
-
-    checkColumnIsDisplayed(column) {
-        Util.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="auto_id_entry.${column}"]`)));
-        return this;
-    }
 }

@@ -82,20 +82,20 @@ describe('Process list cloud', () => {
 
         it('[C291997] Should be able to change the default columns', async() => {
 
-            expect(processCloudDemoPage.processListCloudComponent().getNoOfColumns()).toBe(13);
-            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('id');
-            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('name');
-            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('status');
-            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('startDate');
-            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('appName');
-            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('businessKey');
-            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('description');
-            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('initiator');
-            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('lastModified');
-            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('processName');
-            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('processId');
-            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('processDefinitionId');
-            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('processDefinitionKey');
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().getNoOfColumns()).toBe(13);
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('id');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('name');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('status');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('startDate');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('appName');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('businessKey');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('description');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('initiator');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('lastModified');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('processName');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('processId');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('processDefinitionId');
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('processDefinitionKey');
 
         });
 
