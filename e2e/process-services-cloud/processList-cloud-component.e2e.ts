@@ -25,7 +25,7 @@ import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
-import {ProcessListCloudConfiguration} from "./processListCloud.config";
+import { ProcessListCloudConfiguration } from './processListCloud.config';
 
 describe('Process list cloud', () => {
 
@@ -82,20 +82,20 @@ describe('Process list cloud', () => {
 
         it('[C291997] Should be able to change the default columns', async() => {
 
-            expect(processCloudDemoPage.processListCloudComponent().getNoOfCoulmns()).toBe(13);
-            processCloudDemoPage.processListCloudComponent().checkCloumnIdIsDisplayed();
-            processCloudDemoPage.processListCloudComponent().checkCloumnNameIsDisplayed();
-            processCloudDemoPage.processListCloudComponent().checkCloumnAppNameIsDisplayed();
-            processCloudDemoPage.processListCloudComponent().checkCloumnBusinessKeyIsDisplayed();
-            processCloudDemoPage.processListCloudComponent().checkCloumnDescriptionIsDisplayed();
-            processCloudDemoPage.processListCloudComponent().checkCloumnInitiatorIsDisplayed();
-            processCloudDemoPage.processListCloudComponent().checkCloumnLastModifiedIsDisplayed();
-            processCloudDemoPage.processListCloudComponent().checkCloumnProcessDefinitionIdIsDisplayed();
-            processCloudDemoPage.processListCloudComponent().checkCloumnProcessDefinitionKeyIsDisplayed();
-            processCloudDemoPage.processListCloudComponent().checkCloumnProcessIdIsDisplayed();
-            processCloudDemoPage.processListCloudComponent().checkCloumnProcessNameIsDisplayed();
-            processCloudDemoPage.processListCloudComponent().checkCloumnStartDateIsDisplayed();
-            processCloudDemoPage.processListCloudComponent().checkCloumnStatusIsDisplayed();
+            expect(processCloudDemoPage.processListCloudComponent().getNoOfColumns()).toBe(13);
+            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('id');
+            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('name');
+            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('status');
+            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('startDate');
+            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('appName');
+            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('businessKey');
+            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('description');
+            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('initiator');
+            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('lastModified');
+            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('processName');
+            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('processId');
+            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('processDefinitionId');
+            processCloudDemoPage.processListCloudComponent().checkColumnIsDisplayed('processDefinitionKey');
 
         });
 
