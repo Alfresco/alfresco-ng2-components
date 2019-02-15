@@ -23,7 +23,7 @@ import { CoreModule } from '@alfresco/adf-core';
 describe('HomeComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-        imports: [CoreModule],
+        imports: [CoreModule.forRoot()],
         declarations: [HomeComponent],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
