@@ -38,7 +38,7 @@ export class DataTablePage {
     tableBody = element.all(by.css(`div[class='adf-datatable-body']`)).first();
     spinner = element(by.css('mat-progress-spinner'));
     rows = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`);
-    allColumns = element.all(by.css('div[data-automation-id*="auto_id_entry."]'))
+    allColumns = element.all(by.css('div[data-automation-id*="auto_id_entry."]'));
 
     constructor(rootElement: ElementFinder = element(by.css('adf-datatable'))) {
         this.rootElement = rootElement;
