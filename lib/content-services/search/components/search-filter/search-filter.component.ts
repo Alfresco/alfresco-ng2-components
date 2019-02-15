@@ -41,8 +41,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private facetQueriesPageSize = this.DEFAULT_PAGE_SIZE;
     facetQueriesLabel: string = 'Facet Queries';
-    facetQueriesExpanded = false;
-    facetFieldsExpanded = false;
+    facetExpanded = {
+        'default': false
+    };
 
     selectedBuckets: Array<{ field: FacetField, bucket: FacetFieldBucket }> = [];
 
@@ -52,10 +53,13 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         if (queryBuilder.config && queryBuilder.config.facetQueries) {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
             this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || this.DEFAULT_PAGE_SIZE;
-            this.facetQueriesExpanded = queryBuilder.config.facetQueries.expanded;
+            this.facetExpanded['query'] = queryBuilder.config.facetQueries.expanded;
         }
         if (queryBuilder.config && queryBuilder.config.facetFields) {
-            this.facetFieldsExpanded = queryBuilder.config.facetFields.expanded;
+            this.facetExpanded['field'] = queryBuilder.config.facetFields.expanded;
+        }
+        if (queryBuilder.config && queryBuilder.config.facetIntervals) {
+            this.facetExpanded['interval'] = queryBuilder.config.facetIntervals.expanded;
         }
 
         this.queryBuilder.updated.pipe(
@@ -146,7 +150,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     }
 
     shouldExpand(field: FacetField): boolean {
-        return field.type === 'query' ? this.facetQueriesExpanded : this.facetFieldsExpanded;
+        return this.facetExpanded[field.type] || this.facetExpanded['default'];
     }
 
     onDataLoaded(data: any) {

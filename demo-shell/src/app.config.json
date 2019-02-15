@@ -133,6 +133,7 @@
         ]
       },
       "facetIntervals":{
+        "expanded": true,
         "intervals":[
           {
             "label":"TheCreated",

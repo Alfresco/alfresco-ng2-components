@@ -360,6 +360,7 @@ These provide custom categories based on admin defined ranges inside `intervals`
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 |intervals|array|Specifies the fields to facet by interval.|
+|expanded|boolean|Toggles expanded state of the facet intervals.|
 Note: `sets` parameter from Search API (Sets the intervals for all fields) is not yet supported.
 
 
@@ -367,6 +368,7 @@ Note: `sets` parameter from Search API (Sets the intervals for all fields) is no
 {
     "search": {
       "facetIntervals":{
+        "expanded": true,
         "intervals":[
           {
             "label":"TheCreated",
@@ -397,7 +399,7 @@ You can specify a value for the `mincount` property inside each `intervals` item
 Check the [schema.json](https://github.com/Alfresco/alfresco-ng2-components/blob/master/lib/core/app-config/schema.json)
 for more details about what is the structure and the properties of `intervals` that you can set inside the configuration file.
 
-Each interval defined is collected into its collapsible category identified uniquely by its `label`. The top code snippet will result in the following display of the facet intervals:
+Each `intervals` item defined is collected into its collapsible category identified uniquely by its `label`. The top code snippet will result in the following display of the facet intervals:
 
 ![Facet Intervals](../docassets/images/search-facet-intervals.png)
 
