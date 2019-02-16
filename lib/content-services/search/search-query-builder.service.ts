@@ -175,6 +175,7 @@ export class SearchQueryBuilderService {
             const fields = this.config.facetFields.fields || [];
             const result = fields.find((field) => this.checkEqualInsideQuotes(field.label, label));
             if (result) {
+                result.label = this.getSupportedLabel(result.label);
                 return { ...result };
             }
         }
@@ -375,7 +376,7 @@ export class SearchQueryBuilderService {
                 facets: facetFields.map((facet) => <RequestFacetField> {
                     field: facet.field,
                     mincount: facet.mincount,
-                    label: facet.label,
+                    label: this.getSupportedLabel(facet.label),
                     limit: facet.limit,
                     offset: facet.offset,
                     prefix: facet.prefix
@@ -391,5 +392,13 @@ export class SearchQueryBuilderService {
         const cleanValue1 = value1.replace(wrappingQuotes, '');
         const cleanValue2 = value2.replace(wrappingQuotes, '');
         return cleanValue1 === cleanValue2;
+    }
+
+    getSupportedLabel(item: string) {
+        const spaceInsideLabelIndex = item.search(/\s/g);
+        if (spaceInsideLabelIndex > -1) {
+            return `"${item}"`;
+        }
+        return item;
     }
 }

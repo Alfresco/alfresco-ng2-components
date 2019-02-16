@@ -216,18 +216,17 @@ describe('SearchQueryBuilder', () => {
         expect(field).toBeFalsy();
     });
 
-    it('should fetch facet with escaped label from the config by non-escaped label like the response has', () => {
+    it('should fetch facets from the config by label with spaces and return field with request compatible label (escaped)', () => {
         const config: SearchConfiguration = {
             categories: [],
             facetFields: { 'fields': [
-                    { 'field': 'content.mimetype', 'mincount': 1, 'label': '"Type"' },
-                    { 'field': 'content.size', 'mincount': 1, 'label': '\'Size\'' }
+                    { 'field': 'content.size', 'mincount': 1, 'label': 'Label with spaces' }
                 ]}
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
-        const field = builder.getFacetField('Size');
+        const field = builder.getFacetField('Label with spaces');
 
-        expect(field.label).toBe('\'Size\'');
+        expect(field.label).toBe('"Label with spaces"');
         expect(field.field).toBe('content.size');
     });
 
@@ -384,6 +383,35 @@ describe('SearchQueryBuilder', () => {
 
         const compiled = builder.buildQuery();
         expect(compiled.facetFields.facets).toEqual(jasmine.objectContaining(config.facetFields.fields));
+    });
+
+    it('should build query with custom facet fields automatically getting their request compatible labels', () => {
+        const spacesLabel = {
+            configValue: 'label with spaces',
+            requestCompatibleValue: '"label with spaces"'
+        };
+        const noSpacesLabel = {
+            configValue: 'label',
+            requestCompatibleValue: 'label'
+        };
+
+        const config: SearchConfiguration = {
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ],
+            facetFields: { fields: [
+                    { field: 'field1', label: spacesLabel.configValue, mincount: 1, limit: null, offset: 0, prefix: null },
+                    { field: 'field2', label: noSpacesLabel.configValue, mincount: 1, limit: null, offset: 0, prefix: null }
+                ]}
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        builder.queryFragments['cat1'] = 'cm:name:test';
+
+        const compiled = builder.buildQuery();
+        expect(compiled.facetFields.facets[0].label).toEqual(spacesLabel.requestCompatibleValue);
+        expect(compiled.facetFields.facets[0].label).not.toEqual(spacesLabel.configValue);
+        expect(compiled.facetFields.facets[1].label).toEqual(noSpacesLabel.requestCompatibleValue);
+        expect(compiled.facetFields.facets[1].label).toEqual(noSpacesLabel.configValue);
     });
 
     it('should build query with custom facet intervals', () => {
