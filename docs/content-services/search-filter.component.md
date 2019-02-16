@@ -66,7 +66,7 @@ A typical configuration is shown below:
           "expanded": true,
           "fields": [
             { "field": "content.mimetype", "mincount": 1, "label": "Type" },
-            { "field": "content.size", "mincount": 1, "label": "\"File Size\"" },
+            { "field": "content.size", "mincount": 1, "label": "File Size" },
             { "field": "creator", "mincount": 1, "label": "Creator" },
             { "field": "modifier", "mincount": 1, "label": "Modifier" }
           ]
@@ -258,7 +258,7 @@ export interface SearchWidgetSettings {
             "expanded": true,
             "fields": [
                 { "field": "content.mimetype", "mincount": 1, "label": "Type" },
-                { "field": "content.size", "mincount": 1, "label": "'File Size'" },
+                { "field": "content.size", "mincount": 1, "label": "File Size" },
                 { "field": "creator", "mincount": 1, "label": "Creator" },
                 { "field": "modifier", "mincount": 1, "label": "Modifier" },
                 { "field": "created", "mincount": 1, "label": "Created" }
@@ -280,7 +280,7 @@ the next block of results.
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| field | string |  | Specifies the facet field. If the field string contains spaces, it must be escaped by wrapping it inside quotes - in order to get the correct response from the server.|
+| field | string |  | Specifies the facet field. |
 | mincount | number | 1 | Specifies the minimum count required for a facet field to be included in the response. The default value is 1. |
 | label | string |  | Specifies the label to include in place of the facet field. |
 | prefix | string |  | Restricts the possible constraints to only indexed values with a specified prefix. |
@@ -319,7 +319,7 @@ The `mincount` property allows setting the minimum count required for a facet fi
 The component provides a `Show more` button to display more items if the number of items
 exceeds the `pageSize` value.
 
-You can also provide a custom `label` (or i18n resource key) for the default resulting collapsible category. If the `label` value contains spaces, there is no need for wrapping the label inside quotes as it is in the case of facetFields labels.
+You can also provide a custom `label` (or i18n resource key) for the default resulting collapsible category.
 If you need to display more resulting collapsible categories, you can group different facet queries under custom labels by using the `group` property on those facet queries:
 ```json
 {
