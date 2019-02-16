@@ -229,47 +229,6 @@ describe('SearchFilterComponent', () => {
         expect(component.responseFacets[1].buckets.length).toEqual(2);
     });
 
-    it('should fetch facet fields with spaced labels from response payload', () => {
-        component.responseFacets = null;
-
-        const spacedLabels = [{
-            configValue: '"label with spaces and double quoted in config"',
-            responseValue: 'label with spaces and double quoted in config'
-        }, {
-            configValue: '\'label with spaces and single quoted in config\'',
-            responseValue: 'label with spaces and single quoted in config'
-        }];
-
-        queryBuilder.config = {
-            categories: [],
-            facetFields: { fields: [
-                { label: spacedLabels[0].configValue, field: 'f0' },
-                { label: spacedLabels[1].configValue, field: 'f1' }
-            ]},
-            facetQueries: {
-                queries: []
-            }
-        };
-
-        const fields: any = [
-            { type: 'field', label: spacedLabels[0].responseValue, buckets: [{ label: 'a0' }] },
-            { type: 'field', label: spacedLabels[1].responseValue, buckets: [{ label: 'a1' }, { label: 'a2' }, { label: 'a3' }] }
-        ];
-        const data = {
-            list: {
-                context: {
-                    facets: fields
-                }
-            }
-        };
-
-        component.onDataLoaded(data);
-
-        expect(component.responseFacets.length).toEqual(2);
-        expect(component.responseFacets[0].buckets.length).toEqual(1);
-        expect(component.responseFacets[1].buckets.length).toEqual(3);
-    });
-
     it('should filter response facet fields based on search filter config method', () => {
         queryBuilder.config = {
             categories: [],

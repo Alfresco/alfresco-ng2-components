@@ -17,10 +17,10 @@
     </mat-expansion-panel>
 
     <ng-container *ngIf="responseFacets">
-        <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+getCleanLabel(field.label)" *ngFor="let field of responseFacets"
+        <mat-expansion-panel [attr.data-automation-id]="'expansion-panel-'+field.label" *ngFor="let field of responseFacets"
                              [expanded]="shouldExpand(field)">
             <mat-expansion-panel-header>
-                <mat-panel-title>{{ getCleanLabel(field.label) | translate }}</mat-panel-title>
+                <mat-panel-title>{{ field.label | translate }}</mat-panel-title>
             </mat-expansion-panel-header>
 
             <div class="adf-facet-result-filter">
@@ -28,7 +28,7 @@
                     <input
                         matInput
                         placeholder="{{ 'SEARCH.FILTER.ACTIONS.FILTER-CATEGORY' | translate }}"
-                        [attr.data-automation-id]="'facet-result-filter-'+getCleanLabel(field.label)"
+                        [attr.data-automation-id]="'facet-result-filter-'+field.label"
                         [(ngModel)]="field.buckets.filterText">
                     <button *ngIf="field.buckets.filterText"
                         mat-button matSuffix mat-icon-button
@@ -42,7 +42,7 @@
                 <mat-checkbox
                     *ngFor="let bucket of field.buckets"
                     [checked]="bucket.checked"
-                    [attr.data-automation-id]="'checkbox-'+getCleanLabel(field.label)+'-'+(bucket.display || bucket.label)"
+                    [attr.data-automation-id]="'checkbox-'+field.label+'-'+(bucket.display || bucket.label)"
                     (change)="onToggleBucket($event, field, bucket)">
                     <div 
                         matTooltip="{{ bucket.display || bucket.label | translate }}"

@@ -174,8 +174,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             this.responseFacets = this.responseFacets
                 .map((field) => {
 
-                    let responseField = (context.facets || [])
-                        .find((response) => this.queryBuilder.checkEqualInsideQuotes(response.label, field.label) && response.type === field.type);
+                    let responseField = (context.facets || []).find((response) => response.label === field.label && response.type === field.type);
 
                     (field && field.buckets && field.buckets.items || [])
                         .map((bucket) => {
@@ -192,8 +191,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private parseFacetItems(context: ResultSetContext, configFacetFields, itemType): FacetField[] {
         return configFacetFields.map((field) => {
-            const responseField = (context.facets || [])
-                .find((response) => response.type === itemType && this.queryBuilder.checkEqualInsideQuotes(response.label, field.label)) || {};
+            const responseField = (context.facets || []).find((response) => response.type === itemType && response.label === field.label) || {};
             const responseBuckets = this.getResponseBuckets(responseField, field.field)
                 .filter(this.getFilterByMinCount(field.mincount));
 
@@ -321,10 +319,5 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             return null;
         }
         return `${field}:"${bucketLabel}"`;
-    }
-
-    getCleanLabel(label: string) {
-        const wrappingQuotes = /^\"|\"$|^\'|\'$/g;
-        return label.replace(wrappingQuotes, '');
     }
 }
