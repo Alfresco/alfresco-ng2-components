@@ -117,4 +117,16 @@ describe('Permissions Component', function () {
         permissionsPage.checkUserOrGroupIsAdded('GROUP_' + groupBody.id);
     });
 
+    it('[C268974] Inherit Permission', () => {
+        permissionsPage.checkPermissionInheritedButtonIsDisplayed();
+        expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
+        permissionsPage.checkPermissionsDatatableIsDisplayed();
+        permissionsPage.clickPermissionInheritedButton();
+        expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Inherit Permission');
+        permissionsPage.checkNoPermissionsIsDisplayed();
+        permissionsPage.clickPermissionInheritedButton();
+        expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
+        permissionsPage.checkPermissionsDatatableIsDisplayed();
+    });
+
 });
