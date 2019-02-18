@@ -18,6 +18,7 @@
 import { element, by } from 'protractor';
 
 import { Util } from '../../util/util';
+import { DataTablePage } from './dataTablePage';
 
 export class PermissionsPage {
 
@@ -26,6 +27,9 @@ export class PermissionsPage {
     searchUserInput = element(by.id('searchInput'));
     searchResults = element.all(by.id('adf-search-results-content')).first();
     addButton =  element(by.id('add-permission-dialog-confirm-button'));
+    permissionInheritedButton = element.all(by.css("div[class='adf-inherit_permission_button'] button")).first();
+    permissionInheritedButtonText = this.permissionInheritedButton.element(by.css('span'));
+    noPermissions = element(by.css('div[id="adf-no-permissions-template"]'));
 
     checkAddPermissionButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.addPermissionButton);
@@ -64,6 +68,28 @@ export class PermissionsPage {
     checkUserOrGroupIsAdded(name) {
         let userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
         Util.waitUntilElementIsVisible(userOrGroupName);
+    }
+
+    checkPermissionInheritedButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.permissionInheritedButton);
+    }
+
+    clickPermissionInheritedButton() {
+        Util.waitUntilElementIsClickable(this.permissionInheritedButton);
+        return this.permissionInheritedButton.click();
+    }
+
+    checkNoPermissionsIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.noPermissions);
+    }
+
+    getPermissionInheritedButtonText() {
+        Util.waitUntilElementIsClickable(this.permissionInheritedButton);
+        return this.permissionInheritedButtonText.getText();
+    }
+
+    checkPermissionsDatatableIsDisplayed() {
+        return new DataTablePage(element(by.css('[class*="adf-datatable-permission"]')));
     }
 
 }

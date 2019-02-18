@@ -25,6 +25,7 @@ import { ContentListPage } from '../pages/adf/dialog/contentListPage';
 import AlfrescoApi = require('alfresco-js-api-node');
 import { FileModel } from '../models/ACS/fileModel';
 import { UploadActions } from '../actions/ACS/upload.actions';
+import { DataTablePage } from '../pages/adf/dataTablePage';
 import { Util } from '../util/util';
 import { browser } from 'protractor';
 
@@ -35,6 +36,7 @@ describe('Permissions Component', function () {
     let permissionsPage = new PermissionsPage();
     let uploadActions = new UploadActions();
     let contentList = new ContentListPage();
+    let dataTablePage = new DataTablePage();
     let acsUser, file;
 
     let fileModel = new FileModel({
@@ -115,6 +117,18 @@ describe('Permissions Component', function () {
         permissionsPage.searchUserOrGroup('GROUP_' + groupBody.id);
         permissionsPage.clickUserOrGroup('GROUP_' + groupBody.id);
         permissionsPage.checkUserOrGroupIsAdded('GROUP_' + groupBody.id);
+    });
+
+    it('[C268974] Inherit Permission', () => {
+        permissionsPage.checkPermissionInheritedButtonIsDisplayed();
+        expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
+        permissionsPage.checkPermissionsDatatableIsDisplayed();
+        permissionsPage.clickPermissionInheritedButton();
+        expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Inherit Permission');
+        permissionsPage.checkNoPermissionsIsDisplayed();
+        permissionsPage.clickPermissionInheritedButton();
+        expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
+        permissionsPage.checkPermissionsDatatableIsDisplayed();
     });
 
 });
