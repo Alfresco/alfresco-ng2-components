@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2019-01-30
 ---
 
-# [Edit Process Filter Cloud component](../../lib/lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts "Defined in edit-process-filter-cloud.component.ts")
+# [Edit Process Filter Cloud component](../../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts "Defined in edit-process-filter-cloud.component.ts")
 
 Shows Process Filter Details.
 
@@ -54,8 +54,8 @@ Shows Process Filter Details.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterAction`](../../lib/lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a filter action occurs i.e Save, SaveAs, Delete. |
-| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterCloudModel`](../../lib/lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a process instance filter property changes. |
+| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterAction`](../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a filter action occurs i.e Save, SaveAs, Delete. |
+| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterCloudModel`](../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a process instance filter property changes. |
 
 ## Details
 
