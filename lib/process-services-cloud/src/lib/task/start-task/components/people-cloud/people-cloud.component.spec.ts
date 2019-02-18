@@ -317,7 +317,7 @@ describe('PeopleCloudComponent', () => {
 
     it('should not validate preselect values if preselectValidation flag is set to false', () => {
         component.mode = 'multiple';
-        component.preselectValidation = false;
+        component.validate = false;
         component.preSelectUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
         fixture.detectChanges();
         fixture.whenStable().then( () => {
@@ -328,7 +328,7 @@ describe('PeopleCloudComponent', () => {
 
     it('should filter users when validation flag is true', async(() => {
         component.mode = 'multiple';
-        component.preselectValidation = true;
+        component.validate = true;
         component.preSelectUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
         fixture.detectChanges();
         fixture.whenStable().then( () => {

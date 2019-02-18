@@ -40,7 +40,7 @@ export class IdentityUserService {
     constructor(
         private helper: JwtHelperService,
         private apiService: AlfrescoApiService,
-        private appConfigService: AppConfigService) {}
+        private appConfigService: AppConfigService) { }
 
     /**
      * Gets the name and other basic details of the current user.
@@ -80,14 +80,74 @@ export class IdentityUserService {
             return of([]);
         }
         const url = this.buildUserUrl();
-        const httpMethod = 'GET', pathParams = {}, queryParams = {search: search}, bodyParam = {}, headerParams = {},
+        const httpMethod = 'GET', pathParams = {}, queryParams = { search: search }, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
         return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
-                    url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam,
-                    contentTypes, accepts, Object, null, null)
-                ));
+            url, httpMethod, pathParams, queryParams,
+            headerParams, formParams, bodyParam,
+            contentTypes, accepts, Object, null, null)
+        ));
+    }
+
+    /**
+     * Find users based on username input.
+     * @param username Search query string
+     * @returns List of users
+     */
+    findUserByUsername(username: string): Observable<any> {
+        if (username === '') {
+            return of([]);
+        }
+        const url = this.buildUserUrl();
+        const httpMethod = 'GET', pathParams = {}, queryParams = { username: username }, bodyParam = {}, headerParams = {},
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+            url, httpMethod, pathParams, queryParams,
+            headerParams, formParams, bodyParam,
+            contentTypes, accepts, Object, null, null)
+        ));
+    }
+
+    /**
+     * Find users based on email input.
+     * @param email Search query string
+     * @returns List of users
+     */
+    findUserByEmail(email: string): Observable<any> {
+        if (email === '') {
+            return of([]);
+        }
+        const url = this.buildUserUrl();
+        const httpMethod = 'GET', pathParams = {}, queryParams = { email: email }, bodyParam = {}, headerParams = {},
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+            url, httpMethod, pathParams, queryParams,
+            headerParams, formParams, bodyParam,
+            contentTypes, accepts, Object, null, null)
+        ));
+    }
+
+    /**
+     * Find users based on id input.
+     * @param id Search query string
+     * @returns List of users
+     */
+    findUserById(id: string): Observable<any> {
+        if (id === '') {
+            return of([]);
+        }
+        const url = this.buildUserUrl() + '/' + id;
+        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+            url, httpMethod, pathParams, queryParams,
+            headerParams, formParams, bodyParam,
+            contentTypes, accepts, Object, null, null)
+        ));
     }
 
     /**
@@ -102,10 +162,10 @@ export class IdentityUserService {
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
         return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
-                    url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam,
-                    contentTypes, accepts, Object, null, null)
-                );
+            url, httpMethod, pathParams, queryParams,
+            headerParams, formParams, bodyParam,
+            contentTypes, accepts, Object, null, null)
+        );
     }
 
     /**
@@ -160,18 +220,18 @@ export class IdentityUserService {
      */
     getClientIdByApplicationName(applicationName: string): Observable<string> {
         const url = this.buildGetClientsUrl();
-        const httpMethod = 'GET', pathParams = {}, queryParams = {clientId: applicationName}, bodyParam = {}, headerParams = {}, formParams = {},
-              contentTypes = ['application/json'], accepts = ['application/json'];
+        const httpMethod = 'GET', pathParams = {}, queryParams = { clientId: applicationName }, bodyParam = {}, headerParams = {}, formParams = {},
+            contentTypes = ['application/json'], accepts = ['application/json'];
         return from(this.apiService.getInstance()
-                        .oauth2Auth.callCustomApi(url, httpMethod, pathParams, queryParams, headerParams,
-                                              formParams, bodyParam, contentTypes,
-                                              accepts, Object, null, null)
-            ).pipe(
-                map((response: any[]) => {
-                    const clientId = response && response.length > 0 ? response[0].id : '';
-                    return clientId;
-                })
-            );
+            .oauth2Auth.callCustomApi(url, httpMethod, pathParams, queryParams, headerParams,
+                formParams, bodyParam, contentTypes,
+                accepts, Object, null, null)
+        ).pipe(
+            map((response: any[]) => {
+                const clientId = response && response.length > 0 ? response[0].id : '';
+                return clientId;
+            })
+        );
     }
 
     /**
@@ -213,14 +273,14 @@ export class IdentityUserService {
             formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
 
         return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
-                    url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam, authNames,
-                    contentTypes, accepts, null, null)
-                ).pipe(
-                    map((response: IdentityUserModel[]) => {
-                        return response;
-                    })
-            );
+            url, httpMethod, pathParams, queryParams,
+            headerParams, formParams, bodyParam, authNames,
+            contentTypes, accepts, null, null)
+        ).pipe(
+            map((response: IdentityUserModel[]) => {
+                return response;
+            })
+        );
     }
 
     /**
@@ -234,14 +294,14 @@ export class IdentityUserService {
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
 
         return from(this.apiService.getInstance().oauth2Auth.callCustomApi(
-                    url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam,
-                    contentTypes, accepts, Object, null, null)
-                ).pipe(
-                    map((response: IdentityRoleModel[]) => {
-                        return response;
-                    })
-            );
+            url, httpMethod, pathParams, queryParams,
+            headerParams, formParams, bodyParam,
+            contentTypes, accepts, Object, null, null)
+        ).pipe(
+            map((response: IdentityRoleModel[]) => {
+                return response;
+            })
+        );
     }
 
     /**
@@ -308,7 +368,7 @@ export class IdentityUserService {
      * @param roleNames Array of roles to check for
      * @returns True if the user has one of the roles, false otherwise
      */
-    checkUserHasRole(userId: string, roleNames: string[]): Observable<boolean>  {
+    checkUserHasRole(userId: string, roleNames: string[]): Observable<boolean> {
         return this.getUserRoles(userId).pipe(map((userRoles: IdentityRoleModel[]) => {
             let hasRole = false;
             if (userRoles && userRoles.length > 0) {
