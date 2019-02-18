@@ -35,7 +35,7 @@ describe('Permissions Component', function () {
     let permissionsPage = new PermissionsPage();
     let uploadActions = new UploadActions();
     let contentList = new ContentListPage();
-    let acsUser, file;
+    let acsUser, acsUser2, file;
 
     let fileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -57,9 +57,13 @@ describe('Permissions Component', function () {
 
         acsUser = new AcsUserModel();
 
+        acsUser2 = new AcsUserModel();
+
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser2);
 
         let group = await this.alfrescoJsApi.core.groupsApi.createGroup(groupBody);
 
@@ -115,6 +119,16 @@ describe('Permissions Component', function () {
         permissionsPage.searchUserOrGroup('GROUP_' + groupBody.id);
         permissionsPage.clickUserOrGroup('GROUP_' + groupBody.id);
         permissionsPage.checkUserOrGroupIsAdded('GROUP_' + groupBody.id);
+    });
+
+    it('[C274691] Should display dropdown choice for role into permission list for locally set permissions', () => {
+        permissionsPage.checkAddPermissionButtonIsDisplayed();
+        permissionsPage.clickAddPermissionButton();
+        permissionsPage.checkAddPermissionDialogIsDisplayed();
+        permissionsPage.checkSearchUserInputIsDisplayed();
+        permissionsPage.searchUserOrGroup(acsUser2.getFirstName());
+        permissionsPage.clickUserOrGroup(acsUser2.getFirstName());
+        permissionsPage.checkUserOrGroupIsAdded(acsUser2.getFirstName());
     });
 
 });
