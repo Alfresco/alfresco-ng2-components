@@ -136,7 +136,7 @@
         "expanded": true,
         "intervals":[
           {
-            "label":"TheCreated",
+            "label":"The Created",
             "field":"cm:created",
             "sets":[
               { "label":"lastYear", "start":"2018", "end":"2019", "endInclusive":false },

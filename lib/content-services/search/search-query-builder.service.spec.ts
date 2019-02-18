@@ -447,6 +447,51 @@ describe('SearchQueryBuilder', () => {
         expect(compiled.facetIntervals).toEqual(jasmine.objectContaining(config.facetIntervals));
     });
 
+    it('should build query with custom facet intervals automatically getting their request compatible labels', () => {
+        const spacesLabel = {
+            configValue: 'label with spaces',
+            requestCompatibleValue: '"label with spaces"'
+        };
+        const noSpacesLabel = {
+            configValue: 'label',
+            requestCompatibleValue: 'label'
+        };
+
+        const config: SearchConfiguration = {
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ],
+            facetIntervals: {
+                intervals: [
+                    {
+                        label: spacesLabel.configValue,
+                        field: 'f1',
+                        sets: [
+                            { label: 'interval1', start: 's1', end: 'e1' },
+                            { label: 'interval2', start: 's2', end: 'e2' }
+                        ]
+                    },
+                    {
+                        label: noSpacesLabel.configValue,
+                        field: 'f2',
+                        sets: [
+                            { label: 'interval3', start: 's3', end: 'e3' },
+                            { label: 'interval4', start: 's4', end: 'e4' }
+                        ]
+                    }
+                ]
+            }
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        builder.queryFragments['cat1'] = 'cm:name:test';
+
+        const compiled = builder.buildQuery();
+        expect(compiled.facetIntervals.intervals[0].label).toEqual(spacesLabel.requestCompatibleValue);
+        expect(compiled.facetIntervals.intervals[0].label).not.toEqual(spacesLabel.configValue);
+        expect(compiled.facetIntervals.intervals[1].label).toEqual(noSpacesLabel.requestCompatibleValue);
+        expect(compiled.facetIntervals.intervals[1].label).toEqual(noSpacesLabel.configValue);
+    });
+
     it('should build query with sorting', () => {
         const config: SearchConfiguration = {
             fields: [],

@@ -314,10 +314,32 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         };
     }
 
-    private getCorrespondingFilterQuery (configFacetItem: FacetField, bucketLabel: string): string {
-        if (!configFacetItem.field || !bucketLabel) {
+    // remove once [SEARCH-1487] issue is fixed
+    private getCorrespondingFilterQuery (field, bucketLabel: string): string {
+        if (!field.field || !bucketLabel) {
             return null;
         }
-        return `${configFacetItem.field}:"${bucketLabel}"`;
+
+        if (!field.sets) {
+            return `${field.field}:"${bucketLabel}"`;
+
+        } else {
+            const configSet = field.sets.find((set) => bucketLabel === set.label);
+
+            if (configSet) {
+                return this.buildIntervalQuery(field.field, configSet);
+            }
+        }
+
+        return null;
+    }
+
+    private buildIntervalQuery(fieldName, interval): string {
+        const start = interval.start;
+        const end = interval.end;
+        const startLimit = (interval.startInclusive === undefined || interval.startInclusive === true) ? '[' : '<';
+        const endLimit = (interval.endInclusive === undefined || interval.endInclusive === true) ? ']' : '>';
+
+        return `${fieldName}:${startLimit}"${start}" TO "${end}"${endLimit}`;
     }
 }

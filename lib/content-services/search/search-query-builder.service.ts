@@ -323,7 +323,7 @@ export class SearchQueryBuilderService {
 
             return {
                 intervals: configIntervals.intervals.map((interval) => <any> {
-                    label: interval.label,
+                    label: this.getSupportedLabel(interval.label),
                     field: interval.field,
                     sets: interval.sets
                 })
