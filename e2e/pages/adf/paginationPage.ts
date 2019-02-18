@@ -22,7 +22,7 @@ export class PaginationPage {
 
     itemsPerPageDropdown = element(by.css('div[class*="adf-pagination__perpage-block"] button'));
     pageSelectorDropDown = element(by.css('div[class*="adf-pagination__page-selector"]'));
-    pageSelectorArrow = element(by.css('button[aria-label="Current page selector"]'));
+    pageSelectorArrow = element(by.css('button[data-automation-id="page-selector"]'));
     itemsPerPage = element(by.css('span[class="adf-pagination__max-items"]'));
     currentPage = element(by.css('span[class="adf-pagination__current-page"]'));
     totalPages = element(by.css('span[class="adf-pagination__total-pages"]'));
