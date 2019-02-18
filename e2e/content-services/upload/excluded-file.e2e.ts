@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,6 +83,11 @@ describe('Upload component - Excluded Files', () => {
         done();
     });
 
+    afterEach(async (done) => {
+        await browser.refresh();
+        done();
+    });
+
     it('[C279914] Should not allow upload default excluded files using D&D', () => {
         contentServicesPage.checkDragAndDropDIsDisplayed();
 
@@ -108,14 +113,16 @@ describe('Upload component - Excluded Files', () => {
     it('[C260125] Should not upload excluded file when they are in a Folder', () => {
         uploadToggles.enableFolderUpload();
 
-        contentServicesPage.uploadFolder(folderWithExcludedFile.location).checkContentIsDisplayed(folderWithExcludedFile.name);
+        contentServicesPage.uploadFolder(folderWithExcludedFile.location);
 
-        contentServicesPage.doubleClickRow(folderWithExcludedFile.name).checkContentIsNotDisplayed(iniExcludedFile.name).checkContentIsDisplayed('a_file.txt');
+        uploadDialog.checkUploadCompleted().then(() => {
+            contentServicesPage.doubleClickRow(folderWithExcludedFile.name)
+                .checkContentIsNotDisplayed(iniExcludedFile.name)
+                .checkContentIsDisplayed('a_file.txt');
+        });
     });
 
     it('[C212862] Should not allow upload file excluded in the files extension of app.config.json', () => {
-
-        browser.refresh();
 
         navigationBarPage.clickConfigEditorButton();
         configEditorPage.clickFileConfiguration();
@@ -123,15 +130,14 @@ describe('Upload component - Excluded Files', () => {
         configEditorPage.clickClearButton();
 
         configEditorPage.enterConfiguration('{' +
-            '    "excluded": [' +
-            '        ".DS_Store",' +
-            '        "desktop.ini",' +
-            '        "*.txt"' +
-            '    ],' +
-            '    "match-options": {' +
-            '        "nocase": true' +
-            '    }' +
-            '}');
+            '"excluded": [' +
+                '".DS_Store",' +
+                '"desktop.ini",' +
+                '"*.txt"' +
+            '],' +
+            '"match-options": {' +
+                '"nocase": true' +
+            '}}');
 
         configEditorPage.clickSaveButton();
 
@@ -153,15 +159,14 @@ describe('Upload component - Excluded Files', () => {
         configEditorPage.clickClearButton();
 
         configEditorPage.enterConfiguration('{' +
-            '    "excluded": [' +
-            '        ".DS_Store",' +
-            '        "desktop.ini",' +
-            '        "*.png"' +
-            '    ],' +
-            '    "match-options": {' +
-            '        "nocase": true' +
-            '    }' +
-            '}');
+            '"excluded": [' +
+                '".DS_Store",' +
+                '"desktop.ini",' +
+                '"*.png"' +
+            '],' +
+            '"match-options": {' +
+                '"nocase": true' +
+            '}}');
 
         configEditorPage.clickSaveButton();
 

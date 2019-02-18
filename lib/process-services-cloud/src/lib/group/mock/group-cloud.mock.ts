@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { GroupModel } from '../models/group.model';
+import { GroupModel, GroupRoleModel } from '../models/group.model';
 
 export let mockGroup1 = new GroupModel({
     id: 'mock-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []
@@ -102,3 +102,11 @@ export let applicationDetailsMockApi = {
         }
     }
 };
+
+export let groupRoles = [
+    new GroupRoleModel({id: 'mock-id', name: 'MOCK-ADMIN-ROLE'}),
+    new GroupRoleModel({id: 'mock-id', name: 'MOCK-USER-ROLE'}),
+    new GroupRoleModel({id: 'mock-id', name: 'MOCK-ROLE-1'})
+];
+
+export let clientRoles = [ 'MOCK-ADMIN-ROLE', 'MOCK-USER-ROLE'];

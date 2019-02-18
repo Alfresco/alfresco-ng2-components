@@ -56,12 +56,12 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Context menu directive](context-menu.directive.md) | Adds a context menu to a component. | [Source](../../lib/core/context-menu/context-menu.directive.ts) |
+| [Check allowable operation directive](check-allowable-operation.directive.md) | Selectively disables an HTML element or Angular component. | [Source](../../lib/core/directives/check-allowable-operation.directive.ts) |
 | [Highlight directive](highlight.directive.md) | Adds highlighting to selected sections of an HTML element's content. | [Source](../../lib/core/directives/highlight.directive.ts) |
 | [Logout directive](logout.directive.md) | Logs the user out when the decorated element is clicked. | [Source](../../lib/core/directives/logout.directive.ts) |
 | [Node delete directive](node-delete.directive.md) | Deletes multiple files and folders. | [Source](../../lib/core/directives/node-delete.directive.ts) |
 | [Node download directive](node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../../lib/core/directives/node-download.directive.ts) |
 | [Node favorite directive](node-favorite.directive.md) | Selectively toggles nodes as favorites. | [Source](../../lib/core/directives/node-favorite.directive.ts) |
-| [Node permission directive](node-permission.directive.md) | Selectively disables an HTML element or Angular component. | [Source](../../lib/core/directives/node-permission.directive.ts) |
 | [Node restore directive](node-restore.directive.md) | Restores deleted nodes to their original location. | [Source](../../lib/core/directives/node-restore.directive.ts) |
 | [Upload directive](upload.directive.md) | Uploads content in response to file drag and drop. | [Source](../../lib/core/directives/upload.directive.ts) |
 

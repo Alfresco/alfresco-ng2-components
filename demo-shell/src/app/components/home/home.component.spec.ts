@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import { CoreModule } from '@alfresco/adf-core';
 describe('HomeComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-        imports: [CoreModule],
+        imports: [CoreModule.forRoot()],
         declarations: [HomeComponent],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });

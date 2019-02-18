@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,10 +42,20 @@ describe('AuthGuardService ECM', () => {
         appConfigService = TestBed.get(AppConfigService);
 
         appConfigService.config.providers = 'ECM';
+        appConfigService.config.auth = {};
     });
 
     it('if the alfresco js api is logged in should canActivate be true', async(() => {
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
+        const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
+
+        expect(authGuard.canActivate(null, router)).toBeTruthy();
+    }));
+
+    it('if the alfresco js api is configured with withCredentials true should canActivate be true', async(() => {
+        spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
+        appConfigService.config.auth.withCredentials = true;
+
         const router: RouterStateSnapshot = <RouterStateSnapshot>  {url : 'some-url'};
 
         expect(authGuard.canActivate(null, router)).toBeTruthy();

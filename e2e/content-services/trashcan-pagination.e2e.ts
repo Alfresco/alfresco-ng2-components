@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,15 +84,19 @@ describe('Trashcan - Pagination', () => {
         });
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
+        navigationBarPage.clickTrashcanButton();
+        trashcanPage.waitForTableBody();
 
         done();
     });
 
-    it('[C272811] Should be able to set Items per page to 20', () => {
-        navigationBarPage.clickTrashcanButton();
-
+    afterEach((done) => {
+        browser.refresh();
         trashcanPage.waitForTableBody();
+        done();
+    });
 
+    it('[C272811] Should be able to set Items per page to 20', () => {
         paginationPage.selectItemsPerPage(itemsPerPage.twenty);
 
         trashcanPage.waitForTableBody();
@@ -107,8 +111,6 @@ describe('Trashcan - Pagination', () => {
     });
 
     it('[C276742] Should be able to set Items per page to 15', () => {
-        navigationBarPage.clickTrashcanButton();
-        trashcanPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
         trashcanPage.waitForTableBody();
         trashcanPage.waitForPagination();
@@ -120,8 +122,6 @@ describe('Trashcan - Pagination', () => {
     });
 
     it('[C276743] Should be able to set Items per page to 10', () => {
-        navigationBarPage.clickTrashcanButton();
-        trashcanPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.ten);
         trashcanPage.waitForTableBody();
         trashcanPage.waitForPagination();
@@ -133,8 +133,6 @@ describe('Trashcan - Pagination', () => {
     });
 
     it('[C276744] Should be able to set Items per page to 5', () => {
-        navigationBarPage.clickTrashcanButton();
-        trashcanPage.waitForTableBody();
         paginationPage.selectItemsPerPage(itemsPerPage.five);
         trashcanPage.waitForTableBody();
         trashcanPage.waitForPagination();

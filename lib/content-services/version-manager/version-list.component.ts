@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,11 +71,11 @@ export class VersionListComponent implements OnChanges {
     }
 
     canUpdate(): boolean {
-        return this.contentService.hasPermission(this.node, 'update') && this.versions.length > 1;
+        return this.contentService.hasAllowableOperations(this.node, 'update') && this.versions.length > 1;
     }
 
     canDelete(): boolean {
-        return this.contentService.hasPermission(this.node, 'delete') && this.versions.length > 1;
+        return this.contentService.hasAllowableOperations(this.node, 'delete') && this.versions.length > 1;
     }
 
     restore(versionId) {

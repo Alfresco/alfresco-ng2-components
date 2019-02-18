@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,9 @@ import { OauthConfigModel } from '../models/oauth-config.model';
     providedIn: 'root'
 })
 export class AuthGuardBpm implements CanActivate, CanActivateChild {
-    constructor(private authService: AuthenticationService, private router: Router, private appConfig: AppConfigService) {}
+
+    constructor(private authService: AuthenticationService, private router: Router, private appConfigService: AppConfigService) {
+    }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         return this.checkLogin(state.url);
@@ -36,7 +38,9 @@ export class AuthGuardBpm implements CanActivate, CanActivateChild {
     }
 
     checkLogin(redirectUrl: string): boolean {
-        if (this.authService.isBpmLoggedIn()) {
+        let withCredentialsMode = this.appConfigService.get<boolean>('auth.withCredentials', false);
+
+        if (this.authService.isBpmLoggedIn() || withCredentialsMode) {
             return true;
         }
 
@@ -50,11 +54,11 @@ export class AuthGuardBpm implements CanActivate, CanActivateChild {
     }
 
     isOAuthWithoutSilentLogin() {
-        let oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
+        let oauth: OauthConfigModel = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
         return this.authService.isOauth() && oauth.silentLogin === false;
     }
 
     private getRouteDestinationForLogin(): string {
-        return this.appConfig && this.appConfig.get<string>(AppConfigValues.LOGIN_ROUTE) ? this.appConfig.get<string>(AppConfigValues.LOGIN_ROUTE) : 'login';
+        return this.appConfigService && this.appConfigService.get<string>(AppConfigValues.LOGIN_ROUTE) ? this.appConfigService.get<string>(AppConfigValues.LOGIN_ROUTE) : 'login';
     }
 }

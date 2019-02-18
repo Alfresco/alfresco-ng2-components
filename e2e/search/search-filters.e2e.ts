@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,6 +65,8 @@ describe('Search Filters', () => {
 
     let filter = { type: 'TYPE-PNG Image' };
 
+    let jsonFile;
+
     beforeAll(async (done) => {
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -88,9 +90,9 @@ describe('Search Filters', () => {
 
         searchDialog.checkSearchIconIsVisible();
         searchDialog.clickOnSearchIcon();
-        searchDialog.enterTextAndPressEnter(fileUploaded.entry.name);
 
-        searchFiltersPage.checkSearchFiltersIsDisplayed();
+        let searchConfiguration = new SearchConfiguration();
+        jsonFile = searchConfiguration.getConfiguration();
 
         done();
     });
@@ -105,6 +107,10 @@ describe('Search Filters', () => {
     });
 
     it('[C286298] Should be able to cancel a filter using "x" button from the toolbar', () => {
+        searchDialog.enterTextAndPressEnter(fileUploaded.entry.name);
+
+        searchFiltersPage.checkSearchFiltersIsDisplayed();
+
         let userOption = `${acsUser.firstName} ${acsUser.lastName}`;
         searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption)
             .checkChipIsDisplayed(userOption)
@@ -157,8 +163,6 @@ describe('Search Filters', () => {
     });
 
     it('[C291802] Should be able to filter facet fields with "Contains"', () => {
-        let searchConfiguration = new SearchConfiguration();
-        let jsonFile = searchConfiguration.getConfiguration();
         navigationBar.clickConfigEditorButton();
         configEditor.clickSearchConfiguration();
         configEditor.clickClearButton();
@@ -176,4 +180,31 @@ describe('Search Filters', () => {
             .checkCheckListOptionIsDisplayed('Administrator');
     });
 
+    it('[C291980] Should group search facets under specified labels', () => {
+        browser.get(TestConfig.adf.url + '/search;q=*');
+
+        searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed()
+            .checkTypeFacetQueryGroupIsDisplayed()
+            .checkSizeFacetQueryGroupIsDisplayed();
+    });
+
+    it('[C291981] Should group search facets under the default label, by default', () => {
+        browser.refresh();
+
+        navigationBar.clickConfigEditorButton();
+        configEditor.clickSearchConfiguration();
+        configEditor.clickClearButton();
+        jsonFile['filterWithContains'] = true;
+        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
+        configEditor.clickSaveButton();
+
+        searchDialog.clickOnSearchIcon()
+            .enterTextAndPressEnter('*');
+
+        searchResults.tableIsLoaded();
+
+        searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
+        expect(searchFiltersPage.isTypeFacetQueryGroupPresent()).toBe(false);
+        expect(searchFiltersPage.isSizeFacetQueryGroupPresent()).toBe(false);
+    });
 });

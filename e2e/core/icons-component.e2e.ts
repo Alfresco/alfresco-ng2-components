@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,11 +52,11 @@ describe('Universal Icon component', function () {
 
     it('[C291872] Should display the icons on the page', () => {
 
-        expect(iconsPage.locateLigatureIcon('alarm').isDisplayed()).toBe(true, 'Ligature icon is not displayed');
+        expect(iconsPage.locateLigatureIcon('folder').isDisplayed()).toBe(true, 'Ligature icon is not displayed');
 
         expect(iconsPage.locateCustomIcon('adf:move_file').isDisplayed()).toBe(true, 'Named icon is not displayed');
 
-        expect(iconsPage.locateCustomIcon('image/gif').isDisplayed()).toBe(true, 'Thumbnail service icon is not displayed');
+        expect(iconsPage.locateCustomIcon('adf:folder').isDisplayed()).toBe(true, 'Thumbnail service icon is not displayed');
     });
 
 });

@@ -1,6 +1,7 @@
 <div class="adf-cloud-group">
 <mat-form-field>
-    <mat-chip-list #groupChipList *ngIf="isMultipleMode()" data-automation-id="adf-cloud-group-chip-list" class="apa-group-chip-list">
+    <mat-label>{{ (title || 'ADF_CLOUD_GROUPS.SEARCH-GROUP') | translate }}</mat-label>
+    <mat-chip-list #groupChipList *ngIf="isMultipleMode()" [disabled]="isDisabled" data-automation-id="adf-cloud-group-chip-list" class="apa-group-chip-list">
       <mat-chip
         *ngFor="let group of selectedGroups$ | async"
         (removed)="onRemove(group)"
@@ -8,23 +9,26 @@
         {{group.name}}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
-      <input
-        placeholder="{{ 'ADF_CLOUD_GROUPS.SEARCH-GROUP' | translate }}"
+      <input matInput
         [formControl]="searchGroupsControl"
         class="adf-group-input"
         id="group-name"
+        [attr.disabled]="isDisabled"
         data-automation-id="adf-cloud-group-search-input"
+        (focus)="setFocus(true)"
+        (blur)="setFocus(false)"
         [matAutocomplete]="auto"
         [matChipInputFor]="groupChipList" #groupInput>
     </mat-chip-list>
 
     <input *ngIf="!isMultipleMode()"
       matInput
-      placeholder="{{ 'ADF_CLOUD_GROUPS.SEARCH-GROUP' | translate }}"
       class="adf-group-input"
       data-automation-id="adf-cloud-group-search-input"
+      (focus)="setFocus(true)"
+      (blur)="setFocus(false)"
       [formControl]="searchGroupsControl"
-      [matAutocomplete]="auto" #groupInput>
+      [matAutocomplete]="auto">
 
     <mat-autocomplete
       #auto="matAutocomplete"
@@ -40,7 +44,7 @@
       </mat-option>
     </mat-autocomplete>
 </mat-form-field>
-<div class="adf-cloud-group-error" *ngIf="hasError()">
+<div class="adf-cloud-group-error" *ngIf="hasErrorMessage()">
     <div fxLayout="row" fxLayoutAlign="start start" [@transitionMessages]="_subscriptAnimationState">
         <div class="adf-cloud-group-error-message">
         {{ 'ADF_CLOUD_GROUPS.ERROR.NOT_FOUND' | translate : { groupName : searchedValue } }}

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
-const POSITION = { BOTTOM: 'bottom', LEFT: 'left', RIGHT: 'right', TOP: 'top'};
-const STRATEGY = { CURSOR: 'cursor', ELEMENT: 'element'};
-const IS_ACTIVE_CLASS = 'is-active';
+const POSITION = { BOTTOM: 'bottom', LEFT: 'left', RIGHT: 'right', TOP: 'top' };
+const STRATEGY = { CURSOR: 'cursor', ELEMENT: 'element' };
+const IS_ACTIVE_CLASS = 'adf-is-active';
 
 @Component({
     selector: 'diagram-tooltip',
@@ -100,10 +100,10 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
     private handleMouseEnter(event): void {
         let props;
 
-        if (this.strategy === STRATEGY.ELEMENT ) {
+        if (this.strategy === STRATEGY.ELEMENT) {
             props = event.target.getBoundingClientRect();
         } else {
-            props = {top: (event.pageY - 150), left: event.pageX , width: event.layerX, height: 50};
+            props = { top: (event.pageY - 150), left: event.pageX, width: event.layerX, height: 50 };
         }
 
         let top = props.top + (props.height / 2);

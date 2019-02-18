@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,7 +46,8 @@ import { AppsCloudDemoComponent } from './components/app-layout/cloud/apps-cloud
 import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-cloud-demo.component';
 import { StartTaskCloudDemoComponent } from './components/app-layout/cloud/start-task-cloud-demo.component';
 import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
-import { DocumentListDemoComponent } from './components/document-list/document-list-demo.component';
+import { TemplateDemoComponent } from './components/template-list/template-demo.component';
+import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -84,11 +85,12 @@ export const appRoutes: Routes = [
     {
         path: 'breadcrumb',
         canActivate: [AuthGuardEcm],
+        component: AppLayoutComponent,
         loadChildren: 'app/components/breadcrumb-demo/breadcrumb-demo.module#AppBreadcrumbModule'
     },
     {
         path: 'notifications',
-        component: AppLayoutComponent ,
+        component: AppLayoutComponent,
         children: [
             {
                 path: '',
@@ -98,7 +100,7 @@ export const appRoutes: Routes = [
     },
     {
         path: 'config-editor',
-        component: AppLayoutComponent ,
+        component: AppLayoutComponent,
         children: [
             {
                 path: '',
@@ -108,7 +110,7 @@ export const appRoutes: Routes = [
     },
     {
         path: 'card-view',
-        component: AppLayoutComponent ,
+        component: AppLayoutComponent,
         children: [
             {
                 path: '',
@@ -145,6 +147,10 @@ export const appRoutes: Routes = [
                     {
                         path: '',
                         component: AppsCloudDemoComponent
+                    },
+                    {
+                        path: 'people-group-cloud',
+                        component: PeopleGroupCloudDemoComponent
                     },
                     {
                         path: ':applicationName',
@@ -336,8 +342,8 @@ export const appRoutes: Routes = [
                 loadChildren: 'app/components/lazy-loading/lazy-loading.module#LazyLoadingModule'
             },
             {
-                path: 'document-list',
-                component: DocumentListDemoComponent
+                path: 'template-list',
+                component: TemplateDemoComponent
             },
             {
                 path: 'task-list',

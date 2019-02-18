@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -268,6 +268,17 @@ describe('Content Services Viewer', () => {
         viewerPage.checkZoomOutButtonIsDisplayed();
         viewerPage.checkScalePageButtonIsDisplayed();
 
+        viewerPage.clickCloseButton();
+    });
+
+    it('[C291903] Should display the buttons in order in the adf viewer toolbar', () => {
+        viewerPage.viewFile(pdfFile.name);
+        viewerPage.checkLeftSideBarIsNotDisplayed();
+        viewerPage.clickLeftSidebarButton();
+        viewerPage.checkLeftSideBarIsDisplayed();
+        viewerPage.enableMoreActionsMenu();
+        viewerPage.checkToolbarIsDisplayed();
+        expect(viewerPage.getLastButtonTitle()).toEqual(viewerPage.getMoreActionsMenuTitle());
         viewerPage.clickCloseButton();
     });
 

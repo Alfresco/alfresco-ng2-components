@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
  */
 
 export * from './file.model';
+export * from './allowable-operations.enum';
 export * from './permissions.enum';
 export * from './product-version.model';
 export * from './user-process.model';
@@ -24,3 +25,4 @@ export * from './ecm-company.model';
 export * from './redirection.model';
 export * from './pagination.model';
 export * from './oauth-config.model';
+export * from './request-pagination.model';

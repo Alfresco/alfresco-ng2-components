@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -242,6 +242,28 @@ describe('IdentityUserService', () => {
 
         service.checkUserHasAnyClientAppRole('user-id', 'app-name', [mockRoles[1].name]).subscribe(
             (res: boolean) => {
+                expect(res).toBeFalsy();
+                done();
+            }
+        );
+    });
+
+    it('should return true if user has given role', (done) => {
+        spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
+        service.checkUserHasRole('mock-user-id', ['MOCK-ROLE-1']).subscribe(
+            (res: boolean) => {
+                expect(res).toBeDefined();
+                expect(res).toBeTruthy();
+                done();
+            }
+        );
+    });
+
+    it('should return false if user does not have given role', (done) => {
+        spyOn(service, 'getUserRoles').and.returnValue(of(mockRoles));
+        service.checkUserHasRole('mock-user-id', ['MOCK-ROLE-10']).subscribe(
+            (res: boolean) => {
+                expect(res).toBeDefined();
                 expect(res).toBeFalsy();
                 done();
             }

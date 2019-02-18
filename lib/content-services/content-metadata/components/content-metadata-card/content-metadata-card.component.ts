@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { ContentService, PermissionsEnum } from '@alfresco/adf-core';
+import { ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-content-metadata-card',
@@ -89,7 +89,7 @@ export class ContentMetadataCardComponent {
         this.expanded = !this.expanded;
     }
 
-    hasPermission() {
-        return this.contentService.hasPermission(this.node, PermissionsEnum.UPDATE);
+    hasAllowableOperations() {
+        return this.contentService.hasAllowableOperations(this.node, AllowableOperationsEnum.UPDATE);
     }
 }

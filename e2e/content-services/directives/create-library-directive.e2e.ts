@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -200,6 +200,16 @@ describe('Create library directive', function () {
             expect(createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
             expect(createLibraryDialog.getErrorMessage()).toMatch('Use numbers and letters only');
         }
+    });
+
+    it('[C291985] Should not accept less than one character name for Library name', () => {
+        let name = 'x';
+        let libraryId = 'My New Library';
+
+        createLibraryDialog.typeLibraryName(name);
+        createLibraryDialog.typeLibraryId(libraryId);
+        expect(createLibraryDialog.isErrorMessageDisplayed()).toBe(true, 'Error message is not displayed');
+        expect(createLibraryDialog.getErrorMessage()).toMatch('Title must be at least 2 characters long');
     });
 
     it('[C291793] Should display error for Name field filled in with spaces only', () => {

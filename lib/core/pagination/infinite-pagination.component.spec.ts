@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,8 +23,9 @@ import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
 import { setupTestBed } from '../testing/setupTestBed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { PaginationModel } from '../models/pagination.model';
+import { RequestPaginationModel } from '../models/request-pagination.model';
 
 @Component({
     template: ``
@@ -56,6 +57,7 @@ describe('InfinitePaginationComponent', () => {
     let fixture: ComponentFixture<InfinitePaginationComponent>;
     let component: InfinitePaginationComponent;
     let pagination: Pagination;
+    let changeDetectorRef: ChangeDetectorRef;
 
     setupTestBed({
         imports: [CoreTestingModule],
@@ -67,6 +69,7 @@ describe('InfinitePaginationComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(InfinitePaginationComponent);
         component = fixture.componentInstance;
+        changeDetectorRef = fixture.componentRef.injector.get(ChangeDetectorRef);
 
         component.target = TestBed.createComponent(TestPaginatedComponent).componentInstance;
         pagination = {
@@ -85,7 +88,7 @@ describe('InfinitePaginationComponent', () => {
             pagination.hasMoreItems = true;
             component.isLoading = true;
             component.target = null;
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
 
             let loadingSpinner = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-spinner"]'));
             expect(loadingSpinner).not.toBeNull();
@@ -95,7 +98,7 @@ describe('InfinitePaginationComponent', () => {
             pagination.hasMoreItems = true;
             component.target.updatePagination(pagination);
             component.isLoading = false;
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
 
             let loadingSpinner = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-spinner"]'));
             expect(loadingSpinner).toBeNull();
@@ -105,16 +108,46 @@ describe('InfinitePaginationComponent', () => {
             pagination.hasMoreItems = true;
             component.target.updatePagination(pagination);
             component.isLoading = false;
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
 
             let loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
             expect(loadMoreButton).not.toBeNull();
         });
 
+        it('should NOT show the load more button if there are no more elements to load', (done) => {
+            pagination = { maxItems: 444, skipCount: 25, totalItems: 30, hasMoreItems: false };
+
+            component.target.pagination.next(pagination);
+
+            changeDetectorRef.detectChanges();
+
+            component.onLoadMore();
+
+            fixture.whenStable().then(() => {
+                let loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
+                expect(loadMoreButton).toBeNull();
+                done();
+            });
+        });
+
+        it('should  show the load more button if there are  more elements to load', (done) => {
+            pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
+
+            component.target.pagination.next(pagination);
+
+            changeDetectorRef.detectChanges();
+
+            fixture.whenStable().then(() => {
+                let loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
+                expect(loadMoreButton).not.toBeNull();
+                done();
+            });
+        });
+
         it('should NOT show anything if pagination has NO more items', () => {
             pagination.hasMoreItems = false;
             component.target.updatePagination(pagination);
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
 
             let loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
             expect(loadMoreButton).toBeNull();
@@ -122,16 +155,35 @@ describe('InfinitePaginationComponent', () => {
             expect(loadingSpinner).toBeNull();
         });
 
-        it('should trigger the loadMore event with the proper pagination object', (done) => {
-            pagination.hasMoreItems = true;
-            pagination.skipCount = 5;
-            component.target.updatePagination(pagination);
+        it('should trigger the loadMore event with skipcount 0 to reload all the elements', (done) => {
+            pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
+
+            component.target.pagination.next(pagination);
+
             component.isLoading = false;
             component.pageSize = 5;
-            fixture.detectChanges();
+            changeDetectorRef.detectChanges();
 
             component.loadMore.subscribe((newPagination: Pagination) => {
                 expect(newPagination.skipCount).toBe(0);
+                done();
+            });
+
+            let loadMoreButton = fixture.debugElement.query(By.css('[data-automation-id="adf-infinite-pagination-button"]'));
+            loadMoreButton.triggerEventHandler('click', {});
+        });
+
+        it('should trigger the loadMore event with merge false to reload all the elements', (done) => {
+            pagination = { maxItems: 444, skipCount: 25, totalItems: 55, hasMoreItems: true };
+
+            component.target.pagination.next(pagination);
+
+            component.isLoading = false;
+            component.pageSize = 5;
+            changeDetectorRef.detectChanges();
+
+            component.loadMore.subscribe((newPagination: RequestPaginationModel) => {
+                expect(newPagination.merge).toBe(false);
                 done();
             });
 
@@ -166,11 +218,10 @@ describe('InfinitePaginationComponent', () => {
             component.onLoadMore();
 
             expect(spyTarget).toHaveBeenCalledWith({
-                maxItems: 444 + 25,
                 skipCount: 0,
-                totalItems: 888,
-                hasMoreItems: true,
-                merge: true
+                maxItems: 50,
+                hasMoreItems: false,
+                merge: false
             });
         });
 
@@ -182,11 +233,10 @@ describe('InfinitePaginationComponent', () => {
             component.onLoadMore();
 
             expect(spyTarget).toHaveBeenCalledWith({
-                maxItems: 444 + component.pageSize,
+                maxItems: 14,
                 skipCount: 0,
-                totalItems: 888,
-                hasMoreItems: true,
-                merge: true
+                hasMoreItems: false,
+                merge: false
             });
         });
 

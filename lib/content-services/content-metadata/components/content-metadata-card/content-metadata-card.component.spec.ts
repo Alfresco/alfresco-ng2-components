@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import { By } from '@angular/platform-browser';
 import { Node } from '@alfresco/js-api';
 import { ContentMetadataCardComponent } from './content-metadata-card.component';
 import { ContentMetadataComponent } from '../content-metadata/content-metadata.component';
-import { setupTestBed, PermissionsEnum } from '@alfresco/adf-core';
+import { setupTestBed, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 describe('ContentMetadataCardComponent', () => {
@@ -125,7 +125,7 @@ describe('ContentMetadataCardComponent', () => {
 
     it('should toggle editable by clicking on the button', () => {
         component.editable = true;
-        component.node.allowableOperations = [PermissionsEnum.UPDATE];
+        component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
         fixture.detectChanges();
 
         const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));
@@ -183,7 +183,7 @@ describe('ContentMetadataCardComponent', () => {
 
     it('should show the edit button if node does has `update` permissions', () => {
         component.readOnly = false;
-        component.node.allowableOperations = [PermissionsEnum.UPDATE];
+        component.node.allowableOperations = [AllowableOperationsEnum.UPDATE];
         fixture.detectChanges();
 
         const button = fixture.debugElement.query(By.css('[data-automation-id="meta-data-card-toggle-edit"]'));

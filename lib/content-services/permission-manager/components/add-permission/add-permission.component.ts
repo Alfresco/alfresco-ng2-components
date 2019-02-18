@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
 import { NodeEntry, Node } from '@alfresco/js-api';
 import { NodePermissionService } from '../../services/node-permission.service';
-import { NodesApiService, ContentService, PermissionsEnum } from '@alfresco/adf-core';
+import { NodesApiService, ContentService, AllowableOperationsEnum } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-add-permission',
@@ -55,12 +55,12 @@ export class AddPermissionComponent {
     }
 
     isAddEnabled(): boolean {
-        return this.contentService.hasPermission(this.currentNode, PermissionsEnum.UPDATEPERMISSIONS) &&
+        return this.contentService.hasAllowableOperations(this.currentNode, AllowableOperationsEnum.UPDATEPERMISSIONS) &&
                 this.selectedItems.length !== 0;
     }
 
     applySelection() {
-        if (this.contentService.hasPermission(this.currentNode, PermissionsEnum.UPDATEPERMISSIONS)) {
+        if (this.contentService.hasAllowableOperations(this.currentNode, AllowableOperationsEnum.UPDATEPERMISSIONS)) {
             this.nodePermissionService.updateNodePermissions(this.nodeId, this.selectedItems)
                 .subscribe(
                     (node) => {

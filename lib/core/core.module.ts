@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,9 @@
  */
 
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-
 import { APP_INITIALIZER, NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, TranslateStore, TranslateService } from '@ngx-translate/core';
 
 import { MaterialModule } from './material.module';
 import { AboutModule } from './about/about.module';
@@ -49,19 +47,15 @@ import { DialogModule } from './dialogs/dialog.module';
 import { PipeModule } from './pipes/pipe.module';
 
 import { AlfrescoApiService } from './services/alfresco-api.service';
-import { LogService } from './services/log.service';
-import { TranslateLoaderService } from './services/translate-loader.service';
 import { TranslationService } from './services/translation.service';
 import { startupServiceFactory } from './services/startup-service-factory';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { IconModule } from './icon/icon.module';
-
-export function createTranslateLoader(http: HttpClient) {
-    return new TranslateLoaderService(http);
-}
+import { TranslateLoaderService } from './services/translate-loader.service';
 
 @NgModule({
     imports: [
+        TranslateModule,
         AboutModule,
         ViewerModule,
         SidenavLayoutModule,
@@ -69,10 +63,8 @@ export function createTranslateLoader(http: HttpClient) {
         CommonModule,
         DirectiveModule,
         DialogModule,
-        ClipboardModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule,
         HostSettingsModule,
         UserInfoModule,
         MaterialModule,
@@ -91,13 +83,6 @@ export function createTranslateLoader(http: HttpClient) {
         ButtonsMenuModule,
         TemplateModule,
         IconModule,
-        TranslateModule.forChild({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient, LogService]
-            }
-        }),
         SortingPickerModule
     ],
     exports: [
@@ -111,7 +96,6 @@ export function createTranslateLoader(http: HttpClient) {
         ClipboardModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule,
         HostSettingsModule,
         UserInfoModule,
         MaterialModule,
@@ -132,92 +116,6 @@ export function createTranslateLoader(http: HttpClient) {
         TemplateModule,
         SortingPickerModule,
         IconModule
-    ]
-})
-export class CoreModuleLazy {
-}
-
-@NgModule({
-    imports: [
-        AboutModule,
-        ViewerModule,
-        SidenavLayoutModule,
-        PipeModule,
-        CommonModule,
-        DirectiveModule,
-        DialogModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        HostSettingsModule,
-        UserInfoModule,
-        MaterialModule,
-        AppConfigModule,
-        PaginationModule,
-        ToolbarModule,
-        ContextMenuModule,
-        CardViewModule,
-        FormModule,
-        CommentsModule,
-        LoginModule,
-        LanguageMenuModule,
-        InfoDrawerModule,
-        DataColumnModule,
-        DataTableModule,
-        ButtonsMenuModule,
-        TemplateModule,
-        IconModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient, LogService]
-            }
-        }),
-        SortingPickerModule
-    ],
-    exports: [
-        AboutModule,
-        ViewerModule,
-        SidenavLayoutModule,
-        PipeModule,
-        CommonModule,
-        DirectiveModule,
-        DialogModule,
-        ClipboardModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        HostSettingsModule,
-        UserInfoModule,
-        MaterialModule,
-        AppConfigModule,
-        PaginationModule,
-        ToolbarModule,
-        ContextMenuModule,
-        CardViewModule,
-        FormModule,
-        CommentsModule,
-        LoginModule,
-        LanguageMenuModule,
-        InfoDrawerModule,
-        DataColumnModule,
-        DataTableModule,
-        TranslateModule,
-        ButtonsMenuModule,
-        TemplateModule,
-        SortingPickerModule,
-        IconModule
-    ],
-    providers: [
-        {
-            provide: APP_INITIALIZER,
-            useFactory: startupServiceFactory,
-            deps: [
-                AlfrescoApiService
-            ],
-            multi: true
-        }
     ]
 })
 export class CoreModule {
@@ -225,6 +123,9 @@ export class CoreModule {
         return {
             ngModule: CoreModule,
             providers: [
+                TranslateStore,
+                TranslateService,
+                { provide: TranslateLoader, useClass: TranslateLoaderService },
                 {
                     provide: APP_INITIALIZER,
                     useFactory: startupServiceFactory,
@@ -239,7 +140,7 @@ export class CoreModule {
 
     static forChild(): ModuleWithProviders {
         return {
-            ngModule: CoreModuleLazy
+            ngModule: CoreModule
         };
     }
 

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,29 +19,23 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
-import { TemplateModule, TranslateLoaderService, FormModule, PipeModule } from '@alfresco/adf-core';
+import { TemplateModule, FormModule, PipeModule, CoreModule } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
 import { GroupCloudComponent } from './components/group-cloud.component';
 import { InitialGroupNamePipe } from './pipe/group-initial.pipe';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    PipeModule,
-    TranslateModule.forRoot({
-          loader: {
-              provide: TranslateLoader,
-              useClass: TranslateLoaderService
-          }
-      }),
-      TemplateModule,
-      FlexLayoutModule,
-      MaterialModule,
-      FormsModule,
-      ReactiveFormsModule,
-      FormModule
+    imports: [
+        CommonModule,
+        PipeModule,
+        TemplateModule,
+        FlexLayoutModule,
+        MaterialModule,
+        FormsModule,
+        ReactiveFormsModule,
+        FormModule,
+        CoreModule.forChild()
     ],
     declarations: [GroupCloudComponent, InitialGroupNamePipe],
     exports: [GroupCloudComponent, InitialGroupNamePipe]

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import {
     AlfrescoApiService,
@@ -36,7 +36,7 @@ describe('StartTaskCloudService', () => {
     let service: StartProcessCloudService;
 
     setupTestBed({
-        imports: [ProcessCloudModule],
+        imports: [CoreModule.forRoot(), ProcessCloudModule],
         providers: [StartProcessCloudService, AlfrescoApiService, AppConfigService, LogService, StorageService]
     });
 

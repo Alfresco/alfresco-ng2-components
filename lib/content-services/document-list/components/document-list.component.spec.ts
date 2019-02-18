@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import { Subject, of, throwError } from 'rxjs';
 import { FileNode, FolderNode } from '../../mock';
 import {
     fakeNodeAnswerWithNOEntries,
-    fakeNodeWithCreatePermission,
     fakeNodeWithNoPermission,
     fakeGetSitesAnswer,
     fakeGetSiteMembership
@@ -249,7 +248,6 @@ describe('DocumentList', () => {
     });
 
     it('should empty template be present when no element are present', () => {
-        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve(''));
         spyOn(documentList, 'loadFolder').and.callThrough();
         spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: { id: 'fake-node' } }));
         spyOn(documentListService, 'getFolder').and.returnValue(of(fakeNodeAnswerWithNOEntries));
@@ -675,41 +673,41 @@ describe('DocumentList', () => {
 
     it('should perform folder navigation on single click', () => {
         let folder = new FolderNode();
-        spyOn(documentList, 'performNavigation').and.stub();
+        spyOn(documentList, 'navigateTo').and.stub();
 
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         documentList.onNodeClick(folder);
-        expect(documentList.performNavigation).toHaveBeenCalled();
+        expect(documentList.navigateTo).toHaveBeenCalled();
     });
 
     it('should perform folder navigation on double click', () => {
         let folder = new FolderNode();
-        spyOn(documentList, 'performNavigation').and.stub();
+        spyOn(documentList, 'navigateTo').and.stub();
 
         documentList.navigationMode = DocumentListComponent.DOUBLE_CLICK_NAVIGATION;
         documentList.onNodeDblClick(folder);
-        expect(documentList.performNavigation).toHaveBeenCalled();
+        expect(documentList.navigateTo).toHaveBeenCalled();
     });
 
     it('should not perform folder navigation on double click when single mode', () => {
         let folder = new FolderNode();
-        spyOn(documentList, 'performNavigation').and.stub();
+        spyOn(documentList, 'navigateTo').and.stub();
 
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         documentList.onNodeDblClick(folder);
 
-        expect(documentList.performNavigation).not.toHaveBeenCalled();
+        expect(documentList.navigateTo).not.toHaveBeenCalled();
     });
 
     it('should not perform folder navigation on double click when navigation off', () => {
         let folder = new FolderNode();
-        spyOn(documentList, 'performNavigation').and.stub();
+        spyOn(documentList, 'navigateTo').and.stub();
 
         documentList.navigate = false;
         documentList.navigationMode = DocumentListComponent.DOUBLE_CLICK_NAVIGATION;
         documentList.onNodeDblClick(folder);
 
-        expect(documentList.performNavigation).not.toHaveBeenCalled();
+        expect(documentList.navigateTo).not.toHaveBeenCalled();
     });
 
     it('should perform navigation for folder node only', () => {
@@ -718,9 +716,9 @@ describe('DocumentList', () => {
 
         spyOn(documentList, 'loadFolder').and.stub();
 
-        expect(documentList.performNavigation(folder)).toBeTruthy();
-        expect(documentList.performNavigation(file)).toBeFalsy();
-        expect(documentList.performNavigation(null)).toBeFalsy();
+        expect(documentList.navigateTo(folder.entry)).toBeTruthy();
+        expect(documentList.navigateTo(file.entry)).toBeFalsy();
+        expect(documentList.navigateTo(null)).toBeFalsy();
     });
 
     it('should perform navigation through corret linked folder', () => {
@@ -731,7 +729,7 @@ describe('DocumentList', () => {
 
         spyOn(documentList, 'loadFolder').and.stub();
 
-        expect(documentList.performNavigation(linkFolder)).toBeTruthy();
+        expect(documentList.navigateTo(linkFolder.entry)).toBeTruthy();
         expect(documentList.currentFolderId).toBe('normal-folder');
     });
 
@@ -754,7 +752,7 @@ describe('DocumentList', () => {
     it('should require valid node for folder navigation', () => {
         let folder = new FolderNode();
         folder.entry = null;
-        spyOn(documentList, 'performNavigation').and.stub();
+        spyOn(documentList, 'navigateTo').and.stub();
 
         documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         documentList.onNodeClick(folder);
@@ -762,13 +760,12 @@ describe('DocumentList', () => {
         documentList.navigationMode = DocumentListComponent.DOUBLE_CLICK_NAVIGATION;
         documentList.onNodeDblClick(folder);
 
-        expect(documentList.performNavigation).not.toHaveBeenCalled();
+        expect(documentList.navigateTo).not.toHaveBeenCalled();
     });
 
     it('should display folder content from loadFolder on reload if folderNode defined', () => {
         documentList.folderNode = new NodeMinimal();
 
-        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve(''));
         spyOn(documentList, 'loadFolder').and.callThrough();
         documentList.reload();
         expect(documentList.loadFolder).toHaveBeenCalled();
@@ -878,9 +875,9 @@ describe('DocumentList', () => {
         let filter = <RowFilter> {};
         documentList.currentFolderId = 'id';
         spyOn(documentList.data, 'setFilter').and.callThrough();
-        spyOn(documentListService, 'getFolder');
+        spyOn(documentListService, 'getFolder').and.callThrough();
 
-        documentList.ngOnChanges({ rowFilter: new SimpleChange(null, filter, true) });
+        documentList.rowFilter = filter;
 
         expect(documentList.data.setFilter).toHaveBeenCalledWith(filter);
         expect(documentListService.getFolder).toHaveBeenCalled();
@@ -944,27 +941,16 @@ describe('DocumentList', () => {
     it('should load folder by ID on init', () => {
         spyOn(documentList, 'loadFolder').and.returnValue(Promise.resolve());
 
-        documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, '1d26e465-dea3-42f3-b415-faa8364b9692', true) });
+        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+
+        fixture.detectChanges();
+
         expect(documentList.loadFolder).toHaveBeenCalled();
     });
 
     it('should emit error when getFolderNode fails', (done) => {
         const error = { message: '{ "error": { "statusCode": 501 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(throwError(error));
-
-        let disposableError = documentList.error.subscribe((val) => {
-            expect(val).toBe(error);
-            disposableError.unsubscribe();
-            done();
-        });
-
-        documentList.loadFolderByNodeId('123');
-    });
-
-    it('should emit error when loadFolderNodesByFolderNodeId fails', (done) => {
-        const error = { message: '{ "error": { "statusCode": 501 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: fakeNodeWithCreatePermission }));
-        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.reject(error));
+        spyOn(documentListService, 'getFolder').and.returnValue(throwError(error));
 
         let disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe(error);
@@ -987,7 +973,7 @@ describe('DocumentList', () => {
 
     it('should set no permission when getFolderNode fails with 403', (done) => {
         const error = { message: '{ "error": { "statusCode": 403 } }' };
-        spyOn(documentListService, 'getFolderNode').and.returnValue(throwError(error));
+        spyOn(documentListService, 'getFolder').and.returnValue(throwError(error));
 
         let disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe(error);
@@ -1040,16 +1026,16 @@ describe('DocumentList', () => {
         expect(documentList.noPermission).toBeTruthy();
     });
 
-    it('should not perform navigation for virtual sources', () => {
+    it('should allow to perform navigation for virtual sources', () => {
         const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
         const node = new FolderNode('folder');
 
         documentList.currentFolderId = 'node-id';
-        expect(documentList.canNavigateFolder(node)).toBeTruthy();
+        expect(documentList.canNavigateFolder(node.entry)).toBeTruthy();
 
         sources.forEach((source) => {
             documentList.currentFolderId = source;
-            expect(documentList.canNavigateFolder(node)).toBeFalsy();
+            expect(documentList.canNavigateFolder(node.entry)).toBeTruthy();
         });
     });
 
@@ -1245,23 +1231,6 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('-recent-');
     });
 
-    it('should reset folder node upon changing current folder id', () => {
-        documentList.currentFolderId = 'fake-node-id';
-        documentList.folderNode = <any> {};
-
-        documentList.ngOnChanges({ currentFolderId: new SimpleChange(null, '-sites-', false) });
-
-        expect(documentList.folderNode).toBeNull();
-    });
-
-    it('should reset folder node on loading folder by node id', () => {
-        documentList.folderNode = <any> {};
-
-        documentList.loadFolderByNodeId('-sites-');
-
-        expect(documentList.folderNode).toBeNull();
-    });
-
     it('should have correct currentFolderId on loading folder by node id', () => {
         documentList.currentFolderId = '12345-some-id-6789';
 
@@ -1295,17 +1264,55 @@ describe('DocumentList', () => {
     });
 
     it('should add includeFields in the server request when present', () => {
-        fixture.detectChanges();
-        documentList.currentFolderId = 'fake-id';
-        documentList.includeFields = ['test-include'];
-        spyOn(documentListService, 'getFolder').and.stub();
+        spyOn(documentListService, 'getFolder').and.callThrough();
 
-        documentList.ngOnChanges({ rowFilter: new SimpleChange(null, <RowFilter> {}, true) });
+        documentList.includeFields = ['test-include'];
+        documentList.currentFolderId = 'fake-id';
+
+        fixture.detectChanges();
 
         expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
+            where: undefined,
             maxItems: 25,
             skipCount: 0,
             rootFolderId: 'fake-id'
         }, ['test-include']);
+    });
+
+    it('should add where in the server request when present', () => {
+        spyOn(documentListService, 'getFolder').and.callThrough();
+
+        documentList.includeFields = ['test-include'];
+        documentList.where = '(isFolder=true)';
+        documentList.currentFolderId = 'fake-id';
+
+        fixture.detectChanges();
+
+        expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
+            where: '(isFolder=true)',
+            maxItems: 25,
+            skipCount: 0,
+            rootFolderId: 'fake-id'
+        }, ['test-include']);
+    });
+
+    it('should reset the pagination when enter in a new folder', () => {
+        let folder = new FolderNode();
+        documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
+        documentList.updatePagination({
+            maxItems: 10,
+            skipCount: 10
+        });
+
+        spyOn(documentListService, 'getFolder').and.callThrough();
+
+        documentList.onNodeClick(folder);
+
+        expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
+            maxItems: 25,
+            skipCount: 0,
+            rootFolderId: 'folder-id',
+            where: undefined
+        }, undefined);
     });
 });

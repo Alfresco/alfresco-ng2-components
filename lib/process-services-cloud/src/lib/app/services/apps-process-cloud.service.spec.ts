@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppsProcessCloudService } from './apps-process-cloud.service';
 import { fakeApplicationInstance } from '../mock/app-model.mock';
@@ -29,7 +29,7 @@ describe('AppsProcessCloudService', () => {
     let service: AppsProcessCloudService;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule],
+        imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule],
         providers: [AppsProcessCloudService]
     });
 
@@ -42,7 +42,7 @@ describe('AppsProcessCloudService', () => {
         service.getDeployedApplicationsByStatus('fake').subscribe(
             (res: ApplicationInstanceModel[]) => {
                 expect(res).toBeDefined();
-                expect(res.length).toEqual(2);
+                expect(res.length).toEqual(3);
                 expect(res).toEqual(fakeApplicationInstance);
                 expect(res[0]).toEqual(fakeApplicationInstance[0]);
                 expect(res[0].name).toEqual('application-new-1');

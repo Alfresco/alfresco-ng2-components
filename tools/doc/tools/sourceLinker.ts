@@ -5,7 +5,7 @@ import { select } from "unist-util-select";
 import * as ngHelpers from "../ngHelpers";
 
 
-const angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(interface)|(model)|(pipe)|(service)|(widget))/;
+const angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(dialog)|(directive)|(interface)|(model)|(pipe)|(service)|(widget))/;
 
 
 export function processDocs(mdCache, aggData, errorMessages) {
@@ -33,7 +33,7 @@ export function processDocs(mdCache, aggData, errorMessages) {
                 title: `Defined in ${path.basename(sourcePath)}`,
                 children: [titleText]
             }
-        } else if (titleHeading.children[0].type === "link") {
+        } else if ((titleHeading.children[0].type === "link") && sourcePath) {
             let linkElem = titleHeading.children[0];
             linkElem.url = `../../${sourcePath}`;
             linkElem.title = `Defined in ${path.basename(sourcePath)}`;

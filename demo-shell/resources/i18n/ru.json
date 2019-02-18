@@ -7,7 +7,7 @@
       "VERSIONS": "Версии"
     },
     "HOME": {
-      "TITLE": "Компоненты Angular для Alfresco",
+      "TITLE": "Угловые компоненты для Alfresco",
       "DOCUMENTATION": "Документация"
     },
     "LOGOUT": {
@@ -19,7 +19,7 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Разрешить удаление",
       "SHOW_COMMENTS": "Показать комментарии к версиям",
-      "ALLOW_DOWNLOAD": "Разрешить загрузку",
+      "ALLOW_DOWNLOAD": "Включить загрузку версий",
       "READ_ONLY": "Только чтение",
       "COMMENTS": "Показать комментарии"
     },
@@ -61,12 +61,15 @@
     "NOTIFICATIONS": "Оповещения",
     "TASK_LIST": "Список задач",
     "PROCESS_LIST": "Список процессов",
+    "PROCESS_CLOUD": "Процесс в облаке",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Войти",
     "CUSTOM_SOURCES": "Пользовательские источники",
     "DATATABLE": "Datatable",
     "DATATABLE_LAZY": "Таблица данных (частичная загрузка)",
+    "DOCUMENT_LIST": "Список документов",
+    "TEMPLATE": "Шаблон",
     "FORM": "Форма",
     "FORM_LIST": "Список форм",
     "FORM_LOADING": "Загрузка формы",
@@ -84,7 +87,12 @@
     "WORD_TO_SEARCH": "Искать слово",
     "SEARCH_CREATED_BY": "Создано пользователем",
     "SEARCH_SERVICE_APPROACH": "Установите флажок, чтобы отключить свойство ввода и настроить, используя службу.",
-    "HEADER_DATA": "Данные заголовка"
+    "HEADER_DATA": "Данные заголовка",
+    "TREE_VIEW": "Иерархическое представление",
+    "ICONS": "Значки",
+    "PEOPLE_GROUPS_CLOUD": "Облако пользователей/групп",
+    "PEOPLE_CLOUD": "Компонент облака «Пользователи»",
+    "GROUPS_CLOUD": "Компонент облака «Группы»"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -100,6 +108,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Выбор нескольких вариантов (с флажками)",
     "THUMBNAILS": "Включить эскизы",
+    "ALLOW_DROP_FILES": "Включить перетаскивание файлов в папку",
     "MULTIPLE_FILE_UPLOAD": "Загрузка нескольких файлов",
     "FOLDER_UPLOAD": "Загрузка папки",
     "CUSTOM_FILTER": "Пользовательский фильтр расширений",
@@ -118,6 +127,7 @@
       "DISPLAY_NAME": "Отображаемое имя",
       "IS_LOCKED": "Блокировка",
       "TAG": "Метка",
+      "NODE_ID": "Идентификатор узла",
       "CREATED_BY": "Создано пользователем",
       "CREATED_ON": "Дата создания",
       "CREATED": "Создано",
@@ -137,10 +147,12 @@
       "THEME": "Выберите тему",
       "SHOW_VERSION": "Показать версию",
       "HIDE_VERSION": "Скрыть версию",
-      "LISTVIEW": "Режим просмотра списка"
+      "LISTVIEW": "Режим просмотра списка",
+      "CREATE_LIBRARY": "Создание библиотеки"
     },
     "ACTIONS": {
       "VERSIONS": "Управление версиями",
+      "LOCK": "Блокировка",
       "METADATA": "Информация",
       "DOWNLOAD": "Скачать",
       "PERMISSION": "Право",
@@ -180,6 +192,10 @@
     "TASK-AUDIT-LOG": "Журнал проверки задачи",
     "TASK-SHOW-HEADER": "Показать подробности заголовка"
   },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "Приложение",
+    "SETTINGS_TAB": "Параметры"
+  },
   "FORM-LIST": {
     "STORE": "Хранилище",
     "RESTORE": "Восстановить"
@@ -201,7 +217,25 @@
   },
   "SEARCH": {
     "RESULTS": "Результаты поиска",
-    "NO_RESULT": "Результаты не найдены"
+    "NO_RESULT": "Результаты не найдены",
+    "FACET_FIELDS": {
+      "TYPE": "1: тип",
+      "SIZE": "2: размер",
+      "CREATOR": "3: автор",
+      "MODIFIER": "4: редактор",
+      "CREATED": "5: создано"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "Мои фасетные запросы",
+      "CREATED_THIS_YEAR": "1. Создано в этом году",
+      "MIMETYPE": "2. Тип HTML",
+      "XTRASMALL": "3. Размер: крайне малый",
+      "SMALL": "4. Размер: малый",
+      "MEDIUM": "5. Размер: средний",
+      "LARGE": "6. Размер: большой",
+      "XTRALARGE": "7. Размер: очень большой",
+      "XXTRALARGE": "8. Размер: огромный"
+    }
   },
   "SOCIAL": {
     "LIKE": "Компонент \"Нравится\"",
@@ -220,16 +254,61 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",
       "APP_ID_TYPE_ERROR": "Идентификатор приложения должен быть числом",
-      "NUMBER_TYPE_ERROR": "Значение должно быть числом"
+      "NUMBER_TYPE_ERROR": "Значение должно быть числом",
+      "NUMBER_GREATER_THAN": "Значение должно быть больше или равно {{ value }}"
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Начальная страница"
     }
   },
   "PROCESS_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",
-    "APP_ID_TYPE_ERROR": "Идентификатор приложения должен быть числом"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",
+      "APP_ID_TYPE_ERROR": "Идентификатор приложения должен быть числом",
+      "NUMBER_GREATER_THAN": "Значение должно быть больше или равно {{ value }}"
+    }
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Перевод пользовательского заголовка один",
-  "GROUP-TITLE2-TRANSLATION-KEY": "Перевод пользовательского заголовка два"
+  "GROUP-TITLE2-TRANSLATION-KEY": "Перевод пользовательского заголовка два",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "Диск ACS заполнен",
+      "DESCRIPTION": "Объем данных превысил максимально допустимое значение, установленное для сети или системы",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Назад на главную"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "CUSTOMIZE_FILTERS": "Настройка фильтра"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Настройка фильтра"
+  },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Один",
+    "MULTI": "Несколько",
+    "PRESELECTED_VALUE": "Предустановленное значение"
+  },
+  "ABOUT": {
+    "TITLE": "Подключаемые модули",
+    "TABLE_HEADERS": {
+      "ID": "Идентификатор",
+      "NAME": "Имя",
+      "VERSION": "Версия",
+      "VENDOR": "Поставщик",
+      "LICENSE": "Лицензия",
+      "RUNTIME": "Среда выполнения",
+      "DESCRIPTION": "Описание"
+    }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Выбор нескольких",
+    "TESTING_MODE": "Режим тестирования",
+    "SELECTION_MODE": "Режим выбора"
+  }
 }

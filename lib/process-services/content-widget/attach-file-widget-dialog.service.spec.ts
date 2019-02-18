@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { Subject, of } from 'rxjs';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { ProcessModule } from '../process.module';
 
 describe('AttachFileWidgetDialogService', () => {
@@ -30,7 +30,10 @@ describe('AttachFileWidgetDialogService', () => {
     let afterOpenObservable: Subject<any>;
 
     setupTestBed({
-        imports: [ProcessModule.forRoot()]
+        imports: [
+            CoreModule.forRoot(),
+            ProcessModule.forRoot()
+        ]
     });
 
     beforeEach(() => {

@@ -87,7 +87,7 @@ the `parentId`.
 
 ### Permissions
 
-The `hasPermission` method reports whether or not the user has the specified permission for the
+The `hasAllowableOperations` method reports whether or not the user has the specified permission for the
 node. The Permissions enum contains the values DELETE, UPDATE, CREATE, UPDATEPERMISSIONS, NOT_DELETE, NOT_UPDATE, NOT_CREATE and NOT_UPDATEPERMISSIONS but you can also supply these
 values via their string equivalents.
 

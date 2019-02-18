@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -118,20 +118,22 @@ export class ProcessContentService {
     /**
      * Gets related content items for a task instance.
      * @param taskId ID of the target task
+     * @param opts Options supported by JS-API
      * @returns Metadata for the content
      */
-    getTaskRelatedContent(taskId: string): Observable<any> {
-        return from(this.contentApi.getRelatedContentForTask(taskId))
+    getTaskRelatedContent(taskId: string, opts?: any): Observable<any> {
+        return from(this.contentApi.getRelatedContentForTask(taskId, opts))
             .pipe(catchError((err) => this.handleError(err)));
     }
 
     /**
      * Gets related content items for a process instance.
      * @param processId ID of the target process
+     * @param opts Options supported by JS-API
      * @returns Metadata for the content
      */
-    getProcessRelatedContent(processId: string): Observable<any> {
-        return from(this.contentApi.getRelatedContentForProcessInstance(processId))
+    getProcessRelatedContent(processId: string, opts?: any): Observable<any> {
+        return from(this.contentApi.getRelatedContentForProcessInstance(processId, opts))
             .pipe(catchError((err) => this.handleError(err)));
     }
 

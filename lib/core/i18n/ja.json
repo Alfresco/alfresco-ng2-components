@@ -29,6 +29,9 @@
     }
   },
   "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "会社のロゴ"
+    },
     "FILE_SIZE": {
       "BYTES": "バイト",
       "KB": "KB",
@@ -298,7 +301,7 @@
   },
   "ERROR_CONTENT": {
     "UNKNOWN": {
-      "TITLE": "エラーが発生しました。",
+      "TITLE": "問題が発生しました。",
       "DESCRIPTION": "何らかの問題がある可能性があります。",
       "SECONDARY_BUTTON": {
         "TEXT": ""
@@ -325,6 +328,60 @@
       },
       "RETURN_BUTTON": {
         "TEXT": "ホームへ戻る"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "サーバーの設定",
+      "DESCRIPTION": "下の値は AppConfigService から取得されたものです",
+      "CONTENT_SERVICE_HOST": "Alfresco Content Services の URL: {{ value }}",
+      "PROCESS_SERVICE_HOST": "Alfresco Process Services の URL: {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "製品のバージョン",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "エディション",
+        "VERSION": "バージョン",
+        "LICENSE": "ライセンス",
+        "STATUS": "ステータス",
+        "MODULES": "モジュール"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "ソースコード",
+      "DESCRIPTION": "実行しているプロジェクトは次のコミットに基づいています:"
+    },
+    "PACKAGES": {
+      "TITLE": "パッケージ",
+      "DESCRIPTION": "現在のプロジェクトは次の ADF ライブラリを使用しています:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "ID",
+        "TITLE": "タイトル",
+        "DESCRIPTION": "説明",
+        "INSTALL_DATE": "インストール日",
+        "INSTALL_STATE": "インストール状態",
+        "VERSION_MIN": "小さな変更",
+        "VERSION_MAX": "大きな変更"
+      },
+      "STATUS": {
+        "READ_ONLY": "読み取り専用",
+        "AUDIT_ENABLED": "監査 - 有効",
+        "QUICK_SHARE_ENABLED": "Quick Share - 有効",
+        "THUMBNAIL_ENABLED": "サムネイルの生成"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "発行日時",
+        "EXPIRES_AT": "有効期限",
+        "REMAINING_DAYS": "残り日数",
+        "HOLDER": "所有者",
+        "MODE": "モード",
+        "CLUSTER_ENABLED": "クラスタ - 有効",
+        "CRYPTODOC_ENABLED": "Cryptodoc - 有効"
       }
     }
   }

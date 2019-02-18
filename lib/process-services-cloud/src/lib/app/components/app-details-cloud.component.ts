@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,5 +40,19 @@ export class AppDetailsCloudComponent {
    */
   public onSelectApp(app: ApplicationInstanceModel): void {
     this.selectedApp.emit(app);
+  }
+
+  public getTheme() {
+    if ( !this.applicationInstance.theme ) {
+      return ApplicationInstanceModel.DEFAULT_THEME;
+    }
+    return this.applicationInstance.theme;
+  }
+
+  public getIcon() {
+    if ( !this.applicationInstance.icon ) {
+      return ApplicationInstanceModel.DEFAULT_ICON;
+    }
+    return this.applicationInstance.icon;
   }
 }

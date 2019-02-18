@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { MatSelect } from '@angular/material';
 import { Node, PathElementEntity } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list';
@@ -84,23 +94,24 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         this.transform = this.transform ? this.transform : null;
+
+        if (this.target) {
+            this.target.$folderNode.subscribe((folderNode: Node) => {
+                this.folderNode = folderNode;
+                this.recalculateNodes();
+            });
+        }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.folderNode) {
-            let node: Node = null;
-            node = this.transform ? this.transform(changes.folderNode.currentValue) : changes.folderNode.currentValue;
-            this.route = this.parseRoute(node);
-        }
-
-        if (changes.transform) {
-            let node = this.transform ? this.transform(this.folderNode) : this.folderNode;
-            this.route = this.parseRoute(node);
-        }
         this.recalculateNodes();
     }
 
     protected recalculateNodes(): void {
+        let node: Node = this.transform ? this.transform(this.folderNode) : this.folderNode;
+
+        this.route = this.parseRoute(node);
+
         if (this.maxItems && this.route.length > this.maxItems) {
             this.lastNodes = this.route.slice(this.route.length - this.maxItems);
             this.previousNodes = this.route.slice(0, this.route.length - this.maxItems);
@@ -127,7 +138,8 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
 
             route.push(<PathElementEntity> {
                 id: node.id,
-                name: node.name
+                name: node.name,
+                node: node
             });
 
             const rootPos = this.getElementPosition(route, this.rootId);

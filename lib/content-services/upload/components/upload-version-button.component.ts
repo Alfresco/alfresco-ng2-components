@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { PermissionsEnum  } from '@alfresco/adf-core';
+import { AllowableOperationsEnum  } from '@alfresco/adf-core';
 import { Component, forwardRef, Input, OnChanges, ViewEncapsulation, OnInit } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { UploadButtonComponent } from './upload-button.component';
@@ -53,6 +53,6 @@ export class UploadVersionButtonComponent extends UploadButtonComponent implemen
     }
 
     checkPermission() {
-        this.permissionValue.next(this.nodeHasPermission(this.node, PermissionsEnum.UPDATE));
+        this.permissionValue.next(this.nodeHasPermission(this.node, AllowableOperationsEnum.UPDATE));
     }
 }

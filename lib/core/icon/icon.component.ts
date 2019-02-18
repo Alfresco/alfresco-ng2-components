@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import {
     ViewEncapsulation,
     ChangeDetectionStrategy
 } from '@angular/core';
-import { ThumbnailService } from '../services/thumbnail.service';
+import { ThemePalette } from '@angular/material';
 
 @Component({
     selector: 'adf-icon',
@@ -35,6 +35,10 @@ export class IconComponent {
     private _value = '';
     private _isCustom = false;
 
+    /** Theme color palette for the component. */
+    @Input()
+    color: ThemePalette;
+
     get value(): string {
         return this._value;
     }
@@ -43,14 +47,10 @@ export class IconComponent {
     @Input()
     set value(value: string) {
         this._value = value || 'settings';
-        this._isCustom =
-            this._value.includes(':') ||
-            this.thumbnailService.mimeTypeIcons[value];
+        this._isCustom = this._value.includes(':');
     }
 
     get isCustom(): boolean {
         return this._isCustom;
     }
-
-    constructor(private thumbnailService: ThumbnailService) {}
 }

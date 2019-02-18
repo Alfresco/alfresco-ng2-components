@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ export * from './highlight.directive';
 export * from './logout.directive';
 export * from './node-delete.directive';
 export * from './node-favorite.directive';
-export * from './node-permission.directive';
+export * from './check-allowable-operation.directive';
 export * from './node-restore.directive';
 export * from './node-download.directive';
 export * from './upload.directive';

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { TRANSLATION_PROVIDER } from '@alfresco/adf-core';
+import { TRANSLATION_PROVIDER, CoreModule } from '@alfresco/adf-core';
 import { AppListCloudModule } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
@@ -24,6 +24,7 @@ import { GroupCloudModule } from './group/group-cloud.module';
 
 @NgModule({
     imports: [
+        CoreModule.forChild(),
         AppListCloudModule,
         ProcessCloudModule,
         TaskCloudModule,

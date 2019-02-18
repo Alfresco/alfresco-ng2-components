@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,8 +34,8 @@ export class FormControllersPage {
         Util.waitUntilElementIsVisible(toggle);
         toggle.getAttribute('class').then((check) => {
             if (check.indexOf('mat-checked') >= 0) {
-                Util.waitUntilElementIsClickable(toggle.element(by.css('div')));
-                toggle.element(by.css('div')).click();
+                Util.waitUntilElementIsClickable(toggle.all(by.css('div')).first());
+                toggle.all(by.css('div')).first().click();
             }
         });
     }

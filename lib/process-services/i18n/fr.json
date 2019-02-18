@@ -27,6 +27,8 @@
     "PROPERTIES": {
       "TASK_NAME": "Tâche",
       "THUMBNAIL": "Miniature",
+      "DURATION": "Durée",
+      "PARENT_TASK_ID": "ID de la tâche parent",
       "NAME": "Nom",
       "ASSIGNEE": "Personne assignée",
       "ASSIGNEE_DEFAULT": "Aucune personne assignée",
@@ -40,6 +42,7 @@
       "PARENT_NAME_DEFAULT": "Aucun parent",
       "CREATED_BY": "Créé par",
       "CREATED": "Créé",
+      "END_DATE": "Date de fin",
       "ID": "ID",
       "DESCRIPTION": "Description",
       "DESCRIPTION_DEFAULT": "Aucune description",
@@ -91,7 +94,13 @@
         "NONE": "Aucune personne impliquée"
       },
       "CHECKLIST": {
-        "NONE": "Aucune liste de contrôle"
+        "NONE": "Aucune liste de contrôle",
+        "DIALOG": {
+          "TITLE": "Nouvelle tâche cochée",
+          "CANCEL-BUTTON": "Annuler",
+          "ADD-BUTTON": "Ajouter une liste de contrôle",
+          "PLACEHOLDER": "Nom"
+        }
       },
       "ERROR": {
         "TITLE": "Impossible de terminer l'action",
@@ -105,6 +114,7 @@
       }
     },
     "START_TASK": {
+      "DEFAULT_NAME": "Ma tâche par défaut",
       "BUTTON": "Créer une tâche",
       "FORM": {
         "TITLE": "Démarrer la tâche",
@@ -121,8 +131,10 @@
           "START": "Démarrer",
           "CANCEL": "Annuler"
         },
-        "DATE": {
-          "ERROR": "Format de date JJ/MM/AAAA"
+        "ERROR": {
+          "REQUIRED": "Champ obligatoire",
+          "DATE": "Format de date JJ/MM/AAAA",
+          "MAXIMUM_LENGTH": "Longueur dépassée, {{characters}} caractères max."
         }
       }
     },
@@ -274,7 +286,8 @@
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Impossible de charger les définitions de processus ; vérifiez que vous avez les droits d'accès.",
-        "START": "Impossible de démarrer la nouvelle instance de processus ; vérifiez que vous avez les droits d'accès."
+        "START": "Impossible de démarrer la nouvelle instance de processus ; vérifiez que vous avez les droits d'accès.",
+        "MAXIMUM_LENGTH": "Longueur dépassée, {{characters}} caractères max."
       }
     },
     "PROCESS-ATTACHMENT": {

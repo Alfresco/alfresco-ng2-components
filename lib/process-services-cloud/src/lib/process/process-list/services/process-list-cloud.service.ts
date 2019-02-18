@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,11 @@ export class ProcessListCloudService {
                 private logService: LogService) {
     }
 
+    /**
+     * Finds a process using an object with optional query properties.
+     * @param requestNode Query object
+     * @returns Process information
+     */
     getProcessByRequest(requestNode: ProcessQueryCloudRequestModel): Observable<any> {
         if (requestNode.appName) {
             let queryUrl = this.buildQueryUrl(requestNode);

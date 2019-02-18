@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -200,6 +200,28 @@ describe('TaskListCloudComponent', () => {
             component.ngOnChanges({});
             fixture.detectChanges();
             expect(component.isListEmpty()).toBeTruthy();
+        });
+
+        it('should reload the task list when input parameters changed', () => {
+            const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            component.applicationName = 'mock-app-name';
+            component.priority = 1;
+            component.status = 'mock-status';
+            component.lastModifiedFrom = 'mock-lastmodified-date';
+            component.owner = 'mock-owner-name';
+            const priorityChange = new SimpleChange(undefined, 1, true);
+            const statusChange = new SimpleChange(undefined, 'mock-status', true);
+            const lastModifiedFromChange = new SimpleChange(undefined, 'mock-lastmodified-date', true);
+            const ownerChange = new SimpleChange(undefined, 'mock-owner-name', true);
+            component.ngOnChanges({
+                'priority': priorityChange,
+                'status': statusChange,
+                'lastModifiedFrom': lastModifiedFromChange,
+                'owner': ownerChange
+            });
+            fixture.detectChanges();
+            expect(component.isListEmpty()).toBeFalsy();
+            expect(getTaskByRequestSpy).toHaveBeenCalled();
         });
     });
 

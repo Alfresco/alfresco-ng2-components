@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  */
 
 import { FormControl } from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input, ViewChild, ElementRef, SimpleChanges, OnChanges } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter } from 'rxjs/operators';
 import { FullNamePipe, IdentityUserModel, IdentityUserService } from '@alfresco/adf-core';
@@ -39,7 +39,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     encapsulation: ViewEncapsulation.None
 })
 
-export class PeopleCloudComponent implements OnInit {
+export class PeopleCloudComponent implements OnInit, OnChanges {
 
     static MODE_SINGLE = 'single';
     static MODE_MULTIPLE = 'multiple';
@@ -101,16 +101,17 @@ export class PeopleCloudComponent implements OnInit {
     ngOnInit() {
         this.selectedUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this.preSelectUsers);
         this.selectedUsers$ = this.selectedUsersSubject.asObservable();
-
-        if (this.hasPreSelectUsers()) {
-            this.loadPreSelectUsers();
-        }
-
         this.initSearch();
 
         if (this.appName) {
             this.disableSearch();
             this.loadClientId();
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.preSelectUsers && this.hasPreSelectUsers()) {
+            this.loadPreSelectUsers();
         }
     }
 
@@ -148,6 +149,8 @@ export class PeopleCloudComponent implements OnInit {
                             return hasRole ? of(user) : of();
                         })
                     );
+                } else if (this.hasRoles()) {
+                    return this.filterUsersByRoles(user);
                 } else {
                     return of(user);
                 }
@@ -170,6 +173,14 @@ export class PeopleCloudComponent implements OnInit {
         return this.roles && this.roles.length > 0;
     }
 
+    filterUsersByRoles(user: IdentityUserModel): Observable<IdentityUserModel> {
+        return this.identityUserService.checkUserHasRole(user.id, this.roles).pipe(
+            mergeMap((hasRole) => {
+                return hasRole ? of(user) : of();
+            })
+        );
+    }
+
     private isUserAlreadySelected(user: IdentityUserModel): boolean {
         if (this.preSelectUsers && this.preSelectUsers.length > 0) {
             const result = this.preSelectUsers.find((selectedUser) => {
@@ -185,6 +196,8 @@ export class PeopleCloudComponent implements OnInit {
         if (!this.isMultipleMode()) {
             this.searchUserCtrl.setValue(this.preSelectUsers[0]);
             this.preSelectUsers = [];
+        } else {
+            this.selectedUsersSubject.next(this.preSelectUsers);
         }
     }
 

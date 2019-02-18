@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,9 +65,9 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     state: string;
 
     /** The assignment of the process. Possible values are: "assignee" (the current user
-     * is the assignee), candidate (the current user is a task candidate", "group_x" (the task
+     * is the assignee), "candidate" (the current user is a task candidate, "group_x" (the task
      * is assigned to a group where the current user is a member,
-     * no value(the current user is involved).
+     * no value (the current user is involved).
      */
     @Input()
     assignment: string;
@@ -91,7 +91,6 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     /**
      * Data source object that represents the number and the type of the columns that
      * you want to show.
-     * @deprecated 2.4.0
      */
     @Input()
     data: DataTableAdapter;
@@ -119,7 +118,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     includeProcessInstance: boolean;
 
-    /** Starting point of the */
+    /** Starting point of the list within the full set of tasks. */
     @Input()
     start: number;
 
@@ -151,11 +150,11 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     size: number = PaginationComponent.DEFAULT_PAGINATION.maxItems;
 
-    /** Filter the tasks. Display only tasks with created_date after dueAfter. */
+    /** Filter the tasks. Display only tasks with `created_date` after `dueAfter`. */
     @Input()
     dueAfter: string;
 
-    /** Filter the tasks. Display only tasks with created_date before dueBefore. */
+    /** Filter the tasks. Display only tasks with `created_date` before `dueBefore`. */
     @Input()
     dueBefore: string;
 

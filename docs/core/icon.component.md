@@ -2,10 +2,10 @@
 Title: Icon Component
 Added: v3.0.0
 Status: Active
-Last reviewed: 2019-01-10
+Last reviewed: 2019-02-08
 ---
 
-# [Icon Component](../../core/icon/icon.component.ts "Defined in icon.component.ts")
+# [Icon Component](../../lib/core/icon/icon.component.ts "Defined in icon.component.ts")
 
 Provides a universal way of rendering registered and named icons.
 
@@ -28,6 +28,7 @@ Provides a universal way of rendering registered and named icons.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| color | `ThemePalette` |  | Theme color palette for the component. |
 | value | `string` |  | Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. |
 
 ## Details
@@ -70,10 +71,11 @@ In the HTML, you can now use the icon as shown below:
 
 ### Thumbnail Service
 
-You can also use icons registered with the [Thumbnail Service](thumbnail.service.md):
+You can also reference the icons registered with the [Thumbnail Service](thumbnail.service.md)
+using the `adf:` namespace.
 
 ```html
-<adf-icon value="image/gif"></adf-icon>
+<adf-icon value="adf:image/gif"></adf-icon>
 ```
 
 ## See also

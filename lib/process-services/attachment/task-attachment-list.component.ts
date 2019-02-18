@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,18 @@
  */
 
 import { ContentService, ThumbnailService, EmptyListComponent } from '@alfresco/adf-core';
-import { AfterContentInit, ContentChild, Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+    AfterContentInit,
+    ContentChild,
+    Component,
+    EventEmitter,
+    Input,
+    NgZone,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
 import { ProcessContentService } from '@alfresco/adf-core';
 
 @Component({
@@ -108,7 +119,8 @@ export class TaskAttachmentListComponent implements OnChanges, AfterContentInit 
         if (taskId) {
             this.isLoading = true;
             this.reset();
-            this.activitiContentService.getTaskRelatedContent(taskId).subscribe(
+            const opts = 'true';
+            this.activitiContentService.getTaskRelatedContent(taskId, opts).subscribe(
                 (res: any) => {
                     let attachList = [];
                     res.data.forEach((content) => {

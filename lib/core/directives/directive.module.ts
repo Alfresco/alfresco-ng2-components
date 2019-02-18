@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import { HighlightDirective } from './highlight.directive';
 import { LogoutDirective } from './logout.directive';
 import { NodeDeleteDirective } from './node-delete.directive';
 import { NodeFavoriteDirective } from './node-favorite.directive';
-import { NodePermissionDirective } from './node-permission.directive';
+import { CheckAllowableOperationDirective } from './check-allowable-operation.directive';
 import { NodeRestoreDirective } from './node-restore.directive';
 import { UploadDirective } from './upload.directive';
 import { NodeDownloadDirective } from './node-download.directive';
@@ -38,7 +38,7 @@ import { NodeDownloadDirective } from './node-download.directive';
         LogoutDirective,
         NodeDeleteDirective,
         NodeFavoriteDirective,
-        NodePermissionDirective,
+        CheckAllowableOperationDirective,
         NodeRestoreDirective,
         NodeDownloadDirective,
         UploadDirective
@@ -48,7 +48,7 @@ import { NodeDownloadDirective } from './node-download.directive';
         LogoutDirective,
         NodeDeleteDirective,
         NodeFavoriteDirective,
-        NodePermissionDirective,
+        CheckAllowableOperationDirective,
         NodeRestoreDirective,
         NodeDownloadDirective,
         UploadDirective

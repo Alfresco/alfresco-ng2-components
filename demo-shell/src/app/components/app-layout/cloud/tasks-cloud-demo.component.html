@@ -13,13 +13,28 @@
             [processInstanceId]="editedFilter.processInstanceId"
             [name]="editedFilter.taskName"
             [parentTaskId]="editedFilter.parentTaskId"
+            [priority]="editedFilter.priority"
+            [owner]="editedFilter.owner"
+            [lastModifiedFrom]="editedFilter.lastModifiedFrom"
+            [lastModifiedTo]="editedFilter.lastModifiedTo"
             [status]="editedFilter.state"
             [assignee]="editedFilter.assignment"
             [sorting]="sortArray"
-            (rowClick)="onRowClick($event)">
+            [multiselect]="multiselect"
+            [selectionMode]="selectionMode"
+            (rowClick)="onRowClick($event)"
+            (rowsSelected)="onRowsSelected($event)">
         </adf-cloud-task-list>
         <adf-pagination [target]="taskCloud"
-                        (changePageSize)="onChangePageSize($event)">
+                        (changePageSize)="onChangePageSize($event)"
+                        (nextPage)="resetSelectedRows()"
+                        (prevPage)="resetSelectedRows()">
         </adf-pagination>
+        <div *ngIf="testingMode">
+            Selected rows:
+            <ul>
+                <li *ngFor="let row of selectedRows" [attr.data-automation-id]="row.id">{{ row.name }}</li>
+            </ul>
+        </div>
     </div>
 </div>

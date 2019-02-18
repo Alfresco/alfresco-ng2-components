@@ -10,11 +10,6 @@ section discusses particular techniques in depth. The other sections are referen
 libraries. Click the name of an item to see its documentation or click the source link to see
 its main source file. Note that ADF is developed continuously, so the source files for some items may be listed here before their documentation is available.
 
-See the [Version Index](versionIndex.md) for a list of components ordered by
-the ADF version where they were introduced. You can see the full details of each release
-in the [Release notes](release-notes/README.md) section. The [roadmap](roadmap.md)
-contains a preview of features we hope to release in future versions of ADF.
-
 Components are sometimes marked with an icon to show their status. No icon indicates
 that the component is complete and suitable for normal use. The other status levels are:
 
@@ -27,6 +22,22 @@ that the component is complete and suitable for normal use. The other status lev
 
 There is also a set of ADF tutorials that describe how to accomplish tasks step-by-step.
 See the [Tutorials index](tutorials/README.md) for the full list.
+
+A few other pages of information are also available:
+
+-   The [Version Index](versionIndex.md) has a list of components ordered by
+    the ADF version where they were introduced.
+-   The [Release notes](release-notes/README.md) section has details of all
+    the features introduced and bugs fixed with each release.
+-   The [Version compatibility](compatibility.md) page shows which versions
+    of Alfresco's backend servies (ACS and APS) are compatible with each released
+    version of ADF.
+-   The [Roadmap](roadmap.md)
+    contains a preview of features we hope to release in future versions of ADF.
+-   The [License info](license-info/license-info-v3.0.0.md) section lists the third-party
+    libraries used by ADF along with links to their Open Source licenses.
+-   The [Breaking changes](breaking-changes/breaking-change-2.6.0-3.0.0.md) section lists
+    all breaking changes between major versions, such as removal of deprecated items.
 
 ## Contents
 
@@ -107,12 +118,12 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Context menu directive](core/context-menu.directive.md) | Adds a context menu to a component. | [Source](../lib/core/context-menu/context-menu.directive.ts) |
+| [Check allowable operation directive](core/check-allowable-operation.directive.md) | Selectively disables an HTML element or Angular component. | [Source](../lib/core/directives/check-allowable-operation.directive.ts) |
 | [Highlight directive](core/highlight.directive.md) | Adds highlighting to selected sections of an HTML element's content. | [Source](../lib/core/directives/highlight.directive.ts) |
 | [Logout directive](core/logout.directive.md) | Logs the user out when the decorated element is clicked. | [Source](../lib/core/directives/logout.directive.ts) |
 | [Node delete directive](core/node-delete.directive.md) | Deletes multiple files and folders. | [Source](../lib/core/directives/node-delete.directive.ts) |
-| [Node download directive](content-services/node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../lib/core/directives/node-download.directive.ts) |
+| [Node download directive](core/node-download.directive.md) | Allows folders and/or files to be downloaded, with multiple nodes packed as a '.ZIP' archive. | [Source](../lib/core/directives/node-download.directive.ts) |
 | [Node favorite directive](core/node-favorite.directive.md) | Selectively toggles nodes as favorites. | [Source](../lib/core/directives/node-favorite.directive.ts) |
-| [Node permission directive](core/node-permission.directive.md) | Selectively disables an HTML element or Angular component. | [Source](../lib/core/directives/node-permission.directive.ts) |
 | [Node restore directive](core/node-restore.directive.md) | Restores deleted nodes to their original location. | [Source](../lib/core/directives/node-restore.directive.ts) |
 | [Upload directive](core/upload.directive.md) | Uploads content in response to file drag and drop. | [Source](../lib/core/directives/upload.directive.ts) |
 
@@ -200,7 +211,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Data Table Adapter interface](core/datatable-adapter.interface.md) | Defines how table data is supplied to DataTable and Tasklist components. | [Source](../lib/core/datatable/data/datatable-adapter.ts) |
-| [Form Field Validator interface](core/form-field-validator.interface.md) | Defines how the input fields of [`Form`](../../lib/process-services/task-list/models/form.model.ts) and Task Details components are validated. | [Source](../lib/core/form/components/widgets/core/form-field-validator.ts) |
+| [Form Field Validator interface](core/form-field-validator.interface.md) | Defines how the input fields of Form and Task Details components are validated. | [Source](../lib/core/form/components/widgets/core/form-field-validator.ts) |
 | [Search Configuration interface](core/search-configuration.interface.md) | Provides fine control of parameters to a search. | [Source](../lib/core/services/search-configuration.service.ts) |
 
 [(Back to Contents)](#contents)
@@ -222,7 +233,7 @@ for more information about installing and using the source code.
 | [Dropdown breadcrumb component](content-services/dropdown-breadcrumb.component.md) | Indicates the current position within a navigation hierarchy using a dropdown menu. | [Source](../lib/content-services/breadcrumb/dropdown-breadcrumb.component.ts) |
 | [Content metadata component](content-services/content-metadata.component.md) | Displays and edits metadata related to a node. | [Source](../lib/content-services/content-metadata/components/content-metadata/content-metadata.component.ts) |
 | [Content metadata card component](content-services/content-metadata-card.component.md) | Displays and edits metadata related to a node. | [Source](../lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts) |
-| [Content node selector panel component](content-services/content-node-selector-panel.component.md) | Opens a Content Node Selector in its own dialog window. | [Source](../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) |
+| [Content node selector panel component](content-services/content-node-selector-panel.component.md) | Opens a Content Node Selector  in its own dialog window. | [Source](../lib/content-services/content-node-selector/content-node-selector-panel.component.ts) |
 | [Content node selector component](content-services/content-node-selector.component.md) | Allows a user to select items from a Content Services repository. | [Source](../lib/content-services/content-node-selector/content-node-selector.component.ts) |
 | [Content action component](content-services/content-action.component.md) | Adds options to a Document List actions menu for a particular content type. | [Source](../lib/content-services/document-list/components/content-action/content-action.component.ts) |
 | [Document list component](content-services/document-list.component.md) | Displays the documents from a repository. | [Source](../lib/content-services/document-list/components/document-list.component.ts) |
@@ -278,6 +289,8 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Image resolver model](content-services/image-resolver.model.md) | Defines the Image Resolver function used by the Document List Component. | [Source](../lib/content-services/document-list/data/image-resolver.model.ts) |
+| [Row filter model](content-services/row-filter.model.md) | Defines the Row Filter function used by the Document List Component. | [Source](../lib/content-services/document-list/data/row-filter.model.ts) |
 | [Permissions style model](content-services/permissions-style.model.md) | Sets custom CSS styles for rows of a Document List according to the item's permissions. | [Source](../lib/content-services/document-list/models/permissions-style.model.ts) |
 
 ## Pipes
@@ -308,7 +321,7 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
-| [Search Widget interface](content-services/search-widget.interface.md) | Specifies required properties for [Search filter component](../content-services/search-filter.component.md) widgets. | [Source](../lib/content-services/search/search-widget.interface.ts) |
+| [Search Widget interface](content-services/search-widget.interface.md) | Specifies required properties for Search filter component widgets. | [Source](../lib/content-services/search/search-widget.interface.ts) |
 
 [(Back to Contents)](#contents)
 
@@ -394,7 +407,6 @@ for more information about installing and using the source code.
 | [Task filters cloud component](process-services-cloud/task-filters-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all available filters. | [Source](../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.ts) |
 | [Task header cloud component](process-services-cloud/task-header-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all the information related to a task. | [Source](../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts) |
 | [Task list cloud component](process-services-cloud/task-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts) |
-| _App details cloud component_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/app/components/app-details-cloud.component.ts) |
 
 ## Pipes
 
@@ -407,14 +419,14 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Apps process cloud service](process-services-cloud/apps-process-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Gets details of deployed apps for the current user.  | [Source](../lib/process-services-cloud/src/lib/app/services/apps-process-cloud.service.ts) |
+| [Group cloud service](process-services-cloud/group-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches and gets information for groups.  | [Source](../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts) |
 | [Process filter cloud service](process-services-cloud/process-filter-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manage Process Filters, which are pre-configured Process Instance queries.  | [Source](../lib/process-services-cloud/src/lib/process/process-filters/services/process-filter-cloud.service.ts) |
+| [Process list cloud service](process-services-cloud/process-list-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches processes.  | [Source](../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts) |
 | [Start process cloud service](process-services-cloud/start-process-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Gets process definitions and starts processes.  | [Source](../lib/process-services-cloud/src/lib/process/start-process/services/start-process-cloud.service.ts) |
 | [Start task cloud service](process-services-cloud/start-task-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Starts standalone tasks.  | [Source](../lib/process-services-cloud/src/lib/task/start-task/services/start-task-cloud.service.ts) |
 | [Task filter cloud service](process-services-cloud/task-filter-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manages task filters.  | [Source](../lib/process-services-cloud/src/lib/task/task-filters/services/task-filter-cloud.service.ts) |
 | [Task header cloud service](process-services-cloud/task-header-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manages cloud tasks.  | [Source](../lib/process-services-cloud/src/lib/task/task-header/services/task-header-cloud.service.ts) |
-| _Group cloud service_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts) |
-| _Process list cloud service_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/process/process-list/services/process-list-cloud.service.ts) |
-| _Task list cloud service_ | _Not currently documented_ | [Source](../lib/process-services-cloud/src/lib/task/task-list/services/task-list-cloud.service.ts) |
+| [Task list cloud service](process-services-cloud/task-list-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches tasks.  | [Source](../lib/process-services-cloud/src/lib/task/task-list/services/task-list-cloud.service.ts) |
 
 <!--process-services-cloud end-->
 
@@ -434,7 +446,6 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Dynamic component](extensions/dynamic.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays dynamically-loaded extension components. | [Source](../lib/extensions/src/lib/components/dynamic-component/dynamic.component.ts) |
-| [Dynamic tab component](extensions/dynamic-tab.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays dynamically-loaded extensions with tabs. | [Source](../lib/extensions/src/lib/components/dynamic-tab/dynamic-tab.component.ts) |
 
 ## Services
 

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,6 +44,10 @@ export class TasksCloudDemoComponent implements OnInit {
     taskFilterProperties: any[] = [];
 
     filterId;
+    multiselect: boolean;
+    selectedRows: string[] = [];
+    testingMode: boolean;
+    selectionMode: string;
 
     constructor(
         private cloudLayoutService: CloudLayoutService,
@@ -69,14 +73,40 @@ export class TasksCloudDemoComponent implements OnInit {
             this.onFilterChange(params);
             this.filterId = params.id;
         });
+
+        this.cloudLayoutService.getCurrentSettings()
+            .subscribe((settings) => this.setCurrentSettings(settings));
+    }
+
+    setCurrentSettings(settings) {
+        if (settings.multiselect !== undefined) {
+            this.multiselect = settings.multiselect;
+        }
+        if (settings.testingMode !== undefined) {
+            this.testingMode = settings.testingMode;
+        }
+        if (settings.selectionMode !== undefined) {
+            this.selectionMode = settings.selectionMode;
+        }
     }
 
     onChangePageSize(event) {
         this.userPreference.paginationSize = event.maxItems;
     }
 
+    resetSelectedRows() {
+        this.selectedRows = [];
+    }
+
     onRowClick(taskId) {
-        this.router.navigate([`/cloud/${this.applicationName}/task-details/${taskId}`]);
+        if (!this.multiselect && this.selectionMode !== 'multiple') {
+            this.router.navigate([`/cloud/${this.applicationName}/task-details/${taskId}`]);
+        }
+    }
+
+    onRowsSelected(nodes) {
+        this.resetSelectedRows();
+        this.selectedRows = nodes.map((node) => node.obj.entry);
     }
 
     onFilterChange(filter: any) {

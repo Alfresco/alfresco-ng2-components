@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,6 +48,10 @@ export class ProcessesCloudDemoComponent implements OnInit {
     filterId: string = '';
     sortArray: any = [];
     selectedRow: any;
+    multiselect: boolean;
+    selectionMode: string;
+    selectedRows: string[] = [];
+    testingMode: boolean;
     processFilterProperties: any[] = [];
 
     editedFilter: ProcessFilterCloudModel;
@@ -75,10 +79,29 @@ export class ProcessesCloudDemoComponent implements OnInit {
             this.onFilterChange(params);
             this.filterId = params.id;
         });
+
+        this.cloudLayoutService.getCurrentSettings()
+            .subscribe((settings) => this.setCurrentSettings(settings));
+    }
+
+    setCurrentSettings(settings) {
+        if (settings.multiselect !== undefined) {
+            this.multiselect = settings.multiselect;
+        }
+        if (settings.testingMode !== undefined) {
+            this.testingMode = settings.testingMode;
+        }
+        if (settings.selectionMode !== undefined) {
+            this.selectionMode = settings.selectionMode;
+        }
     }
 
     onChangePageSize(event) {
         this.userPreference.paginationSize = event.maxItems;
+    }
+
+    resetSelectedRows() {
+        this.selectedRows = [];
     }
 
     onRowClick($event) {
@@ -91,9 +114,14 @@ export class ProcessesCloudDemoComponent implements OnInit {
     }
 
     onProcessFilterAction(filterAction: any) {
-        this.cloudLayoutService.setCurrentProcessFilterParam({id: filterAction.filter.id});
+        this.cloudLayoutService.setCurrentProcessFilterParam({ id: filterAction.filter.id });
         if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_SAVE_AS) {
             this.router.navigate([`/cloud/${this.applicationName}/processes/`], { queryParams: filterAction.filter });
         }
-     }
+    }
+
+    onRowsSelected(nodes) {
+        this.resetSelectedRows();
+        this.selectedRows = nodes.map((node) => node.obj.entry);
+    }
 }

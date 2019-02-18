@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -175,7 +175,8 @@ describe('Upload - User permission', () => {
         it('[C279916] Should not be allowed to upload a folder in folder with consumer permissions', () => {
             uploadToggles.enableFolderUpload();
 
-            contentServicesPage.uploadFolder(folder.location).checkContentIsDisplayed(folder.name);
+            contentServicesPage.uploadFolder(folder.location)
+                .checkContentIsDisplayed(folder.name);
 
             let fileInTheUploadedFolder = 'share_profile_pic.png';
 
@@ -227,6 +228,9 @@ describe('Upload - User permission', () => {
             uploadToggles.enableFolderUpload();
 
             contentServicesPage.uploadFolder(folder.location);
+            uploadDialog.checkUploadCompleted().then(() => {
+                contentServicesPage.checkContentIsDisplayed(folder.name);
+            });
 
             let fileInTheUploadedFolder = 'share_profile_pic.png';
 

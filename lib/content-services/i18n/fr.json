@@ -140,8 +140,7 @@
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "Importation annulée",
-      "UPLOAD_COMPLETED": "Importé {{ completed }} sur {{ total }}",
-      "UPLOAD_PROGRESS": "Importation de {{ completed }} sur {{ total }}",
+      "UPLOAD_PROGRESS": "Importé {{ completed }} sur {{ total }}",
       "UPLOAD_ERROR": "{{ total }} importation échouée",
       "UPLOAD_ERRORS": "{{ total }} importations échouées",
       "PROGRESS": "Importation en cours...",
@@ -153,6 +152,16 @@
     },
     "ACTION": {
       "UNDO": "Annuler"
+    },
+    "ERRORS": {
+      "GENERIC": "L'importation a échoué. Contactez le support technique si le problème persiste",
+      "500": "Erreur de serveur interne. Réessayez ou contactez le support technique [500]",
+      "504": "Le délai d'attente du serveur a expiré. Réessayez ou contactez le support technique [504]",
+      "403": "Droits d'accès insuffisants pour importer dans cet emplacement [403]",
+      "404": "L'emplacement de destination de l'importation n'existe plus [404]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "Erreur d'importation"
     }
   },
   "WEBSCRIPT": {
@@ -254,11 +263,13 @@
     }
   },
   "SHARE": {
+    "PUBLIC-LINK": "Lien public",
     "DIALOG-TITLE": "Partager",
     "DESCRIPTION": "Cliquez sur le lien ci-dessous pour le copier dans le Presse-papiers.",
     "TITLE": "Lien à partager",
     "EXPIRES": "Expire le",
     "CLIPBOARD-MESSAGE": "Lien copié dans le Presse-papiers",
+    "CLOSE": "Fermer",
     "CONFIRMATION": {
       "DIALOG-TITLE": "Supprimer ce lien partagé",
       "MESSAGE": "Ce lien sera supprimé et un nouveau lien sera créé lors du prochain partage de ce fichier",
@@ -288,15 +299,21 @@
       "NOT-ALLOWED": "Vous n'avez pas le droit de modifier les droits d'accès"
     }
   },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "Aucun ID de nœud spécifié !"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "Créer une Bibliothèque",
       "CREATE": "Créer",
+      "UPDATE": "Mis à jour",
+      "EDIT": "Modifier",
       "CANCEL": "Annuler",
       "FORM": {
         "DESCRIPTION": "Description",
         "SITE_ID": "ID de Bibliothèque",
-        "NAME": "Nom"
+        "NAME": "Nom",
+        "VISIBILITY": "Visibilité"
       }
     },
     "ROLE": {
@@ -310,14 +327,23 @@
       "PUBLIC": "Public",
       "MODERATED": "Modéré"
     },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "Ce nom de bibliothèque existe déjà"
+    },
     "ERRORS": {
-      "GENERIC": "Une erreur est survenue",
-      "EXISTENT_SITE": "Cet ID de Bibliothèque est indisponible. Essayez avec une autre Bibliothèque.",
+      "GENERIC": "Un problème est survenu",
+      "EXISTENT_SITE": "Cet ID de bibliothèque est indisponible. Essayez avec un autre ID de bibliothèque.",
       "CONFLICT": "Cet ID de Bibliothèque est déjà utilisé. Vérifiez la corbeille.",
       "ID_TOO_LONG": "L'URL doit contenir 72 caractères maximum",
       "DESCRIPTION_TOO_LONG": "La description doit contenir 512 caractères maximum",
       "TITLE_TOO_LONG": "Le titre doit contenir 256 caractères maximum",
-      "ILLEGAL_CHARACTERS": "Utilisez uniquement des chiffres et des lettres"
+      "TITLE_TOO_SHORT": "Le titre doit comporter au moins 2 caractères",
+      "ILLEGAL_CHARACTERS": "Utilisez uniquement des chiffres et des lettres",
+      "ONLY_SPACES": "Un nom de bibliothèque ne peut pas contenir uniquement des espaces",
+      "LIBRARY_UPDATE_ERROR": "Une erreur est survenue pendant la mise à jour des propriétés de la bibliothèque"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "Les propriétés de la bibliothèque ont été mises à jour"
     }
   }
 }

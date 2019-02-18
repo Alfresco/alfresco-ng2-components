@@ -135,7 +135,11 @@ function makeToc(tree) {
             context.headings.push({
                 "level": heading.item.depth - 2,
                 "title": linkTitle,
-                "anchor": "#" + linkTitle.toLowerCase().replace(/ /g, "-").replace(/[:;@\.,'"`$\(\)\/]/g ,"")
+                //"anchor": "#" + linkTitle.toLowerCase().replace(/ /g, "-").replace(/[:;@\.,'"`$\(\)\/]/g ,"")
+                "anchor": "#" + linkTitle.toLowerCase()
+                                .replace(/\W/g ,"-")
+                                .replace(/-+/g, '-')
+                                .replace(/-+$/, '')
             })
         };
     });

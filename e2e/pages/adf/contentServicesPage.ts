@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -190,8 +190,15 @@ export class ContentServicesPage {
     checkElementsSortedAsc(elements) {
         let sorted = true;
         let i = 0;
+        let compareNumbers = false;
+
+        if (elements && elements[0] && typeof elements[0] === 'number') {
+            compareNumbers = true;
+        }
         while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
-            if (JSON.stringify(elements[i]) > JSON.stringify(elements[i + 1])) {
+            const left = compareNumbers ? elements[i] : JSON.stringify(elements[i]);
+            const right = compareNumbers ? elements[i + 1] : JSON.stringify(elements[i + 1]);
+            if (left > right) {
                 sorted = false;
             }
             i++;

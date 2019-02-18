@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,20 @@
  * limitations under the License.
  */
 
-import { DataColumn, DataRow, DataSorting, DataTableAdapter, ThumbnailService, ContentService } from '@alfresco/adf-core';
+import {
+    DataColumn,
+    DataRow,
+    DataSorting,
+    DataTableAdapter,
+    ThumbnailService,
+    ContentService
+} from '@alfresco/adf-core';
 import { NodePaging } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { DocumentListService } from './../services/document-list.service';
 import { ShareDataRow } from './share-data-row.model';
+import { NodeEntry } from '@alfresco/js-api/src/api/content-rest-api/model/nodeEntry';
+import { RowFilter } from './row-filter.model';
 
 export class ShareDataTableAdapter implements DataTableAdapter {
 
@@ -31,7 +40,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     private rows: DataRow[];
     private columns: DataColumn[];
 
-    private filter: any;
+    private filter: RowFilter;
     private imageResolver: any;
 
     thumbnails: boolean = false;
@@ -156,7 +165,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.setSorting(sorting);
     }
 
-    setFilter(filter: any) {
+    setFilter(filter: RowFilter) {
         this.filter = filter;
     }
 
@@ -236,16 +245,16 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
     }
 
-    public loadPage(page: NodePaging, merge: boolean = false) {
-        let rows = [];
+    public loadPage(nodePaging: NodePaging, merge: boolean = false) {
+        let shareDataRows: ShareDataRow[] = [];
 
-        if (page && page.list) {
-            let data = page.list.entries;
-            if (data && data.length > 0) {
-                rows = data.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle, this.thumbnailService));
+        if (nodePaging && nodePaging.list) {
+            let nodeEntries: NodeEntry[] = nodePaging.list.entries;
+            if (nodeEntries && nodeEntries.length > 0) {
+                shareDataRows = nodeEntries.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle, this.thumbnailService));
 
                 if (this.filter) {
-                    rows = rows.filter(this.filter);
+                    shareDataRows = shareDataRows.filter(this.filter);
                 }
 
                 if (this.sortingMode !== 'server') {
@@ -253,7 +262,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                     if (this.columns && this.columns.length > 0) {
                         let sorting = this.getSorting();
                         if (sorting) {
-                            this.sortRows(rows, sorting);
+                            this.sortRows(shareDataRows, sorting);
                         } else {
                             let sortable = this.columns.filter((c) => c.sortable);
                             if (sortable.length > 0) {
@@ -268,7 +277,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
 
         if (merge) {
-            let listPrunedDuplicate = rows.filter((elementToFilter) => {
+            let listPrunedDuplicate = shareDataRows.filter((elementToFilter: any) => {
                 let isPresent = this.rows.find((currentRow: any) => {
                     return currentRow.obj.entry.id === elementToFilter.obj.entry.id;
                 });
@@ -278,7 +287,8 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
             this.rows = this.rows.concat(listPrunedDuplicate);
         } else {
-            this.rows = rows;
+            this.rows = shareDataRows;
         }
     }
+
 }

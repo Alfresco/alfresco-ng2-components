@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ import { debounceTime, filter } from 'rxjs/operators';
     animations: [
         trigger('transitionMessages', [
             state('active', style({ transform: 'translateX(0%)', 'margin-left': '13px' })),
-            state('inactive', style({ transform: 'translateX(81%)'})),
+            state('inactive', style({ transform: 'translateX(82%)'})),
             state('no-animation', style({ transform: 'translateX(0%)', width: '100%' })),
             transition('inactive => active',
                 animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')),

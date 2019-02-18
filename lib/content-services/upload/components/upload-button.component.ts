@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 import {
     ContentService, EXTENDIBLE_COMPONENT, FileUtils,
-    LogService, NodePermissionSubject, TranslationService, UploadService, PermissionsEnum
+    LogService, NodeAllowableOperationSubject, TranslationService, UploadService, AllowableOperationsEnum
 } from '@alfresco/adf-core';
 import {
     Component, EventEmitter, forwardRef, Input,
@@ -37,7 +37,7 @@ import { UploadBase } from './base-upload/upload-base';
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class UploadButtonComponent extends UploadBase implements OnInit, OnChanges, NodePermissionSubject {
+export class UploadButtonComponent extends UploadBase implements OnInit, OnChanges, NodeAllowableOperationSubject {
 
     /** Allows/disallows upload folders (only for Chrome). */
     @Input()
@@ -59,7 +59,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     @Output()
     permissionEvent: EventEmitter<PermissionModel> = new EventEmitter<PermissionModel>();
 
-    private hasPermission: boolean = false;
+    private hasAllowableOperations: boolean = false;
 
     protected permissionValue: Subject<boolean> = new Subject<boolean>();
 
@@ -73,7 +73,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
 
     ngOnInit() {
         this.permissionValue.subscribe((permission: boolean) => {
-            this.hasPermission = permission;
+            this.hasAllowableOperations = permission;
         });
     }
 
@@ -91,7 +91,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     onFilesAdded($event: any): void {
         let files: File[] = FileUtils.toFileArray($event.currentTarget.files);
 
-        if (this.hasPermission) {
+        if (this.hasAllowableOperations) {
             this.uploadFiles(files);
         } else {
             this.permissionEvent.emit(new PermissionModel({ type: 'content', action: 'upload', permission: 'create' }));
@@ -101,7 +101,7 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     }
 
     onDirectoryAdded($event: any): void {
-        if (this.hasPermission) {
+        if (this.hasAllowableOperations) {
             let files: File[] = FileUtils.toFileArray($event.currentTarget.files);
             this.uploadFiles(files);
         } else {
@@ -119,13 +119,13 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
             };
 
             this.contentService.getNode(this.rootFolderId, opts).subscribe(
-                (res) => this.permissionValue.next(this.nodeHasPermission(res.entry, PermissionsEnum.CREATE)),
+                (res) => this.permissionValue.next(this.nodeHasPermission(res.entry, AllowableOperationsEnum.CREATE)),
                 (error) => this.error.emit(error)
             );
         }
     }
 
-    nodeHasPermission(node: Node, permission: PermissionsEnum | string): boolean {
-        return this.contentService.hasPermission(node, permission);
+    nodeHasPermission(node: Node, permission: AllowableOperationsEnum | string): boolean {
+        return this.contentService.hasAllowableOperations(node, permission);
     }
 }

@@ -1,0 +1,27 @@
+.adf {
+    &-section {
+        mat-card-title {
+            font-size:18px;
+            font-weight: bold;
+        }
+        mat-radio-group {
+            margin:7px 10px;
+
+            mat-radio-button {
+                margin: 0 3px;
+            }
+        }
+
+        mat-card-content {
+
+            .adf-preselect-value {
+                margin-right: 15px;
+                min-width: 330px;
+
+                &-full {
+                    width:60%;
+                }
+            }
+        }
+    }
+}

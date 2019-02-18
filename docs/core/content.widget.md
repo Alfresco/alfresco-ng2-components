@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [APS Content Component](../../core/form/components/widgets/content/content.widget.ts "Defined in content.widget.ts")
+# [APS Content Component](../../lib/core/form/components/widgets/content/content.widget.ts "Defined in content.widget.ts")
 
 Shows the content preview.
 

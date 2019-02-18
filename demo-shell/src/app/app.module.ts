@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,7 +63,7 @@ import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
-import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
+import { ProcessServicesCloudModule, GroupCloudModule } from '@alfresco/adf-process-services-cloud';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { AppExtensionsModule } from './extensions/extensions.module';
 import { CloudLayoutComponent } from './components/app-layout/cloud/cloud-layout.component';
@@ -75,7 +75,9 @@ import { CloudBreadcrumbsComponent } from './components/app-layout/cloud/cloud-b
 import { TasksCloudDemoComponent } from './components/app-layout/cloud/tasks-cloud-demo.component';
 import { CloudFiltersDemoComponent } from './components/app-layout/cloud/cloud-filters-demo.component';
 import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
-import { DocumentListDemoComponent } from './components/document-list/document-list-demo.component';
+import { TemplateDemoComponent } from './components/template-list/template-demo.component';
+import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
+import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-settings.component';
 
 @NgModule({
     imports: [
@@ -95,7 +97,8 @@ import { DocumentListDemoComponent } from './components/document-list/document-l
         ChartsModule,
         MonacoEditorModule.forRoot(),
         ProcessServicesCloudModule,
-        AppExtensionsModule.forRoot()
+        AppExtensionsModule.forRoot(),
+        GroupCloudModule
     ],
     declarations: [
         AppComponent,
@@ -135,7 +138,9 @@ import { DocumentListDemoComponent } from './components/document-list/document-l
         StartProcessCloudDemoComponent,
         CloudBreadcrumbsComponent,
         CloudFiltersDemoComponent,
-        DocumentListDemoComponent
+        TemplateDemoComponent,
+        PeopleGroupCloudDemoComponent,
+        CloudSettingsComponent
     ],
     providers: [
         {

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import { from, of, Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { GroupSearchParam } from '../models/group.model';
+import { GroupSearchParam, GroupRoleModel } from '../models/group.model';
 
 @Injectable({
     providedIn: 'root'
@@ -33,6 +33,11 @@ export class GroupCloudService {
         private logService: LogService
     ) {}
 
+    /**
+     * Finds groups filtered by name.
+     * @param searchParams Object containing the name filter string
+     * @returns List of group information
+     */
     findGroupsByName(searchParams: GroupSearchParam): Observable<any> {
         if (searchParams.name === '') {
             return of([]);
@@ -50,6 +55,54 @@ export class GroupCloudService {
         );
     }
 
+    /**
+     * Gets details for a specified group.
+     * @param groupId ID of the target group
+     * @returns Group details
+     */
+    getGroupRoles(groupId: string): Observable<GroupRoleModel[]> {
+        const url = this.buildRolesUrl(groupId);
+        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
+            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+
+        return (from(this.apiService.getInstance().oauth2Auth.callCustomApi(
+            url, httpMethod, pathParams, queryParams,
+            headerParams, formParams, bodyParam,
+            contentTypes, accepts, Object, null, null)
+        )).pipe(
+            catchError((err) => this.handleError(err))
+        );
+    }
+
+    /**
+     * Check that a group has one or more roles from the supplied list.
+     * @param groupId ID of the target group
+     * @param roleNames Array of role names
+     * @returns True if the group has one or more of the roles, false otherwise
+     */
+    checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean>  {
+        return this.getGroupRoles(groupId).pipe(map((groupRoles: GroupRoleModel[]) => {
+            let hasRole = false;
+            if (groupRoles && groupRoles.length > 0) {
+                roleNames.forEach((roleName: string) => {
+                    const role = groupRoles.find((groupRole) => {
+                        return roleName === groupRole.name;
+                    });
+                    if (role) {
+                        hasRole = true;
+                        return;
+                    }
+                });
+            }
+            return hasRole;
+        }));
+    }
+
+    /**
+     * Gets the client ID using the app name.
+     * @param applicationName Name of the app
+     * @returns client ID string
+     */
     getClientIdByApplicationName(applicationName: string): Observable<string> {
         const url = this.getApplicationIdApi();
         const httpMethod = 'GET', pathParams = {}, queryParams = {clientId: applicationName}, bodyParam = {}, headerParams = {}, formParams = {},
@@ -67,7 +120,13 @@ export class GroupCloudService {
             );
     }
 
-    checkGroupHasClientRoleMapping(groupId: string, clientId: string): Observable<any> {
+    /**
+     * Gets client roles.
+     * @param groupId ID of the target group
+     * @param clientId ID of the client
+     * @returns List of roles
+     */
+    getClientRoles(groupId: string, clientId: string): Observable<any[]> {
         const url = this.groupClientRoleMappingApi(groupId, clientId);
         const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
             formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
@@ -76,7 +135,17 @@ export class GroupCloudService {
                     url, httpMethod, pathParams, queryParams,
                     headerParams, formParams, bodyParam,
                     contentTypes, accepts, Object, null, null)
-                ).pipe(
+                );
+    }
+
+    /**
+     * Checks if a group has a client app.
+     * @param groupId ID of the target group
+     * @param clientId ID of the client
+     * @returns True if the group has the client app, false otherwise
+     */
+    checkGroupHasClientApp(groupId: string, clientId: string): Observable<boolean> {
+        return this.getClientRoles(groupId, clientId).pipe(
                     map((response: any[]) => {
                         if (response && response.length > 0) {
                             return true;
@@ -85,6 +154,35 @@ export class GroupCloudService {
                     }),
                     catchError((err) => this.handleError(err))
             );
+    }
+
+    /**
+     * Check if a group has any of the client app roles in the supplied list.
+     * @param groupId ID of the target group
+     * @param clientId ID of the client
+     * @param roleNames Array of role names to check
+     * @returns True if the group has one or more of the roles, false otherwise
+     */
+    checkGroupHasAnyClientAppRole(groupId: string, clientId: string, roleNames: string[]): Observable<boolean> {
+        return this.getClientRoles(groupId, clientId).pipe(
+            map((clientRoles: any[]) => {
+                let hasRole = false;
+                if (clientRoles.length > 0) {
+                    roleNames.forEach((roleName) => {
+                        const role = clientRoles.find((availableRole) => {
+                            return availableRole.name === roleName;
+                        });
+
+                        if (role) {
+                            hasRole = true;
+                            return;
+                        }
+                    });
+                }
+                return hasRole;
+            }),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     private groupClientRoleMappingApi(groupId: string, clientId: string): any {
@@ -97,6 +195,10 @@ export class GroupCloudService {
 
     private getGroupsApi() {
         return `${this.appConfigService.get('identityHost')}/groups`;
+    }
+
+    private buildRolesUrl(groupId: string): any {
+        return `${this.appConfigService.get('identityHost')}/groups/${groupId}/role-mappings/realm/composite`;
     }
 
     /**

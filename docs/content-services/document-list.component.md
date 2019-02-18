@@ -2,7 +2,7 @@
 Title: Document List component
 Added: v2.0.0
 Status: Active
-Last reviewed: 2019-01-16
+Last reviewed: 2019-02-08
 ---
 
 # [Document List component](../../lib/content-services/document-list/components/document-list.component.ts "Defined in document-list.component.ts")
@@ -33,8 +33,7 @@ Displays the documents from a repository.
     -   [Actions](#actions)
     -   [Navigation mode](#navigation-mode)
 -   [Advanced usage and customization](#advanced-usage-and-customization)
-    -   [Custom row filter](#custom-row-filter)
-    -   [Custom image resolver](#custom-image-resolver)
+    -   [Image Resolver and Row Filter functions](#image-resolver-and-row-filter-functions)
     -   [Custom 'empty folder' template](#custom-empty-folder-template)
     -   [Custom 'permission denied' template](#custom-permission-denied-template)
     -   [Custom 'loading' template](#custom-loading-template)
@@ -61,20 +60,18 @@ Displays the documents from a repository.
 | contentActions | `boolean` | false | Toggles content actions for each row |
 | contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |
 | contextMenuActions | `boolean` | false | Toggles context menus for each row |
-| currentFolderId | `string` | null | The ID of the folder node to display or a reserved string alias for special sources |
 | display | `string` | DisplayMode.List | Change the display mode of the table. Can be "list" or "gallery". |
 | emptyFolderImageUrl | `string` |  | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
-| imageResolver | `any \| null` | null | Custom image resolver |
+| imageResolver | `any \| null` | null | Custom function to choose image file paths to show. See the [Image Resolver Model](image-resolver.model.md) page for more information. |
 | includeFields | `string[]` |  | Include additional information about the node in the server request. For example: association, isLink, isLocked and others. |
 | loading | `boolean` | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
 | locationFormat | `string` | "/" | The default route for all the location-based columns (if declared). |
-| maxItems | `number` |  | Default value is stored into user preference settings use it only if you are not using the pagination |
+| maxItems | `number` |  | Default value is stored in the user preference settings. Use this only if you are not using pagination. |
 | multiselect | `boolean` | false | Toggles multiselect mode |
 | navigate | `boolean` | true | Toggles navigation to folder content or file preview |
 | navigationMode | `string` |  | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
 | node | [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) | null | The Document list will show all the nodes contained in the [NodePaging](../../lib/content-services/document-list/models/document-library.model.ts) entity |
 | permissionsStyle | [`PermissionStyleModel`](../../lib/content-services/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
-| rowFilter | `any \| null` | null | Custom row filter |
 | rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
 | rowStyleClass | `string` |  | The CSS class to apply to every row |
 | selectionMode | `string` | "single" | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
@@ -82,6 +79,9 @@ Displays the documents from a repository.
 | sorting | `string[]` | ['name', 'asc'] | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
 | sortingMode | `string` | "client" | Defines sorting mode. Can be either `client` (items in the list are sorted client-side) or `server` (the ordering supplied by the server is used without further client-side sorting). Note that the `server` option _does not_ request the server to sort the data before delivering it. |
 | thumbnails | `boolean` | false | Show document thumbnails rather than icons |
+| where | `string` |  | Filters the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information. |
+| currentFolderId | `string` |  | The ID of the folder node to display or a reserved string alias for special sources |
+| rowFilter | `RowFilter` |  | Custom function to choose whether to show or hide rows. See the [Row Filter Model](row-filter.model.md) page for more information. |
 
 ### Events
 
@@ -579,11 +579,11 @@ You can use the following components as column templates:
 
 | Name | Description |
 | ---- | ----------- |
-| adf-name-column | Renders hyperlink-styled name of the node. Provides formatted tooltip. Emits `name-click` DOM event that can be handled by any parent component. |
-| adf-library-name-column | Renders library name. Provides formatted tooltips and extra details for libraries with same names on the page. Emits `name-click` DOM event that can be handled by any parent component. |
-| adf-library-role-column | Renders i18n-enabled information about Library (Site) role (`Manager`, `Collaborator`, `Contributor`, `Consumer`) |
-| adf-library-status-column | Renders i18n-enabled information about Library (Site) status (`Public`, `Private`, `Moderated`, `Unknown`) |
-| adf-trashcan-name-column | Renders a name of the deleted node. Distinguishes between a Library (Site) and File/Folder nodes. Provides proper tooltips. |
+| `adf-name-column` | Renders the hyperlink-styled name of the node. Provides a formatted tooltip. Emits the `name-click` DOM event, which can be handled by any parent component. |
+| `adf-library-name-column` | Renders the library name. Provides formatted tooltips and extra details for libraries with the same names on the page. Emits the `name-click` DOM event, which can be handled by any parent component. |
+| `adf-library-role-column` | Renders i18n-enabled information about the Library (Site) role (`Manager`, `Collaborator`, `Contributor`, `Consumer`) |
+| `adf-library-status-column` | Renders i18n-enabled information about the Library (Site) status (`Public`, `Private`, `Moderated`, `Unknown`) |
+| `adf-trashcan-name-column` | Renders the name of the deleted node. Distinguishes between a Library (Site) and File/Folder nodes. Provides proper tooltips. |
 
 All the components above require only the `context` property to be bound, since
 each component fetches and renders the information it needs from the underlying node.
@@ -703,120 +703,17 @@ The following example switches navigation to single clicks:
 
 ## Advanced usage and customization
 
-### Custom row filter
+### Image Resolver and Row Filter functions
 
-You can create a custom row filter function that returns `true` if the row should be
-displayed or `false` if it should be hidden.
-A typical row filter implementation receives a [`ShareDataRow`](../../lib/content-services/document-list/data/share-data-row.model.ts) object as a parameter:
+The Document List has two properties that let you modify behavior with custom
+functions:
 
-```ts
-myFilter(row: ShareDataRow): boolean {
-    return true;
-}
-```
+-   `imageResolver` - Specifies a function to choose image file paths for icons and thumbnails.
+-   `rowFilter` - Selects whether a row is shown or hidden according to its data content.
 
-_Note that for the sake of simplicity the example code below was reduced to the main points of interest only._
-
-**View1.component.html**
-
-```html
-<adf-document-list 
-    [rowFilter]="folderFilter">
-</adf-document-list>
-```
-
-**View1.component.ts**
-
-```ts
-import { RowFilter, ShareDataRow } from '@alfresco/adf-content-services';
-
-export class View1 {
-
-    folderFilter: RowFilter;
-
-    constructor() {
-    
-        // This filter will make the document list show only folders
-        
-        this.folderFilter = (row: ShareDataRow) => {
-            let node = row.node.entry;
-            
-            if (node && node.isFolder) {
-                return true;
-            }
-            
-            return false;
-        };
-    }
-}
-```
-
-### Custom image resolver
-
-You can create a custom image resolver function to manage the way folder/file icons and thumbnails 
-are resolved (ie, which image is shown for which item). 
-
-**Note:** Image resolvers are executed only for columns of the `image` type.
-
-A typical image resolver implementation receives [`DataRow`](../../lib/core/datatable/data/data-row.model.ts) and [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) objects as parameters:
-
-```ts
-myImageResolver(row: DataRow, col: DataColumn): string {
-    return '/path/to/image';
-}
-```
-
-Your function can return `null` or `false` values to fall back to the default image
-resolving behavior.
-
-_Note that for the sake of simplicity the example code below was reduced to the main points of interest only._
-
-**View1.component.html**
-
-```html
-<adf-document-list 
-    [imageResolver]="folderImageResolver">
-    
-    <data-columns>
-        <data-column key="name" type="image"></data-column>
-    </data-columns>
-    
-</adf-document-list>
-```
-
-**View1.component.ts**
-
-```ts
-import { DataColumn, DataRow } from '@alfresco/adf-core';
-import { ImageResolver } from '@alfresco/adf-content-services';
-
-export class View1 {
-
-    folderImageResolver: ImageResolver;
-    
-    constructor() {
-        
-        // Customize folder icons, leave file icons untouched
-        
-        this.folderImageResolver = (row: DataRow, col: DataColumn) => {
-            let isFolder = <boolean> row.getValue('isFolder');
-            if (isFolder) {
-                
-                // (optional) You may want dynamically getting the column value
-                let name = row.getValue(col.key);
-                
-                // Format image url
-                return `http://<my custom path to folder icon>/${name}`;
-            }
-            
-            // For the rest of the cases just fallback to default behaviour.
-            return null;
-        };
-        
-    }
-
-}
-```
+See the [Image Resolver Model](image-resolver.model.md)
+and [Row Filter Model](row-filter.model.md) pages for details of how to
+implement these functions.
 
 ### Custom 'empty folder' template
 

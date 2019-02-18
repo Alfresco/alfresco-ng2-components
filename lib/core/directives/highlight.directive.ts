@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@
 
 /* tslint:disable:no-input-rename  */
 
-import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2, AfterViewChecked } from '@angular/core';
 import { HighlightTransformService, HighlightTransformResult } from '../services/highlight-transform.service';
 
 @Directive({
     selector: '[adf-highlight]'
 })
-export class HighlightDirective {
+export class HighlightDirective implements AfterViewChecked {
 
     /** Class selector for highlightable elements. */
     @Input('adf-highlight-selector')
@@ -40,7 +40,12 @@ export class HighlightDirective {
     constructor(
         private el: ElementRef,
         private renderer: Renderer2,
-        private highlightTransformService: HighlightTransformService) { }
+        private highlightTransformService: HighlightTransformService) {
+    }
+
+    ngAfterViewChecked() {
+        this.highlight();
+    }
 
     public highlight(search = this.search, selector = this.selector, classToApply = this.classToApply) {
         if (search && selector) {

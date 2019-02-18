@@ -19,7 +19,7 @@
     "ADF_VERSION_MANAGER": {
       "ALLOW_DELETE": "Permitir eliminar",
       "SHOW_COMMENTS": "Mostrar comentarios en las versiones",
-      "ALLOW_DOWNLOAD": "Permitir descarga",
+      "ALLOW_DOWNLOAD": "Habilitar descarga de versión",
       "READ_ONLY": "Solo lectura",
       "COMMENTS": "Mostrar comentarios"
     },
@@ -61,12 +61,15 @@
     "NOTIFICATIONS": "Notificaciones",
     "TASK_LIST": "Lista de tareas",
     "PROCESS_LIST": "Lista de procesos",
+    "PROCESS_CLOUD": "Procesos en la nube",
     "CARD_VIEW": "CardView",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Iniciar sesión",
     "CUSTOM_SOURCES": "Fuentes personalizadas",
     "DATATABLE": "Tabla de datos",
     "DATATABLE_LAZY": "Tabla de datos (diferida)",
+    "DOCUMENT_LIST": "Lista de documentos",
+    "TEMPLATE": "Plantilla",
     "FORM": "Formulario",
     "FORM_LIST": "Lista de formularios",
     "FORM_LOADING": "Carga de formulario",
@@ -84,7 +87,12 @@
     "WORD_TO_SEARCH": "Buscar palabra",
     "SEARCH_CREATED_BY": "Creado por",
     "SEARCH_SERVICE_APPROACH": "Marque esto para desactivar la propiedad de entrada y configurar el uso del servicio",
-    "HEADER_DATA": "Datos de encabezado"
+    "HEADER_DATA": "Datos de encabezado",
+    "TREE_VIEW": "Vista de árbol",
+    "ICONS": "Iconos",
+    "PEOPLE_GROUPS_CLOUD": "Personas/Grupos en la nube",
+    "PEOPLE_CLOUD": "Componente en la nube de personas",
+    "GROUPS_CLOUD": "Componente en la nube de grupos"
   },
   "TRASHCAN": {
     "ACTIONS": {
@@ -100,6 +108,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Selección múltiple (con casillas)",
     "THUMBNAILS": "Habilitar miniaturas",
+    "ALLOW_DROP_FILES": "Habilitar arrastre de ficheros en una carpeta",
     "MULTIPLE_FILE_UPLOAD": "Carga de varios ficheros",
     "FOLDER_UPLOAD": "Carga de carpetas",
     "CUSTOM_FILTER": "Filtro de extensiones personalizado",
@@ -118,6 +127,7 @@
       "DISPLAY_NAME": "Nombre a mostrar",
       "IS_LOCKED": "Bloquear",
       "TAG": "Etiqueta",
+      "NODE_ID": "ID de nodo",
       "CREATED_BY": "Creado por",
       "CREATED_ON": "Creado",
       "CREATED": "Creado",
@@ -137,10 +147,12 @@
       "THEME": "Seleccionar un tema",
       "SHOW_VERSION": "Mostrar versión",
       "HIDE_VERSION": "Ocultar versión",
-      "LISTVIEW": "Modo de vista de lista"
+      "LISTVIEW": "Modo de vista de lista",
+      "CREATE_LIBRARY": "Crear biblioteca"
     },
     "ACTIONS": {
       "VERSIONS": "Gestionar versiones",
+      "LOCK": "Bloquear",
       "METADATA": "Información",
       "DOWNLOAD": "Descargar",
       "PERMISSION": "Permiso",
@@ -180,6 +192,10 @@
     "TASK-AUDIT-LOG": "Registro de auditoría de tareas",
     "TASK-SHOW-HEADER": "Mostrar encabezado de detalles"
   },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "Aplicación",
+    "SETTINGS_TAB": "Configuración"
+  },
   "FORM-LIST": {
     "STORE": "Almacenar",
     "RESTORE": "Restaurar"
@@ -201,7 +217,25 @@
   },
   "SEARCH": {
     "RESULTS": "Resultados de la búsqueda",
-    "NO_RESULT": "Ningún resultado encontrado"
+    "NO_RESULT": "Ningún resultado encontrado",
+    "FACET_FIELDS": {
+      "TYPE": "1:Tipo",
+      "SIZE": "2:Tamaño",
+      "CREATOR": "3:Creador",
+      "MODIFIER": "4:Modificador",
+      "CREATED": "5:Creados"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "Mis consultas de faceta",
+      "CREATED_THIS_YEAR": "1.Creadas este año",
+      "MIMETYPE": "2.Tipo: HTML",
+      "XTRASMALL": "3.Tamaño: extrapequeño",
+      "SMALL": "4.Tamaño: pequeño",
+      "MEDIUM": "5.Tamaño: mediano",
+      "LARGE": "6.Tamaño: grande",
+      "XTRALARGE": "7.Tamaño: extragrande",
+      "XXTRALARGE": "8.Tamaño: extraextragrande"
+    }
   },
   "SOCIAL": {
     "LIKE": "Componente Me gusta",
@@ -220,16 +254,61 @@
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Insertar ID de aplicación",
       "APP_ID_TYPE_ERROR": "El ID de aplicación debe ser un número",
-      "NUMBER_TYPE_ERROR": "El valor debe ser un número"
+      "NUMBER_TYPE_ERROR": "El valor debe ser un número",
+      "NUMBER_GREATER_THAN": "El valor debe ser igual o superior a {{ value }}"
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Inicio de página"
     }
   },
   "PROCESS_LIST_DEMO": {
-    "APP_ID_REQUIRED_ERROR": "Insertar ID de aplicación",
-    "APP_ID_TYPE_ERROR": "El ID de aplicación debe ser un número"
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "Insertar ID de aplicación",
+      "APP_ID_TYPE_ERROR": "El ID de aplicación debe ser un número",
+      "NUMBER_GREATER_THAN": "El valor debe ser igual o superior a {{ value }}"
+    }
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Traducción de título personalizado 1",
-  "GROUP-TITLE2-TRANSLATION-KEY": "Traducción de título personalizado 2"
+  "GROUP-TITLE2-TRANSLATION-KEY": "Traducción de título personalizado 2",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "Disco ACS lleno",
+      "DESCRIPTION": "El contenido supera el límite de la cuota de almacenamiento general configurado para la red o sistema.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "Volver al inicio"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "PROCESS LIST CLOUD DEMO",
+    "CUSTOMIZE_FILTERS": "Personalice su filtro"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "Personalice su filtro"
+  },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "Individual",
+    "MULTI": "Múltiple",
+    "PRESELECTED_VALUE": "Valor preseleccionado"
+  },
+  "ABOUT": {
+    "TITLE": "Complementos",
+    "TABLE_HEADERS": {
+      "ID": "ID",
+      "NAME": "Nombre",
+      "VERSION": "Versión",
+      "VENDOR": "Proveedor",
+      "LICENSE": "Licencia",
+      "RUNTIME": "Tiempo de ejecución",
+      "DESCRIPTION": "Descripción"
+    }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "Selección múltiple",
+    "TESTING_MODE": "Modo de prueba",
+    "SELECTION_MODE": "Modo de selección"
+  }
 }

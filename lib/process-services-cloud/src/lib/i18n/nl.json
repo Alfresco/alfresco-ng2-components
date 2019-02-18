@@ -1,0 +1,195 @@
+{
+  "ADF_CLOUD_PROCESS_LIST": {
+    "MESSAGES": {
+      "TITLE": "Geen processen gevonden",
+      "SUBTITLE": "Maak een nieuw proces dat u later gemakkelijk wilt kunnen vinden",
+      "NONE": "Geen procesinstancefilter geselecteerd."
+    },
+    "PROPERTIES": {
+      "NAME": "Naam",
+      "CREATED": "Gemaakt",
+      "STATUS": "Status",
+      "START_DATE": "Begindatum",
+      "ID": "Id"
+    },
+    "ADF_CLOUD_START_PROCESS": {
+      "BUTTON": "Proces starten",
+      "NO_PROCESS_DEFINITIONS": "U kunt geen proces starten omdat er geen procesdefinities beschikbaar zijn",
+      "FORM": {
+        "TITLE": "Proces starten",
+        "LABEL": {
+          "TYPE": "Proces selecteren",
+          "NAME": "Procesnaam"
+        },
+        "TYPE_PLACEHOLDER": "Maak een keuze...",
+        "ACTION": {
+          "START": "Proces starten",
+          "CANCEL": "Annuleren"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "Kan procesdefinities niet laden, controleer of u over toegang beschikt.",
+        "START": "Kan geen nieuwe procesinstance starten, controleer of u over toegang beschikt.",
+        "PROCESS_NAME_REQUIRED": "Procesnaam is vereist",
+        "PROCESS_DEFINITION_REQUIRED": "Procesdefinitie is vereist",
+        "MAXIMUM_LENGTH": "Lengte overschreden, max. {{characters}} tekens."
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_LIST": {
+    "APPS": {
+      "TITLE": "Geen toepassingen gevonden",
+      "SUBTITLE": "Maak een nieuwe toepassing die u later gemakkelijk wilt kunnen vinden"
+    },
+    "START_TASK": {
+      "FORM": {
+        "TITLE": "Taak starten",
+        "LABEL": {
+          "NAME": "Naam",
+          "DESCRIPTION": "Beschrijving",
+          "ATTACHFORM": "Formulier bijvoegen",
+          "ASSIGNEE": "Toegewezen persoon",
+          "CANDIDATE_GROUP": "Kandidaatgroep",
+          "FORM": "Formulier",
+          "DATE": "Datum kiezen"
+        },
+        "ACTION": {
+          "START": "Start",
+          "CANCEL": "Annuleren"
+        }
+      }
+    },
+    "PROPERTIES": {
+      "NAME": "Naam",
+      "ASSIGNEE": "Toegewezen persoon",
+      "ID": "Id",
+      "STATUS": "Status",
+      "PRIORITY": "Prioriteit",
+      "CREATED_DATE": "Datum gemaakt",
+      "LAST_MODIFIED": "Laatst gewijzigd",
+      "CREATED": "Gemaakt"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "Geen taken gevonden",
+        "SUBTITLE": "Maak een nieuwe taak die u later gemakkelijk wilt kunnen vinden",
+        "NONE": "Geen takenlijsten gevonden"
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_FILTERS": {
+    "MY_TASKS": "Mijn taken",
+    "COMPLETED_TASKS": "Voltooide taken"
+  },
+  "ADF_CLOUD_PROCESS_FILTERS": {
+    "ALL_PROCESSES": "Alle processen",
+    "RUNNING_PROCESSES": "Actieve processen",
+    "COMPLETED_PROCESSES": "Voltooide processen"
+  },
+  "ADF_CLOUD_START_TASK": {
+    "ERROR": {
+      "MESSAGE": "Voer een andere waarde in",
+      "REQUIRED": "Veld vereist",
+      "DATE": "Datumnotatie dd-mm-jjjj",
+      "MAXIMUM_LENGTH": "Lengte overschreden, max. {{characters}} tekens."
+    }
+  },
+  "ADF_CLOUD_EDIT_TASK_FILTER": {
+    "TITLE": "Uw filter aanpassen",
+    "TOOL_TIP": {
+      "SAVE": "Filter opslaan",
+      "SAVE_AS": "Filter opslaan als",
+      "DELETE": "Filter verwijderen"
+    },
+    "LABEL": {
+      "APP_NAME": "Toepassingsnaam",
+      "PROCESS_DEF_ID": "Procesdefinitie-id",
+      "STATUS": "Status",
+      "ASSIGNMENT": "Toewijzing",
+      "DIRECTION": "Richting",
+      "PROCESS_INSTANCE_ID": "Procesinstance-id",
+      "TASK_NAME": "Taaknaam",
+      "PARENT_TASK_ID": "Id bovenliggende taak",
+      "PRIORITY": "Prioriteit",
+      "STAND_ALONE": "Zelfstandig",
+      "LAST_MODIFIED_FROM": "Laatst veranderd van",
+      "LAST_MODIFIED_TO": "Laatst veranderd in",
+      "OWNER": "Eigenaar",
+      "SORT": "Sorteren"
+    },
+    "DIALOG": {
+      "TITLE": "Filter opslaan als",
+      "SAVE": "Opslaan",
+      "CANCEL": "Annuleren"
+    }
+  },
+  "ADF_CLOUD_EDIT_PROCESS_FILTER": {
+    "TITLE": "Uw filter aanpassen",
+    "LABEL": {
+      "APP_NAME": "Toepassingsnaam",
+      "STATUS": "Status",
+      "INITIATOR": "Initiator",
+      "ASSIGNMENT": "Toewijzing",
+      "SORT": "Sorteren",
+      "DIRECTION": "Richting",
+      "PROCESS_DEF_ID": "Procesdefinitie-id",
+      "PROCESS_DEF_KEY": "Procesdefinitiesleutel",
+      "PROCESS_INS_ID": "Procesinstance-id",
+      "START_DATE": "Begindatum",
+      "LAST_MODIFIED": "Laatst veranderd",
+      "LAST_MODIFIED_DATE_FORM": "Laatst veranderd van",
+      "LAST_MODIFIED_TO": "Laatst veranderd in",
+      "PROCESS_NAME": "Procesnaam"
+    },
+    "ERROR": {
+      "DATE": "Datumnotatie dd-mm-jjjj"
+    },
+    "TOOL_TIP": {
+      "SAVE": "Filter opslaan",
+      "SAVE_AS": "Filter opslaan als",
+      "DELETE": "Filter verwijderen"
+    },
+    "DIALOG": {
+      "TITLE": "Filter opslaan als",
+      "SAVE": "Opslaan",
+      "CANCEL": "Annuleren"
+    }
+  },
+  "ADF_CLOUD_GROUPS": {
+    "SEARCH-GROUP": "Groepen",
+    "ERROR": {
+      "NOT_FOUND": "Geen groep gevonden met de naam {{groupName}}"
+    }
+  },
+  "ADF_CLOUD_TASK_HEADER": {
+    "BUTTON": {
+      "CLAIM": "Claimen",
+      "UNCLAIM": "Opnieuw in wachtrij plaatsen"
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "Taak",
+      "THUMBNAIL": "Miniatuur",
+      "DURATION": "Duur",
+      "PARENT_TASK_ID": "Id bovenliggende taak",
+      "NAME": "Naam",
+      "ASSIGNEE": "Toegewezen persoon",
+      "ASSIGNEE_DEFAULT": "Geen toegewezen persoon",
+      "PRIORITY": "Prioriteit",
+      "DUE_DATE": "Vervaldatum",
+      "DUE_DATE_DEFAULT": "Geen vervaldatum",
+      "STATUS": "Status",
+      "CATEGORY": "Categorie",
+      "CATEGORY_DEFAULT": "Geen categorie",
+      "PARENT_NAME": "Naam bovenliggend element",
+      "PARENT_NAME_DEFAULT": "Geen bovenliggend element",
+      "CREATED_BY": "Gemaakt door",
+      "CREATED": "Gemaakt",
+      "END_DATE": "Einddatum",
+      "ID": "Id",
+      "DESCRIPTION": "Beschrijving",
+      "DESCRIPTION_DEFAULT": "Geen beschrijving",
+      "FORM_NAME": "Formuliernaam",
+      "FORM_NAME_DEFAULT": "Geen formulier"
+    }
+  }
+}

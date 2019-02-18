@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import { PaginatedComponent } from './paginated-component.interface';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { Subscription } from 'rxjs';
 import { PaginationModel } from '../models/pagination.model';
-import { UserPreferencesService } from '../services/user-preferences.service';
+import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
 
 @Component({
     selector: 'adf-pagination',
@@ -60,7 +60,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
 
     /** Pagination object. */
     @Input()
-    pagination: PaginationModel;
+    pagination: PaginationModel = PaginationComponent.DEFAULT_PAGINATION;
 
     /** Emitted when pagination changes in any way. */
     @Output()
@@ -85,17 +85,14 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     private paginationSubscription: Subscription;
 
     constructor(private cdr: ChangeDetectorRef, private userPreferencesService: UserPreferencesService) {
+        this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
+            this.pagination.maxItems = pagSize;
+        });
     }
 
     ngOnInit() {
-        if (!this.pagination) {
-            let defaultPagination = PaginationComponent.DEFAULT_PAGINATION;
-            defaultPagination.maxItems = this.userPreferencesService.paginationSize;
-            this.pagination = defaultPagination;
-        }
-
         if (!this.supportedPageSizes) {
-            this.supportedPageSizes =  this.userPreferencesService.supportedPageSizes;
+            this.supportedPageSizes = this.userPreferencesService.supportedPageSizes;
         }
 
         if (this.target) {
@@ -213,7 +210,7 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
 
     onChangePageSize(maxItems: number) {
         this.pagination.skipCount = 0;
-        this.pagination.maxItems = maxItems;
+        this.userPreferencesService.paginationSize = maxItems;
         this.handlePaginationEvent(PaginationComponent.ACTIONS.CHANGE_PAGE_SIZE, {
             skipCount: 0,
             maxItems

@@ -53,21 +53,22 @@
         data-automation-id="content-node-selector-content-list">
         <adf-document-list
             #documentList
-            adf-highlight
-            adf-highlight-selector="adf-name-location-cell .adf-name-location-cell-name"
+            [adf-highlight]="searchTerm"
+            adf-highlight-selector=".adf-name-location-cell-name"
             [showHeader]="false"
-            [node]="nodes"
+            [node]="nodePaging"
             [maxItems]="pageSize"
-            [rowFilter]="rowFilter"
+            [rowFilter]="_rowFilter"
             [imageResolver]="imageResolver"
             [currentFolderId]="folderIdToShow"
             selectionMode="single"
             [contextMenuActions]="false"
             [contentActions]="false"
             [allowDropFiles]="false"
+            [sorting]="'server'"
+            [where]="where"
             (folderChange)="onFolderChange()"
-            (ready)="onFolderLoaded($event)"
-            (node-dblclick)="onNodeDoubleClick($event)"
+            (ready)="onFolderLoaded()"
             data-automation-id="content-node-selector-document-list">
 
             <adf-custom-empty-content-template>
@@ -82,14 +83,14 @@
                     </ng-template>
                 </data-column>
                 <data-column key="modifiedAt" type="date" format="timeAgo" class="adf-content-selector-modified-cell"></data-column>
-                <data-column key="modifiedByUser.displayName" type="text" class="adf-content-selector-modifier-cell"></data-column>
+                <data-column key="createdByUser.displayName" type="text" class="adf-content-selector-modifier-cell"></data-column>
                 <data-column key="visibility" type="text"></data-column>
             </data-columns>
 
         </adf-document-list>
 
         <adf-infinite-pagination
-            [target]="documentList"
+            [target]="target"
             [loading]="loadingSearchResults"
             (loadMore)="getNextPageOfSearch($event)"
             data-automation-id="content-node-selector-search-pagination">

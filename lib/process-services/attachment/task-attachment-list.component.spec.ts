@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -277,7 +277,7 @@ describe('TaskAttachmentList', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 component.ngOnChanges({ 'taskId': change });
-                expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456');
+                expect(getTaskRelatedContentSpy).toHaveBeenCalledWith('456', 'true');
                 done();
             });
         });

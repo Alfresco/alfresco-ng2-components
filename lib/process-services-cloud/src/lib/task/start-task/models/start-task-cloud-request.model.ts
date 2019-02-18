@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,10 @@ export class StartTaskCloudRequestModel {
     name: string;
     description: string;
     assignee: string;
-    candidateGroups: string [];
     priority: string;
     dueDate: Date;
+    candidateUsers: string[];
+    candidateGroups: string[];
     payloadType: string;
 
     constructor(obj?: any) {
@@ -31,6 +32,7 @@ export class StartTaskCloudRequestModel {
             this.assignee = obj.assignee || null;
             this.priority = obj.priority || null;
             this.dueDate = obj.dueDate || null;
+            this.candidateUsers = obj.candidateUsers || null;
             this.candidateGroups = obj.candidateGroups || null;
             this.payloadType = 'CreateTaskPayload';
         }

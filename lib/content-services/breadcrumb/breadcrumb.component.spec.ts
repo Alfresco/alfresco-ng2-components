@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PathElementEntity } from '@alfresco/js-api';
 import { setupTestBed } from '@alfresco/adf-core';
@@ -52,10 +52,9 @@ describe('Breadcrumb', () => {
     });
 
     it('should root be present as default node if the path is null', () => {
-        let change = new SimpleChange(null, fakeNodeWithCreatePermission, true);
-
         component.root = 'default';
-        component.ngOnChanges({ 'folderNode': change });
+        component.folderNode = fakeNodeWithCreatePermission;
+        component.ngOnChanges(null);
 
         expect(component.route[0].name).toBe('default');
     });
@@ -211,8 +210,8 @@ describe('Breadcrumb', () => {
             transformNode.name = 'test-name';
             return transformNode;
         });
-        let change = new SimpleChange(null, node, true);
-        component.ngOnChanges({ 'folderNode': change });
+        component.folderNode = node;
+        component.ngOnChanges(null);
         expect(component.route.length).toBe(4);
         expect(component.route[3].id).toBe('test-id');
         expect(component.route[3].name).toBe('test-name');

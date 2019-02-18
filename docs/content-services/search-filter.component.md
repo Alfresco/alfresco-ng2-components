@@ -76,7 +76,7 @@ A typical configuration is shown below:
             "pageSize": 4,
             "queries": [
                 { "query": "created:2018", "label": "Created This Year" },
-                { "query": "content.mimetype", "label": "Type" },
+                { "query": "content.mimetype:text/html", "label": "Type: HTML" },
                 { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small"},
                 { "query": "content.size:[10240 TO 102400]", "label": "Size: small"},
                 { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium" },
@@ -298,7 +298,7 @@ These provide custom categories based on admin-defined facet queries.
             "expanded": true,
             "queries": [
                 { "query": "created:2018", "label": "Created This Year" },
-                { "query": "content.mimetype", "label": "Type" },
+                { "query": "content.mimetype:text/html", "label": "Type: HTML" },
                 { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small"},
                 { "query": "content.size:[10240 TO 102400]", "label": "Size: small"},
                 { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium" },
@@ -311,12 +311,40 @@ These provide custom categories based on admin-defined facet queries.
 }
 ```
 
-The queries declared in the `facetQueries` are collected into a single collapsible category.
-Only the queries that have 1 or more response entries are displayed at runtime.
+By default, the queries declared in the `facetQueries` are collected into a single collapsible category.
+The `mincount` property allows setting the minimum count required for a facet field to be displayed. By default, only the queries that have 1 or more response entries are displayed at runtime.
 The component provides a `Show more` button to display more items if the number of items
 exceeds the `pageSize` value.
 
-You can also provide a custom `label` (or i18n resource key) for the resulting collapsible category.
+You can also provide a custom `label` (or i18n resource key) for the default resulting collapsible category.
+If you need to display more resulting collapsible categories, you can group different facet queries under custom labels by using the `group` property on those facet queries:
+```json
+{
+    "search": {
+        "facetQueries": {
+            "label": "Facet queries",
+            "pageSize": 5,
+            "expanded": true,
+            "mincount": 0,
+            "queries": [
+                { "query": "created:2018", "label": "Created This Year" },
+                { "query": "modifier:admin", "label": "Admin modifier" },
+                { "query": "content.mimetype:text/html", "label": "Type: HTML", "group":"Type facet queries" },
+                { "query": "content.mimetype:image/png", "label": "Type: PNG", "group":"Type facet queries" },
+                { "query": "content.size:[0 TO 10240]", "label": "Size: xtra small", "group":"Size facet queries"},
+                { "query": "content.size:[10240 TO 102400]", "label": "Size: small", "group":"Size facet queries"},
+                { "query": "content.size:[102400 TO 1048576]", "label": "Size: medium", "group":"Size facet queries" },
+                { "query": "content.size:[1048576 TO 16777216]", "label": "Size: large", "group":"Size facet queries" },
+                { "query": "content.size:[16777216 TO 134217728]", "label": "Size: xtra large", "group":"Size facet queries" },
+                { "query": "content.size:[134217728 TO MAX]", "label": "Size: XX large", "group":"Size facet queries" }
+           ]
+        }
+    }
+}
+``` 
+This will result in the following display of the grouped facet queries:
+
+![Grouped Facet Queries](../docassets/images/search-facet-queries-groups.png)
 
 The `pageSize` property allows you to define the number of results to display.
 Users will see `Show more` or `Show less` buttons as appropriate for the result set.

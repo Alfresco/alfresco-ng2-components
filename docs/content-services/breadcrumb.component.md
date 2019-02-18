@@ -15,8 +15,7 @@ Indicates the current position within a navigation hierarchy.
 
 ```html
 <adf-breadcrumb
-    [target]="documentList"
-    [folderNode]="documentList.folderNode">
+    [target]="documentList">
 </adf-breadcrumb>
 ```
 

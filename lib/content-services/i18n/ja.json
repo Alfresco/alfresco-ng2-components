@@ -140,8 +140,7 @@
     },
     "MESSAGES": {
       "UPLOAD_CANCELED": "アップロードがキャンセルされました",
-      "UPLOAD_COMPLETED": "{{ completed }} / {{ total }} 個をアップロードしました",
-      "UPLOAD_PROGRESS": "{{ completed }} / {{ total }} 個をアップロードしています",
+      "UPLOAD_PROGRESS": "{{ completed }} / {{ total }} 個をアップロードしました",
       "UPLOAD_ERROR": "{{ total }} 個をアップロードできませんでした",
       "UPLOAD_ERRORS": "{{ total }} 個をアップロードできませんでした",
       "PROGRESS": "アップロードしています...",
@@ -153,6 +152,16 @@
     },
     "ACTION": {
       "UNDO": "元に戻す"
+    },
+    "ERRORS": {
+      "GENERIC": "アップロードできませんでした。問題が解決しない場合は、IT 担当者に連絡してください。",
+      "500": "内部サーバーエラーが発生しました。もう一度操作をやり直すか、IT 担当者に連絡してください。 [500]",
+      "504": "サーバーがタイムアウトになりました。もう一度操作をやり直すか、IT 担当者に連絡してください。[504]",
+      "403": "この場所にアップロードするための権限がありません [403]",
+      "404": "アップロード場所は削除されました [404]"
+    },
+    "ARIA-LABEL": {
+      "ERROR": "アップロードエラー"
     }
   },
   "WEBSCRIPT": {
@@ -254,11 +263,13 @@
     }
   },
   "SHARE": {
+    "PUBLIC-LINK": "公開リンク",
     "DIALOG-TITLE": "共有",
     "DESCRIPTION": "下のリンクをクリックすると、リンクがクリップボードにコピーされます。",
     "TITLE": "共有するリンク",
     "EXPIRES": "有効期限",
     "CLIPBOARD-MESSAGE": "リンクがクリップボードにコピーされました",
+    "CLOSE": "閉じる",
     "CONFIRMATION": {
       "DIALOG-TITLE": "共有リンクの削除",
       "MESSAGE": "このリンクは削除され、次回このファイルを共有するときに新しいリンクが作成されます。",
@@ -288,15 +299,21 @@
       "NOT-ALLOWED": "権限を変更することはできません"
     }
   },
+  "ADF-TREE-VIEW": {
+    "MISSING-ID": "ノード ID が指定されていません。"
+  },
   "LIBRARY": {
     "DIALOG": {
       "CREATE_TITLE": "ライブラリの作成",
       "CREATE": "作成",
+      "UPDATE": "更新",
+      "EDIT": "編集",
       "CANCEL": "キャンセル",
       "FORM": {
         "DESCRIPTION": "説明",
         "SITE_ID": "ライブラリ ID",
-        "NAME": "名前"
+        "NAME": "名前",
+        "VISIBILITY": "公開レベル"
       }
     },
     "ROLE": {
@@ -310,14 +327,23 @@
       "PUBLIC": "公開",
       "MODERATED": "条件付き公開"
     },
+    "HINTS": {
+      "SITE_TITLE_EXISTS": "ライブラリ名は既に使用されています"
+    },
     "ERRORS": {
       "GENERIC": "問題が発生しました",
-      "EXISTENT_SITE": "このライブラリ ID は使用できません。別のライブラリを使用してください。",
+      "EXISTENT_SITE": "このライブラリ ID は使用できません。別のライブラリ ID を使用してください。",
       "CONFLICT": "このライブラリ ID は既に使われています。ごみ箱をチェックしてください。",
       "ID_TOO_LONG": "URL 名は 72 文字以内で入力してください",
       "DESCRIPTION_TOO_LONG": "説明は 512 文字以内で入力してください",
       "TITLE_TOO_LONG": "タイトルは 256 文字以内で入力してください",
-      "ILLEGAL_CHARACTERS": "英数字だけを使用してください"
+      "TITLE_TOO_SHORT": "タイトルは 2 文字以上でなければなりません",
+      "ILLEGAL_CHARACTERS": "英数字だけを使用してください",
+      "ONLY_SPACES": "ライブラリ名をスペース (空白文字) だけにすることはできません",
+      "LIBRARY_UPDATE_ERROR": "ライブラリのプロパティの更新中にエラーが発生しました"
+    },
+    "SUCCESS": {
+      "LIBRARY_UPDATED": "ライブラリのプロパティが更新されました"
     }
   }
 }

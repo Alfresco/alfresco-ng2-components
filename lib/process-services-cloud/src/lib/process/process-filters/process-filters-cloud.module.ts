@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProcessFiltersCloudComponent } from './components/process-filters-cloud.component';
 import { MaterialModule } from '../../material.module';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateLoaderService, LogService, StorageService } from '@alfresco/adf-core';
+import { LogService, StorageService, CoreModule } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from './services/process-filter-cloud.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EditProcessFilterCloudComponent } from './components/edit-process-filter-cloud.component';
@@ -34,15 +33,11 @@ import { AppListCloudModule } from './../../app/app-list-cloud.module';
         ReactiveFormsModule,
         HttpClientModule,
         CommonModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useClass: TranslateLoaderService
-            }
-        }),
         FlexLayoutModule,
         MaterialModule,
-        AppListCloudModule
+        AppListCloudModule,
+        CoreModule.forChild()
+
     ],
     declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],
     exports: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],

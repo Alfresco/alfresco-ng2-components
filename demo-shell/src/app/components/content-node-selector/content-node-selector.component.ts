@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { SitePaging, SiteEntry, MinimalNodeEntryEntity } from '@alfresco/js-api';
-import { ContentNodeDialogService, ShareDataRow } from '@alfresco/adf-content-services';
+import { ContentNodeDialogService, ShareDataRow, RowFilter } from '@alfresco/adf-content-services';
 import { DataRow, DataColumn, ThumbnailService } from '@alfresco/adf-core';
 
 @Component({
@@ -40,7 +40,7 @@ export class ContentNodeSelectorComponent {
     customSideTitle = '';
     actualPageSize = 2;
 
-    rowFilterFunction: any = null;
+    rowFilterFunction: RowFilter = null;
     excludeSiteContentList: string[] = ContentNodeDialogService.nonDocumentSiteContent;
     customImageResolver: any = null;
 

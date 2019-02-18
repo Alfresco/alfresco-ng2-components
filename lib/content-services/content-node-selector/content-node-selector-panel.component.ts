@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,17 +17,19 @@
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
-    AlfrescoApiService, HighlightDirective, UserPreferencesService,
-    PaginatedComponent, PaginationModel
+    HighlightDirective,
+    UserPreferencesService,
+    PaginationModel,
+    UserPreferenceValues,
+    InfinitePaginationComponent, PaginatedComponent
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging } from '@alfresco/js-api';
-import { DocumentListComponent, PaginationStrategy } from '../document-list/components/document-list.component';
+import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { debounceTime } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { ShareDataRow } from '../document-list';
 
@@ -42,7 +44,14 @@ const defaultValidation = () => true;
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-content-node-selector-panel' }
 })
-export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedComponent {
+export class ContentNodeSelectorPanelComponent implements OnInit {
+
+    DEFAULT_PAGINATION: Pagination = new Pagination({
+        maxItems: 25,
+        skipCount: 0,
+        totalItems: 0,
+        hasMoreItems: false
+    });
 
     /** Node ID of the folder currently listed. */
     @Input()
@@ -55,28 +64,54 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     @Input()
     dropdownHideMyFiles: boolean = false;
 
-    /** Custom site for site dropdown same as siteList. See the
-     * [Sites Dropdown component](sites-dropdown.component.md)
-     * for more information.
+    /** Custom site for site dropdown. This is the same as the `siteList`.
+     * property of the Sites Dropdown component (see its doc page
+     * for more information).
      */
     @Input()
     dropdownSiteList: SitePaging = null;
 
-    /** Custom row filter function. See the
-     * [Document List component](document-list.component.md#custom-row-filter)
+    _rowFilter: RowFilter = defaultValidation;
+
+    /** Custom *where* filter function. See the
+     * Document List component
      * for more information.
      */
     @Input()
-    rowFilter: RowFilter = null;
+    where: string;
+
+    /**
+     * Custom row filter function. See the
+     * [Row Filter Model](row-filter.model.md) page
+     * for more information.
+     */
+    @Input()
+    set rowFilter(rowFilter: RowFilter) {
+        this.createRowFilter(rowFilter);
+    }
+
+    get rowFilter(): RowFilter {
+        return this._rowFilter;
+    }
+
+    _excludeSiteContent: string[] = [];
 
     /** Custom list of site content componentIds.
      * Used to filter out the corresponding items from the displayed nodes
      */
     @Input()
-    excludeSiteContent: string[] = [];
+    set excludeSiteContent(excludeSiteContent: string[]) {
+        this._excludeSiteContent = excludeSiteContent;
+        this.createRowFilter(this._rowFilter);
+    }
 
-    /** Custom image resolver function. See the
-     * [Document List component](document-list.component.md#custom-row-filter)
+    get excludeSiteContent(): string[] {
+        return this._excludeSiteContent;
+    }
+
+    /**
+     * Custom image resolver function. See the
+     * [Image Resolver Model](image-resolver.model.md) page
      * for more information.
      */
     @Input()
@@ -84,7 +119,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
 
     /** Number of items shown per page in the list. */
     @Input()
-    pageSize: number;
+    pageSize: number = this.DEFAULT_PAGINATION.maxItems;
 
     /** Function used to decide if the selected node has permission to be selected.
      * Default value is a function that always returns true.
@@ -110,7 +145,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     @ViewChild(HighlightDirective)
     highlighter: HighlightDirective;
 
-    nodes: NodePaging | null = null;
+    nodePaging: NodePaging | null = null;
     siteId: null | string;
     searchTerm: string = '';
     showingSearchResults: boolean = false;
@@ -118,18 +153,21 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     inDialog: boolean = false;
     _chosenNode: Node = null;
     folderIdToShow: string | null = null;
-    paginationStrategy: PaginationStrategy = PaginationStrategy.Infinite;
-    pagination: BehaviorSubject<PaginationModel>;
 
-    skipCount: number = 0;
+    pagination: PaginationModel = this.DEFAULT_PAGINATION;
+
+    @ViewChild(InfinitePaginationComponent)
+    infinitePaginationComponent: InfinitePaginationComponent;
+
     infiniteScroll: boolean = false;
     debounceSearch: number = 200;
     searchInput: FormControl = new FormControl();
 
+    target: PaginatedComponent;
+
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
-                private apiService: AlfrescoApiService,
                 private customResourcesService: CustomResourcesService,
-                private preferences: UserPreferencesService) {
+                private userPreferencesService: UserPreferencesService) {
         this.searchInput.valueChanges
             .pipe(
                 debounceTime(this.debounceSearch)
@@ -137,15 +175,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
             .subscribe((searchValue) => {
                 this.search(searchValue);
             });
-        this.pageSize = this.preferences.paginationSize;
 
-        let defaultPagination = <PaginationModel> {
-            maxItems: this.pageSize,
-            skipCount: 0,
-            totalItems: 0,
-            hasMoreItems: false
-        };
-        this.pagination = new BehaviorSubject<PaginationModel>(defaultPagination);
+        this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
+            this.pageSize = pagSize;
+        });
+
     }
 
     set chosenNode(value: Node) {
@@ -162,31 +196,30 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     }
 
     ngOnInit() {
+        this.target = this.documentList;
         this.folderIdToShow = this.currentFolderId;
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
-        this.excludeSiteContent = this.excludeSiteContent ? this.excludeSiteContent : [];
-        this.rowFilter = this.getRowFilter(this.rowFilter);
     }
 
-    private getRowFilter(initialFilterFunction): RowFilter {
-        if (!initialFilterFunction) {
-            initialFilterFunction = () => true;
+    private createRowFilter(filter?: RowFilter) {
+        if (!filter) {
+            filter = () => true;
         }
-        return (value: ShareDataRow, index: number, array: ShareDataRow[]) => {
-            return initialFilterFunction(value, index, array) &&
+        this._rowFilter = (value: ShareDataRow, index: number, array: ShareDataRow[]) => {
+            return filter(value, index, array) &&
                 !this.isExcludedSiteContent(value);
         };
     }
 
     private isExcludedSiteContent(row: ShareDataRow): boolean {
         const entry = row.node.entry;
-        if (this.excludeSiteContent.length &&
+        if (this._excludeSiteContent && this._excludeSiteContent.length &&
             entry &&
             entry.properties &&
             entry.properties['st:componentId']) {
-            const excludedItem = this.excludeSiteContent.find(
+            const excludedItem = this._excludeSiteContent.find(
                 (id: string) => entry.properties['st:componentId'] === id
             );
             return !!excludedItem;
@@ -202,6 +235,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     siteChanged(chosenSite: SiteEntry): void {
         this.siteId = chosenSite.entry.guid;
         this.updateResults();
+
     }
 
     /**
@@ -242,8 +276,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
      */
     clearSearch() {
         this.searchTerm = '';
-        this.nodes = null;
-        this.skipCount = 0;
+        this.nodePaging = null;
+        this.pagination.maxItems = this.pageSize;
         this.chosenNode = null;
         this.showingSearchResults = false;
     }
@@ -252,6 +286,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
      * Update the result list depending on the criteria
      */
     private updateResults(): void {
+        this.target = this.searchTerm.length > 0 ? null : this.documentList;
+
         if (this.searchTerm.length === 0) {
             this.clear();
         } else {
@@ -263,25 +299,14 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
      * Load the first page of a new search result
      */
     private startNewSearch(): void {
-        this.nodes = null;
-        this.skipCount = 0;
+        this.nodePaging = null;
+        this.pagination.maxItems = this.pageSize;
+        if (this.target) {
+            this.infinitePaginationComponent.reset();
+        }
         this.chosenNode = null;
         this.folderIdToShow = null;
         this.querySearch();
-    }
-
-    /**
-     * Loads the next batch of search results
-     *
-     * @param event Pagination object
-     */
-    updatePagination(pagination: Pagination): void {
-        this.infiniteScroll = true;
-        this.skipCount = pagination.skipCount;
-
-        if (this.searchTerm.length > 0) {
-            this.querySearch();
-        }
     }
 
     /**
@@ -293,14 +318,14 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
         if (this.customResourcesService.hasCorrespondingNodeIds(this.siteId)) {
             this.customResourcesService.getCorrespondingNodeIds(this.siteId)
                 .subscribe((nodeIds) => {
-                        this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize, nodeIds)
+                        this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, nodeIds)
                             .subscribe(this.showSearchResults.bind(this));
                     },
                     () => {
                         this.showSearchResults({ list: { entries: [] } });
                     });
         } else {
-            this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.skipCount, this.pageSize)
+            this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems)
                 .subscribe(this.showSearchResults.bind(this));
         }
     }
@@ -314,24 +339,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
         this.showingSearchResults = true;
         this.loadingSearchResults = false;
 
-        // DocumentList hack, since data displaying for preloaded nodes is a little bit messy there
-        if (!this.nodes) {
-            this.nodes = nodePaging;
-        } else {
-            this.documentList.data.loadPage(nodePaging, true);
-        }
-
-        this.pagination.next(nodePaging.list.pagination);
-        this.highlight();
-    }
-
-    /**
-     * Highlight the actual search term in the next frame
-     */
-    highlight(): void {
-        setTimeout(() => {
-            this.highlighter.highlight(this.searchTerm);
-        }, 0);
+        this.nodePaging = nodePaging;
     }
 
     /**
@@ -346,7 +354,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
     /**
      * Attempts to set the currently loaded node
      */
-    onFolderLoaded(nodePaging: NodePaging): void {
+    onFolderLoaded(): void {
         if (!this.showingSearchResults) {
             this.attemptNodeSelection(this.documentList.folderNode);
         }
@@ -364,9 +372,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
      *
      * @param event Pagination object
      */
-    getNextPageOfSearch(event: Pagination): void {
+    getNextPageOfSearch(pagination: Pagination): void {
         this.infiniteScroll = true;
-        this.skipCount = event.skipCount;
+        this.pagination = pagination;
 
         if (this.searchTerm.length > 0) {
             this.querySearch();
@@ -379,7 +387,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
      * @param entry
      */
     private attemptNodeSelection(entry: Node): void {
-        if (this.isSelectionValid(entry)) {
+        if (entry && this.isSelectionValid(entry)) {
             this.chosenNode = entry;
         } else {
             this.resetChosenNode();
@@ -400,22 +408,5 @@ export class ContentNodeSelectorPanelComponent implements OnInit, PaginatedCompo
      */
     onNodeSelect(event: any): void {
         this.attemptNodeSelection(event.detail.node.entry);
-    }
-
-    onNodeDoubleClick(customEvent: CustomEvent) {
-        const node: any = customEvent.detail.node.entry;
-
-        if (node && node.guid) {
-            const options = {
-                maxItems: this.pageSize,
-                skipCount: this.skipCount,
-                include: ['path', 'properties', 'allowableOperations']
-            };
-
-            this.apiService.nodesApi.getNode(node.guid, options)
-                .then((documentLibrary) => {
-                    this.documentList.performCustomSourceNavigation(documentLibrary);
-                });
-        }
     }
 }

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,14 @@ import { NgModule } from '@angular/core';
 import { ProcessFiltersCloudModule } from './process-filters/process-filters-cloud.module';
 import { ProcessListCloudModule } from './process-list/process-list-cloud.module';
 import { StartProcessCloudModule } from './start-process/start-process-cloud.module';
+import { CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
     imports: [
         ProcessFiltersCloudModule,
         ProcessListCloudModule,
-        StartProcessCloudModule
+        StartProcessCloudModule,
+        CoreModule.forChild()
     ],
     exports: [
         ProcessFiltersCloudModule,

@@ -6,7 +6,9 @@ Title: Version index
 
 Below are the details of all released versions of ADF since general
 availability (v2.0.0). See the [main index page](README.md) for a list
-of components organized by ADF libraries.
+of components organized by ADF libraries. See the
+[version compatibility page](compatibility.md) for full details of which
+backend services have been tested with each released version of ADF.
 
 ## Versions
 
@@ -29,7 +31,6 @@ of components organized by ADF libraries.
 
 -   [App list cloud component](process-services-cloud/app-list-cloud.component.md)
 -   [Apps process cloud service](process-services-cloud/apps-process-cloud.service.md)
--   [Dynamic tab component](extensions/dynamic-tab.component.md)
 -   [Dynamic component](extensions/dynamic.component.md)
 -   [Edit process filter cloud component](process-services-cloud/edit-process-filter-cloud.component.md)
 -   [Edit task filter cloud component](process-services-cloud/edit-task-filter-cloud.component.md)
@@ -38,6 +39,7 @@ of components organized by ADF libraries.
 -   [Format space pipe](core/format-space.pipe.md)
 -   [Full name pipe](core/full-name.pipe.md)
 -   [Group cloud component](process-services-cloud/group-cloud.component.md)
+-   [Group cloud service](process-services-cloud/group-cloud.service.md)
 -   [Group initial pipe](process-services-cloud/group-initial.pipe.md)
 -   [Icon component](core/icon.component.md)
 -   [Identity user service](core/identity-user.service.md)
@@ -46,6 +48,7 @@ of components organized by ADF libraries.
 -   [Process filter cloud service](process-services-cloud/process-filter-cloud.service.md)
 -   [Process filters cloud component](process-services-cloud/process-filters-cloud.component.md)
 -   [Process list cloud component](process-services-cloud/process-list-cloud.component.md)
+-   [Process list cloud service](process-services-cloud/process-list-cloud.service.md)
 -   [Start process cloud component](process-services-cloud/start-process-cloud.component.md)
 -   [Start process cloud service](process-services-cloud/start-process-cloud.service.md)
 -   [Start task cloud component](process-services-cloud/start-task-cloud.component.md)
@@ -55,6 +58,7 @@ of components organized by ADF libraries.
 -   [Task header cloud component](process-services-cloud/task-header-cloud.component.md)
 -   [Task header cloud service](process-services-cloud/task-header-cloud.service.md)
 -   [Task list cloud component](process-services-cloud/task-list-cloud.component.md)
+-   [Task list cloud service](process-services-cloud/task-list-cloud.service.md)
 -   [Tree view component](content-services/tree-view.component.md)
 
 <!--v300 end-->
@@ -171,7 +175,7 @@ of components organized by ADF libraries.
 
 <!--v220 start-->
 
--   [Node download directive](content-services/node-download.directive.md)
+-   [Node download directive](core/node-download.directive.md)
 -   [Node lock directive](content-services/node-lock.directive.md)
 
 <!--v220 end-->
@@ -228,6 +232,7 @@ of components organized by ADF libraries.
 -   [Card item types service](core/card-item-types.service.md)
 -   [Card view update service](core/card-view-update.service.md)
 -   [Card view component](core/card-view.component.md)
+-   [Check allowable operation directive](core/check-allowable-operation.directive.md)
 -   [Checklist component](process-services/checklist.component.md)
 -   [Comment list component](core/comment-list.component.md)
 -   [Comment process service](core/comment-process.service.md)
@@ -269,6 +274,7 @@ of components organized by ADF libraries.
 -   [Highlight transform service](core/highlight-transform.service.md)
 -   [Highlight directive](core/highlight.directive.md)
 -   [Host settings component](core/host-settings.component.md)
+-   [Image resolver model](content-services/image-resolver.model.md)
 -   [Infinite pagination component](core/infinite-pagination.component.md)
 -   [Info drawer layout component](core/info-drawer-layout.component.md)
 -   [Info drawer component](core/info-drawer.component.md)
@@ -281,7 +287,6 @@ of components organized by ADF libraries.
 -   [Node delete directive](core/node-delete.directive.md)
 -   [Node favorite directive](core/node-favorite.directive.md)
 -   [Node name tooltip pipe](core/node-name-tooltip.pipe.md)
--   [Node permission directive](core/node-permission.directive.md)
 -   [Node permission service](content-services/node-permission.service.md)
 -   [Node restore directive](core/node-restore.directive.md)
 -   [Node service](core/node.service.md)
@@ -310,6 +315,7 @@ of components organized by ADF libraries.
 -   [Rating component](content-services/rating.component.md)
 -   [Rating service](content-services/rating.service.md)
 -   [Renditions service](core/renditions.service.md)
+-   [Row filter model](content-services/row-filter.model.md)
 -   [Search control component](content-services/search-control.component.md)
 -   [Search component](content-services/search.component.md)
 -   [Search service](core/search.service.md)

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,8 +31,8 @@ export class LoginDialogService {
 
     /**
      * Opens a dialog to choose a file to upload.
-     * @param action Name of the action to show in the title
-     * @param contentEntry Item to upload
+     * @param actionName Name of the action to show in the title
+     * @param title Title for the dialog
      * @returns Information about the chosen file(s)
      */
     openLogin(actionName: string, title: string): Observable<string> {

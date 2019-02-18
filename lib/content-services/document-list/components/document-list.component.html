@@ -34,7 +34,7 @@
                 </div>
                 <!-- <div adf-empty-list-header class="adf-empty-list-header"> {{'ADF-DOCUMENT-LIST.EMPTY.HEADER' | translate}} </div> -->
             </adf-empty-list>
-            <ng-content select="adf-custom-empty-content-template"></ng-content>
+            <ng-content select="adf-custom-empty-content-template, empty-folder-content"></ng-content>
         </ng-template>
     </adf-no-content-template>
 
@@ -44,7 +44,7 @@
                 <mat-icon>ic_error</mat-icon>
                 <p class="adf-no-permission__template--text">{{ 'ADF-DOCUMENT-LIST.NO_PERMISSION' | translate }}</p>
             </div>
-            <ng-content select="adf-custom-no-permission-template"></ng-content>
+            <ng-content select="adf-custom-no-permission-template, no-permission-content"></ng-content>
         </ng-template>
     </adf-no-permission-template>
 

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,11 @@ export class TaskListCloudService {
     contentTypes = ['application/json'];
     accepts = ['application/json'];
 
+    /**
+     * Finds a task using an object with optional query properties.
+     * @param requestNode Query object
+     * @returns Task information
+     */
     getTaskByRequest(requestNode: TaskQueryCloudRequestModel): Observable<any> {
         if (requestNode.appName) {
             let queryUrl = this.buildQueryUrl(requestNode);

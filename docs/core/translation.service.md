@@ -2,10 +2,10 @@
 Title: Translation service
 Added: v2.0.0
 Status: Active
-Last reviewed: 2018-06-07
+Last reviewed: 2019-02-08
 ---
 
-# [Translation service](../../core/services/translation.service.ts "Defined in translation.service.ts")
+# [Translation service](../../lib/core/services/translation.service.ts "Defined in translation.service.ts")
 
 Supports localisation.
 

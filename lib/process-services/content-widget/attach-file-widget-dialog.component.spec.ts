@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import { ContentModule, ContentNodeSelectorPanelComponent } from '@alfresco/adf-
 import { EventEmitter } from '@angular/core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
-import { setupTestBed, AuthenticationService, SitesService } from '@alfresco/adf-core';
+import { setupTestBed, AuthenticationService, SitesService, CoreModule } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
@@ -46,6 +46,7 @@ describe('AttachFileWidgetDialogComponent', () => {
 
     setupTestBed({
         imports: [
+            CoreModule.forRoot(),
             ProcessTestingModule,
             ContentModule.forRoot(),
             RouterTestingModule

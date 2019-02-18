@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ export class FileViewComponent implements OnInit {
     showLeftSidebar = null;
     showRightSidebar = false;
     customToolbar = false;
-    isCommentEnabled = true;
+    isCommentDisabled = false;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -68,7 +68,7 @@ export class FileViewComponent implements OnInit {
                 this.nodeApiService.getNode(id).subscribe(
                     (node) => {
                         if (node && node.isFile) {
-                            this.isCommentEnabled = !this.contentServices.hasPermission(node, PermissionsEnum.UPDATE);
+                            this.isCommentDisabled = this.contentServices.hasPermissions(node, PermissionsEnum.CONSUMER);
                             this.nodeId = id;
                             return;
                         }

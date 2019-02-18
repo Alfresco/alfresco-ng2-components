@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ export class ShareDataRow implements DataRow {
 
             if (this.applyPermissionStyleToFolder(nodeEntity.entry, currentPermissionsStyle) || this.applyPermissionStyleToFile(nodeEntity.entry, currentPermissionsStyle)) {
 
-                if (this.contentService.hasPermission(nodeEntity.entry, currentPermissionsStyle.permission)) {
+                if (this.contentService.hasAllowableOperations(nodeEntity.entry, currentPermissionsStyle.permission)) {
                     permissionsClasses += ` ${currentPermissionsStyle.css}`;
                 }
             }
@@ -73,7 +73,7 @@ export class ShareDataRow implements DataRow {
     }
 
     isFolderAndHasPermissionToUpload(nodeEntry: NodeEntry): boolean {
-        return this.isFolder(nodeEntry) && this.contentService.hasPermission(nodeEntry.entry, 'create');
+        return this.isFolder(nodeEntry) && this.contentService.hasAllowableOperations(nodeEntry.entry, 'create');
     }
 
     isFolder(nodeEntry: NodeEntry): boolean {

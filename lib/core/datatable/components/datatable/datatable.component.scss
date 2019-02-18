@@ -414,7 +414,7 @@
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                line-height: 1.12em;
+                line-height: 1.2em;
             }
 
             /* visible content */
@@ -425,7 +425,6 @@
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                line-height: 1.12em;
             }
 
             /* query for Microsoft IE 11*/
@@ -497,6 +496,7 @@
         @include flex-column;
         justify-content: center;
         align-items: center;
+        height: inherit;
 
         .adf-datatable-body {
             .adf-datatable-row {

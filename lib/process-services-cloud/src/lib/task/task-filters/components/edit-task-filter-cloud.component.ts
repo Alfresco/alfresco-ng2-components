@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,7 +63,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     @Input()
     showTitle = true;
 
-    /** Emitted when an task filter property changes. */
+    /** Emitted when a task filter property changes. */
     @Output()
     filterChange: EventEmitter<TaskFilterCloudModel> = new EventEmitter();
 
@@ -153,6 +153,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     createAndFilterProperties(): TaskFilterProperties[] {
         this.checkMandatoryFilterProperties();
         if (this.checkForApplicationNameProperty()) {
+            this.applicationNames = [];
             this.getRunningApplications();
         }
         this.taskFilter = this.retrieveTaskFilter();

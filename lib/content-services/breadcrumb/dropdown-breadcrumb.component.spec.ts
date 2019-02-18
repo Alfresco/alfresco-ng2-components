@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { setupTestBed } from '@alfresco/adf-core';
@@ -52,8 +52,8 @@ describe('DropdownBreadcrumb', () => {
     }
 
     function triggerComponentChange(fakeNodeData) {
-        const change = new SimpleChange(null, fakeNodeData, true);
-        component.ngOnChanges({ 'folderNode': change });
+        component.folderNode = fakeNodeData;
+        component.ngOnChanges(null);
         fixture.detectChanges();
     }
 

@@ -2,6 +2,7 @@
 Title: Permission Style model
 Added: v2.0.0
 Status: Active
+Last reviewed: 2019-02-13
 ---
 
 # [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts "Defined in permissions-style.model.ts")
@@ -28,7 +29,7 @@ and can be applied separately to files and folders by setting `isFile` and `isFo
 
 ### Permissions enum
 
-The [Permissions](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/models/permissions.enum.ts)
+The [Allowable Operations](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/models/allowable-operations.enum.ts)
 enum contains all the valid permissions for which you can apply custom styles: **DELETE**, **UPDATE**,
 **CREATE**, **UPDATEPERMISSIONS**, **NOT_DELETE**, **NOT_UPDATE**, **NOT_CREATE**, **NOT_UPDATEPERMISSIONS**.
 
@@ -39,7 +40,7 @@ If you want to change the style on rows where the user can create content:
 ```ts
 let permissionsStyle: PermissionStyleModel[] = [];
 
-this.permissionsStyle.push(new PermissionStyleModel('document-list__create', PermissionsEnum.CREATE));        
+this.permissionsStyle.push(new PermissionStyleModel('document-list__create', AllowableOperationsEnum.CREATE));        
 ```
 
 ```html
@@ -58,7 +59,7 @@ If you want to change the style on the folders where the user doesn't have the p
 ```ts
 let permissionsStyle: PermissionStyleModel[] = [];
 
-this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', PermissionsEnum.NOT_UPDATE, false, true));
+this.permissionsStyle.push(new PermissionStyleModel('document-list__disable', AllowableOperationsEnum.NOT_UPDATE, false, true));
 ```
 
 ```html

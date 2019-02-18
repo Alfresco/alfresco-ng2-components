@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -166,6 +166,22 @@ describe('DataTable', () => {
     it('should hide the header if there are no elements inside', () => {
         let newData = new ObjectDataTableAdapter(
         );
+
+        dataTable.ngOnChanges({
+            data: new SimpleChange(null, newData, false)
+        });
+
+        fixture.detectChanges();
+
+        expect(element.querySelector('.adf-datatable-header')).toBe(null);
+    });
+
+    it('should hide the header if noPermission is true', () => {
+        let newData = new ObjectDataTableAdapter(
+        );
+
+        dataTable.noPermission = true;
+        dataTable.loading = false;
 
         dataTable.ngOnChanges({
             data: new SimpleChange(null, newData, false)

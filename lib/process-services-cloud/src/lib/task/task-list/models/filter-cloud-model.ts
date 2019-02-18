@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,10 +25,13 @@ export class TaskQueryCloudRequestModel {
     createdDate?: Date;
     description?: string;
     dueDate?: null;
+    lastModifiedFrom?: null;
+    lastModifiedTo?: null;
     id?: string;
     name?: string;
     owner?: string;
     parentTaskId?: string;
+    standAlone?: boolean;
     priority?: number;
     processDefinitionId?: string;
     processInstanceId?: string;
@@ -46,10 +49,13 @@ export class TaskQueryCloudRequestModel {
             this.createdDate = obj.createdDate;
             this.description = obj.description;
             this.dueDate = obj.dueDate;
+            this.lastModifiedFrom = obj.lastModifiedFrom;
+            this.lastModifiedTo = obj.lastModifiedTo;
             this.id = obj.id;
             this.name = obj.name;
             this.owner = obj.owner;
             this.parentTaskId = obj.parentTaskId;
+            this.standAlone = obj.standAlone;
             this.priority = obj.priority;
             this.processDefinitionId = obj.processDefinitionId;
             this.processInstanceId = obj.processInstanceId;

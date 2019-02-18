@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import {
     AppConfigService
 } from '@alfresco/adf-core';
 import { ContentNodeDialogService } from '@alfresco/adf-content-services';
-import { Node } from '@alfresco/js-api';
+import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { from, zip, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
@@ -147,9 +147,9 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         this.onFileChanged(event);
     }
 
-    onRemoveAttachFile(file: any) {
+    onRemoveAttachFile(file: File | RelatedContentRepresentation) {
         if (this.isTemporaryFile(file)) {
-            this.tempFilesList.splice(this.tempFilesList.indexOf(file.contentBlob), 1);
+            this.tempFilesList.splice(this.tempFilesList.indexOf((<RelatedContentRepresentation> file).contentBlob), 1);
         }
         this.removeFile(file);
     }
@@ -166,13 +166,13 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
         }
     }
 
-    downloadContent(file: any): void {
+    downloadContent(file: any | RelatedContentRepresentation): void {
         if (this.isTemporaryFile(file)) {
-            this.contentService.downloadBlob(file, file.name);
+            this.contentService.downloadBlob((<RelatedContentRepresentation> file).contentBlob, file.name);
         } else {
-            this.processContentService.getFileRawContent(file.id).subscribe(
+            this.processContentService.getFileRawContent((<any> file).id).subscribe(
                 (blob: Blob) => {
-                    this.contentService.downloadBlob(blob, file.name);
+                    this.contentService.downloadBlob(blob, (<any> file).name);
                 },
                 (err) => {
                     this.logger.error('Impossible retrieve content for download');
@@ -213,19 +213,19 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                 )
             )
         )
-        .subscribe(([mimeType, res, isExternal]) => {
-            res.mimeType = mimeType;
-            res.isExternal = isExternal;
-            filesSaved.push(res);
-        },
-        (error) => {
-            this.logger.error(error);
-        },
-        () => {
-            this.field.value = filesSaved;
-            this.field.json.value = filesSaved;
-            this.hasFile = true;
-        });
+            .subscribe(([mimeType, res, isExternal]) => {
+                    res.mimeType = mimeType;
+                    res.isExternal = isExternal;
+                    filesSaved.push(res);
+                },
+                (error) => {
+                    this.logger.error(error);
+                },
+                () => {
+                    this.field.value = filesSaved;
+                    this.field.json.value = filesSaved;
+                    this.hasFile = true;
+                });
     }
 
     private getDomainHost(urlToCheck) {

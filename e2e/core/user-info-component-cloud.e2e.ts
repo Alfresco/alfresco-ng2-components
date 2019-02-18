@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ describe('User Info - SSO', () => {
         await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         identityUser = await identityService.createIdentityUser();
         silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, silentLogin);
+        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
         loginSSOPage.clickOnSSOButton();
         browser.ignoreSynchronization = true;
         loginSSOPage.loginAPS(identityUser['0'].username, identityUser['0'].password);

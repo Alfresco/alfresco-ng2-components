@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,13 +41,14 @@ export class AppLayoutComponent implements OnInit {
         { href: '/task-list', icon: 'assignment', title: 'APP_LAYOUT.TASK_LIST' },
         { href: '/process-list', icon: 'assignment', title: 'APP_LAYOUT.PROCESS_LIST' },
         { href: '/cloud', icon: 'cloud', title: 'APP_LAYOUT.PROCESS_CLOUD' },
+        { href: '/cloud/people-group-cloud', icon: 'group', title: 'APP_LAYOUT.PEOPLE_GROUPS_CLOUD' },
         { href: '/activiti', icon: 'device_hub', title: 'APP_LAYOUT.PROCESS_SERVICES' },
         { href: '/login', icon: 'vpn_key', title: 'APP_LAYOUT.LOGIN' },
         { href: '/trashcan', icon: 'delete', title: 'APP_LAYOUT.TRASHCAN' },
         { href: '/dl-custom-sources', icon: 'extension', title: 'APP_LAYOUT.CUSTOM_SOURCES' },
         { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE' },
         { href: '/datatable-lazy', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE_LAZY' },
-        { href: '/document-list', icon: 'list_alt', title: 'APP_LAYOUT.DOCUMENT_LIST' },
+        { href: '/template-list', icon: 'list_alt', title: 'APP_LAYOUT.TEMPLATE' },
         { href: '/form', icon: 'poll', title: 'APP_LAYOUT.FORM' },
         { href: '/form-list', icon: 'library_books', title: 'APP_LAYOUT.FORM_LIST' },
         { href: '/form-loading', icon: 'cached', title: 'APP_LAYOUT.FORM_LOADING' },

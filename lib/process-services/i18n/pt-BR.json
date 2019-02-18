@@ -27,6 +27,8 @@
     "PROPERTIES": {
       "TASK_NAME": "Tarefa",
       "THUMBNAIL": "Miniatura",
+      "DURATION": "Duração",
+      "PARENT_TASK_ID": "ID da tarefa primária",
       "NAME": "Nome",
       "ASSIGNEE": "Destinatário",
       "ASSIGNEE_DEFAULT": "Nenhum destinatário",
@@ -40,6 +42,7 @@
       "PARENT_NAME_DEFAULT": "Nenhum primário",
       "CREATED_BY": "Criado por",
       "CREATED": "Criado",
+      "END_DATE": "Data de término",
       "ID": "ID",
       "DESCRIPTION": "Descrição",
       "DESCRIPTION_DEFAULT": "Nenhuma descrição",
@@ -91,7 +94,13 @@
         "NONE": "Ninguém envolvido"
       },
       "CHECKLIST": {
-        "NONE": "Nenhuma lista de verificação"
+        "NONE": "Nenhuma lista de verificação",
+        "DIALOG": {
+          "TITLE": "Nova verificação",
+          "CANCEL-BUTTON": "Cancelar",
+          "ADD-BUTTON": "Adicionar lista de verificação",
+          "PLACEHOLDER": "Nome"
+        }
       },
       "ERROR": {
         "TITLE": "Não foi possível concluir a ação",
@@ -105,6 +114,7 @@
       }
     },
     "START_TASK": {
+      "DEFAULT_NAME": "Minha tarefa padrão",
       "BUTTON": "Criar tarefa",
       "FORM": {
         "TITLE": "Iniciar tarefa",
@@ -121,8 +131,10 @@
           "START": "Iniciar",
           "CANCEL": "Cancelar"
         },
-        "DATE": {
-          "ERROR": "Formato de data DD/MM/AAAA"
+        "ERROR": {
+          "REQUIRED": "Campo obrigatório",
+          "DATE": "Formato de data DD/MM/AAAA",
+          "MAXIMUM_LENGTH": "Tamanho excedido, máximo de {{characters}} caracteres."
         }
       }
     },
@@ -274,7 +286,8 @@
       },
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Não foi possível carregar as definições do processo, verifique se você tem acesso.",
-        "START": "Não foi possível iniciar a instância de novo processo, verifique se você tem acesso."
+        "START": "Não foi possível iniciar a instância de novo processo, verifique se você tem acesso.",
+        "MAXIMUM_LENGTH": "Tamanho excedido, máximo de {{characters}} caracteres."
       }
     },
     "PROCESS-ATTACHMENT": {

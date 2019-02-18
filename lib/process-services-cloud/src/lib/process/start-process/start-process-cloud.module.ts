@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,23 +20,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../material.module';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateLoaderService } from '@alfresco/adf-core';
 import { StartProcessCloudComponent } from './components/start-process-cloud.component';
 import { StartProcessCloudService } from './services/start-process-cloud.service';
+import { CoreModule } from '@alfresco/adf-core';
 @NgModule({
     imports: [
         FormsModule,
         CommonModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useClass: TranslateLoaderService
-            }
-        }),
         MaterialModule,
         FlexLayoutModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CoreModule.forChild()
     ],
     declarations: [
         StartProcessCloudComponent

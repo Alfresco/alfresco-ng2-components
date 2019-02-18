@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ export class TasksCloudDemoPage {
     }
 
     customTaskFilter(filterName) {
-        return new TaskFiltersCloudComponent(element(by.css(`span[data-automation-id="${filterName}_filter"]`)));
+        return new TaskFiltersCloudComponent(element(by.css(`span[data-automation-id="${filterName}-filter"]`)));
     }
 
     getActiveFilterName() {

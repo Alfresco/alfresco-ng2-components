@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,6 +70,7 @@ export class TaskFilterCloudModel  {
             this.dueDateTo = obj.dueDateTo || null;
             this.taskName = obj.taskName || null;
             this.parentTaskId = obj.parentTaskId || null;
+            this.owner = obj.owner;
             this.priority = obj.priority || null;
             this.standAlone = obj.standAlone || null;
             this.lastModifiedFrom = obj.lastModifiedFrom || null;

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,14 +23,23 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class CloudLayoutService {
 
+    private settings = {
+        multiselect: false,
+        testingMode: false,
+        selectionMode: 'single'
+    };
+
     private filterTaskSubject: BehaviorSubject<any> = new BehaviorSubject({index: 0});
     private filterTask$: Observable<any>;
     private filterProcessSubject: BehaviorSubject<any> = new BehaviorSubject({index: 0});
     private filterProcess$: Observable<any>;
+    private settingsSubject: BehaviorSubject<any> = new BehaviorSubject(this.settings);
+    private settings$: Observable<any>;
 
     constructor() {
         this.filterTask$ = this.filterTaskSubject.asObservable();
         this.filterProcess$ = this.filterProcessSubject.asObservable();
+        this.settings$ = this.settingsSubject.asObservable();
     }
 
     getCurrentTaskFilterParam() {
@@ -47,5 +56,13 @@ export class CloudLayoutService {
 
     setCurrentProcessFilterParam(param) {
         this.filterProcessSubject.next(param);
+    }
+
+    getCurrentSettings() {
+        return this.settings$;
+    }
+
+    setCurrentSettings(param) {
+        this.settingsSubject.next(param);
     }
 }

@@ -5,11 +5,11 @@
             role="button"
             class="adf-app-listgrid-item-card"
             title="{{applicationInstance.name}}"
-            [ngClass]="[applicationInstance.theme]"
+            [ngClass]="getTheme()"
             (click)="onSelectApp(applicationInstance)"
             (keyup.enter)="onSelectApp(applicationInstance)">
             <div class="adf-app-listgrid-item-card-logo">
-                <mat-icon class="adf-app-listgrid-item-card-logo-icon">{{applicationInstance.icon}}</mat-icon>
+                <mat-icon class="adf-app-listgrid-item-card-logo-icon">{{ getIcon() }}</mat-icon>
             </div>
             <div mat-card-title class="adf-app-listgrid-item-card-title">
                 <h1>{{applicationInstance.name}}</h1>

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -118,7 +118,7 @@ export class FolderActionsService {
         let handlerObservable: Observable<any>;
 
         if (this.canExecuteAction(node)) {
-            if (this.contentService.hasPermission(node.entry, permission)) {
+            if (this.contentService.hasAllowableOperations(node.entry, permission)) {
                 handlerObservable = this.documentListService.deleteNode(node.entry.id);
                 handlerObservable.subscribe(() => {
                     if (target && typeof target.reload === 'function') {

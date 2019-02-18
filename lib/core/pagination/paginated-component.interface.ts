@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,9 @@
 
 import { PaginationModel } from '../models/pagination.model';
 import { BehaviorSubject } from 'rxjs';
+import { RequestPaginationModel } from '../models/request-pagination.model';
 
 export interface PaginatedComponent {
     pagination: BehaviorSubject<PaginationModel>;
-    updatePagination(pagination: PaginationModel);
+    updatePagination(requestPaginationModel: RequestPaginationModel);
 }

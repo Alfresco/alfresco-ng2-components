@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 
 import { fakeApplicationInstance } from '../mock/app-model.mock';
@@ -35,7 +35,7 @@ describe('AppListCloudComponent', () => {
     let getAppsSpy: jasmine.Spy;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, AppListCloudModule],
+        imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule, AppListCloudModule],
         providers: [AppsProcessCloudService]
     });
 
@@ -62,7 +62,7 @@ describe('AppListCloudComponent', () => {
         fixture.whenStable().then(() => {
             component.apps$.subscribe((response: ApplicationInstanceModel[]) => {
                 expect(response).toBeDefined();
-                expect(response.length).toEqual(2);
+                expect(response.length).toEqual(3);
                 expect(response[0].name).toEqual('application-new-1');
                 expect(response[0].status).toEqual('Running');
                 expect(response[0].icon).toEqual('favorite_border');
@@ -106,7 +106,7 @@ describe('AppListCloudComponent', () => {
             expect(adfCloudDetailsElement).toBeDefined();
             expect(adfCloudDetailsElement).not.toBeNull();
 
-            expect(adfCloudDetailsElement.length).toEqual(2);
+            expect(adfCloudDetailsElement.length).toEqual(3);
             expect(component.isGrid()).toBe(true);
             expect(component.isList()).toBe(false);
 
@@ -146,7 +146,7 @@ describe('AppListCloudComponent', () => {
             expect(appListElement).toBeDefined();
             expect(appListElement).not.toBeNull();
 
-            expect(appListItemElement.length).toEqual(2);
+            expect(appListItemElement.length).toEqual(3);
             expect(component.isGrid()).toBe(false);
             expect(component.isList()).toBe(true);
 

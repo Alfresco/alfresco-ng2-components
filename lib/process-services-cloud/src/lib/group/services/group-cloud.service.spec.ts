@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,9 +33,13 @@ import {
     mockApiError,
     mockError,
     roleMappingApi,
-    noRoleMappingApi
+    noRoleMappingApi,
+    groupRoles,
+    clientRoles
 } from '../mock/group-cloud.mock';
 import { GroupSearchParam } from '../models/group.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { throwError, of } from 'rxjs';
 
 describe('GroupCloudService', () => {
     let service: GroupCloudService;
@@ -73,7 +77,7 @@ describe('GroupCloudService', () => {
 
     it('should return true if group has client role mapping', (done) => {
         spyOn(apiService, 'getInstance').and.returnValue(roleMappingApi);
-        service.checkGroupHasClientRoleMapping('mock-group-id', 'mock-app-id').subscribe((hasRole) => {
+        service.checkGroupHasClientApp('mock-group-id', 'mock-app-id').subscribe((hasRole) => {
             expect(hasRole).toBeDefined();
             expect(hasRole).toBe(true);
             done();
@@ -82,11 +86,147 @@ describe('GroupCloudService', () => {
 
     it('should return false if group does not have client role mapping', (done) => {
         spyOn(apiService, 'getInstance').and.returnValue(noRoleMappingApi);
-        service.checkGroupHasClientRoleMapping('mock-group-id', 'mock-app-id').subscribe((hasRole) => {
+        service.checkGroupHasClientApp('mock-group-id', 'mock-app-id').subscribe((hasRole) => {
             expect(hasRole).toBeDefined();
             expect(hasRole).toBe(false);
             done();
         });
+    });
+
+    it('should able to fetch group roles by groupId', (done) => {
+        spyOn(service, 'getGroupRoles').and.returnValue(of(groupRoles));
+        service.getGroupRoles('mock-group-id').subscribe(
+            (res: any) => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(3);
+                expect(res[0].name).toEqual('MOCK-ADMIN-ROLE');
+                expect(res[1].name).toEqual('MOCK-USER-ROLE');
+                expect(res[2].name).toEqual('MOCK-ROLE-1');
+                done();
+            }
+        );
+    });
+
+    it('Should not able to fetch group roles if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'getGroupRoles').and.returnValue(throwError(errorResponse));
+
+        service.getGroupRoles('mock-group-id')
+            .subscribe(
+                () => {
+                    fail('expected an error, not group roles');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should return true if group has given role', (done) => {
+        spyOn(service, 'getGroupRoles').and.returnValue(of(groupRoles));
+        service.checkGroupHasRole('mock-group-id', ['MOCK-ADMIN-ROLE']).subscribe(
+            (res: boolean) => {
+                expect(res).toBeDefined();
+                expect(res).toBeTruthy();
+                done();
+            }
+        );
+    });
+
+    it('should return false if group does not have given role', (done) => {
+        spyOn(service, 'getGroupRoles').and.returnValue(of(groupRoles));
+        service.checkGroupHasRole('mock-group-id', ['MOCK-ADMIN-MODELER']).subscribe(
+            (res: boolean) => {
+                expect(res).toBeDefined();
+                expect(res).toBeFalsy();
+                done();
+            }
+        );
+    });
+
+    it('should fetch client roles by groupId and clientId', (done) => {
+        spyOn(service, 'getClientRoles').and.returnValue(of(clientRoles));
+        service.getClientRoles('mock-group-id', 'mock-client-id').subscribe(
+            (res: any) => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(2);
+                expect(res).toEqual(clientRoles);
+                done();
+            }
+        );
+    });
+
+    it('Should not fetch client roles if error occurred', (done) => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'getClientRoles').and.returnValue(throwError(errorResponse));
+
+        service.getClientRoles('mock-group-id', 'mock-client-id')
+            .subscribe(
+                () => {
+                    fail('expected an error, not client roles');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                    done();
+                }
+            );
+    });
+
+    it('should return true if group has client access', (done) => {
+        spyOn(service, 'getClientRoles').and.returnValue(of(clientRoles));
+        service.checkGroupHasClientApp('mock-group-id', 'mock-client-id').subscribe(
+            (res: boolean) => {
+                expect(res).toBeDefined();
+                expect(res).toBeTruthy();
+                done();
+            }
+        );
+    });
+
+    it('should return false if group does not have client access', (done) => {
+        spyOn(service, 'getClientRoles').and.returnValue(of([]));
+        service.checkGroupHasClientApp('mock-group-id', 'mock-client-id').subscribe(
+            (res: boolean) => {
+                expect(res).toBeDefined();
+                expect(res).toBeFalsy();
+                done();
+            }
+        );
+    });
+
+    it('should return true if group has any client role', (done) => {
+        spyOn(service, 'checkGroupHasAnyClientAppRole').and.returnValue(of(true));
+        service.checkGroupHasAnyClientAppRole('mock-group-id', 'mock-client-id', ['MOCK-USER-ROLE']).subscribe(
+            (res: boolean) => {
+                expect(res).toBeDefined();
+                expect(res).toBeTruthy();
+                done();
+            }
+        );
+    });
+
+    it('should return false if group does not have any client role', (done) => {
+        spyOn(service, 'getClientRoles').and.returnValue(of([]));
+        service.checkGroupHasAnyClientAppRole('mock-group-id', 'mock-client-id', ['MOCK-ADMIN-MODELER']).subscribe(
+            (res: boolean) => {
+                expect(res).toBeDefined();
+                expect(res).toBeFalsy();
+                done();
+            }
+        );
     });
 
     it('should append to the call all the parameters', (done) => {

@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,5 +20,7 @@ export * from './components/task-list-cloud.component';
 export * from './models/filter-cloud-model';
 export * from './models/task-list-sorting.model';
 export * from './models/task-preset-cloud.model';
+
+export * from './services/task-list-cloud.service';
 
 export * from './task-list-cloud.module';

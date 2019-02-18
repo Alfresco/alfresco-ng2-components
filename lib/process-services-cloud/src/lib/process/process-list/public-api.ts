@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,11 @@
  */
 
 export * from './components/process-list-cloud.component';
+
 export * from './models/process-cloud-query-request.model';
 export * from './models/process-cloud-preset.model';
 export * from './models/process-list-sorting.model';
+
+export * from './services/process-list-cloud.service';
+
 export * from './process-list-cloud.module';

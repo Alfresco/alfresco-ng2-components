@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,11 +62,15 @@ export class ViewerPage {
     activeTab = element(by.css('div[class*="mat-tab-label-active"]'));
     toolbarSwitch = element(by.id('adf-switch-toolbar'));
     toolbar = element(by.id('adf-viewer-toolbar'));
+    lastButton = element.all(by.css('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]')).last();
     datatableHeader = element(by.css('div.adf-datatable-header'));
     goBackSwitch = element(by.id('adf-switch-goback'));
 
     openWithSwitch = element(by.id('adf-switch-openwith'));
     openWith = element(by.id('adf-viewer-openwith'));
+
+    moreActionsMenuSwitch = element(by.id('adf-switch-moreactionsmenu'));
+    moreActionsMenu = element(by.css('button[data-automation-id="adf-toolbar-more-actions"]'));
 
     customNameSwitch = element(by.id('adf-switch-custoname'));
     customToolbarToggle = element(by.id('adf-toggle-custom-toolbar'));
@@ -86,9 +90,6 @@ export class ViewerPage {
 
     allowSidebarSwitch = element(by.id('adf-switch-allowsidebar'));
     allowLeftSidebarSwitch = element(by.id('adf-switch-allowLeftSidebar'));
-
-    shareSwitch = element(by.id('adf-switch-share'));
-    shareButton = element(by.id('adf-viewer-share'));
 
     uploadButton = element(by.id('adf-viewer-upload'));
     timeButton = element(by.id('adf-viewer-time'));
@@ -183,6 +184,14 @@ export class ViewerPage {
 
     checkCloseButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.closeButton);
+    }
+
+    getLastButtonTitle() {
+        return this.lastButton.getAttribute('title');
+    }
+
+    getMoreActionsMenuTitle() {
+        return this.moreActionsMenu.getAttribute('title');
     }
 
     checkDownloadButtonIsDisplayed() {
@@ -543,6 +552,10 @@ export class ViewerPage {
 
     enableMoreActions() {
         this.formControllersPage.enableToggle(this.moreActionsSwitch);
+    }
+
+    enableMoreActionsMenu() {
+        this.formControllersPage.enableToggle(this.moreActionsMenuSwitch);
     }
 
     disableCustomToolbar() {

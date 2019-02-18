@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,19 +22,19 @@ import { NodeEntry } from '@alfresco/js-api';
 import { ContentService } from './../services/content.service';
 import { EXTENDIBLE_COMPONENT } from './../interface/injection.tokens';
 
-export interface NodePermissionSubject {
+export interface NodeAllowableOperationSubject {
     disabled: boolean;
 }
 
 @Directive({
-    selector: '[adf-node-permission]'
+    selector: '[adf-check-allowable-operation]'
 })
-export class NodePermissionDirective implements OnChanges {
+export class CheckAllowableOperationDirective implements OnChanges {
 
     /** Node permission to check (create, delete, update, updatePermissions,
      * !create, !delete, !update, !updatePermissions).
      */
-    @Input('adf-node-permission')
+    @Input('adf-check-allowable-operation')
     permission: string  = null;
 
     /** Nodes to check permission for. */
@@ -48,7 +48,7 @@ export class NodePermissionDirective implements OnChanges {
 
                 @Host()
                 @Optional()
-                @Inject(EXTENDIBLE_COMPONENT) private parentComponent?: NodePermissionSubject) {
+                @Inject(EXTENDIBLE_COMPONENT) private parentComponent?: NodeAllowableOperationSubject) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -60,10 +60,10 @@ export class NodePermissionDirective implements OnChanges {
     /**
      * Updates disabled state for the decorated element
      *
-     * @memberof NodePermissionDirective
+     * @memberof CheckAllowableOperationDirective
      */
     updateElement(): boolean {
-        let enable = this.hasPermission(this.nodes, this.permission);
+        let enable = this.hasAllowableOperations(this.nodes, this.permission);
 
         if (enable) {
             this.enable();
@@ -95,7 +95,7 @@ export class NodePermissionDirective implements OnChanges {
     /**
      * Enables decorated element
      *
-     * @memberof NodePermissionDirective
+     * @memberof CheckAllowableOperationDirective
      */
     enableElement(): void {
         this.renderer.removeAttribute(this.elementRef.nativeElement, 'disabled');
@@ -104,7 +104,7 @@ export class NodePermissionDirective implements OnChanges {
     /**
      * Disables decorated element
      *
-     * @memberof NodePermissionDirective
+     * @memberof CheckAllowableOperationDirective
      */
     disableElement(): void {
         this.renderer.setAttribute(this.elementRef.nativeElement, 'disabled', 'true');
@@ -115,11 +115,11 @@ export class NodePermissionDirective implements OnChanges {
      *
      * @param  nodes Node collection to check
      * @param  permission Permission to check for each node
-     * @memberof NodePermissionDirective
+     * @memberof CheckAllowableOperationDirective
      */
-    hasPermission(nodes: NodeEntry[], permission: string): boolean {
+    hasAllowableOperations(nodes: NodeEntry[], permission: string): boolean {
         if (nodes && nodes.length > 0) {
-            return nodes.every((node) => this.contentService.hasPermission(node.entry, permission));
+            return nodes.every((node) => this.contentService.hasAllowableOperations(node.entry, permission));
         }
 
         return false;

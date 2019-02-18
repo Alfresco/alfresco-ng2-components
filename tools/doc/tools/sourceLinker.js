@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var unist_util_select_1 = require("unist-util-select");
 var ngHelpers = require("../ngHelpers");
-var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(directive)|(interface)|(model)|(pipe)|(service)|(widget))/;
+var angFilenameRegex = /([a-zA-Z0-9\-]+)\.((component)|(dialog)|(directive)|(interface)|(model)|(pipe)|(service)|(widget))/;
 function processDocs(mdCache, aggData, errorMessages) {
     var pathnames = Object.keys(mdCache);
     pathnames.forEach(function (pathname) {
@@ -25,7 +25,7 @@ function processDocs(mdCache, aggData, errorMessages) {
                 children: [titleText]
             };
         }
-        else if (titleHeading.children[0].type === "link") {
+        else if ((titleHeading.children[0].type === "link") && sourcePath) {
             var linkElem = titleHeading.children[0];
             linkElem.url = "../../" + sourcePath;
             linkElem.title = "Defined in " + path.basename(sourcePath);

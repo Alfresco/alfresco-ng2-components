@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,8 +33,8 @@ export class ApplicationInstanceModel {
             this.name = obj.name ? obj.name : null;
             this.status = obj.status ? obj.status : null;
             this.createdAt = obj.createdAt ? obj.createdAt : null;
-            this.theme = obj.theme ? obj.theme : ApplicationInstanceModel.DEFAULT_THEME;
-            this.icon = obj.icon ? obj.icon : ApplicationInstanceModel.DEFAULT_ICON;
+            this.theme = obj.theme;
+            this.icon = obj.icon;
             this.description = obj.description ? obj.description : null;
             this.connectors = obj.connectors ? obj.connectors : null;
         }

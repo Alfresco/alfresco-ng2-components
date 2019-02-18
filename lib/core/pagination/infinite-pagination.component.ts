@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,9 @@ import { PaginatedComponent } from './paginated-component.interface';
 import { Subscription } from 'rxjs';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { PaginationModel } from '../models/pagination.model';
+import { RequestPaginationModel } from '../models/request-pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
+import { Pagination } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-infinite-pagination',
@@ -39,15 +41,35 @@ import { UserPreferencesService, UserPreferenceValues } from '../services/user-p
 })
 export class InfinitePaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
 
-    static DEFAULT_PAGINATION: PaginationModel = {
+    static DEFAULT_PAGINATION: Pagination = new Pagination({
         skipCount: 0,
-        hasMoreItems: false,
-        merge: true
-    };
+        maxItems: 25,
+        totalItems: 0
+    });
+
+    _target: PaginatedComponent;
 
     /** Component that provides custom pagination support. */
     @Input()
-    target: PaginatedComponent;
+    set target(target: PaginatedComponent) {
+        if (target) {
+            this._target = target;
+            this.paginationSubscription = target.pagination.subscribe((pagination: PaginationModel) => {
+                this.isLoading = false;
+                this.pagination = pagination;
+
+                if (!this.pagination.hasMoreItems) {
+                    this.pagination.hasMoreItems = false;
+                }
+
+                this.cdr.detectChanges();
+            });
+        }
+    }
+
+    get target() {
+        return this._target;
+    }
 
     /** Number of items that are added with each "load more" event. */
     @Input()
@@ -59,9 +81,14 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     /** Emitted when the "Load More" button is clicked. */
     @Output()
-    loadMore: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
+    loadMore: EventEmitter<RequestPaginationModel> = new EventEmitter<RequestPaginationModel>();
 
-    pagination: PaginationModel;
+    pagination: PaginationModel = InfinitePaginationComponent.DEFAULT_PAGINATION;
+
+    requestPaginationModel: RequestPaginationModel = {
+        skipCount: 0,
+        merge: true
+    };
 
     private paginationSubscription: Subscription;
 
@@ -69,44 +96,33 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     }
 
     ngOnInit() {
-        if (this.target) {
-            this.paginationSubscription = this.target.pagination.subscribe((pagination) => {
-                this.isLoading = false;
-                this.pagination = pagination;
-                this.cdr.detectChanges();
-            });
-        }
-
-        this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pagSize) => {
-            this.pageSize = this.pageSize || pagSize;
+        this.userPreferencesService.select(UserPreferenceValues.PaginationSize).subscribe((pageSize: number) => {
+            this.pageSize = this.pageSize || pageSize;
+            this.requestPaginationModel.maxItems = this.pageSize;
         });
-
-        if (!this.pagination) {
-            this.pagination = InfinitePaginationComponent.DEFAULT_PAGINATION;
-        }
     }
 
     onLoadMore() {
-        this.pagination.skipCount = 0;
-        this.pagination.maxItems = this.pagination.maxItems + this.pageSize;
-        this.pagination.merge = true;
-        this.loadMore.next(this.pagination);
+        this.requestPaginationModel.skipCount = 0;
+        this.requestPaginationModel.merge = false;
 
-        if (this.pagination.maxItems >= this.pagination.totalItems) {
-            this.pagination.hasMoreItems = false;
-        }
+        this.requestPaginationModel.maxItems += this.pageSize;
 
-        if (this.target) {
-            this.target.pagination.value.merge = this.pagination.merge;
-            this.target.pagination.value.skipCount = this.pagination.skipCount;
+        this.loadMore.next(this.requestPaginationModel);
+
+        if (this._target) {
             this.isLoading = true;
-            this.target.updatePagination(<PaginationModel> this.pagination);
+            this._target.updatePagination(<RequestPaginationModel> this.requestPaginationModel);
         }
     }
 
     reset() {
         this.pagination.skipCount = 0;
-        this.target.updatePagination(this.pagination);
+        this.pagination.maxItems = this.pageSize;
+
+        if (this._target) {
+            this._target.updatePagination(this.pagination);
+        }
     }
 
     ngOnDestroy() {

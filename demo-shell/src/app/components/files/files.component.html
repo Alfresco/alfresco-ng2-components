@@ -35,9 +35,9 @@
         <adf-upload-drag-area fxFlex="1 1 auto"
                               [disabled]="disableDragArea"
                               [acceptedFilesType]="getFileFiltering()"
-                              [rootFolderId]="getDocumentListCurrentFolderId()"
+                              [rootFolderId]="currentFolderId"
                               [versioning]="versioning"
-                              [adf-node-permission]="'create'"
+                              [adf-check-allowable-operation]="'create'"
                               [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []"
                               (beginUpload)="onBeginUpload($event)">
             <div *ngIf="errorMessage" class="adf-error-message">
@@ -51,13 +51,11 @@
                     <adf-breadcrumb fxShow fxHide.lt-sm="true"
                                     class="adf-files-breadcrumb"
                                     root="APP.PERSONAL-FILES"
-                                    [target]="documentList"
-                                    [folderNode]="documentList.folderNode">
+                                    [target]="documentList">
                     </adf-breadcrumb>
                     <adf-dropdown-breadcrumb fxHide fxShow.lt-sm="true"
                                              class="adf-files-breadcrumb"
-                                             [target]="documentList"
-                                             [folderNode]="documentList.folderNode">
+                                             [target]="documentList">
                     </adf-dropdown-breadcrumb>
                 </adf-toolbar-title>
 
@@ -79,7 +77,7 @@
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}"
                         (error)="openSnackMessage($event)"
                         (success)="documentList.reload()"
-                        [adf-create-folder]="getDocumentListCurrentFolderId()"
+                        [adf-create-folder]="currentFolderId"
                         matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}">
                         <mat-icon>create_new_folder</mat-icon>
                     </button>
@@ -107,7 +105,7 @@
                         <mat-icon>get_app</mat-icon>
                     </button>
                     <button mat-icon-button
-                            adf-node-permission="delete"
+                            adf-check-allowable-operation="delete"
                             [adf-nodes]="documentList.selection"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}"
                             (delete)="onDeleteActionSuccess($event)"
@@ -168,7 +166,7 @@
                     </button>
                     <button mat-menu-item
                             (error)="openSnackMessage($event)"
-                            [adf-create-folder]="getDocumentListCurrentFolderId()">
+                            [adf-create-folder]="currentFolderId">
                         <mat-icon>create_new_folder</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.NEW_FOLDER' | translate }}</span>
                     </button>
@@ -192,7 +190,7 @@
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.DOWNLOAD' | translate }}</span>
                     </button>
                     <button mat-menu-item
-                            adf-node-permission="delete"
+                            adf-check-allowable-operation="delete"
                             [adf-nodes]="documentList.selection"
                             (delete)="onDeleteActionSuccess($event)"
                             [adf-delete]="documentList.selection">
@@ -533,7 +531,7 @@
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-document-list-enable-drop-files" [color]="'primary'" (click)="toggleAllowDropFiles()" >
+            <mat-slide-toggle id="adf-document-list-enable-drop-files" [color]="'primary'" [(ngModel)]="allowDropFiles" (click)="toggleAllowDropFiles()" >
                 {{'DOCUMENT_LIST.ALLOW_DROP_FILES' | translate}}
             </mat-slide-toggle>
         </section>
@@ -614,7 +612,7 @@
                 [maxFilesSize]="maxSizeShow ? maxFilesSize : null"
                 (error)="openSnackMessage($event)"
                 [versioning]="versioning"
-                [adf-node-permission]="'create'"
+                [adf-check-allowable-operation]="'create'"
                 [adf-nodes]="enableUpload ? getCurrentDocumentListNode() : []"
                 (permissionEvent)="handlePermissionError($event)"
                 (beginUpload)="onBeginUpload($event)">
@@ -631,7 +629,7 @@
                 [uploadFolders]="folderUpload"
                 [versioning]="versioning"
                 (error)="openSnackMessage($event)"
-                [adf-node-permission]="'create'"
+                [adf-check-allowable-operation]="'create'"
                 [adf-nodes]="enableUpload ? getCurrentDocumentListNode() : []"
                 (permissionEvent)="handlePermissionError($event)">
             </adf-upload-button>

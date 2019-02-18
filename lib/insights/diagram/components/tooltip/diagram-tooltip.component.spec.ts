@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -140,7 +140,7 @@ describe('DiagramTooltipComponent', () => {
         });
 
         it('should NOT show the tooltip by default', () => {
-            const tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.is-active'));
+            const tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
 
             expect(tooltip).toBeNull();
         });
@@ -150,7 +150,7 @@ describe('DiagramTooltipComponent', () => {
 
             tooltipTarget.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
 
-            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.is-active'));
+            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
             expect(tooltip).not.toBeNull();
         });
 
@@ -159,7 +159,7 @@ describe('DiagramTooltipComponent', () => {
 
             tooltipTarget.nativeElement.dispatchEvent(new MouseEvent('touchend'));
 
-            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.is-active'));
+            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
             expect(tooltip).not.toBeNull();
         });
 
@@ -169,7 +169,7 @@ describe('DiagramTooltipComponent', () => {
             tooltipTarget.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
             tooltipTarget.nativeElement.dispatchEvent(new MouseEvent('mouseleave'));
 
-            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.is-active'));
+            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
             expect(tooltip).toBeNull();
         });
 
@@ -179,7 +179,7 @@ describe('DiagramTooltipComponent', () => {
             tooltipTarget.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
             window.dispatchEvent(new CustomEvent('scroll'));
 
-            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.is-active'));
+            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
             expect(tooltip).toBeNull();
         });
 
@@ -189,7 +189,7 @@ describe('DiagramTooltipComponent', () => {
             tooltipTarget.nativeElement.dispatchEvent(new MouseEvent('touchend'));
             window.dispatchEvent(new CustomEvent('touchstart'));
 
-            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.is-active'));
+            let tooltip = fixture.debugElement.query(By.css('.adf-diagram-tooltip.adf-is-active'));
             expect(tooltip).toBeNull();
         });
     });

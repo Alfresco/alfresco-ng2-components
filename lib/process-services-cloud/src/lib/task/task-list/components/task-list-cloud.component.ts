@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,6 +60,14 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @Input()
     dueDate: string = '';
 
+    /** Filter the tasks. Display only tasks with lastModifiedFrom equal to the supplied date. */
+    @Input()
+    lastModifiedFrom: string = '';
+
+    /** Filter the tasks. Display only tasks with lastModifiedTo equal to the supplied date. */
+    @Input()
+    lastModifiedTo: string = '';
+
     /** Filter the tasks. Display only tasks with id equal to the supplied value. */
     @Input()
     id: string = '';
@@ -83,6 +91,18 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     /** Filter the tasks. Display only tasks with status equal to the supplied value. */
     @Input()
     status: string = '';
+
+    /** Filter the tasks. Display only tasks with owner equal to the supplied value. */
+    @Input()
+    owner: string = '';
+
+    /** Filter the tasks. Display only tasks with priority equal to the supplied value. */
+    @Input()
+    priority: number;
+
+    /** Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true. */
+    @Input()
+    standAlone: boolean = false;
 
     /**
      * Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode,
@@ -238,6 +258,10 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             parentTaskId: this.parentTaskId,
             processDefinitionId: this.processDefinitionId,
             processInstanceId: this.processInstanceId,
+            owner: this.owner,
+            priority: this.priority,
+            lastModifiedFrom: this.lastModifiedFrom,
+            lastModifiedTo: this.lastModifiedTo,
             status: this.status,
             maxItems: this.size,
             skipCount: this.skipCount,

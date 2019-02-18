@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,15 @@
 
 export class ProcessPayloadCloud {
     processDefinitionKey: string;
-    processInstanceName: string;
+    name: string;
     businessKey: string;
     variables: Map<string, object>[];
-    payloadType: string;
+    payloadType: string = 'StartProcessPayload';
 
     constructor(obj?: any) {
         this.processDefinitionKey = obj && obj.processDefinitionKey ? obj.processDefinitionKey : null;
-        this.processInstanceName = obj && obj.processInstanceName ? obj.processInstanceName : null;
+        this.name = obj && obj.name ? obj.name : null;
         this.businessKey = obj && obj.businessKey ? obj.businessKey : null;
         this.variables = obj && obj.variables ? obj.variables : null;
-        this.payloadType = obj && obj.valueUrl ? obj.payloadType : null;
     }
 }

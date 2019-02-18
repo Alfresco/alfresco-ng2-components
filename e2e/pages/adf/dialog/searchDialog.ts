@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2016 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,14 +69,14 @@ export class SearchDialog {
 
     enterText(text) {
         Util.waitUntilElementIsVisible(this.searchBar);
-        this.searchBar.click();
+        browser.executeScript(`document.querySelector("adf-search-control input").click();`);
         this.searchBar.sendKeys(text);
         return this;
     }
 
     enterTextAndPressEnter(text) {
         Util.waitUntilElementIsVisible(this.searchBar);
-        this.searchBar.click();
+        browser.executeScript(`document.querySelector("adf-search-control input").click();`);
         this.searchBar.sendKeys(text);
         this.searchBar.sendKeys(protractor.Key.ENTER);
         return this;
