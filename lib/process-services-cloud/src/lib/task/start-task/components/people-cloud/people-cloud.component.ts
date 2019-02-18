@@ -288,6 +288,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         } else {
             this.searchUserCtrl.setValue(this.preSelectUsers[0]);
         }
+        this.userInput.nativeElement.click();
     }
 
     private async loadSinglePreselectUser() {
@@ -301,6 +302,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         this.checkPreselectValidationErrors();
         this.preSelectUsers = [...users];
         this.selectedUsersSubject.next(users);
+        this.userInput.nativeElement.click();
     }
 
     private checkPreselectValidationErrors() {
