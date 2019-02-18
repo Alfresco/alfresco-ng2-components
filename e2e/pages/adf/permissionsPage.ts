@@ -27,7 +27,6 @@ export class PermissionsPage {
     searchResults = element.all(by.id('adf-search-results-content')).first();
     addButton =  element(by.id('add-permission-dialog-confirm-button'));
     permissionInheritedButton = element.all(by.css("div[class='adf-inherit_permission_button'] button")).first();
-    permissionsDataTable = element(by.css("adf-datatable[class*='adf-datatable-permission']"));
     permissionInheritedButtonText = this.permissionInheritedButton.element(by.css('span'));
     noPermissions = element(by.css('div[id="adf-no-permissions-template"]'));
 
@@ -78,10 +77,6 @@ export class PermissionsPage {
     clickPermissionInheritedButton() {
         Util.waitUntilElementIsClickable(this.permissionInheritedButton);
         return this.permissionInheritedButton.click();
-    }
-
-    checkPermissionsDatatableIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.permissionsDataTable);
     }
 
     checkNoPermissionsIsDisplayed() {

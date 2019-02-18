@@ -38,6 +38,7 @@ export class DataTablePage {
     tableBody = element.all(by.css(`div[class='adf-datatable-body']`)).first();
     spinner = element(by.css('mat-progress-spinner'));
     rows = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`);
+    permissionsDataTable = element(by.css("adf-datatable[class*='adf-datatable-permission']"));
 
     constructor(rootElement: ElementFinder = element(by.css('adf-datatable'))) {
         this.rootElement = rootElement;
@@ -262,6 +263,10 @@ export class DataTablePage {
     getNumberOfRowsDisplayedWithSameName(filename) {
         Util.waitUntilElementIsVisible(element(by.css(`div[filename="${filename}"]`)));
         return element.all(by.css(`div[title='Name'][filename="${filename}"]`)).count();
+    }
+
+    checkPermissionsDatatableIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.permissionsDataTable);
     }
 
 }
