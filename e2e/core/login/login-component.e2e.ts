@@ -54,6 +54,8 @@ describe('Login component', () => {
         password: 'Enter your password to sign in',
         required: 'Required'
     };
+    let invalidUsername = 'invaliduser';
+    let invalidPassword = 'invalidpassword';
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -248,6 +250,19 @@ describe('Login component', () => {
         loginPage.enableLogoSwitch();
         loginPage.enterLogo('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');
         loginPage.checkLoginImgURL('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');
+    });
+
+    it('[C291854] Should be possible login in valid credentials', () => {
+        browser.get(TestConfig.adf.url);
+        loginPage.waitForElements();
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
+        loginPage.enterUsername(invalidUsername);
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(false);
+        loginPage.enterPassword(invalidPassword);
+        expect(loginPage.getSignInButtonIsEnabled()).toBe(true);
+        loginPage.clickSignInButton();
+        expect(loginPage.getLoginError()).toEqual(errorMessages.invalid_credentials);
+        loginPage.login(adminUserModel.id, adminUserModel.password);
     });
 
 });
