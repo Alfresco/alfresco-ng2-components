@@ -122,13 +122,13 @@ describe('Permissions Component', function () {
     it('[C268974] Inherit Permission', () => {
         permissionsPage.checkPermissionInheritedButtonIsDisplayed();
         expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
-        dataTablePage.checkPermissionsDatatableIsDisplayed();
+        permissionsPage.checkPermissionsDatatableIsDisplayed();
         permissionsPage.clickPermissionInheritedButton();
         expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Inherit Permission');
         permissionsPage.checkNoPermissionsIsDisplayed();
         permissionsPage.clickPermissionInheritedButton();
         expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
-        dataTablePage.checkPermissionsDatatableIsDisplayed();
+        permissionsPage.checkPermissionsDatatableIsDisplayed();
     });
 
 });

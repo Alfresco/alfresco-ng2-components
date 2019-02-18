@@ -18,6 +18,7 @@
 import { element, by } from 'protractor';
 
 import { Util } from '../../util/util';
+import { DataTablePage } from './dataTablePage';
 
 export class PermissionsPage {
 
@@ -85,6 +86,10 @@ export class PermissionsPage {
     getPermissionInheritedButtonText() {
         Util.waitUntilElementIsClickable(this.permissionInheritedButton);
         return this.permissionInheritedButtonText.getText();
+    }
+
+    checkPermissionsDatatableIsDisplayed() {
+        return new DataTablePage(element(by.css('[class*="adf-datatable-permission"]')));
     }
 
 }
