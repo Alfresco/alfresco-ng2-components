@@ -28,7 +28,6 @@ import { UploadActions } from '../actions/ACS/upload.actions';
 import { DataTablePage } from '../pages/adf/dataTablePage';
 import { Util } from '../util/util';
 import { browser } from 'protractor';
-import {DataTablePage} from "../pages/adf/dataTablePage";
 
 describe('Permissions Component', function () {
 

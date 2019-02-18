@@ -30,7 +30,6 @@ export class PermissionsPage {
     permissionInheritedButtonText = this.permissionInheritedButton.element(by.css('span'));
     noPermissions = element(by.css('div[id="adf-no-permissions-template"]'));
 
-
     checkAddPermissionButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.addPermissionButton);
     }
