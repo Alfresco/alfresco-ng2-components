@@ -18,6 +18,7 @@
 import { element, by } from 'protractor';
 
 import { Util } from '../../util/util';
+import { DataTablePage } from './dataTablePage';
 
 export class PermissionsPage {
 
@@ -26,6 +27,11 @@ export class PermissionsPage {
     searchUserInput = element(by.id('searchInput'));
     searchResults = element.all(by.id('adf-search-results-content')).first();
     addButton =  element(by.id('add-permission-dialog-confirm-button'));
+    permissionInheritedButton = element.all(by.css("div[class='adf-inherit_permission_button'] button")).first();
+    permissionInheritedButtonText = this.permissionInheritedButton.element(by.css('span'));
+    noPermissions = element(by.css('div[id="adf-no-permissions-template"]'));
+    roleDropdown = element(by.id('adf-select-role-permission'));
+    roleDropdownOptions = element.all(by.css('.mat-option-text'));
 
     checkAddPermissionButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.addPermissionButton);
@@ -66,4 +72,47 @@ export class PermissionsPage {
         Util.waitUntilElementIsVisible(userOrGroupName);
     }
 
+    checkPermissionInheritedButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.permissionInheritedButton);
+    }
+
+    clickPermissionInheritedButton() {
+        Util.waitUntilElementIsClickable(this.permissionInheritedButton);
+        return this.permissionInheritedButton.click();
+    }
+
+    checkNoPermissionsIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.noPermissions);
+    }
+
+    getPermissionInheritedButtonText() {
+        Util.waitUntilElementIsClickable(this.permissionInheritedButton);
+        return this.permissionInheritedButtonText.getText();
+    }
+
+    checkPermissionsDatatableIsDisplayed() {
+        return new DataTablePage(element(by.css('[class*="adf-datatable-permission"]')));
+    }
+
+    checkUserHasRoleSelected(user, role) {
+        return new DataTablePage().getRowByRowNumber(user).element(by.xpath(`ancestor::div/div[contains(@class, 'adf-data-table-cell')]/following-sibling::div[contains(@class, 'adf-data-table-cell')]//mat-select[aria-label=${role}]`));
+    }
+
+    clickRoleDropdown() {
+        Util.waitUntilElementIsVisible(this.roleDropdown);
+        return this.roleDropdown.click();
+    }
+
+    getRoleDropdownOptions() {
+        Util.waitUntilElementIsVisible(this.roleDropdownOptions);
+        return this.roleDropdownOptions;
+    }
+
+    selectOption(name) {
+        let selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
+        Util.waitUntilElementIsVisible(selectProcessDropdown);
+        Util.waitUntilElementIsClickable(selectProcessDropdown);
+        selectProcessDropdown.click();
+        return this;
+    }
 }

@@ -121,14 +121,46 @@ describe('Permissions Component', function () {
         permissionsPage.checkUserOrGroupIsAdded('GROUP_' + groupBody.id);
     });
 
+    it('[C268974] Inherit Permission', () => {
+        permissionsPage.checkPermissionInheritedButtonIsDisplayed();
+        expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
+        permissionsPage.checkPermissionsDatatableIsDisplayed();
+        permissionsPage.clickPermissionInheritedButton();
+        expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Inherit Permission');
+        permissionsPage.checkNoPermissionsIsDisplayed();
+        permissionsPage.clickPermissionInheritedButton();
+        expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
+        permissionsPage.checkPermissionsDatatableIsDisplayed();
+    });
+
     it('[C274691] Should display dropdown choice for role into permission list for locally set permissions', () => {
         permissionsPage.checkAddPermissionButtonIsDisplayed();
         permissionsPage.clickAddPermissionButton();
         permissionsPage.checkAddPermissionDialogIsDisplayed();
         permissionsPage.checkSearchUserInputIsDisplayed();
-        permissionsPage.searchUserOrGroup(acsUser2.getFirstName());
+        permissionsPage.searchUserOrGroup(acsUser2.getId());
         permissionsPage.clickUserOrGroup(acsUser2.getFirstName());
-        permissionsPage.checkUserOrGroupIsAdded(acsUser2.getFirstName());
+        permissionsPage.checkUserOrGroupIsAdded(acsUser2.getId());
+        permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Contributor');
+        permissionsPage.clickRoleDropdown();
+        expect(permissionsPage.getRoleDropdownOptions().count()).toBe(5);
+        expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('Contributor');
+        expect(permissionsPage.getRoleDropdownOptions().get(1).getText()).toBe('Collaborator');
+        expect(permissionsPage.getRoleDropdownOptions().get(2).getText()).toBe('Coordinator');
+        expect(permissionsPage.getRoleDropdownOptions().get(3).getText()).toBe('Editor');
+        expect(permissionsPage.getRoleDropdownOptions().get(4).getText()).toBe('Consumer');
+        permissionsPage.selectOption('Collaborator');
+        permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Collaborator');
+        permissionsPage.clickRoleDropdown();
+        permissionsPage.selectOption('Coordinator');
+        permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Coordinator');
+        permissionsPage.clickRoleDropdown();
+        permissionsPage.selectOption('Editor');
+        permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Editor');
+        permissionsPage.clickRoleDropdown();
+        permissionsPage.selectOption('Consumer');
+        permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Consumer');
+
     });
 
 });
