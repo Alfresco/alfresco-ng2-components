@@ -95,7 +95,8 @@ export class EditTaskFilterCloudComponent {
 
     setAssignment(option) {
         Util.waitUntilElementIsVisible(this.assignment);
-        this.assignment.clear();
+        //this.assignment.clear();
+        this.clearField(this.assignment);
         this.assignment.sendKeys(option);
         this.assignment.sendKeys(protractor.Key.ENTER);
         return this;

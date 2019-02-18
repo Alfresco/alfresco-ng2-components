@@ -23,6 +23,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
+import { TaskListCloudConfiguration } from './taskListCloud.config';
 import { Util } from '../util/util';
 
 import { Tasks } from '../actions/APS-cloud/tasks';
@@ -48,17 +49,26 @@ describe('Edit task filters and task list properties', () => {
         const candidateUserApp = 'candidateuserapp';
         let noTasksFoundMessage = 'No Tasks Found';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-        let createdTask, notDisplayedTask, processDefinition, processInstance;;
+        let createdTask, notDisplayedTask, processDefinition, processInstance;
 
         beforeAll(async (done) => {
             silentLogin = false;
+            let jsonFile = new TaskListCloudConfiguration().getConfiguration();
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginAPS(user, password);
 
             navigationBarPage.clickConfigEditorButton();
+
+            configEditorPage.clickTaskListCloudConfiguration();
+            configEditorPage.clickClearButton();
+            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
+
+            browser.driver.sleep(15000);
+
             configEditorPage.clickEditTaskConfiguration();
             configEditorPage.clickClearButton();
+            browser.driver.sleep(5000);
             configEditorPage.enterConfiguration('{' +
                 '"properties": [' +
                 '"appName",' + '"state",' + '"assignment",' +
@@ -67,7 +77,10 @@ describe('Edit task filters and task list properties', () => {
                 '"lastModifiedFrom",' +'"lastModifiedTo",' +'"sort",' +'"order"' +
                 ']' +
                 '}');
+            browser.driver.sleep(5000);
             configEditorPage.clickSaveButton();
+            browser.driver.sleep(35000);
+            browser.driver.sleep(5000);
 
             await tasksService.init(user, password);
             createdTask = await tasksService.createStandaloneTask(Util.generateRandomString(), simpleApp);
@@ -90,18 +103,24 @@ describe('Edit task filters and task list properties', () => {
             done();
         });
 
-        it('[C291895] Should be able to see only the tasks of a specific app when typing the exact app name in the appName field', () => {
+        it('[C292004] Filter by appName', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setAppNameDropDown(simpleApp);//.typeCurrentDate(currentDate);
+            tasksCloudDemoPage.editTaskFilterCloudComponent();//.setAppNameDropDown(simpleApp);
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getAppNameDropDownValue()).toEqual(simpleApp);
 
             //tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsDisplayedByName(createdTask.entry.name);
             //tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsNotDisplayedByName(notDisplayedTask.entry.name);
+
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setAppNameDropDown(candidateUserApp);
+            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getAppNameDropDownValue()).toEqual(candidateUserApp);
+
+            //tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsNotDisplayedByName(createdTask.entry.name);
+            //tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsDisplayedByName(notDisplayedTask.entry.name);
         });
 
-        it('[C291905] Should be able to see only the tasks with specific name when typing the name in the task name field', () => {
+        it('[C297476] Filter by taskName', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -112,7 +131,7 @@ describe('Edit task filters and task list properties', () => {
             //expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfRowsDisplayedWithSameName(createdTask.entry.name)).toEqual(1);
         });
 
-        it('[C280571] Should be able to see No tasks found when typing a task name that does not exist', () => {
+        it('[C297613] Should be able to see No tasks found when typing a task name that does not exist', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -122,17 +141,19 @@ describe('Edit task filters and task list properties', () => {
             expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
-        fit('[C291908] Should be able to see only tasks that are part of a specific process when processDefinitionId is set', () => {
+        it('[C297479] Should be able to see only tasks that are part of a specific process when processDefinitionId is set', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setProcessDefinitionId(processDefinition.list.entries[0].entry.id);
-            browser.driver.sleep(50000);
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setProcessDefinitionId(processDefinition.list.entries[0].entry.id)
+                .setStateFilterDropDown('ALL').setAssignment('');
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
 
-            expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllDisplayedRows()).toBe(1);
-            //taskListCloudDemoPage.getAllProcessDefinitionIds().then(function (list) {
-            //    expect(Util.arrayContainsArray(list, [processDefinition.list.entries[0].entry.key])).toEqual(true);
-            //});
+            //verifica si taskul in sine daca apare: //tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsDisplayedByName(createdTask.entry.name);
+            tasksCloudDemoPage.taskListCloudComponent().getAllRowsByColumn('ProcessDefinitionId').then(function (list) {
+                expect (list.every(elem => elem == processDefinition.list.entries[0].entry.id)).toEqual(true);
+            });
         });
 
         it('[C291909] Should be able to see No tasks found when typing an invalid processDefinitionId', () => {
