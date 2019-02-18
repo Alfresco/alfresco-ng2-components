@@ -121,6 +121,21 @@ xdescribe('Viewer', () => {
         done();
     });
 
+    fit('A11Y', () => {
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        navigationBarPage.goToSite(site);
+        contentServicesPage.checkAcsContainer();
+
+        viewerPage.viewFile(pngFileUploaded.entry.name);
+
+        viewerPage.checkImgViewerIsDisplayed();
+
+        runAxeTestWithSelector('User Profile A11Y', browser.driver, 'adf-userinfo');
+
+        viewerPage.clickCloseButton();
+    });
+
     it('[C272813] Should be redirected to site when opening and closing a file in a site', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 

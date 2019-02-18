@@ -72,6 +72,12 @@ describe('Login component', () => {
         done();
     });
 
+    it('A11Y', () => {
+        loginPage.goToLoginPage();
+
+        runAxeTestWithSelector('Login A11Y', browser.driver, 'adf-login');
+    });
+
     it('[C276746] Should display the right information in user-info when a different users logs in', () => {
         loginPage.loginToContentServicesUsingUserModel(userA);
         navigationBarPage.clickUserProfile();

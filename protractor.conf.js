@@ -196,7 +196,10 @@ exports.config = {
         screenshotOnExpectFailure: true,
         screenshotOnSpecFailure: false,
         clearFoldersBeforeTest: true,
-        screenshotPath: `${projectRoot}/e2e-output/screenshots/`
+        screenshotPath: `${projectRoot}/e2e-output/screenshots/`,
+        standardsToReport: ['wcag2a'],
+        ignoreAxeFailures: true,
+        package: 'protractor-axe-report-plugin',
     }],
 
     onCleanUp(results) {

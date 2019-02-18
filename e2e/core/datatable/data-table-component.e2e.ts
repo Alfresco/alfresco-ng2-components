@@ -22,6 +22,7 @@ import TestConfig = require('../../test.config');
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
+import { browser } from 'protractor';
 
 describe('Datatable component', () => {
 

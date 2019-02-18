@@ -157,6 +157,7 @@
     "ng-packagr": "4.4.5",
     "node-sass": "4.9.2",
     "protractor": "^5.4.0",
+    "protractor-axe-report-plugin": "^1.1.0",
     "protractor-html-reporter-2": "^1.0.4",
     "raw-loader": "0.5.1",
     "remap-istanbul": "^0.11.1",
