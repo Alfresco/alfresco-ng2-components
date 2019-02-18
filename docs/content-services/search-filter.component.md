@@ -393,7 +393,6 @@ Note: `sets` parameter from Search API (Sets the intervals for all fields) is no
   }
 }
 ```
-> **Note:** Just like on the `facetFields`, make sure that the `label` properties do not contain empty spaces, as this would cause unexpected behavior.
 
 You can specify a value for the `mincount` property inside each `intervals` item to set the minimum count required for a facet interval to be displayed. By default, only the intervals that have 1 or more response entries are displayed at runtime.
 Check the [schema.json](https://github.com/Alfresco/alfresco-ng2-components/blob/master/lib/core/app-config/schema.json)
