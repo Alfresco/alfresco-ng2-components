@@ -352,6 +352,56 @@ The default page size of 5 will be used if you set the value to 0 or omit it ent
 
 ![Facet Queries](../docassets/images/search-facet-queries.png)
 
+### Facet Intervals
+
+These provide custom categories based on admin defined ranges inside `intervals`. What is wanted for every interval can be specified exactly in the config file, and having overlapping ranges could also be possible.
+
+#### FacetIntervals Properties
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+|intervals|array|Specifies the fields to facet by interval.|
+|expanded|boolean|Toggles expanded state of the facet intervals.|
+Note: `sets` parameter from Search API (Sets the intervals for all fields) is not yet supported.
+
+
+```json
+{
+    "search": {
+      "facetIntervals":{
+        "expanded": true,
+        "intervals":[
+          {
+            "label":"TheCreated",
+            "field":"cm:created",
+            "sets":[
+              { "label":"lastYear", "start":"2017", "end":"2018", "endInclusive":false },
+              { "label":"currentYear", "start":"NOW/YEAR", "end":"NOW/YEAR+1YEAR" },
+              { "label":"earlier", "start":"*", "end":"2017", "endInclusive":false }
+            ]
+          },
+          {
+            "label":"TheModified",
+            "field":"cm:modified",
+            "sets":[
+              { "label":"2016", "start":"2017", "end":"2018", "endInclusive":false },
+              { "label":"currentYear", "start":"NOW/YEAR", "end":"NOW/YEAR+1YEAR" },
+              { "label":"earlierThan2017", "start":"*", "end":"2017", "endInclusive":false }
+            ]
+          }
+        ]
+      }
+  }
+}
+```
+
+You can specify a value for the `mincount` property inside each `intervals` item to set the minimum count required for a facet interval to be displayed. By default, only the intervals that have 1 or more response entries are displayed at runtime.
+Check the [schema.json](https://github.com/Alfresco/alfresco-ng2-components/blob/master/lib/core/app-config/schema.json)
+for more details about what is the structure and the properties of `intervals` that you can set inside the configuration file.
+
+Each `intervals` item defined is collected into its collapsible category identified uniquely by its `label`. The top code snippet will result in the following display of the facet intervals:
+
+![Facet Intervals](../docassets/images/search-facet-intervals.png)
+
 ## See also
 
 -   [Search Query Builder service](search-query-builder.service.md)

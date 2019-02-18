@@ -122,7 +122,7 @@
         "expanded": true,
         "mincount": 1,
         "queries": [
-          { "query": "created:2018", "label": "SEARCH.FACET_QUERIES.CREATED_THIS_YEAR" },
+          { "query": "created:2019", "label": "SEARCH.FACET_QUERIES.CREATED_THIS_YEAR" },
           { "query": "content.mimetype:text/html", "label": "SEARCH.FACET_QUERIES.MIMETYPE", "group":"Type facet queries" },
           { "query": "content.size:[0 TO 10240]", "label": "SEARCH.FACET_QUERIES.XTRASMALL", "group":"Size facet queries"},
           { "query": "content.size:[10240 TO 102400]", "label": "SEARCH.FACET_QUERIES.SMALL", "group":"Size facet queries"},
@@ -130,6 +130,30 @@
           { "query": "content.size:[1048576 TO 16777216]", "label": "SEARCH.FACET_QUERIES.LARGE", "group":"Size facet queries" },
           { "query": "content.size:[16777216 TO 134217728]", "label": "SEARCH.FACET_QUERIES.XTRALARGE", "group":"Size facet queries" },
           { "query": "content.size:[134217728 TO MAX]", "label": "SEARCH.FACET_QUERIES.XXTRALARGE", "group":"Size facet queries" }
+        ]
+      },
+      "facetIntervals":{
+        "expanded": true,
+        "intervals":[
+          {
+            "label":"TheCreated",
+            "field":"cm:created",
+            "sets":[
+              { "label":"lastYear", "start":"2018", "end":"2019", "endInclusive":false },
+              { "label":"currentYear", "start":"NOW/YEAR", "end":"NOW/YEAR+1YEAR" },
+              { "label":"earlier", "start":"*", "end":"2018", "endInclusive":false }
+            ]
+          },
+          {
+            "label":"TheModified",
+            "field":"cm:modified",
+            "sets":[
+              { "label":"2017", "start":"2017", "end":"2018", "endInclusive":false },
+              { "label":"2017-2018", "start":"2017", "end":"2018", "endInclusive":true },
+              { "label":"currentYear", "start":"NOW/YEAR", "end":"NOW/YEAR+1YEAR" },
+              { "label":"earlierThan2017", "start":"*", "end":"2017", "endInclusive":false }
+            ]
+          }
         ]
       },
       "categories": [

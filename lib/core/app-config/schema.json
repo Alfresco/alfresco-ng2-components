@@ -980,6 +980,81 @@
             }
           }
         },
+        "facetIntervals": {
+          "type": "object",
+          "required": [
+            "intervals"
+          ],
+          "properties": {
+            "intervals": {
+              "description": "List of facet intervals",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "label",
+                  "field",
+                  "sets"
+                ],
+                "properties": {
+                  "label": {
+                    "description": "This specifies the label to use to identify the field facet.",
+                    "type": "string"
+                  },
+                  "field": {
+                    "description": "This specifies the field to facet on.",
+                    "type": "string"
+                  },
+                  "sets": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "label",
+                        "start",
+                        "end"
+                      ],
+                      "properties": {
+                        "label": {
+                          "description": "This specifies the label to use to identify the set.",
+                          "type": "string"
+                        },
+                        "start": {
+                          "description": "This specifies the start of the range.",
+                          "type": "string"
+                        },
+                        "end": {
+                          "description": "This specifies the end of the range.",
+                          "type": "string"
+                        },
+                        "startInclusive": {
+                          "description": "When true, the set will include values greater or equal to 'start'. The default value is true.",
+                          "type": "boolean"
+                        },
+                        "endInclusive": {
+                          "description": "When true, the set will include values less than or equal to 'end'. The default value is true.",
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  },
+                  "pageSize": {
+                    "type": "number",
+                    "description": "Display page size"
+                  },
+                  "mincount": {
+                    "type": "number",
+                    "description": "This specifies the minimum count required for a facet interval to be displayed. The default value is 1."
+                  }
+                }
+              }
+            },
+            "expanded": {
+              "description": "Toggles expanded state of the facet intervals",
+              "type": "boolean"
+            }
+          }
+        },
         "facetQueries": {
           "type": "object",
           "required": [
@@ -1017,6 +1092,7 @@
                     "type": "string"
                   },
                   "label": {
+                    "description": "Unique identifier for the query",
                     "type": "string"
                   },
                   "group": {
