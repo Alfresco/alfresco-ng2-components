@@ -207,4 +207,12 @@ describe('Search Filters', () => {
         expect(searchFiltersPage.isTypeFacetQueryGroupPresent()).toBe(false);
         expect(searchFiltersPage.isSizeFacetQueryGroupPresent()).toBe(false);
     });
+
+    it('[C297509] Should display search intervals under specified labels from config', () => {
+        browser.get(TestConfig.adf.url + '/search;q=*');
+
+        searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed()
+            .checkFacetIntervalsByModifiedIsDisplayed();
+    });
+
 });

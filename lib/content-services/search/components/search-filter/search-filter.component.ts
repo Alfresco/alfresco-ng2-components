@@ -41,8 +41,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private facetQueriesPageSize = this.DEFAULT_PAGE_SIZE;
     facetQueriesLabel: string = 'Facet Queries';
-    facetQueriesExpanded = false;
-    facetFieldsExpanded = false;
+    facetExpanded = {
+        'default': false
+    };
 
     selectedBuckets: Array<{ field: FacetField, bucket: FacetFieldBucket }> = [];
 
@@ -52,10 +53,13 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         if (queryBuilder.config && queryBuilder.config.facetQueries) {
             this.facetQueriesLabel = queryBuilder.config.facetQueries.label || 'Facet Queries';
             this.facetQueriesPageSize = queryBuilder.config.facetQueries.pageSize || this.DEFAULT_PAGE_SIZE;
-            this.facetQueriesExpanded = queryBuilder.config.facetQueries.expanded;
+            this.facetExpanded['query'] = queryBuilder.config.facetQueries.expanded;
         }
         if (queryBuilder.config && queryBuilder.config.facetFields) {
-            this.facetFieldsExpanded = queryBuilder.config.facetFields.expanded;
+            this.facetExpanded['field'] = queryBuilder.config.facetFields.expanded;
+        }
+        if (queryBuilder.config && queryBuilder.config.facetIntervals) {
+            this.facetExpanded['interval'] = queryBuilder.config.facetIntervals.expanded;
         }
 
         this.queryBuilder.updated.pipe(
@@ -146,7 +150,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     }
 
     shouldExpand(field: FacetField): boolean {
-        return field.type === 'query' ? this.facetQueriesExpanded : this.facetFieldsExpanded;
+        return this.facetExpanded[field.type] || this.facetExpanded['default'];
     }
 
     onDataLoaded(data: any) {
@@ -162,8 +166,9 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private parseFacets(context: ResultSetContext) {
         if (!this.responseFacets) {
             const responseFacetFields = this.parseFacetFields(context);
+            const responseFacetIntervals = this.parseFacetIntervals(context);
             const responseGroupedFacetQueries = this.parseFacetQueries(context);
-            this.responseFacets = responseFacetFields.concat(...responseGroupedFacetQueries);
+            this.responseFacets = responseFacetFields.concat(...responseGroupedFacetQueries, ...responseFacetIntervals);
 
         } else {
             this.responseFacets = this.responseFacets
@@ -184,12 +189,11 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
     }
 
-    private parseFacetFields(context: ResultSetContext): FacetField[] {
-        const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
-
+    private parseFacetItems(context: ResultSetContext, configFacetFields, itemType): FacetField[] {
         return configFacetFields.map((field) => {
-            const responseField = (context.facets || []).find((response) => response.type === 'field' && response.label === field.label) || {};
-            const responseBuckets = this.getResponseBuckets(responseField);
+            const responseField = (context.facets || []).find((response) => response.type === itemType && response.label === field.label) || {};
+            const responseBuckets = this.getResponseBuckets(responseField)
+                .filter(this.getFilterByMinCount(field.mincount));
 
             const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
             bucketList.filter = (bucket: FacetFieldBucket): boolean => {
@@ -212,6 +216,16 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         });
     }
 
+    private parseFacetFields(context: ResultSetContext): FacetField[] {
+        const configFacetFields = this.queryBuilder.config.facetFields && this.queryBuilder.config.facetFields.fields || [];
+        return this.parseFacetItems(context, configFacetFields, 'field');
+    }
+
+    private parseFacetIntervals(context: ResultSetContext): FacetField[] {
+        const configFacetIntervals = this.queryBuilder.config.facetIntervals && this.queryBuilder.config.facetIntervals.intervals || [];
+        return this.parseFacetItems(context, configFacetIntervals, 'interval');
+    }
+
     private parseFacetQueries(context: ResultSetContext): FacetField[] {
         const configFacetQueries = this.queryBuilder.config.facetQueries && this.queryBuilder.config.facetQueries.queries || [];
         const configGroups = configFacetQueries.reduce((acc, query) => {
@@ -225,10 +239,13 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }, []);
 
         const result = [];
+        const mincount = this.queryBuilder.config.facetQueries && this.queryBuilder.config.facetQueries.mincount;
+        const mincountFilter = this.getFilterByMinCount(mincount);
 
         Object.keys(configGroups).forEach((group) => {
             const responseField = (context.facets || []).find((response) => response.type === 'query' && response.label === group) || {};
-            const responseBuckets = this.getResponseQueryBuckets(responseField, configGroups[group]);
+            const responseBuckets = this.getResponseQueryBuckets(responseField, configGroups[group])
+                .filter(mincountFilter);
 
             const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, this.facetQueriesPageSize);
             bucketList.filter = (bucket: FacetFieldBucket): boolean => {
@@ -278,17 +295,21 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 display: respBucket.display,
                 label: respBucket.label
             };
-        }).filter((bucket) => {
-            let mincount = this.queryBuilder.config.facetQueries.mincount;
-            if (mincount === undefined) {
-                    mincount = 1;
-            }
-            return bucket.count >= mincount;
         });
     }
 
     private getCountValue(bucket: GenericBucket): number {
         return (!!bucket && !!bucket.metrics && bucket.metrics[0] && bucket.metrics[0].value && bucket.metrics[0].value.count)
             || 0;
+    }
+
+    private getFilterByMinCount(mincountInput: number) {
+        return (bucket) => {
+            let mincount = mincountInput;
+            if (mincount === undefined) {
+                mincount = 1;
+            }
+            return bucket.count >= mincount;
+        };
     }
 }

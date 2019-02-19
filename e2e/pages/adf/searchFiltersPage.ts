@@ -37,6 +37,8 @@ export class SearchFiltersPage {
         'mat-expansion-panel[data-automation-id="expansion-panel-My facet queries"]'));
     facetQueriesTypeGroup = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type facet queries"]'));
     facetQueriesSizeGroup = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Size facet queries"]'));
+    facetIntervalsByCreated = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-TheCreated"]'));
+    facetIntervalsByModified = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-TheModified"]'));
 
     checkSearchFiltersIsDisplayed() {
         Util.waitUntilElementIsVisible(this.searchFilters);
@@ -107,6 +109,16 @@ export class SearchFiltersPage {
 
     checkSizeFacetQueryGroupIsDisplayed() {
         this.searchCategoriesPage.checkFilterIsDisplayed(this.facetQueriesSizeGroup);
+        return this;
+    }
+
+    checkFacetIntervalsByCreatedIsDisplayed() {
+        this.searchCategoriesPage.checkFilterIsDisplayed(this.facetIntervalsByCreated);
+        return this;
+    }
+
+    checkFacetIntervalsByModifiedIsDisplayed() {
+        this.searchCategoriesPage.checkFilterIsDisplayed(this.facetIntervalsByModified);
         return this;
     }
 
