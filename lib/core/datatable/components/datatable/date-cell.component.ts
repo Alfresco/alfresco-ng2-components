@@ -27,12 +27,12 @@ import {
 
     template: `
         <ng-container>
-            <span title="{{ tooltip | date:'medium' }}" *ngIf="format === 'timeAgo' else standard_date">
+            <span title="{{ tooltip | date:'medium' }}" *ngIf="format === 'timeAgo' else standard_date" [attr.aria-label]=" value | adfTimeAgo: currentLocale ">
                 {{ value | adfTimeAgo: currentLocale }}
             </span>
         </ng-container>
         <ng-template #standard_date>
-            <span title="{{ tooltip | date:format }}">
+            <span [attr.aria-label]=" value | date:format " title="{{ tooltip | date:format }}">
                 {{ value | date:format }}
             </span>
         </ng-template>
