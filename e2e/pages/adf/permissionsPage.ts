@@ -95,7 +95,8 @@ export class PermissionsPage {
     }
 
     checkUserHasRoleSelected(user, role) {
-        return new DataTablePage().getRowByRowNumber(user).element(by.xpath(`ancestor::div/div[contains(@class, 'adf-data-table-cell')]/following-sibling::div[contains(@class, 'adf-data-table-cell')]//mat-select[aria-label=${role}]`));
+        return new DataTablePage().getRowByRowNumber(user).element(by.xpath(`ancestor::div/div[contains(@class, 'adf-data-table-cell')]` +
+            `/following-sibling::div[contains(@class, 'adf-data-table-cell')]//mat-select[aria-label=${role}]`));
     }
 
     clickRoleDropdown() {
