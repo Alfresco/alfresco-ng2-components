@@ -133,7 +133,7 @@ export class IdentityUserService {
     /**
      * Find users based on id input.
      * @param id Search query string
-     * @returns List of users
+     * @returns users object
      */
     findUserById(id: string): Observable<any> {
         if (id === '') {
