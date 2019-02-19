@@ -202,6 +202,8 @@
 
             <adf-document-list
                 #documentList
+                [adf-highlight]="searchTerm"
+                adf-highlight-selector=".adf-datatable-cell-value"
                 [permissionsStyle]="permissionsStyle"
                 [currentFolderId]="currentFolderId"
                 [contextMenuActions]="true"

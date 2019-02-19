@@ -28,7 +28,7 @@ import {
     AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode, InfinitePaginationComponent
+    PaginationComponent, FormValues, DisplayMode, InfinitePaginationComponent, HighlightDirective
 } from '@alfresco/adf-core';
 
 import {
@@ -150,6 +150,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     showNameColumn = true;
 
+    @Input()
+    searchTerm = '';
+
     @Output()
     documentListReady: EventEmitter<any> = new EventEmitter();
 
@@ -179,6 +182,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild(InfinitePaginationComponent)
     infinitePaginationComponent: InfinitePaginationComponent;
+
+    @ViewChild(HighlightDirective)
+    highlighter: HighlightDirective;
 
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
