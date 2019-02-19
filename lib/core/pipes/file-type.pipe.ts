@@ -15,17 +15,22 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
-import { DataTableCellComponent } from './datatable-cell.component';
+import { PipeTransform, Pipe } from '@angular/core';
 
-@Component({
-    selector: 'adf-filesize-cell',
-    template: `
-        <ng-container>
-            <span [attr.aria-label]=" value | adfFileSize " [title]="tooltip">{{ value | adfFileSize }}</span>
-        </ng-container>
-    `,
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-filesize-cell' }
+@Pipe({
+    name: 'fileType',
+    pure: true
 })
-export class FileSizeCellComponent extends DataTableCellComponent {}
+export class FileTypePipe implements PipeTransform {
+
+    transform(value: string) {
+
+        if ( value == null || value === undefined ) {
+            return '';
+        } else {
+            const fileInfo = value.substring(value.lastIndexOf('/') + 1).replace(/\.[a-z]+/, '');
+            return fileInfo.split('_').pop();
+        }
+    }
+
+}
