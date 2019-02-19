@@ -166,7 +166,7 @@ describe('Permissions Component', function () {
             done();
         });
 
-        it('[C274691, C276978] Should be able to add a user and change roles for the locally set permissions', () => {
+        it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', () => {
 
             permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Contributor');
             permissionsPage.clickRoleDropdown();
