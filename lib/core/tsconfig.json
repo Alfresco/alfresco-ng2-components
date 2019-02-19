@@ -20,12 +20,8 @@
     "baseUrl": "./",
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@alfresco/adf-extensions": [
-        "../extensions"
-      ],
-      "@alfresco/adf-extensions": [
-        "../extensions"
-      ]
+      "@alfresco/adf-content-services": ["../content-services"],
+      "@alfresco/adf-extensions": ["../extensions"]
     },
     "lib": [
       "es2016",

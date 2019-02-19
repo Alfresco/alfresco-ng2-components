@@ -6,7 +6,7 @@
     "entryFile": "src/public-api.ts",
     "flatModuleFile": "adf-process-services-cloud",
     "umdModuleIds": {
-      "@alfresco/js-api": "@alfresco/js-ap"
+      "@alfresco/js-api": "@alfresco/js-api"
     }
   }
 }

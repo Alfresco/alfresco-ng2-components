@@ -9,7 +9,7 @@
     "entryFile": "./public-api.ts",
     "flatModuleFile": "adf-core",
     "umdModuleIds": {
-      "@alfresco/js-api": "@alfresco/js-ap",
+      "@alfresco/js-api": "@alfresco/js-api",
       "minimatch": "minimatch-browser",
       "@angular/platform-browser/animations": "@angular/platform-browser/animations",
       "@angular/material": "@angular/material",

@@ -76,7 +76,7 @@
                     mat-icon-button
                     title="{{ 'ADF_VIEWER.ACTIONS.DOWNLOAD' | translate }}"
                     data-automation-id="adf-toolbar-download"
-                    [adfNodeDownload]="node">
+                    [adfNodeDownload]="nodeEntry">
                     <mat-icon>file_download</mat-icon>
                 </button>
 
@@ -201,7 +201,7 @@
                                 <adf-preview-extension
                                     *ngIf="extension === ext.fileExtension"
                                     [id]="ext.component"
-                                    [node]="node"
+                                    [node]="nodeEntry.entry"
                                     [url]="urlFileContent"
                                     [extension]="extension"
                                     [attr.data-automation-id]="ext.component">

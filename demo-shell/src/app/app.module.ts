@@ -101,7 +101,6 @@ import { AcaMonacoModule } from 'adf-monaco-extension';
         ChartsModule,
         MonacoEditorModule.forRoot(),
         ProcessServicesCloudModule,
-        AppExtensionsModule.forRoot(),
         GroupCloudModule
     ],
     declarations: [

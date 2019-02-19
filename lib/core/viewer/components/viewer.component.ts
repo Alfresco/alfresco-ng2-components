@@ -202,7 +202,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     viewerType = 'unknown';
     isLoading = false;
-    node: NodeEntry;
+    nodeEntry: NodeEntry;
 
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
     externalExtensions: string[] = [];
@@ -292,7 +292,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             } else if (this.nodeId) {
                 this.apiService.nodesApi.getNode(this.nodeId, { include: ['allowableOperations'] }).then(
                     (node: NodeEntry) => {
-                        this.node = node;
+                        this.nodeEntry = node;
                         this.setUpNodeFile(node.entry).then(() => {
                             this.isLoading = false;
                         });
