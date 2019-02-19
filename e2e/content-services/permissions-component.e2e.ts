@@ -25,7 +25,6 @@ import { ContentListPage } from '../pages/adf/dialog/contentListPage';
 import AlfrescoApi = require('alfresco-js-api-node');
 import { FileModel } from '../models/ACS/fileModel';
 import { UploadActions } from '../actions/ACS/upload.actions';
-import { DataTablePage } from '../pages/adf/dataTablePage';
 import { Util } from '../util/util';
 import { browser } from 'protractor';
 
@@ -36,7 +35,6 @@ describe('Permissions Component', function () {
     let permissionsPage = new PermissionsPage();
     let uploadActions = new UploadActions();
     let contentList = new ContentListPage();
-    let dataTablePage = new DataTablePage();
     let acsUser, acsUser2, file;
 
     let fileModel = new FileModel({
@@ -50,24 +48,25 @@ describe('Permissions Component', function () {
     };
 
     let groupId;
+    let alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: TestConfig.adf.url
+    });
+
+    acsUser = new AcsUserModel();
+
+    acsUser2 = new AcsUserModel();
+    const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + acsUser2.getId() + ' / role -> Contributor';
 
     beforeAll(async (done) => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: TestConfig.adf.url
-        });
 
-        acsUser = new AcsUserModel();
+        await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        acsUser2 = new AcsUserModel();
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser2);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser2);
-
-        let group = await this.alfrescoJsApi.core.groupsApi.createGroup(groupBody);
+        let group = await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
 
         groupId = group.entry.id;
 
@@ -76,92 +75,131 @@ describe('Permissions Component', function () {
         done();
     });
 
-    beforeEach(async (done) => {
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
-        file = await uploadActions.uploadFile(this.alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
-
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.goToDocumentList();
-
-        contentList.checkContentIsDisplayed(fileModel.name);
-        contentList.rightClickOnRowNamed(fileModel.name);
-        contentList.pressContextMenuActionNamed('Permission');
-
-        done();
-    });
-
-    afterEach(async (done) => {
-        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, file.entry.id);
-
-        done();
-    });
-
     afterAll(async (done) => {
-        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.core.groupsApi.deleteGroup(groupId);
+        await alfrescoJsApi.core.groupsApi.deleteGroup(groupId);
         done();
     });
 
-    it('[C286272] Should be able to see results when searching for a user', () => {
-        permissionsPage.checkAddPermissionButtonIsDisplayed();
-        permissionsPage.clickAddPermissionButton();
-        permissionsPage.checkAddPermissionDialogIsDisplayed();
-        permissionsPage.checkSearchUserInputIsDisplayed();
-        permissionsPage.searchUserOrGroup('a');
-        permissionsPage.checkResultListIsDisplayed();
+    describe('Inherit and assigning permissions', function () {
+
+        beforeEach(async (done) => {
+            await alfrescoJsApi.login(acsUser.id, acsUser.password);
+
+            file = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+
+            contentList.checkContentIsDisplayed(fileModel.name);
+            contentList.rightClickOnRowNamed(fileModel.name);
+            contentList.pressContextMenuActionNamed('Permission');
+
+            done();
+        });
+
+        afterEach(async (done) => {
+            await uploadActions.deleteFilesOrFolder(alfrescoJsApi, file.entry.id);
+
+            done();
+        });
+
+        it('[C286272] Should be able to see results when searching for a user', () => {
+            permissionsPage.checkAddPermissionButtonIsDisplayed();
+            permissionsPage.clickAddPermissionButton();
+            permissionsPage.checkAddPermissionDialogIsDisplayed();
+            permissionsPage.checkSearchUserInputIsDisplayed();
+            permissionsPage.searchUserOrGroup('a');
+            permissionsPage.checkResultListIsDisplayed();
+        });
+
+        it('[C276979] Should be able to give permissions to a group of people', () => {
+            permissionsPage.checkAddPermissionButtonIsDisplayed();
+            permissionsPage.clickAddPermissionButton();
+            permissionsPage.checkAddPermissionDialogIsDisplayed();
+            permissionsPage.checkSearchUserInputIsDisplayed();
+            permissionsPage.searchUserOrGroup('GROUP_' + groupBody.id);
+            permissionsPage.clickUserOrGroup('GROUP_' + groupBody.id);
+            permissionsPage.checkUserOrGroupIsAdded('GROUP_' + groupBody.id);
+        });
+
+        it('[C268974] Inherit Permission', () => {
+            permissionsPage.checkPermissionInheritedButtonIsDisplayed();
+            expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
+            permissionsPage.checkPermissionsDatatableIsDisplayed();
+            permissionsPage.clickPermissionInheritedButton();
+            expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Inherit Permission');
+            permissionsPage.checkNoPermissionsIsDisplayed();
+            permissionsPage.clickPermissionInheritedButton();
+            expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
+            permissionsPage.checkPermissionsDatatableIsDisplayed();
+        });
     });
 
-    it('[C276979] Should be able to give permissions to a group of people', () => {
-        permissionsPage.checkAddPermissionButtonIsDisplayed();
-        permissionsPage.clickAddPermissionButton();
-        permissionsPage.checkAddPermissionDialogIsDisplayed();
-        permissionsPage.checkSearchUserInputIsDisplayed();
-        permissionsPage.searchUserOrGroup('GROUP_' + groupBody.id);
-        permissionsPage.clickUserOrGroup('GROUP_' + groupBody.id);
-        permissionsPage.checkUserOrGroupIsAdded('GROUP_' + groupBody.id);
-    });
+    describe('Changing and duplicate Permissions', function () {
 
-    it('[C268974] Inherit Permission', () => {
-        permissionsPage.checkPermissionInheritedButtonIsDisplayed();
-        expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
-        permissionsPage.checkPermissionsDatatableIsDisplayed();
-        permissionsPage.clickPermissionInheritedButton();
-        expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Inherit Permission');
-        permissionsPage.checkNoPermissionsIsDisplayed();
-        permissionsPage.clickPermissionInheritedButton();
-        expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
-        permissionsPage.checkPermissionsDatatableIsDisplayed();
-    });
+        beforeEach(async (done) => {
+            await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-    it('[C274691] Should display dropdown choice for role into permission list for locally set permissions', () => {
-        permissionsPage.checkAddPermissionButtonIsDisplayed();
-        permissionsPage.clickAddPermissionButton();
-        permissionsPage.checkAddPermissionDialogIsDisplayed();
-        permissionsPage.checkSearchUserInputIsDisplayed();
-        permissionsPage.searchUserOrGroup(acsUser2.getId());
-        permissionsPage.clickUserOrGroup(acsUser2.getFirstName());
-        permissionsPage.checkUserOrGroupIsAdded(acsUser2.getId());
-        permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Contributor');
-        permissionsPage.clickRoleDropdown();
-        expect(permissionsPage.getRoleDropdownOptions().count()).toBe(5);
-        expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('Contributor');
-        expect(permissionsPage.getRoleDropdownOptions().get(1).getText()).toBe('Collaborator');
-        expect(permissionsPage.getRoleDropdownOptions().get(2).getText()).toBe('Coordinator');
-        expect(permissionsPage.getRoleDropdownOptions().get(3).getText()).toBe('Editor');
-        expect(permissionsPage.getRoleDropdownOptions().get(4).getText()).toBe('Consumer');
-        permissionsPage.selectOption('Collaborator');
-        permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Collaborator');
-        permissionsPage.clickRoleDropdown();
-        permissionsPage.selectOption('Coordinator');
-        permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Coordinator');
-        permissionsPage.clickRoleDropdown();
-        permissionsPage.selectOption('Editor');
-        permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Editor');
-        permissionsPage.clickRoleDropdown();
-        permissionsPage.selectOption('Consumer');
-        permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Consumer');
+            file = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+
+            contentList.checkContentIsDisplayed(fileModel.name);
+            contentList.rightClickOnRowNamed(fileModel.name);
+            contentList.pressContextMenuActionNamed('Permission');
+            permissionsPage.checkAddPermissionButtonIsDisplayed();
+            permissionsPage.clickAddPermissionButton();
+            permissionsPage.checkAddPermissionDialogIsDisplayed();
+            permissionsPage.checkSearchUserInputIsDisplayed();
+            permissionsPage.searchUserOrGroup(acsUser2.getId());
+            permissionsPage.clickUserOrGroup(acsUser2.getFirstName());
+            permissionsPage.checkUserOrGroupIsAdded(acsUser2.getId());
+            done();
+        });
+
+        afterEach(async (done) => {
+            await uploadActions.deleteFilesOrFolder(alfrescoJsApi, file.entry.id);
+
+            done();
+        });
+
+        it('[C274691, C276978] Should be able to add a user and change roles for the locally set permissions', () => {
+
+            permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Contributor');
+            permissionsPage.clickRoleDropdown();
+            expect(permissionsPage.getRoleDropdownOptions().count()).toBe(5);
+            expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('Contributor');
+            expect(permissionsPage.getRoleDropdownOptions().get(1).getText()).toBe('Collaborator');
+            expect(permissionsPage.getRoleDropdownOptions().get(2).getText()).toBe('Coordinator');
+            expect(permissionsPage.getRoleDropdownOptions().get(3).getText()).toBe('Editor');
+            expect(permissionsPage.getRoleDropdownOptions().get(4).getText()).toBe('Consumer');
+            permissionsPage.selectOption('Collaborator');
+            permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Collaborator');
+            permissionsPage.clickRoleDropdown();
+            permissionsPage.selectOption('Coordinator');
+            permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Coordinator');
+            permissionsPage.clickRoleDropdown();
+            permissionsPage.selectOption('Editor');
+            permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Editor');
+            permissionsPage.clickRoleDropdown();
+            permissionsPage.selectOption('Consumer');
+            permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Consumer');
+
+        });
+
+        it('[C276980] Should not be able to duplicate User or Group to the locally set permissions', () => {
+
+            permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Contributor');
+            permissionsPage.clickAddPermissionButton();
+            permissionsPage.checkAddPermissionDialogIsDisplayed();
+            permissionsPage.checkSearchUserInputIsDisplayed();
+            permissionsPage.searchUserOrGroup(acsUser2.getId());
+            permissionsPage.clickUserOrGroup(acsUser2.getFirstName());
+            expect(permissionsPage.getAssignPermissionErrorText()).toBe(duplicateUserPermissionMessage);
+        });
 
     });
 

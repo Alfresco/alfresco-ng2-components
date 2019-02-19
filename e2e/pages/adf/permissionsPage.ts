@@ -32,6 +32,7 @@ export class PermissionsPage {
     noPermissions = element(by.css('div[id="adf-no-permissions-template"]'));
     roleDropdown = element(by.id('adf-select-role-permission'));
     roleDropdownOptions = element.all(by.css('.mat-option-text'));
+    assignPermissionError = element(by.css('simple-snack-bar'));
 
     checkAddPermissionButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.addPermissionButton);
@@ -115,5 +116,10 @@ export class PermissionsPage {
         Util.waitUntilElementIsClickable(selectProcessDropdown);
         selectProcessDropdown.click();
         return this;
+    }
+
+    getAssignPermissionErrorText() {
+        Util.waitUntilElementIsVisible(this.assignPermissionError);
+        return this.assignPermissionError.getText();
     }
 }
