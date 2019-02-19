@@ -23,13 +23,13 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { StartTasksCloudComponent } from '../pages/adf/process-cloud/startTasksCloudComponent';
 import { Util } from '../util/util';
-import {TaskDetailsPage} from "../pages/adf/demo-shell/process-services/taskDetailsPage";
+import { TaskDetailsPage } from '../pages/adf/demo-shell/process-services/taskDetailsPage';
 
 describe('Start Task', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
-    let taskDetailsPage = new TaskDetailsPage();
+    const taskDetailsPage = new TaskDetailsPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudComponent();
     const tasksCloudDemoPage = new TasksCloudDemoPage();

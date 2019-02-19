@@ -30,7 +30,7 @@ export class TaskDetailsPage {
 
     checkPropertyIsDisplayed(propertyName) {
         Util.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="header-${propertyName}"]`)));
-        return element(by.css(`div[data-automation-id="header-${propertyName}"]`))
+        return element(by.css(`div[data-automation-id="header-${propertyName}"]`));
     }
 
     getPropertyLabel(propertyLabel) {
