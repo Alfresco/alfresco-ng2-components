@@ -22,6 +22,7 @@
         "allowSyntheticDefaultImports": true,
         "paths": {
             "@alfresco/adf-process-services-cloud": ["./process-services-cloud/"],
+            "@alfresco/adf-testing": ["./testing/"],
             "@alfresco/adf-process-services": ["./process-services/"],
             "@alfresco/adf-content-services": ["./content-services/"],
             "@alfresco/adf-extensions": ["./extensions/"],

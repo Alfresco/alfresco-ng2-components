@@ -34,6 +34,9 @@
     },
     "extensions": {
       "tags": []
+    },
+    "testing": {
+      "tags": []
     }
   }
 }
