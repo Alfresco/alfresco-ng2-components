@@ -92,6 +92,7 @@ describe('Edit task filters and task list properties', () => {
             processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             await processInstancesService.init(user, password);
             processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            console.log("bbb: ", processInstance);
             done();
         });
 
@@ -141,7 +142,7 @@ describe('Edit task filters and task list properties', () => {
             expect(tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
-        it('[C297479] Should be able to see only tasks that are part of a specific process when processDefinitionId is set', () => {
+        it('[C297480] Should be able to see only tasks that are part of a specific process when processInstanceId is set', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
@@ -150,13 +151,13 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
 
-            //verifica si taskul in sine daca apare: //tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsDisplayedByName(createdTask.entry.name);
+            //verifica si taskul in sine daca apare si ca celalat nu apare eventual: //tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsDisplayedByName(createdTask.entry.name);
             tasksCloudDemoPage.taskListCloudComponent().getAllRowsByColumn('ProcessDefinitionId').then(function (list) {
                 expect (list.every(elem => elem == processDefinition.list.entries[0].entry.id)).toEqual(true);
             });
         });
 
-        it('[C291909] Should be able to see No tasks found when typing an invalid processDefinitionId', () => {
+        it('[C297682] Should be able to see No tasks found when typing an invalid processDefinitionId', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 

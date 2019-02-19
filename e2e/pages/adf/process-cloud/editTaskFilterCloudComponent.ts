@@ -26,6 +26,7 @@ export class EditTaskFilterCloudComponent {
     assignment = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignment"]'));
     taskName = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
     processDefinitionId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
+    processInstanceId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
     saveButton = element(by.css('button[id="adf-save-id"]'));
     saveAsButton = element(by.css('button[id="adf-save-as-id"]'));
     deleteButton = element(by.css('button[id="adf-delete-id"]'));
@@ -196,6 +197,18 @@ export class EditTaskFilterCloudComponent {
     }
 
     setProcessDefinitionId(option) {
+        Util.waitUntilElementIsVisible(this.processDefinitionId);
+        this.processDefinitionId.clear();
+        this.processDefinitionId.sendKeys(option);
+        this.processDefinitionId.sendKeys(protractor.Key.ENTER);
+        return this;
+    }
+
+    getTaskName() {
+        return this.processDefinitionId.getAttribute('value');
+    }
+
+    setProcessInstanceId(option) { // nu uita sa faci o metoda generala in care sa pui clear, sendKeys, etc
         Util.waitUntilElementIsVisible(this.processDefinitionId);
         this.processDefinitionId.clear();
         this.processDefinitionId.sendKeys(option);
