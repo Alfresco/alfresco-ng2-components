@@ -339,9 +339,9 @@ describe('PeopleCloudComponent', () => {
     }));
     it('should emit warning if are invalid users', async ((done) => {
         const warningSpy = spyOn(component.warning, 'emit').and.returnValue(of(false));
-        component.mode = "single";
+        component.mode = 'single';
         component.validate = true;
-        component.preSelectUsers = <any> [{username: "invalidUsername"}];
+        component.preSelectUsers = <any> [{username: 'invalidUsername'}];
         fixture.detectChanges();
         fixture.whenStable().then( () => {
             component.loadSinglePreselectUser().then( (result) => {
@@ -352,7 +352,7 @@ describe('PeopleCloudComponent', () => {
     }));
     it('should filter user by id if validate true', async((done) => {
         const findByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve(mockUsers));
-        component.mode = "multiple";
+        component.mode = 'multiple';
         component.validate = true;
         component.preSelectUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
         fixture.detectChanges();
@@ -366,7 +366,7 @@ describe('PeopleCloudComponent', () => {
     }));
     it('should filter user by username if validate true', async((done) => {
         const findUserByUsernameSpy = spyOn(identityService, 'findUserByUsername').and.returnValue(Promise.resolve(mockUsers));
-        component.mode = "multiple";
+        component.mode = 'multiple';
         component.validate = true;
         component.preSelectUsers = <any> [{username: mockUsers[1].username}, {username: mockUsers[2].username}];
         fixture.detectChanges();
@@ -381,7 +381,7 @@ describe('PeopleCloudComponent', () => {
 
     it('should filter user by email if validate true', async((done) => {
         const findUserByEmailSpy = spyOn(identityService, 'findUserByEmail').and.returnValue(Promise.resolve(mockUsers));
-        component.mode = "multiple";
+        component.mode = 'multiple';
         component.validate = true;
         component.preSelectUsers = <any> [{email: mockUsers[1].email}, {email: mockUsers[2].email}];
         fixture.detectChanges();
