@@ -23,11 +23,13 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { StartTasksCloudComponent } from '../pages/adf/process-cloud/startTasksCloudComponent';
 import { Util } from '../util/util';
+import {TaskDetailsPage} from "../pages/adf/demo-shell/process-services/taskDetailsPage";
 
 describe('Start Task', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
+    let taskDetailsPage = new TaskDetailsPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudComponent();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
@@ -127,6 +129,32 @@ describe('Start Task', () => {
             .setStateFilterDropDown('CREATED')
             .clearAssignment();
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(standaloneTaskName2);
+    });
+
+    it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
+
+        tasksCloudDemoPage.openNewTaskForm();
+        startTask.addName(standaloneTaskName2);
+        startTask.clearField(startTask.assignee);
+        startTask.clickStartButton();
+        tasksCloudDemoPage.editTaskFilterCloudComponent()
+            .clickCustomiseFilterHeader()
+            .setStateFilterDropDown('CREATED')
+            .clearAssignment();
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(standaloneTaskName2);
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then(function (list) {
+            let taskName = list[0];
+            expect(taskName).toBe(standaloneTaskName2);
+            });
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsIdColumn().then(function (list) {
+            let taskId = list[0];
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByContentName(standaloneTaskName2);
+            taskDetailsPage.checkTaskDetailsHeader(taskId);
+        });
+        expect(taskDetailsPage.getPropertyLabel('assignee')).toBe('Assignee');
+        expect(taskDetailsPage.getPropertyValue('assignee')).toBe('No assignee');
+
     });
 
 });
