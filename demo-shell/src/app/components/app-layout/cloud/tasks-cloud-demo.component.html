@@ -7,7 +7,9 @@
         (filterChange)="onFilterChange($event)">
     </adf-cloud-edit-task-filter>
     <div fxLayout="column" fxFlex fxLayoutAlign="space-between" *ngIf="editedFilter">
-        <adf-cloud-task-list #taskCloud
+        <adf-cloud-task-list 
+            fxFlex
+            class="adf-cloud-layout-overflow"
             [applicationName]="editedFilter.appName"
             [processDefinitionId]="editedFilter.processDefinitionId"
             [processInstanceId]="editedFilter.processInstanceId"
@@ -23,12 +25,14 @@
             [multiselect]="multiselect"
             [selectionMode]="selectionMode"
             (rowClick)="onRowClick($event)"
-            (rowsSelected)="onRowsSelected($event)">
+            (rowsSelected)="onRowsSelected($event)"
+            #taskCloud>
         </adf-cloud-task-list>
-        <adf-pagination [target]="taskCloud"
-                        (changePageSize)="onChangePageSize($event)"
-                        (nextPage)="resetSelectedRows()"
-                        (prevPage)="resetSelectedRows()">
+        <adf-pagination 
+            [target]="taskCloud"
+            (changePageSize)="onChangePageSize($event)"
+            (nextPage)="resetSelectedRows()"
+            (prevPage)="resetSelectedRows()">
         </adf-pagination>
         <div *ngIf="testingMode">
             Selected rows:
