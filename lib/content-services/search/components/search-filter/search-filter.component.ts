@@ -315,22 +315,23 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     }
 
     private getCorrespondingFilterQuery (field: FacetField, bucketLabel: string): string {
-        if (!field.field || !bucketLabel) {
-            return null;
-        }
+        let filterQuery = null;
 
-        if (!field.sets) {
-            return `${field.field}:"${bucketLabel}"`;
+        if (field.field && bucketLabel) {
 
-        } else {
-            const configSet = field.sets.find((set) => bucketLabel === set.label);
+            if (field.sets) {
+                const configSet = field.sets.find((set) => bucketLabel === set.label);
 
-            if (configSet) {
-                return this.buildIntervalQuery(field.field, configSet);
+                if (configSet) {
+                    filterQuery = this.buildIntervalQuery(field.field, configSet);
+                }
+
+            } else {
+                filterQuery = `${field.field}:"${bucketLabel}"`;
             }
         }
 
-        return null;
+        return filterQuery;
     }
 
     private buildIntervalQuery(fieldName: string, interval: any): string {
