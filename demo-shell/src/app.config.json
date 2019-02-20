@@ -612,39 +612,39 @@
         "presets": {
             "default": [
                 {
-                    "key": "id",
+                    "key": "entry.id",
                     "type": "text",
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.ID",
                     "sortable": true
                 },
                 {
-                    "key": "name",
+                    "key": "entry.name",
                     "type": "text",
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.NAME",
                     "sortable": true,
                     "cssClass": "full-width name-column ellipsis-cell"
                 },
                 {
-                    "key": "status",
+                    "key": "entry.status",
                     "type": "text",
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.STATUS",
                     "sortable": true
                 },
                 {
-                    "key": "priority",
+                    "key": "entry.priority",
                     "type": "text",
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.PRIORITY",
                     "sortable": true
                 },
                 {
-                    "key": "createdDate",
+                    "key": "entry.createdDate",
                     "type": "date",
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.CREATED_DATE",
                     "sortable": true,
                     "format": "timeAgo"
                 },
                 {
-                    "key": "lastModified",
+                    "key": "entry.lastModified",
                     "type": "date",
                     "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.LAST_MODIFIED",
                     "sortable": true,
@@ -657,25 +657,25 @@
         "presets": {
             "default": [
                 {
-                    "key": "id",
+                    "key": "entry.id",
                     "type": "text",
                     "title": "ADF_CLOUD_PROCESS_LIST.PROPERTIES.ID",
                     "sortable": true
                 },
                 {
-                    "key": "name",
+                    "key": "entry.name",
                     "type": "text",
                     "title": "ADF_CLOUD_PROCESS_LIST.PROPERTIES.NAME",
                     "sortable": true
                 },
                 {
-                    "key": "status",
+                    "key": "entry.status",
                     "type": "text",
                     "title": "ADF_CLOUD_PROCESS_LIST.PROPERTIES.STATUS",
                     "sortable": true
                 },
                 {
-                    "key": "startDate",
+                    "key": "entry.startDate",
                     "type": "date",
                     "title": "ADF_CLOUD_PROCESS_LIST.PROPERTIES.START_DATE",
                     "sortable": true,

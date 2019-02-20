@@ -75,9 +75,9 @@ describe('Activiti ProcessList Cloud Service', () => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.list.entries.length).toBe(3);
-            expect(res.list.entries[0].appName).toBe('easy-peasy-japanesey');
-            expect(res.list.entries[1].appName).toBe('easy-peasy-japanesey');
-            expect(res.list.entries[1].appName).toBe('easy-peasy-japanesey');
+            expect(res.list.entries[0].entry.appName).toBe('easy-peasy-japanesey');
+            expect(res.list.entries[1].entry.appName).toBe('easy-peasy-japanesey');
+            expect(res.list.entries[1].entry.appName).toBe('easy-peasy-japanesey');
             done();
         });
     });

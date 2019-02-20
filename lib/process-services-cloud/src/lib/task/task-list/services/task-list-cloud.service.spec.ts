@@ -77,8 +77,8 @@ describe('Activiti TaskList Cloud Service', () => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();
             expect(res.list.entries.length).toBe(2);
-            expect(res.list.entries[0].appName).toBe('save-the-cheerleader');
-            expect(res.list.entries[1].appName).toBe('save-the-cheerleader');
+            expect(res.list.entries[0].entry.appName).toBe('save-the-cheerleader');
+            expect(res.list.entries[1].entry.appName).toBe('save-the-cheerleader');
             done();
         });
     });

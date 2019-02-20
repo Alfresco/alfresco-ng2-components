@@ -21,20 +21,22 @@ export const fakeProcessCloudList = {
     list: {
         entries: [
             {
-                appName: 'easy-peasy-japanesey',
-                appVersion: '',
-                id: '69eddfa7-d781-11e8-ae24-0a58646001fa',
-                name: 'starring',
-                description: null,
-                processDefinitionId: 'BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa',
-                processDefinitionKey: 'BasicProcess',
-                initiator: 'devopsuser',
-                startDate: 1540381146275,
-                businessKey: 'MyBusinessKey',
-                status: 'RUNNING',
-                lastModified: 1540381146276,
-                lastModifiedTo: null,
-                lastModifiedFrom: null
+                entry: {
+                    appName: 'easy-peasy-japanesey',
+                    appVersion: '',
+                    id: '69eddfa7-d781-11e8-ae24-0a58646001fa',
+                    name: 'starring',
+                    description: null,
+                    processDefinitionId: 'BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa',
+                    processDefinitionKey: 'BasicProcess',
+                    initiator: 'devopsuser',
+                    startDate: 1540381146275,
+                    businessKey: 'MyBusinessKey',
+                    status: 'RUNNING',
+                    lastModified: 1540381146276,
+                    lastModifiedTo: null,
+                    lastModifiedFrom: null
+                }
             },
             {
                 entry: {

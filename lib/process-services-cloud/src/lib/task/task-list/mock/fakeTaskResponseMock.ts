@@ -83,26 +83,28 @@ export let fakeGlobalTask = {
     list: {
         entries: [
             {
-                appName: 'test-ciprian2',
-                appVersion: '',
-                id: '11fe013d-c263-11e8-b75b-0a5864600540',
-                assignee: null,
-                name: 'standalone-subtask',
-                description: null,
-                createdDate: 1538059139420,
-                dueDate: null,
-                claimedDate: null,
-                priority: 0,
-                category: null,
-                processDefinitionId: null,
-                processInstanceId: null,
-                status: 'CREATED',
-                owner: 'devopsuser',
-                parentTaskId: '71fda20b-c25b-11e8-b75b-0a5864600540',
-                lastModified: 1538059139420,
-                lastModifiedTo: null,
-                lastModifiedFrom: null,
-                standAlone: true
+                entry: {
+                    appName: 'test-ciprian2',
+                    appVersion: '',
+                    id: '11fe013d-c263-11e8-b75b-0a5864600540',
+                    assignee: null,
+                    name: 'standalone-subtask',
+                    description: null,
+                    createdDate: 1538059139420,
+                    dueDate: null,
+                    claimedDate: null,
+                    priority: 0,
+                    category: null,
+                    processDefinitionId: null,
+                    processInstanceId: null,
+                    status: 'CREATED',
+                    owner: 'devopsuser',
+                    parentTaskId: '71fda20b-c25b-11e8-b75b-0a5864600540',
+                    lastModified: 1538059139420,
+                    lastModifiedTo: null,
+                    lastModifiedFrom: null,
+                    standAlone: true
+                }
             }
         ],
         pagination: {

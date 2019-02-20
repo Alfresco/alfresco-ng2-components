@@ -226,7 +226,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     }
 
     onRowClick(item: DataRowEvent) {
-        this.currentInstanceId = item.value.getValue('id');
+        this.currentInstanceId = item.value.getValue('entry.id');
         this.rowClick.emit(this.currentInstanceId);
     }
 
@@ -243,7 +243,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     onRowKeyUp(event: CustomEvent) {
         if (event.detail.keyboardEvent.key === 'Enter') {
             event.preventDefault();
-            this.currentInstanceId = event.detail.row.getValue('id');
+            this.currentInstanceId = event.detail.row.getValue('entry.id');
             this.rowClick.emit(this.currentInstanceId);
         }
     }
