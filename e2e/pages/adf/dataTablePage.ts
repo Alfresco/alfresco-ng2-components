@@ -219,19 +219,19 @@ export class DataTablePage {
     }
 
     checkContentIsDisplayed(content) {
-        let row = element.all(by.cssContainingText(`[data-automation-id*="${content}"]`, content)).first();
-        Util.waitUntilElementIsVisible(this.tableBody.element(row));
+        let row = by.cssContainingText(`[data-automation-id*="${content}"]`, content);
+        Util.waitUntilElementIsVisible(this.tableBody.all(row).first());
         return this;
     }
 
     checkContentIsNotDisplayed(content) {
-        let row = element.all(by.cssContainingText(`[data-automation-id*="${content}"]`, content)).first();
-        Util.waitUntilElementIsNotOnPage(this.tableBody.element(row));
+        let row = by.cssContainingText(`[data-automation-id*="${content}"]`, content);
+        Util.waitUntilElementIsNotOnPage(this.tableBody.all(row).first());
         return this;
     }
 
     selectRowByContentName(content) {
-        let row = element.all(by.cssContainingText(`[data-automation-id*="${content}"]`, content)).first();
+        let row = by.cssContainingText(`[data-automation-id*="${content}"]`, content);
         Util.waitUntilElementIsVisible(this.tableBody.element(row));
         this.tableBody.element(row).click();
         return this;
