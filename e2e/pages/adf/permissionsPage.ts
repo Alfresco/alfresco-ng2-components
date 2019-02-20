@@ -20,6 +20,10 @@ import { element, by } from 'protractor';
 import { Util } from '../../util/util';
 import { DataTablePage } from './dataTablePage';
 
+let column = {
+    role: 'Role'
+};
+
 export class PermissionsPage {
 
     addPermissionButton = element(by.css("button[data-automation-id='adf-add-permission-button']"));
@@ -95,9 +99,10 @@ export class PermissionsPage {
         return new DataTablePage(element(by.css('[class*="adf-datatable-permission"]')));
     }
 
-    checkUserHasRoleSelected(user, role) {
-        return new DataTablePage().getRowByRowNumber(user).element(by.xpath(`ancestor::div/div[contains(@class, 'adf-data-table-cell')]` +
-            `/following-sibling::div[contains(@class, 'adf-data-table-cell')]//mat-select[aria-label=${role}]`));
+    getRoleCellValue(rowName) {
+        let locator = new DataTablePage().getCellByNameAndColumn(rowName, column.role);
+        Util.waitUntilElementIsVisible(locator);
+        return locator.getText();
     }
 
     clickRoleDropdown() {

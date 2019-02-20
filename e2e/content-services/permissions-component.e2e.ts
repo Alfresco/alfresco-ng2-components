@@ -168,7 +168,7 @@ describe('Permissions Component', function () {
 
         it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', () => {
 
-            permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Contributor');
+            expect(permissionsPage.getRoleCellValue(acsUser2.getId())).toEqual('Contributor');
             permissionsPage.clickRoleDropdown();
             expect(permissionsPage.getRoleDropdownOptions().count()).toBe(5);
             expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('Contributor');
@@ -177,22 +177,22 @@ describe('Permissions Component', function () {
             expect(permissionsPage.getRoleDropdownOptions().get(3).getText()).toBe('Editor');
             expect(permissionsPage.getRoleDropdownOptions().get(4).getText()).toBe('Consumer');
             permissionsPage.selectOption('Collaborator');
-            permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Collaborator');
+            expect(permissionsPage.getRoleCellValue(acsUser2.getId())).toEqual('Collaborator');
             permissionsPage.clickRoleDropdown();
             permissionsPage.selectOption('Coordinator');
-            permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Coordinator');
+            expect(permissionsPage.getRoleCellValue(acsUser2.getId())).toEqual('Coordinator');
             permissionsPage.clickRoleDropdown();
             permissionsPage.selectOption('Editor');
-            permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Editor');
+            expect(permissionsPage.getRoleCellValue(acsUser2.getId())).toEqual('Editor');
             permissionsPage.clickRoleDropdown();
             permissionsPage.selectOption('Consumer');
-            permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Consumer');
+            expect(permissionsPage.getRoleCellValue(acsUser2.getId())).toEqual('Consumer');
 
         });
 
         it('[C276980] Should not be able to duplicate User or Group to the locally set permissions', () => {
 
-            permissionsPage.checkUserHasRoleSelected(acsUser2.getId(), 'Contributor');
+            expect(permissionsPage.getRoleCellValue(acsUser2.getId())).toEqual('Contributor');
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
             permissionsPage.checkSearchUserInputIsDisplayed();
