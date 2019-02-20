@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-export * from './lib/process-services-cloud.module';
-
-export * from './lib/app/public-api';
-export * from './lib/process/public-api';
-export * from './lib/task/public-api';
-export * from './lib/group/public-api';
+export * from './viewer/preview-extension.component';
+export * from './dynamic-column/dynamic-column.component';
+export * from './dynamic-component/dynamic.component';
+export * from './dynamic-tab/dynamic-tab.component';

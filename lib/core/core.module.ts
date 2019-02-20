@@ -52,10 +52,12 @@ import { startupServiceFactory } from './services/startup-service-factory';
 import { SortingPickerModule } from './sorting-picker/sorting-picker.module';
 import { IconModule } from './icon/icon.module';
 import { TranslateLoaderService } from './services/translate-loader.service';
+import { ExtensionsModule } from '@alfresco/adf-extensions';
 
 @NgModule({
     imports: [
         TranslateModule,
+        ExtensionsModule.forRoot(),
         AboutModule,
         ViewerModule,
         SidenavLayoutModule,

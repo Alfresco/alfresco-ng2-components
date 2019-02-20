@@ -6,9 +6,6 @@
     "baseUrl": ".",
     "types": [],
     "paths": {
-      "@alfresco/adf-extensions": [
-        "../../lib/extensions"
-      ],
       "@alfresco/adf-core": [
         "../../lib/core"
       ],

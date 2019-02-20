@@ -15,9 +15,13 @@
  * limitations under the License.
  */
 
-export * from './lib/process-services-cloud.module';
+import { NgModule } from '@angular/core';
+import { AcaMonacoModule } from 'adf-monaco-extension';
 
-export * from './lib/app/public-api';
-export * from './lib/process/public-api';
-export * from './lib/task/public-api';
-export * from './lib/group/public-api';
+@NgModule({
+    imports: [
+        AcaMonacoModule
+    ]
+})
+export class AppExtensionsModule {
+}
