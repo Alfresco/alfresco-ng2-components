@@ -45,6 +45,13 @@ export class TaskListCloudConfiguration {
                     'cssClass': 'full-width name-column ellipsis-cell'
                 },
                 {
+                    'key': 'entry.processInstanceId',
+                    'type': 'text',
+                    'title': 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.PROCESS_INSTANCE_ID',
+                    'sortable': true,
+                    'cssClass': 'full-width name-column ellipsis-cell'
+                },
+                {
                     'key': 'entry.status',
                     'type': 'text',
                     'title': 'ADF_CLOUD_TASK_LIST.PROPERTIES.STATUS',

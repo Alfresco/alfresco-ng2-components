@@ -24,9 +24,13 @@ export class EditTaskFilterCloudComponent {
     customiseFilter = element(by.id('adf-edit-task-filter-title-id'));
     selectedOption = element(by.css('mat-option[class*="mat-selected"]'));
     assignment = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignment"]'));
+    priority = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-priority"]'));
     taskName = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
     processDefinitionId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
-    processInstanceId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
+    processInstanceId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]'));
+    lastModifiedFrom = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedFrom"]'));
+    lastModifiedTo = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedTo"]'));
+    parentTaskId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-parentTaskId"]'));
     saveButton = element(by.css('button[id="adf-save-id"]'));
     saveAsButton = element(by.css('button[id="adf-save-as-id"]'));
     deleteButton = element(by.css('button[id="adf-delete-id"]'));
@@ -96,7 +100,6 @@ export class EditTaskFilterCloudComponent {
 
     setAssignment(option) {
         Util.waitUntilElementIsVisible(this.assignment);
-        //this.assignment.clear();
         this.clearField(this.assignment);
         this.assignment.sendKeys(option);
         this.assignment.sendKeys(protractor.Key.ENTER);
@@ -105,6 +108,54 @@ export class EditTaskFilterCloudComponent {
 
     getAssignment() {
         return this.assignment.getText();
+    }
+
+    setPriority(option) {
+        Util.waitUntilElementIsVisible(this.priority);
+        this.clearField(this.priority);
+        this.priority.sendKeys(option);
+        this.priority.sendKeys(protractor.Key.ENTER);
+        return this;
+    }
+
+    getPriority() {
+        return this.priority.getText();
+    }
+
+    setParentTaskId(option) {
+        Util.waitUntilElementIsVisible(this.parentTaskId);
+        this.clearField(this.parentTaskId);
+        this.parentTaskId.sendKeys(option);
+        this.parentTaskId.sendKeys(protractor.Key.ENTER);
+        return this;
+    }
+
+    getParentTaskId() {
+        return this.parentTaskId.getText();
+    }
+
+    setLastModifiedFrom(option) {
+        Util.waitUntilElementIsVisible(this.lastModifiedFrom);
+        this.clearField(this.lastModifiedFrom);
+        this.lastModifiedFrom.sendKeys(option);
+        this.lastModifiedFrom.sendKeys(protractor.Key.ENTER);
+        return this;
+    }
+
+    getLastModifiedFrom() {
+        return this.lastModifiedFrom.getText();
+    }
+
+    setLastModifiedTo(option) {
+        Util.waitUntilElementIsVisible(this.lastModifiedTo);
+        this.clearField(this.lastModifiedTo);
+        this.lastModifiedTo.sendKeys(option);
+        this.lastModifiedTo.sendKeys(protractor.Key.ENTER);
+        return this;
+    }
+
+    getLastModifiedTo() {
+        return this.lastModifiedTo.getText();
     }
 
     checkSaveButtonIsDisplayed() {
@@ -181,7 +232,9 @@ export class EditTaskFilterCloudComponent {
     }
 
     getAppNameDropDownValue() {
-        return element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span")).getText();
+        let locator = element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-appName'] span"));
+        Util.waitUntilElementIsVisible(locator);
+        return locator.getText();
     }
 
     setTaskName(option) {
@@ -204,20 +257,20 @@ export class EditTaskFilterCloudComponent {
         return this;
     }
 
-    getTaskName() {
+    getProcessDefinitionId() {
         return this.processDefinitionId.getAttribute('value');
     }
 
     setProcessInstanceId(option) { // nu uita sa faci o metoda generala in care sa pui clear, sendKeys, etc
-        Util.waitUntilElementIsVisible(this.processDefinitionId);
-        this.processDefinitionId.clear();
-        this.processDefinitionId.sendKeys(option);
-        this.processDefinitionId.sendKeys(protractor.Key.ENTER);
+        Util.waitUntilElementIsVisible(this.processInstanceId);
+        this.processInstanceId.clear();
+        this.processInstanceId.sendKeys(option);
+        this.processInstanceId.sendKeys(protractor.Key.ENTER);
         return this;
     }
 
-    getTaskName() {
-        return this.processDefinitionId.getAttribute('value');
+    getProcessInstanceId() {
+        return this.processInstanceId.getAttribute('value');
     }
 
 }

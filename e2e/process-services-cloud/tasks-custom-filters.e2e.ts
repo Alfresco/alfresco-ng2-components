@@ -63,8 +63,10 @@ describe('Task filters cloud', () => {
 
             await tasksService.init(user, password);
             createdTask = await tasksService.createStandaloneTask(createdTaskName, simpleApp);
+            console.log("Aaaa: ", createdTask);
 
             assignedTask = await tasksService.createStandaloneTask(assignedTaskName, simpleApp);
+            console.log("Bbbb: ", assignedTask);
             await tasksService.claimTask(assignedTask.entry.id, simpleApp);
             completedTask = await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
             deletedTask = await tasksService.createStandaloneTask(deletedTaskName, simpleApp);
@@ -114,6 +116,7 @@ describe('Task filters cloud', () => {
 
         it('[C290139] Should display only tasks with all states when All is selected from state dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignment()
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment('')
                 .setStateFilterDropDown('ALL');
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(deletedTaskName);
