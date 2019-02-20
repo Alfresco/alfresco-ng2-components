@@ -42,7 +42,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     @ViewChild('processFiltersCloud')
     processFiltersCloud: ProcessFiltersCloudComponent;
 
-    applicationName: string = '';
+    appName: string = '';
     isFilterLoaded: boolean;
 
     filterId: string = '';
@@ -71,7 +71,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     ngOnInit() {
         this.isFilterLoaded = false;
         this.route.parent.params.subscribe((params) => {
-            this.applicationName = params.applicationName;
+            this.appName = params.appName;
         });
 
         this.route.queryParams.subscribe((params) => {
@@ -116,7 +116,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     onProcessFilterAction(filterAction: any) {
         this.cloudLayoutService.setCurrentProcessFilterParam({ id: filterAction.filter.id });
         if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_SAVE_AS) {
-            this.router.navigate([`/cloud/${this.applicationName}/processes/`], { queryParams: filterAction.filter });
+            this.router.navigate([`/cloud/${this.appName}/processes/`], { queryParams: filterAction.filter });
         }
     }
 

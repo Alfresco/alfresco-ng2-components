@@ -43,7 +43,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     /** The name of the application. */
     @Input()
-    applicationName: string = '';
+    appName: string = '';
 
     /** The related application version. */
     @Input()
@@ -221,7 +221,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     private createRequestNode(): ProcessQueryCloudRequestModel {
         let requestNode = {
-            appName: this.applicationName,
+            appName: this.appName,
             appVersion: this.appVersion,
             maxItems: this.size,
             skipCount: this.skipCount,

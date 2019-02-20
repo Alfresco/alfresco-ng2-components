@@ -146,13 +146,13 @@ describe('ProcessListCloudComponent', () => {
 
             done();
         });
-        component.applicationName = appName.currentValue;
+        component.appName = appName.currentValue;
         component.ngOnChanges({ 'appName': appName });
         fixture.detectChanges();
     });
 
     it('should reload tasks when reload() is called', (done) => {
-        component.applicationName = 'fake';
+        component.appName = 'fake';
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
         component.success.subscribe((res) => {
             expect(res).toBeDefined();
