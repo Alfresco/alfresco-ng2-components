@@ -15,6 +15,7 @@ branches:
   only:
   - master
   - development
+  - /.*beta.*/
 
 # TRAVIS_PULL_REQUEST == false means is running on dev branch and is not a PR
 stages:
