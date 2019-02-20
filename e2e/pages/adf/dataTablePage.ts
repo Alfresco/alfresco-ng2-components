@@ -268,4 +268,8 @@ export class DataTablePage {
         return element.all(by.css(`div[title='Name'][filename="${filename}"]`)).count();
     }
 
+    getCellByNameAndColumn(content, columnName) {
+        return this.getRowByRowName(content).element(by.css(`div[title='${columnName}']`));
+    }
+
 }
