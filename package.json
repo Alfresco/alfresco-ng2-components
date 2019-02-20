@@ -80,7 +80,7 @@
     "@ngx-translate/core": "^11.0.0",
     "@nrwl/nx": "7.1.1",
     "@nrwl/schematics": "7.1.1",
-    "adf-monaco-extension": "0.0.7",
+    "adf-monaco-extension": "0.0.8",
     "adf-tslint-rules": "0.0.6",
     "alfresco-js-api-node": "2.7.0-beta5",
     "chart.js": "2.5.0",
