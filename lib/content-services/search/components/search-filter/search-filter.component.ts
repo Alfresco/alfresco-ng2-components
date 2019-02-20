@@ -314,7 +314,6 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         };
     }
 
-    // remove once [SEARCH-1487] issue is fixed
     private getCorrespondingFilterQuery (field, bucketLabel: string): string {
         if (!field.field || !bucketLabel) {
             return null;
