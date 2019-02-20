@@ -15,17 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
-import { DataTableCellComponent } from './datatable-cell.component';
+import { FileTypePipe } from './file-type.pipe';
+import { async } from '@angular/core/testing';
 
-@Component({
-    selector: 'adf-filesize-cell',
-    template: `
-        <ng-container>
-            <span [attr.aria-label]=" value | adfFileSize " [title]="tooltip">{{ value | adfFileSize }}</span>
-        </ng-container>
-    `,
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-filesize-cell' }
-})
-export class FileSizeCellComponent extends DataTableCellComponent {}
+describe('FileTypePipe', () => {
+
+    const altText = 'ft_ic_ms_word';
+    let pipe: FileTypePipe;
+
+    beforeEach(async(() => {
+        pipe = new FileTypePipe();
+    }));
+
+    it('should return file type from alt text', () => {
+        expect(pipe.transform(altText)).toBe('word');
+    });
+
+});

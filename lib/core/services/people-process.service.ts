@@ -63,7 +63,7 @@ export class PeopleProcessService {
      */
     involveUserWithTask(taskId: string, idToInvolve: string): Observable<UserProcessModel[]> {
         let node = {userId: idToInvolve};
-        return from<UserProcessModel[]>(this.involveUserToTaskApi(taskId, node))
+        return from(this.involveUserToTaskApi(taskId, node))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -77,7 +77,7 @@ export class PeopleProcessService {
      */
     removeInvolvedUser(taskId: string, idToRemove: string): Observable<UserProcessModel[]> {
         let node = {userId: idToRemove};
-        return from<UserProcessModel[]>(this.removeInvolvedUserFromTaskApi(taskId, node))
+        return from(this.removeInvolvedUserFromTaskApi(taskId, node))
             .pipe(
                 catchError((err) => this.handleError(err))
             );

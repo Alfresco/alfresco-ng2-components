@@ -17,7 +17,6 @@
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import TestConfig = require('../../test.config');
-
 export class ApiService {
 
     HOST_SSO = TestConfig.adf.hostSso;
