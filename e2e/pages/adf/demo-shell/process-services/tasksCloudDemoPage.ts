@@ -68,6 +68,10 @@ export class TasksCloudDemoPage {
         return new TaskListCloudComponent().getAllRowsByColumn('Id');
     }
 
+    getAllRowsByProcessDefIdColumn() {
+        return new TaskListCloudComponent().getAllRowsByColumn('Process Definition Id');
+    }
+
     clickOnTaskFilters() {
         Util.waitUntilElementIsVisible(this.taskFilters);
         return this.taskFilters.click();

@@ -31,6 +31,7 @@ export class EditTaskFilterCloudComponent {
     lastModifiedFrom = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedFrom"]'));
     lastModifiedTo = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-lastModifiedTo"]'));
     parentTaskId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-parentTaskId"]'));
+    owner = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-owner"]'));
     saveButton = element(by.css('button[id="adf-save-id"]'));
     saveAsButton = element(by.css('button[id="adf-save-as-id"]'));
     deleteButton = element(by.css('button[id="adf-delete-id"]'));
@@ -99,11 +100,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setAssignment(option) {
-        Util.waitUntilElementIsVisible(this.assignment);
-        this.clearField(this.assignment);
-        this.assignment.sendKeys(option);
-        this.assignment.sendKeys(protractor.Key.ENTER);
-        return this;
+        return this.setProperty('assignment' ,option);
     }
 
     getAssignment() {
@@ -111,11 +108,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setPriority(option) {
-        Util.waitUntilElementIsVisible(this.priority);
-        this.clearField(this.priority);
-        this.priority.sendKeys(option);
-        this.priority.sendKeys(protractor.Key.ENTER);
-        return this;
+        return this.setProperty('priority' ,option);
     }
 
     getPriority() {
@@ -123,23 +116,23 @@ export class EditTaskFilterCloudComponent {
     }
 
     setParentTaskId(option) {
-        Util.waitUntilElementIsVisible(this.parentTaskId);
-        this.clearField(this.parentTaskId);
-        this.parentTaskId.sendKeys(option);
-        this.parentTaskId.sendKeys(protractor.Key.ENTER);
-        return this;
+        return this.setProperty('parentTaskId' ,option);
     }
 
     getParentTaskId() {
         return this.parentTaskId.getText();
     }
 
+    setOwner(option) {
+        return this.setProperty('owner' ,option);
+    }
+
+    getOwner() {
+        return this.owner.getText();
+    }
+
     setLastModifiedFrom(option) {
-        Util.waitUntilElementIsVisible(this.lastModifiedFrom);
-        this.clearField(this.lastModifiedFrom);
-        this.lastModifiedFrom.sendKeys(option);
-        this.lastModifiedFrom.sendKeys(protractor.Key.ENTER);
-        return this;
+        return this.setProperty('lastModifiedFrom' ,option);
     }
 
     getLastModifiedFrom() {
@@ -147,11 +140,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setLastModifiedTo(option) {
-        Util.waitUntilElementIsVisible(this.lastModifiedTo);
-        this.clearField(this.lastModifiedTo);
-        this.lastModifiedTo.sendKeys(option);
-        this.lastModifiedTo.sendKeys(protractor.Key.ENTER);
-        return this;
+        return this.setProperty('lastModifiedTo' ,option);
     }
 
     getLastModifiedTo() {
@@ -238,11 +227,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setTaskName(option) {
-        Util.waitUntilElementIsVisible(this.taskName);
-        this.taskName.clear();
-        this.taskName.sendKeys(option);
-        this.taskName.sendKeys(protractor.Key.ENTER);
-        return this;
+        return this.setProperty('taskName' ,option);
     }
 
     getTaskName() {
@@ -250,22 +235,23 @@ export class EditTaskFilterCloudComponent {
     }
 
     setProcessDefinitionId(option) {
-        Util.waitUntilElementIsVisible(this.processDefinitionId);
-        this.processDefinitionId.clear();
-        this.processDefinitionId.sendKeys(option);
-        this.processDefinitionId.sendKeys(protractor.Key.ENTER);
-        return this;
+        return this.setProperty('processDefinitionId' ,option);
     }
 
     getProcessDefinitionId() {
         return this.processDefinitionId.getAttribute('value');
     }
 
-    setProcessInstanceId(option) { // nu uita sa faci o metoda generala in care sa pui clear, sendKeys, etc
-        Util.waitUntilElementIsVisible(this.processInstanceId);
-        this.processInstanceId.clear();
-        this.processInstanceId.sendKeys(option);
-        this.processInstanceId.sendKeys(protractor.Key.ENTER);
+    setProcessInstanceId(option) {
+        return this.setProperty('processInstanceId' ,option);
+    }
+
+    setProperty(property, option) {
+        let locator = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-' + property+'"]'));
+        Util.waitUntilElementIsVisible(locator);
+        locator.clear();
+        locator.sendKeys(option);
+        locator.sendKeys(protractor.Key.ENTER);
         return this;
     }
 

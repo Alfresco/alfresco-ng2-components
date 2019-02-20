@@ -63,10 +63,8 @@ describe('Task filters cloud', () => {
 
             await tasksService.init(user, password);
             createdTask = await tasksService.createStandaloneTask(createdTaskName, simpleApp);
-            console.log("Aaaa: ", createdTask);
 
             assignedTask = await tasksService.createStandaloneTask(assignedTaskName, simpleApp);
-            console.log("Bbbb: ", assignedTask);
             await tasksService.claimTask(assignedTask.entry.id, simpleApp);
             completedTask = await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
             deletedTask = await tasksService.createStandaloneTask(deletedTaskName, simpleApp);
@@ -123,6 +121,24 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(createdTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTaskName);
+        });
+
+        it('[C290154] Should display only tasks with suspended states when Suspended is selected from state dropdown', () => { 
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment('')
+                .setStateFilterDropDown('SUSPENDED');  
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(suspendedTasks.list.entries[0].entry.id);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
+        });
+
+        it('[C290060] Should display only tasks with Created state when Created is selected from state dropdown', () => { 
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment('').setStateFilterDropDown('CREATED');  
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(createdTaskName); 
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName); 
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName); 
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName); 
         });
 
         it('[C290069] Should display tasks ordered by name when Name is selected from sort dropdown', () => {
