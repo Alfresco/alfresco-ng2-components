@@ -23,9 +23,9 @@ export class TaskDetailsPage {
     taskDetailsHeader = element(by.css('ng-component h4'));
     taskPropertyList = element(by.css('adf-cloud-task-header adf-card-view div[class="adf-property-list"]'));
 
-    checkTaskDetailsHeader(taskId) {
+    getTaskDetailsHeader() {
         Util.waitUntilElementIsOnPage(this.taskPropertyList);
-        expect(this.taskDetailsHeader.getText()).toContain(taskId);
+        return this.taskDetailsHeader.getText();
     }
 
     checkPropertyIsDisplayed(propertyName) {

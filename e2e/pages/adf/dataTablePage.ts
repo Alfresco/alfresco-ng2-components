@@ -56,10 +56,6 @@ export class DataTablePage {
         return this.getAllRowsColumnValues('Name');
     }
 
-    getAllRowsIdColumn() {
-        return this.getAllRowsColumnValues('Id');
-    }
-
     async getAllRowsColumnValues(locator) {
         let columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row'] div[title='" + locator + "'] span");
         Util.waitUntilElementIsVisible(element.all(columnLocator).first());

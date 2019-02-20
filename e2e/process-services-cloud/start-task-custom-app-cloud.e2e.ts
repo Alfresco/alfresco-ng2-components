@@ -143,15 +143,9 @@ describe('Start Task', () => {
             .clearAssignment();
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(standaloneTaskName2);
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then(function (list) {
-            let taskName = list[0];
-            expect(taskName).toBe(standaloneTaskName2);
-            });
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsIdColumn().then(function (list) {
-            let taskId = list[0];
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByContentName(standaloneTaskName2);
-            taskDetailsPage.checkTaskDetailsHeader(taskId);
-        });
+        let taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(standaloneTaskName2);
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByContentName(standaloneTaskName2);
+        expect(taskDetailsPage.getTaskDetailsHeader()).toContain(taskId);
         expect(taskDetailsPage.getPropertyLabel('assignee')).toBe('Assignee');
         expect(taskDetailsPage.getPropertyValue('assignee')).toBe('No assignee');
 
