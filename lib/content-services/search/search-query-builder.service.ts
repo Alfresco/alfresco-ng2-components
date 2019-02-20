@@ -387,11 +387,11 @@ export class SearchQueryBuilderService {
         return null;
     }
 
-    getSupportedLabel(item: string) {
-        const spaceInsideLabelIndex = item.search(/\s/g);
+    getSupportedLabel(configLabel: string): string {
+        const spaceInsideLabelIndex = configLabel.search(/\s/g);
         if (spaceInsideLabelIndex > -1) {
-            return `"${item}"`;
+            return `"${configLabel}"`;
         }
-        return item;
+        return configLabel;
     }
 }
