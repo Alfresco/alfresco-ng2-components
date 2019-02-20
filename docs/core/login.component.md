@@ -42,8 +42,8 @@ You can replace the content of the header and footer of the [Login component](..
 
 ```html
 <adf-login ...>
-    <adf-login-header><ng-template>My custom HTML for the header</ng-template></adf-login-header>
-    <adf-login-footer><ng-template>My custom HTML for the footer</ng-template></adf-login-footer>
+    <login-header><ng-template>My custom HTML for the header</ng-template></login-header>
+    <login-footer><ng-template>My custom HTML for the footer</ng-template></login-footer>
 </adf-login>`
 ```
 
