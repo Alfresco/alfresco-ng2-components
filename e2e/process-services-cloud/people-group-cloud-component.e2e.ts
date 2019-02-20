@@ -20,10 +20,10 @@ import TestConfig = require('../test.config');
 import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import {PeopleGroupCloudComponentPage} from "../pages/adf/demo-shell/process-services/peopleGroupCloudComponentPage";
-import {PeopleCloudComponent} from "../pages/adf/process-cloud/peopleCloudComponent";
-import {GroupCloudComponent} from "../pages/adf/process-cloud/groupCloudComponent";
-import {browser} from "protractor";
+import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/peopleGroupCloudComponentPage';
+import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComponent';
+import { GroupCloudComponent } from '../pages/adf/process-cloud/groupCloudComponent';
+import { browser } from 'protractor';
 
 describe('People Groups CLoud Component', () => {
 
@@ -39,11 +39,11 @@ describe('People Groups CLoud Component', () => {
         let apsUser = 'User Aps Aps';
         let activitiUser = 'userActiviti Activiti';
         let noRoleUser = 'userNoRole NoRole';
-        let selectedPeople = [apsUser, activitiUser];
+        let selectedPeople = [apsUser, activitiUser, noRoleUser];
         let groupAps = 'GroupAdminAps';
         let groupActiviti = 'GroupAdminActiviti';
         let groupNoRole = 'GroupNoRole';
-        let selectedGroups = [groupAps, groupActiviti];
+        let selectedGroups = [groupAps, groupActiviti, groupNoRole];
 
         beforeAll(async () => {
             silentLogin = false;
@@ -59,7 +59,7 @@ describe('People Groups CLoud Component', () => {
             browser.refresh();
             peopleGroupCloudComponentPage.checkGroupsCloudComponentTitleIsDisplayed();
             peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();
-        })
+        });
 
         it('[C297674] Add roles filtering to PeopleCloudComponent', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
@@ -75,13 +75,12 @@ describe('People Groups CLoud Component', () => {
             peopleCloudComponent.checkUserIsDisplayed(activitiUser);
             peopleCloudComponent.checkUserIsNotDisplayed(noRoleUser);
             peopleCloudComponent.selectAssigneeFromList(activitiUser);
-            // peopleGroupCloudComponentPage.clearPeopleRoles();
-            // peopleCloudComponent.searchAssignee('user');
-            // peopleCloudComponent.checkUserIsNotDisplayed(apsUser);
-            // peopleCloudComponent.checkUserIsNotDisplayed(activitiUser);
-            // browser.sleep(10000);
-            // peopleCloudComponent.checkUserIsDisplayed(noRoleUser);
-            // peopleCloudComponent.selectAssigneeFromList(noRoleUser);
+            peopleGroupCloudComponentPage.clearPeopleRoles();
+            peopleCloudComponent.searchAssignee('user');
+            peopleCloudComponent.checkUserIsNotDisplayed(apsUser);
+            peopleCloudComponent.checkUserIsNotDisplayed(activitiUser);
+            peopleCloudComponent.checkUserIsDisplayed(noRoleUser);
+            peopleCloudComponent.selectAssigneeFromList(noRoleUser);
             peopleCloudComponent.checkSelectedPeople(selectedPeople);
         });
 
@@ -99,12 +98,12 @@ describe('People Groups CLoud Component', () => {
             groupCloudComponent.checkGroupIsNotDisplayed(groupActiviti);
             groupCloudComponent.checkGroupIsNotDisplayed(groupNoRole);
             groupCloudComponent.selectGroupFromList(groupActiviti);
-            // peopleGroupCloudComponentPage.clearGroupRoles();
-            // groupCloudComponent.searchGroups('Group');
-            // groupCloudComponent.checkGroupIsNotDisplayed(groupAps);
-            // groupCloudComponent.checkGroupIsNotDisplayed(groupActiviti);
-            // groupCloudComponent.checkGroupIsDisplayed(groupNoRole);
-            // groupCloudComponent.selectGroupFromList(groupNoRole);
+            peopleGroupCloudComponentPage.clearGroupRoles();
+            groupCloudComponent.searchGroups('Group');
+            groupCloudComponent.checkGroupIsNotDisplayed(groupAps);
+            groupCloudComponent.checkGroupIsNotDisplayed(groupActiviti);
+            groupCloudComponent.checkGroupIsDisplayed(groupNoRole);
+            groupCloudComponent.selectGroupFromList(groupNoRole);
             groupCloudComponent.checkSelectedGroups(selectedGroups);
         });
 

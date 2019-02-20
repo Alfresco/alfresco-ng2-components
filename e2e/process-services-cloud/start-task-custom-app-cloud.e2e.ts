@@ -23,7 +23,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { StartTasksCloudComponent } from '../pages/adf/process-cloud/startTasksCloudComponent';
 import { Util } from '../util/util';
-import { PeopleCloudComponent } from "../pages/adf/process-cloud/peopleCloudComponent";
+import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComponent';
 
 describe('Start Task', () => {
 
@@ -105,8 +105,8 @@ describe('Start Task', () => {
 
     it('[C290182] Should be possible to assign the task to another user', () => {
         tasksCloudDemoPage.openNewTaskForm();
-        startTask.addName(standaloneTaskName1)
-        peopleCloudComponent.searchAssigneeAndSelect('Super Admin')
+        startTask.addName(standaloneTaskName1);
+        peopleCloudComponent.searchAssigneeAndSelect('Super Admin');
         startTask.clickStartButton();
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');

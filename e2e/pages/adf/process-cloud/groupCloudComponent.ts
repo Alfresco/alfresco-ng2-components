@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import {by, element} from "protractor";
-import {Util} from "../../../util/util";
+import { by, element } from 'protractor';
+import { Util } from '../../../util/util';
 
 export class GroupCloudComponent {
 
@@ -64,10 +64,9 @@ export class GroupCloudComponent {
 
     checkSelectedGroups = (selectedGroups: string[]) => {
         selectedGroups.forEach( (group) => {
-            Util.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)))
-        })
+            Util.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
+        });
         return this;
-
-    };
+    }
 
 }

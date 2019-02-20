@@ -20,7 +20,7 @@ import { browser, by, element } from 'protractor';
 import { ProcessServicesPage } from './process-services/processServicesPage';
 import { AppListCloudComponent } from './process-cloud/appListCloudComponent';
 import TestConfig = require('../../test.config');
-import {PeopleGroupCloudComponentPage} from "./demo-shell/process-services/peopleGroupCloudComponentPage";
+import { PeopleGroupCloudComponentPage } from './demo-shell/process-services/peopleGroupCloudComponentPage';
 
 export class NavigationBarPage {
 
