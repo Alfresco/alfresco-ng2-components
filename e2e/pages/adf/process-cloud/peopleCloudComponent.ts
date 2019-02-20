@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import {by, element} from "protractor";
-import {Util} from "../../../util/util";
+import { by, element } from 'protractor';
+import { Util } from '../../../util/util';
 
 export class PeopleCloudComponent {
 
@@ -64,10 +64,9 @@ export class PeopleCloudComponent {
 
     checkSelectedPeople = (selectedPeople: string[]) => {
         selectedPeople.forEach( (person) => {
-            Util.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)))
-        })
+            Util.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
+        });
         return this;
-
-    };
+    }
 
 }

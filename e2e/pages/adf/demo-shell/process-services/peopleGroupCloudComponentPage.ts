@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, protractor } from 'protractor';
 
-import {PeopleCloudComponent} from "../../process-cloud/peopleCloudComponent";
-import {GroupCloudComponent} from "../../process-cloud/groupCloudComponent";
-import {Util} from "../../../../util/util";
+import { PeopleCloudComponent } from '../../process-cloud/peopleCloudComponent';
+import { GroupCloudComponent } from '../../process-cloud/groupCloudComponent';
+import { Util } from '../../../../util/util';
 
 export class PeopleGroupCloudComponentPage {
 
@@ -60,14 +60,20 @@ export class PeopleGroupCloudComponentPage {
 
     clearPeopleRoles() {
         Util.waitUntilElementIsVisible(this.peopleRoleInput);
-        this.peopleRoleInput.clear();
-        return this;
+        this.peopleRoleInput.getAttribute('value').then((result) => {
+            for (let i = result.length; i >= 0; i--) {
+                this.peopleRoleInput.sendKeys(protractor.Key.BACK_SPACE);
+            }
+        });
     }
 
     clearGroupRoles() {
         Util.waitUntilElementIsVisible(this.groupRoleInput);
-        this.groupRoleInput.clear();
-        return this;
+        this.groupRoleInput.getAttribute('value').then((result) => {
+            for (let i = result.length; i >= 0; i--) {
+                this.groupRoleInput.sendKeys(protractor.Key.BACK_SPACE);
+            }
+        });
     }
 
     clickGroupCloudMultipleSelection() {
