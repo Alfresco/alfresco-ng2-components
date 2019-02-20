@@ -1,16 +1,14 @@
 <div fxLayout="column" fxFill fxLayoutGap="2px">
     <adf-cloud-edit-task-filter
-        [appName]="applicationName"
+        [appName]="appName"
         [id]="filterId"
         [filterProperties]="taskFilterProperties"
         (action)="onTaskFilterAction($event)"
         (filterChange)="onFilterChange($event)">
     </adf-cloud-edit-task-filter>
     <div fxLayout="column" fxFlex fxLayoutAlign="space-between" *ngIf="editedFilter">
-        <adf-cloud-task-list 
-            fxFlex
-            class="adf-cloud-layout-overflow"
-            [applicationName]="editedFilter.appName"
+        <adf-cloud-task-list #taskCloud
+            [appName]="editedFilter.appName"
             [processDefinitionId]="editedFilter.processDefinitionId"
             [processInstanceId]="editedFilter.processInstanceId"
             [name]="editedFilter.taskName"
@@ -28,7 +26,7 @@
             (rowsSelected)="onRowsSelected($event)"
             #taskCloud>
         </adf-cloud-task-list>
-        <adf-pagination 
+        <adf-pagination
             [target]="taskCloud"
             (changePageSize)="onChangePageSize($event)"
             (nextPage)="resetSelectedRows()"

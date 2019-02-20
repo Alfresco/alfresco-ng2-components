@@ -26,7 +26,7 @@ import { CloudLayoutService } from './services/cloud-layout.service';
 })
 export class CloudLayoutComponent implements OnInit {
     displayMenu = true;
-    applicationName: string;
+    appName: string;
 
     constructor(
         private router: Router,
@@ -37,7 +37,7 @@ export class CloudLayoutComponent implements OnInit {
     ngOnInit() {
         let root: string = '';
         this.route.params.subscribe((params) => {
-            this.applicationName = params.applicationName;
+            this.appName = params.appName;
         });
 
         if (this.route.snapshot && this.route.snapshot.firstChild) {
@@ -56,10 +56,10 @@ export class CloudLayoutComponent implements OnInit {
     }
 
     onStartTask() {
-        this.router.navigate([`/cloud/${this.applicationName}/start-task/`]);
+        this.router.navigate([`/cloud/${this.appName}/start-task/`]);
     }
 
     onStartProcess() {
-        this.router.navigate([`/cloud/${this.applicationName}/start-process/`]);
+        this.router.navigate([`/cloud/${this.appName}/start-process/`]);
     }
 }

@@ -15,7 +15,7 @@ Shows all the information related to a task.
 
 ```html
 <adf-cloud-task-header
-    [appName]="applicationName"
+    [appName]="appName"
     [taskId]="taskId">
 </adf-cloud-task-header>
 ```
@@ -39,12 +39,12 @@ Shows all the information related to a task.
 
 ## Details
 
-The component populates an internal array of 
+The component populates an internal array of
 [CardViewModel](../core/card-view.component.md) with the information that we want to display.
 
 By default all properties are displayed:
 
-**_assignee_**, **_status_**, **_priority_**, **_dueDate_**, **_category_**, **_parentName_**, **_created_**, **_id_**, **_description_**, **_formName_**. 
+**_assignee_**, **_status_**, **_priority_**, **_dueDate_**, **_category_**, **_parentName_**, **_created_**, **_id_**, **_description_**, **_formName_**.
 
 However, you can also choose which properties to show using a configuration in `app.config.json`:
 
