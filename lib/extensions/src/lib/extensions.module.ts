@@ -21,10 +21,7 @@ import { DynamicColumnComponent } from './components/dynamic-column/dynamic-colu
 import { PreviewExtensionComponent } from './components/viewer/preview-extension.component';
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
 import { AppExtensionService } from './services/app-extension.service';
-
-export function setupExtensions(service: AppExtensionService): Function {
-    return () => service.load();
-}
+import { setupExtensions } from './services/startup-extension-factory';
 
 @NgModule({
     declarations: [
