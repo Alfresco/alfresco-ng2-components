@@ -38,6 +38,7 @@ export class DataTablePage {
     tableBody = element.all(by.css(`div[class='adf-datatable-body']`)).first();
     spinner = element(by.css('mat-progress-spinner'));
     rows = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`);
+    allColumns = element.all(by.css('div[data-automation-id*="auto_id_entry."]'));
 
     constructor(rootElement: ElementFinder = element(by.css('adf-datatable'))) {
         this.rootElement = rootElement;
@@ -262,6 +263,15 @@ export class DataTablePage {
     getNumberOfRowsDisplayedWithSameName(filename) {
         Util.waitUntilElementIsVisible(element(by.css(`div[filename="${filename}"]`)));
         return element.all(by.css(`div[title='Name'][filename="${filename}"]`)).count();
+    }
+
+    checkColumnIsDisplayed(column) {
+        Util.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="auto_id_entry.${column}"]`)));
+        return this;
+    }
+
+    getNoOfColumns() {
+        return this.allColumns.count();
     }
 
     getCellByNameAndColumn(content, columnName) {

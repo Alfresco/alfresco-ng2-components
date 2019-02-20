@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2019 Alfresco Software, Ltd.
+ * Copyright 2016 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,6 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
-import { DataTableCellComponent } from './datatable-cell.component';
+export class ExampleAction {
 
-@Component({
-    selector: 'adf-filesize-cell',
-    template: `
-        <ng-container>
-            <span [attr.aria-label]=" value | adfFileSize " [title]="tooltip">{{ value | adfFileSize }}</span>
-        </ng-container>
-    `,
-    encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-filesize-cell' }
-})
-export class FileSizeCellComponent extends DataTableCellComponent {}
+}

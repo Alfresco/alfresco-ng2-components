@@ -53,6 +53,7 @@ export class ContentMetadataService {
             if (groupNames.length > 0) {
                 groupedProperties = this.propertyDescriptorsService.load(groupNames).pipe(
                     map((groups) => config.reorganiseByConfig(groups)),
+                    map((groups) => this.filterEmptyPreset(groups)),
                     map((groups) => this.setTitleToNameIfNotSet(groups)),
                     map((groups) => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties))
                 );
@@ -67,5 +68,9 @@ export class ContentMetadataService {
             propertyGroup.title = propertyGroup.title || propertyGroup.name;
         });
         return propertyGroups;
+    }
+
+    filterEmptyPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[]  {
+        return propertyGroups.filter((props) => props.properties.length);
     }
 }

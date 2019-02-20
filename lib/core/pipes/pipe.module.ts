@@ -26,6 +26,7 @@ import { TimeAgoPipe } from './time-ago.pipe';
 import { InitialUsernamePipe } from './user-initial.pipe';
 import { FullNamePipe } from './full-name.pipe';
 import { FormatSpacePipe } from './format-space.pipe';
+import { FileTypePipe } from './file-type.pipe';
 
 @NgModule({
     imports: [
@@ -39,7 +40,8 @@ import { FormatSpacePipe } from './format-space.pipe';
         InitialUsernamePipe,
         FullNamePipe,
         NodeNameTooltipPipe,
-        FormatSpacePipe
+        FormatSpacePipe,
+        FileTypePipe
     ],
     providers: [
         FileSizePipe,
@@ -58,7 +60,8 @@ import { FormatSpacePipe } from './format-space.pipe';
         InitialUsernamePipe,
         FullNamePipe,
         NodeNameTooltipPipe,
-        FormatSpacePipe
+        FormatSpacePipe,
+        FileTypePipe
     ]
 })
 export class PipeModule {
