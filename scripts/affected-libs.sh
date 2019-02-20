@@ -6,7 +6,7 @@ eval SHA_2="HEAD"
 eval DIRECTORY="tmp"
 
 show_help() {
-    echo "Usage: smart-build.sh"
+    echo "Usage: affected-libs.sh"
     echo ""
     echo "-b branch name"
 }
@@ -61,6 +61,14 @@ done < "./$DIRECTORY/deps.txt"
 #transform string to array
 libs=(`echo $fileLine | sed 's/^$/\n/g'`)
 
+#extensions
+for i in "${libs[@]}"
+do
+    if [ "$i" == "extensions" ] ; then
+        AFFECTED_LIBS=$AFFECTED_LIBS" extensions$"
+    fi
+done
+
 #core
 for i in "${libs[@]}"
 do
@@ -92,14 +100,6 @@ for i in "${libs[@]}"
 do
     if [ "$i" == "insights" ] ; then
         AFFECTED_LIBS=$AFFECTED_LIBS" insights$"
-    fi
-done
-
-#extensions
-for i in "${libs[@]}"
-do
-    if [ "$i" == "extensions" ] ; then
-        AFFECTED_LIBS=$AFFECTED_LIBS" extensions$"
     fi
 done
 
