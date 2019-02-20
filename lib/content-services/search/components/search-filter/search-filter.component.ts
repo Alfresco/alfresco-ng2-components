@@ -189,7 +189,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
     }
 
-    private parseFacetItems(context: ResultSetContext, configFacetFields, itemType): FacetField[] {
+    private parseFacetItems(context: ResultSetContext, configFacetFields: Array<FacetField>, itemType: string): FacetField[] {
         return configFacetFields.map((field) => {
             const responseField = (context.facets || []).find((response) => response.type === itemType && response.label === field.label) || {};
             const responseBuckets = this.getResponseBuckets(responseField, field)
@@ -314,7 +314,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         };
     }
 
-    private getCorrespondingFilterQuery (field, bucketLabel: string): string {
+    private getCorrespondingFilterQuery (field: FacetField, bucketLabel: string): string {
         if (!field.field || !bucketLabel) {
             return null;
         }
@@ -333,7 +333,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         return null;
     }
 
-    private buildIntervalQuery(fieldName, interval): string {
+    private buildIntervalQuery(fieldName: string, interval: any): string {
         const start = interval.start;
         const end = interval.end;
         const startLimit = (interval.startInclusive === undefined || interval.startInclusive === true) ? '[' : '<';
