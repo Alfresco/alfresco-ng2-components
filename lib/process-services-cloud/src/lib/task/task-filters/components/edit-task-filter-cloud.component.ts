@@ -41,7 +41,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     public static MIN_VALUE = 1;
     public static APPLICATION_NAME: string = 'appName';
     public static DEFAULT_TASK_FILTER_PROPERTIES = ['state', 'assignment', 'sort', 'order'];
-    public FORMAT_DATE: string = 'DD/MM/YYYY';
+    public FORMAT_DATE: string = 'MM/DD/YYYY';
 
     /** (required) Name of the app. */
     @Input()
