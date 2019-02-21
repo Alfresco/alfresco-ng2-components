@@ -43,7 +43,7 @@ describe('User Info - SSO', () => {
     });
 
     afterAll (() => {
-        identityService.deleteIdentityUser(identityUser[0].id);
+        await identityService.deleteIdentityUser(identityUser[0].id);
     });
 
     it('[C290066] Should display UserInfo when login using SSO', () => {
