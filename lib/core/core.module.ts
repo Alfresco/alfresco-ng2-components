@@ -57,7 +57,7 @@ import { ExtensionsModule } from '@alfresco/adf-extensions';
 @NgModule({
     imports: [
         TranslateModule,
-        ExtensionsModule.forRoot(),
+        ExtensionsModule.forChild(),
         AboutModule,
         ViewerModule,
         SidenavLayoutModule,
