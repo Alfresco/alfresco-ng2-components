@@ -213,4 +213,14 @@ describe('StartTaskCloudComponent', () => {
         fixture.detectChanges();
         expect(name.valid).toBeTruthy();
     });
+    it('should emit error when description have only white spaces', () => {
+        fixture.detectChanges();
+        let description = component.taskForm.controls['description'];
+        description.setValue('     ');
+        fixture.detectChanges();
+        expect(description.valid).toBeFalsy();
+        description.setValue('');
+        fixture.detectChanges();
+        expect(description.valid).toBeTruthy();
+    })
 });
