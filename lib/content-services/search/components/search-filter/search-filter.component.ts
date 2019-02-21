@@ -192,7 +192,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private parseFacetItems(context: ResultSetContext, configFacetFields, itemType): FacetField[] {
         return configFacetFields.map((field) => {
             const responseField = (context.facets || []).find((response) => response.type === itemType && response.label === field.label) || {};
-            const responseBuckets = this.getResponseBuckets(responseField, field.field)
+            const responseBuckets = this.getResponseBuckets(responseField, field)
                 .filter(this.getFilterByMinCount(field.mincount));
 
             const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
@@ -270,11 +270,11 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         return result;
     }
 
-    private getResponseBuckets(responseField: GenericFacetResponse, configFieldName: string): FacetFieldBucket[] {
+    private getResponseBuckets(responseField: GenericFacetResponse, configField: FacetField): FacetFieldBucket[] {
         return ((responseField && responseField.buckets) || []).map((respBucket) => {
 
             respBucket['count'] = this.getCountValue(respBucket);
-            respBucket.filterQuery = respBucket.filterQuery || this.getCorrespondingFilterQuery(configFieldName, respBucket.label);
+            respBucket.filterQuery = respBucket.filterQuery || this.getCorrespondingFilterQuery(configField, respBucket.label);
             return <FacetFieldBucket> {
                 ...respBucket,
                 checked: false,
@@ -314,10 +314,10 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         };
     }
 
-    private getCorrespondingFilterQuery (field: string, bucketLabel: string): string {
-        if (!field || !bucketLabel) {
+    private getCorrespondingFilterQuery (configFacetItem: FacetField, bucketLabel: string): string {
+        if (!configFacetItem.field || !bucketLabel) {
             return null;
         }
-        return `${field}:"${bucketLabel}"`;
+        return `${configFacetItem.field}:"${bucketLabel}"`;
     }
 }
