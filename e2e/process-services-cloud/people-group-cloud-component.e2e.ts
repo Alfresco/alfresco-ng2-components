@@ -75,7 +75,7 @@ describe('People Groups CLoud Component', () => {
             peopleCloudComponent.checkUserIsDisplayed(activitiUser);
             peopleCloudComponent.checkUserIsNotDisplayed(noRoleUser);
             peopleCloudComponent.selectAssigneeFromList(activitiUser);
-            peopleGroupCloudComponentPage.clearPeopleRoles();
+            peopleGroupCloudComponentPage.clearField(peopleGroupCloudComponentPage.peopleRoleInput);
             peopleCloudComponent.searchAssignee('user');
             peopleCloudComponent.checkUserIsNotDisplayed(apsUser);
             peopleCloudComponent.checkUserIsNotDisplayed(activitiUser);
@@ -98,7 +98,7 @@ describe('People Groups CLoud Component', () => {
             groupCloudComponent.checkGroupIsNotDisplayed(groupActiviti);
             groupCloudComponent.checkGroupIsNotDisplayed(groupNoRole);
             groupCloudComponent.selectGroupFromList(groupActiviti);
-            peopleGroupCloudComponentPage.clearGroupRoles();
+            peopleGroupCloudComponentPage.clearField(peopleGroupCloudComponentPage.groupRoleInput);
             groupCloudComponent.searchGroups('Group');
             groupCloudComponent.checkGroupIsNotDisplayed(groupAps);
             groupCloudComponent.checkGroupIsNotDisplayed(groupActiviti);
