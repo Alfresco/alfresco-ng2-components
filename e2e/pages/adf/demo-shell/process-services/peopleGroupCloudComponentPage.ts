@@ -58,20 +58,11 @@ export class PeopleGroupCloudComponentPage {
         return this;
     }
 
-    clearPeopleRoles() {
-        Util.waitUntilElementIsVisible(this.peopleRoleInput);
-        this.peopleRoleInput.getAttribute('value').then((result) => {
+    clearField(locator) {
+        Util.waitUntilElementIsVisible(locator);
+        locator.getAttribute('value').then((result) => {
             for (let i = result.length; i >= 0; i--) {
-                this.peopleRoleInput.sendKeys(protractor.Key.BACK_SPACE);
-            }
-        });
-    }
-
-    clearGroupRoles() {
-        Util.waitUntilElementIsVisible(this.groupRoleInput);
-        this.groupRoleInput.getAttribute('value').then((result) => {
-            for (let i = result.length; i >= 0; i--) {
-                this.groupRoleInput.sendKeys(protractor.Key.BACK_SPACE);
+                locator.sendKeys(protractor.Key.BACK_SPACE);
             }
         });
     }
