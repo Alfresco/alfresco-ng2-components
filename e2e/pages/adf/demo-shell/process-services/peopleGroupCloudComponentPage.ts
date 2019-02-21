@@ -16,9 +16,6 @@
  */
 
 import { by, element, protractor } from 'protractor';
-
-import { PeopleCloudComponent } from '../../process-cloud/peopleCloudComponent';
-import { GroupCloudComponent } from '../../process-cloud/groupCloudComponent';
 import { Util } from '../../../../util/util';
 
 export class PeopleGroupCloudComponentPage {
@@ -33,8 +30,6 @@ export class PeopleGroupCloudComponentPage {
     groupPreselect = element(by.css('input[data-automation-id="adf-group-preselect-input"]'));
     peopleCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
     groupCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
-    peopleCloudComponent = new PeopleCloudComponent();
-    groupCloudComponent = new GroupCloudComponent();
 
     checkPeopleCloudComponentTitleIsDisplayed() {
         Util.waitUntilElementIsVisible(this.peopleCloudComponentTitle);
