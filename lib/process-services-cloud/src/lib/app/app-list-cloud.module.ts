@@ -30,7 +30,7 @@ import { TemplateModule, CoreModule } from '@alfresco/adf-core';
         TemplateModule,
         MaterialModule,
         FlexLayoutModule,
-        CoreModule.forChild()
+        CoreModule
     ],
     declarations: [
         AppListCloudComponent,

@@ -35,7 +35,7 @@ import { InitialGroupNamePipe } from './pipe/group-initial.pipe';
         FormsModule,
         ReactiveFormsModule,
         FormModule,
-        CoreModule.forChild()
+        CoreModule
     ],
     declarations: [GroupCloudComponent, InitialGroupNamePipe],
     exports: [GroupCloudComponent, InitialGroupNamePipe]
