@@ -146,5 +146,5 @@ export function mergeArrays(left: any[], right: any[]): any[] {
         }
     });
 
-    return Object.keys(map).map(key => map[key]).concat(result);
+    return Object.keys(map).map((key) => map[key]).concat(result);
 }
