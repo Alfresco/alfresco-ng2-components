@@ -35,7 +35,7 @@ describe('Permissions Component', function () {
     let permissionsPage = new PermissionsPage();
     let uploadActions = new UploadActions();
     let contentList = new ContentListPage();
-    let acsUser, acsUser2, file;
+    let fileOwnerUser, filePermissionUser, file;
 
     let fileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -53,18 +53,18 @@ describe('Permissions Component', function () {
         hostEcm: TestConfig.adf.url
     });
 
-    acsUser = new AcsUserModel();
+    fileOwnerUser = new AcsUserModel();
 
-    acsUser2 = new AcsUserModel();
-    const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + acsUser2.getId() + ' / role -> Contributor';
+    filePermissionUser = new AcsUserModel();
+    const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.getId() + ' / role -> Contributor';
 
     beforeAll(async (done) => {
 
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(fileOwnerUser);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser2);
+        await alfrescoJsApi.core.peopleApi.addPerson(filePermissionUser);
 
         let group = await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
 
@@ -85,11 +85,11 @@ describe('Permissions Component', function () {
     describe('Inherit and assigning permissions', function () {
 
         beforeEach(async (done) => {
-            await alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
 
             file = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
             contentServicesPage.goToDocumentList();
 
             contentList.checkContentIsDisplayed(fileModel.name);
@@ -140,11 +140,11 @@ describe('Permissions Component', function () {
     describe('Changing and duplicate Permissions', function () {
 
         beforeEach(async (done) => {
-            await alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
 
             file = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
 
-            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
             contentServicesPage.goToDocumentList();
 
             contentList.checkContentIsDisplayed(fileModel.name);
@@ -154,9 +154,9 @@ describe('Permissions Component', function () {
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
             permissionsPage.checkSearchUserInputIsDisplayed();
-            permissionsPage.searchUserOrGroup(acsUser2.getId());
-            permissionsPage.clickUserOrGroup(acsUser2.getFirstName());
-            permissionsPage.checkUserOrGroupIsAdded(acsUser2.getId());
+            permissionsPage.searchUserOrGroup(filePermissionUser.getId());
+            permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
+            permissionsPage.checkUserOrGroupIsAdded(filePermissionUser.getId());
             done();
         });
 
@@ -168,7 +168,7 @@ describe('Permissions Component', function () {
 
         it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', () => {
 
-            expect(permissionsPage.getRoleCellValue(acsUser2.getId())).toEqual('Contributor');
+            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
             permissionsPage.clickRoleDropdown();
             expect(permissionsPage.getRoleDropdownOptions().count()).toBe(5);
             expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('Contributor');
@@ -177,27 +177,27 @@ describe('Permissions Component', function () {
             expect(permissionsPage.getRoleDropdownOptions().get(3).getText()).toBe('Editor');
             expect(permissionsPage.getRoleDropdownOptions().get(4).getText()).toBe('Consumer');
             permissionsPage.selectOption('Collaborator');
-            expect(permissionsPage.getRoleCellValue(acsUser2.getId())).toEqual('Collaborator');
+            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Collaborator');
             permissionsPage.clickRoleDropdown();
             permissionsPage.selectOption('Coordinator');
-            expect(permissionsPage.getRoleCellValue(acsUser2.getId())).toEqual('Coordinator');
+            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Coordinator');
             permissionsPage.clickRoleDropdown();
             permissionsPage.selectOption('Editor');
-            expect(permissionsPage.getRoleCellValue(acsUser2.getId())).toEqual('Editor');
+            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Editor');
             permissionsPage.clickRoleDropdown();
             permissionsPage.selectOption('Consumer');
-            expect(permissionsPage.getRoleCellValue(acsUser2.getId())).toEqual('Consumer');
+            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Consumer');
 
         });
 
         it('[C276980] Should not be able to duplicate User or Group to the locally set permissions', () => {
 
-            expect(permissionsPage.getRoleCellValue(acsUser2.getId())).toEqual('Contributor');
+            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
             permissionsPage.checkSearchUserInputIsDisplayed();
-            permissionsPage.searchUserOrGroup(acsUser2.getId());
-            permissionsPage.clickUserOrGroup(acsUser2.getFirstName());
+            permissionsPage.searchUserOrGroup(filePermissionUser.getId());
+            permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
             expect(permissionsPage.getAssignPermissionErrorText()).toBe(duplicateUserPermissionMessage);
         });
 
