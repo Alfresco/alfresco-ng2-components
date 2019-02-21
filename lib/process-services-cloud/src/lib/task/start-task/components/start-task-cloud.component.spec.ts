@@ -222,5 +222,5 @@ describe('StartTaskCloudComponent', () => {
         description.setValue('');
         fixture.detectChanges();
         expect(description.valid).toBeTruthy();
-    })
+    });
 });
