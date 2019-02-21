@@ -314,20 +314,20 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         };
     }
 
-    private getCorrespondingFilterQuery (facetField: FacetField, bucketLabel: string): string {
+    private getCorrespondingFilterQuery (configFacetField: FacetField, bucketLabel: string): string {
         let filterQuery = null;
 
-        if (facetField.field && bucketLabel) {
+        if (configFacetField.field && bucketLabel) {
 
-            if (facetField.sets) {
-                const configSet = facetField.sets.find((set) => bucketLabel === set.label);
+            if (configFacetField.sets) {
+                const configSet = configFacetField.sets.find((set) => bucketLabel === set.label);
 
                 if (configSet) {
-                    filterQuery = this.buildIntervalQuery(facetField.field, configSet);
+                    filterQuery = this.buildIntervalQuery(configFacetField.field, configSet);
                 }
 
             } else {
-                filterQuery = `${facetField.field}:"${bucketLabel}"`;
+                filterQuery = `${configFacetField.field}:"${bucketLabel}"`;
             }
         }
 
