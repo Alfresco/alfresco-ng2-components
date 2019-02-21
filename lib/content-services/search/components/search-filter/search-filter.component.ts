@@ -189,7 +189,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
     }
 
-    private parseFacetItems(context: ResultSetContext, configFacetFields: Array<FacetField>, itemType: string): FacetField[] {
+    private parseFacetItems(context: ResultSetContext, configFacetFields: FacetField[], itemType: string): FacetField[] {
         return configFacetFields.map((field) => {
             const responseField = (context.facets || []).find((response) => response.type === itemType && response.label === field.label) || {};
             const responseBuckets = this.getResponseBuckets(responseField, field)
@@ -314,20 +314,20 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         };
     }
 
-    private getCorrespondingFilterQuery (field: FacetField, bucketLabel: string): string {
+    private getCorrespondingFilterQuery (facetField: FacetField, bucketLabel: string): string {
         let filterQuery = null;
 
-        if (field.field && bucketLabel) {
+        if (facetField.field && bucketLabel) {
 
-            if (field.sets) {
-                const configSet = field.sets.find((set) => bucketLabel === set.label);
+            if (facetField.sets) {
+                const configSet = facetField.sets.find((set) => bucketLabel === set.label);
 
                 if (configSet) {
-                    filterQuery = this.buildIntervalQuery(field.field, configSet);
+                    filterQuery = this.buildIntervalQuery(facetField.field, configSet);
                 }
 
             } else {
-                filterQuery = `${field.field}:"${bucketLabel}"`;
+                filterQuery = `${facetField.field}:"${bucketLabel}"`;
             }
         }
 

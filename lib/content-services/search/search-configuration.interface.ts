@@ -22,28 +22,28 @@ import { SearchCategory } from './search-category.interface';
 import { SearchSortingDefinition } from './search-sorting-definition.interface';
 
 export interface SearchConfiguration {
-    include?: Array<string>;
-    fields?: Array<string>;
-    categories: Array<SearchCategory>;
-    filterQueries?: Array<FilterQuery>;
+    include?: string[];
+    fields?: string[];
+    categories: SearchCategory[];
+    filterQueries?: FilterQuery[];
     filterWithContains?: boolean;
     facetQueries?: {
         label?: string;
         pageSize?: number;
         expanded?: boolean;
         mincount?: number;
-        queries: Array<FacetQuery>;
+        queries: FacetQuery[];
     };
     facetFields?: {
         expanded?: boolean;
-        fields: Array<FacetField>;
+        fields: FacetField[];
     };
     facetIntervals?: {
         expanded?: boolean;
-        intervals: Array<FacetField>;
+        intervals: FacetField[];
     };
     sorting?: {
-        options: Array<SearchSortingDefinition>;
-        defaults: Array<SearchSortingDefinition>;
+        options: SearchSortingDefinition[];
+        defaults: SearchSortingDefinition[];
     };
 }
