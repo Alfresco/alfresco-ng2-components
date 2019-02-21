@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, protractor } from 'protractor';
 import { Util } from '../../../util/util';
 
 export class PeopleCloudComponent {
@@ -33,6 +33,11 @@ export class PeopleCloudComponent {
     searchAssignee(name) {
         Util.waitUntilElementIsVisible(this.peopleCloudSearch);
         this.peopleCloudSearch.clear();
+        this.peopleCloudSearch.sendKeys(name).then((result) => {
+            for (let i = name.length; i >= 0; i--) {
+                this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
+            }
+        });
         this.peopleCloudSearch.sendKeys(name);
         return this;
     }
