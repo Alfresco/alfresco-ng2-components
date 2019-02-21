@@ -175,6 +175,7 @@ export class SearchQueryBuilderService {
             const fields = this.config.facetFields.fields || [];
             const result = fields.find((field) => field.label === label);
             if (result) {
+                result.label = this.getSupportedLabel(result.label);
                 return { ...result };
             }
         }
@@ -352,6 +353,7 @@ export class SearchQueryBuilderService {
         if (this.userFacetBuckets) {
             Object.keys(this.userFacetBuckets).forEach((key) => {
                 const subQuery = (this.userFacetBuckets[key] || [])
+                    .filter((bucket) => bucket.filterQuery)
                     .map((bucket) => bucket.filterQuery)
                     .join(' OR ');
                 if (subQuery) {
@@ -374,7 +376,7 @@ export class SearchQueryBuilderService {
                 facets: facetFields.map((facet) => <RequestFacetField> {
                     field: facet.field,
                     mincount: facet.mincount,
-                    label: facet.label,
+                    label: this.getSupportedLabel(facet.label),
                     limit: facet.limit,
                     offset: facet.offset,
                     prefix: facet.prefix
@@ -383,5 +385,13 @@ export class SearchQueryBuilderService {
         }
 
         return null;
+    }
+
+    getSupportedLabel(configLabel: string): string {
+        const spaceInsideLabelIndex = configLabel.search(/\s/g);
+        if (spaceInsideLabelIndex > -1) {
+            return `"${configLabel}"`;
+        }
+        return configLabel;
     }
 }
