@@ -104,7 +104,7 @@ describe('DropdownBreadcrumb', () => {
         });
     });
 
-    xit('should display the path in reverse order', (done) => {
+    it('should display the path in reverse order', (done) => {
         let fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [
             { id: '1', name: 'Stark Industries' },

@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.spec.json",
   "files": [
-    "src/test.ts"
+    "test.ts"
   ]
 }
