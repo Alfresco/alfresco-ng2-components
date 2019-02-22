@@ -88,7 +88,7 @@ describe('Aspect oriented config', () => {
 
     it('[C261117] Should be possible restrict the display properties of one an aspect', () => {
 
-        configEditorPage.enterConfiguration('{  "presets": {' +
+        configEditorPage.enterBigConfigurationText('{  "presets": {' +
             '        "default": [{' +
             '            "title": "IMAGE",' +
             '            "items": [' +
@@ -123,7 +123,7 @@ describe('Aspect oriented config', () => {
 
     it('[C260185] Should ignore not existing aspect when present in the configuration', () => {
 
-        configEditorPage.enterConfiguration('   {' +
+        configEditorPage.enterBigConfigurationText('   {' +
             '        "presets": {' +
             '            "default": {' +
             '                "exif:exif": "*",' +
@@ -152,7 +152,7 @@ describe('Aspect oriented config', () => {
 
     it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided', () => {
 
-        configEditorPage.enterConfiguration('{ }');
+        configEditorPage.enterBigConfigurationText('{ }');
 
         configEditorPage.clickSaveButton();
 
@@ -176,7 +176,7 @@ describe('Aspect oriented config', () => {
 
     it('[C260182] Should show all the aspects if the default configuration contains the star symbol', () => {
 
-        configEditorPage.enterConfiguration('{' +
+        configEditorPage.enterBigConfigurationText('{' +
             '    "presets": {' +
             '        "default": "*"' +
             '    }' +
@@ -205,7 +205,7 @@ describe('Aspect oriented config', () => {
 
     it('[C268899] Should be possible use a Translation key as Title of a metadata group', () => {
 
-        configEditorPage.enterConfiguration('{' +
+        configEditorPage.enterBigConfigurationText('{' +
             '  "presets": {' +
             '    "default": [' +
             '      {' +
@@ -221,11 +221,8 @@ describe('Aspect oriented config', () => {
             '        "title": "GROUP-TITLE2-TRANSLATION-KEY",' +
             '        "items": [' +
             '          {' +
-            '            "aspect": "kitten:food",' +
-            '            "properties": [' +
-            '              "kitten:favourite-food",' +
-            '              "kitten:recommended-food"' +
-            '            ]' +
+            '            "aspect": "exif:exif"' +
+            '            "properties": "*"' +
             '          }' +
             '        ]' +
             '      }' +
@@ -255,7 +252,7 @@ describe('Aspect oriented config', () => {
 
     it('[C279968] Should be possible use a custom preset', () => {
 
-        configEditorPage.enterConfiguration('{' +
+        configEditorPage.enterBigConfigurationText('{' +
             '    "presets": {' +
             '        "custom-preset": {' +
             '            "exif:exif": "*",' +
