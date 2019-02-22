@@ -18,7 +18,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
-import { AppConfigService } from 'core/app-config';
+import { AppConfigService } from './../../app-config/app-config.service';
 
 @Component({
     selector: 'adf-txt-viewer',
