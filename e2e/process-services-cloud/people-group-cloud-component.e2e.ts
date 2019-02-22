@@ -25,7 +25,7 @@ import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComp
 import { GroupCloudComponent } from '../pages/adf/process-cloud/groupCloudComponent';
 import { browser } from 'protractor';
 import { Identity } from '../actions/APS-cloud/identity';
-import {GroupIdentity} from "../actions/APS-cloud/groupIdentity";
+import { GroupIdentity } from '../actions/APS-cloud/groupIdentity';
 
 describe('People Groups CLoud Component', () => {
 
@@ -60,7 +60,8 @@ describe('People Groups CLoud Component', () => {
             activitiUser = await identityService.createIdentityUser();
             identityService.assignRole(activitiUser.id, ACTIVITI_USER_ROLE_ID, 'ACTIVITI_USER');
             noRoleUser = await identityService.createIdentityUser();
-            selectedPeople = [`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`, `${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`, `${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`];
+            selectedPeople = [`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`, `${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`, +
+                `${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`];
             await groupIdentityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             groupAps = await groupIdentityService.createIdentityGroup();
             groupIdentityService.assignRole(groupAps.id, APS_ADMIN_ROLE_ID, 'APS_ADMIN');

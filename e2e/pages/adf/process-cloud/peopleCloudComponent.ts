@@ -37,7 +37,7 @@ export class PeopleCloudComponent {
                 this.peopleCloudSearch.sendKeys(name[i]);
             }
             this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
-            this.peopleCloudSearch.sendKeys(name[name.length-1]);
+            this.peopleCloudSearch.sendKeys(name[name.length - 1]);
         });
         return this;
     }
