@@ -131,7 +131,7 @@ describe('WebscriptComponent', () => {
             });
         });
 
-        it('HTML response should be displayed', (done) => {
+        xit('HTML response should be displayed', (done) => {
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'HTML';
 

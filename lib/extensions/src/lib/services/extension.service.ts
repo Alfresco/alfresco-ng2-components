@@ -80,9 +80,9 @@ export class ExtensionService {
         this.features = this.loader.getFeatures(config);
     }
 
-    getFeature(key: string): any {
+    getFeature(key: string): any[] {
         let properties: string[] = Array.isArray(key) ? [key] : key.split('.');
-        return properties.reduce((prev, curr) => prev && prev[curr], this.features);
+        return properties.reduce((prev, curr) => prev && prev[curr], this.features) || [];
     }
 
     /**
