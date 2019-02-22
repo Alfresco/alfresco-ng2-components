@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, protractor} from 'protractor';
 import { Util } from '../../../util/util';
 
 export class GroupCloudComponent {
@@ -32,13 +32,18 @@ export class GroupCloudComponent {
 
     searchGroups(name) {
         Util.waitUntilElementIsVisible(this.groupCloudSearch);
-        this.groupCloudSearch.clear();
-        this.groupCloudSearch.sendKeys(name);
+        this.groupCloudSearch.clear().then(() => {
+            for (let i = 0; i < name.length; i++) {
+                this.groupCloudSearch.sendKeys(name[i]);
+            }
+            this.groupCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
+            this.groupCloudSearch.sendKeys(name[name.length-1]);
+        });
         return this;
     }
 
     selectGroupFromList(name) {
-        let groupRow = element(by.cssContainingText('mat-option span', name));
+        let groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         Util.waitUntilElementIsVisible(groupRow);
         groupRow.click();
         Util.waitUntilElementIsNotVisible(groupRow);
@@ -51,13 +56,13 @@ export class GroupCloudComponent {
     }
 
     checkGroupIsDisplayed(name) {
-        let groupRow = element(by.cssContainingText('mat-option span', name));
+        let groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         Util.waitUntilElementIsVisible(groupRow);
         return this;
     }
 
     checkGroupIsNotDisplayed(name) {
-        let groupRow = element(by.cssContainingText('mat-option span', name));
+        let groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         Util.waitUntilElementIsNotVisible(groupRow);
         return this;
     }

@@ -32,13 +32,13 @@ export class PeopleCloudComponent {
 
     searchAssignee(name) {
         Util.waitUntilElementIsVisible(this.peopleCloudSearch);
-        this.peopleCloudSearch.clear();
-        this.peopleCloudSearch.sendKeys(name).then((result) => {
-            for (let i = name.length; i >= 0; i--) {
-                this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
+        this.peopleCloudSearch.clear().then(() => {
+            for (let i = 0; i < name.length; i++) {
+                this.peopleCloudSearch.sendKeys(name[i]);
             }
+            this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
+            this.peopleCloudSearch.sendKeys(name[name.length-1]);
         });
-        this.peopleCloudSearch.sendKeys(name);
         return this;
     }
 
