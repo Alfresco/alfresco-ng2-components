@@ -41,7 +41,7 @@ export class AppsProcessCloudService {
             return of([]);
         }
         const api: Oauth2Auth = this.apiService.getInstance().oauth2Auth;
-        const path = this.getApplicationUrl();
+        const path = this.getApplicationUrl(status);
         const pathParams = {}, queryParams = {},
             headerParams = {}, formParams = {}, bodyParam = {},
             contentTypes = ['application/json'], accepts = ['application/json'];
@@ -58,8 +58,12 @@ export class AppsProcessCloudService {
             );
     }
 
-    private getApplicationUrl() {
-        return `${this.appConfigService.get('bpmHost')}/alfresco-deployment-service/v1/applications`;
+    private getApplicationUrl(status: string): string {
+        let applicationUrl = `${this.appConfigService.get('bpmHost')}/alfresco-deployment-service/v1/applications`;
+        if (status) {
+            applicationUrl = applicationUrl + `?status=${status}`;
+        }
+        return applicationUrl;
     }
 
     private handleError(error?: any) {
