@@ -1219,7 +1219,7 @@ describe('DocumentList', () => {
         documentList.loadFolderByNodeId('-recent-');
     });
 
-    xit('should emit error when fetch recent fails on search call', (done) => {
+    it('should emit error when fetch recent fails on search call', (done) => {
         spyOn(customResourcesService, 'loadFolderByNodeId').and.returnValue(throwError('error'));
 
         let disposableError = documentList.error.subscribe((val) => {

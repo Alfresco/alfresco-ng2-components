@@ -36,7 +36,7 @@ import { AppListCloudModule } from './../../app/app-list-cloud.module';
         FlexLayoutModule,
         MaterialModule,
         AppListCloudModule,
-        CoreModule.forChild()
+        CoreModule
 
     ],
     declarations: [ProcessFiltersCloudComponent, EditProcessFilterCloudComponent, ProcessFilterDialogCloudComponent],

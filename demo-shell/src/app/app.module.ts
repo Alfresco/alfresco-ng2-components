@@ -24,6 +24,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppConfigService, TRANSLATION_PROVIDER, DebugAppConfigService, CoreModule } from '@alfresco/adf-core';
+import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { LoginComponent } from './components/login/login.component';
@@ -65,7 +66,6 @@ import { ProcessModule } from '@alfresco/adf-process-services';
 import { AuthBearerInterceptor } from './services';
 import { ProcessServicesCloudModule, GroupCloudModule } from '@alfresco/adf-process-services-cloud';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
-import { AppExtensionsModule } from './extensions/extensions.module';
 import { CloudLayoutComponent } from './components/app-layout/cloud/cloud-layout.component';
 import { AppsCloudDemoComponent } from './components/app-layout/cloud/apps-cloud-demo.component';
 import { ProcessesCloudDemoComponent } from './components/app-layout/cloud/processes-cloud-demo.component';
@@ -78,6 +78,7 @@ import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/st
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
 import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-settings.component';
+import { AppExtensionsModule } from './app-extension.module';
 
 @NgModule({
     imports: [
@@ -88,16 +89,18 @@ import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-sett
         FormsModule,
         HttpClientModule,
         MaterialModule,
+        AppExtensionsModule,
         FlexLayoutModule,
         CoreModule.forRoot(),
         ContentModule.forRoot(),
         InsightsModule.forRoot(),
         ProcessModule.forRoot(),
+        ProcessServicesCloudModule,
+        ExtensionsModule.forRoot(),
         ThemePickerModule,
         ChartsModule,
         MonacoEditorModule.forRoot(),
         ProcessServicesCloudModule,
-        AppExtensionsModule.forRoot(),
         GroupCloudModule
     ],
     declarations: [

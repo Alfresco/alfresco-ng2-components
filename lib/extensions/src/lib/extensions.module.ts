@@ -15,21 +15,46 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
 import { DynamicExtensionComponent } from './components/dynamic-component/dynamic.component';
 import { DynamicTabComponent } from './components/dynamic-tab/dynamic-tab.component';
 import { DynamicColumnComponent } from './components/dynamic-column/dynamic-column.component';
+import { PreviewExtensionComponent } from './components/viewer/preview-extension.component';
+import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
+import { AppExtensionService } from './services/app-extension.service';
+import { setupExtensions } from './services/startup-extension-factory';
 
 @NgModule({
     declarations: [
         DynamicExtensionComponent,
         DynamicTabComponent,
-        DynamicColumnComponent
+        DynamicColumnComponent,
+        PreviewExtensionComponent
     ],
     exports: [
         DynamicExtensionComponent,
         DynamicTabComponent,
-        DynamicColumnComponent
+        DynamicColumnComponent,
+        PreviewExtensionComponent
     ]
 })
-export class ExtensionsModule {}
+export class ExtensionsModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: ExtensionsModule,
+            providers: [
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: setupExtensions,
+                    deps: [AppExtensionService],
+                    multi: true
+                }
+            ]
+        };
+    }
+
+    static forChild(): ModuleWithProviders {
+        return {
+            ngModule: ExtensionsModule
+        };
+    }
+}

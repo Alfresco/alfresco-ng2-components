@@ -16,8 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { ExtensionRef } from '@alfresco/adf-extensions';
-import { AppExtensionService } from '../../extensions/extension.service';
+import { AppExtensionService, ExtensionRef } from '@alfresco/adf-extensions';
 import { Observable } from 'rxjs';
 
 @Component({

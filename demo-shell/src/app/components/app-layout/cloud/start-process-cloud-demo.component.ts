@@ -19,6 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService, AppConfigService } from '@alfresco/adf-core';
 import { CloudLayoutService } from './services/cloud-layout.service';
+
 @Component({
     templateUrl: './start-process-cloud-demo.component.html',
     styleUrls: ['./start-process-cloud-demo.component.scss']
