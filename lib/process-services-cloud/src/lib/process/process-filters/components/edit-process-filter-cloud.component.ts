@@ -320,7 +320,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_INS_ID',
                 type: 'text',
                 key: 'processInstanceId',
-                value: ''
+                value: currentProcessFilter.processInstanceId || ''
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME',
