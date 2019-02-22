@@ -456,6 +456,10 @@ describe('SearchQueryBuilder', () => {
             configValue: 'label',
             requestCompatibleValue: 'label'
         };
+        const spacesLabelForSet = {
+            configValue: 'label for set',
+            requestCompatibleValue: '"label for set"'
+        };
 
         const config: SearchConfiguration = {
             categories: [
@@ -467,7 +471,7 @@ describe('SearchQueryBuilder', () => {
                         label: spacesLabel.configValue,
                         field: 'f1',
                         sets: [
-                            { label: 'interval1', start: 's1', end: 'e1' },
+                            { label: spacesLabelForSet.configValue, start: 's1', end: 'e1' },
                             { label: 'interval2', start: 's2', end: 'e2' }
                         ]
                     },
@@ -490,6 +494,9 @@ describe('SearchQueryBuilder', () => {
         expect(compiled.facetIntervals.intervals[0].label).not.toEqual(spacesLabel.configValue);
         expect(compiled.facetIntervals.intervals[1].label).toEqual(noSpacesLabel.requestCompatibleValue);
         expect(compiled.facetIntervals.intervals[1].label).toEqual(noSpacesLabel.configValue);
+
+        expect(compiled.facetIntervals.intervals[0].sets[0].label).toEqual(spacesLabelForSet.requestCompatibleValue);
+
     });
 
     it('should build query with sorting', () => {
