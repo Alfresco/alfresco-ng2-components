@@ -18,6 +18,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
+import { AppConfigService } from 'core/app-config';
 
 @Component({
     selector: 'adf-txt-viewer',
@@ -36,7 +37,7 @@ export class TxtViewerComponent implements OnChanges {
 
     content: string | ArrayBuffer;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private appConfigService: AppConfigService) {
     }
 
     ngOnChanges(changes: SimpleChanges): Promise<any> {
@@ -57,8 +58,10 @@ export class TxtViewerComponent implements OnChanges {
     }
 
     private getUrlContent(url: string): Promise<any> {
+        let withCredentialsMode = this.appConfigService.get<boolean>('auth.withCredentials', false);
+
         return new Promise((resolve, reject) => {
-            this.http.get(url, { responseType: 'text' }).subscribe((res) => {
+            this.http.get(url, { responseType: 'text', withCredentials: withCredentialsMode }).subscribe((res) => {
                 this.content = res;
                 resolve();
             }, (event) => {
