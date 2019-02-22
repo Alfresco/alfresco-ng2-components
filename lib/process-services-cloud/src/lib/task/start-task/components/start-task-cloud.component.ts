@@ -131,7 +131,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.taskForm = this.formBuilder.group({
             name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
             priority: new FormControl(),
-            description: new FormControl()
+            description: new FormControl('', [this.whitespaceValidator])
         });
     }
 
@@ -206,7 +206,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     public whitespaceValidator(control: FormControl) {
         const isWhitespace = (control.value || '').trim().length === 0;
-        const isValid = !isWhitespace;
+        const isValid = control.value.length === 0 || !isWhitespace;
         return isValid ? null : { 'whitespace': true };
     }
 
@@ -217,5 +217,4 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     get priorityController(): AbstractControl {
         return this.taskForm.get('priority');
     }
-
 }
