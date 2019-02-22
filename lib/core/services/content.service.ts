@@ -26,6 +26,8 @@ import { LogService } from './log.service';
 import { catchError } from 'rxjs/operators';
 import { PermissionsEnum } from '../models/permissions.enum';
 import { AllowableOperationsEnum } from '../models/allowable-operations.enum';
+import moment from 'moment-es6';
+import { Moment } from 'moment';
 
 @Injectable({
     providedIn: 'root'
@@ -278,15 +280,6 @@ export class ContentService {
     private isLockExpired(node: Node): boolean {
         let expiryLockTime = this.getLockExpiryTime(node);
         return moment().isAfter(expiryLockTime);
-    }
-
-    /**
-     * Checks if the node has the properties allowableOperations
-     * @param node Node to check allowableOperations
-     * @returns True if the node has the property, false otherwise
-     */
-    hasAllowableOperations(node: any): boolean {
-        return node && node.allowableOperations ? true : false;
     }
 
     private handleError(error: any) {
