@@ -85,9 +85,7 @@ describe('Edit task filters and task list properties', () => {
                 '"lastModifiedFrom",' +'"lastModifiedTo",' +'"sort",' +'"order"' +
                 ']' +
                 '}');
-            browser.driver.sleep(5000);
             configEditorPage.clickSaveButton();
-            browser.driver.sleep(5000);
 
             await tasksService.init(user, password);
             createdTask = await tasksService.createStandaloneTask(Util.generateRandomString(), simpleApp);

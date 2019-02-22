@@ -20,6 +20,8 @@ import { Util } from '../../../../util/util';
 import { TaskFiltersCloudComponent } from '../../process-cloud/taskFiltersCloudComponent';
 import { TaskListCloudComponent } from '../../process-cloud/taskListCloudComponent';
 import { EditTaskFilterCloudComponent } from '../../process-cloud/editTaskFilterCloudComponent';
+import { FormControllersPage } from '../../material/formControllersPage';
+
 import { element, by } from 'protractor';
 
 export class TasksCloudDemoPage {
@@ -30,10 +32,14 @@ export class TasksCloudDemoPage {
 
     taskFilters = element(by.css("mat-expansion-panel[data-automation-id='Task Filters']"));
     defaultActiveFilter = element.all(by.css('.adf-filters__entry')).first();
-    editTaskFilterCloud = new EditTaskFilterCloudComponent();
 
     createButton = element(by.css('button[data-automation-id="create-button"'));
     newTaskButton = element(by.css('button[data-automation-id="btn-start-task"]'));
+    multiSelectionSwitch = element(by.css("mat-checkbox[data-automation-id='multiSelection']"));
+    settingsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
+
+    formControllersPage = new FormControllersPage();
+    editTaskFilterCloud = new EditTaskFilterCloudComponent();
 
     taskFiltersCloudComponent(filter) {
         return new TaskFiltersCloudComponent(filter);
@@ -103,6 +109,16 @@ export class TasksCloudDemoPage {
 
     firstFilterIsActive () {
         return this.defaultActiveFilter.getAttribute('class').then((value) => value.includes('adf-active'));
+    }
+
+    clickMultiSelect() {
+        this.clickSettingsButton();
+        this.formControllersPage.enableToggle(this.multiSelectionSwitch);
+    }
+
+    clickSettingsButton() {
+        this.settingsButton.click();
+        browser.driver.sleep(10000);
     }
 
 }
