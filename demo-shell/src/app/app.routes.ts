@@ -153,7 +153,7 @@ export const appRoutes: Routes = [
                         component: PeopleGroupCloudDemoComponent
                     },
                     {
-                        path: ':applicationName',
+                        path: ':appName',
                         children: [
                             {
                                 path: '',

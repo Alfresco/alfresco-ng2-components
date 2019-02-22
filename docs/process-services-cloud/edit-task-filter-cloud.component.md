@@ -16,7 +16,7 @@ Edits Task Filter Details.
 ```html
 <adf-cloud-edit-task-filter
     [id]="taskFilterId"
-    [appName]="applicationName"
+    [appName]="appName"
     [filterProperties]="filterProperties"
     (filterChange)="onFilterChange($event)"
     (action)="onAction($event)">
@@ -51,13 +51,13 @@ Use the `appName` and `id` properties to choose which task filter to edit:
 ```html
 <adf-cloud-edit-task-filter
     [id]="taskFilterId"
-    [appName]="applicationName">
+    [appName]="appName">
 </adf-cloud-edit-task-filter>
 ```
 
 ### Filter properties
 
-You can supply various *filter properties* to edit that will determine 
+You can supply various *filter properties* to edit that will determine
 which tasks are found by a filter. The full set of properties is
 given below:
 

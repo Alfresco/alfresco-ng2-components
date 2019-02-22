@@ -66,7 +66,7 @@ A typical configuration is shown below:
           "expanded": true,
           "fields": [
             { "field": "content.mimetype", "mincount": 1, "label": "Type" },
-            { "field": "content.size", "mincount": 1, "label": "Size" },
+            { "field": "content.size", "mincount": 1, "label": "File Size" },
             { "field": "creator", "mincount": 1, "label": "Creator" },
             { "field": "modifier", "mincount": 1, "label": "Modifier" }
           ]
@@ -254,13 +254,16 @@ export interface SearchWidgetSettings {
 ```json
 {
     "search": {
-        "facetFields": [
-            { "field": "content.mimetype", "mincount": 1, "label": "Type" },
-            { "field": "content.size", "mincount": 1, "label": "Size" },
-            { "field": "creator", "mincount": 1, "label": "Creator" },
-            { "field": "modifier", "mincount": 1, "label": "Modifier" },
-            { "field": "created", "mincount": 1, "label": "Created" }
-        ]
+        "facetFields": {
+            "expanded": true,
+            "fields": [
+                { "field": "content.mimetype", "mincount": 1, "label": "Type" },
+                { "field": "content.size", "mincount": 1, "label": "File Size" },
+                { "field": "creator", "mincount": 1, "label": "Creator" },
+                { "field": "modifier", "mincount": 1, "label": "Modifier" },
+                { "field": "created", "mincount": 1, "label": "Created" }
+            ]
+        }
     }
 }
 ```
@@ -268,7 +271,7 @@ export interface SearchWidgetSettings {
 Every field declared within the `facetFields` group is presented by a separate collapsible category at runtime. 
 
 By default, users see only the top 5 entries. 
-If there are more than 5 entries, the "Show more" button is displayed to let the user move to
+If there are more than 5 entries, a button to show more items is displayed to let the user move to
 the next block of results.
 
 ![Facet Fields](../docassets/images/search-facet-fields.png)
