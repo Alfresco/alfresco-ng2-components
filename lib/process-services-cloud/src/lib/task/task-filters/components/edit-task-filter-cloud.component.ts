@@ -153,17 +153,17 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
             .pipe(debounceTime(500),
                 filter(() => this.isFormValid()))
             .subscribe((formValues: TaskFilterCloudModel) => {
-                this.replaceFormDateValues(formValues);
                 this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, formValues));
+                this.replaceTaskFilterDateValues(formValues);
                 this.formHasBeenChanged = !this.compareFilters(this.changedTaskFilter, this.taskFilter);
                 this.filterChange.emit(this.changedTaskFilter);
             });
     }
 
-    replaceFormDateValues(formValues: TaskFilterCloudModel) {
-        Object.keys(formValues).map( (element) => {
-            if (formValues[element] instanceof moment) {
-                formValues[element] = formValues[element].toDate();
+    replaceTaskFilterDateValues(taskFilter: TaskFilterCloudModel) {
+        Object.keys(taskFilter).map( (element) => {
+            if (taskFilter[element] instanceof moment) {
+                taskFilter[element] = taskFilter[element].toDate();
             }
         });
     }
