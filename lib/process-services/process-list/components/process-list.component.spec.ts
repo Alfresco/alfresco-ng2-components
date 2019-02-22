@@ -29,7 +29,7 @@ import { fakeProcessInstance, fakeProcessInstancesWithNoName, fakeProcessInstanc
 import { ProcessService } from '../services/process.service';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { fakeProcessCustomSchema } from '../../mock';
-import { ProcessListModule } from 'process-list/process-list.module';
+import { ProcessListModule } from '../process-list.module';
 
 describe('ProcessInstanceListComponent', () => {
 

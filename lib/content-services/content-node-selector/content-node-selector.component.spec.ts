@@ -27,6 +27,7 @@ import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
+import { ShareDataRow } from '../document-list';
 
 describe('ContentNodeSelectorDialogComponent', () => {
 
@@ -36,7 +37,10 @@ describe('ContentNodeSelectorDialogComponent', () => {
         title: 'Move along citizen...',
         actionName: 'move',
         select: new EventEmitter<Node>(),
-        rowFilter: () => {
+        rowFilter: (shareDataRow: ShareDataRow) => {
+            if (shareDataRow.node.entry.name === 'impossible-name') {
+                return true;
+            }
         },
         imageResolver: () => 'piccolo',
         currentFolderId: 'cat-girl-nuku-nuku'
@@ -88,14 +92,25 @@ describe('ContentNodeSelectorDialogComponent', () => {
             expect(documentList.componentInstance.currentFolderId).toBe('cat-girl-nuku-nuku');
         });
 
-        xit('should pass through the injected rowFilter to the documentList', (done) => {
-            fixture.whenStable().then(() => {
-                let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
-                expect(documentList).not.toBeNull('Document list should be shown');
-                expect(documentList.componentInstance.rowFilter).toBe(data.rowFilter);
-                done();
-            });
-
+        it('should pass through the injected rowFilter to the documentList', () => {
+            let documentList = fixture.debugElement.query(By.directive(DocumentListComponent));
+            expect(documentList).not.toBeNull('Document list should be shown');
+            expect(documentList.componentInstance.rowFilter({
+                node: {
+                    entry: new Node({
+                        name: 'impossible-name',
+                        id: 'name'
+                    })
+                }
+            }))
+                .toBe(data.rowFilter(<ShareDataRow> {
+                    node: {
+                        entry: new Node({
+                            name: 'impossible-name',
+                            id: 'name'
+                        })
+                    }
+                }));
         });
 
         it('should pass through the injected imageResolver to the documentList', () => {

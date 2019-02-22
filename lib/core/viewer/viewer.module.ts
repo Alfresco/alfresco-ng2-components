@@ -21,6 +21,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { ExtensionsModule } from '@alfresco/adf-extensions';
+
 import { MaterialModule } from '../material.module';
 import { ToolbarModule } from '../toolbar/toolbar.module';
 import { PipeModule } from '../pipes/pipe.module';
@@ -43,6 +45,7 @@ import { DirectiveModule } from '../directives/directive.module';
 
 @NgModule({
     imports: [
+        ExtensionsModule,
         CommonModule,
         MaterialModule,
         TranslateModule.forChild(),

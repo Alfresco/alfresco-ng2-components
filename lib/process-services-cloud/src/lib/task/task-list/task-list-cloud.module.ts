@@ -28,7 +28,7 @@ import { TaskListCloudService } from './services/task-list-cloud.service';
         MaterialModule,
         DataTableModule,
         TemplateModule,
-        CoreModule.forChild()
+        CoreModule
     ],
     declarations: [TaskListCloudComponent],
     exports: [TaskListCloudComponent],
