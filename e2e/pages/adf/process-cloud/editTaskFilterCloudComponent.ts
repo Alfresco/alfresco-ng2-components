@@ -51,7 +51,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     getStateFilterDropDownValue() {
-        return element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-state'] span")).getText();
+        return element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-state'] span")).first().getText();
     }
 
     setSortFilterDropDown(option) {
@@ -65,7 +65,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     getSortFilterDropDownValue() {
-        let elementSort = element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-sort'] span"));
+        let elementSort = element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-sort'] span")).first();
         Util.waitUntilElementIsVisible(elementSort);
         return elementSort.getText();
     }
@@ -81,11 +81,11 @@ export class EditTaskFilterCloudComponent {
     }
 
     getOrderFilterDropDownValue() {
-        return element(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-order'] span")).getText();
+        return element.all(by.css("mat-select[data-automation-id='adf-cloud-edit-task-property-order'] span")).first().getText();
     }
 
     clickOnDropDownArrow(option) {
-        let dropDownArrow = element(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']"));
+        let dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']")).first();
         Util.waitUntilElementIsVisible(dropDownArrow);
         dropDownArrow.click();
         Util.waitUntilElementIsVisible(this.selectedOption);
