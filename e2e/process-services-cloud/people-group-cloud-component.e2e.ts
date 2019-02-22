@@ -60,7 +60,7 @@ describe('People Groups CLoud Component', () => {
             activitiUser = await identityService.createIdentityUser();
             identityService.assignRole(activitiUser.id, ACTIVITI_USER_ROLE_ID, 'ACTIVITI_USER');
             noRoleUser = await identityService.createIdentityUser();
-            selectedPeople = [`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`, `${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`, +
+            selectedPeople = [`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`, `${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`,
                 `${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`];
             await groupIdentityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             groupAps = await groupIdentityService.createIdentityGroup();
@@ -103,15 +103,15 @@ describe('People Groups CLoud Component', () => {
             peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
             peopleGroupCloudComponentPage.enterPeopleRoles('["APS_USER","ACTIVITI_USER"]');
             peopleCloudComponent.searchAssignee('LastName');
-            peopleCloudComponent.checkUserIsNotDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
             peopleCloudComponent.checkUserIsDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
+            peopleCloudComponent.checkUserIsNotDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
             peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
             peopleCloudComponent.selectAssigneeFromList(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
             peopleGroupCloudComponentPage.clearField(peopleGroupCloudComponentPage.peopleRoleInput);
             peopleCloudComponent.searchAssignee('LastName');
+            peopleCloudComponent.checkUserIsDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
             peopleCloudComponent.checkUserIsNotDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
             peopleCloudComponent.checkUserIsNotDisplayed(`${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`);
-            peopleCloudComponent.checkUserIsDisplayed(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
             peopleCloudComponent.selectAssigneeFromList(`${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`);
             peopleCloudComponent.checkSelectedPeople(selectedPeople);
         });
