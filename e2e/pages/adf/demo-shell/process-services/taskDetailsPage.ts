@@ -20,7 +20,7 @@ import { Util } from '../../../../util/util';
 
 export class TaskDetailsPage {
 
-    taskDetailsHeader = element(by.css('ng-component h4'));
+    taskDetailsHeader = element(by.css(`h4[data-automation-id='task-details-header']`));
     taskPropertyList = element(by.css('adf-cloud-task-header adf-card-view div[class="adf-property-list"]'));
 
     getTaskDetailsHeader() {
