@@ -20,6 +20,10 @@ import { element, by } from 'protractor';
 import { Util } from '../../util/util';
 import { DataTablePage } from './dataTablePage';
 
+let column = {
+    role: 'Role'
+};
+
 export class PermissionsPage {
 
     addPermissionButton = element(by.css("button[data-automation-id='adf-add-permission-button']"));
@@ -30,6 +34,9 @@ export class PermissionsPage {
     permissionInheritedButton = element.all(by.css("div[class='adf-inherit_permission_button'] button")).first();
     permissionInheritedButtonText = this.permissionInheritedButton.element(by.css('span'));
     noPermissions = element(by.css('div[id="adf-no-permissions-template"]'));
+    roleDropdown = element(by.id('adf-select-role-permission'));
+    roleDropdownOptions = element.all(by.css('.mat-option-text'));
+    assignPermissionError = element(by.css('simple-snack-bar'));
 
     checkAddPermissionButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.addPermissionButton);
@@ -92,4 +99,32 @@ export class PermissionsPage {
         return new DataTablePage(element(by.css('[class*="adf-datatable-permission"]')));
     }
 
+    getRoleCellValue(rowName) {
+        let locator = new DataTablePage().getCellByNameAndColumn(rowName, column.role);
+        Util.waitUntilElementIsVisible(locator);
+        return locator.getText();
+    }
+
+    clickRoleDropdown() {
+        Util.waitUntilElementIsVisible(this.roleDropdown);
+        return this.roleDropdown.click();
+    }
+
+    getRoleDropdownOptions() {
+        Util.waitUntilElementIsVisible(this.roleDropdownOptions);
+        return this.roleDropdownOptions;
+    }
+
+    selectOption(name) {
+        let selectProcessDropdown = element(by.cssContainingText('.mat-option-text', name));
+        Util.waitUntilElementIsVisible(selectProcessDropdown);
+        Util.waitUntilElementIsClickable(selectProcessDropdown);
+        selectProcessDropdown.click();
+        return this;
+    }
+
+    getAssignPermissionErrorText() {
+        Util.waitUntilElementIsVisible(this.assignPermissionError);
+        return this.assignPermissionError.getText();
+    }
 }
