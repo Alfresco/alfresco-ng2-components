@@ -41,7 +41,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
     public static APP_RUNNING_STATUS: string = 'RUNNING';
     public static MIN_VALUE = 1;
     public static APPLICATION_NAME: string = 'appName';
-    public static DEFAULT_TASK_FILTER_PROPERTIES = ['state', 'assignment', 'sort', 'order', "lastModifiedFrom"];
+    public static DEFAULT_TASK_FILTER_PROPERTIES = ['state', 'assignment', 'sort', 'order', 'lastModifiedFrom'];
     public FORMAT_DATE: string = 'DD/MM/YYYY';
 
     /** (required) Name of the app. */
@@ -165,7 +165,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
             if (formValues[element] instanceof moment) {
                 formValues[element] = formValues[element].toDate();
             }
-        })
+        });
     }
 
     createAndFilterProperties(): TaskFilterProperties[] {
