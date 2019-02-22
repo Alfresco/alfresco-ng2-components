@@ -187,7 +187,7 @@ describe('ProcessListCloudComponent', () => {
 
         it('should reload the task list when input parameters changed', () => {
             const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-            component.applicationName = 'mock-app-name';
+            component.appName = 'mock-app-name';
             component.status = 'mock-status';
             component.initiator = 'mock-initiator';
             const appNameChange = new SimpleChange(undefined, 'mock-app-name', true);
@@ -195,7 +195,7 @@ describe('ProcessListCloudComponent', () => {
             const initiatorChange = new SimpleChange(undefined, 'mock-initiator', true);
 
             component.ngOnChanges({
-                'applicationName': appNameChange,
+                'appName': appNameChange,
                 'assignee': initiatorChange,
                 'status': statusChange
             });
