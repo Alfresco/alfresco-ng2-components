@@ -100,7 +100,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setAssignment(option) {
-        return this.setProperty('assignment' ,option);
+        return this.setProperty('assignment', option);
     }
 
     getAssignment() {
@@ -108,7 +108,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setPriority(option) {
-        return this.setProperty('priority' ,option);
+        return this.setProperty('priority', option);
     }
 
     getPriority() {
@@ -116,7 +116,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setParentTaskId(option) {
-        return this.setProperty('parentTaskId' ,option);
+        return this.setProperty('parentTaskId', option);
     }
 
     getParentTaskId() {
@@ -124,7 +124,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setOwner(option) {
-        return this.setProperty('owner' ,option);
+        return this.setProperty('owner', option);
     }
 
     getOwner() {
@@ -132,7 +132,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setLastModifiedFrom(option) {
-        return this.setProperty('lastModifiedFrom' ,option);
+        return this.setProperty('lastModifiedFrom', option);
     }
 
     getLastModifiedFrom() {
@@ -140,7 +140,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setLastModifiedTo(option) {
-        return this.setProperty('lastModifiedTo' ,option);
+        return this.setProperty('lastModifiedTo', option);
     }
 
     getLastModifiedTo() {
@@ -227,7 +227,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setTaskName(option) {
-        return this.setProperty('taskName' ,option);
+        return this.setProperty('taskName', option);
     }
 
     getTaskName() {
@@ -235,7 +235,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setProcessDefinitionId(option) {
-        return this.setProperty('processDefinitionId' ,option);
+        return this.setProperty('processDefinitionId', option);
     }
 
     getProcessDefinitionId() {
@@ -243,11 +243,11 @@ export class EditTaskFilterCloudComponent {
     }
 
     setProcessInstanceId(option) {
-        return this.setProperty('processInstanceId' ,option);
+        return this.setProperty('processInstanceId', option);
     }
 
     setProperty(property, option) {
-        let locator = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-' + property+'"]'));
+        let locator = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-' + property + '"]'));
         Util.waitUntilElementIsVisible(locator);
         locator.clear();
         locator.sendKeys(option);

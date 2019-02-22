@@ -89,6 +89,24 @@ export class DataTablePage {
         checkbox.click();
     }
 
+    clickCheckboxByName(rowName) {
+        let checkbox = this.getRowByRowName(rowName).element(by.xpath(`//mat-checkbox/label`));
+        Util.waitUntilElementIsVisible(checkbox);
+        checkbox.click();
+    }
+
+    getRowCheckboxByName(rowName) {
+        return this.getRowByRowName(rowName).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
+    }
+
+    checkRowIsNotCheckedByName(rowName) {
+        Util.waitUntilElementIsNotOnPage(this.getRowCheckboxByName(rowName));
+    }
+
+    checkRowIsCheckedByName(rowName) {
+        Util.waitUntilElementIsVisible(this.getRowCheckboxByName(rowName));
+    }
+
     selectRow(rowNumber) {
         return this.getRowByRowNumber(rowNumber).click();
     }
@@ -103,6 +121,30 @@ export class DataTablePage {
         this.selectionButton.click();
         Util.waitUntilElementIsVisible(this.selectionDropDown);
         selectMode.click();
+    }
+
+    selectRowByRowName(rowName) {
+        let row = element(by.cssContainingText(`[data-automation-id*="${rowName}"]`, rowName));
+        Util.waitUntilElementIsVisible(row);
+        Util.waitUntilElementIsClickable(row);
+        return row.click();
+    }
+
+    checkRowIsSelectedByName(rowName) {
+        let row = element(by.cssContainingText(`[data-automation-id*="${rowName}"]`, rowName));
+        let isRowSelected = row.element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        Util.waitUntilElementIsVisible(isRowSelected);
+    }
+
+    checkRowIsNotSelectedByName(rowName) {
+        let row = element(by.cssContainingText(`[data-automation-id*="${rowName}"]`, rowName));
+        let isRowSelected = row.element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        Util.waitUntilElementIsNotOnPage(isRowSelected);
+    }
+
+    selectRowByNameWithKeyboard(rowName) {
+        let row = element(by.cssContainingText(`[data-automation-id*="${rowName}"]`, rowName));
+        browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
     }
 
     checkRowIsSelected(rowNumber) {
@@ -263,6 +305,12 @@ export class DataTablePage {
     getNumberOfRowsDisplayedWithSameName(filename) {
         Util.waitUntilElementIsVisible(element(by.css(`div[filename="${filename}"]`)));
         return element.all(by.css(`div[title='Name'][filename="${filename}"]`)).count();
+    }
+
+    getNumberOfRowsDisplayedByName(filename) {
+        let rowLocator = by.cssContainingText(`[data-automation-id*="${filename}"]`, filename);
+        Util.waitUntilElementIsVisible(element(rowLocator));
+        return element.all(by.css(`div[title='Name'] div[data-automation-id*="${filename}"]`)).count();
     }
 
     checkColumnIsDisplayed(column) {

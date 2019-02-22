@@ -20,7 +20,6 @@ import { Util } from '../../../../util/util';
 import { TaskFiltersCloudComponent } from '../../process-cloud/taskFiltersCloudComponent';
 import { TaskListCloudComponent } from '../../process-cloud/taskListCloudComponent';
 import { EditTaskFilterCloudComponent } from '../../process-cloud/editTaskFilterCloudComponent';
-import { FormControllersPage } from '../../material/formControllersPage';
 
 import { element, by } from 'protractor';
 
@@ -35,10 +34,12 @@ export class TasksCloudDemoPage {
 
     createButton = element(by.css('button[data-automation-id="create-button"'));
     newTaskButton = element(by.css('button[data-automation-id="btn-start-task"]'));
-    multiSelectionSwitch = element(by.css("mat-checkbox[data-automation-id='multiSelection']"));
+    multiSelectionButton = element(by.css("mat-checkbox[data-automation-id='multiSelection'] div[class='mat-checkbox-inner-container']"));
     settingsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
+    appButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'App')).first();
+    modeDropDownArrow = element(by.css('mat-form-field[data-automation-id="selectionMode"] div[class*="arrow-wrapper"]'));
+    modeSelector = element(by.css("div[class*='mat-select-panel']"));
 
-    formControllersPage = new FormControllersPage();
     editTaskFilterCloud = new EditTaskFilterCloudComponent();
 
     taskFiltersCloudComponent(filter) {
@@ -112,13 +113,38 @@ export class TasksCloudDemoPage {
     }
 
     clickMultiSelect() {
-        this.clickSettingsButton();
-        this.formControllersPage.enableToggle(this.multiSelectionSwitch);
+        Util.waitUntilElementIsVisible(this.multiSelectionButton);
+        this.multiSelectionButton.click();
     }
 
     clickSettingsButton() {
         this.settingsButton.click();
-        browser.driver.sleep(10000);
+        browser.driver.sleep(400);
+        Util.waitUntilElementIsVisible(this.multiSelectionButton);
+        Util.waitUntilElementIsVisible(this.modeDropDownArrow);
+        Util.waitUntilElementIsClickable(this.modeDropDownArrow);
+        return this;
     }
 
+    clickAppButton() {
+        this.appButton.click();
+        return this;
+    }
+
+    selectSelectionMode(mode) {
+        this.clickOnSelectionModeDropDownArrow();
+
+        let modeElement = element.all(by.cssContainingText('mat-option span', mode)).first();
+        Util.waitUntilElementIsClickable(modeElement);
+        Util.waitUntilElementIsVisible(modeElement);
+        modeElement.click();
+        return this;
+    }
+
+    clickOnSelectionModeDropDownArrow() {
+        Util.waitUntilElementIsVisible(this.modeDropDownArrow);
+        Util.waitUntilElementIsClickable(this.modeDropDownArrow);
+        this.modeDropDownArrow.click();
+        Util.waitUntilElementIsVisible(this.modeSelector);
+    }
 }

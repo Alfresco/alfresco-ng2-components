@@ -81,8 +81,8 @@ describe('Edit task filters and task list properties', () => {
                 '"properties": [' +
                 '"appName",' + '"state",' + '"assignment",' +
                 '"taskName",' + '"parentTaskId",' + '"priority",' +
-                '"standAlone",' + '"owner",' +'"processDefinitionId",' +'"processInstanceId",' +
-                '"lastModifiedFrom",' +'"lastModifiedTo",' +'"sort",' +'"order"' +
+                '"standAlone",' + '"owner",' + '"processDefinitionId",' + '"processInstanceId",' +
+                '"lastModifiedFrom",' + '"lastModifiedTo",' + '"sort",' + '"order"' +
                 ']' +
                 '}');
             configEditorPage.clickSaveButton();
@@ -140,7 +140,7 @@ describe('Edit task filters and task list properties', () => {
             expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getTaskName()).toEqual(createdTask.entry.name);
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(createdTask.entry.name);
-            //expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfRowsDisplayedWithSameName(createdTask.entry.name)).toEqual(1);
+            expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfRowsDisplayedByName(createdTask.entry.name)).toEqual(1);
         });
 
         it('[C297613] Should be able to see No tasks found when typing a task name that does not exist', () => {

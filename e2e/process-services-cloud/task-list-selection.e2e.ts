@@ -22,21 +22,15 @@ import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
-import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { TaskListCloudConfiguration } from './taskListCloud.config';
 
 import { Util } from '../util/util';
 import moment = require('moment');
-import { DateUtil } from '../util/dateUtil';
 
 import { Tasks } from '../actions/APS-cloud/tasks';
-import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
-import { ProcessInstances } from '../actions/APS-cloud/process-instances';
-
 describe('Task list cloud - selection', () => {
 
     describe('Task list cloud - selection', () => {
-        const configEditorPage = new ConfigEditorPage();
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
@@ -44,20 +38,12 @@ describe('Task list cloud - selection', () => {
         let tasksCloudDemoPage = new TasksCloudDemoPage();
 
         const tasksService: Tasks = new Tasks();
-        const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
-        const processInstancesService: ProcessInstances = new ProcessInstances();
 
         let silentLogin;
         const simpleApp = 'simple-app';
-        const candidateUserApp = 'candidateuserapp';
-        let noTasksFoundMessage = 'No Tasks Found';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-        let createdTask, notAssigned, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask;
-        let priority = 30;
-
-        let beforeDate = moment().add(-1, 'days').format('DD/MM/YYYY');
-        let currentDate = DateUtil.formatDate('DD/MM/YYYY');
-        let afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
+        let nrOfTasks = 3, response;
+        let tasks = [];
 
         beforeAll(async (done) => {
             silentLogin = false;
@@ -66,43 +52,12 @@ describe('Task list cloud - selection', () => {
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginAPS(user, password);
 
-            navigationBarPage.clickConfigEditorButton();
-
-            configEditorPage.clickTaskListCloudConfiguration();
-            configEditorPage.clickClearButton();
-            configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
-
-            browser.driver.sleep(5000);
-
-            configEditorPage.clickEditTaskConfiguration();
-            configEditorPage.clickClearButton();
-            browser.driver.sleep(5000);
-            configEditorPage.enterConfiguration('{' +
-                '"properties": [' +
-                '"appName",' + '"state",' + '"assignment",' +
-                '"taskName",' + '"parentTaskId",' + '"priority",' +
-                '"standAlone",' + '"owner",' +'"processDefinitionId",' +'"processInstanceId",' +
-                '"lastModifiedFrom",' +'"lastModifiedTo",' +'"sort",' +'"order"' +
-                ']' +
-                '}');
-            configEditorPage.clickSaveButton();
-
             await tasksService.init(user, password);
-            createdTask = await tasksService.createStandaloneTask(Util.generateRandomString(), simpleApp);
-            await tasksService.claimTask(createdTask.entry.id, simpleApp);
-            notAssigned = await tasksService.createStandaloneTask(Util.generateRandomString(), simpleApp);
-            priorityTask = await tasksService.createStandaloneTask(Util.generateRandomString(), simpleApp, {priority: priority});
-            await tasksService.claimTask(priorityTask.entry.id, simpleApp);
-            notDisplayedTask = await tasksService.createStandaloneTask(Util.generateRandomString(), candidateUserApp);
-            await tasksService.claimTask(notDisplayedTask.entry.id, candidateUserApp);
-
-            /*await processDefinitionService.init(user, password);
-            processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
-            await processInstancesService.init(user, password);
-            processInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);*/
-
-            /*subTask = await tasksService.createStandaloneSubtask(createdTask.entry.id, simpleApp, Util.generateRandomString());
-            await tasksService.claimTask(subTask.entry.id, simpleApp);*/
+            for (let i = 0; i < nrOfTasks; i++) {
+                response = await tasksService.createStandaloneTask(Util.generateRandomString(), simpleApp);
+                await tasksService.claimTask(response.entry.id, simpleApp);
+                tasks.push(response.entry.name);
+            }
 
             done();
         });
@@ -111,42 +66,96 @@ describe('Task list cloud - selection', () => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader();
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             done();
         });
-
-        /*it('[C292004] Filter by appName', () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getAppNameDropDownValue()).toEqual(simpleApp);
-
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(createdTask.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(notDisplayedTask.entry.name);
-
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setAppNameDropDown(candidateUserApp);
-            expect(tasksCloudDemoPage.editTaskFilterCloudComponent().getAppNameDropDownValue()).toEqual(candidateUserApp);
-
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(notDisplayedTask.entry.name);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTask.entry.name);
-        });*/
 
         it('[C291916] Should be able to select multiple row when multiselect is true', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            tasksCloudDemoPage.clickMultiSelect();
-            /*expect(tasksCloudDemoPage.getAppName()).toEqual(simpleApp);
+            tasksCloudDemoPage.clickSettingsButton().clickMultiSelect();
+            tasksCloudDemoPage.clickAppButton();
 
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsNotCheckedByName(multipleTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(assignedTaskName);
-            taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsNotCheckedByName(assignedTaskName);
-            taskListCloudDemoPage.taskListCloud().getDataTable().checkRowIsCheckedByName(createdTaskName);*/
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsNotCheckedByName(tasks[2]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsNotCheckedByName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[0]);
+        });
+
+        it('[C291914] Should not be able to select any row when selection mode is set to None', () => {
+            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+            tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('None');
+            tasksCloudDemoPage.clickAppButton();
+
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByRowName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkNoRowIsSelected();
+        });
+
+        it('[C291918] Should be able to select only one row when selection mode is set to Single', () => {
+            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+            tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Single');
+            tasksCloudDemoPage.clickAppButton();
+
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByRowName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsSelectedByName(tasks[0]);
+            expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByRowName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsSelectedByName(tasks[1]);
+            expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
+        });
+
+        it('[C291919] Should be able to select only one row when selection mode is set to Multiple', () => {
+            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+            tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Multiple');
+            tasksCloudDemoPage.clickAppButton();
+
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByRowName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsSelectedByName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByNameWithKeyboard(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsSelectedByName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsSelectedByName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsNotSelectedByName(tasks[2]);
+        });
+
+        it('[C291916] Should be able to select multiple row when multiselect is true', () => {
+            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+            tasksCloudDemoPage.clickSettingsButton().clickMultiSelect();
+            tasksCloudDemoPage.clickAppButton();
+
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsNotCheckedByName(tasks[2]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsNotCheckedByName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[0]);
+        });
+
+        it('[C291915] Should be possible select all the rows when multiselect is true', () => {
+            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
+            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
+
+            tasksCloudDemoPage.clickSettingsButton().clickMultiSelect();
+            tasksCloudDemoPage.clickAppButton();
+
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkAllRows();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[0]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[1]);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[2]);
         });
 
     });
