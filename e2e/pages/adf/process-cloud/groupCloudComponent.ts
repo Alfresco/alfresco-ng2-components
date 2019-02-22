@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, protractor} from 'protractor';
+import { by, element, protractor } from 'protractor';
 import { Util } from '../../../util/util';
 
 export class GroupCloudComponent {
@@ -37,7 +37,7 @@ export class GroupCloudComponent {
                 this.groupCloudSearch.sendKeys(name[i]);
             }
             this.groupCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
-            this.groupCloudSearch.sendKeys(name[name.length-1]);
+            this.groupCloudSearch.sendKeys(name[name.length - 1]);
         });
         return this;
     }
