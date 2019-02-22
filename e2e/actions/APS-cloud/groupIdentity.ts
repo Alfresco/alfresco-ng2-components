@@ -19,7 +19,7 @@ import { ApiService } from '../APS-cloud/apiservice';
 import { Util } from '../../util/util';
 import { AppConfigService } from '@alfresco/adf-core';
 
-export class Identity {
+export class GroupIdentity {
 
     api: ApiService = new ApiService();
 
@@ -44,10 +44,10 @@ export class Identity {
         const path = '/groups';
         const method = 'POST';
         const queryParams = {}, postBody = {
-            'name': groupName
+            'name': groupName + 'TestGroup'
         };
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-        return data[0];
+        return data;
     }
 
     async deleteGroup(groupId) {
@@ -56,7 +56,7 @@ export class Identity {
         const queryParams = {}, postBody = {
         };
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-        return data[0];
+        return data;
     }
 
     async getGroupInfoByGroupname(groupName) {

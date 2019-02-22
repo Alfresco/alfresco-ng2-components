@@ -25,6 +25,7 @@ import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComp
 import { GroupCloudComponent } from '../pages/adf/process-cloud/groupCloudComponent';
 import { browser } from 'protractor';
 import { Identity } from '../actions/APS-cloud/identity';
+import {GroupIdentity} from "../actions/APS-cloud/groupIdentity";
 
 describe('People Groups CLoud Component', () => {
 
@@ -36,16 +37,17 @@ describe('People Groups CLoud Component', () => {
         const peopleCloudComponent = new PeopleCloudComponent();
         const groupCloudComponent = new GroupCloudComponent();
         const identityService: Identity = new Identity();
+        const groupIdentityService: GroupIdentity = new GroupIdentity();
 
         let silentLogin;
         let apsUser;
         let activitiUser;
         let noRoleUser ;
         let selectedPeople;
-        // let groupAps = 'GroupAdminAps';
-        // let groupActiviti = 'GroupAdminActiviti';
-        // let groupNoRole = 'GroupNoRole';
-        // let selectedGroups = [groupAps, groupActiviti, groupNoRole];
+        let groupAps;
+        let groupActiviti;
+        let groupNoRole;
+        let selectedGroups;
         const APS_USER_ROLE_ID = 'c56d382a-a60c-4fd1-b3ab-b1610448ceea';
         const ACTIVITI_USER_ROLE_ID = '206d548f-06e5-48ff-8d2a-f7f9c1cf52ee';
         const APS_ADMIN_ROLE_ID = 'f729afbe-91de-4e9b-8c89-e0fa4cbd6fbf';
@@ -59,6 +61,13 @@ describe('People Groups CLoud Component', () => {
             identityService.assignRole(activitiUser.id, ACTIVITI_USER_ROLE_ID, 'ACTIVITI_USER');
             noRoleUser = await identityService.createIdentityUser();
             selectedPeople = [`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`, `${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`, `${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`];
+            await groupIdentityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            groupAps = await groupIdentityService.createIdentityGroup();
+            groupIdentityService.assignRole(groupAps.id, APS_ADMIN_ROLE_ID, 'APS_ADMIN');
+            groupActiviti = await groupIdentityService.createIdentityGroup();
+            groupIdentityService.assignRole(groupActiviti.id,  ACTIVITI_ADMIN_ROLE_ID, 'ACTIVITI_ADMIN');
+            groupNoRole = await groupIdentityService.createIdentityGroup();
+            selectedGroups = [`${groupAps.name}` , `${groupActiviti.name}`, `${groupNoRole.name}`];
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
@@ -72,6 +81,9 @@ describe('People Groups CLoud Component', () => {
             await identityService.deleteIdentityUser(apsUser.id);
             await identityService.deleteIdentityUser(activitiUser.id);
             await identityService.deleteIdentityUser(noRoleUser.id);
+            await groupIdentityService.deleteIdentityGroup(groupAps.id);
+            await groupIdentityService.deleteIdentityGroup(groupActiviti.id);
+            await groupIdentityService.deleteIdentityGroup(groupNoRole.id);
         });
 
         beforeEach( () => {
@@ -103,28 +115,28 @@ describe('People Groups CLoud Component', () => {
             peopleCloudComponent.checkSelectedPeople(selectedPeople);
         });
 
-        // it('[C297674] Add roles filtering to GroupCloudComponent', () => {
-        //     peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
-        //     peopleGroupCloudComponentPage.enterGroupRoles('["APS_ADMIN"]');
-        //     groupCloudComponent.searchGroups('Group');
-        //     groupCloudComponent.checkGroupIsNotDisplayed(groupAps);
-        //     groupCloudComponent.checkGroupIsNotDisplayed(groupActiviti);
-        //     groupCloudComponent.checkGroupIsNotDisplayed(groupNoRole);
-        //     groupCloudComponent.selectGroupFromList(groupAps);
-        //     peopleGroupCloudComponentPage.enterGroupRoles('["APS_ADMIN","ACTIVITI_ADMIN"]');
-        //     groupCloudComponent.searchGroups('Group');
-        //     groupCloudComponent.checkGroupIsNotDisplayed(groupAps);
-        //     groupCloudComponent.checkGroupIsNotDisplayed(groupActiviti);
-        //     groupCloudComponent.checkGroupIsNotDisplayed(groupNoRole);
-        //     groupCloudComponent.selectGroupFromList(groupActiviti);
-        //     peopleGroupCloudComponentPage.clearField(peopleGroupCloudComponentPage.groupRoleInput);
-        //     groupCloudComponent.searchGroups('Group');
-        //     groupCloudComponent.checkGroupIsNotDisplayed(groupAps);
-        //     groupCloudComponent.checkGroupIsNotDisplayed(groupActiviti);
-        //     groupCloudComponent.checkGroupIsDisplayed(groupNoRole);
-        //     groupCloudComponent.selectGroupFromList(groupNoRole);
-        //     groupCloudComponent.checkSelectedGroups(selectedGroups);
-        // });
+        it('[C297674] Add roles filtering to GroupCloudComponent', () => {
+            peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
+            peopleGroupCloudComponentPage.enterGroupRoles('["APS_ADMIN"]');
+            groupCloudComponent.searchGroups('TestGroup');
+            groupCloudComponent.checkGroupIsDisplayed(`${groupAps.name}`);
+            groupCloudComponent.checkGroupIsNotDisplayed(`${groupActiviti.name}`);
+            groupCloudComponent.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+            groupCloudComponent.selectGroupFromList(`${groupAps.name}`);
+            peopleGroupCloudComponentPage.enterGroupRoles('["APS_ADMIN","ACTIVITI_ADMIN"]');
+            groupCloudComponent.searchGroups('TestGroup');
+            groupCloudComponent.checkGroupIsDisplayed(`${groupActiviti.name}`);
+            groupCloudComponent.checkGroupIsNotDisplayed(`${groupAps.name}`);
+            groupCloudComponent.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+            groupCloudComponent.selectGroupFromList(`${groupActiviti.name}`);
+            peopleGroupCloudComponentPage.clearField(peopleGroupCloudComponentPage.groupRoleInput);
+            groupCloudComponent.searchGroups('TestGroup');
+            groupCloudComponent.checkGroupIsDisplayed(`${groupNoRole.name}`);
+            groupCloudComponent.checkGroupIsNotDisplayed(`${groupActiviti.name}`);
+            groupCloudComponent.checkGroupIsNotDisplayed(`${groupAps.name}`);
+            groupCloudComponent.selectGroupFromList(`${groupNoRole.name}`);
+            groupCloudComponent.checkSelectedGroups(selectedGroups);
+        });
 
     });
 
