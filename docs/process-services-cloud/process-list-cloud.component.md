@@ -27,7 +27,7 @@ Renders a list containing all the process instances matched by the parameters sp
 
 ```html
 <adf-cloud-process-list
-    [applicationName]="'app-name'">
+    [appName]="'app-name'">
 </adf-cloud-process-list>
 ```
 
@@ -51,7 +51,7 @@ when the process list is empty:
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appVersion | `string` | "" | The related application version. |
-| applicationName | `string` | "" | The name of the application. |
+| appName | `string` | "" | The name of the application. |
 | businessKey | `string` | "" | Filter the tasks to display only the ones with this businessKey value. |
 | id | `string` | "" | Filter the processes to display only the ones with this ID. |
 | initiator | `string` | "" | Name of the initiator of the process. |
@@ -100,7 +100,7 @@ You can define a custom schema for the list in the `app.config.json` file and ac
 
 ```html
 <adf-cloud-process-list
-    [applicationName]="'appName'">
+    [appName]="'appName'">
 </adf-cloud-process-list>
 ```
 
@@ -133,7 +133,7 @@ information defined in `app.config.json` as in the example below:
 
 ```html
 <adf-cloud-process-list
-    [applicationName]="'appName'" >
+    [appName]="'appName'" >
     <data-columns>
         <data-column key="key" title="title" class="full-width name-column">
             <ng-template let-entry="$implicit">
@@ -157,7 +157,7 @@ let sorting = [{ orderBy: 'status', direction: 'desc' }];
 
 ```html
 <adf-cloud-process-list
-    [applicationName]="'appName'"
+    [appName]="'appName'"
     [sort]="sorting">
 </adf-cloud-process-list>
 ```

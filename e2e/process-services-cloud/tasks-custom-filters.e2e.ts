@@ -113,7 +113,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290139] Should display only tasks with all states when All is selected from state dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment(' ')
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignment()
                 .setStateFilterDropDown('ALL');
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(deletedTaskName);

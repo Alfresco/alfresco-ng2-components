@@ -42,7 +42,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     /** The name of the application. */
     @Input()
-    applicationName: string = '';
+    appName: string = '';
 
     /**
      * The assignee of the process. Possible values are: "assignee" (the current user is the assignee),
@@ -251,7 +251,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     private createRequestNode() {
 
         let requestNode = {
-            appName: this.applicationName,
+            appName: this.appName,
             assignee: this.assignee,
             id: this.id,
             name: this.name,
