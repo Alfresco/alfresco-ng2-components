@@ -26,7 +26,7 @@ import { CoreModule } from '@alfresco/adf-core';
         ProcessFiltersCloudModule,
         ProcessListCloudModule,
         StartProcessCloudModule,
-        CoreModule.forChild()
+        CoreModule
     ],
     exports: [
         ProcessFiltersCloudModule,

@@ -26,7 +26,7 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { fakeGlobalTask, fakeCustomSchema, fakeEmptyTask } from '../../mock';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
-import { TaskListModule } from 'task-list/task-list.module';
+import { TaskListModule } from '../task-list.module';
 
 declare let jasmine: any;
 

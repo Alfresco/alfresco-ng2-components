@@ -30,7 +30,7 @@ import { CoreModule } from '@alfresco/adf-core';
         MaterialModule,
         FlexLayoutModule,
         ReactiveFormsModule,
-        CoreModule.forChild()
+        CoreModule
     ],
     declarations: [
         StartProcessCloudComponent

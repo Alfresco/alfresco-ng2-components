@@ -6,7 +6,7 @@ cd $DIR/..
 
 echo "====== Extensions ======"
 echo "====== Build ======"
-ng build extensions || exit 1
+npm run ng-packagr -- -p ./lib/extensions/ || exit 1
 
 echo "====== Move to node_modules ======"
 rm -rf ./node_modules/@alfresco/adf-extensions/ && \

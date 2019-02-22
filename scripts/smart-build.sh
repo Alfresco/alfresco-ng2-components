@@ -31,6 +31,14 @@ affected="$(./scripts/affected-libs.sh -b "$BRANCH_NAME")"
 echo $affected
 libs=(`echo $affected | sed 's/^$/\n/g'`)
 
+#extensions
+for i in "${libs[@]}"
+do
+    if [ "$i" == "extensions$" ] ; then
+        ./scripts/build-extensions.sh || exit 1;
+    fi
+done
+
 #core
 for i in "${libs[@]}"
 do
@@ -68,13 +76,5 @@ for i in "${libs[@]}"
 do
     if [ "$i" == "insights$" ] ; then
         ./scripts/build-insights.sh || exit 1;
-    fi
-done
-
-#extensions
-for i in "${libs[@]}"
-do
-    if [ "$i" == "extensions$" ] ; then
-        ./scripts/build-extensions.sh || exit 1;
     fi
 done

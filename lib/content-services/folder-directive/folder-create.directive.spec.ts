@@ -55,7 +55,6 @@ class TestComponent {
 describe('FolderCreateDirective', () => {
     let fixture: ComponentFixture<TestTypeComponent | TestComponent>;
     let element;
-    let node: any;
     let dialog: MatDialog;
     let contentService: ContentService;
     let dialogRefMock;
@@ -85,8 +84,6 @@ describe('FolderCreateDirective', () => {
     });
 
     beforeEach(() => {
-        node = { entry: { id: 'nodeId' } };
-
         dialogRefMock = {
             afterClosed: (val) =>  of(val),
             componentInstance: {
@@ -104,22 +101,6 @@ describe('FolderCreateDirective', () => {
             dialog = TestBed.get(MatDialog);
             contentService = TestBed.get(ContentService);
             spyOn(dialog, 'open').and.returnValue(dialogRefMock);
-        });
-
-        xit('should emit folderCreate event when input value is not undefined', (done) => {
-            spyOn(dialogRefMock, 'afterClosed').and.returnValue(of(node));
-            spyOn(contentService.folderCreate, 'next');
-
-            contentService.folderCreate.subscribe((val) => {
-                expect(val).toBe(node);
-                done();
-            });
-
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                element.nativeElement.click();
-            });
         });
 
         it('should not emit folderCreate event when input value is undefined', () => {

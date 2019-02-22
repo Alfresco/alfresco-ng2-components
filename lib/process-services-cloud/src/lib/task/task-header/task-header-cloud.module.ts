@@ -29,7 +29,7 @@ import { TaskHeaderCloudService } from './services/task-header-cloud.service';
         DataTableModule,
         TemplateModule,
         CardViewModule,
-        CoreModule.forChild()
+        CoreModule
     ],
     declarations: [
         TaskHeaderCloudComponent

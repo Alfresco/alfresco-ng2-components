@@ -120,31 +120,6 @@ describe('ShareDialogComponent', () => {
         });
     }));
 
-    xit(`should copy shared link and notify on button event`, (done) => {
-        node.entry.properties['qshare:sharedId'] = 'sharedId';
-        spyOn(document, 'execCommand').and.callThrough();
-
-        component.data = {
-            node,
-            baseShareUrl: 'some-url/'
-        };
-
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-
-            fixture.nativeElement.querySelector('.adf-input-action')
-                .dispatchEvent(new MouseEvent('click'));
-
-            fixture.detectChanges();
-
-            expect(document.execCommand).toHaveBeenCalledWith('copy');
-            expect(notificationServiceMock.openSnackMessage).toHaveBeenCalledWith('SHARE.CLIPBOARD-MESSAGE');
-            done();
-        });
-    });
-
     it('should open a confirmation dialog when unshare button is triggered', () => {
         spyOn(matDialog, 'open').and.returnValue({ beforeClose: () => of(false) });
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.callThrough();

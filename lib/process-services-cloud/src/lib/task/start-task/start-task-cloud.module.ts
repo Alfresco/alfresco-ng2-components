@@ -38,7 +38,7 @@ import { GroupCloudModule } from '../../group/group-cloud.module';
         GroupCloudModule,
         FormModule,
         GroupCloudModule,
-        CoreModule.forChild()
+        CoreModule
     ],
     declarations: [StartTaskCloudComponent, PeopleCloudComponent],
     providers: [
