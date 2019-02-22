@@ -41,7 +41,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
     public static APP_RUNNING_STATUS: string = 'RUNNING';
     public static MIN_VALUE = 1;
     public static APPLICATION_NAME: string = 'appName';
-    public static DEFAULT_TASK_FILTER_PROPERTIES = ['state', 'assignment', 'sort', 'order', 'lastModifiedFrom'];
+    public static DEFAULT_TASK_FILTER_PROPERTIES = ['state', 'assignment', 'sort', 'order'];
     public FORMAT_DATE: string = 'DD/MM/YYYY';
 
     /** (required) Name of the app. */
@@ -384,7 +384,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.LAST_MODIFIED_FROM',
                 type: 'date',
                 key: 'lastModifiedFrom',
-                value: currentTaskFilter.lastModifiedFrom || ''
+                value: ''
             }),
 
             new TaskFilterProperties({
