@@ -37,6 +37,7 @@ export class PermissionsPage {
     roleDropdown = element(by.id('adf-select-role-permission'));
     roleDropdownOptions = element.all(by.css('.mat-option-text'));
     assignPermissionError = element(by.css('simple-snack-bar'));
+    deletePermissionButton = element(by.css(`button[data-automation-id='adf-delete-permission-button']`));
 
     checkAddPermissionButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.addPermissionButton);
@@ -77,6 +78,11 @@ export class PermissionsPage {
         Util.waitUntilElementIsVisible(userOrGroupName);
     }
 
+    checkUserOrGroupIsDeleted(name) {
+        let userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
+        Util.waitUntilElementIsNotVisible(userOrGroupName);
+    }
+
     checkPermissionInheritedButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.permissionInheritedButton);
     }
@@ -84,6 +90,11 @@ export class PermissionsPage {
     clickPermissionInheritedButton() {
         Util.waitUntilElementIsClickable(this.permissionInheritedButton);
         return this.permissionInheritedButton.click();
+    }
+
+    clickDeletePermissionButton() {
+        Util.waitUntilElementIsClickable(this.deletePermissionButton);
+        return this.deletePermissionButton.click();
     }
 
     checkNoPermissionsIsDisplayed() {
