@@ -1,10 +1,13 @@
 <div fxFlex fxLayout="column" class="adf-settings-container">
-    <mat-checkbox [color]="'primary'" [checked]="multiselect" (change)="toggleMultiselect()" data-automation-id="multiSelection">
+    <mat-slide-toggle [color]="'primary'" [checked]="multiselect" (change)="toggleMultiselect()" data-automation-id="multiSelection">
         {{ 'SETTINGS_CLOUD.MULTISELECTION' | translate }}
-    </mat-checkbox>
-    <mat-checkbox [color]="'primary'" [checked]="testingMode" (change)="toggleTestingMode()" data-automation-id="testingMode">
+    </mat-slide-toggle>
+    <mat-slide-toggle [color]="'primary'" [checked]="testingMode" (change)="toggleTestingMode()" data-automation-id="testingMode">
         {{ 'SETTINGS_CLOUD.TESTING_MODE' | translate }}
-    </mat-checkbox>
+    </mat-slide-toggle>
+    <mat-slide-toggle [color]="'primary'" [checked]="taskDetailsRedirection" (change)="toggleTaskDetailsRedirection()" data-automation-id="taskDetailsRedirection">
+        {{ 'SETTINGS_CLOUD.TASK_DETAILS_REDIRECTION' | translate }}
+    </mat-slide-toggle>
     <mat-form-field>
         <mat-label>
             {{ 'SETTINGS_CLOUD.SELECTION_MODE' | translate }}

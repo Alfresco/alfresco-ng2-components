@@ -201,6 +201,13 @@ describe('Permissions Component', function () {
             expect(permissionsPage.getAssignPermissionErrorText()).toBe(duplicateUserPermissionMessage);
         });
 
+        it('[C276982] Should be able to remove User or Group from the locally set permissions', () => {
+
+            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
+            permissionsPage.clickDeletePermissionButton();
+            permissionsPage.checkUserOrGroupIsDeleted(filePermissionUser.getId());
+        });
+
     });
 
 });

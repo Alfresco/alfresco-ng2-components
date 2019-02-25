@@ -189,7 +189,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         }
     }
 
-    private parseFacetItems(context: ResultSetContext, configFacetFields, itemType): FacetField[] {
+    private parseFacetItems(context: ResultSetContext, configFacetFields: FacetField[], itemType: string): FacetField[] {
         return configFacetFields.map((field) => {
             const responseField = (context.facets || []).find((response) => response.type === itemType && response.label === field.label) || {};
             const responseBuckets = this.getResponseBuckets(responseField, field)
@@ -315,9 +315,31 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     }
 
     private getCorrespondingFilterQuery (configFacetItem: FacetField, bucketLabel: string): string {
-        if (!configFacetItem.field || !bucketLabel) {
-            return null;
+        let filterQuery = null;
+
+        if (configFacetItem.field && bucketLabel) {
+
+            if (configFacetItem.sets) {
+                const configSet = configFacetItem.sets.find((set) => bucketLabel === set.label);
+
+                if (configSet) {
+                    filterQuery = this.buildIntervalQuery(configFacetItem.field, configSet);
+                }
+
+            } else {
+                filterQuery = `${configFacetItem.field}:"${bucketLabel}"`;
+            }
         }
-        return `${configFacetItem.field}:"${bucketLabel}"`;
+
+        return filterQuery;
+    }
+
+    private buildIntervalQuery(fieldName: string, interval: any): string {
+        const start = interval.start;
+        const end = interval.end;
+        const startLimit = (interval.startInclusive === undefined || interval.startInclusive === true) ? '[' : '<';
+        const endLimit = (interval.endInclusive === undefined || interval.endInclusive === true) ? ']' : '>';
+
+        return `${fieldName}:${startLimit}"${start}" TO "${end}"${endLimit}`;
     }
 }

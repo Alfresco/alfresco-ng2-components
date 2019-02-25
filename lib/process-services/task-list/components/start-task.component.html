@@ -7,11 +7,11 @@
             <div class="adf-task-name">
                 <mat-form-field fxFlex>
                     <mat-label>{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.NAME' | translate}}</mat-label>
-                    <input 
+                    <input
                         matInput
                         id="name_id"
                         formControlName="name">
-                        <mat-error *ngIf="nameController.hasError('required')">
+                        <mat-error *ngIf="nameController.hasError('required') || nameController.hasError('whitespace')">
                             {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.REQUIRED' | translate }}
                         </mat-error>
                         <mat-error *ngIf="nameController.hasError('maxlength')">
@@ -28,21 +28,24 @@
                         id="description_id"
                         formControlName="description">
                     </textarea>
+                    <mat-error *ngIf="descriptionController.hasError('whitespace')">
+                        {{ 'ADF_TASK_LIST.START_TASK.FORM.ERROR.MESSAGE' | translate }}
+                    </mat-error>
                 </mat-form-field>
             </div>
             <div class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
                 <mat-form-field fxFlex>
-                    <input 
+                    <input
                         matInput
                         (keyup)="onDateChanged($event.srcElement.value)"
                         (dateInput)="onDateChanged($event.value)"
                         [matDatepicker]="taskDatePicker"
                         placeholder="{{'ADF_TASK_LIST.START_TASK.FORM.LABEL.DATE'|translate}}"
                         id="date_id">
-                    <mat-datepicker-toggle 
+                    <mat-datepicker-toggle
                         matSuffix
                         [for]="taskDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker 
+                    <mat-datepicker
                         #taskDatePicker
                         [touchUi]="true">
                     </mat-datepicker>
@@ -54,9 +57,9 @@
                     </div>
                 </mat-form-field>
                 <div fxFlex>
-                    <people-widget 
-                        (peopleSelected)="getAssigneeId($event)" 
-                        [field]="field" 
+                    <people-widget
+                        (peopleSelected)="getAssigneeId($event)"
+                        [field]="field"
                         class="adf-people-widget-content"></people-widget>
                 </div>
             </div>

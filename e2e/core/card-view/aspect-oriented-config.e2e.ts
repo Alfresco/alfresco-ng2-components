@@ -221,7 +221,7 @@ describe('Aspect oriented config', () => {
             '        "title": "GROUP-TITLE2-TRANSLATION-KEY",' +
             '        "items": [' +
             '          {' +
-            '            "aspect": "exif:exif"' +
+            '            "aspect": "exif:exif",' +
             '            "properties": "*"' +
             '          }' +
             '        ]' +

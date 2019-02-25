@@ -48,6 +48,7 @@ export class TasksCloudDemoComponent implements OnInit {
     selectedRows: string[] = [];
     testingMode: boolean;
     selectionMode: string;
+    taskDetailsRedirection: boolean;
 
     constructor(
         private cloudLayoutService: CloudLayoutService,
@@ -79,14 +80,11 @@ export class TasksCloudDemoComponent implements OnInit {
     }
 
     setCurrentSettings(settings) {
-        if (settings.multiselect !== undefined) {
+        if (settings) {
             this.multiselect = settings.multiselect;
-        }
-        if (settings.testingMode !== undefined) {
             this.testingMode = settings.testingMode;
-        }
-        if (settings.selectionMode !== undefined) {
             this.selectionMode = settings.selectionMode;
+            this.selectionMode = settings.taskDetailsRedirection;
         }
     }
 
@@ -99,7 +97,7 @@ export class TasksCloudDemoComponent implements OnInit {
     }
 
     onRowClick(taskId) {
-        if (!this.multiselect && this.selectionMode !== 'multiple') {
+        if (!this.multiselect && this.selectionMode !== 'multiple' && this.taskDetailsRedirection) {
             this.router.navigate([`/cloud/${this.appName}/task-details/${taskId}`]);
         }
     }

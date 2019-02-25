@@ -323,9 +323,15 @@ export class SearchQueryBuilderService {
 
             return {
                 intervals: configIntervals.intervals.map((interval) => <any> {
-                    label: interval.label,
+                    label: this.getSupportedLabel(interval.label),
                     field: interval.field,
-                    sets: interval.sets
+                    sets: interval.sets.map((set) => <any> {
+                        label: this.getSupportedLabel(set.label),
+                        start: set.start,
+                        end: set.end,
+                        startInclusive: set.startInclusive,
+                        endInclusive: set.endInclusive
+                    })
                 })
             };
         }

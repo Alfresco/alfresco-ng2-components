@@ -15,24 +15,25 @@
  * limitations under the License.
  */
 
-import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
 import { TaskFilterCloudModel, FilterActionType, TaskFilterProperties } from './../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, DateAdapter } from '@angular/material';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
-import { TranslationService } from '@alfresco/adf-core';
+import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { debounceTime, filter } from 'rxjs/operators';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import moment from 'moment-es6';
+import { Moment } from 'moment';
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',
     templateUrl: './edit-task-filter-cloud.component.html',
     styleUrls: ['./edit-task-filter-cloud.component.scss']
 })
-export class EditTaskFilterCloudComponent implements OnChanges {
+export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
 
     public static ACTION_SAVE = 'SAVE';
     public static ACTION_SAVE_AS = 'SAVE_AS';
@@ -98,6 +99,7 @@ export class EditTaskFilterCloudComponent implements OnChanges {
     ];
 
     applicationNames: any[] = [];
+    dateFilter: any[] = [];
     formHasBeenChanged = false;
     editTaskFilterForm: FormGroup;
     taskFilterProperties: any[] = [];
@@ -108,7 +110,15 @@ export class EditTaskFilterCloudComponent implements OnChanges {
         public dialog: MatDialog,
         private translateService: TranslationService,
         private taskFilterCloudService: TaskFilterCloudService,
+        private dateAdapter: DateAdapter<Moment>,
+        private userPreferencesService: UserPreferencesService,
         private appsProcessCloudService: AppsProcessCloudService) {
+    }
+
+    ngOnInit() {
+        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
+            this.dateAdapter.setLocale(locale);
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -185,18 +195,13 @@ export class EditTaskFilterCloudComponent implements OnChanges {
 
     onDateChanged(newDateValue: any, dateProperty: TaskFilterProperties) {
         if (newDateValue) {
-            let momentDate;
-
-            if (typeof newDateValue === 'string') {
-                momentDate = moment(newDateValue, this.FORMAT_DATE, true);
-            } else {
-                momentDate = newDateValue;
-            }
+            let momentDate = moment(newDateValue, this.FORMAT_DATE, true);
 
             if (momentDate.isValid()) {
                 this.getPropertyController(dateProperty).setValue(momentDate.toDate());
+                this.getPropertyController(dateProperty).setErrors(null);
             } else {
-                this.getPropertyController(dateProperty).setErrors({ invalid: true });
+                this.getPropertyController(dateProperty).setErrors({invalid: true});
             }
         }
     }
