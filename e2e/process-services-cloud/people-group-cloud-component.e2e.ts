@@ -113,28 +113,28 @@ describe('People Groups CLoud Component', () => {
             peopleCloudComponent.checkSelectedPeople(selectedPeople);
         });
 
-        // it('[C297674] Add roles filtering to GroupCloudComponent', () => {
-        //     peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
-        //     peopleGroupCloudComponentPage.enterGroupRoles('["APS_ADMIN"]');
-        //     groupCloudComponent.searchGroups('TestGroup');
-        //     groupCloudComponent.checkGroupIsDisplayed(`${groupAps.name}`);
-        //     groupCloudComponent.checkGroupIsNotDisplayed(`${groupActiviti.name}`);
-        //     groupCloudComponent.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
-        //     groupCloudComponent.selectGroupFromList(`${groupAps.name}`);
-        //     peopleGroupCloudComponentPage.enterGroupRoles('["APS_ADMIN","ACTIVITI_ADMIN"]');
-        //     groupCloudComponent.searchGroups('TestGroup');
-        //     groupCloudComponent.checkGroupIsDisplayed(`${groupActiviti.name}`);
-        //     groupCloudComponent.checkGroupIsNotDisplayed(`${groupAps.name}`);
-        //     groupCloudComponent.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
-        //     groupCloudComponent.selectGroupFromList(`${groupActiviti.name}`);
-        //     peopleGroupCloudComponentPage.clearField(peopleGroupCloudComponentPage.groupRoleInput);
-        //     groupCloudComponent.searchGroups('TestGroup');
-        //     groupCloudComponent.checkGroupIsDisplayed(`${groupNoRole.name}`);
-        //     groupCloudComponent.checkGroupIsNotDisplayed(`${groupActiviti.name}`);
-        //     groupCloudComponent.checkGroupIsNotDisplayed(`${groupAps.name}`);
-        //     groupCloudComponent.selectGroupFromList(`${groupNoRole.name}`);
-        //     groupCloudComponent.checkSelectedGroups(selectedGroups);
-        // });
+        it('[C297674] Add roles filtering to GroupCloudComponent', () => {
+            peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
+            peopleGroupCloudComponentPage.enterGroupRoles('["APS_ADMIN"]');
+            groupCloudComponent.searchGroups('TestGroup');
+            groupCloudComponent.checkGroupIsDisplayed(`${groupAps.name}`);
+            groupCloudComponent.checkGroupIsNotDisplayed(`${groupActiviti.name}`);
+            groupCloudComponent.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+            groupCloudComponent.selectGroupFromList(`${groupAps.name}`);
+            peopleGroupCloudComponentPage.enterGroupRoles('["APS_ADMIN","ACTIVITI_ADMIN"]');
+            groupCloudComponent.searchGroups('TestGroup');
+            groupCloudComponent.checkGroupIsDisplayed(`${groupActiviti.name}`);
+            groupCloudComponent.checkGroupIsNotDisplayed(`${groupAps.name}`);
+            groupCloudComponent.checkGroupIsNotDisplayed(`${groupNoRole.name}`);
+            groupCloudComponent.selectGroupFromList(`${groupActiviti.name}`);
+            peopleGroupCloudComponentPage.clearField(peopleGroupCloudComponentPage.groupRoleInput);
+            groupCloudComponent.searchGroups('TestGroup');
+            groupCloudComponent.checkGroupIsDisplayed(`${groupNoRole.name}`);
+            groupCloudComponent.checkGroupIsNotDisplayed(`${groupActiviti.name}`);
+            groupCloudComponent.checkGroupIsNotDisplayed(`${groupAps.name}`);
+            groupCloudComponent.selectGroupFromList(`${groupNoRole.name}`);
+            groupCloudComponent.checkSelectedGroups(selectedGroups);
+        });
 
     });
 
