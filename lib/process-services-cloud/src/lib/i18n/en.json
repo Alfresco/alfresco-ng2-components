@@ -10,7 +10,16 @@
       "CREATED": "Created",
       "STATUS": "Status",
       "START_DATE": "Start Date",
-      "ID": "Id"
+      "ID": "Id",
+      "INITIATOR": "Initiator",
+      "APP_NAME": "Application Name",
+      "BUSINESS_KEY": "Business Key",
+      "DESCRIPTION": "Description",
+      "LAST_MODIFIED": "Last Modified",
+      "PROCESS_NAME": "Process Name",
+      "PARENT_TASK_ID": "Parent Task Id",
+      "PROCESS_DEF_ID": "Process Definition Id",
+      "PROCESS_DEF_KEY": "Process Definition Key"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Start Process",
