@@ -68,11 +68,23 @@ export class GroupIdentity {
         return data[0];
     }
 
-    async assignRole(groupId, roleId, roleName) {
+    async getRoleByName(roleName) {
+        const path = `/roles/${roleName}`;
+        const method = 'GET';
+        const queryParams = {},
+            postBody = {};
+
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return data;
+    }
+
+    async assignRole(groupId, roleName) {
+        const role = this.getRoleByName(roleName);
+        console.log('-----------------' + role);
         const path = `/groups/${groupId}/role-mappings/realm`;
         const method = 'POST';
         const queryParams = {},
-            postBody = [{'id': roleId, 'name': roleName}];
+            postBody = [{'id': role.id, 'name': roleName}];
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;
