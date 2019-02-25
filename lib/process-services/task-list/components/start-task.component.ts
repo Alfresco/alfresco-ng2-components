@@ -102,12 +102,18 @@ export class StartTaskComponent implements OnInit {
 
     buildForm() {
         this.taskForm = this.formBuilder.group({
-            name: new FormControl(this.taskDetailsModel.name, [Validators.required, Validators.maxLength(this.maxTaskNameLength)]),
-            description: new FormControl(''),
+            name: new FormControl(this.taskDetailsModel.name, [Validators.required, Validators.maxLength(this.maxTaskNameLength), this.whitespaceValidator]),
+            description: new FormControl('', [this.whitespaceValidator]),
             formKey: new FormControl('')
         });
 
         this.taskForm.valueChanges.subscribe((taskFormValues) => this.setTaskDetails(taskFormValues));
+    }
+
+    public whitespaceValidator(control: FormControl) {
+        const isWhitespace = (control.value || '').trim().length === 0;
+        const isValid =  control.value.length === 0 || !isWhitespace;
+        return isValid ? null : { 'whitespace': true };
     }
 
     setTaskDetails(form) {
