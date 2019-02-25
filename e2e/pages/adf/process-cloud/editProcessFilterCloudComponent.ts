@@ -16,11 +16,19 @@
  */
 import { Util } from '../../../util/util';
 import { by, element } from 'protractor';
+import { EditProcessFilterDialog } from '../dialog/editProcessFilterDialog';
 
 export class EditProcessFilterCloudComponent {
 
     customiseFilter = element(by.id('adf-edit-process-filter-title-id'));
     selectedOption = element(by.css('mat-option[class*="mat-selected"]'));
+    saveAsButton = element(by.css('button[id="adf-save-as-id"]'));
+
+    editProcessFilter = new EditProcessFilterDialog();
+
+    editProcessFilterDialog() {
+        return this.editProcessFilter;
+    }
 
     clickCustomiseFilterHeader() {
         Util.waitUntilElementIsVisible(this.customiseFilter);
@@ -59,9 +67,39 @@ export class EditProcessFilterCloudComponent {
     }
 
     clickOnDropDownArrow(option) {
-        let dropDownArrow = element(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']"));
+        let dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']")).first();
         Util.waitUntilElementIsVisible(dropDownArrow);
         dropDownArrow.click();
         Util.waitUntilElementIsVisible(this.selectedOption);
+    }
+
+    setProcessInstanceId(option) {
+        return this.setProperty('processInstanceId', option);
+    }
+
+    getProcessInstanceId() {
+        return this.getProperty('processInstanceId');
+    }
+
+    getProperty(property) {
+        let locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
+        Util.waitUntilElementIsVisible(locator);
+        return locator.getAttribute('value');
+    }
+
+    setProperty(property, option) {
+        let locator = element.all(by.css('input[data-automation-id="adf-cloud-edit-process-property-' + property + '"]')).first();
+        Util.waitUntilElementIsVisible(locator);
+        locator.clear();
+        locator.sendKeys(option);
+        locator.sendKeys(protractor.Key.ENTER);
+        return this;
+    }
+
+    clickSaveAsButton() {
+        Util.waitUntilElementIsClickable(this.saveAsButton);
+        Util.waitUntilElementIsVisible(this.saveAsButton);
+        this.saveAsButton.click();
+        return this.editProcessFilter;
     }
 }
