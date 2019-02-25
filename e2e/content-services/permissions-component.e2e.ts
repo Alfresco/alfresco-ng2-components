@@ -210,4 +210,51 @@ describe('Permissions Component', function () {
 
     });
 
+    fdescribe('Role Site Dropdown', function () {
+
+        let publicSite, uploadedFolder;
+
+        beforeEach(async (done) => {
+            await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
+            let siteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
+            let folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
+            let publicSiteBody = {visibility: 'PUBLIC', title: siteName};
+
+            publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
+
+            uploadedFolder = await uploadActions.createFolder(alfrescoJsApi, folderName, publicSite.entry.guid);
+
+            loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
+            browser.get(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
+            contentList.checkContentIsDisplayed(folderName);
+            contentList.rightClickOnRowNamed(folderName);
+            contentList.pressContextMenuActionNamed('Permission');
+            permissionsPage.checkAddPermissionButtonIsDisplayed();
+            permissionsPage.clickAddPermissionButton();
+            permissionsPage.checkAddPermissionDialogIsDisplayed();
+            permissionsPage.checkSearchUserInputIsDisplayed();
+            permissionsPage.searchUserOrGroup(filePermissionUser.getId());
+            permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
+            permissionsPage.checkUserOrGroupIsAdded(filePermissionUser.getId());
+            done();
+        });
+
+        afterEach(async (done) => {
+            await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
+            done();
+        });
+
+        it('[C277002] Should display the Role Site dropdown', () => {
+
+            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('SiteCollaborator');
+            permissionsPage.clickRoleDropdown();
+            expect(permissionsPage.getRoleDropdownOptions().count()).toBe(4);
+            expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('SiteCollaborator');
+            expect(permissionsPage.getRoleDropdownOptions().get(1).getText()).toBe('SiteConsumer');
+            expect(permissionsPage.getRoleDropdownOptions().get(2).getText()).toBe('SiteContributor');
+            expect(permissionsPage.getRoleDropdownOptions().get(3).getText()).toBe('SiteManager');
+
+        });
+
+    });
 });
