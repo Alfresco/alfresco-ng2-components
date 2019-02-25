@@ -36,6 +36,7 @@ describe('Permissions Component', function () {
     let uploadActions = new UploadActions();
     let contentList = new ContentListPage();
     let fileOwnerUser, filePermissionUser, file;
+    let publicSite, uploadedFolder;
 
     let fileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -91,8 +92,8 @@ describe('Permissions Component', function () {
 
             loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
             contentServicesPage.goToDocumentList();
-
             contentList.checkContentIsDisplayed(fileModel.name);
+            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             contentList.rightClickOnRowNamed(fileModel.name);
             contentList.pressContextMenuActionNamed('Permission');
 
@@ -125,6 +126,7 @@ describe('Permissions Component', function () {
         });
 
         it('[C268974] Inherit Permission', () => {
+            permissionsPage.checkPermissionContainerIsDisplayed();
             permissionsPage.checkPermissionInheritedButtonIsDisplayed();
             expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
             permissionsPage.checkPermissionsDatatableIsDisplayed();
@@ -148,6 +150,7 @@ describe('Permissions Component', function () {
             contentServicesPage.goToDocumentList();
 
             contentList.checkContentIsDisplayed(fileModel.name);
+            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             contentList.rightClickOnRowNamed(fileModel.name);
             contentList.pressContextMenuActionNamed('Permission');
             permissionsPage.checkAddPermissionButtonIsDisplayed();
@@ -210,15 +213,13 @@ describe('Permissions Component', function () {
 
     });
 
-    fdescribe('Role Site Dropdown', function () {
-
-        let publicSite, uploadedFolder;
+    describe('Role Site Dropdown', function () {
 
         beforeEach(async (done) => {
             await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
             let siteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
             let folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
-            let publicSiteBody = {visibility: 'PUBLIC', title: siteName};
+            let publicSiteBody = { visibility: 'PUBLIC', title: siteName };
 
             publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
 
@@ -227,6 +228,7 @@ describe('Permissions Component', function () {
             loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
             browser.get(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
             contentList.checkContentIsDisplayed(folderName);
+            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             contentList.rightClickOnRowNamed(folderName);
             contentList.pressContextMenuActionNamed('Permission');
             permissionsPage.checkAddPermissionButtonIsDisplayed();
@@ -240,7 +242,7 @@ describe('Permissions Component', function () {
         });
 
         afterEach(async (done) => {
-            await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
+            await alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
             done();
         });
 

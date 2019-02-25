@@ -66,6 +66,7 @@ export class ContentServicesPage {
     copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
     searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
+    siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-select']`));
 
     getUploadAreaDocumentList() {
         return new ContentListPage(element(by.css('adf-upload-drag-area')));
@@ -253,8 +254,8 @@ export class ContentServicesPage {
         return this.recentFileIcon.getText();
     }
 
-    checkAcsContainer() {
-        Util.waitUntilElementIsVisible(this.uploadBorder);
+    async checkAcsContainer() {
+        await Util.waitUntilElementIsVisible(this.uploadBorder);
         return this;
     }
 
@@ -690,5 +691,9 @@ export class ContentServicesPage {
     clickShareButton() {
         Util.waitUntilElementIsClickable(this.shareNodeButton);
         this.shareNodeButton.click();
+    }
+
+    checkSelectedSiteIsDisplayed(siteName) {
+        Util.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
     }
 }
