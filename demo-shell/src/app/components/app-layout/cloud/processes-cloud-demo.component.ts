@@ -85,13 +85,9 @@ export class ProcessesCloudDemoComponent implements OnInit {
     }
 
     setCurrentSettings(settings) {
-        if (settings.multiselect !== undefined) {
+        if (settings) {
             this.multiselect = settings.multiselect;
-        }
-        if (settings.testingMode !== undefined) {
             this.testingMode = settings.testingMode;
-        }
-        if (settings.selectionMode !== undefined) {
             this.selectionMode = settings.selectionMode;
         }
     }

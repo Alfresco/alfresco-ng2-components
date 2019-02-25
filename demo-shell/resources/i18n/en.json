@@ -310,6 +310,7 @@
   "SETTINGS_CLOUD": {
       "MULTISELECTION": "Multiselection",
       "TESTING_MODE": "Testing Mode",
-      "SELECTION_MODE": "Selection Mode"
+      "SELECTION_MODE": "Selection Mode",
+      "TASK_DETAILS_REDIRECTION": "Display task details on task click"
   }
 }

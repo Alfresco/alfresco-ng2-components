@@ -26,6 +26,7 @@ export class CloudLayoutService {
     private settings = {
         multiselect: false,
         testingMode: false,
+        taskDetailsRedirection: true,
         selectionMode: 'single'
     };
 
