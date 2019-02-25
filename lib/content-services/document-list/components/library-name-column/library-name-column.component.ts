@@ -24,7 +24,7 @@ import {
     ElementRef,
     OnDestroy
 } from '@angular/core';
-import { NodeEntry, Node } from '@alfresco/js-api';
+import { NodeEntry, Node, Site } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -52,29 +52,36 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
 
     private sub: Subscription;
 
-    constructor(private element: ElementRef, private api: AlfrescoApiService) {}
+    constructor(
+        private element: ElementRef,
+        private alfrescoApiService: AlfrescoApiService
+    ) {}
 
     ngOnInit() {
         this.updateValue();
 
-        this.sub = this.api.nodeUpdated.subscribe((node: Node) => {
-            const row: ShareDataRow = this.context.row;
-            if (row) {
-                const { entry } = row.node;
+        this.sub = this.alfrescoApiService.nodeUpdated.subscribe(
+            (node: Node) => {
+                const row: ShareDataRow = this.context.row;
+                if (row) {
+                    const { entry } = row.node;
 
-                if (entry === node) {
-                    row.node = { entry };
-                    this.updateValue();
+                    if (entry === node) {
+                        row.node = { entry };
+                        this.updateValue();
+                    }
                 }
             }
-        });
+        );
     }
 
     protected updateValue() {
         this.node = this.context.row.node;
         const rows: Array<ShareDataRow> = this.context.data.rows || [];
         if (this.node && this.node.entry) {
-            this.displayText$.next(this.makeLibraryTitle(this.node.entry, rows));
+            this.displayText$.next(
+                this.makeLibraryTitle(<any> this.node.entry, rows)
+            );
             this.displayTooltip$.next(this.makeLibraryTooltip(this.node.entry));
         }
     }
@@ -96,8 +103,8 @@ export class LibraryNameColumnComponent implements OnInit, OnDestroy {
         return description || title || '';
     }
 
-    makeLibraryTitle(library: any, rows: Array<ShareDataRow>): string {
-        const entries = rows.map((r: ShareDataRow) => r.node.entry);
+    makeLibraryTitle(library: Site, rows: Array<ShareDataRow>): string {
+        const entries = rows.map((row: ShareDataRow) => row.node.entry);
         const { title, id } = library;
 
         let isDuplicate = false;

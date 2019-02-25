@@ -35,9 +35,12 @@ import { Node } from '@alfresco/js-api';
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <ng-container>
-            <span [attr.aria-label]="value$ | async" [title]="tooltip" class="adf-datatable-cell-value">{{
-                value$ | async
-            }}</span>
+            <span
+                [attr.aria-label]="value$ | async"
+                [title]="tooltip"
+                class="adf-datatable-cell-value"
+                >{{ value$ | async }}</span
+            >
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
@@ -60,12 +63,12 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
 
     private sub: Subscription;
 
-    constructor(protected api: AlfrescoApiService) {}
+    constructor(protected alfrescoApiService: AlfrescoApiService) {}
 
     ngOnInit() {
         this.updateValue();
 
-        this.sub = this.api.nodeUpdated.subscribe((node: Node) => {
+        this.sub = this.alfrescoApiService.nodeUpdated.subscribe((node: Node) => {
             if (this.row) {
                 const { entry } = this.row['node'];
 

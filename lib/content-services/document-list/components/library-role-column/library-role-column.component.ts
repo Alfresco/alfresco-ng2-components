@@ -25,7 +25,7 @@ import {
 } from '@angular/core';
 import { Subscription, BehaviorSubject } from 'rxjs';
 import { AlfrescoApiService } from '@alfresco/adf-core';
-import { Node } from '@alfresco/js-api';
+import { Node, SiteEntry, Site } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 
 @Component({
@@ -66,20 +66,20 @@ export class LibraryRoleColumnComponent implements OnInit, OnDestroy {
     }
 
     protected updateValue() {
-        const node = this.context.row.node;
+        const node: SiteEntry = this.context.row.node;
         if (node && node.entry) {
             const role: string = node.entry.role;
             switch (role) {
-                case 'SiteManager':
+                case Site.RoleEnum.SiteManager:
                     this.displayText$.next('LIBRARY.ROLE.MANAGER');
                     break;
-                case 'SiteCollaborator':
+                case Site.RoleEnum.SiteCollaborator:
                     this.displayText$.next('LIBRARY.ROLE.COLLABORATOR');
                     break;
-                case 'SiteContributor':
+                case Site.RoleEnum.SiteContributor:
                     this.displayText$.next('LIBRARY.ROLE.CONTRIBUTOR');
                     break;
-                case 'SiteConsumer':
+                case Site.RoleEnum.SiteConsumer:
                     this.displayText$.next('LIBRARY.ROLE.CONSUMER');
                     break;
                 default:

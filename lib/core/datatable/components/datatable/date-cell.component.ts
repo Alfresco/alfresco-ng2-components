@@ -28,13 +28,20 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
 
     template: `
         <ng-container>
-            <span [attr.aria-label]=" (value$ | async) | adfTimeAgo: currentLocale " title="{{ tooltip | date:'medium' }}" *ngIf="format === 'timeAgo' else standard_date">
-                {{ (value$ | async) | adfTimeAgo: currentLocale }}
+            <span
+                [attr.aria-label]="value$ | async | adfTimeAgo: currentLocale"
+                title="{{ tooltip | date: 'medium' }}"
+                *ngIf="format === 'timeAgo'; else standard_date"
+            >
+                {{ value$ | async | adfTimeAgo: currentLocale }}
             </span>
         </ng-container>
         <ng-template #standard_date>
-            <span title="{{ tooltip | date:format }}" [attr.aria-label]="(value$ | async) | date:format">
-                {{ (value$ | async) | date:format }}
+            <span
+                title="{{ tooltip | date: format }}"
+                [attr.aria-label]="value$ | async | date: format"
+            >
+                {{ value$ | async | date: format }}
             </span>
         </ng-template>
     `,
@@ -51,8 +58,11 @@ export class DateCellComponent extends DataTableCellComponent {
         return 'medium';
     }
 
-    constructor(userPreferenceService: UserPreferencesService, apiService: AlfrescoApiService) {
-        super(apiService);
+    constructor(
+        userPreferenceService: UserPreferencesService,
+        alfrescoApiService: AlfrescoApiService
+    ) {
+        super(alfrescoApiService);
 
         if (userPreferenceService) {
             userPreferenceService

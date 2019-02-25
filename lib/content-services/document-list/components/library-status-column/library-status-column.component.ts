@@ -18,7 +18,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Subscription, BehaviorSubject } from 'rxjs';
-import { Node } from '@alfresco/js-api';
+import { Node, Site, SiteEntry } from '@alfresco/js-api';
 import { ShareDataRow } from '../../data/share-data-row.model';
 
 @Component({
@@ -57,18 +57,18 @@ export class LibraryStatusColumnComponent implements OnInit, OnDestroy {
     }
 
     protected updateValue() {
-        const node = this.context.row.node;
+        const node: SiteEntry = this.context.row.node;
         if (node && node.entry) {
             const visibility: string = node.entry.visibility;
 
-            switch (visibility.toUpperCase()) {
-                case 'PUBLIC':
+            switch (visibility) {
+                case Site.VisibilityEnum.PUBLIC:
                     this.displayText$.next('LIBRARY.VISIBILITY.PUBLIC');
                     break;
-                case 'PRIVATE':
+                case Site.VisibilityEnum.PRIVATE:
                     this.displayText$.next('LIBRARY.VISIBILITY.PRIVATE');
                     break;
-                case 'MODERATED':
+                case Site.VisibilityEnum.MODERATED:
                     this.displayText$.next('LIBRARY.VISIBILITY.MODERATED');
                     break;
                 default:

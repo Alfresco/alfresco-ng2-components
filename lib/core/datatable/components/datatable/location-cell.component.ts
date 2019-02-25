@@ -39,13 +39,12 @@ import { AlfrescoApiService } from '../../../services/alfresco-api.service';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'adf-location-cell' }
 })
-export class LocationCellComponent extends DataTableCellComponent
-    implements OnInit {
+export class LocationCellComponent extends DataTableCellComponent implements OnInit {
     @Input()
     link: any[];
 
-    constructor(apiService: AlfrescoApiService) {
-        super(apiService);
+    constructor(alfrescoApiService: AlfrescoApiService) {
+        super(alfrescoApiService);
     }
 
     /** @override */
