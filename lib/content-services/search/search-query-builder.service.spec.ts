@@ -425,16 +425,16 @@ describe('SearchQueryBuilder', () => {
                         label: 'test_intervals1',
                         field: 'f1',
                         sets: [
-                            { label: 'interval1', start: 's1', end: 'e1' },
-                            { label: 'interval2', start: 's2', end: 'e2' }
+                            { label: 'interval1', start: 's1', end: 'e1', startInclusive: true, endInclusive: true  },
+                            { label: 'interval2', start: 's2', end: 'e2', startInclusive: false, endInclusive: true }
                         ]
                     },
                     {
                         label: 'test_intervals2',
                         field: 'f2',
                         sets: [
-                            { label: 'interval3', start: 's3', end: 'e3' },
-                            { label: 'interval4', start: 's4', end: 'e4' }
+                            { label: 'interval3', start: 's3', end: 'e3', startInclusive: true, endInclusive: false },
+                            { label: 'interval4', start: 's4', end: 'e4', startInclusive: false, endInclusive: false }
                         ]
                     }
                 ]
