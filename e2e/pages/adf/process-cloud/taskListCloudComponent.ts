@@ -19,6 +19,10 @@ import { Util } from '../../../util/util';
 import { DataTablePage } from '../dataTablePage';
 import { element, by } from 'protractor';
 
+let column = {
+    id: 'Id'
+};
+
 export class TaskListCloudComponent {
 
     taskList = element(by.css('adf-cloud-task-list'));
@@ -40,8 +44,14 @@ export class TaskListCloudComponent {
         return this.noTasksFound.getText();
     }
 
-    getAllRowsByColumn(column) {
-        return this.dataTable.getAllRowsColumnValues(column);
+    getAllRowsByColumn(columnName) {
+        return this.dataTable.getAllRowsColumnValues(columnName);
+    }
+
+    getIdCellValue(rowName) {
+        let locator = new DataTablePage().getCellByNameAndColumn(rowName, column.id);
+        Util.waitUntilElementIsVisible(locator);
+        return locator.getText();
     }
 
 }
