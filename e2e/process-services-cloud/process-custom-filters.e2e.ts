@@ -131,7 +131,7 @@ describe('Process list cloud', () => {
             });
         });
 
-        it('[C297697] The the value of the filter should be preserved when saving it', async() => {
+        it('[C297697] The value of the filter should be preserved when saving it', async() => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader()
                 .setProcessInstanceId(completedProcess.entry.id);
 
