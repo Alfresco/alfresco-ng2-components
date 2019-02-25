@@ -99,6 +99,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
     ];
 
     applicationNames: any[] = [];
+    dateFilter: any[] = [];
     formHasBeenChanged = false;
     editTaskFilterForm: FormGroup;
     taskFilterProperties: any[] = [];
@@ -154,18 +155,9 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
                 filter(() => this.isFormValid()))
             .subscribe((formValues: TaskFilterCloudModel) => {
                 this.changedTaskFilter = new TaskFilterCloudModel(Object.assign({}, this.taskFilter, formValues));
-                this.replaceTaskFilterDateValues(formValues);
                 this.formHasBeenChanged = !this.compareFilters(this.changedTaskFilter, this.taskFilter);
                 this.filterChange.emit(this.changedTaskFilter);
             });
-    }
-
-    replaceTaskFilterDateValues(taskFilter: TaskFilterCloudModel) {
-        Object.keys(taskFilter).map( (element) => {
-            if (taskFilter[element] instanceof moment) {
-                taskFilter[element] = taskFilter[element].toDate();
-            }
-        });
     }
 
     createAndFilterProperties(): TaskFilterProperties[] {
@@ -206,10 +198,10 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
             let momentDate = moment(newDateValue, this.FORMAT_DATE, true);
 
             if (momentDate.isValid()) {
-                this.getPropertyController(dateProperty).setValue(momentDate);
+                this.getPropertyController(dateProperty).setValue(momentDate.toDate());
                 this.getPropertyController(dateProperty).setErrors(null);
             } else {
-                this.getPropertyController(dateProperty).setErrors({ invalid: true });
+                this.getPropertyController(dateProperty).setErrors({invalid: true});
             }
         }
     }
