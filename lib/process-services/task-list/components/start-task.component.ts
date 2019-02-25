@@ -111,11 +111,9 @@ export class StartTaskComponent implements OnInit {
     }
 
     public whitespaceValidator(control: FormControl) {
-        if (control.value) {
-            const isWhitespace = (control.value || '').trim().length === 0;
-            const isValid =  control.value.length === 0 || !isWhitespace;
-            return isValid ? null : { 'whitespace': true };
-        }
+        const isWhitespace = (control.value || '').trim().length === 0;
+        const isValid =  control.value.length === 0 || !isWhitespace;
+        return isValid ? null : { 'whitespace': true };
     }
 
     setTaskDetails(form) {
