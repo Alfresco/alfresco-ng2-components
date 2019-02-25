@@ -127,7 +127,7 @@ describe('Task list cloud - selection', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsSelectedByName(tasks[1]);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsNotSelectedByName(tasks[2]);
         });
-
+        
         it('[C291916] Should be able to select multiple row when multiselect is true', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
