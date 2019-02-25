@@ -51,7 +51,7 @@
             </data-column>
             <data-column key="delete">
             <ng-template let-entry="$implicit">
-                <button *ngIf="!entry.row.getValue('isInherited')" mat-icon-button color="primary" (click)="removePermission(entry.row.obj)">
+                <button *ngIf="!entry.row.getValue('isInherited')" mat-icon-button color="primary" (click)="removePermission(entry.row.obj)" data-automation-id="adf-delete-permission-button">
                     <mat-icon>highlight_off</mat-icon>
                 </button>
             </ng-template>
