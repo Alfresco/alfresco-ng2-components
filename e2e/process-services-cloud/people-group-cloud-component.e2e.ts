@@ -26,6 +26,7 @@ import { GroupCloudComponent } from '../pages/adf/process-cloud/groupCloudCompon
 import { browser } from 'protractor';
 import { Identity } from '../actions/APS-cloud/identity';
 import { GroupIdentity } from '../actions/APS-cloud/groupIdentity';
+import CONSTANTS = require('../util/constants');
 
 describe('People Groups CLoud Component', () => {
 
@@ -48,25 +49,21 @@ describe('People Groups CLoud Component', () => {
         let groupActiviti;
         let groupNoRole;
         let selectedGroups;
-        // const APS_USER_ROLE_ID = 'c56d382a-a60c-4fd1-b3ab-b1610448ceea';
-        // const ACTIVITI_USER_ROLE_ID = '206d548f-06e5-48ff-8d2a-f7f9c1cf52ee';
-        // const APS_ADMIN_ROLE_ID = 'f729afbe-91de-4e9b-8c89-e0fa4cbd6fbf';
-        // const ACTIVITI_ADMIN_ROLE_ID = '12936123-9eba-4f3c-a2eb-beb2fcd7c18e';
 
         beforeAll(async () => {
-            await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await identityService.init(TestConfig.identity.adminUser, TestConfig.identity.adminPassword);
             apsUser = await identityService.createIdentityUser();
-            await identityService.assignRole(apsUser.id, 'APS_USER');
+            await identityService.assignRole(apsUser.id, CONSTANTS.ROLES.APS_USER);
             activitiUser = await identityService.createIdentityUser();
-            await identityService.assignRole(activitiUser.id, 'ACTIVITI_USER');
+            await identityService.assignRole(activitiUser.id, CONSTANTS.ROLES.ACTIVITI_USER);
             noRoleUser = await identityService.createIdentityUser();
             selectedPeople = [`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`, `${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`,
                 `${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`];
-            await groupIdentityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await groupIdentityService.init(TestConfig.identity.adminUser, TestConfig.identity.adminPassword);
             groupAps = await groupIdentityService.createIdentityGroup();
-            await groupIdentityService.assignRole(groupAps.id, 'APS_ADMIN');
+            await groupIdentityService.assignRole(groupAps.id, CONSTANTS.ROLES.APS_ADMIN);
             groupActiviti = await groupIdentityService.createIdentityGroup();
-            await groupIdentityService.assignRole(groupActiviti.id, 'ACTIVITI_ADMIN');
+            await groupIdentityService.assignRole(groupActiviti.id, CONSTANTS.ROLES.ACTIVITI_ADMIN);
             groupNoRole = await groupIdentityService.createIdentityGroup();
             selectedGroups = [`${groupAps.name}` , `${groupActiviti.name}`, `${groupNoRole.name}`];
             silentLogin = false;

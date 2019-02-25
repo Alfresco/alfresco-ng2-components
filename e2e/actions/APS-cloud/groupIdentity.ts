@@ -79,8 +79,7 @@ export class GroupIdentity {
     }
 
     async assignRole(groupId, roleName) {
-        const role = this.getRoleByName(roleName);
-        console.log('-----------------' + role);
+        const role = await this.getRoleByName(roleName);
         const path = `/groups/${groupId}/role-mappings/realm`;
         const method = 'POST';
         const queryParams = {},

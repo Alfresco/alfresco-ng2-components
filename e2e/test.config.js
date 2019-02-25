@@ -58,6 +58,19 @@ module.exports = {
 
     },
 
+    identity: {
+
+        /**
+         * admin username
+         */
+        adminUser: 'admin',
+
+        /**
+         * main admin password
+         */
+        adminPassword: 'admin'
+    },
+
     adf_acs: {
         /** 
          * The protocol where the app runs. 

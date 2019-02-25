@@ -95,8 +95,7 @@ export class Identity {
   }
 
   async assignRole(userId, roleName) {
-      const role = this.getRoleByName(roleName);
-      console.log('------------------' + role);
+    const role = await this.getRoleByName(roleName);
     const path = `/users/${userId}/role-mappings/realm`;
     const method = 'POST';
     const queryParams = {},
