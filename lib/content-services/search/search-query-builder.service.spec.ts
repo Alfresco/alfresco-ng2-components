@@ -425,12 +425,58 @@ describe('SearchQueryBuilder', () => {
                         label: 'test_intervals1',
                         field: 'f1',
                         sets: [
-                            { label: 'interval1', start: 's1', end: 'e1' },
-                            { label: 'interval2', start: 's2', end: 'e2' }
+                            { label: 'interval1', start: 's1', end: 'e1', startInclusive: true, endInclusive: true  },
+                            { label: 'interval2', start: 's2', end: 'e2', startInclusive: false, endInclusive: true }
                         ]
                     },
                     {
                         label: 'test_intervals2',
+                        field: 'f2',
+                        sets: [
+                            { label: 'interval3', start: 's3', end: 'e3', startInclusive: true, endInclusive: false },
+                            { label: 'interval4', start: 's4', end: 'e4', startInclusive: false, endInclusive: false }
+                        ]
+                    }
+                ]
+            }
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        builder.queryFragments['cat1'] = 'cm:name:test';
+
+        const compiled = builder.buildQuery();
+        expect(compiled.facetIntervals).toEqual(jasmine.objectContaining(config.facetIntervals));
+    });
+
+    it('should build query with custom facet intervals automatically getting their request compatible labels', () => {
+        const spacesLabel = {
+            configValue: 'label with spaces',
+            requestCompatibleValue: '"label with spaces"'
+        };
+        const noSpacesLabel = {
+            configValue: 'label',
+            requestCompatibleValue: 'label'
+        };
+        const spacesLabelForSet = {
+            configValue: 'label for set',
+            requestCompatibleValue: '"label for set"'
+        };
+
+        const config: SearchConfiguration = {
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ],
+            facetIntervals: {
+                intervals: [
+                    {
+                        label: spacesLabel.configValue,
+                        field: 'f1',
+                        sets: [
+                            { label: spacesLabelForSet.configValue, start: 's1', end: 'e1' },
+                            { label: 'interval2', start: 's2', end: 'e2' }
+                        ]
+                    },
+                    {
+                        label: noSpacesLabel.configValue,
                         field: 'f2',
                         sets: [
                             { label: 'interval3', start: 's3', end: 'e3' },
@@ -444,7 +490,13 @@ describe('SearchQueryBuilder', () => {
         builder.queryFragments['cat1'] = 'cm:name:test';
 
         const compiled = builder.buildQuery();
-        expect(compiled.facetIntervals).toEqual(jasmine.objectContaining(config.facetIntervals));
+        expect(compiled.facetIntervals.intervals[0].label).toEqual(spacesLabel.requestCompatibleValue);
+        expect(compiled.facetIntervals.intervals[0].label).not.toEqual(spacesLabel.configValue);
+        expect(compiled.facetIntervals.intervals[1].label).toEqual(noSpacesLabel.requestCompatibleValue);
+        expect(compiled.facetIntervals.intervals[1].label).toEqual(noSpacesLabel.configValue);
+
+        expect(compiled.facetIntervals.intervals[0].sets[0].label).toEqual(spacesLabelForSet.requestCompatibleValue);
+
     });
 
     it('should build query with sorting', () => {
