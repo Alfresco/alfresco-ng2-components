@@ -18,8 +18,12 @@
                 margin-right: 15px;
                 min-width: 330px;
 
-                &-full {
+                &-big {
                     width:60%;
+                }
+
+                &-full {
+                    width:100%;
                 }
             }
         }
