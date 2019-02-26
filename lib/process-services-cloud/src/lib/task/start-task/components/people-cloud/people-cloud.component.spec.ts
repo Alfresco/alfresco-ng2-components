@@ -337,6 +337,7 @@ describe('PeopleCloudComponent', () => {
             });
         });
     }));
+
     it('should emit warning if are invalid users', async ((done) => {
         const warningSpy = spyOn(component.warning, 'emit').and.returnValue(of(false));
         component.mode = 'single';
@@ -350,6 +351,7 @@ describe('PeopleCloudComponent', () => {
             });
         });
     }));
+
     it('should filter user by id if validate true', async((done) => {
         const findByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve(mockUsers));
         component.mode = 'multiple';
@@ -364,6 +366,7 @@ describe('PeopleCloudComponent', () => {
             });
         });
     }));
+
     it('should filter user by username if validate true', async((done) => {
         const findUserByUsernameSpy = spyOn(identityService, 'findUserByUsername').and.returnValue(Promise.resolve(mockUsers));
         component.mode = 'multiple';

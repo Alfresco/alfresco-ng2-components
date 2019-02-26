@@ -7,7 +7,7 @@ Last reviewed: 2019-02-08
 
 # [Identity user service](../../lib/lib/core/userinfo/services/identity-user.service.ts "Defined in identity-user.service.ts")
 
-Gets OAuth2 personal details and roles for users. 
+Gets OAuth2 personal details and roles for users.
 
 ## Class members
 
@@ -65,24 +65,24 @@ Gets OAuth2 personal details and roles for users.
     -   _userId:_ `string`  - ID of the target user
     -   _clientId:_ `string`  - ID of the client app
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any[]>` - List of client roles
--   **getCurrentUserInfo**(): [`IdentityUserModel`](../../lib/lib/core/userinfo/models/identity-user.model.ts)<br/>
+-   **getCurrentUserInfo**(): [`IdentityUserModel`](../../lib/core/userinfo/models/identity-user.model.ts)<br/>
     Gets the name and other basic details of the current user.
-    -   **Returns** [`IdentityUserModel`](../../lib/lib/core/userinfo/models/identity-user.model.ts) - The user's details
--   **getUserRoles**(userId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../lib/lib/core/userinfo/models/identity-role.model.ts)`[]>`<br/>
+    -   **Returns** [`IdentityUserModel`](../../lib/core/userinfo/models/identity-user.model.ts) - The user's details
+-   **getUserRoles**(userId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../lib/core/userinfo/models/identity-role.model.ts)`[]>`<br/>
     Gets a list of roles for a user.
     -   _userId:_ `string`  - ID of the user
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../lib/lib/core/userinfo/models/identity-role.model.ts)`[]>` - Array of role info objects
 -   **getUsers**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../lib/lib/core/userinfo/models/identity-user.model.ts)`[]>`<br/>
     Gets details for all users.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../lib/lib/core/userinfo/models/identity-user.model.ts)`[]>` - Array of user info objects
--   **getUsersByRolesWithCurrentUser**(roleNames: `string[]`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`IdentityUserModel`](../../lib/lib/core/userinfo/models/identity-user.model.ts)`[]>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../lib/core/userinfo/models/identity-user.model.ts)`[]>` - Array of user info objects
+-   **getUsersByRolesWithCurrentUser**(roleNames: `string[]`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`IdentityUserModel`](../../lib/core/userinfo/models/identity-user.model.ts)`[]>`<br/>
     Gets an array of users (including the current user) who have any of the roles in the supplied list.
     -   _roleNames:_ `string[]`  - List of role names to look for
-    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`IdentityUserModel`](../../lib/lib/core/userinfo/models/identity-user.model.ts)`[]>` - Array of user info objects
--   **getUsersByRolesWithoutCurrentUser**(roleNames: `string[]`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`IdentityUserModel`](../../lib/lib/core/userinfo/models/identity-user.model.ts)`[]>`<br/>
+    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`IdentityUserModel`](../../lib/core/userinfo/models/identity-user.model.ts)`[]>` - Array of user info objects
+-   **getUsersByRolesWithoutCurrentUser**(roleNames: `string[]`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`IdentityUserModel`](../../lib/core/userinfo/models/identity-user.model.ts)`[]>`<br/>
     Gets an array of users (not including the current user) who have any of the roles in the supplied list.
     -   _roleNames:_ `string[]`  - List of role names to look for
-    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`IdentityUserModel`](../../lib/lib/core/userinfo/models/identity-user.model.ts)`[]>` - Array of user info objects
+    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`IdentityUserModel`](../../lib/core/userinfo/models/identity-user.model.ts)`[]>` - Array of user info objects
 -   **getValueFromToken**(key: `string`)<br/>
     Gets a named value from the user access token.
     -   _key:_ `string`  - Key name of the field to retrieve
