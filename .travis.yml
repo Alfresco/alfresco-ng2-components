@@ -16,6 +16,7 @@ branches:
   - master
   - development
   - /.*beta.*/
+  - /.*greenkeeper.*/
 
 # TRAVIS_PULL_REQUEST == false means is running on dev branch and is not a PR
 stages:
