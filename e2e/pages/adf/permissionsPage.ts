@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import {element, by, browser} from 'protractor';
 
 import { Util } from '../../util/util';
 import { DataTablePage } from './dataTablePage';
@@ -58,8 +58,14 @@ export class PermissionsPage {
     }
 
     searchUserOrGroup(name) {
+        console.log('Looking for Search element');
         Util.waitUntilElementIsClickable(this.searchUserInput);
+        console.log('Looking for Search element');
+        console.log('Before sending keys');
+        //this.searchUserInput.click();
+        browser.sleep(10000);
         return this.searchUserInput.sendKeys(name);
+        console.log('After Sending Keys');
     }
 
     checkResultListIsDisplayed() {

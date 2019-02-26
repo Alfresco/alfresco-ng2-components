@@ -91,12 +91,15 @@ describe('Permissions Component', function () {
             file = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
 
             loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
-            contentServicesPage.goToDocumentList();
+            contentServicesPage.navigateToDocumentList();
+            contentList.waitForTableBody();
+            //contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             contentList.checkContentIsDisplayed(fileModel.name);
-            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
-            contentList.rightClickOnRowNamed(fileModel.name);
-            contentList.pressContextMenuActionNamed('Permission');
-
+            contentList.clickRowToSelect(fileModel.name);
+            contentList.clickSelectedFolderOrFileActions(fileModel.name);
+            //contentList.rightClickOnRowNamed(fileModel.name);
+            contentList.clickMenuActionNamed('PERMISSION');
+            permissionsPage.checkPermissionContainerIsDisplayed();
             done();
         });
 
@@ -147,12 +150,14 @@ describe('Permissions Component', function () {
             file = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
 
             loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
-            contentServicesPage.goToDocumentList();
-
+            contentServicesPage.navigateToDocumentList();
+            contentList.waitForTableBody();
+            //contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             contentList.checkContentIsDisplayed(fileModel.name);
-            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
-            contentList.rightClickOnRowNamed(fileModel.name);
-            contentList.pressContextMenuActionNamed('Permission');
+            contentList.clickRowToSelect(fileModel.name);
+            contentList.clickSelectedFolderOrFileActions(fileModel.name);
+            contentList.clickMenuActionNamed('PERMISSION');
+            permissionsPage.checkPermissionContainerIsDisplayed();
             permissionsPage.checkAddPermissionButtonIsDisplayed();
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
@@ -227,10 +232,14 @@ describe('Permissions Component', function () {
 
             loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
             browser.get(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
+            contentList.waitForTableBody();
+            //contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             contentList.checkContentIsDisplayed(folderName);
-            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
-            contentList.rightClickOnRowNamed(folderName);
-            contentList.pressContextMenuActionNamed('Permission');
+            contentList.clickRowToSelect(fileModel.name);
+            contentList.clickSelectedFolderOrFileActions(fileModel.name);
+            //contentList.rightClickOnRowNamed(folderName);
+            contentList.clickMenuActionNamed('PERMISSION');
+            permissionsPage.checkPermissionContainerIsDisplayed();
             permissionsPage.checkAddPermissionButtonIsDisplayed();
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();

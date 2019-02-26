@@ -388,6 +388,13 @@ export class ContentListPage {
         return actionButton;
     }
 
+    checkMenuActionIsVisible(actionName) {
+        let actionButton = element(by.css(`button[data-automation-id='DOCUMENT_LIST.ACTIONS.${actionName}']`));
+        Util.waitUntilElementIsVisible(actionButton);
+        Util.waitUntilElementIsClickable(actionButton);
+        return actionButton;
+    }
+
     pressContextMenuActionNamed(actionName) {
         let actionButton = this.checkContextActionIsVisible(actionName);
         actionButton.click();
@@ -442,5 +449,17 @@ export class ContentListPage {
         let row = this.getRowByRowName(rowName);
         browser.actions().click(row, protractor.Button.RIGHT).perform();
         Util.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
+    }
+
+    clickSelectedFolderOrFileActions(content) {
+        let isRowSelected = this.getRowsName(content).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        let selectedFolderOrFileActions = isRowSelected.element(by.css('.adf-datatable__actions-cell button'));
+        Util.waitUntilElementIsVisible(selectedFolderOrFileActions);
+        selectedFolderOrFileActions.click();
+    }
+
+    clickMenuActionNamed(actionName) {
+        let actionButton = this.checkMenuActionIsVisible(actionName);
+        actionButton.click();
     }
 }
