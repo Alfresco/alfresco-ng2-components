@@ -39,7 +39,7 @@ describe('Edit process filters cloud', () => {
 
         beforeAll(async () => {
             silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, silentLogin);
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         });
@@ -98,6 +98,8 @@ describe('Edit process filters cloud', () => {
             processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('ID');
             processCloudDemoPage.editProcessFilterCloudComponent().clickDeleteButton();
+
+            browser.driver.sleep(100000);
         });
 
         it('[C291806] Two process filters with same name can be created when clicking the Save As button', () => {
