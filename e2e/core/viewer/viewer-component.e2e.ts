@@ -121,7 +121,7 @@ xdescribe('Viewer', () => {
         done();
     });
 
-    fit('A11Y', () => {
+    it('A11Y', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         navigationBarPage.goToSite(site);
