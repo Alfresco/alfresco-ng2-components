@@ -64,7 +64,9 @@ export class EditProcessFilterCloudComponent {
     }
 
     getSortFilterDropDownValue() {
-        return element(by.css("mat-form-field[data-automation-id='sort'] span")).getText();
+        let sortLocator = element(by.css("mat-form-field[data-automation-id='sort'] span"));
+        Util.waitUntilElementIsVisible(sortLocator);
+        return sortLocator.getText();
     }
 
     setOrderFilterDropDown(option) {
@@ -84,6 +86,7 @@ export class EditProcessFilterCloudComponent {
     clickOnDropDownArrow(option) {
         let dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']")).first();
         Util.waitUntilElementIsVisible(dropDownArrow);
+        Util.waitUntilElementIsClickable(dropDownArrow);
         dropDownArrow.click();
         Util.waitUntilElementIsVisible(this.selectedOption);
     }

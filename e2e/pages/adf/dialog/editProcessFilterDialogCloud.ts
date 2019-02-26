@@ -35,6 +35,7 @@ export class EditProcessFilterDialogCloud {
     }
 
     checkSaveButtonIsEnabled() {
+        Util.waitUntilElementIsVisible(this.componentElement.element(this.saveButtonLocator));
         return this.componentElement.element(this.saveButtonLocator).isEnabled();
     }
 
