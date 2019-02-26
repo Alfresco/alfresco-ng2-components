@@ -75,11 +75,11 @@ export class GroupIdentity {
         const queryParams = {}, postBody = {};
 
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-        for(var key in data) {
-            if(data[key].name == roleName) {
+        for (let key in data) {
+            if (data[key].name === roleName) {
                 roleId =  data[key].id;
-            };
-        };
+            }
+        }
         return roleId;
     }
 

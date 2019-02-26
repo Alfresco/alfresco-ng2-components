@@ -85,18 +85,17 @@ export class Identity {
   }
 
   async getRoleIdByRoleName(roleName) {
-      const path = `/roles`;
-      const method = 'GET';
-      let roleId;
-      const queryParams = {}, postBody = {};
-
-      const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-      for(var key in data) {
-          if(data[key].name == roleName) {
-              roleId =  data[key].id;
-          };
-      };
-     return roleId;
+    const path = `/roles`;
+    const method = 'GET';
+    let roleId;
+    const queryParams = {}, postBody = {};
+    const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+    for (let key in data) {
+     if (data[key].name === roleName) {
+       roleId =  data[key].id;
+       }
+    }
+    return roleId;
   }
 
   async assignRole(userId, roleName) {
