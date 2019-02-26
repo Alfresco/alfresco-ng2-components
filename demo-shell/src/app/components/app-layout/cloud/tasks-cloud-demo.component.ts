@@ -84,7 +84,7 @@ export class TasksCloudDemoComponent implements OnInit {
             this.multiselect = settings.multiselect;
             this.testingMode = settings.testingMode;
             this.selectionMode = settings.selectionMode;
-            this.selectionMode = settings.taskDetailsRedirection;
+            this.taskDetailsRedirection = settings.taskDetailsRedirection;
         }
     }
 
