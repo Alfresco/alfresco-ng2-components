@@ -455,7 +455,7 @@ export class ContentListPage {
         let isRowSelected = this.getRowsName(content).element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
         let selectedFolderOrFileActions = isRowSelected.element(by.css('.adf-datatable__actions-cell button'));
         Util.waitUntilElementIsVisible(selectedFolderOrFileActions);
-        selectedFolderOrFileActions.click();
+        return selectedFolderOrFileActions.click();
     }
 
     clickMenuActionNamed(actionName) {

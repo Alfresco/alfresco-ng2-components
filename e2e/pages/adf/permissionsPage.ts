@@ -58,14 +58,11 @@ export class PermissionsPage {
     }
 
     searchUserOrGroup(name) {
-        console.log('Looking for Search element');
         Util.waitUntilElementIsClickable(this.searchUserInput);
-        console.log('Looking for Search element');
-        console.log('Before sending keys');
-        //this.searchUserInput.click();
-        browser.sleep(10000);
-        return this.searchUserInput.sendKeys(name);
-        console.log('After Sending Keys');
+        browser.executeScript(' setTimeout(() => { document.querySelector("#searchInput".sendKeys(' + name + '));  }, 3000)');
+
+
+        //return this.searchUserInput.sendKeys(name);
     }
 
     checkResultListIsDisplayed() {
