@@ -28,9 +28,9 @@ import { Identity } from '../actions/APS-cloud/identity';
 import { GroupIdentity } from '../actions/APS-cloud/groupIdentity';
 import CONSTANTS = require('../util/constants');
 
-describe('People Groups CLoud Component', () => {
+describe('People Groups Cloud Component', () => {
 
-    describe('People Groups CLoud Component', () => {
+    describe('People Groups Cloud Component', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
@@ -51,7 +51,7 @@ describe('People Groups CLoud Component', () => {
         let selectedGroups;
 
         beforeAll(async () => {
-            await identityService.init(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
+            await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             apsUser = await identityService.createIdentityUser();
             await identityService.assignRole(apsUser.id, CONSTANTS.ROLES.APS_USER);
             activitiUser = await identityService.createIdentityUser();
@@ -59,7 +59,7 @@ describe('People Groups CLoud Component', () => {
             noRoleUser = await identityService.createIdentityUser();
             selectedPeople = [`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`, `${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`,
                 `${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`];
-            await groupIdentityService.init(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
+            await groupIdentityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             groupAps = await groupIdentityService.createIdentityGroup();
             await groupIdentityService.assignRole(groupAps.id, CONSTANTS.ROLES.APS_ADMIN);
             groupActiviti = await groupIdentityService.createIdentityGroup();
@@ -69,7 +69,7 @@ describe('People Groups CLoud Component', () => {
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
-            loginSSOPage.loginAPS(TestConfig.adf.adminUser, TestConfig.adf.adminPassword);
+            loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             navigationBarPage.navigateToPeopleGroupCloudPage();
             peopleGroupCloudComponentPage.checkGroupsCloudComponentTitleIsDisplayed();
             peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();
