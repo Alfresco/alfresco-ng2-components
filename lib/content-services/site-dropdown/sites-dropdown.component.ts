@@ -106,7 +106,7 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     isScrollInNextFetchArea(event) {
-        return event.target.scrollTop >= (event.target.scrollHeight - event.target.offsetHeight - this.ITEM_HEIGHT_TO_WAIT_BEFORE_LOAD_NEXT)
+        return event.target.scrollTop >= (event.target.scrollHeight - event.target.offsetHeight - this.ITEM_HEIGHT_TO_WAIT_BEFORE_LOAD_NEXT);
     }
 
     selectedSite(event: any) {
@@ -163,11 +163,11 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     showLoading(): boolean {
-        return this.loading && (this.siteList && this.siteList.list.pagination.hasMoreItems);
+        return this.loading && (this.siteList && this.siteList.list.pagination && this.siteList.list.pagination.hasMoreItems);
     }
 
     isInfiniteScrollingEnabled(): boolean {
-        return !this.loading && (this.siteList && this.siteList.list.pagination.hasMoreItems);
+        return !this.loading && (this.siteList && this.siteList.list.pagination && this.siteList.list.pagination.hasMoreItems);
     }
 
     private filteredResultsByMember(sites: SitePaging): SitePaging {

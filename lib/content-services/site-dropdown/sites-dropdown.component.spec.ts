@@ -23,7 +23,7 @@ import { SitesService, setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApi
 import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('DropdownSitesComponent', () => {
+fdescribe('DropdownSitesComponent', () => {
 
     let component: any;
     let fixture: ComponentFixture<DropdownSitesComponent>;
@@ -45,6 +45,107 @@ describe('DropdownSitesComponent', () => {
     });
 
     describe('Rendering tests', () => {
+
+
+        // describe('Infinite Loading', () => {
+        //
+        //     beforeEach(async(() => {
+        //         siteService = TestBed.get(SitesService);
+        //         fixture = TestBed.createComponent(DropdownSitesComponent);
+        //         debug = fixture.debugElement;
+        //         element = fixture.nativeElement;
+        //         component = fixture.componentInstance;
+        //     }));
+        //
+        //     it('Should show loading item if there are more itemes', async(() => {
+        //         spyOn(siteService, 'getSites').and.returnValue(of({
+        //             'list': {
+        //                 'pagination': {
+        //                     'count': 2,
+        //                     'hasMoreItems': true,
+        //                     'totalItems': 2,
+        //                     'skipCount': 0,
+        //                     'maxItems': 100
+        //                 },
+        //                 'entries': [
+        //                     {
+        //                         'entry': {
+        //                             'role': 'SiteManager',
+        //                             'visibility': 'PUBLIC',
+        //                             'guid': 'fake-1',
+        //                             'description': 'fake-test-site',
+        //                             'id': 'fake-test-site',
+        //                             'preset': 'site-dashboard',
+        //                             'title': 'fake-test-site'
+        //                         }
+        //                     },
+        //                     {
+        //                         'entry': {
+        //                             'role': 'SiteManager',
+        //                             'visibility': 'PUBLIC',
+        //                             'guid': 'fake-2',
+        //                             'description': 'This is a Sample Alfresco Team site.',
+        //                             'id': 'swsdp',
+        //                             'preset': 'site-dashboard',
+        //                             'title': 'fake-test-2'
+        //                         }
+        //                     }
+        //                 ]
+        //             }
+        //         }));
+        //
+        //         fixture.detectChanges();
+        //         fixture.whenStable().then(() => {
+        //             fixture.detectChanges();
+        //             expect(element.querySelector('[data-automation-id="lsite-loading"]')).toBeDefined();
+        //         });
+        //     }));
+        //
+        //     it('Should not show loading item if there are more itemes', async(() => {
+        //         spyOn(siteService, 'getSites').and.returnValue(of({
+        //             'list': {
+        //                 'pagination': {
+        //                     'count': 2,
+        //                     'hasMoreItems': false,
+        //                     'totalItems': 2,
+        //                     'skipCount': 0,
+        //                     'maxItems': 100
+        //                 },
+        //                 'entries': [
+        //                     {
+        //                         'entry': {
+        //                             'role': 'SiteManager',
+        //                             'visibility': 'PUBLIC',
+        //                             'guid': 'fake-1',
+        //                             'description': 'fake-test-site',
+        //                             'id': 'fake-test-site',
+        //                             'preset': 'site-dashboard',
+        //                             'title': 'fake-test-site'
+        //                         }
+        //                     },
+        //                     {
+        //                         'entry': {
+        //                             'role': 'SiteManager',
+        //                             'visibility': 'PUBLIC',
+        //                             'guid': 'fake-2',
+        //                             'description': 'This is a Sample Alfresco Team site.',
+        //                             'id': 'swsdp',
+        //                             'preset': 'site-dashboard',
+        //                             'title': 'fake-test-2'
+        //                         }
+        //                     }
+        //                 ]
+        //             }
+        //         }));
+        //
+        //         fixture.detectChanges();
+        //         fixture.whenStable().then(() => {
+        //             fixture.detectChanges();
+        //             expect(element.querySelector('[data-automation-id="lsite-loading"]')).not.toBeDefined();
+        //         });
+        //     }));
+        //
+        // });
 
         describe('Sites', () => {
 
