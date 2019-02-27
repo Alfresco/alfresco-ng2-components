@@ -89,10 +89,10 @@ describe('People Groups Cloud Component', () => {
         });
 
         afterAll(async () => {
-            for(let i = 0; i < users.length; i++) {
+            for (let i = 0; i < users.length; i++) {
                 await identityService.deleteIdentityUser(users[i]);
             }
-            for(let i = 0; i < groups.length; i++) {
+            for (let i = 0; i < groups.length; i++) {
                 await groupIdentityService.deleteIdentityGroup(groups[i]);
             }
         });
