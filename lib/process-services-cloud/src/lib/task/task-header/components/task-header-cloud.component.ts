@@ -79,6 +79,7 @@ export class TaskHeaderCloudComponent implements OnInit {
 
         this.cardViewUpdateService.itemUpdated$.subscribe(this.updateTaskDetails.bind(this));
     }
+
     loadCurrentBpmUserId(): any {
         this.currentUser = this.storage.getItem('USERNAME');
     }
@@ -224,7 +225,11 @@ export class TaskHeaderCloudComponent implements OnInit {
     }
 
     isCompleted() {
-        return this.taskDetails && this.taskDetails.status === 'completed';
+        return this.taskDetails && this.taskDetails.status && this.taskDetails.status.toLowerCase() === 'completed';
+    }
+
+    canCompleteTask() {
+        return this.isAssignedToCurrentUser() && !this.isCompleted();
     }
 
     isTaskClaimable(): boolean {

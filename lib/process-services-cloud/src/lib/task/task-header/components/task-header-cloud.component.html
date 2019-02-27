@@ -1,6 +1,6 @@
 <mat-card *ngIf="isTaskValid()" class="adf-card-container">
     <mat-card-content>
-        <adf-card-view 
+        <adf-card-view
             [properties]="properties"
             [editable]="!isCompleted()">
         </adf-card-view>
@@ -12,4 +12,6 @@
         <button *ngIf="isTaskClaimable()" mat-button data-automation-id="header-claim-button" id="claim-task" (click)="claimTask()" class="adf-claim-controls">{{ 'ADF_CLOUD_TASK_HEADER.BUTTON.CLAIM' | translate }}
         </button>
     </mat-card-actions>
+
+    <button mat-button color="primary" *ngIf="canCompleteTask()" adf-complete-task [appName]="appName" [taskId]="taskId">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.COMPLETE' | translate }}</button>
 </mat-card>
