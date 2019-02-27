@@ -84,26 +84,11 @@ export class Identity {
     return data;
   }
 
-  async getRoleIdByRoleName(roleName) {
-    const path = `/roles`;
-    const method = 'GET';
-    let roleId;
-    const queryParams = {}, postBody = {};
-    const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-    for (let key in data) {
-     if (data[key].name === roleName) {
-       roleId =  data[key].id;
-       }
-    }
-    return roleId;
-  }
-
-  async assignRole(userId, roleName) {
-    const role = await this.getRoleIdByRoleName(roleName);
+  async assignRole(userId, roleId, roleName) {
     const path = `/users/${userId}/role-mappings/realm`;
     const method = 'POST';
     const queryParams = {},
-    postBody = [{'id': role, 'name': roleName}];
+    postBody = [{'id': roleId, 'name': roleName}];
 
     const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
     return data;

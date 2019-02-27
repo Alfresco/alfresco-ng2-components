@@ -27,6 +27,7 @@ import { browser } from 'protractor';
 import { Identity } from '../actions/APS-cloud/identity';
 import { GroupIdentity } from '../actions/APS-cloud/groupIdentity';
 import CONSTANTS = require('../util/constants');
+import { Roles } from '../actions/APS-cloud/roles';
 
 describe('People Groups Cloud Component', () => {
 
@@ -39,6 +40,7 @@ describe('People Groups Cloud Component', () => {
         const groupCloudComponent = new GroupCloudComponent();
         const identityService: Identity = new Identity();
         const groupIdentityService: GroupIdentity = new GroupIdentity();
+        const rolesService: Roles = new Roles();
 
         let silentLogin;
         let apsUser;
@@ -49,23 +51,36 @@ describe('People Groups Cloud Component', () => {
         let groupActiviti;
         let groupNoRole;
         let selectedGroups;
+        let apsUserRoleId;
+        let activitiUserRoleId;
+        let apsAdminRoleId;
+        let activitiAdminRoleId;
+        let users = new Array<string>();
+        let groups = new Array<string>();
 
         beforeAll(async () => {
             await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await rolesService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             apsUser = await identityService.createIdentityUser();
-            await identityService.assignRole(apsUser.id, CONSTANTS.ROLES.APS_USER);
+            apsUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_USER);
+            await identityService.assignRole(apsUser.id, apsUserRoleId, CONSTANTS.ROLES.APS_USER);
             activitiUser = await identityService.createIdentityUser();
-            await identityService.assignRole(activitiUser.id, CONSTANTS.ROLES.ACTIVITI_USER);
+            activitiUserRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.ACTIVITI_USER);
+            await identityService.assignRole(activitiUser.id, activitiUserRoleId, CONSTANTS.ROLES.ACTIVITI_USER);
             noRoleUser = await identityService.createIdentityUser();
             selectedPeople = [`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`, `${activitiUser.firstName}` + ' ' + `${activitiUser.lastName}`,
                 `${noRoleUser.firstName}` + ' ' + `${noRoleUser.lastName}`];
             await groupIdentityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             groupAps = await groupIdentityService.createIdentityGroup();
-            await groupIdentityService.assignRole(groupAps.id, CONSTANTS.ROLES.APS_ADMIN);
+            apsAdminRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.APS_ADMIN);
+            await groupIdentityService.assignRole(groupAps.id, apsAdminRoleId, CONSTANTS.ROLES.APS_ADMIN);
             groupActiviti = await groupIdentityService.createIdentityGroup();
-            await groupIdentityService.assignRole(groupActiviti.id, CONSTANTS.ROLES.ACTIVITI_ADMIN);
+            activitiAdminRoleId = await rolesService.getRoleIdByRoleName(CONSTANTS.ROLES.ACTIVITI_ADMIN);
+            await groupIdentityService.assignRole(groupActiviti.id, activitiAdminRoleId, CONSTANTS.ROLES.ACTIVITI_ADMIN);
             groupNoRole = await groupIdentityService.createIdentityGroup();
             selectedGroups = [`${groupAps.name}` , `${groupActiviti.name}`, `${groupNoRole.name}`];
+            users = [`${apsUser.id}`, `${activitiUser.id}`, `${noRoleUser.id}`];
+            groups = [`${groupAps.id}`, `${groupActiviti.id}`, `${groupNoRole.id}`];
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
@@ -74,12 +89,12 @@ describe('People Groups Cloud Component', () => {
         });
 
         afterAll(async () => {
-            await identityService.deleteIdentityUser(apsUser.id);
-            await identityService.deleteIdentityUser(activitiUser.id);
-            await identityService.deleteIdentityUser(noRoleUser.id);
-            await groupIdentityService.deleteIdentityGroup(groupAps.id);
-            await groupIdentityService.deleteIdentityGroup(groupActiviti.id);
-            await groupIdentityService.deleteIdentityGroup(groupNoRole.id);
+            for(let i = 0; i < users.length; i++) {
+                await identityService.deleteIdentityUser(users[i]);
+            }
+            for(let i = 0; i < groups.length; i++) {
+                await groupIdentityService.deleteIdentityGroup(groups[i]);
+            }
         });
 
         beforeEach( () => {
