@@ -36,7 +36,7 @@ describe('Permissions Component', function () {
     let uploadActions = new UploadActions();
     let contentList = new ContentListPage();
     let fileOwnerUser, filePermissionUser, file;
-    let publicSite;
+    let publicSite, folderName;
 
     let fileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -62,23 +62,23 @@ describe('Permissions Component', function () {
     beforeAll(async (done) => {
 
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
         await alfrescoJsApi.core.peopleApi.addPerson(fileOwnerUser);
-
         await alfrescoJsApi.core.peopleApi.addPerson(filePermissionUser);
-
         let group = await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
-
         groupId = group.entry.id;
-
         browser.driver.sleep(15000); // wait search get the groups
-
+        await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
+        let siteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
+        folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
+        let publicSiteBody = { visibility: 'PUBLIC', title: siteName };
+        publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
+        await uploadActions.createFolder(alfrescoJsApi, folderName, publicSite.entry.guid);
         done();
     });
 
     afterAll(async (done) => {
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
+        await alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         await alfrescoJsApi.core.groupsApi.deleteGroup(groupId);
         done();
     });
@@ -102,7 +102,6 @@ describe('Permissions Component', function () {
 
         afterEach(async (done) => {
             await uploadActions.deleteFilesOrFolder(alfrescoJsApi, file.entry.id);
-
             done();
         });
 
@@ -216,15 +215,6 @@ describe('Permissions Component', function () {
     describe('Role Site Dropdown', function () {
 
         beforeEach(async (done) => {
-            await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
-            let siteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
-            let folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
-            let publicSiteBody = { visibility: 'PUBLIC', title: siteName };
-
-            publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
-
-            await uploadActions.createFolder(alfrescoJsApi, folderName, publicSite.entry.guid);
-
             loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
             browser.get(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
             contentList.checkContentIsDisplayed(folderName);
@@ -239,11 +229,6 @@ describe('Permissions Component', function () {
             permissionsPage.searchUserOrGroup(filePermissionUser.getId());
             permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
             permissionsPage.checkUserOrGroupIsAdded(filePermissionUser.getId());
-            done();
-        });
-
-        afterEach(async (done) => {
-            await alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
             done();
         });
 
