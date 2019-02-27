@@ -204,7 +204,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             const responseBuckets = this.getResponseBuckets(responseField, field)
                 .filter(this.getFilterByMinCount(field.mincount));
 
-            const alreadyExistingField = (this.responseFacets || []).find((response) => response.type === 'field' && response.label === field.label);
+            const alreadyExistingField = (this.responseFacets || []).find((response) => response.type === itemType && response.label === field.label);
             if (alreadyExistingField) {
 
                 const alreadyExistingBuckets = alreadyExistingField.buckets && alreadyExistingField.buckets.items || [];
