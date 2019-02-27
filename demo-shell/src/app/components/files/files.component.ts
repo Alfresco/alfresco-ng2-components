@@ -589,7 +589,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    searchResultsHighlight(search: SearchEntry) {
+    searchResultsHighlight(search: SearchEntry): string {
         if (search && search.highlight) {
             return search.highlight.map((currentHighlight) => currentHighlight.snippets).join(', ');
         }
