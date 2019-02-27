@@ -162,16 +162,16 @@ export class DataTablePage {
         Util.waitUntilElementIsNotOnPage(this.selectedRowNumber);
     }
 
+    checkAllRowsButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.selectAll);
+        Util.waitUntilElementIsVisible(this.selectAll);
+        return this;
+    }
+
     checkAllRows() {
         Util.waitUntilElementIsVisible(this.selectAll);
         Util.waitUntilElementIsClickable(this.selectAll);
         this.selectAll.click();
-    }
-    
-    checkAllRowsButtonIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.selectAll);
-        Util.waitUntilElementIsClickable(this.selectAll);
-        return this;
     }
 
     checkRowIsChecked(rowNumber) {
