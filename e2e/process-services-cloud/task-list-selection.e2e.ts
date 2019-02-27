@@ -42,7 +42,7 @@ describe('Task list cloud - selection', () => {
         let silentLogin;
         const simpleApp = 'simple-app';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-        let nrOfTasks = 3, response;
+        let noOfTasks = 3, response;
         let tasks = [];
 
         beforeAll(async (done) => {
@@ -53,7 +53,7 @@ describe('Task list cloud - selection', () => {
             loginSSOPage.loginAPS(user, password);
 
             await tasksService.init(user, password);
-            for (let i = 0; i < nrOfTasks; i++) {
+            for (let i = 0; i < noOfTasks; i++) {
                 response = await tasksService.createStandaloneTask(Util.generateRandomString(), simpleApp);
                 await tasksService.claimTask(response.entry.id, simpleApp);
                 tasks.push(response.entry.name);
@@ -71,10 +71,7 @@ describe('Task list cloud - selection', () => {
         });
 
         it('[C291916] Should be able to select multiple row when multiselect is true', () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
-            tasksCloudDemoPage.clickSettingsButton().clickMultiSelect();
+            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails().enableMultiselection();
             tasksCloudDemoPage.clickAppButton();
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[0]);
@@ -88,9 +85,6 @@ describe('Task list cloud - selection', () => {
         });
 
         it('[C291914] Should not be able to select any row when selection mode is set to None', () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('None');
             tasksCloudDemoPage.clickAppButton();
 
@@ -99,9 +93,6 @@ describe('Task list cloud - selection', () => {
         });
 
         it('[C291918] Should be able to select only one row when selection mode is set to Single', () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Single');
             tasksCloudDemoPage.clickAppButton();
 
@@ -114,9 +105,6 @@ describe('Task list cloud - selection', () => {
         });
 
         it('[C291919] Should be able to select only one row when selection mode is set to Multiple', () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Multiple');
             tasksCloudDemoPage.clickAppButton();
 
@@ -129,9 +117,6 @@ describe('Task list cloud - selection', () => {
         });
 
         it('[C291916] Should be able to select multiple row when multiselect is true', () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
             tasksCloudDemoPage.clickSettingsButton().clickMultiSelect();
             tasksCloudDemoPage.clickAppButton();
 
@@ -146,9 +131,6 @@ describe('Task list cloud - selection', () => {
         });
 
         it('[C291915] Should be possible select all the rows when multiselect is true', () => {
-            tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-
             tasksCloudDemoPage.clickSettingsButton().clickMultiSelect();
             tasksCloudDemoPage.clickAppButton();
 
