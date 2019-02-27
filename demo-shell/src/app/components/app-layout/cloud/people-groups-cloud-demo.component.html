@@ -30,9 +30,17 @@
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.PRESELECTED_VALUE' | translate }}: {{ DEFAULT_PEOPLE_PLACEHOLDER }}</mat-label>
                 <input matInput (input)="setPeoplePreselectValue($event)"  data-automation-id="adf-people-preselect-input" />
             </mat-form-field>
+            <mat-checkbox class="adf-preselect-value" (change)="onChangePeopleValidation($event)">{{
+                'PEOPLE_GROUPS_CLOUD.PRESELECT_VALIDATION' | translate }}</mat-checkbox>
         </div>
         <div>
-            <adf-cloud-people [preSelectUsers]="preSelectUsers" [appName]="peopleAppName" [roles]="peopleRoles" [mode]="peopleMode"></adf-cloud-people>
+            <adf-cloud-people
+                [preSelectUsers]="preSelectUsers"
+                [preselectValidation]="peoplePreselectValidation"
+                [appName]="peopleAppName"
+                [roles]="peopleRoles"
+                [appName]="peopleAppName"
+                [mode]="peopleMode"></adf-cloud-people>
         </div>
 
         <div class="adf-people-list" *ngIf="canShowPeopleList()">

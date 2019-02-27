@@ -56,6 +56,10 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     @Input()
     roles: string[];
 
+    /** preselect values validation flag */
+    @Input()
+    preselectValidation: Boolean;
+
     /**
      * Array of users to be pre-selected. All users in the
      * array are pre-selected in multi selection mode, but only the first user
@@ -93,6 +97,8 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     isFocused: boolean;
 
+    invalidUsers: IdentityUserModel[];
+
     constructor(private identityUserService: IdentityUserService) {
         this.searchUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this._searchUsers);
         this.searchUsers$ = this.searchUsersSubject.asObservable();
@@ -105,8 +111,57 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.preSelectUsers && this.hasPreSelectUsers()) {
-            this.loadPreSelectUsers();
+        if (this.isPreselectedUserChanged(changes) && this.hasPreSelectUsers()) {
+           this.loadPreSelectUsers();
+        }
+    }
+
+    isPreselectedUserChanged(changes: SimpleChanges) {
+        return changes.preSelectUsers && changes.preSelectUsers.previousValue !== changes.preSelectUsers.currentValue;
+    }
+
+    validatePreselectUsers(): Promise<any> {
+        this.invalidUsers = [];
+        return this.filterPreselectUsers().then( (filteredPreSelectUsers) => {
+            return filteredPreSelectUsers.reduce( (acc, user) => {
+                if (user.valid) {
+                    acc.push( new IdentityUserModel(user.data));
+                } else {
+                    this.invalidUsers.push(user.data);
+                }
+                return acc;
+            }, []);
+        });
+    }
+
+    filterPreselectUsers() {
+        let promises: Promise<any>[] = [];
+
+        this.preSelectUsers.forEach((user: IdentityUserModel) => {
+            promises.push(new Promise((resolve, revoke) => {
+                const queryParam = this.getSearchParam(user);
+                this.identityUserService.findUsersByName(queryParam.value).subscribe( (result) => {
+                    const userValid = this.userExists(result, user);
+                    resolve({
+                        valid : userValid,
+                        data: userValid ? result[0] : user
+                    });
+                });
+            }));
+        });
+        return Promise.all(promises);
+    }
+
+    private userExists(result: any, user: IdentityUserModel) {
+        const key = this.getSearchParam(user).type;
+        return result.length > 0 && result[0][key] === user[key];
+    }
+
+    private getSearchParam(search) {
+        if (typeof search === 'string') {
+            return search;
+        } else {
+            return this.getUserSearchField(search);
         }
 
         if (changes.appName && this.isAppNameChanged(changes.appName)) {
@@ -119,6 +174,17 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     private isAppNameChanged(change) {
         return change.previousValue !== change.currentValue && this.appName && this.appName.length > 0;
+    }
+
+    private getUserSearchField(user: IdentityUserModel) {
+        let field: any;
+        Object.keys(user).forEach( ( element: string) => {
+            field = {
+                type: element ? element : field,
+                value : element ? user[element] : field
+            };
+        });
+        return field;
     }
 
     private initSearch() {
@@ -200,10 +266,41 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     private loadPreSelectUsers() {
         if (!this.isMultipleMode()) {
+            this.loadSinglePreselectUser();
+        } else {
+            this.loadMultiplePreselectUsers();
+        }
+    }
+
+    private loadSinglePreselectUser() {
+        if (this.preselectValidation) {
+            this.validatePreselectUsers().then( (users) => {
+                this.checkPreselectValidationErrors();
+                this.searchUserCtrl.setValue(users[0]);
+            });
+        } else {
             this.searchUserCtrl.setValue(this.preSelectUsers[0]);
-            this.preSelectUsers = [];
+        }
+    }
+
+    private loadMultiplePreselectUsers() {
+
+        if (this.preselectValidation) {
+            this.validatePreselectUsers().then( (users) => {
+                this.checkPreselectValidationErrors();
+                this.selectedUsersSubject.next(users);
+            });
         } else {
             this.selectedUsersSubject.next(this.preSelectUsers);
+        }
+    }
+
+    private checkPreselectValidationErrors() {
+        if (this.invalidUsers.length > 0) {
+            this.error.emit({
+                message: 'INVALID_PRESELECTED_USERS',
+                users: this.invalidUsers
+            });
         }
     }
 
