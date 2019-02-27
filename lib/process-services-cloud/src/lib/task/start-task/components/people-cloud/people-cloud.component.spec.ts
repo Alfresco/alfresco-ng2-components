@@ -53,9 +53,9 @@ describe('PeopleCloudComponent', () => {
     });
 
     it('should show the users if the typed result match', async(() => {
-        component.searchUsers$ = of(<IdentityUserModel[]> mockUsers);
+        component.searchUsers$ = of(<IdentityUserModel[]>mockUsers);
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement>element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.dispatchEvent(new Event('input'));
         inputHTMLElement.dispatchEvent(new Event('keyup'));
@@ -70,7 +70,7 @@ describe('PeopleCloudComponent', () => {
 
     it('should hide result list if input is empty', async(() => {
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement>element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = '';
         inputHTMLElement.dispatchEvent(new Event('keyup'));
@@ -85,7 +85,7 @@ describe('PeopleCloudComponent', () => {
     it('should emit selectedUser if option is valid', async(() => {
         fixture.detectChanges();
         let selectEmitSpy = spyOn(component.selectUser, 'emit');
-        component.onSelect(new IdentityUserModel({ username: 'username'}));
+        component.onSelect(new IdentityUserModel({ username: 'username' }));
         fixture.whenStable().then(() => {
             expect(selectEmitSpy).toHaveBeenCalled();
         });
@@ -95,7 +95,7 @@ describe('PeopleCloudComponent', () => {
         checkUserHasAccessSpy.and.returnValue(of(false));
         findUsersSpy.and.returnValue(of([]));
         fixture.detectChanges();
-        const inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        const inputHTMLElement: HTMLInputElement = <HTMLInputElement>element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = 'ZZZ';
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -130,7 +130,7 @@ describe('PeopleCloudComponent', () => {
     it('should pre-select all preSelectUsers when mode=multiple', async(() => {
         spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
         component.mode = 'multiple';
-        component.preSelectUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
+        component.preSelectUsers = <any>[{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -153,7 +153,7 @@ describe('PeopleCloudComponent', () => {
     it('should pre-select preSelectUsers[0] when mode=single', async(() => {
         spyOn(identityService, 'getUsersByRolesWithCurrentUser').and.returnValue(Promise.resolve(mockUsers));
         component.mode = 'single';
-        component.preSelectUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
+        component.preSelectUsers = <any>[{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             const selectedUser = component.searchUserCtrl.value;
@@ -176,7 +176,7 @@ describe('PeopleCloudComponent', () => {
         let removeUserSpy = spyOn(component.removeUser, 'emit');
 
         component.mode = 'multiple';
-        component.preSelectUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
+        component.preSelectUsers = <any>[{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
@@ -192,7 +192,7 @@ describe('PeopleCloudComponent', () => {
     it('should list users who have access to the app when appName is specified', async(() => {
         component.appName = 'sample-app';
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement>element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = 'M';
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -209,7 +209,7 @@ describe('PeopleCloudComponent', () => {
         component.appName = 'sample-app';
 
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement>element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = 'M';
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -225,7 +225,7 @@ describe('PeopleCloudComponent', () => {
         component.appName = 'sample-app';
 
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement>element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = 'M';
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -238,7 +238,7 @@ describe('PeopleCloudComponent', () => {
 
     it('should not validate access to the app when appName is not specified', async(() => {
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement>element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = 'M';
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -253,7 +253,7 @@ describe('PeopleCloudComponent', () => {
         const checkUserHasRoleSpy = spyOn(identityService, 'checkUserHasRole').and.returnValue(of(true));
         component.roles = ['mock-role-1'];
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement>element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = 'M';
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -269,7 +269,7 @@ describe('PeopleCloudComponent', () => {
         component.appName = '';
         component.roles = ['mock-role-10'];
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement>element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = 'M';
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -285,7 +285,7 @@ describe('PeopleCloudComponent', () => {
         component.appName = '';
         component.roles = [];
         fixture.detectChanges();
-        let inputHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('input');
+        let inputHTMLElement: HTMLInputElement = <HTMLInputElement>element.querySelector('input');
         inputHTMLElement.focus();
         inputHTMLElement.value = 'M';
         inputHTMLElement.dispatchEvent(new Event('input'));
@@ -296,10 +296,10 @@ describe('PeopleCloudComponent', () => {
         });
     }));
 
-    it('should load the clients if appName change', async( () => {
+    it('should load the clients if appName change', async(() => {
         component.appName = 'ADF';
         fixture.detectChanges();
-        fixture.whenStable().then( () => {
+        fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(loadClientsByApplicationNameSpy).toHaveBeenCalled();
         });
@@ -310,17 +310,18 @@ describe('PeopleCloudComponent', () => {
         fixture.detectChanges();
         component.appName = 'ADF';
         fixture.detectChanges();
-        fixture.whenStable().then( () => {
+        fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(checkUserHasAccessSpy).toHaveBeenCalled();
-    });
+        });
+    }));
 
     it('should not validate preselect values if preselectValidation flag is set to false', () => {
         component.mode = 'multiple';
         component.validate = false;
-        component.preSelectUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
+        component.preSelectUsers = <any>[{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
         fixture.detectChanges();
-        fixture.whenStable().then( () => {
+        fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(component.validatePreselectUsers).not.toHaveBeenCalled();
         });
@@ -329,23 +330,23 @@ describe('PeopleCloudComponent', () => {
     it('should filter users when validation flag is true', async(() => {
         component.mode = 'multiple';
         component.validate = true;
-        component.preSelectUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
+        component.preSelectUsers = <any>[{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
         fixture.detectChanges();
-        fixture.whenStable().then( () => {
-            component.filterPreselectUsers().then( (result) => {
+        fixture.whenStable().then(() => {
+            component.filterPreselectUsers().then((result) => {
                 expect(component.userExists(result)).toEqual(false);
             });
         });
     }));
 
-    it('should emit warning if are invalid users', async ((done) => {
+    it('should emit warning if are invalid users', async((done) => {
         const warningSpy = spyOn(component.warning, 'emit').and.returnValue(of(false));
         component.mode = 'single';
         component.validate = true;
-        component.preSelectUsers = <any> [{username: 'invalidUsername'}];
+        component.preSelectUsers = <any>[{ username: 'invalidUsername' }];
         fixture.detectChanges();
-        fixture.whenStable().then( () => {
-            component.loadSinglePreselectUser().then( (result) => {
+        fixture.whenStable().then(() => {
+            component.loadSinglePreselectUser().then((result) => {
                 fixture.detectChanges();
                 expect(warningSpy).toHaveBeenCalled();
             });
@@ -356,10 +357,10 @@ describe('PeopleCloudComponent', () => {
         const findByIdSpy = spyOn(identityService, 'findUserById').and.returnValue(Promise.resolve(mockUsers));
         component.mode = 'multiple';
         component.validate = true;
-        component.preSelectUsers = <any> [{id: mockUsers[1].id}, {id: mockUsers[2].id}];
+        component.preSelectUsers = <any>[{ id: mockUsers[1].id }, { id: mockUsers[2].id }];
         fixture.detectChanges();
-        fixture.whenStable().then( () => {
-            component.filterPreselectUsers().then( (result) => {
+        fixture.whenStable().then(() => {
+            component.filterPreselectUsers().then((result) => {
                 expect(findByIdSpy).toHaveBeenCalled();
                 expect(component.userExists(result)).toEqual(true);
                 done();
@@ -371,10 +372,10 @@ describe('PeopleCloudComponent', () => {
         const findUserByUsernameSpy = spyOn(identityService, 'findUserByUsername').and.returnValue(Promise.resolve(mockUsers));
         component.mode = 'multiple';
         component.validate = true;
-        component.preSelectUsers = <any> [{username: mockUsers[1].username}, {username: mockUsers[2].username}];
+        component.preSelectUsers = <any>[{ username: mockUsers[1].username }, { username: mockUsers[2].username }];
         fixture.detectChanges();
-        fixture.whenStable().then( () => {
-            component.filterPreselectUsers().then( (result) => {
+        fixture.whenStable().then(() => {
+            component.filterPreselectUsers().then((result) => {
                 expect(findUserByUsernameSpy).toHaveBeenCalled();
                 expect(component.userExists(result)).toEqual(true);
                 done();
@@ -386,10 +387,10 @@ describe('PeopleCloudComponent', () => {
         const findUserByEmailSpy = spyOn(identityService, 'findUserByEmail').and.returnValue(Promise.resolve(mockUsers));
         component.mode = 'multiple';
         component.validate = true;
-        component.preSelectUsers = <any> [{email: mockUsers[1].email}, {email: mockUsers[2].email}];
+        component.preSelectUsers = <any>[{ email: mockUsers[1].email }, { email: mockUsers[2].email }];
         fixture.detectChanges();
-        fixture.whenStable().then( () => {
-            component.filterPreselectUsers().then( (result) => {
+        fixture.whenStable().then(() => {
+            component.filterPreselectUsers().then((result) => {
                 expect(findUserByEmailSpy).toHaveBeenCalled();
                 expect(component.userExists(result)).toEqual(true);
                 done();
