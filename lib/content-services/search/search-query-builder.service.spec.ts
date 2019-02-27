@@ -599,7 +599,7 @@ describe('SearchQueryBuilder', () => {
             highlight: {
                 'prefix': 'my-prefix',
                 'postfix': 'my-postfix',
-                'mergeContiguous': true,
+                'mergeContiguous': true
             }
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
