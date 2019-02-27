@@ -110,8 +110,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290139] Should display only tasks with all states when All is selected from state dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignment();
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment('')
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignment()
                 .setStateFilterDropDown('ALL');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(deletedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(assignedTaskName);
@@ -120,7 +119,7 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290154] Should display only tasks with suspended states when Suspended is selected from state dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment('')
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignment()
                 .setStateFilterDropDown('SUSPENDED');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(suspendedTasks.list.entries[0].entry.id);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
@@ -130,7 +129,7 @@ describe('Task filters cloud', () => {
          });
 
         it('[C290060] Should display only tasks with Created state when Created is selected from state dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setAssignment('').setStateFilterDropDown('CREATED');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignment().setStateFilterDropDown('CREATED');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(createdTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);

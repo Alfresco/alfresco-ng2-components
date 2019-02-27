@@ -132,6 +132,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setLastModifiedFrom(option) {
+        this.clearField(this.lastModifiedFrom);
         return this.setProperty('lastModifiedFrom', option);
     }
 
@@ -140,6 +141,7 @@ export class EditTaskFilterCloudComponent {
     }
 
     setLastModifiedTo(option) {
+        this.clearField(this.lastModifiedTo);
         return this.setProperty('lastModifiedTo', option);
     }
 

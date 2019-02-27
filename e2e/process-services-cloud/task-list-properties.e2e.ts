@@ -71,7 +71,6 @@ describe('Edit task filters and task list properties', () => {
             configEditorPage.clickTaskListCloudConfiguration();
             configEditorPage.clickClearButton();
             configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
-
             browser.driver.sleep(5000);
 
             configEditorPage.clickEditTaskConfiguration();
@@ -158,7 +157,7 @@ describe('Edit task filters and task list properties', () => {
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
             tasksCloudDemoPage.editTaskFilterCloudComponent().setProcessInstanceId(processInstance.entry.id)
-                .setStateFilterDropDown('ALL').setAssignment('');
+                .setStateFilterDropDown('ALL').clearAssignment();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
 
@@ -227,7 +226,7 @@ describe('Edit task filters and task list properties', () => {
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            tasksCloudDemoPage.editTaskFilterCloudComponent().setStateFilterDropDown('ALL').setAssignment('').setOwner('admin.adf');
+            tasksCloudDemoPage.editTaskFilterCloudComponent().setStateFilterDropDown('ALL').clearAssignment().setOwner('admin.adf');
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(notAssigned.entry.name);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(createdTask.entry.name);
