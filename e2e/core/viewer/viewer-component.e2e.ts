@@ -23,6 +23,7 @@ import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
+import { AboutPage } from '../../pages/adf/demo-shell/aboutPage';
 
 import CONSTANTS = require('../../util/constants');
 import resources = require('../../util/resources');
@@ -35,6 +36,7 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
+import { viewWrappedDebugError } from '@angular/core/src/view/errors';
 
 xdescribe('Viewer', () => {
 
@@ -48,6 +50,7 @@ xdescribe('Viewer', () => {
     let pngFileUploaded;
     const contentList = new ContentListPage();
     const shareDialog = new ShareDialog();
+    const about = new AboutPage();
 
     let pngFileInfo = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -450,6 +453,47 @@ xdescribe('Viewer', () => {
                 viewerPage.checkFileIsLoaded();
                 viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
             });
+        });
+    });
+
+    describe('Viewer - Code editor extension', () => {
+
+        let jsFileInfo = new FileModel({
+            'name': resources.Files.ADF_DOCUMENTS.JS.file_name,
+            'location': resources.Files.ADF_DOCUMENTS.JS.file_location
+        });
+
+        let jsFileUploaded;
+
+        beforeAll(async (done) => {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+
+            jsFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, jsFileInfo.location, jsFileInfo.name, '-my-');
+
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+            done();
+        });
+
+        afterAll(async (done) => {
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, jsFileUploaded.entry.id);
+            done();
+        });
+
+        it('[C297698] Should be able to add an extension for code editor viewer', () => {
+            navigationBarPage.checkAboutButtonIsDisplayed();
+            navigationBarPage.clickAboutButton();
+
+            about.checkMonacoPluginIsDisplayed();
+
+            navigationBarPage.clickContentServicesButton();
+
+            contentServicesPage.waitForTableBody();
+            contentServicesPage.checkContentIsDisplayed(jsFileInfo.name);
+            contentServicesPage.doubleClickRow(jsFileInfo.name);
+
+            viewerPage.checkCodeViewerIsDisplayed();
         });
     });
 });
