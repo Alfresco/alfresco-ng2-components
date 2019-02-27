@@ -7,13 +7,12 @@
             id="site-dropdown"
             placeholder="{{placeholder | translate}}"
             floatPlaceholder="never"
-            data-automation-id="site-my-files-select"
             [(value)]="selected"
             (selectionChange)="selectedSite($event)">
             <mat-option *ngFor="let site of siteList?.list.entries;" [value]="site">
                 {{ site.entry.title | translate}}
             </mat-option>
-            <mat-option *ngIf="showLoading()" disabled="true">
+            <mat-option *ngIf="showLoading()" disabled="true" data-automation-id="site-loading">
                 {{ 'ADF_DROPDOWN.LOADING' | translate}}
             </mat-option>
         </mat-select>
