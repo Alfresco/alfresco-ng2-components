@@ -388,13 +388,6 @@ export class ContentListPage {
         return actionButton;
     }
 
-    checkMenuActionIsVisible(actionName) {
-        let actionButton = element(by.css(`button[data-automation-id='DOCUMENT_LIST.ACTIONS.${actionName}']`));
-        Util.waitUntilElementIsVisible(actionButton);
-        Util.waitUntilElementIsClickable(actionButton);
-        return actionButton;
-    }
-
     pressContextMenuActionNamed(actionName) {
         let actionButton = this.checkContextActionIsVisible(actionName);
         actionButton.click();
@@ -462,4 +455,12 @@ export class ContentListPage {
         let actionButton = this.checkMenuActionIsVisible(actionName);
         actionButton.click();
     }
+
+    checkMenuActionIsVisible(actionName) {
+        let actionButton = element(by.css(`button[data-automation-id='DOCUMENT_LIST.ACTIONS.${actionName}']`));
+        Util.waitUntilElementIsVisible(actionButton);
+        Util.waitUntilElementIsClickable(actionButton);
+        return actionButton;
+    }
+
 }

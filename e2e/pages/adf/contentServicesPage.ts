@@ -254,8 +254,8 @@ export class ContentServicesPage {
         return this.recentFileIcon.getText();
     }
 
-    async checkAcsContainer() {
-        await Util.waitUntilElementIsVisible(this.uploadBorder);
+    checkAcsContainer() {
+        Util.waitUntilElementIsVisible(this.uploadBorder);
         return this;
     }
 
