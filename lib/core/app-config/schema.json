@@ -1145,6 +1145,25 @@
             }
           }
         },
+        "highlight": {
+          "prefix": "string",
+          "postfix": "string",
+          "snippetCount": 0,
+          "fragmentSize": 0,
+          "maxAnalyzedChars": 0,
+          "mergeContiguous": true,
+          "usePhraseHighlighter": true,
+          "fields": [
+            {
+              "field": "string",
+              "snippetCount": 0,
+              "fragmentSize": 0,
+              "mergeContiguous": true,
+              "prefix": "string",
+              "postfix": "string"
+            }
+          ]
+        },
         "sorting": {
           "description": "Sorting options and defaults",
           "required": [

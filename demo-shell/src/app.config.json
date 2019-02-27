@@ -244,7 +244,23 @@
             }
           }
         }
-      ]
+      ],
+      "highlight": {
+        "prefix": " ",
+        "postfix": " ",
+        "mergeContiguous": true,
+        "fields": [
+          {
+            "field": "cm:title"
+          },
+          {
+            "field": "description",
+            "prefix": "(",
+            "postfix": ")"
+          }
+
+        ]
+      }
     },
     "pagination": {
         "size": 20,

@@ -49,7 +49,6 @@ export class SearchQueryBuilderService {
     queryFragments: { [id: string]: string } = {};
     filterQueries: FilterQuery[] = [];
     paging: { maxItems?: number; skipCount?: number } = null;
-    highlight: RequestHighlight = null;
     sorting: Array<SearchSortingDefinition> = [];
 
     protected userFacetBuckets: { [key: string]: Array<FacetFieldBucket> } = {};
@@ -299,6 +298,10 @@ export class SearchQueryBuilderService {
         return false;
     }
 
+    get hasFacetHilight(): boolean {
+        return this.config && this.config.highlight ? true : false;
+    }
+
     protected get sort(): RequestSortDefinitionInner[] {
         return this.sorting.map((def) => {
             return new RequestSortDefinitionInner({
@@ -340,6 +343,10 @@ export class SearchQueryBuilderService {
         }
 
         return null;
+    }
+
+    protected get highlight(): RequestHighlight {
+        return this.hasFacetHilight ? this.config.highlight : null;
     }
 
     protected getFinalQuery(): string {

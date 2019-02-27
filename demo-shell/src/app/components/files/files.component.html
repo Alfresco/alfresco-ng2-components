@@ -1,10 +1,11 @@
 <div class="adf-container">
 
     <mat-accordion *ngIf="showRecentFiles" class="adf-container-recent">
-        <mat-expansion-panel  hideToggle="true">
-            <mat-expansion-panel-header >
+        <mat-expansion-panel hideToggle="true">
+            <mat-expansion-panel-header>
                 <mat-panel-title>
-                    {{ 'DOCUMENT_LIST.RECENT.TITLE' | translate }}<mat-icon>history</mat-icon>
+                    {{ 'DOCUMENT_LIST.RECENT.TITLE' | translate }}
+                    <mat-icon>history</mat-icon>
                 </mat-panel-title>
             </mat-expansion-panel-header>
 
@@ -31,7 +32,8 @@
         </adf-sites-dropdown>
     </div>
 
-    <div id="document-list-container" class="adf-document-list-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="16px">
+    <div id="document-list-container" class="adf-document-list-container" fxLayout="row" fxLayoutAlign="start stretch"
+         fxLayoutGap="16px">
         <adf-upload-drag-area fxFlex="1 1 auto"
                               [disabled]="disableDragArea"
                               [acceptedFilesType]="getFileFiltering()"
@@ -67,8 +69,12 @@
                         data-automation-id="document-list-grid-view"
                         title="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}"
                         (click)="toggleGalleryView()">
-                        <mat-icon *ngIf="displayMode === 'list'" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}">view_comfy</mat-icon>
-                        <mat-icon *ngIf="displayMode === 'gallery'" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.LISTVIEW' | translate }}">list</mat-icon>
+                        <mat-icon *ngIf="displayMode === 'list'"
+                                  matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}">view_comfy
+                        </mat-icon>
+                        <mat-icon *ngIf="displayMode === 'gallery'"
+                                  matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.LISTVIEW' | translate }}">list
+                        </mat-icon>
                     </button>
                     <button
                         data-automation-id="create-new-folder"
@@ -136,7 +142,8 @@
                     </button>
                 </div>
 
-                <button fxFlex="1 0 auto" mat-icon-button [matMenuTriggerFor]="themePicker" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.THEME' | translate }}">
+                <button fxFlex="1 0 auto" mat-icon-button [matMenuTriggerFor]="themePicker"
+                        matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.THEME' | translate }}">
                     <mat-icon>format_color_fill</mat-icon>
                 </button>
 
@@ -148,8 +155,12 @@
                 </mat-menu>
 
                 <button mat-icon-button (click)="showVersions = !showVersions" class="adf-show-versions-button">
-                    <mat-icon *ngIf="!showVersions" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.SHOW_VERSION' | translate }}">chevron_left</mat-icon>
-                    <mat-icon *ngIf="showVersions" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.HIDE_VERSION' | translate }}">chevron_right</mat-icon>
+                    <mat-icon *ngIf="!showVersions" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.SHOW_VERSION' | translate }}">
+                        chevron_left
+                    </mat-icon>
+                    <mat-icon *ngIf="showVersions" matTooltip="{{ 'DOCUMENT_LIST.TOOLBAR.HIDE_VERSION' | translate }}">
+                        chevron_right
+                    </mat-icon>
                 </button>
 
                 <adf-toolbar-divider fxFlex="0 0 auto" fxHide fxShow.lt-sm="true"></adf-toolbar-divider>
@@ -160,7 +171,7 @@
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item
                             (click)="toggleGalleryView()">
-                        <mat-icon *ngIf="displayMode === 'list'" >view_comfy</mat-icon>
+                        <mat-icon *ngIf="displayMode === 'list'">view_comfy</mat-icon>
                         <mat-icon *ngIf="displayMode === 'gallery'">list</mat-icon>
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.CARDVIEW' | translate }}</span>
                     </button>
@@ -226,12 +237,12 @@
                 (permissionError)="handlePermissionError($event)"
                 (name-click)="documentList.onNodeDblClick($event.detail?.node)">
                 <adf-custom-no-permission-template *ngIf="enableCustomPermissionMessage">
-                        <h1>You don't have permissions</h1>
+                    <h1>You don't have permissions</h1>
                 </adf-custom-no-permission-template>
                 <adf-custom-empty-content-template *ngIf="disableDragArea">
-                        <div class="adf-empty_template">
-                            <div class="adf-no-result-message">{{ 'SEARCH.NO_RESULT' | translate }}</div>
-                        </div>
+                    <div class="adf-empty_template">
+                        <div class="adf-no-result-message">{{ 'SEARCH.NO_RESULT' | translate }}</div>
+                    </div>
                 </adf-custom-empty-content-template>
                 <data-columns>
                     <data-column
@@ -271,6 +282,15 @@
                         key="content.sizeInBytes"
                         title="{{'DOCUMENT_LIST.COLUMNS.SIZE' | translate}}"
                         type="fileSize">
+                    </data-column>
+                    <data-column
+                        *ngIf="searchTerm"
+                        key="search"
+                        title="Search">
+                        <ng-template let-entry="$implicit">
+                            <div [innerHTML]="searchResultsHighlight(entry.row.node.entry.search) | highlight:searchTerm">
+                            </div>
+                        </ng-template>
                     </data-column>
                     <!-- Notes: has performance overhead due to multiple files/folders causing separate HTTP calls to get tags -->
                     <!--
@@ -423,7 +443,7 @@
         <adf-info-drawer-layout *ngIf="showVersions" class="adf-manage-versions-sidebar" fxFlex="0 0 auto">
             <div info-drawer-content>
 
-                <adf-info-drawer [title]="'Details'"  *ngIf="documentList.selection[0]" >
+                <adf-info-drawer [title]="'Details'" *ngIf="documentList.selection[0]">
                     <adf-info-drawer-tab [label]="'Properties'">
                         <adf-content-metadata-card
                             [node]="documentList.selection[0].entry"
@@ -515,7 +535,8 @@
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-extension-filter-upload-switch" [color]="'primary'" [(ngModel)]="acceptedFilesTypeShow">
+            <mat-slide-toggle id="adf-extension-filter-upload-switch" [color]="'primary'"
+                              [(ngModel)]="acceptedFilesTypeShow">
                 {{'DOCUMENT_LIST.CUSTOM_FILTER' | translate}}
             </mat-slide-toggle>
         </section>
@@ -533,13 +554,14 @@
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-document-list-enable-drop-files" [color]="'primary'" [(ngModel)]="allowDropFiles" (click)="toggleAllowDropFiles()" >
+            <mat-slide-toggle id="adf-document-list-enable-drop-files" [color]="'primary'" [(ngModel)]="allowDropFiles"
+                              (click)="toggleAllowDropFiles()">
                 {{'DOCUMENT_LIST.ALLOW_DROP_FILES' | translate}}
             </mat-slide-toggle>
         </section>
 
         <section>
-            <mat-slide-toggle  id="adf-version-upload-switch"  [color]="'primary'" [(ngModel)]="versioning">
+            <mat-slide-toggle id="adf-version-upload-switch" [color]="'primary'" [(ngModel)]="versioning">
                 {{'DOCUMENT_LIST.ENABLE_VERSIONING' | translate}}
             </mat-slide-toggle>
         </section>
@@ -657,4 +679,4 @@
     </div>
 </div>
 
-<adf-file-uploading-dialog #fileDialog (error)="openSnackMessage($event)" ></adf-file-uploading-dialog>
+<adf-file-uploading-dialog #fileDialog (error)="openSnackMessage($event)"></adf-file-uploading-dialog>

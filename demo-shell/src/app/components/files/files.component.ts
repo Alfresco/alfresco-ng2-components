@@ -46,6 +46,7 @@ import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.compon
 import { Subscription } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
 import { debounceTime } from 'rxjs/operators';
+import { SearchEntry } from '@alfresco/js-api';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -586,5 +587,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 6000
             );
         });
+    }
+
+    searchResultsHighlight(search: SearchEntry) {
+        if (search && search.highlight) {
+            return search.highlight.map((currentHighlight) => currentHighlight.snippets).join(', ');
+        }
     }
 }
