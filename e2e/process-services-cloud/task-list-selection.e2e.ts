@@ -47,7 +47,6 @@ describe('Task list cloud - selection', () => {
 
         beforeAll(async (done) => {
             silentLogin = false;
-            let jsonFile = new TaskListCloudConfiguration().getConfiguration();
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginAPS(user, password);
@@ -59,29 +58,13 @@ describe('Task list cloud - selection', () => {
                 tasks.push(response.entry.name);
             }
 
-            done();
-        });
-
-        beforeEach((done) => {
             navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             appListCloudComponent.goToApp(simpleApp);
             tasksCloudDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            done();
-        });
-
-        it('[C291916] Should be able to select multiple row when multiselect is true', () => {
-            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails().enableMultiselection();
+            tasksCloudDemoPage.clickSettingsButton().disableDisplayTaskDetails();
             tasksCloudDemoPage.clickAppButton();
-
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[0]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsNotCheckedByName(tasks[2]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsNotCheckedByName(tasks[1]);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[0]);
+            done();
         });
 
         it('[C291914] Should not be able to select any row when selection mode is set to None', () => {
@@ -117,7 +100,7 @@ describe('Task list cloud - selection', () => {
         });
 
         it('[C291916] Should be able to select multiple row when multiselect is true', () => {
-            tasksCloudDemoPage.clickSettingsButton().clickMultiSelect();
+            tasksCloudDemoPage.clickSettingsButton().enableMultiselection();
             tasksCloudDemoPage.clickAppButton();
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[0]);
@@ -131,10 +114,10 @@ describe('Task list cloud - selection', () => {
         });
 
         it('[C291915] Should be possible select all the rows when multiselect is true', () => {
-            tasksCloudDemoPage.clickSettingsButton().clickMultiSelect();
+            tasksCloudDemoPage.clickSettingsButton().enableMultiselection();
             tasksCloudDemoPage.clickAppButton();
 
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkAllRows();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed().checkAllRows();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[0]);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[1]);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkRowIsCheckedByName(tasks[2]);

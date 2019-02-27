@@ -137,6 +137,7 @@ export class TasksCloudDemoPage {
 
     clickAppButton() {
         this.appButton.click();
+        this.createButtonIsDisplayed();
         return this;
     }
 

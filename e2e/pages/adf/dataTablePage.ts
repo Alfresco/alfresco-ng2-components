@@ -29,7 +29,7 @@ export class DataTablePage {
     selectionDropDown = element(by.css(`div[class*='ng-trigger-transformPanel']`));
     allSelectedRows = element.all(by.css(`div[class*='is-selected']`));
     selectedRowNumber = element(by.css(`div[class*='is-selected'] div[data-automation-id*='text_']`));
-    selectAll = element(by.css(`div[class*='header'] label`));
+    selectAll = element(by.css(`div[class*='header'] mat-checkbox`));
     addRowElement = element(by.xpath(`//span[contains(text(),'Add row')]/..`));
     replaceRowsElement = element(by.xpath(`//span[contains(text(),'Replace rows')]/..`));
     reset = element(by.xpath(`//span[contains(text(),'Reset to default')]/..`));
@@ -90,13 +90,13 @@ export class DataTablePage {
     }
 
     clickCheckboxByName(rowName) {
-        let checkbox = this.getRowByRowName(rowName).element(by.xpath(`//mat-checkbox/label`));
+        let checkbox = this.getRowsName(rowName).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
         Util.waitUntilElementIsVisible(checkbox);
         checkbox.click();
     }
 
     getRowCheckboxByName(rowName) {
-        return this.getRowByRowName(rowName).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
+        return this.getRowsName(rowName).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
     }
 
     checkRowIsNotCheckedByName(rowName) {
@@ -164,7 +164,14 @@ export class DataTablePage {
 
     checkAllRows() {
         Util.waitUntilElementIsVisible(this.selectAll);
+        Util.waitUntilElementIsClickable(this.selectAll);
         this.selectAll.click();
+    }
+    
+    checkAllRowsButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.selectAll);
+        Util.waitUntilElementIsClickable(this.selectAll);
+        return this;
     }
 
     checkRowIsChecked(rowNumber) {
