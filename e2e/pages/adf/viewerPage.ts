@@ -95,6 +95,12 @@ export class ViewerPage {
     timeButton = element(by.id('adf-viewer-time'));
     bugButton = element(by.id('adf-viewer-bug'));
 
+    codeViewer = element(by.id('adf-monaco-file-editor'));
+
+    checkCodeViewerIsDisplayed() {
+        return Util.waitUntilElementIsVisible(this.codeViewer);
+    }
+
     viewFile(fileName) {
         let fileView = element.all(by.css(`#document-list-container div[filename="${fileName}"]`)).first();
         Util.waitUntilElementIsVisible(fileView);

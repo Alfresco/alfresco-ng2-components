@@ -50,7 +50,8 @@ import { FileTypePipe } from './file-type.pipe';
         MimeTypeIconPipe,
         InitialUsernamePipe,
         NodeNameTooltipPipe,
-        FormatSpacePipe
+        FormatSpacePipe,
+        FileTypePipe
     ],
     exports: [
         FileSizePipe,

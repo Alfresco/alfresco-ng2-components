@@ -16,6 +16,7 @@ branches:
   - master
   - development
   - /.*beta.*/
+  - /.*greenkeeper.*/
 
 # TRAVIS_PULL_REQUEST == false means is running on dev branch and is not a PR
 stages:
@@ -111,18 +112,23 @@ jobs:
                             (./scripts/start.sh -dev -t -ss -vjsapi alpha || exit 1;);
                     fi
         - stage: Update children projects dependency #Update generator-ng2-alfresco-app
+          name: Update Generator
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n generator-ng2-alfresco-app
         - stage: Update children projects dependency # Test Update alfresco-content-app
+          name: Update ACA
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-content-app
         - stage: Update children projects dependency # Test Update adf-app-manager-ui
+          name: Update adf-app-manager-ui
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n adf-app-manager-ui
-        - stage: Update children projects dependency # Test Update aalfresco-ng2-components
+        - stage: Update children projects dependency # Test Update alfresco-ng2-components
+          name: Update alfresco-ng2-components
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-ng2-components
         - stage: Update children projects dependency # Test Update alfresco-modeler-app
+          name: Update alfresco modeler app
           if: tag =~ .*beta.*
           script: ./scripts/update-project.sh -gnu -t $GITHUB_TOKEN -n alfresco-modeler-app
         - stage: e2e Test # Test core

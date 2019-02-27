@@ -48,6 +48,7 @@ export class NavigationBarPage {
     customSourcesButton = element(by.css('a[data-automation-id="Custom Sources"]'));
     settingsButton = element(by.css('a[data-automation-id="Settings"]'));
     peopleGroupCloud = element(by.css('a[data-automation-id="People/Group Cloud"]'));
+    aboutButton = element(by.css('a[data-automation-id="About"]'));
 
     navigateToDatatable() {
         Util.waitUntilElementIsVisible(this.dataTableButton);
@@ -157,6 +158,15 @@ export class NavigationBarPage {
         Util.waitUntilElementIsVisible(this.headerDataButton);
         Util.waitUntilElementIsClickable(this.headerDataButton);
         return this.headerDataButton.click();
+    }
+
+    clickAboutButton() {
+        Util.waitUntilElementIsClickable(this.aboutButton);
+        return this.aboutButton.click();
+    }
+
+    checkAboutButtonIsDisplayed() {
+        return Util.waitUntilElementIsVisible(this.aboutButton);
     }
 
     checkMenuButtonIsDisplayed() {

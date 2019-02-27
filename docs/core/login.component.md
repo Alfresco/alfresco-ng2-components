@@ -256,8 +256,7 @@ export class MyCustomLogin {
         
         // check if the username is in the blacklist
         if (values.controls['username'].value === 'invalidUsername') {
-            this.alfrescoLogin.addCustomFormError('username', 'the
-            username is in blacklist');
+            this.alfrescoLogin.addCustomFormError('username', 'the username is in blacklist');
             event.preventDefault();
         }
     }

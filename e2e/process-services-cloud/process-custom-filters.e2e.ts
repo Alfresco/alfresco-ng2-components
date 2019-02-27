@@ -23,6 +23,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';
@@ -32,6 +33,7 @@ import { Query } from '../actions/APS-cloud/query';
 describe('Process list cloud', () => {
 
     describe('Process List', () => {
+        const configEditorPage = new ConfigEditorPage();
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
@@ -54,6 +56,16 @@ describe('Process list cloud', () => {
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginAPS(user, password);
+
+            navigationBarPage.clickConfigEditorButton();
+            configEditorPage.clickEditProcessCloudConfiguration();
+            configEditorPage.clickClearButton();
+            configEditorPage.enterConfiguration('{' +
+                '"properties": [' +
+                '"state",' + '"processInstanceId",' + '"sort",' + '"order"' +
+                ']' +
+                '}');
+            configEditorPage.clickSaveButton();
 
             await processDefinitionService.init(user, password);
             let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
@@ -117,6 +129,23 @@ describe('Process list cloud', () => {
                 list.reverse();
                 expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
             });
+        });
+
+        it('[C297697] The value of the filter should be preserved when saving it', async() => {
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader()
+                .setProcessInstanceId(completedProcess.entry.id);
+
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+
+            expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllDisplayedRows()).toBe(1);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedProcess.entry.id);
+
+            processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
+            processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
+            expect(processCloudDemoPage.getActiveFilterName()).toBe('New');
+
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(completedProcess.entry.id);
         });
 
     });
