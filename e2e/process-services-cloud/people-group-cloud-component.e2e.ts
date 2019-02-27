@@ -71,8 +71,6 @@ describe('People Groups Cloud Component', () => {
             loginSSOPage.clickOnSSOButton();
             loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             navigationBarPage.navigateToPeopleGroupCloudPage();
-            peopleGroupCloudComponentPage.checkGroupsCloudComponentTitleIsDisplayed();
-            peopleGroupCloudComponentPage.checkPeopleCloudComponentTitleIsDisplayed();
         });
 
         afterAll(async () => {
