@@ -1,0 +1,23 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "demo-shell/package.json",
+        "integration/base_ver_2_app/package.json",
+        "lib/content-services/package.json",
+        "lib/core/package.json",
+        "lib/extensions/package.json",
+        "lib/insights/package.json",
+        "lib/process-services-cloud/package.json",
+        "lib/process-services/package.json",
+        "lib/testing/package.json",
+        "package.json",
+        "tools/i18n/li18nt/client/package.json",
+        "tools/i18n/li18nt/package.json",
+        "tools/i18n/li18nt/server/package.json",
+        "tools/schematics/adf/package.json",
+        "tools/tslint-rules/package.json"
+      ]
+    }
+  }
+}
