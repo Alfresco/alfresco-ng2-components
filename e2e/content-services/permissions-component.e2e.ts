@@ -229,8 +229,7 @@ describe('Permissions Component', function () {
             browser.get(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
             contentList.checkContentIsDisplayed(folderName);
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
-            contentList.clickRowToSelect(folderName);
-            contentList.clickSelectedFolderOrFileActions(folderName);
+            contentList.clickRowMenuActionsButton(folderName);
             contentList.clickMenuActionNamed('PERMISSION');
             permissionsPage.checkAddPermissionButtonIsDisplayed();
             permissionsPage.clickAddPermissionButton();
