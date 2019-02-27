@@ -151,8 +151,8 @@ describe('Permissions Component', function () {
 
             contentList.checkContentIsDisplayed(fileModel.name);
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
-            contentList.rightClickOnRowNamed(fileModel.name);
-            contentList.pressContextMenuActionNamed('Permission');
+            contentList.clickRowMenuActionsButton(fileModel.name);
+            contentList.clickMenuActionNamed('PERMISSION');
             permissionsPage.checkAddPermissionButtonIsDisplayed();
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
@@ -231,6 +231,7 @@ describe('Permissions Component', function () {
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             contentList.clickRowMenuActionsButton(folderName);
             contentList.clickMenuActionNamed('PERMISSION');
+            permissionsPage.checkPermissionInheritedButtonIsDisplayed();
             permissionsPage.checkAddPermissionButtonIsDisplayed();
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
@@ -245,7 +246,6 @@ describe('Permissions Component', function () {
             await alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
             done();
         });
-
 
         it('[C277002] Should display the Role Site dropdown', () => {
 
