@@ -21,6 +21,9 @@
       "NO_LABEL": "No"
     }
   },
+  "ADF_DROPDOWN": {
+    "LOADING": "Loading..."
+  },
   "ADF_CONFIRM_DIALOG": {
     "TITLE": "Confirm",
     "ACTION": "Do you want to proceed?",

@@ -1,6 +1,7 @@
 <div id="site-dropdown-container" class="adf-site-dropdown-container">
     <mat-form-field>
         <mat-select
+            #siteSelect
             data-automation-id="site-my-files-option"
             class="adf-site-dropdown-list-element"
             id="site-dropdown"
@@ -9,8 +10,11 @@
             data-automation-id="site-my-files-select"
             [(value)]="selected"
             (selectionChange)="selectedSite($event)">
-            <mat-option *ngFor="let site of siteList?.list.entries" [value]="site">
+            <mat-option *ngFor="let site of siteList?.list.entries;" [value]="site">
                 {{ site.entry.title | translate}}
+            </mat-option>
+            <mat-option *ngIf="showLoading()" disabled="true">
+                {{ 'ADF_DROPDOWN.LOADING' | translate}}
             </mat-option>
         </mat-select>
     </mat-form-field>

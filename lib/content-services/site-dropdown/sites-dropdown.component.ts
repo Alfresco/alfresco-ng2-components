@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { SitesService, LogService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry } from '@alfresco/js-api';
+import { MatSelect } from '@angular/material';
 
 export enum Relations {
     Members = 'members',
@@ -68,6 +69,15 @@ export class DropdownSitesComponent implements OnInit {
     @Output()
     change: EventEmitter<SiteEntry> = new EventEmitter();
 
+    @ViewChild('siteSelect')
+    siteSelect: MatSelect;
+
+    private loading = true;
+    private skipCount = 0;
+    private readonly MAX_ITEMS = 50;
+    private readonly ITEM_HEIGHT = 45;
+    private readonly ITEM_HEIGHT_TO_WAIT_BEFORE_LOAD_NEXT = (this.ITEM_HEIGHT * (this.MAX_ITEMS / 2));
+
     selected: SiteEntry = null;
 
     public MY_FILES_VALUE = '-my-';
@@ -77,45 +87,87 @@ export class DropdownSitesComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.siteSelect.openedChange.subscribe(() => {
+            if (this.siteSelect.panelOpen) {
+                this.siteSelect.panel.nativeElement.addEventListener('scroll', (event) => this.loadAllOnScroll(event));
+            }
+        });
+
         if (!this.siteList) {
-            this.setDefaultSiteList();
+            this.loadSiteList();
         }
+    }
+
+    loadAllOnScroll(event) {
+        if (this.isInfiniteScrollingEnabled() && this.isScrollInNextFetchArea(event)) {
+            this.loading = true;
+            this.loadSiteList();
+        }
+    }
+
+    isScrollInNextFetchArea(event) {
+        return event.target.scrollTop >= (event.target.scrollHeight - event.target.offsetHeight - this.ITEM_HEIGHT_TO_WAIT_BEFORE_LOAD_NEXT)
     }
 
     selectedSite(event: any) {
         this.change.emit(event.value);
     }
 
-    private setDefaultSiteList() {
-        let extendedOptions = null;
+    private loadSiteList() {
+        let extendedOptions: any = {
+            skipCount: this.skipCount,
+            maxItems: this.MAX_ITEMS
+        };
+
+        this.skipCount += this.MAX_ITEMS;
+
         if (this.relations) {
-            extendedOptions = { relations: [this.relations] };
+            extendedOptions.relations = [this.relations];
         }
+
         this.sitesService.getSites(extendedOptions).subscribe((sitePaging: SitePaging) => {
 
-                this.siteList = this.relations === Relations.Members ? this.filteredResultsByMember(sitePaging) : sitePaging;
+                if (!this.siteList) {
+                    this.siteList = this.relations === Relations.Members ? this.filteredResultsByMember(sitePaging) : sitePaging;
 
-                if (!this.hideMyFiles) {
-                    let siteEntry = new SiteEntry({
-                        entry: {
-                            id: '-my-',
-                            guid: '-my-',
-                            title: 'DROPDOWN.MY_FILES_OPTION'
+                    if (!this.hideMyFiles) {
+                        let siteEntry = new SiteEntry({
+                            entry: {
+                                id: '-my-',
+                                guid: '-my-',
+                                title: 'DROPDOWN.MY_FILES_OPTION'
+                            }
+                        });
+
+                        this.siteList.list.entries.unshift(siteEntry);
+
+                        if (!this.value) {
+                            this.value = '-my-';
                         }
-                    });
-
-                    this.siteList.list.entries.unshift(siteEntry);
-
-                    if (!this.value) {
-                        this.value = '-my-';
                     }
+
+                } else {
+                    let siteList: SitePaging = this.relations === Relations.Members ? this.filteredResultsByMember(sitePaging) : sitePaging;
+
+                    this.siteList.list.entries = this.siteList.list.entries.concat(siteList.list.entries);
+                    this.siteList.list.pagination = sitePaging.list.pagination;
                 }
 
                 this.selected = this.siteList.list.entries.find((site: SiteEntry) => site.entry.id === this.value);
+
+                this.loading = false;
             },
             (error) => {
                 this.logService.error(error);
             });
+    }
+
+    showLoading(): boolean {
+        return this.loading && (this.siteList && this.siteList.list.pagination.hasMoreItems);
+    }
+
+    isInfiniteScrollingEnabled(): boolean {
+        return !this.loading && (this.siteList && this.siteList.list.pagination.hasMoreItems);
     }
 
     private filteredResultsByMember(sites: SitePaging): SitePaging {
