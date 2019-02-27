@@ -100,7 +100,7 @@ describe('Task list cloud - selection', () => {
         });
 
         it('[C291916] Should be able to select multiple row when multiselect is true', () => {
-            tasksCloudDemoPage.clickSettingsButton().enableMultiselection();
+            tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
             tasksCloudDemoPage.clickAppButton();
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().clickCheckboxByName(tasks[0]);
@@ -114,7 +114,7 @@ describe('Task list cloud - selection', () => {
         });
 
         it('[C291915] Should be possible select all the rows when multiselect is true', () => {
-            tasksCloudDemoPage.clickSettingsButton().enableMultiselection();
+            tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
             tasksCloudDemoPage.clickAppButton();
 
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed().checkAllRows();

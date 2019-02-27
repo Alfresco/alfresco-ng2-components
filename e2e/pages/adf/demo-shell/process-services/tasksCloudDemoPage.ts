@@ -40,7 +40,7 @@ export class TasksCloudDemoPage {
     modeDropDownArrow = element(by.css('mat-form-field[data-automation-id="selectionMode"] div[class*="arrow-wrapper"]'));
     modeSelector = element(by.css("div[class*='mat-select-panel']"));
     displayTaskDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]'));
-    multiselectionToggle = element(by.css('mat-slide-toggle[data-automation-id="multiSelection"]'));
+    multiSelectionToggle = element(by.css('mat-slide-toggle[data-automation-id="multiSelection"]'));
 
     formControllersPage = new FormControllersPage();
 
@@ -51,8 +51,8 @@ export class TasksCloudDemoPage {
         return this;
     }
 
-    enableMultiselection() {
-        this.formControllersPage.enableToggle(this.multiselectionToggle);
+    enableMultiSelection() {
+        this.formControllersPage.enableToggle(this.multiSelectionToggle);
         return this;
     }
 
@@ -129,7 +129,7 @@ export class TasksCloudDemoPage {
     clickSettingsButton() {
         this.settingsButton.click();
         browser.driver.sleep(400);
-        Util.waitUntilElementIsVisible(this.multiselectionToggle);
+        Util.waitUntilElementIsVisible(this.multiSelectionToggle);
         Util.waitUntilElementIsVisible(this.modeDropDownArrow);
         Util.waitUntilElementIsClickable(this.modeDropDownArrow);
         return this;
