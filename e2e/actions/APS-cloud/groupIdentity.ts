@@ -32,7 +32,7 @@ export class GroupIdentity {
 
     async createIdentityGroup(groupName = Util.generateRandomString(5)) {
         await this.createGroup(groupName);
-        const group = await this.getGroupInfoByGroupname(groupName);
+        const group = await this.getGroupInfoByGroupName(groupName);
         return group;
     }
 
@@ -59,7 +59,7 @@ export class GroupIdentity {
         return data;
     }
 
-    async getGroupInfoByGroupname(groupName) {
+    async getGroupInfoByGroupName(groupName) {
         const path = `/groups`;
         const method = 'GET';
         const queryParams = { 'search' : groupName }, postBody = {};
