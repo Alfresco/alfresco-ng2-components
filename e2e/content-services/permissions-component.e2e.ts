@@ -36,6 +36,7 @@ describe('Permissions Component', function () {
     let uploadActions = new UploadActions();
     let contentList = new ContentListPage();
     let fileOwnerUser, filePermissionUser, file;
+    let publicSite, folderName;
 
     let fileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -61,23 +62,23 @@ describe('Permissions Component', function () {
     beforeAll(async (done) => {
 
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
         await alfrescoJsApi.core.peopleApi.addPerson(fileOwnerUser);
-
         await alfrescoJsApi.core.peopleApi.addPerson(filePermissionUser);
-
         let group = await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
-
         groupId = group.entry.id;
-
         browser.driver.sleep(15000); // wait search get the groups
-
+        await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
+        let siteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
+        folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
+        let publicSiteBody = { visibility: 'PUBLIC', title: siteName };
+        publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
+        await uploadActions.createFolder(alfrescoJsApi, folderName, publicSite.entry.guid);
         done();
     });
 
     afterAll(async (done) => {
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
+        await alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         await alfrescoJsApi.core.groupsApi.deleteGroup(groupId);
         done();
     });
@@ -91,8 +92,8 @@ describe('Permissions Component', function () {
 
             loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
             contentServicesPage.goToDocumentList();
-
             contentList.checkContentIsDisplayed(fileModel.name);
+            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             contentList.rightClickOnRowNamed(fileModel.name);
             contentList.pressContextMenuActionNamed('Permission');
 
@@ -101,7 +102,6 @@ describe('Permissions Component', function () {
 
         afterEach(async (done) => {
             await uploadActions.deleteFilesOrFolder(alfrescoJsApi, file.entry.id);
-
             done();
         });
 
@@ -125,6 +125,7 @@ describe('Permissions Component', function () {
         });
 
         it('[C268974] Inherit Permission', () => {
+            permissionsPage.checkPermissionContainerIsDisplayed();
             permissionsPage.checkPermissionInheritedButtonIsDisplayed();
             expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
             permissionsPage.checkPermissionsDatatableIsDisplayed();
@@ -148,8 +149,9 @@ describe('Permissions Component', function () {
             contentServicesPage.goToDocumentList();
 
             contentList.checkContentIsDisplayed(fileModel.name);
-            contentList.rightClickOnRowNamed(fileModel.name);
-            contentList.pressContextMenuActionNamed('Permission');
+            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
+            contentList.clickRowMenuActionsButton(fileModel.name);
+            contentList.clickMenuActionNamed('PERMISSION');
             permissionsPage.checkAddPermissionButtonIsDisplayed();
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
@@ -210,4 +212,37 @@ describe('Permissions Component', function () {
 
     });
 
+    describe('Role Site Dropdown', function () {
+
+        beforeEach(async (done) => {
+            loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
+            browser.get(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
+            contentList.checkContentIsDisplayed(folderName);
+            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
+            contentList.clickRowMenuActionsButton(folderName);
+            contentList.clickMenuActionNamed('PERMISSION');
+            permissionsPage.checkPermissionInheritedButtonIsDisplayed();
+            permissionsPage.checkAddPermissionButtonIsDisplayed();
+            permissionsPage.clickAddPermissionButton();
+            permissionsPage.checkAddPermissionDialogIsDisplayed();
+            permissionsPage.checkSearchUserInputIsDisplayed();
+            permissionsPage.searchUserOrGroup(filePermissionUser.getId());
+            permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
+            permissionsPage.checkUserOrGroupIsAdded(filePermissionUser.getId());
+            done();
+        });
+
+        it('[C277002] Should display the Role Site dropdown', () => {
+
+            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('SiteCollaborator');
+            permissionsPage.clickRoleDropdown();
+            expect(permissionsPage.getRoleDropdownOptions().count()).toBe(4);
+            expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('SiteCollaborator');
+            expect(permissionsPage.getRoleDropdownOptions().get(1).getText()).toBe('SiteConsumer');
+            expect(permissionsPage.getRoleDropdownOptions().get(2).getText()).toBe('SiteContributor');
+            expect(permissionsPage.getRoleDropdownOptions().get(3).getText()).toBe('SiteManager');
+
+        });
+
+    });
 });
