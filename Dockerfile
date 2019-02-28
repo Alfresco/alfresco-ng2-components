@@ -25,9 +25,6 @@ WORKDIR /usr/share/nginx/html
 COPY demo-shell/dist/ .
 COPY --from=builder /usr/src/alfresco/licenses ./licenses
 
-WORKDIR /usr/share/nginx/html
-COPY demo-shell/dist/ .
-
 RUN addgroup -g ${GROUPID} ${GROUPNAME} && \
   adduser -S -u ${USERID} -G ${GROUPNAME} -s "/bin/bash" ${USERNAME} && \
   chown -R ${USERNAME}:${GROUPNAME} ./app.config.json && \
