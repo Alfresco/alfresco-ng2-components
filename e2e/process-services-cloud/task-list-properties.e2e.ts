@@ -32,6 +32,7 @@ import { DateUtil } from '../util/dateUtil';
 import { Tasks } from '../actions/APS-cloud/tasks';
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';
+import { NotificationPage } from '../pages/adf/notificationPage';
 
 describe('Edit task filters and task list properties', () => {
 
@@ -46,6 +47,7 @@ describe('Edit task filters and task list properties', () => {
         const tasksService: Tasks = new Tasks();
         const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
         const processInstancesService: ProcessInstances = new ProcessInstances();
+        let notificationPage = new NotificationPage();
 
         let silentLogin;
         const simpleApp = 'simple-app';
@@ -71,7 +73,8 @@ describe('Edit task filters and task list properties', () => {
             configEditorPage.clickTaskListCloudConfiguration();
             configEditorPage.clickClearButton();
             configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile)).clickSaveButton();
-            browser.driver.sleep(5000);
+            notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Save');
+            notificationPage.checkNotificationSnackBarIsNotDisplayed();
 
             configEditorPage.clickEditTaskConfiguration();
             configEditorPage.clickClearButton();
