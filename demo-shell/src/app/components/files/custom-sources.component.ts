@@ -39,7 +39,8 @@ export class CustomSourcesComponent {
         { title: 'Trashcan', value: '-trashcan-' },
         { title: 'Root', value: '-root-' },
         { title: 'My', value: '-my-' },
-        { title: 'Shared', value: '-shared-' }
+        { title: 'Shared', value: '-shared-' },
+        { title: 'File Plan', value: '-filePlan-' }
     ];
 
     hasSelection(selection: any[]): boolean {

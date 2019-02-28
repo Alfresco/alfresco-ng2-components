@@ -213,6 +213,37 @@ export class CustomResourcesService {
     }
 
     /**
+     * Gets all record categories in the file plan.
+     * @param pagination Specifies how to paginate the results
+     * @returns List of record categories
+     */
+    loadFilePlan(nodeId: string, pagination: PaginationModel): Observable<NodePaging> {
+        const options = {
+            include: ['properties', 'aspectNames'],
+            maxItems: pagination.maxItems,
+            skipCount: pagination.skipCount
+        };
+
+        return new Observable((observer) => {
+            this.apiService.getInstance().gsCore.fileplansApi.getFilePlanCategories(nodeId, options)
+                .then((page: any) => {
+                        page.list.entries.map(
+                            ({ entry }: any) => {
+                                entry.name = entry.name || entry.title;
+                                return { entry };
+                            }
+                        );
+                        observer.next(page);
+                        observer.complete();
+                    },
+                    (err) => {
+                        observer.error(err);
+                        observer.complete();
+                    });
+        }).pipe(catchError((err) => this.handleError(err)));
+    }
+
+    /**
      * Gets all items currently in the trash.
      * @param pagination Specifies how to paginate the results
      * @param includeFields List of data field names to include in the results
@@ -258,7 +289,7 @@ export class CustomResourcesService {
      */
     isCustomSource(folderId: string): boolean {
         let isCustomSources = false;
-        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-'];
+        const sources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-filePlan-'];
 
         if (sources.indexOf(folderId) > -1) {
             isCustomSources = true;
@@ -303,6 +334,8 @@ export class CustomResourcesService {
             return this.loadFavorites(pagination, includeFields);
         } else if (nodeId === '-recent-') {
             return this.getRecentFiles('-me-', pagination);
+        } else if (nodeId === '-filePlan-') {
+            return this.loadFilePlan(nodeId, pagination);
         }
     }
 

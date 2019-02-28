@@ -98,6 +98,27 @@ export let presetsDefaultModel = {
             sortable: true
         }
     ],
+    '-filePlan-': [
+        {
+            key: '$thumbnail',
+            type: 'image',
+            srTitle: 'ADF-DOCUMENT-LIST.LAYOUT.THUMBNAIL',
+            sortable: false
+        },
+        {
+            key: 'title',
+            type: 'text',
+            title: 'ADF-DOCUMENT-LIST.LAYOUT.NAME',
+            cssClass: 'full-width ellipsis-cell',
+            sortable: true
+        },
+        {
+            key: 'visibility',
+            type: 'text',
+            title: 'ADF-DOCUMENT-LIST.LAYOUT.STATUS',
+            sortable: true
+        }
+    ],
     '-favorites-': [
         {
             key: '$thumbnail',
