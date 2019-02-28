@@ -443,4 +443,23 @@ export class ContentListPage {
         browser.actions().click(row, protractor.Button.RIGHT).perform();
         Util.waitUntilElementIsVisible(element(by.id('adf-context-menu-content')));
     }
+
+    clickMenuActionNamed(actionName) {
+        let actionButton = this.checkMenuActionIsVisible(actionName);
+        actionButton.click();
+    }
+
+    checkMenuActionIsVisible(actionName) {
+        let actionButton = element(by.css(`button[data-automation-id='DOCUMENT_LIST.ACTIONS.${actionName}']`));
+        Util.waitUntilElementIsVisible(actionButton);
+        Util.waitUntilElementIsClickable(actionButton);
+        return actionButton;
+    }
+
+    clickRowMenuActionsButton(rowName) {
+        let row = this.getRowByRowName(rowName);
+        Util.waitUntilElementIsVisible(row.element(by.css('.adf-datatable__actions-cell button')));
+        row.element(by.css('.adf-datatable__actions-cell button')).click();
+    }
+
 }

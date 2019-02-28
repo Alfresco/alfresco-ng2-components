@@ -38,6 +38,7 @@ export class PermissionsPage {
     roleDropdownOptions = element.all(by.css('.mat-option-text'));
     assignPermissionError = element(by.css('simple-snack-bar'));
     deletePermissionButton = element(by.css(`button[data-automation-id='adf-delete-permission-button']`));
+    permissionDisplayContainer = element(by.css(`div[id='adf-permission-display-container']`));
 
     checkAddPermissionButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.addPermissionButton);
@@ -137,5 +138,9 @@ export class PermissionsPage {
     getAssignPermissionErrorText() {
         Util.waitUntilElementIsVisible(this.assignPermissionError);
         return this.assignPermissionError.getText();
+    }
+
+    checkPermissionContainerIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.permissionDisplayContainer);
     }
 }

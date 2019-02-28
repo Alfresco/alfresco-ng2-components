@@ -8,6 +8,8 @@
     </adf-cloud-edit-task-filter>
     <div fxLayout="column" fxFlex fxLayoutAlign="space-between" *ngIf="editedFilter">
         <adf-cloud-task-list #taskCloud
+            fxFlex
+            class="adf-cloud-layout-overflow"
             [appName]="editedFilter.appName"
             [processDefinitionId]="editedFilter.processDefinitionId"
             [processInstanceId]="editedFilter.processInstanceId"
