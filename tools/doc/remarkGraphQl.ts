@@ -23,19 +23,10 @@ tree = removePosInfo(tree);
 
 let schema = buildSchema(`
   type Query {
-    document: Root
+    document: Node
   }
 
-  interface Node {
-    type: String
-  }
-
-  interface Parent {
-    type: String
-    children: [Node]
-  }
-
-  type Root implements Parent {
+  type Node {
     type: String
     children: [Node]
   }
