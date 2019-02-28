@@ -2,10 +2,15 @@
     $foreground: map-get($theme, foreground);
     $accent: map-get($theme, accent);
 
+    .mat-icon.adf-datatable-selected {
+        height: 100%;
+        width: 100%;
+        margin-left: -2px;
+        margin-top: 2px;
+    }
+
     .adf-datatable-selected > svg {
         fill: mat-color($accent);
-        margin-top: -4px;
-        margin-left: -4px;
         width: 32px;
         height: 32px;
     }
@@ -154,7 +159,7 @@
     }
 
     .adf-datatable-gallery-thumbnails {
-        .adf-data-table-card .adf-datatable-row {
+        .adf-datatable-card .adf-datatable-row {
             height: 300px !important;
 
             img {
@@ -168,7 +173,7 @@
                 justify-content: center;
             }
 
-            .adf-data-table-cell.adf-datatable-table-cell.adf-data-table-cell--image {
+            .adf-datatable-cell.adf-datatable-table-cell.adf-datatable-cell--image {
                 flex: 0 0 auto;
                 display: flex;
                 flex-direction: column-reverse;

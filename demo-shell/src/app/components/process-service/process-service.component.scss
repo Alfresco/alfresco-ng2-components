@@ -71,23 +71,23 @@
         }
 
         .adf-list {
-            .adf-data-table {
+            .adf-datatable-list {
                 border: none;
             }
 
-            .adf-data-table tr,
-            .adf-data-table td {
+            .adf-datatable tr,
+            .adf-datatable td {
                 height: 36px;
                 font-size: 14px;
             }
 
-            .adf-data-table td {
+            .adf-datatable td {
                 padding-top: 0;
                 padding-bottom: 0;
                 border-bottom: none;
             }
 
-            .adf-data-table th {
+            .adf-datatable th {
                 padding-top: 0;
                 padding-bottom: 0;
                 height: 40px;

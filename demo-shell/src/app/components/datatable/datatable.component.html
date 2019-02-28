@@ -2,28 +2,37 @@
     <input id="adf-datatable-filter-input" matInput placeholder="Name filter" [(ngModel)]="data.filterValue">
 </mat-form-field>
 
-<adf-datatable
-    #dataTable
-    [data]="data"
-    [selectionMode]="selectionMode"
-    [multiselect]="multiselect"
-    [actions]="true"
-    rowStyleClass="custom-row-style"
-    (showRowActionsMenu)="onShowRowActionsMenu($event)"
-    (executeRowAction)="onExecuteRowAction($event)"
-    (row-click)="onRowClick($event)"
-    (row-dblclick)="onRowDblClick($event)">
-    <!-- HTML column definition demo -->
-    <!--
-    <data-columns>
-        <data-column type="image" key="icon" [sortable]="false"></data-column>
-        <data-column key="id" title="Id"></data-column>
-        <data-column key="createdOn" title="Created"></data-column>
-        <data-column key="name" title="Name" class="adf-full-width name-column"></data-column>
-        <data-column key="createdBy.name" title="Created By"></data-column>
-    </data-columns>
-    -->
-</adf-datatable>
+<mat-slide-toggle
+    id="adf-toggle-sticky-header"
+    [color]="'primary'"
+    (change)="toggleStickyHeader()"
+    [checked]="stickyHeader">
+    Sticky header
+</mat-slide-toggle>
+
+<div style="height: 300px; overflow-y: auto;">
+    <adf-datatable 
+        #dataTable 
+        [data]="data"
+        [stickyHeader]="stickyHeader"
+        [selectionMode]="selectionMode"
+        [multiselect]="multiselect"
+        [actions]="true"
+        rowStyleClass="custom-row-style"
+        (showRowActionsMenu)="onShowRowActionsMenu($event)" (executeRowAction)="onExecuteRowAction($event)"
+        (row-click)="onRowClick($event)" (row-dblclick)="onRowDblClick($event)">
+        <!-- HTML column definition demo -->
+        <!--
+        <data-columns>
+            <data-column type="image" key="icon" [sortable]="false"></data-column>
+            <data-column key="id" title="Id"></data-column>
+            <data-column key="createdOn" title="Created"></data-column>
+            <data-column key="name" title="Name" class="adf-full-width name-column"></data-column>
+            <data-column key="createdBy.name" title="Created By"></data-column>
+        </data-columns>
+        -->
+    </adf-datatable>
+</div>
 
 <div>
     Selected items: {{ dataTable.selection?.length }}

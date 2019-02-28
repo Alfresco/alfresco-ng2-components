@@ -33,7 +33,7 @@ export class ContentListPage {
     actionMenu = element(by.css('div[role="menu"]'));
     optionButton = by.css('button[data-automation-id*="action_menu_"]');
     rowByRowName = by.xpath('ancestor::div[contains(@class, "adf-datatable-row")]');
-    nameColumn = by.css('div[class*="datatable-body"] div[class*="adf-data-table-cell"][title="Display name"]');
+    nameColumn = by.css('div[class*="datatable-body"] div[class*="adf-datatable-cell"][title="Display name"]');
     nameColumnHeader = by.css('div[data-automation-id="auto_id_name"]');
     createdByColumn = by.css('div[class*="--text"][title="Created by"] span');
     sizeColumn = by.css('div[id*="document-list-container"] div[class*="adf-datatable-row"] .adf-filesize-cell');
