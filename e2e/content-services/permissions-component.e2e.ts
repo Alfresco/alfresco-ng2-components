@@ -27,6 +27,7 @@ import { FileModel } from '../models/ACS/fileModel';
 import { UploadActions } from '../actions/ACS/upload.actions';
 import { Util } from '../util/util';
 import { browser } from 'protractor';
+import { FolderModel } from "../models/ACS/folderModel";
 
 describe('Permissions Component', function () {
 
@@ -54,6 +55,9 @@ describe('Permissions Component', function () {
         hostEcm: TestConfig.adf.url
     });
 
+    let roleFolderModel = new FolderModel({'name': 'role' + Util.generateRandomString()});
+    let roleFolder;
+
     fileOwnerUser = new AcsUserModel();
 
     filePermissionUser = new AcsUserModel();
@@ -70,7 +74,7 @@ describe('Permissions Component', function () {
         await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
         let siteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
         folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
-        let publicSiteBody = { visibility: 'PUBLIC', title: siteName };
+        let publicSiteBody = {visibility: 'PUBLIC', title: siteName};
         publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
         await uploadActions.createFolder(alfrescoJsApi, folderName, publicSite.entry.guid);
         done();
@@ -244,5 +248,50 @@ describe('Permissions Component', function () {
 
         });
 
+    });
+
+    describe('Role Consumer', function () {
+
+        beforeEach(async (done) => {
+            await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
+            roleFolder = await uploadActions.createFolder(alfrescoJsApi, roleFolderModel.name, '-my-');
+
+            file = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleFile' + fileModel.name, roleFolder.entry.id);
+
+            loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
+            contentServicesPage.goToDocumentList();
+
+            contentList.checkContentIsDisplayed(roleFolder.name);
+            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
+            contentList.clickRowMenuActionsButton(roleFolder.name);
+            contentList.clickMenuActionNamed('PERMISSION');
+            permissionsPage.checkAddPermissionButtonIsDisplayed();
+            permissionsPage.clickAddPermissionButton();
+            permissionsPage.checkAddPermissionDialogIsDisplayed();
+            permissionsPage.checkSearchUserInputIsDisplayed();
+            permissionsPage.searchUserOrGroup(filePermissionUser.getId());
+            permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
+            permissionsPage.checkUserOrGroupIsAdded(filePermissionUser.getId());
+            permissionsPage.clickRoleDropdown();
+            permissionsPage.selectOption('Consumer');
+            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Consumer');
+            done();
+        });
+
+        afterEach(async (done) => {
+            await uploadActions.deleteFilesOrFolder(alfrescoJsApi, roleFolder.entry.id);
+
+            done();
+        });
+
+        fit('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', () => {
+
+            loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
+            contentServicesPage.goToDocumentList();
+            console.log(roleFolderModel.name);
+            browser.sleep(50000);
+            contentList.checkContentIsDisplayed(roleFolderModel.name);
+
+        });
     });
 });
