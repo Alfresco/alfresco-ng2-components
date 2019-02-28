@@ -26,7 +26,6 @@
         &-card-container {
             font-family: inherit;
         }
-
     }
 
     @media screen and  ($mat-small) {
@@ -37,4 +36,12 @@
         }
     }
 
+}
+
+.adf-task-header-container {
+    display: flex;
+}
+
+.adf-task-tiitle {
+    margin-left:15px;
 }

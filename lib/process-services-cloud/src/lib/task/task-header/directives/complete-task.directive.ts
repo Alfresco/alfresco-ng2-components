@@ -22,15 +22,19 @@ import { TaskCloudService } from '../services/task-cloud.service';
 })
 export class CompleteTaskDirective implements OnInit {
 
+    /** (Required) The id of the task. */
     @Input()
     taskId: string;
 
+    /** (Required) The name of the application. */
     @Input()
     appName: string;
 
+    /** Emitted when the task is completed. */
     @Output()
     taskCompleted: EventEmitter<any> = new EventEmitter<any>();
 
+    /** Emitted when the task cannot be completed. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 

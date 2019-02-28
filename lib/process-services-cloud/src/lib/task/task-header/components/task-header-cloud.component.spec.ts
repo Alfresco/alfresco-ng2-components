@@ -24,6 +24,7 @@ import { By } from '@angular/platform-browser';
 import { TaskHeaderCloudService } from '../services/task-header-cloud.service';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TaskHeaderComponent', () => {
     let component: TaskHeaderCloudComponent;
@@ -34,7 +35,8 @@ describe('TaskHeaderComponent', () => {
     setupTestBed({
         imports: [
             ProcessServiceCloudTestingModule,
-            TaskHeaderCloudModule
+            TaskHeaderCloudModule,
+            RouterTestingModule
         ]
     });
 
@@ -52,7 +54,7 @@ describe('TaskHeaderComponent', () => {
         component.appName = undefined;
         component.taskId = undefined;
         fixture.detectChanges();
-        expect(fixture.debugElement.children.length).toBe(0);
+        expect(fixture.debugElement.children.length).toBe(2);
     }));
 
     it('should display assignee', async(() => {

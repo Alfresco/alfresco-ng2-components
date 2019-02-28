@@ -46,7 +46,9 @@ describe('Task Header Cloud Service', () => {
         alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService() );
         service = new TaskCloudService(alfrescoApiMock,
                                            new AppConfigService(null),
-                                           new LogService(new AppConfigService(null)));
+                                           new LogService(new AppConfigService(null)),
+                                           new StorageService());
+
     }));
 
     it('should complete a task', (done) => {

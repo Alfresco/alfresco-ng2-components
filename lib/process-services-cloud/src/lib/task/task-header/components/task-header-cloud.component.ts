@@ -29,6 +29,8 @@ import {
 } from '@alfresco/adf-core';
 import { TaskHeaderCloudService } from '../services/task-header-cloud.service';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
+import { TaskCloudService } from '../services/task-cloud.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'adf-cloud-task-header',
@@ -68,7 +70,9 @@ export class TaskHeaderCloudComponent implements OnInit {
         private translationService: TranslationService,
         private appConfig: AppConfigService,
         private cardViewUpdateService: CardViewUpdateService,
-        private storage: StorageService
+        private storage: StorageService,
+        private router: Router,
+        private taskCloudService: TaskCloudService
     ) { }
 
     ngOnInit() {
@@ -229,7 +233,7 @@ export class TaskHeaderCloudComponent implements OnInit {
     }
 
     canCompleteTask() {
-        return this.isAssignedToCurrentUser() && !this.isCompleted();
+        return this.taskCloudService.canCompleteTask(this.taskDetails);
     }
 
     isTaskClaimable(): boolean {
@@ -282,5 +286,9 @@ export class TaskHeaderCloudComponent implements OnInit {
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
+    }
+
+    goBack() {
+        this.router.navigate([`/cloud/${this.appName}/`]);
     }
 }
