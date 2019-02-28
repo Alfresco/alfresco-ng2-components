@@ -327,7 +327,7 @@ together in the same datatable.
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showHeader | `boolean` | true | Toggles the header. |
 | sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
-| stickHeader | `boolean` | false | Toggles a fix header that stays in place while the rows become scrollable. [Sticky header](#sticky-header)|
+| stickyHeader | `boolean` | false | Toggles a sticky (fixed) header that stays in place while the rows become scrollable. [Sticky header](#sticky-header)|
 
 ### Events
 
@@ -565,7 +565,7 @@ earlier), and perform the corresponding actions.
 
 ### Customizing the component's styles
 
-The datatable component is ready to be used out of the box although you might want to customize it to better fit your own needs.
+The datatable component is ready to be used out of the box although you might want to customize it to better fit your needs.
 
 ### Truncated text
 

@@ -108,9 +108,6 @@
                     }
 
                     .adf-datatable-cell {
-                        // padding-top: 8px;
-                        // padding-bottom: 8px;
-                        // height: 30px;
 
                         & .adf-name-location-cell-location {
                             display: none;
@@ -118,22 +115,6 @@
 
                         &.adf-content-selector-visibility-cell {
                             display: none;
-                        }
-
-                        & .adf-name-location-cell-name {
-                            // padding: 0;
-                        }
-
-                        &--image {
-                            // padding: 8px 16px;
-                        }
-
-                        &--text {
-                            // padding: 8px 16px;
-                        }
-
-                        &:first-of-type {
-                            // padding: 8px 16px;
                         }
                     }
 
@@ -159,8 +140,6 @@
 
                     .adf-datatable-list {
                         .adf-datatable-cell {
-                            // height: 56px;
-                            // padding-bottom: 8px;
 
                             & .adf-name-location-cell-location {
                                 display: block;
@@ -180,12 +159,6 @@
 
                             &.adf-content-selector-visibility-cell {
                                 display: none;
-                            }
-
-                            &--image {
-                                // padding-left: 16px;
-                                // padding-right: 8px;
-                                // padding-bottom: 8px;
                             }
                         }
                     }

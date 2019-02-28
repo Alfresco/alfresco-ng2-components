@@ -119,7 +119,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     showHeader: boolean = true;
 
-    /** Toggles the header. */
+    /** Toggles the sticky header mode. */
     @Input()
     stickyHeader: boolean = false;
 
