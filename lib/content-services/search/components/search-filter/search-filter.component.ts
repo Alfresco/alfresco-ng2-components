@@ -37,6 +37,11 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private DEFAULT_PAGE_SIZE = 5;
 
     isAlive = true;
+
+    /** All facet field items to be displayed in the component. These are updated according to the response.
+     *  When a new search is performed, the already existing items are updated with the new bucket count values and
+     *  the newly received items are added to the responseFacets.
+     */
     responseFacets: FacetField[] = null;
 
     private facetQueriesPageSize = this.DEFAULT_PAGE_SIZE;
@@ -200,54 +205,19 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private parseFacetItems(context: ResultSetContext, configFacetFields: FacetField[], itemType: string) {
         configFacetFields.forEach((field) => {
-            const responseField = (context.facets || []).find((response) => response.type === itemType && response.label === field.label) || {};
+            const responseField = this.getApiResponseField(context, itemType, field.label);
             const responseBuckets = this.getResponseBuckets(responseField, field)
                 .filter(this.getFilterByMinCount(field.mincount));
+            const alreadyExistingField = this.getAlreadyDisplayedField(itemType, field.label);
 
-            const alreadyExistingField = (this.responseFacets || []).find((response) => response.type === itemType && response.label === field.label);
             if (alreadyExistingField) {
-
                 const alreadyExistingBuckets = alreadyExistingField.buckets && alreadyExistingField.buckets.items || [];
 
-                const shouldDelete = [];
-                alreadyExistingBuckets
-                    .map((bucket) => {
-                        const responseBucket = ((responseField && responseField.buckets) || []).find((respBucket) => respBucket.label === bucket.label);
-
-                        if (!responseBucket) {
-                            shouldDelete.push(bucket);
-                        }
-                        bucket.count = this.getCountValue(responseBucket);
-                        return bucket;
-                    });
-                const hasSelection = this.selectedBuckets
-                    .find((selBuckets) => alreadyExistingField.label === selBuckets.field.label && alreadyExistingField.type === selBuckets.field.type);
-
-                if (!hasSelection && shouldDelete.length) {
-                    shouldDelete.forEach((bucket) => {
-                        alreadyExistingField.buckets.deleteItem(bucket);
-                    });
-                }
-
-                responseBuckets.forEach((respBucket) => {
-                    const existingBucket = alreadyExistingBuckets.find((oldBucket) => oldBucket.label === respBucket.label);
-
-                    if (!existingBucket) {
-                        alreadyExistingField.buckets.addItem(respBucket);
-                    }
-                });
-
+                this.updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets);
             } else if (responseField) {
 
                 const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, field.pageSize);
-                bucketList.filter = (bucket: FacetFieldBucket): boolean => {
-                    if (bucket && bucketList.filterText) {
-                        const pattern = (bucketList.filterText || '').toLowerCase();
-                        const label = (this.translationService.instant(bucket.display) || this.translationService.instant(bucket.label)).toLowerCase();
-                        return this.queryBuilder.config.filterWithContains ? label.indexOf(pattern) !== -1 : label.startsWith(pattern);
-                    }
-                    return true;
-                };
+                bucketList.filter = this.getBucketFilterFunction(bucketList);
 
                 if (!this.responseFacets) {
                     this.responseFacets = [];
@@ -290,54 +260,19 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         const mincountFilter = this.getFilterByMinCount(mincount);
 
         Object.keys(configGroups).forEach((group) => {
-            const responseField = (context.facets || []).find((response) => response.type === 'query' && response.label === group) || {};
+            const responseField = this.getApiResponseField(context, 'query', group);
             const responseBuckets = this.getResponseQueryBuckets(responseField, configGroups[group])
                 .filter(mincountFilter);
+            const alreadyExistingField = this.getAlreadyDisplayedField('query', group);
 
-            const alreadyExistingField = (this.responseFacets || []).find((response) => response.type === 'query' && response.label === group);
             if (alreadyExistingField) {
-
                 const alreadyExistingBuckets = alreadyExistingField.buckets && alreadyExistingField.buckets.items || [];
 
-                const shouldDelete = [];
-                alreadyExistingBuckets
-                    .map((bucket) => {
-                        const responseBucket = ((responseField && responseField.buckets) || []).find((respBucket) => respBucket.label === bucket.label);
-
-                        if (!responseBucket) {
-                            shouldDelete.push(bucket);
-                        }
-                        bucket.count = this.getCountValue(responseBucket);
-                        return bucket;
-                    });
-                const hasSelection = this.selectedBuckets
-                    .find((selBuckets) => alreadyExistingField.label === selBuckets.field.label && alreadyExistingField.type === selBuckets.field.type);
-
-                if (!hasSelection && shouldDelete.length) {
-                    shouldDelete.forEach((bucket) => {
-                        alreadyExistingField.buckets.deleteItem(bucket);
-                    });
-                }
-
-                responseBuckets.forEach((respBucket) => {
-                    const existingBucket = alreadyExistingBuckets.find((oldBucket) => oldBucket.label === respBucket.label);
-
-                    if (!existingBucket) {
-                        alreadyExistingField.buckets.addItem(respBucket);
-                    }
-                });
-
+                this.updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets);
             } else if (responseField) {
 
                 const bucketList = new SearchFilterList<FacetFieldBucket>(responseBuckets, this.facetQueriesPageSize);
-                bucketList.filter = (bucket: FacetFieldBucket): boolean => {
-                    if (bucket && bucketList.filterText) {
-                        const pattern = (bucketList.filterText || '').toLowerCase();
-                        const label = (this.translationService.instant(bucket.display) || this.translationService.instant(bucket.label)).toLowerCase();
-                        return this.queryBuilder.config.filterWithContains ? label.indexOf(pattern) !== -1 : label.startsWith(pattern);
-                    }
-                    return true;
-                };
+                bucketList.filter = this.getBucketFilterFunction(bucketList);
 
                 if (!this.responseFacets) {
                     this.responseFacets = [];
@@ -426,5 +361,56 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         const endLimit = (interval.endInclusive === undefined || interval.endInclusive === true) ? ']' : '>';
 
         return `${fieldName}:${startLimit}"${start}" TO "${end}"${endLimit}`;
+    }
+
+    private getApiResponseField(context: ResultSetContext, itemType: string, fieldLabel: string): GenericFacetResponse {
+        return (context.facets || []).find((response) => response.type === itemType && response.label === fieldLabel) || {};
+    }
+
+    private getAlreadyDisplayedField(itemType: string, fieldLabel: string): FacetField {
+        return (this.responseFacets || []).find((response) => response.type === itemType && response.label === fieldLabel);
+    }
+
+    private updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets) {
+        const shouldDelete = [];
+
+        alreadyExistingBuckets
+            .map((bucket) => {
+                const responseBucket = ((responseField && responseField.buckets) || []).find((respBucket) => respBucket.label === bucket.label);
+
+                if (!responseBucket) {
+                    shouldDelete.push(bucket);
+                }
+                bucket.count = this.getCountValue(responseBucket);
+                return bucket;
+            });
+
+        const hasSelection = this.selectedBuckets
+            .find((selBuckets) => alreadyExistingField.label === selBuckets.field.label && alreadyExistingField.type === selBuckets.field.type);
+
+        if (!hasSelection && shouldDelete.length) {
+            shouldDelete.forEach((bucket) => {
+                alreadyExistingField.buckets.deleteItem(bucket);
+            });
+        }
+
+        responseBuckets.forEach((respBucket) => {
+            const existingBucket = alreadyExistingBuckets.find((oldBucket) => oldBucket.label === respBucket.label);
+
+            if (!existingBucket) {
+                alreadyExistingField.buckets.addItem(respBucket);
+            }
+        });
+    }
+
+    private getBucketFilterFunction (bucketList) {
+        return (bucket: FacetFieldBucket): boolean => {
+            if (bucket && bucketList.filterText) {
+                const pattern = (bucketList.filterText || '').toLowerCase();
+                const label = (this.translationService.instant(bucket.display) || this.translationService.instant(bucket.label)).toLowerCase();
+                return this.queryBuilder.config.filterWithContains ? label.indexOf(pattern) !== -1 : label.startsWith(pattern);
+            }
+            return true;
+        };
     }
 }
