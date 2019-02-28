@@ -6,7 +6,7 @@
     [class.adf-sticky-header]="stickyHeader"
     [class.adf-datatable--empty]="!isHeaderVisible()">
     <div *ngIf="showHeader && isHeaderVisible()" class="adf-datatable-header" role="rowgroup">
-        <div class="adf-datatable-row" *ngIf="display === 'list'" role="adf-datatable">
+        <div class="adf-datatable-row" *ngIf="display === 'list'" role="row">
             <!-- Actions (left) -->
             <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-cell-header">
                 <span class="adf-sr-only">Actions</span>
