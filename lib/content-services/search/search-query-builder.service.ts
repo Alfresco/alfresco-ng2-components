@@ -298,7 +298,7 @@ export class SearchQueryBuilderService {
         return false;
     }
 
-    get hasFacetHilight(): boolean {
+    get hasFacetHighlight(): boolean {
         return this.config && this.config.highlight ? true : false;
     }
 
@@ -346,7 +346,7 @@ export class SearchQueryBuilderService {
     }
 
     protected get highlight(): RequestHighlight {
-        return this.hasFacetHilight ? this.config.highlight : null;
+        return this.hasFacetHighlight ? this.config.highlight : null;
     }
 
     protected getFinalQuery(): string {
