@@ -7,20 +7,21 @@
         (action)="onProcessFilterAction($event)">
     </adf-cloud-edit-process-filter>
     <div fxLayout="column" fxFlex fxLayoutAlign="space-between" *ngIf="editedFilter">
-        <adf-cloud-process-list fxFlex class="adf-cloud-layout-overflow"
-                                [appName]="editedFilter.appName"
-                                [initiator]="editedFilter.initiator"
-                                [processDefinitionId]="editedFilter.processDefinitionId"
-                                [processDefinitionKey]="editedFilter.processDefinitionKey"
-                                [id]="editedFilter.processInstanceId"
-                                [status]="editedFilter.state"
-                                [name]="editedFilter.processName"
-                                [sorting]="sortArray"
-                                [selectionMode]="selectionMode"
-                                [multiselect]="multiselect"
-                                (rowClick)="onRowClick($event)"
-                                (rowsSelected)="onRowsSelected($event)"
-                                #processCloud>
+        <adf-cloud-process-list #processCloud
+            fxFlex
+            class="adf-cloud-layout-overflow"
+            [appName]="editedFilter.appName"
+            [initiator]="editedFilter.initiator"
+            [processDefinitionId]="editedFilter.processDefinitionId"
+            [processDefinitionKey]="editedFilter.processDefinitionKey"
+            [id]="editedFilter.processInstanceId"
+            [status]="editedFilter.state"
+            [name]="editedFilter.processName"
+            [sorting]="sortArray"
+            [selectionMode]="selectionMode"
+            [multiselect]="multiselect"
+            (rowClick)="onRowClick($event)"
+            (rowsSelected)="onRowsSelected($event)">
         </adf-cloud-process-list>
         <adf-pagination
             [target]="processCloud"
