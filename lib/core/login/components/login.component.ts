@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter,
+import {
+    Component, EventEmitter,
     Input, OnInit, Output, TemplateRef, ViewEncapsulation
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -173,20 +174,31 @@ export class LoginComponent implements OnInit {
      */
     onSubmit(values: any) {
         this.disableError();
-        const args = new LoginSubmitEvent({
-            controls: { username: this.form.controls.username }
-        });
-        this.executeSubmit.emit(args);
 
-        if (args.defaultPrevented) {
-            return false;
+        if (this.authService.isOauth() && this.authService.isSSODiscoveryConfigured()) {
+            this.errorMsg = 'LOGIN.MESSAGES.SSO-WRONG-CONFIGURATION';
+            this.isError = true;
         } else {
-            this.performLogin(values);
+            const args = new LoginSubmitEvent({
+                controls: { username: this.form.controls.username }
+            });
+            this.executeSubmit.emit(args);
+
+            if (args.defaultPrevented) {
+                return false;
+            } else {
+                this.performLogin(values);
+            }
         }
     }
 
     implicitLogin() {
-        this.authService.ssoImplicitLogin();
+        if (this.authService.isOauth() && !this.authService.isSSODiscoveryConfigured()) {
+            this.errorMsg = 'LOGIN.MESSAGES.SSO-WRONG-CONFIGURATION';
+            this.isError = true;
+        } else {
+            this.authService.ssoImplicitLogin();
+        }
     }
 
     /**
@@ -267,7 +279,7 @@ export class LoginComponent implements OnInit {
         } else if (
             err.status === 403 &&
             err.message.indexOf('The system is currently in read-only mode') !==
-                -1
+            -1
         ) {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ECM-LICENSE';
         } else {
@@ -351,7 +363,7 @@ export class LoginComponent implements OnInit {
         this._message = {
             username: {
                 required: {
-                   value: 'LOGIN.MESSAGES.USERNAME-REQUIRED'
+                    value: 'LOGIN.MESSAGES.USERNAME-REQUIRED'
                 },
                 minLength: {
                     value: 'LOGIN.MESSAGES.USERNAME-MIN',

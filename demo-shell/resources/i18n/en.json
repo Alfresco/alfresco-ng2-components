@@ -315,5 +315,11 @@
       "TESTING_MODE": "Testing Mode",
       "SELECTION_MODE": "Selection Mode",
       "TASK_DETAILS_REDIRECTION": "Display task details on task click"
+  },
+  "ERROR_CONTENT": {
+    "403": {
+      "TITLE": "Forbidden"
+    },
+    "DESCRIPTION": "You don't have permission to access"
   }
 }
