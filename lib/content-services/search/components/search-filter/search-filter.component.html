@@ -62,13 +62,10 @@
                     [attr.data-automation-id]="'checkbox-'+field.label+'-'+(bucket.display || bucket.label)"
                     (change)="onToggleBucket($event, field, bucket)">
                     <div 
-                        matTooltip="{{ bucket.display || bucket.label | translate }}"
+                        matTooltip="{{ bucket.display || bucket.label | translate }} {{ getBucketCountDisplay(bucket) }}"
                         matTooltipPosition="right"
                         class="adf-facet-label">
-                        {{ bucket.display || bucket.label | translate }} 
-                        <span *ngIf="bucket.count!==null">(</span>
-                        {{ bucket.count }}
-                        <span *ngIf="bucket.count!==null">)</span>
+                        {{ bucket.display || bucket.label | translate }} {{ getBucketCountDisplay(bucket) }}
                     </div>
                 </mat-checkbox>
             </div>

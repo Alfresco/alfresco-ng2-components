@@ -324,6 +324,10 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
             || 0;
     }
 
+    getBucketCountDisplay(bucket: FacetFieldBucket): string {
+        return bucket.count === null ? '' : `(${bucket.count})`;
+    }
+
     private getFilterByMinCount(mincountInput: number) {
         return (bucket) => {
             let mincount = mincountInput;
