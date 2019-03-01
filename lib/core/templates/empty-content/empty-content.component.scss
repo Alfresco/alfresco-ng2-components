@@ -15,19 +15,17 @@
             width: mat-font-size($config, display-3) !important;
         }
 
-        p {
-            line-height: 0;
-        }
-
         &__title {
             font-size: 18px;
             font-weight: 600;
+            line-height: 0;
         }
 
         &__subtitle,
         &__text {
             font-size: 14px;
             font-weight: 300;
+            line-height: inherit;
         }
     }
 }

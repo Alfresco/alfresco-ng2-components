@@ -1,25 +1,26 @@
 <div
     role="grid"
     *ngIf="data" class="adf-full-width"
-    [class.adf-data-table-card]="display === 'gallery'"
-    [class.adf-data-table]="display === 'list'"
-    [class.adf-data-table--empty]="!isHeaderVisible()">
+    [class.adf-datatable-card]="display === 'gallery'"
+    [class.adf-datatable-list]="display === 'list'"
+    [class.adf-sticky-header]="stickyHeader"
+    [class.adf-datatable--empty]="!isHeaderVisible()">
     <div *ngIf="showHeader && isHeaderVisible()" class="adf-datatable-header" role="rowgroup">
         <div class="adf-datatable-row" *ngIf="display === 'list'" role="row">
             <!-- Actions (left) -->
-            <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-table-cell-header">
+            <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-cell-header">
                 <span class="adf-sr-only">Actions</span>
             </div>
             <!-- Columns -->
-            <div *ngIf="multiselect" class="adf-datatable-table-cell-header">
-                <mat-checkbox [checked]="isSelectAllChecked" (change)="onSelectAllClick($event)"></mat-checkbox>
+            <div *ngIf="multiselect" class="adf-datatable-cell-header adf-datatable-checkbox">
+                <mat-checkbox [checked]="isSelectAllChecked" (change)="onSelectAllClick($event)" class="adf-checkbox-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}</mat-checkbox>
             </div>
-            <div class="adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-table-cell-header"
+            <div class="adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-header"
                  *ngFor="let col of data.getColumns()"
                  [class.adf-sortable]="col.sortable"
                  [attr.data-automation-id]="'auto_id_' + col.key"
-                 [class.adf-data-table__header--sorted-asc]="isColumnSorted(col, 'asc')"
-                 [class.adf-data-table__header--sorted-desc]="isColumnSorted(col, 'desc')"
+                 [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
+                 [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')"
                  (click)="onColumnHeaderClick(col)"
                  (keyup.enter)="onColumnHeaderClick(col)"
                  role="columnheader"
@@ -29,7 +30,7 @@
                 <span *ngIf="col.title">{{ col.title | translate}}</span>
             </div>
             <!-- Actions (right) -->
-            <div *ngIf="actions && actionsPosition === 'right'" class="adf-actions-column adf-datatable-table-cell-header">
+            <div *ngIf="actions && actionsPosition === 'right'" class="adf-actions-column adf-datatable-cell-header adf-datatable__actions-cell">
                 <span class="adf-sr-only">Actions</span>
             </div>
         </div>
@@ -57,7 +58,7 @@
                  [ngClass]="getRowStyle(row)"
                  (keyup)="onRowKeyUp(row, $event)">
                 <!-- Actions (left) -->
-                <div *ngIf="actions && actionsPosition === 'left'" role="gridcell" class="adf-datatable-table-cell">
+                <div *ngIf="actions && actionsPosition === 'left'" role="gridcell" class="adf-datatable-cell">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
                             [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
                             [attr.id]="'action_menu_left_' + idx"
@@ -75,17 +76,19 @@
                     </mat-menu>
                 </div>
 
-                <div *ngIf="multiselect" class="adf-datatable-table-cell adf-datatable-table-checkbox">
+                <div *ngIf="multiselect" class="adf-datatable-cell adf-datatable-checkbox">
                     <mat-checkbox
                         [checked]="row.isSelected"
                         [attr.aria-checked]="row.isSelected"
                         role="checkbox"
-                        (change)="onCheckboxChange(row, $event)">
+                        (change)="onCheckboxChange(row, $event)"
+                        class="adf-checkbox-sr-only">
+                        {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                     </mat-checkbox>
                 </div>
                 <div *ngFor="let col of data.getColumns()"
                      role="gridcell"
-                     class="adf-data-table-cell adf-datatable-table-cell adf-data-table-cell--{{col.type || 'text'}} {{col.cssClass}}"
+                     class=" adf-datatable-cell adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}}"
                      [attr.title]="col.title | translate"
                      [attr.filename]="getFilename(row)"
                      tabindex="0"
@@ -93,7 +96,7 @@
                      (keydown.enter)="onEnterKeyPressed(row, $event)"
                      [adf-context-menu]="getContextMenuActions(row, col)"
                      [adf-context-menu-enabled]="contextMenu">
-                    <div *ngIf="!col.template" class="adf-cell-container">
+                    <div *ngIf="!col.template" class="adf-datatable-cell-container">
                         <ng-container [ngSwitch]="col.type">
                             <div *ngSwitchCase="'image'" class="adf-cell-value">
                                 <mat-icon *ngIf="isIconValue(row, col); else no_iconvalue">{{ asIconValue(row, col) }}
@@ -156,7 +159,7 @@
                     </span>
                         </ng-container>
                     </div>
-                    <div *ngIf="col.template" class="adf-cell-container">
+                    <div *ngIf="col.template" class="adf-datatable-cell-container">
                         <ng-container
                             [ngTemplateOutlet]="col.template"
                             [ngTemplateOutletContext]="{ $implicit: { data: data, row: row, col: col }, value: data.getValue(row, col) }">
@@ -167,7 +170,7 @@
                 <!-- Actions (right) -->
                 <div *ngIf="actions && actionsPosition === 'right'"
                      role="gridcell"
-                     class="adf-datatable-table-cell adf-datatable__actions-cell">
+                     class="adf-datatable-cell adf-datatable__actions-cell">
                     <button mat-icon-button [matMenuTriggerFor]="menu"
                             [title]="'ADF-DATATABLE.CONTENT-ACTIONS.TOOLTIP' | translate"
                             [attr.id]="'action_menu_right_' + idx"
@@ -190,8 +193,8 @@
             <div *ngIf="isEmpty()"
                  role="row"
                  [class.adf-datatable-row]="display === 'list'"
-                 [class.adf-data-table-card-empty]="display === 'gallery'">
-                <div class="adf-no-content-container adf-datatable-table-cell" role="gridcell">
+                 [class.adf-datatable-card-empty]="display === 'gallery'">
+                <div class="adf-no-content-container adf-datatable-cell" role="gridcell">
                     <ng-template *ngIf="noContentTemplate"
                                  ngFor [ngForOf]="[data]"
                                  [ngForTemplate]="noContentTemplate">
@@ -206,9 +209,9 @@
         <div *ngIf="!loading && noPermission"
              role="row"
              [class.adf-datatable-row]="display === 'list'"
-             [class.adf-data-table-card-permissions]="display === 'gallery'"
+             [class.adf-datatable-card-permissions]="display === 'gallery'"
              class="adf-no-permission__row">
-            <div class="adf-no-permission__cell adf-no-content-container adf-datatable-table-cell">
+            <div class="adf-no-permission__cell adf-no-content-container adf-datatable-cell">
                 <ng-template *ngIf="noPermissionTemplate"
                              ngFor [ngForOf]="[data]"
                              [ngForTemplate]="noPermissionTemplate">
@@ -217,8 +220,8 @@
         </div>
         <div *ngIf="loading"
              [class.adf-datatable-row]="display === 'list'"
-             [class.adf-data-table-card-loading]="display === 'gallery'">
-            <div class="adf-no-content-container adf-datatable-table-cell">
+             [class.adf-datatable-card-loading]="display === 'gallery'">
+            <div class="adf-no-content-container adf-datatable-cell">
                 <ng-template *ngIf="loadingTemplate"
                              ngFor [ngForOf]="[data]"
                              [ngForTemplate]="loadingTemplate">

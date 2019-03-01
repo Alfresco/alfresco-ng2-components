@@ -15,10 +15,28 @@
  * limitations under the License.
  */
 
-export * from './lib/process-services-cloud.module';
+import { AppConfigService } from '@alfresco/adf-core';
 
-export * from './lib/app/public-api';
-export * from './lib/process/public-api';
-export * from './lib/task/public-api';
-export * from './lib/group/public-api';
-export * from './lib/services/public-api';
+export class TestingAppConfigService extends AppConfigService {
+
+    config = {
+    };
+
+    constructor(config?) {
+        super(null);
+        this.config = config;
+    }
+
+    getLocationHostname(): string {
+        return '';
+    }
+
+    getLocationPort(prefix: string = ''): string {
+        return '';
+    }
+
+    getLocationProtocol(): string {
+        return '';
+    }
+
+}

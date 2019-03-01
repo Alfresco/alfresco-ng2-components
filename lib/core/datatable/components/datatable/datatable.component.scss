@@ -20,7 +20,7 @@
     $data-table-cell-top: $data-table-card-padding / 2;
     $data-table-drag-border: 1px dashed rgb(68, 138, 255);
 
-    .adf-data-table-card {
+    .adf-datatable-card {
 
         border: 1px solid mat-color($foreground, divider);
 
@@ -68,34 +68,34 @@
                 padding-bottom: 31px;
             }
 
-            .adf-data-table-card-permission {
+            .adf-datatable-card-permission {
                 width: 100%;
                 min-height: 250px;
 
-                .adf-datatable-table-cell {
+                .adf-datatable-cell {
                     height: 240px !important;
                 }
             }
 
-            .adf-data-table-card-loading {
+            .adf-datatable-card-loading {
                 width: 100%;
                 min-height: 250px;
 
-                .adf-datatable-table-cell {
+                .adf-datatable-cell {
                     height: 240px !important;
                 }
             }
 
-            .adf-data-table-card-empty {
+            .adf-datatable-card-empty {
                 width: 100%;
                 min-height: 380px;
 
-                .adf-datatable-table-cell {
+                .adf-datatable-cell {
                     height: 370px !important;
                 }
             }
 
-            .adf-datatable-table-cell {
+            .adf-datatable-cell {
                 text-align: left;
                 flex: 0 1 24%;
                 height: 136px !important;
@@ -123,7 +123,6 @@
                 height: 42px !important;
                 width: 42px !important;
                 right: 0;
-                text-align: right;
             }
 
             .adf-image-table-cell {
@@ -134,7 +133,7 @@
                 border-bottom-width: 1px;
                 border-bottom-style: solid;
 
-                .adf-cell-container {
+                .adf-datatable-cell-container {
                     float: left;
                     width: 42px;
                 }
@@ -150,7 +149,7 @@
                 }
             }
 
-            .adf-datatable-table-checkbox {
+            .adf-datatable-checkbox {
                 margin: 8px;
             }
 
@@ -163,65 +162,27 @@
 
     }
 
-    .adf-data-table {
-        display: table;
-        width: 100%;
-        position: relative;
-        border: $data-table-dividers;
-        // border-collapse: collapse;
-        white-space: nowrap;
-        font-size: $data-table-font-size;
+    .adf-datatable-list {
+        display: flex;
+        flex-direction: column;
         background-color: mat-color($background, card);
-
-        /* Firefox fixes */
-        border-collapse: unset;
-        border-spacing: 0;
-
-        .adf-datatable-link {
-            text-decoration: none;
-            color: mat-color($foreground, text);
-
-            &:hover {
-                color: #2196f3;
-                text-decoration: underline;
-            }
-        }
-
-        .adf-datatable-row {
-            display: table-row;
-            vertical-align: inherit;
-            border-color: inherit;
-        }
-
-        .adf-datatable-body {
-            display: table-row-group;
-            vertical-align: middle;
-            border-color: inherit;
-        }
-
-        .adf-datatable-table-cell {
-            display: table-cell;
-        }
-
-        .adf-datatable-table-cell-header {
-            display: table-cell;
-        }
+        border: $data-table-dividers;
 
         .adf-datatable-header {
-            padding-bottom: 3px;
-            display: table-header-group;
-            vertical-align: middle;
-            border-color: inherit;
+            display: flex;
+            flex-direction: column;
         }
 
         .adf-datatable-body {
+            display: flex;
+            flex-direction: column;
 
             .adf-datatable-row {
-                cursor: pointer;
-                position: relative;
-                height: $data-table-row-height;
                 @include material-animation-default(0.28s);
                 transition-property: background-color;
+                border-top: $data-table-dividers;
+                padding-top: 12px;
+                padding-bottom: 12px;
 
                 &:hover {
                     background-color: $data-table-hover-color;
@@ -230,55 +191,49 @@
                 &.adf-is-selected, &.adf-is-selected:hover {
                     background-color: $data-table-selection-color;
                 }
-
-                &:focus {
-                    outline-offset: -1px;
-                    outline-width: 1px;
-                    outline-color: rgb(68, 138, 255);
-                    outline-style: solid;
-                }
-
-                &:last-child {
-                    & > td {
-                        border-bottom: $data-table-dividers;
-                    }
-                }
             }
         }
 
-        .adf-datatable-table-cell, .adf-datatable-table-cell-header {
-            padding: 0 $data-table-column-padding 12px $data-table-column-padding;
+        .adf-datatable-row {
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+            padding-right: 20px;
+
+            .adf-datatable-checkbox {
+                max-width: 50px;
+            }
+        }
+
+        .adf-datatable-cell {
             text-align: left;
 
-            &:first-of-type {
-                padding-left: 24px;
+            &--text {
+                text-align: left;
             }
 
-            &:last-of-type {
+            &--date {
+                text-align: left;
+            }
+
+            &--number {
+                text-align: right;
+            }
+
+            &--image {
+                padding-left: 24px;
                 padding-right: 24px;
+                width: 10px;
+                text-align: left;
+
             }
 
             &:focus {
-                outline-offset: -1px;
-                outline-width: 1px;
-                outline-color: rgb(68, 138, 255);
-                outline-style: solid;
+                outline-width: 0;
             }
         }
 
-        .adf-datatable-table-cell {
-            color: mat-color($foreground, text);
-            position: relative;
-            vertical-align: middle;
-            height: $data-table-row-height;
-            border-top: $data-table-dividers;
-            padding-top: $data-table-cell-top;
-            box-sizing: border-box;
-
-            @include adf-no-select;
-        }
-
-        .adf-datatable-table-cell-header {
+        .adf-datatable-cell-header {
             @include adf-no-select;
             cursor: pointer;
             position: relative;
@@ -299,10 +254,13 @@
                 &:hover {
                     cursor: pointer;
                 }
+                padding-top: 12px;
+                display: flex;
+                align-items: center;
             }
 
-            &.adf-data-table__header--sorted-asc,
-            &.adf-data-table__header--sorted-desc {
+            &.adf-datatable__header--sorted-asc,
+            &.adf-datatable__header--sorted-desc {
                 color: $data-table-header-sorted-color;
                 &::before {
                     @include typo-icon;
@@ -312,46 +270,61 @@
                     vertical-align: sub;
                 }
             }
-            &.adf-data-table__header--sorted-desc::before {
+            &.adf-datatable__header--sorted-desc::before {
                 content: '\e5db';
             }
-        }
 
-        .adf-data-table-cell {
-            text-align: left;
-            height: 100%;
-
-            &--text {
-                text-align: left;
-            }
-
-            &--date {
-                text-align: left;
-            }
-
-            &--number {
-                text-align: right;
-            }
-
-            &--image {
-                padding-left: 24px;
-                padding-right: 24px;
-                width: 10px;
-                text-align: left;
-
-                .adf-cell-value {
-                    height: 24px;
-                }
-
-                img {
-                    height: 100%;
-                }
-            }
-
-            .adf-cell-container {
+            &.adf-datatable-checkbox {
                 display: flex;
                 align-items: center;
             }
+        }
+
+        .adf-datatable-cell-header.adf-expand-cell-1, .adf-datatable-cell.adf-expand-cell-1 {
+            flex-grow: 1;
+        }
+
+        .adf-datatable-cell-header.adf-expand-cell-2, .adf-datatable-cell.adf-expand-cell-2 {
+            flex-grow: 2;
+        }
+
+        .adf-datatable-cell-header.adf-expand-cell-3, .adf-datatable-cell.adf-expand-cell-3 {
+            flex-grow: 3;
+        }
+
+        .adf-datatable-cell-header.adf-expand-cell-4, .adf-datatable-cell.adf-expand-cell-4 {
+            flex-grow: 4;
+        }
+
+        .adf-datatable-cell-header.adf-expand-cell-5, .adf-datatable-cell.adf-expand-cell-5 {
+            flex-grow: 5;
+        }
+
+        .adf-datatable-cell, .adf-datatable-cell-header {
+            flex: 1;
+            padding: 0;
+
+            .adf-datatable-cell-container {
+                overflow: hidden;
+            }
+
+            .adf-datatable-cell-value {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .adf-cell-value {
+            display: flex;
+        }
+
+        .adf-datatable__actions-cell, .adf-datatable-cell--image {
+            max-width: 50px;
+            display: flex;
+        }
+
+        .adf-datatable-cell--image {
+            max-width: 50px;
         }
 
         .adf-location-cell {
@@ -366,8 +339,71 @@
             }
         }
 
-        .adf-full-width {
-            width: 100%;
+        /* [Accessibility] For screen reader only */
+        .adf-sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        .adf-is-selected {
+            background: mat-color($primary, 100);
+        }
+
+        .adf-datatable-link {
+            text-decoration: none;
+            color: mat-color($foreground, text);
+
+            &:hover {
+                color: #2196f3;
+                text-decoration: underline;
+            }
+        }
+
+        .adf-expand-cell {
+
+        }
+
+        .adf-ellipsis-cell {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            .adf-datatable-cell, .adf-datatable-cell-header {
+                overflow: hidden;
+
+                .adf-datatable-cell-container {
+                    overflow: hidden;
+                }
+
+                .adf-datatable-cell-value {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    display: block;
+                    width: calc(100% - 2em);
+                }
+            }
+
+            /* query for Microsoft IE 11*/
+            @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+                .adf-cell-value {
+                    top: 100%;
+                }
+            }
+
+            /* cell stretching content */
+            & > div::after {
+                content: attr(title);
+                overflow: hidden;
+                height: 0;
+                display: block;
+            }
         }
 
         /* Empty folder */
@@ -402,60 +438,7 @@
             }
         }
 
-        .adf-ellipsis-cell {
-            .adf-cell-container {
-                height: 100%;
-            }
-
-            .adf-cell-container > * {
-                display: block;
-                position: absolute;
-                max-width: calc(100% - 2em);
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                line-height: 1.2em;
-            }
-
-            /* visible content */
-            .adf-cell-value {
-                display: block;
-                position: absolute;
-                max-width: calc(100% - 2em);
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            /* query for Microsoft IE 11*/
-            @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-                .adf-cell-value {
-                    top: 100%;
-                }
-            }
-
-            /* cell stretching content */
-            & > div::after {
-                content: attr(title);
-                overflow: hidden;
-                height: 0;
-                display: block;
-            }
-        }
-
-        /* [Accessibility] For screen reader only */
-        .adf-sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
-        }
-
-        /* Utils */
+         /* Utils */
         .adf-hidden {
             display: none;
         }
@@ -465,12 +448,46 @@
             .adf-desktop-only {
                 display: none;
             }
+
+            .adf-sticky-header {
+                width: 100%;
+            }
         }
 
         @media (max-device-width: 768px) {
             .adf-desktop-only {
                 display: none;
             }
+        }
+
+    }
+
+    /* [Accessibility] Material checkbox labels */
+    .adf-checkbox-sr-only .mat-checkbox-label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
+
+    .adf-sticky-header {
+        border-top: 0;
+        .adf-datatable-header {
+            position: absolute;
+            background-color: mat-color($background, card);
+            display: flex;
+            z-index: 10;
+            border-top: $data-table-dividers;
+            border-bottom: $data-table-dividers;
+            width: calc(100% - 16em);
+        }
+
+        .adf-datatable-body {
+            margin-top: 56px;
         }
     }
 
@@ -492,7 +509,7 @@
         }
     }
 
-    .adf-data-table--empty {
+    .adf-datatable--empty {
         @include flex-column;
         justify-content: center;
         align-items: center;

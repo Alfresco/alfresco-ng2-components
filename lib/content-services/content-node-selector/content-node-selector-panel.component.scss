@@ -84,14 +84,19 @@
                 height: 200px;
                 overflow: auto;
                 border: 1px solid mat-color($foreground, base, 0.07);
-                padding: 1px;
+                border-top: 0;
 
                 .adf-highlight {
                     color: mat-color($primary);
                 }
 
-                .adf-data-table {
+                .adf-datatable-list {
                     border: none;
+
+                    .adf-datatable-selected {
+                        height: 100%;
+                        width: 100%;
+                    }
 
                     .adf-datatable-selected > svg {
                         fill: #00bcd4 !important;
@@ -102,29 +107,14 @@
                         border: none !important;
                     }
 
-                    .adf-data-table-cell {
-                        padding-top: 8px;
-                        padding-bottom: 8px;
-                        height: 30px;
+                    .adf-datatable-cell {
 
                         & .adf-name-location-cell-location {
                             display: none;
                         }
 
-                        & .adf-name-location-cell-name {
-                            padding: 0;
-                        }
-
-                        &--image {
-                            padding: 8px 16px;
-                        }
-
-                        &--text {
-                            padding: 8px 16px;
-                        }
-
-                        &:first-of-type {
-                            padding: 8px 16px;
+                        &.adf-content-selector-visibility-cell {
+                            display: none;
                         }
                     }
 
@@ -132,13 +122,13 @@
                         height: auto !important;
 
                         &:first-child {
-                            .adf-data-table-cell {
+                            .adf-datatable-cell {
                                 border-top: none;
                             }
                         }
 
                         &:last-child {
-                            .adf-data-table-cell {
+                            .adf-datatable-cell {
                                 border-bottom: none;
                             }
                         }
@@ -146,11 +136,10 @@
                 }
 
                 &-searchLayout {
+                    height: auto !important;
 
-                    .adf-data-table {
-                        .adf-data-table-cell {
-                            height: 56px;
-                            padding-bottom: 8px;
+                    .adf-datatable-list {
+                        .adf-datatable-cell {
 
                             & .adf-name-location-cell-location {
                                 display: block;
@@ -168,10 +157,8 @@
                                 display: none;
                             }
 
-                            &--image {
-                                padding-left: 16px;
-                                padding-right: 8px;
-                                padding-bottom: 8px;
+                            &.adf-content-selector-visibility-cell {
+                                display: none;
                             }
                         }
                     }
