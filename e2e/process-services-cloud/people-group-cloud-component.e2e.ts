@@ -157,7 +157,7 @@ describe('People Groups Cloud Component', () => {
             groupCloudComponent.checkSelectedGroup(`${groupActiviti.name}`);
         });
 
-        it('[C297674] Add more than one role filtering to GroupCloudComponent', () => {
+        it('[C297674] Add no role filters to GroupCloudComponent', () => {
             peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
             peopleGroupCloudComponentPage.clickGroupCloudFilterRole();
             peopleGroupCloudComponentPage.clearField(peopleGroupCloudComponentPage.groupRoleInput);
