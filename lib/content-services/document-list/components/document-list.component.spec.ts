@@ -218,7 +218,7 @@ describe('DocumentList', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector('.adf-data-table-card')).toBeDefined();
+        expect(element.querySelector('.adf-datatable-card')).toBeDefined();
     });
 
     it('should use the base document list style if cardview is false', () => {
@@ -226,8 +226,8 @@ describe('DocumentList', () => {
 
         fixture.detectChanges();
 
-        expect(element.querySelector('.adf-data-table-card')).toBe(null);
-        expect(element.querySelector('.adf-data-table')).toBeDefined();
+        expect(element.querySelector('.adf-datatable-card')).toBe(null);
+        expect(element.querySelector('.adf-datatable')).toBeDefined();
     });
 
     it('should reset selection upon reload', () => {

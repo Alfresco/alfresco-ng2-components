@@ -27,6 +27,7 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
     -   [DataTable DOM Events](#datatable-dom-events)
     -   [Card view](#card-view)
     -   [Using events](#using-events)
+    -   [Customizing the component's styles](#customizing-the-components-styles)
 -   [See also](#see-also)
 
 ## Basic usage
@@ -326,6 +327,7 @@ together in the same datatable.
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showHeader | `boolean` | true | Toggles the header. |
 | sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
+| stickyHeader | `boolean` | false | Toggles a sticky (fixed) header that stays in place while the rows become scrollable. [Sticky header](#sticky-header)|
 
 ### Events
 
@@ -560,6 +562,80 @@ must have a `title` property.
 When an action is selected in the dropdown menu, the DataTable invokes the `executeRowAction` event.
 Use this to handle the response, inspect the action payload (and all custom properties defined
 earlier), and perform the corresponding actions.
+
+### Customizing the component's styles
+
+The datatable component is ready to be used out of the box although you might want to customize it to better fit your needs.
+
+### Truncated text
+
+By default, the content of the cells is wrapped so you can see all the data inside. See picture bellow.
+
+![](../docassets/images/datatable-wrapped-text.png)
+
+However, you can also truncate the text within these cells by using the `adf-ellipsis-cell` class in the desired column. 
+
+```json
+{ 
+    type: 'text', 
+    key: 'createdOn', 
+    title: 'Created On', 
+    sortable: true, 
+    cssClass: 'adf-ellipsis-cell' 
+}
+```
+
+![](../docassets/images/datatable-truncated-text.png)
+
+### Expanded cells
+
+This component makes use of a flex layout. All cells have the same semantic importance, so all of them have the same width. You can alter this behavior by adding one of the following classes in the desired column to make it grow wider. 
+
+![](../docassets/images/datatable-expand-5.png)
+
+This classes go from `adf-expand-cell-1` to `adf-expand-cell-5`. The higher the number in the class the wider the column will get. You can choose the one that better suits your needs.
+
+
+### Combining classes
+
+All these classes can be combined together to fully fit your needs and make your datatable component look as you want.
+
+```json
+{ 
+    type: 'text', 
+    key: 'name', 
+    title: 'Name', 
+    cssClass: 'adf-ellipsis-cell adf-expand-cell-3' 
+}
+```
+
+
+### Sticky header
+If you have a long list of rows and you want to fix the header in place so you always see it you only have to follow this 2-step process.
+
+First, you will need to set the stickyHeader property of your datatable to `true`:
+
+```html
+<adf-datatable 
+    [data]="data"
+    [stickyHeader]="true">
+</adf-datatable>
+```
+
+Second and last, you will need to set the height of your datatable in its parent's container so that the datatable adapts to it, i.e. `height: 300px;`. You will also need to set the overflow-y attribute to auto, `overflow-y: auto;`, so it hides when the rows exceed the height of the datatable component.
+
+```html
+<div style="height: 300px; overflow-y: auto;">
+    <adf-datatable
+        [data]="data"
+        [stickyHeader]="'true'">
+    </adf-datatable>
+</div>
+```
+
+Final result
+
+![](../docassets/images/datatable-sticky-header.png)
 
 ## See also
 

@@ -54,6 +54,7 @@ export class DataTableComponent {
 
     multiselect = false;
     data: FilteredDataAdapter;
+    stickyHeader = false;
 
     @Input()
     selectionMode = 'single';
@@ -100,18 +101,18 @@ export class DataTableComponent {
                 },
                 {
                     id: 4,
-                    name: 'Image 1',
+                    name: 'Image 8',
                     createdOn: new Date(2016, 6, 2, 15, 8, 4),
                     createdBy: this._createdBy,
-                    icon: this._imageUrl
+                    icon: 'material-icons://alarm'
                 }
             ],
             [
                 { type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail' },
-                { type: 'text', key: 'id', title: 'Id', sortable: true , cssClass: 'adf-desktop-only'},
-                { type: 'text', key: 'createdOn', title: 'Created On', sortable: true },
-                { type: 'text', key: 'name', title: 'Name', cssClass: 'adf-full-width adf-name-column', sortable: true },
-                { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true, cssClass: 'adf-desktop-only'}
+                { type: 'text', key: 'id', title: 'Id', sortable: true , cssClass: 'adf-ellipsis-cell' },
+                { type: 'text', key: 'createdOn', title: 'Created On', sortable: true, cssClass: 'adf-ellipsis-cell adf-expand-cell-5' },
+                { type: 'text', key: 'name', title: 'Name', cssClass: '', sortable: true },
+                { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true, cssClass: ''}
             ]
         );
 
@@ -198,5 +199,9 @@ export class DataTableComponent {
 
     onRowDblClick(event) {
         this.logService.log(event);
+    }
+
+    toggleStickyHeader() {
+        this.stickyHeader = !this.stickyHeader;
     }
 }
