@@ -16,16 +16,13 @@
  */
 
 import TestConfig = require('../test.config');
-import resources = require('../util/resources');
 
 import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { TasksListPage } from '../pages/adf/process_services/tasksListPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
 
-import AlfrescoApi = require('alfresco-js-api-node');
 import { Tasks } from '../actions/APS-cloud/tasks';
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';
@@ -69,8 +66,8 @@ describe('Task filters cloud', () => {
             completedTask = await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
             deletedTask = await tasksService.createStandaloneTask(deletedTaskName, simpleApp);
             await tasksService.deleteTask(deletedTask.entry.id, simpleApp);
-            for ( let i = 0; i < nrOfTasks; i++ ) {
-                await tasksService.createStandaloneTask(orderByNameAndPriority[i], simpleApp, {priority: priority});
+            for (let i = 0; i < nrOfTasks; i++) {
+                await tasksService.createStandaloneTask(orderByNameAndPriority[i], simpleApp, { priority: priority });
                 priority = priority + 20;
             }
 
@@ -115,11 +112,28 @@ describe('Task filters cloud', () => {
         it('[C290139] Should display only tasks with all states when All is selected from state dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignment()
                 .setStateFilterDropDown('ALL');
-
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(deletedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(assignedTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(createdTaskName);
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTaskName);
+        });
+
+        it('[C290154] Should display only tasks with suspended states when Suspended is selected from state dropdown', () => {
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignment()
+                .setStateFilterDropDown('SUSPENDED');
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(suspendedTasks.list.entries[0].entry.id);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
+         });
+
+        it('[C290060] Should display only tasks with Created state when Created is selected from state dropdown', () => {
+            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignment().setStateFilterDropDown('CREATED');
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(createdTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
         });
 
         it('[C290069] Should display tasks ordered by name when Name is selected from sort dropdown', () => {
@@ -127,7 +141,7 @@ describe('Task filters cloud', () => {
                 .setSortFilterDropDown('NAME').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then( (list) => {
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then((list) => {
                 let initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);
@@ -138,7 +152,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then( (list) => {
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then((list) => {
                 let initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);
@@ -154,7 +168,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
 
-            tasksCloudDemoPage.getAllRowsByIdColumn().then( (list) => {
+            tasksCloudDemoPage.getAllRowsByIdColumn().then((list) => {
                 let initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);
@@ -165,7 +179,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
-            tasksCloudDemoPage.getAllRowsByIdColumn().then( (list) => {
+            tasksCloudDemoPage.getAllRowsByIdColumn().then((list) => {
                 let initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);
@@ -174,7 +188,5 @@ describe('Task filters cloud', () => {
                 expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
             });
         });
-
     });
-
 });
