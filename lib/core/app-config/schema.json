@@ -1114,7 +1114,6 @@
             ],
             "properties": {
               "id": {
-                "type": "string"
               },
               "name": {
                 "type": "string"
@@ -1146,23 +1145,66 @@
           }
         },
         "highlight": {
-          "prefix": "string",
-          "postfix": "string",
-          "snippetCount": 0,
-          "fragmentSize": 0,
-          "maxAnalyzedChars": 0,
-          "mergeContiguous": true,
-          "usePhraseHighlighter": true,
-          "fields": [
-            {
-              "field": "string",
-              "snippetCount": 0,
-              "fragmentSize": 0,
-              "mergeContiguous": true,
-              "prefix": "string",
-              "postfix": "string"
+          "description": " Request that highlight fragments to be added to result set rows The properties reflect SOLR highlighting parameters.",
+          "properties": {
+            "prefix": {
+              "description": "The string used to mark the start of a highlight in a fragment",
+              "type": "string"
+            },
+            "postfix": {
+              "description": "The string used to mark the end of a highlight in a fragment",
+              "type": "string"
+            },
+            "snippetCount": {
+              "description": "The maximum number of distinct highlight snippets to return for each highlight field",
+              "type": "number"
+            },
+            "fragmentSize": {
+              "description": "The character length of each snippet",
+              "type": "number"
+            },
+            "maxAnalyzedChars": {
+              "description": "The number of characters to be considered for highlighting. Matches after this count will not be shown",
+              "type": "number"
+            },
+            "mergeContiguous": {
+              "description": "If fragments over lap they can be  merged into one larger fragment",
+              "type": "boolean"
+            },
+            "usePhraseHighlighter": {
+              "description": "Should phrases be identified",
+              "type": "boolean"
+            },
+            "fields": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "description": "The fields to highlight and field specific configuration properties for each field",
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "description": "The name of the field to highlight",
+                    "type": "string"
+                  },
+                  "snippetCount": {
+                    "type": "number"
+                  },
+                  "fragmentSize": {
+                    "type": "number"
+                  },
+                  "mergeContiguous": {
+                    "type": "boolean"
+                  },
+                  "prefix": {
+                    "type": "string"
+                  },
+                  "postfix": {
+                    "type": "string"
+                  }
+                }
+              }
             }
-          ]
+          }
         },
         "sorting": {
           "description": "Sorting options and defaults",
