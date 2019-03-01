@@ -118,6 +118,15 @@ do
     fi
 done
 
+#testing
+for i in "${libs[@]}"
+do
+    if [ "$i" == "testing" ] ; then
+        AFFECTED_LIBS=$AFFECTED_LIBS" testing$"
+    fi
+done
+
+
 #process-services-cloud
 for i in "${libs[@]}"
 do
