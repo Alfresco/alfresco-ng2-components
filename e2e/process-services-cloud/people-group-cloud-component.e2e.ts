@@ -105,6 +105,7 @@ describe('People Groups Cloud Component', () => {
 
         it('[C297674] Add roles filtering to PeopleCloudComponent', () => {
             peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
+            peopleGroupCloudComponentPage.clickPeopleCloudFilterRole();
             peopleGroupCloudComponentPage.enterPeopleRoles(`["${CONSTANTS.ROLES.APS_USER}"]`);
             peopleCloudComponent.searchAssignee('LastName');
             peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName}` + ' ' + `${apsUser.lastName}`);
@@ -128,6 +129,7 @@ describe('People Groups Cloud Component', () => {
 
         it('[C297674] Add roles filtering to GroupCloudComponent', () => {
             peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
+            peopleGroupCloudComponentPage.clickGroupCloudFilterRole();
             peopleGroupCloudComponentPage.enterGroupRoles(`["${CONSTANTS.ROLES.APS_ADMIN}"]`);
             groupCloudComponent.searchGroups('TestGroup');
             groupCloudComponent.checkGroupIsDisplayed(`${groupAps.name}`);

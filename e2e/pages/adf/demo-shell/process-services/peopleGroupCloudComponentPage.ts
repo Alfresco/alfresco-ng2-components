@@ -22,8 +22,10 @@ export class PeopleGroupCloudComponentPage {
 
     peopleCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="adf-people-single-mode"]'));
     peopleCloudMultipleSelection = element(by.css('mat-radio-button[data-automation-id="adf-people-multiple-mode"]'));
+    peopleCloudFilterRole = element(by.css('mat-radio-button[data-automation-id="adf-people-filter-role"]'));
     groupCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="adf-group-single-mode"]'));
     groupCloudMultipleSelection = element(by.css('mat-radio-button[data-automation-id="adf-group-multiple-mode"]'));
+    groupCloudFilterRole = element(by.css('mat-radio-button[data-automation-id="adf-group-filter-role"]'));
     peopleRoleInput = element(by.css('input[data-automation-id="adf-people-roles-input"]'));
     peoplePreselect = element(by.css('input[data-automation-id="adf-people-preselect-input"]'));
     groupRoleInput = element(by.css('input[data-automation-id="adf-group-roles-input"]'));
@@ -44,6 +46,16 @@ export class PeopleGroupCloudComponentPage {
     clickPeopleCloudMultipleSelection() {
         Util.waitUntilElementIsVisible(this.peopleCloudMultipleSelection);
         this.peopleCloudMultipleSelection.click();
+    }
+
+    clickPeopleCloudFilterRole() {
+        Util.waitUntilElementIsVisible(this.peopleCloudFilterRole);
+        this.peopleCloudFilterRole.click();
+    }
+
+    clickGroupCloudFilterRole() {
+        Util.waitUntilElementIsVisible(this.groupCloudFilterRole);
+        this.groupCloudFilterRole.click();
     }
 
     enterPeopleRoles(roles) {

@@ -15,7 +15,7 @@
             <mat-radio-group (change)="onChangePeopleFilterMode($event)">
                 <mat-radio-button checked="true" class="adf-people-single-mode" value="appName">{{
                     'PEOPLE_GROUPS_CLOUD.APP_FILTER_MODE' | translate }}</mat-radio-button>
-                <mat-radio-button class="adf-people-multiple-mode" value="role">{{
+                <mat-radio-button class="adf-people-multiple-mode" data-automation-id="adf-people-filter-role" value="role">{{
                     'PEOPLE_GROUPS_CLOUD.ROLE_FILTER_MODE' | translate }}</mat-radio-button>
             </mat-radio-group>
             <mat-form-field *ngIf="!isPeopleAppNameSelected()" class="adf-preselect-value">
@@ -54,7 +54,7 @@
     <mat-card-content>
         <br>
         <mat-radio-group (change)="onChangeGroupsMode($event)">
-            <mat-radio-button checked="true" class="adf-people-single-mode"  data-automation-id="adf-group-single-mode" value="{{ groupSingleMode }}">{{
+            <mat-radio-button checked="true" class="adf-people-single-mode" data-automation-id="adf-group-single-mode" value="{{ groupSingleMode }}">{{
                 'PEOPLE_GROUPS_CLOUD.SINGLE' | translate }}</mat-radio-button>
             <mat-radio-button class="adf-people-multiple-mode" data-automation-id="adf-group-multiple-mode" value="{{ groupMultipleMode }}">{{
                 'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
@@ -63,7 +63,7 @@
             <mat-radio-group (change)="onChangeGroupsFilterMode($event)">
                 <mat-radio-button checked="true" class="adf-people-single-mode" value="appName">{{
                     'PEOPLE_GROUPS_CLOUD.APP_FILTER_MODE' | translate }}</mat-radio-button>
-                <mat-radio-button class="adf-people-multiple-mode" value="role">{{
+                <mat-radio-button class="adf-people-multiple-mode" data-automation-id="adf-group-filter-role" value="role">{{
                     'PEOPLE_GROUPS_CLOUD.ROLE_FILTER_MODE' | translate }}</mat-radio-button>
             </mat-radio-group>
             <mat-form-field *ngIf="!isGroupAppNameSelected()" class="adf-preselect-value">
