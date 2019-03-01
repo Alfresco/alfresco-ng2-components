@@ -1,6 +1,6 @@
 <mat-accordion multi="true" displayMode="flat">
 
-    <button *ngIf="responseFacets"
+    <button *ngIf="displayResetButton && responseFacets"
             mat-button
             color="primary"
             matTooltip="{{ 'SEARCH.FILTER.BUTTONS.RESET-ALL.TOOLTIP' | translate }}"

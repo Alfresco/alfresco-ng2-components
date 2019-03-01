@@ -49,7 +49,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     facetExpanded = {
         'default': false
     };
-
+    displayResetButton: boolean;
     selectedBuckets: Array<{ field: FacetField, bucket: FacetFieldBucket }> = [];
 
     constructor(public queryBuilder: SearchQueryBuilderService,
@@ -66,6 +66,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         if (queryBuilder.config && queryBuilder.config.facetIntervals) {
             this.facetExpanded['interval'] = queryBuilder.config.facetIntervals.expanded;
         }
+        this.displayResetButton = this.queryBuilder.config && !!this.queryBuilder.config.resetButton;
 
         this.queryBuilder.updated.pipe(
             takeWhile(() => this.isAlive)

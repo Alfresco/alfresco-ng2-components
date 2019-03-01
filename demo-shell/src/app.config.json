@@ -102,6 +102,7 @@
           }
         ]
       },
+      "resetButton": true,
       "filterQueries": [
         { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
         { "query": "NOT cm:creator:System" }
