@@ -20,6 +20,7 @@ import { browser, by, element } from 'protractor';
 import { ProcessServicesPage } from './process-services/processServicesPage';
 import { AppListCloudComponent } from './process-cloud/appListCloudComponent';
 import TestConfig = require('../../test.config');
+import { PeopleGroupCloudComponentPage } from './demo-shell/process-services/peopleGroupCloudComponentPage';
 
 export class NavigationBarPage {
 
@@ -46,6 +47,7 @@ export class NavigationBarPage {
     iconsButton = element(by.css('a[data-automation-id="Icons"]'));
     customSourcesButton = element(by.css('a[data-automation-id="Custom Sources"]'));
     settingsButton = element(by.css('a[data-automation-id="Settings"]'));
+    peopleGroupCloud = element(by.css('a[data-automation-id="People/Group Cloud"]'));
     aboutButton = element(by.css('a[data-automation-id="About"]'));
 
     navigateToDatatable() {
@@ -78,6 +80,12 @@ export class NavigationBarPage {
         Util.waitUntilElementIsVisible(this.processServicesCloudButton);
         this.processServicesCloudButton.click();
         return new AppListCloudComponent();
+    }
+
+    navigateToPeopleGroupCloudPage() {
+        Util.waitUntilElementIsVisible(this.peopleGroupCloud);
+        this.peopleGroupCloud.click();
+        return new PeopleGroupCloudComponentPage();
     }
 
     navigateToSettingsPage() {

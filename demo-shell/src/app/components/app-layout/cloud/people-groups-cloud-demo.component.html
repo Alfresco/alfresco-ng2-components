@@ -6,21 +6,21 @@
     <mat-card-content>
         <br>
         <mat-radio-group (change)="onChangePeopleMode($event)">
-            <mat-radio-button checked="true" class="adf-people-single-mode" value="{{ peopleSingleMode }}">{{
+            <mat-radio-button checked="true" class="adf-people-single-mode" data-automation-id="adf-people-single-mode" value="{{ peopleSingleMode }}">{{
                 'PEOPLE_GROUPS_CLOUD.SINGLE' | translate }}</mat-radio-button>
-            <mat-radio-button class="adf-people-multiple-mode" value="{{ peopleMultipleMode }}">{{
+            <mat-radio-button class="adf-people-multiple-mode" data-automation-id="adf-people-multiple-mode" value="{{ peopleMultipleMode }}">{{
                 'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
         </mat-radio-group>
         <div class="people-control-options">
             <mat-radio-group (change)="onChangePeopleFilterMode($event)">
                 <mat-radio-button checked="true" class="adf-people-single-mode" value="appName">{{
                     'PEOPLE_GROUPS_CLOUD.APP_FILTER_MODE' | translate }}</mat-radio-button>
-                <mat-radio-button class="adf-people-multiple-mode" value="role">{{
+                <mat-radio-button class="adf-people-multiple-mode" data-automation-id="adf-people-filter-role" value="role">{{
                     'PEOPLE_GROUPS_CLOUD.ROLE_FILTER_MODE' | translate }}</mat-radio-button>
             </mat-radio-group>
             <mat-form-field *ngIf="!isPeopleAppNameSelected()" class="adf-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }} ['ACTIVITI_ADMIN', "ACTIVITI_USER"]</mat-label>
-                <input matInput (input)="setPeopleRoles($event)" />
+                <input matInput (input)="setPeopleRoles($event)" data-automation-id="adf-people-roles-input" />
             </mat-form-field>
             <mat-form-field *ngIf="isPeopleAppNameSelected()" class="adf-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.APP_NAME' | translate }}</mat-label>
@@ -28,7 +28,7 @@
             </mat-form-field>
             <mat-form-field class="adf-preselect-value-full">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.PRESELECTED_VALUE' | translate }}: {{ DEFAULT_PEOPLE_PLACEHOLDER }}</mat-label>
-                <input matInput (input)="setPeoplePreselectValue($event)" />
+                <input matInput (input)="setPeoplePreselectValue($event)"  data-automation-id="adf-people-preselect-input" />
             </mat-form-field>
         </div>
         <div>
@@ -54,21 +54,21 @@
     <mat-card-content>
         <br>
         <mat-radio-group (change)="onChangeGroupsMode($event)">
-            <mat-radio-button checked="true" class="adf-people-single-mode" value="{{ groupSingleMode }}">{{
+            <mat-radio-button checked="true" class="adf-people-single-mode" data-automation-id="adf-group-single-mode" value="{{ groupSingleMode }}">{{
                 'PEOPLE_GROUPS_CLOUD.SINGLE' | translate }}</mat-radio-button>
-            <mat-radio-button class="adf-people-multiple-mode" value="{{ groupMultipleMode }}">{{
+            <mat-radio-button class="adf-people-multiple-mode" data-automation-id="adf-group-multiple-mode" value="{{ groupMultipleMode }}">{{
                 'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
         </mat-radio-group>
         <div class="groups-control-options">
             <mat-radio-group (change)="onChangeGroupsFilterMode($event)">
                 <mat-radio-button checked="true" class="adf-people-single-mode" value="appName">{{
                     'PEOPLE_GROUPS_CLOUD.APP_FILTER_MODE' | translate }}</mat-radio-button>
-                <mat-radio-button class="adf-people-multiple-mode" value="role">{{
+                <mat-radio-button class="adf-people-multiple-mode" data-automation-id="adf-group-filter-role" value="role">{{
                     'PEOPLE_GROUPS_CLOUD.ROLE_FILTER_MODE' | translate }}</mat-radio-button>
             </mat-radio-group>
             <mat-form-field *ngIf="!isGroupAppNameSelected()" class="adf-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.ROLE' | translate }} ['ACTIVITI_ADMIN', "ACTIVITI_USER"]</mat-label>
-                <input matInput (input)="setGroupRoles($event)" />
+                <input matInput (input)="setGroupRoles($event)" data-automation-id="adf-group-roles-input"/>
             </mat-form-field>
             <mat-form-field *ngIf="isGroupAppNameSelected()" class="adf-preselect-value">
                 <mat-label>{{ 'PEOPLE_GROUPS_CLOUD.APP_NAME' | translate }}</mat-label>
@@ -76,7 +76,7 @@
             </mat-form-field>
             <mat-form-field class="adf-preselect-value-full">
                 <mat-label>Preselect: {{ DEFAULT_GROUP_PLACEHOLDER }}</mat-label>
-                <input matInput (input)="setGroupsPreselectValue($event)" />
+                <input matInput (input)="setGroupsPreselectValue($event)" data-automation-id="adf-group-preselect-input" />
             </mat-form-field>
         </div>
         <div>

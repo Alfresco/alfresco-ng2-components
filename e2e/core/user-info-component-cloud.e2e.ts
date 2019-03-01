@@ -39,20 +39,20 @@ describe('User Info - SSO', () => {
         settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
         loginSSOPage.clickOnSSOButton();
         browser.ignoreSynchronization = true;
-        loginSSOPage.loginAPS(identityUser['0'].username, identityUser['0'].password);
+        loginSSOPage.loginAPS(identityUser.username, identityUser.password);
     });
 
-    afterAll (() => {
-        identityService.deleteIdentityUser(identityUser[0].id);
+    afterAll (async () => {
+        await identityService.deleteIdentityUser(identityUser.id);
     });
 
     it('[C290066] Should display UserInfo when login using SSO', () => {
 
         navigationBarPage.navigateToProcessServicesCloudPage();
         navigationBarPage.clickUserProfile();
-        expect(userInfoDialog.getSsoHeaderTitle()).toEqual(identityUser['0'].firstName + ' ' + identityUser['0'].lastName);
-        expect(userInfoDialog.getSsoTitle()).toEqual(identityUser['0'].firstName + ' ' + identityUser['0'].lastName);
-        expect(userInfoDialog.getSsoEmail()).toEqual(identityUser['0'].email);
+        expect(userInfoDialog.getSsoHeaderTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
+        expect(userInfoDialog.getSsoTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
+        expect(userInfoDialog.getSsoEmail()).toEqual(identityUser.email);
         userInfoDialog.closeUserProfile();
 
     });

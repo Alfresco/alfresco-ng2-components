@@ -23,6 +23,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { StartTasksCloudComponent } from '../pages/adf/process-cloud/startTasksCloudComponent';
 import { Util } from '../util/util';
+import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComponent';
 import { TaskDetailsPage } from '../pages/adf/demo-shell/process-services/taskDetailsPage';
 
 describe('Start Task', () => {
@@ -34,6 +35,7 @@ describe('Start Task', () => {
     const appListCloudComponent = new AppListCloudComponent();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudComponent();
+    const peopleCloudComponent = new PeopleCloudComponent();
     const standaloneTaskName = Util.generateRandomString(5);
     const unassignedTaskName = Util.generateRandomString(5);
     const taskName255Characters = Util.generateRandomString(255);
@@ -105,9 +107,9 @@ describe('Start Task', () => {
 
     it('[C290182] Should be possible to assign the task to another user', () => {
         tasksCloudDemoPage.openNewTaskForm();
-        startTask.addName(standaloneTaskName)
-                 .addAssignee('Super Admin')
-                 .clickStartButton();
+        startTask.addName(standaloneTaskName);
+        peopleCloudComponent.searchAssigneeAndSelect('Super Admin');
+        startTask.clickStartButton();
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(standaloneTaskName);
@@ -115,27 +117,27 @@ describe('Start Task', () => {
 
     it('[C291953] Assignee field should display the logged user as default', () => {
         tasksCloudDemoPage.openNewTaskForm();
-        expect(startTask.getAssignee()).toContain('Admin', 'does not contain Admin');
+        expect(peopleCloudComponent.getAssignee()).toContain('Admin', 'does not contain Admin');
         startTask.clickCancelButton();
     });
 
     it('[C291956] Should be able to create a new standalone task without assignee', () => {
         tasksCloudDemoPage.openNewTaskForm();
-        startTask.addName(unassignedTaskName);
-        startTask.clearField(startTask.assignee);
+        startTask.addName(standaloneTaskName);
+        startTask.clearField(peopleCloudComponent.peopleCloudSearch);
         startTask.clickStartButton();
         tasksCloudDemoPage.editTaskFilterCloudComponent()
             .clickCustomiseFilterHeader()
             .setStateFilterDropDown('CREATED')
             .clearAssignment();
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(unassignedTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(standaloneTaskName);
     });
 
     it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
 
         tasksCloudDemoPage.openNewTaskForm();
         startTask.addName(unassignedTaskName);
-        startTask.clearField(startTask.assignee);
+        startTask.clearField(peopleCloudComponent.peopleCloudSearch);
         startTask.clickStartButton();
         tasksCloudDemoPage.editTaskFilterCloudComponent()
             .clickCustomiseFilterHeader()

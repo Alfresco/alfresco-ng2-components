@@ -33,8 +33,8 @@ export class Identity {
   async createIdentityUser(username = Util.generateRandomString(5), password = Util.generateRandomString(5)) {
     await this.createUser(username);
     const user = await this.getUserInfoByUsername(username);
-    await this.resetPassword(user[0].id, password);
-    user[0].password = password;
+    await this.resetPassword(user.id, password);
+    user.password = password;
     return user;
   }
 
@@ -71,7 +71,7 @@ export class Identity {
     const queryParams = { 'username' : username }, postBody = {};
 
     const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-    return data;
+    return data[0];
   }
 
   async resetPassword(id, password) {
@@ -79,16 +79,6 @@ export class Identity {
     const method = 'PUT';
     const queryParams = {},
     postBody = {'type': 'password', 'value': password, 'temporary': false};
-
-    const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-    return data;
-  }
-
-  async getRoleByName(roleName) {
-    const path = `/roles/${roleName}`;
-    const method = 'GET';
-    const queryParams = {},
-    postBody = {};
 
     const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
     return data;
