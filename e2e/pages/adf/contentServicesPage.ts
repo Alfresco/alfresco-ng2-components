@@ -66,7 +66,7 @@ export class ContentServicesPage {
     copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
     searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
-    siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-select']`));
+    siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
 
     getUploadAreaDocumentList() {
         return new ContentListPage(element(by.css('adf-upload-drag-area')));

@@ -29,7 +29,7 @@ export class DataTablePage {
     selectionDropDown = element(by.css(`div[class*='ng-trigger-transformPanel']`));
     allSelectedRows = element.all(by.css(`div[class*='is-selected']`));
     selectedRowNumber = element(by.css(`div[class*='is-selected'] div[data-automation-id*='text_']`));
-    selectAll = element(by.css(`div[class*='header'] label`));
+    selectAll = element(by.css(`div[class*='header'] mat-checkbox`));
     addRowElement = element(by.xpath(`//span[contains(text(),'Add row')]/..`));
     replaceRowsElement = element(by.xpath(`//span[contains(text(),'Replace rows')]/..`));
     reset = element(by.xpath(`//span[contains(text(),'Reset to default')]/..`));
@@ -89,6 +89,24 @@ export class DataTablePage {
         checkbox.click();
     }
 
+    clickCheckboxByName(rowName) {
+        let checkbox = this.getRowsName(rowName).element(by.xpath(`ancestor::div[contains(@class, 'adf-datatable-row')]//mat-checkbox/label`));
+        Util.waitUntilElementIsVisible(checkbox);
+        checkbox.click();
+    }
+
+    getRowCheckboxByName(rowName) {
+        return this.getRowsName(rowName).element(by.xpath(`ancestor::div/div/mat-checkbox[contains(@class, 'mat-checkbox-checked')]`));
+    }
+
+    checkRowIsNotCheckedByName(rowName) {
+        Util.waitUntilElementIsNotOnPage(this.getRowCheckboxByName(rowName));
+    }
+
+    checkRowIsCheckedByName(rowName) {
+        Util.waitUntilElementIsVisible(this.getRowCheckboxByName(rowName));
+    }
+
     selectRow(rowNumber) {
         return this.getRowByRowNumber(rowNumber).click();
     }
@@ -103,6 +121,30 @@ export class DataTablePage {
         this.selectionButton.click();
         Util.waitUntilElementIsVisible(this.selectionDropDown);
         selectMode.click();
+    }
+
+    selectRowByRowName(rowName) {
+        let row = element(by.cssContainingText(`[data-automation-id*="${rowName}"]`, rowName));
+        Util.waitUntilElementIsVisible(row);
+        Util.waitUntilElementIsClickable(row);
+        return row.click();
+    }
+
+    checkRowIsSelectedByName(rowName) {
+        let row = element(by.cssContainingText(`[data-automation-id*="${rowName}"]`, rowName));
+        let isRowSelected = row.element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        Util.waitUntilElementIsVisible(isRowSelected);
+    }
+
+    checkRowIsNotSelectedByName(rowName) {
+        let row = element(by.cssContainingText(`[data-automation-id*="${rowName}"]`, rowName));
+        let isRowSelected = row.element(by.xpath(`ancestor::div[contains(@class, 'is-selected')]`));
+        Util.waitUntilElementIsNotOnPage(isRowSelected);
+    }
+
+    selectRowByNameWithKeyboard(rowName) {
+        let row = element(by.cssContainingText(`[data-automation-id*="${rowName}"]`, rowName));
+        browser.actions().sendKeys(protractor.Key.COMMAND).click(row).perform();
     }
 
     checkRowIsSelected(rowNumber) {
@@ -120,8 +162,15 @@ export class DataTablePage {
         Util.waitUntilElementIsNotOnPage(this.selectedRowNumber);
     }
 
+    checkAllRowsButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.selectAll);
+        Util.waitUntilElementIsVisible(this.selectAll);
+        return this;
+    }
+
     checkAllRows() {
         Util.waitUntilElementIsVisible(this.selectAll);
+        Util.waitUntilElementIsClickable(this.selectAll);
         this.selectAll.click();
     }
 
@@ -263,6 +312,12 @@ export class DataTablePage {
     getNumberOfRowsDisplayedWithSameName(filename) {
         Util.waitUntilElementIsVisible(element(by.css(`div[filename="${filename}"]`)));
         return element.all(by.css(`div[title='Name'][filename="${filename}"]`)).count();
+    }
+
+    getNumberOfRowsDisplayedByName(filename) {
+        let rowLocator = by.cssContainingText(`[data-automation-id*="${filename}"]`, filename);
+        Util.waitUntilElementIsVisible(element(rowLocator));
+        return element.all(by.css(`div[title='Name'] div[data-automation-id*="${filename}"]`)).count();
     }
 
     checkColumnIsDisplayed(column) {

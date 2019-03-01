@@ -20,6 +20,8 @@ import { Util } from '../../../../util/util';
 import { TaskFiltersCloudComponent } from '../../process-cloud/taskFiltersCloudComponent';
 import { TaskListCloudComponent } from '../../process-cloud/taskListCloudComponent';
 import { EditTaskFilterCloudComponent } from '../../process-cloud/editTaskFilterCloudComponent';
+import { FormControllersPage } from '../../material/formControllersPage';
+
 import { element, by } from 'protractor';
 
 export class TasksCloudDemoPage {
@@ -30,10 +32,29 @@ export class TasksCloudDemoPage {
 
     taskFilters = element(by.css("mat-expansion-panel[data-automation-id='Task Filters']"));
     defaultActiveFilter = element.all(by.css('.adf-filters__entry')).first();
-    editTaskFilterCloud = new EditTaskFilterCloudComponent();
 
     createButton = element(by.css('button[data-automation-id="create-button"'));
     newTaskButton = element(by.css('button[data-automation-id="btn-start-task"]'));
+    settingsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
+    appButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'App')).first();
+    modeDropDownArrow = element(by.css('mat-form-field[data-automation-id="selectionMode"] div[class*="arrow-wrapper"]'));
+    modeSelector = element(by.css("div[class*='mat-select-panel']"));
+    displayTaskDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]'));
+    multiSelectionToggle = element(by.css('mat-slide-toggle[data-automation-id="multiSelection"]'));
+
+    formControllersPage = new FormControllersPage();
+
+    editTaskFilterCloud = new EditTaskFilterCloudComponent();
+
+    disableDisplayTaskDetails() {
+        this.formControllersPage.disableToggle(this.displayTaskDetailsToggle);
+        return this;
+    }
+
+    enableMultiSelection() {
+        this.formControllersPage.enableToggle(this.multiSelectionToggle);
+        return this;
+    }
 
     taskFiltersCloudComponent(filter) {
         return new TaskFiltersCloudComponent(filter);
@@ -66,6 +87,10 @@ export class TasksCloudDemoPage {
 
     getAllRowsByIdColumn() {
         return new TaskListCloudComponent().getAllRowsByColumn('Id');
+    }
+
+    getAllRowsByProcessDefIdColumn() {
+        return new TaskListCloudComponent().getAllRowsByColumn('Process Definition Id');
     }
 
     clickOnTaskFilters() {
@@ -101,4 +126,35 @@ export class TasksCloudDemoPage {
         return this.defaultActiveFilter.getAttribute('class').then((value) => value.includes('adf-active'));
     }
 
+    clickSettingsButton() {
+        this.settingsButton.click();
+        browser.driver.sleep(400);
+        Util.waitUntilElementIsVisible(this.multiSelectionToggle);
+        Util.waitUntilElementIsVisible(this.modeDropDownArrow);
+        Util.waitUntilElementIsClickable(this.modeDropDownArrow);
+        return this;
+    }
+
+    clickAppButton() {
+        this.appButton.click();
+        this.createButtonIsDisplayed();
+        return this;
+    }
+
+    selectSelectionMode(mode) {
+        this.clickOnSelectionModeDropDownArrow();
+
+        let modeElement = element.all(by.cssContainingText('mat-option span', mode)).first();
+        Util.waitUntilElementIsClickable(modeElement);
+        Util.waitUntilElementIsVisible(modeElement);
+        modeElement.click();
+        return this;
+    }
+
+    clickOnSelectionModeDropDownArrow() {
+        Util.waitUntilElementIsVisible(this.modeDropDownArrow);
+        Util.waitUntilElementIsClickable(this.modeDropDownArrow);
+        this.modeDropDownArrow.click();
+        Util.waitUntilElementIsVisible(this.modeSelector);
+    }
 }
