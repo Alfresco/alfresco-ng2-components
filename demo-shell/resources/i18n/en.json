@@ -280,6 +280,10 @@
       "RETURN_BUTTON": {
         "TEXT": "Back to home"
       }
+    },
+    "403": {
+      "TITLE": "Forbidden",
+      "DESCRIPTION": "You don't have permission to access"
     }
   },
   "PROCESS_LIST_CLOUD_DEMO": {
@@ -311,15 +315,9 @@
     }
   },
   "SETTINGS_CLOUD": {
-      "MULTISELECTION": "Multiselection",
-      "TESTING_MODE": "Testing Mode",
-      "SELECTION_MODE": "Selection Mode",
-      "TASK_DETAILS_REDIRECTION": "Display task details on task click"
-  },
-  "ERROR_CONTENT": {
-    "403": {
-      "TITLE": "Forbidden"
-    },
-    "DESCRIPTION": "You don't have permission to access"
+    "MULTISELECTION": "Multiselection",
+    "TESTING_MODE": "Testing Mode",
+    "SELECTION_MODE": "Selection Mode",
+    "TASK_DETAILS_REDIRECTION": "Display task details on task click"
   }
 }
