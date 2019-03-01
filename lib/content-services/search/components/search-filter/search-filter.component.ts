@@ -173,17 +173,6 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         this.responseFacets = null;
     }
 
-    canResetBuckets() {
-        return this.responseFacets && !this.selectedBuckets.length;
-    }
-
-    resetBuckets() {
-        if (this.canResetBuckets()) {
-            this.responseFacets = null;
-            this.queryBuilder.update();
-        }
-    }
-
     shouldExpand(field: FacetField): boolean {
         return this.facetExpanded[field.type] || this.facetExpanded['default'];
     }

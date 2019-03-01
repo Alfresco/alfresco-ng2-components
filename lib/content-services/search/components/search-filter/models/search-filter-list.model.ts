@@ -109,16 +109,20 @@ export class SearchFilterList<T> implements Iterable<T> {
         this.filterText = '';
     }
 
-    addItem(item) {
+    addItem(item: T) {
+        if (!item) {
+            return;
+        }
         this.items.push(item);
         this.applyFilter();
     }
 
-    deleteItem(item) {
+    deleteItem(item: T) {
         const removeIndex = this.items.indexOf(item);
-
-        this.items.splice(removeIndex, 1);
-        this.filteredItems.splice(removeIndex, 1);
+        if (removeIndex > -1) {
+            this.items.splice(removeIndex, 1);
+            this.filteredItems.splice(removeIndex, 1);
+        }
     }
 
     [Symbol.iterator](): Iterator<T> {
