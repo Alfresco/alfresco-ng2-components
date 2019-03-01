@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 import { Util } from '../../../util/util';
-import { by, element } from 'protractor';
+import { by, element, protractor } from 'protractor';
 import { EditProcessFilterDialog } from '../dialog/editProcessFilterDialog';
 
 export class EditProcessFilterCloudComponent {
 
     customiseFilter = element(by.id('adf-edit-process-filter-title-id'));
-    selectedOption = element(by.css('mat-option[class*="mat-selected"]'));
+    selectedOption = element.all(by.css('mat-option[class*="mat-selected"]')).first();
+    saveButton = element(by.css('button[id="adf-save-id"]'));
     saveAsButton = element(by.css('button[id="adf-save-as-id"]'));
+    deleteButton = element(by.css('button[id="adf-delete-id"]'));
 
     editProcessFilter = new EditProcessFilterDialog();
 
@@ -36,14 +38,26 @@ export class EditProcessFilterCloudComponent {
         return this;
     }
 
-    setStateFilterDropDown(option) {
-        this.clickOnDropDownArrow('state');
-
-        let stateElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(stateElement);
-        Util.waitUntilElementIsVisible(stateElement);
-        stateElement.click();
+    checkCustomiseFilterHeaderIsExpanded() {
+        let expansionPanelExtended = element.all(by.css('mat-expansion-panel-header[class*="mat-expanded"]')).first();
+        Util.waitUntilElementIsVisible(expansionPanelExtended);
+        let content = element(by.css('div[class*="mat-expansion-panel-content "][style*="visible"]'));
+        Util.waitUntilElementIsVisible(content);
         return this;
+    }
+
+    setStatusFilterDropDown(option) {
+        this.clickOnDropDownArrow('status');
+
+        let statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        Util.waitUntilElementIsClickable(statusElement);
+        Util.waitUntilElementIsVisible(statusElement);
+        statusElement.click();
+        return this;
+    }
+
+    getStateFilterDropDownValue() {
+        return element(by.css("mat-form-field[data-automation-id='status'] span")).getText();
     }
 
     setSortFilterDropDown(option) {
@@ -56,6 +70,12 @@ export class EditProcessFilterCloudComponent {
         return this;
     }
 
+    getSortFilterDropDownValue() {
+        let sortLocator = element.all(by.css("mat-form-field[data-automation-id='sort'] span")).first();
+        Util.waitUntilElementIsVisible(sortLocator);
+        return sortLocator.getText();
+    }
+
     setOrderFilterDropDown(option) {
         this.clickOnDropDownArrow('order');
 
@@ -66,11 +86,42 @@ export class EditProcessFilterCloudComponent {
         return this;
     }
 
+    getOrderFilterDropDownValue() {
+        return element(by.css("mat-form-field[data-automation-id='order'] span")).getText();
+    }
+
     clickOnDropDownArrow(option) {
-        let dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']")).first();
+        let dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class='mat-select-arrow-wrapper']")).first();
         Util.waitUntilElementIsVisible(dropDownArrow);
+        Util.waitUntilElementIsClickable(dropDownArrow);
         dropDownArrow.click();
         Util.waitUntilElementIsVisible(this.selectedOption);
+    }
+
+    setAppNameDropDown(option) {
+        this.clickOnDropDownArrow('appName');
+
+        let appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        Util.waitUntilElementIsClickable(appNameElement);
+        Util.waitUntilElementIsVisible(appNameElement);
+        appNameElement.click();
+        return this;
+    }
+
+    async checkAppNamesAreUnique() {
+        let appNameList = element.all(by.css('mat-option[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span'));
+        let appTextList: any = await appNameList.getText();
+        let uniqueArray = appTextList.filter((appName) => {
+            let sameAppNameArray = appTextList.filter((eachApp) => eachApp === appName);
+            return sameAppNameArray.length === 1;
+        });
+        return uniqueArray.length === appTextList.length;
+    }
+
+    getNumberOfAppNameOptions() {
+        this.clickOnDropDownArrow('appName');
+        let dropdownOptions = element.all(by.css('.mat-select-panel mat-option'));
+        return dropdownOptions.count();
     }
 
     setProcessInstanceId(option) {
@@ -96,10 +147,57 @@ export class EditProcessFilterCloudComponent {
         return this;
     }
 
+    checkSaveButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.saveButton);
+        return this;
+    }
+
+    checkSaveAsButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.saveAsButton);
+        return this;
+    }
+
+    checkDeleteButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.deleteButton);
+        return this;
+    }
+
+    checkSaveButtonIsEnabled() {
+        Util.waitUntilElementIsVisible(this.saveButton);
+        return this.saveButton.isEnabled();
+    }
+
+    checkSaveAsButtonIsEnabled() {
+        Util.waitUntilElementIsVisible(this.saveAsButton);
+        return this.saveAsButton.isEnabled();
+    }
+
+    checkDeleteButtonIsEnabled() {
+        Util.waitUntilElementIsVisible(this.deleteButton);
+        return this.deleteButton.isEnabled();
+    }
+
     clickSaveAsButton() {
+        let disabledButton = element(by.css(("button[id='adf-save-as-id'][disabled]")));
         Util.waitUntilElementIsClickable(this.saveAsButton);
         Util.waitUntilElementIsVisible(this.saveAsButton);
+        Util.waitUntilElementIsNotVisible(disabledButton);
         this.saveAsButton.click();
         return this.editProcessFilter;
+    }
+
+    clickDeleteButton() {
+        Util.waitUntilElementIsVisible(this.deleteButton);
+        this.deleteButton.click();
+        return this;
+    }
+
+    clickSaveButton() {
+        let disabledButton = element(by.css(("button[id='adf-save-as-id'][disabled]")));
+        Util.waitUntilElementIsClickable(this.saveButton);
+        Util.waitUntilElementIsVisible(this.saveButton);
+        Util.waitUntilElementIsNotVisible(disabledButton);
+        this.saveButton.click();
+        return this;
     }
 }

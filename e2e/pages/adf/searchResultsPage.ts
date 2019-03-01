@@ -16,8 +16,7 @@
  */
 
 import { Util } from '../../util/util';
-import { ContentListPage } from './dialog/contentListPage';
-import { DataTablePage } from './dataTablePage';
+import { DataTableComponentPage } from './dataTableComponentPage';
 import { SearchSortingPickerPage } from './content-services/search/components/search-sortingPicker.page';
 import { element, by, protractor } from 'protractor';
 import { ContentServicesPage } from './contentServicesPage';
@@ -25,13 +24,12 @@ import { ContentServicesPage } from './contentServicesPage';
 export class SearchResultsPage {
 
     noResultsMessage = element(by.css('div[class="adf-no-result-message"]'));
-    contentList = new ContentListPage();
-    dataTable = new DataTablePage();
+    dataTable = new DataTableComponentPage();
     searchSortingPicker = new SearchSortingPickerPage();
     contentServices = new ContentServicesPage();
 
     tableIsLoaded() {
-        this.contentList.tableIsLoaded();
+        this.dataTable.tableIsLoaded();
     }
 
     closeActionButton() {
@@ -43,16 +41,17 @@ export class SearchResultsPage {
     }
 
     checkContentIsDisplayed(content) {
-        this.contentList.checkContentIsDisplayed(content);
+        this.dataTable.checkContentIsDisplayed('Display name', content);
         return this;
     }
 
     numberOfResultsDisplayed() {
-        return this.contentList.getAllDisplayedRows();
+        return this.dataTable.numberOfRows();
     }
 
     checkContentIsNotDisplayed(content) {
-        Util.waitUntilElementIsNotOnPage(element(by.css("span[title='" + content + "']")));
+        this.dataTable.checkContentIsNotDisplayed('Display name', content);
+        return this;
     }
 
     checkNoResultMessageIsDisplayed() {
@@ -66,16 +65,16 @@ export class SearchResultsPage {
     }
 
     navigateToFolder(content) {
-        this.contentList.doubleClickRow(content);
+        this.dataTable.doubleClickRow('Display name', content);
         return this;
     }
 
     deleteContent(content) {
-        this.contentList.deleteContent(content);
+        this.contentServices.deleteContent(content);
     }
 
     checkDeleteIsDisabled(content) {
-        this.contentList.checkDeleteIsDisabled(content);
+        this.contentServices.checkDeleteIsDisabled(content);
         this.closeActionButton();
     }
 
@@ -165,7 +164,11 @@ export class SearchResultsPage {
     }
 
     async checkListIsOrderedByCreatedAsc() {
-        let list = await this.contentServices.getElementsDisplayedCreated();
+        let stringList = await this.contentServices.getElementsDisplayedCreated();
+        let list;
+        await stringList.forEach((stringDate) => {
+            list.push(new Date(stringDate));
+        });
         return this.contentServices.checkElementsSortedAsc(list);
     }
 

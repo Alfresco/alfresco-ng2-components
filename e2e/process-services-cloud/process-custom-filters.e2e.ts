@@ -17,18 +17,19 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { AppListCloudPage } from '@alfresco/adf-testing';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';
 import { Tasks } from '../actions/APS-cloud/tasks';
 import { Query } from '../actions/APS-cloud/query';
+import { browser, protractor } from 'protractor';
 
 describe('Process list cloud', () => {
 
@@ -37,7 +38,7 @@ describe('Process list cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudComponent();
+        let appListCloudComponent = new AppListCloudPage();
         let processCloudDemoPage = new ProcessCloudDemoPage();
         let tasksCloudDemoPage = new TasksCloudDemoPage();
 
@@ -47,7 +48,7 @@ describe('Process list cloud', () => {
         const queryService: Query = new Query();
 
         let silentLogin;
-        let completedProcess;
+        let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps;
         const simpleApp = 'candidateuserapp';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
@@ -55,6 +56,7 @@ describe('Process list cloud', () => {
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
+            browser.ignoreSynchronization = true;
             loginSSOPage.loginAPS(user, password);
 
             navigationBarPage.clickConfigEditorButton();
@@ -62,7 +64,7 @@ describe('Process list cloud', () => {
             configEditorPage.clickClearButton();
             configEditorPage.enterConfiguration('{' +
                 '"properties": [' +
-                '"state",' + '"processInstanceId",' + '"sort",' + '"order"' +
+                '"appName",' + '"state",' + '"processInstanceId",' + '"sort",' + '"order"' +
                 ']' +
                 '}');
             configEditorPage.clickSaveButton();
@@ -71,6 +73,8 @@ describe('Process list cloud', () => {
             let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             await processInstancesService.init(user, password);
             await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
 
             completedProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
             await queryService.init(user, password);
@@ -90,16 +94,16 @@ describe('Process list cloud', () => {
         });
 
         it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async() => {
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('RUNNING')
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
                 .setSortFilterDropDown('NAME').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().getAllRowsNameColumn().then(function (list) {
+            processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
                 let initialList = list.slice(0);
                 list.sort();
                 expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
             });
 
             processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getDataTable().getAllRowsNameColumn().then(function (list) {
+            processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
                 let initialList = list.slice(0);
                 list.sort();
                 list.reverse();
@@ -108,7 +112,7 @@ describe('Process list cloud', () => {
         });
 
         it('[C291783] Should display processes ordered by id when Id is selected from sort dropdown', async() => {
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('RUNNING')
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStatusFilterDropDown('RUNNING')
                 .setSortFilterDropDown('ID').setOrderFilterDropDown('ASC');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
             processCloudDemoPage.getAllRowsByIdColumn().then(function (list) {
@@ -137,8 +141,8 @@ describe('Process list cloud', () => {
 
             processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
 
-            expect(tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllDisplayedRows()).toBe(1);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedProcess.entry.id);
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().numberOfRows()).toBe(1);
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
 
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
@@ -146,6 +150,43 @@ describe('Process list cloud', () => {
 
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(completedProcess.entry.id);
+        });
+
+        it('[C297646] Should display the filter dropdown fine , after switching between saved filters', async() => {
+
+            noOfApps = processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().getNumberOfAppNameOptions();
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
+            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING')
+                .setAppNameDropDown(simpleApp).setProcessInstanceId(runningProcessInstance.entry.id);
+
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcessInstance.entry.id);
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
+            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+
+            processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
+            processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SavedFilter').clickOnSaveButton();
+            expect(processCloudDemoPage.getActiveFilterName()).toBe('SavedFilter');
+
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
+
+            processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING')
+                .setAppNameDropDown(simpleApp).setProcessInstanceId(switchProcessInstance.entry.id);
+
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(switchProcessInstance.entry.id);
+            processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
+            processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SwitchFilter').clickOnSaveButton();
+            expect(processCloudDemoPage.getActiveFilterName()).toBe('SwitchFilter');
+
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(switchProcessInstance.entry.id);
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
+            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
         });
 
     });

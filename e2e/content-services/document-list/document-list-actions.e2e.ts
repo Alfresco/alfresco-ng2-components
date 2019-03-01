@@ -18,11 +18,10 @@
 import { browser } from 'protractor';
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { FileModel } from '../../models/ACS/fileModel';
 import { Util } from '../../util/util';
@@ -31,7 +30,7 @@ describe('Document List Component - Actions', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
-    let contentListPage = new ContentListPage();
+    let contentListPage = contentServicesPage.getDocumentList();
     let uploadedFolder, secondUploadedFolder;
     let uploadActions = new UploadActions();
     let acsUser = null;
@@ -88,8 +87,8 @@ describe('Document List Component - Actions', () => {
         it('[C213257] Should be able to copy a file', () => {
             browser.driver.sleep(15000);
 
-            contentListPage.rightClickOnRowNamed(pdfUploadedNode.entry.name);
-            contentListPage.pressContextMenuActionNamed('Copy');
+            contentListPage.rightClickOnRow(pdfUploadedNode.entry.name);
+            contentServicesPage.pressContextMenuActionNamed('Copy');
             contentServicesPage.typeIntoNodeSelectorSearchField(folderName);
             contentServicesPage.clickContentNodeSelectorResult(folderName);
             contentServicesPage.clickCopyButton();
@@ -99,45 +98,45 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C280561] Should be able to delete a file via dropdown menu', () => {
-            contentListPage.deleteContent(pdfFileModel.name);
-            contentListPage.checkContentIsNotDisplayed(pdfFileModel.name);
+            contentServicesPage.deleteContent(pdfFileModel.name);
+            contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
             pdfUploadedNode = null;
         });
 
         it('[C280562] Should be able to delete multiple files via dropdown menu', () => {
-            contentListPage.clickRowToSelect(pdfFileModel.name);
-            contentListPage.clickRowToSelect(testFileModel.name);
-            contentListPage.deleteContent(pdfFileModel.name);
-            contentListPage.checkContentIsNotDisplayed(pdfFileModel.name);
-            contentListPage.checkContentIsDisplayed(testFileModel.name);
+            contentListPage.selectRow(pdfFileModel.name);
+            contentListPage.selectRow(testFileModel.name);
+            contentServicesPage.deleteContent(pdfFileModel.name);
+            contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
+            contentServicesPage.checkContentIsDisplayed(testFileModel.name);
         });
 
         it('[C280565] Should be able to delete a file using context menu', () => {
-            contentListPage.rightClickOnRowNamed(pdfFileModel.name);
-            contentListPage.pressContextMenuActionNamed('Delete');
-            contentListPage.checkContentIsNotDisplayed(pdfFileModel.name);
+            contentListPage.rightClickOnRow(pdfFileModel.name);
+            contentServicesPage.pressContextMenuActionNamed('Delete');
+            contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
             pdfUploadedNode = null;
         });
 
         it('[C280566] Should be able to open context menu with right click', () => {
-            contentListPage.rightClickOnRowNamed(pdfFileModel.name);
-            contentListPage.checkContextActionIsVisible('Download');
-            contentListPage.checkContextActionIsVisible('Copy');
-            contentListPage.checkContextActionIsVisible('Move');
-            contentListPage.checkContextActionIsVisible('Delete');
-            contentListPage.checkContextActionIsVisible('Info');
-            contentListPage.checkContextActionIsVisible('Manage versions');
-            contentListPage.checkContextActionIsVisible('Permission');
-            contentListPage.checkContextActionIsVisible('Lock');
+            contentListPage.rightClickOnRow(pdfFileModel.name);
+            contentServicesPage.checkContextActionIsVisible('Download');
+            contentServicesPage.checkContextActionIsVisible('Copy');
+            contentServicesPage.checkContextActionIsVisible('Move');
+            contentServicesPage.checkContextActionIsVisible('Delete');
+            contentServicesPage.checkContextActionIsVisible('Info');
+            contentServicesPage.checkContextActionIsVisible('Manage versions');
+            contentServicesPage.checkContextActionIsVisible('Permission');
+            contentServicesPage.checkContextActionIsVisible('Lock');
         });
 
         it('[C280567] Should be able to delete multiple files using context menu', () => {
-            contentListPage.clickRowToSelect(pdfFileModel.name);
-            contentListPage.clickRowToSelect(testFileModel.name);
-            contentListPage.rightClickOnRowNamed(pdfFileModel.name);
-            contentListPage.pressContextMenuActionNamed('Delete');
-            contentListPage.checkContentIsNotDisplayed(pdfFileModel.name);
-            contentListPage.checkContentIsDisplayed(testFileModel.name);
+            contentListPage.selectRow(pdfFileModel.name);
+            contentListPage.selectRow(testFileModel.name);
+            contentListPage.rightClickOnRow(pdfFileModel.name);
+            contentServicesPage.pressContextMenuActionNamed('Delete');
+            contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
+            contentServicesPage.checkContentIsDisplayed(testFileModel.name);
         });
 
     });
@@ -173,25 +172,25 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C260123] Should be able to delete a folder using context menu', () => {
-            contentListPage.deleteContent(folderName);
-            contentListPage.checkContentIsNotDisplayed(folderName);
+            contentServicesPage.deleteContent(folderName);
+            contentServicesPage.checkContentIsNotDisplayed(folderName);
             uploadedFolder = null;
         });
 
         it('[C280568] Should be able to open context menu with right click', () => {
-            contentListPage.rightClickOnRowNamed(folderName);
-            contentListPage.checkContextActionIsVisible('Download');
-            contentListPage.checkContextActionIsVisible('Copy');
-            contentListPage.checkContextActionIsVisible('Move');
-            contentListPage.checkContextActionIsVisible('Delete');
-            contentListPage.checkContextActionIsVisible('Info');
-            contentListPage.checkContextActionIsVisible('Permission');
+            contentListPage.rightClickOnRow(folderName);
+            contentServicesPage.checkContextActionIsVisible('Download');
+            contentServicesPage.checkContextActionIsVisible('Copy');
+            contentServicesPage.checkContextActionIsVisible('Move');
+            contentServicesPage.checkContextActionIsVisible('Delete');
+            contentServicesPage.checkContextActionIsVisible('Info');
+            contentServicesPage.checkContextActionIsVisible('Permission');
         });
 
         it('[C260138] Should be able to copy a folder', () => {
             browser.driver.sleep(15000);
 
-            contentListPage.copyContent(folderName);
+            contentServicesPage.copyContent(folderName);
             contentServicesPage.typeIntoNodeSelectorSearchField(secondFolderName);
             contentServicesPage.clickContentNodeSelectorResult(secondFolderName);
             contentServicesPage.clickCopyButton();

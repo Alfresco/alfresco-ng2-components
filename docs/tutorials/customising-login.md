@@ -5,7 +5,7 @@ Level: Intermediate
 
 # Customizing the Login component
 
-In this tutorial you will learn how to customize the [Login component](../core/login.component.md) following the technical documentation.
+In this tutorial you will learn how to customize the [Login component](../core/components/login.component.md) following the technical documentation.
 
 The task will be very simple. See the documentation for further details about customizing this component, along with examples.
 
@@ -16,17 +16,17 @@ Starting from an existing ADF application, the `Login` component, like any other
 it is stored in the `/src/app/components/login` path. In an ADF app created with [Yeoman](http://yeoman.io/)
 it is stored in the `/src/app/login` path.
 
-Once you have located the Login component for your application, you can customize it as described below. 
+Once you have located the [Login component](../core/components/login.component.md) for your application, you can customize it as described below. 
 
 ## Changing the header
 
 As with every regular
 [Angular Component](https://angular.io/guide/architecture-components),
-you can customize the Login component can be customised via CSS, HTML and Typescript. In this simple
+you can customize the [Login component](../core/components/login.component.md) can be customised via CSS, HTML and Typescript. In this simple
 example, we will customize the header (as described also in the
-[technical documentation](../core/login.component.md)).
+[technical documentation](../core/components/login.component.md)).
 
-Open the [`login.component`](../core/login.component.md)`.html` file and change the content to match the following source code:
+Open the [`login.component`](../core/components/login.component.md)`.html` file and change the content to match the following source code:
 
 ```html
 <adf-login ...>
@@ -40,7 +40,7 @@ After saving the file, the login form will look like this:
 
 ## More examples
 
-As mentioned earlier, this is a very basic example and the Login component can be customized
+As mentioned earlier, this is a very basic example and the [Login component](../core/components/login.component.md) can be customized
 much more extensively than this. For a complete and detailed description, full of examples, check the
-[technical documentation about the component](../core/login.component.md).
-This describes every customization available for the Login component.
+[technical documentation about the component](../core/components/login.component.md).
+This describes every customization available for the [Login component](../core/components/login.component.md).

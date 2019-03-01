@@ -33,8 +33,8 @@ import { CloudLayoutService } from './services/cloud-layout.service';
 })
 export class ProcessesCloudDemoComponent implements OnInit {
 
-    public static ACTION_SAVE_AS = 'SAVE_AS';
-    static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter.properties';
+    public static ACTION_SAVE_AS = 'saveAs';
+    static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter';
 
     @ViewChild('processCloud')
     processCloud: ProcessListCloudComponent;
@@ -52,7 +52,7 @@ export class ProcessesCloudDemoComponent implements OnInit {
     selectionMode: string;
     selectedRows: string[] = [];
     testingMode: boolean;
-    processFilterProperties: any[] = [];
+    processFilterProperties: any  = { filterProperties: [], sortProperties: [], actions: [] };
 
     editedFilter: ProcessFilterCloudModel;
 
@@ -100,8 +100,8 @@ export class ProcessesCloudDemoComponent implements OnInit {
         this.selectedRows = [];
     }
 
-    onRowClick($event) {
-        this.selectedRow = $event;
+    onRowClick(processInstanceId) {
+        this.router.navigate([`/cloud/${this.appName}/process-details/${processInstanceId}`]);
     }
 
     onFilterChange(query: any) {

@@ -25,7 +25,7 @@ import { TasksListPage } from '../pages/adf/process-services/tasksListPage';
 import { TaskDetailsPage } from '../pages/adf/process-services/taskDetailsPage';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/taskFiltersDemoPage';
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
@@ -100,13 +100,9 @@ describe('Task Filters Sorting', () => {
 
     });
 
-    // afterAll(async(done) => {
-    //     await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-    //     done();
-    // });
     it('[C277254] Should display tasks under new filter from newest to oldest when they are completed', () => {
         browser.controlFlow().execute(async () => {
-            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            let newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Newest first';
             newFilter.appId = appId;
             newFilter.icon = 'glyphicon-filter';
@@ -129,7 +125,7 @@ describe('Task Filters Sorting', () => {
 
     it('[C277255] Should display tasks under new filter from oldest to newest when they are completed', () => {
         browser.controlFlow().execute(async () => {
-            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            let newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Newest last';
             newFilter.appId = appId;
             newFilter.icon = 'glyphicon-filter';
@@ -151,7 +147,7 @@ describe('Task Filters Sorting', () => {
 
     it('[C277256] Should display tasks under new filter from closest due date to farthest when they are completed', () => {
         browser.controlFlow().execute(async () => {
-            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            let newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Due first';
             newFilter.appId = appId;
             newFilter.icon = 'glyphicon-filter';
@@ -173,7 +169,7 @@ describe('Task Filters Sorting', () => {
 
     it('[C277257] Should display tasks under new filter from farthest due date to closest when they are completed', () => {
         browser.controlFlow().execute(async () => {
-            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            let newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Due last';
             newFilter.appId = appId;
             newFilter.icon = 'glyphicon-filter';
@@ -195,7 +191,7 @@ describe('Task Filters Sorting', () => {
 
     it('[C277258] Should display tasks under new filter from newest to oldest when they are open  ', () => {
         browser.controlFlow().execute(async () => {
-            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            let newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Newest first Open';
             newFilter.appId = appId;
             newFilter.icon = 'glyphicon-filter';
@@ -217,7 +213,7 @@ describe('Task Filters Sorting', () => {
 
     it('[C277259] Should display tasks under new filter from oldest to newest when they are open', () => {
         browser.controlFlow().execute(async () => {
-            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            let newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Newest last Open';
             newFilter.appId = appId;
             newFilter.icon = 'glyphicon-filter';
@@ -239,7 +235,7 @@ describe('Task Filters Sorting', () => {
 
     it('[C277260] Should display tasks under new filter from closest due date to farthest when they are open', () => {
         browser.controlFlow().execute(async () => {
-            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            let newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Due first Open';
             newFilter.appId = appId;
             newFilter.icon = 'glyphicon-filter';
@@ -261,7 +257,7 @@ describe('Task Filters Sorting', () => {
 
     it('[C277261] Should display tasks under new filter from farthest due date to closest when they are open', () => {
         browser.controlFlow().execute(async () => {
-            let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+            let newFilter: any = new UserProcessInstanceFilterRepresentation();
             newFilter.name = 'Due last Open';
             newFilter.appId = appId;
             newFilter.icon = 'glyphicon-filter';

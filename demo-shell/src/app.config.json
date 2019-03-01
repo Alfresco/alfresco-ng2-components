@@ -70,6 +70,10 @@
         {
             "key": "zh-CN",
             "label": "中文简体"
+        },
+        {
+            "key": "ar",
+            "label": "عربى"
         }
     ],
     "search": {
@@ -102,6 +106,7 @@
           }
         ]
       },
+      "resetButton": true,
       "filterQueries": [
         { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
         { "query": "NOT cm:creator:System" }
@@ -585,6 +590,12 @@
         "properties": [
             "state", "assignment", "sort", "order"
         ]
+    },
+    "adf-edit-process-filter": {
+        "filterProperties": [ "status", "sort", "order", "processName" ],
+        "sortProperties": [ "id", "name", "status", "startDate" ],
+        "actions": ["save", "saveAs", "delete"]
+
     },
     "content-metadata": {
         "presets": {

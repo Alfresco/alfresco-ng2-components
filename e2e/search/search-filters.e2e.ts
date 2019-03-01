@@ -19,7 +19,7 @@ import { LoginPage } from '../pages/adf/loginPage';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { SearchFiltersPage } from '../pages/adf/searchFiltersPage';
 import { PaginationPage } from '../pages/adf/paginationPage';
-import { ContentListPage } from '../pages/adf/dialog/contentListPage';
+import { DocumentListPage } from '../pages/adf/content-services/documentListPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { SearchResultsPage } from '../pages/adf/searchResultsPage';
@@ -31,7 +31,7 @@ import TestConfig = require('../test.config');
 import { Util } from '../util/util';
 import resources = require('../util/resources');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
@@ -43,7 +43,7 @@ describe('Search Filters', () => {
     let searchFiltersPage = new SearchFiltersPage();
     let uploadActions = new UploadActions();
     let paginationPage = new PaginationPage();
-    let contentList = new ContentListPage();
+    let contentList = new DocumentListPage();
     let navigationBar = new NavigationBarPage();
     let configEditor = new ConfigEditorPage();
     let searchResults = new SearchResultsPage();
@@ -51,6 +51,10 @@ describe('Search Filters', () => {
     let acsUser = new AcsUserModel();
 
     let filename = Util.generateRandomString(16);
+    let fileNamePrefix = Util.generateRandomString(5);
+    let uniqueFileName1 = fileNamePrefix + Util.generateRandomString(5);
+    let uniqueFileName2 = fileNamePrefix + Util.generateRandomString(5);
+    let uniqueFileName3 = fileNamePrefix + Util.generateRandomString(5);
 
     let fileModel = new FileModel({
         'name': filename, 'shortName': filename.substring(0, 8)
@@ -61,7 +65,22 @@ describe('Search Filters', () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    let fileUploaded, fileTypePng;
+    let txtFileModel1 = new FileModel({
+        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
+        'name': `${uniqueFileName1}.txt`
+    });
+
+    let jpgFileModel = new FileModel({
+        'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
+        'name': `${uniqueFileName2}.jpg`
+    });
+
+    let txtFileModel2 = new FileModel({
+        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
+        'name': `${uniqueFileName3}.txt`
+    });
+
+    let fileUploaded, fileTypePng, fileTypeTxt1, fileTypeJpg, fileTypeTxt2;
 
     let filter = { type: 'TYPE-PNG Image' };
 
@@ -84,6 +103,12 @@ describe('Search Filters', () => {
 
         fileTypePng = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
 
+        fileTypeTxt1 = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel1.location, txtFileModel1.name, '-my-');
+
+        fileTypeJpg = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFileModel.location, jpgFileModel.name, '-my-');
+
+        fileTypeTxt2 = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel2.location, txtFileModel2.name, '-my-');
+
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await browser.driver.sleep(30000); // wait search index previous file/folder uploaded
@@ -102,6 +127,9 @@ describe('Search Filters', () => {
 
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileUploaded.entry.id);
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTypePng.entry.id);
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTypeTxt1.entry.id);
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTypeTxt2.entry.id);
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTypeJpg.entry.id);
 
         done();
     });
@@ -149,7 +177,7 @@ describe('Search Filters', () => {
 
         let bucketNumberForFilter = searchFiltersPage.fileTypeCheckListFiltersPage().getBucketNumberOfFilterType(filter.type);
 
-        let resultFileNames = contentList.getAllRowsNameColumn();
+        let resultFileNames = contentList.getAllRowsColumnValues('Display name');
 
         expect(bucketNumberForFilter).not.toEqual('0');
 
@@ -212,7 +240,54 @@ describe('Search Filters', () => {
         browser.get(TestConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed()
-            .checkFacetIntervalsByModifiedIsDisplayed();
+            .checkFacetIntervalsByCreatedIsExpanded()
+            .clickFacetIntervalsByCreatedFilterHeader()
+            .checkFacetIntervalsByCreatedIsCollapsed()
+            .clickFacetIntervalsByCreatedFilterHeader()
+            .checkFacetIntervalsByCreatedIsExpanded()
+            .checkFacetIntervalsByModifiedIsDisplayed()
+            .checkFacetIntervalsByModifiedIsExpanded()
+            .clickFacetIntervalsByModifiedFilterHeader()
+            .checkFacetIntervalsByModifiedIsCollapsed()
+            .clickFacetIntervalsByModifiedFilterHeader()
+            .checkFacetIntervalsByModifiedIsExpanded();
+    });
+
+    it('[C299200] Should reset the filters facet with search query', () => {
+        searchDialog.enterTextAndPressEnter(fileTypeTxt1.entry.name);
+
+        searchFiltersPage.checkSearchFiltersIsDisplayed();
+        searchResults.tableIsLoaded();
+        searchResults.checkContentIsDisplayed(fileTypeTxt1.entry.name);
+        searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('Plain Text (1)');
+        searchFiltersPage.checkFileTypeFacetLabelIsNotDisplayed('JPEG Image');
+
+        searchDialog.enterTextAndPressEnter(fileNamePrefix);
+        searchFiltersPage.checkSearchFiltersIsDisplayed();
+        searchResults.tableIsLoaded();
+        searchResults.checkContentIsDisplayed(fileTypeTxt1.entry.name);
+        searchResults.checkContentIsDisplayed(fileTypeTxt2.entry.name);
+        searchResults.checkContentIsDisplayed(fileTypeJpg.entry.name);
+        searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('Plain Text (2)');
+        searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('JPEG Image (1)');
+
+    });
+
+    it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', () => {
+        navigationBar.clickConfigEditorButton();
+        configEditor.clickSearchConfiguration();
+        configEditor.clickClearButton();
+        jsonFile.facetFields.fields[0].label = 'My File Types';
+        jsonFile.facetFields.fields[1].label = 'My File Sizes';
+        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
+        configEditor.clickSaveButton();
+
+        searchDialog.clickOnSearchIcon()
+            .enterTextAndPressEnter('*');
+
+        searchResults.tableIsLoaded();
+        searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Types');
+        searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Sizes');
     });
 
 });

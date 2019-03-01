@@ -119,6 +119,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     showHeader: boolean = true;
 
+    /** Toggles the sticky header mode. */
+    @Input()
+    stickyHeader: boolean = false;
+
     /** Emitted when the user clicks a row. */
     @Output()
     rowClick = new EventEmitter<DataRowEvent>();

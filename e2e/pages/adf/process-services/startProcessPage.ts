@@ -16,7 +16,7 @@
  */
 
 import { Util } from '../../../util/util';
-import { by, element, Key } from 'protractor';
+import { by, element, Key, protractor, browser } from 'protractor';
 
 export class StartProcessPage {
 

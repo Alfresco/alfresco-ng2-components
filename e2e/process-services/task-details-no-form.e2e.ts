@@ -26,7 +26,7 @@ import { Tenant } from '../models/APS/tenant';
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 
@@ -70,8 +70,8 @@ describe('Task Details - No form', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(app.taskName);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName(app.taskName);
+        taskPage.tasksListPage().checkContentIsDisplayed(app.taskName);
+        taskPage.tasksListPage().selectRow(app.taskName);
         taskPage.taskDetails().noFormIsDisplayed();
         taskPage.taskDetails().checkCompleteTaskButtonIsDisplayed().checkCompleteTaskButtonIsEnabled();
         taskPage.taskDetails().checkAttachFormButtonIsNotDisplayed();

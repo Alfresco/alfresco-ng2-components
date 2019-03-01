@@ -15,7 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, OnInit, Output, EventEmitter, ViewChild, ViewEncapsulation, Input, SimpleChanges, OnChanges } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    OnInit,
+    Output,
+    EventEmitter,
+    ViewChild,
+    ViewEncapsulation,
+    Input,
+    SimpleChanges,
+    OnChanges
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, of, BehaviorSubject } from 'rxjs';
@@ -133,6 +144,7 @@ export class GroupCloudComponent implements OnInit, OnChanges {
             this.enableSearch();
         }
     }
+
     initSearch() {
         this.searchGroupsControl.valueChanges.pipe(
             filter((value) => {
@@ -211,9 +223,9 @@ export class GroupCloudComponent implements OnInit, OnChanges {
 
     filterGroupsByRoles(group: GroupModel): Observable<GroupModel> {
         return this.groupService.checkGroupHasRole(group.id, this.roles).pipe(
-            mergeMap((hasRole) => {
+            mergeMap<boolean, Observable<GroupModel>>((hasRole) => {
                 return hasRole ? of(group) : of();
-        }));
+            }));
     }
 
     onSelect(selectedGroup: GroupModel) {
@@ -236,7 +248,9 @@ export class GroupCloudComponent implements OnInit, OnChanges {
 
     onRemove(selectedGroup: GroupModel) {
         this.removeGroup.emit(selectedGroup);
-        const indexToRemove = this.selectedGroups.findIndex((group: GroupModel) => { return group.id === selectedGroup.id; });
+        const indexToRemove = this.selectedGroups.findIndex((group: GroupModel) => {
+            return group.id === selectedGroup.id;
+        });
         this.selectedGroups.splice(indexToRemove, 1);
         this.selectedGroupsSubject.next(this.selectedGroups);
     }

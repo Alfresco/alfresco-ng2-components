@@ -26,7 +26,7 @@ import CONSTANTS = require('../util/constants');
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { by } from 'protractor';
@@ -98,7 +98,7 @@ describe('Attach Form Component', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName(testNames.taskName);
+        taskPage.tasksListPage().selectRow(testNames.taskName);
 
         attachFormPage.checkNoFormMessageIsDisplayed();
         attachFormPage.checkAttachFormButtonIsDisplayed();
@@ -109,7 +109,7 @@ describe('Attach Form Component', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName(testNames.taskName);
+        taskPage.tasksListPage().selectRow(testNames.taskName);
 
         attachFormPage.clickAttachFormButton();
         attachFormPage.checkDefaultFormTitleIsDisplayed(testNames.formTitle);
@@ -129,7 +129,7 @@ describe('Attach Form Component', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName(testNames.taskName);
+        taskPage.tasksListPage().selectRow(testNames.taskName);
 
         attachFormPage.clickAttachFormButton();
         attachFormPage.clickAttachFormDropdown();
@@ -140,7 +140,7 @@ describe('Attach Form Component', () => {
         formFields.completeForm();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName(testNames.taskName);
+        taskPage.tasksListPage().selectRow(testNames.taskName);
 
         expect(formFields.getFieldValue(formTextField)).toEqual(testNames.formFieldValue);
     });

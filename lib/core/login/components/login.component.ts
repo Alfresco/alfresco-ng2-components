@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter,
+import {
+    Component, EventEmitter,
     Input, OnInit, Output, TemplateRef, ViewEncapsulation
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Location } from '@angular/common';
 import { AuthenticationService } from '../../services/authentication.service';
 import { LogService } from '../../services/log.service';
 import { TranslationService } from '../../services/translation.service';
@@ -139,7 +140,9 @@ export class LoginComponent implements OnInit {
         private logService: LogService,
         private router: Router,
         private appConfig: AppConfigService,
-        private userPreferences: UserPreferencesService
+        private userPreferences: UserPreferencesService,
+        private location: Location,
+        private route: ActivatedRoute
     ) {
         this.initFormError();
         this.initFormFieldsMessages();
@@ -151,6 +154,17 @@ export class LoginComponent implements OnInit {
             if (oauth && oauth.implicitFlow) {
                 this.implicitFlow = true;
             }
+        }
+
+        if (this.authService.isEcmLoggedIn() || this.authService.isBpmLoggedIn()) {
+            this.location.forward();
+        } else {
+            this.route.queryParams.subscribe((params: Params) => {
+                const url = params['redirectUrl'];
+                const provider = this.appConfig.get<string>(AppConfigValues.PROVIDERS);
+
+                this.authService.setRedirect({ provider, url });
+              });
         }
 
         if (this.hasCustomFieldsValidation()) {
@@ -173,20 +187,31 @@ export class LoginComponent implements OnInit {
      */
     onSubmit(values: any) {
         this.disableError();
-        const args = new LoginSubmitEvent({
-            controls: { username: this.form.controls.username }
-        });
-        this.executeSubmit.emit(args);
 
-        if (args.defaultPrevented) {
-            return false;
+        if (this.authService.isOauth() && this.authService.isSSODiscoveryConfigured()) {
+            this.errorMsg = 'LOGIN.MESSAGES.SSO-WRONG-CONFIGURATION';
+            this.isError = true;
         } else {
-            this.performLogin(values);
+            const args = new LoginSubmitEvent({
+                controls: { username: this.form.controls.username }
+            });
+            this.executeSubmit.emit(args);
+
+            if (args.defaultPrevented) {
+                return false;
+            } else {
+                this.performLogin(values);
+            }
         }
     }
 
     implicitLogin() {
-        this.authService.ssoImplicitLogin();
+        if (this.authService.isOauth() && !this.authService.isSSODiscoveryConfigured()) {
+            this.errorMsg = 'LOGIN.MESSAGES.SSO-WRONG-CONFIGURATION';
+            this.isError = true;
+        } else {
+            this.authService.ssoImplicitLogin();
+        }
     }
 
     /**
@@ -267,7 +292,7 @@ export class LoginComponent implements OnInit {
         } else if (
             err.status === 403 &&
             err.message.indexOf('The system is currently in read-only mode') !==
-                -1
+            -1
         ) {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ECM-LICENSE';
         } else {
@@ -351,7 +376,7 @@ export class LoginComponent implements OnInit {
         this._message = {
             username: {
                 required: {
-                   value: 'LOGIN.MESSAGES.USERNAME-REQUIRED'
+                    value: 'LOGIN.MESSAGES.USERNAME-REQUIRED'
                 },
                 minLength: {
                     value: 'LOGIN.MESSAGES.USERNAME-MIN',

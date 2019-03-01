@@ -29,6 +29,7 @@ import {
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
+import { TaskDescriptionValidator } from '../validators/task-description.validator';
 
 @Component({
     selector: 'adf-task-header',
@@ -168,7 +169,8 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
                     key: 'description',
                     default: this.translationService.instant('ADF_TASK_LIST.PROPERTIES.DESCRIPTION_DEFAULT'),
                     multiline: true,
-                    editable: true
+                    editable: true,
+                    validators: [new TaskDescriptionValidator()]
                 }
             ),
             new CardViewTextItemModel(

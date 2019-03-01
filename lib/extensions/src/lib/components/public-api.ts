@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './viewer/viewer-extension.interface';
 export * from './viewer/preview-extension.component';
 export * from './dynamic-column/dynamic-column.component';
 export * from './dynamic-component/dynamic.component';

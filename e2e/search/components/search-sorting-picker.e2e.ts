@@ -26,7 +26,7 @@ import { NodeActions } from '../../actions/ACS/node.actions';
 
 import TestConfig = require('../../test.config');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';
@@ -254,11 +254,33 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277286] Should be able to sort the search results by "Created Date" ASC', () => {
-        expect(searchResults.sortAndCheckListIsOrderedByCreated(true)).toBe(true);
+        searchResults.sortByCreated(true);
+        browser.controlFlow().execute(async () => {
+            let idList = await contentServices.getElementsDisplayedId();
+            let numberOfElements = await contentServices.numberOfResultsDisplayed();
+
+            let nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
+            let dateList = [];
+            for (let i = 0; i < nodeList.length; i++) {
+                dateList.push(new Date(nodeList[i].entry.createdAt));
+            }
+            expect(contentServices.checkElementsSortedAsc(dateList)).toBe(true);
+        });
     });
 
     it('[C277287] Should be able to sort the search results by "Created Date" DESC', () => {
-        expect(searchResults.sortAndCheckListIsOrderedByCreated(false)).toBe(true);
+        searchResults.sortByCreated(false);
+        browser.controlFlow().execute(async () => {
+            let idList = await contentServices.getElementsDisplayedId();
+            let numberOfElements = await contentServices.numberOfResultsDisplayed();
+
+            let nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
+            let dateList = [];
+            for (let i = 0; i < nodeList.length; i++) {
+                dateList.push(new Date(nodeList[i].entry.createdAt));
+            }
+            expect(contentServices.checkElementsSortedDesc(dateList)).toBe(true);
+        });
     });
 
     it('[C277288] Should be able to sort the search results by "Modified Date" ASC', () => {

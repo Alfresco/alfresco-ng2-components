@@ -18,7 +18,7 @@
 import { element, by } from 'protractor';
 
 import { Util } from '../../util/util';
-import { DataTablePage } from './dataTablePage';
+import { DataTableComponentPage } from './dataTableComponentPage';
 
 let column = {
     role: 'Role'
@@ -38,6 +38,13 @@ export class PermissionsPage {
     roleDropdownOptions = element.all(by.css('.mat-option-text'));
     assignPermissionError = element(by.css('simple-snack-bar'));
     deletePermissionButton = element(by.css(`button[data-automation-id='adf-delete-permission-button']`));
+    permissionDisplayContainer = element(by.css(`div[id='adf-permission-display-container']`));
+    closeButton = element(by.id('add-permission-dialog-close-button'));
+
+    clickCloseButton() {
+        Util.waitUntilElementIsClickable(this.closeButton);
+        this.closeButton.click();
+    }
 
     checkAddPermissionButtonIsDisplayed() {
         Util.waitUntilElementIsVisible(this.addPermissionButton);
@@ -107,11 +114,11 @@ export class PermissionsPage {
     }
 
     checkPermissionsDatatableIsDisplayed() {
-        return new DataTablePage(element(by.css('[class*="adf-datatable-permission"]')));
+        return new DataTableComponentPage(element(by.css('[class*="adf-datatable-permission"]')));
     }
 
     getRoleCellValue(rowName) {
-        let locator = new DataTablePage().getCellByNameAndColumn(rowName, column.role);
+        let locator = new DataTableComponentPage().getCellByRowAndColumn('Authority ID', rowName, column.role);
         Util.waitUntilElementIsVisible(locator);
         return locator.getText();
     }
@@ -137,5 +144,9 @@ export class PermissionsPage {
     getAssignPermissionErrorText() {
         Util.waitUntilElementIsVisible(this.assignPermissionError);
         return this.assignPermissionError.getText();
+    }
+
+    checkPermissionContainerIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.permissionDisplayContainer);
     }
 }

@@ -25,7 +25,7 @@ import { browser } from 'protractor';
 export class AppsActions {
 
     async getProcessTaskId(alfrescoJsApi, processId) {
-        let taskList = await alfrescoJsApi.activiti.taskApi.listTasks();
+        let taskList = await alfrescoJsApi.activiti.taskApi.listTasks({});
         let taskId = -1;
 
         taskList.data.forEach((task) => {

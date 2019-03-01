@@ -26,7 +26,8 @@ export class ChecklistDialog {
     dialogTitle = element(by.id('add-checklist-title'));
 
     addName(name) {
-        Util.waitUntilElementIsVisible(this.nameField);
+        Util.waitUntilElementIsClickable(this.nameField);
+        this.nameField.clear();
         this.nameField.sendKeys(name);
         return this;
     }

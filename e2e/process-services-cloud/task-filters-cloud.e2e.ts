@@ -17,13 +17,14 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { AppListCloudPage } from '@alfresco/adf-testing';
 import { Util } from '../util/util';
 import { Tasks } from '../actions/APS-cloud/tasks';
+import { browser } from 'protractor';
 
 describe('Task filters cloud', () => {
 
@@ -31,7 +32,7 @@ describe('Task filters cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudComponent();
+        let appListCloudComponent = new AppListCloudPage();
         let tasksCloudDemoPage = new TasksCloudDemoPage();
         const tasksService: Tasks = new Tasks();
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
@@ -44,6 +45,7 @@ describe('Task filters cloud', () => {
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
+            browser.ignoreSynchronization = true;
             loginSSOPage.loginAPS(user, password);
         });
 
@@ -66,12 +68,12 @@ describe('Task filters cloud', () => {
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(newTask);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(newTask);
 
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
 
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(newTask);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(newTask);
         });
 
         it('[C289955] Should display task in Complete Tasks List when task is completed', async () => {
@@ -83,12 +85,12 @@ describe('Task filters cloud', () => {
 
             tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTask);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTask);
 
             tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
             expect(tasksCloudDemoPage.getActiveFilterName()).toBe('Completed Tasks');
 
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTask);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask);
         });
 
         it('[C291792] Should select the first task filter from the list as default', () => {

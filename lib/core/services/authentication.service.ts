@@ -314,4 +314,11 @@ export class AuthenticationService {
             }
         });
     }
+
+    /**
+     * Check if SSO is configured correctly
+     */
+    isSSODiscoveryConfigured() {
+        return this.alfrescoApi.getInstance().storage.getItem('discovery') ? true : false;
+    }
 }

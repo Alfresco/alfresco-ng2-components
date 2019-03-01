@@ -926,6 +926,9 @@
         "filterWithContains": {
           "type": "boolean"
         },
+        "resetButton": {
+          "type": "boolean"
+        },
         "facetFields": {
           "type": "object",
           "required": [

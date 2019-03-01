@@ -36,7 +36,7 @@ import { Tenant } from '../models/APS/tenant';
 import { FileModel } from '../models/ACS/fileModel';
 import dateFormat = require('dateformat');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import path = require('path');
 
 describe('Start Process Component', () => {
@@ -371,7 +371,7 @@ describe('Start Process Component', () => {
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.selectFromProcessList('Active Task');
             processDetailsPage.clickOnActiveTask();
-            processDetailsPage.checkActiveTaskTitleIsDisplayed(app.task_name);
+            processDetailsPage.checkActiveTaskTitleIsDisplayed();
         });
 
         it('[C260457] Should display process in Completed when cancelled', () => {

@@ -238,7 +238,7 @@ export class TaskListService {
      * @returns Null response notifying when the operation is complete
      */
     deleteTask(taskId: string): Observable<TaskDetailsModel> {
-        return from<TaskDetailsModel>(this.callApiDeleteTask(taskId))
+        return from(this.callApiDeleteTask(taskId))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -250,7 +250,7 @@ export class TaskListService {
      * @returns Null response notifying when the operation is complete
      */
     deleteForm(taskId: string): Observable<TaskDetailsModel> {
-        return from<TaskDetailsModel>(this.callApiDeleteForm(taskId))
+        return from(this.callApiDeleteForm(taskId))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -339,7 +339,7 @@ export class TaskListService {
      * @returns Details of the claimed task
      */
     claimTask(taskId: string): Observable<TaskDetailsModel> {
-        return from<TaskDetailsModel>(this.apiService.taskApi.claimTask(taskId))
+        return from(this.apiService.taskApi.claimTask(taskId))
             .pipe(
                 catchError((err) => this.handleError(err))
             );
@@ -351,7 +351,7 @@ export class TaskListService {
      * @returns Null response notifying when the operation is complete
      */
     unclaimTask(taskId: string): Observable<TaskDetailsModel> {
-        return from<TaskDetailsModel>(this.apiService.taskApi.unclaimTask(taskId))
+        return from(this.apiService.taskApi.unclaimTask(taskId))
             .pipe(
                 catchError((err) => this.handleError(err))
             );

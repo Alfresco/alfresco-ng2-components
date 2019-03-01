@@ -27,7 +27,7 @@ import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 import { Util } from '../util/util';
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { AppsRuntimeActions } from '../actions/APS/appsRuntime.actions';
 import { UsersActions } from '../actions/users.actions';
@@ -129,8 +129,8 @@ describe('Start Task - Custom App', () => {
 
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(nrOfTasks);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(nrOfTasks);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName)).toEqual(true);
         });
         expect(paginationPage.getCurrentPage()).toEqual('Page 1');
@@ -148,8 +148,8 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.taskList().getDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + nrOfTasks + ' of ' + nrOfTasks);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(nrOfTasks);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(nrOfTasks);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName)).toEqual(true);
         });
         paginationPage.checkNextPageButtonIsDisabled();
@@ -164,8 +164,8 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.taskList().getDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(0, 5))).toEqual(true);
         });
 
@@ -174,8 +174,8 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.taskList().getDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 6-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(5, 10))).toEqual(true);
         });
 
@@ -184,8 +184,8 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.taskList().getDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(10, 15))).toEqual(true);
         });
 
@@ -194,8 +194,8 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.taskList().getDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(15, 20))).toEqual(true);
         });
     });
@@ -209,8 +209,8 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.taskList().getDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(itemsPerPage.tenValue);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(0, 10))).toEqual(true);
         });
         paginationPage.clickOnNextPage();
@@ -218,8 +218,8 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.taskList().getDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.tenValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(itemsPerPage.tenValue);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.tenValue);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(10, 20))).toEqual(true);
         });
     });
@@ -233,8 +233,8 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.taskList().getDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * currentPage + ' of ' + nrOfTasks);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(itemsPerPage.fifteenValue);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fifteenValue);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(0, 15))).toEqual(true);
         });
         currentPage++;
@@ -242,8 +242,8 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.taskList().getDataTable().waitForTableBody();
         expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfTasks + ' of ' + nrOfTasks);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(15, 20))).toEqual(true);
         });
     });
@@ -277,8 +277,8 @@ describe('Start Task - Custom App', () => {
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual(totalNrOfPages);
         paginationPage.checkPageSelectorIsDisplayed();
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(0, 5))).toEqual(true);
         });
 
@@ -288,8 +288,8 @@ describe('Start Task - Custom App', () => {
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual(totalNrOfPages);
         paginationPage.checkPageSelectorIsDisplayed();
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(5, 10))).toEqual(true);
         });
 
@@ -299,8 +299,8 @@ describe('Start Task - Custom App', () => {
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual(totalNrOfPages);
         paginationPage.checkPageSelectorIsDisplayed();
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(10, 15))).toEqual(true);
         });
 
@@ -310,8 +310,8 @@ describe('Start Task - Custom App', () => {
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual(totalNrOfPages);
         paginationPage.checkPageSelectorIsDisplayed();
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(itemsPerPage.fiveValue);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName.slice(15, 20))).toEqual(true);
         });
     });
@@ -333,8 +333,8 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.clickResetButton();
 
         taskListSinglePage.typeDueAfter(beforeDate);
-        taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(paginationTasksName[0]);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(1);
+        taskListSinglePage.taskList().checkContentIsDisplayed(paginationTasksName[0]);
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(1);
     });
 
     it('[C286414] Task is not displayed when typing into dueAfter field a date after the task due date', function () {
@@ -366,8 +366,8 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.clickResetButton();
 
         taskListSinglePage.typeDueBefore(afterDate);
-        taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(paginationTasksName[0]);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(1);
+        taskListSinglePage.taskList().checkContentIsDisplayed(paginationTasksName[0]);
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(1);
     });
 
     it('[C286426] Task is not displayed when typing into dueBefore field the same date as tasks due date', function () {
@@ -393,8 +393,8 @@ describe('Start Task - Custom App', () => {
 
         taskListSinglePage.typeDueBefore(afterDate);
         taskListSinglePage.typeDueAfter(beforeDate);
-        taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(paginationTasksName[0]);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(1);
+        taskListSinglePage.taskList().checkContentIsDisplayed(paginationTasksName[0]);
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(1);
     });
 
     it('[C286429] Task is not displayed when typing into dueAfter field a date after the tasks due date and into dueBefore a date after', function () {
@@ -413,9 +413,9 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.typeAppId(appRuntime.id);
         expect(taskListSinglePage.getAppId()).toEqual(appRuntime.id.toString());
 
-        taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(app.taskName);
-        taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(app.taskName);
-        taskListSinglePage.taskList().getDataTable().checkRowIsNotDisplayedByName(paginationTasksName[13]);
+        taskListSinglePage.taskList().checkContentIsDisplayed(app.taskName);
+        taskListSinglePage.taskList().checkContentIsDisplayed(app.taskName);
+        taskListSinglePage.taskList().checkContentIsNotDisplayed(paginationTasksName[13]);
     });
 
     it('[C280569] Should be able to see No tasks found when typing an invalid appId', () => {
@@ -435,8 +435,10 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.typeTaskName(paginationTasksName[13]);
         expect(taskListSinglePage.getTaskName()).toEqual(paginationTasksName[13]);
 
-        taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(paginationTasksName[13]);
-        expect(taskListSinglePage.taskList().getDataTable().getNumberOfRowsDisplayedWithSameName(paginationTasksName[13])).toEqual(2);
+        taskListSinglePage.taskList().checkContentIsDisplayed(paginationTasksName[13]);
+        taskListSinglePage.taskList().getRowsDisplayedWithSameName(paginationTasksName[13]).then((list) => {
+            expect(list.length).toEqual(2);
+        });
     });
 
     it('[C280571] Should be able to see No tasks found when typing a task name that does not exist', () => {
@@ -456,8 +458,8 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.typeTaskId(taskWithDueDate.id);
         expect(taskListSinglePage.getTaskId()).toEqual(taskWithDueDate.id);
 
-        taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(taskWithDueDate.name);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(1);
+        taskListSinglePage.taskList().checkContentIsDisplayed(taskWithDueDate.name);
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(1);
     });
 
     it('[C280630] Should be able to see No tasks found when typing an invalid taskId', () => {
@@ -476,10 +478,10 @@ describe('Start Task - Custom App', () => {
 
         taskListSinglePage.selectState('Completed');
 
-        taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(completedTasks[0].name);
-        taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(completedTasks[1].name);
-        taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(completedTasks[2].name);
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(3);
+        taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[0].name);
+        taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[1].name);
+        taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[2].name);
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(3);
     });
 
     it('[C286597] Should be able to see only running tasks when choosing Active from state drop down', () => {
@@ -488,13 +490,13 @@ describe('Start Task - Custom App', () => {
 
         taskListSinglePage.selectState('Active');
 
-        taskListSinglePage.taskList().getDataTable().checkRowIsNotDisplayedByName(completedTasks[0].name);
-        taskListSinglePage.taskList().getDataTable().checkRowIsNotDisplayedByName(completedTasks[1].name);
-        taskListSinglePage.taskList().getDataTable().checkRowIsNotDisplayedByName(completedTasks[2].name);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        taskListSinglePage.taskList().checkContentIsNotDisplayed(completedTasks[0].name);
+        taskListSinglePage.taskList().checkContentIsNotDisplayed(completedTasks[1].name);
+        taskListSinglePage.taskList().checkContentIsNotDisplayed(completedTasks[2].name);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName)).toEqual(true);
         });
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(20);
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(20);
     });
 
     it('[C286598] Should be able to see all tasks when choosing All from state drop down', () => {
@@ -503,13 +505,13 @@ describe('Start Task - Custom App', () => {
 
         taskListSinglePage.selectState('All');
 
-        taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(completedTasks[0].name);
-        taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(completedTasks[1].name);
-        taskListSinglePage.taskList().getDataTable().checkRowIsDisplayedByName(completedTasks[2].name);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[0].name);
+        taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[1].name);
+        taskListSinglePage.taskList().checkContentIsDisplayed(completedTasks[2].name);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, allTasksName)).toEqual(true);
         });
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(23);
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(23);
     });
 
     // failing due to ADF-3667, blocked by ACTIVITI-1975
@@ -523,16 +525,16 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.selectState('All');
         taskListSinglePage.selectSort('Due (asc)');
 
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, sortAscByDueDate)).toEqual(true);
         });
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(4);
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(4);
 
         taskListSinglePage.clickResetButton();
         taskListSinglePage.selectState('All');
         taskListSinglePage.selectSort('Due (asc)');
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(23);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(23);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list.slice(0, 4), sortAscByDueDate)).toEqual(true);
             expect(Util.arrayContainsArray(list.slice(4, list.length), allTasksName)).toEqual(true);
         });
@@ -549,16 +551,16 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.selectState('All');
         taskListSinglePage.selectSort('Due (desc)');
 
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list, sortDescByDueDate)).toEqual(true);
         });
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(4);
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(4);
 
         taskListSinglePage.clickResetButton();
         taskListSinglePage.selectState('All');
         taskListSinglePage.selectSort('Due (asc)');
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(23);
-        taskListSinglePage.taskList().getDataTable().getAllRowsNameColumn().then(function (list) {
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(23);
+        taskListSinglePage.taskList().getAllRowsNameColumn().then(function (list) {
             expect(Util.arrayContainsArray(list.slice(0, 4), sortDescByDueDate)).toEqual(true);
             expect(Util.arrayContainsArray(list.slice(4, list.length), allTasksName)).toEqual(true);
         });
@@ -573,7 +575,7 @@ describe('Start Task - Custom App', () => {
 
         taskListSinglePage.typeProcessDefinitionId(processDefinitionId.processDefinitionId);
 
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(4);
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(4);
         taskListSinglePage.getAllProcessDefinitionIds().then(function (list) {
             expect(Util.arrayContainsArray(list, processDefinitionIds)).toEqual(true);
         });
@@ -597,7 +599,7 @@ describe('Start Task - Custom App', () => {
         taskListSinglePage.typeProcessInstanceId(processDefinitionId.id);
         expect(taskListSinglePage.getProcessInstanceId()).toEqual(processDefinitionId.id);
 
-        expect(taskListSinglePage.taskList().getDataTable().getAllDisplayedRows()).toBe(1);
+        expect(taskListSinglePage.taskList().getDataTable().numberOfRows()).toBe(1);
         taskListSinglePage.getAllProcessInstanceIds().then(function (list) {
             expect(Util.arrayContainsArray(list, processInstanceIds)).toEqual(true);
         });

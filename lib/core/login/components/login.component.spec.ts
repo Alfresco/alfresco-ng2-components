@@ -489,7 +489,7 @@ describe('LoginComponent', () => {
     it('should return ECM read-only error when error occurs', async(() => {
         spyOn(authService, 'login')
             .and.returnValue(
-                throwError(
+            throwError(
                 {
                     message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode',
                     status: 403
@@ -569,49 +569,80 @@ describe('LoginComponent', () => {
         loginWithCredentials('fake-username', 'fake-password');
     }));
 
-    describe('SSO', () => {
+    describe('SSO ', () => {
 
-        beforeEach(() => {
-            appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true };
-            appConfigService.load();
-            alfrescoApiService.reset();
+        describe('implicitFlow ', () => {
+
+            beforeEach(() => {
+                appConfigService.config.oauth2 = <OauthConfigModel> { implicitFlow: true };
+                appConfigService.load();
+                alfrescoApiService.reset();
+            });
+
+            it('should not show login username and password if SSO implicit flow is active', async(() => {
+                spyOn(authService, 'isOauth').and.returnValue(true);
+
+                component.ngOnInit();
+                fixture.detectChanges();
+
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('#username')).toBeNull();
+                    expect(element.querySelector('#password')).toBeNull();
+                });
+            }));
+
+            it('should not show the login base auth button', async(() => {
+                spyOn(authService, 'isOauth').and.returnValue(true);
+
+                component.ngOnInit();
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('#login-button')).toBeNull();
+                });
+            }));
+
+            it('should  show the login SSO button', async(() => {
+                spyOn(authService, 'isOauth').and.returnValue(true);
+
+                component.ngOnInit();
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('#login-button-sso')).toBeDefined();
+                });
+            }));
+
+            it('should show the SSO error when the discovery server is unreachable', async(() => {
+                spyOn(authService, 'isOauth').and.returnValue(true);
+                spyOn(authService, 'isSSODiscoveryConfigured').and.returnValue(false);
+
+                component.ngOnInit();
+                fixture.detectChanges();
+                element.querySelector('[data-automation-id="login-button-sso"]').click();
+
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    expect(getLoginErrorMessage()).toEqual('LOGIN.MESSAGES.SSO-WRONG-CONFIGURATION' );
+                });
+            }));
+
+            it('should not show the SSO error when the discovery server is reachable', async(() => {
+                spyOn(authService, 'isOauth').and.returnValue(true);
+                spyOn(authService, 'isSSODiscoveryConfigured').and.returnValue(true);
+                spyOn(authService, 'ssoImplicitLogin').and.stub();
+
+                component.ngOnInit();
+                fixture.detectChanges();
+                element.querySelector('[data-automation-id="login-button-sso"]').click();
+
+                fixture.whenStable().then(() => {
+                    expect(getLoginErrorMessage()).toBeUndefined();
+                });
+            }));
         });
-
-        it('should not show login username and password if SSO implicit flow is active', async(() => {
-            spyOn(authService, 'isOauth').and.returnValue(true);
-
-            component.ngOnInit();
-            fixture.detectChanges();
-
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                expect(element.querySelector('#username')).toBeNull();
-                expect(element.querySelector('#password')).toBeNull();
-            });
-        }));
-
-        it('should not show the login base auth button', async(() => {
-            spyOn(authService, 'isOauth').and.returnValue(true);
-
-            component.ngOnInit();
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                expect(element.querySelector('#login-button')).toBeNull();
-            });
-        }));
-
-        it('should  show the login SSO button', async(() => {
-            spyOn(authService, 'isOauth').and.returnValue(true);
-
-            component.ngOnInit();
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                expect(element.querySelector('#login-button-sso')).toBeDefined();
-            });
-        }));
-
     });
 });

@@ -1,0 +1,388 @@
+{
+  "SAVE": "حفظ",
+  "COMPLETE": "تم",
+  "START PROCESS": "بدء العملية",
+  "FORM": {
+    "START_FORM": {
+      "TITLE": "نموذج البدء"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "المعاينة غير متاحة"
+    },
+    "FIELD": {
+      "LOCALSTORAGE": "التخزين المحلي",
+      "SOURCE": "تحديد المصدر من ",
+      "SHOW_FILE": "إظهار",
+      "DOWNLOAD_FILE": "تنزيل",
+      "REMOVE_FILE": "إزالة",
+      "UPLOAD": "تحميل",
+      "REQUIRED": "*مطلوب",
+      "VALIDATOR": {
+        "INVALID_NUMBER": "استخدم تنسيق رقم مختلفًا",
+        "INVALID_DATE": "استخدم تنسيق تاريخ مختلفًا",
+        "INVALID_VALUE": "أدخل قيمة مختلفة",
+        "NOT_GREATER_THAN": "لا يمكن أن يكون أكبر من {{ maxValue }}",
+        "NOT_LESS_THAN": "لا يمكن أن يكون أقل من {{ minValue }}",
+        "AT_LEAST_LONG": "أدخل {{ minLength }} حرف (حرفًا) على الأقل",
+        "NO_LONGER_THAN": "أدخل {{ maxLength }} حرف (حرفًا) كحد أقصى"
+      }
+    }
+  },
+  "CORE": {
+    "HEADER": {
+      "LOGO_ARIA": "شعار الشركة"
+    },
+    "FILE_SIZE": {
+      "BYTES": "بايت",
+      "KB": "كيلوبايت",
+      "MB": "ميجابايت",
+      "GB": "جيجابايت",
+      "TB": "تيرابايت",
+      "PB": "بيتابايت",
+      "EB": "إكسابايت",
+      "ZB": "زيتابايت",
+      "YB": "يوتابايت"
+    },
+    "PAGINATION": {
+      "ARIA": {
+        "ITEMS_PER_PAGE": "محدد حجم الصفحة",
+        "CURRENT_PAGE": "محدد الصفحة الحالية",
+        "PREVIOUS_PAGE": "زر الصفحة السابقة",
+        "NEXT_PAGE": "زر الصفحة التالية"
+      },
+      "ITEMS_RANGE": "إظهار {{ range }} من {{ total }}",
+      "ITEMS_PER_PAGE": "عناصر لكل صفحة",
+      "CURRENT_PAGE": "الصفحة {{ number }}",
+      "TOTAL_PAGES": "من {{ total }}"
+    },
+    "DIALOG": {
+      "DOWNLOAD_ZIP": {
+        "ACTIONS": {
+          "CANCEL": "إلغاء"
+        },
+        "TITLE": "إضافة الملفات إلى الضغط، قد يستغرق هذا بضع دقائق"
+      }
+    },
+    "FILE_DIALOG": {
+      "FILE_LOCK": "تأمين ملف",
+      "ALLOW_OTHERS_CHECKBOX": "السماح للمالك بتعديل هذا الملف",
+      "FILE_LOCK_CHECKBOX": "تأمين ملف",
+      "TIME_LOCK_CHECKBOX": "تأمين الوقت",
+      "SAVE_BUTTON": {
+        "LABEL": "حفظ"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "إلغاء"
+      }
+    },
+    "FOLDER_DIALOG": {
+      "CREATE_FOLDER_TITLE": "إنشاء مجلد جديد",
+      "EDIT_FOLDER_TITLE": "تحرير مجلد",
+      "FOLDER_NAME": {
+        "LABEL": "الاسم",
+        "ERRORS": {
+          "REQUIRED": "اسم المجلد مطلوب",
+          "SPECIAL_CHARACTERS": "لا يمكن أن يحتوي اسم المجلد على هذه الحروف * \" < > \\ / ? : |",
+          "ENDING_DOT": "لا يمكن أن ينتهي اسم المجلد بنقطة .",
+          "ONLY_SPACES": "لايمكن أن يحتوي اسم المجلد على مسافات فقط"
+        }
+      },
+      "FOLDER_DESCRIPTION": {
+        "LABEL": "الوصف"
+      },
+      "CREATE_BUTTON": {
+        "LABEL": "إنشاء"
+      },
+      "UPDATE_BUTTON": {
+        "LABEL": "تحديث"
+      },
+      "CANCEL_BUTTON": {
+        "LABEL": "إلغاء"
+      }
+    },
+    "MESSAGES": {
+      "ERRORS": {
+        "GENERIC": "كان الإجراء غير ناجح. حاول مرة أخرى أو اتصل بفريق تكنولوجيا المعلومات.",
+        "EXISTENT_FOLDER": "يوجد مجلد بهذا الاسم بالفعل. جرّب اسمًا مختلفًا."
+      }
+    },
+    "RESTORE_NODE": {
+      "VIEW": "عرض",
+      "PARTIAL_PLURAL": "لم تتم استعادة {{ number }} من العناصر بسبب مشكلات في مكان الاستعادة",
+      "NODE_EXISTS": "تتعذر الاستعادة، عنصر {{ name }} موجود بالفعل",
+      "LOCATION_MISSING": "تتعذر استعادة العنصر {{ name }}، المكان الأصلي لم يعد موجودًا",
+      "GENERIC": "حدثت مشكلة في استعادة العنصر {{ name }}",
+      "PLURAL": "نجحت الاستعادة",
+      "SINGULAR": "تمت استعادة العنصر {{ name }}"
+    },
+    "DELETE_NODE": {
+      "SINGULAR": "تم حذف {{ name }}",
+      "PLURAL": "تم حذف {{ number }} عناصر",
+      "PARTIAL_SINGULAR": "تم حذف {{ success }} عنصر، تعذر حذف {{ failed }}",
+      "PARTIAL_PLURAL": "تم حذف {{ success }} عناصر، تعذر حذف {{ failed }}",
+      "ERROR_SINGULAR": "تعذر حذف {{ name }}",
+      "ERROR_PLURAL": "تعذر حذف {{ number }} من العناصر"
+    },
+    "HOST_SETTINGS": {
+      "TYPE-AUTH": "نوع المصادقة",
+      "BASIC": "مصادقة أساسية",
+      "SSO": "SSO",
+      "IMPLICIT-FLOW": "تدفق ضمني",
+      "PROVIDER": "موفر",
+      "REQUIRED": "هذا الحقل مطلوب",
+      "CS_URL_ERROR": "لا يتطابق عنوان Content Services مع تنسيق URL",
+      "PS_URL_ERROR": "لا يتطابق عنوان Process Services مع تنسيق URL",
+      "TITLE": "إعدادات",
+      "CS-HOST": "عنوان URL لـ Content Services",
+      "BP-HOST": "عنوان URL لـ Process Services",
+      "BACK": "عودة",
+      "APPLY": "تطبيق",
+      "NOT_VALID": "لم يتم التعرف على http(s)://host|ip:port(/path)، جرّب عنوان URL مختلفًا.",
+      "REDIRECT": "إعادة توجيه URI",
+      "REDIRECT_LOGOUT": "إعادة توجيه خروج URI",
+      "SILENT": "دخول صامت",
+      "SCOPE": "نطاق",
+      "CLIENT": "معرف العميل"
+    },
+    "CARDVIEW": {
+      "KEYVALUEPAIRS": {
+        "ADD": "إضافة جديد",
+        "NAME": "الاسم",
+        "VALUE": "القيمة"
+      },
+      "VALIDATORS": {
+        "FLOAT_VALIDATION_ERROR": "استخدام تنسيق رقم",
+        "INT_VALIDATION_ERROR": "استخدام تنسيق عدد صحيح"
+      }
+    },
+    "METADATA": {
+      "BASIC": {
+        "HEADER": "الخصائص",
+        "NAME": "الاسم",
+        "TITLE": "العنوان",
+        "DESCRIPTION": "الوصف",
+        "AUTHOR": "المؤلف",
+        "MIMETYPE": "Mimetype",
+        "SIZE": "الحجم",
+        "CREATOR": "المنشئ",
+        "CREATED_DATE": "تاريخ الإنشاء",
+        "MODIFIER": "المعدل",
+        "MODIFIED_DATE": "تاريخ التعديل"
+      },
+      "ACTIONS": {
+        "EDIT": "تحرير",
+        "SAVE": "حفظ",
+        "CANCEL": "إلغاء",
+        "TOGGLE": "تبديل القيمة"
+      }
+    }
+  },
+  "COMMENTS": {
+    "NONE": "لا تعليقات",
+    "ADD": "إضافة",
+    "HEADER": "التعليقات ({{ count }})",
+    "CREATED_BY_HEADER": "تم الإنشاء بواسطة",
+    "MESSAGE_HEADER": "رسالة",
+    "DIALOG": {
+      "TITLE": "تعليق جديد",
+      "LABELS": {
+        "MESSAGE": "رسالة"
+      },
+      "BUTTON": {
+        "ADD": "إضافة تعليق",
+        "CANCEL": "إلغاء"
+      }
+    }
+  },
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "تسجيل دخول",
+      "USERNAME": "اسم مستخدم",
+      "PASSWORD": "كلمة سر",
+      "REMEMBER": "تذكرني"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "مطلوب",
+      "USERNAME-MIN": "يلزم أن يكون اسم المستخدم {{ minLength }} من الحروف على الأقل.",
+      "PASSWORD-REQUIRED": "أدخل كلمة السر لتسجيل الدخول",
+      "LOGIN-ERROR-CREDENTIALS": "لقد أدخلت اسم مستخدم أو كلمة سر غير معروفة",
+      "LOGIN-ERROR-PROVIDERS": "لا يمكن أن يكون الموفرون غير محددين",
+      "LOGIN-ERROR-CORS": "استثناء CORS، تحقق من تكوين الخادم لديك",
+      "LOGIN-ERROR-CSRF": "استثناء CSRF، قم بتعيين [disableCsrf]=\"true\" في login.component",
+      "LOGIN-ECM-LICENSE": "مستودع Alfresco Content Services في وضع للقراءة فقط"
+    },
+    "BUTTON": {
+      "LOGIN": "تسجيل دخول",
+      "CHECKING": "فحص",
+      "WELCOME": "مرحبًا",
+      "SSO": "تسجيل دخول SSO"
+    },
+    "ACTION": {
+      "HELP": "بحاجة لمساعدة؟",
+      "REGISTER": "تسجيل"
+    },
+    "DIALOG": {
+      "CANCEL": "إلغاء",
+      "CHOOSE": "اختيار"
+    }
+  },
+  "ADF-DATATABLE": {
+    "EMPTY": {
+      "HEADER": "هذه القائمة فارغة",
+      "DRAG-AND-DROP": {
+        "TITLE": "سحب وإفلات",
+        "SUBTITLE": "لتحميل الملفات"
+      }
+    },
+    "CONTENT-ACTIONS": {
+      "TOOLTIP": "إجراءات المحتوى"
+    }
+  },
+  "USER_PROFILE": {
+    "LABELS": {
+      "ECM": {
+        "JOB_TITLE": "عنوان المهمة"
+      },
+      "BPM": {
+        "TENANT": "مستأجر"
+      }
+    },
+    "TAB": {
+      "CS": "Content Services",
+      "PS": "Process Services"
+    }
+  },
+  "ADF_VIEWER": {
+    "ACTIONS": {
+      "BACK": "عودة",
+      "OPEN_WITH": "فتح باستخدام",
+      "DOWNLOAD": "تنزيل",
+      "PRINT": "طباعة",
+      "SHARE": "مشاركة",
+      "MORE_ACTIONS": "إجراءات أكثر",
+      "INFO": "معلومات",
+      "FULLSCREEN": "تنشيط وضع ملء الشاشة",
+      "CLOSE": "إغلاق",
+      "NEXT_FILE": "الملف التالي",
+      "PREV_FILE": "الملف السابق"
+    },
+    "ARIA": {
+      "PREVIOUS_PAGE": "الصفحة السابقة",
+      "NEXT_PAGE": "الصفحة التالية",
+      "ZOOM_IN": "تكبير",
+      "ZOOM_OUT": "تصغير",
+      "FIT_PAGE": "ملاءمة الصفحة",
+      "ROTATE_LEFT": "تدوير لليسار",
+      "ROTATE_RIGHT": "تدوير لليمين",
+      "RESET": "إعادة تعيين"
+    },
+    "PAGE_LABEL": {
+      "SHOWING": "إظهار",
+      "OF": "من"
+    },
+    "LOADING": "تحميل",
+    "UNKNOWN_FORMAT": "تعذر تحميل المعاينة",
+    "SIDEBAR": {
+      "THUMBNAILS": {
+        "PAGE": "الصفحة{{ pageNum }}"
+      },
+      "METADATA": {
+        "MORE_INFORMATION": "معلومات أكثر",
+        "LESS_INFORMATION": "معلومات أقل"
+      }
+    },
+    "PDF_DIALOG": {
+      "SUBMIT": "إرسال",
+      "CLOSE": "إغلاق",
+      "PLACEHOLDER": "كلمة سر",
+      "ERROR": "كلمة السر خطأ"
+    }
+  },
+  "ERROR_CONTENT": {
+    "UNKNOWN": {
+      "TITLE": "نواجه مشكلة.",
+      "DESCRIPTION": "يبدو أن شيئًا ما خطأ قد حدث.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "عودة إلى الرئيسية"
+      }
+    },
+    "403": {
+      "TITLE": "ليس لديك إذن للوصول إلى هذا الخادم.",
+      "DESCRIPTION": "غير مسموح لك بالوصول إلى هذا المورد على الخادم.",
+      "SECONDARY_BUTTON": {
+        "TEXT": "إبلاغ عن مشكلة"
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "عودة إلى الرئيسية"
+      }
+    },
+    "404": {
+      "TITLE": "حدث خطأ.",
+      "DESCRIPTION": "تعذر العثور على الصفحة التي تبحث عنها.",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "عودة إلى الرئيسية"
+      }
+    }
+  },
+  "ABOUT": {
+    "SERVER_SETTINGS": {
+      "TITLE": "إعدادات الخادم",
+      "DESCRIPTION": "تم أخذ القيم أدناه من AppConfigService",
+      "CONTENT_SERVICE_HOST": "Alfresco Content Services URL: {{ value }}",
+      "PROCESS_SERVICE_HOST": "Alfresco Process Services URL: {{ value }}"
+    },
+    "VERSIONS": {
+      "TITLE": "إصدارات المنتج",
+      "CONTENT_SERVICE": "ECM",
+      "PROCESS_SERVICE": "BPM",
+      "LABELS": {
+        "EDITION": "الإصدار",
+        "VERSION": "الإصدار",
+        "LICENSE": "الترخيص",
+        "STATUS": "الحالة",
+        "MODULES": "وحدات"
+      }
+    },
+    "SOURCE_CODE": {
+      "TITLE": "رمز المصدر",
+      "DESCRIPTION": "أنت تقوم بتشغيل المشروع استنادًا إلى الالتزام التالي:"
+    },
+    "PACKAGES": {
+      "TITLE": "حزم",
+      "DESCRIPTION": "يستخدم المشروع الحالي مكتبات ADF التالية:"
+    },
+    "TABLE_HEADERS": {
+      "MODULES": {
+        "ID": "المعرف",
+        "TITLE": "العنوان",
+        "DESCRIPTION": "الوصف",
+        "INSTALL_DATE": "تاريخ التثبيت",
+        "INSTALL_STATE": "حالة التثبيت",
+        "VERSION_MIN": "أقل إصدار",
+        "VERSION_MAX": "أقصى إصدار"
+      },
+      "STATUS": {
+        "READ_ONLY": "للقراءة فقط",
+        "AUDIT_ENABLED": "تم تمكين التدقيق",
+        "QUICK_SHARE_ENABLED": "تم تمكين المشاركة السريعة",
+        "THUMBNAIL_ENABLED": "إنشاء صورة مصغرة"
+      },
+      "LICENSE": {
+        "ISSUES_AT": "تم الإصدار في",
+        "EXPIRES_AT": "تنتهي الصلاحية في",
+        "REMAINING_DAYS": "الأيام المتبقية",
+        "HOLDER": "الحامل",
+        "MODE": "الوضع",
+        "CLUSTER_ENABLED": "تم تمكين الكتلة",
+        "CRYPTODOC_ENABLED": "تم تمكين مستند تشفير"
+      }
+    }
+  }
+}

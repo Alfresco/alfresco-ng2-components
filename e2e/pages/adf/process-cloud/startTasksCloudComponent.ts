@@ -23,11 +23,16 @@ export class StartTasksCloudComponent {
     name = element(by.css('input[id="name_id"]'));
     dueDate = element(by.css('input[id="date_id"]'));
     description = element(by.css('textarea[id="description_id"]'));
-    assignee = element(by.css('adf-cloud-people input'));
     priority = element(by.css('input[formcontrolname="priority"]'));
     startButton = element(by.css('button[id="button-start"]'));
     startButtonEnabled = element(by.css('button[id="button-start"]:not(disabled)'));
     cancelButton = element(by.css('button[id="button-cancel"]'));
+    form = element(by.css('adf-cloud-start-task form'));
+
+    checkFormIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.form);
+        return this;
+    }
 
     addName(userName) {
         Util.waitUntilElementIsVisible(this.name);
@@ -53,27 +58,6 @@ export class StartTasksCloudComponent {
         this.clearField(this.dueDate);
         this.dueDate.sendKeys(date);
         return this;
-    }
-
-    addAssignee(name) {
-        Util.waitUntilElementIsVisible(this.assignee);
-        this.assignee.clear();
-        this.assignee.sendKeys(name);
-        this.selectAssigneeFromList(name);
-        return this;
-    }
-
-    selectAssigneeFromList(name) {
-        let assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        Util.waitUntilElementIsVisible(assigneeRow);
-        assigneeRow.click();
-        Util.waitUntilElementIsNotVisible(assigneeRow);
-        return this;
-    }
-
-    getAssignee() {
-        Util.waitUntilElementIsVisible(this.assignee);
-        return this.assignee.getAttribute('value');
     }
 
     clickStartButton() {

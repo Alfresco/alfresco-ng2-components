@@ -16,7 +16,7 @@
  */
 
 import { Util } from '../../../util/util';
-import { element, by } from 'protractor';
+import { element, by, browser } from 'protractor';
 
 export class AppNavigationBarPage {
 

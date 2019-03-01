@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+      "outDir": ".",
+      "baseUrl": ".",
+      "moduleResolution": "node",
+      "noUnusedLocals": true,
+      "target": "es5",
+      "types": ["node", "@paperist/types-remark"],
+      "lib": [
+        "es5"
+      ]
+    },
+    "files": [
+        "remarkGraphQl.ts",
+        "mqDefs.ts",
+        "tools/gqIndex.ts"
+    ]
+  }

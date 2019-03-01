@@ -18,21 +18,25 @@
 import { Util } from '../../util/util';
 import { browser, by, element } from 'protractor';
 import { ProcessServicesPage } from './process-services/processServicesPage';
-import { AppListCloudComponent } from './process-cloud/appListCloudComponent';
+import { AppListCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../../test.config');
+import { PeopleGroupCloudComponentPage } from './demo-shell/process-services/peopleGroupCloudComponentPage';
 
 export class NavigationBarPage {
 
     contentServicesButton = element(by.css('a[data-automation-id="Content Services"]'));
     dataTableButton = element(by.css('a[data-automation-id="Datatable"]'));
+    dataTableNestedButton = element(by.css('button[data-automation-id="Datatable"]'));
     taskListButton = element(by.css("a[data-automation-id='Task List']"));
     configEditorButton = element(by.css('a[data-automation-id="Configuration Editor"]'));
     processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
+    processServicesNestedButton = element(by.css('button[data-automation-id="App"]'));
     processServicesCloudButton = element(by.css('a[data-automation-id="Process Cloud"]'));
+    processServicesCloudHomeButton = element(by.css('button[data-automation-id="Home"]'));
+    processServicesCloudPeopleGroupButton = element(by.css('button[data-automation-id="People/Group Cloud"]'));
     loginButton = element(by.css('a[data-automation-id="Login"]'));
     trashcanButton = element(by.css('a[data-automation-id="Trashcan"]'));
     overlayViewerButton = element(by.css('a[data-automation-id="Overlay Viewer"]'));
-    userProfileButton = element(by.css('button[data-automation-id="adf-user-profile"]'));
     themeButton = element(by.css('button[data-automation-id="theme menu"]'));
     themeMenuContent = element(by.css('div[class*="mat-menu-panel"]'));
     logoutButton = element(by.css('a[adf-logout]'));
@@ -41,16 +45,18 @@ export class NavigationBarPage {
     appTitle = element(by.css('.adf-app-title'));
     headerDataButton = element(by.css('a[data-automation-id="Header Data"]'));
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
-    formButton = element(by.css('a[data-automation-id="Form"]'));
+    formButton = element(by.css('button[data-automation-id="Form"]'));
     treeViewButton = element(by.css('a[data-automation-id="Tree View"]'));
     iconsButton = element(by.css('a[data-automation-id="Icons"]'));
     customSourcesButton = element(by.css('a[data-automation-id="Custom Sources"]'));
     settingsButton = element(by.css('a[data-automation-id="Settings"]'));
+    peopleGroupCloud = element(by.css('a[data-automation-id="People/Group Cloud"]'));
     aboutButton = element(by.css('a[data-automation-id="About"]'));
 
     navigateToDatatable() {
         Util.waitUntilElementIsVisible(this.dataTableButton);
         this.dataTableButton.click();
+        this.dataTableNestedButton.click();
     }
 
     clickContentServicesButton() {
@@ -71,19 +77,29 @@ export class NavigationBarPage {
     navigateToProcessServicesPage() {
         Util.waitUntilElementIsVisible(this.processServicesButton);
         this.processServicesButton.click();
+        Util.waitUntilElementIsVisible(this.processServicesNestedButton);
+        this.processServicesNestedButton.click();
         return new ProcessServicesPage();
     }
 
     navigateToProcessServicesCloudPage() {
         Util.waitUntilElementIsVisible(this.processServicesCloudButton);
         this.processServicesCloudButton.click();
-        return new AppListCloudComponent();
+        Util.waitUntilElementIsVisible(this.processServicesCloudHomeButton);
+        this.processServicesCloudHomeButton.click();
+        return new AppListCloudPage();
+    }
+
+    navigateToPeopleGroupCloudPage() {
+        Util.waitUntilElementIsVisible(this.peopleGroupCloud);
+        this.peopleGroupCloud.click();
+        return new PeopleGroupCloudComponentPage();
     }
 
     navigateToSettingsPage() {
         Util.waitUntilElementIsVisible(this.settingsButton);
         this.settingsButton.click();
-        return new AppListCloudComponent();
+        return new AppListCloudPage();
     }
 
     clickLoginButton() {
@@ -100,11 +116,6 @@ export class NavigationBarPage {
         Util.waitUntilElementIsVisible(this.overlayViewerButton);
         this.overlayViewerButton.click();
         return this;
-    }
-
-    clickUserProfile() {
-        Util.waitUntilElementIsVisible(this.userProfileButton);
-        this.userProfileButton.click();
     }
 
     clickThemeButton() {
@@ -186,6 +197,8 @@ export class NavigationBarPage {
     }
 
     clickFormButton() {
+        Util.waitUntilElementIsVisible(this.processServicesButton);
+        this.processServicesButton.click();
         Util.waitUntilElementIsVisible(this.formButton);
         return this.formButton.click();
     }

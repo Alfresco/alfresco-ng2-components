@@ -18,6 +18,7 @@ eval EXECLINT=true
 eval projects=( "core"
     "content-services"
     "insights"
+    "testing"
     "process-services"
     "process-services-cloud"
     "extensions" )

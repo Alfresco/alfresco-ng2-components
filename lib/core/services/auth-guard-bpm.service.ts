@@ -16,49 +16,32 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot, Router } from '@angular/router';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
+import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from './authentication.service';
-import { OauthConfigModel } from '../models/oauth-config.model';
+import { AuthGuardBase } from './auth-guard-base';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuardBpm implements CanActivate, CanActivateChild {
+export class AuthGuardBpm extends AuthGuardBase {
 
-    constructor(private authService: AuthenticationService, private router: Router, private appConfigService: AppConfigService) {
+    constructor(authenticationService: AuthenticationService,
+                router: Router,
+                appConfigService: AppConfigService) {
+        super(authenticationService, router, appConfigService);
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        return this.checkLogin(state.url);
-    }
-
-    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        return this.canActivate(route, state);
-    }
-
-    checkLogin(redirectUrl: string): boolean {
-        let withCredentialsMode = this.appConfigService.get<boolean>('auth.withCredentials', false);
-
-        if (this.authService.isBpmLoggedIn() || withCredentialsMode) {
+    checkLogin(activeRoute: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {
+        if (this.authenticationService.isBpmLoggedIn() || this.withCredentials) {
             return true;
         }
 
-        if (!this.authService.isOauth() || this.isOAuthWithoutSilentLogin()) {
-            this.authService.setRedirect({ provider: 'BPM', url: redirectUrl });
-            const pathToLogin = this.getRouteDestinationForLogin();
-            this.router.navigate(['/' + pathToLogin]);
+        if (!this.authenticationService.isOauth() || this.isOAuthWithoutSilentLogin()) {
+            this.redirectToUrl('BPM', redirectUrl);
         }
 
         return false;
-    }
-
-    isOAuthWithoutSilentLogin() {
-        let oauth: OauthConfigModel = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
-        return this.authService.isOauth() && oauth.silentLogin === false;
-    }
-
-    private getRouteDestinationForLogin(): string {
-        return this.appConfigService && this.appConfigService.get<string>(AppConfigValues.LOGIN_ROUTE) ? this.appConfigService.get<string>(AppConfigValues.LOGIN_ROUTE) : 'login';
     }
 }

@@ -419,7 +419,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     relocateLocationToTask(): void {
-        this.location.go(`/activiti/apps/${this.appId || 0}/tasks/${this.taskFilter.id}`);
+        this.location.go(`/activiti/apps/${this.appId || 0}/tasks/${this.taskFilter ? this.taskFilter.id : 0}`);
     }
 
     relocateLocationToReport(): void {
@@ -484,7 +484,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             name: event.value.name || 'No name',
             created: event.value.created
         };
-        this.activitiFilter.selectFilter(null);
+
         if (this.taskList) {
             this.taskList.setCustomDataSource([processTaskDataRow]);
             this.taskList.selectTask(taskId);

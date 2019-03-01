@@ -123,9 +123,9 @@ describe('TaskListComponent', () => {
             expect(component.rows[0]['assignee'].firstName).toEqual('firstNameFake1');
             expect(component.rows[0]['assignee'].lastName).toEqual('lastNameFake1');
             expect(component.rows[0][('assignee')].email).toEqual('emailFake1');
-            expect(component.rows[0]['created']).toEqual('Mar 1, 2017');
-            expect(component.rows[0]['dueDate']).toEqual('Apr 2, 2017');
-            expect(component.rows[0]['endDate']).toEqual('May 3, 2017');
+            expect(component.rows[0]['created'].toISOString()).toEqual('2017-03-01T12:25:17.189Z');
+            expect(component.rows[0]['dueDate'].toISOString()).toEqual('2017-04-02T12:25:17.189Z');
+            expect(component.rows[0]['endDate'].toISOString()).toEqual('2017-05-03T12:25:31.129Z');
             expect(component.rows[0]['duration']).toEqual(13940);
             expect(component.rows[0]['priority']).toEqual(50);
             expect(component.rows[0]['parentTaskId']).toEqual(1);

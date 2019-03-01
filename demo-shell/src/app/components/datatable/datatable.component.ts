@@ -54,6 +54,7 @@ export class DataTableComponent {
 
     multiselect = false;
     data: FilteredDataAdapter;
+    stickyHeader = false;
 
     @Input()
     selectionMode = 'single';
@@ -74,12 +75,18 @@ export class DataTableComponent {
         this.reset();
     }
 
+    /* spellchecker: disable */
     reset() {
         this.data = new FilteredDataAdapter(
             [
                 {
                     id: 1,
-                    name: 'Name 1',
+                    name: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                            Excepteur sint occaecat cupidatat non proident,
+                            sunt in culpa qui officia deserunt mollit anim id est laborum.`,
                     createdOn: new Date(2016, 6, 2, 15, 8, 1),
                     createdBy: this._createdBy,
                     icon: 'material-icons://folder_open'
@@ -100,23 +107,24 @@ export class DataTableComponent {
                 },
                 {
                     id: 4,
-                    name: 'Image 1',
+                    name: 'Image 8',
                     createdOn: new Date(2016, 6, 2, 15, 8, 4),
                     createdBy: this._createdBy,
-                    icon: this._imageUrl
+                    icon: 'material-icons://alarm'
                 }
             ],
             [
                 { type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail' },
-                { type: 'text', key: 'id', title: 'Id', sortable: true , cssClass: 'adf-desktop-only'},
-                { type: 'text', key: 'createdOn', title: 'Created On', sortable: true },
-                { type: 'text', key: 'name', title: 'Name', cssClass: 'adf-full-width adf-name-column', sortable: true },
-                { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true, cssClass: 'adf-desktop-only'}
+                { type: 'text', key: 'id', title: 'Id', sortable: true , cssClass: '' },
+                { type: 'text', key: 'createdOn', title: 'Created On', sortable: true, cssClass: 'adf-ellipsis-cell adf-expand-cell-5' },
+                { type: 'text', key: 'name', title: 'Name', cssClass: 'adf-ellipsis-cell', sortable: true },
+                { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true, cssClass: ''}
             ]
         );
 
         this.data.setSorting(new DataSorting('id', 'asc'));
     }
+    /* spellchecker: enable */
 
     addRow() {
         const id = this.data.getRows().length + 1;
@@ -198,5 +206,9 @@ export class DataTableComponent {
 
     onRowDblClick(event) {
         this.logService.log(event);
+    }
+
+    toggleStickyHeader() {
+        this.stickyHeader = !this.stickyHeader;
     }
 }

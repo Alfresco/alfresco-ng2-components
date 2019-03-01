@@ -43,8 +43,11 @@ then
     exit 0
 fi
 
-#HEAD_SHA_BRANCH=(`git merge-base origin/$BRANCH_NAME HEAD`)
-HEAD_SHA_BRANCH="$(git merge-base origin/$BRANCH_NAME HEAD)"
+if [ ! -f ./$DIRECTORY/devhead.txt ]; then
+git merge-base origin/$BRANCH_NAME HEAD > ./$DIRECTORY/devhead.txt
+fi
+
+HEAD_SHA_BRANCH="$(cat ./$DIRECTORY/devhead.txt)"
 echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
 
 # tmp folder doesn't exist.
@@ -88,7 +91,7 @@ done
 for i in "${libs[@]}"
 do
     if [ "$i" == "core" ] ; then
-        AFFECTED_LIBS="core$ content-services$ process-services$ process-services-cloud$ insights$ extensions$ "
+        AFFECTED_LIBS="core$ content-services$ process-services$ process-services-cloud$ insights$ extensions$ testing$"
         echo "${AFFECTED_LIBS}"
         exit 0
     fi
@@ -117,6 +120,15 @@ do
         AFFECTED_LIBS=$AFFECTED_LIBS" insights$"
     fi
 done
+
+#testing
+for i in "${libs[@]}"
+do
+    if [ "$i" == "testing" ] ; then
+        AFFECTED_LIBS=$AFFECTED_LIBS" testing$"
+    fi
+done
+
 
 #process-services-cloud
 for i in "${libs[@]}"

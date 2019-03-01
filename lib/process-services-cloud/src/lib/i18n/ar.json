@@ -1,0 +1,195 @@
+{
+  "ADF_CLOUD_PROCESS_LIST": {
+    "MESSAGES": {
+      "TITLE": "لم يتم العثور على عمليات",
+      "SUBTITLE": "إنشاء عملية جديدة تريد العثور عليها بسهولة لاحقًا",
+      "NONE": "لم يتم تحديد عامل تصفية مثيل العملية."
+    },
+    "PROPERTIES": {
+      "NAME": "الاسم",
+      "CREATED": "تم الإنشاء",
+      "STATUS": "الحالة",
+      "START_DATE": "تاريخ البدء",
+      "ID": "المعرف"
+    },
+    "ADF_CLOUD_START_PROCESS": {
+      "BUTTON": "بدء العملية",
+      "NO_PROCESS_DEFINITIONS": "لا يمكنك بدء عملية حيث لا توجد تعريفات عملية متاحة",
+      "FORM": {
+        "TITLE": "بدء العملية",
+        "LABEL": {
+          "TYPE": "تحديد عملية",
+          "NAME": "اسم العملية"
+        },
+        "TYPE_PLACEHOLDER": "اختر واحدة...",
+        "ACTION": {
+          "START": "بدء العملية",
+          "CANCEL": "إلغاء"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "تعذر تحميل تعريفات العملية، تأكد أن لديك حق الوصول.",
+        "START": "تعذر بدء مثيل عملية جديد، تأكد أن لديك حق الوصول.",
+        "PROCESS_NAME_REQUIRED": "اسم العملية مطلوب",
+        "PROCESS_DEFINITION_REQUIRED": "تعريف العملية مطلوب",
+        "MAXIMUM_LENGTH": "تم تجاوز الطول، {{characters}} من الحد الأقصى للحروف."
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_LIST": {
+    "APPS": {
+      "TITLE": "لم يتم العثور على تطبيقات",
+      "SUBTITLE": "أنشئ تطبيقًا جديدًا تريد العثور عليه بسهولة لاحقًا"
+    },
+    "START_TASK": {
+      "FORM": {
+        "TITLE": "بدء مهمة",
+        "LABEL": {
+          "NAME": "الاسم",
+          "DESCRIPTION": "الوصف",
+          "ATTACHFORM": "إرفاق نموذج",
+          "ASSIGNEE": "معين له",
+          "CANDIDATE_GROUP": "المجموعة المرشحة",
+          "FORM": "نموذج",
+          "DATE": "اختيار تاريخ"
+        },
+        "ACTION": {
+          "START": "بدء",
+          "CANCEL": "إلغاء"
+        }
+      }
+    },
+    "PROPERTIES": {
+      "NAME": "الاسم",
+      "ASSIGNEE": "معين له",
+      "ID": "المعرف",
+      "STATUS": "الحالة",
+      "PRIORITY": "أولوية",
+      "CREATED_DATE": "تاريخ الإنشاء",
+      "LAST_MODIFIED": "آخر تعديل",
+      "CREATED": "تم الإنشاء"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "لم يتم العثور على مهام",
+        "SUBTITLE": "أنشئ مهمة جديدة تريد العثور عليها بسهولة لاحقًا",
+        "NONE": "لم يتم العثور على قوائم مهام"
+      }
+    }
+  },
+  "ADF_CLOUD_TASK_FILTERS": {
+    "MY_TASKS": "مهامي",
+    "COMPLETED_TASKS": "مهام مكتملة"
+  },
+  "ADF_CLOUD_PROCESS_FILTERS": {
+    "ALL_PROCESSES": "جميع العمليات",
+    "RUNNING_PROCESSES": "عمليات قيد التشغيل",
+    "COMPLETED_PROCESSES": "عمليات مكتملة"
+  },
+  "ADF_CLOUD_START_TASK": {
+    "ERROR": {
+      "MESSAGE": "أدخل قيمة مختلفة",
+      "REQUIRED": "حقل مطلوب",
+      "DATE": "تنسيق التاريخ ي‎ي/ش‎ش/س‎س‎س‎س",
+      "MAXIMUM_LENGTH": "تم تجاوز الطول، {{characters}} من الحد الأقصى للحروف."
+    }
+  },
+  "ADF_CLOUD_EDIT_TASK_FILTER": {
+    "TITLE": "تخصيص عامل التصفية",
+    "TOOL_TIP": {
+      "SAVE": "حفظ عامل التصفية",
+      "SAVE_AS": "حفظ عامل التصفية باسم",
+      "DELETE": "حذف عامل التصفية"
+    },
+    "LABEL": {
+      "APP_NAME": "ApplicationName",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
+      "STATUS": "الحالة",
+      "ASSIGNMENT": "مهمة",
+      "DIRECTION": "اتجاه",
+      "PROCESS_INSTANCE_ID": "ProcessInstanceId",
+      "TASK_NAME": "TaskName",
+      "PARENT_TASK_ID": "ParentTaskId",
+      "PRIORITY": "أولوية",
+      "STAND_ALONE": "StandAlone",
+      "LAST_MODIFIED_FROM": "LastModifiedFrom",
+      "LAST_MODIFIED_TO": "LastModifiedTo",
+      "OWNER": "مالك",
+      "SORT": "فرز"
+    },
+    "DIALOG": {
+      "TITLE": "حفظ عامل التصفية باسم",
+      "SAVE": "حفظ",
+      "CANCEL": "إلغاء"
+    }
+  },
+  "ADF_CLOUD_EDIT_PROCESS_FILTER": {
+    "TITLE": "تخصيص عامل التصفية",
+    "LABEL": {
+      "APP_NAME": "ApplicationName",
+      "STATUS": "الحالة",
+      "INITIATOR": "بادئ",
+      "ASSIGNMENT": "مهمة",
+      "SORT": "فرز",
+      "DIRECTION": "اتجاه",
+      "PROCESS_DEF_ID": "ProcessDefinitionId",
+      "PROCESS_DEF_KEY": "ProcessDefinitionKey",
+      "PROCESS_INS_ID": "ProcessInstanceId",
+      "START_DATE": "StartDate",
+      "LAST_MODIFIED": "LastModified",
+      "LAST_MODIFIED_DATE_FORM": "LastModifiedFrom",
+      "LAST_MODIFIED_TO": "LastModifiedTo",
+      "PROCESS_NAME": "ProcessName"
+    },
+    "ERROR": {
+      "DATE": "تنسيق التاريخ ي‎ي/ش‎ش/س‎س‎س‎س"
+    },
+    "TOOL_TIP": {
+      "SAVE": "حفظ عامل التصفية",
+      "SAVE_AS": "حفظ عامل التصفية باسم",
+      "DELETE": "حذف عامل التصفية"
+    },
+    "DIALOG": {
+      "TITLE": "حفظ عامل التصفية باسم",
+      "SAVE": "حفظ",
+      "CANCEL": "إلغاء"
+    }
+  },
+  "ADF_CLOUD_GROUPS": {
+    "SEARCH-GROUP": "مجموعات",
+    "ERROR": {
+      "NOT_FOUND": "لم يتم العثور على مجموعة بالاسم {{groupName}}"
+    }
+  },
+  "ADF_CLOUD_TASK_HEADER": {
+    "BUTTON": {
+      "CLAIM": "مطالبة",
+      "UNCLAIM": "إعادة وضع في قائمة الانتظار"
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "مهمة",
+      "THUMBNAIL": "صورة مصغرة",
+      "DURATION": "المدة",
+      "PARENT_TASK_ID": "معرف المهمة الأصلية",
+      "NAME": "الاسم",
+      "ASSIGNEE": "معين له",
+      "ASSIGNEE_DEFAULT": "لا يوجد معين له",
+      "PRIORITY": "أولوية",
+      "DUE_DATE": "تاريخ الاستحقاق",
+      "DUE_DATE_DEFAULT": "لا يوجد تاريخ",
+      "STATUS": "الحالة",
+      "CATEGORY": "الفئة",
+      "CATEGORY_DEFAULT": "لا توجد فئة",
+      "PARENT_NAME": "اسم العنصر الأصلي",
+      "PARENT_NAME_DEFAULT": "لا يوجد عنصر أصلي",
+      "CREATED_BY": "تم الإنشاء بواسطة",
+      "CREATED": "تم الإنشاء",
+      "END_DATE": "تاريخ الانتهاء",
+      "ID": "المعرف",
+      "DESCRIPTION": "الوصف",
+      "DESCRIPTION_DEFAULT": "لا يوجد وصف",
+      "FORM_NAME": "اسم النموذج",
+      "FORM_NAME_DEFAULT": "لا يوجد نموذج"
+    }
+  }
+}

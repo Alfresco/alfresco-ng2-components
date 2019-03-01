@@ -21,7 +21,6 @@ import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
-import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
@@ -30,8 +29,9 @@ import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 import dateFormat = require('dateformat');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Metadata component', () => {
 
@@ -52,7 +52,7 @@ describe('Metadata component', () => {
     const contentServicesPage = new ContentServicesPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
-    const contentListPage = new ContentListPage();
+    const navigationBarPage = new NavigationBarPage();
 
     let acsUser = new AcsUserModel();
 
@@ -87,7 +87,8 @@ describe('Metadata component', () => {
         pngFileModel.update(pngUploadedFile.entry);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.navigateToDocumentList();
+        navigationBarPage.clickContentServicesButton();
+        contentServicesPage.waitForTableBody();
 
         done();
     });
@@ -233,7 +234,7 @@ describe('Metadata component', () => {
                 expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('check author example description');
 
                 loginPage.loginToContentServicesUsingUserModel(acsUser);
-                contentServicesPage.navigateToDocumentList();
+                navigationBarPage.clickContentServicesButton();
 
                 await browser.get(fileUrl);
 
@@ -291,14 +292,14 @@ describe('Metadata component', () => {
         });
 
         it('[C261157] Should be possible use the metadata component When the node is a Folder', () => {
-            contentListPage.metadataContent(folderName);
+            contentServicesPage.metadataContent(folderName);
 
             expect(metadataViewPage.getPropertyText('name')).toEqual(folderName);
             expect(metadataViewPage.getPropertyText('createdByUser.displayName')).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
         });
 
         it('[C261158] Should be possible edit the metadata When the node is a Folder', () => {
-            contentListPage.metadataContent(folderName);
+            contentServicesPage.metadataContent(folderName);
 
             browser.controlFlow().execute(async () => {
                 await metadataViewPage.editIconClick();

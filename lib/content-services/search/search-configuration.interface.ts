@@ -28,6 +28,7 @@ export interface SearchConfiguration {
     categories?: SearchCategory[];
     filterQueries?: FilterQuery[];
     filterWithContains?: boolean;
+    resetButton?: boolean;
     facetQueries?: {
         label?: string;
         pageSize?: number;

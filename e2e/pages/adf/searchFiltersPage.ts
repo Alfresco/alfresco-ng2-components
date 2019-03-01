@@ -68,6 +68,10 @@ export class SearchFiltersPage {
         return this.searchCategoriesPage.checkListFiltersPage(this.fileTypeFilter);
     }
 
+    checkCustomFacetFieldLabelIsDisplayed(fieldLabel) {
+        Util.waitUntilElementIsVisible(element(by.css(`mat-expansion-panel[data-automation-id="expansion-panel-${fieldLabel}"]`)));
+    }
+
     sizeSliderFilterPage() {
         return this.searchCategoriesPage.sliderFilter(this.sizeSliderFilter);
     }
@@ -144,6 +148,7 @@ export class SearchFiltersPage {
         this.searchCategoriesPage.clickFilterHeader(this.fileSizeFilter);
         return this;
     }
+
     checkFileSizeFilterIsCollapsed() {
         this.searchCategoriesPage.checkFilterIsCollapsed(this.fileSizeFilter);
         return this;
@@ -246,4 +251,45 @@ export class SearchFiltersPage {
         this.searchCategoriesPage.checkFilterIsCollapsed(this.sizeSliderFilter);
         return this;
     }
+
+    checkFacetIntervalsByCreatedIsExpanded() {
+        this.searchCategoriesPage.checkFilterIsExpanded(this.facetIntervalsByCreated);
+        return this;
+    }
+
+    checkFacetIntervalsByCreatedIsCollapsed() {
+        this.searchCategoriesPage.checkFilterIsCollapsed(this.facetIntervalsByCreated);
+        return this;
+    }
+
+    clickFacetIntervalsByCreatedFilterHeader() {
+        this.searchCategoriesPage.clickFilterHeader(this.facetIntervalsByCreated);
+        return this;
+    }
+
+    checkFacetIntervalsByModifiedIsExpanded() {
+        this.searchCategoriesPage.checkFilterIsExpanded(this.facetIntervalsByModified);
+        return this;
+    }
+
+    checkFacetIntervalsByModifiedIsCollapsed() {
+        this.searchCategoriesPage.checkFilterIsCollapsed(this.facetIntervalsByModified);
+        return this;
+    }
+
+    clickFacetIntervalsByModifiedFilterHeader() {
+        this.searchCategoriesPage.clickFilterHeader(this.facetIntervalsByModified);
+        return this;
+    }
+
+    checkFileTypeFacetLabelIsDisplayed(fileType) {
+        Util.waitUntilElementIsVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
+        return this;
+    }
+
+    checkFileTypeFacetLabelIsNotDisplayed(fileType) {
+        Util.waitUntilElementIsNotVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
+        return this;
+    }
+
 }

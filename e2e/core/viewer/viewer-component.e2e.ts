@@ -21,7 +21,6 @@ import { LoginPage } from '../../pages/adf/loginPage';
 import { ViewerPage } from '../../pages/adf/viewerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
 import { AboutPage } from '../../pages/adf/demo-shell/aboutPage';
 
@@ -33,10 +32,9 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { FolderModel } from '../../models/ACS/folderModel';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
-import { viewWrappedDebugError } from '@angular/core/src/view/errors';
 
 xdescribe('Viewer', () => {
 
@@ -48,7 +46,7 @@ xdescribe('Viewer', () => {
     let site;
     let acsUser = new AcsUserModel();
     let pngFileUploaded;
-    const contentList = new ContentListPage();
+    const contentList = contentServicesPage.getDocumentList();
     const shareDialog = new ShareDialog();
     const about = new AboutPage();
 
@@ -120,7 +118,6 @@ xdescribe('Viewer', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         pngFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileInfo.location, pngFileInfo.name, site.entry.guid);
-
         done();
     });
 
@@ -158,7 +155,7 @@ xdescribe('Viewer', () => {
         });
 
         it('[C260517] Should be possible to open any Archive file', () => {
-            contentServicesPage.navigateToFolder('archive');
+            contentServicesPage.doubleClickRow('archive');
 
             uploadedArchives.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
@@ -193,7 +190,7 @@ xdescribe('Viewer', () => {
         });
 
         it('[C280008] Should be possible to open any Excel file', () => {
-            contentServicesPage.navigateToFolder('excel');
+            contentServicesPage.doubleClickRow('excel');
 
             uploadedExcels.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
@@ -228,7 +225,7 @@ xdescribe('Viewer', () => {
         });
 
         it('[C280009] Should be possible to open any PowerPoint file', () => {
-            contentServicesPage.navigateToFolder('ppt');
+            contentServicesPage.doubleClickRow('ppt');
 
             uploadedPpt.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
@@ -263,7 +260,7 @@ xdescribe('Viewer', () => {
         });
 
         it('[C280010] Should be possible to open any Text file', () => {
-            contentServicesPage.navigateToFolder('text');
+            contentServicesPage.doubleClickRow('text');
 
             uploadedTexts.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
@@ -298,7 +295,7 @@ xdescribe('Viewer', () => {
         });
 
         it('[C280011] Should be possible to open any Word file', () => {
-            contentServicesPage.navigateToFolder('word');
+            contentServicesPage.doubleClickRow('word');
 
             uploadedWords.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
@@ -333,7 +330,7 @@ xdescribe('Viewer', () => {
         });
 
         it('[C280012] Should be possible to open any other Document supported extension', () => {
-            contentServicesPage.navigateToFolder('other');
+            contentServicesPage.doubleClickRow('other');
 
             uploadedOthers.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
@@ -372,7 +369,7 @@ xdescribe('Viewer', () => {
         });
 
         it('[C279966] Should be possible to open any Image supported extension', () => {
-            contentServicesPage.navigateToFolder('images');
+            contentServicesPage.doubleClickRow('images');
 
             uploadedImages.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
@@ -382,7 +379,7 @@ xdescribe('Viewer', () => {
                 }
             });
 
-            contentServicesPage.navigateToFolder('images-rendition');
+            contentServicesPage.doubleClickRow('images-rendition');
 
             uploadedImgRenditionFolderInfo.forEach((currentFile) => {
                 if (currentFile.entry.name !== '.DS_Store') {
@@ -434,9 +431,10 @@ xdescribe('Viewer', () => {
         });
 
         it('[C260106] Should be able to open a Word file shared via API', () => {
-            contentServicesPage.navigateToDocumentList();
+            navigationBarPage.clickContentServicesButton();
+            contentServicesPage.waitForTableBody();
 
-            contentList.clickRowToSelect(wordFileInfo.name);
+            contentList.selectRow(wordFileInfo.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickShareLinkButton();

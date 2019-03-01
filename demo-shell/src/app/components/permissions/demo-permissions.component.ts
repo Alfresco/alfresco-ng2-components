@@ -63,17 +63,15 @@ export class DemoPermissionComponent implements OnInit {
     }
 
     openAddPermissionDialog(event: Event) {
-        this.nodePermissionDialogService.updateNodePermissionByDialog(this.nodeId).subscribe(() => {
-            this.displayPermissionComponent.reload();
-        },
-            (error) => {
-                this.showErrorMessage(error);
-            });
+        this.nodePermissionDialogService.updateNodePermissionByDialog(this.nodeId).subscribe(
+            () =>  this.displayPermissionComponent.reload(),
+            (error) => this.showErrorMessage(error));
     }
 
     showErrorMessage(error) {
+        const message = error.message ? error.message : error;
         this.notificationService.openSnackMessage(
-            error,
+            message,
             4000
         );
     }

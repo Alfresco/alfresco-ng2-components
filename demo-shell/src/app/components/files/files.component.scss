@@ -38,9 +38,13 @@
 
     adf-document-list ::ng-deep .adf-datatable-selected > svg {
         fill: #00bcd4 !important;
+        margin-top: -4px;
+        margin-left: -4px;
+        width: 32px;
+        height: 32px;
     }
 
-    .adf-data-table-card .adf-lock-button {
+    .adf-datatable-card .adf-lock-button {
         top: -10px;
     }
 
@@ -129,15 +133,15 @@
     }
 
     @media (max-device-width: $minimumDocumentListWidth) {
-        adf-document-list .adf-data-table {
-            .adf-data-table-cell,
+        .adf-file-list-container .adf-datatable-list {
+            .adf-datatable-cell,
             .adf-datatable-table-cell-header {
                 display: none;
             }
 
-            .adf-data-table-cell:first-child,
+            .adf-datatable-cell:first-child,
             .adf-datatable-table-cell-header:first-child,
-            .adf-data-table-cell:nth-child(2),
+            .adf-datatable-cell:nth-child(2),
             .adf-datatable-table-cell-header:nth-child(2) {
                 display: table-cell;
             }
@@ -163,9 +167,9 @@
     }
 
     @media (max-device-width: 1024px) {
-        adf-document-list .adf-data-table {
+        .adf-file-list-container .adf-datatable-list {
 
-            .adf-data-table-cell:nth-child(5),
+            .adf-datatable-cell:nth-child(5),
             .adf-datatable-table-cell-header:nth-child(5) {
                 display: none;
             }

@@ -110,6 +110,13 @@ exports.APP_ICON = {
     USER: "person"
 };
 
+exports.ROLES = {
+    APS_USER: "APS_USER",
+    ACTIVITI_USER: "ACTIVITI_USER",
+    APS_ADMIN: "APS_ADMIN",
+    ACTIVITI_ADMIN: "ACTIVITI_ADMIN"
+};
+
 exports.PROCESS_END_DATE = "No date";
 
 exports.PROCESS_CATEGORY = "http://www.activiti.org/processdef";

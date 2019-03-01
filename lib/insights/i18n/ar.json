@@ -1,0 +1,51 @@
+{
+  "ANALYTICS": {
+    "TITLE": "تحليلات",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "نوع عنصر واجهة مستخدم غير معروف",
+      "FILL-PARAMETER": "اختر من خيارات التقرير",
+      "NO-DATA-FOUND": "لم يتم العثور على بيانات",
+      "ZERO-DATA-FOUND": "توجد القيم الصفرية فقط",
+      "ICON-SETTING": "إعدادات",
+      "ICON-SAVE": "حفظ",
+      "ICON-DELETE": "حذف",
+      "ICON-EXPORT-CSV": "تصدير"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "العدد الإجمالي لتعريفات العملية",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "العدد الإجمالي لمثيلات العملية",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "العدد الإجمالي لمثيلات العملية النشطة",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "العدد الإجمالي لمثيلات العملية المكتملة"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "تضمين المرور عبر الخطوات مثل أحداث البدء والبوابات"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "تعريف العملية",
+        "DATE-RANGE": "نطاق التاريخ",
+        "SLOW-PROC-INST-NUMBER": "كم عدد مثيلات العملية الأبطأ التي ينبغي عرضها؟"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "تعريف العملية",
+        "DATE-RANGE": "نطاق التاريخ",
+        "DATE-RANGE-INTERVAL": "تجميع التواريخ حسب"
+      },
+      "TASK-SLA": {
+        "TASK": "مهمة",
+        "PROCESS-DEFINITION": "تعريف العملية",
+        "DATE-RANGE": "نطاق التاريخ",
+        "SLA-DURATION": "وقت إكمال SLA المطلوب"
+      }
+    },
+    "PROCESS-STATUS": "حالة العملية",
+    "TASK-STATUS": "حالة المهمة"
+  },
+  "DIAGRAMS": "مخططات"
+}

@@ -16,16 +16,17 @@
  */
 
 import TestConfig = require('../test.config');
-import { LoginSSOPage } from '../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { AppListCloudPage } from '@alfresco/adf-testing';
 
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { ProcessListCloudConfiguration } from './processListCloud.config';
+import { browser } from 'protractor';
 
 describe('Process list cloud', () => {
 
@@ -34,7 +35,7 @@ describe('Process list cloud', () => {
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const configEditor = new ConfigEditorPage();
-        let appListCloudComponent = new AppListCloudComponent();
+        let appListCloudComponent = new AppListCloudPage();
         let processCloudDemoPage = new ProcessCloudDemoPage();
 
         const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
@@ -50,6 +51,7 @@ describe('Process list cloud', () => {
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
+            browser.ignoreSynchronization = true;
             loginSSOPage.loginAPS(user, password);
 
             await processDefinitionService.init(user, password);
@@ -76,13 +78,13 @@ describe('Process list cloud', () => {
             processCloudDemoPage.runningProcessesFilter().clickProcessFilter();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('Running Processes');
             processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
-            processCloudDemoPage.processListCloudComponent().getDataTable().checkContentIsDisplayed(runningProcess.entry.id);
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcess.entry.id);
             done();
         });
 
         it('[C291997] Should be able to change the default columns', async() => {
 
-            expect(processCloudDemoPage.processListCloudComponent().getDataTable().getNoOfColumns()).toBe(13);
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfColumns()).toBe(13);
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('id');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('name');
             processCloudDemoPage.processListCloudComponent().getDataTable().checkColumnIsDisplayed('status');

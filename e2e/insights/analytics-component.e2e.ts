@@ -24,8 +24,7 @@ import TestConfig = require('../test.config');
 import { Tenant } from '../models/APS/tenant';
 import { User } from '../models/APS/user';
 
-import AlfrescoApi = require('alfresco-js-api-node');
-import { browser } from 'protractor';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Analytics Smoke Test', () => {
 

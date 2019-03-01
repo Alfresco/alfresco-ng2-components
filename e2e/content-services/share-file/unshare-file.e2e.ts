@@ -20,14 +20,13 @@ import { Util } from '../../util/util';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 import { ErrorPage } from '../../pages/adf/errorPage';
 import { ShareDialog } from '../../pages/adf/dialog/shareDialog';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { FileModel } from '../../models/ACS/fileModel';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 
@@ -35,8 +34,8 @@ describe('Unshare file', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const contentListPage = contentServicesPage.getUploadAreaDocumentList();
-    let navBar = new NavigationBarPage();
+    const contentListPage = contentServicesPage.getDocumentList();
+    const navBar = new NavigationBarPage();
     const errorPage = new ErrorPage();
     const shareDialog = new ShareDialog();
     const siteName = `PRIVATE-TEST-SITE-${Util.generateRandomString(5)}`;
@@ -102,7 +101,8 @@ describe('Unshare file', () => {
         nodeId = pngUploadedFile.entry.id;
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
-        contentServicesPage.navigateToDocumentList();
+        navBar.clickContentServicesButton();
+        contentServicesPage.waitForTableBody();
         done();
     });
 
@@ -118,7 +118,7 @@ describe('Unshare file', () => {
         });
 
         it('[C286550] Should display unshare confirmation dialog', () => {
-            contentListPage.clickRowToSelectWithRoot(pngFileModel.name);
+            contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickUnShareFile();
@@ -126,7 +126,7 @@ describe('Unshare file', () => {
         });
 
         it('[C286551] Should be able to cancel unshare action', () => {
-            contentListPage.clickRowToSelectWithRoot(pngFileModel.name);
+            contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickUnShareFile();
@@ -136,7 +136,7 @@ describe('Unshare file', () => {
         });
 
         it('[C286552] Should be able to confirm unshare action', async () => {
-            contentListPage.clickRowToSelectWithRoot(pngFileModel.name);
+            contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.clickUnShareFile();
@@ -146,7 +146,7 @@ describe('Unshare file', () => {
         });
 
         it('[C280556] Should redirect to 404 when trying to access an unshared file', async () => {
-            contentListPage.clickRowToSelectWithRoot(pngFileModel.name);
+            contentListPage.selectRow(pngFileModel.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             let sharedLink = await shareDialog.getShareLink();
@@ -168,8 +168,8 @@ describe('Unshare file', () => {
 
         it('[C286555] Should NOT be able to unshare file without permission', () => {
             navBar.goToSite(testSite);
-            contentListPage.navigateToFolder('documentLibrary');
-            contentListPage.clickRowToSelect(nodeBody.name);
+            contentListPage.doubleClickRow('documentLibrary');
+            contentListPage.selectRow(nodeBody.name);
             contentServicesPage.clickShareButton();
             shareDialog.checkDialogIsDisplayed();
             shareDialog.shareToggleButtonIsChecked();

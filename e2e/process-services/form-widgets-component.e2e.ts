@@ -28,7 +28,7 @@ import Task = require('../models/APS/Task');
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
@@ -84,7 +84,7 @@ describe('Form widgets', () => {
             taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             taskPage.createNewTask().addName(newTask).addDescription('Description').addForm(app.formName).clickStartButton()
                 .then(() => {
-                    taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(newTask);
+                    taskPage.tasksListPage().checkContentIsDisplayed(newTask);
                     taskPage.formFields().checkFormIsDisplayed();
                     expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
                 })

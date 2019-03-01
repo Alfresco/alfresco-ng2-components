@@ -49,5 +49,10 @@
         "strictMetadataEmit": false,
         "skipTemplateCodegen": true,
         "preserveWhitespaces": false
+    },
+    "typedocOptions": {
+        "json": "docs/docs.json",
+        "exclude": ["**/*.spec.ts", "node_modules"],
+        "ignoreCompilerErrors": true
     }
 }

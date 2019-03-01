@@ -24,7 +24,7 @@ import { FolderModel } from '../models/ACS/folderModel';
 import TestConfig = require('../test.config');
 import { Util } from '../util/util';
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../actions/ACS/upload.actions';
 
 describe('Enable infinite scrolling', () => {
@@ -71,7 +71,7 @@ describe('Enable infinite scrolling', () => {
     });
 
     it('[C260484] Should be possible to enable infinite scrolling', () => {
-        contentServicesPage.navigateToFolder(folderModel.name);
+        contentServicesPage.doubleClickRow(folderModel.name);
         contentServicesPage.enableInfiniteScrolling();
         contentServicesPage.clickLoadMoreButton();
         for (fileNum; fileNum < nrOfFiles; fileNum++) {

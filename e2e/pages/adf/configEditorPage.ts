@@ -76,4 +76,18 @@ export class ConfigEditorPage {
         Util.waitUntilElementIsClickable(button);
         return button.click();
     }
+
+    clickEditTaskConfiguration() {
+        let button = element(by.id('adf-edit-task-filter-conf'));
+        Util.waitUntilElementIsVisible(button);
+        Util.waitUntilElementIsClickable(button);
+        return button.click();
+    }
+
+    clickTaskListCloudConfiguration() {
+        let button = element(by.id('adf-task-list-cloud-conf'));
+        Util.waitUntilElementIsVisible(button);
+        Util.waitUntilElementIsClickable(button);
+        return button.click();
+    }
 }

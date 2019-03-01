@@ -26,8 +26,7 @@ then
 fi
 
 #reset the tmp folder
-rm -rf tmp
-affected="$(./scripts/affected-libs.sh -b "$BRANCH_NAME")"
+affected="$(./scripts/affected-libs.sh -gnu -b "$BRANCH_NAME")"
 echo $affected
 libs=(`echo $affected | sed 's/^$/\n/g'`)
 
@@ -76,5 +75,13 @@ for i in "${libs[@]}"
 do
     if [ "$i" == "insights$" ] ; then
         ./scripts/build-insights.sh || exit 1;
+    fi
+done
+
+#testing
+for i in "${libs[@]}"
+do
+    if [ "$i" == "testing$" ] ; then
+        ./scripts/build-testing.sh || exit 1;
     fi
 done

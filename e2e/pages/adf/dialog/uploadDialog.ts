@@ -27,7 +27,6 @@ export class UploadDialog {
     cancelledStatusIcon = by.css('div[class*="status--cancelled"]');
     errorStatusIcon = by.css('div[class*="status--error"] mat-icon');
     errorTooltip = element(by.css('div.mat-tooltip'));
-    cancelWhileUploadingIcon = by.css('mat-icon[class*="adf-file-uploading-row__action adf-file-uploading-row__action--cancel"]');
     rowByRowName = by.xpath('ancestor::adf-file-uploading-list-row');
     title = element(by.css('span[class*="upload-dialog__title"]'));
     minimizeButton = element(by.css('mat-icon[title="Minimize"]'));
@@ -114,12 +113,6 @@ export class UploadDialog {
         return this;
     }
 
-    removeFileWhileUploading(content) {
-        browser.driver.actions().mouseMove(this.getRowByRowName(content).element(this.sizeUploaded)).perform();
-        this.getRowByRowName(content).element(this.cancelWhileUploadingIcon).click();
-        return this;
-    }
-
     getTitleText() {
         Util.waitUntilElementIsVisible(this.title);
         let deferred = protractor.promise.defer();
@@ -165,7 +158,7 @@ export class UploadDialog {
 
     numberOfCurrentFilesUploaded() {
         let deferred = protractor.promise.defer();
-        this.getTitleText().then((text) => {
+        this.getTitleText().then((text: any) => {
             deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[0]);
         });
         return deferred.promise;
@@ -173,7 +166,7 @@ export class UploadDialog {
 
     numberOfInitialFilesUploaded() {
         let deferred = protractor.promise.defer();
-        this.getTitleText().then((text) => {
+        this.getTitleText().then((text: any) => {
             deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[1]);
         });
         return deferred.promise;

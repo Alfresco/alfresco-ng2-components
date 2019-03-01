@@ -17,7 +17,7 @@
 
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm } from '@alfresco/adf-core';
+import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm, AuthGuardSsoRoleService } from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
@@ -48,6 +48,7 @@ import { StartTaskCloudDemoComponent } from './components/app-layout/cloud/start
 import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
+import { ProcessDetailsCloudDemoComponent } from './components/app-layout/cloud/process-details-cloud-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -143,6 +144,8 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'cloud',
+                canActivate: [AuthGuardSsoRoleService],
+                data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403'},
                 children: [
                     {
                         path: '',
@@ -180,7 +183,12 @@ export const appRoutes: Routes = [
                             {
                                 path: 'task-details/:taskId',
                                 component: TaskDetailsCloudDemoComponent
+                            },
+                            {
+                                path: 'process-details/:processInstanceId',
+                                component: ProcessDetailsCloudDemoComponent
                             }
+
                         ]
                     }
                 ]
@@ -357,6 +365,10 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'error/:id',
+                component: ErrorContentComponent
+            },
+            {
+                path: 'error/no-authorization',
                 component: ErrorContentComponent
             },
             {

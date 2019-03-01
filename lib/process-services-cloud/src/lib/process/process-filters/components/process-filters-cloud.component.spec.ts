@@ -36,21 +36,21 @@ describe('ProcessFiltersCloudComponent', () => {
             name: 'FakeAllProcesses',
             icon: 'adjust',
             id: '10',
-            state: ''
+            status: ''
         }),
         new ProcessFilterCloudModel({
             name: 'FakeRunningProcesses',
             key: 'FakeRunningProcesses',
             icon: 'inbox',
             id: '11',
-            state: 'RUNNING'
+            status: 'RUNNING'
         }),
         new ProcessFilterCloudModel({
             name: 'FakeCompletedProcesses',
             key: 'completed-processes',
             icon: 'done',
             id: '12',
-            state: 'COMPLETED'
+            status: 'COMPLETED'
         })
     ];
 

@@ -22,24 +22,26 @@ import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ProcessServicesPage } from '../../pages/adf/process-services/processServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
-import { UserInfoDialog } from '../../pages/adf/dialog/userInfoDialog';
+import { UserInfoPage } from '@alfresco/adf-testing';
 
 import TestConfig = require('../../test.config');
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 
 import { SettingsPage } from '../../pages/adf/settingsPage';
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 import { Util } from '../../util/util';
+import { ErrorPage } from '../../pages/adf/errorPage';
 
 describe('Login component', () => {
 
     let settingsPage = new SettingsPage();
     let processServicesPage = new ProcessServicesPage();
     let navigationBarPage = new NavigationBarPage();
-    let userInfoDialog = new UserInfoDialog();
+    let userInfoPage = new UserInfoPage();
     let contentServicesPage = new ContentServicesPage();
     let loginPage = new LoginPage();
+    let errorPage = new ErrorPage();
     let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
@@ -74,14 +76,22 @@ describe('Login component', () => {
 
     it('[C276746] Should display the right information in user-info when a different users logs in', () => {
         loginPage.loginToContentServicesUsingUserModel(userA);
-        navigationBarPage.clickUserProfile();
-        expect(userInfoDialog.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
-        expect(userInfoDialog.getContentEmail()).toEqual(userA.email);
+        userInfoPage.clickUserProfile();
+        expect(userInfoPage.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
+        expect(userInfoPage.getContentEmail()).toEqual(userA.email);
 
         loginPage.loginToContentServicesUsingUserModel(userB);
-        navigationBarPage.clickUserProfile();
-        expect(userInfoDialog.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
-        expect(userInfoDialog.getContentEmail()).toEqual(userB.email);
+        userInfoPage.clickUserProfile();
+        expect(userInfoPage.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
+        expect(userInfoPage.getContentEmail()).toEqual(userB.email);
+    });
+
+    it('[C299206] Should redirect the user without the right access role on a forbidden page', () => {
+        loginPage.loginToContentServicesUsingUserModel(userA);
+        navigationBarPage.navigateToProcessServicesCloudPage();
+        expect(errorPage.getErrorCode()).toBe('403');
+        expect(errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
+        expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
     });
 
     it('[C260036] Should require username', () => {

@@ -22,7 +22,7 @@ import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 
 import CONSTANTS = require('../util/constants');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
@@ -80,7 +80,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + (nrOfTasks - 5));
-        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(itemsPerPage.fifteenValue);
+        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fifteenValue);
 
         browser.controlFlow().execute(async () => {
             for (i; i < nrOfTasks; i++) {
@@ -94,7 +94,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
         expect(paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         expect(paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         expect(paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfTasks + ' of ' + nrOfTasks);
-        expect(taskPage.tasksListPage().getDataTable().getNumberOfRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
+        expect(taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(nrOfTasks - itemsPerPage.fifteenValue);
         paginationPage.checkNextPageButtonIsDisabled();
         paginationPage.checkPreviousPageButtonIsEnabled();
     });
