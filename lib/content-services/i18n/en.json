@@ -200,7 +200,7 @@
       },
       "BUTTONS": {
         "CLEAR-ALL": {
-          "LABEL": "Clear all selections",
+          "LABEL": "Clear all",
           "TOOLTIP": "This will remove all selections"
         },
         "RESET-ALL": {

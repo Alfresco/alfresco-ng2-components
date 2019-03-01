@@ -8,14 +8,6 @@
             (click)="resetAll()">
         {{ 'SEARCH.FILTER.BUTTONS.RESET-ALL.LABEL' | translate }}
     </button>
-    <button *ngIf="selectedBuckets.length"
-            mat-button
-            color="primary"
-            matTooltip="{{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.TOOLTIP' | translate }}"
-            matTooltipPosition="right"
-            (click)="resetAllSelectedBuckets()">
-        {{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.LABEL' | translate }}
-    </button>
     <mat-expansion-panel
         *ngFor="let category of queryBuilder.categories"
         [attr.data-automation-id]="'expansion-panel-'+category.name"
