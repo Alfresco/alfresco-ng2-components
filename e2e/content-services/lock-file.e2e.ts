@@ -35,8 +35,6 @@ import { UploadActions } from '../actions/ACS/upload.actions';
 
 describe('Lock File', () => {
 
-    debugger;
-
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const contentServicesPage = new ContentServicesPage();
