@@ -67,10 +67,8 @@ export class PeopleCloudComponent {
         return this;
     }
 
-    checkSelectedPeople = (selectedPeople: string[]) => {
-        selectedPeople.forEach( (person) => {
-            Util.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
-        });
+    checkSelectedPeople(person) {
+        Util.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip-list mat-chip', person)));
         return this;
     }
 

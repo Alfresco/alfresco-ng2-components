@@ -22,14 +22,6 @@ export class GroupCloudComponent {
 
     groupCloudSearch = element(by.css('input[data-automation-id="adf-cloud-group-search-input"]'));
 
-    searchGroupAndSelect(name) {
-        Util.waitUntilElementIsVisible(this.groupCloudSearch);
-        this.groupCloudSearch.clear();
-        this.groupCloudSearch.sendKeys(name);
-        this.selectGroupFromList(name);
-        return this;
-    }
-
     searchGroups(name) {
         Util.waitUntilElementIsVisible(this.groupCloudSearch);
         this.groupCloudSearch.clear().then(() => {
@@ -50,11 +42,6 @@ export class GroupCloudComponent {
         return this;
     }
 
-    getGroup() {
-        Util.waitUntilElementIsVisible(this.groupCloudSearch);
-        return this.groupCloudSearch.getAttribute('value');
-    }
-
     checkGroupIsDisplayed(name) {
         let groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
         Util.waitUntilElementIsVisible(groupRow);
@@ -67,10 +54,8 @@ export class GroupCloudComponent {
         return this;
     }
 
-    checkSelectedGroups = (selectedGroups: string[]) => {
-        selectedGroups.forEach( (group) => {
-            Util.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
-        });
+    checkSelectedGroup(group) {
+        Util.waitUntilElementIsVisible(element(by.cssContainingText('mat-chip[data-automation-id*="adf-cloud-group-chip-"]', group)));
         return this;
     }
 
