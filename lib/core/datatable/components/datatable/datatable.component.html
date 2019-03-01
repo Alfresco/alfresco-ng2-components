@@ -13,7 +13,7 @@
             </div>
             <!-- Columns -->
             <div *ngIf="multiselect" class="adf-datatable-cell-header adf-datatable-checkbox">
-                <mat-checkbox [checked]="isSelectAllChecked" (change)="onSelectAllClick($event)"></mat-checkbox>
+                <mat-checkbox [checked]="isSelectAllChecked" (change)="onSelectAllClick($event)" class="adf-checkbox-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}</mat-checkbox></mat-checkbox>
             </div>
             <div class="adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-header"
                  *ngFor="let col of data.getColumns()"
@@ -81,7 +81,9 @@
                         [checked]="row.isSelected"
                         [attr.aria-checked]="row.isSelected"
                         role="checkbox"
-                        (change)="onCheckboxChange(row, $event)">
+                        (change)="onCheckboxChange(row, $event)"
+                        class="adf-checkbox-sr-only">
+                        {{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_FILE' | translate }}
                     </mat-checkbox>
                 </div>
                 <div *ngFor="let col of data.getColumns()"

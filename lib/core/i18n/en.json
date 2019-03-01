@@ -237,6 +237,10 @@
     },
     "CONTENT-ACTIONS": {
       "TOOLTIP": "Content actions"
+    },
+    "ACCESSIBILITY": {
+        "SELECT_ALL": "Select all",
+        "SELECT_FILE": "Select file"
     }
   },
   "USER_PROFILE": {
