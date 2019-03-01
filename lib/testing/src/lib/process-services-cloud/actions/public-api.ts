@@ -2,4 +2,5 @@
  * Public API Surface of testing
  */
 
-export * from './identity-user.action';
+export * from './testing-alfresco-api.service';
+export * from './testing-app-config.service';
