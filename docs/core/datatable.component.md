@@ -618,7 +618,7 @@ First, you will need to set the stickyHeader property of your datatable to `true
 ```html
 <adf-datatable 
     [data]="data"
-    [stickyHeader]="'true'">
+    [stickyHeader]="true">
 </adf-datatable>
 ```
 
