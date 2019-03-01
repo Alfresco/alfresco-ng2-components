@@ -289,7 +289,7 @@ describe('Permissions Component', function () {
 
             loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
             contentServicesPage.goToDocumentList();
-            browser.sleep(15000); //for the Search indexing ot finish
+            browser.sleep(15000); //for the Search indexing to finish
             searchDialog
                 .checkSearchIconIsVisible()
                 .clickOnSearchIcon()
