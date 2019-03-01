@@ -23,7 +23,7 @@ const appRoutes: Routes = [
         path: 'examplepath',
         component: ExampleComponent,
         canActivate: [ AuthGuardSsoRoleService ],
-        data: { roles: ['USER_ROLE1', 'USER_ROLE2']'}
+        data: { roles: ['USER_ROLE1', 'USER_ROLE2']}
     },
     ...
 ]
