@@ -58,7 +58,7 @@ export class ApiService {
         };
 
         return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, {})
+            authNames, contentTypes, accepts)
             .catch((error) => {
                 throw (error);
             });
@@ -76,7 +76,7 @@ export class ApiService {
         };
 
         return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, {})
+            authNames, contentTypes, accepts)
             .catch((error) => {
                 throw (error);
             });
