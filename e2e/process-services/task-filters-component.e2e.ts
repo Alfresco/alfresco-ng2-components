@@ -28,7 +28,7 @@ import { AppNavigationBarPage } from '../pages/adf/process-services/appNavigatio
 import { AppSettingsToggles } from '../pages/adf/process-services/dialog/appSettingsToggles';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/taskFiltersDemoPage';
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { AlfrescoApiCompatibility as AlfrescoApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
@@ -253,7 +253,7 @@ describe('Task', () => {
 
         it('[C260350] Should display a new filter when a filter is added', () => {
             browser.controlFlow().execute(async () => {
-                let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+                let newFilter = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'New Task Filter';
                 newFilter.appId = appId;
                 newFilter.icon = 'glyphicon-filter';
@@ -277,7 +277,7 @@ describe('Task', () => {
 
         it('[C286447] Should display the task filter icon when a custom filter is added', () => {
             browser.controlFlow().execute(async () => {
-                let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+                let newFilter = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'New Task Filter with icon';
                 newFilter.appId = appId;
                 newFilter.icon = 'glyphicon-cloud';
@@ -317,7 +317,7 @@ describe('Task', () => {
 
         it('[C260353] Should display changes on a filter when this filter is edited', () => {
             browser.controlFlow().execute(async () => {
-                let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+                let newFilter = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'New Task Filter';
                 newFilter.appId = appId;
                 newFilter.icon = 'glyphicon-filter';
@@ -334,7 +334,7 @@ describe('Task', () => {
             taskFiltersDemoPage.customTaskFilter('New Task Filter').checkTaskFilterIsDisplayed();
 
             browser.controlFlow().execute(() => {
-                let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+                let newFilter = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'Task Filter Edited';
                 newFilter.appId = appId;
                 newFilter.icon = 'glyphicon-filter';
@@ -356,7 +356,7 @@ describe('Task', () => {
 
         it('[C286448] Should display changes on a task filter when this filter icon is edited', () => {
             browser.controlFlow().execute(async () => {
-                let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+                let newFilter = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'Task Filter Edited icon';
                 newFilter.appId = appId;
                 newFilter.icon = 'glyphicon-filter';
@@ -373,7 +373,7 @@ describe('Task', () => {
             taskFiltersDemoPage.customTaskFilter('Task Filter Edited icon').checkTaskFilterIsDisplayed();
 
             browser.controlFlow().execute(() => {
-                let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+                let newFilter = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'Task Filter Edited icon';
                 newFilter.appId = appId;
                 newFilter.icon = 'glyphicon-cloud';
@@ -397,7 +397,7 @@ describe('Task', () => {
 
         it('[C260354] Should not display task filter when this filter is deleted', () => {
             browser.controlFlow().execute(async () => {
-                let newFilter = new this.alfrescoJsApi.activiti.UserProcessInstanceFilterRepresentation();
+                let newFilter = new UserProcessInstanceFilterRepresentation();
                 newFilter.name = 'New Task Filter';
                 newFilter.appId = appId;
                 newFilter.icon = 'glyphicon-filter';
