@@ -199,6 +199,10 @@
     {
       "path": "./lib/dist/extensions/bundles/adf-extensions.umd.min.js",
       "maxSize": "10 kb"
+    },
+    {
+      "path": "./lib/dist/testing/bundles/adf-testing.umd.min.js",
+      "maxSize": "10 kb"
     }
   ],
   "engines": {
