@@ -98,6 +98,7 @@ describe('Task Details component', () => {
             .toEqual(taskModel.getCategory() === null ? CONSTANTS.TASK_DETAILS.NO_CATEGORY : taskModel.getCategory());
         expect(taskPage.taskDetails().getDueDate())
             .toEqual(taskModel.getDueDate() === null ? CONSTANTS.TASK_DETAILS.NO_DATE : taskModel.getDueDate());
+
         expect(taskPage.taskDetails().getParentName())
             .toEqual(taskModel.getParentTaskName() === null ? CONSTANTS.TASK_DETAILS.NO_PARENT : taskModel.getParentTaskName());
         expect(taskPage.taskDetails().getParentTaskId())
