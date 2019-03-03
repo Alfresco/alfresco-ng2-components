@@ -78,3 +78,11 @@ do
         ./scripts/build-insights.sh || exit 1;
     fi
 done
+
+#testing
+for i in "${libs[@]}"
+do
+    if [ "$i" == "testing$" ] ; then
+        ./scripts/build-testing.sh || exit 1;
+    fi
+done

@@ -19,6 +19,7 @@ eval EXEC_BUILD=true
 eval projects=(
     "core"
     "insights"
+    "testing"
     "content-services"
     "process-services"
     "process-services-cloud"
