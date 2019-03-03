@@ -24,6 +24,9 @@ echo "====== Run insights ====="
 echo "====== Run process-services-cloud ====="
 ./build-process-services-cloud.sh
 
+echo "====== Run testing ====="
+./build-testing.sh 
+
 echo "====== Copy schema ====="
 
 cp ../lib/core/app-config/schema.json ../lib/dist/core/app.config.schema.json
