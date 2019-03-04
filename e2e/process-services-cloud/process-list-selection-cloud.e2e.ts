@@ -54,12 +54,9 @@ describe('Process list cloud', () => {
             await processDefinitionService.init(user, password);
             let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             await processInstancesService.init(user, password);
-            //runningProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
 
             for (let i = 0; i < noOfProcesses; i++) {
                 response = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
-                console.log("Response: ", response);
-                //await tasksService.claimTask(response.entry.id, simpleApp);
                 processInstances.push(response.entry.id);
             }
 
@@ -75,7 +72,7 @@ describe('Process list cloud', () => {
 
         });
 
-        it('[C291914] Should not be able to select any row when selection mode is set to None', () => {
+        it('[C297469] Should NOT be able to select a process when settings are set to None', () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('None');
             tasksCloudDemoPage.clickAppButton();
             expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
@@ -84,7 +81,7 @@ describe('Process list cloud', () => {
             processCloudDemoPage.processListCloudComponent().getDataTable().checkNoRowIsSelected();
         });
 
-        it('[C291918] Should be able to select only one row when selection mode is set to Single', () => {
+        it('[C297468] Should be able to select only one process when settings are set to Single', () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Single');
             tasksCloudDemoPage.clickAppButton();
             expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
@@ -97,7 +94,7 @@ describe('Process list cloud', () => {
             expect(processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
         });
 
-        it('[C291919] Should be able to select only one row when selection mode is set to Multiple', () => {
+        it('[C297470] Should be able to select multiple processes using keyboard', () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Multiple');
             tasksCloudDemoPage.clickAppButton();
             expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
@@ -110,7 +107,7 @@ describe('Process list cloud', () => {
             processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsNotSelectedByName(processInstances[2]);
         });
 
-        it('[C291916] Should be able to select multiple row when multiselect is true', () => {
+        it('[C297465] Should be able to select multiple processes using checkboxes', () => {
             tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
             tasksCloudDemoPage.clickAppButton();
             expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
@@ -125,7 +122,7 @@ describe('Process list cloud', () => {
             processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsCheckedByName(processInstances[0]);
         });
 
-        it('[C291915] Should be possible select all the rows when multiselect is true', () => {
+        it('[C299125] Should be possible select all the rows when multiselect is true', () => {
             tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
             tasksCloudDemoPage.clickAppButton();
             expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
