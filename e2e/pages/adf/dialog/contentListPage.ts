@@ -180,6 +180,12 @@ export class ContentListPage {
         return this;
     }
 
+    checkActionMenuIsNotDisplayed() {
+        Util.waitUntilElementIsNotVisible(this.actionMenu);
+        browser.sleep(500);
+        return this;
+    }
+
     sortByColumn(sortOrder, locator) {
         Util.waitUntilElementIsVisible(element(locator));
         return element(locator).getAttribute('class').then(function (result) {
