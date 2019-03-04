@@ -45,7 +45,6 @@ import { TaskListService } from './../services/tasklist.service';
 import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../../content-widget';
 import { UserRepresentation } from '@alfresco/js-api';
 import { share } from 'rxjs/operators';
-import { TaskDescriptionValidator } from './taks-description.validator';
 
 @Component({
     selector: 'adf-task-details',
