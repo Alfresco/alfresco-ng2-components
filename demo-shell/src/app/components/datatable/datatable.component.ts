@@ -88,12 +88,7 @@ export class DataTableComponent {
                 },
                 {
                     id: 2,
-                    name: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        Excepteur sint occaecat cupidatat non proident,
-                        sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+                    name: 'Name 2',
                     createdOn: new Date(2016, 6, 2, 15, 8, 2),
                     createdBy: this._createdBy,
                     icon: 'material-icons://accessibility'
@@ -117,7 +112,7 @@ export class DataTableComponent {
                 { type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail' },
                 { type: 'text', key: 'id', title: 'Id', sortable: true , cssClass: 'adf-ellipsis-cell' },
                 { type: 'text', key: 'createdOn', title: 'Created On', sortable: true, cssClass: 'adf-ellipsis-cell adf-expand-cell-5' },
-                { type: 'text', key: 'name', title: 'Name', cssClass: 'adf-ellipsis-cell', sortable: true },
+                { type: 'text', key: 'name', title: 'Name', cssClass: '', sortable: true },
                 { type: 'text', key: 'createdBy.name', title: 'Created By', sortable: true, cssClass: ''}
             ]
         );
