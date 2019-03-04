@@ -78,6 +78,7 @@ describe('Process list cloud', () => {
         it('[C291914] Should not be able to select any row when selection mode is set to None', () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('None');
             tasksCloudDemoPage.clickAppButton();
+            expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
 
             processCloudDemoPage.processListCloudComponent().getDataTable().selectRowByRowName(processInstances[0]);
             processCloudDemoPage.processListCloudComponent().getDataTable().checkNoRowIsSelected();
@@ -86,6 +87,7 @@ describe('Process list cloud', () => {
         it('[C291918] Should be able to select only one row when selection mode is set to Single', () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Single');
             tasksCloudDemoPage.clickAppButton();
+            expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
 
             processCloudDemoPage.processListCloudComponent().getDataTable().selectRowByRowName(processInstances[0]);
             processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsSelectedByName(processInstances[0]);
@@ -98,6 +100,7 @@ describe('Process list cloud', () => {
         it('[C291919] Should be able to select only one row when selection mode is set to Multiple', () => {
             tasksCloudDemoPage.clickSettingsButton().selectSelectionMode('Multiple');
             tasksCloudDemoPage.clickAppButton();
+            expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
 
             processCloudDemoPage.processListCloudComponent().getDataTable().selectRowByRowName(processInstances[0]);
             processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsSelectedByName(processInstances[0]);
@@ -110,6 +113,7 @@ describe('Process list cloud', () => {
         it('[C291916] Should be able to select multiple row when multiselect is true', () => {
             tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
             tasksCloudDemoPage.clickAppButton();
+            expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
 
             processCloudDemoPage.processListCloudComponent().getDataTable().clickCheckboxByName(processInstances[0]);
             processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsCheckedByName(processInstances[0]);
@@ -124,6 +128,7 @@ describe('Process list cloud', () => {
         it('[C291915] Should be possible select all the rows when multiselect is true', () => {
             tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
             tasksCloudDemoPage.clickAppButton();
+            expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
 
             processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed().checkAllRows();
             processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsCheckedByName(processInstances[0]);
