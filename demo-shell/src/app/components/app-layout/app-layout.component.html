@@ -75,6 +75,7 @@
 <mat-menu #nestedMenu="matMenu">
     <ng-template matMenuContent let-links="links">
         <button mat-menu-item *ngFor="let link of links"
+            [attr.data-automation-id]="link.title | translate"
             routerLinkActive="active"
             [routerLink]="link.href"
             [routerLinkActiveOptions]="{ exact: true }">

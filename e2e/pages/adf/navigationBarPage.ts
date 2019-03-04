@@ -30,6 +30,8 @@ export class NavigationBarPage {
     configEditorButton = element(by.css('a[data-automation-id="Configuration Editor"]'));
     processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
     processServicesCloudButton = element(by.css('a[data-automation-id="Process Cloud"]'));
+    processServicesCloudHomeButton = element(by.css('button[data-automation-id="Home"]'));
+    processServicesCloudPeopleGroupButton = element(by.css('button[data-automation-id="People/Group Cloud"]'));
     loginButton = element(by.css('a[data-automation-id="Login"]'));
     trashcanButton = element(by.css('a[data-automation-id="Trashcan"]'));
     overlayViewerButton = element(by.css('a[data-automation-id="Overlay Viewer"]'));
@@ -78,6 +80,8 @@ export class NavigationBarPage {
     navigateToProcessServicesCloudPage() {
         Util.waitUntilElementIsVisible(this.processServicesCloudButton);
         this.processServicesCloudButton.click();
+        Util.waitUntilElementIsVisible(this.processServicesCloudHomeButton);
+        this.processServicesCloudHomeButton.click();
         return new AppListCloudPage();
     }
 
