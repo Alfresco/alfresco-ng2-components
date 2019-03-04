@@ -225,4 +225,21 @@ describe('Search Filters', () => {
             .checkFacetIntervalsByModifiedIsExpanded();
     });
 
+    it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', () => {
+        navigationBar.clickConfigEditorButton();
+        configEditor.clickSearchConfiguration();
+        configEditor.clickClearButton();
+        jsonFile.facetFields.fields[0].label = 'My File Types';
+        jsonFile.facetFields.fields[1].label = 'My File Sizes';
+        configEditor.enterBigConfigurationText(JSON.stringify(jsonFile));
+        configEditor.clickSaveButton();
+
+        searchDialog.clickOnSearchIcon()
+            .enterTextAndPressEnter('*');
+
+        searchResults.tableIsLoaded();
+        searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed("My File Types");
+        searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed("My File Sizes");
+    });
+
 });
