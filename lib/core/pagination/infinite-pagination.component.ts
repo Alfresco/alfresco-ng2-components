@@ -30,6 +30,7 @@ import { PaginationModel } from '../models/pagination.model';
 import { RequestPaginationModel } from '../models/request-pagination.model';
 import { UserPreferencesService, UserPreferenceValues } from '../services/user-preferences.service';
 import { Pagination } from '@alfresco/js-api';
+import { AppConfigService } from '../app-config/app-config.service';
 
 @Component({
     selector: 'adf-infinite-pagination',
@@ -40,12 +41,6 @@ import { Pagination } from '@alfresco/js-api';
     encapsulation: ViewEncapsulation.None
 })
 export class InfinitePaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
-
-    static DEFAULT_PAGINATION: Pagination = new Pagination({
-        skipCount: 0,
-        maxItems: 25,
-        totalItems: 0
-    });
 
     _target: PaginatedComponent;
 
@@ -83,7 +78,7 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
     @Output()
     loadMore: EventEmitter<RequestPaginationModel> = new EventEmitter<RequestPaginationModel>();
 
-    pagination: PaginationModel = InfinitePaginationComponent.DEFAULT_PAGINATION;
+    pagination: PaginationModel;
 
     requestPaginationModel: RequestPaginationModel = {
         skipCount: 0,
@@ -92,7 +87,11 @@ export class InfinitePaginationComponent implements OnInit, OnDestroy, Paginatio
 
     private paginationSubscription: Subscription;
 
-    constructor(private cdr: ChangeDetectorRef, private userPreferencesService: UserPreferencesService) {
+    constructor(
+        private cdr: ChangeDetectorRef,
+        private userPreferencesService: UserPreferencesService,
+        private appConfig: AppConfigService) {
+            this.pagination = new Pagination(this.appConfig.get('adf-infinite-pagination'));
     }
 
     ngOnInit() {

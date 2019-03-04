@@ -130,6 +130,12 @@ export class ConfigEditorComponent {
         this.indentCode();
     }
 
+    infinitePaginationConfClick() {
+        this.code = JSON.stringify(this.appConfig.config['adf-infinite-pagination']);
+        this.field = 'adf-infinite-pagination';
+        this.indentCode();
+    }
+
     indentCode() {
         setTimeout(() => {
             this.editor.getAction('editor.action.formatDocument').run();
