@@ -291,4 +291,8 @@ export class TaskHeaderCloudComponent implements OnInit {
     goBack() {
         this.router.navigate([`/cloud/${this.appName}/`]);
     }
+
+    onCompletedTask(event:any) {
+        this.goBack();
+    }
 }

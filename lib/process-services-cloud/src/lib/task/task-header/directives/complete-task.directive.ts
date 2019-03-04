@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Directive, OnInit, Input, HostListener, Output, EventEmitter } from '@angular/core';
+import { Directive, Input, HostListener, Output, EventEmitter } from '@angular/core';
 import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
     selector: '[adf-complete-task]'
 })
-export class CompleteTaskDirective implements OnInit {
+export class CompleteTaskDirective {
 
     /** (Required) The id of the task. */
     @Input()
@@ -32,26 +32,21 @@ export class CompleteTaskDirective implements OnInit {
 
     /** Emitted when the task is completed. */
     @Output()
-    taskCompleted: EventEmitter<any> = new EventEmitter<any>();
+    success: EventEmitter<any> = new EventEmitter<any>();
 
     /** Emitted when the task cannot be completed. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private taskListService: TaskCloudService) {
-
-    }
-
-    ngOnInit() {
-
-    }
+    constructor(private taskListService: TaskCloudService) {}
 
     @HostListener('click')
-    onClick() {
+    async onClick() {
         try {
-            this.taskListService.completeTask(this.appName, this.taskId).subscribe(
-                (res) => this.taskCompleted.emit(res)
-            );
+            const result = await this.taskListService.completeTask(this.appName, this.taskId);
+            if (result) {
+                this.success.emit(result)
+            }
         } catch (error) {
             this.error.emit(error);
         }

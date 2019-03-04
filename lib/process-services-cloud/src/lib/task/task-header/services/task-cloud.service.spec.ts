@@ -20,8 +20,9 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService, CoreModule } from '@alfresco/adf-core';
 import { TaskCloudService } from './task-cloud.service';
 import { taskComplateCloudMock } from '../mocks/fake-complete-task.mock';
+import { taskDetailsCloudMock } from '../mocks/task-details-cloud.mock';
 
-describe('Task Header Cloud Service', () => {
+describe('Task Cloud Service', () => {
 
     let service: TaskCloudService;
     let alfrescoApiMock: AlfrescoApiServiceMock;
@@ -31,6 +32,16 @@ describe('Task Header Cloud Service', () => {
             oauth2Auth: {
                 callCustomApi : () => {
                     return Promise.resolve(taskComplateCloudMock);
+                }
+            }
+        };
+    }
+
+    function returnFakeTaskCompleteResultsError() {
+        return {
+            oauth2Auth: {
+                callCustomApi : () => {
+                    return Promise.reject(taskComplateCloudMock);
                 }
             }
         };
@@ -62,5 +73,23 @@ describe('Task Header Cloud Service', () => {
             expect(res.entry.id).toBe('68d54a8f');
             done();
         });
+    });
+
+    it('should not complete a task', (done) => {
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskCompleteResultsError);
+        const appName = 'simple-app';
+        const taskId = '68d54a8f';
+
+        service.completeTask(appName, taskId).toPromise().then( (res: any) => {
+        }, (error) => {
+            expect(error).toBeDefined();
+            done();
+        });
+    });
+
+    it('should canCompleteTask', () => {
+        localStorage.setItem('USERNAME', 'superadminuser');
+        const canCompleteTaskResult = service.canCompleteTask(taskDetailsCloudMock);
+        expect(canCompleteTaskResult).toBeTruthy();
     });
 });

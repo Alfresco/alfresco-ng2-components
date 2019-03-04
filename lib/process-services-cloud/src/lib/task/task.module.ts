@@ -16,31 +16,18 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../material.module';
-import { DataTableModule, TemplateModule, CardViewModule, CoreModule } from '@alfresco/adf-core';
-import { TaskHeaderCloudComponent } from './components/task-header-cloud.component';
-import { TaskHeaderCloudService } from './services/task-header-cloud.service';
-import { TaskModule } from '../task.module';
+import { CompleteTaskDirective } from './task-header/directives/complete-task.directive';
+import { TaskCloudService } from './task-header/services/task-cloud.service';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MaterialModule,
-        DataTableModule,
-        TemplateModule,
-        CardViewModule,
-        CoreModule,
-        TaskModule
-    ],
     declarations: [
-        TaskHeaderCloudComponent,
+        CompleteTaskDirective
     ],
     exports: [
-        TaskHeaderCloudComponent
+        CompleteTaskDirective
     ],
     providers: [
-        TaskHeaderCloudService,
+        TaskCloudService
     ]
 })
-export class TaskHeaderCloudModule { }
+export class TaskModule { }

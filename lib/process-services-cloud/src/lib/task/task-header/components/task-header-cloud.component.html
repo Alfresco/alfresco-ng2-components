@@ -3,7 +3,10 @@
 <div class="adf-task-header-container">
     <div class="adf-task-control">
         <button mat-button (click)="goBack()" adf-complete-task [appName]="appName" [taskId]="taskId">Cancel</button>
-        <button mat-button color="primary" *ngIf="isTaskValid() && canCompleteTask()" adf-complete-task [appName]="appName" [taskId]="taskId">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.COMPLETE' | translate }}</button>
+        <button mat-button color="primary" *ngIf="isTaskValid() && canCompleteTask()" adf-complete-task
+            [appName]="appName" [taskId]="taskId"
+            (success)="onCompletedTask($event)"
+            >{{ 'ADF_TASK_LIST.DETAILS.BUTTON.COMPLETE' | translate }}</button>
     </div>
 
     <mat-card *ngIf="isTaskValid()" class="adf-card-container">
