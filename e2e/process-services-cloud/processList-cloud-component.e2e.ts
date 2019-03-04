@@ -20,11 +20,12 @@ import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { ConfigEditorPage } from '../pages/adf/configEditorPage';
+
 import { ProcessListCloudConfiguration } from './processListCloud.config';
 
 describe('Process list cloud', () => {
