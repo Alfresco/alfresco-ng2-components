@@ -50,6 +50,7 @@ describe('Edit process filters cloud', () => {
             appListCloudComponent.goToApp(simpleApp);
             tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             processCloudDemoPage.clickOnProcessFilters();
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
             done();
         });
 
@@ -60,7 +61,6 @@ describe('Edit process filters cloud', () => {
 
         it('[C291804] Delete Save and Save as actions should be displayed when clicking on custom filter header', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('All Processes');
             processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsDisplayed().checkSaveAsButtonIsDisplayed()
@@ -73,7 +73,8 @@ describe('Edit process filters cloud', () => {
 
         it('[C291805] New process filter is added when clicking Save As button', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setSortFilterDropDown('ID');
+
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('ID');
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
 
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
@@ -94,8 +95,8 @@ describe('Edit process filters cloud', () => {
 
         it('[C291806] Two process filters with same name can be created when clicking the Save As button', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded()
-                .setSortFilterDropDown('ID');
+
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('ID');
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded();
@@ -116,8 +117,8 @@ describe('Edit process filters cloud', () => {
 
         it('[C291807] A process filter is overrided when clicking on save button', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded()
-                .setSortFilterDropDown('ID');
+
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('ID');
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
@@ -135,8 +136,8 @@ describe('Edit process filters cloud', () => {
 
         it('[C291808] A process filter is deleted when clicking on delete button', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded()
-                .setSortFilterDropDown('ID');
+
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('ID');
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('New').clickOnSaveButton();
@@ -150,8 +151,8 @@ describe('Edit process filters cloud', () => {
 
         it('[C291810] Process filter should not be created when process filter dialog is closed', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded()
-                .setSortFilterDropDown('ID');
+
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('ID');
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('Cancel');
@@ -171,8 +172,7 @@ describe('Edit process filters cloud', () => {
         it('[C291811] Save button of process filter dialog should be disabled when process name is empty', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded()
-                .setSortFilterDropDown('ID');
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('ID');
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().clearFilterName();
@@ -190,8 +190,7 @@ describe('Edit process filters cloud', () => {
         it('[C291809] Process filter dialog is displayed when clicking on Save As button', () => {
             processCloudDemoPage.allProcessesFilter().clickProcessFilter();
 
-            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().checkCustomiseFilterHeaderIsExpanded()
-                .setSortFilterDropDown('NAME');
+            processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('NAME');
             processCloudDemoPage.allProcessesFilter().checkProcessFilterIsDisplayed();
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().checkCancelButtonIsEnabled()).toEqual(true);
