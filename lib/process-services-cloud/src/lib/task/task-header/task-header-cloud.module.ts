@@ -34,13 +34,13 @@ import { TaskModule } from '../task.module';
         TaskModule
     ],
     declarations: [
-        TaskHeaderCloudComponent,
+        TaskHeaderCloudComponent
     ],
     exports: [
         TaskHeaderCloudComponent
     ],
     providers: [
-        TaskHeaderCloudService,
+        TaskHeaderCloudService
     ]
 })
 export class TaskHeaderCloudModule { }

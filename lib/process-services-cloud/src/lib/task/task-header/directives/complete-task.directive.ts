@@ -45,7 +45,7 @@ export class CompleteTaskDirective {
         try {
             const result = await this.taskListService.completeTask(this.appName, this.taskId);
             if (result) {
-                this.success.emit(result)
+                this.success.emit(result);
             }
         } catch (error) {
             this.error.emit(error);
