@@ -195,10 +195,10 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private parseFacetItems(context: ResultSetContext, configFacetFields: FacetField[], itemType: string) {
         configFacetFields.forEach((field) => {
-            const responseField = this.getApiResponseField(context, itemType, field.label);
+            const responseField = this.findFacet(context, itemType, field.label);
             const responseBuckets = this.getResponseBuckets(responseField, field)
                 .filter(this.getFilterByMinCount(field.mincount));
-            const alreadyExistingField = this.getAlreadyDisplayedField(itemType, field.label);
+            const alreadyExistingField = this.findResponseFacet(itemType, field.label);
 
             if (alreadyExistingField) {
                 const alreadyExistingBuckets = alreadyExistingField.buckets && alreadyExistingField.buckets.items || [];
@@ -250,10 +250,10 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         const mincountFilter = this.getFilterByMinCount(mincount);
 
         Object.keys(configGroups).forEach((group) => {
-            const responseField = this.getApiResponseField(context, 'query', group);
+            const responseField = this.findFacet(context, 'query', group);
             const responseBuckets = this.getResponseQueryBuckets(responseField, configGroups[group])
                 .filter(mincountFilter);
-            const alreadyExistingField = this.getAlreadyDisplayedField('query', group);
+            const alreadyExistingField = this.findResponseFacet('query', group);
 
             if (alreadyExistingField) {
                 const alreadyExistingBuckets = alreadyExistingField.buckets && alreadyExistingField.buckets.items || [];
@@ -357,11 +357,11 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         return `${fieldName}:${startLimit}"${start}" TO "${end}"${endLimit}`;
     }
 
-    private getApiResponseField(context: ResultSetContext, itemType: string, fieldLabel: string): GenericFacetResponse {
+    private findFacet(context: ResultSetContext, itemType: string, fieldLabel: string): GenericFacetResponse {
         return (context.facets || []).find((response) => response.type === itemType && response.label === fieldLabel) || {};
     }
 
-    private getAlreadyDisplayedField(itemType: string, fieldLabel: string): FacetField {
+    private findResponseFacet(itemType: string, fieldLabel: string): FacetField {
         return (this.responseFacets || []).find((response) => response.type === itemType && response.label === fieldLabel);
     }
 
@@ -373,7 +373,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
                 const responseBucket = ((responseField && responseField.buckets) || []).find((respBucket) => respBucket.label === bucket.label);
 
                 if (!responseBucket) {
-                    shouldDelete.push(bucket);
+                    bucketsToDelete.push(bucket);
                 }
                 bucket.count = this.getCountValue(responseBucket);
                 return bucket;
@@ -382,8 +382,8 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         const hasSelection = this.selectedBuckets
             .find((selBuckets) => alreadyExistingField.label === selBuckets.field.label && alreadyExistingField.type === selBuckets.field.type);
 
-        if (!hasSelection && shouldDelete.length) {
-            shouldDelete.forEach((bucket) => {
+        if (!hasSelection && bucketsToDelete.length) {
+            bucketsToDelete.forEach((bucket) => {
                 alreadyExistingField.buckets.deleteItem(bucket);
             });
         }
