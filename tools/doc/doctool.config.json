@@ -24,7 +24,7 @@
             "fileChecker"
         ],
         "dev": [
-            "toc"
+            "gqIndex"
         ]
     },
     "statusIcons": {

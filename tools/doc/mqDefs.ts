@@ -6,10 +6,11 @@ import * as jsyaml from 'js-yaml';
 
 export let schema = `
     type Query {
-        document: Root
+        documents: [Root]
     }
 
     type Root {
+        id: ID
         type: String
         metadata(key: String): String
         heading(depth: Int = 0): Heading
@@ -159,7 +160,7 @@ export class Parent {
 
 export class Root extends Parent {
     _meta: {};
-
+    public id: string
 
     type(): string {
         return 'root';

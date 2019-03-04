@@ -1,0 +1,14 @@
+<%
+    function relDocPath(fullPath) {
+        return fullPath.substring(fullPath.indexOf('docs') + 5).replace('\\', '/')
+    }
+
+    function relSrcPath(fullPath) {
+        return '../' + fullPath.substring(fullPath.indexOf('lib')).replace('\\', '/')
+    }
+-%>
+| Name | Description | Source link |
+| -- | -- | --|
+<% documents.forEach(document => { -%>
+| [<%= document['metadata'] %>](<%= relDocPath(document['id']) %>) | <%= document['paragraph']['plaintext'] %> | [Source](<%= relSrcPath(document['heading']['link']['url']) %>) |
+<% }); %>

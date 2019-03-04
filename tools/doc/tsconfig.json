@@ -12,6 +12,7 @@
     },
     "files": [
         "remarkGraphQl.ts",
-        "mqDefs.ts"
+        "mqDefs.ts",
+        "tools/gqIndex.ts"
     ]
   }
