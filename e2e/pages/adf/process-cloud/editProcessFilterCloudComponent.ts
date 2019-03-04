@@ -47,7 +47,6 @@ export class EditProcessFilterCloudComponent {
         return this;
     }
 
-
     setStateFilterDropDown(option) {
         this.clickOnDropDownArrow('state');
 
