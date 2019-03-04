@@ -22,10 +22,6 @@
         &-claim-controls {
             color: rgb(131, 131, 131);
         }
-
-        &-card-container {
-            font-family: inherit;
-        }
     }
 
     @media screen and  ($mat-small) {
@@ -35,13 +31,24 @@
             white-space: nowrap;
         }
     }
-
 }
 
-.adf-task-header-container {
-    display: flex;
-}
+.adf {
 
-.adf-task-tiitle {
-    margin-left:15px;
+    &-task-header-container {
+        display: flex;
+    }
+
+    &-task-tiitle {
+        margin-left:15px;
+    }
+
+    &-task-control {
+        width:70%;
+    }
+
+    &-card-container {
+        width:30%;
+        font-family: inherit;
+    }
 }
