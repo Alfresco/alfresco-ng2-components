@@ -370,9 +370,9 @@
         }
 
         .adf-ellipsis-cell {
-            overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            position: sticky;
 
             .adf-datatable-cell, .adf-datatable-cell-header {
                 overflow: hidden;
@@ -387,6 +387,8 @@
                     white-space: nowrap;
                     display: block;
                     width: calc(100% - 2em);
+                    position: absolute;
+                    margin-top: -10px;
                 }
             }
 
