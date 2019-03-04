@@ -26,7 +26,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 import { FileModel } from '../models/ACS/fileModel';
 import { UploadActions } from '../actions/ACS/upload.actions';
 import { Util } from '../util/util';
-import {browser, protractor} from 'protractor';
+import { browser, protractor } from 'protractor';
 import { FolderModel } from '../models/ACS/folderModel';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { ViewerPage } from '../pages/adf/viewerPage';
