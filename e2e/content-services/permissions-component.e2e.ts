@@ -285,7 +285,7 @@ describe('Permissions Component', function () {
             done();
         });
 
-        it('[C274691] Should not to be able to Delete, see Info or Upload a file with Consumer permission', () => {
+        it('[C276993] Should not to be able to Delete, see Info or Upload a file with Consumer permission', () => {
 
             loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
             contentServicesPage.goToDocumentList();
