@@ -26,6 +26,7 @@ export class NavigationBarPage {
 
     contentServicesButton = element(by.css('a[data-automation-id="Content Services"]'));
     dataTableButton = element(by.css('a[data-automation-id="Datatable"]'));
+    dataTableNestedButton = element(by.css('button[data-automation-id="Datatable"]'));
     taskListButton = element(by.css("a[data-automation-id='Task List']"));
     configEditorButton = element(by.css('a[data-automation-id="Configuration Editor"]'));
     processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
@@ -53,7 +54,8 @@ export class NavigationBarPage {
 
     navigateToDatatable() {
         Util.waitUntilElementIsVisible(this.dataTableButton);
-        this.dataTableButton.click();
+        this.dataTableButton.click()
+        this.dataTableNestedButton.click();
     }
 
     clickContentServicesButton() {

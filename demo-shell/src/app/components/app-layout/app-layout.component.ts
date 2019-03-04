@@ -40,7 +40,7 @@ export class AppLayoutComponent implements OnInit {
         { href: '/node-selector', icon: 'attachment', title: 'APP_LAYOUT.NODE-SELECTOR' },
         { href: '/task-list', icon: 'assignment', title: 'APP_LAYOUT.TASK_LIST' },
         { href: '/process-list', icon: 'assignment', title: 'APP_LAYOUT.PROCESS_LIST' },
-        { href: '/cloud', icon: 'cloud', title: 'APP_LAYOUT.PROCESS_CLOUD', subitems: [
+        { href: '/cloud', icon: 'cloud', title: 'APP_LAYOUT.PROCESS_CLOUD', children: [
             { href: '/cloud/', icon: 'cloud', title: 'APP_LAYOUT.HOME' },
             { href: '/cloud/people-group-cloud', icon: 'group', title: 'APP_LAYOUT.PEOPLE_GROUPS_CLOUD' }
         ]},
@@ -48,8 +48,10 @@ export class AppLayoutComponent implements OnInit {
         { href: '/login', icon: 'vpn_key', title: 'APP_LAYOUT.LOGIN' },
         { href: '/trashcan', icon: 'delete', title: 'APP_LAYOUT.TRASHCAN' },
         { href: '/dl-custom-sources', icon: 'extension', title: 'APP_LAYOUT.CUSTOM_SOURCES' },
-        { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE' },
-        { href: '/datatable-lazy', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE_LAZY' },
+        { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE', children: [
+            { href: '/datatable', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE' },
+            { href: '/datatable-lazy', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE_LAZY' }
+        ]},
         { href: '/template-list', icon: 'list_alt', title: 'APP_LAYOUT.TEMPLATE' },
         { href: '/form', icon: 'poll', title: 'APP_LAYOUT.FORM' },
         { href: '/form-list', icon: 'library_books', title: 'APP_LAYOUT.FORM_LIST' },
