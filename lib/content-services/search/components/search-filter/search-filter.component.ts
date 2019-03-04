@@ -366,7 +366,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     }
 
     private updateExistingBuckets(responseField, responseBuckets, alreadyExistingField, alreadyExistingBuckets) {
-        const shouldDelete = [];
+        const bucketsToDelete = [];
 
         alreadyExistingBuckets
             .map((bucket) => {
