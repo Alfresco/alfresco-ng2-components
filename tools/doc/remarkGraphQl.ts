@@ -8,9 +8,9 @@ import * as frontMatter from 'remark-frontmatter';
 import { MDAST } from 'mdast';
 import * as removePosInfo from 'unist-util-remove-position';
 
-import { MQNode } from './mqDefs';
+import * as MQ from './mqDefs';
 
-let docFilePath = path.resolve('..', '..', 'docs', 'core', 'testMd.md');
+let docFilePath = path.resolve('..', '..', 'docs', 'core', 'about.component.md');
 let docSrc = fs.readFileSync(docFilePath, 'utf8');
 
 let tree: MDAST.Root = remark()
@@ -21,36 +21,31 @@ tree = removePosInfo(tree);
 
 //console.log(JSON.stringify(tree));
 
-let schema = buildSchema(`
-  type Query {
-    document: Node
-  }
-
-  type Node {
-    type: String
-    children: [Node]
-  }
-`);
+let schema = buildSchema(MQ.schema);
 
 let root = {
-    document: () => new MQNode(tree)
+    document: () => new MQ.Root(tree)
 };
 
-let node = {
-    type: () => 'heading'
-}
 
 let query = `
     {
         document {
-            type
-            children {
-              type
+          metadata(key: "Status")
+          heading {
+            link {
+              text {
+                value
+              }
             }
+          }
+          paragraph {
+            plaintext
+          }
         }
     }
 `;
 
 graphql(schema, query, root).then((response) => {
-  console.log(response);
+  console.log(JSON.stringify(response));
 });

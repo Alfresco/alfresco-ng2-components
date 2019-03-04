@@ -6,22 +6,19 @@ var graphql_1 = require("graphql");
 var remark = require("remark");
 var frontMatter = require("remark-frontmatter");
 var removePosInfo = require("unist-util-remove-position");
-var mqDefs_1 = require("./mqDefs");
-var docFilePath = path.resolve('..', '..', 'docs', 'core', 'testMd.md');
+var MQ = require("./mqDefs");
+var docFilePath = path.resolve('..', '..', 'docs', 'core', 'about.component.md');
 var docSrc = fs.readFileSync(docFilePath, 'utf8');
 var tree = remark()
     .use(frontMatter, ["yaml"])
     .parse(docSrc);
 tree = removePosInfo(tree);
 //console.log(JSON.stringify(tree));
-var schema = graphql_1.buildSchema("\n  type Query {\n    document: Root\n  }\n\n  interface Node {\n    type: String\n  }\n\n  interface Parent {\n    type: String\n    children: [Node]\n  }\n\n  type Root implements Parent {\n    type: String\n    children: [Node]\n  }\n");
+var schema = graphql_1.buildSchema(MQ.schema);
 var root = {
-    document: function () { return new mqDefs_1.MQNode(tree); }
+    document: function () { return new MQ.Root(tree); }
 };
-var node = {
-    type: function () { return 'heading'; }
-};
-var query = "\n    {\n        document {\n            type\n            children {\n              type\n            }\n        }\n    }\n";
+var query = "\n    {\n        document {\n          metadata(key: \"Status\")\n          heading {\n            link {\n              text {\n                value\n              }\n            }\n          }\n          paragraph {\n            plaintext\n          }\n        }\n    }\n";
 graphql_1.graphql(schema, query, root).then(function (response) {
-    console.log(response);
+    console.log(JSON.stringify(response));
 });
