@@ -40,8 +40,10 @@ export class AppLayoutComponent implements OnInit {
         { href: '/node-selector', icon: 'attachment', title: 'APP_LAYOUT.NODE-SELECTOR' },
         { href: '/task-list', icon: 'assignment', title: 'APP_LAYOUT.TASK_LIST' },
         { href: '/process-list', icon: 'assignment', title: 'APP_LAYOUT.PROCESS_LIST' },
-        { href: '/cloud', icon: 'cloud', title: 'APP_LAYOUT.PROCESS_CLOUD' },
-        { href: '/cloud/people-group-cloud', icon: 'group', title: 'APP_LAYOUT.PEOPLE_GROUPS_CLOUD' },
+        { href: '/cloud', icon: 'cloud', title: 'APP_LAYOUT.PROCESS_CLOUD', subitems: [
+            { href: '/cloud/', icon: 'cloud', title: 'APP_LAYOUT.HOME' },
+            { href: '/cloud/people-group-cloud', icon: 'group', title: 'APP_LAYOUT.PEOPLE_GROUPS_CLOUD' }
+        ]},
         { href: '/activiti', icon: 'device_hub', title: 'APP_LAYOUT.PROCESS_SERVICES' },
         { href: '/login', icon: 'vpn_key', title: 'APP_LAYOUT.LOGIN' },
         { href: '/trashcan', icon: 'delete', title: 'APP_LAYOUT.TRASHCAN' },

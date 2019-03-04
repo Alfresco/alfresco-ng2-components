@@ -1,19 +1,12 @@
 <adf-sidenav-layout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="780" [hideSidenav]="hideSidenav"
-                    [expandedSidenav]="expandedSidenav" (expanded)="setState($event)"
-                    [position]="position">
+    [expandedSidenav]="expandedSidenav" (expanded)="setState($event)" [position]="position">
 
     <adf-sidenav-layout-header>
         <ng-template let-toggleMenu="toggleMenu">
 
-            <adf-layout-header id="adf-header"
-                               [title]="title | translate"
-                               [redirectUrl]="redirectUrl"
-                               [logo]="logo"
-                               [tooltip]="tooltip | translate"
-                               [showSidenavToggle]="showMenu"
-                               [color]="color"
-                               [position]="position"
-                               (clicked)=toggleMenu($event)>
+            <adf-layout-header id="adf-header" [title]="title | translate" [redirectUrl]="redirectUrl" [logo]="logo"
+                [tooltip]="tooltip | translate" [showSidenavToggle]="showMenu" [color]="color" [position]="position"
+                (clicked)=toggleMenu($event)>
 
                 <div class="adf-app-layout-menu-spacer"></div>
 
@@ -21,10 +14,7 @@
 
                 <div class="adf-header-delimiexpandedSidenavter"></div>
 
-                <adf-userinfo
-                    class="adf-app-layout-user-profile"
-                    [menuPositionX]="'before'"
-                    [menuPositionY]="'above'">
+                <adf-userinfo class="adf-app-layout-user-profile" [menuPositionX]="'before'" [menuPositionY]="'above'">
                 </adf-userinfo>
 
                 <app-theme-picker></app-theme-picker>
@@ -42,14 +32,29 @@
     <adf-sidenav-layout-navigation>
         <ng-template let-isMenuMinimized="isMenuMinimized">
             <mat-nav-list class="adf-sidenav-linklist">
-                <a mat-list-item *ngFor="let link of links" [attr.data-automation-id]="link.title | translate"
-                   [routerLink]="link.href" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-                   class="adf-sidenav-link">
-                    <mat-icon matListIcon class="adf-sidenav-menu-icon">{{link.icon}}</mat-icon>
-                    <div class="adf-sidenav-menu-label" *ngIf="!isMenuMinimized()">{{link.title | translate }}</div>
-                </a>
+
+                <ng-container *ngFor="let link of links">
+                    <a mat-list-item *ngIf="link.subitems" [attr.data-automation-id]="link.title | translate"
+                        class="adf-sidenav-link" [matMenuTriggerFor]="nestedMenu"
+                        [matMenuTriggerData]="{links: link.subitems}">
+
+                        <mat-icon matListIcon class="adf-sidenav-menu-icon">{{link.icon}}</mat-icon>
+                        <div class="adf-sidenav-menu-label" *ngIf="!isMenuMinimized()">
+                            {{link.title | translate }}</div>
+                    </a>
+
+                    <a mat-list-item *ngIf="!link.subitems" [attr.data-automation-id]="link.title | translate"
+                        class="adf-sidenav-link" [routerLink]="link.href" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: true }">
+
+                        <mat-icon matListIcon class="adf-sidenav-menu-icon">{{link.icon}}</mat-icon>
+                        <div class="adf-sidenav-menu-label" *ngIf="!isMenuMinimized()">
+                            {{link.title | translate }}</div>
+                    </a>
+                </ng-container>
+
                 <a mat-list-item adf-logout [enableRedirect]="enableRedirect" redirectUri="/logout"
-                   class="adf-sidenav-link">
+                    class="adf-sidenav-link">
                     <mat-icon matListIcon class="adf-sidenav-menu-icon">exit_to_app</mat-icon>
                     <div class="adf-sidenav-menu-label" *ngIf="!isMenuMinimized()">Logout</div>
                 </a>
@@ -66,3 +71,16 @@
 
 </adf-sidenav-layout>
 <app-log></app-log>
+
+<mat-menu #nestedMenu="matMenu">
+    <ng-template matMenuContent let-links="links">
+        <button mat-menu-item *ngFor="let link of links"
+            routerLinkActive="active"
+            [routerLink]="link.href"
+            [routerLinkActiveOptions]="{ exact: true }">
+
+            <mat-icon matListIcon class="adf-sidenav-menu-icon">{{link.icon}}</mat-icon>
+            {{ link.title | translate }}
+        </button>
+    </ng-template>
+</mat-menu>

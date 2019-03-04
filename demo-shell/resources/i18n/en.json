@@ -92,7 +92,8 @@
     "ICONS": "Icons",
     "PEOPLE_GROUPS_CLOUD": "People/Group Cloud",
     "PEOPLE_CLOUD": "People Cloud Component",
-    "GROUPS_CLOUD": "Groups Cloud Component"
+    "GROUPS_CLOUD": "Groups Cloud Component",
+    "HOME": "Home"
   },
   "TRASHCAN": {
     "ACTIONS": {
