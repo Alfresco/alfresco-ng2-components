@@ -168,7 +168,10 @@ export class EditProcessFilterCloudComponent {
     }
 
     clickSaveButton() {
+        let disabledButton = element(by.css(("button[id='adf-save-as-id'][disabled]")));
+        Util.waitUntilElementIsClickable(this.saveButton);
         Util.waitUntilElementIsVisible(this.saveButton);
+        Util.waitUntilElementIsNotVisible(disabledButton);
         this.saveButton.click();
         return this;
     }
