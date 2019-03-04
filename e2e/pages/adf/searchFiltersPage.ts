@@ -246,4 +246,34 @@ export class SearchFiltersPage {
         this.searchCategoriesPage.checkFilterIsCollapsed(this.sizeSliderFilter);
         return this;
     }
+
+    checkFacetIntervalsByCreatedIsExpanded() {
+        this.searchCategoriesPage.checkFilterIsExpanded(this.facetIntervalsByCreated);
+        return this;
+    }
+
+    checkFacetIntervalsByCreatedIsCollapsed() {
+        this.searchCategoriesPage.checkFilterIsCollapsed(this.facetIntervalsByCreated);
+        return this;
+    }
+
+    clickFacetIntervalsByCreatedFilterHeader() {
+        this.searchCategoriesPage.clickFilterHeader(this.facetIntervalsByCreated);
+        return this;
+    }
+
+    checkFacetIntervalsByModifiedIsExpanded() {
+        this.searchCategoriesPage.checkFilterIsExpanded(this.facetIntervalsByModified);
+        return this;
+    }
+
+    checkFacetIntervalsByModifiedIsCollapsed() {
+        this.searchCategoriesPage.checkFilterIsCollapsed(this.facetIntervalsByModified);
+        return this;
+    }
+
+    clickFacetIntervalsByModifiedFilterHeader() {
+        this.searchCategoriesPage.clickFilterHeader(this.facetIntervalsByModified);
+        return this;
+    }
 }

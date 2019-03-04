@@ -212,7 +212,17 @@ describe('Search Filters', () => {
         browser.get(TestConfig.adf.url + '/search;q=*');
 
         searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed()
-            .checkFacetIntervalsByModifiedIsDisplayed();
+            .checkFacetIntervalsByCreatedIsExpanded()
+            .clickFacetIntervalsByCreatedFilterHeader()
+            .checkFacetIntervalsByCreatedIsCollapsed()
+            .clickFacetIntervalsByCreatedFilterHeader()
+            .checkFacetIntervalsByCreatedIsExpanded()
+            .checkFacetIntervalsByModifiedIsDisplayed()
+            .checkFacetIntervalsByModifiedIsExpanded()
+            .clickFacetIntervalsByModifiedFilterHeader()
+            .checkFacetIntervalsByModifiedIsCollapsed()
+            .clickFacetIntervalsByModifiedFilterHeader()
+            .checkFacetIntervalsByModifiedIsExpanded();
     });
 
 });
