@@ -75,6 +75,7 @@ export class DataTableComponent {
         this.reset();
     }
 
+    /* spellchecker: disable */
     reset() {
         this.data = new FilteredDataAdapter(
             [
@@ -123,6 +124,7 @@ export class DataTableComponent {
 
         this.data.setSorting(new DataSorting('id', 'asc'));
     }
+    /* spellchecker: enable */
 
     addRow() {
         const id = this.data.getRows().length + 1;
