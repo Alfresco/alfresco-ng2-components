@@ -39,6 +39,15 @@ export class EditProcessFilterCloudComponent {
         return this;
     }
 
+    checkCustomiseFilterHeaderIsExpanded() {
+        let expansionPanelExtended = element.all(by.css('mat-expansion-panel-header[class*="mat-expanded"]')).first();
+        Util.waitUntilElementIsVisible(expansionPanelExtended);
+        let content = element(by.css('div[class*="mat-expansion-panel-content "][style*="visible"]'));
+        Util.waitUntilElementIsVisible(content);
+        return this;
+    }
+
+
     setStateFilterDropDown(option) {
         this.clickOnDropDownArrow('state');
 
@@ -64,7 +73,7 @@ export class EditProcessFilterCloudComponent {
     }
 
     getSortFilterDropDownValue() {
-        let sortLocator = element(by.css("mat-form-field[data-automation-id='sort'] span"));
+        let sortLocator = element.all(by.css("mat-form-field[data-automation-id='sort'] span")).first();
         Util.waitUntilElementIsVisible(sortLocator);
         return sortLocator.getText();
     }
@@ -84,7 +93,7 @@ export class EditProcessFilterCloudComponent {
     }
 
     clickOnDropDownArrow(option) {
-        let dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class*='arrow']")).first();
+        let dropDownArrow = element.all(by.css("mat-form-field[data-automation-id='" + option + "'] div[class='mat-select-arrow-wrapper']")).first();
         Util.waitUntilElementIsVisible(dropDownArrow);
         Util.waitUntilElementIsClickable(dropDownArrow);
         dropDownArrow.click();
@@ -145,8 +154,10 @@ export class EditProcessFilterCloudComponent {
     }
 
     clickSaveAsButton() {
+        let disabledButton = element(by.css(("button[id='adf-save-as-id'][disabled]")));
         Util.waitUntilElementIsClickable(this.saveAsButton);
         Util.waitUntilElementIsVisible(this.saveAsButton);
+        Util.waitUntilElementIsNotVisible(disabledButton);
         this.saveAsButton.click();
         return this.editProcessFilter;
     }
