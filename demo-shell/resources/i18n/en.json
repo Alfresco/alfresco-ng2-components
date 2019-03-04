@@ -280,10 +280,6 @@
       "RETURN_BUTTON": {
         "TEXT": "Back to home"
       }
-    },
-    "403": {
-      "TITLE": "Forbidden",
-      "DESCRIPTION": "You don't have permission to access"
     }
   },
   "PROCESS_LIST_CLOUD_DEMO": {
