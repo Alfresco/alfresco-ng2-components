@@ -238,8 +238,8 @@ describe('Search Filters', () => {
             .enterTextAndPressEnter('*');
 
         searchResults.tableIsLoaded();
-        searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed("My File Types");
-        searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed("My File Sizes");
+        searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Types');
+        searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Sizes');
     });
 
 });
