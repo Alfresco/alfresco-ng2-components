@@ -127,6 +127,8 @@ while [[ $1 == -* ]]; do
     esac
 done
 
+node ./scripts/pre-publish.js
+
 if $EXEC_BUILD == true; then
 echo "====== INSTALL AND CLEAN ${PACKAGE} ===== "
     npm install rimraf
