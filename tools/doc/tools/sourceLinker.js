@@ -27,7 +27,7 @@ function processDocs(mdCache, aggData, errorMessages) {
                 children: [titleText]
             };
         }
-        else if ((titleHeading.children[0].type === "link") && sourcePath) {
+        else if ((titleHeading && titleHeading.children[0].type === "link") && sourcePath) {
             var linkElem = titleHeading.children[0];
             linkElem.url = srcUrl, //`../../${sourcePath}`;
                 linkElem.title = "Defined in " + path.basename(sourcePath);

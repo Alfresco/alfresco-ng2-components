@@ -14,7 +14,7 @@ Starts a process.
 ## Basic Usage
 
 ```html
-<adf-cloud-start-process 
+<adf-cloud-start-process
    [appName]="YOUR_APP_NAME">
 </adf-cloud-start-process>
 ```
@@ -45,11 +45,11 @@ Starts a process.
 ### Starting a process with a default name and a pre-selected process definition name
 
 ```html
- <adf-cloud-start-process 
+ <adf-cloud-start-process
       [appId]="YOUR_APP_ID"
       [name]="PROCESS_NAME"
       [processDefinitionName]="PROCESS_DEFINITION_NAME">
- </adf-cloud-start-process>		 
+ </adf-cloud-start-process>
 ```
 
 You can use the `processDefinitionName` property to select which process will be selected by default on the dropdown (when there is more than one process to choose from). Use the `name` property to set the name shown on the dropdown item.
