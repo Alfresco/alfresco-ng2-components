@@ -133,6 +133,17 @@ You can choose to filter facet field results using 'contains' instead of 'starts
 }
 ```
 
+You can choose to display a reset button by setting the 'resetButton' value to true.
+This 'clean up' button would make it easier for the final user to remove all bucket selections and all search filtering.
+
+```json
+{
+    "search": {
+        "resetButton": true
+    }
+}
+```
+
 You can also provide a set of queries that are always executed alongside the user-defined
 settings:
 
