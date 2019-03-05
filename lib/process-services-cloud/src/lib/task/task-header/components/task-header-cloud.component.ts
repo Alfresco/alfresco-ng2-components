@@ -227,7 +227,7 @@ export class TaskHeaderCloudComponent implements OnInit {
     }
 
     isCompleted() {
-        return this.taskDetails && this.taskDetails.status && this.taskDetails.status.toLowerCase() === 'completed';
+        return this.taskDetails && this.taskDetails.status && this.taskDetails.status.toUpperCase() === TaskStatusEnum.COMPLETED;
     }
 
     canClaimTask() {
