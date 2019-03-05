@@ -105,6 +105,7 @@ describe('Process list cloud', () => {
             processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsSelectedByName(processInstances[0]);
             processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsSelectedByName(processInstances[1]);
             processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsNotSelectedByName(processInstances[2]);
+            expect(processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(2);
         });
 
         it('[C297465] Should be able to select multiple processes using checkboxes', () => {
@@ -122,15 +123,20 @@ describe('Process list cloud', () => {
             processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsCheckedByName(processInstances[0]);
         });
 
-        it('[C299125] Should be possible select all the rows when multiselect is true', () => {
+        it('[C299125] Should be possible to select all the rows when multiselect is true', () => {
             tasksCloudDemoPage.clickSettingsButton().enableMultiSelection();
             tasksCloudDemoPage.clickAppButton();
             expect(processCloudDemoPage.getActiveFilterName()).toEqual('Running Processes');
 
             processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed().checkAllRows();
             processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsCheckedByName(processInstances[0]);
-            processCloudDemoPage.processListCloudComponent().getDataTable().clickCheckboxByName(processInstances[1]);
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsCheckedByName(processInstances[1]);
             processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsCheckedByName(processInstances[2]);
+
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed().checkAllRows();
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsNotCheckedByName(processInstances[0]);
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsNotCheckedByName(processInstances[1]);
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkRowIsNotCheckedByName(processInstances[2]);
         });
 
     });
