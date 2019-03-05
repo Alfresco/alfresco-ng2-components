@@ -57,17 +57,9 @@ describe('Upload component', () => {
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
-    let pngFileModelTwo = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.PNG_B.file_location
-    });
     let pngFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
-    });
-    let largeFile = new FileModel({
-        'name': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
-        'location': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
     });
     let fileWithSpecificSize = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_400B.file_name,
@@ -87,8 +79,6 @@ describe('Upload component', () => {
     });
     let uploadedFileInFolder = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_ONE.file_name });
     let uploadedFileInFolderTwo = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_TWO.file_name });
-    let filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
-    let filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -198,58 +188,6 @@ describe('Upload component', () => {
         uploadDialog.checkCloseButtonIsDisplayed().clickOnCloseButton().dialogIsNotDisplayed();
     });
 
-    it('[C291902] Should be shown upload counter display in dialog box', () => {
-        contentServicesPage
-            .uploadFile(docxFileModel.location)
-            .checkContentIsDisplayed(docxFileModel.name);
-
-        uploadDialog.fileIsUploaded(docxFileModel.name).checkCloseButtonIsDisplayed();
-        expect(uploadDialog.getTitleText()).toEqual('Uploaded 1 / 1');
-        uploadDialog.checkCloseButtonIsDisplayed().clickOnCloseButton().dialogIsNotDisplayed();
-    });
-
-    it('[C260168] Should be possible to cancel upload using dialog icon', () => {
-        contentServicesPage.uploadFile(pdfFileModel.location)
-            .checkContentIsDisplayed(pdfFileModel.name);
-        uploadDialog.removeUploadedFile(pdfFileModel.name).fileIsCancelled(pdfFileModel.name);
-        expect(uploadDialog.getTitleText()).toEqual('Upload canceled');
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-        contentServicesPage.checkContentIsNotDisplayed(pdfFileModel.name);
-    });
-
-    it('[C272792] Should be possible to cancel upload of a big file using row cancel icon', () => {
-        browser.executeScript(' setTimeout(() => {document.querySelector(\'mat-icon[class*="adf-file-uploading-row__action"]\').click();}, 3000)');
-
-        contentServicesPage.uploadFile(largeFile.location);
-
-        expect(uploadDialog.getTitleText()).toEqual('Upload canceled');
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-        contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
-    });
-
-    it('[C287790] Should be possible to cancel upload of a big file through the cancel uploads button', () => {
-        browser.executeScript(' setInterval(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
-            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 500)');
-
-        contentServicesPage.uploadFile(largeFile.location);
-
-        expect(uploadDialog.getTitleText()).toEqual('Upload canceled');
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-        contentServicesPage.checkContentIsNotDisplayed(largeFile.name);
-    });
-
-    it('[C272793] Should be able to cancel multiple files upload', () => {
-        browser.executeScript(' setInterval(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
-            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 500)');
-
-        uploadToggles.enableMultipleFileUpload();
-        contentServicesPage.uploadMultipleFile([pngFileModel.location, largeFile.location]);
-        expect(uploadDialog.getTitleText()).toEqual('Upload canceled');
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-        contentServicesPage.checkContentIsNotDisplayed(pngFileModel.name).checkContentIsNotDisplayed(largeFile.name);
-        uploadToggles.disableMultipleFileUpload();
-    });
-
     it('[C272794] Should display tooltip for uploading files', () => {
         uploadToggles.enableMultipleFileUpload();
         browser.driver.sleep(1000);
@@ -332,39 +270,6 @@ describe('Upload component', () => {
 
         pdfFileModel.setVersion('');
         uploadToggles.disableVersioning();
-    });
-
-    it('[C260176] Should remove files from upload dialog box when closed', () => {
-        contentServicesPage.uploadFile(pngFileModelTwo.location).checkContentIsDisplayed(pngFileModelTwo.name);
-
-        uploadDialog.fileIsUploaded(pngFileModelTwo.name);
-
-        contentServicesPage.uploadFile(pngFileModel.location).checkContentIsDisplayed(pngFileModel.name);
-
-        uploadDialog.fileIsUploaded(pngFileModel.name).fileIsUploaded(pngFileModelTwo.name);
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-
-        contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
-
-        uploadDialog.fileIsUploaded(pdfFileModel.name).fileIsNotDisplayedInDialog(pngFileModel.name).fileIsNotDisplayedInDialog(pngFileModelTwo.name);
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-    });
-
-    it('[C260170] Should be possible to upload multiple files', () => {
-        contentServicesPage.goToDocumentList();
-        contentServicesPage.checkAcsContainer();
-
-        uploadToggles.enableMultipleFileUpload();
-
-        contentServicesPage.uploadMultipleFile(filesLocation).checkContentsAreDisplayed(filesName);
-
-        uploadDialog.filesAreUploaded(filesName);
-
-        expect(uploadDialog.getTitleText()).toEqual('Uploaded 4 / 4');
-
-        uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-
-        uploadToggles.disableMultipleFileUpload();
     });
 
     it('[C260174] Should be possible to set a max size', () => {
