@@ -18,28 +18,33 @@
 import { LoginPage } from '../pages/adf/loginPage';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { PaginationPage } from '../pages/adf/paginationPage';
-import { Util } from '../util/util';
+import { ViewerPage } from '../pages/adf/viewerPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FolderModel } from '../models/ACS/folderModel';
-
-import TestConfig = require('../test.config');
+import { FileModel } from '../models/ACS/fileModel';
 
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../actions/ACS/upload.actions';
+
+import { Util } from '../util/util';
+import resources = require('../util/resources');
+import TestConfig = require('../test.config');
 
 describe('Pagination - returns to previous page when current is empty', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
     let paginationPage = new PaginationPage();
+    let viewerPage = new ViewerPage();
 
     let acsUser = new AcsUserModel();
     let folderModel = new FolderModel({ 'name': 'folderOne' });
     let parentFolderModel = new FolderModel({ 'name': 'parentFolder' });
 
-    let fileNames = [], nrOfFiles = 6, nrOfFolders = 6;
-    let lastFile = 'newFile6.txt';
+    let fileNames = [], nrOfFiles = 6, nrOfFolders = 5;
+    let lastFile = 'newFile6.txt', lastFolderResponse, pngFileUploaded;
+    let folderNames = ['t1', 't2', 't3', 't4', 't5', 't6'];
 
     let itemsPerPage = {
         five: '5',
@@ -50,6 +55,11 @@ describe('Pagination - returns to previous page when current is empty', () => {
         base: 'newFile',
         extension: '.txt'
     };
+
+    let pngFileInfo = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
+    });
 
     beforeAll(async (done) => {
         let uploadActions = new UploadActions();
@@ -71,11 +81,15 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         let parentFolderResponse = await uploadActions.createFolder(this.alfrescoJsApi, parentFolderModel.name, '-my-');
 
-        for(let i=0; i< nrOfFolders; i++) {
-            await uploadActions.createFolder(this.alfrescoJsApi, Util.generateRandomString(), parentFolderResponse.entry.id);
+        for (let i = 0; i < nrOfFolders; i++) {
+            await uploadActions.createFolder(this.alfrescoJsApi, folderNames[i], parentFolderResponse.entry.id);
         }
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
+
+        lastFolderResponse = await uploadActions.createFolder(this.alfrescoJsApi, folderNames[5], parentFolderResponse.entry.id);
+
+        pngFileUploaded = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileInfo.location, pngFileInfo.name, lastFolderResponse.entry.id);
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -124,4 +138,30 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
     });
 
+    it('[C297494] Should display content when navigating to a non-empty folder not in the first page', () => {
+        contentServicesPage.goToDocumentList();
+        contentServicesPage.navigateToFolder(parentFolderModel.name);
+        contentServicesPage.checkAcsContainer();
+        contentServicesPage.waitForTableBody();
+
+        paginationPage.selectItemsPerPage(itemsPerPage.five);
+
+        contentServicesPage.checkAcsContainer();
+        contentServicesPage.waitForTableBody();
+
+        expect(paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
+        expect(contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
+
+        paginationPage.clickOnNextPage();
+
+        contentServicesPage.checkAcsContainer();
+        contentServicesPage.waitForTableBody();
+
+        contentServicesPage.navigateToFolder(lastFolderResponse.entry.name);
+        contentServicesPage.checkContentIsDisplayed(pngFileInfo.name);
+
+        viewerPage.viewFile(pngFileUploaded.entry.name);
+        viewerPage.checkImgViewerIsDisplayed();
+        viewerPage.clickCloseButton();
+    });
 });

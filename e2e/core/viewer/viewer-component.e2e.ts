@@ -36,7 +36,6 @@ import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
-import { viewWrappedDebugError } from '@angular/core/src/view/errors';
 
 xdescribe('Viewer', () => {
 
