@@ -1,0 +1,314 @@
+{
+  "APP": {
+    "INFO_DRAWER": {
+      "TITLE": "التفاصيل",
+      "COMMENTS": "تعليقات",
+      "PROPERTIES": "الخصائص",
+      "VERSIONS": "الإصدارات"
+    },
+    "HOME": {
+      "TITLE": "المكونات الزاوّية لـ Alfresco",
+      "DOCUMENTATION": "الوثائق"
+    },
+    "LOGOUT": {
+      "TITLE": "صفحة الخروج",
+      "SUB_TITLE": "تم خروجك الآن",
+      "LOGIN": "دخول",
+      "HOME": "رئيسية"
+    },
+    "ADF_VERSION_MANAGER": {
+      "ALLOW_DELETE": "السماح بالحذف",
+      "SHOW_COMMENTS": "إظهار التعليقات على الإصدارات",
+      "ALLOW_DOWNLOAD": "تمكين تنزيل الإصدار",
+      "READ_ONLY": "للقراءة فقط",
+      "COMMENTS": "إظهار التعليقات"
+    },
+    "PERSONAL-FILES": "الملفات الشخصية",
+    "WARN-MULTIPLE-UPLOADS": "عرض تحذير للتحميلات المتعددة.",
+    "CUSTOM-PERMISSION-MESSAGE": "تمكين رسالة إذن مخصصة",
+    "MEDIUM-TIME-FORMAT": "تمكين تنسيق وقت متوسط لقائمة المستندات",
+    "SEARCH": {
+      "RADIO": {
+        "NONE": "بلا",
+        "ALL": "الكل",
+        "FOLDER": "مجلد",
+        "DOCUMENT": "مستند"
+      }
+    }
+  },
+  "title": "مرحبًا",
+  "VERSION": {
+    "NO_PERMISSION": "ليس لديك إذن لإدارة إصدارات هذا المحتوى",
+    "NO_PERMISSION_EVENT": "ليس لديك إذن ${event.permission} ل${event.action} ${event.type}",
+    "CHOOSE_FILE": "تحديد ملف لرؤية إصداراته",
+    "DIALOG": {
+      "CLOSE": "إغلاق",
+      "TITLE": "إدارة الإصدارات"
+    }
+  },
+  "METADATA": {
+    "DIALOG": {
+      "CLOSE": "إغلاق",
+      "TITLE": "بيانات تعريف"
+    }
+  },
+  "APP_LAYOUT": {
+    "APP_NAME": "تطبيق ADF التوضيحي",
+    "HOME": "رئيسية",
+    "NODE-SELECTOR": "محدد العقدة",
+    "CONTENT_SERVICES": "Content Services",
+    "BREADCRUMB": "مسار التنقل",
+    "NOTIFICATIONS": "إعلامات",
+    "TASK_LIST": "قائمة المهام",
+    "PROCESS_LIST": "مهام عملية",
+    "PROCESS_CLOUD": "سحابة العملية",
+    "CARD_VIEW": "CardView",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN": "دخول",
+    "CUSTOM_SOURCES": "مصادر مخصصة",
+    "DATATABLE": "جدول بيانات",
+    "DATATABLE_LAZY": "جدول بيانات (بطيء)",
+    "DOCUMENT_LIST": "قائمة المستندات",
+    "TEMPLATE": "قالب",
+    "FORM": "نموذج",
+    "FORM_LIST": "قائمة النماذج",
+    "FORM_LOADING": "تحميل النموذج",
+    "UPLOADER": "مُحمِّل",
+    "WEBSCRIPT": "برنامج الويب النصي",
+    "TAG": "علامة",
+    "TRASHCAN": "سلة المحذوفات",
+    "SOCIAL": "اجتماعي",
+    "SETTINGS": "إعدادات",
+    "CONFIG-EDITOR": "محرر التكوين",
+    "OVERLAY_VIEWER": "عارض مركّب",
+    "ABOUT": "حول",
+    "SEARCH": "بحث ممتد",
+    "EXTENDED_SEARCH_QUERY_BODY": "بحث ممتد بنص الاستعلام",
+    "WORD_TO_SEARCH": "بحث عن كلمة",
+    "SEARCH_CREATED_BY": "تم الإنشاء بواسطة",
+    "SEARCH_SERVICE_APPROACH": "حدد هذا لتعطيل خاصية الإدخال والتكوين باستخدام الخدمة",
+    "HEADER_DATA": "بيانات العنوان",
+    "TREE_VIEW": "طريقة عرض الشجرة",
+    "ICONS": "أيقونات",
+    "PEOPLE_GROUPS_CLOUD": "سحابة الأشخاص/المجموعة",
+    "PEOPLE_CLOUD": "مكون سحابة الأشخاص",
+    "GROUPS_CLOUD": "مكون سحابة المجموعة"
+  },
+  "TRASHCAN": {
+    "ACTIONS": {
+      "DELETE_PERMANENT": "حذف بشكل دائم",
+      "RESTORE": "استعادة"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "المهملات فارغة",
+      "FIRST_TEXT": "تم نقل العناصر المحذوفة إلى المهملات.",
+      "SECOND_TEXT": "أفرغ المهملات لحذف العناصر بشكل دائم."
+    }
+  },
+  "DOCUMENT_LIST": {
+    "MULTISELECT_CHECKBOXES": "تحديد متعدد (مع خانات اختيارات)",
+    "THUMBNAILS": "تمكين الصور المصغرة",
+    "ALLOW_DROP_FILES": "تمكين إسقاط ملفات في مجلد",
+    "MULTIPLE_FILE_UPLOAD": "تحميل ملفات متعددة",
+    "FOLDER_UPLOAD": "تحميل مجلد",
+    "CUSTOM_FILTER": "عامل تصفية امتدادات مخصص",
+    "MAX_SIZE": "عامل تصفية الحد الأقصى للحجم",
+    "ENABLE_VERSIONING": "تمكين تعيين الإصدار",
+    "DESCRIPTION_UPLOAD": "تمكين التحميل",
+    "ENABLE_INFINITE_SCROLL": "تمكين التمرير اللانهائي",
+    "MULTISELECT_DESCRIPTION": "استخدام Cmd (Mac) أو Ctrl (Windows) لتبديل تحديد العناصر المتعددة",
+    "RECENT": {
+      "EMPTY_STATE": {
+        "TITLE": "قائمة أحدث الملفات فارغة"
+      },
+      "TITLE": "أحدث الملفات"
+    },
+    "COLUMNS": {
+      "DISPLAY_NAME": "اسم العرض",
+      "IS_LOCKED": "قفل",
+      "TAG": "علامة",
+      "NODE_ID": "معرف العقدة",
+      "CREATED_BY": "تم الإنشاء بواسطة",
+      "CREATED_ON": "تم الإنشاء في",
+      "CREATED": "تم الإنشاء",
+      "SIZE": "الحجم",
+      "DELETED_ON": "تم الحذف",
+      "DELETED_BY": "تم الحذف بواسطة"
+    },
+    "TOOLBAR": {
+      "CARDVIEW": "وضع عرض البطاقة",
+      "SHARE_EDIT": "إعدادات التحرير",
+      "NEW_FOLDER": "مجلد جديد",
+      "EDIT_FOLDER": "تحرير مجلد",
+      "DOWNLOAD": "تنزيل",
+      "DELETE": "حذف",
+      "FAVORITES": "إضافة إلى المفضلات",
+      "SHARE": "مشاركة",
+      "THEME": "تحديد نسق",
+      "SHOW_VERSION": "إظهار الإصدار",
+      "HIDE_VERSION": "إخفاء الإصدار",
+      "LISTVIEW": "وضع عرض القائمة",
+      "CREATE_LIBRARY": "إنشاء مكتبة"
+    },
+    "ACTIONS": {
+      "VERSIONS": "إدارة الإصدارات",
+      "LOCK": "قفل",
+      "METADATA": "معلومات",
+      "DOWNLOAD": "تنزيل",
+      "PERMISSION": "إذن",
+      "FOLDER": {
+        "COPY": "نسخ",
+        "MOVE": "نقل",
+        "DELETE": "حذف"
+      },
+      "DOCUMENT": {
+        "COPY": "نسخ",
+        "MOVE": "نقل",
+        "DELETE": "حذف",
+        "PROCESS_ACTION": "بدء العملية"
+      }
+    }
+  },
+  "DATATABLE": {
+    "RESET_DEFAULT": "إعادة تعيين إلى افتراضي",
+    "ADD_ROW": "إضافة صف",
+    "REPLACE_ROWS": "استبدال صفوف",
+    "REPLACE_COLUMNS": "استبدال أعمدة",
+    "LOAD_NODE": "تحميل عقدة",
+    "MULTISELECT": "تحديد متعدد",
+    "MULTISELECT_DESCRIPTION": "استخدام Cmd (Mac) أو Ctrl (Windows) لتبديل تحديد العناصر المتعددة"
+  },
+  "ANALYTICS_REPORT": {
+    "NO_REPORT_MESSAGE": "لم يتم تحديد تقرير. اختر تقريرًا من القائمة"
+  },
+  "PS-TAB": {
+    "TASKS-TAB": "المهام",
+    "PROCESSES-TAB": "العملية",
+    "REPORTS-TAB": "تقارير",
+    "SETTINGS-TAB": "إعدادات",
+    "START-TASK": "بدء مهمة",
+    "START-PROCESS": "بدء العملية",
+    "PROCESS-AUDIT-LOG": "سجل تدقيق العملية",
+    "TASK-AUDIT-LOG": "سجل تدقيق المهمة",
+    "TASK-SHOW-HEADER": "إظهار تفاصيل العنوان"
+  },
+  "PS_CLOUD_TAB": {
+    "APPS_TAB": "تطبيق",
+    "SETTINGS_TAB": "إعدادات"
+  },
+  "FORM-LIST": {
+    "STORE": "متجر",
+    "RESTORE": "استعادة"
+  },
+  "FORM-LOADING": {
+    "FORM_DATA": "بيانات النموذج",
+    "FORM_DATA_MESSAGE": "إدخال قيم لملء النموذج",
+    "TYPEAHEAD_PLACEHOLDER": "التنبؤ بالحروف",
+    "RADIO_PLACEHOLDER": "زر الراديو",
+    "SELECT_PLACEHOLDER": "القائمة المنسدلة"
+  },
+  "LOGIN": {
+    "CONTENT_SERVICES": "Content Services",
+    "PROCESS_SERVICES": "Process Services",
+    "LOGIN_FOOTER": "تذييل الدخول",
+    "SHOW_REMEMBERME": "إظهار تذكرني",
+    "SHOW_SUCCESS_ROUTE": "إظهار طريق النجاح",
+    "CUSTOM_LOGO": "شعار مخصص"
+  },
+  "SEARCH": {
+    "RESULTS": "نتائج البحث",
+    "NO_RESULT": "لم يتم العثور على نتائج",
+    "FACET_FIELDS": {
+      "TYPE": "1:النوع",
+      "SIZE": "2:الحجم",
+      "CREATOR": "3:المُنشئ",
+      "MODIFIER": "4:المُعدل",
+      "CREATED": "5:تم الإنشاء"
+    },
+    "FACET_QUERIES": {
+      "MY_FACET_QUERIES": "استعلامات واجهتي",
+      "CREATED_THIS_YEAR": "1.تم الإنشاء هذا العام",
+      "MIMETYPE": "2.النوع: HTML",
+      "XTRASMALL": "3.الحجم: فائق الصغر",
+      "SMALL": "4.الحجم: صغير",
+      "MEDIUM": "5.الحجم: متوسط",
+      "LARGE": "6.الحجم: كبير",
+      "XTRALARGE": "7.الحجم: فائق الكبر",
+      "XXTRALARGE": "8.الحجم: كبير XX"
+    }
+  },
+  "SOCIAL": {
+    "LIKE": "مكون الإعجاب",
+    "RATING": "مكون التقييم"
+  },
+  "TAG": {
+    "LIST": "خدمات محتوى علامات القائمة",
+    "INSERT": "إدراج معرف العقدة",
+    "NODE_LIST": "قائمة العلامات حسب معرف العقدة"
+  },
+  "DEMO_PERMISSION": {
+    "INHERIT_PERMISSION_BUTTON": "إذن التوريث",
+    "INHERITED_PERMISSIONS_BUTTON": "تم توريث الإذن"
+  },
+  "TASK_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "إدراج معرف التطبيق",
+      "APP_ID_TYPE_ERROR": "يجب أن يكون معرف التطبيق رقمًا",
+      "NUMBER_TYPE_ERROR": "يجب أن تكون القيمة رقمًا",
+      "NUMBER_GREATER_THAN": "يجب أن تكون القيمة أكبر من {{ value }} أو تساويها"
+    },
+    "TOOLTIP_MESSAGE": {
+      "START_INPUT": "صفحة البدء"
+    }
+  },
+  "PROCESS_LIST_DEMO": {
+    "ERROR_MESSAGE": {
+      "APP_ID_REQUIRED_ERROR": "إدراج معرف التطبيق",
+      "APP_ID_TYPE_ERROR": "يجب أن يكون معرف التطبيق رقمًا",
+      "NUMBER_GREATER_THAN": "يجب أن تكون القيمة أكبر من {{ value }} أو تساويها"
+    }
+  },
+  "GROUP-TITLE1-TRANSLATION-KEY": "الترجمة الأولى للعنوان المخصص",
+  "GROUP-TITLE2-TRANSLATION-KEY": "الترجمة الثانية للعنوان المخصص",
+  "ERROR_CONTENT": {
+    "507": {
+      "TITLE": "قرص ACS ممتلئ",
+      "DESCRIPTION": "يتجاوز المحتوى حد سعة التخزين المكون للشبكة أو النظام",
+      "SECONDARY_BUTTON": {
+        "TEXT": ""
+      },
+      "RETURN_BUTTON": {
+        "TEXT": "عودة إلى الرئيسية"
+      }
+    }
+  },
+  "PROCESS_LIST_CLOUD_DEMO": {
+    "TITLE": "العرض التوضيحي لسحابة قائمة العملية",
+    "CUSTOMIZE_FILTERS": "تخصيص عامل التصفية"
+  },
+  "TASK_LIST_CLOUD_DEMO": {
+    "CUSTOMIZE_FILTERS": "تخصيص عامل التصفية"
+  },
+  "PEOPLE_GROUPS_CLOUD": {
+    "SINGLE": "فردي",
+    "MULTI": "متعدد",
+    "PRESELECTED_VALUE": "قيمة محددة مسبقًا"
+  },
+  "ABOUT": {
+    "TITLE": "مكونات إضافية",
+    "TABLE_HEADERS": {
+      "ID": "المعرف",
+      "NAME": "الاسم",
+      "VERSION": "الإصدار",
+      "VENDOR": "المورد",
+      "LICENSE": "الترخيص",
+      "RUNTIME": "وقت التشغيل",
+      "DESCRIPTION": "الوصف"
+    }
+  },
+  "SETTINGS_CLOUD": {
+    "MULTISELECTION": "تحديد متعدد",
+    "TESTING_MODE": "وضع الاختبار",
+    "SELECTION_MODE": "وضع التحديد"
+  }
+}
