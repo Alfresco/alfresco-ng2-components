@@ -200,6 +200,9 @@
       "DESCRIPTION_DEFAULT": "No description",
       "FORM_NAME": "Form Name",
       "FORM_NAME_DEFAULT": "No form"
+    },
+    "FORM_VALIDATION": {
+        "INVALID_FIELD": "Enter a different value"
     }
   }
 }
