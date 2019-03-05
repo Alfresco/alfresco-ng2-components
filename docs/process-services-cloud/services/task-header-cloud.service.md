@@ -7,7 +7,7 @@ Last reviewed: 2019-01-18
 
 # [Task Header Cloud Service](../../../lib/process-services-cloud/src/lib/task/task-header/services/task-header-cloud.service.ts "Defined in task-header-cloud.service.ts")
 
-Manages cloud tasks. 
+Manages cloud tasks.
 
 ## Class members
 

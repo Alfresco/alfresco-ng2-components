@@ -22,6 +22,17 @@ Edits Task Filter Details.
     -   [Filter properties](#filter-properties)
 -   [See also](#see-also)
 
+## Contents
+
+-   [Basic Usage](#basic-usage)
+-   [Class members](#class-members)
+    -   [Properties](#properties)
+    -   [Events](#events)
+-   [Details](#details)
+    -   [Editing APS2 task filters](#editing-aps2-task-filters)
+    -   [Filter properties](#filter-properties)
+-   [See also](#see-also)
+
 ## Basic Usage
 
 ```html
@@ -50,8 +61,13 @@ Edits Task Filter Details.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
+<<<<<<< HEAD:docs/process-services-cloud/components/edit-task-filter-cloud.component.md
 | action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterActionType`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter action occurs (i.e Save, Save As, Delete). |
 | filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a task filter property changes. |
+=======
+| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterActionType`](../../lib/lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter action occurs (i.e Save, Save As, Delete). |
+| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../lib/lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a task filter property changes. |
+>>>>>>> [ADF-4127] ProessServicesCloud - claim task directive:docs/process-services-cloud/edit-task-filter-cloud.component.md
 
 ## Details
 

@@ -7,7 +7,7 @@ Last reviewed: 2019-02-06
 
 # [Group Cloud Service](../../../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts "Defined in group-cloud.service.ts")
 
-Searches and gets information for groups. 
+Searches and gets information for groups.
 
 ## Class members
 

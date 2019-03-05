@@ -1,0 +1,73 @@
+/*!
+ * @license
+ * Copyright 2019 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@angular/core';
+import { TaskCloudService } from '../services/task-cloud.service';
+import { IdentityUserService, IdentityUserModel } from '@alfresco/adf-core';
+import { Observable, of } from 'rxjs';
+
+@Directive({
+    selector: '[adf-claim-task]'
+})
+export class ClaimTaskDirective implements OnInit {
+
+    /** (Required) The id of the task. */
+    @Input()
+    taskId: string;
+
+    /** (Required) The name of the application. */
+    @Input()
+    appName: string;
+
+    /** Emitted when the task is completed. */
+    @Output()
+    success: EventEmitter<any> = new EventEmitter<any>();
+
+    /** Emitted when the task cannot be completed. */
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
+
+    private identityUser$: Observable<IdentityUserModel>;
+    private currentUser: IdentityUserModel;
+
+    constructor(
+        private taskListService: TaskCloudService,
+        private identityUserService: IdentityUserService) { }
+
+    async ngOnInit() {
+        this.identityUser$ = of(this.identityUserService.getCurrentUserInfo());
+        this.identityUser$.subscribe((user: IdentityUserModel) => {
+            this.currentUser = user;
+        });
+    }
+
+    @HostListener('click')
+    async onClick() {
+        try {
+            this.claimTask();
+        } catch (error) {
+            this.error.emit(error);
+        }
+
+    }
+
+    private claimTask() {
+        this.taskListService.claimTask(this.appName, this.taskId, this.currentUser.username).subscribe(
+            (res: any) => {
+                this.success.emit(this.taskId);
+            });
+    }
+}
