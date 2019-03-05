@@ -6,12 +6,13 @@ import * as jsyaml from 'js-yaml';
 
 export let schema = `
     type Query {
-        documents: [Root]
+        documents(idFilter: String = ""): [Root]
     }
 
     type Root {
         id: ID
         type: String
+        folder(depth: Int = 1): String
         metadata(key: String): String
         heading(depth: Int = 0): Heading
         headings(depth: Int = 0): [Heading]
@@ -166,7 +167,15 @@ export class Root extends Parent {
         return 'root';
     }
 
-    metadata(args): String {
+    folder(args): string {
+        let depth = args['depth'];
+
+        let relPath = this.id.substring(this.id.indexOf('docs'));
+        let pathSegments = relPath.split(/[\\\/]/);
+        return pathSegments[depth];
+    }
+
+    metadata(args): string {
         if (!this._meta) {
             let yamlElement: MDAST.YAML = this.orig.children.find(
                 (ch: UNIST.Node) => (ch.type === 'yaml')
@@ -186,7 +195,7 @@ export class Root extends Parent {
         }
     }
 
-    heading(args, _context, _info): Heading {
+    heading(args): Heading {
         let depth = args['depth'];
         
         return new Heading(<MDAST.Heading> this.orig.children.find(

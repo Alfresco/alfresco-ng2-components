@@ -12,7 +12,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var mdToString = require("mdast-util-to-string");
 var jsyaml = require("js-yaml");
-exports.schema = "\n    type Query {\n        documents: [Root]\n    }\n\n    type Root {\n        id: ID\n        type: String\n        metadata(key: String): String\n        heading(depth: Int = 0): Heading\n        headings(depth: Int = 0): [Heading]\n        paragraph: Paragraph\n        paragraphs: [Paragraph]\n        link: Link\n        links: [Link]\n        text: Text\n        texts: [Text]\n        children: [Node]\n    }\n\n    type Heading {\n        depth: Int\n        plaintext: String\n        paragraph: Paragraph\n        paragraphs: [Paragraph]\n        link: Link\n        links: [Link]\n        children: [Node]\n    }\n\n    type Paragraph {\n        plaintext: String\n    }\n\n    type Link {\n        plaintext: String\n        title: String\n        url: String\n        paragraph: Paragraph\n        paragraphs: [Paragraph]\n        text: Text\n        texts: [Text]\n    }\n\n    type Text {\n        value: String\n    }\n\n    type Node {\n        type: String\n        children: [Node]\n    }\n";
+exports.schema = "\n    type Query {\n        documents(idFilter: String = \"\"): [Root]\n    }\n\n    type Root {\n        id: ID\n        type: String\n        folder(depth: Int = 1): String\n        metadata(key: String): String\n        heading(depth: Int = 0): Heading\n        headings(depth: Int = 0): [Heading]\n        paragraph: Paragraph\n        paragraphs: [Paragraph]\n        link: Link\n        links: [Link]\n        text: Text\n        texts: [Text]\n        children: [Node]\n    }\n\n    type Heading {\n        depth: Int\n        plaintext: String\n        paragraph: Paragraph\n        paragraphs: [Paragraph]\n        link: Link\n        links: [Link]\n        children: [Node]\n    }\n\n    type Paragraph {\n        plaintext: String\n    }\n\n    type Link {\n        plaintext: String\n        title: String\n        url: String\n        paragraph: Paragraph\n        paragraphs: [Paragraph]\n        text: Text\n        texts: [Text]\n    }\n\n    type Text {\n        value: String\n    }\n\n    type Node {\n        type: String\n        children: [Node]\n    }\n";
 var Node = /** @class */ (function () {
     function Node(orig) {
         this.orig = orig;
@@ -100,6 +100,12 @@ var Root = /** @class */ (function (_super) {
     Root.prototype.type = function () {
         return 'root';
     };
+    Root.prototype.folder = function (args) {
+        var depth = args['depth'];
+        var relPath = this.id.substring(this.id.indexOf('docs'));
+        var pathSegments = relPath.split(/[\\\/]/);
+        return pathSegments[depth];
+    };
     Root.prototype.metadata = function (args) {
         if (!this._meta) {
             var yamlElement = this.orig.children.find(function (ch) { return (ch.type === 'yaml'); });
@@ -117,7 +123,7 @@ var Root = /** @class */ (function (_super) {
             return '';
         }
     };
-    Root.prototype.heading = function (args, _context, _info) {
+    Root.prototype.heading = function (args) {
         var depth = args['depth'];
         return new Heading(this.orig.children.find(function (ch) {
             return (ch.type === 'heading') &&
