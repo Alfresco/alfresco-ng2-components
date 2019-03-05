@@ -99,6 +99,32 @@ export class EditProcessFilterCloudComponent {
         Util.waitUntilElementIsVisible(this.selectedOption);
     }
 
+    setAppNameDropDown(option) {
+        this.clickOnDropDownArrow('appName');
+
+        let appNameElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        Util.waitUntilElementIsClickable(appNameElement);
+        Util.waitUntilElementIsVisible(appNameElement);
+        appNameElement.click();
+        return this;
+    }
+
+    async checkAppNamesAreUnique() {
+        let appNameList = element.all(by.css('mat-option[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span'));
+        let appTextList = await appNameList.getText();
+        let uniqueArray = appTextList.filter((appName) => {
+            let sameAppNameArray = appTextList.filter(element => element === appName);
+            return sameAppNameArray.length === 1;
+        });
+        return uniqueArray.length === appTextList.length;
+    }
+
+    getNumberOfAppNameOptions() {
+        this.clickOnDropDownArrow('appName');
+        let dropdownOptions = element.all(by.css('.mat-select-panel mat-option'));
+        return dropdownOptions.count();
+    }
+
     setProcessInstanceId(option) {
         return this.setProperty('processInstanceId', option);
     }
