@@ -1,5 +1,14 @@
 <mat-chip-list>
     <ng-container *ngIf="searchFilter && searchFilter.selectedBuckets.length">
+        <mat-chip *ngIf="clearAll && searchFilter.selectedBuckets.length > 1"
+                  color="primary"
+                  selected
+                  matTooltip="{{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.TOOLTIP' | translate }}"
+                  matTooltipPosition="right"
+                  (click)="searchFilter.resetAllSelectedBuckets()">
+            {{ 'SEARCH.FILTER.BUTTONS.CLEAR-ALL.LABEL' | translate }}
+        </mat-chip>
+
         <mat-chip
             *ngFor="let selection of searchFilter.selectedBuckets"
             [removable]="true"

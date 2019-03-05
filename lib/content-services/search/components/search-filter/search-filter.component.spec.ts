@@ -193,7 +193,7 @@ describe('SearchFilterComponent', () => {
 
         component.onDataLoaded(data);
 
-        expect(component.responseFacets.length).toBe(0);
+        expect(component.responseFacets).toBeNull();
     });
 
     it('should fetch facet fields from response payload', () => {
@@ -397,10 +397,10 @@ describe('SearchFilterComponent', () => {
         };
 
         component.responseFacets = <any> [
-            { label: 'f1', field: 'f1', buckets: {items: [
+            { type: 'field', label: 'f1', field: 'f1', buckets: {items: [
                 { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
                 { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
-            { label: 'f2', field: 'f2', buckets: {items: [] }}
+            { type: 'field', label: 'f2', field: 'f2', buckets: {items: [] }}
         ];
         component.queryBuilder.addUserFacetBucket({ label: 'f1', field: 'f1' }, component.responseFacets[0].buckets.items[0]);
 
@@ -437,10 +437,10 @@ describe('SearchFilterComponent', () => {
         };
 
         component.responseFacets = <any> [
-            { label: 'f1', field: 'f1', buckets: {items: [
+            { type: 'field', label: 'f1', field: 'f1', buckets: {items: [
                         { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
                         { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
-            { label: 'f2', field: 'f2', buckets: {items: [] }}
+            { type: 'field', label: 'f2', field: 'f2', buckets: {items: [] }}
         ];
         component.queryBuilder.addUserFacetBucket({ label: 'f1', field: 'f1' }, component.responseFacets[0].buckets.items[0]);
 
@@ -477,10 +477,10 @@ describe('SearchFilterComponent', () => {
         };
 
         component.responseFacets = <any> [
-            { label: 'f1', field: 'f1', buckets: {items: [
+            { type: 'field', label: 'f1', field: 'f1', buckets: {items: [
                         { label: 'b1', count: 10, filterQuery: 'filter', checked: true },
                         { label: 'b2', count: 1, filterQuery: 'filter2' }] }},
-            { label: 'f2', field: 'f2', buckets: {items: [] }}
+            { type: 'field', label: 'f2', field: 'f2', buckets: {items: [] }}
         ];
         component.queryBuilder.addUserFacetBucket({ label: 'f1', field: 'f1' }, component.responseFacets[0].buckets.items[0]);
         const data = {

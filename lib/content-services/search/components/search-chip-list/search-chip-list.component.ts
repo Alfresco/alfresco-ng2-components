@@ -29,4 +29,8 @@ export class SearchChipListComponent {
     /** Search filter to supply the data for the chips. */
     @Input()
     searchFilter: SearchFilterComponent;
+
+    /** Flag used to enable the display of a clear-all-filters button. */
+    @Input()
+    clearAll: boolean = false;
 }
