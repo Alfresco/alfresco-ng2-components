@@ -1,0 +1,332 @@
+{
+  "DIALOG": {
+    "SAVE_MESSAGE": "انقر فوق حفظ لإضافة تقرير بالإعدادات الحالية إلى قائمة تقاريرك.",
+    "EXPORT_MESSAGE": ""
+  },
+  "DATE-WIDGET": {
+    "START-DATE": "تاريخ البدء",
+    "END-DATE": "تاريخ الانتهاء",
+    "MESSAGES": {
+      "START-DATE-REQUIRED": "تاريخ البدء مطلوب",
+      "START-LESS-THAN-END-DATE": "يجب أن يكون تاريخ البدء قبل تاريخ الانتهاء"
+    }
+  },
+  "ADF_TASK_LIST": {
+    "APPS": {
+      "TITLE": "لم يتم العثور على تطبيقات",
+      "SUBTITLE": "أنشئ تطبيقًا جديدًا تريد العثور عليه بسهولة لاحقًا",
+      "TASK_APP_NAME": "تطبيق المهمة"
+    },
+    "LIST": {
+      "MESSAGES": {
+        "TITLE": "لم يتم العثور على مهام",
+        "SUBTITLE": "أنشئ مهمة جديدة تريد العثور عليها بسهولة لاحقًا",
+        "NONE": "لم يتم العثور على قوائم مهام"
+      }
+    },
+    "PROPERTIES": {
+      "TASK_NAME": "مهمة",
+      "THUMBNAIL": "صورة مصغرة",
+      "DURATION": "المدة",
+      "PARENT_TASK_ID": "معرف المهمة الأصلية",
+      "NAME": "الاسم",
+      "ASSIGNEE": "معين له",
+      "ASSIGNEE_DEFAULT": "لا يوجد معين له",
+      "PRIORITY": "أولوية",
+      "DUE_DATE": "تاريخ الاستحقاق",
+      "DUE_DATE_DEFAULT": "لا يوجد تاريخ",
+      "STATUS": "الحالة",
+      "CATEGORY": "الفئة",
+      "CATEGORY_DEFAULT": "لا توجد فئة",
+      "PARENT_NAME": "اسم العنصر الأصلي",
+      "PARENT_NAME_DEFAULT": "لا يوجد عنصر أصلي",
+      "CREATED_BY": "تم الإنشاء بواسطة",
+      "CREATED": "تم الإنشاء",
+      "END_DATE": "تاريخ الانتهاء",
+      "ID": "المعرف",
+      "DESCRIPTION": "الوصف",
+      "DESCRIPTION_DEFAULT": "لا يوجد وصف",
+      "FORM_NAME": "اسم النموذج",
+      "FORM_NAME_DEFAULT": "لا يوجد نموذج"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "عرض",
+      "REMOVE_CONTENT": "إزالة",
+      "DOWNLOAD_CONTENT": "تنزيل",
+      "DOWNLOAD_AUDIT": "تنزيل التدقيق"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "INFO_DRAWER_TITLE": "أنشطة",
+        "INFO_DRAWER_TAB_ACTIVITY_TITLE": "نشاط",
+        "INFO_DRAWER_TAB_DETAILS_TITLE": "التفاصيل",
+        "ASSIGNEE": "معين له",
+        "DUE": "مستحق",
+        "FORM": "نموذج",
+        "PEOPLE": "الأشخاص هذه المهمة مشتركة مع",
+        "COMMENTS": "تعليقات",
+        "CHECKLIST": "قائمة الاختيار",
+        "INVOLVED_PEOPLE": "الأشخاص المشتركون",
+        "ADD_PEOPLE": "إضافة أشخاص ومجموعات",
+        "ADD_ASSIGNEE": "إضافة معين له جديد"
+      },
+      "BUTTON": {
+        "COMPLETE": "تم",
+        "CLAIM": "مطالبة",
+        "UNCLAIM": "إعادة وضع في قائمة الانتظار",
+        "DRAG-ATTACHMENT": "إفلات الملفات لتحميلها",
+        "UPLOAD-ATTACHMENT": "تحميل المرفق"
+      },
+      "MESSAGES": {
+        "NONE": "لم يتم العثور على تفاصيل المهمة",
+        "CLAIM": "انقر فوق مطالبة للعمل على هذه المهمة"
+      },
+      "FORM": {
+        "NONE": "لا يوجد نموذج"
+      },
+      "DUE": {
+        "NONE": "لا يوجد تاريخ استحقاق"
+      },
+      "ASSIGNEE": {
+        "NONE": "لا يوجد معين له"
+      },
+      "PEOPLE": {
+        "NONE": "لا يوجد شخص مشترك"
+      },
+      "CHECKLIST": {
+        "NONE": "لا توجد قائمة اختيار",
+        "DIALOG": {
+          "TITLE": "اختيار جديد",
+          "CANCEL-BUTTON": "إلغاء",
+          "ADD-BUTTON": "إضافة قائمة اختيار",
+          "PLACEHOLDER": "الاسم"
+        }
+      },
+      "ERROR": {
+        "TITLE": "تعذر إتمام الإجراء",
+        "DESCRIPTION": "حاول مرة أخرى أو تحقق من أن لديك حق الوصول.",
+        "CLOSE": "إغلاق"
+      }
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "لم يتم تحديد عامل تصفية للمهمة"
+      }
+    },
+    "START_TASK": {
+      "DEFAULT_NAME": "مهمتي الافتراضية",
+      "BUTTON": "إنشاء مهمة",
+      "FORM": {
+        "TITLE": "بدء مهمة",
+        "LABEL": {
+          "NONE": "بلا",
+          "NAME": "الاسم",
+          "DESCRIPTION": "الوصف",
+          "ATTACHFORM": "إرفاق نموذج",
+          "ASSIGNEE": "معين له",
+          "FORM": "نموذج",
+          "DATE": "اختيار تاريخ"
+        },
+        "ACTION": {
+          "START": "بدء",
+          "CANCEL": "إلغاء"
+        },
+        "ERROR": {
+          "REQUIRED": "حقل مطلوب",
+          "DATE": "تنسيق التاريخ ي‎ي/ش‎ش/س‎س‎س‎س",
+          "MAXIMUM_LENGTH": "تم تجاوز الطول، {{characters}} من الحد الأقصى للحروف."
+        }
+      }
+    },
+    "PEOPLE": {
+      "ASSIGNEE": "معين له",
+      "DIALOG_CLOSE": "إغلاق",
+      "ADD_USER": "إضافة",
+      "ADD_ASSIGNEE": "تعيين",
+      "SEARCH_USER": "بحث عن مستخدم",
+      "SEARCH": {
+        "NO_USERS": "لم يتم العثور على شخص للاشتراك"
+      }
+    },
+    "ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "هذه القائمة فارغة",
+        "DRAG-AND-DROP": {
+          "TITLE": "سحب وإفلات",
+          "SUBTITLE": "لتحميل الملفات"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "لا توجد ملفات متاحة"
+      }
+    },
+    "STANDALONE_TASK": {
+      "NO_FORM_MESSAGE": "لا توجد نماذج مرفقة",
+      "COMPLETE_TASK_MESSAGE": "اكتملت المهمة {{taskName}}",
+      "COMPLETE_TASK_SUB_MESSAGE": "لا توجد نماذج لإضافتها"
+    },
+    "ATTACH_FORM": {
+      "SELECT_FORM": "حدد نموذجًا لإرفاقه",
+      "REMOVE_FORM": "إزالة النموذج",
+      "SELECT_OPTION": "حدد خيارًا"
+    }
+  },
+  "ADF_PROCESS_LIST": {
+    "LIST": {
+      "TITLE": "لم يتم العثور على عمليات",
+      "SUBTITLE": "إنشاء عملية جديدة تريد العثور عليها بسهولة لاحقًا",
+      "SUMMARY": "تم العثور على {{total}} من مثيلات العملية",
+      "ERROR": "تعذر تحميل مثيلات العمليات. حاول مرة أخرى أو شارك الرسالة التالية مع فريق تكنولوجيا المعلومات لديك: {{errorMessage}}"
+    },
+    "FILTERS": {
+      "MESSAGES": {
+        "NONE": "لم يتم تحديد عامل تصفية مثيل العملية."
+      }
+    },
+    "PROPERTIES": {
+      "PROCESS_NAME": "العملية",
+      "NAME": "الاسم",
+      "THUMBNAIL": "صورة مصغرة",
+      "STATUS": "الحالة",
+      "END_DATE": "تاريخ الانتهاء",
+      "END_DATE_DEFAULT": "لا يوجد تاريخ",
+      "CATEGORY": "الفئة",
+      "CATEGORY_DEFAULT": "لا توجد فئة",
+      "CREATED_BY": "تم الإنشاء بواسطة",
+      "CREATED_BY_DEFAULT": "لا يوجد معين له",
+      "CREATED": "تم الإنشاء",
+      "BUSINESS_KEY": "مفتاح أعمال",
+      "BUSINESS_KEY_DEFAULT": "بلا",
+      "DESCRIPTION": "الوصف",
+      "DESCRIPTION_DEFAULT": "لا يوجد وصف",
+      "ID": "المعرف"
+    },
+    "MENU_ACTIONS": {
+      "VIEW_CONTENT": "عرض",
+      "REMOVE_CONTENT": "إزالة",
+      "DOWNLOAD_CONTENT": "تنزيل",
+      "DOWNLOAD_AUDIT": "تنزيل التدقيق",
+      "VIEW_TASK": "عرض المهمة"
+    },
+    "DETAILS": {
+      "LABELS": {
+        "STARTED_BY": "بدأ حسب",
+        "STARTED": "بدأ",
+        "ENDED": "انتهى",
+        "COMMENTS": "تعليقات",
+        "START_FORM": "نموذج البدء",
+        "TASKS_ACTIVE": "مهام نشطة",
+        "TASKS_COMPLETED": "مهام مكتملة",
+        "TASK_SUBTITLE": "تم التعيين إلى {{user}}، تم إنشاء {{created}}"
+      },
+      "BUTTON": {
+        "CANCEL": "إلغاء العملية",
+        "CLOSE": "إغلاق",
+        "SHOW_DIAGRAM": "إظهار المخطط",
+        "DRAG-ATTACHMENT": "إفلات الملفات لتحميلها",
+        "UPLOAD-ATTACHMENT": "تحميل المرفق"
+      },
+      "MESSAGES": {
+        "NONE": "لم يتم العثور على تفاصيل العملية"
+      },
+      "TASKS": {
+        "NO_ACTIVE": "لا توجد مهام نشطة حاليًا",
+        "NO_COMPLETED": "لم تكتمل أي مهام بعد",
+        "TASK_DETAILS": "تفاصيل المهمة",
+        "TASK_CLOSE": "إغلاق"
+      },
+      "COMMENTS": {
+        "ADD": "إضافة تعليق",
+        "HEADER": "التعليقات ({{ count }})",
+        "NONE": "لا تعليقات",
+        "BUTTON": {
+          "ADD": "إضافة تعليق"
+        },
+        "ADD_DIALOG": {
+          "TITLE": "تعليق جديد",
+          "LABEL": {
+            "MESSAGE": "رسالة"
+          },
+          "BUTTON": {
+            "ADD": "إضافة تعليق",
+            "CANCEL": "إلغاء"
+          }
+        }
+      },
+      "ADD_DIALOG": {
+        "TITLE": "تعيين متغير العملية",
+        "LABEL": {
+          "NAME": "الاسم",
+          "VALUE": "القيمة",
+          "SCOPE": "نطاق"
+        }
+      },
+      "EDIT_DIALOG": {
+        "TITLE": "تحرير متغير العملية"
+      },
+      "ERROR_DIALOG": {
+        "TITLE": "تعذر إتمام الإجراء",
+        "DESCRIPTION": "قد لا يكون لديك مستوى الوصول المطلوب، تحقق الأمر مع فريق تكنولوجيا المعلومات لديك."
+      }
+    },
+    "START_PROCESS": {
+      "BUTTON": "بدء العملية",
+      "NO_PROCESS_DEFINITIONS": "لا يمكنك بدء عملية حيث لا توجد تعريفات عملية متاحة",
+      "FORM": {
+        "TITLE": "بدء العملية",
+        "LABEL": {
+          "TYPE": "تحديد عملية",
+          "NAME": "اسم العملية"
+        },
+        "TYPE_PLACEHOLDER": "اختر واحدة...",
+        "ACTION": {
+          "START": "بدء العملية",
+          "CANCEL": "إلغاء"
+        }
+      },
+      "ERROR": {
+        "LOAD_PROCESS_DEFS": "تعذر تحميل تعريفات العملية، تأكد أن لديك حق الوصول.",
+        "START": "تعذر بدء مثيل عملية جديد، تأكد أن لديك حق الوصول.",
+        "MAXIMUM_LENGTH": "تم تجاوز الطول، {{characters}} من الحد الأقصى للحروف."
+      }
+    },
+    "PROCESS-ATTACHMENT": {
+      "EMPTY": {
+        "HEADER": "هذه القائمة فارغة",
+        "DRAG-AND-DROP": {
+          "TITLE": "سحب وإفلات",
+          "SUBTITLE": "لتحميل الملفات"
+        }
+      },
+      "EMPTY-LIST": {
+        "HEADER": "لا توجد ملفات متاحة"
+      },
+      "COLUMNS": {
+        "NAME": "الاسم",
+        "CREATED-ON": "تم الإنشاء في"
+      }
+    }
+  },
+  "ADF_SIDEBAR_ACTION_MENU": {
+    "BUTTON": {
+      "CREATE": "إنشاء",
+      "NEW_TASK": "مهمة جديدة",
+      "NEW_PROCESS": "عملية جديدة"
+    }
+  },
+  "APP": {
+    "DIALOG": {
+      "START": "متابعة",
+      "TITLE": "تحديد تطبيق عملية",
+      "LIST": "قائمة تطبيقات العمليات",
+      "ERROR": "توجد مشكلة في الاتصال Process Services"
+    }
+  },
+  "ATTACH-FILE": {
+    "ACTIONS": {
+      "LOGIN": "دخول",
+      "CANCEL": "إلغاء",
+      "CHOOSE": "اختيار"
+    }
+  }
+}
