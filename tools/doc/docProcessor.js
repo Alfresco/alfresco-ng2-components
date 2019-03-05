@@ -263,6 +263,7 @@ var files = [];
 
 if (sourceInfo.isDirectory()) {
     getAllDocFilePaths(sourcePath, files);
+    aggData['rootFolder'] = sourcePath;
 } else if (sourceInfo.isFile()) {
     files = [ sourcePath ];
 }
