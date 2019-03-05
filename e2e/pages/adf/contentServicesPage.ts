@@ -26,8 +26,12 @@ import { DropActions } from '../../actions/drop.actions';
 import { by, element, protractor, $$, browser } from 'protractor';
 
 import path = require('path');
+import { FormControllersPage } from './material/formControllersPage';
 
 export class ContentServicesPage {
+
+    formControllersPage = new FormControllersPage();
+    multipleFileUploadToggle = element(by.id('adf-document-list-enable-drop-files'));
 
     contentList = new ContentListPage();
     createFolderDialog = new CreateFolderDialog();
@@ -67,6 +71,16 @@ export class ContentServicesPage {
     searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
     siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
+
+    enableDropFilesInAFolder() {
+        this.formControllersPage.enableToggle(this.multipleFileUploadToggle);
+        return this;
+    }
+
+    disableDropFilesInAFolder() {
+        this.formControllersPage.disableToggle(this.multipleFileUploadToggle);
+        return this;
+    }
 
     getUploadAreaDocumentList() {
         return new ContentListPage(element(by.css('adf-upload-drag-area')));
