@@ -36,8 +36,9 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
     let acsUser = new AcsUserModel();
     let folderModel = new FolderModel({ 'name': 'folderOne' });
+    let parentFolderModel = new FolderModel({ 'name': 'parentFolder' });
 
-    let fileNames = [], nrOfFiles = 6;
+    let fileNames = [], nrOfFiles = 6, nrOfFolders = 6;
     let lastFile = 'newFile6.txt';
 
     let itemsPerPage = {
@@ -67,6 +68,12 @@ describe('Pagination - returns to previous page when current is empty', () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         let folderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, folderModel.name, '-my-');
+
+        let parentFolderResponse = await uploadActions.createFolder(this.alfrescoJsApi, parentFolderModel.name, '-my-');
+
+        for(let i=0; i< nrOfFolders; i++) {
+            await uploadActions.createFolder(this.alfrescoJsApi, Util.generateRandomString(), parentFolderResponse.entry.id);
+        }
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
 
