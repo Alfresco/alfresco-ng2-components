@@ -18,7 +18,7 @@
 import { Util } from '../../util/util';
 import { browser, by, element } from 'protractor';
 import { ProcessServicesPage } from './process-services/processServicesPage';
-import { AppListCloudComponent } from './process-cloud/appListCloudComponent';
+import { AppListCloudComponent } from '../../../lib/testing/src/lib/process-services-cloud/app/appListCloudComponent';
 import TestConfig = require('../../test.config');
 import { PeopleGroupCloudComponentPage } from './demo-shell/process-services/peopleGroupCloudComponentPage';
 

@@ -22,6 +22,7 @@ import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { TaskListCloudConfiguration } from './taskListCloud.config';
 
 import { Util } from '../util/util';
 

@@ -17,7 +17,7 @@
 
 import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
-import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { AppListCloudComponent } from '../../lib/testing/src/lib/process-services-cloud/app/appListCloudComponent';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';

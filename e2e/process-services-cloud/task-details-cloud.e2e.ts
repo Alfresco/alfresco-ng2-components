@@ -25,7 +25,7 @@ import { Tasks } from '../actions/APS-cloud/tasks';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
-import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { AppListCloudComponent } from '../../lib/testing/src/lib/process-services-cloud/app/appListCloudComponent';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { TaskDetailsCloudComponent } from '../pages/adf/process-cloud/TaskDetailsCloudComponent';
 

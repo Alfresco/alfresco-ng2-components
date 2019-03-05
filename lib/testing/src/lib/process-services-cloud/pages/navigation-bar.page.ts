@@ -17,7 +17,7 @@
 
 import { by, element } from 'protractor';
 import { BrowserVisibility } from '../../core/browser-visibility';
-import { AppListCloudPage } from './app-list-cloud.page';
+import { AppListCloudPage } from '../app/app-list-cloud.page';
 
 export class NavigationBarPage {
     processServicesCloudButton = element(by.css('a[data-automation-id="Process Cloud"]'));

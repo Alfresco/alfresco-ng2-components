@@ -22,7 +22,7 @@ import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { AppListCloudComponent } from '../../lib/testing/src/lib/process-services-cloud/app/appListCloudComponent';
 
 describe('Edit process filters cloud', () => {
 

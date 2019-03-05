@@ -22,7 +22,7 @@ import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { AppListCloudComponent } from '../../lib/testing/src/lib/process-services-cloud/app/appListCloudComponent';
 
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';

@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
-import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { AppListCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { NavigationBarPage } from '@alfresco/adf-testing';
 
 describe('Applications list', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-    const appListCloudComponent = new AppListCloudComponent();
+    const appListCloudComponent = new AppListCloudPage();
     const appName = 'simple-app';
 
     it('[C289910] Should the app be displayed on dashboard when is deployed on APS', () => {
