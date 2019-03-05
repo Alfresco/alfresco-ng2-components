@@ -113,7 +113,7 @@ export class EditProcessFilterCloudComponent {
         let appNameList = element.all(by.css('mat-option[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span'));
         let appTextList = await appNameList.getText();
         let uniqueArray = appTextList.filter((appName) => {
-            let sameAppNameArray = appTextList.filter(element => element === appName);
+            let sameAppNameArray = appTextList.filter((eachApp) => eachApp === appName);
             return sameAppNameArray.length === 1;
         });
         return uniqueArray.length === appTextList.length;
