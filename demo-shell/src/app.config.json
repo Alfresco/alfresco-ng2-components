@@ -70,6 +70,10 @@
         {
             "key": "zh-CN",
             "label": "中文简体"
+        },
+        {
+            "key": "ar",
+            "label": "عربى"
         }
     ],
     "search": {
