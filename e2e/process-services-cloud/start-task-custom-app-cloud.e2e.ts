@@ -15,22 +15,23 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '../../lib/testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { StartTasksCloudComponent } from '../pages/adf/process-cloud/startTasksCloudComponent';
+import { StartTasksCloudComponent } from '../../lib/testing';
 import { Util } from '../util/util';
 import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComponent';
-import { TaskDetailsPage } from '../pages/adf/demo-shell/process-services/taskDetailsPage';
+import { TaskDetailsCloudComponent } from '../../lib/testing';
+import { browser } from 'protractor';
 
 describe('Start Task', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
-    const taskDetailsPage = new TaskDetailsPage();
+    const taskDetailsPage = new TaskDetailsCloudComponent();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudComponent();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
@@ -51,6 +52,7 @@ describe('Start Task', () => {
         silentLogin = false;
         settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
         loginSSOPage.clickOnSSOButton();
+        browser.ignoreSynchronization = true;
         loginSSOPage.loginAPS(user, password);
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
@@ -148,8 +150,7 @@ describe('Start Task', () => {
         let taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByContentName(unassignedTaskName);
         expect(taskDetailsPage.getTaskDetailsHeader()).toContain(taskId);
-        expect(taskDetailsPage.getPropertyLabel('assignee')).toBe('Assignee');
-        expect(taskDetailsPage.getPropertyValue('assignee')).toBe('No assignee');
+        expect(taskDetailsPage.getAssignee()).toBe('No assignee');
 
     });
 
