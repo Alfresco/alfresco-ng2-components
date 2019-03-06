@@ -17,7 +17,7 @@
 
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm } from '@alfresco/adf-core';
+import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm, AuthGuardSsoRoleService } from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
@@ -143,6 +143,8 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'cloud',
+                canActivate: [AuthGuardSsoRoleService],
+                data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403'},
                 children: [
                     {
                         path: '',
@@ -357,6 +359,10 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'error/:id',
+                component: ErrorContentComponent
+            },
+            {
+                path: 'error/no-authorization',
                 component: ErrorContentComponent
             },
             {

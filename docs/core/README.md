@@ -103,7 +103,8 @@ for more information about installing and using the source code.
 | [Apps process service](apps-process.service.md) | Gets details of the Process Services apps that are deployed for the user. | [Source](../../lib/core/services/apps-process.service.ts) |
 | [Auth guard bpm service](auth-guard-bpm.service.md) | Adds authentication with Process Services to a route within the app. | [Source](../../lib/core/services/auth-guard-bpm.service.ts) |
 | [Auth guard ecm service](auth-guard-ecm.service.md) | Adds authentication with Content Services to a route within the app. | [Source](../../lib/core/services/auth-guard-ecm.service.ts) |
-| [Auth guard service](auth-guard.service.md) | Adds authentication to a route within the app. | [Source](../../lib/core/services/auth-guard.service.ts) |
+| [Auth guard service](auth-guard.service.md) | Adds authentication to a route within the app. | [Source](../../lib/core/services/auth-guard.service.ts) 
+| [Auth guard SSO Role service](auth-guard-sso-role.service.md) | check the roles on a user | [Source](../../lib/core/services/auth-guard-sso-role.service.ts) |
 | [Authentication service](authentication.service.md) | Provides authentication to ACS and APS. | [Source](../../lib/core/services/authentication.service.ts) |
 | [Comment content service](comment-content.service.md) | Adds and retrieves comments for nodes in Content Services. | [Source](../../lib/core/services/comment-content.service.ts) |
 | [Comment process service](comment-process.service.md) | Adds and retrieves comments for task and process instances in Process Services. | [Source](../../lib/core/services/comment-process.service.ts) |
