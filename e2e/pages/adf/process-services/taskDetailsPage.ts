@@ -18,7 +18,7 @@
 import { AppSettingsToggles } from './dialog/appSettingsToggles';
 import { Util } from '../../../util/util';
 import { element, by, protractor, browser } from 'protractor';
-import { TabsPage } from '../material/tabsPage';
+import { TabsPage } from '../../../../lib/testing/src/lib/material/tabsPage';
 
 export class TaskDetailsPage {
 

@@ -17,8 +17,7 @@
 
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { LoginPage } from '../pages/adf/loginPage';
-import { UserInfoDialog } from '../pages/adf/dialog/userInfoDialog';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { UserInfoDialogPage } from '@alfresco/adf-testing';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
@@ -36,8 +35,7 @@ describe('User Info component', () => {
 
     let settingsPage = new SettingsPage();
     let loginPage = new LoginPage();
-    let navigationBarPage = new NavigationBarPage();
-    let userInfoDialog = new UserInfoDialog();
+    let userInfoDialog = new UserInfoDialogPage();
     let processUserModel, contentUserModel;
     let acsAvatarFileModel = new FileModel({
         'name': resources.Files.PROFILE_IMAGES.ECM.file_name,
@@ -78,7 +76,7 @@ describe('User Info component', () => {
         loginPage.goToLoginPage();
         settingsPage.setProviderEcmBpm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
-        navigationBarPage.clickUserProfile();
+        userInfoDialog.clickUserProfile();
 
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
         expect(userInfoDialog.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
@@ -116,7 +114,7 @@ describe('User Info component', () => {
         settingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
 
-        navigationBarPage.clickUserProfile();
+        userInfoDialog.clickUserProfile();
         userInfoDialog.dialogIsDisplayed();
 
         expect(userInfoDialog.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
@@ -135,7 +133,7 @@ describe('User Info component', () => {
         settingsPage.setProviderBpm();
         loginPage.login(processUserModel.email, processUserModel.password);
 
-        navigationBarPage.clickUserProfile();
+        userInfoDialog.clickUserProfile();
 
         userInfoDialog.dialogIsDisplayed();
 
@@ -158,7 +156,7 @@ describe('User Info component', () => {
         loginPage.goToLoginPage();
         settingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
-        navigationBarPage.clickUserProfile();
+        userInfoDialog.clickUserProfile();
 
         userInfoDialog.checkACSProfileImage();
         userInfoDialog.APSProfileImageNotDisplayed();
@@ -175,7 +173,7 @@ describe('User Info component', () => {
         loginPage.goToLoginPage();
         settingsPage.setProviderBpm();
         loginPage.login(processUserModel.email, processUserModel.password);
-        navigationBarPage.clickUserProfile();
+        userInfoDialog.clickUserProfile();
 
         userInfoDialog.checkAPSProfileImage();
         userInfoDialog.ACSProfileImageNotDisplayed();
@@ -190,7 +188,7 @@ describe('User Info component', () => {
 
         settingsPage.setProviderEcm();
         loginPage.login(contentUserModel.id, contentUserModel.password);
-        navigationBarPage.clickUserProfile();
+        userInfoDialog.clickUserProfile();
 
         userInfoDialog.checkInitialImage();
         userInfoDialog.APSProfileImageNotDisplayed();

@@ -18,7 +18,7 @@
 import { element, by } from 'protractor';
 
 import { Util } from '../../util/util';
-import { TabsPage } from './material/tabsPage';
+import { TabsPage } from '../../../lib/testing/src/lib/material/tabsPage';
 
 export class CommentsPage {
 

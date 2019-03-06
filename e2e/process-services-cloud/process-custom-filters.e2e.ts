@@ -17,12 +17,12 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudComponent } from '../../lib/testing/src/lib/process-services-cloud/app/appListCloudComponent';
+import { AppListCloudPage } from '@alfresco/adf-testing';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
@@ -38,7 +38,7 @@ describe('Process list cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudComponent();
+        let appListCloudComponent = new AppListCloudPage();
         let processCloudDemoPage = new ProcessCloudDemoPage();
         let tasksCloudDemoPage = new TasksCloudDemoPage();
 
@@ -56,6 +56,7 @@ describe('Process list cloud', () => {
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
+            browser.ignoreSynchronization = true;
             loginSSOPage.loginAPS(user, password);
 
             navigationBarPage.clickConfigEditorButton();
@@ -95,14 +96,14 @@ describe('Process list cloud', () => {
         it('[C290069] Should display processes ordered by name when Name is selected from sort dropdown', async() => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('RUNNING')
                 .setSortFilterDropDown('NAME').setOrderFilterDropDown('ASC');
-            processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
+            processCloudDemoPage.processListCloudComponent().getDataTable().getAllRowsNameColumn().then(function (list) {
                 let initialList = list.slice(0);
                 list.sort();
                 expect(JSON.stringify(initialList) === JSON.stringify(list)).toEqual(true);
             });
 
             processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            processCloudDemoPage.processListCloudComponent().getAllRowsNameColumn().then(function (list) {
+            processCloudDemoPage.processListCloudComponent().getDataTable().getAllRowsNameColumn().then(function (list) {
                 let initialList = list.slice(0);
                 list.sort();
                 list.reverse();

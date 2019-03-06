@@ -23,11 +23,13 @@ import moment = require('moment');
 import { Tasks } from '../actions/APS-cloud/tasks';
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { LoginSSOPage } from '../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
-import { AppListCloudComponent } from '../../lib/testing/src/lib/process-services-cloud/app/appListCloudComponent';
+import { AppListCloudPage } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { TaskDetailsCloudComponent } from '../pages/adf/process-cloud/TaskDetailsCloudComponent';
+import { browser } from 'protractor';
+
 
 describe('Task Header cloud component', () => {
 
@@ -42,7 +44,7 @@ describe('Task Header cloud component', () => {
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-    const appListCloudComponent = new AppListCloudComponent();
+    const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const tasksService: Tasks = new Tasks();
 
@@ -52,6 +54,7 @@ describe('Task Header cloud component', () => {
         silentLogin = false;
         settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
         loginSSOPage.clickOnSSOButton();
+        browser.ignoreSynchronization = true;
         loginSSOPage.loginAPS(user, password);
 
         await tasksService.init(user, password);

@@ -16,13 +16,13 @@
  */
 
 import { element, by } from 'protractor';
-import { Util } from '../../../util/util';
+import {BrowserVisibility} from "../core/browser-visibility";
 
 export class TabsPage {
 
     clickTabByTitle(tabTitle) {
         let tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
-        Util.waitUntilElementIsVisible(tab);
+        BrowserVisibility.waitUntilElementIsVisible(tab);
         tab.click();
     }
 

@@ -17,7 +17,7 @@
 
 import { Util } from '../../util/util';
 
-import { TabsPage } from './material/tabsPage';
+import { TabsPage } from '../../../lib/testing/src/lib/material/tabsPage';
 import { FormControllersPage } from './material/formControllersPage';
 import { element, by, browser, protractor } from 'protractor';
 
