@@ -16,26 +16,26 @@
  */
 
 import {
-    AlfrescoApiService, AuthenticationService, ContentService, LogService, ThumbnailService
+    AlfrescoApiService, ContentService, LogService
 } from '@alfresco/adf-core';
 
 import { Injectable } from '@angular/core';
 import { NodeEntry, NodePaging } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { BaseDocumentListService } from './base-document-list.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class DocumentListService {
+export class DocumentListService extends BaseDocumentListService {
 
     static ROOT_ID = '-root-';
 
-    constructor(authService: AuthenticationService,
-                private contentService: ContentService,
+    constructor(private contentService: ContentService,
                 private apiService: AlfrescoApiService,
-                private logService: LogService,
-                private thumbnailService: ThumbnailService) {
+                private logService: LogService) {
+        super();
     }
 
     /**
@@ -80,7 +80,7 @@ export class DocumentListService {
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
      */
-    getFolder(folder: string, opts?: any, includeFields: string[] = []): Observable<NodePaging> {
+    getNodeChildren(folder: string, opts?: any, includeFields: string[] = []): Observable<NodePaging> {
         let rootNodeId = DocumentListService.ROOT_ID;
         if (opts && opts.rootFolderId) {
             rootNodeId = opts.rootFolderId;
@@ -140,7 +140,7 @@ export class DocumentListService {
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
      */
-    getFolderNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
+    getNodeById(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
 
         const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
@@ -153,32 +153,6 @@ export class DocumentListService {
         return from(this.apiService.getInstance().nodes.getNode(nodeId, opts)).pipe(
             catchError((err) => this.handleError(err))
         );
-    }
-
-    /**
-     * Get thumbnail URL for the given document node.
-     * @param node Node to get URL for.
-     * @returns Thumbnail URL string
-     */
-    getDocumentThumbnailUrl(node: NodeEntry): string {
-        return this.thumbnailService.getDocumentThumbnailUrl(node);
-    }
-
-    /**
-     * Gets the icon that represents a MIME type.
-     * @param mimeType MIME type to get the icon for
-     * @returns Path to the icon file
-     */
-    getMimeTypeIcon(mimeType: string): string {
-        return this.thumbnailService.getMimeTypeIcon(mimeType);
-    }
-
-    /**
-     * Gets a default icon for MIME types with no specific icon.
-     * @returns Path to the icon file
-     */
-    getDefaultMimeTypeIcon(): string {
-        return this.thumbnailService.getDefaultMimeTypeIcon();
     }
 
     private handleError(error: any) {

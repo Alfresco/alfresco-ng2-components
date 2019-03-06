@@ -25,7 +25,6 @@ import {
 } from '@alfresco/adf-core';
 import { NodePaging } from '@alfresco/js-api';
 import { PermissionStyleModel } from './../models/permissions-style.model';
-import { DocumentListService } from './../services/document-list.service';
 import { ShareDataRow } from './share-data-row.model';
 import { NodeEntry } from '@alfresco/js-api/src/api/content-rest-api/model/nodeEntry';
 import { RowFilter } from './row-filter.model';
@@ -59,8 +58,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         return this._sortingMode;
     }
 
-    constructor(private documentListService: DocumentListService,
-                private thumbnailService: ThumbnailService,
+    constructor(private thumbnailService: ThumbnailService,
                 private contentService: ContentService,
                 schema: DataColumn[] = [],
                 sorting?: DataSorting,
@@ -119,18 +117,18 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
             if (node.entry.isFile) {
                 if (this.thumbnails) {
-                    return this.documentListService.getDocumentThumbnailUrl(node);
+                    return this.thumbnailService.getDocumentThumbnailUrl(node);
                 }
             }
 
             if (node.entry.content) {
                 const mimeType = node.entry.content.mimeType;
                 if (mimeType) {
-                    return this.documentListService.getMimeTypeIcon(mimeType);
+                    return this.thumbnailService.getMimeTypeIcon(mimeType);
                 }
             }
 
-            return this.documentListService.getDefaultMimeTypeIcon();
+            return this.thumbnailService.getDefaultMimeTypeIcon();
         }
 
         if (col.type === 'image') {
@@ -175,13 +173,13 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
     private getFolderIcon(node: any) {
         if (this.isSmartFolder(node)) {
-            return this.documentListService.getMimeTypeIcon('smartFolder');
+            return this.thumbnailService.getMimeTypeIcon('smartFolder');
         } else if (this.isRuleFolder(node)) {
-            return this.documentListService.getMimeTypeIcon('ruleFolder');
+            return this.thumbnailService.getMimeTypeIcon('ruleFolder');
         } else if (this.isALinkFolder(node)) {
-            return this.documentListService.getMimeTypeIcon('linkFolder');
+            return this.thumbnailService.getMimeTypeIcon('linkFolder');
         } else {
-            return this.documentListService.getMimeTypeIcon('folder');
+            return this.thumbnailService.getMimeTypeIcon('folder');
         }
     }
 
