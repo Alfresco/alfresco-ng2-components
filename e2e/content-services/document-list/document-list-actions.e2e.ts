@@ -111,10 +111,23 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.pressContextMenuActionNamed('Copy');
             contentServicesPage.typeIntoNodeSelectorSearchField(folderName);
             contentServicesPage.clickContentNodeSelectorResult(folderName);
-            contentServicesPage.clickCopyButton();
+            contentServicesPage.clickChooseButton();
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
             contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
+        });
+
+        it('[C297491] Should be able to move a file', () => {
+            contentServicesPage.checkContentIsDisplayed(testFileModel.name);
+
+            contentServicesPage.getUploadAreaDocumentList().rightClickOnRowNamedWithRoot(testFileModel.name);
+            contentListPage.pressContextMenuActionNamed('Move');
+            contentServicesPage.typeIntoNodeSelectorSearchField(folderName);
+            contentServicesPage.clickContentNodeSelectorResult(folderName);
+            contentServicesPage.clickChooseButton();
+            contentServicesPage.checkContentIsNotDisplayed(testFileModel.name);
+            contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+            contentServicesPage.checkContentIsDisplayed(testFileModel.name);
         });
 
         it('[C280561] Should be able to delete a file via dropdown menu', () => {
@@ -162,7 +175,7 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.copyContent(folderName);
             contentServicesPage.typeIntoNodeSelectorSearchField(secondUploadedFolder.entry.name);
             contentServicesPage.clickContentNodeSelectorResult(secondUploadedFolder.entry.name);
-            contentServicesPage.clickCopyButton();
+            contentServicesPage.clickChooseButton();
             contentServicesPage.checkContentIsDisplayed(folderName);
             contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);
             contentServicesPage.checkContentIsDisplayed(folderName);

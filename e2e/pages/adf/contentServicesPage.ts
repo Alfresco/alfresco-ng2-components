@@ -62,7 +62,7 @@ export class ContentServicesPage {
     emptyRecent = element(by.css('.adf-container-recent .adf-empty-list__title'));
     gridViewButton = element(by.css('button[data-automation-id="document-list-grid-view"]'));
     cardViewContainer = element(by.css('div.adf-document-list-container div.adf-datatable-card'));
-    copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
+    chooseButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
     searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
     nameColumnHeader = 'name';
@@ -660,9 +660,9 @@ export class ContentServicesPage {
         resultElement.click();
     }
 
-    clickCopyButton() {
-        Util.waitUntilElementIsClickable(this.copyButton);
-        this.copyButton.click();
+    clickChooseButton() {
+        Util.waitUntilElementIsClickable(this.chooseButton);
+        this.chooseButton.click();
     }
 
     clickShareButton() {
