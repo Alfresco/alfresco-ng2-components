@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [People Component](../../lib/process-services/people/components/people/people.component.ts "Defined in people.component.ts")
+# [People Component](../../../lib/process-services/people/components/people/people.component.ts "Defined in people.component.ts")
 
 Displays users involved with a specified task
 
-![activiti-people](../docassets/images/activiti_people.png)
+![activiti-people](../../docassets/images/activiti_people.png)
 
 ## Contents
 
@@ -39,7 +39,7 @@ Displays users involved with a specified task
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| people | [`UserProcessModel`](../core/user-process.model.md)`[]` | \[] | The array of User objects to display. |
+| people | [`UserProcessModel`](../../core/user-process.model.md)`[]` | \[] | The array of User objects to display. |
 | readOnly | `boolean` | false | Should the data be read-only? |
 | taskId | `string` | "" | The numeric ID of the task. |
 
@@ -47,12 +47,12 @@ Displays users involved with a specified task
 
 ### How to customize the people component behavior
 
-The [people component](../process-services/people.component.md) provides two options to customize its behavior:
+The [people component](people.component.md) provides two options to customize its behavior:
 
 -   _involveUserAndCloseSearch_: The selected user gets added and then the search section is closed
 -   _involveUserWithoutCloseSearch_: The selected user gets added without closing the search section
 
-This makes it easy to customize the [people component](../process-services/people.component.md) to involve the user via a single or double click event:
+This makes it easy to customize the [people component](people.component.md) to involve the user via a single or double click event:
 
 ### Involve People single click and close search
 
@@ -65,7 +65,7 @@ This makes it easy to customize the [people component](../process-services/peopl
 </adf-people>
 ```
 
-![involve-people-single-click-and-close-search](../docassets/images/involve-people-single-click-and-close-search.gif)
+![involve-people-single-click-and-close-search](../../docassets/images/involve-people-single-click-and-close-search.gif)
 
 ### Involve People single click without close search
 
@@ -78,7 +78,7 @@ This makes it easy to customize the [people component](../process-services/peopl
 </adf-people>
 ```
 
-![involve-people-single-click-without-close-search](../docassets/images/involve-people-single-click-without-close-search.gif)
+![involve-people-single-click-without-close-search](../../docassets/images/involve-people-single-click-without-close-search.gif)
 
 ### Involve People double click and close search
 
@@ -91,7 +91,7 @@ This makes it easy to customize the [people component](../process-services/peopl
 </adf-people>
 ```
 
-![involve-people-double-click-and-close-search](../docassets/images/involve-people-double-click-and-close-search.gif)
+![involve-people-double-click-and-close-search](../../docassets/images/involve-people-double-click-and-close-search.gif)
 
 ### Involve People double double without close search
 
@@ -104,4 +104,4 @@ This makes it easy to customize the [people component](../process-services/peopl
 </adf-people>
 ```
 
-![involve-people-double-click-without-close-search](../docassets/images/involve-people-double-click-without-close-search.gif)
+![involve-people-double-click-without-close-search](../../docassets/images/involve-people-double-click-without-close-search.gif)

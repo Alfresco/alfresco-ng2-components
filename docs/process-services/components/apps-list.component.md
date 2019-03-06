@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Apps List Component](../../lib/process-services/app-list/apps-list.component.ts "Defined in apps-list.component.ts")
+# [Apps List Component](../../../lib/process-services/app-list/apps-list.component.ts "Defined in apps-list.component.ts")
 
 Shows all available apps.
 
-![how-filter-apps](../docassets/images/how-filter-apps.png)
+![how-filter-apps](../../docassets/images/how-filter-apps.png)
 
 ## Basic Usage
 
@@ -19,7 +19,7 @@ Shows all available apps.
 </adf-apps>
 ```
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 You can show custom content when there are no apps available by supplying an
 `<adf-custom-empty-content>` section:
@@ -46,7 +46,7 @@ You can show custom content when there are no apps available by supplying an
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| appClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`AppDefinitionRepresentationModel`](../../lib/process-services/task-list/models/filter.model.ts)`>` | Emitted when an app entry is clicked. |
+| appClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`AppDefinitionRepresentationModel`](../../../lib/process-services/task-list/models/filter.model.ts)`>` | Emitted when an app entry is clicked. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
 
 ## Details
@@ -79,4 +79,4 @@ For example, if you set `filtersAppId` as follows:
 
 ...then only the Tasks app, the app with `deploymentId` 15037 and the app with "my app name" will be shown.
 
-![how-filter-apps](../docassets/images/how-filter-apps.png)
+![how-filter-apps](../../docassets/images/how-filter-apps.png)

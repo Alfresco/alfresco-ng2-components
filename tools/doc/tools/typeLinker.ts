@@ -1,27 +1,9 @@
 import * as path from "path";
 import * as fs from "fs";
 
-
 import * as remark from "remark";
 import * as stringify from "remark-stringify";
 import * as frontMatter from "remark-frontmatter";
-
-/*
-import {
-    Application,
-    ProjectReflection,
-    Reflection,
-    DeclarationReflection,
-    SignatureReflection,
-    ParameterReflection,
-    ReflectionKind,
-    TraverseProperty,
-    Decorator
- } from "typedoc";
-import { CommentTag } from "typedoc/dist/lib/models";
-*/
-
-import * as ProgressBar from "progress";
 
 import * as unist from "../unistHelpers";
 import * as ngHelpers from "../ngHelpers";
@@ -40,29 +22,22 @@ const adfLibNames = ["core", "content-services", "insights", "process-services",
 let externalNameLinks;
 
 export function processDocs(mdCache, aggData, errorMessages) {
-    initPhase(aggData);
+    initPhase(aggData, mdCache);
 
     var pathnames = Object.keys(mdCache);
 
-    let progress = new ProgressBar("Processing: [:bar] (:current/:total)", {
-        total: pathnames.length,
-        width: 50,
-        clear: true
-    });
-
     pathnames.forEach(pathname => {
         updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
-        progress.tick();
-        progress.render();
     });
 }
 
 
-function initPhase(aggData) {
+function initPhase(aggData, mdCache) {
     externalNameLinks = aggData.config.externalNameLinks;
     aggData.docFiles = {};
     aggData.nameLookup = new SplitNameLookup();
 
+    /*
     adfLibNames.forEach(libName => {
         let libFolderPath = path.resolve(docFolder, libName);
 
@@ -76,16 +51,15 @@ function initPhase(aggData) {
             }
         });
     });
-
-    /*
-    let classes = aggData.projData.getReflectionsByKind(ReflectionKind.Class);
-
-    classes.forEach(currClass => {
-        if (currClass.name.match(/(Component|Directive|Interface|Model|Pipe|Service|Widget)$/)) {
-            aggData.nameLookup.addName(currClass.name);
-        }
-    });
     */
+
+    let docFilePaths = Object.keys(mdCache);
+
+    docFilePaths.forEach(docFilePath => {
+        let relPath = docFilePath.substring(docFilePath.indexOf('docs') + 5).replace(/\\/g, "/");
+        let compName = path.basename(relPath, ".md");
+        aggData.docFiles[compName] = relPath;
+    });
 
     let classNames = Object.keys(aggData.classInfo);
 
@@ -381,7 +355,8 @@ function resolveTypeLink(aggData, docFilePath, text): string {
         let url = fixRelSrcUrl(docFilePath, classInfo.sourcePath);
 
         if (possDocFile) {
-            url = "../" + possDocFile;
+            //url = "../" + possDocFile;
+            url = fixRelDocUrl(docFilePath, possDocFile);
         }
 
         return url;
@@ -402,6 +377,20 @@ function fixRelSrcUrl(docPath: string, srcPath: string) {
     }
 
     return dotPathPart + srcPath;
+}
+
+function fixRelDocUrl(docPathFrom: string, docPathTo: string) {
+    let relDocPathFrom = docPathFrom.substring(docPathFrom.indexOf('docs'));
+    let docPathSegments = relDocPathFrom.split(/[\\\/]/);
+    let dotPathPart = '';
+
+    console.log(`Fixing: ${docPathFrom} ${docPathTo}`);
+
+    for (let i = 0; i < (docPathSegments.length - 2); i++) {
+        dotPathPart += '../';
+    }
+
+    return dotPathPart + docPathTo;
 }
 
 function cleanTypeName(text) {

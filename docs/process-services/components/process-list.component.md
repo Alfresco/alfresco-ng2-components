@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Process Instance List](../../lib/process-services/process-list/components/process-list.component.ts "Defined in process-list.component.ts")
+# [Process Instance List](../../../lib/process-services/process-list/components/process-list.component.ts "Defined in process-list.component.ts")
 
 Renders a list containing all the process instances matched by the parameters specified.
 
@@ -32,7 +32,7 @@ Renders a list containing all the process instances matched by the parameters sp
 </adf-process-instance-list>
 ```
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 Any content inside an `<adf-custom-empty-content>` sub-component will be shown
 when the process list is empty:
@@ -52,7 +52,7 @@ when the process list is empty:
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | The id of the app. |
-| data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source to define the datatable. |
+| data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source to define the datatable. |
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row |
 | page | `number` | 0 | The page number of the processes to fetch. |
 | presetColumn | `string` |  | Custom preset column schema in JSON format. |
@@ -70,7 +70,7 @@ when the process list is empty:
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessListModel`](../../lib/process-services/process-list/models/process-list.model.ts)`>` | Emitted when the list of process instances has been loaded successfully from the server. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessListModel`](../../../lib/process-services/process-list/models/process-list.model.ts)`>` | Emitted when the list of process instances has been loaded successfully from the server. |
 
 ## Details
 
@@ -107,7 +107,7 @@ You can define a custom schema for the list in the `app.config.json` file and ac
 ```
 
 You can also define the schema in the HTML using the
-[Data column component](../core/data-column.component.md). You can combine this with schema
+[Data column component](../../core/data-column.component.md). You can combine this with schema
 information defined in `app.config.json` as in the example below:
 
 ```json
@@ -186,6 +186,6 @@ The Process Instance List also supports pagination:
 
 ## See also
 
--   [Data column component](../core/data-column.component.md)
--   [Data Table Adapter interface](../core/datatable-adapter.interface.md)
--   [Pagination component](../core/pagination.component.md)
+-   [Data column component](../../core/data-column.component.md)
+-   [Data Table Adapter interface](../../core/datatable-adapter.interface.md)
+-   [Pagination component](../../core/pagination.component.md)

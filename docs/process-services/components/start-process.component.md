@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Start Process component](../../lib/process-services/process-list/components/start-process.component.ts "Defined in start-process.component.ts")
+# [Start Process component](../../../lib/process-services/process-list/components/start-process.component.ts "Defined in start-process.component.ts")
 
 Starts a process.
 
-![adf-start-process ](../docassets/images/startProcess.png)
+![adf-start-process ](../../docassets/images/startProcess.png)
 
 ## Contents
 
@@ -43,16 +43,16 @@ Starts a process.
 | processDefinitionName | `string` |  | (optional) Definition name of the process to start. |
 | processFilterSelector | `boolean` | true | (optional) Parameter to enable selection of process when filtering. |
 | showSelectProcessDropdown | `boolean` | true | Hide or show the process selection dropdown. |
-| values | [`FormValues`](../../lib/core/form/components/widgets/core/form-values.ts) |  | Parameter to pass form field values in the start form if one is associated. |
-| variables | [`ProcessInstanceVariable`](../../lib/process-services/process-list/models/process-instance-variable.model.ts)`[]` |  | Variables in the input to the process [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md). |
+| values | [`FormValues`](../../../lib/core/form/components/widgets/core/form-values.ts) |  | Parameter to pass form field values in the start form if one is associated. |
+| variables | [`ProcessInstanceVariable`](../../../lib/process-services/process-list/models/process-instance-variable.model.ts)`[]` |  | Variables in the input to the process [RestVariable](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-activiti-rest-api/docs/RestVariable.md). |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../lib/process-services/process-list/models/process-instance.model.ts)`>` | Emitted when the process is canceled. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../lib/process-services/process-list/models/process-instance.model.ts)`>` | Emitted when an error occurs. |
-| start | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../lib/process-services/process-list/models/process-instance.model.ts)`>` | Emitted when the process starts. |
+| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/process-list/models/process-instance.model.ts)`>` | Emitted when the process is canceled. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/process-list/models/process-instance.model.ts)`>` | Emitted when an error occurs. |
+| start | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/process-list/models/process-instance.model.ts)`>` | Emitted when the process starts. |
 
 ## Details
 
@@ -170,7 +170,7 @@ Note that in the object above, the key `file` is the name of the attach file fie
 
 The result will be the start form prefilled with the file data:
 
-![Start process load file](../docassets/images/start_process.png)
+![Start process load file](../../docassets/images/start_process.png)
 
 ## See also
 

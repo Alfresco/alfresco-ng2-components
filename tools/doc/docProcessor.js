@@ -264,7 +264,6 @@ var files = [];
 if (sourceInfo.isDirectory()) {
     getAllDocFilePaths(sourcePath, files);
     aggData['rootFolder'] = path.dirname(sourcePath);
-    console.log(`Root dir: ${aggData['rootFolder']}`);
 } else if (sourceInfo.isFile()) {
     files = [ sourcePath ];
 }

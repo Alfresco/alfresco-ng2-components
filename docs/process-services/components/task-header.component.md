@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Task Header component](../../lib/process-services/task-list/components/task-header.component.ts "Defined in task-header.component.ts")
+# [Task Header component](../../../lib/process-services/task-list/components/task-header.component.ts "Defined in task-header.component.ts")
 
 Shows all the information related to a task.
 
-![adf-task-header](../docassets/images/adf-task-header.png)
+![adf-task-header](../../docassets/images/adf-task-header.png)
 
 ## Basic Usage
 
@@ -26,7 +26,7 @@ Shows all the information related to a task.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | formName | `string` | null | The name of the form. |
-| taskDetails | [`TaskDetailsModel`](../../lib/process-services/task-list/models/task-details.model.ts) |  | (required) Details related to the task. |
+| taskDetails | [`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts) |  | (required) Details related to the task. |
 
 ### Events
 
@@ -38,7 +38,7 @@ Shows all the information related to a task.
 ## Details
 
 The component populates an internal array of 
-[CardViewModel](../core/card-view.component.md) with the information that we want to display.
+[CardViewModel](../../core/card-view.component.md) with the information that we want to display.
 
 By default all properties are displayed:
 

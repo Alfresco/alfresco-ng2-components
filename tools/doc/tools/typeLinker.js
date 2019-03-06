@@ -1,22 +1,6 @@
 "use strict";
 exports.__esModule = true;
 var path = require("path");
-var fs = require("fs");
-/*
-import {
-    Application,
-    ProjectReflection,
-    Reflection,
-    DeclarationReflection,
-    SignatureReflection,
-    ParameterReflection,
-    ReflectionKind,
-    TraverseProperty,
-    Decorator
- } from "typedoc";
-import { CommentTag } from "typedoc/dist/lib/models";
-*/
-var ProgressBar = require("progress");
 var unist = require("../unistHelpers");
 var ngHelpers = require("../ngHelpers");
 var includedNodeTypes = [
@@ -28,44 +12,38 @@ var docFolder = path.resolve("docs");
 var adfLibNames = ["core", "content-services", "insights", "process-services", "process-services-cloud", "extensions"];
 var externalNameLinks;
 function processDocs(mdCache, aggData, errorMessages) {
-    initPhase(aggData);
+    initPhase(aggData, mdCache);
     var pathnames = Object.keys(mdCache);
-    var progress = new ProgressBar("Processing: [:bar] (:current/:total)", {
-        total: pathnames.length,
-        width: 50,
-        clear: true
-    });
     pathnames.forEach(function (pathname) {
         updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
-        progress.tick();
-        progress.render();
     });
 }
 exports.processDocs = processDocs;
-function initPhase(aggData) {
+function initPhase(aggData, mdCache) {
     externalNameLinks = aggData.config.externalNameLinks;
     aggData.docFiles = {};
     aggData.nameLookup = new SplitNameLookup();
-    adfLibNames.forEach(function (libName) {
-        var libFolderPath = path.resolve(docFolder, libName);
-        var files = fs.readdirSync(libFolderPath);
-        files.forEach(function (file) {
+    /*
+    adfLibNames.forEach(libName => {
+        let libFolderPath = path.resolve(docFolder, libName);
+
+        let files = fs.readdirSync(libFolderPath);
+
+        files.forEach(file => {
             if (path.extname(file) === ".md") {
-                var relPath = libFolderPath.substr(libFolderPath.indexOf("docs") + 5).replace(/\\/, "/") + "/" + file;
-                var compName = path.basename(file, ".md");
+                let relPath = libFolderPath.substr(libFolderPath.indexOf("docs") + 5).replace(/\\/, "/") + "/" + file;
+                let compName = path.basename(file, ".md");
                 aggData.docFiles[compName] = relPath;
             }
         });
     });
-    /*
-    let classes = aggData.projData.getReflectionsByKind(ReflectionKind.Class);
-
-    classes.forEach(currClass => {
-        if (currClass.name.match(/(Component|Directive|Interface|Model|Pipe|Service|Widget)$/)) {
-            aggData.nameLookup.addName(currClass.name);
-        }
-    });
     */
+    var docFilePaths = Object.keys(mdCache);
+    docFilePaths.forEach(function (docFilePath) {
+        var relPath = docFilePath.substring(docFilePath.indexOf('docs') + 5).replace(/\\/g, "/");
+        var compName = path.basename(relPath, ".md");
+        aggData.docFiles[compName] = relPath;
+    });
     var classNames = Object.keys(aggData.classInfo);
     classNames.forEach(function (currClassName) {
         if (currClassName.match(/(Component|Directive|Interface|Model|Pipe|Service|Widget)$/)) {
@@ -314,7 +292,8 @@ function resolveTypeLink(aggData, docFilePath, text) {
         //let url = "../../" + classInfo.sourcePath;
         var url = fixRelSrcUrl(docFilePath, classInfo.sourcePath);
         if (possDocFile) {
-            url = "../" + possDocFile;
+            //url = "../" + possDocFile;
+            url = fixRelDocUrl(docFilePath, possDocFile);
         }
         return url;
     }
@@ -333,6 +312,16 @@ function fixRelSrcUrl(docPath, srcPath) {
         dotPathPart += '../';
     }
     return dotPathPart + srcPath;
+}
+function fixRelDocUrl(docPathFrom, docPathTo) {
+    var relDocPathFrom = docPathFrom.substring(docPathFrom.indexOf('docs'));
+    var docPathSegments = relDocPathFrom.split(/[\\\/]/);
+    var dotPathPart = '';
+    console.log("Fixing: " + docPathFrom + " " + docPathTo);
+    for (var i = 0; i < (docPathSegments.length - 2); i++) {
+        dotPathPart += '../';
+    }
+    return dotPathPart + docPathTo;
 }
 function cleanTypeName(text) {
     var matches = text.match(/[a-zA-Z0-9_]+<([a-zA-Z0-9_]+)(\[\])?>/);
