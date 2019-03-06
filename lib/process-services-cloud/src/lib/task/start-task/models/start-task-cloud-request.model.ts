@@ -24,6 +24,7 @@ export class StartTaskCloudRequestModel {
     candidateUsers: string[];
     candidateGroups: string[];
     payloadType: string;
+    formKey: string;
 
     constructor(obj?: any) {
         if (obj) {
@@ -34,6 +35,7 @@ export class StartTaskCloudRequestModel {
             this.dueDate = obj.dueDate || null;
             this.candidateUsers = obj.candidateUsers || null;
             this.candidateGroups = obj.candidateGroups || null;
+            this.formKey = obj.formKey || null;
             this.payloadType = 'CreateTaskPayload';
         }
     }
