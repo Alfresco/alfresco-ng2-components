@@ -75,4 +75,38 @@ describe('StartTaskCloudService', () => {
                 }
             );
     });
+
+    it('should fetch forms for an app', (done) => {
+        spyOn(service, 'getForms').and.returnValue(of([{id: 'fake-id', name: 'fake-name', description: 'fake-desc', version: 'v1'}]));
+        service.getForms('appName').subscribe(
+            (res: any[]) => {
+                expect(res).toBeDefined();
+                expect(res[0].id).toEqual('fake-id');
+                expect(res[0].name).toEqual('fake-name');
+                expect(res[0].description).toEqual('fake-desc');
+                expect(res[0].version).toEqual('v1');
+                done();
+            }
+        );
+    });
+
+    it('Should not able to get forms if error occurred', () => {
+        const errorResponse = new HttpErrorResponse({
+            error: 'Mock Error',
+            status: 404, statusText: 'Not Found'
+        });
+
+        spyOn(service, 'getForms').and.returnValue(throwError(errorResponse));
+        service.getForms('appName')
+            .subscribe(
+                () => {
+                    fail('expected an error, not applications');
+                },
+                (error) => {
+                    expect(error.status).toEqual(404);
+                    expect(error.statusText).toEqual('Not Found');
+                    expect(error.error).toEqual('Mock Error');
+                }
+            );
+    });
 });
