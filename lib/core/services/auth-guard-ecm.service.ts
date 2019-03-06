@@ -17,18 +17,17 @@
 
 import { Injectable } from '@angular/core';
 import {
-    ActivatedRouteSnapshot, CanActivate, Router
+    ActivatedRouteSnapshot, Router
 } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
-import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
-import { OauthConfigModel } from '../models/oauth-config.model';
+import { AppConfigService } from '../app-config/app-config.service';
 import { AuthGuardBase } from './auth-guard-base';
 import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuardEcm extends AuthGuardBase implements CanActivate {
+export class AuthGuardEcm extends AuthGuardBase {
 
     constructor(authenticationService: AuthenticationService,
                 router: Router,
@@ -37,9 +36,7 @@ export class AuthGuardEcm extends AuthGuardBase implements CanActivate {
     }
 
     checkLogin(activeRoute: ActivatedRouteSnapshot, redirectUrl: string): Observable<boolean> | Promise<boolean> | boolean {
-        let withCredentialsMode = this.appConfigService.get<boolean>('auth.withCredentials', false);
-
-        if (this.authenticationService.isEcmLoggedIn() || withCredentialsMode) {
+        if (this.authenticationService.isEcmLoggedIn() || this.withCredentials) {
             return true;
         }
 
@@ -48,10 +45,5 @@ export class AuthGuardEcm extends AuthGuardBase implements CanActivate {
         }
 
         return false;
-    }
-
-    isOAuthWithoutSilentLogin() {
-        let oauth: OauthConfigModel = this.appConfigService.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
-        return this.authenticationService.isOauth() && oauth.silentLogin === false;
     }
 }

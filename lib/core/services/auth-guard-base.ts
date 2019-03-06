@@ -19,20 +19,29 @@ import {
     Router,
     CanActivate,
     ActivatedRouteSnapshot,
-    RouterStateSnapshot
+    RouterStateSnapshot,
+    CanActivateChild
 } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import {
     AppConfigService,
     AppConfigValues
 } from '../app-config/app-config.service';
-import { Observable } from 'rxjs';
+import { OauthConfigModel } from '../models/oauth-config.model';
 
-export abstract class AuthGuardBase implements CanActivate {
+export abstract class AuthGuardBase implements CanActivate, CanActivateChild {
     abstract checkLogin(
         activeRoute: ActivatedRouteSnapshot,
         redirectUrl: string
     ): Observable<boolean> | Promise<boolean> | boolean;
+
+    protected get withCredentials(): boolean {
+        return this.appConfigService.get<boolean>(
+            'auth.withCredentials',
+            false
+        );
+    }
 
     constructor(
         protected authenticationService: AuthenticationService,
@@ -70,6 +79,16 @@ export abstract class AuthGuardBase implements CanActivate {
                 AppConfigValues.LOGIN_ROUTE,
                 'login'
             )
+        );
+    }
+
+    protected isOAuthWithoutSilentLogin() {
+        const oauth = this.appConfigService.get<OauthConfigModel>(
+            AppConfigValues.OAUTHCONFIG,
+            null
+        );
+        return (
+            this.authenticationService.isOauth() && oauth.silentLogin === false
         );
     }
 }
