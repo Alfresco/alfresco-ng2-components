@@ -1,0 +1,35 @@
+<%
+    function relDocPath(fullPath) {
+        return fullPath.substring(fullPath.indexOf('docs') + 5).replace('\\', '/')
+    }
+
+    function relSrcPath(fullPath) {
+        return '../' + fullPath.substring(fullPath.indexOf('lib')).replace('\\', '/')
+    }
+
+    function renderSection(sectionName) {
+        var sectionDocs = documents.filter(doc => doc.classType === sectionName.toLowerCase());
+
+        if (sectionDocs.length > 0) { -%>
+
+### <%= sectionName %>
+
+| Name | Description | Source link |
+| -- | -- | --|
+<%      }
+
+        sectionDocs.forEach(document => { -%>
+| [<%= document['title'] %>](<%= relDocPath(document['id']) %>) | <%= document['paragraph']['plaintext'] %> | [Source](<%= relSrcPath(document['heading']['link']['url']) %>) |
+<%      });
+    }
+-%>
+<%
+renderSection('Components');
+renderSection('Directives');
+renderSection('Dialogs');
+renderSection('Interfaces');
+renderSection('Models');
+renderSection('Pipes');
+renderSection('Services');
+renderSection('Widgets');
+-%>

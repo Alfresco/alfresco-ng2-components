@@ -1,27 +1,9 @@
 import * as path from "path";
 import * as fs from "fs";
 
-
 import * as remark from "remark";
 import * as stringify from "remark-stringify";
 import * as frontMatter from "remark-frontmatter";
-
-/*
-import {
-    Application,
-    ProjectReflection,
-    Reflection,
-    DeclarationReflection,
-    SignatureReflection,
-    ParameterReflection,
-    ReflectionKind,
-    TraverseProperty,
-    Decorator
- } from "typedoc";
-import { CommentTag } from "typedoc/dist/lib/models";
-*/
-
-import * as ProgressBar from "progress";
 
 import * as unist from "../unistHelpers";
 import * as ngHelpers from "../ngHelpers";
@@ -40,29 +22,22 @@ const adfLibNames = ["core", "content-services", "insights", "process-services",
 let externalNameLinks;
 
 export function processDocs(mdCache, aggData, errorMessages) {
-    initPhase(aggData);
+    initPhase(aggData, mdCache);
 
     var pathnames = Object.keys(mdCache);
 
-    let progress = new ProgressBar("Processing: [:bar] (:current/:total)", {
-        total: pathnames.length,
-        width: 50,
-        clear: true
-    });
-
     pathnames.forEach(pathname => {
         updateFile(mdCache[pathname].mdOutTree, pathname, aggData, errorMessages);
-        progress.tick();
-        progress.render();
     });
 }
 
 
-function initPhase(aggData) {
+function initPhase(aggData, mdCache) {
     externalNameLinks = aggData.config.externalNameLinks;
     aggData.docFiles = {};
     aggData.nameLookup = new SplitNameLookup();
 
+    /*
     adfLibNames.forEach(libName => {
         let libFolderPath = path.resolve(docFolder, libName);
 
@@ -76,16 +51,15 @@ function initPhase(aggData) {
             }
         });
     });
-
-    /*
-    let classes = aggData.projData.getReflectionsByKind(ReflectionKind.Class);
-
-    classes.forEach(currClass => {
-        if (currClass.name.match(/(Component|Directive|Interface|Model|Pipe|Service|Widget)$/)) {
-            aggData.nameLookup.addName(currClass.name);
-        }
-    });
     */
+
+    let docFilePaths = Object.keys(mdCache);
+
+    docFilePaths.forEach(docFilePath => {
+        let relPath = docFilePath.substring(docFilePath.indexOf('docs') + 5).replace(/\\/g, "/");
+        let compName = path.basename(relPath, ".md");
+        aggData.docFiles[compName] = relPath;
+    });
 
     let classNames = Object.keys(aggData.classInfo);
 
@@ -110,21 +84,12 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
             return;
         }
 
-        /*if (node.type === "inlineCode") {
-            console.log(`Link text: ${node.value}`);
-            let link = resolveTypeLink(aggData, node.value);
-
-            if (link) {
-                convertNodeToTypeLink(node, node.value, link);
-            }
-
-        } else */
         if (node.type === "link") {
             if (node.children && (
                 (node.children[0].type === "inlineCode") ||
                 (node.children[0].type === "text")
             )) {
-                let link = resolveTypeLink(aggData, node.children[0].value);
+                let link = resolveTypeLink(aggData, pathname, node.children[0].value);
 
                 if (link) {
                     convertNodeToTypeLink(node, node.children[0].value, link);
@@ -133,7 +98,7 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
         } else if ((node.children) && (node.type !== "heading")) { //((node.type === "paragraph") || (node.type === "tableCell")) {
             node.children.forEach((child, index) => {
                 if ((child.type === "text") || (child.type === "inlineCode")) {
-                    let newNodes = handleLinksInBodyText(aggData, child.value, child.type === 'inlineCode');
+                    let newNodes = handleLinksInBodyText(aggData, pathname, child.value, child.type === 'inlineCode');
                     node.children.splice(index, 1, ...newNodes);
                 } else {
                     traverseMDTree(child);
@@ -302,7 +267,7 @@ class WordScanner {
 }
 
 
-function handleLinksInBodyText(aggData, text: string, wrapInlineCode: boolean = false): Node[] {
+function handleLinksInBodyText(aggData, docFilePath: string, text: string, wrapInlineCode: boolean = false): Node[] {
     let result = [];
     let currTextStart = 0;
     let matcher = new SplitNameMatcher(aggData.nameLookup.root);
@@ -313,14 +278,14 @@ function handleLinksInBodyText(aggData, text: string, wrapInlineCode: boolean = 
         .replace(/^[;:,\."']+/g, "")
         .replace(/[;:,\."']+$/g, "");
 
-        let link = resolveTypeLink(aggData, word);
+        let link = resolveTypeLink(aggData, docFilePath, word);
         let matchStart;
 
         if (!link) {
             let match = matcher.nextWord(word.toLowerCase(), scanner.index);
 
             if (match && match[0]) {
-                link = resolveTypeLink(aggData, match[0].value);
+                link = resolveTypeLink(aggData, docFilePath, match[0].value);
                 matchStart = match[0].startPos;
             }
         } else {
@@ -368,7 +333,7 @@ function handleLinksInBodyText(aggData, text: string, wrapInlineCode: boolean = 
 }
 
 
-function resolveTypeLink(aggData, text): string {
+function resolveTypeLink(aggData, docFilePath, text): string {
     let possTypeName = cleanTypeName(text);
 
     if (possTypeName === 'constructor') {
@@ -384,12 +349,14 @@ function resolveTypeLink(aggData, text): string {
     if (classInfo) {
         let kebabName = ngHelpers.kebabifyClassName(possTypeName);
         let possDocFile = aggData.docFiles[kebabName];
-        //let url = "../../lib/" + ref.sources[0].fileName;
 
-        let url = "../../" + classInfo.sourcePath; //"../../lib/" + classInfo.items[0].source.path;
+        //let url = "../../" + classInfo.sourcePath;
+
+        let url = fixRelSrcUrl(docFilePath, classInfo.sourcePath);
 
         if (possDocFile) {
-            url = "../" + possDocFile;
+            //url = "../" + possDocFile;
+            url = fixRelDocUrl(docFilePath, possDocFile);
         }
 
         return url;
@@ -400,6 +367,31 @@ function resolveTypeLink(aggData, text): string {
     }
 }
 
+function fixRelSrcUrl(docPath: string, srcPath: string) {
+    let relDocPath = docPath.substring(docPath.indexOf('docs'));
+    let docPathSegments = relDocPath.split(/[\\\/]/);
+    let dotPathPart = '';
+
+    for (let i = 0; i < (docPathSegments.length - 1); i++) {
+        dotPathPart += '../';
+    }
+
+    return dotPathPart + srcPath;
+}
+
+function fixRelDocUrl(docPathFrom: string, docPathTo: string) {
+    let relDocPathFrom = docPathFrom.substring(docPathFrom.indexOf('docs'));
+    let docPathSegments = relDocPathFrom.split(/[\\\/]/);
+    let dotPathPart = '';
+
+    console.log(`Fixing: ${docPathFrom} ${docPathTo}`);
+
+    for (let i = 0; i < (docPathSegments.length - 2); i++) {
+        dotPathPart += '../';
+    }
+
+    return dotPathPart + docPathTo;
+}
 
 function cleanTypeName(text) {
     let matches = text.match(/[a-zA-Z0-9_]+<([a-zA-Z0-9_]+)(\[\])?>/);

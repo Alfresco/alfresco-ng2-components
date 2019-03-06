@@ -1,7 +1,7 @@
 {
     "profiles": {
         "default": [
-            "index",
+            "gqIndex",
             "versionIndex",
             "tutorialIndex",
             "tsInfo",
@@ -10,7 +10,7 @@
             "toc"
         ],
         "index": [
-            "index",
+            "gqIndex",
             "versionIndex",
             "tutorialIndex"
         ],
@@ -24,7 +24,7 @@
             "fileChecker"
         ],
         "dev": [
-            "toc"
+            "typeLinker"
         ]
     },
     "statusIcons": {

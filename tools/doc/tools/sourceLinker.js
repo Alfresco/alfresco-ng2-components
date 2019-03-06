@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var path = require("path");
 var unist_util_select_1 = require("unist-util-select");
 var ngHelpers = require("../ngHelpers");
@@ -16,20 +16,30 @@ function processDocs(mdCache, aggData, errorMessages) {
         var classInfo = aggData.classInfo[className];
         var sourcePath = classInfo ? classInfo.sourcePath : '';
         var titleHeading = unist_util_select_1.select('heading[depth=1]:first-of-type', tree);
+        var relDocPath = pathname.substring(pathname.indexOf('docs'));
+        var srcUrl = fixRelSrcUrl(relDocPath, sourcePath);
         if (titleHeading.children[0].type === "text") {
             var titleText = titleHeading.children[0];
             titleHeading.children[0] = {
                 type: 'link',
-                url: "../../" + sourcePath,
+                url: srcUrl,
                 title: "Defined in " + path.basename(sourcePath),
                 children: [titleText]
             };
         }
         else if ((titleHeading.children[0].type === "link") && sourcePath) {
             var linkElem = titleHeading.children[0];
-            linkElem.url = "../../" + sourcePath;
-            linkElem.title = "Defined in " + path.basename(sourcePath);
+            linkElem.url = srcUrl, //`../../${sourcePath}`;
+                linkElem.title = "Defined in " + path.basename(sourcePath);
         }
     });
 }
 exports.processDocs = processDocs;
+function fixRelSrcUrl(docPath, srcPath) {
+    var docPathSegments = docPath.split(/[\\\/]/);
+    var dotPathPart = '';
+    for (var i = 0; i < (docPathSegments.length - 1); i++) {
+        dotPathPart += '../';
+    }
+    return dotPathPart + srcPath;
+}
