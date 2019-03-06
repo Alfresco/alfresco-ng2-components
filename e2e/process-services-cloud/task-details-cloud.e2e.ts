@@ -27,7 +27,7 @@ import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { TaskDetailsCloudComponent } from '../../lib/testing';
+import { TaskDetailsCloudComponent } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Task Header cloud component', () => {
