@@ -370,7 +370,7 @@
         }
 
         .adf-ellipsis-cell {
-            overflow: hidden;
+            position: sticky;
             text-overflow: ellipsis;
             white-space: nowrap;
 
@@ -387,6 +387,8 @@
                     white-space: nowrap;
                     display: block;
                     width: calc(100% - 2em);
+                    position: absolute;
+                    margin-top: -10px;
                 }
             }
 

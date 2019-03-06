@@ -65,8 +65,8 @@ export class DataTablePage {
     }
 
     getRowByRowNumber(rowNumber) {
-        Util.waitUntilElementIsVisible(element(by.css(`div[data-automation-id='text_` + rowNumber + `']`)));
-        return element(by.css(`div[data-automation-id='text_` + rowNumber + `']`));
+        Util.waitUntilElementIsVisible(element(by.css(`div[data-automation-id='text_` + rowNumber + `'] span`)));
+        return element(by.css(`div[data-automation-id='text_` + rowNumber + `'] span`));
     }
 
     getRowCheckbox(rowNumber) {
