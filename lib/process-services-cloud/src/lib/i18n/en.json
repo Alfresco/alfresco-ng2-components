@@ -60,7 +60,8 @@
           "ASSIGNEE": "Assignee",
           "CANDIDATE_GROUP": "Candidate Group",
           "FORM": "Form",
-          "DATE": "Choose Date"
+          "DATE": "Choose Date",
+          "NONE": "None"
         },
         "ACTION": {
           "START": "Start",

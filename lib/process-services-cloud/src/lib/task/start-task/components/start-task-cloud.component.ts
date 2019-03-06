@@ -32,6 +32,7 @@ import {
 } from '@alfresco/adf-core';
 import { PeopleCloudComponent } from './people-cloud/people-cloud.component';
 import { GroupCloudComponent } from '../../../../lib/group/public-api';
+import { FormCloud } from '../models/form-cloud.model';
 
 @Component({
     selector: 'adf-cloud-start-task',
@@ -97,6 +98,8 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
     currentUser: IdentityUserModel;
 
+    forms$: Observable<FormCloud[]>;
+
     private localeSub: Subscription;
     private createTaskSub: Subscription;
 
@@ -115,6 +118,7 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
 
         this.loadCurrentUser();
         this.buildForm();
+        this.loadForms();
     }
 
     ngOnDestroy() {
@@ -131,8 +135,13 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.taskForm = this.formBuilder.group({
             name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
             priority: new FormControl(),
-            description: new FormControl('', [this.whitespaceValidator])
+            description: new FormControl('', [this.whitespaceValidator]),
+            formKey: new FormControl()
         });
+    }
+
+    private loadForms() {
+        this.forms$ = this.taskService.getForms(this.appName);
     }
 
     private getMaxNameLength(): number {

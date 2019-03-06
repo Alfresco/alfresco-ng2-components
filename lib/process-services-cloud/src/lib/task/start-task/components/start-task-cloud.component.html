@@ -73,8 +73,16 @@
                     [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.CANDIDATE_GROUP'"
                     [appName]="appName"
                     (selectGroup)="onCandiateGroupSelect($event)"
-                    (removeGroup)="onCandiateGroupRemove($event)"></adf-cloud-group>
-                <div fxFlex></div>
+                    (removeGroup)="onCandiateGroupRemove($event)">
+                </adf-cloud-group>
+
+                <mat-form-field fxFlex>
+                    <mat-label>{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.FORM'|translate}}</mat-label>
+                    <mat-select formControlName="formKey" #formInput>
+                        <mat-option [value]="''">{{'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.NONE'|translate}}</mat-option>
+                        <mat-option *ngFor="let form of forms$ | async" [value]="form.id">{{ form.name }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
     </mat-card-content>
 
