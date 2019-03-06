@@ -28,7 +28,7 @@ describe('User Info - SSO', () => {
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-    const userInfoDialog = new UserInfoPage();
+    const userInfoPage = new UserInfoPage();
     const identityService: Identity = new Identity();
     let silentLogin, identityUser;
 
@@ -49,11 +49,11 @@ describe('User Info - SSO', () => {
     it('[C290066] Should display UserInfo when login using SSO', () => {
 
         navigationBarPage.navigateToProcessServicesCloudPage();
-        userInfoDialog.clickUserProfile();
-        expect(userInfoDialog.getSsoHeaderTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
-        expect(userInfoDialog.getSsoTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
-        expect(userInfoDialog.getSsoEmail()).toEqual(identityUser.email);
-        userInfoDialog.closeUserProfile();
+        userInfoPage.clickUserProfile();
+        expect(userInfoPage.getSsoHeaderTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
+        expect(userInfoPage.getSsoTitle()).toEqual(identityUser.firstName + ' ' + identityUser.lastName);
+        expect(userInfoPage.getSsoEmail()).toEqual(identityUser.email);
+        userInfoPage.closeUserProfile();
 
     });
 
