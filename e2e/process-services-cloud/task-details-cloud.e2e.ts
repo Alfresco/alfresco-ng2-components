@@ -30,7 +30,7 @@ import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { TaskDetailsCloudComponent } from '../../lib/testing';
+import { TaskDetailsCloudComponent } from '@alfresco/adf-testing';
 
 describe('Task Header cloud component', () => {
 
