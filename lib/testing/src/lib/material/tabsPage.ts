@@ -16,7 +16,7 @@
  */
 
 import { element, by } from 'protractor';
-import {BrowserVisibility} from "../core/browser-visibility";
+import { BrowserVisibility } from '../core/browser-visibility';
 
 export class TabsPage {
 
