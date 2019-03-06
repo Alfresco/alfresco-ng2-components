@@ -18,7 +18,7 @@
 import { element, by, Key, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/browser-visibility';
 
-export class StartTasksCloudComponent {
+export class StartTasksCloudPage {
 
     name = element(by.css('input[id="name_id"]'));
     dueDate = element(by.css('input[id="date_id"]'));
