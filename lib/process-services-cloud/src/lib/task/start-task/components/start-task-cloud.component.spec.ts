@@ -42,6 +42,7 @@ describe('StartTaskCloudComponent', () => {
     let identityService: IdentityUserService;
     let element: HTMLElement;
     let createNewTaskSpy: jasmine.Spy;
+    let getFormsSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
@@ -57,6 +58,7 @@ describe('StartTaskCloudComponent', () => {
         service = TestBed.get(StartTaskCloudService);
         identityService = TestBed.get(IdentityUserService);
         createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(taskDetailsMock));
+        getFormsSpy = spyOn(service, 'getForms').and.returnValue(of([{id: 'fake-form', name: 'fakeForm'}]));
         spyOn(identityService, 'getCurrentUserInfo').and.returnValue(new IdentityUserModel({username: 'currentUser', firstName: 'Test', lastName: 'User'}));
         fixture.detectChanges();
     }));
@@ -155,6 +157,18 @@ describe('StartTaskCloudComponent', () => {
         const startButton = element.querySelector('#button-start');
         expect(startButton).toBeDefined();
         expect(startButton.textContent).toContain('ADF_CLOUD_TASK_LIST.START_TASK.FORM.ACTION.START');
+    });
+
+    it('should load the forms by default', async(() => {
+        fixture.detectChanges();
+        expect(getFormsSpy).toHaveBeenCalled();
+    }));
+
+    it('should not preselect any form by default', () => {
+        fixture.detectChanges();
+        const formInput = element.querySelector('mat-select');
+        expect(formInput).toBeDefined();
+        expect(formInput.nodeValue).toBeNull();
     });
 
     it('should disable start button if name is empty', () => {
