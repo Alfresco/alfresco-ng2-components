@@ -17,6 +17,7 @@
 
 import { LoginPage } from '../pages/adf/loginPage';
 import { ContentServicesPage } from '../pages/adf/contentServicesPage';
+import { PaginationPage } from '../pages/adf/paginationPage';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FolderModel } from '../models/ACS/folderModel';
@@ -31,12 +32,13 @@ describe('Enable infinite scrolling', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
+    let paginationPage = new PaginationPage();
 
     let acsUser = new AcsUserModel();
     let folderModel = new FolderModel({ 'name': 'folderOne' });
 
-    let fileNames = [], nrOfFiles = 21;
-    let fileNum = 0;
+    let fileNames = [], nrOfFiles = 21, deleteFileNames = [], nrOfDeletedFiles = 22;
+    let deleteUploaded;
 
     let files = {
         base: 'newFile',
@@ -58,12 +60,17 @@ describe('Enable infinite scrolling', () => {
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
+        deleteFileNames = Util.generateSequenceFiles(1, nrOfDeletedFiles, files.base, files.extension);
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         let folderUploadedModel = await uploadActions.createFolder(this.alfrescoJsApi, folderModel.name, '-my-');
 
         await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, folderUploadedModel.entry.id);
+
+        deleteUploaded = await uploadActions.createFolder(this.alfrescoJsApi, 'deleteFolder', '-my-');
+
+        await uploadActions.createEmptyFiles(this.alfrescoJsApi, deleteFileNames, deleteUploaded.entry.id);
 
         done();
     });
@@ -83,21 +90,23 @@ describe('Enable infinite scrolling', () => {
     });
 
     it('[C268165] Delete folder when infinite scrolling is enabled', () => {
-        contentServicesPage.navigateToFolder(folderModel.name);
+        contentServicesPage.navigateToFolder(deleteUploaded.entry.name);
+        contentServicesPage.checkAcsContainer();
+        contentServicesPage.waitForTableBody();
         contentServicesPage.enableInfiniteScrolling();
         contentServicesPage.clickLoadMoreButton();
-        for (let i = 0; i < nrOfFiles; i++) {
-            contentServicesPage.checkContentIsDisplayed(fileNames[i]);
-        }
-        expect(contentServicesPage.getContentList().getAllDisplayedRows()).toEqual(21);
+        for (let i = 0; i < nrOfDeletedFiles; i++) {
+            contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
+        };
+        expect(contentServicesPage.getContentList().getAllDisplayedRows()).toEqual(nrOfDeletedFiles);
 
-        contentServicesPage.getUploadAreaDocumentList().clickRowToSelectWithRoot(fileNames[20])
-            .deleteContentWithRoot(fileNames[20]);
-        contentServicesPage.checkContentIsNotDisplayed(fileNames[20]);
+        contentServicesPage.getUploadAreaDocumentList().clickRowToSelectWithRoot(deleteFileNames[nrOfDeletedFiles - 1])
+            .deleteContentWithRoot(deleteFileNames[nrOfDeletedFiles - 1]);
+        contentServicesPage.checkContentIsNotDisplayed(deleteFileNames[nrOfDeletedFiles - 1]);
 
-        for (let i = 0; i < nrOfFiles - 1; i++) {
-            contentServicesPage.checkContentIsDisplayed(fileNames[i]);
-        }
+        for (let i = 0; i < nrOfDeletedFiles - 1; i++) {
+            contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
+        };
     });
 
 });
