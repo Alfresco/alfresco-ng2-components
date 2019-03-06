@@ -145,7 +145,9 @@ describe('Task list cloud - selection', () => {
             tasksCloudDemoPage.clickAppButton();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
 
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed().checkAllRows();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable()
+                .checkAllRowsButtonIsDisplayed()
+                .checkAllRows();
             tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[0]);
             tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[1]);
             tasksCloudDemoPage.taskListCloudComponent().checkRowIsChecked(tasks[2]);

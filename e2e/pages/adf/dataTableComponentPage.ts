@@ -23,19 +23,25 @@ export class DataTableComponentPage {
 
     rootElement: ElementFinder;
     list: ElementArrayFinder;
-    contents = element.all(by.css('div[class="adf-datatable-body"] span'));
-    table = element.all(by.css('adf-datatable')).first();
-    tableBody = element.all(by.css(`div[class='adf-datatable-body']`)).first();
-    spinner = element(by.css('mat-progress-spinner'));
+    contents;
+    tableBody;
+    spinner;
     rows = by.css(`adf-datatable div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`);
-    allColumns = element.all(by.css('div[data-automation-id*="auto_id_entry."]'));
-    selectedRowNumber = element(by.css(`div[class*='is-selected'] div[data-automation-id*='text_']`));
-    allSelectedRows = element.all(by.css(`div[class*='is-selected']`));
-    selectAll = element(by.css(`div[class*='adf-datatable-header'] mat-checkbox`));
+    allColumns;
+    selectedRowNumber;
+    allSelectedRows;
+    selectAll;
 
     constructor(rootElement: ElementFinder = element.all(by.css('adf-datatable')).first()) {
         this.rootElement = rootElement;
         this.list = this.rootElement.all(by.css(`div[class*='adf-datatable-body'] div[class*='adf-datatable-row']`));
+        this.contents = this.rootElement.all(by.css('div[class="adf-datatable-body"] span'));
+        this.tableBody = this.rootElement.all(by.css(`div[class='adf-datatable-body']`)).first();
+        this.spinner = this.rootElement.element(by.css('mat-progress-spinner'));
+        this.allColumns = this.rootElement.all(by.css('div[data-automation-id*="auto_id_entry."]'));
+        this.selectedRowNumber = this.rootElement.element(by.css(`div[class*='is-selected'] div[data-automation-id*='text_']`));
+        this.allSelectedRows = this.rootElement.all(by.css(`div[class*='is-selected']`));
+        this.selectAll = this.rootElement.element(by.css(`div[class*='adf-datatable-header'] mat-checkbox`));
     }
 
     checkAllRowsButtonIsDisplayed() {
@@ -44,8 +50,11 @@ export class DataTableComponentPage {
     }
 
     checkAllRows() {
-        Util.waitUntilElementIsClickable(this.selectAll);
-        this.selectAll.click();
+        Util.waitUntilElementIsClickable(this.selectAll).then(() => {
+            this.selectAll.click();
+            Util.waitUntilElementIsVisible(this.selectAll.element(by.css('input[aria-checked="true"]')));
+        });
+        return this;
     }
 
     clickCheckbox(columnName, columnValue) {
@@ -247,7 +256,7 @@ export class DataTableComponentPage {
     }
 
     tableIsLoaded() {
-        Util.waitUntilElementIsVisible(this.table);
+        Util.waitUntilElementIsVisible(this.rootElement);
         return this;
     }
 
