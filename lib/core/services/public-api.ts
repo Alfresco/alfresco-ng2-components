@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './auth-guard-base';
 export * from './authentication.service';
 export * from './alfresco-api.service';
 export * from './content.service';
