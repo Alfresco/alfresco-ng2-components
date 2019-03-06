@@ -5,9 +5,9 @@ Status: Active
 Last reviewed: 2019-02-08
 ---
 
-# [Identity user service](../../lib/core/userinfo/services/identity-user.service.ts "Defined in identity-user.service.ts")
+# [Identity user service](../../lib/lib/core/userinfo/services/identity-user.service.ts "Defined in identity-user.service.ts")
 
-Gets OAuth2 personal details and roles for users. 
+Gets OAuth2 personal details and roles for users.
 
 ## Class members
 
@@ -40,9 +40,21 @@ Gets OAuth2 personal details and roles for users.
     -   _userId:_ `string`  - ID of the target user
     -   _roleNames:_ `string[]`  - Array of roles to check for
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>` - True if the user has one of the roles, false otherwise
+-   **findUserByEmail**(email: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    Find users based on email input.
+    -   _email:_ `string`  - [Search](../../lib/node_modules/@alfresco/js-api/src/api-legacy/legacy.ts) query string
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - List of users
+-   **findUserById**(id: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    Find users based on id input.
+    -   _id:_ `string`  - [Search](../../lib/node_modules/@alfresco/js-api/src/api-legacy/legacy.ts) query string
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - users object
+-   **findUserByUsername**(username: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+    Find users based on username input.
+    -   _username:_ `string`  - [Search](../../lib/node_modules/@alfresco/js-api/src/api-legacy/legacy.ts) query string
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - List of users
 -   **findUsersByName**(search: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Find users based on search input.
-    -   _search:_ `string`  - Search query string
+    -   _search:_ `string`  - [Search](../../lib/node_modules/@alfresco/js-api/src/api-legacy/legacy.ts) query string
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - List of users
 -   **getClientIdByApplicationName**(applicationName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string>`<br/>
     Gets the client ID for an application.
@@ -59,8 +71,8 @@ Gets OAuth2 personal details and roles for users.
 -   **getUserRoles**(userId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../lib/core/userinfo/models/identity-role.model.ts)`[]>`<br/>
     Gets a list of roles for a user.
     -   _userId:_ `string`  - ID of the user
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../lib/core/userinfo/models/identity-role.model.ts)`[]>` - Array of role info objects
--   **getUsers**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../lib/core/userinfo/models/identity-user.model.ts)`[]>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../lib/lib/core/userinfo/models/identity-role.model.ts)`[]>` - Array of role info objects
+-   **getUsers**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../lib/lib/core/userinfo/models/identity-user.model.ts)`[]>`<br/>
     Gets details for all users.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityUserModel`](../../lib/core/userinfo/models/identity-user.model.ts)`[]>` - Array of user info objects
 -   **getUsersByRolesWithCurrentUser**(roleNames: `string[]`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`IdentityUserModel`](../../lib/core/userinfo/models/identity-user.model.ts)`[]>`<br/>

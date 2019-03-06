@@ -19,7 +19,7 @@ import { FormControl } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, Input, ViewChild, ElementRef, SimpleChanges, OnChanges } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter } from 'rxjs/operators';
-import { FullNamePipe, IdentityUserModel, IdentityUserService } from '@alfresco/adf-core';
+import { FullNamePipe, IdentityUserModel, IdentityUserService, LogService } from '@alfresco/adf-core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -28,9 +28,9 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     styleUrls: ['./people-cloud.component.scss'],
     animations: [
         trigger('transitionMessages', [
-            state('enter', style({opacity: 1, transform: 'translateY(0%)'})),
+            state('enter', style({ opacity: 1, transform: 'translateY(0%)' })),
             transition('void => enter', [
-                style({opacity: 0, transform: 'translateY(-100%)'}),
+                style({ opacity: 0, transform: 'translateY(-100%)' }),
                 animate('300ms cubic-bezier(0.55, 0, 0.55, 0.2)')
             ])
         ])
@@ -56,10 +56,17 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     @Input()
     roles: string[];
 
-    /**
-     * Array of users to be pre-selected. All users in the
+    /** This flag enables the validation on the preSelectUsers passed as input.
+     * In case the flag is true the components call the identity service to verify the validity of the information passed as input.
+     * Otherwise, no check will be done.
+     */
+    @Input()
+    validate: Boolean = false;
+
+    /** Array of users to be pre-selected. All users in the
      * array are pre-selected in multi selection mode, but only the first user
      * is pre-selected in single selection mode.
+     * Mandatory properties are: id, email, username
      */
     @Input()
     preSelectUsers: IdentityUserModel[];
@@ -72,9 +79,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     @Output()
     removeUser: EventEmitter<IdentityUserModel> = new EventEmitter<IdentityUserModel>();
 
-    /** Emitted when an error occurs. */
+    /** Emitted when an warning occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    warning: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('userInput')
     private userInput: ElementRef<HTMLInputElement>;
@@ -93,7 +100,9 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     isFocused: boolean;
 
-    constructor(private identityUserService: IdentityUserService) {
+    invalidUsers: IdentityUserModel[];
+
+    constructor(private identityUserService: IdentityUserService, private logService: LogService) {
         this.searchUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this._searchUsers);
         this.searchUsers$ = this.searchUsersSubject.asObservable();
     }
@@ -102,11 +111,18 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
         this.selectedUsersSubject = new BehaviorSubject<IdentityUserModel[]>(this.preSelectUsers);
         this.selectedUsers$ = this.selectedUsersSubject.asObservable();
         this.initSearch();
+
+        if (this.appName) {
+            this.disableSearch();
+            this.loadClientId();
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.preSelectUsers && this.hasPreSelectUsers()) {
+        if (this.isPreselectedUserChanged(changes) && this.isValidationEnabled()) {
             this.loadPreSelectUsers();
+        } else {
+            this.loadNoValidationPreselctUsers();
         }
 
         if (changes.appName && this.isAppNameChanged(changes.appName)) {
@@ -119,6 +135,70 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     private isAppNameChanged(change) {
         return change.previousValue !== change.currentValue && this.appName && this.appName.length > 0;
+    }
+
+    isPreselectedUserChanged(changes: SimpleChanges) {
+        return changes.preSelectUsers
+            && changes.preSelectUsers.previousValue !== changes.preSelectUsers.currentValue
+            && this.hasPreSelectUsers();
+    }
+
+    isValidationEnabled() {
+        return this.validate === true;
+    }
+
+    async validatePreselectUsers(): Promise<any> {
+        this.invalidUsers = [];
+        let filteredPreSelectUsers: IdentityUserModel[];
+
+        try {
+            filteredPreSelectUsers = await this.filterPreselectUsers();
+        } catch (error) {
+            filteredPreSelectUsers = [];
+            this.logService.error(error);
+        }
+
+        return filteredPreSelectUsers.reduce((validUsers, user: IdentityUserModel) => {
+            if (this.userExists(user)) {
+                validUsers.push(user);
+            } else {
+                this.invalidUsers.push(user);
+            }
+            return validUsers;
+        }, []);
+    }
+
+    async filterPreselectUsers() {
+        const promiseBatch = this.preSelectUsers.map(async (user: IdentityUserModel) => {
+            let result: any;
+
+            try {
+                result = await this.searchUser(user);
+            } catch (error) {
+                result = [];
+                this.logService.error(error);
+            }
+            const isUserValid: Boolean = this.userExists(result);
+            return isUserValid ? new IdentityUserModel(result[0]) : user;
+        });
+        return await Promise.all(promiseBatch);
+    }
+
+    async searchUser(user: IdentityUserModel) {
+        const key: string = Object.keys(user)[0];
+        switch (key) {
+            case 'id': return this.identityUserService.findUserById(user[key]).toPromise();
+            case 'username': return this.identityUserService.findUserByUsername(user[key]).toPromise();
+            case 'email': return this.identityUserService.findUserByEmail(user[key]).toPromise();
+            default: return of([]);
+        }
+    }
+
+    public userExists(result: any) {
+        return result.length > 0 ||
+         result.id !== undefined ||
+         result.username !== undefined ||
+         result.amil !== undefined;
     }
 
     private initSearch() {
@@ -135,7 +215,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
                     }
                     this.clearError();
                 }
-             }),
+            }),
             debounceTime(500),
             distinctUntilChanged(),
             tap(() => {
@@ -190,7 +270,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     private isUserAlreadySelected(user: IdentityUserModel): boolean {
         if (this.preSelectUsers && this.preSelectUsers.length > 0) {
             const result = this.preSelectUsers.find((selectedUser) => {
-                return selectedUser.id === user.id || selectedUser.email  === user.email;
+                return selectedUser.id === user.id || selectedUser.email === user.email || selectedUser.username === user.username;
             });
 
             return !!result;
@@ -200,15 +280,46 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
 
     private loadPreSelectUsers() {
         if (!this.isMultipleMode()) {
-            this.searchUserCtrl.setValue(this.preSelectUsers[0]);
-            this.preSelectUsers = [];
+            this.loadSinglePreselectUser();
         } else {
+            this.loadMultiplePreselectUsers();
+        }
+        if (this.userInput) {
+            this.userInput.nativeElement.click();
+        }
+    }
+
+    loadNoValidationPreselctUsers() {
+        if (this.isMultipleMode()) {
             this.selectedUsersSubject.next(this.preSelectUsers);
+        } else {
+            this.searchUserCtrl.setValue(this.preSelectUsers[0]);
+        }
+    }
+
+    public async loadSinglePreselectUser() {
+        const users = await this.validatePreselectUsers();
+        this.checkPreselectValidationErrors();
+        this.searchUserCtrl.setValue(users[0]);
+    }
+
+    public async loadMultiplePreselectUsers() {
+        let users = await this.validatePreselectUsers();
+        this.checkPreselectValidationErrors();
+        this.preSelectUsers = [...users];
+        this.selectedUsersSubject.next(users);
+    }
+
+    public checkPreselectValidationErrors() {
+        if (this.invalidUsers.length > 0) {
+            this.warning.emit({
+                message: 'INVALID_PRESELECTED_USERS',
+                users: this.invalidUsers
+            });
         }
     }
 
     private async loadClientId() {
-
         this.clientId = await this.identityUserService.getClientIdByApplicationName(this.appName).toPromise();
 
         if (this.clientId) {
@@ -260,7 +371,7 @@ export class PeopleCloudComponent implements OnInit, OnChanges {
     }
 
     private setError() {
-        this.searchUserCtrl.setErrors({invalid: true});
+        this.searchUserCtrl.setErrors({ invalid: true });
     }
 
     private clearError() {

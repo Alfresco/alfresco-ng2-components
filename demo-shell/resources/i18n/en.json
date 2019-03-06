@@ -296,7 +296,8 @@
     "ROLE": "Roles: ",
     "APP_NAME": "Aplication Name",
     "APP_FILTER_MODE": "Filter by application name",
-    "ROLE_FILTER_MODE": "Filter by role"
+    "ROLE_FILTER_MODE": "Filter by role",
+    "PRESELECT_VALIDATION": "Preselect validation"
   },
   "ABOUT": {
     "TITLE": "Plugins",
