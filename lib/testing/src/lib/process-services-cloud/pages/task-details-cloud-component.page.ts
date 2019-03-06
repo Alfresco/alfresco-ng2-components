@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
+// import { Util } from '../../../util/util';
 import { element, by } from 'protractor';
+import { BrowserVisibility } from '../../core/browser-visibility';
 
 export class TaskDetailsCloudComponent {
 
@@ -31,60 +32,67 @@ export class TaskDetailsCloudComponent {
     endDateField = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
     idField = element.all(by.css('span[data-automation-id*="id"] span')).first();
     descriptionField = element(by.css('span[data-automation-id*="description"] span'));
+    taskDetailsHeader = element(by.css(`h4[data-automation-id='task-details-header']`));
+    taskPropertyList = element(by.css('adf-cloud-task-header adf-card-view div[class="adf-property-list"]'));
 
     getAssignee() {
-        Util.waitUntilElementIsVisible(this.assigneeField);
+        BrowserVisibility.waitUntilElementIsVisible(this.assigneeField);
         return this.assigneeField.getText();
     }
 
     getStatus() {
-        Util.waitUntilElementIsVisible(this.statusField);
+        BrowserVisibility.waitUntilElementIsVisible(this.statusField);
         return this.statusField.getText();
     }
 
     getPriority() {
-        Util.waitUntilElementIsVisible(this.priorityField);
+        BrowserVisibility.waitUntilElementIsVisible(this.priorityField);
         return this.priorityField.getText();
     }
 
     getCategory() {
-        Util.waitUntilElementIsVisible(this.categoryField);
+        BrowserVisibility.waitUntilElementIsVisible(this.categoryField);
         return this.categoryField.getText();
     }
 
     getParentName() {
-        Util.waitUntilElementIsVisible(this.parentNameField);
+        BrowserVisibility.waitUntilElementIsVisible(this.parentNameField);
         return this.parentNameField.getText();
     }
 
     getParentTaskId() {
-        Util.waitUntilElementIsVisible(this.parentTaskIdField);
+        BrowserVisibility.waitUntilElementIsVisible(this.parentTaskIdField);
         return this.parentTaskIdField.getText();
     }
 
     getEndDate() {
-        Util.waitUntilElementIsVisible(this.endDateField);
+        BrowserVisibility.waitUntilElementIsVisible(this.endDateField);
         return this.endDateField.getText();
     }
 
     getCreated() {
-        Util.waitUntilElementIsVisible(this.createdField);
+        BrowserVisibility.waitUntilElementIsVisible(this.createdField);
         return this.createdField.getText();
     }
 
     getId() {
-        Util.waitUntilElementIsVisible(this.idField);
+        BrowserVisibility.waitUntilElementIsVisible(this.idField);
         return this.idField.getText();
     }
 
     getDescription() {
-        Util.waitUntilElementIsVisible(this.descriptionField);
+        BrowserVisibility.waitUntilElementIsVisible(this.descriptionField);
         return this.descriptionField.getText();
     }
 
     getDueDate() {
-        Util.waitUntilElementIsVisible(this.dueDateField);
+        BrowserVisibility.waitUntilElementIsVisible(this.dueDateField);
         return this.dueDateField.getText();
+    }
+
+    getTaskDetailsHeader() {
+        BrowserVisibility.waitUntilElementIsVisible(this.taskPropertyList);
+        return this.taskDetailsHeader.getText();
     }
 
 }
