@@ -31,6 +31,7 @@ import { FolderModel } from '../models/ACS/folderModel';
 import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { ViewerPage } from '../pages/adf/viewerPage';
 import { NotificationPage } from '../pages/adf/notificationPage';
+import CONSTANTS = require('../util/constants');
 
 describe('Permissions Component', function () {
 
@@ -42,7 +43,7 @@ describe('Permissions Component', function () {
     let searchDialog = new SearchDialog();
     let viewerPage = new ViewerPage();
     let notificationPage = new NotificationPage();
-    let fileOwnerUser, filePermissionUser, file;
+    let fileOwnerUser, filePermissionUser, consumerUser, collaboratorUser, contributorUser, managerUser, file;
     let publicSite, folderName;
 
     let fileModel = new FileModel({
@@ -62,11 +63,16 @@ describe('Permissions Component', function () {
     });
 
     let roleFolderModel = new FolderModel({'name': 'role' + Util.generateRandomString()});
-    let roleFolder;
+    let roleFolder, siteFolder;
 
     fileOwnerUser = new AcsUserModel();
 
     filePermissionUser = new AcsUserModel();
+    consumerUser = new AcsUserModel();
+    collaboratorUser = new AcsUserModel();
+    contributorUser = new AcsUserModel();
+    managerUser = new AcsUserModel();
+
     const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.getId() + ' / role -> Contributor';
 
     beforeAll(async (done) => {
@@ -74,6 +80,10 @@ describe('Permissions Component', function () {
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await alfrescoJsApi.core.peopleApi.addPerson(fileOwnerUser);
         await alfrescoJsApi.core.peopleApi.addPerson(filePermissionUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(consumerUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(contributorUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(collaboratorUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(managerUser);
         let group = await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
         groupId = group.entry.id;
 
@@ -82,10 +92,32 @@ describe('Permissions Component', function () {
         folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
         let publicSiteBody = {visibility: 'PUBLIC', title: siteName};
         publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
-        await uploadActions.createFolder(alfrescoJsApi, folderName, publicSite.entry.guid);
+
+        await alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
+            id: consumerUser.id,
+            role: CONSTANTS.CS_USER_ROLES.CONSUMER
+        });
+
+        await alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
+            id: collaboratorUser.id,
+            role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
+        });
+
+        await alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
+            id: contributorUser.id,
+            role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
+        });
+
+        await alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
+            id: managerUser.id,
+            role: CONSTANTS.CS_USER_ROLES.MANAGER
+        });
+
+        siteFolder = await uploadActions.createFolder(alfrescoJsApi, folderName, publicSite.entry.guid);
         roleFolder = await uploadActions.createFolder(alfrescoJsApi, roleFolderModel.name, '-my-');
 
         await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'Role' + fileModel.name, roleFolder.entry.id);
+        await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'Site' + fileModel.name, siteFolder.entry.id);
         browser.driver.sleep(15000); // wait search get the groups, files and folders
 
         done();
@@ -306,6 +338,35 @@ describe('Permissions Component', function () {
             browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
             contentList.checkActionMenuIsNotDisplayed();
             contentList.metadataContent('Role' + fileModel.name);
+            notificationPage.checkNotifyContains('You don\'t have access to do this.');
+            contentServicesPage.uploadFile(fileModel.location);
+            notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+
+        });
+    });
+
+    describe('Roles: SiteConsumer, SiteCollaborator, SiteContributor, SiteManager', function () {
+
+        it('[C276994] Role SiteConsumer', () => {
+
+            loginPage.loginToContentServicesUsingUserModel(consumerUser);
+            contentServicesPage.goToDocumentList();
+            searchDialog
+                .checkSearchIconIsVisible()
+                .clickOnSearchIcon()
+                .checkSearchBarIsVisible()
+                .enterText(folderName)
+                .resultTableContainsRow(folderName)
+                .clickOnSpecificRow(folderName);
+            contentList.checkContentIsDisplayed('Site' + fileModel.name);
+            contentList.doubleClickRow('Site' + fileModel.name);
+            viewerPage.checkFileIsLoaded();
+            viewerPage.clickCloseButton();
+            contentList.waitForTableBody();
+            contentList.checkDeleteIsDisabled('Site' + fileModel.name);
+            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            contentList.checkActionMenuIsNotDisplayed();
+            contentList.metadataContent('Site' + fileModel.name);
             notificationPage.checkNotifyContains('You don\'t have access to do this.');
             contentServicesPage.uploadFile(fileModel.location);
             notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
