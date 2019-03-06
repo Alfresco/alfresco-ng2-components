@@ -35,7 +35,7 @@ describe('Enable infinite scrolling', () => {
     let acsUser = new AcsUserModel();
     let folderModel = new FolderModel({ 'name': 'folderOne' });
 
-    let fileNames = [], nrOfFiles = 30;
+    let fileNames = [], nrOfFiles = 21;
     let fileNum = 0;
 
     let files = {
@@ -57,8 +57,6 @@ describe('Enable infinite scrolling', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.goToDocumentList();
-
         fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -70,12 +68,36 @@ describe('Enable infinite scrolling', () => {
         done();
     });
 
+    beforeEach(async (done) => {
+        contentServicesPage.goToDocumentList();
+        done();
+    });
+
     it('[C260484] Should be possible to enable infinite scrolling', () => {
         contentServicesPage.doubleClickRow(folderModel.name);
         contentServicesPage.enableInfiniteScrolling();
         contentServicesPage.clickLoadMoreButton();
-        for (fileNum; fileNum < nrOfFiles; fileNum++) {
-            contentServicesPage.checkContentIsDisplayed(fileNames[fileNum]);
+        for (let i = 0; i < nrOfFiles; i++) {
+            contentServicesPage.checkContentIsDisplayed(fileNames[i]);
         }
     });
+
+    it('[C268165] Delete folder when infinite scrolling is enabled', () => {
+        contentServicesPage.navigateToFolder(folderModel.name);
+        contentServicesPage.enableInfiniteScrolling();
+        contentServicesPage.clickLoadMoreButton();
+        for (let i = 0; i < nrOfFiles; i++) {
+            contentServicesPage.checkContentIsDisplayed(fileNames[i]);
+        }
+        expect(contentServicesPage.getContentList().getAllDisplayedRows()).toEqual(21);
+
+        contentServicesPage.getUploadAreaDocumentList().clickRowToSelectWithRoot(fileNames[20])
+            .deleteContentWithRoot(fileNames[20]);
+        contentServicesPage.checkContentIsNotDisplayed(fileNames[20]);
+
+        for (let i = 0; i < nrOfFiles - 1; i++) {
+            contentServicesPage.checkContentIsDisplayed(fileNames[i]);
+        }
+    });
+
 });
