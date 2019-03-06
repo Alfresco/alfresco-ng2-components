@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-// import { Util } from '../../../util/util';
 import { element, by, Key, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/browser-visibility';
 
