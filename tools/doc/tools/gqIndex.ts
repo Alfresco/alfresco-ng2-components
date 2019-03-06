@@ -42,7 +42,7 @@ export function processDocs(mdCache, aggData, _errorMessages) {
     let templateSource = fs.readFileSync(templateFilePath, 'utf8');
     let template = ejs.compile(templateSource);
 
-    let indexFilePath = path.resolve(aggData['rootFolder'], 'README.md');
+    let indexFilePath = path.resolve(aggData['rootFolder'], 'docs', 'README.md');
     let indexFileText = fs.readFileSync(indexFilePath, 'utf8');
     let indexMD = remark()
     .use(frontMatter, ["yaml"])

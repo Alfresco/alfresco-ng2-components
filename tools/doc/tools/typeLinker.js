@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var path = require("path");
 var fs = require("fs");
 /*
@@ -81,34 +81,25 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
         if (!includedNodeTypes.includes(node.type)) {
             return;
         }
-        /*if (node.type === "inlineCode") {
-            console.log(`Link text: ${node.value}`);
-            let link = resolveTypeLink(aggData, node.value);
-
-            if (link) {
-                convertNodeToTypeLink(node, node.value, link);
-            }
-
-        } else */
         if (node.type === "link") {
             if (node.children && ((node.children[0].type === "inlineCode") ||
                 (node.children[0].type === "text"))) {
-                var link = resolveTypeLink(aggData, node.children[0].value);
+                var link = resolveTypeLink(aggData, pathname, node.children[0].value);
                 if (link) {
                     convertNodeToTypeLink(node, node.children[0].value, link);
                 }
             }
         }
-        else if ((node.children) && (node.type !== "heading")) { //((node.type === "paragraph") || (node.type === "tableCell")) {
+        else if ((node.children) && (node.type !== "heading")) {
             node.children.forEach(function (child, index) {
-                var _a;
                 if ((child.type === "text") || (child.type === "inlineCode")) {
-                    var newNodes = handleLinksInBodyText(aggData, child.value, child.type === 'inlineCode');
+                    var newNodes = handleLinksInBodyText(aggData, pathname, child.value, child.type === 'inlineCode');
                     (_a = node.children).splice.apply(_a, [index, 1].concat(newNodes));
                 }
                 else {
                     traverseMDTree(child);
                 }
+                var _a;
             });
         } /*else if (node.children) {
             node.children.forEach(child => {
@@ -250,7 +241,7 @@ var WordScanner = /** @class */ (function () {
     };
     return WordScanner;
 }());
-function handleLinksInBodyText(aggData, text, wrapInlineCode) {
+function handleLinksInBodyText(aggData, docFilePath, text, wrapInlineCode) {
     if (wrapInlineCode === void 0) { wrapInlineCode = false; }
     var result = [];
     var currTextStart = 0;
@@ -260,12 +251,12 @@ function handleLinksInBodyText(aggData, text, wrapInlineCode) {
             .replace(/'s$/, "")
             .replace(/^[;:,\."']+/g, "")
             .replace(/[;:,\."']+$/g, "");
-        var link = resolveTypeLink(aggData, word);
+        var link = resolveTypeLink(aggData, docFilePath, word);
         var matchStart = void 0;
         if (!link) {
             var match_1 = matcher.nextWord(word.toLowerCase(), scanner.index);
             if (match_1 && match_1[0]) {
-                link = resolveTypeLink(aggData, match_1[0].value);
+                link = resolveTypeLink(aggData, docFilePath, match_1[0].value);
                 matchStart = match_1[0].startPos;
             }
         }
@@ -307,7 +298,7 @@ function handleLinksInBodyText(aggData, text, wrapInlineCode) {
     }
     return result;
 }
-function resolveTypeLink(aggData, text) {
+function resolveTypeLink(aggData, docFilePath, text) {
     var possTypeName = cleanTypeName(text);
     if (possTypeName === 'constructor') {
         return "";
@@ -320,8 +311,8 @@ function resolveTypeLink(aggData, text) {
     if (classInfo) {
         var kebabName = ngHelpers.kebabifyClassName(possTypeName);
         var possDocFile = aggData.docFiles[kebabName];
-        //let url = "../../lib/" + ref.sources[0].fileName;
-        var url = "../../" + classInfo.sourcePath; //"../../lib/" + classInfo.items[0].source.path;
+        //let url = "../../" + classInfo.sourcePath;
+        var url = fixRelSrcUrl(docFilePath, classInfo.sourcePath);
         if (possDocFile) {
             url = "../" + possDocFile;
         }
@@ -333,6 +324,15 @@ function resolveTypeLink(aggData, text) {
     else {
         return "";
     }
+}
+function fixRelSrcUrl(docPath, srcPath) {
+    var relDocPath = docPath.substring(docPath.indexOf('docs'));
+    var docPathSegments = relDocPath.split(/[\\\/]/);
+    var dotPathPart = '';
+    for (var i = 0; i < (docPathSegments.length - 1); i++) {
+        dotPathPart += '../';
+    }
+    return dotPathPart + srcPath;
 }
 function cleanTypeName(text) {
     var matches = text.match(/[a-zA-Z0-9_]+<([a-zA-Z0-9_]+)(\[\])?>/);

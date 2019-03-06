@@ -110,21 +110,12 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
             return;
         }
 
-        /*if (node.type === "inlineCode") {
-            console.log(`Link text: ${node.value}`);
-            let link = resolveTypeLink(aggData, node.value);
-
-            if (link) {
-                convertNodeToTypeLink(node, node.value, link);
-            }
-
-        } else */
         if (node.type === "link") {
             if (node.children && (
                 (node.children[0].type === "inlineCode") ||
                 (node.children[0].type === "text")
             )) {
-                let link = resolveTypeLink(aggData, node.children[0].value);
+                let link = resolveTypeLink(aggData, pathname, node.children[0].value);
 
                 if (link) {
                     convertNodeToTypeLink(node, node.children[0].value, link);
@@ -133,7 +124,7 @@ function updateFile(tree, pathname, aggData, _errorMessages) {
         } else if ((node.children) && (node.type !== "heading")) { //((node.type === "paragraph") || (node.type === "tableCell")) {
             node.children.forEach((child, index) => {
                 if ((child.type === "text") || (child.type === "inlineCode")) {
-                    let newNodes = handleLinksInBodyText(aggData, child.value, child.type === 'inlineCode');
+                    let newNodes = handleLinksInBodyText(aggData, pathname, child.value, child.type === 'inlineCode');
                     node.children.splice(index, 1, ...newNodes);
                 } else {
                     traverseMDTree(child);
@@ -302,7 +293,7 @@ class WordScanner {
 }
 
 
-function handleLinksInBodyText(aggData, text: string, wrapInlineCode: boolean = false): Node[] {
+function handleLinksInBodyText(aggData, docFilePath: string, text: string, wrapInlineCode: boolean = false): Node[] {
     let result = [];
     let currTextStart = 0;
     let matcher = new SplitNameMatcher(aggData.nameLookup.root);
@@ -313,14 +304,14 @@ function handleLinksInBodyText(aggData, text: string, wrapInlineCode: boolean = 
         .replace(/^[;:,\."']+/g, "")
         .replace(/[;:,\."']+$/g, "");
 
-        let link = resolveTypeLink(aggData, word);
+        let link = resolveTypeLink(aggData, docFilePath, word);
         let matchStart;
 
         if (!link) {
             let match = matcher.nextWord(word.toLowerCase(), scanner.index);
 
             if (match && match[0]) {
-                link = resolveTypeLink(aggData, match[0].value);
+                link = resolveTypeLink(aggData, docFilePath, match[0].value);
                 matchStart = match[0].startPos;
             }
         } else {
@@ -368,7 +359,7 @@ function handleLinksInBodyText(aggData, text: string, wrapInlineCode: boolean = 
 }
 
 
-function resolveTypeLink(aggData, text): string {
+function resolveTypeLink(aggData, docFilePath, text): string {
     let possTypeName = cleanTypeName(text);
 
     if (possTypeName === 'constructor') {
@@ -384,9 +375,10 @@ function resolveTypeLink(aggData, text): string {
     if (classInfo) {
         let kebabName = ngHelpers.kebabifyClassName(possTypeName);
         let possDocFile = aggData.docFiles[kebabName];
-        //let url = "../../lib/" + ref.sources[0].fileName;
 
-        let url = "../../" + classInfo.sourcePath; //"../../lib/" + classInfo.items[0].source.path;
+        //let url = "../../" + classInfo.sourcePath;
+
+        let url = fixRelSrcUrl(docFilePath, classInfo.sourcePath);
 
         if (possDocFile) {
             url = "../" + possDocFile;
@@ -400,6 +392,17 @@ function resolveTypeLink(aggData, text): string {
     }
 }
 
+function fixRelSrcUrl(docPath: string, srcPath: string) {
+    let relDocPath = docPath.substring(docPath.indexOf('docs'));
+    let docPathSegments = relDocPath.split(/[\\\/]/);
+    let dotPathPart = '';
+
+    for (let i = 0; i < (docPathSegments.length - 1); i++) {
+        dotPathPart += '../';
+    }
+
+    return dotPathPart + srcPath;
+}
 
 function cleanTypeName(text) {
     let matches = text.match(/[a-zA-Z0-9_]+<([a-zA-Z0-9_]+)(\[\])?>/);
