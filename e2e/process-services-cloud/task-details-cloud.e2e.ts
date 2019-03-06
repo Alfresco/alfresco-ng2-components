@@ -30,7 +30,6 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { TaskDetailsCloudComponent } from '../pages/adf/process-cloud/TaskDetailsCloudComponent';
 import { browser } from 'protractor';
 
-
 describe('Task Header cloud component', () => {
 
     const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;

@@ -33,7 +33,6 @@ export class NavigationBarPage {
     loginButton = element(by.css('a[data-automation-id="Login"]'));
     trashcanButton = element(by.css('a[data-automation-id="Trashcan"]'));
     overlayViewerButton = element(by.css('a[data-automation-id="Overlay Viewer"]'));
-    //userProfileButton = element(by.css('button[data-automation-id="adf-user-profile"]'));
     themeButton = element(by.css('button[data-automation-id="theme menu"]'));
     themeMenuContent = element(by.css('div[class*="mat-menu-panel"]'));
     logoutButton = element(by.css('a[adf-logout]'));
@@ -109,11 +108,6 @@ export class NavigationBarPage {
         this.overlayViewerButton.click();
         return this;
     }
-
-    // clickUserProfile() {
-    //     Util.waitUntilElementIsVisible(this.userProfileButton);
-    //     this.userProfileButton.click();
-    // }
 
     clickThemeButton() {
         Util.waitUntilElementIsVisible(this.themeButton);

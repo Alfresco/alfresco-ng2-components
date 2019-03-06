@@ -25,7 +25,7 @@ import { StartTasksCloudComponent } from '../pages/adf/process-cloud/startTasksC
 import { Util } from '../util/util';
 import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComponent';
 import { TaskDetailsPage } from '../pages/adf/demo-shell/process-services/taskDetailsPage';
-import {browser} from "protractor";
+import { browser } from 'protractor';
 
 describe('Start Task', () => {
 
