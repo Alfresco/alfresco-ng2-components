@@ -18,7 +18,7 @@
 import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../core/browser-visibility';
 
-export class TaskDetailsCloudComponent {
+export class TaskHeaderCloudPage {
 
     assigneeField = element(by.css('span[data-automation-id*="assignee"] span'));
     statusField = element(by.css('span[data-automation-id*="status"] span'));

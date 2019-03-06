@@ -24,14 +24,14 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { StartTasksCloudPage } from '@alfresco/adf-testing';
 import { Util } from '../util/util';
 import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComponent';
-import { TaskDetailsCloudComponent } from '@alfresco/adf-testing';
+import { TaskHeaderCloudPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Start Task', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
-    const taskDetailsPage = new TaskDetailsCloudComponent();
+    const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudComponent();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
@@ -149,8 +149,8 @@ describe('Start Task', () => {
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(unassignedTaskName);
         let taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByContentName(unassignedTaskName);
-        expect(taskDetailsPage.getTaskDetailsHeader()).toContain(taskId);
-        expect(taskDetailsPage.getAssignee()).toBe('No assignee');
+        expect(taskHeaderCloudPage.getTaskDetailsHeader()).toContain(taskId);
+        expect(taskHeaderCloudPage.getAssignee()).toBe('No assignee');
 
     });
 
