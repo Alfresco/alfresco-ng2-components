@@ -35,6 +35,9 @@ describe('Document List Component - Actions', () => {
     let uploadActions = new UploadActions();
     let acsUser = null;
     let testFileNode;
+    let pdfUploadedNode;
+    let folderName;
+    let fileNames = [], nrOfFiles = 6;
 
     let pdfFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -45,14 +48,34 @@ describe('Document List Component - Actions', () => {
         'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
 
-    beforeAll(() => {
+    let files = {
+        base: 'newFile',
+        extension: '.txt'
+    };
+
+    beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: TestConfig.adf.url
         });
+
+        acsUser = new AcsUserModel();
+        folderName = `TATSUMAKY_${Util.generateRandomString(5)}_SENPOUKYAKU`;
+        await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        pdfUploadedNode = await uploadActions.uploadFile(this.alfrescoJsApi, pdfFileModel.location, pdfFileModel.name, '-my-');
+        testFileNode = await uploadActions.uploadFile(this.alfrescoJsApi, testFileModel.location, testFileModel.name, '-my-');
+        uploadedFolder = await uploadActions.createFolder(this.alfrescoJsApi, folderName, '-my-');
+
+        fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
+        await uploadActions.createEmptyFiles(this.alfrescoJsApi, fileNames, pdfUploadedNode.entry.id);
+
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+        contentServicesPage.goToDocumentList();
     });
 
-    describe('File Actions', () => {
+    fdescribe('File Actions', () => {
 
         let pdfUploadedNode;
         let folderName;
@@ -86,9 +109,11 @@ describe('Document List Component - Actions', () => {
 
         it('[C213257] Should be able to copy a file', () => {
             browser.driver.sleep(15000);
+            contentServicesPage.checkContentIsDisplayed(pdfUploadedNode.entry.name);
 
             contentListPage.rightClickOnRow(pdfUploadedNode.entry.name);
             contentServicesPage.pressContextMenuActionNamed('Copy');
+
             contentServicesPage.typeIntoNodeSelectorSearchField(folderName);
             contentServicesPage.clickContentNodeSelectorResult(folderName);
             contentServicesPage.clickCopyButton();
