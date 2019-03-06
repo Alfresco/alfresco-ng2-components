@@ -21,7 +21,7 @@ import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudCo
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { StartTasksCloudComponent } from '@alfresco/adf-testing';
+import { StartTasksCloudPage } from '@alfresco/adf-testing';
 import { Util } from '../util/util';
 import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComponent';
 import { TaskDetailsCloudComponent } from '@alfresco/adf-testing';
@@ -35,7 +35,7 @@ describe('Start Task', () => {
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudComponent();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
-    const startTask = new StartTasksCloudComponent();
+    const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponent();
     const standaloneTaskName = Util.generateRandomString(5);
     const unassignedTaskName = Util.generateRandomString(5);
