@@ -22,7 +22,7 @@ import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { ProcessServicesPage } from '../../pages/adf/process-services/processServicesPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
-import { UserInfoDialogPage } from '@alfresco/adf-testing';
+import { UserInfoPage } from '@alfresco/adf-testing';
 
 import TestConfig = require('../../test.config');
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -37,7 +37,7 @@ describe('Login component', () => {
     let settingsPage = new SettingsPage();
     let processServicesPage = new ProcessServicesPage();
     let navigationBarPage = new NavigationBarPage();
-    let userInfoDialog = new UserInfoDialogPage();
+    let userInfoPage = new UserInfoPage();
     let contentServicesPage = new ContentServicesPage();
     let loginPage = new LoginPage();
     let adminUserModel = new AcsUserModel({
@@ -74,14 +74,14 @@ describe('Login component', () => {
 
     it('[C276746] Should display the right information in user-info when a different users logs in', () => {
         loginPage.loginToContentServicesUsingUserModel(userA);
-        userInfoDialog.clickUserProfile();
-        expect(userInfoDialog.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
-        expect(userInfoDialog.getContentEmail()).toEqual(userA.email);
+        userInfoPage.clickUserProfile();
+        expect(userInfoPage.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
+        expect(userInfoPage.getContentEmail()).toEqual(userA.email);
 
         loginPage.loginToContentServicesUsingUserModel(userB);
-        userInfoDialog.clickUserProfile();
-        expect(userInfoDialog.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
-        expect(userInfoDialog.getContentEmail()).toEqual(userB.email);
+        userInfoPage.clickUserProfile();
+        expect(userInfoPage.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
+        expect(userInfoPage.getContentEmail()).toEqual(userB.email);
     });
 
     it('[C260036] Should require username', () => {

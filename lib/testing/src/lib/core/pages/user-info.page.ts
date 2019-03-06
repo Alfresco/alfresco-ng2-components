@@ -17,9 +17,9 @@
 
 import { element, by, browser, protractor } from 'protractor';
 import { BrowserVisibility } from '../browser-visibility';
-import { TabsPage } from '../../material/tabsPage';
+import { TabsPage } from '../../material/tabs.page';
 
-export class UserInfoDialogPage {
+export class UserInfoPage {
 
     dialog = element.all(by.css('mat-card[class*="adf-userinfo-card"]')).first();
     userImage = element(by.css('div[id="user-initial-image"]'));

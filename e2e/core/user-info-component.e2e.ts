@@ -17,7 +17,7 @@
 
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { LoginPage } from '../pages/adf/loginPage';
-import { UserInfoDialogPage } from '@alfresco/adf-testing';
+import { UserInfoPage } from '@alfresco/adf-testing';
 
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import { FileModel } from '../models/ACS/fileModel';
@@ -35,7 +35,7 @@ describe('User Info component', () => {
 
     let settingsPage = new SettingsPage();
     let loginPage = new LoginPage();
-    let userInfoDialog = new UserInfoDialogPage();
+    let userInfoDialog = new UserInfoPage();
     let processUserModel, contentUserModel;
     let acsAvatarFileModel = new FileModel({
         'name': resources.Files.PROFILE_IMAGES.ECM.file_name,

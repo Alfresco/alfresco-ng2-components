@@ -18,7 +18,7 @@
 import { element, by } from 'protractor';
 
 import { Util } from '../../util/util';
-import { TabsPage } from '../../../lib/testing/src/lib/material/tabsPage';
+import { TabsPage } from '@alfresco/adf-testing';
 
 export class CommentsPage {
 

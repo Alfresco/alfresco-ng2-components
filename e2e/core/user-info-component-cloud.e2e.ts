@@ -20,7 +20,7 @@ import { SettingsPage } from '../pages/adf/settingsPage';
 import TestConfig = require('../test.config');
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import { UserInfoDialogPage } from '@alfresco/adf-testing';
+import { UserInfoPage } from '@alfresco/adf-testing';
 import { Identity } from '../actions/APS-cloud/identity';
 
 describe('User Info - SSO', () => {
@@ -28,7 +28,7 @@ describe('User Info - SSO', () => {
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-    const userInfoDialog = new UserInfoDialogPage();
+    const userInfoDialog = new UserInfoPage();
     const identityService: Identity = new Identity();
     let silentLogin, identityUser;
 
