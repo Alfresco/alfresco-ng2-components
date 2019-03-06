@@ -132,7 +132,8 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
         this.taskForm = this.formBuilder.group({
             name: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
             priority: new FormControl(),
-            description: new FormControl('', [this.whitespaceValidator])
+            description: new FormControl('', [this.whitespaceValidator]),
+            formKey: new FormControl()
         });
     }
 
