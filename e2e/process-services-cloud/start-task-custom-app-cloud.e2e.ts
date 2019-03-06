@@ -21,17 +21,17 @@ import { AppListCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { StartTasksCloudComponent } from '../pages/adf/process-cloud/startTasksCloudComponent';
+import { StartTasksCloudComponent } from '../../lib/testing';
 import { Util } from '../util/util';
 import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComponent';
-import { TaskDetailsPage } from '../pages/adf/demo-shell/process-services/taskDetailsPage';
+import { TaskDetailsCloudComponent } from '../../lib/testing';
 import { browser } from 'protractor';
 
 describe('Start Task', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
-    const taskDetailsPage = new TaskDetailsPage();
+    const taskDetailsPage = new TaskDetailsCloudComponent();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
@@ -159,8 +159,8 @@ describe('Start Task', () => {
         let taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
         tasksCloudDemoPage.taskListCloudComponent().getRow(unassignedTaskName).click();
         expect(taskDetailsPage.getTaskDetailsHeader()).toContain(taskId);
-        expect(taskDetailsPage.getPropertyLabel('assignee')).toBe('Assignee');
-        expect(taskDetailsPage.getPropertyValue('assignee')).toBe('No assignee');
+        expect(taskDetailsPage.getAssignee()).toBe('No assignee');
+
     });
 
 });
