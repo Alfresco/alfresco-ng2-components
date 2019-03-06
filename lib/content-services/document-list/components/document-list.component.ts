@@ -159,7 +159,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
 
-    /** Toggle file drop support for rows (see Upload Directive for further details) */
+    /**
+     * When true, this enables you to drop files directly into subfolders shown
+     * as items in the list. When false, the dropped file will be added to the
+     * current folder (ie, the one containing all the items shown in the list).
+     * See the Upload directive for further details about how the file drop is
+     * handled.
+     */
     @Input()
     allowDropFiles: boolean = false;
 
