@@ -21,7 +21,7 @@ import { MaterialModule } from '../../material.module';
 import { DataTableModule, TemplateModule, CardViewModule, CoreModule } from '@alfresco/adf-core';
 import { TaskHeaderCloudComponent } from './components/task-header-cloud.component';
 import { TaskHeaderCloudService } from './services/task-header-cloud.service';
-import { TaskModule } from '../task.module';
+import { TaskDirectiveModule } from '../directives/task-directive.module';
 
 @NgModule({
     imports: [
@@ -31,7 +31,7 @@ import { TaskModule } from '../task.module';
         TemplateModule,
         CardViewModule,
         CoreModule,
-        TaskModule
+        TaskDirectiveModule
     ],
     declarations: [
         TaskHeaderCloudComponent

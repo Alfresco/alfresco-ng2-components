@@ -19,8 +19,8 @@ import { async } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { AlfrescoApiServiceMock, LogService, AppConfigService, StorageService, CoreModule } from '@alfresco/adf-core';
 import { TaskCloudService } from './task-cloud.service';
-import { taskComplateCloudMock } from '../mocks/fake-complete-task.mock';
 import { taskDetailsCloudMock } from '../mocks/task-details-cloud.mock';
+import { taskCompleteCloudMock } from '../mocks/fake-complete-task.mock';
 
 describe('Task Cloud Service', () => {
 
@@ -31,7 +31,7 @@ describe('Task Cloud Service', () => {
         return {
             oauth2Auth: {
                 callCustomApi : () => {
-                    return Promise.resolve(taskComplateCloudMock);
+                    return Promise.resolve(taskCompleteCloudMock);
                 }
             }
         };
@@ -41,7 +41,7 @@ describe('Task Cloud Service', () => {
         return {
             oauth2Auth: {
                 callCustomApi : () => {
-                    return Promise.reject(taskComplateCloudMock);
+                    return Promise.reject(taskCompleteCloudMock);
                 }
             }
         };

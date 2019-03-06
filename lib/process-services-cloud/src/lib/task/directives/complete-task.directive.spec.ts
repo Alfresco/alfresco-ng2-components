@@ -18,10 +18,10 @@ import { Component, ContentChildren } from '@angular/core';
 import { CompleteTaskDirective } from './complete-task.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { TaskCloudService } from '../services/task-cloud.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { taskComplateCloudMock } from '../mocks/fake-complete-task.mock';
+import { TaskCloudService } from '../task-header/services/task-cloud.service';
+import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
 
 describe('CompleteTaskDirective', () => {
 
@@ -59,7 +59,7 @@ describe('CompleteTaskDirective', () => {
     });
 
     it('should directive complete task', () => {
-        spyOn(taskCloudService, 'completeTask').and.returnValue(of(taskComplateCloudMock));
+        spyOn(taskCloudService, 'completeTask').and.returnValue(of(taskCompleteCloudMock));
         const button = fixture.nativeElement.querySelector('button');
         button.click();
         expect(taskCloudService.completeTask).toHaveBeenCalled();

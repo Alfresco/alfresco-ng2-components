@@ -16,8 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CompleteTaskDirective } from './task-header/directives/complete-task.directive';
-import { TaskCloudService } from './task-header/services/task-cloud.service';
+import { CompleteTaskDirective } from './complete-task.directive';
 
 @NgModule({
     declarations: [
@@ -25,9 +24,6 @@ import { TaskCloudService } from './task-header/services/task-cloud.service';
     ],
     exports: [
         CompleteTaskDirective
-    ],
-    providers: [
-        TaskCloudService
     ]
 })
-export class TaskModule { }
+export class TaskDirectiveModule { }
