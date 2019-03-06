@@ -30,7 +30,7 @@ import { LoginSSOPage } from '../pages/adf/loginSSOPage';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { TaskDetailsCloudComponent } from '../pages/adf/process-cloud/TaskDetailsCloudComponent';
+import { TaskDetailsCloudComponent } from '../../lib/testing';
 
 describe('Task Header cloud component', () => {
 
@@ -94,7 +94,7 @@ describe('Task Header cloud component', () => {
             .toEqual(basicCreatedTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : basicCreatedTask.entry.description);
         expect(taskDetailsCloudPage.getStatus()).toEqual(basicCreatedTask.entry.status);
         expect(taskDetailsCloudPage.getPriority()).toEqual(basicCreatedTask.entry.priority === 0 ? '' : basicCreatedTask.entry.priority.toString());
-        expect(taskDetailsCloudPage.getCategory()).toEqual(basicCreatedTask.entry.category === null ?
+        expect(taskDetailsCloudPage.getCategory()).toEqual(!basicCreatedTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : basicCreatedTask.entry.category);
         expect(taskDetailsCloudPage.getDueDate()).toEqual(basicCreatedTask.entry.dueDate === null ?
             CONSTANTS.TASK_DETAILS.NO_DATE : basicCreatedDate);
@@ -114,7 +114,7 @@ describe('Task Header cloud component', () => {
             .toEqual(completedTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : completedTask.entry.description);
         expect(taskDetailsCloudPage.getStatus()).toEqual(completedTask.entry.status);
         expect(taskDetailsCloudPage.getPriority()).toEqual(completedTask.entry.priority === '0' ? '' : completedTask.entry.priority.toString());
-        expect(taskDetailsCloudPage.getCategory()).toEqual(completedTask.entry.category === null ?
+        expect(taskDetailsCloudPage.getCategory()).toEqual(!completedTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : completedTask.entry.category);
         expect(taskDetailsCloudPage.getDueDate()).toEqual(completedTask.entry.dueDate === null ?
             CONSTANTS.TASK_DETAILS.NO_DATE : completedCreatedDate);
@@ -134,7 +134,7 @@ describe('Task Header cloud component', () => {
             .toEqual(subTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : subTask.entry.description);
         expect(taskDetailsCloudPage.getStatus()).toEqual(subTask.entry.status);
         expect(taskDetailsCloudPage.getPriority()).toEqual(subTask.entry.priority === 0 ? '' : subTask.entry.priority.toString());
-        expect(taskDetailsCloudPage.getCategory()).toEqual(subTask.entry.category === null ?
+        expect(taskDetailsCloudPage.getCategory()).toEqual(!subTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : subTask.entry.category);
         expect(taskDetailsCloudPage.getDueDate()).toEqual(subTask.entry.dueDate === null ?
             CONSTANTS.TASK_DETAILS.NO_DATE : subTaskCreatedDate);
