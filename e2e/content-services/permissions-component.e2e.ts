@@ -51,6 +51,11 @@ describe('Permissions Component', function () {
         'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
+    let pdfFileModel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
+    });
+
     let groupBody = {
         id: Util.generateRandomString(),
         displayName: Util.generateRandomString()
@@ -115,6 +120,9 @@ describe('Permissions Component', function () {
 
         siteFolder = await uploadActions.createFolder(alfrescoJsApi, folderName, publicSite.entry.guid);
         roleFolder = await uploadActions.createFolder(alfrescoJsApi, roleFolderModel.name, '-my-');
+
+        await alfrescoJsApi.core.nodesApi.updateNode(roleFolder.entry.id,
+                {permissions :{locallySet:[{authorityId: filePermissionUser.getId(), name :"Consumer", accessStatus :"ALLOWED"}]}});
 
         await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'Role' + fileModel.name, roleFolder.entry.id);
         await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'Site' + fileModel.name, siteFolder.entry.id);
@@ -296,32 +304,10 @@ describe('Permissions Component', function () {
 
     describe('Role Consumer', function () {
 
-        beforeEach(async (done) => {
-
-            loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
-            contentServicesPage.goToDocumentList();
-
-            contentList.checkContentIsDisplayed(roleFolder.name);
-            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
-            contentList.clickRowMenuActionsButton(roleFolder.name);
-            contentList.clickMenuActionNamed('PERMISSION');
-            permissionsPage.checkAddPermissionButtonIsDisplayed();
-            permissionsPage.clickAddPermissionButton();
-            permissionsPage.checkAddPermissionDialogIsDisplayed();
-            permissionsPage.checkSearchUserInputIsDisplayed();
-            permissionsPage.searchUserOrGroup(filePermissionUser.getId());
-            permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
-            permissionsPage.checkUserOrGroupIsAdded(filePermissionUser.getId());
-            permissionsPage.clickRoleDropdown();
-            permissionsPage.selectOption('Consumer');
-            done();
-        });
-
         it('[C276993] Should not to be able to Delete, see Info or Upload a file with Consumer permission', () => {
 
             loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
             contentServicesPage.goToDocumentList();
-            browser.sleep(15000); // for the Search indexing to finish
             searchDialog
                 .checkSearchIconIsVisible()
                 .clickOnSearchIcon()
@@ -370,6 +356,31 @@ describe('Permissions Component', function () {
             notificationPage.checkNotifyContains('You don\'t have access to do this.');
             contentServicesPage.uploadFile(fileModel.location);
             notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+
+        });
+
+        it('[C276997] Role SiteContributor', () => {
+
+            loginPage.loginToContentServicesUsingUserModel(contributorUser);
+            contentServicesPage.goToDocumentList();
+            searchDialog
+                .checkSearchIconIsVisible()
+                .clickOnSearchIcon()
+                .checkSearchBarIsVisible()
+                .enterText(folderName)
+                .resultTableContainsRow(folderName)
+                .clickOnSpecificRow(folderName);
+            contentList.checkContentIsDisplayed('Site' + fileModel.name);
+            contentList.doubleClickRow('Site' + fileModel.name);
+            viewerPage.checkFileIsLoaded();
+            viewerPage.clickCloseButton();
+            contentList.waitForTableBody();
+            contentList.checkDeleteIsDisabled('Site' + fileModel.name);
+            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            contentList.checkActionMenuIsNotDisplayed();
+            contentList.metadataContent('Site' + fileModel.name);
+            notificationPage.checkNotifyContains('You don\'t have access to do this.');
+            contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
 
         });
     });
