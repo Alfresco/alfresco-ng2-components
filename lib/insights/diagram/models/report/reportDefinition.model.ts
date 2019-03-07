@@ -22,7 +22,7 @@ export class ReportDefinitionModel {
 
     constructor(obj?: any) {
         obj.parameters.forEach((params: any) => {
-            let reportParamsModel = new ReportParameterDetailsModel(params);
+            const reportParamsModel = new ReportParameterDetailsModel(params);
             this.parameters.push(reportParamsModel);
         });
     }

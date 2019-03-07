@@ -238,7 +238,7 @@ export class NodeRestoreDirective {
     private notification(): void {
         const status = Object.assign({}, this.restoreProcessStatus);
 
-        let message = this.getRestoreMessage();
+        const message = this.getRestoreMessage();
         this.reset();
 
         const action = (status.oneSucceeded && !status.someFailed) ? this.translation.instant('CORE.RESTORE_NODE.VIEW') : '';

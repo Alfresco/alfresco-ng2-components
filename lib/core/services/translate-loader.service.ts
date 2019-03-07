@@ -43,7 +43,7 @@ export class TranslateLoaderService implements TranslateLoader {
     }
 
     registerProvider(name: string, path: string) {
-        let registered = this.providers.find((provider) => provider.name === name);
+        const registered = this.providers.find((provider) => provider.name === name);
         if (registered) {
             registered.path = path;
         } else {
@@ -148,7 +148,7 @@ export class TranslateLoaderService implements TranslateLoader {
             if (batch.length > 0) {
                 forkJoin(batch).subscribe(
                     () => {
-                        let fullTranslation = this.getFullTranslationJSON(lang);
+                        const fullTranslation = this.getFullTranslationJSON(lang);
                         if (fullTranslation) {
                             observer.next(fullTranslation);
                         }
@@ -162,7 +162,7 @@ export class TranslateLoaderService implements TranslateLoader {
                         observer.error('Failed to load some resources');
                     });
             } else {
-                let fullTranslation = this.getFullTranslationJSON(lang);
+                const fullTranslation = this.getFullTranslationJSON(lang);
                 if (fullTranslation) {
                     observer.next(fullTranslation);
                     observer.complete();

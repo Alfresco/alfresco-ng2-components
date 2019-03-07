@@ -45,7 +45,7 @@ export class RatingComponent implements OnChanges {
     }
 
     ngOnChanges() {
-        let ratingObserver = this.ratingService.getRating(this.nodeId, this.ratingType);
+        const ratingObserver = this.ratingService.getRating(this.nodeId, this.ratingType);
 
         ratingObserver.subscribe(
             (ratingEntry: RatingEntry) => {

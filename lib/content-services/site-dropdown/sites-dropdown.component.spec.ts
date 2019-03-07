@@ -216,7 +216,7 @@ describe('DropdownSitesComponent', () => {
                     fixture.detectChanges();
                     debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
                     fixture.detectChanges();
-                    let options: any = debug.queryAll(By.css('mat-option'));
+                    const options: any = debug.queryAll(By.css('mat-option'));
                     expect(options[0].nativeElement.innerText).toContain('DROPDOWN.MY_FILES_OPTION');
                 });
             }));
@@ -229,7 +229,7 @@ describe('DropdownSitesComponent', () => {
                     fixture.detectChanges();
                     debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
                     fixture.detectChanges();
-                    let options: any = debug.queryAll(By.css('mat-option'));
+                    const options: any = debug.queryAll(By.css('mat-option'));
                     expect(options[0].nativeElement.innerText).not.toContain('DROPDOWN.MY_FILES_OPTION');
                 });
             }));
@@ -304,7 +304,7 @@ describe('DropdownSitesComponent', () => {
                     fixture.detectChanges();
                     debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
                     fixture.detectChanges();
-                    let options: any = debug.queryAll(By.css('mat-option'));
+                    const options: any = debug.queryAll(By.css('mat-option'));
                     expect(options[1].nativeElement.innerText).toContain('fake-test-site');
                     expect(options[2].nativeElement.innerText).toContain('fake-test-2');
                 });
@@ -317,7 +317,7 @@ describe('DropdownSitesComponent', () => {
                     fixture.detectChanges();
                     debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
                     fixture.detectChanges();
-                    let options: any = debug.queryAll(By.css('mat-option'));
+                    const options: any = debug.queryAll(By.css('mat-option'));
                     options[1].nativeElement.click();
                     fixture.detectChanges();
                 });
@@ -489,7 +489,7 @@ describe('DropdownSitesComponent', () => {
                         debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
                         fixture.detectChanges();
                         fixture.whenStable().then(() => {
-                            let options: any = debug.queryAll(By.css('mat-option'));
+                            const options: any = debug.queryAll(By.css('mat-option'));
                             expect(options[1].nativeElement.innerText).toContain('FAKE-SITE-PUBLIC');
                             expect(options[2].nativeElement.innerText).toContain('FAKE-PRIVATE-SITE-MEMBER');
                             expect(options[3]).toBeUndefined();
@@ -513,7 +513,7 @@ describe('DropdownSitesComponent', () => {
                         debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
                         fixture.detectChanges();
                         fixture.whenStable().then(() => {
-                            let options: any = debug.queryAll(By.css('mat-option'));
+                            const options: any = debug.queryAll(By.css('mat-option'));
                             expect(options[1].nativeElement.innerText).toContain('FAKE-MODERATED-SITE');
                             expect(options[2].nativeElement.innerText).toContain('FAKE-SITE-PUBLIC');
                             expect(options[3].nativeElement.innerText).toContain('FAKE-PRIVATE-SITE-MEMBER');

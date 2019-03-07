@@ -45,14 +45,14 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
 
     ngOnInit() {
         if (this.field) {
-            let group = this.field.value;
+            const group = this.field.value;
             if (group) {
                 this.value = group.name;
             }
 
-            let params = this.field.params;
+            const params = this.field.params;
             if (params && params['restrictWithGroup']) {
-                let restrictWithGroup = <GroupModel> params['restrictWithGroup'];
+                const restrictWithGroup = <GroupModel> params['restrictWithGroup'];
                 this.groupId = restrictWithGroup.id;
             }
 
@@ -78,7 +78,7 @@ export class FunctionalGroupWidgetComponent extends WidgetComponent implements O
     }
 
     flushValue() {
-        let option = this.groups.find((item) => item.name.toLocaleLowerCase() === this.value.toLocaleLowerCase());
+        const option = this.groups.find((item) => item.name.toLocaleLowerCase() === this.value.toLocaleLowerCase());
 
         if (option) {
             this.field.value = option;

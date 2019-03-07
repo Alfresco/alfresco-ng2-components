@@ -144,28 +144,28 @@ describe('CommentListComponent', () => {
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let comment = fixture.debugElement.query(By.css('#adf-comment-1'));
+            const comment = fixture.debugElement.query(By.css('#adf-comment-1'));
             comment.triggerEventHandler('click', null);
         });
     }));
 
     it('should deselect the previous selected comment when a new one is clicked', async(() => {
         processCommentOne.isSelected = true;
-        let commentOne = Object.assign({}, processCommentOne);
-        let commentTwo = Object.assign({}, processCommentTwo);
+        const commentOne = Object.assign({}, processCommentOne);
+        const commentTwo = Object.assign({}, processCommentTwo);
         commentList.selectedComment = commentOne;
         commentList.comments = [commentOne, commentTwo];
 
         commentList.clickRow.subscribe((selectedComment) => {
             fixture.detectChanges();
-            let commentSelectedList = fixture.nativeElement.querySelectorAll('.adf-is-selected');
+            const commentSelectedList = fixture.nativeElement.querySelectorAll('.adf-is-selected');
             expect(commentSelectedList.length).toBe(1);
             expect(commentSelectedList[0].textContent).toContain('2nd Test Comment');
         });
 
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            let comment = fixture.debugElement.query(By.css('#adf-comment-2'));
+            const comment = fixture.debugElement.query(By.css('#adf-comment-2'));
             comment.triggerEventHandler('click', null);
         });
     }));
@@ -183,7 +183,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let elements = fixture.nativeElement.querySelectorAll('#comment-message');
+            const elements = fixture.nativeElement.querySelectorAll('#comment-message');
             expect(elements.length).toBe(1);
             expect(elements[0].innerText).toBe(processCommentOne.message);
             expect(fixture.nativeElement.querySelector('#comment-message:empty')).toBeNull();
@@ -195,7 +195,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let elements = fixture.nativeElement.querySelectorAll('#comment-user');
+            const elements = fixture.nativeElement.querySelectorAll('#comment-user');
             expect(elements.length).toBe(1);
             expect(elements[0].innerText).toBe(processCommentOne.createdBy.firstName + ' ' + processCommentOne.createdBy.lastName);
             expect(fixture.nativeElement.querySelector('#comment-user:empty')).toBeNull();
@@ -203,7 +203,7 @@ describe('CommentListComponent', () => {
     }));
 
     it('comment date time should start with few seconds ago when comment date is few seconds ago', async(() => {
-        let commentFewSecond = Object.assign({}, processCommentOne);
+        const commentFewSecond = Object.assign({}, processCommentOne);
         commentFewSecond.created = new Date();
 
         commentList.comments = [commentFewSecond];
@@ -216,7 +216,7 @@ describe('CommentListComponent', () => {
     }));
 
     it('comment date time should start with Yesterday when comment date is yesterday', async(() => {
-        let commentOld = Object.assign({}, processCommentOne);
+        const commentOld = Object.assign({}, processCommentOne);
         commentOld.created = new Date((Date.now() - 24 * 3600 * 1000));
         commentList.comments = [commentOld];
         fixture.detectChanges();
@@ -228,7 +228,7 @@ describe('CommentListComponent', () => {
     }));
 
     it('comment date time should not start with Today/Yesterday when comment date is before yesterday', async(() => {
-        let commentOld = Object.assign({}, processCommentOne);
+        const commentOld = Object.assign({}, processCommentOne);
         commentOld.created = new Date((Date.now() - 24 * 3600 * 1000 * 2));
         commentList.comments = [commentOld];
         fixture.detectChanges();
@@ -245,7 +245,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let elements = fixture.nativeElement.querySelectorAll('#comment-user-icon');
+            const elements = fixture.nativeElement.querySelectorAll('#comment-user-icon');
             expect(elements.length).toBe(1);
             expect(elements[0].innerText).toContain(commentList.getUserShortName(processCommentOne.createdBy));
             expect(fixture.nativeElement.querySelector('#comment-user-icon:empty')).toBeNull();
@@ -257,7 +257,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let elements = fixture.nativeElement.querySelectorAll('.adf-people-img');
+            const elements = fixture.nativeElement.querySelectorAll('.adf-people-img');
             expect(elements.length).toBe(1);
             expect(fixture.nativeElement.getElementsByClassName('adf-people-img')[0].src).toContain('content-user-image');
         });
@@ -268,7 +268,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let elements = fixture.nativeElement.querySelectorAll('.adf-people-img');
+            const elements = fixture.nativeElement.querySelectorAll('.adf-people-img');
             expect(elements.length).toBe(1);
             expect(fixture.nativeElement.getElementsByClassName('adf-people-img')[0].src).toContain('process-user-image');
         });
@@ -279,7 +279,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let elements = fixture.nativeElement.querySelectorAll('.adf-comment-user-icon');
+            const elements = fixture.nativeElement.querySelectorAll('.adf-comment-user-icon');
             expect(elements.length).toBe(1);
         });
     }));
@@ -289,7 +289,7 @@ describe('CommentListComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            let elements = fixture.nativeElement.querySelectorAll('.adf-comment-user-icon');
+            const elements = fixture.nativeElement.querySelectorAll('.adf-comment-user-icon');
             expect(elements.length).toBe(1);
         });
     }));

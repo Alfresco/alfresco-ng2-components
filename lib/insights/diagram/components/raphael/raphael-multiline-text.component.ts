@@ -58,14 +58,14 @@ export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit
     }
 
     draw(position: Point, text: string) {
-        let textPaper = this.paper.text(position.x + this.TEXT_PADDING, position.y + this.TEXT_PADDING, text).attr({
+        const textPaper = this.paper.text(position.x + this.TEXT_PADDING, position.y + this.TEXT_PADDING, text).attr({
             'text-anchor': 'middle',
             'font-family': 'Arial',
             'font-size': '11',
             'fill': '#373e48'
         });
 
-        let formattedText = this.formatText(textPaper, text, this.elementWidth);
+        const formattedText = this.formatText(textPaper, text, this.elementWidth);
         textPaper.attr({
             'text': formattedText
         });
@@ -74,17 +74,18 @@ export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit
     }
 
     private formatText(textPaper, text, elementWidth) {
-        let pText = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const pText = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         textPaper.attr({
             'text': pText
         });
-        let letterWidth = textPaper.getBBox().width / text.length;
-        let removedLineBreaks = text.split('\n');
-        let actualRowLength = 0, formattedText = [];
+        const letterWidth = textPaper.getBBox().width / text.length;
+        const removedLineBreaks = text.split('\n');
+        let actualRowLength = 0;
+        const formattedText = [];
         removedLineBreaks.forEach((sentence) => {
-            let words = sentence.split(' ');
+            const words = sentence.split(' ');
             words.forEach((word) => {
-                let length = word.length;
+                const length = word.length;
                 if (actualRowLength + (length * letterWidth) > elementWidth) {
                     formattedText.push('\n');
                     actualRowLength = 0;

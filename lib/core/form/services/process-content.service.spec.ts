@@ -26,7 +26,7 @@ import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 
 declare let jasmine: any;
 
-let fileContentPdfResponseBody = {
+const fileContentPdfResponseBody = {
     id: 999,
     name: 'fake-name.pdf',
     created: '2017-01-23T12:12:53.219+0000',
@@ -40,7 +40,7 @@ let fileContentPdfResponseBody = {
     thumbnailStatus: 'created'
 };
 
-let fileContentJpgResponseBody = {
+const fileContentJpgResponseBody = {
     id: 888,
     name: 'fake-name.jpg',
     created: '2017-01-23T12:12:53.219+0000',
@@ -55,9 +55,9 @@ let fileContentJpgResponseBody = {
 };
 
 function createFakeBlob() {
-    let data = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+    const data = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
 
-    let bytes = new Uint8Array(data.length / 2);
+    const bytes = new Uint8Array(data.length / 2);
 
     for (let i = 0; i < data.length; i += 2) {
         bytes[i / 2] = parseInt(data.substring(i, i + 2), /* base = */ 16);
@@ -144,7 +144,7 @@ describe('ProcessContentService', () => {
     });
 
     it('should return the unsupported content when the file is an image', (done) => {
-        let contentId: number = 888;
+        const contentId: number = 888;
 
         service.getFileContent(contentId).subscribe((result) => {
             expect(result.id).toEqual(contentId);
@@ -162,7 +162,7 @@ describe('ProcessContentService', () => {
     });
 
     it('should return the supported content when the file is a pdf', (done) => {
-        let contentId: number = 999;
+        const contentId: number = 999;
 
         service.getFileContent(contentId).subscribe((result) => {
             expect(result.id).toEqual(contentId);
@@ -180,14 +180,14 @@ describe('ProcessContentService', () => {
     });
 
     it('should return the raw content URL', () => {
-        let contentId: number = 999;
-        let contentUrl = service.getFileRawContentUrl(contentId);
+        const contentId: number = 999;
+        const contentUrl = service.getFileRawContentUrl(contentId);
         expect(contentUrl).toContain(`/api/enterprise/content/${contentId}/raw`);
     });
 
     it('should return a Blob as thumbnail', (done) => {
-        let contentId: number = 999;
-        let blob = createFakeBlob();
+        const contentId: number = 999;
+        const blob = createFakeBlob();
         spyOn(service, 'getContentThumbnail').and.returnValue(of(blob));
         service.getContentThumbnail(contentId).subscribe((result) => {
             expect(result).toEqual(jasmine.any(Blob));

@@ -44,9 +44,9 @@ export class AnalyticsService {
         return from(this.apiService.getInstance().activiti.reportApi.getReportList())
             .pipe(
                 map((res: any) => {
-                    let reports: ReportParametersModel[] = [];
+                    const reports: ReportParametersModel[] = [];
                     res.forEach((report: ReportParametersModel) => {
-                        let reportModel = new ReportParametersModel(report);
+                        const reportModel = new ReportParametersModel(report);
                         if (this.isReportValid(appId, report)) {
                             reports.push(reportModel);
                         }
@@ -111,7 +111,7 @@ export class AnalyticsService {
     }
 
     getProcessStatusValues(): Observable<any> {
-        let paramOptions: ParameterValueModel[] = [];
+        const paramOptions: ParameterValueModel[] = [];
 
         paramOptions.push(new ParameterValueModel({ id: 'All', name: 'All' }));
         paramOptions.push(new ParameterValueModel({ id: 'Active', name: 'Active' }));
@@ -124,7 +124,7 @@ export class AnalyticsService {
     }
 
     getDateIntervalValues(): Observable<any> {
-        let paramOptions: ParameterValueModel[] = [];
+        const paramOptions: ParameterValueModel[] = [];
 
         paramOptions.push(new ParameterValueModel({ id: 'byHour', name: 'By hour' }));
         paramOptions.push(new ParameterValueModel({ id: 'byDay', name: 'By day' }));
@@ -139,7 +139,7 @@ export class AnalyticsService {
     }
 
     getMetricValues(): Observable<any> {
-        let paramOptions: ParameterValueModel[] = [];
+        const paramOptions: ParameterValueModel[] = [];
 
         paramOptions.push(new ParameterValueModel({ id: 'totalCount', name: 'Number of times a step is executed' }));
         paramOptions.push(new ParameterValueModel({ id: 'totalTime', name: 'Total time spent in a process step' }));
@@ -155,7 +155,7 @@ export class AnalyticsService {
         return from(this.apiService.getInstance().activiti.reportApi.getProcessDefinitions())
             .pipe(
                 map((res: any) => {
-                    let paramOptions: ParameterValueModel[] = [];
+                    const paramOptions: ParameterValueModel[] = [];
                     res.forEach((opt) => {
                         paramOptions.push(new ParameterValueModel(opt));
                     });
@@ -166,11 +166,11 @@ export class AnalyticsService {
     }
 
     getProcessDefinitionsValues(appId: number): Observable<any> {
-        let options = { 'appDefinitionId': appId };
+        const options = { 'appDefinitionId': appId };
         return from(this.apiService.getInstance().activiti.processDefinitionsApi.getProcessDefinitions(options))
             .pipe(
                 map((res: any) => {
-                    let paramOptions: ParameterValueModel[] = [];
+                    const paramOptions: ParameterValueModel[] = [];
                     res.data.forEach((opt) => {
                         paramOptions.push(new ParameterValueModel(opt));
                     });
@@ -184,7 +184,7 @@ export class AnalyticsService {
         return from(this.apiService.getInstance().activiti.reportApi.getTasksByProcessDefinitionId(reportId, processDefinitionId))
             .pipe(
                 map((res: any) => {
-                    let paramOptions: ParameterValueModel[] = [];
+                    const paramOptions: ParameterValueModel[] = [];
                     res.forEach((opt) => {
                         paramOptions.push(new ParameterValueModel({ id: opt, name: opt }));
                     });
@@ -198,7 +198,7 @@ export class AnalyticsService {
         return from(this.apiService.getInstance().activiti.reportApi.getReportsByParams(reportId, paramsQuery))
             .pipe(
                 map((res: any) => {
-                    let elements: Chart[] = [];
+                    const elements: Chart[] = [];
                     res.elements.forEach((chartData) => {
                         if (chartData.type === 'pieChart') {
                             elements.push(new PieChart(chartData));

@@ -85,7 +85,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[ECM] should return an ECM ticket after the login done', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
                 expect(authService.isEcmLoggedIn()).toBe(true);
@@ -101,7 +101,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[ECM] should login in the ECM if no provider are defined calling the login', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
                 disposableLogin.unsubscribe();
                 done();
             });
@@ -114,8 +114,8 @@ describe('AuthenticationService', () => {
         });
 
         it('[ECM] should return a ticket undefined after logout', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
-                let disposableLogout = authService.logout().subscribe(() => {
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
+                const disposableLogout = authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
                     expect(authService.isEcmLoggedIn()).toBe(false);
@@ -206,7 +206,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[BPM] should return an BPM ticket after the login done', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password').subscribe((response) => {
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe((response) => {
                 expect(authService.isLoggedIn()).toBe(true);
                 // cspell: disable-next
                 expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
@@ -222,8 +222,8 @@ describe('AuthenticationService', () => {
         });
 
         it('[BPM] should return a ticket undefined after logout', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
-                let disposableLogout = authService.logout().subscribe(() => {
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
+                const disposableLogout = authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketBpm()).toBe(null);
                     expect(authService.isBpmLoggedIn()).toBe(false);
@@ -309,7 +309,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[ECM] should save the remember me cookie as a session cookie after successful login', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password', false).subscribe(() => {
+            const disposableLogin = authService.login('fake-username', 'fake-password', false).subscribe(() => {
                 expect(cookie['ALFRESCO_REMEMBER_ME']).not.toBeUndefined();
                 expect(cookie['ALFRESCO_REMEMBER_ME'].expiration).toBeNull();
                 disposableLogin.unsubscribe();
@@ -324,7 +324,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[ECM] should save the remember me cookie as a persistent cookie after successful login', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password', true).subscribe(() => {
+            const disposableLogin = authService.login('fake-username', 'fake-password', true).subscribe(() => {
                 expect(cookie['ALFRESCO_REMEMBER_ME']).not.toBeUndefined();
                 expect(cookie['ALFRESCO_REMEMBER_ME'].expiration).not.toBeNull();
                 disposableLogin.unsubscribe();
@@ -340,7 +340,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[ECM] should not save the remember me cookie after failed login', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
                 (res) => {
                 },
                 (err: any) => {
@@ -374,7 +374,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[ALL] should return both ECM and BPM tickets after the login done', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
                 // cspell: disable-next
@@ -397,7 +397,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[ALL] should return login fail if only ECM call fail', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
                 (res) => {
                 },
                 (err: any) => {
@@ -420,7 +420,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[ALL] should return login fail if only BPM call fail', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
                 (res) => {
                 },
                 (err: any) => {
@@ -444,7 +444,7 @@ describe('AuthenticationService', () => {
         });
 
         it('[ALL] should return ticket undefined when the credentials are wrong', (done) => {
-            let disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
+            const disposableLogin = authService.login('fake-username', 'fake-password').subscribe(
                 (res) => {
                 },
                 (err: any) => {

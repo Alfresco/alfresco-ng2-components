@@ -208,7 +208,7 @@ export class SearchQueryBuilderService {
      * @returns The finished query
      */
     buildQuery(): QueryBody {
-        let query = this.getFinalQuery();
+        const query = this.getFinalQuery();
 
         const include = this.config.include || [];
         if (include.length === 0) {

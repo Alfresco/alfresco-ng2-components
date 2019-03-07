@@ -43,8 +43,8 @@ describe('Rating service', () => {
     });
 
     it('Should get rating return an Observable', (done) => {
-        let ratingType: string = 'fiveStar';
-        let nodeId: string = 'fake-node-id';
+        const ratingType: string = 'fiveStar';
+        const nodeId: string = 'fake-node-id';
 
         service.getRating(nodeId, ratingType).subscribe((data) => {
             expect(data.entry.myRating).toBe('1');
@@ -66,8 +66,8 @@ describe('Rating service', () => {
     });
 
     it('Should post rating return an Observable', (done) => {
-        let ratingType: string = 'fiveStar';
-        let nodeId: string = 'fake-node-id';
+        const ratingType: string = 'fiveStar';
+        const nodeId: string = 'fake-node-id';
 
         service.postRating(nodeId, ratingType, 3).subscribe((data) => {
             expect(data.entry.myRating).toBe('3');

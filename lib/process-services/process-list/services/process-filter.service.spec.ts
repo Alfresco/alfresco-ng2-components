@@ -163,7 +163,7 @@ describe('Process filter', () => {
                 .callFake((processfilter: FilterProcessRepresentationModel) => Promise.resolve(processfilter));
             });
 
-            let filter = fakeProcessFilters.data[0];
+            const filter = fakeProcessFilters.data[0];
 
             it('should call the API to create the filter', () => {
                 service.addProcessFilter(filter);

@@ -50,7 +50,7 @@ describe('FormComponent', () => {
     });
 
     it('should allow title if task name available', () => {
-        let formModel = new FormModel();
+        const formModel = new FormModel();
         formComponent.form = formModel;
 
         expect(formComponent.showTitle).toBeTruthy();
@@ -69,7 +69,7 @@ describe('FormComponent', () => {
     });
 
     it('should not allow title', () => {
-        let formModel = new FormModel();
+        const formModel = new FormModel();
 
         formComponent.form = formModel;
         formComponent.showTitle = false;
@@ -87,16 +87,16 @@ describe('FormComponent', () => {
     });
 
     it('should enable custom outcome buttons', () => {
-        let formModel = new FormModel();
+        const formModel = new FormModel();
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(formModel, { id: 'action1', name: 'Action 1' });
+        const outcome = new FormOutcomeModel(formModel, { id: 'action1', name: 'Action 1' });
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
     });
 
     it('should allow controlling [complete] button visibility', () => {
-        let formModel = new FormModel();
+        const formModel = new FormModel();
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
+        const outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
 
         formComponent.showSaveButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
@@ -106,27 +106,27 @@ describe('FormComponent', () => {
     });
 
     it('should show only [complete] button with readOnly form ', () => {
-        let formModel = new FormModel();
+        const formModel = new FormModel();
         formModel.readOnly = true;
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(formModel, { id: '$complete', name: FormOutcomeModel.COMPLETE_ACTION });
+        const outcome = new FormOutcomeModel(formModel, { id: '$complete', name: FormOutcomeModel.COMPLETE_ACTION });
 
         formComponent.showCompleteButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
     });
 
     it('should not show [save] button with readOnly form ', () => {
-        let formModel = new FormModel();
+        const formModel = new FormModel();
         formModel.readOnly = true;
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
+        const outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
 
         formComponent.showSaveButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
     });
 
     it('should show [custom-outcome] button with readOnly form and selected custom-outcome', () => {
-        let formModel = new FormModel({ selectedOutcome: 'custom-outcome' });
+        const formModel = new FormModel({ selectedOutcome: 'custom-outcome' });
         formModel.readOnly = true;
         formComponent.form = formModel;
         let outcome = new FormOutcomeModel(formModel, { id: '$customoutome', name: 'custom-outcome' });
@@ -140,10 +140,10 @@ describe('FormComponent', () => {
     });
 
     it('should allow controlling [save] button visibility', () => {
-        let formModel = new FormModel();
+        const formModel = new FormModel();
         formModel.readOnly = false;
         formComponent.form = formModel;
-        let outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.COMPLETE_ACTION });
+        const outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.COMPLETE_ACTION });
 
         formComponent.showCompleteButton = true;
         expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
@@ -251,7 +251,7 @@ describe('FormComponent', () => {
         spyOn(formComponent, 'getFormByTaskId').and.stub();
         const taskId = '<task id>';
 
-        let change = new SimpleChange(null, taskId, true);
+        const change = new SimpleChange(null, taskId, true);
         formComponent.ngOnChanges({ 'taskId': change });
 
         expect(formComponent.getFormByTaskId).toHaveBeenCalledWith(taskId);
@@ -261,7 +261,7 @@ describe('FormComponent', () => {
         spyOn(formComponent, 'getFormDefinitionByFormId').and.stub();
         const formId = '123';
 
-        let change = new SimpleChange(null, formId, true);
+        const change = new SimpleChange(null, formId, true);
         formComponent.ngOnChanges({ 'formId': change });
 
         expect(formComponent.getFormDefinitionByFormId).toHaveBeenCalledWith(formId);
@@ -271,7 +271,7 @@ describe('FormComponent', () => {
         spyOn(formComponent, 'getFormDefinitionByFormName').and.stub();
         const formName = '<form>';
 
-        let change = new SimpleChange(null, formName, true);
+        const change = new SimpleChange(null, formName, true);
         formComponent.ngOnChanges({ 'formName': change });
 
         expect(formComponent.getFormDefinitionByFormName).toHaveBeenCalledWith(formName);
@@ -305,24 +305,24 @@ describe('FormComponent', () => {
     });
 
     it('should complete form on custom outcome click', () => {
-        let formModel = new FormModel();
-        let outcomeName = 'Custom Action';
-        let outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
+        const formModel = new FormModel();
+        const outcomeName = 'Custom Action';
+        const outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
 
         let saved = false;
         formComponent.form = formModel;
         formComponent.formSaved.subscribe((v) => saved = true);
         spyOn(formComponent, 'completeTaskForm').and.stub();
 
-        let result = formComponent.onOutcomeClicked(outcome);
+        const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeTruthy();
         expect(saved).toBeTruthy();
         expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcomeName);
     });
 
     it('should save form on [save] outcome click', () => {
-        let formModel = new FormModel();
-        let outcome = new FormOutcomeModel(formModel, {
+        const formModel = new FormModel();
+        const outcome = new FormOutcomeModel(formModel, {
             id: FormComponent.SAVE_OUTCOME_ID,
             name: 'Save',
             isSystem: true
@@ -331,14 +331,14 @@ describe('FormComponent', () => {
         formComponent.form = formModel;
         spyOn(formComponent, 'saveTaskForm').and.stub();
 
-        let result = formComponent.onOutcomeClicked(outcome);
+        const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeTruthy();
         expect(formComponent.saveTaskForm).toHaveBeenCalled();
     });
 
     it('should complete form on [complete] outcome click', () => {
-        let formModel = new FormModel();
-        let outcome = new FormOutcomeModel(formModel, {
+        const formModel = new FormModel();
+        const outcome = new FormOutcomeModel(formModel, {
             id: FormComponent.COMPLETE_OUTCOME_ID,
             name: 'Complete',
             isSystem: true
@@ -347,14 +347,14 @@ describe('FormComponent', () => {
         formComponent.form = formModel;
         spyOn(formComponent, 'completeTaskForm').and.stub();
 
-        let result = formComponent.onOutcomeClicked(outcome);
+        const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeTruthy();
         expect(formComponent.completeTaskForm).toHaveBeenCalled();
     });
 
     it('should emit form saved event on custom outcome click', () => {
-        let formModel = new FormModel();
-        let outcome = new FormOutcomeModel(formModel, {
+        const formModel = new FormModel();
+        const outcome = new FormOutcomeModel(formModel, {
             id: FormComponent.CUSTOM_OUTCOME_ID,
             name: 'Custom',
             isSystem: true
@@ -364,15 +364,15 @@ describe('FormComponent', () => {
         formComponent.form = formModel;
         formComponent.formSaved.subscribe((v) => saved = true);
 
-        let result = formComponent.onOutcomeClicked(outcome);
+        const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeTruthy();
         expect(saved).toBeTruthy();
     });
 
     it('should do nothing when clicking outcome for readonly form', () => {
-        let formModel = new FormModel();
+        const formModel = new FormModel();
         const outcomeName = 'Custom Action';
-        let outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
+        const outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
 
         formComponent.form = formModel;
         spyOn(formComponent, 'completeTaskForm').and.stub();
@@ -389,9 +389,9 @@ describe('FormComponent', () => {
     });
 
     it('should require loaded form when clicking outcome', () => {
-        let formModel = new FormModel();
+        const formModel = new FormModel();
         const outcomeName = 'Custom Action';
-        let outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
+        const outcome = new FormOutcomeModel(formModel, { id: 'custom1', name: outcomeName });
 
         formComponent.readOnly = false;
         formComponent.form = null;
@@ -399,15 +399,15 @@ describe('FormComponent', () => {
     });
 
     it('should not execute unknown system outcome', () => {
-        let formModel = new FormModel();
-        let outcome = new FormOutcomeModel(formModel, { id: 'unknown', name: 'Unknown', isSystem: true });
+        const formModel = new FormModel();
+        const outcome = new FormOutcomeModel(formModel, { id: 'unknown', name: 'Unknown', isSystem: true });
 
         formComponent.form = formModel;
         expect(formComponent.onOutcomeClicked(outcome)).toBeFalsy();
     });
 
     it('should require custom action name to complete form', () => {
-        let formModel = new FormModel();
+        const formModel = new FormModel();
         let outcome = new FormOutcomeModel(formModel, { id: 'custom' });
 
         formComponent.form = formModel;
@@ -544,7 +544,7 @@ describe('FormComponent', () => {
             savedForm = form;
         });
 
-        let formModel = new FormModel({
+        const formModel = new FormModel({
             taskId: '123',
             fields: [
                 { id: 'field1' },
@@ -606,7 +606,7 @@ describe('FormComponent', () => {
         let completed = false;
         formComponent.formCompleted.subscribe(() => completed = true);
 
-        let formModel = new FormModel({
+        const formModel = new FormModel({
             taskId: '123',
             fields: [
                 { id: 'field1' },
@@ -626,7 +626,7 @@ describe('FormComponent', () => {
     });
 
     it('should parse form from json', () => {
-        let form = formComponent.parseForm({
+        const form = formComponent.parseForm({
             id: 1,
             fields: [
                 { id: 'field1', type: FormFieldTypes.CONTAINER }
@@ -642,13 +642,13 @@ describe('FormComponent', () => {
     it('should provide outcomes for form definition', () => {
         spyOn(formComponent, 'getFormDefinitionOutcomes').and.callThrough();
 
-        let form = formComponent.parseForm({ id: 1 });
+        const form = formComponent.parseForm({ id: 1 });
         expect(formComponent.getFormDefinitionOutcomes).toHaveBeenCalledWith(form);
     });
 
     it('should prevent default outcome execution', () => {
 
-        let outcome = new FormOutcomeModel(new FormModel(), {
+        const outcome = new FormOutcomeModel(new FormModel(), {
             id: FormComponent.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
@@ -660,12 +660,12 @@ describe('FormComponent', () => {
             expect(event.defaultPrevented).toBeTruthy();
         });
 
-        let result = formComponent.onOutcomeClicked(outcome);
+        const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeFalsy();
     });
 
     it('should not prevent default outcome execution', () => {
-        let outcome = new FormOutcomeModel(new FormModel(), {
+        const outcome = new FormOutcomeModel(new FormModel(), {
             id: FormComponent.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
@@ -678,7 +678,7 @@ describe('FormComponent', () => {
 
         spyOn(formComponent, 'completeTaskForm').and.callThrough();
 
-        let result = formComponent.onOutcomeClicked(outcome);
+        const result = formComponent.onOutcomeClicked(outcome);
         expect(result).toBeTruthy();
 
         expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcome.name);
@@ -699,7 +699,7 @@ describe('FormComponent', () => {
     });
 
     it('should load form for ecm node', () => {
-        let metadata = {};
+        const metadata = {};
         spyOn(nodeService, 'getNodeMetadata').and.returnValue(
             new Observable((observer) => {
                 observer.next({ metadata: metadata });
@@ -709,7 +709,7 @@ describe('FormComponent', () => {
         spyOn(formComponent, 'loadFormFromActiviti').and.stub();
 
         const nodeId = '<id>';
-        let change = new SimpleChange(null, nodeId, false);
+        const change = new SimpleChange(null, nodeId, false);
         formComponent.ngOnChanges({ 'nodeId': change });
 
         expect(nodeService.getNodeMetadata).toHaveBeenCalledWith(nodeId);
@@ -718,11 +718,11 @@ describe('FormComponent', () => {
     });
 
     it('should disable outcome buttons for readonly form', () => {
-        let formModel = new FormModel();
+        const formModel = new FormModel();
         formModel.readOnly = true;
         formComponent.form = formModel;
 
-        let outcome = new FormOutcomeModel(new FormModel(), {
+        const outcome = new FormOutcomeModel(new FormModel(), {
             id: FormComponent.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
@@ -736,22 +736,22 @@ describe('FormComponent', () => {
     });
 
     it('should always enable save outcome for writeable form', () => {
-        let formModel = new FormModel();
+        const formModel = new FormModel();
 
-        let field = new FormFieldModel(formModel, {
+        const field = new FormFieldModel(formModel, {
             type: 'text',
             value: null,
             required: true
         });
 
-        let containerModel = new ContainerModel(field);
+        const containerModel = new ContainerModel(field);
         formModel.fields.push(containerModel);
         formComponent.form = formModel;
         formModel.onFormFieldChanged(field);
 
         expect(formModel.isValid).toBeFalsy();
 
-        let outcome = new FormOutcomeModel(new FormModel(), {
+        const outcome = new FormOutcomeModel(new FormModel(), {
             id: FormComponent.SAVE_OUTCOME_ID,
             name: FormOutcomeModel.SAVE_ACTION
         });
@@ -761,21 +761,21 @@ describe('FormComponent', () => {
     });
 
     it('should disable outcome buttons for invalid form', () => {
-        let formModel = new FormModel();
-        let field = new FormFieldModel(formModel, {
+        const formModel = new FormModel();
+        const field = new FormFieldModel(formModel, {
             type: 'text',
             value: null,
             required: true
         });
 
-        let containerModel = new ContainerModel(field);
+        const containerModel = new ContainerModel(field);
         formModel.fields.push(containerModel);
         formComponent.form = formModel;
         formModel.onFormFieldChanged(field);
 
         expect(formModel.isValid).toBeFalsy();
 
-        let outcome = new FormOutcomeModel(new FormModel(), {
+        const outcome = new FormOutcomeModel(new FormModel(), {
             id: FormComponent.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
@@ -784,23 +784,23 @@ describe('FormComponent', () => {
     });
 
     it('should disable complete outcome button when disableCompleteButton is true', () => {
-        let formModel = new FormModel();
+        const formModel = new FormModel();
         formComponent.form = formModel;
         formComponent.disableCompleteButton = true;
 
         expect(formModel.isValid).toBeTruthy();
-        let completeOutcome = formComponent.form.outcomes.find((outcome) => outcome.name === FormOutcomeModel.COMPLETE_ACTION);
+        const completeOutcome = formComponent.form.outcomes.find((outcome) => outcome.name === FormOutcomeModel.COMPLETE_ACTION);
 
         expect(formComponent.isOutcomeButtonEnabled(completeOutcome)).toBeFalsy();
     });
 
     it('should disable start process outcome button when disableStartProcessButton is true', () => {
-        let formModel = new FormModel();
+        const formModel = new FormModel();
         formComponent.form = formModel;
         formComponent.disableStartProcessButton = true;
 
         expect(formModel.isValid).toBeTruthy();
-        let startProcessOutcome = formComponent.form.outcomes.find((outcome) => outcome.name === FormOutcomeModel.START_PROCESS_ACTION);
+        const startProcessOutcome = formComponent.form.outcomes.find((outcome) => outcome.name === FormOutcomeModel.START_PROCESS_ACTION);
 
         expect(formComponent.isOutcomeButtonEnabled(startProcessOutcome)).toBeFalsy();
     });
@@ -810,7 +810,7 @@ describe('FormComponent', () => {
             done();
         });
 
-        let outcome = new FormOutcomeModel(new FormModel(), {
+        const outcome = new FormOutcomeModel(new FormModel(), {
             id: FormComponent.CUSTOM_OUTCOME_ID,
             name: 'Custom'
         });
@@ -828,13 +828,13 @@ describe('FormComponent', () => {
         expect(labelField.value).toBe('empty');
         expect(radioField.value).toBeNull();
 
-        let formValues: any = {};
+        const formValues: any = {};
         formValues.label = {
             id: 'option_2',
             name: 'test2'
         };
         formValues.radio = { id: 'option_2', name: 'Option 2' };
-        let change = new SimpleChange(null, formValues, false);
+        const change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
         formComponent.ngOnChanges({ 'data': change });
 
@@ -850,9 +850,9 @@ describe('FormComponent', () => {
         let formFields = formComponent.form.getFormFields();
         let radioFieldById = formFields.find((field) => field.id === 'radio');
 
-        let formValues: any = {};
+        const formValues: any = {};
         formValues.radio = 'option_3';
-        let change = new SimpleChange(null, formValues, false);
+        const change = new SimpleChange(null, formValues, false);
         formComponent.data = formValues;
         formComponent.ngOnChanges({ 'data': change });
 

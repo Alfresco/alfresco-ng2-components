@@ -170,7 +170,7 @@ export class ThumbnailService {
      * @returns URL string
      */
     public getDocumentThumbnailUrl(node: any): string {
-        let thumbnail = this.contentService.getDocumentThumbnailUrl(node);
+        const thumbnail = this.contentService.getDocumentThumbnailUrl(node);
         return thumbnail || this.DEFAULT_ICON;
     }
 
@@ -180,7 +180,7 @@ export class ThumbnailService {
      * @returns URL string
      */
     public getMimeTypeIcon(mimeType: string): string {
-        let icon = this.mimeTypeIcons[mimeType];
+        const icon = this.mimeTypeIcons[mimeType];
         return (icon || this.DEFAULT_ICON);
     }
 

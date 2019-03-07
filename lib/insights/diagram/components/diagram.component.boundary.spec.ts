@@ -54,7 +54,7 @@ describe('Diagrams boundary', () => {
         jasmine.Ajax.uninstall();
     });
 
-    let ajaxReply =  (resp: any) => {
+    const ajaxReply =  (resp: any) => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
@@ -69,27 +69,27 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryTimeEvent] };
+            const resp = { elements: [boundaryEventMock.boundaryTimeEvent] };
             ajaxReply(resp);
         }));
 
@@ -99,30 +99,30 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryTimeEventActive] };
+            const resp = { elements: [boundaryEventMock.boundaryTimeEventActive] };
             ajaxReply(resp);
         }));
 
@@ -132,30 +132,30 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryTimeEventCompleted] };
+            const resp = { elements: [boundaryEventMock.boundaryTimeEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -164,27 +164,27 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryErrorEvent] };
+            const resp = { elements: [boundaryEventMock.boundaryErrorEvent] };
             ajaxReply(resp);
         }));
 
@@ -194,30 +194,30 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryErrorEventActive] };
+            const resp = { elements: [boundaryEventMock.boundaryErrorEventActive] };
             ajaxReply(resp);
         }));
 
@@ -227,30 +227,30 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryErrorEventCompleted] };
+            const resp = { elements: [boundaryEventMock.boundaryErrorEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -259,27 +259,27 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundarySignalEvent] };
+            const resp = { elements: [boundaryEventMock.boundarySignalEvent] };
             ajaxReply(resp);
         }));
 
@@ -289,30 +289,30 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundarySignalEventActive] };
+            const resp = { elements: [boundaryEventMock.boundarySignalEventActive] };
             ajaxReply(resp);
         }));
 
@@ -322,30 +322,30 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundarySignalEventCompleted] };
+            const resp = { elements: [boundaryEventMock.boundarySignalEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -354,27 +354,27 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
+            const resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
             ajaxReply(resp);
         }));
 
@@ -384,30 +384,30 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryMessageEventActive] };
+            const resp = { elements: [boundaryEventMock.boundaryMessageEventActive] };
             ajaxReply(resp);
         }));
 
@@ -417,30 +417,30 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryMessageEventCompleted] };
+            const resp = { elements: [boundaryEventMock.boundaryMessageEventCompleted] };
             ajaxReply(resp);
         }));
 
@@ -449,27 +449,27 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
+            const resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
             ajaxReply(resp);
         }));
 
@@ -479,30 +479,30 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
+                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#017501"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryMessageEventActive] };
+            const resp = { elements: [boundaryEventMock.boundaryMessageEventActive] };
             ajaxReply(resp);
         }));
 
@@ -512,30 +512,30 @@ describe('Diagrams boundary', () => {
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
 
-                    let coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
+                    const coloredShape: any = element.querySelector('diagram-boundary-event>raphael-circle[ng-reflect-stroke="#2632aa"]');
                     expect(coloredShape).not.toBeNull();
 
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryMessageEventCompleted] };
+            const resp = { elements: [boundaryEventMock.boundaryMessageEventCompleted] };
             ajaxReply(resp);
         }));
     });
@@ -547,27 +547,27 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryTimeEvent] };
+            const resp = { elements: [boundaryEventMock.boundaryTimeEvent] };
             ajaxReply(resp);
         }));
 
@@ -576,27 +576,27 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryErrorEvent] };
+            const resp = { elements: [boundaryEventMock.boundaryErrorEvent] };
             ajaxReply(resp);
         }));
 
@@ -605,27 +605,27 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundarySignalEvent] };
+            const resp = { elements: [boundaryEventMock.boundarySignalEvent] };
             ajaxReply(resp);
         }));
 
@@ -634,27 +634,27 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
+            const resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
             ajaxReply(resp);
         }));
 
@@ -663,27 +663,27 @@ describe('Diagrams boundary', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     expect(res).not.toBeNull();
-                    let shape: any = element.querySelector('diagram-boundary-event');
+                    const shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
                     expect(shape.children.length).toBe(4);
 
-                    let outerCircle = shape.children[0];
+                    const outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
 
-                    let innerCircle = shape.children[1];
+                    const innerCircle = shape.children[1];
                     expect(innerCircle.localName).toEqual('raphael-circle');
 
-                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                    const iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
 
-                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    const tooltip: any = element.querySelector('diagram-tooltip > div');
                     expect(tooltip.textContent).toContain(res.elements[0].id);
                     expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
-            let resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
+            const resp = { elements: [boundaryEventMock.boundaryMessageEvent] };
             ajaxReply(resp);
         }));
     });

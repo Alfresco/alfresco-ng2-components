@@ -24,10 +24,10 @@ export interface FileInfo {
 export class FileUtils {
 
     static flatten(folder: any): Promise<FileInfo[]> {
-        let reader = folder.createReader();
-        let files: FileInfo[] = [];
+        const reader = folder.createReader();
+        const files: FileInfo[] = [];
         return new Promise((resolve) => {
-            let iterations = [];
+            const iterations = [];
             (function traverse() {
                 reader.readEntries((entries) => {
                     if (!entries.length) {
@@ -60,7 +60,7 @@ export class FileUtils {
     }
 
     static toFileArray(fileList: FileList): File[] {
-        let result = [];
+        const result = [];
 
         if (fileList && fileList.length > 0) {
             for (let i = 0; i < fileList.length; i++) {

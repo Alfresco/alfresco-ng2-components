@@ -60,7 +60,7 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should initialize the Report form with a Form Group ', (done) => {
-            let fakeReportParam = new ReportParametersModel(analyticParamsMock.reportDefParamTask);
+            const fakeReportParam = new ReportParametersModel(analyticParamsMock.reportDefParamTask);
             component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
                 expect(component.reportForm.get('taskGroup')).toBeDefined();
@@ -73,7 +73,7 @@ describe('AnalyticsReportParametersComponent', () => {
         it('Should render a dropdown with all the status when the definition parameter type is \'status\' ', (done) => {
             component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
-                let dropDown: any = element.querySelector('#select-status');
+                const dropDown: any = element.querySelector('#select-status');
                 expect(element.querySelector('h4').textContent.trim()).toEqual('Fake Task overview status');
                 expect(dropDown).toBeDefined();
                 expect(dropDown.length).toEqual(4);
@@ -84,8 +84,8 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId, true);
+            const reportId = 1;
+            const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -98,14 +98,14 @@ describe('AnalyticsReportParametersComponent', () => {
         it('Should render a number with the default value when the definition parameter type is \'integer\' ', (done) => {
             component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
-                let numberElement: any = element.querySelector('#slowProcessInstanceInteger');
+                const numberElement: any = element.querySelector('#slowProcessInstanceInteger');
                 expect(numberElement.value).toEqual('10');
 
                 done();
             });
 
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId, true);
+            const reportId = 1;
+            const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -118,10 +118,10 @@ describe('AnalyticsReportParametersComponent', () => {
         it('Should render a duration component when the definition parameter type is \'duration\' ', (done) => {
             component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
-                let numberElement: any = element.querySelector('#duration');
+                const numberElement: any = element.querySelector('#duration');
                 expect(numberElement.value).toEqual('0');
 
-                let dropDown: any = element.querySelector('#select-duration');
+                const dropDown: any = element.querySelector('#select-duration');
                 expect(dropDown).toBeDefined();
                 expect(dropDown.length).toEqual(4);
                 expect(dropDown[0].innerHTML).toEqual('Seconds');
@@ -131,8 +131,8 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId, true);
+            const reportId = 1;
+            const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -155,7 +155,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 expect(res.typeFiltering).toEqual(true);
             });
 
-            let values: any = {
+            const values: any = {
                 dateRange: {
                     startDate: '2016-09-01', endDate: '2016-10-05'
                 },
@@ -188,13 +188,13 @@ describe('AnalyticsReportParametersComponent', () => {
         it('Should render a checkbox with the value true when the definition parameter type is \'boolean\' ', (done) => {
             component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
-                let checkElement: any = element.querySelector('#typeFiltering-input');
+                const checkElement: any = element.querySelector('#typeFiltering-input');
                 expect(checkElement.checked).toBeTruthy();
                 done();
             });
 
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId, true);
+            const reportId = 1;
+            const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -206,13 +206,13 @@ describe('AnalyticsReportParametersComponent', () => {
 
         it('Should render a date range components when the definition parameter type is \'dateRange\' ', (done) => {
             component.successReportParams.subscribe(() => {
-                let dateElement: any = element.querySelector('adf-date-range-widget');
+                const dateElement: any = element.querySelector('adf-date-range-widget');
                 expect(dateElement).toBeDefined();
                 done();
             });
 
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId, true);
+            const reportId = 1;
+            const change = new SimpleChange(null, reportId, true);
             component.toggleParameters();
             component.ngOnChanges({'reportId': change});
 
@@ -226,7 +226,7 @@ describe('AnalyticsReportParametersComponent', () => {
         it('Should render a dropdown with all the RangeInterval when the definition parameter type is \'dateRangeInterval\' ', (done) => {
             component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
-                let dropDown: any = element.querySelector('#select-dateRangeInterval');
+                const dropDown: any = element.querySelector('#select-dateRangeInterval');
                 expect(dropDown).toBeDefined();
                 expect(dropDown.length).toEqual(5);
                 expect(dropDown[0].innerHTML).toEqual('By hour');
@@ -237,8 +237,8 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId, true);
+            const reportId = 1;
+            const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -252,7 +252,7 @@ describe('AnalyticsReportParametersComponent', () => {
             ' reportId change', (done) => {
             component.successParamOpt.subscribe(() => {
                 fixture.detectChanges();
-                let dropDown: any = element.querySelector('#select-processDefinitionId');
+                const dropDown: any = element.querySelector('#select-processDefinitionId');
                 expect(dropDown).toBeDefined();
                 expect(dropDown.length).toEqual(5);
                 expect(dropDown[0].innerHTML).toEqual('Choose One');
@@ -275,8 +275,8 @@ describe('AnalyticsReportParametersComponent', () => {
                 responseText: analyticParamsMock.reportDefParamProcessDefOptionsNoApp
             });
 
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId, true);
+            const reportId = 1;
+            const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({'reportId': change});
 
         });
@@ -285,7 +285,7 @@ describe('AnalyticsReportParametersComponent', () => {
             ' appId change', (done) => {
             component.successParamOpt.subscribe(() => {
                 fixture.detectChanges();
-                let dropDown: any = element.querySelector('#select-processDefinitionId');
+                const dropDown: any = element.querySelector('#select-processDefinitionId');
                 expect(dropDown).toBeDefined();
                 expect(dropDown.length).toEqual(3);
                 expect(dropDown[0].innerHTML).toEqual('Choose One');
@@ -300,7 +300,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            let appId = 1;
+            const appId = 1;
 
             jasmine.Ajax.stubRequest('http://localhost:9876/bpm/activiti-app/api/enterprise/process-definitions?appDefinitionId=' + appId).andReturn({
                 status: 200,
@@ -310,7 +310,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
             component.appId = appId;
             component.reportId = '1';
-            let change = new SimpleChange(null, appId, true);
+            const change = new SimpleChange(null, appId, true);
             component.ngOnChanges({'appId': change});
 
         });
@@ -322,8 +322,8 @@ describe('AnalyticsReportParametersComponent', () => {
                 expect(component.reportForm.controls).toEqual({});
             });
 
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId, true);
+            const reportId = 1;
+            const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -372,8 +372,8 @@ describe('AnalyticsReportParametersComponent', () => {
                 responseText: []
             });
 
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId, true);
+            const reportId = 1;
+            const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({'reportId': change});
 
         });
@@ -384,8 +384,8 @@ describe('AnalyticsReportParametersComponent', () => {
                 done();
             });
 
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId, true);
+            const reportId = 1;
+            const change = new SimpleChange(null, reportId, true);
             component.ngOnChanges({'reportId': change});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -396,13 +396,13 @@ describe('AnalyticsReportParametersComponent', () => {
         });
 
         it('Should convert a string in number', () => {
-            let numberConvert = component.convertNumber('2');
+            const numberConvert = component.convertNumber('2');
             expect(numberConvert).toEqual(2);
         });
 
         describe('When the form is rendered correctly', () => {
 
-            let values: any = {
+            const values: any = {
                 dateRange: {
                     startDate: '2016-09-01', endDate: '2016-10-05'
                 },
@@ -430,8 +430,8 @@ describe('AnalyticsReportParametersComponent', () => {
             };
 
             beforeEach(async(() => {
-                let reportId = 1;
-                let change = new SimpleChange(null, reportId, true);
+                const reportId = 1;
+                const change = new SimpleChange(null, reportId, true);
                 component.ngOnChanges({'reportId': change});
                 fixture.detectChanges();
 
@@ -450,11 +450,11 @@ describe('AnalyticsReportParametersComponent', () => {
             it('Should be able to change the report title', (done) => {
                 spyOn(service, 'updateReport').and.returnValue(of(analyticParamsMock.reportDefParamStatus));
 
-                let title: HTMLElement = element.querySelector('h4');
+                const title: HTMLElement = element.querySelector('h4');
                 title.click();
                 fixture.detectChanges();
 
-                let reportName: HTMLInputElement = <HTMLInputElement> element.querySelector('#reportName');
+                const reportName: HTMLInputElement = <HTMLInputElement> element.querySelector('#reportName');
                 expect(reportName).not.toBeNull();
 
                 reportName.focus();
@@ -465,7 +465,7 @@ describe('AnalyticsReportParametersComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let titleChanged: HTMLElement = element.querySelector('h4');
+                    const titleChanged: HTMLElement = element.querySelector('h4');
                     expect(titleChanged.textContent.trim()).toEqual('FAKE_TEST_NAME');
                     done();
                 });
@@ -481,7 +481,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 component.submit(values);
                 fixture.detectChanges();
-                let saveButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#save-button');
+                const saveButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#save-button');
                 expect(saveButton).toBeDefined();
                 expect(saveButton).not.toBeNull();
                 saveButton.click();
@@ -490,11 +490,11 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let reportDialogTitle: HTMLElement = <HTMLElement> window.document.querySelector('#report-dialog-title');
-                    let saveTitleSubMessage: HTMLElement = <HTMLElement> window.document.querySelector('#save-title-submessage');
-                    let inputSaveName: HTMLInputElement = <HTMLInputElement> window.document.querySelector('#repName');
-                    let performActionButton: HTMLButtonElement = <HTMLButtonElement> window.document.querySelector('#action-dialog-button');
-                    let todayDate = component.getTodayDate();
+                    const reportDialogTitle: HTMLElement = <HTMLElement> window.document.querySelector('#report-dialog-title');
+                    const saveTitleSubMessage: HTMLElement = <HTMLElement> window.document.querySelector('#save-title-submessage');
+                    const inputSaveName: HTMLInputElement = <HTMLInputElement> window.document.querySelector('#repName');
+                    const performActionButton: HTMLButtonElement = <HTMLButtonElement> window.document.querySelector('#action-dialog-button');
+                    const todayDate = component.getTodayDate();
 
                     expect(reportDialogTitle).not.toBeNull('Dialog title should not be null');
                     expect(saveTitleSubMessage).not.toBeNull('Dialog save title submessage should not be null');
@@ -513,7 +513,7 @@ describe('AnalyticsReportParametersComponent', () => {
             xit('Should show a dialog to allowing report export', async(() => {
                 component.submit(values);
                 fixture.detectChanges();
-                let exportButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#export-button');
+                const exportButton: HTMLButtonElement = <HTMLButtonElement> element.querySelector('#export-button');
 
                 expect(exportButton).toBeDefined();
                 expect(exportButton).not.toBeNull();
@@ -523,10 +523,10 @@ describe('AnalyticsReportParametersComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    let reportDialogTitle: HTMLElement = <HTMLElement> window.document.querySelector('#report-dialog-title');
-                    let inputSaveName: HTMLInputElement = <HTMLInputElement> window.document.querySelector('#repName');
-                    let performActionButton: HTMLButtonElement = <HTMLButtonElement> window.document.querySelector('#action-dialog-button');
-                    let todayDate = component.getTodayDate();
+                    const reportDialogTitle: HTMLElement = <HTMLElement> window.document.querySelector('#report-dialog-title');
+                    const inputSaveName: HTMLInputElement = <HTMLInputElement> window.document.querySelector('#repName');
+                    const performActionButton: HTMLButtonElement = <HTMLButtonElement> window.document.querySelector('#action-dialog-button');
+                    const todayDate = component.getTodayDate();
 
                     expect(reportDialogTitle).not.toBeNull();
                     expect(inputSaveName.value.trim()).toEqual(analyticParamsMock.reportDefParamStatus.name + ' ( ' + todayDate + ' )');
@@ -562,7 +562,7 @@ describe('AnalyticsReportParametersComponent', () => {
             it('Should raise an event for report deleted', async(() => {
                 fixture.detectChanges();
                 spyOn(component, 'deleteReport');
-                let deleteButton = fixture.debugElement.nativeElement.querySelector('#delete-button');
+                const deleteButton = fixture.debugElement.nativeElement.querySelector('#delete-button');
                 expect(deleteButton).toBeDefined();
                 expect(deleteButton).not.toBeNull();
                 component.deleteReportSuccess.subscribe((reportId) => {

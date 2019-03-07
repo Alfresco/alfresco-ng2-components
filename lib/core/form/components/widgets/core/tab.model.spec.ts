@@ -23,20 +23,20 @@ import { TabModel } from './tab.model';
 describe('TabModel', () => {
 
     it('should setup with json config', () => {
-        let json = {
+        const json = {
             id: '<id>',
             title: '<title>',
             visibilityCondition: '<condition>'
         };
 
-        let model = new TabModel(null, json);
+        const model = new TabModel(null, json);
         expect(model.id).toBe(json.id);
         expect(model.title).toBe(json.title);
         expect(model.isVisible).toBe(true);
     });
 
     it('should not setup with json config', () => {
-        let model = new TabModel(null, null);
+        const model = new TabModel(null, null);
         expect(model.id).toBeUndefined();
         expect(model.title).toBeUndefined();
         expect(model.isVisible).toBeDefined();
@@ -45,7 +45,7 @@ describe('TabModel', () => {
     });
 
     it('should evaluate content based on fields', () => {
-        let model = new TabModel(null, null);
+        const model = new TabModel(null, null);
 
         model.fields = null;
         expect(model.hasContent()).toBeFalsy();
@@ -53,21 +53,21 @@ describe('TabModel', () => {
         model.fields = [];
         expect(model.hasContent()).toBeFalsy();
 
-        let form = new FormModel();
-        let field = new FormFieldModel(form);
+        const form = new FormModel();
+        const field = new FormFieldModel(form);
         model.fields = [new ContainerModel(field)];
         expect(model.hasContent()).toBeTruthy();
     });
 
     it('should store the form reference', () => {
-        let form = new FormModel();
-        let model = new TabModel(form);
+        const form = new FormModel();
+        const model = new TabModel(form);
         expect(model.form).toBe(form);
     });
 
     it('should store original json', () => {
-        let json = {};
-        let model = new TabModel(null, json);
+        const json = {};
+        const model = new TabModel(null, json);
         expect(model.json).toBe(json);
     });
 

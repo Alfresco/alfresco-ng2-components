@@ -91,7 +91,7 @@ export class StorageService {
 
     private storageAvailable(type: string): boolean {
         try {
-            let storage = window[type];
+            const storage = window[type];
             const key = '__storage_test__';
             storage.setItem(key, key);
             storage.removeItem(key, key);

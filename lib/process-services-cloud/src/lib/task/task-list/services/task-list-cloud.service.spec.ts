@@ -71,7 +71,7 @@ describe('Activiti TaskList Cloud Service', () => {
     }));
 
     it('should return the tasks', (done) => {
-        let taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel> { appName: 'fakeName' };
+        const taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel> { appName: 'fakeName' };
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskListResults);
         service.getTaskByRequest(taskRequest).subscribe((res) => {
             expect(res).toBeDefined();
@@ -84,7 +84,7 @@ describe('Activiti TaskList Cloud Service', () => {
     });
 
     it('should append to the call all the parameters', (done) => {
-        let taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' };
+        const taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' };
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnCallQueryParameters);
         service.getTaskByRequest(taskRequest).subscribe((res) => {
             expect(res).toBeDefined();
@@ -97,7 +97,7 @@ describe('Activiti TaskList Cloud Service', () => {
     });
 
     it('should concat the app name to the request url', (done) => {
-        let taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' };
+        const taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service' };
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnCallUrl);
         service.getTaskByRequest(taskRequest).subscribe((requestUrl) => {
             expect(requestUrl).toBeDefined();
@@ -108,7 +108,7 @@ describe('Activiti TaskList Cloud Service', () => {
     });
 
     it('should concat the sorting to append as parameters', (done) => {
-        let taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service',
+        const taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel> { appName: 'fakeName', skipCount: 0, maxItems: 20, service: 'fake-service',
             sorting: [{ orderBy: 'NAME', direction: 'DESC'}, { orderBy: 'TITLE', direction: 'ASC'}] };
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnCallQueryParameters);
         service.getTaskByRequest(taskRequest).subscribe((res) => {
@@ -120,7 +120,7 @@ describe('Activiti TaskList Cloud Service', () => {
     });
 
     it('should return an error when app name is not specified', (done) => {
-        let taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel> { appName: null };
+        const taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel> { appName: null };
         spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnCallUrl);
         service.getTaskByRequest(taskRequest).subscribe(
             () => { },

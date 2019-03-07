@@ -181,7 +181,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
      * @param taskId
      */
     public selectFilterWithTask(taskId: string) {
-        let filteredFilterList: FilterRepresentationModel[] = [];
+        const filteredFilterList: FilterRepresentationModel[] = [];
         this.taskListService.getFilterForTaskById(taskId, this.filters).subscribe(
             (filter: FilterRepresentationModel) => {
                 filteredFilterList.push(filter);

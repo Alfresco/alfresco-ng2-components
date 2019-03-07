@@ -331,7 +331,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     private setUpUrlFile() {
-        let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
+        const filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
         this.fileTitle = this.getDisplayName(filenameFromUrl);
         this.extension = this.getFileExtension(filenameFromUrl);
         this.urlFileContent = this.urlFile;
@@ -433,7 +433,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             mimeType = mimeType.toLowerCase();
 
             const editorTypes = Object.keys(this.mimeTypes);
-            for (let type of editorTypes) {
+            for (const type of editorTypes) {
                 if (this.mimeTypes[type].indexOf(mimeType) >= 0) {
                     return type;
                 }
@@ -508,9 +508,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
      * @param  url - url file
      */
     getFilenameFromUrl(url: string): string {
-        let anchor = url.indexOf('#');
-        let query = url.indexOf('?');
-        let end = Math.min(
+        const anchor = url.indexOf('#');
+        const query = url.indexOf('?');
+        const end = Math.min(
             anchor > 0 ? anchor : url.length,
             query > 0 ? query : url.length);
         return url.substring(url.lastIndexOf('/', end) + 1, end);
@@ -678,7 +678,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     private async waitRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
         let currentRetry: number = 0;
         return new Promise<RenditionEntry>((resolve, reject) => {
-            let intervalId = setInterval(() => {
+            const intervalId = setInterval(() => {
                 currentRetry++;
                 if (this.maxRetries >= currentRetry) {
                     this.apiService.renditionsApi.getRendition(nodeId, renditionId).then((rendition: RenditionEntry) => {

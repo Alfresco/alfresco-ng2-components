@@ -92,8 +92,8 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             const content = fixture.debugElement.query(By.css('.adf-card-view__key-value-pairs'));
             expect(content).not.toBeNull();
 
-            let nameInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-name-input-0"]`));
-            let valueInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-value-input-0"]`));
+            const nameInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-name-input-0"]`));
+            const valueInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-value-input-0"]`));
             expect(nameInput).not.toBeNull();
             expect(valueInput).not.toBeNull();
 
@@ -129,8 +129,8 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             addButton.triggerEventHandler('click', null);
             fixture.detectChanges();
 
-            let nameInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-name-input-0"]`));
-            let valueInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-value-input-0"]`));
+            const nameInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-name-input-0"]`));
+            const valueInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-value-input-0"]`));
 
             nameInput.nativeElement.value = mockData[0].name;
             nameInput.nativeElement.dispatchEvent(new Event('input'));
@@ -157,7 +157,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
             addButton.triggerEventHandler('click', null);
             fixture.detectChanges();
 
-            let valueInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-value-input-0"]`));
+            const valueInput = fixture.debugElement.query(By.css(`[data-automation-id="card-${component.property.key}-value-input-0"]`));
 
             valueInput.nativeElement.value = mockData[0].value;
             valueInput.nativeElement.dispatchEvent(new Event('input'));

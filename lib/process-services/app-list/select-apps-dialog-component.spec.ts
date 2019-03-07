@@ -52,7 +52,7 @@ export class DialogSelectAppTestComponent {
 describe('Select app dialog', () => {
     let fixture: ComponentFixture<DialogSelectAppTestComponent>;
     let component: DialogSelectAppTestComponent;
-    let dialogRef = {
+    const dialogRef = {
         close: jasmine.createSpy('close')
     };
     let overlayContainerElement: HTMLElement;

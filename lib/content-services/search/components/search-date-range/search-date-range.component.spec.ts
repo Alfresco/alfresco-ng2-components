@@ -29,8 +29,8 @@ describe('SearchDateRangeComponent', () => {
     describe('component class', () => {
 
         let component: SearchDateRangeComponent;
-        let fromDate = '2016-10-16';
-        let toDate = '2017-10-16';
+        const fromDate = '2016-10-16';
+        const toDate = '2017-10-16';
         const localeFixture = 'it';
         const dateFormatFixture = 'DD-MMM-YY';
 

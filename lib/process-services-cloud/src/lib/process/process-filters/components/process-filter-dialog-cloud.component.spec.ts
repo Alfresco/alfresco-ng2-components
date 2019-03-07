@@ -63,7 +63,7 @@ describe('ProcessFilterDialogCloudComponent', () => {
 
     it('should display title', () => {
         fixture.detectChanges();
-        let titleElement = fixture.debugElement.nativeElement.querySelector(
+        const titleElement = fixture.debugElement.nativeElement.querySelector(
             '#adf-process-filter-dialog-title'
         );
         expect(titleElement.textContent).toEqual(' ADF_CLOUD_EDIT_PROCESS_FILTER.DIALOG.TITLE ');
@@ -71,7 +71,7 @@ describe('ProcessFilterDialogCloudComponent', () => {
 
     it('should enable save button if form is valid', async(() => {
         fixture.detectChanges();
-        let saveButton = fixture.debugElement.nativeElement.querySelector(
+        const saveButton = fixture.debugElement.nativeElement.querySelector(
             '#adf-save-button-id'
         );
         const inputElement = fixture.debugElement.nativeElement.querySelector(
@@ -94,7 +94,7 @@ describe('ProcessFilterDialogCloudComponent', () => {
         inputElement.value = '';
         inputElement.dispatchEvent(new Event('input'));
         fixture.whenStable().then(() => {
-            let saveButton = fixture.debugElement.nativeElement.querySelector(
+            const saveButton = fixture.debugElement.nativeElement.querySelector(
                 '#adf-save-button-id'
             );
             fixture.detectChanges();
@@ -111,7 +111,7 @@ describe('ProcessFilterDialogCloudComponent', () => {
         inputElement.value = 'My custom Name';
         inputElement.dispatchEvent(new Event('input'));
         fixture.whenStable().then(() => {
-            let saveButton = fixture.debugElement.nativeElement.querySelector(
+            const saveButton = fixture.debugElement.nativeElement.querySelector(
                 '#adf-save-button-id'
             );
             fixture.detectChanges();
@@ -124,7 +124,7 @@ describe('ProcessFilterDialogCloudComponent', () => {
 
     it('should able close dialog on click of cancel button', () => {
         component.data = { data: { name: '' } };
-        let cancelButton = fixture.debugElement.nativeElement.querySelector(
+        const cancelButton = fixture.debugElement.nativeElement.querySelector(
             '#adf-cancel-button-id'
         );
         fixture.detectChanges();

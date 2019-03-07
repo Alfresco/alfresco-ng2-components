@@ -259,7 +259,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges {
 
     onDateChanged(newDateValue: any, dateProperty: TaskFilterProperties) {
         if (newDateValue) {
-            let momentDate = moment(newDateValue, this.FORMAT_DATE, true);
+            const momentDate = moment(newDateValue, this.FORMAT_DATE, true);
 
             if (momentDate.isValid()) {
                 this.getPropertyController(dateProperty).setValue(momentDate.toDate());
