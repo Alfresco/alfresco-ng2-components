@@ -17,4 +17,6 @@
 
 export * from './components/task-header-cloud.component';
 
+export * from './services/task-cloud.service';
+
 export * from './task-header-cloud.module';

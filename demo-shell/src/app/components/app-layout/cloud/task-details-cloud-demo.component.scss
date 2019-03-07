@@ -1,0 +1,20 @@
+
+.adf {
+
+    &-task-detail-container {
+        display: flex;
+    }
+
+    &-task-tiitle {
+        margin-left:15px;
+    }
+
+    &-task-control {
+        width:70%;
+    }
+
+    &-demop-card-container {
+        width:30%;
+        font-family: inherit;
+    }
+}

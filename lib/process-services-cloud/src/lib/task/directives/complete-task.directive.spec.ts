@@ -27,7 +27,7 @@ describe('CompleteTaskDirective', () => {
 
     @Component({
         selector:  'adf-test-component',
-        template: '<button adf-complete-task [taskId]="asfras" [appName]="simple-app" (taskCompleted)="onCompleteTask($event)"></button>'
+        template: '<button adf-cloud-complete-task [taskId]="asfras" [appName]="simple-app" (taskCompleted)="onCompleteTask($event)"></button>'
     })
     class TestComponent {
         @ContentChildren(CompleteTaskDirective)

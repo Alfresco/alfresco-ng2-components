@@ -18,7 +18,7 @@ import { Directive, Input, HostListener, Output, EventEmitter } from '@angular/c
 import { TaskCloudService } from '../task-header/services/task-cloud.service';
 
 @Directive({
-    selector: '[adf-complete-task]'
+    selector: '[adf-cloud-complete-task]'
 })
 export class CompleteTaskDirective {
 

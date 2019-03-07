@@ -73,8 +73,22 @@ export class TaskDetailsCloudModel {
             this.memberOfCandidateUsers = obj.memberOfCandidateUsers || null;
         }
     }
+
+
+    isCompleted() {
+        return this.status && this.status.toUpperCase() === TaskStatusEnum.COMPLETED;
+    }
 }
 
 export interface StartTaskCloudResponseModel {
     entry: TaskDetailsCloudModel;
+}
+
+export enum TaskStatusEnum {
+    COMPLETED=  'COMPLETED',
+    DELETED = 'DELETED',
+    CREATED = 'CREATED',
+    ASSIGNED = 'ASSIGNED',
+    SUSPENDED = 'SUSPENDED',
+    CANCELLED = 'CANCELLED'
 }
