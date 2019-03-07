@@ -180,8 +180,10 @@ export class EditTaskFilterCloudComponent {
     }
 
     clickSaveAsButton() {
+        let disabledButton = element(by.css(("button[id='adf-save-as-id'][disabled]")));
         Util.waitUntilElementIsClickable(this.saveAsButton);
         Util.waitUntilElementIsVisible(this.saveAsButton);
+        Util.waitUntilElementIsNotVisible(disabledButton);
         this.saveAsButton.click();
         return this.editTaskFilter;
     }
