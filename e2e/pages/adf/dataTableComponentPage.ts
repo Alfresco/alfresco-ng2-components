@@ -225,7 +225,7 @@ export class DataTableComponentPage {
 
     checkContentIsNotDisplayed(columnName, columnValue) {
         let row = this.getRow(columnName, columnValue);
-        Util.waitUntilElementIsNotVisible(row);
+        Util.waitUntilElementIsNotOnPage(row);
         return this;
     }
 
@@ -242,7 +242,7 @@ export class DataTableComponentPage {
     }
 
     getRow(columnName, columnValue) {
-        return this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"]`)).first();
+        return this.rootElement.all(by.css(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"] span`)).first();
     }
 
     checkSpinnerIsDisplayed() {

@@ -102,7 +102,11 @@ export class DataTablePage {
     }
 
     selectRow(rowNumber) {
-        return this.dataTable.getRow('Id', rowNumber).click();
+        let locator = this.dataTable.getRow('Id', rowNumber);
+        Util.waitUntilElementIsVisible(locator);
+        Util.waitUntilElementIsClickable(locator);
+        locator.click();
+        return this;
     }
 
     selectRowWithKeyboard(rowNumber) {
