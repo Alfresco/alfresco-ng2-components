@@ -124,7 +124,15 @@ describe('Permissions Component', function () {
         roleFolder = await uploadActions.createFolder(alfrescoJsApi, roleFolderModel.name, '-my-');
 
         await alfrescoJsApi.core.nodesApi.updateNode(roleFolder.entry.id,
-                {permissions :{locallySet:[{authorityId: filePermissionUser.getId(), name :"Consumer", accessStatus :"ALLOWED"}]}});
+            {
+                permissions: {
+                    locallySet: [{
+                        authorityId: filePermissionUser.getId(),
+                        name: 'Consumer',
+                        accessStatus: 'ALLOWED'
+                    }]
+                }
+            });
 
         await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'Role' + fileModel.name, roleFolder.entry.id);
         await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'Site' + fileModel.name, siteFolder.entry.id);
@@ -417,6 +425,6 @@ describe('Permissions Component', function () {
 
                 contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
             });
+        });
     });
 });
-    });
