@@ -140,4 +140,40 @@ describe('Login component - Redirect', () => {
         });
 
     });
+
+    it('[C299161] Should redirect user to requested URL after reloading login page', () => {
+        settingsPage.setProviderEcm();
+        loginPage.login(user.id, user.password);
+
+        browser.controlFlow().execute(async () => {
+
+            navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
+
+            browser.getCurrentUrl().then((actualUrl) => {
+                expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
+            });
+
+            browser.driver.sleep(1000);
+
+            navigationBarPage.clickLogoutButton();
+
+            browser.driver.sleep(1000);
+
+            navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
+            loginPage.waitForElements();
+            browser.refresh();
+            loginPage.waitForElements();
+
+            loginPage.enterUsername(user.id);
+            loginPage.enterPassword(user.password);
+            loginPage.clickSignInButton();
+
+            browser.driver.sleep(1000);
+
+            browser.getCurrentUrl().then((actualUrl) => {
+                expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
+            });
+        });
+
+    });
 });
