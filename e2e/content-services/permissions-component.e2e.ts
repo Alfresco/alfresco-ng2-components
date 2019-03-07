@@ -32,17 +32,19 @@ import { SearchDialog } from '../pages/adf/dialog/searchDialog';
 import { ViewerPage } from '../pages/adf/viewerPage';
 import { NotificationPage } from '../pages/adf/notificationPage';
 import CONSTANTS = require('../util/constants');
+import { MetadataViewPage } from '../pages/adf/metadataViewPage';
 
 describe('Permissions Component', function () {
 
-    let loginPage = new LoginPage();
-    let contentServicesPage = new ContentServicesPage();
-    let permissionsPage = new PermissionsPage();
-    let uploadActions = new UploadActions();
-    let contentList = new ContentListPage();
-    let searchDialog = new SearchDialog();
-    let viewerPage = new ViewerPage();
-    let notificationPage = new NotificationPage();
+    const loginPage = new LoginPage();
+    const contentServicesPage = new ContentServicesPage();
+    const permissionsPage = new PermissionsPage();
+    const uploadActions = new UploadActions();
+    const contentList = new ContentListPage();
+    const searchDialog = new SearchDialog();
+    const viewerPage = new ViewerPage();
+    const metadataViewPage = new MetadataViewPage();
+    const notificationPage = new NotificationPage();
     let fileOwnerUser, filePermissionUser, consumerUser, collaboratorUser, contributorUser, managerUser, file;
     let publicSite, folderName;
 
@@ -383,5 +385,38 @@ describe('Permissions Component', function () {
             contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
 
         });
+
+        it('[C277005] Role SiteCollaborator', () => {
+
+            loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
+            contentServicesPage.goToDocumentList();
+            searchDialog
+                .checkSearchIconIsVisible()
+                .clickOnSearchIcon()
+                .checkSearchBarIsVisible()
+                .enterText(folderName)
+                .resultTableContainsRow(folderName)
+                .clickOnSpecificRow(folderName);
+            contentList.checkContentIsDisplayed('Site' + fileModel.name);
+            contentList.doubleClickRow('Site' + fileModel.name);
+            viewerPage.checkFileIsLoaded();
+            viewerPage.clickCloseButton();
+            contentList.waitForTableBody();
+            contentList.checkDeleteIsDisabled('Site' + fileModel.name);
+            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            contentList.checkActionMenuIsNotDisplayed();
+
+            contentList.metadataContent('Site' + fileModel.name);
+            browser.controlFlow().execute(async () => {
+                await metadataViewPage.editIconClick();
+                metadataViewPage.clickEditPropertyIcons('properties.cm:title');
+                metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle');
+                metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
+                expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
+                metadataViewPage.clickCloseButton();
+
+                contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
+            });
     });
 });
+    });

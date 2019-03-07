@@ -43,6 +43,7 @@ export class MetadataViewPage {
     multiSwitch = element(by.id(`adf-metadata-multi`));
     presetSwitch = element(by.id('adf-toggle-custom-preset'));
     defaultPropertiesSwitch = element(by.id('adf-metadata-default-properties'));
+    closeButton = element(by.cssContainingText('button.mat-button span', 'Close'));
 
     getTitle(): promise.Promise<string> {
         Util.waitUntilElementIsVisible(this.title);
@@ -281,5 +282,10 @@ export class MetadataViewPage {
     checkPropertyIsNotVisible(propertyName: string, type: string) {
         let property = element(by.css('div[data-automation-id="card-' + type + '-label-' + propertyName + '"]'));
         Util.waitUntilElementIsNotVisible(property);
+    }
+
+    clickCloseButton() {
+        Util.waitUntilElementIsVisible(this.closeButton);
+        this.closeButton.click();
     }
 }
