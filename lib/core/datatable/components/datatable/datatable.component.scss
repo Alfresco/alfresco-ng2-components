@@ -181,8 +181,10 @@
                 @include material-animation-default(0.28s);
                 transition-property: background-color;
                 border-top: $data-table-dividers;
-                padding-top: 12px;
-                padding-bottom: 12px;
+                min-height: 65px;
+                cursor: pointer;
+
+                @include adf-no-select;
 
                 &:hover {
                     background-color: $data-table-hover-color;
@@ -249,6 +251,13 @@
             box-sizing: border-box;
             white-space: nowrap;
 
+            &:focus {
+                outline-offset: -1px;
+                outline-width: 1px;
+                outline-color: rgb(68, 138, 255);
+                outline-style: solid;
+            }
+
             &.adf-sortable {
                 @include adf-no-select;
                 &:hover {
@@ -303,9 +312,15 @@
         .adf-datatable-cell, .adf-datatable-cell-header {
             flex: 1;
             padding: 0;
+            align-items: center;
+            display: flex;
+            min-height: inherit;
 
             .adf-datatable-cell-container {
                 overflow: hidden;
+                min-height: inherit;
+                align-items: center;
+                display: flex;
             }
 
             .adf-datatable-cell-value {
@@ -316,6 +331,8 @@
 
         .adf-cell-value {
             display: flex;
+            min-height: inherit;
+            align-items: center;
         }
 
         .adf-datatable__actions-cell, .adf-datatable-cell--image {
@@ -365,10 +382,6 @@
             }
         }
 
-        .adf-expand-cell {
-
-        }
-
         .adf-ellipsis-cell {
             position: sticky;
             text-overflow: ellipsis;
@@ -388,7 +401,7 @@
                     display: block;
                     width: calc(100% - 2em);
                     position: absolute;
-                    margin-top: -10px;
+                    // margin-top: -10px;
                 }
             }
 
