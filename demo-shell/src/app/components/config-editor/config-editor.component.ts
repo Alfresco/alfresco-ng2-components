@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { AppConfigService, NotificationService } from '@alfresco/adf-core';
+import { AppConfigService, NotificationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-config-editor',
@@ -29,6 +29,8 @@ export class ConfigEditorComponent {
     code: any;
     field = 'content-metadata';
     invalidJson = false;
+    isUserPreference = false;
+    userPreferenceProperty: string;
 
     editorOptions = {
         theme: 'vs-dark',
@@ -43,13 +45,19 @@ export class ConfigEditorComponent {
         this.indentCode();
     }
 
-    constructor(private appConfig: AppConfigService, private notificationService: NotificationService) {
+    constructor(private appConfig: AppConfigService,
+                private userPreferencesService: UserPreferencesService,
+                private notificationService: NotificationService) {
         this.code = JSON.stringify(appConfig.config['content-metadata']);
     }
 
     onSave() {
         try {
-            this.appConfig.config[this.field] = JSON.parse(this.editor.getValue());
+            if (this.isUserPreference) {
+                this.userPreferencesService.set(this.userPreferenceProperty, JSON.parse(this.editor.getValue()));
+            } else {
+                this.appConfig.config[this.field] = JSON.parse(this.editor.getValue());
+            }
         } catch (error) {
             this.invalidJson = true;
             this.notificationService.openSnackMessage(
@@ -71,69 +79,83 @@ export class ConfigEditorComponent {
     }
 
     fileConfClick() {
+        this.isUserPreference = false;
         this.code = JSON.stringify(this.appConfig.config['files']);
         this.field = 'files';
         this.indentCode();
     }
 
     searchConfClick() {
+        this.isUserPreference = false;
         this.code = JSON.stringify(this.appConfig.config['search']);
         this.field = 'search';
         this.indentCode();
     }
 
     metadataConfClick() {
+        this.isUserPreference = false;
         this.code = JSON.stringify(this.appConfig.config['content-metadata']);
         this.field = 'content-metadata';
         this.indentCode();
     }
 
     taskHeaderConfClick() {
+        this.isUserPreference = false;
         this.code = JSON.stringify(this.appConfig.config['adf-task-header']);
         this.field = 'adf-task-header';
         this.indentCode();
     }
 
     processInstanceHeaderConfClick() {
+        this.isUserPreference = false;
         this.code = JSON.stringify(this.appConfig.config['adf-process-instance-header']);
         this.field = 'adf-process-instance-header';
         this.indentCode();
     }
 
     startProcessConfClick() {
+        this.isUserPreference = false;
         this.code = JSON.stringify(this.appConfig.config['adf-start-process']);
         this.field = 'adf-start-process';
         this.indentCode();
     }
 
     taskListCloudConfClick() {
+        this.isUserPreference = false;
         this.code = JSON.stringify(this.appConfig.config['adf-cloud-task-list']);
         this.field = 'adf-cloud-task-list';
         this.indentCode();
     }
 
     editProcessFilterConfClick() {
+        this.isUserPreference = false;
         this.code = JSON.stringify(this.appConfig.config['adf-edit-process-filter']);
         this.field = 'adf-edit-process-filter';
         this.indentCode();
     }
 
      editTaskFilterConfClick() {
+        this.isUserPreference = false;
         this.code = JSON.stringify(this.appConfig.config['adf-edit-task-filter']);
         this.field = 'adf-edit-task-filter';
         this.indentCode();
     }
 
     processListCloudConfClick() {
+        this.isUserPreference = false;
         this.code = JSON.stringify(this.appConfig.config['adf-cloud-process-list']);
         this.field = 'adf-cloud-process-list';
         this.indentCode();
     }
 
     infinitePaginationConfClick() {
-        this.code = JSON.stringify(this.appConfig.config['adf-infinite-pagination']);
-        this.field = 'adf-infinite-pagination';
-        this.indentCode();
+        this.isUserPreference = true;
+        this.userPreferenceProperty = UserPreferenceValues.PaginationSize;
+        this.userPreferencesService.select(this.userPreferenceProperty).subscribe((pageSize: number) => {
+            this.code = JSON.stringify(pageSize);
+            this.field = 'adf-infinite-pagination';
+            this.indentCode();
+        });
     }
 
     indentCode() {

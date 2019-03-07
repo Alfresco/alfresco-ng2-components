@@ -661,10 +661,5 @@
                 }
             ]
         }
-    },
-    "adf-infinite-pagination": {
-        "skipCount": 0,
-        "maxItems": 25,
-        "totalItems": 0
     }
 }
