@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { setupTestBed, IdentityUserService, IdentityUserModel, AlfrescoApiServiceMock} from '@alfresco/adf-core';
+import { setupTestBed, IdentityUserService, IdentityUserModel, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { LogService, AppConfigService, StorageService, CoreModule } from '@alfresco/adf-core';
 import { TaskCloudService } from './task-cloud.service';
 import { taskDetailsCloudMock } from '../mocks/task-details-cloud.mock';
@@ -68,7 +68,6 @@ describe('Task Cloud Service', () => {
         ],
         providers: [IdentityUserService, LogService]
     });
-
 
     beforeEach(async(() => {
 

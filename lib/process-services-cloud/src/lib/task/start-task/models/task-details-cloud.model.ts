@@ -74,7 +74,6 @@ export class TaskDetailsCloudModel {
         }
     }
 
-
     isCompleted() {
         return this.status && this.status.toUpperCase() === TaskStatusEnum.COMPLETED;
     }
