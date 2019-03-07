@@ -47,7 +47,7 @@ describe('Permissions Component', function () {
     const metadataViewPage = new MetadataViewPage();
     const notificationPage = new NotificationPage();
     let uploadDialog = new UploadDialog();
-    let fileOwnerUser, filePermissionUser, consumerUser, collaboratorUser, contributorUser, managerUser, file;
+    let folderOwnerUser, consumerUser, siteConsumerUser, contributorUser, managerUser, collaboratorUser, editorUser, coordinatorUser, file;
     let publicSite, folderName;
 
     let fileModel = new FileModel({
@@ -81,39 +81,46 @@ describe('Permissions Component', function () {
         hostEcm: TestConfig.adf.url
     });
 
-    let roleFolderModel = new FolderModel({'name': 'role' + Util.generateRandomString()});
-    let roleFolder, siteFolder;
+    let roleConsumerFolderModel = new FolderModel({'name': 'roleConsumer' + Util.generateRandomString()});
+    let roleCoordinatorFolderModel = new FolderModel({'name': 'roleCoordinator' + Util.generateRandomString()});
+    let roleCollaboratorFolderModel = new FolderModel({'name': 'roleCollaborator' + Util.generateRandomString()});
+    let roleContributorFolderModel = new FolderModel({'name': 'roleContributor' + Util.generateRandomString()});
+    let roleEditorFolderModel = new FolderModel({'name': 'roleEditor' + Util.generateRandomString()});
+    let roleConsumerFolder, roleCoordinatorFolder, roleContributorFolder, roleCollaboratorFolder, roleEditorFolder, siteFolder;
 
-    fileOwnerUser = new AcsUserModel();
-
-    filePermissionUser = new AcsUserModel();
+    folderOwnerUser = new AcsUserModel();
     consumerUser = new AcsUserModel();
+    siteConsumerUser = new AcsUserModel();
     collaboratorUser = new AcsUserModel();
+    coordinatorUser = new AcsUserModel();
     contributorUser = new AcsUserModel();
     managerUser = new AcsUserModel();
+    editorUser = new AcsUserModel();
 
-    const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.getId() + ' / role -> Contributor';
+    const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + consumerUser.getId() + ' / role -> Contributor';
 
     beforeAll(async (done) => {
 
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-        await alfrescoJsApi.core.peopleApi.addPerson(fileOwnerUser);
-        await alfrescoJsApi.core.peopleApi.addPerson(filePermissionUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(folderOwnerUser);
         await alfrescoJsApi.core.peopleApi.addPerson(consumerUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(siteConsumerUser);
         await alfrescoJsApi.core.peopleApi.addPerson(contributorUser);
         await alfrescoJsApi.core.peopleApi.addPerson(collaboratorUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(editorUser);
         await alfrescoJsApi.core.peopleApi.addPerson(managerUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(coordinatorUser);
         let group = await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
         groupId = group.entry.id;
 
-        await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
+        await alfrescoJsApi.login(folderOwnerUser.id, folderOwnerUser.password);
         let siteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
         folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
         let publicSiteBody = {visibility: 'PUBLIC', title: siteName};
         publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
 
         await alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
-            id: consumerUser.id,
+            id: siteConsumerUser.id,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
@@ -133,20 +140,72 @@ describe('Permissions Component', function () {
         });
 
         siteFolder = await uploadActions.createFolder(alfrescoJsApi, folderName, publicSite.entry.guid);
-        roleFolder = await uploadActions.createFolder(alfrescoJsApi, roleFolderModel.name, '-my-');
+        roleConsumerFolder = await uploadActions.createFolder(alfrescoJsApi, roleConsumerFolderModel.name, '-my-');
+        roleCoordinatorFolder = await uploadActions.createFolder(alfrescoJsApi, roleCoordinatorFolderModel.name, '-my-');
+        roleContributorFolder = await uploadActions.createFolder(alfrescoJsApi, roleContributorFolderModel.name, '-my-');
+        roleCollaboratorFolder = await uploadActions.createFolder(alfrescoJsApi, roleCollaboratorFolderModel.name, '-my-');
+        roleEditorFolder = await uploadActions.createFolder(alfrescoJsApi, roleEditorFolderModel.name, '-my-');
 
-        await alfrescoJsApi.core.nodesApi.updateNode(roleFolder.entry.id,
+        await alfrescoJsApi.core.nodesApi.updateNode(roleConsumerFolder.entry.id,
             {
                 permissions: {
                     locallySet: [{
-                        authorityId: filePermissionUser.getId(),
+                        authorityId: consumerUser.getId(),
                         name: 'Consumer',
                         accessStatus: 'ALLOWED'
                     }]
                 }
             });
 
-        await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'Role' + fileModel.name, roleFolder.entry.id);
+        await alfrescoJsApi.core.nodesApi.updateNode(roleCollaboratorFolder.entry.id,
+            {
+                permissions: {
+                    locallySet: [{
+                        authorityId: collaboratorUser.getId(),
+                        name: 'Collaborator',
+                        accessStatus: 'ALLOWED'
+                    }]
+                }
+            });
+
+        await alfrescoJsApi.core.nodesApi.updateNode(roleCoordinatorFolder.entry.id,
+            {
+                permissions: {
+                    locallySet: [{
+                        authorityId: coordinatorUser.getId(),
+                        name: 'Coordinator',
+                        accessStatus: 'ALLOWED'
+                    }]
+                }
+            });
+
+        await alfrescoJsApi.core.nodesApi.updateNode(roleContributorFolder.entry.id,
+            {
+                permissions: {
+                    locallySet: [{
+                        authorityId: contributorUser.getId(),
+                        name: 'Contributor',
+                        accessStatus: 'ALLOWED'
+                    }]
+                }
+            });
+
+        await alfrescoJsApi.core.nodesApi.updateNode(roleEditorFolder.entry.id,
+            {
+                permissions: {
+                    locallySet: [{
+                        authorityId: editorUser.getId(),
+                        name: 'Editor',
+                        accessStatus: 'ALLOWED'
+                    }]
+                }
+            });
+
+        await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleConsumer' + fileModel.name, roleConsumerFolder.entry.id);
+        await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleContributor' + fileModel.name, roleContributorFolder.entry.id);
+        await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleCoordinator' + fileModel.name, roleCoordinatorFolder.entry.id);
+        await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleCollaborator' + fileModel.name, roleCollaboratorFolder.entry.id);
+        await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleEditor' + fileModel.name, roleEditorFolder.entry.id);
         await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'Site' + fileModel.name, siteFolder.entry.id);
         browser.driver.sleep(15000); // wait search get the groups, files and folders
 
@@ -157,18 +216,22 @@ describe('Permissions Component', function () {
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         await alfrescoJsApi.core.groupsApi.deleteGroup(groupId);
-        await uploadActions.deleteFilesOrFolder(alfrescoJsApi, roleFolder.entry.id);
+        await uploadActions.deleteFilesOrFolder(alfrescoJsApi, roleConsumerFolder.entry.id);
+        await uploadActions.deleteFilesOrFolder(alfrescoJsApi, roleCoordinatorFolder.entry.id);
+        await uploadActions.deleteFilesOrFolder(alfrescoJsApi, roleCollaboratorFolder.entry.id);
+        await uploadActions.deleteFilesOrFolder(alfrescoJsApi, roleContributorFolder.entry.id);
+        await uploadActions.deleteFilesOrFolder(alfrescoJsApi, roleEditorFolder.entry.id);
         done();
     });
 
     describe('Inherit and assigning permissions', function () {
 
         beforeEach(async (done) => {
-            await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
+            await alfrescoJsApi.login(folderOwnerUser.id, folderOwnerUser.password);
 
             file = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
 
-            loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
+            loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
             contentServicesPage.goToDocumentList();
             contentList.checkContentIsDisplayed(fileModel.name);
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
@@ -219,11 +282,11 @@ describe('Permissions Component', function () {
     describe('Changing and duplicate Permissions', function () {
 
         beforeEach(async (done) => {
-            await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
+            await alfrescoJsApi.login(folderOwnerUser.id, folderOwnerUser.password);
 
             file = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, fileModel.name, '-my-');
 
-            loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
+            loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
             contentServicesPage.goToDocumentList();
 
             contentList.checkContentIsDisplayed(fileModel.name);
@@ -234,9 +297,9 @@ describe('Permissions Component', function () {
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
             permissionsPage.checkSearchUserInputIsDisplayed();
-            permissionsPage.searchUserOrGroup(filePermissionUser.getId());
-            permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
-            permissionsPage.checkUserOrGroupIsAdded(filePermissionUser.getId());
+            permissionsPage.searchUserOrGroup(consumerUser.getId());
+            permissionsPage.clickUserOrGroup(consumerUser.getFirstName());
+            permissionsPage.checkUserOrGroupIsAdded(consumerUser.getId());
             done();
         });
 
@@ -248,7 +311,7 @@ describe('Permissions Component', function () {
 
         it('[C274691] Should be able to add a new User with permission to the file and also change locally set permissions', () => {
 
-            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
+            expect(permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('Contributor');
             permissionsPage.clickRoleDropdown();
             expect(permissionsPage.getRoleDropdownOptions().count()).toBe(5);
             expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('Contributor');
@@ -257,35 +320,35 @@ describe('Permissions Component', function () {
             expect(permissionsPage.getRoleDropdownOptions().get(3).getText()).toBe('Editor');
             expect(permissionsPage.getRoleDropdownOptions().get(4).getText()).toBe('Consumer');
             permissionsPage.selectOption('Collaborator');
-            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Collaborator');
+            expect(permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('Collaborator');
             permissionsPage.clickRoleDropdown();
             permissionsPage.selectOption('Coordinator');
-            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Coordinator');
+            expect(permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('Coordinator');
             permissionsPage.clickRoleDropdown();
             permissionsPage.selectOption('Editor');
-            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Editor');
+            expect(permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('Editor');
             permissionsPage.clickRoleDropdown();
             permissionsPage.selectOption('Consumer');
-            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Consumer');
+            expect(permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('Consumer');
 
         });
 
         it('[C276980] Should not be able to duplicate User or Group to the locally set permissions', () => {
 
-            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
+            expect(permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('Contributor');
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
             permissionsPage.checkSearchUserInputIsDisplayed();
-            permissionsPage.searchUserOrGroup(filePermissionUser.getId());
-            permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
+            permissionsPage.searchUserOrGroup(consumerUser.getId());
+            permissionsPage.clickUserOrGroup(consumerUser.getFirstName());
             expect(permissionsPage.getAssignPermissionErrorText()).toBe(duplicateUserPermissionMessage);
         });
 
         it('[C276982] Should be able to remove User or Group from the locally set permissions', () => {
 
-            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('Contributor');
+            expect(permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('Contributor');
             permissionsPage.clickDeletePermissionButton();
-            permissionsPage.checkUserOrGroupIsDeleted(filePermissionUser.getId());
+            permissionsPage.checkUserOrGroupIsDeleted(consumerUser.getId());
         });
 
     });
@@ -293,7 +356,7 @@ describe('Permissions Component', function () {
     describe('Role Site Dropdown', function () {
 
         beforeEach(async (done) => {
-            loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
+            loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
             browser.get(TestConfig.adf.url + '/files/' + publicSite.entry.guid);
             contentList.checkContentIsDisplayed(folderName);
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
@@ -304,15 +367,15 @@ describe('Permissions Component', function () {
             permissionsPage.clickAddPermissionButton();
             permissionsPage.checkAddPermissionDialogIsDisplayed();
             permissionsPage.checkSearchUserInputIsDisplayed();
-            permissionsPage.searchUserOrGroup(filePermissionUser.getId());
-            permissionsPage.clickUserOrGroup(filePermissionUser.getFirstName());
-            permissionsPage.checkUserOrGroupIsAdded(filePermissionUser.getId());
+            permissionsPage.searchUserOrGroup(consumerUser.getId());
+            permissionsPage.clickUserOrGroup(consumerUser.getFirstName());
+            permissionsPage.checkUserOrGroupIsAdded(consumerUser.getId());
             done();
         });
 
         it('[C277002] Should display the Role Site dropdown', () => {
 
-            expect(permissionsPage.getRoleCellValue(filePermissionUser.getId())).toEqual('SiteCollaborator');
+            expect(permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('SiteCollaborator');
             permissionsPage.clickRoleDropdown();
             expect(permissionsPage.getRoleDropdownOptions().count()).toBe(4);
             expect(permissionsPage.getRoleDropdownOptions().get(0).getText()).toBe('SiteCollaborator');
@@ -324,31 +387,168 @@ describe('Permissions Component', function () {
 
     });
 
-    describe('Role Consumer', function () {
+    describe('Role: Consumer, Contributor, Coordinator, Collaborator, Editor', function () {
 
-        it('[C276993] Should not to be able to Delete, see Info or Upload a file with Consumer permission', () => {
+        it('[C276993] Role Consumer', () => {
 
-            loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
+            loginPage.loginToContentServicesUsingUserModel(consumerUser);
             contentServicesPage.goToDocumentList();
             searchDialog
                 .checkSearchIconIsVisible()
                 .clickOnSearchIcon()
                 .checkSearchBarIsVisible()
-                .enterText(roleFolderModel.name)
-                .resultTableContainsRow(roleFolderModel.name)
-                .clickOnSpecificRow(roleFolderModel.name);
-            contentList.checkContentIsDisplayed('Role' + fileModel.name);
-            contentList.doubleClickRow('Role' + fileModel.name);
+                .enterText(roleConsumerFolderModel.name)
+                .resultTableContainsRow(roleConsumerFolderModel.name)
+                .clickOnSpecificRow(roleConsumerFolderModel.name);
+            contentList.checkContentIsDisplayed('RoleConsumer' + fileModel.name);
+            contentList.doubleClickRow('RoleConsumer' + fileModel.name);
             viewerPage.checkFileIsLoaded();
             viewerPage.clickCloseButton();
             contentList.waitForTableBody();
-            contentList.checkDeleteIsDisabled('Role' + fileModel.name);
+            contentList.checkDeleteIsDisabled('RoleConsumer' + fileModel.name);
             browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
             contentList.checkActionMenuIsNotDisplayed();
-            contentList.metadataContent('Role' + fileModel.name);
+            contentList.metadataContent('RoleConsumer' + fileModel.name);
             notificationPage.checkNotifyContains('You don\'t have access to do this.');
             contentServicesPage.uploadFile(fileModel.location);
             notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+
+        });
+
+        it('[C276996] Role Contributor', () => {
+
+            loginPage.loginToContentServicesUsingUserModel(contributorUser);
+            contentServicesPage.goToDocumentList();
+            searchDialog
+                .checkSearchIconIsVisible()
+                .clickOnSearchIcon()
+                .checkSearchBarIsVisible()
+                .enterText(roleContributorFolderModel.name)
+                .resultTableContainsRow(roleContributorFolderModel.name)
+                .clickOnSpecificRow(roleContributorFolderModel.name);
+            contentList.checkContentIsDisplayed('RoleContributor' + fileModel.name);
+            contentList.doubleClickRow('RoleContributor' + fileModel.name);
+            viewerPage.checkFileIsLoaded();
+            viewerPage.clickCloseButton();
+            contentList.waitForTableBody();
+            contentList.checkDeleteIsDisabled('RoleContributor' + fileModel.name);
+            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            contentList.checkActionMenuIsNotDisplayed();
+            contentList.metadataContent('RoleContributor' + fileModel.name);
+            notificationPage.checkNotifyContains('You don\'t have access to do this.');
+            contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
+            uploadDialog.fileIsUploaded(pdfFileModel.name);
+
+            uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+
+        });
+
+        it('[C277000] Role Editor', () => {
+
+            loginPage.loginToContentServicesUsingUserModel(editorUser);
+            contentServicesPage.goToDocumentList();
+            searchDialog
+                .checkSearchIconIsVisible()
+                .clickOnSearchIcon()
+                .checkSearchBarIsVisible()
+                .enterText(roleEditorFolderModel.name)
+                .resultTableContainsRow(roleEditorFolderModel.name)
+                .clickOnSpecificRow(roleEditorFolderModel.name);
+            contentList.checkContentIsDisplayed('RoleEditor' + fileModel.name);
+            contentList.doubleClickRow('RoleEditor' + fileModel.name);
+            viewerPage.checkFileIsLoaded();
+            viewerPage.clickCloseButton();
+            contentList.waitForTableBody();
+            contentList.checkDeleteIsDisabled('RoleEditor' + fileModel.name);
+            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            contentList.checkActionMenuIsNotDisplayed();
+
+            contentList.metadataContent('RoleEditor' + fileModel.name);
+            browser.controlFlow().execute(async () => {
+                await metadataViewPage.editIconClick();
+                metadataViewPage.clickEditPropertyIcons('properties.cm:title');
+                metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle');
+                metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
+                expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
+                metadataViewPage.clickCloseButton();
+
+                contentServicesPage.uploadFile(fileModel.location);
+                notificationPage.checkNotifyContains('You don\'t have the create permission to upload the content');
+            });
+
+        });
+
+        it('[C277003] Role Collaborator', () => {
+
+            loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
+            contentServicesPage.goToDocumentList();
+            searchDialog
+                .checkSearchIconIsVisible()
+                .clickOnSearchIcon()
+                .checkSearchBarIsVisible()
+                .enterText(roleCollaboratorFolderModel.name)
+                .resultTableContainsRow(roleCollaboratorFolderModel.name)
+                .clickOnSpecificRow(roleCollaboratorFolderModel.name);
+            contentList.checkContentIsDisplayed('RoleCollaborator' + fileModel.name);
+            contentList.doubleClickRow('RoleCollaborator' + fileModel.name);
+            viewerPage.checkFileIsLoaded();
+            viewerPage.clickCloseButton();
+            contentList.waitForTableBody();
+            contentList.checkDeleteIsDisabled('RoleCollaborator' + fileModel.name);
+            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            contentList.checkActionMenuIsNotDisplayed();
+
+            contentList.metadataContent('RoleCollaborator' + fileModel.name);
+            browser.controlFlow().execute(async () => {
+                await metadataViewPage.editIconClick();
+                metadataViewPage.clickEditPropertyIcons('properties.cm:description');
+                metadataViewPage.enterDescriptionText('newDescription');
+                metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
+                expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('newDescription');
+                metadataViewPage.clickCloseButton();
+
+                contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
+                uploadDialog.fileIsUploaded(testFileModel.name);
+
+                uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+            });
+
+        });
+
+        it('[C277004] Role Coordinator', () => {
+
+            loginPage.loginToContentServicesUsingUserModel(coordinatorUser);
+            contentServicesPage.goToDocumentList();
+            searchDialog
+                .checkSearchIconIsVisible()
+                .clickOnSearchIcon()
+                .checkSearchBarIsVisible()
+                .enterText(roleCoordinatorFolderModel.name)
+                .resultTableContainsRow(roleCoordinatorFolderModel.name)
+                .clickOnSpecificRow(roleCoordinatorFolderModel.name);
+            contentList.checkContentIsDisplayed('RoleCoordinator' + fileModel.name);
+            contentList.doubleClickRow('RoleCoordinator' + fileModel.name);
+            viewerPage.checkFileIsLoaded();
+            viewerPage.clickCloseButton();
+            contentList.waitForTableBody();
+
+            contentList.metadataContent('RoleCoordinator' + fileModel.name);
+            browser.controlFlow().execute(async () => {
+                await metadataViewPage.editIconClick();
+                metadataViewPage.clickEditPropertyIcons('properties.cm:author');
+                metadataViewPage.enterPropertyText('properties.cm:author', 'newAuthor');
+                metadataViewPage.clickUpdatePropertyIcon('properties.cm:author');
+                expect(metadataViewPage.getPropertyText('properties.cm:author')).toEqual('newAuthor');
+                metadataViewPage.clickCloseButton();
+
+                contentServicesPage.uploadFile(pngFileModel.location).checkContentIsDisplayed(pngFileModel.name);
+                uploadDialog.fileIsUploaded(pngFileModel.name);
+
+                uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+                contentList.checkContentIsDisplayed('RoleCoordinator' + fileModel.name);
+                contentList.deleteContent('RoleCoordinator' + fileModel.name);
+                contentList.checkContentIsNotDisplayed('RoleCoordinator' + fileModel.name);
+            });
 
         });
     });
@@ -357,7 +557,7 @@ describe('Permissions Component', function () {
 
         it('[C276994] Role SiteConsumer', () => {
 
-            loginPage.loginToContentServicesUsingUserModel(consumerUser);
+            loginPage.loginToContentServicesUsingUserModel(siteConsumerUser);
             contentServicesPage.goToDocumentList();
             searchDialog
                 .checkSearchIconIsVisible()
