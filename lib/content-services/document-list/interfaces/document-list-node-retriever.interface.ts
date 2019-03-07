@@ -19,7 +19,7 @@ import { Observable } from 'rxjs';
 import { NodeEntry, NodePaging } from '@alfresco/js-api';
 
 export interface DocumentListNodeRetrieverInterface {
-    getNodeChildren(folder: string, opts?: any, includeFields?: string[]): Observable<NodePaging>;
+    getFolder(folder: string, opts?: any, includeFields?: string[]): Observable<NodePaging>;
 
-    getNodeById(nodeId: string, includeFields?: string[]): Observable<NodeEntry>;
+    getFolderNode(nodeId: string, includeFields?: string[]): Observable<NodeEntry>;
 }

@@ -21,7 +21,7 @@ import { NodePaging, NodeEntry } from '@alfresco/js-api';
 
 export abstract class BaseDocumentListService implements DocumentListNodeRetrieverInterface {
 
-    abstract getNodeChildren(folder: string, opts?: any, includeFields?: string[]): Observable<NodePaging>;
+    abstract getFolder(folder: string, opts?: any, includeFields?: string[]): Observable<NodePaging>;
 
-    abstract getNodeById(nodeId: string, includeFields?: string[]): Observable<NodeEntry>;
+    abstract getFolderNode(nodeId: string, includeFields?: string[]): Observable<NodeEntry>;
 }

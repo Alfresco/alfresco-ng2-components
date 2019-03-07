@@ -80,7 +80,7 @@ export class DocumentListService extends BaseDocumentListService {
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
      */
-    getNodeChildren(folder: string, opts?: any, includeFields: string[] = []): Observable<NodePaging> {
+    getFolder(folder: string, opts?: any, includeFields: string[] = []): Observable<NodePaging> {
         let rootNodeId = DocumentListService.ROOT_ID;
         if (opts && opts.rootFolderId) {
             rootNodeId = opts.rootFolderId;
@@ -140,7 +140,7 @@ export class DocumentListService extends BaseDocumentListService {
      * @param includeFields Extra information to include (available options are "aspectNames", "isLink" and "association")
      * @returns Details of the folder
      */
-    getNodeById(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
+    getFolderNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
 
         const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'aspectNames', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
