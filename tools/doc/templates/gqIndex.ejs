@@ -19,7 +19,10 @@
 <%      }
 
         sectionDocs.forEach(document => { -%>
-| [<%= document['title'] %>](<%= relDocPath(document['id']) %>) | <%= document['paragraph']['plaintext'] %> | [Source](<%= relSrcPath(document['heading']['link']['url']) %>) |
+| [<%= document['title'] %>](<%= relDocPath(document['id']) %>) -%>
+<% if (document['status'] && document['status'] !== 'Active') { -%>
+![<%= document['status'] %>](docassets/images/<%= document['status'] %>Icon.png) <% } -%>
+| <%= document['paragraph']['plaintext'] %> | [Source](<%= relSrcPath(document['heading']['link']['url']) %>) |
 <%      });
     }
 -%>
