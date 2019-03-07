@@ -33,6 +33,7 @@ import { ViewerPage } from '../pages/adf/viewerPage';
 import { NotificationPage } from '../pages/adf/notificationPage';
 import CONSTANTS = require('../util/constants');
 import { MetadataViewPage } from '../pages/adf/metadataViewPage';
+import { UploadDialog } from '../pages/adf/dialog/uploadDialog';
 
 describe('Permissions Component', function () {
 
@@ -45,6 +46,7 @@ describe('Permissions Component', function () {
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const notificationPage = new NotificationPage();
+    let uploadDialog = new UploadDialog();
     let fileOwnerUser, filePermissionUser, consumerUser, collaboratorUser, contributorUser, managerUser, file;
     let publicSite, folderName;
 
@@ -61,6 +63,11 @@ describe('Permissions Component', function () {
     let testFileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
         'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+    });
+
+    let pngFileModel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     let groupBody = {
@@ -396,6 +403,9 @@ describe('Permissions Component', function () {
             contentList.metadataContent('Site' + fileModel.name);
             notificationPage.checkNotifyContains('You don\'t have access to do this.');
             contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
+            uploadDialog.fileIsUploaded(pdfFileModel.name);
+
+            uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
         });
 
@@ -428,7 +438,10 @@ describe('Permissions Component', function () {
                 expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
                 metadataViewPage.clickCloseButton();
 
-                contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
+                contentServicesPage.uploadFile(pngFileModel.location).checkContentIsDisplayed(pngFileModel.name);
+                uploadDialog.fileIsUploaded(pngFileModel.name);
+
+                uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
             });
         });
 
@@ -452,16 +465,21 @@ describe('Permissions Component', function () {
                 contentList.metadataContent('Site' + fileModel.name);
                 browser.controlFlow().execute(async () => {
                     await metadataViewPage.editIconClick();
-                    metadataViewPage.clickEditPropertyIcons('properties.cm:title');
-                    metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle');
-                    metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
-                    expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
+                    metadataViewPage.clickEditPropertyIcons('properties.cm:description');
+                    metadataViewPage.enterDescriptionText('newDescription');
+                    metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
+                    expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('newDescription');
                     metadataViewPage.clickCloseButton();
+
+                    contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
+                    uploadDialog.fileIsUploaded(testFileModel.name);
+
+                    uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
                     contentList.checkContentIsDisplayed('Site' + fileModel.name);
                     contentList.deleteContent('Site' + fileModel.name);
                     contentList.checkContentIsNotDisplayed('Site' + fileModel.name);
-                    contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
+
                 });
 
             });
