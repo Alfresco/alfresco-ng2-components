@@ -151,7 +151,7 @@ export class DataTableComponentPage {
     }
 
     getTooltip(columnName, columnValue) {
-        return this.getRow(columnName, columnValue).element(by.css('span')).getAttribute('title');
+        return this.getRow(columnName, columnValue).getAttribute('title');
     }
 
     getFileHyperlink(filename) {
