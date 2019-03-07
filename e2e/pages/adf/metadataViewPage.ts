@@ -231,6 +231,7 @@ export class MetadataViewPage {
 
     clickEditPropertyIcons(propertyName: string) {
         let editPropertyIcon = element(by.css('mat-icon[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
+        Util.waitUntilElementIsVisible(editPropertyIcon);
         Util.waitUntilElementIsClickable(editPropertyIcon);
         editPropertyIcon.click();
     }

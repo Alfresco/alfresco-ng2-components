@@ -58,6 +58,11 @@ describe('Permissions Component', function () {
         'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
+    let testFileModel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TEST.file_location
+    });
+
     let groupBody = {
         id: Util.generateRandomString(),
         displayName: Util.generateRandomString()
@@ -426,5 +431,39 @@ describe('Permissions Component', function () {
                 contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
             });
         });
+
+            it('[C277006] Role SiteManager', () => {
+
+                loginPage.loginToContentServicesUsingUserModel(managerUser);
+                contentServicesPage.goToDocumentList();
+                searchDialog
+                    .checkSearchIconIsVisible()
+                    .clickOnSearchIcon()
+                    .checkSearchBarIsVisible()
+                    .enterText(folderName)
+                    .resultTableContainsRow(folderName)
+                    .clickOnSpecificRow(folderName);
+                contentList.checkContentIsDisplayed('Site' + fileModel.name);
+                contentList.doubleClickRow('Site' + fileModel.name);
+                viewerPage.checkFileIsLoaded();
+                viewerPage.clickCloseButton();
+                contentList.waitForTableBody();
+
+                contentList.metadataContent('Site' + fileModel.name);
+                browser.controlFlow().execute(async () => {
+                    await metadataViewPage.editIconClick();
+                    metadataViewPage.clickEditPropertyIcons('properties.cm:title');
+                    metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle');
+                    metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
+                    expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
+                    metadataViewPage.clickCloseButton();
+
+                    contentList.checkContentIsDisplayed('Site' + fileModel.name);
+                    contentList.deleteContent('Site' + fileModel.name);
+                    contentList.checkContentIsNotDisplayed('Site' + fileModel.name);
+                    contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
+                });
+
+            });
+        });
     });
-});
