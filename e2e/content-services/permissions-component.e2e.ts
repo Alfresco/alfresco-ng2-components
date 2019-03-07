@@ -47,7 +47,8 @@ describe('Permissions Component', function () {
     const metadataViewPage = new MetadataViewPage();
     const notificationPage = new NotificationPage();
     let uploadDialog = new UploadDialog();
-    let folderOwnerUser, consumerUser, siteConsumerUser, contributorUser, managerUser, collaboratorUser, editorUser, coordinatorUser, file;
+    let folderOwnerUser, consumerUser, siteConsumerUser, contributorUser, managerUser, collaboratorUser, editorUser,
+        coordinatorUser, file;
     let publicSite, folderName;
 
     let fileModel = new FileModel({
@@ -86,7 +87,8 @@ describe('Permissions Component', function () {
     let roleCollaboratorFolderModel = new FolderModel({'name': 'roleCollaborator' + Util.generateRandomString()});
     let roleContributorFolderModel = new FolderModel({'name': 'roleContributor' + Util.generateRandomString()});
     let roleEditorFolderModel = new FolderModel({'name': 'roleEditor' + Util.generateRandomString()});
-    let roleConsumerFolder, roleCoordinatorFolder, roleContributorFolder, roleCollaboratorFolder, roleEditorFolder, siteFolder;
+    let roleConsumerFolder, roleCoordinatorFolder, roleContributorFolder, roleCollaboratorFolder, roleEditorFolder,
+        siteFolder;
 
     folderOwnerUser = new AcsUserModel();
     consumerUser = new AcsUserModel();
@@ -645,43 +647,43 @@ describe('Permissions Component', function () {
             });
         });
 
-            it('[C277006] Role SiteManager', () => {
+        it('[C277006] Role SiteManager', () => {
 
-                loginPage.loginToContentServicesUsingUserModel(managerUser);
-                contentServicesPage.goToDocumentList();
-                searchDialog
-                    .checkSearchIconIsVisible()
-                    .clickOnSearchIcon()
-                    .checkSearchBarIsVisible()
-                    .enterText(folderName)
-                    .resultTableContainsRow(folderName)
-                    .clickOnSpecificRow(folderName);
+            loginPage.loginToContentServicesUsingUserModel(managerUser);
+            contentServicesPage.goToDocumentList();
+            searchDialog
+                .checkSearchIconIsVisible()
+                .clickOnSearchIcon()
+                .checkSearchBarIsVisible()
+                .enterText(folderName)
+                .resultTableContainsRow(folderName)
+                .clickOnSpecificRow(folderName);
+            contentList.checkContentIsDisplayed('Site' + fileModel.name);
+            contentList.doubleClickRow('Site' + fileModel.name);
+            viewerPage.checkFileIsLoaded();
+            viewerPage.clickCloseButton();
+            contentList.waitForTableBody();
+
+            contentList.metadataContent('Site' + fileModel.name);
+            browser.controlFlow().execute(async () => {
+                await metadataViewPage.editIconClick();
+                metadataViewPage.clickEditPropertyIcons('properties.cm:description');
+                metadataViewPage.enterDescriptionText('newDescription');
+                metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
+                expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('newDescription');
+                metadataViewPage.clickCloseButton();
+
+                contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
+                uploadDialog.fileIsUploaded(testFileModel.name);
+
+                uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
+
                 contentList.checkContentIsDisplayed('Site' + fileModel.name);
-                contentList.doubleClickRow('Site' + fileModel.name);
-                viewerPage.checkFileIsLoaded();
-                viewerPage.clickCloseButton();
-                contentList.waitForTableBody();
-
-                contentList.metadataContent('Site' + fileModel.name);
-                browser.controlFlow().execute(async () => {
-                    await metadataViewPage.editIconClick();
-                    metadataViewPage.clickEditPropertyIcons('properties.cm:description');
-                    metadataViewPage.enterDescriptionText('newDescription');
-                    metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
-                    expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('newDescription');
-                    metadataViewPage.clickCloseButton();
-
-                    contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
-                    uploadDialog.fileIsUploaded(testFileModel.name);
-
-                    uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
-
-                    contentList.checkContentIsDisplayed('Site' + fileModel.name);
-                    contentList.deleteContent('Site' + fileModel.name);
-                    contentList.checkContentIsNotDisplayed('Site' + fileModel.name);
-
-                });
+                contentList.deleteContent('Site' + fileModel.name);
+                contentList.checkContentIsNotDisplayed('Site' + fileModel.name);
 
             });
+
         });
     });
+});
