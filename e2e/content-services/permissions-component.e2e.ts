@@ -49,7 +49,7 @@ describe('Permissions Component', function () {
     let uploadDialog = new UploadDialog();
     let folderOwnerUser, consumerUser, siteConsumerUser, contributorUser, managerUser, collaboratorUser, editorUser,
         coordinatorUser, file;
-    let publicSite, folderName;
+    let publicSite, privateSite, folderName;
 
     let fileModel = new FileModel({
         'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -88,7 +88,7 @@ describe('Permissions Component', function () {
     let roleContributorFolderModel = new FolderModel({'name': 'roleContributor' + Util.generateRandomString()});
     let roleEditorFolderModel = new FolderModel({'name': 'roleEditor' + Util.generateRandomString()});
     let roleConsumerFolder, roleCoordinatorFolder, roleContributorFolder, roleCollaboratorFolder, roleEditorFolder,
-        siteFolder;
+        siteFolder, privateSiteFile;
 
     folderOwnerUser = new AcsUserModel();
     consumerUser = new AcsUserModel();
@@ -117,10 +117,13 @@ describe('Permissions Component', function () {
         groupId = group.entry.id;
 
         await alfrescoJsApi.login(folderOwnerUser.id, folderOwnerUser.password);
-        let siteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
+        let publicSiteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
+        let privateSiteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
         folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
-        let publicSiteBody = {visibility: 'PUBLIC', title: siteName};
+        let publicSiteBody = {visibility: 'PUBLIC', title: publicSiteName};
+        let privateSiteBody = {visibility: 'PRIVATE', title: privateSiteName};
         publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
+        privateSite = await alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
 
         await alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
             id: siteConsumerUser.id,
@@ -142,12 +145,18 @@ describe('Permissions Component', function () {
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
+        await alfrescoJsApi.core.sitesApi.addSiteMember(privateSite.entry.id, {
+            id: managerUser.id,
+            role: CONSTANTS.CS_USER_ROLES.MANAGER
+        });
+
         siteFolder = await uploadActions.createFolder(alfrescoJsApi, folderName, publicSite.entry.guid);
         roleConsumerFolder = await uploadActions.createFolder(alfrescoJsApi, roleConsumerFolderModel.name, '-my-');
         roleCoordinatorFolder = await uploadActions.createFolder(alfrescoJsApi, roleCoordinatorFolderModel.name, '-my-');
         roleContributorFolder = await uploadActions.createFolder(alfrescoJsApi, roleContributorFolderModel.name, '-my-');
         roleCollaboratorFolder = await uploadActions.createFolder(alfrescoJsApi, roleCollaboratorFolderModel.name, '-my-');
         roleEditorFolder = await uploadActions.createFolder(alfrescoJsApi, roleEditorFolderModel.name, '-my-');
+        privateSiteFile = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'privateSite' + fileModel.name, privateSite.entry.id);
 
         await alfrescoJsApi.core.nodesApi.updateNode(roleConsumerFolder.entry.id,
             {
@@ -199,6 +208,17 @@ describe('Permissions Component', function () {
                     locallySet: [{
                         authorityId: editorUser.getId(),
                         name: 'Editor',
+                        accessStatus: 'ALLOWED'
+                    }]
+                }
+            });
+
+        await alfrescoJsApi.core.nodesApi.updateNode(privateSiteFile.entry.id,
+            {
+                permissions: {
+                    locallySet: [{
+                        authorityId: managerUser.getId(),
+                        name: 'SiteConsumer',
                         accessStatus: 'ALLOWED'
                     }]
                 }
