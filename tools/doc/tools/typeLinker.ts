@@ -20,6 +20,7 @@ const docFolder = path.resolve("docs");
 const adfLibNames = ["core", "content-services", "insights", "process-services", "process-services-cloud", "extensions"];
 
 let externalNameLinks;
+let linkOverrides;
 
 export function processDocs(mdCache, aggData, errorMessages) {
     initPhase(aggData, mdCache);
@@ -34,6 +35,12 @@ export function processDocs(mdCache, aggData, errorMessages) {
 
 function initPhase(aggData, mdCache) {
     externalNameLinks = aggData.config.externalNameLinks;
+
+    linkOverrides = {};
+    aggData.config.linkOverrides.forEach(override => {
+        linkOverrides[override.toLowerCase()] = 1;
+    });
+
     aggData.docFiles = {};
     aggData.nameLookup = new SplitNameLookup();
 
@@ -346,7 +353,11 @@ function resolveTypeLink(aggData, docFilePath, text): string {
     let classInfo = aggData.classInfo[possTypeName];
 
     //if (ref && isLinkable(ref.kind)) {
-    if (classInfo) {
+    if (linkOverrides[possTypeName.toLowerCase()]) {
+        return '';
+    } else if (externalNameLinks[possTypeName]) {
+        return externalNameLinks[possTypeName];
+    } else if (classInfo) {
         let kebabName = ngHelpers.kebabifyClassName(possTypeName);
         let possDocFile = aggData.docFiles[kebabName];
 
@@ -360,8 +371,6 @@ function resolveTypeLink(aggData, docFilePath, text): string {
         }
 
         return url;
-    } else if (externalNameLinks[possTypeName]) {
-        return externalNameLinks[possTypeName];
     } else {
         return "";
     }
@@ -383,8 +392,6 @@ function fixRelDocUrl(docPathFrom: string, docPathTo: string) {
     let relDocPathFrom = docPathFrom.substring(docPathFrom.indexOf('docs'));
     let docPathSegments = relDocPathFrom.split(/[\\\/]/);
     let dotPathPart = '';
-
-    console.log(`Fixing: ${docPathFrom} ${docPathTo}`);
 
     for (let i = 0; i < (docPathSegments.length - 2); i++) {
         dotPathPart += '../';

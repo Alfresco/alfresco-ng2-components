@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var unist = require("../unistHelpers");
 var ngHelpers = require("../ngHelpers");
@@ -11,6 +11,7 @@ var includedNodeTypes = [
 var docFolder = path.resolve("docs");
 var adfLibNames = ["core", "content-services", "insights", "process-services", "process-services-cloud", "extensions"];
 var externalNameLinks;
+var linkOverrides;
 function processDocs(mdCache, aggData, errorMessages) {
     initPhase(aggData, mdCache);
     var pathnames = Object.keys(mdCache);
@@ -21,6 +22,10 @@ function processDocs(mdCache, aggData, errorMessages) {
 exports.processDocs = processDocs;
 function initPhase(aggData, mdCache) {
     externalNameLinks = aggData.config.externalNameLinks;
+    linkOverrides = {};
+    aggData.config.linkOverrides.forEach(function (override) {
+        linkOverrides[override.toLowerCase()] = 1;
+    });
     aggData.docFiles = {};
     aggData.nameLookup = new SplitNameLookup();
     /*
@@ -286,7 +291,13 @@ function resolveTypeLink(aggData, docFilePath, text) {
 */
     var classInfo = aggData.classInfo[possTypeName];
     //if (ref && isLinkable(ref.kind)) {
-    if (classInfo) {
+    if (linkOverrides[possTypeName.toLowerCase()]) {
+        return '';
+    }
+    else if (externalNameLinks[possTypeName]) {
+        return externalNameLinks[possTypeName];
+    }
+    else if (classInfo) {
         var kebabName = ngHelpers.kebabifyClassName(possTypeName);
         var possDocFile = aggData.docFiles[kebabName];
         //let url = "../../" + classInfo.sourcePath;
@@ -296,9 +307,6 @@ function resolveTypeLink(aggData, docFilePath, text) {
             url = fixRelDocUrl(docFilePath, possDocFile);
         }
         return url;
-    }
-    else if (externalNameLinks[possTypeName]) {
-        return externalNameLinks[possTypeName];
     }
     else {
         return "";
@@ -317,7 +325,6 @@ function fixRelDocUrl(docPathFrom, docPathTo) {
     var relDocPathFrom = docPathFrom.substring(docPathFrom.indexOf('docs'));
     var docPathSegments = relDocPathFrom.split(/[\\\/]/);
     var dotPathPart = '';
-    console.log("Fixing: " + docPathFrom + " " + docPathTo);
     for (var i = 0; i < (docPathSegments.length - 2); i++) {
         dotPathPart += '../';
     }
