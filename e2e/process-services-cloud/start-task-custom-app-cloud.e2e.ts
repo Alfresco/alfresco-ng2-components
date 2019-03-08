@@ -62,6 +62,7 @@ describe('Start Task', () => {
 
     it('[C290166] Should be possible to cancel a task', () => {
         tasksCloudDemoPage.openNewTaskForm();
+        startTask.checkFormIsDisplayed();
         startTask.checkStartButtonIsDisabled()
                  .blur(startTask.name)
                  .checkValidationErrorIsDisplayed(requiredError);
@@ -75,6 +76,7 @@ describe('Start Task', () => {
 
     it('[C290180] Should be able to create a new standalone task', () => {
         tasksCloudDemoPage.openNewTaskForm();
+        startTask.checkFormIsDisplayed();
         startTask.addName(standaloneTaskName)
                  .addDescription('descriptions')
                  .addDueDate('12/12/2018')
@@ -85,6 +87,7 @@ describe('Start Task', () => {
 
     it('[C290181] Should be displayed an error message if task name exceed 255 characters', () => {
         tasksCloudDemoPage.openNewTaskForm();
+        startTask.checkFormIsDisplayed();
         startTask.addName(taskName255Characters)
                  .checkStartButtonIsEnabled();
         startTask.addName(taskNameBiggerThen255Characters)
@@ -107,8 +110,10 @@ describe('Start Task', () => {
 
     it('[C290182] Should be possible to assign the task to another user', () => {
         tasksCloudDemoPage.openNewTaskForm();
+        startTask.checkFormIsDisplayed();
         startTask.addName(standaloneTaskName);
         peopleCloudComponent.searchAssigneeAndSelect('Super Admin');
+        startTask.checkStartButtonIsEnabled();
         startTask.clickStartButton();
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
         expect(tasksCloudDemoPage.getActiveFilterName()).toBe('My Tasks');
@@ -117,15 +122,18 @@ describe('Start Task', () => {
 
     it('[C291953] Assignee field should display the logged user as default', () => {
         tasksCloudDemoPage.openNewTaskForm();
+        startTask.checkFormIsDisplayed();
         expect(peopleCloudComponent.getAssignee()).toContain('Admin', 'does not contain Admin');
         startTask.clickCancelButton();
     });
 
     it('[C291956] Should be able to create a new standalone task without assignee', () => {
         tasksCloudDemoPage.openNewTaskForm();
-        startTask.addName(unassignedTaskName);
+        startTask.checkFormIsDisplayed();
         startTask.clearField(peopleCloudComponent.peopleCloudSearch);
+        startTask.addName(unassignedTaskName);
         startTask.clickStartButton();
+        startTask.checkStartButtonIsEnabled();
         tasksCloudDemoPage.editTaskFilterCloudComponent()
             .clickCustomiseFilterHeader()
             .setStateFilterDropDown('CREATED')
@@ -136,13 +144,14 @@ describe('Start Task', () => {
     it('[C297675] Should create a task unassigned when assignee field is empty in Start Task form', () => {
 
         tasksCloudDemoPage.openNewTaskForm();
+        startTask.checkFormIsDisplayed();
         startTask.addName(unassignedTaskName);
         startTask.clearField(peopleCloudComponent.peopleCloudSearch);
         startTask.clickStartButton();
         tasksCloudDemoPage.editTaskFilterCloudComponent()
             .clickCustomiseFilterHeader()
-            .setStateFilterDropDown('CREATED')
-            .clearAssignment();
+            .clearAssignment()
+            .setStateFilterDropDown('CREATED');
         tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unassignedTaskName);
         let taskId = tasksCloudDemoPage.taskListCloudComponent().getIdCellValue(unassignedTaskName);
@@ -150,7 +159,6 @@ describe('Start Task', () => {
         expect(taskDetailsPage.getTaskDetailsHeader()).toContain(taskId);
         expect(taskDetailsPage.getPropertyLabel('assignee')).toBe('Assignee');
         expect(taskDetailsPage.getPropertyValue('assignee')).toBe('No assignee');
-
     });
 
 });
