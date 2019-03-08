@@ -97,7 +97,7 @@ describe('Enable infinite scrolling', () => {
         contentServicesPage.clickLoadMoreButton();
         for (let i = 0; i < nrOfDeletedFiles; i++) {
             contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
-        };
+        }
         expect(contentServicesPage.getContentList().getAllDisplayedRows()).toEqual(nrOfDeletedFiles);
 
         contentServicesPage.getUploadAreaDocumentList().clickRowToSelectWithRoot(deleteFileNames[nrOfDeletedFiles - 1])
@@ -106,7 +106,7 @@ describe('Enable infinite scrolling', () => {
 
         for (let i = 0; i < nrOfDeletedFiles - 1; i++) {
             contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
-        };
+        }
     });
 
 });
