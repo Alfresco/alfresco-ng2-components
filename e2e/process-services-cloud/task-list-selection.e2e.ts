@@ -22,7 +22,6 @@ import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
-import { TaskListCloudConfiguration } from './taskListCloud.config';
 import { Util } from '../util/util';
 import { Tasks } from '../actions/APS-cloud/tasks';
 import { browser } from 'protractor';
