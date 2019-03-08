@@ -252,7 +252,7 @@ describe('Task Details component', () => {
         });
 
         let taskModel = new TaskModel(allTasks.data[0]);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskModel.getName());
+        taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         expect(taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
@@ -289,7 +289,7 @@ describe('Task Details component', () => {
         });
 
         let taskModel = new TaskModel(allTasks.data[0]);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskModel.getName());
+        taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         expect(taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
@@ -322,7 +322,7 @@ describe('Task Details component', () => {
         });
 
         let taskModel = new TaskModel(getTaskResponse);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskModel.getName());
+        taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         expect(taskPage.taskDetails().getDescription()).toEqual(CONSTANTS.TASK_DETAILS.NO_DESCRIPTION);
