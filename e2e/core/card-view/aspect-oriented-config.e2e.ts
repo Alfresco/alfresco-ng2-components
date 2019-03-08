@@ -42,6 +42,7 @@ describe('Aspect oriented config', () => {
     const navigationBarPage = new NavigationBarPage();
     const configEditorPage = new ConfigEditorPage();
     let contentServicesPage = new ContentServicesPage();
+    let modelOne, modelOneName = 'modelOne', emptyAspectName = 'emptyAspect';
 
     let acsUser = new AcsUserModel();
 
@@ -60,6 +61,16 @@ describe('Aspect oriented config', () => {
         });
 
         await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+        try {
+            await this.alfrescoJsApi.core.customModelApi.createCustomModel('ACTIVE', modelOneName, modelOneName, modelOneName, modelOneName);
+        } catch(e) {
+        };
+
+        try {
+            await this.alfrescoJsApi.core.customModelApi.createCustomAspect(modelOneName, emptyAspectName, null, emptyAspectName, emptyAspectName);
+        } catch(e) {
+        };
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
