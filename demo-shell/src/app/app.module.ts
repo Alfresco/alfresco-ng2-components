@@ -79,6 +79,7 @@ import { TemplateDemoComponent } from './components/template-list/template-demo.
 import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
 import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-settings.component';
 import { AppExtensionsModule } from './app-extension.module';
+import { ProcessDetailsCloudDemoComponent } from './components/app-layout/cloud/process-details-cloud-demo.component';
 
 @NgModule({
     imports: [
@@ -137,6 +138,7 @@ import { AppExtensionsModule } from './app-extension.module';
         TasksCloudDemoComponent,
         ProcessesCloudDemoComponent,
         TaskDetailsCloudDemoComponent,
+        ProcessDetailsCloudDemoComponent,
         StartTaskCloudDemoComponent,
         StartProcessCloudDemoComponent,
         CloudBreadcrumbsComponent,

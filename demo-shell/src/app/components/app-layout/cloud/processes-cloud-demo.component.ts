@@ -100,8 +100,8 @@ export class ProcessesCloudDemoComponent implements OnInit {
         this.selectedRows = [];
     }
 
-    onRowClick($event) {
-        this.selectedRow = $event;
+    onRowClick(processInstanceId) {
+        this.router.navigate([`/cloud/${this.appName}/process-details/${processInstanceId}`]);
     }
 
     onFilterChange(query: any) {

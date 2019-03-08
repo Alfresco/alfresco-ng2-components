@@ -48,6 +48,7 @@ import { StartTaskCloudDemoComponent } from './components/app-layout/cloud/start
 import { StartProcessCloudDemoComponent } from './components/app-layout/cloud/start-process-cloud-demo.component';
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
 import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/people-groups-cloud-demo.component';
+import { ProcessDetailsCloudDemoComponent } from './components/app-layout/cloud/process-details-cloud-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -182,7 +183,12 @@ export const appRoutes: Routes = [
                             {
                                 path: 'task-details/:taskId',
                                 component: TaskDetailsCloudDemoComponent
+                            },
+                            {
+                                path: 'process-details/:processInstanceId',
+                                component: ProcessDetailsCloudDemoComponent
                             }
+
                         ]
                     }
                 ]
