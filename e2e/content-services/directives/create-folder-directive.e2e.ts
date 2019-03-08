@@ -20,7 +20,6 @@ import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
 import { CreateFolderDialog } from '../../pages/adf/dialog/createFolderDialog';
 import { NotificationPage } from '../../pages/adf/notificationPage';
 import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
-import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import TestConfig = require('../../test.config');
@@ -34,7 +33,6 @@ describe('Create folder directive', function () {
     let createFolderDialog = new CreateFolderDialog();
     let notificationPage = new NotificationPage();
     let metadataViewPage = new MetadataViewPage();
-    let contentListPage = new ContentListPage();
 
     let acsUser = new AcsUserModel();
 
@@ -103,7 +101,7 @@ describe('Create folder directive', function () {
         contentServicesPage.createNewFolder(folderName);
         contentServicesPage.checkContentIsDisplayed(folderName);
 
-        contentServicesPage.navigateToFolder(folderName);
+        contentServicesPage.doubleClickRow(folderName);
 
         contentServicesPage.createNewFolder(folderName);
         contentServicesPage.checkContentIsDisplayed(folderName);
@@ -122,7 +120,7 @@ describe('Create folder directive', function () {
 
         contentServicesPage.checkContentIsDisplayed(folderName);
 
-        contentListPage.metadataContent(folderName);
+        contentServicesPage.metadataContent(folderName);
 
         expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('this is the description');
     });

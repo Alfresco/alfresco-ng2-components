@@ -88,7 +88,8 @@ describe('Comment Component', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.navigateToDocumentList();
+        navigationBar.clickContentServicesButton();
+        contentServicesPage.waitForTableBody();
 
         done();
     });
@@ -195,7 +196,7 @@ describe('Comment Component', () => {
 
             loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-            contentServicesPage.navigateToDocumentList();
+            navigationBar.clickContentServicesButton();
 
             done();
         });

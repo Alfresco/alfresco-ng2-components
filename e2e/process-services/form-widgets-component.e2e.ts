@@ -84,7 +84,7 @@ describe('Form widgets', () => {
             taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             taskPage.createNewTask().addName(newTask).addDescription('Description').addForm(app.formName).clickStartButton()
                 .then(() => {
-                    taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(newTask);
+                    taskPage.tasksListPage().checkContentIsDisplayed(newTask);
                     taskPage.formFields().checkFormIsDisplayed();
                     expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
                 })

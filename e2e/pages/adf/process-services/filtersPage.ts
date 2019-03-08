@@ -17,13 +17,12 @@
 
 import { by, element } from 'protractor';
 import { Util } from '../../../util/util';
-import { ContentListPage } from '../dialog/contentListPage';
+import { DataTableComponentPage } from '../dataTableComponentPage';
 
 export class FiltersPage {
 
     activeFilter = element(by.css('mat-list-item[class*="active"]'));
-    nameColumn = by.css('div[class*="adf-datatable-body"] div[class*="adf-datatable-row"] div[class*="--text"] span');
-    contentList = new ContentListPage();
+    dataTable = new DataTableComponentPage();
 
     getActiveFilter() {
         Util.waitUntilElementIsVisible(this.activeFilter);
@@ -38,11 +37,11 @@ export class FiltersPage {
     }
 
     sortByName(sortOrder) {
-        this.contentList.sortByName(sortOrder);
+        this.dataTable.sortByColumn(sortOrder, 'name');
     }
 
     getAllRowsNameColumn() {
-        return this.contentList.getAllRowsColumnValues(this.nameColumn);
+        return this.dataTable.getAllRowsColumnValues('Name');
     }
 
 }

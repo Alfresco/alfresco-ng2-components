@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-import { DataTablePage } from '../../pages/adf/dataTablePage';
+import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
@@ -42,7 +42,7 @@ describe('Search Number Range Filter', () => {
     const searchResults = new SearchResultsPage();
     const navigationBar = new NavigationBarPage();
     const configEditor = new ConfigEditorPage();
-    const dataTable = new DataTablePage();
+    const dataTable = new DataTableComponentPage();
 
     const acsUser = new AcsUserModel();
 
@@ -171,7 +171,7 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getNodeIdFirstElement();
+            let firstResult = await dataTable.getFirstElementDetail('Node id');
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes <= toSize).toBe(true);
             });
@@ -196,7 +196,7 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getNodeIdFirstElement();
+            let firstResult = await dataTable.getFirstElementDetail('Node id');
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes <= toSize).toBe(true);
             });
@@ -208,7 +208,7 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getNodeIdFirstElement();
+            let firstResult = await dataTable.getFirstElementDetail('Node id');
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes <= toSize).toBe(true);
                 let name = node.entry.name;
@@ -237,7 +237,7 @@ describe('Search Number Range Filter', () => {
         searchResults.tableIsLoaded();
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getNodeIdFirstElement();
+            let firstResult = await dataTable.getFirstElementDetail('Node id');
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes <= sliderSize).toBe(true);
             });
@@ -252,7 +252,7 @@ describe('Search Number Range Filter', () => {
         searchResults.tableIsLoaded();
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getNodeIdFirstElement();
+            let firstResult = await dataTable.getFirstElementDetail('Node id');
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes >= 1).toBe(true);
                 await expect(node.entry.content.sizeInBytes <= sliderSize).toBe(true);
@@ -297,7 +297,7 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getNodeIdFirstElement();
+            let firstResult = await dataTable.getFirstElementDetail('Node id');
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes).toEqual(0);
             });
@@ -328,7 +328,7 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getNodeIdFirstElement();
+            let firstResult = await dataTable.getFirstElementDetail('Node id');
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes <= 1).toBe(true);
             });
@@ -340,7 +340,7 @@ describe('Search Number Range Filter', () => {
         expect(sizeRangeFilter.getToNumber()).toEqual('');
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getNodeIdFirstElement();
+            let firstResult = await dataTable.getFirstElementDetail('Node id');
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes >= 1).toBe(true);
             });
@@ -426,7 +426,7 @@ describe('Search Number Range Filter', () => {
             searchResults.sortByCreated(false);
 
             browser.controlFlow().execute(async () => {
-                let firstResult = await dataTable.getNodeIdFirstElement();
+                let firstResult = await dataTable.getFirstElementDetail('Node id');
                 await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                     await expect((node.entry.createdAt.getFullYear()) <= toYear).toBe(true);
                 });
@@ -435,7 +435,7 @@ describe('Search Number Range Filter', () => {
             searchResults.sortByCreated(true);
 
             browser.controlFlow().execute(async () => {
-                let firstResult = await dataTable.getNodeIdFirstElement();
+                let firstResult = await dataTable.getFirstElementDetail('Node id');
                 await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                     await expect((node.entry.createdAt.getFullYear()) >= fromYear).toBe(true);
                 });

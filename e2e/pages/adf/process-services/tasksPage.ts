@@ -163,11 +163,11 @@ export class TasksPage {
     }
 
     clickSortByNameAsc() {
-        return this.tasksListPage().getDataTable().sortByColumn(true, this.sortByName);
+        return this.tasksListPage().getDataTable().sortByColumn(true, 'name');
     }
 
     clickSortByNameDesc() {
-        return this.tasksListPage().getDataTable().sortByColumn(false, this.sortByName);
+        return this.tasksListPage().getDataTable().sortByColumn(false, 'name');
     }
 
 }

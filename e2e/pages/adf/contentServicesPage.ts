@@ -17,10 +17,9 @@
 
 import TestConfig = require('../../test.config');
 import { Util } from '../../util/util';
-import { ContentListPage } from './dialog/contentListPage';
+import { DocumentListPage } from './content-services/documentListPage';
 import { CreateFolderDialog } from './dialog/createFolderDialog';
 import { CreateLibraryDialog } from './dialog/createLibraryDialog';
-import { NavigationBarPage } from './navigationBarPage';
 import { NodeActions } from '../../actions/ACS/node.actions';
 import { DropActions } from '../../actions/drop.actions';
 import { by, element, protractor, $$, browser } from 'protractor';
@@ -29,13 +28,12 @@ import path = require('path');
 
 export class ContentServicesPage {
 
-    contentList = new ContentListPage();
+    contentList = new DocumentListPage(element.all(by.css('adf-upload-drag-area adf-document-list')).first());
     createFolderDialog = new CreateFolderDialog();
     nodeActions = new NodeActions();
     createLibraryDialog = new CreateLibraryDialog();
     dragAndDropAction = new DropActions();
     uploadBorder = element(by.id('document-list-container'));
-    tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
     contentServices = element(by.css('a[data-automation-id="Content Services"]'));
     currentFolder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
     createFolderButton = element(by.css('button[data-automation-id="create-new-folder"]'));
@@ -66,21 +64,94 @@ export class ContentServicesPage {
     copyButton = element(by.css('button[data-automation-id="content-node-selector-actions-choose"]'));
     searchInputElement = element(by.css('input[data-automation-id="content-node-selector-search-input"]'));
     shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
+    nameColumnHeader = 'name';
+    createdByColumnHeader = 'createdByUser.displayName';
+    createdColumnHeader = 'createdAt';
+    deleteContentElement = element(by.css('button[data-automation-id*="DELETE"]'));
+    metadataAction = element(by.css('button[data-automation-id*="METADATA"]'));
+    versionManagerAction = element(by.css('button[data-automation-id*="VERSIONS"]'));
+    moveContentElement = element(by.css('button[data-automation-id*="MOVE"]'));
+    copyContentElement = element(by.css('button[data-automation-id*="COPY"]'));
+    lockContentElement = element(by.css('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]'));
+    downloadContent = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
     siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
 
-    getUploadAreaDocumentList() {
-        return new ContentListPage(element(by.css('adf-upload-drag-area')));
+    pressContextMenuActionNamed(actionName) {
+        let actionButton = this.checkContextActionIsVisible(actionName);
+        actionButton.click();
+    }
+
+    checkContextActionIsVisible(actionName) {
+        let actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
+        Util.waitUntilElementIsVisible(actionButton);
+        Util.waitUntilElementIsClickable(actionButton);
+        return actionButton;
+    }
+
+    getDocumentList() {
+        return this.contentList;
+    }
+
+    checkLockedIcon(content) {
+        return this.contentList.checkLockedIcon(content);
+    }
+
+    checkUnlockedIcon(content) {
+        return this.contentList.checkUnlockedIcon(content);
+    }
+
+    checkDeleteIsDisabled(content) {
+        this.contentList.clickOnActionMenu(content);
+        this.waitForContentOptions();
+        let disabledDelete = element(by.css(`button[data-automation-id*='DELETE'][disabled='true']`));
+        Util.waitUntilElementIsVisible(disabledDelete);
+    }
+
+    deleteContent(content) {
+        this.contentList.clickOnActionMenu(content);
+        this.waitForContentOptions();
+        this.deleteContentElement.click();
+    }
+
+    metadataContent(content) {
+        this.contentList.clickOnActionMenu(content);
+        this.waitForContentOptions();
+        this.metadataAction.click();
+    }
+
+    versionManagerContent(content) {
+        this.contentList.clickOnActionMenu(content);
+        this.waitForContentOptions();
+        this.versionManagerAction.click();
+    }
+
+    copyContent(content) {
+        this.contentList.clickOnActionMenu(content);
+        this.copyContentElement.click();
+    }
+
+    lockContent(content) {
+        this.contentList.clickOnActionMenu(content);
+        this.lockContentElement.click();
+    }
+
+    waitForContentOptions() {
+        Util.waitUntilElementIsVisible(this.copyContentElement);
+        Util.waitUntilElementIsVisible(this.moveContentElement);
+        Util.waitUntilElementIsVisible(this.deleteContentElement);
+        Util.waitUntilElementIsVisible(this.downloadContent);
     }
 
     clickFileHyperlink(fileName) {
-        let hyperlink = this.contentList.getFileHyperlink(fileName);
+        let hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
+
         Util.waitUntilElementIsClickable(hyperlink);
         hyperlink.click();
         return this;
     }
 
     checkFileHyperlinkIsEnabled(fileName) {
-        let hyperlink = this.contentList.getFileHyperlink(fileName);
+        let hyperlink = this.contentList.dataTablePage().getFileHyperlink(fileName);
         Util.waitUntilElementIsVisible(hyperlink);
         return this;
     }
@@ -93,57 +164,27 @@ export class ContentServicesPage {
     }
 
     getElementsDisplayedCreated() {
-        let deferred = protractor.promise.defer();
-        let fileCreatedLocator = this.contentList.getColumnLocator('Created');
-        Util.waitUntilElementIsVisible(element.all(fileCreatedLocator).first());
-        let initialList = [];
-
-        element.all(fileCreatedLocator).each((item) => {
-            item.getAttribute('title').then((dateText) => {
-                if (dateText !== '') {
-                    let date = new Date(dateText);
-                    initialList.push(date);
-                }
-            });
-        }).then(function () {
-            deferred.fulfill(initialList);
-        });
-
-        return deferred.promise;
+        return this.contentList.dataTablePage().getAllRowsColumnValues('Created');
     }
 
     getElementsDisplayedSize() {
-        let deferred = protractor.promise.defer();
-        let fileSizeLocator = this.contentList.getColumnLocator('Size');
-        Util.waitUntilElementIsVisible(element.all(fileSizeLocator).first());
-        let initialList = [];
-
-        element.all(fileSizeLocator).each(function (item) {
-            item.getAttribute('title').then((sizeText) => {
-                if (sizeText !== '') {
-                    let size = Number(sizeText);
-                    initialList.push(size);
-                }
-            });
-        }).then(function () {
-            deferred.fulfill(initialList);
-        });
-
-        return deferred.promise;
+        return this.contentList.dataTablePage().getAllRowsColumnValues('Size');
     }
 
     getElementsDisplayedAuthor(alfrescoJsApi) {
         let deferred = protractor.promise.defer();
+        let initialList = [];
         let idList = this.getElementsDisplayedId();
         let numberOfElements = this.numberOfResultsDisplayed();
         this.nodeActions.getNodesDisplayed(alfrescoJsApi, idList, numberOfElements).then((nodes) => {
-            let initialList = [];
-
             nodes.forEach((item) => {
-                if (item.entry.createdByUser.id !== '') {
-                    initialList.push(item.entry.createdByUser.id);
-                }
+                item.entry.createdByUser.id.then((author) => {
+                    if (author !== '') {
+                        initialList.push(author);
+                    }
+                });
             });
+        }).then(function () {
             deferred.fulfill(initialList);
         });
 
@@ -151,41 +192,11 @@ export class ContentServicesPage {
     }
 
     getElementsDisplayedName() {
-        let deferred = protractor.promise.defer();
-        let fileNameLocator = this.contentList.getColumnLocator('Display name');
-        Util.waitUntilElementIsVisible(element.all(fileNameLocator).first());
-        let initialList = [];
-
-        element.all(fileNameLocator).each((item) => {
-            item.getText().then(function (name) {
-                if (name !== '') {
-                    initialList.push(name);
-                }
-            });
-        }).then(function () {
-            deferred.fulfill(initialList);
-        });
-
-        return deferred.promise;
+        return this.contentList.dataTablePage().getAllRowsColumnValues('Display name');
     }
 
     getElementsDisplayedId() {
-        let deferred = protractor.promise.defer();
-        let fileIdLocator = this.contentList.getColumnLocator('Node id');
-        Util.waitUntilElementIsVisible(element.all(fileIdLocator).first());
-        let initialList = [];
-
-        element.all(fileIdLocator).each((item) => {
-            item.getText().then(function (text) {
-                if (text !== '') {
-                    initialList.push(text);
-                }
-            });
-        }).then(function () {
-            deferred.fulfill(initialList);
-        });
-
-        return deferred.promise;
+        return this.contentList.dataTablePage().getAllRowsColumnValues('Node id');
     }
 
     checkElementsSortedAsc(elements) {
@@ -260,7 +271,7 @@ export class ContentServicesPage {
     }
 
     waitForTableBody() {
-        Util.waitUntilElementIsVisible(this.tableBody);
+        this.contentList.waitForTableBody();
     }
 
     goToDocumentList() {
@@ -275,14 +286,8 @@ export class ContentServicesPage {
         this.contentServices.click();
     }
 
-    navigateToDocumentList() {
-        let navigationBarPage = new NavigationBarPage();
-        navigationBarPage.clickContentServicesButton();
-        this.checkAcsContainer();
-    }
-
     numberOfResultsDisplayed() {
-        return this.contentList.getAllDisplayedRows();
+        return this.contentList.dataTablePage().numberOfRows();
     }
 
     currentFolderName() {
@@ -294,59 +299,51 @@ export class ContentServicesPage {
         return deferred.promise;
     }
 
-    getTooltip(content) {
-        return this.contentList.getRowByRowName(content).element(this.tooltip).getAttribute('title');
-    }
-
-    getBreadcrumbTooltip(nodeName: string) {
-        return element(by.css(`nav[data-automation-id="breadcrumb"] div[title="${nodeName}"]`)).getAttribute('title');
-    }
-
     getAllRowsNameColumn() {
-        return this.contentList.getAllRowsNameColumn();
+        return this.contentList.getAllRowsColumnValues('Display name');
     }
 
     sortByName(sortOrder) {
-        this.contentList.sortByName(sortOrder);
+        return this.contentList.dataTable.sortByColumn(sortOrder, this.nameColumnHeader);
     }
 
     sortByAuthor(sortOrder) {
-        this.contentList.sortByAuthor(sortOrder);
+        return this.contentList.dataTable.sortByColumn(sortOrder, this.createdByColumnHeader);
     }
 
     sortByCreated(sortOrder) {
-        return this.contentList.sortByCreated(sortOrder);
+        return this.contentList.dataTable.sortByColumn(sortOrder, this.createdColumnHeader);
     }
 
     sortAndCheckListIsOrderedByName(sortOrder) {
         this.sortByName(sortOrder);
         let deferred = protractor.promise.defer();
-        this.contentList.checkListIsOrderedByNameColumn(sortOrder).then((result) => {
+        this.checkListIsSortedByNameColumn(sortOrder).then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;
     }
 
     async checkListIsSortedByNameColumn(sortOrder) {
-        await this.contentList.checkListIsOrderedByNameColumn(sortOrder);
+        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, 'Display name');
     }
 
     async checkListIsSortedByCreatedColumn(sortOrder) {
-        await this.contentList.checkListIsOrderedByCreatedColumn(sortOrder);
+        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, 'Created');
     }
 
     async checkListIsSortedByAuthorColumn(sortOrder) {
-        await this.contentList.checkListIsOrderedByAuthorColumn(sortOrder);
+        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, 'Created by');
     }
 
     async checkListIsSortedBySizeColumn(sortOrder) {
-        await this.contentList.checkListIsOrderedBySizeColumn(sortOrder);
+        return await this.contentList.dataTablePage().checkListIsSorted(sortOrder, 'Size');
     }
 
     sortAndCheckListIsOrderedByAuthor(sortOrder) {
         this.sortByAuthor(sortOrder);
         let deferred = protractor.promise.defer();
-        this.contentList.checkListIsOrderedByAuthorColumn(sortOrder).then((result) => {
+        this.checkListIsSortedByAuthorColumn(sortOrder).then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;
@@ -355,15 +352,10 @@ export class ContentServicesPage {
     sortAndCheckListIsOrderedByCreated(sortOrder) {
         this.sortByCreated(sortOrder);
         let deferred = protractor.promise.defer();
-        this.contentList.checkListIsOrderedByCreatedColumn(sortOrder).then((result) => {
+        this.checkListIsSortedByCreatedColumn(sortOrder).then((result) => {
             deferred.fulfill(result);
         });
         return deferred.promise;
-    }
-
-    navigateToFolder(folder) {
-        this.contentList.navigateToFolder(folder);
-        return this;
     }
 
     doubleClickRow(nodeName) {
@@ -393,7 +385,7 @@ export class ContentServicesPage {
     }
 
     checkContentIsDisplayed(content) {
-        this.contentList.checkContentIsDisplayed(content);
+        this.contentList.dataTablePage().checkContentIsDisplayed('Display name', content);
         return this;
     }
 
@@ -405,7 +397,7 @@ export class ContentServicesPage {
     }
 
     checkContentIsNotDisplayed(content) {
-        this.contentList.checkContentIsNotDisplayed(content);
+        this.contentList.dataTablePage().checkContentIsNotDisplayed('Display name', content);
         return this;
     }
 
@@ -465,11 +457,6 @@ export class ContentServicesPage {
         return this.uploadFileButton.isEnabled();
     }
 
-    deleteContent(content) {
-        this.contentList.deleteContent(content);
-        return this;
-    }
-
     getErrorMessage() {
         Util.waitUntilElementIsVisible(this.errorSnackBar);
         let deferred = protractor.promise.defer();
@@ -477,10 +464,6 @@ export class ContentServicesPage {
             deferred.fulfill(text);
         });
         return deferred.promise;
-    }
-
-    checkItemInDocList(fileName) {
-        Util.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="text_${fileName}"]`)));
     }
 
     enableInfiniteScrolling() {
@@ -564,11 +547,7 @@ export class ContentServicesPage {
     }
 
     getColumnValueForRow(file, columnName) {
-        let row = this.contentList.getRowByRowName(file);
-        Util.waitUntilElementIsVisible(row);
-        let rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
-        Util.waitUntilElementIsVisible(rowColumn);
-        return rowColumn.getText();
+        return this.contentList.dataTablePage().getColumnValueForRow('Display name', file, columnName);
     }
 
     async getStyleValueForRowText(rowName, styleName) {
@@ -668,7 +647,7 @@ export class ContentServicesPage {
     }
 
     checkRowIsDisplayed(rowName) {
-        let row = this.contentList.getRowByRowName(rowName);
+        let row = this.contentList.dataTablePage().getRow('Display name', rowName);
         Util.waitUntilElementIsVisible(row);
     }
 

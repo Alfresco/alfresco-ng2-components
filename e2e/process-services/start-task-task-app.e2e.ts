@@ -96,7 +96,7 @@ describe('Start Task - Task App', () => {
         taskPage.createNewTask().addName(tasks[0])
             .addForm(app.formName).clickStartButton()
             .then(() => {
-                taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[0]);
+                taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
                 taskPage.taskDetails().clickInvolvePeopleButton()
                     .typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
                     .selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName)
@@ -118,7 +118,7 @@ describe('Start Task - Task App', () => {
         taskPage.createNewTask().checkStartButtonIsDisabled().addName(tasks[3])
             .checkStartButtonIsEnabled().clickCancelButton()
             .then(() => {
-                taskPage.tasksListPage().getDataTable().checkContentIsNotDisplayed(tasks[3]);
+                taskPage.tasksListPage().checkContentIsNotDisplayed(tasks[3]);
                 expect(taskPage.filtersPage().getActiveFilter()).toEqual(CONSTANTS.TASK_FILTERS.MY_TASKS);
             });
     });
@@ -129,11 +129,11 @@ describe('Start Task - Task App', () => {
         taskPage.createNewTask()
             .addForm(app.formName).addName(tasks[4]).clickStartButton()
             .then(() => {
-                taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[4]);
+                taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
                 expect(taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue)
                     .getFieldValue(formTextField)).toEqual(formFieldValue);
                 taskPage.formFields().refreshForm().checkFieldValue(by.id, formTextField, '');
-                taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[4]);
+                taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
                 taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue)
                     .checkFieldValue(by.id, formTextField, formFieldValue);
                 taskPage.formFields().saveForm().checkFieldValue(by.id, formTextField, formFieldValue);
@@ -149,7 +149,8 @@ describe('Start Task - Task App', () => {
                 taskPage.tasksListPage().checkTaskListIsLoaded();
                 taskPage.tasksListPage().getDataTable().waitForTableBody();
                 taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
-                taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[5]).selectRowByContentName(tasks[5]);
+                taskPage.tasksListPage().checkContentIsDisplayed(tasks[5]);
+                taskPage.tasksListPage().selectRow(tasks[5]);
                 taskPage.checkTaskTitle(tasks[5]);
                 expect(taskPage.taskDetails().getAssignee()).toEqual(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
             });
@@ -168,7 +169,7 @@ describe('Start Task - Task App', () => {
     it('[C260420] Should Information box be hidden when showHeaderContent property is set on false', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(showHeaderTask);
+        taskPage.tasksListPage().checkContentIsDisplayed(showHeaderTask);
 
         appNavigationBarPage.clickSettingsButton();
         taskPage.taskDetails().appSettingsToggles().disableShowHeader();

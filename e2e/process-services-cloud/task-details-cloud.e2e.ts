@@ -16,13 +16,10 @@
  */
 
 import TestConfig = require('../test.config');
-import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
-import dateFormat = require('dateformat');
 import { Util } from '../util/util';
 import moment = require('moment');
 
-import AlfrescoApi = require('alfresco-js-api-node');
 import { Tasks } from '../actions/APS-cloud/tasks';
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -87,8 +84,8 @@ describe('Task Header cloud component', () => {
 
     it('[C291943] Should display task details for assigned task', async () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(basicCreatedTaskName);
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByContentName(basicCreatedTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
         expect(taskDetailsCloudPage.getId()).toEqual(basicCreatedTask.entry.id);
         expect(taskDetailsCloudPage.getDescription())
             .toEqual(basicCreatedTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : basicCreatedTask.entry.description);
@@ -107,8 +104,8 @@ describe('Task Header cloud component', () => {
 
     it('[C291944] Should display task details for completed task', async () => {
         tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTaskName);
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByContentName(completedTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
         expect(taskDetailsCloudPage.getId()).toEqual(completedTask.entry.id);
         expect(taskDetailsCloudPage.getDescription())
             .toEqual(completedTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : completedTask.entry.description);
@@ -127,8 +124,8 @@ describe('Task Header cloud component', () => {
 
     it('[C291945] Should Parent Name and Parent Id not be empty in task details for sub task', async () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(subTask.entry.name);
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByContentName(subTask.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(subTask.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(subTask.entry.name);
         expect(taskDetailsCloudPage.getId()).toEqual(subTask.entry.id);
         expect(taskDetailsCloudPage.getDescription())
             .toEqual(subTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : subTask.entry.description);

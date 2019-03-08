@@ -27,6 +27,12 @@ export class StartTasksCloudComponent {
     startButton = element(by.css('button[id="button-start"]'));
     startButtonEnabled = element(by.css('button[id="button-start"]:not(disabled)'));
     cancelButton = element(by.css('button[id="button-cancel"]'));
+    form = element(by.css('adf-cloud-start-task form'));
+
+    checkFormIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.form);
+        return this;
+    }
 
     addName(userName) {
         Util.waitUntilElementIsVisible(this.name);

@@ -47,9 +47,8 @@ describe('Task filters cloud', () => {
             assignedTaskName = Util.generateRandomString(), deletedTaskName = Util.generateRandomString();
         const simpleApp = 'simple-app';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
-        let createdTask, assignedTask, completedTask, deletedTask;
+        let assignedTask, deletedTask, suspendedTasks;
         let orderByNameAndPriority = ['cCreatedTask', 'dCreatedTask', 'eCreatedTask'];
-        let suspendedTasks, cancelledTasks;
         let priority = 30, nrOfTasks = 3;
 
         beforeAll(async () => {
@@ -59,11 +58,11 @@ describe('Task filters cloud', () => {
             loginSSOPage.loginAPS(user, password);
 
             await tasksService.init(user, password);
-            createdTask = await tasksService.createStandaloneTask(createdTaskName, simpleApp);
+            await tasksService.createStandaloneTask(createdTaskName, simpleApp);
 
             assignedTask = await tasksService.createStandaloneTask(assignedTaskName, simpleApp);
             await tasksService.claimTask(assignedTask.entry.id, simpleApp);
-            completedTask = await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
+            await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
             deletedTask = await tasksService.createStandaloneTask(deletedTaskName, simpleApp);
             await tasksService.deleteTask(deletedTask.entry.id, simpleApp);
             for (let i = 0; i < nrOfTasks; i++) {
@@ -78,7 +77,7 @@ describe('Task filters cloud', () => {
             let secondProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
             await queryService.init(user, password);
             suspendedTasks = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
-            cancelledTasks = await queryService.getProcessInstanceTasks(secondProcessInstance.entry.id, simpleApp);
+            await queryService.getProcessInstanceTasks(secondProcessInstance.entry.id, simpleApp);
             await processInstancesService.suspendProcessInstance(processInstance.entry.id, simpleApp);
             await processInstancesService.deleteProcessInstance(secondProcessInstance.entry.id, simpleApp);
             await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
@@ -88,52 +87,56 @@ describe('Task filters cloud', () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
             done();
         });
 
         it('[C290045] Should display only tasks with Assigned state when Assigned is selected from state dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('ASSIGNED');
 
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assignedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
         });
 
         it('[C290061] Should display only tasks with Completed state when Completed is selected from state dropdown', () => {
-            tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().setStateFilterDropDown('COMPLETED');
+            tasksCloudDemoPage.editTaskFilterCloudComponent()
+                .clickCustomiseFilterHeader()
+                .setStateFilterDropDown('COMPLETED');
 
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
         });
 
         it('[C290139] Should display only tasks with all states when All is selected from state dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignment()
                 .setStateFilterDropDown('ALL');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(deletedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTaskName);
+
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(deletedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(assignedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
         });
 
         it('[C290154] Should display only tasks with suspended states when Suspended is selected from state dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignment()
                 .setStateFilterDropDown('SUSPENDED');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(suspendedTasks.list.entries[0].entry.id);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(suspendedTasks.list.entries[0].entry.id);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
          });
 
         it('[C290060] Should display only tasks with Created state when Created is selected from state dropdown', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().clickCustomiseFilterHeader().clearAssignment().setStateFilterDropDown('CREATED');
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(createdTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(assignedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(completedTaskName);
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsNotDisplayed(deletedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(assignedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTaskName);
+            tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(deletedTaskName);
         });
 
         it('[C290069] Should display tasks ordered by name when Name is selected from sort dropdown', () => {
@@ -141,7 +144,7 @@ describe('Task filters cloud', () => {
                 .setSortFilterDropDown('NAME').setOrderFilterDropDown('ASC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then((list) => {
+            tasksCloudDemoPage.taskListCloudComponent().getAllRowsNameColumn().then( (list) => {
                 let initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);
@@ -152,7 +155,7 @@ describe('Task filters cloud', () => {
             tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsDisplayed();
             tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkSpinnerIsNotDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().getAllRowsNameColumn().then((list) => {
+            tasksCloudDemoPage.taskListCloudComponent().getAllRowsNameColumn().then( (list) => {
                 let initialList = list.slice(0);
                 list.sort(function (firstStr, secondStr) {
                     return firstStr.localeCompare(secondStr);

@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-import { DataTablePage } from '../../pages/adf/dataTablePage';
+import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { DatePickerPage } from '../../pages/adf/material/datePickerPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
@@ -41,7 +41,7 @@ describe('Search Date Range Filter', () => {
     let datePicker = new DatePickerPage();
     let navigationBar = new NavigationBarPage();
     let configEditor = new ConfigEditorPage();
-    let dataTable = new DataTablePage();
+    let dataTable = new DataTableComponentPage();
 
     beforeAll(async (done) => {
 
@@ -137,7 +137,7 @@ describe('Search Date Range Filter', () => {
 
         searchResults.sortByCreated(true);
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getNodeIdFirstElement();
+            let firstResult = await dataTable.getFirstElementDetail('Node id');
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 let nodeCreation = new Date(node.entry.createdAt);
@@ -149,7 +149,7 @@ describe('Search Date Range Filter', () => {
 
         searchResults.sortByCreated(false);
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getNodeIdFirstElement();
+            let firstResult = await dataTable.getFirstElementDetail('Node id');
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 let nodeCreation = new Date(node.entry.createdAt);

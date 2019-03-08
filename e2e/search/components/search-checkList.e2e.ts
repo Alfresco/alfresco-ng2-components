@@ -16,8 +16,8 @@
  */
 
 import { LoginPage } from '../../pages/adf/loginPage';
+import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { SearchFiltersPage } from '../../pages/adf/searchFiltersPage';
-import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
@@ -33,14 +33,14 @@ import { UploadActions } from '../../actions/ACS/upload.actions';
 import { browser } from 'protractor';
 import { Util } from '../../util/util';
 
-describe('Search Radio Component', () => {
+describe('Search Checklist Component', () => {
 
     const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
-    const contentList =  new ContentListPage();
     const configEditorPage = new ConfigEditorPage();
     const navigationBarPage = new NavigationBarPage();
     const searchDialog = new SearchDialog();
+    const searchResults = new SearchResultsPage();
 
     let acsUser = new AcsUserModel();
     let uploadActions = new UploadActions();
@@ -54,7 +54,7 @@ describe('Search Radio Component', () => {
     let randomName = Util.generateRandomString();
     let nodeNames = {
         document: `${randomName}.txt`,
-        folder: randomName
+        folder: `${randomName}Folder`
     };
 
     let createdFile, createdFolder;
@@ -79,7 +79,7 @@ describe('Search Radio Component', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        browser.get(TestConfig.adf.url + '/search;q=' + nodeNames.folder + '');
+        browser.get(TestConfig.adf.url + '/search;q=' + randomName + '');
 
         done();
     });
@@ -106,29 +106,29 @@ describe('Search Radio Component', () => {
         searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
         searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
 
-        contentList.checkContentIsDisplayed(nodeNames.folder);
-        contentList.checkContentIsNotDisplayed(nodeNames.document);
+        searchResults.checkContentIsDisplayed(nodeNames.folder);
+        searchResults.checkContentIsNotDisplayed(nodeNames.document);
 
         searchFiltersPage.checkListFiltersPage().clickClearAllButton();
         searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.folder);
 
-        contentList.checkContentIsDisplayed(nodeNames.folder);
-        contentList.checkContentIsDisplayed(nodeNames.document);
+        searchResults.checkContentIsDisplayed(nodeNames.folder);
+        searchResults.checkContentIsDisplayed(nodeNames.document);
 
         searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
         searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
         searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
         searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.document);
 
-        contentList.checkContentIsDisplayed(nodeNames.folder);
-        contentList.checkContentIsDisplayed(nodeNames.document);
+        searchResults.checkContentIsDisplayed(nodeNames.folder);
+        searchResults.checkContentIsDisplayed(nodeNames.document);
 
         searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
         searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.document);
         searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.folder);
 
-        contentList.checkContentIsDisplayed(nodeNames.document);
-        contentList.checkContentIsNotDisplayed(nodeNames.folder);
+        searchResults.checkContentIsDisplayed(nodeNames.document);
+        searchResults.checkContentIsNotDisplayed(nodeNames.folder);
     });
 
     describe('configuration change', () => {
@@ -151,7 +151,7 @@ describe('Search Radio Component', () => {
             configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
             configEditorPage.clickSaveButton();
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
+            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
 
             expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
@@ -190,7 +190,7 @@ describe('Search Radio Component', () => {
             configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
             configEditorPage.clickSaveButton();
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
+            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
 
             expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
@@ -208,7 +208,7 @@ describe('Search Radio Component', () => {
             configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
             configEditorPage.clickSaveButton();
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
+            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
 
             expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
@@ -226,7 +226,7 @@ describe('Search Radio Component', () => {
             configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
             configEditorPage.clickSaveButton();
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
+            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
 
             expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(9);
@@ -250,7 +250,7 @@ describe('Search Radio Component', () => {
             configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
             configEditorPage.clickSaveButton();
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
+            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
 
             expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
@@ -276,7 +276,7 @@ describe('Search Radio Component', () => {
             configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
             configEditorPage.clickSaveButton();
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
+            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
 
             expect(searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
@@ -319,19 +319,19 @@ describe('Search Radio Component', () => {
             configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
             configEditorPage.clickSaveButton();
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
+            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
 
             searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
             searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
 
-            contentList.checkContentIsDisplayed(nodeNames.folder);
-            contentList.checkContentIsNotDisplayed(nodeNames.document);
+            searchResults.checkContentIsDisplayed(nodeNames.folder);
+            searchResults.checkContentIsNotDisplayed(nodeNames.document);
 
             searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
 
-            contentList.checkContentIsNotDisplayed(nodeNames.folder);
-            contentList.checkContentIsNotDisplayed(nodeNames.document);
+            searchResults.checkContentIsNotDisplayed(nodeNames.folder);
+            searchResults.checkContentIsNotDisplayed(nodeNames.document);
 
             browser.refresh();
         });
@@ -346,7 +346,7 @@ describe('Search Radio Component', () => {
             configEditorPage.enterBigConfigurationText(JSON.stringify(jsonFile));
             configEditorPage.clickSaveButton();
 
-            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(nodeNames.folder);
+            searchDialog.clickOnSearchIcon().checkSearchBarIsVisible().enterTextAndPressEnter(randomName);
             searchFiltersPage.clickCheckListFilter();
 
             searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsDisplayed(filterType.folder);
@@ -355,14 +355,14 @@ describe('Search Radio Component', () => {
 
             searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.custom);
 
-            contentList.checkContentIsNotDisplayed(nodeNames.folder);
-            contentList.checkContentIsNotDisplayed(nodeNames.document);
+            searchResults.checkContentIsNotDisplayed(nodeNames.folder);
+            searchResults.checkContentIsNotDisplayed(nodeNames.document);
 
             searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
             searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
 
-            contentList.checkContentIsDisplayed(nodeNames.folder);
-            contentList.checkContentIsDisplayed(nodeNames.document);
+            searchResults.checkContentIsDisplayed(nodeNames.folder);
+            searchResults.checkContentIsDisplayed(nodeNames.document);
         });
     });
 

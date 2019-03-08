@@ -16,12 +16,13 @@
  */
 
 import { Util } from '../../../util/util';
-import { ContentListPage } from '../dialog/contentListPage';
 import { element, by } from 'protractor';
 import { StartProcessPage } from './startProcessPage';
+import { DataTableComponentPage } from '../dataTableComponentPage';
 
 export class ProcessFiltersPage {
 
+    dataTable = new DataTableComponentPage();
     runningFilter = element(by.css('span[data-automation-id="Running_filter"]'));
     completedFilter = element(by.css('div[class="mat-list-text"] > span[data-automation-id="Completed_filter"]'));
     allFilter = element(by.css('span[data-automation-id="All_filter"]'));
@@ -33,7 +34,6 @@ export class ProcessFiltersPage {
     noContentMessage = element.all(by.css('p[class="adf-empty-content__title"]')).first();
     rows = by.css('adf-process-instance-list div[class="adf-datatable-body"] div[class*="adf-datatable-row"]');
     tableBody = element.all(by.css('adf-datatable div[class="adf-datatable-body"]')).first();
-    contentList = new ContentListPage();
     nameColumn = by.css('div[class*="adf-datatable-body"] div[class*="adf-datatable-row"] div[title="Name"] span');
     processIcon = by.xpath('ancestor::div[@class="mat-list-item-content"]/mat-icon');
 
@@ -106,11 +106,11 @@ export class ProcessFiltersPage {
      * @param sortOrder : 'true' to sort the list ascendant and 'false' for descendant
      */
     sortByName(sortOrder) {
-        this.contentList.sortByName(sortOrder);
+        this.dataTable.sortByColumn(sortOrder, 'name');
     }
 
     getAllRowsNameColumn() {
-        return this.contentList.getAllRowsColumnValues(this.nameColumn);
+        return this.dataTable.getAllRowsColumnValues('Name');
     }
 
     checkFilterIsDisplayed(name) {

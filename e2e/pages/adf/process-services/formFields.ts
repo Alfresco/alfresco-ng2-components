@@ -36,7 +36,8 @@ export class FormFields {
     setFieldValue(locator, field, value) {
         let fieldElement = element(locator(field));
         Util.waitUntilElementIsVisible(fieldElement);
-        fieldElement.clear().sendKeys(value);
+        fieldElement.clear();
+        fieldElement.sendKeys(value);
         return this;
     }
 
@@ -158,7 +159,8 @@ export class FormFields {
     setValueInInputById(fieldId, value) {
         let input = element(by.id(fieldId));
         Util.waitUntilElementIsVisible(input);
-        input.clear().sendKeys(value);
+        input.clear();
+        input.sendKeys(value);
         return this;
     }
 

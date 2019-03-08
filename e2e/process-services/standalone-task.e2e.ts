@@ -75,7 +75,7 @@ describe('Start Task - Task App', () => {
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[0]).clickStartButton()
             .then(() => {
-                taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[0]);
+                taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
                 taskPage.taskDetails().noFormIsDisplayed();
                 taskPage.taskDetails().checkCompleteTaskButtonIsDisplayed().checkCompleteTaskButtonIsEnabled();
                 taskPage.taskDetails().checkAttachFormButtonIsDisplayed();
@@ -90,12 +90,12 @@ describe('Start Task - Task App', () => {
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).clickStartButton()
             .then(() => {
-                taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[1]);
+                taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
                 taskPage.formFields().noFormIsDisplayed();
 
                 taskPage.completeTaskNoForm();
                 taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-                taskPage.tasksListPage().getDataTable().selectRowByContentName(tasks[1]);
+                taskPage.tasksListPage().selectRow(tasks[1]);
                 expect(taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + tasks[1] + ' completed');
 
                 taskPage.formFields().noFormIsDisplayed();
@@ -108,7 +108,7 @@ describe('Start Task - Task App', () => {
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[2]).clickStartButton()
             .then(() => {
-                taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[2]);
+                taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
                 taskPage.formFields().noFormIsDisplayed();
 
                 taskPage.formFields().clickOnAttachFormButton().selectForm(app.formName).clickOnAttachFormButton();
@@ -121,7 +121,7 @@ describe('Start Task - Task App', () => {
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[3]).addForm(app.formName).clickStartButton();
 
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[3]);
+        taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
         expect(taskPage.taskDetails().getFormName()).toEqual(app.formName);
 
         browser.controlFlow().execute(async () => {
@@ -130,7 +130,7 @@ describe('Start Task - Task App', () => {
         });
 
         browser.refresh();
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(tasks[3]);
+        taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
         taskPage.checkTaskTitle(tasks[3]);
 
         taskPage.formFields().noFormIsDisplayed();

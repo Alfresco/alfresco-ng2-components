@@ -24,18 +24,19 @@ import Task = require('../models/APS/Task');
 import TaskModel = require('../models/APS/TaskModel');
 import FormModel = require('../models/APS/FormModel');
 import { AppsActions } from '../actions/APS/apps.actions';
+import { ProcessServicesPage } from '../pages/adf/process-services/processServicesPage';
 
 import resources = require('../util/resources');
 import CONSTANTS = require('../util/constants');
 import dateFormat = require('dateformat');
 
 import { LoginPage } from '../pages/adf/loginPage';
-import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksPage } from '../pages/adf/process-services/tasksPage';
 import { browser } from 'protractor';
 
 describe('Task Details component', () => {
 
+    const processServices = new ProcessServicesPage();
     let processUserModel, appModel;
     let app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
@@ -45,7 +46,6 @@ describe('Task Details component', () => {
 
     let loginPage = new LoginPage();
     let taskPage = new TasksPage();
-    let navigationBarPage = new NavigationBarPage();
 
     beforeAll(async (done) => {
         let users = new UsersActions();
@@ -71,8 +71,13 @@ describe('Task Details component', () => {
         done();
     });
 
+    beforeEach(async (done) => {
+        await browser.get(TestConfig.adf.url + '/activiti');
+        done();
+    });
+
     it('[C260506] Should display task details for standalone task - Task App', async () => {
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        processServices.goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
             .addForm(app.formName).clickStartButton();
@@ -83,7 +88,7 @@ describe('Task Details component', () => {
         });
 
         let taskModel = new TaskModel(allTasks.data[0]);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskModel.getName());
+        taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         expect(taskPage.taskDetails().getDescription())
@@ -114,7 +119,7 @@ describe('Task Details component', () => {
     });
 
     it('[C263946] Should display task details for standalone task - Custom App', async () => {
-        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
+        processServices.goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         taskPage.createNewTask().addName(tasks[1]).addDescription('Description')
             .addForm(app.formName).clickStartButton();
@@ -125,7 +130,7 @@ describe('Task Details component', () => {
         });
 
         let taskModel = new TaskModel(allTasks.data[0]);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskModel.getName());
+        taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
 
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
@@ -161,7 +166,7 @@ describe('Task Details component', () => {
             await apps.startProcess(this.alfrescoJsApi, appModel);
         });
 
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        processServices.goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
@@ -172,7 +177,7 @@ describe('Task Details component', () => {
 
         let taskModel = new TaskModel(allTasks.data[0]);
 
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskModel.getName());
+        taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         expect(taskPage.taskDetails().getDescription())
@@ -207,7 +212,7 @@ describe('Task Details component', () => {
             await apps.startProcess(this.alfrescoJsApi, appModel);
         });
 
-        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
+        processServices.goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
@@ -218,7 +223,7 @@ describe('Task Details component', () => {
 
         let taskModel = new TaskModel(allTasks.data[0]);
 
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskModel.getName());
+        taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(taskModel.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(taskModel.getId());
         expect(taskPage.taskDetails().getDescription())
@@ -255,14 +260,16 @@ describe('Task Details component', () => {
             await this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': taskName});
         });
 
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        processServices.goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskName).selectRowByContentName(taskName);
+        taskPage.tasksListPage().checkContentIsDisplayed(taskName);
+        taskPage.tasksListPage().selectRow(taskName);
 
         taskPage.clickOnAddChecklistButton().addName(checklistName).clickCreateChecklistButton();
         taskPage.checkChecklistIsDisplayed(checklistName);
 
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(checklistName).selectRowByContentName(checklistName);
+        taskPage.tasksListPage().checkContentIsDisplayed(checklistName);
+        taskPage.tasksListPage().selectRow(checklistName);
 
         let allTasks = await browser.controlFlow().execute(async () => {
             return this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
@@ -270,7 +277,7 @@ describe('Task Details component', () => {
 
         let checklistTask = new TaskModel(allTasks.data[0]);
         let taskModel = new TaskModel(allTasks.data[0]);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(checklistTask.getName());
+        taskPage.tasksListPage().checkContentIsDisplayed(checklistTask.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(checklistTask.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(checklistTask.getId());
         expect(taskPage.taskDetails().getDescription())
@@ -298,7 +305,7 @@ describe('Task Details component', () => {
             await apps.startProcess(this.alfrescoJsApi, appModel);
         });
 
-        navigationBarPage.navigateToProcessServicesPage().goToApp(appModel.name).clickTasksButton();
+        processServices.goToApp(appModel.name).clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         expect(taskPage.taskDetails().getTitle()).toEqual('Activities');
@@ -306,7 +313,8 @@ describe('Task Details component', () => {
         taskPage.clickOnAddChecklistButton().addName(checklistName).clickCreateChecklistButton();
         taskPage.checkChecklistIsDisplayed(checklistName);
 
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(checklistName).selectRowByContentName(checklistName);
+        taskPage.tasksListPage().checkContentIsDisplayed(checklistName);
+        taskPage.tasksListPage().selectRow(checklistName);
 
         let allTasks = await browser.controlFlow().execute(async () => {
             return this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
@@ -314,7 +322,7 @@ describe('Task Details component', () => {
 
         let checklistTask = new TaskModel(allTasks.data[0]);
         let taskModel = new TaskModel(allTasks.data[0]);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(checklistTask.getName());
+        taskPage.tasksListPage().checkContentIsDisplayed(checklistTask.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(checklistTask.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(checklistTask.getId());
         expect(taskPage.taskDetails().getDescription())
@@ -341,20 +349,20 @@ describe('Task Details component', () => {
             return this.alfrescoJsApi.activiti.taskApi.createNewTask({'name': taskName});
         });
 
-        navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
+        processServices.goToTaskApp().clickTasksButton();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(taskName).selectRowByContentName(taskName);
+        taskPage.tasksListPage().checkContentIsDisplayed(taskName).selectRow('Name', taskName);
 
         taskPage.completeTaskNoForm();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName(taskName);
+        taskPage.tasksListPage().selectRow(taskName);
 
         let getTaskResponse = await browser.controlFlow().execute(async () => {
             return this.alfrescoJsApi.activiti.taskApi.getTask(taskId.id);
         });
 
         let completedTask = new TaskModel(getTaskResponse);
-        taskPage.tasksListPage().getDataTable().checkContentIsDisplayed(completedTask.getName());
+        taskPage.tasksListPage().checkContentIsDisplayed(completedTask.getName());
         expect(taskPage.taskDetails().getCreated()).toEqual(dateFormat(completedTask.getCreated(), TASK_DATA_FORMAT));
         expect(taskPage.taskDetails().getId()).toEqual(completedTask.getId());
         expect(taskPage.taskDetails().getDescription())

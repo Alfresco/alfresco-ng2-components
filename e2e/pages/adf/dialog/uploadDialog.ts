@@ -27,7 +27,6 @@ export class UploadDialog {
     cancelledStatusIcon = by.css('div[class*="status--cancelled"]');
     errorStatusIcon = by.css('div[class*="status--error"] mat-icon');
     errorTooltip = element(by.css('div.mat-tooltip'));
-    cancelWhileUploadingIcon = by.css('mat-icon[class*="adf-file-uploading-row__action adf-file-uploading-row__action--cancel"]');
     rowByRowName = by.xpath('ancestor::adf-file-uploading-list-row');
     title = element(by.css('span[class*="upload-dialog__title"]'));
     minimizeButton = element(by.css('mat-icon[title="Minimize"]'));

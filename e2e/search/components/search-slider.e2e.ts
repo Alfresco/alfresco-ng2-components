@@ -17,7 +17,7 @@
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
-import { DataTablePage } from '../../pages/adf/dataTablePage';
+import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
 import { SearchResultsPage } from '../../pages/adf/searchResultsPage';
 import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 import { ConfigEditorPage } from '../../pages/adf/configEditorPage';
@@ -42,7 +42,7 @@ describe('Search Number Range Filter', () => {
     const searchResults = new SearchResultsPage();
     const navigationBar = new NavigationBarPage();
     const configEditor = new ConfigEditorPage();
-    const dataTable = new DataTablePage();
+    const dataTable = new DataTableComponentPage();
 
     const acsUser = new AcsUserModel();
 
@@ -123,7 +123,7 @@ describe('Search Number Range Filter', () => {
             .tableIsLoaded();
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getNodeIdFirstElement();
+            let firstResult = await dataTable.getFirstElementDetail('Node id');
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes <= size).toBe(true);
             });
@@ -136,7 +136,7 @@ describe('Search Number Range Filter', () => {
             .tableIsLoaded();
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getNodeIdFirstElement();
+            let firstResult = await dataTable.getFirstElementDetail('Node id');
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 await expect(node.entry.content.sizeInBytes >= size).toBe(true);
             });

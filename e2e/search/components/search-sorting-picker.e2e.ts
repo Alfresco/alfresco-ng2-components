@@ -254,11 +254,33 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277286] Should be able to sort the search results by "Created Date" ASC', () => {
-        expect(searchResults.sortAndCheckListIsOrderedByCreated(true)).toBe(true);
+        searchResults.sortByCreated(true);
+        browser.controlFlow().execute(async () => {
+            let idList = await contentServices.getElementsDisplayedId();
+            let numberOfElements = await contentServices.numberOfResultsDisplayed();
+
+            let nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
+            let dateList = [];
+            for (let i = 0; i < nodeList.length; i++) {
+                dateList.push(new Date(nodeList[i].entry.createdAt));
+            }
+            expect(contentServices.checkElementsSortedAsc(dateList)).toBe(true);
+        });
     });
 
     it('[C277287] Should be able to sort the search results by "Created Date" DESC', () => {
-        expect(searchResults.sortAndCheckListIsOrderedByCreated(false)).toBe(true);
+        searchResults.sortByCreated(false);
+        browser.controlFlow().execute(async () => {
+            let idList = await contentServices.getElementsDisplayedId();
+            let numberOfElements = await contentServices.numberOfResultsDisplayed();
+
+            let nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
+            let dateList = [];
+            for (let i = 0; i < nodeList.length; i++) {
+                dateList.push(new Date(nodeList[i].entry.createdAt));
+            }
+            expect(contentServices.checkElementsSortedDesc(dateList)).toBe(true);
+        });
     });
 
     it('[C277288] Should be able to sort the search results by "Modified Date" ASC', () => {

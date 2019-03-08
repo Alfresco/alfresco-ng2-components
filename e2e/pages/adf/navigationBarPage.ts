@@ -34,8 +34,6 @@ export class NavigationBarPage {
     trashcanButton = element(by.css('a[data-automation-id="Trashcan"]'));
     overlayViewerButton = element(by.css('a[data-automation-id="Overlay Viewer"]'));
     userProfileButton = element(by.css('button[data-automation-id="adf-user-profile"]'));
-    themeButton = element(by.css('button[data-automation-id="theme menu"]'));
-    themeMenuContent = element(by.css('div[class*="mat-menu-panel"]'));
     logoutButton = element(by.css('a[adf-logout]'));
     cardViewButton = element(by.cssContainingText('.adf-sidenav-menu-label', 'CardView'));
     languageMenuButton = element(by.css('button[data-automation-id="language-menu-button"]'));
@@ -115,19 +113,6 @@ export class NavigationBarPage {
         this.userProfileButton.click();
     }
 
-    clickThemeButton() {
-        Util.waitUntilElementIsVisible(this.themeButton);
-        this.themeButton.click();
-        Util.waitUntilElementIsVisible(this.themeMenuContent);
-    }
-
-    clickOnSpecificThemeButton(themeName) {
-        let themeElement = element(by.css(`button[data-automation-id="${themeName}"]`));
-        Util.waitUntilElementIsVisible(themeElement);
-        Util.waitUntilElementIsClickable(themeElement);
-        themeElement.click();
-    }
-
     clickLogoutButton() {
         Util.waitUntilElementIsVisible(this.logoutButton);
         this.logoutButton.click();
@@ -201,11 +186,6 @@ export class NavigationBarPage {
     checkLogoTooltip(logoTooltipTitle) {
         let logoTooltip = element(by.css('a[title="' + logoTooltipTitle + '"]'));
         Util.waitUntilElementIsVisible(logoTooltip);
-    }
-
-    openViewer(nodeId) {
-        browser.get(TestConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
-        return this;
     }
 
     goToSite(site) {

@@ -132,7 +132,7 @@ describe('Attachment list action menu for tasks', () => {
 
         taskPage.completeTaskNoForm();
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName(taskName.completed);
+        taskPage.tasksListPage().selectRow(taskName.completed);
 
         attachmentListPage.checkAttachFileButtonIsNotDisplayed();
         attachmentListPage.viewFile(pngFile.name);
@@ -141,7 +141,7 @@ describe('Attachment list action menu for tasks', () => {
         viewerPage.clickCloseButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName(taskName.completed);
+        taskPage.tasksListPage().selectRow(taskName.completed);
 
         attachmentListPage.downloadFile(pngFile.name);
 
@@ -194,7 +194,7 @@ describe('Attachment list action menu for tasks', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName('SHARE KNOWLEDGE');
+        taskPage.tasksListPage().selectRow('SHARE KNOWLEDGE');
 
         attachmentListPage.checkFileIsAttached(pngFile.name);
 
@@ -205,7 +205,7 @@ describe('Attachment list action menu for tasks', () => {
         navigationBarPage.navigateToProcessServicesPage().goToTaskApp().clickTasksButton();
 
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        taskPage.tasksListPage().getDataTable().selectRowByContentName('SHARE KNOWLEDGE');
+        taskPage.tasksListPage().selectRow('SHARE KNOWLEDGE');
 
         attachmentListPage.checkEmptyAttachmentList();
     });

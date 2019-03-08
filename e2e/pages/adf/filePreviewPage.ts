@@ -29,8 +29,8 @@ export class FilePreviewPage {
     }
 
     viewFile(fileName) {
-        Util.waitUntilElementIsVisible(element(by.cssContainingText(`div[data-automation-id="${filename}"]`, fileName)));
-        browser.actions().doubleClick(element(by.cssContainingText(`div[data-automation-id="${filename}"]`, fileName))).perform();
+        Util.waitUntilElementIsVisible(element(by.cssContainingText(`div[data-automation-id="${fileName}"]`, fileName)));
+        browser.actions().doubleClick(element(by.cssContainingText(`div[data-automation-id="${fileName}"]`, fileName))).perform();
         this.waitForElements();
     }
 

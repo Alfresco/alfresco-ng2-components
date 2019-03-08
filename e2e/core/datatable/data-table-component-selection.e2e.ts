@@ -16,7 +16,8 @@
  */
 
 import { LoginPage } from '../../pages/adf/loginPage';
-import { DataTablePage } from '../../pages/adf/dataTablePage';
+import { DataTablePage } from '../../pages/adf/demo-shell/dataTablePage';
+import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
 import TestConfig = require('../../test.config');
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -29,6 +30,7 @@ describe('Datatable component - selection', () => {
     let loginPage = new LoginPage();
     let acsUser = new AcsUserModel();
     let navigationBarPage = new NavigationBarPage();
+    let dataTableComponent = new DataTableComponentPage();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -49,21 +51,21 @@ describe('Datatable component - selection', () => {
 
     it('[C213258] Should be possible change the selection modes when change the selectionMode property', () => {
         dataTablePage.selectRow('2');
-        dataTablePage.checkRowIsSelected('2');
+        dataTableComponent.checkRowIsSelected('Id', '2');
         dataTablePage.getNumberOfSelectedRows().then((result) => {
             expect(result).toEqual(1);
         });
         dataTablePage.selectRow('3');
-        dataTablePage.checkRowIsSelected('3');
+        dataTableComponent.checkRowIsSelected('Id', '3');
         dataTablePage.getNumberOfSelectedRows().then((result) => {
             expect(result).toEqual(1);
         });
         dataTablePage.selectSelectionMode('Multiple');
         dataTablePage.selectRow('1');
-        dataTablePage.checkRowIsSelected('1');
+        dataTableComponent.checkRowIsSelected('Id', '1');
         dataTablePage.selectRowWithKeyboard('3');
-        dataTablePage.checkRowIsSelected('1');
-        dataTablePage.checkRowIsSelected('3');
+        dataTableComponent.checkRowIsSelected('Id', '1');
+        dataTableComponent.checkRowIsSelected('Id', '3');
         dataTablePage.checkRowIsNotSelected('2');
         dataTablePage.checkRowIsNotSelected('4');
         dataTablePage.selectSelectionMode('None');

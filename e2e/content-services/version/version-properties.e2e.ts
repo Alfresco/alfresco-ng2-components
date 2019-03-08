@@ -19,7 +19,6 @@ import { by, element } from 'protractor';
 
 import { LoginPage } from '../../pages/adf/loginPage';
 import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
-import { ContentListPage } from '../../pages/adf/dialog/contentListPage';
 import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
@@ -31,13 +30,14 @@ import resources = require('../../util/resources');
 import AlfrescoApi = require('alfresco-js-api-node');
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { Util } from '../../util/util';
+import { NavigationBarPage } from '../../pages/adf/navigationBarPage';
 
 describe('Version Properties', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const contentListPage = new ContentListPage();
     const versionManagePage = new VersionManagePage();
+    const navigationBarPage = new NavigationBarPage();
 
     let acsUser = new AcsUserModel();
 
@@ -74,8 +74,9 @@ describe('Version Properties', () => {
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
-        contentServicesPage.navigateToDocumentList();
-        contentListPage.versionManagerContent(txtFileModel.name);
+        navigationBarPage.clickContentServicesButton();
+        contentServicesPage.waitForTableBody();
+        contentServicesPage.versionManagerContent(txtFileModel.name);
 
         done();
     });
