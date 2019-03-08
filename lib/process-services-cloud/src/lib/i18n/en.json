@@ -204,5 +204,20 @@
     "FORM_VALIDATION": {
         "INVALID_FIELD": "Enter a different value"
     }
+  },
+  "ADF_CLOUD_PROCESS_HEADER": {
+    "PROPERTIES": {
+      "ID": "ID",
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_DEFAULT": "No description",
+      "STATUS": "Status",
+      "BUSINESS_KEY": "Business Key",
+      "INITIATOR": "Initiator",
+      "START_DATE": "Start Date",
+      "LAST_MODIFIED": "Last Modified",
+      "PARENT_ID": "Parent Id",
+      "NONE": "None"
+    }
   }
 }
