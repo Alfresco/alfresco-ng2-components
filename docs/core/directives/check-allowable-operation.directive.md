@@ -42,13 +42,13 @@ Selectively disables an HTML element or Angular component.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| nodes | [`NodeEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/nodeEntry.ts)`[]` | \[] | Nodes to check permission for. |
-| permission | `string` | null | [Node](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/node.ts) permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions). |
+| nodes | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` | \[] | Nodes to check permission for. |
+| permission | `string` | null | [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions). |
 
 ## Details
 
 The [Check Allowable Operation Directive](check-allowable-operation.directive.md) lets you disable an HTML element or Angular component
-by taking a collection of [`NodeEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/nodeEntry.ts) instances and checking their permissions.
+by taking a collection of [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md) instances and checking their permissions.
 
 The decorated element will be disabled if:
 
@@ -96,7 +96,7 @@ for example). You can also use it in much the same way as you would with an HTML
 
 To enable your own component to work with this directive, you need to implement the
 [`NodeAllowableOperationSubject`](../../../lib/core/directives/check-allowable-operation.directive.ts) interface and also define it as an
-[`EXTENDIBLE_COMPONENT`](../../lib/core/interface/injection.tokens.ts)
+[`EXTENDIBLE_COMPONENT`](../../../lib/core/interface/injection.tokens.ts)
 parent component,
 as described in the following sections.
 
@@ -121,7 +121,7 @@ up to the `@Host()` component. The host component is typically the component tha
 the dependency. However, when this component is projected into a parent component, the
 parent becomes the host. This means you must provide your component with forward referencing
 as the
-[`EXTENDIBLE_COMPONENT`](../../lib/core/interface/injection.tokens.ts)
+[`EXTENDIBLE_COMPONENT`](../../../lib/core/interface/injection.tokens.ts)
 and also provide your component as a `viewProvider`:
 
 ```js

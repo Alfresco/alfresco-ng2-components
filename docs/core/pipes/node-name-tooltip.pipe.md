@@ -6,7 +6,7 @@ Status: Active
 
 # [Node Name Tooltip pipe](../../../lib/core/pipes/node-name-tooltip.pipe.ts "Defined in node-name-tooltip.pipe.ts")
 
-Formats the tooltip for a [Node](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/node.ts).
+Formats the tooltip for a [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md).
 
 ## Basic Usage
 

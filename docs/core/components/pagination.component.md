@@ -42,7 +42,7 @@ Adds pagination to the component it is used with.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| pagination | [`PaginationModel`](../../../lib/core/models/pagination.model.ts) |  | [Pagination](../../../lib/content-services/document-list/models/document-library.model.ts) object. |
+| pagination | [`PaginationModel`](../../../lib/core/models/pagination.model.ts) |  | Pagination object. |
 | supportedPageSizes | `number[]` |  | An array of page sizes. |
 | target | [`PaginatedComponent`](../../../lib/core/pagination/paginated-component.interface.ts) |  | Component that provides custom pagination support. |
 

@@ -189,7 +189,7 @@ for more information about installing and using the source code.
 | [Form Rendering service](core/services/form-rendering.service.md) | Maps a form field type string onto the corresponding form widget component type. | [Source](../lib/core/form/services/form-rendering.service.ts) |
 | [Form service](core/services/form.service.md) | Implements Process Services form methods | [Source](../lib/core/form/services/form.service.ts) |
 | [Highlight Transform service](core/services/highlight-transform.service.md) | Adds HTML to a string to highlight chosen sections. | [Source](../lib/core/services/highlight-transform.service.ts) |
-| [Identity user service](core/services/identity-user.service.md) | Gets OAuth2 personal details and roles for users. | [Source](../lib/process-services-cloud/src/lib/services/identity-user.service.ts) |
+| [Identity user service](core/services/identity-user.service.md) | Gets OAuth2 personal details and roles for users. | [Source](../lib/core/userinfo/services/identity-user.service.ts) |
 | [JWT helper service](core/services/jwt-helper.service.md) | Decodes a JSON Web Token (JWT) to a JavaScript object. | [Source](../lib/core/services/jwt-helper.service.ts) |
 | [Log Service](core/services/log.service.md) | Provides log functionality. | [Source](../lib/core/services/log.service.ts) |
 | [Login Dialog service](core/services/login-dialog.service.md) | Manages login dialogs. | [Source](../lib/core/services/login-dialog.service.ts) |

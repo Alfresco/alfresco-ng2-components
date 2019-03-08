@@ -52,7 +52,7 @@ The default mapping is shown below:
 
 You can define your own custom field types for the Card View (see the
 [Card View Item interface](../interfaces/card-view-item.interface.md) page for full details of how to do this).
-When you have defined the field component, you need to register it with the [Card Item Type service](../../lib/core/card-view/services/card-item-types.service.ts)
+When you have defined the field component, you need to register it with the [Card Item Types service](../../../lib/core/card-view/services/card-item-types.service.ts)
 so that the [Card View component](../components/card-view.component.md) can make use of it:
 
 ```ts

@@ -35,7 +35,7 @@ Displays the Start [`Form`](../../../lib/process-services/task-list/models/form.
 | formName | `string` |  | Name of the form definition to load and display with custom values. |
 | nameNode | `string` |  | Name to assign to the new node where the metadata are stored. |
 | nodeId | `string` |  | Content Services node ID for the form metadata. |
-| path | `string` |  | [Path](../../../node_modules/@alfresco/js-api/src/api/gs-classification-rest-api/model/path.ts) of the folder where the metadata will be stored. |
+| path | `string` |  | Path of the folder where the metadata will be stored. |
 | processDefinitionId | `string` |  | Definition ID of the process to start. |
 | processId | `string` |  | Process ID of the process to start. |
 | readOnly | `boolean` | false | Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. |

@@ -17,7 +17,7 @@ Stores preferences for the app and for individual components.
     Gets a preference property.
     -   _property:_ `string`  - Name of the property
     -   _defaultValue:_ `string`  - (Optional) Default to return if the property is not found
-    -   **Returns** `string` - [Preference](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/preference.ts) property
+    -   **Returns** `string` - Preference property
 -   **getDefaultLocale**(): `string`<br/>
     Gets the default locale.
     -   **Returns** `string` - Default locale language code
@@ -27,7 +27,7 @@ Stores preferences for the app and for individual components.
     -   **Returns** `string` - [Property](../../../lib/content-services/content-metadata/interfaces/property.interface.ts) key
 -   **getStoragePrefix**(): `string`<br/>
     Gets the active storage prefix for preferences.
-    -   **Returns** `string` - [Storage](../../../node_modules/@alfresco/js-api/src/storage.ts) prefix
+    -   **Returns** `string` - Storage prefix
 -   **hasItem**(property: `string`): `boolean`<br/>
     Check if an item is present in the storage
     -   _property:_ `string`  - Name of the property
@@ -108,7 +108,7 @@ whole set of user properties. This is useful when a component needs to react to 
 ```
 
 You can also use the `select` method to get notification when a particular property is changed.
-A set of basic properties is added into the enumeration [`UserPreferenceValues`](../../lib/core/services/user-preferences.service.ts) which gives you the key value to access the standard user preference service properties : **PaginationSize**, **DisableCSRF**, **Locale** and **SupportedPageSizes**.
+A set of basic properties is added into the enumeration [`UserPreferenceValues`](../../../lib/core/services/user-preferences.service.ts) which gives you the key value to access the standard user preference service properties : **PaginationSize**, **DisableCSRF**, **Locale** and **SupportedPageSizes**.
 
 ```ts
     userPreferences.disableCSRF = true;

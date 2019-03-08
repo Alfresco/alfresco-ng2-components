@@ -41,10 +41,10 @@ Provides access to various APIs related to file upload features.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | queueChanged | [`FileModel`](../../../lib/core/models/file.model.ts)\[] | Emitted when the file queue changes. |
-| fileUpload | [`FileUploadEvent`](../../../lib/core/events/file.event.ts) | Emitted when a [File model](../../lib/core/models/file.model.ts) changes its state. |
+| fileUpload | [`FileUploadEvent`](../../../lib/core/events/file.event.ts) | Emitted when a [File model](../../../lib/core/models/file.model.ts) changes its state. |
 | fileUploadStarting | [`FileUploadEvent`](../../../lib/core/events/file.event.ts) | Emitted when an upload starts. |
 | fileUploadCancelled | [`FileUploadEvent`](../../../lib/core/events/file.event.ts) | Emitted when an upload gets cancelled by the user. |
-| fileUploadProgress | [`FileUploadEvent`](../../../lib/core/events/file.event.ts) | Emitted during the file upload process and contains the current progress for a particular [File model](../../lib/core/models/file.model.ts). |
+| fileUploadProgress | [`FileUploadEvent`](../../../lib/core/events/file.event.ts) | Emitted during the file upload process and contains the current progress for a particular [File model](../../../lib/core/models/file.model.ts). |
 | fileUploadAborted | [`FileUploadEvent`](../../../lib/core/events/file.event.ts) | Emitted when a file upload gets aborted by the server. |
 | fileUploadError | [`FileUploadEvent`](../../../lib/core/events/file.event.ts) | Emitted when an error occurs during a file upload. |
 | fileUploadComplete | [`FileUploadCompleteEvent`](../../../lib/core/events/file.event.ts) | Emitted when a file upload is complete. |

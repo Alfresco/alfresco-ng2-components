@@ -31,33 +31,33 @@ Accesses app-generated data objects via URLs and file downloads.
     -   _fileName:_ `string`  - Name of the resulting file.
 -   **getContentUrl**(node: `any`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
     Gets a content URL for the given node.
-    -   _node:_ `any`  - [Node](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/node.ts) to get URL for.
+    -   _node:_ `any`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to get URL for.
     -   _attachment:_ `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
     -   _ticket:_ `string`  - (Optional) Custom ticket to use for authentication
     -   **Returns** `string` - URL string
 -   **getDocumentThumbnailUrl**(node: `any`, attachment?: `boolean`, ticket?: `string`): `string`<br/>
     Gets a thumbnail URL for the given document node.
-    -   _node:_ `any`  - [Node](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/node.ts) to get URL for.
+    -   _node:_ `any`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to get URL for.
     -   _attachment:_ `boolean`  - (Optional) Toggles whether to retrieve content as an attachment for download
     -   _ticket:_ `string`  - (Optional) Custom ticket to use for authentication
     -   **Returns** `string` - URL string
--   **getNode**(nodeId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/nodeEntry.ts)`>`<br/>
+-   **getNode**(nodeId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
     Gets a Node via its node ID.
     -   _nodeId:_ `string`  - ID of the target node
     -   _opts:_ `any`  - (Optional) Options supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/nodeEntry.ts)`>` - Details of the folder
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - Details of the folder
 -   **getNodeContent**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets content for the given node.
     -   _nodeId:_ `string`  - ID of the target node
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Content data
--   **hasAllowableOperations**(node: [`Node`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/node.ts), allowableOperation: [`AllowableOperationsEnum`](../../../lib/core/models/allowable-operations.enum.ts)`|string`): `boolean`<br/>
+-   **hasAllowableOperations**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md), allowableOperation: [`AllowableOperationsEnum`](../../../lib/core/models/allowable-operations.enum.ts)`|string`): `boolean`<br/>
     Checks if the user has permissions on that node
-    -   _node:_ [`Node`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/node.ts)  - [Node](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/node.ts) to check allowableOperations
+    -   _node:_ [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to check allowableOperations
     -   _allowableOperation:_ [`AllowableOperationsEnum`](../../../lib/core/models/allowable-operations.enum.ts)`|string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
     -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
--   **hasPermissions**(node: [`Node`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/node.ts), permission: [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
+-   **hasPermissions**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md), permission: [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
     Checks if the user has permission on that node
-    -   _node:_ [`Node`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/node.ts)  - [Node](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/node.ts) to check permissions
+    -   _node:_ [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to check permissions
     -   _permission:_ [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`  - 
     -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
 

@@ -15,29 +15,29 @@ Accesses and manipulates sites from a Content Services repository.
 
 -   **deleteSite**(siteId: `string`, permanentFlag: `boolean` = `true`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Deletes a site.
-    -   _siteId:_ `string`  - [Site](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/site.ts) to delete
+    -   _siteId:_ `string`  - Site to delete
     -   _permanentFlag:_ `boolean`  - True: deletion is permanent; False: site is moved to the trash
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null response notifying when the operation is complete
 -   **getEcmCurrentLoggedUserName**(): `string`<br/>
     Gets the username of the user currently logged into ACS.
     -   **Returns** `string` - Username string
--   **getSite**(siteId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/siteEntry.ts)`|__type>`<br/>
+-   **getSite**(siteId: `string`, opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`|__type>`<br/>
     Gets the details for a site.
     -   _siteId:_ `string`  - ID of the target site
     -   _opts:_ `any`  - (Optional) Options supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/siteEntry.ts)`|__type>` - Information about the site
--   **getSiteContent**(siteId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/siteEntry.ts)`|__type>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`|__type>` - Information about the site
+-   **getSiteContent**(siteId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`|__type>`<br/>
     Gets a site's content.
     -   _siteId:_ `string`  - ID of the target site
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/siteEntry.ts)`|__type>` - Site content
--   **getSiteMembers**(siteId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/siteEntry.ts)`|__type>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`|__type>` - Site content
+-   **getSiteMembers**(siteId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`|__type>`<br/>
     Gets a list of all a site's members.
     -   _siteId:_ `string`  - ID of the target site
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/siteEntry.ts)`|__type>` - Site members
--   **getSites**(opts: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SitePaging`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/sitePaging.ts)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SiteEntry.md)`|__type>` - Site members
+-   **getSites**(opts: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md)`>`<br/>
     Gets a list of all sites in the repository.
     -   _opts:_ `any`  - Options supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SitePaging`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/sitePaging.ts)`>` - List of sites
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md)`>` - List of sites
 
 ## Details
 

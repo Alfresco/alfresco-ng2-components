@@ -77,10 +77,10 @@ with custom input fields handled by your application or parent component:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| backgroundImageUrl | `string` |  | [Path](../../../node_modules/@alfresco/js-api/src/api/gs-classification-rest-api/model/path.ts) to a custom background image. |
+| backgroundImageUrl | `string` |  | Path to a custom background image. |
 | copyrightText | `string` |  | The copyright text below the login box. |
 | fieldsValidation | `any` |  | Custom validation rules for the login form. |
-| logoImageUrl | `string` |  | [Path](../../../node_modules/@alfresco/js-api/src/api/gs-classification-rest-api/model/path.ts) to a custom logo image. |
+| logoImageUrl | `string` |  | Path to a custom logo image. |
 | needHelpLink | `string` | "" | Sets the URL of the NEED HELP link in the footer. |
 | registerLink | `string` | "" | Sets the URL of the REGISTER link in the footer. |
 | showLoginActions | `boolean` | true | Should the extra actions (`Need Help`, `Register`, etc) be shown? |

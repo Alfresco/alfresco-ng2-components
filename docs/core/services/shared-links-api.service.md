@@ -13,19 +13,19 @@ Finds shared links to Content Services items.
 
 ### Methods
 
--   **createSharedLinks**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SharedLinkEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/sharedLinkEntry.ts)`>`<br/>
+-   **createSharedLinks**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SharedLinkEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/SharedLinkEntry.md)`>`<br/>
     Creates a shared link available to the current user.
     -   _nodeId:_ `string`  - ID of the node to link to
     -   _options:_ `any`  - Options supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SharedLinkEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/sharedLinkEntry.ts)`>` - The shared link just created
--   **deleteSharedLink**(sharedId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SharedLinkEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/sharedLinkEntry.ts)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SharedLinkEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/SharedLinkEntry.md)`>` - The shared link just created
+-   **deleteSharedLink**(sharedId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SharedLinkEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/SharedLinkEntry.md)`>`<br/>
     Deletes a shared link.
     -   _sharedId:_ `string`  - ID of the link to delete
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SharedLinkEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/sharedLinkEntry.ts)`>` - Null response notifying when the operation is complete
--   **getSharedLinks**(options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SharedLinkEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/SharedLinkEntry.md)`>` - Null response notifying when the operation is complete
+-   **getSharedLinks**(options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
     Gets shared links available to the current user.
     -   _options:_ `any`  - Options supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of shared links
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>` - List of shared links
 
 ## Details
 

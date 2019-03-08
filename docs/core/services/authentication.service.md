@@ -20,9 +20,9 @@ Provides authentication to ACS and APS.
 -   **getBearerExcludedUrls**(): `string[]`<br/>
     Gets the set of URLs that the token bearer is excluded from.
     -   **Returns** `string[]` - Array of URL strings
--   **getBpmLoggedUser**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](../../../node_modules/@alfresco/js-api/src/api/activiti-rest-api/model/userRepresentation.ts)`>`<br/>
+-   **getBpmLoggedUser**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/UserRepresentation.md)`>`<br/>
     Gets information about the user currently logged into APS.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](../../../node_modules/@alfresco/js-api/src/api/activiti-rest-api/model/userRepresentation.ts)`>` - User information
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/UserRepresentation.md)`>` - User information
 -   **getBpmUsername**(): `string`<br/>
     Gets the BPM username
     -   **Returns** `string` - The BPM username
@@ -33,13 +33,13 @@ Provides authentication to ACS and APS.
     Gets the URL to redirect to after login.
     -   **Returns** `string` - The redirect URL
 -   **getTicketBpm**(): `string|null`<br/>
-    Gets the BPM ticket stored in the [Storage](../../../node_modules/@alfresco/js-api/src/storage.ts).
+    Gets the BPM ticket stored in the Storage.
     -   **Returns** `string|null` - The ticket or `null` if none was found
 -   **getTicketEcm**(): `string|null`<br/>
-    Gets the ECM ticket stored in the [Storage](../../../node_modules/@alfresco/js-api/src/storage.ts).
+    Gets the ECM ticket stored in the Storage.
     -   **Returns** `string|null` - The ticket or `null` if none was found
 -   **getTicketEcmBase64**(): `string|null`<br/>
-    Gets the BPM ticket from the [Storage](../../../node_modules/@alfresco/js-api/src/storage.ts) in Base 64 format.
+    Gets the BPM ticket from the Storage in Base 64 format.
     -   **Returns** `string|null` - The ticket or `null` if none was found
 -   **getToken**(): `string`<br/>
     Gets the auth token.

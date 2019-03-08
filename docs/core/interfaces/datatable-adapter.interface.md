@@ -30,7 +30,7 @@ Get/set the values for display in the table using an array of rows.
 [`setColumns(columns: Array<DataColumn>): void;`](../../../lib/core/datatable/data/data-column.model.ts)<br/>
 Get/set an array of column specifications.
 
-`getValue(row:`[`DataRow,`](../../lib/core/datatable/data/data-row.model.ts)`col: DataColumn): any;`<br/>
+`getValue(row:`[`DataRow,`](../../../lib/core/datatable/data/data-row.model.ts)`col: DataColumn): any;`<br/>
 Get the data value from a specific table cell.
 
 `getSorting():`[`DataSorting`](../../../lib/core/datatable/data/data-sorting.model.ts)`;`<br/>
@@ -91,7 +91,7 @@ Each row contains a set of values. An item in the set is retrieved by passing it
 
 ### ObjectDataTableAdapter
 
-The DataTable library provides a implementation of [DataTableAdapter,](../../lib/core/datatable/data/datatable-adapter.ts) called
+The DataTable library provides a implementation of [DataTableAdapter,](../../../lib/core/datatable/data/datatable-adapter.ts) called
 [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts). This is a simple adapter that binds to object arrays and turns object fields into columns:
 
 ```ts

@@ -35,5 +35,5 @@ example code.
 
 ## See also
 
--   [Search component](../content-services/search.component.md)
+-   [Search component](../../content-services/search.component.md)
 -   [Search configuration interface](../interfaces/search-configuration.interface.md)

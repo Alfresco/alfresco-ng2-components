@@ -46,11 +46,11 @@ Accesses and manipulates ACS document nodes using their node IDs.
     -   _nodeId:_ `string`  - ID of the target node
     -   _options:_ `any`  - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Node information
--   **getNodeChildren**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
+-   **getNodeChildren**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
     Gets the items contained in a folder node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _options:_ `any`  - Optional parameters supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of child items from the folder
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>` - List of child items from the folder
 -   **restoreNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
     Restores a node previously moved to the trashcan.
     -   _nodeId:_ `string`  - ID of the node to restore

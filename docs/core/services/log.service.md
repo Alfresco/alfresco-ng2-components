@@ -11,7 +11,7 @@ Provides log functionality.
 
 ## Basic Usage
 
-**[app.component](../../demo-shell/src/app/app.component.ts).ts**
+**app.component.ts**
 
 ```ts
 import { LogService } from '@alfresco/adf-core';

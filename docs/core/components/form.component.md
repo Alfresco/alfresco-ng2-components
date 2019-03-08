@@ -63,7 +63,7 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 | formName | `string` |  | Name of the form definition to load and display with custom values. |
 | nameNode | `string` |  | Name to assign to the new node where the metadata are stored. |
 | nodeId | `string` |  | Content Services node ID for the form metadata. |
-| path | `string` |  | [Path](../../../node_modules/@alfresco/js-api/src/api/gs-classification-rest-api/model/path.ts) of the folder where the metadata will be stored. |
+| path | `string` |  | Path of the folder where the metadata will be stored. |
 | readOnly | `boolean` | false | Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. |
 | saveMetadata | `boolean` | false | Toggle saving of form metadata. |
 | showCompleteButton | `boolean` | true | Toggle rendering of the `Complete` outcome button. |
@@ -178,7 +178,7 @@ The `nameNode` parameter is optional.
 </adf-form>
 ```
 
-Here, the node metadata is shown in an APS [Form,](../../lib/process-services/task-list/models/form.model.ts)
+Here, the node metadata is shown in an APS [`Form`](../../../lib/process-services/task-list/models/form.model.ts)
 with the form fields themselves saved as metadata. The `nameNode` parameter is optional.
 
 ### Controlling outcome execution behaviour
@@ -349,7 +349,7 @@ In the CSS, you can target any outcome ID and change the style as in this exampl
 APS allows you to configure where to store files and folders in your on-site Alfresco repositories.
 
 If you have your repositories configured like this, you can use the attach file/folder
-form widget to get a file from those repositories and attach it to the [Form](../../../lib/process-services/task-list/models/form.model.ts).
+form widget to get a file from those repositories and attach it to the [`Form`](../../../lib/process-services/task-list/models/form.model.ts).
 
 **Note:** your repositories could be configured to be on different servers from the one
 where your front-end is deployed.  Make sure you are using the right Proxy or configuration,

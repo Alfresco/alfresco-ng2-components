@@ -68,7 +68,7 @@ You can override the values in your custom `app.config.json` file if necessary.
 
 Below is a simple example of using the [`AppConfigService`](../../core/services/app-config.service.md) in practice. 
 
-**[app.component](../../demo-shell/src/app/app.component.ts).ts**
+**app.component.ts**
 
 ```ts
 import { AppConfigService } from '@alfresco/adf-core';

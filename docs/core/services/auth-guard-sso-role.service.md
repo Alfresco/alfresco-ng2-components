@@ -10,7 +10,7 @@ Allow to check the user roles of a user
 
 ## Details
 
-The Auth Guard SSO role service implements an Angular
+The [Auth Guard SSO role service](../../core/services/auth-guard-sso-role.service.md) implements an Angular
 [route guard](https://angular.io/guide/router#milestone-5-route-guards)
 to check the user has the right role permission. This is typically used with the
 `canActivate` guard check in the route definition. The roles that user needs to have in order to access the route has to be specified in the roles array as in the example below:

@@ -72,7 +72,7 @@ The [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Rende
 | Display value | "readonly" | DisplayValueWidgetComponent |
 | Dropdown | "dropdown" | [`DropdownWidgetComponent`](../../../lib/core/form/components/widgets/dropdown/dropdown.widget.ts) |
 | Dynamic table | "dynamic-table" | [`DynamicTableWidgetComponent`](../../../lib/core/form/components/widgets/dynamic-table/dynamic-table.widget.ts) |
-| [Group](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/group.ts) of people | "functional-group" | [`FunctionalGroupWidgetComponent`](../../../lib/core/form/components/widgets/functional-group/functional-group.widget.ts) |
+| Group of people | "functional-group" | [`FunctionalGroupWidgetComponent`](../../../lib/core/form/components/widgets/functional-group/functional-group.widget.ts) |
 | Header | "group" | [`ContainerWidgetComponent`](../../../lib/core/form/components/widgets/container/container.widget.ts) |
 | Hyperlink | "hyperlink" | [`HyperlinkWidgetComponent`](../../../lib/core/form/components/widgets/hyperlink/hyperlink.widget.ts) |
 | Multi-line text | "multi-line-text" | [`MultilineTextWidgetComponentComponent`](../../../lib/core/form/components/widgets/multiline-text/multiline-text.widget.ts) |

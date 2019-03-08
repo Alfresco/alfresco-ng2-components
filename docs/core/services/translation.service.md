@@ -16,7 +16,7 @@ Supports localisation.
 -   **addTranslationFolder**(name: `string` = `""`, path: `string` = `""`)<br/>
     Adds a new folder of translation source files.
     -   _name:_ `string`  - Name for the translation provider
-    -   _path:_ `string`  - [Path](../../../node_modules/@alfresco/js-api/src/api/gs-classification-rest-api/model/path.ts) to the folder
+    -   _path:_ `string`  - Path to the folder
 -   **get**(key: `string|Array<string>`, interpolateParams?: `Object`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string|any>`<br/>
     Gets the translation for the supplied key.
     -   _key:_ `string|Array<string>`  - Key to translate

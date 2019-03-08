@@ -52,7 +52,7 @@ class MyComponent {
 
 ### Methods
 
--   `parseForm(json: any, data?:`[`FormValues,`](../../lib/core/form/components/widgets/core/form-values.ts)`readOnly: boolean = false):`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)  
+-   `parseForm(json: any, data?:`[`FormValues,`](../../../lib/core/form/components/widgets/core/form-values.ts)`readOnly: boolean = false):`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)  
     Parses JSON data to create a corresponding [`Form`](../../../lib/process-services/task-list/models/form.model.ts) model.  
     -   `json` - JSON to create the form
     -   `data` - (Optional) Values for the form fields
@@ -89,7 +89,7 @@ class MyComponent {
     Save Task [`Form`](../../../lib/process-services/task-list/models/form.model.ts).  
     -   `taskId` - Task Id
     -   `formValues` - [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Values
--   `completeTaskForm(taskId: string, formValues:`[`FormValues,`](../../lib/core/form/components/widgets/core/form-values.ts)`outcome?: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
+-   `completeTaskForm(taskId: string, formValues:`[`FormValues,`](../../../lib/core/form/components/widgets/core/form-values.ts)`outcome?: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Complete Task [`Form`](../../../lib/process-services/task-list/models/form.model.ts)  
     -   `taskId` - Task Id
     -   `formValues` - [`Form`](../../../lib/process-services/task-list/models/form.model.ts) Values
@@ -136,11 +136,11 @@ class MyComponent {
 -   [`getWorkflowUsers(filter: string, groupId?: string): Observable<UserProcessModel[]>`](../../core/models/user-process.model.md)  
     Gets a list of workflow users.  
     -   `filter` - Filter to select specific users
-    -   `groupId` - (Optional) [Group](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/group.ts) ID for the search
+    -   `groupId` - (Optional) Group ID for the search
 -   [`getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]>`](../../../lib/process-services-cloud/src/lib/group/models/group.model.ts)  
     Gets a list of groups in a workflow.  
     -   `filter` - Filter to select specific groups
-    -   `groupId` - (Optional) [Group](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/group.ts) ID for the search
+    -   `groupId` - (Optional) Group ID for the search
 -   `getFormId(res: any): string`  
     Gets the ID of a form.  
     -   `res` - Object representing a form

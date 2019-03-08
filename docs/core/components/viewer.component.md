@@ -24,7 +24,7 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
     -   [Custom file parameters](#custom-file-parameters)
     -   [Supported file formats](#supported-file-formats)
     -   [Content Renditions](#content-renditions)
-    -   [Configuring PDF.js library](#configuring-pdf-js-library)
+    -   [Configuring PDF.js library](#configuring-pdfjs-library)
     -   [Extending the Viewer](#extending-the-viewer)
     -   [Custom layout](#custom-layout)
     -   [Printing](#printing)
@@ -84,14 +84,14 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | allowPrint | `boolean` | false | Toggles printing. |
 | allowRightSidebar | `boolean` | false | Allow the right sidebar. |
 | allowThumbnails | `boolean` | true | Toggles PDF thumbnails. |
-| blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) [File](../../../node_modules/@alfresco/js-api/src/api/activiti-rest-api/model/file.ts) |
+| blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
 | canNavigateBefore | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled. |
 | canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
 | displayName | `string` |  | Specifies the name of the file when it is not available from the URL. |
 | fileName | `string` |  | Content filename. |
-| maxRetries | `number` | 10 | Number of times the Viewer will retry fetching content [Rendition](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/rendition.ts). There is a delay of at least one second between attempts. |
+| maxRetries | `number` | 10 | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
 | mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension). |
-| nodeId | `string` | null | [Node](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/node.ts) Id of the file to load. |
+| nodeId | `string` | null | [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Id of the file to load. |
 | overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
 | sharedLinkId | `string` | null | Shared link id (to display shared file). |
 | showLeftSidebar | `boolean` | false | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`. |
