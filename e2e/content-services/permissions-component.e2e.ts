@@ -279,6 +279,19 @@ describe('Permissions Component', function () {
             expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
             permissionsPage.checkPermissionsDatatableIsDisplayed();
         });
+
+        it('[C277100] Should display EVERYONE group in the search result set', () => {
+            permissionsPage.checkAddPermissionButtonIsDisplayed();
+            permissionsPage.clickAddPermissionButton();
+            permissionsPage.checkAddPermissionDialogIsDisplayed();
+            permissionsPage.checkSearchUserInputIsDisplayed();
+            permissionsPage.searchUserOrGroup(consumerUser.getId());
+            permissionsPage.checkResultListIsDisplayed();
+            permissionsPage.checkUserOrGroupIsDisplayed('EVERYONE');
+            permissionsPage.searchUserOrGroup('somerandomtext');
+            permissionsPage.checkResultListIsDisplayed();
+            permissionsPage.checkUserOrGroupIsDisplayed('EVERYONE');
+        });
     });
 
     describe('Changing and duplicate Permissions', function () {

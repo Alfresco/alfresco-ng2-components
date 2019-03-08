@@ -59,6 +59,7 @@ export class PermissionsPage {
 
     searchUserOrGroup(name) {
         Util.waitUntilElementIsClickable(this.searchUserInput);
+        this.searchUserInput.clear();
         return this.searchUserInput.sendKeys(name);
     }
 
@@ -72,6 +73,11 @@ export class PermissionsPage {
         userOrGroupName.click();
         Util.waitUntilElementIsVisible(this.addButton);
         return this.addButton.click();
+    }
+
+    checkUserOrGroupIsDisplayed(name) {
+        let userOrGroupName = element(by.cssContainingText('mat-list-option .mat-list-text', name));
+        Util.waitUntilElementIsVisible(userOrGroupName);
     }
 
     checkUserOrGroupIsAdded(name) {
