@@ -68,6 +68,10 @@ export class SearchFiltersPage {
         return this.searchCategoriesPage.checkListFiltersPage(this.fileTypeFilter);
     }
 
+    checkCustomFacetFieldLabelIsDisplayed(fieldLabel) {
+        Util.waitUntilElementIsVisible(element(by.css(`mat-expansion-panel[data-automation-id="expansion-panel-${fieldLabel}"]`)));
+    }
+
     sizeSliderFilterPage() {
         return this.searchCategoriesPage.sliderFilter(this.sizeSliderFilter);
     }
