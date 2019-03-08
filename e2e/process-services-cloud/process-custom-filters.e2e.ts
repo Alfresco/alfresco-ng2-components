@@ -29,6 +29,7 @@ import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';
 import { Tasks } from '../actions/APS-cloud/tasks';
 import { Query } from '../actions/APS-cloud/query';
+import { browser, protractor } from 'protractor';
 
 describe('Process list cloud', () => {
 
@@ -47,7 +48,7 @@ describe('Process list cloud', () => {
         const queryService: Query = new Query();
 
         let silentLogin;
-        let completedProcess;
+        let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps;
         const simpleApp = 'candidateuserapp';
         const user = TestConfig.adf.adminEmail, password = TestConfig.adf.adminPassword;
 
@@ -62,7 +63,7 @@ describe('Process list cloud', () => {
             configEditorPage.clickClearButton();
             configEditorPage.enterConfiguration('{' +
                 '"properties": [' +
-                '"state",' + '"processInstanceId",' + '"sort",' + '"order"' +
+                '"appName",' + '"state",' + '"processInstanceId",' + '"sort",' + '"order"' +
                 ']' +
                 '}');
             configEditorPage.clickSaveButton();
@@ -71,6 +72,8 @@ describe('Process list cloud', () => {
             let processDefinition = await processDefinitionService.getProcessDefinitions(simpleApp);
             await processInstancesService.init(user, password);
             await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
+            switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
 
             completedProcess = await processInstancesService.createProcessInstance(processDefinition.list.entries[0].entry.key, simpleApp);
             await queryService.init(user, password);
@@ -146,6 +149,43 @@ describe('Process list cloud', () => {
 
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(completedProcess.entry.id);
+        });
+
+        it('[C297646] Should display the filter dropdown fine , after switching between saved filters', async() => {
+
+            noOfApps = processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().getNumberOfAppNameOptions();
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
+            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+            processCloudDemoPage.editProcessFilterCloudComponent().setStateFilterDropDown('RUNNING')
+                .setAppNameDropDown(simpleApp).setProcessInstanceId(runningProcessInstance.entry.id);
+
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(runningProcessInstance.entry.id);
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
+            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+
+            processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
+            processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SavedFilter').clickOnSaveButton();
+            expect(processCloudDemoPage.getActiveFilterName()).toBe('SavedFilter');
+
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
+
+            processCloudDemoPage.editProcessFilterCloudComponent().setStateFilterDropDown('RUNNING')
+                .setAppNameDropDown(simpleApp).setProcessInstanceId(switchProcessInstance.entry.id);
+
+            processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
+            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(switchProcessInstance.entry.id);
+            processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
+            processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SwitchFilter').clickOnSaveButton();
+            expect(processCloudDemoPage.getActiveFilterName()).toBe('SwitchFilter');
+
+            processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(switchProcessInstance.entry.id);
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
+            expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
+            browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
         });
 
     });
