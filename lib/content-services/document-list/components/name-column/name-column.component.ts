@@ -50,12 +50,12 @@ export class NameColumnComponent implements OnInit, OnDestroy {
 
     private sub: Subscription;
 
-    constructor(private element: ElementRef, private api: AlfrescoApiService) {}
+    constructor(private element: ElementRef, private alfrescoApiService: AlfrescoApiService) {}
 
     ngOnInit() {
         this.updateValue();
 
-        this.sub = this.api.nodeUpdated.subscribe((node: Node) => {
+        this.sub = this.alfrescoApiService.nodeUpdated.subscribe((node: Node) => {
             const row: ShareDataRow = this.context.row;
             if (row) {
                 const { entry } = row.node;
