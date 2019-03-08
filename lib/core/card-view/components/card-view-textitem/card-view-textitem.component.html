@@ -40,18 +40,25 @@
                         class="adf-textarea"
                         [placeholder]="property.default | translate"
                         [(ngModel)]="editedValue"
+                        (input)="onTextAreaInputChange()"
                         [attr.data-automation-id]="'card-textitem-edittextarea-' + property.key"></textarea>
                 </mat-form-field>
-                <mat-icon
-                    class="adf-textitem-icon adf-update-icon"
+                <button mat-button
+                    [disabled]="hasErrors()"
                     (click)="update()"
-                    [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
-                    [attr.data-automation-id]="'card-textitem-update-' + property.key">done</mat-icon>
+                    class="adf-textitem-icon adf-update-icon">
+                        <mat-icon
+                            class="adf-update-icon"
+                            [class.adf-button-disabled]="hasErrors()"
+                            [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
+                            [attr.data-automation-id]="'card-textitem-update-' + property.key">done</mat-icon>
+                </button>
                 <mat-icon
                     class="adf-textitem-icon adf-reset-icon"
                     (click)="reset()"
                     [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
                     [attr.data-automation-id]="'card-textitem-reset-' + property.key">clear</mat-icon>
+
             </div>
             <mat-error  [attr.data-automation-id]="'card-textitem-error-' + property.key" class="adf-textitem-editable-error" *ngIf="hasErrors()">
                 <ul>
