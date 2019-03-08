@@ -27,11 +27,7 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
     -   [DataTable DOM Events](#datatable-dom-events)
     -   [Card view](#card-view)
     -   [Using events](#using-events)
-    -   [Customizing the component's styles](#customizing-the-component-s-styles)
-    -   [Truncated text](#truncated-text)
-    -   [Expanded cells](#expanded-cells)
-    -   [Combining classes](#combining-classes)
-    -   [Sticky header](#sticky-header)
+    -   [Customizing the component's styles](#customizing-the-components-styles)
 -   [See also](#see-also)
 
 ## Basic usage
@@ -331,7 +327,7 @@ together in the same datatable.
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showHeader | `boolean` | true | Toggles the header. |
 | sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
-| stickyHeader | `boolean` | false | Toggles the sticky header mode. |
+| stickyHeader | `boolean` | false | Toggles a sticky (fixed) header that stays in place while the rows become scrollable. [Sticky header](#sticky-header) |
 
 ### Events
 
