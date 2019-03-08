@@ -25,4 +25,4 @@ Logs the user out when the decorated element is clicked.
 
 ## See also
 
--   [Login component](login.component.md)
+-   [Login component](../components/login.component.md)

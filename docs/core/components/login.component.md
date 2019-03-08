@@ -9,7 +9,7 @@ Last reviewed: 2019-02-06
 
 Authenticates to Alfresco Content Services and Alfresco Process Services.
 
-![Login component](../docassets/images/login-extra-content.png)
+![Login component](../../docassets/images/login-extra-content.png)
 
 ## Contents
 
@@ -36,9 +36,9 @@ Authenticates to Alfresco Content Services and Alfresco Process Services.
 </adf-login>
 ```
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
-You can replace the content of the header and footer of the [Login component](../core/login.component.md) with your own custom content:
+You can replace the content of the header and footer of the [Login component](login.component.md) with your own custom content:
 
 ```html
 <adf-login ...>
@@ -49,11 +49,11 @@ You can replace the content of the header and footer of the [Login component](..
 
 Header:
 
-![Login with custom header](../docassets/images/custom-header.png)
+![Login with custom header](../../docassets/images/custom-header.png)
 
 Footer:
 
-![Login with custom footer](../docassets/images/custom-footer.png)
+![Login with custom footer](../../docassets/images/custom-footer.png)
 
 Also, any content that you put inside the `<adf-login>` tags will be rendered as part
 of the Login dialog:
@@ -69,7 +69,7 @@ of the Login dialog:
 This is useful if you need to extend the functionality of the dialog
 with custom input fields handled by your application or parent component:
 
-![Login with custom content](../docassets/images/login-extra-content.png)
+![Login with custom content](../../docassets/images/login-extra-content.png)
 
 ## Class members
 
@@ -77,10 +77,10 @@ with custom input fields handled by your application or parent component:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| backgroundImageUrl | `string` |  | Path to a custom background image. |
+| backgroundImageUrl | `string` |  | [Path](../../../node_modules/@alfresco/js-api/src/api/gs-classification-rest-api/model/path.ts) to a custom background image. |
 | copyrightText | `string` |  | The copyright text below the login box. |
 | fieldsValidation | `any` |  | Custom validation rules for the login form. |
-| logoImageUrl | `string` |  | Path to a custom logo image. |
+| logoImageUrl | `string` |  | [Path](../../../node_modules/@alfresco/js-api/src/api/gs-classification-rest-api/model/path.ts) to a custom logo image. |
 | needHelpLink | `string` | "" | Sets the URL of the NEED HELP link in the footer. |
 | registerLink | `string` | "" | Sets the URL of the REGISTER link in the footer. |
 | showLoginActions | `boolean` | true | Should the extra actions (`Need Help`, `Register`, etc) be shown? |
@@ -91,9 +91,9 @@ with custom input fields handled by your application or parent component:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginErrorEvent`](../../lib/core/login/models/login-error.event.ts)`>` | Emitted when the login fails. |
-| executeSubmit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSubmitEvent`](../../lib/core/login/models/login-submit.event.ts)`>` | Emitted when the login form is submitted. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSuccessEvent`](../../lib/core/login/models/login-success.event.ts)`>` | Emitted when the login is successful. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginErrorEvent`](../../../lib/core/login/models/login-error.event.ts)`>` | Emitted when the login fails. |
+| executeSubmit | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSubmitEvent`](../../../lib/core/login/models/login-submit.event.ts)`>` | Emitted when the login form is submitted. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`LoginSuccessEvent`](../../../lib/core/login/models/login-success.event.ts)`>` | Emitted when the login is successful. |
 
 ## Details
 
@@ -135,7 +135,7 @@ You can change the logo and background images using the `backgroundImageUrl` and
 </adf-login>
 ```
 
-![Login with custom logo and background](../docassets/images/custom-login.png)
+![Login with custom logo and background](../../docassets/images/custom-login.png)
 
 You can also bind to your component properties and provide values dynamically if you need to:
 
@@ -272,7 +272,7 @@ will execute _after_ your custom code has completed.
 #### Implicit Flow
 
 If you used the host-setting component to enable SSO Oauth (or if you
-enabled the setting in `app.config.json`) then the [login component](../core/login.component.md) will show only a button to login:
+enabled the setting in `app.config.json`) then the [login component](login.component.md) will show only a button to login:
 
 ```JSON
 {
@@ -291,7 +291,7 @@ enabled the setting in `app.config.json`) then the [login component](../core/log
 }
 ```
 
-![Login component](../docassets/images/sso-login.png)
+![Login component](../../docassets/images/sso-login.png)
 
 Note that if the `silentLogin` property in the `oauth2` configuration is set to true
 then the login page will not be shown. Instead, the application will redirect
@@ -349,4 +349,4 @@ Setting the `withCredentials` property to true in the `auth` section of
 
 ## See Also
 
--   [Logout directive](logout.directive.md)
+-   [Logout directive](../directives/logout.directive.md)

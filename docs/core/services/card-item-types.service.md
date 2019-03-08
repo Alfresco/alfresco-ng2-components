@@ -7,7 +7,7 @@ Last reviewed: 2018-11-20
 
 # [Card Item Type service](../../../lib/core/card-view/services/card-item-types.service.ts "Defined in card-item-types.service.ts")
 
-Maps type names to field component types for the [Card View component](../core/card-view.component.md).
+Maps type names to field component types for the [Card View component](../components/card-view.component.md).
 
 ## Class members
 
@@ -18,9 +18,9 @@ Maps type names to field component types for the [Card View component](../core/c
     -   _type:_ `string`  - The type whose resolver you want
     -   _defaultValue:_ `Type<__type>`  - Default type returned for types that are not yet mapped
     -   **Returns** `DynamicComponentResolveFunction` - Resolver function
--   **resolveComponentType**(model: [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts), defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
+-   **resolveComponentType**(model: [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts), defaultValue: `Type<__type>` = `this.defaultValue`): `Type<__type>`<br/>
     Finds the component type that is needed to render a form field.
-    -   _model:_ [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../lib/process-services/task-list/models/form.model.ts) field model for the field to render
+    -   _model:_ [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts)  - [Form](../../../lib/process-services/task-list/models/form.model.ts) field model for the field to render
     -   _defaultValue:_ `Type<__type>`  - Default type returned for field types that are not yet mapped.
     -   **Returns** `Type<__type>` - Component type
 -   **setComponentTypeResolver**(type: `string`, resolver: `DynamicComponentResolveFunction`, override: `boolean` = `true`)<br/>
@@ -31,7 +31,7 @@ Maps type names to field component types for the [Card View component](../core/c
 
 ## Details
 
-The [Card View component](card-view.component.md) uses this service to find the component
+The [Card View component](../components/card-view.component.md) uses this service to find the component
 type that is required to display a particular field type (text, date, etc). The service
 maps a type name string to a corresponding `DynamicComponentResolveFunction` that takes a
 model object as a parameter and returns the component type needed to display that model.
@@ -40,20 +40,20 @@ The default mapping is shown below:
 
 | Type string | Component |
 | ----------- | --------- |
-| 'text' | [`CardViewTextItemComponent`](../../lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts) |
-| 'int' | [`CardViewTextItemComponent`](../../lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts) |
-| 'float' | [`CardViewTextItemComponent`](../../lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts) |
-| 'date' | [`CardViewDateItemComponent`](../../lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts) |
-| 'datetime' | [`CardViewDateItemComponent`](../../lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts) |
-| 'bool' | [`CardViewBoolItemComponent`](../../lib/core/card-view/components/card-view-boolitem/card-view-boolitem.component.ts) |
-| 'map' | [`CardViewMapItemComponent`](../../lib/core/card-view/components/card-view-mapitem/card-view-mapitem.component.ts) |
+| 'text' | [`CardViewTextItemComponent`](../../../lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts) |
+| 'int' | [`CardViewTextItemComponent`](../../../lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts) |
+| 'float' | [`CardViewTextItemComponent`](../../../lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts) |
+| 'date' | [`CardViewDateItemComponent`](../../../lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts) |
+| 'datetime' | [`CardViewDateItemComponent`](../../../lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts) |
+| 'bool' | [`CardViewBoolItemComponent`](../../../lib/core/card-view/components/card-view-boolitem/card-view-boolitem.component.ts) |
+| 'map' | [`CardViewMapItemComponent`](../../../lib/core/card-view/components/card-view-mapitem/card-view-mapitem.component.ts) |
 
 ### Adding new type mappings
 
 You can define your own custom field types for the Card View (see the
-[Card View Item interface](card-view-item.interface.md) page for full details of how to do this).
+[Card View Item interface](../interfaces/card-view-item.interface.md) page for full details of how to do this).
 When you have defined the field component, you need to register it with the [Card Item Type service](../../lib/core/card-view/services/card-item-types.service.ts)
-so that the [Card View component](../core/card-view.component.md) can make use of it:
+so that the [Card View component](../components/card-view.component.md) can make use of it:
 
 ```ts
 @Component({
@@ -71,5 +71,5 @@ export class SomeParentComponent {
 
 ## See also
 
--   [Card View component](card-view.component.md)
--   [Card View Item interface](card-view-item.interface.md)
+-   [Card View component](../components/card-view.component.md)
+-   [Card View Item interface](../interfaces/card-view-item.interface.md)

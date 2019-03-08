@@ -7,9 +7,9 @@ Last reviewed: 2018-06-08
 
 # [Start Form component](../../../lib/core/form/components/start-form.component.ts "Defined in start-form.component.ts")
 
-Displays the Start [`Form`](../../lib/process-services/task-list/models/form.model.ts) for a process.
+Displays the Start [`Form`](../../../lib/process-services/task-list/models/form.model.ts) for a process.
 
-![Start Form screenshot](../docassets/images/ProcessStartForm.png)
+![Start Form screenshot](../../docassets/images/ProcessStartForm.png)
 
 ## Basic Usage
 
@@ -26,16 +26,16 @@ Displays the Start [`Form`](../../lib/process-services/task-list/models/form.mod
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| data | [`FormValues`](../../lib/core/form/components/widgets/core/form-values.ts) |  | Custom form values map to be used with the rendered form. |
+| data | [`FormValues`](../../../lib/core/form/components/widgets/core/form-values.ts) |  | Custom form values map to be used with the rendered form. |
 | disableCompleteButton | `boolean` | false | If true then the `Complete` outcome button is shown but it will be disabled. |
 | disableStartProcessButton | `boolean` | false | If true then the `Start Process` outcome button is shown but it will be disabled. |
-| fieldValidators | [`FormFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` | \[] | Contains a list of form field validator instances. |
-| form | [`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts) |  | Underlying [form model](../../lib/core/form/components/widgets/core/form.model.ts) instance. |
-| formId | `string` |  | The id of the form definition to load and display with custom values. |
+| fieldValidators | [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` | \[] | Contains a list of form field validator instances. |
+| form | [`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts) |  | Underlying [form model](../../../lib/core/form/components/widgets/core/form.model.ts) instance. |
+| formId | `number` |  | The id of the form definition to load and display with custom values. |
 | formName | `string` |  | Name of the form definition to load and display with custom values. |
 | nameNode | `string` |  | Name to assign to the new node where the metadata are stored. |
 | nodeId | `string` |  | Content Services node ID for the form metadata. |
-| path | `string` |  | Path of the folder where the metadata will be stored. |
+| path | `string` |  | [Path](../../../node_modules/@alfresco/js-api/src/api/gs-classification-rest-api/model/path.ts) of the folder where the metadata will be stored. |
 | processDefinitionId | `string` |  | Definition ID of the process to start. |
 | processId | `string` |  | Process ID of the process to start. |
 | readOnly | `boolean` | false | Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. |
@@ -54,27 +54,27 @@ Displays the Start [`Form`](../../lib/process-services/task-list/models/form.mod
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| executeOutcome | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../lib/core/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
-| formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
-| formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when a field of the form is clicked. |
-| formDataRefreshed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when form values are refreshed due to a data property change. |
-| formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../core/form-field.model.md)`[]>` | Emitted when the supplied form values have a validation error. |
-| formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
-| formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
+| executeOutcome | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../../lib/core/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
+| formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
+| formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when a field of the form is clicked. |
+| formDataRefreshed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when form values are refreshed due to a data property change. |
+| formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../../core/models/form-field.model.md)`[]>` | Emitted when the supplied form values have a validation error. |
+| formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
+| formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
 | outcomeClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the user clicks one of the outcome buttons that completes the form. |
 
 ## Details
 
-The [Start Process component](../process-services/start-process.component.md) uses the Start [`Form`](../../lib/process-services/task-list/models/form.model.ts) component
+The [Start Process component](../../process-services/components/start-process.component.md) uses the Start [`Form`](../../../lib/process-services/task-list/models/form.model.ts) component
 to display the
 [start form](http://docs.alfresco.com/process-services1.6/topics/none_start_event.html)
 for the process.
 
 The `outcomeClick` event is passed a string containing the ID of the outcome button that
 the user clicked. You can pass this value to the `startProcess` method (defined in the
-[Process service](../process-services/process.service.md)) when activating the process, if necessary.
+[Process service](../../process-services/services/process.service.md)) when activating the process, if necessary.
 
 ## See also
 
--   [Process service](../process-services/process.service.md)
+-   [Process service](../../process-services/services/process.service.md)

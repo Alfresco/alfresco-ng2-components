@@ -37,7 +37,7 @@ Supports app configuration settings, stored server side.
 
 ## Details
 
-The [`AppConfigService`](../core/app-config.service.md) service provides support for loading and accessing global application configuration settings that you store on the server side in the form of a JSON file.
+The [`AppConfigService`](../../core/services/app-config.service.md) service provides support for loading and accessing global application configuration settings that you store on the server side in the form of a JSON file.
 
 You may need this service when deploying your ADF-based application to production servers.
 There can be more than one server running web apps with different settings, like different addresses for Alfresco Content/Process services.
@@ -66,7 +66,7 @@ Example of the default settings file content:
 Note that the settings in the example above are the default ones supplied with the server.
 You can override the values in your custom `app.config.json` file if necessary. 
 
-Below is a simple example of using the [`AppConfigService`](../core/app-config.service.md) in practice. 
+Below is a simple example of using the [`AppConfigService`](../../core/services/app-config.service.md) in practice. 
 
 **[app.component](../../demo-shell/src/app/app.component.ts).ts**
 
@@ -88,12 +88,12 @@ export class AppComponent {
 }
 ```
 
-Your custom components can also benefit from the [`AppConfigService`](../core/app-config.service.md).
+Your custom components can also benefit from the [`AppConfigService`](../../core/services/app-config.service.md).
 You can create an unlimited number of settings and optionally organize them as a nested JSON hierarchy.
 
 ### Variable substitution in configuration strings
 
-The [`AppConfigService`](../core/app-config.service.md) supports a limited set of variable substitutions to greatly simplify certain scenarios.
+The [`AppConfigService`](../../core/services/app-config.service.md) supports a limited set of variable substitutions to greatly simplify certain scenarios.
 
 ```json
 {

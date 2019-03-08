@@ -68,7 +68,7 @@ You can use `ngIf` directives to provide conditional visibility support for the 
 ### Automatic column header translation
 
 You can use i18n resource keys with the
-[`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) `title` property.
+[`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) `title` property.
 The component will automatically check the appropriate i18n resources and fetch the corresponding value.
 
 ```html
@@ -121,9 +121,9 @@ Every cell in the DataTable component is bound to the dynamic data context conta
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) | Data adapter instance. |
-| row | [`DataRow`](../../lib/core/datatable/data/data-row.model.ts) | Current data row instance. |
-| col | [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) | Current data column instance. |
+| data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) | Data adapter instance. |
+| row | [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts) | Current data row instance. |
+| col | [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) | Current data column instance. |
 
 You can use all three properties to gain full access to underlying data from within your custom templates. 
 In order to wire HTML templates with the data context you will need to define a variable that is bound to `$implicit` as shown below:
@@ -136,7 +136,7 @@ In order to wire HTML templates with the data context you will need to define a 
 
 The name format is `let-VARIABLE_NAME="$implicit"` where `VARIABLE_NAME` is the name of the variable you want to bind the template data context to.
 
-You can also get a cell value from the underlying [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts):
+You can also get a cell value from the underlying [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts):
 
 ```ts
 context.data.getValue(entry.row, entry.col);
@@ -180,7 +180,7 @@ In the Example below we will prepend `Hi!` to each file and folder name in the l
 
 <!-- {% endraw %} -->
 
-In the Example below we will integrate the [adf-tag-node-list](../content-services/tag-node-list.component.md) component
+In the Example below we will integrate the [adf-tag-node-list](../../content-services/tag-node-list.component.md) component
 within the document list.
 
 <!-- {% raw %} -->
@@ -199,7 +199,7 @@ within the document list.
 
 <!-- {% endraw %} -->
 
-![Tag component in document List](../docassets/images/document-list-tag-template.png)
+![Tag component in document List](../../docassets/images/document-list-tag-template.png)
 
 ### Styling Techniques
 
@@ -238,7 +238,7 @@ adf-document-list ::ng-deep adf-datatable > table > tbody > tr.is-selected > td.
 
 Once your application starts you should see the following icon for each selected row:
 
-![view-child](../docassets/images/document-list-custom-icon.png)
+![view-child](../../docassets/images/document-list-custom-icon.png)
 
 #### Hiding columns on small screens
 
@@ -292,14 +292,14 @@ Now you can declare columns and assign the `desktop-only` class where needed:
 
 **Desktop View**
 
-![Responsive Desktop](../docassets/images/responsive-desktop.png)
+![Responsive Desktop](../../docassets/images/responsive-desktop.png)
 
 **Mobile View**
 
-![Responsive Mobile](../docassets/images/responsive-mobile.png)
+![Responsive Mobile](../../docassets/images/responsive-mobile.png)
 
 ## See also
 
--   [Document list component](../content-services/document-list.component.md)
+-   [Document list component](../../content-services/document-list.component.md)
 -   [Datatable component](datatable.component.md)
--   [Task list component](../process-services/task-list.component.md)
+-   [Task list component](../../process-services/components/task-list.component.md)

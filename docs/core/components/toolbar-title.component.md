@@ -7,9 +7,9 @@ Last reviewed: 2018-06-08
 
 # [Toolbar Title Component](../../../lib/core/toolbar/toolbar-title.component.ts "Defined in toolbar-title.component.ts")
 
-Supplies custom HTML to be included in a [Toolbar component](../core/toolbar.component.md) title.
+Supplies custom HTML to be included in a [Toolbar component](toolbar.component.md) title.
 
-![](../docassets/images/adf-toolbar-02.png)
+![](../../docassets/images/adf-toolbar-02.png)
 
 ## Basic Usage
 

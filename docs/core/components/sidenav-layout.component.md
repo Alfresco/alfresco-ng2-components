@@ -9,7 +9,7 @@ Last reviewed: 2018-11-20
 
 Displays the standard three-region ADF application layout.
 
-![Sidenav on desktop](../docassets/images/sidenav-layout.png)
+![Sidenav on desktop](../../docassets/images/sidenav-layout.png)
 
 ## Contents
 
@@ -25,7 +25,7 @@ Displays the standard three-region ADF application layout.
 
 ## Basic Usage
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 The content for the header, navigation area, and main content are transcluded using three special
 sub-components (note the use of `<ng-template>` in the sub-components' body sections): 
@@ -104,11 +104,11 @@ in the usage example above.
 
 Desktop layout (screen width greater than the `stepOver` value):
 
-![Sidenav on desktop](../docassets/images/sidenav-layout.png)
+![Sidenav on desktop](../../docassets/images/sidenav-layout.png)
 
 Mobile layout (screen width less than the `stepOver` value):
 
-![Sidenav on mobile](../docassets/images/sidenav-layout-mobile.png)
+![Sidenav on mobile](../../docassets/images/sidenav-layout-mobile.png)
 
 ### Template context
 

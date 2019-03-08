@@ -70,5 +70,5 @@ property:
 
 ## See also
 
--   [Text highlight pipe](text-highlight.pipe.md)
--   [Highlight transform service](highlight-transform.service.md)
+-   [Text highlight pipe](../pipes/text-highlight.pipe.md)
+-   [Highlight transform service](../services/highlight-transform.service.md)

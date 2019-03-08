@@ -13,13 +13,13 @@ Gets information about a Content Services user.
 
 ### Methods
 
--   **getCurrentUserInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../core/ecm-user.model.md)`>`<br/>
+-   **getCurrentUserInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
     Gets information about the user who is currently logged-in.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../core/ecm-user.model.md)`>` - User information as for getUserInfo
--   **getUserInfo**(userName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../core/ecm-user.model.md)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - User information as for getUserInfo
+-   **getUserInfo**(userName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>`<br/>
     Gets information about a user identified by their username.
     -   _userName:_ `string`  - Target username
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../core/ecm-user.model.md)`>` - User information
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmUserModel`](../../core/models/ecm-user.model.md)`>` - User information
 -   **getUserProfileImage**(avatarId: `string`): `string`<br/>
     Returns a profile image as a URL.
     -   _avatarId:_ `string`  - Target avatar
@@ -28,8 +28,8 @@ Gets information about a Content Services user.
 ## Details
 
 The class returned by `getUserInfo` and `getCurrentUserInfo` is detailed
-in the [Ecm User model docs](ecm-user.model.md). The `avatarId` passed to
-`getUserProfileImage` is available as a field of the [`EcmUserModel`](../core/ecm-user.model.md) instance
+in the [Ecm User model docs](../models/ecm-user.model.md). The `avatarId` passed to
+`getUserProfileImage` is available as a field of the [`EcmUserModel`](../../core/models/ecm-user.model.md) instance
 returned for a particular person.
 
 See the
@@ -38,5 +38,5 @@ method in the Alfresco JS API for more information about the REST calls used by 
 
 ## See also
 
--   [Bpm user service](bpm-user.service.md)
--   [Ecm user model](ecm-user.model.md)
+-   [Bpm user service](../services/bpm-user.service.md)
+-   [Ecm user model](../models/ecm-user.model.md)

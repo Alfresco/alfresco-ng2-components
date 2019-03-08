@@ -6,7 +6,7 @@ Status: Active
 
 # [FormFieldValidator interface](../../../lib/core/form/components/widgets/core/form-field-validator.ts "Defined in form-field-validator.ts")
 
-Defines how the input fields of [`Form`](../../lib/process-services/task-list/models/form.model.ts) and Task Details components are validated.
+Defines how the input fields of [`Form`](../../../lib/process-services/task-list/models/form.model.ts) and Task Details components are validated.
 
 ## Basic Usage
 
@@ -54,26 +54,26 @@ Perform validation on `field`.
 
 You can supply a set of validator objects for a form using its `fieldValidators` property.
 ADF will determine if a validator should be used with a given field by calling its
-`isSupported` method, passing the field's [`FormFieldModel`](../core/form-field.model.md) as a parameter. If the validator
-does support the field then its `validate` method will be called on the [`FormFieldModel`](../core/form-field.model.md)
+`isSupported` method, passing the field's [`FormFieldModel`](../../core/models/form-field.model.md) as a parameter. If the validator
+does support the field then its `validate` method will be called on the [`FormFieldModel`](../../core/models/form-field.model.md)
 during the validation phase.
 
 Several validator classes are predefined for you to use:
 
 | Validator name | Checks that: |
 | -------------- | ------------ |
-| [`RequiredFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field is not left blank |
-| [`NumberFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field contains numeric data |
-| [`MinLengthFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field text has at least a minimum number of characters |
-| [`MaxLengthFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field text has no more than a maximum number of characters |
-| [`MinValueFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts) | Numeric field's value is greater than a lower limit |
-| [`MaxValueFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts) | Numeric field's vaue is less than an upper limit |
-| [`RegExFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field text matches a regular expression |
-| [`DateFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field contains a date in the correct format |
-| [`MinDateFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts) | Date within a field occurs after a certain starting point |
-| [`MaxDateFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts) | Date within a field occurs before a certain end point |
+| [`RequiredFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field is not left blank |
+| [`NumberFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field contains numeric data |
+| [`MinLengthFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field text has at least a minimum number of characters |
+| [`MaxLengthFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field text has no more than a maximum number of characters |
+| [`MinValueFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Numeric field's value is greater than a lower limit |
+| [`MaxValueFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Numeric field's vaue is less than an upper limit |
+| [`RegExFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field text matches a regular expression |
+| [`DateFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Field contains a date in the correct format |
+| [`MinDateFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Date within a field occurs after a certain starting point |
+| [`MaxDateFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts) | Date within a field occurs before a certain end point |
 
-The `FORM_FIELD_VALIDATORS` array contains an instance of each of these classes. You can assign this to the `fieldValidators` property of an Activiti [`Form`](../../lib/process-services/task-list/models/form.model.ts) or Activiti [Task Details component](../process-services/task-details.component.md) to enable standard validation.
+The `FORM_FIELD_VALIDATORS` array contains an instance of each of these classes. You can assign this to the `fieldValidators` property of a [`Form`](../../../lib/process-services/task-list/models/form.model.ts) or [Task Details component](../../process-services/components/task-details.component.md) to enable standard validation.
 
 ### Custom validators
 
@@ -81,9 +81,9 @@ You can implement your own custom validator classes if the standard set doesn't 
 features you need. For example, you could check for consistency between separate fields on
 the form (currency values adding up to a given total, say).
 
-The `type` property of [`FormFieldModel`](../core/form-field.model.md) is often used in the `isSupported` function, since
+The `type` property of [`FormFieldModel`](../../core/models/form-field.model.md) is often used in the `isSupported` function, since
 validation methods typically apply only to specific types of data.
-The [`FormFieldTypes`](../../lib/core/form/components/widgets/core/form-field-types.ts)
+The [`FormFieldTypes`](../../../lib/core/form/components/widgets/core/form-field-types.ts)
 class defines convenient constants for the type strings. 
 
 The validator in the example
@@ -128,7 +128,7 @@ export class AppComponent {
 }
 ```
 
-You can now use the 'fieldValidators' property of the [`Form`](../../lib/process-services/task-list/models/form.model.ts) or Task Details components to assign your
+You can now use the 'fieldValidators' property of the [`Form`](../../../lib/process-services/task-list/models/form.model.ts) or Task Details components to assign your
 custom validator set:
 
 ```html
@@ -147,9 +147,9 @@ custom validator set:
 
 If you now run the application and try to enter "admin" in one of the text fields (either optional or required), you should see the following error:
 
-![](../docassets/images/demo-validator.png)
+![](../../docassets/images/demo-validator.png)
 
 ## See also
 
--   [Form field model](form-field.model.md)
--   [Form component](form.component.md)
+-   [Form field model](../models/form-field.model.md)
+-   [Form component](../components/form.component.md)

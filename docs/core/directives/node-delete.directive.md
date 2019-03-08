@@ -31,7 +31,7 @@ Deletes multiple files and folders.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | permanent | `boolean` | false | If true then the nodes are deleted immediately rather than being put in the trash |
-| selection | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[] \| DeletedNodeEntity[]` |  | Array of nodes to delete. |
+| selection | [`NodeEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/nodeEntry.ts)`[] \| DeletedNodeEntity[]` |  | Array of nodes to delete. |
 
 ### Events
 

@@ -21,4 +21,4 @@ latest version of the class, see the
 
 ## See also
 
--   [People process service](people-process.service.md)
+-   [People process service](../services/people-process.service.md)

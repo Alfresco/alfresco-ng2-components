@@ -13,15 +13,15 @@ Adds and retrieves comments for nodes in Content Services.
 
 ### Methods
 
--   **addNodeComment**(nodeId: `string`, message: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../lib/core/models/comment.model.ts)`>`<br/>
+-   **addNodeComment**(nodeId: `string`, message: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/models/comment.model.ts)`>`<br/>
     Adds a comment to a node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _message:_ `string`  - Text for the comment
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../lib/core/models/comment.model.ts)`>` - Details of the comment added
--   **getNodeComments**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../lib/core/models/comment.model.ts)`[]>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/models/comment.model.ts)`>` - Details of the comment added
+-   **getNodeComments**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/models/comment.model.ts)`[]>`<br/>
     Gets all comments that have been added to a node.
     -   _nodeId:_ `string`  - ID of the target node
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../lib/core/models/comment.model.ts)`[]>` - Details for each comment
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`CommentModel`](../../../lib/core/models/comment.model.ts)`[]>` - Details for each comment
 
 ## Details
 

@@ -64,10 +64,10 @@ export class AppComponent {
     Logs a message at the "ERROR" level.
     -   _message:_ `any`  - (Optional) Message to log
     -   _optionalParams:_ `any[]`  - Interpolation values for the message in "printf" format
--   **getLogLevel**(level: `string`): [`LogLevelsEnum`](../../lib/core/models/log-levels.model.ts)<br/>
+-   **getLogLevel**(level: `string`): [`LogLevelsEnum`](../../../lib/core/models/log-levels.model.ts)<br/>
     Converts a log level name string into its numeric equivalent.
     -   _level:_ `string`  - Level name
-    -   **Returns** [`LogLevelsEnum`](../../lib/core/models/log-levels.model.ts) - Numeric log level
+    -   **Returns** [`LogLevelsEnum`](../../../lib/core/models/log-levels.model.ts) - Numeric log level
 -   **group**(groupTitle?: `string`, optionalParams: `any[]`)<br/>
     Starts an indented group of log messages.
     -   _groupTitle:_ `string`  - (Optional) Title shown at the start of the group
@@ -125,7 +125,7 @@ For example, you can set the default log level to `WARNING` as follows:
 
 ### Log message bus
 
-The [log service](../core/log.service.md) also provides an
+The [log service](log.service.md) also provides an
 [`Observable`](http://reactivex.io/documentation/observable.html) called `_onMessage_`
 that you can subscribe to if you want to receive all the log messages. 
 The message object passed as a parameter to the `onMessage` handler has the following format:

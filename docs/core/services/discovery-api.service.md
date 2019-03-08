@@ -13,21 +13,21 @@ Gets version and license information for Process Services and Content Services.
 
 ### Methods
 
--   **getBpmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../lib/core/models/product-version.model.ts)`>`<br/>
+-   **getBpmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>`<br/>
     Gets product information for Process Services.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../lib/core/models/product-version.model.ts)`>` - ProductVersionModel containing product details
--   **getEcmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmProductVersionModel`](../../lib/core/models/product-version.model.ts)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>` - ProductVersionModel containing product details
+-   **getEcmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>`<br/>
     Gets product information for Content Services.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmProductVersionModel`](../../lib/core/models/product-version.model.ts)`>` - ProductVersionModel containing product details
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`EcmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>` - ProductVersionModel containing product details
 
 ## Details
 
 The product license and version information is returned using the
-classes defined in the [Product Version model](product-version.model.md).
+classes defined in the [Product Version model](../models/product-version.model.md).
 See the
 [Alfresco JS API docs](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-discovery-rest-api)
 to learn more about the REST API used by this service.
 
 ## See also
 
--   [Product version model](product-version.model.md)
+-   [Product version model](../models/product-version.model.md)

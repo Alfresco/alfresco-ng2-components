@@ -63,7 +63,7 @@ value or expression:
 
 ### Modes
 
-The [Upload directive](../core/upload.directive.md) supports two modes:
+The [Upload directive](upload.directive.md) supports two modes:
 
 -   **drop** mode, where the decorated element acts like a drop zone for files (enabled by default)
 -   **click** mode, where the decorated element invokes a file dialog to select files or folders.
@@ -100,7 +100,7 @@ In click mode you can provide extra attributes for the file dialog:
 
 #### Drop mode
 
-Currently, the [upload directive](../core/upload.directive.md) supports only file drops (single or multiple).
+Currently, the [upload directive](upload.directive.md) supports only file drops (single or multiple).
 Support for folders and `accept` filters will probably be implemented in a
 future version.
 

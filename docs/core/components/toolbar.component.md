@@ -9,7 +9,7 @@ Last reviewed: 2018-06-08
 
 Simple container for headers, titles, actions and breadcrumbs.
 
-![](../docassets/images/adf-toolbar-01.png)
+![](../../docassets/images/adf-toolbar-01.png)
 
 ## Contents
 
@@ -35,7 +35,7 @@ Simple container for headers, titles, actions and breadcrumbs.
 </adf-toolbar>
 ```
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 You can set the title content using an `<adf-toolbar-title>` element (although
 you can also set a simple textual title with the `title` attribute).
@@ -63,10 +63,10 @@ toolbar:
 ```
 
 For example, the image below shows a toolbar with a
-[Breadcrumb component](../content-services/breadcrumb.component.md) title, and then some buttons
+[Breadcrumb component](../../content-services/breadcrumb.component.md) title, and then some buttons
 pushed to the right by a spacer:
 
-![](../docassets/images/adf-toolbar-02.png)
+![](../../docassets/images/adf-toolbar-02.png)
 
 ## Class members
 
@@ -109,27 +109,27 @@ but you could also use your own custom menu components:
 </adf-toolbar>
 ```
 
-![](../docassets/images/adf-toolbar-03.png)
+![](../../docassets/images/adf-toolbar-03.png)
 
 With the menu set up like this, you would see the following menu items as defined earlier
 when you click the menu button:
 
-![](../docassets/images/adf-toolbar-04.png)
+![](../../docassets/images/adf-toolbar-04.png)
 
 ### Custom color
 
 Besides the default color you can use 'primary', 'accent', or 'warn' values:
 
 You might also want to change colors to follow your application's color
-[theme](../user-guide/theming.md):
+[theme](../../user-guide/theming.md):
 
 For example:
 
-![](../docassets/images/adf-toolbar-05.png)
+![](../../docassets/images/adf-toolbar-05.png)
 
-![](../docassets/images/adf-toolbar-06.png)
+![](../../docassets/images/adf-toolbar-06.png)
 
-![](../docassets/images/adf-toolbar-07.png)
+![](../../docassets/images/adf-toolbar-07.png)
 
 ## See also
 

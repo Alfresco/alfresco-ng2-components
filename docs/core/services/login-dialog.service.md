@@ -22,10 +22,10 @@ Manages login dialogs.
 ## Details
 
 Use the methods of this service to manage login dialogs from code. As an alternative, you may
-find it easier to use the [Login dialog component](login-dialog.component.md) to display the
+find it easier to use the [Login dialog component](../components/login-dialog.component.md) to display the
 dialog directly from HTML.
 
 ## See also
 
--   [Login dialog component](login-dialog.component.md)
--   [Login component](login.component.md)
+-   [Login dialog component](../components/login-dialog.component.md)
+-   [Login component](../components/login.component.md)

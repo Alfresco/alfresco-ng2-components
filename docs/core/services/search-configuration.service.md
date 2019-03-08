@@ -28,12 +28,12 @@ object. This configures the search to use `searchTerm` along with `maxResults` a
 specified for the paging of the search results.
 
 This service is a standard implementation of the
-[Search configuration interface](search-configuration.interface.md) that works well for many
+[Search configuration interface](../interfaces/search-configuration.interface.md) that works well for many
 common cases. However, you can also supply your own implementation if you need to. See the
-[Search configuration interface](search-configuration.interface.md) page for full details and
+[Search configuration interface](../interfaces/search-configuration.interface.md) page for full details and
 example code.
 
 ## See also
 
 -   [Search component](../content-services/search.component.md)
--   [Search configuration interface](search-configuration.interface.md)
+-   [Search configuration interface](../interfaces/search-configuration.interface.md)

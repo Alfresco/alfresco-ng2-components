@@ -43,7 +43,7 @@ export class MyComponent {
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| selection | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` | \[] | Array of nodes to toggle as favorites. |
+| selection | [`NodeEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/nodeEntry.ts)`[]` | \[] | Array of nodes to toggle as favorites. |
 
 ### Events
 

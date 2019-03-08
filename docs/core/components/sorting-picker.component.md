@@ -9,7 +9,7 @@ Last reviewed: 2018-06-08
 
 Selects from a set of predefined sorting definitions and directions.
 
-![Sorting Picker](../docassets/images/sorting-picker.png)
+![Sorting Picker](../../docassets/images/sorting-picker.png)
 
 ## Basic Usage
 
@@ -36,7 +36,8 @@ Selects from a set of predefined sorting definitions and directions.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| change | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Function>` | Raised each time sorting key or direction gets changed. |
+| sortingChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Raised each time direction gets changed. |
+| valueChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Raised each time sorting key gets changed. |
 
 ## Details
 

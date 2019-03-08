@@ -30,4 +30,4 @@ Allows folders and/or files to be downloaded, with multiple nodes packed as a '.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| nodes | [`MinimalNodeEntity`](../content-services/document-library.model.md)`[]` |  | Nodes to download. |
+| nodes | [`NodeEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/nodeEntry.ts)` \| `[`NodeEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/nodeEntry.ts)`[]` |  | Nodes to download. |

@@ -9,7 +9,7 @@ Last reviewed: 2019-02-01
 
 Provides a generic "Empty Content" placeholder for components.
 
-![Favorites screen](../docassets/images/empty-content-favorites.png)
+![Favorites screen](../../docassets/images/empty-content-favorites.png)
 
 ## Basic usage
 
@@ -51,7 +51,7 @@ Provides a generic "Empty Content" placeholder for components.
 </adf-document-list>
 ```
 
-![Favorites screen](../docassets/images/empty-content-favorites.png)
+![Favorites screen](../../docassets/images/empty-content-favorites.png)
 
 You can also use multiple lines instead of the subtitle section:
 
@@ -68,7 +68,7 @@ You can also use multiple lines instead of the subtitle section:
 </adf-document-list>
 ```
 
-![Trashcan screen](../docassets/images/empty-content-trashcan.png)
+![Trashcan screen](../../docassets/images/empty-content-trashcan.png)
 
 ## See also
 

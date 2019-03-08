@@ -46,11 +46,11 @@ Accesses and manipulates ACS document nodes using their node IDs.
     -   _nodeId:_ `string`  - ID of the target node
     -   _options:_ `any`  - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Node information
--   **getNodeChildren**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
+-   **getNodeChildren**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
     Gets the items contained in a folder node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _options:_ `any`  - Optional parameters supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of child items from the folder
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of child items from the folder
 -   **restoreNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
     Restores a node previously moved to the trashcan.
     -   _nodeId:_ `string`  - ID of the node to restore
@@ -73,7 +73,7 @@ by dashes, eg:
 The string is convenient for storage, for passing as an 
 [Angular route parameter](https://angular.io/guide/router)
 and other purposes but doesn't enable you to do very much with the node itself.
-The [Nodes Api Service](../core/nodes-api.service.md) has methods for getting information about nodes and
+The [Nodes Api Service](nodes-api.service.md) has methods for getting information about nodes and
 managing them within the repository (creating, deleting, etc).
 
 Other lower level interfaces to the ACS nodes API are also available - see the
@@ -85,7 +85,7 @@ for more information.
 
 ### Getting node information
 
-The `getNode` method gives access to the [MinimalNode](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) object that represents the
+The `getNode` method gives access to the [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) object that represents the
 details of a node:
 
 ```ts
@@ -111,11 +111,11 @@ modification dates, etc. Also, the `id` and `parentId` properties contain the no
 ID strings for the current node and its enclosing folder.
 
 Sometimes, a [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md) is provided directly, for example, the `folderNode` property
-of a [Document List component](../content-services/document-list.component.md) or the data context of a
-[Document List row](../content-services/document-list.component.md#underlying-node-object). In these cases,
+of a [Document List component](../../content-services/document-list.component.md) or the data context of a
+[Document List row](../../content-services/document-list.component.md#underlying-node-object). In these cases,
 you might pass the `id` or `parentId` as a [route parameter](https://angular.io/guide/router)
 to a page describing the node in full detail. The component receiving the node ID can
-use the [Nodes Api service](../core/nodes-api.service.md) to "decode" the ID string into a `MinimalNode`:
+use the [Nodes Api service](nodes-api.service.md) to "decode" the ID string into a [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md):
 
 ```ts
 import { ActivatedRoute, Router } from '@angular/router';
@@ -188,5 +188,5 @@ pages in the Alfresco JS API for further details and options. Note that you can 
 ## See also
 
 -   [Deleted nodes api service](deleted-nodes-api.service.md)
--   [Document list component](../content-services/document-list.component.md)
+-   [Document list component](../../content-services/document-list.component.md)
 -   [Node service](node.service.md)

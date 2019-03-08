@@ -50,17 +50,17 @@ Restores deleted nodes to their original location.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| selection | `DeletedNodeEntry[]` |  | Array of deleted nodes to restore. |
+| selection | [`DeletedNodeEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/deletedNodeEntry.ts)`[]` |  | Array of deleted nodes to restore. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| restore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`RestoreMessageModel`](../../lib/core/directives/node-restore.directive.ts)`>` | Emitted when restoration is complete. |
+| restore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`RestoreMessageModel`](../../../lib/core/directives/node-restore.directive.ts)`>` | Emitted when restoration is complete. |
 
 ## Details
 
-The directive takes a selection of `DeletedNodeEntry` instances and restores them to
+The directive takes a selection of [`DeletedNodeEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/deletedNodeEntry.ts) instances and restores them to
 their original locations. If the original location doesn't exist anymore then they remain
 in the trash list.
 

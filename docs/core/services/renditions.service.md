@@ -29,24 +29,24 @@ Manages prearranged conversions of content to different formats.
     Generates a rendition for a node using the first available encoding.
     -   _nodeId:_ `string`  - ID of the target node
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null response to indicate completion
--   **getAvailableRenditionForNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionEntry.md)`>`<br/>
+-   **getAvailableRenditionForNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/renditionEntry.ts)`>`<br/>
     Gets the first available rendition found for a node.
     -   _nodeId:_ `string`  - ID of the target node
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionEntry.md)`>` - Information object for the rendition
--   **getRendition**(nodeId: `string`, encoding: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionEntry.md)`>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/renditionEntry.ts)`>` - Information object for the rendition
+-   **getRendition**(nodeId: `string`, encoding: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/renditionEntry.ts)`>`<br/>
     Gets information about a rendition of a node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _encoding:_ `string`  - Name of the rendition encoding
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionEntry.md)`>` - Information object about the rendition
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/renditionEntry.ts)`>` - Information object about the rendition
 -   **getRenditionUrl**(nodeId: `string`, encoding: `string`): `string`<br/>
     Gets a URL linking to the specified rendition of a node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _encoding:_ `string`  - Name of the rendition encoding
     -   **Returns** `string` - URL string
--   **getRenditionsListByNodeId**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionPaging.md)`>`<br/>
+-   **getRenditionsListByNodeId**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionPaging`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/renditionPaging.ts)`>`<br/>
     Gets a list of all renditions for a node.
     -   _nodeId:_ `string`  - ID of the target node
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionPaging.md)`>` - Paged list of rendition details
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RenditionPaging`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/renditionPaging.ts)`>` - Paged list of rendition details
 -   **isConversionPossible**(nodeId: `string`, encoding: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>`<br/>
     Checks if the node can be converted using the specified rendition.
     -   _nodeId:_ `string`  - ID of the target node
@@ -67,13 +67,13 @@ _rendition_ is a prearranged conversion that is set up for an item for convenien
 repeated use. More information about renditions is available in the
 [Content Services documentation](https://docs.alfresco.com/5.2/references/dev-extension-points-content-transformer.html).
 
-In the [Renditions service](../core/renditions.service.md) methods, the `nodeId` is a string identifying the content
+In the [Renditions service](renditions.service.md) methods, the `nodeId` is a string identifying the content
 node that the rendition applies to. This can be obtained from
-[Document List component](../content-services/document-list.component.md) events and various other places
+[Document List component](../../content-services/document-list.component.md) events and various other places
 in the ADF API. The `encoding` identifies the conversion performed by the rendition.
 
 See the
 [Renditions API page](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionsApi.md#createRendition)
 in the Alfresco JS API for more information about the
-[`RenditionPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/RenditionPaging.md)
+[`RenditionPaging`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/renditionPaging.ts)
 class and other implementation details.

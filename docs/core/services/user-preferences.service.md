@@ -17,20 +17,17 @@ Stores preferences for the app and for individual components.
     Gets a preference property.
     -   _property:_ `string`  - Name of the property
     -   _defaultValue:_ `string`  - (Optional) Default to return if the property is not found
-    -   **Returns** `string` - Preference property
+    -   **Returns** `string` - [Preference](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/preference.ts) property
 -   **getDefaultLocale**(): `string`<br/>
     Gets the default locale.
     -   **Returns** `string` - Default locale language code
--   **getDefaultPageSizes**(): `number[]`<br/>
-    Gets an array containing the available page sizes.
-    -   **Returns** `number[]` - Array of page size values
 -   **getPropertyKey**(property: `string`): `string`<br/>
     Gets the full property key with prefix.
     -   _property:_ `string`  - The property name
-    -   **Returns** `string` - [Property](../../lib/content-services/content-metadata/interfaces/property.interface.ts) key
+    -   **Returns** `string` - [Property](../../../lib/content-services/content-metadata/interfaces/property.interface.ts) key
 -   **getStoragePrefix**(): `string`<br/>
     Gets the active storage prefix for preferences.
-    -   **Returns** `string` - Storage prefix
+    -   **Returns** `string` - [Storage](../../../node_modules/@alfresco/js-api/src/storage.ts) prefix
 -   **hasItem**(property: `string`): `boolean`<br/>
     Check if an item is present in the storage
     -   _property:_ `string`  - Name of the property
@@ -70,7 +67,7 @@ class AppComponent {
 }
 ```
 
-As soon as you assign the storage prefix, all settings that you get or set via the [`UserPreferencesService`](../core/user-preferences.service.md) will be saved to a dedicated profile.
+As soon as you assign the storage prefix, all settings that you get or set via the [`UserPreferencesService`](../../core/services/user-preferences.service.md) will be saved to a dedicated profile.
 
 You can import the service into your controller and use its APIs as shown below:
 
@@ -95,12 +92,12 @@ The service also provides quick access to a set of the "known" properties used a
 | ---- | ---- | ----------- |
 | authType | `string` | Authorization type (can be "ECM", "BPM" or "ALL"). |
 | disableCSRF | `boolean` | Prevents the CSRF Token from being submitted if true. Only valid for Process Services. |
-| paginationSize | `number` | [`Pagination`](../../lib/content-services/document-list/models/document-library.model.ts) size. |
+| paginationSize | `number` | [`Pagination`](../../../lib/content-services/document-list/models/document-library.model.ts) size. |
 | locale | `string` | Current locale setting. |
 
 ## User Preference onChange Stream
 
-Whenever a property is set with the [user preferences service,](../core/user-preferences.service.md) an `onChange` event is sent with the
+Whenever a property is set with the [user preferences service,](user-preferences.service.md) an `onChange` event is sent with the
 whole set of user properties. This is useful when a component needs to react to a property change:
 
 ```ts

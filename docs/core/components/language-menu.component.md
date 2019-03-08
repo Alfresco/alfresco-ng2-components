@@ -9,7 +9,7 @@ Last reviewed: 2018-11-09
 
 Displays all the languages that are present in "app.config.json" and the default (EN).
 
-![Language Menu screenshot](../docassets/images/languages-menu.png)
+![Language Menu screenshot](../../docassets/images/languages-menu.png)
 
 ## Basic usage
 
@@ -26,10 +26,10 @@ How to attach an ADF Language Menu as a main menu
 
 ## Details
 
-Add a [Language Menu component](../core/language-menu.component.md) to let the
+Add a [Language Menu component](language-menu.component.md) to let the
 user set the locale language for the app. For further information about the
 locale language, see the
-[Internationalization](../user-guide/internationalization.md#how-the-display-language-is-selected)
+[Internationalization](../../user-guide/internationalization.md#how-the-display-language-is-selected)
 page in the user guide.
 
 The component fetches the list of available languages from `app.config.json`:
@@ -71,8 +71,8 @@ You can also attach the Language Menu as a nested menu:
 </mat-menu>
 ```
 
-![Nested Language Menu screenshot](../docassets/images/languages-menu-nested.png)
+![Nested Language Menu screenshot](../../docassets/images/languages-menu-nested.png)
 
 ## See Also
 
--   [Internationalization](../user-guide/internationalization.md)
+-   [Internationalization](../../user-guide/internationalization.md)

@@ -11,8 +11,8 @@ Contains information about a Process Services user.
 ## Details
 
 Instances of this class are returned by the methods of the
-[Bpm User service](bpm-user.service.md). It implements the
-[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/UserRepresentation.md) interface, which is defined in the
+[Bpm User service](../services/bpm-user.service.md). It implements the
+[`UserRepresentation`](../../../node_modules/@alfresco/js-api/src/api/activiti-rest-api/model/userRepresentation.ts) interface, which is defined in the
 [Alfresco JS API](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/UserRepresentation.md).
 
 Note that the Typescript class for this model is in active development;
@@ -22,6 +22,6 @@ latest version of the class, see the
 
 ## See also
 
--   [Bpm user service](bpm-user.service.md)
+-   [Bpm user service](../services/bpm-user.service.md)
 -   [Ecm user model](ecm-user.model.md)
--   [People process service](people-process.service.md)
+-   [People process service](../services/people-process.service.md)

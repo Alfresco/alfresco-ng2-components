@@ -20,7 +20,7 @@ The interface defines a service that generates a custom
 object. This object can then be supplied to a search operation to refine the search parameters.
 
 A standard implementation, the
-[Search Configuration service](search-configuration.service.md) is provided in the ADF Core library
+[Search Configuration service](../services/search-configuration.service.md) is provided in the ADF Core library
 source. This works fine in most cases but if you need to, you can implement your own service, as
 described below.
 
@@ -28,7 +28,7 @@ described below.
 
 1.  Implement the service class
 
-    Create your own service class to implement the [`SearchConfigurationInterface`](../core/search-configuration.interface.md). This defines the
+    Create your own service class to implement the [`SearchConfigurationInterface`](../../core/interfaces/search-configuration.interface.md). This defines the
     the `generateQueryBody` method that returns the QueryBody object. See the
     [QueryBody](https://github.com/Alfresco/alfresco-js-api/blob/1.6.0/src/alfresco-search-rest-api/docs/QueryBody.md)
     page in the Alfresco JS API for further details about the options this object provides.
@@ -85,10 +85,10 @@ described below.
         })
     ```
 
-    You also need to add the [`SearchService`](../core/search.service.md) as a provider to avoid overriding the module instance. This component will have his own instance of the [`SearchService`](../core/search.service.md) that will use the class you have provided
+    You also need to add the [`SearchService`](../../core/services/search.service.md) as a provider to avoid overriding the module instance. This component will have his own instance of the [`SearchService`](../../core/services/search.service.md) that will use the class you have provided
     as its configuration.
 
 ## See also
 
--   [Search component](../content-services/search.component.md)
--   [Search configuration service](search-configuration.service.md)
+-   [Search component](../../content-services/search.component.md)
+-   [Search configuration service](../services/search-configuration.service.md)

@@ -31,23 +31,23 @@ export class MyComponent implements OnInit {
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| contentApi | `ContentApi` |  | (Read only) Accesses the Content API |
-| nodesApi | `NodesApi` |  | (Read only) Accesses the Nodes API |
-| renditionsApi | `RenditionsApi` |  | (Read only) Accesses the Renditions API |
+| contentApi | [`ContentApi`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/api/content.api.ts) |  | (Read only) Accesses the Content API |
+| nodesApi | [`NodesApi`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/api/nodes.api.ts) |  | (Read only) Accesses the Nodes API |
+| renditionsApi | [`RenditionsApi`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/api/renditions.api.ts) |  | (Read only) Accesses the Renditions API |
 | sharedLinksApi | `SharedLinksApi` |  | (Read only) Accesses the Shared Links API |
-| sitesApi | `SitesApi` |  | (Read only) Accesses the Sites API |
-| favoritesApi | `FavoritesApi` |  | (Read only) Accesses the Favorites API |
-| peopleApi | `PeopleApi` |  | (Read only) Accesses the People API |
-| searchApi | `SearchApi` |  | (Read only) Accesses the Search API |
-| versionsApi | `VersionsApi` |  | (Read only) Accesses the Versions API |
-| classesApi | `ClassesApi` |  | (Read only) Accesses the Classes API |
-| groupsApi | `GroupsApi` |  | (Read only) Accesses the Groups API |
+| sitesApi | [`SitesApi`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/api/sites.api.ts) |  | (Read only) Accesses the Sites API |
+| favoritesApi | [`FavoritesApi`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/api/favorites.api.ts) |  | (Read only) Accesses the Favorites API |
+| peopleApi | [`PeopleApi`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/api/people.api.ts) |  | (Read only) Accesses the People API |
+| searchApi | [`SearchApi`](../../../node_modules/@alfresco/js-api/src/api/search-rest-api/api/search.api.ts) |  | (Read only) Accesses the [Search](../../../node_modules/@alfresco/js-api/src/api-legacy/legacy.ts) API |
+| versionsApi | [`VersionsApi`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/api/versions.api.ts) |  | (Read only) Accesses the Versions API |
+| classesApi | [`ClassesApi`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/api/classes.api.ts) |  | (Read only) Accesses the Classes API |
+| groupsApi | [`GroupsApi`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/api/groups.api.ts) |  | (Read only) Accesses the Groups API |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| nodeUpdated | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` | Emitted when a node updates. |
+| nodeUpdated | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`Node`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/node.ts)`>` | Emitted when a node updates. |
 
 ## Details
 

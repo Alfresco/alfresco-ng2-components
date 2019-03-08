@@ -24,10 +24,10 @@ Adds highlighting to words or sections of text that match a search string.
 
 The pipe's parameter is a string to search for in the text. Any occurrences of the string will
 be highlighted with added HTML (see the
-[Highlight Transform service](highlight-transform.service.md) for more information about how
+[Highlight Transform service](../services/highlight-transform.service.md) for more information about how
 this is implemented). The parameter can contain spaces, in which case each separate "word" in the string will be highlighted individually.
 
 ## See also
 
--   [Highlight directive](highlight.directive.md)
--   [Highlight transform service](highlight-transform.service.md)
+-   [Highlight directive](../directives/highlight.directive.md)
+-   [Highlight transform service](../services/highlight-transform.service.md)

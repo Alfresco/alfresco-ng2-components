@@ -9,11 +9,11 @@ Last reviewed: 2018-06-08
 
 Displays a sidebar-style information panel.
 
-![Info drawer layout screenshot](../docassets/images/infodrawerlayout.png)
+![Info drawer layout screenshot](../../docassets/images/infodrawerlayout.png)
 
 ## Basic usage
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 There are three regions where you can add your own content using `<div>` elements
 with the following names:
@@ -42,8 +42,9 @@ with the following names:
 
 As the name suggests, this is basically just a layout with CSS styling.
 
-See the [Info drawer layout component](../core/info-drawer-layout.component.md) for an alternative approach that uses tabs to structure the content of the info drawer.
+See the [Info drawer tab component](info-drawer-tab.component.md) for an alternative approach that uses tabs to structure the content of the info drawer.
 
 ## See also
 
 -   [Info drawer component](info-drawer.component.md)
+-   [Info drawer tab component](info-drawer-tab.component.md)

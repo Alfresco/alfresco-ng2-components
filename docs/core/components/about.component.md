@@ -17,7 +17,7 @@ Shows a general version and status overview of the installed ADF library.
 
 ## Details
 
-Use this component to get a general overview of the version of ADF installed and the status of the [Content service](../core/content.service.md) and [Process service](../process-services/process.service.md).
+Use this component to get a general overview of the version of ADF installed and the status of the [Content service](../services/content.service.md) and [Process service](../../process-services/services/process.service.md).
 
 Note at the moment this component is mostly for internal use and it requires you to:
 

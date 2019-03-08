@@ -9,7 +9,7 @@ Last reviewed: 2018-11-12
 
 Displays data as a table with customizable columns and presentation.
 
-![DataTable demo](../docassets/images/datatable-demo.png)
+![DataTable demo](../../docassets/images/datatable-demo.png)
 
 See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/)
 
@@ -27,12 +27,16 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
     -   [DataTable DOM Events](#datatable-dom-events)
     -   [Card view](#card-view)
     -   [Using events](#using-events)
-    -   [Customizing the component's styles](#customizing-the-components-styles)
+    -   [Customizing the component's styles](#customizing-the-component-s-styles)
+    -   [Truncated text](#truncated-text)
+    -   [Expanded cells](#expanded-cells)
+    -   [Combining classes](#combining-classes)
+    -   [Sticky header](#sticky-header)
 -   [See also](#see-also)
 
 ## Basic usage
 
-**[app.component](../../demo-shell/src/app/app.component.ts).html**
+**app.component.html**
 
 ```html
 <adf-datatable 
@@ -40,7 +44,7 @@ See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/
 </adf-datatable>
 ```
 
-**[app.component](../../demo-shell/src/app/app.component.ts).ts**
+**app.component.ts**
 
 ```ts
 import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
@@ -79,7 +83,7 @@ export class DataTableDemo {
 
 ### Setting the rows and column schema
 
-You can set rows and columns in the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) as shown below:
+You can set rows and columns in the [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts) as shown below:
 
 ```ts
 import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
@@ -156,7 +160,7 @@ export class DataTableDemo {
 </adf-datatable>
 ```
 
-You can also set rows to the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) and set columns as an input as shown below :
+You can also set rows to the [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts) and set columns as an input as shown below :
 
 ```ts
 import { ObjectDataTableAdapter }  from '@alfresco/adf-core';
@@ -246,7 +250,7 @@ export class DataTableDemo {
 </adf-datatable>
 ```
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 You can add [Data column component](data-column.component.md) instances to define columns for the
 table as described in the usage examples and the [Customizing columns](#customizing-columns) section.
@@ -311,10 +315,10 @@ together in the same datatable.
 | ---- | ---- | ------------- | ----------- |
 | actions | `boolean` | false | Toggles the data actions column. |
 | actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
-| allowDropFiles | `boolean` | false | Toggles file drop support for rows (see [Upload directive](upload.directive.md) for further details). |
+| allowDropFiles | `boolean` | false | Toggles file drop support for rows (see [Upload directive](../directives/upload.directive.md) for further details). |
 | columns | `any[]` | \[] | The columns that the datatable will show. |
 | contextMenu | `boolean` | false | Toggles custom context menu for the component. |
-| data | [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source for the table |
+| data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source for the table |
 | display | `string` | DisplayMode.List | Selects the display mode of the table. Can be "list" or "gallery". |
 | fallbackThumbnail | `string` |  | Fallback image for rows where the thumbnail is missing. |
 | loading | `boolean` | false | Flag that indicates if the datatable is in loading state and needs to show the loading template (see the docs to learn how to configure a loading template). |
@@ -327,27 +331,27 @@ together in the same datatable.
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showHeader | `boolean` | true | Toggles the header. |
 | sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
-| stickyHeader | `boolean` | false | Toggles a sticky (fixed) header that stays in place while the rows become scrollable. [Sticky header](#sticky-header) |
+| stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../lib/core/datatable/components/datatable/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
-| rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user clicks a row. |
-| rowDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user double-clicks a row. |
-| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the actions menu is displayed for a row. |
-| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
+| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/datatable/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
+| rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user clicks a row. |
+| rowDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user double-clicks a row. |
+| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
 
 ## Details
 
 ### Supplying data for the table
 
 The column layout and row data are supplied to the table using an object that implements the
-[`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) interface. This interface hides the internal details of the class that provides
+[`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) interface. This interface hides the internal details of the class that provides
 the data, which gives a lot of flexibility in how the data can be stored and accessed. The DataTable
-library includes a standard adapter class called [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) that is useful in many
-common cases. See the [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) for full details about the interface and the [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts) class.
+library includes a standard adapter class called [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts) that is useful in many
+common cases. See the [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) for full details about the interface and the [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts) class.
 
 ### Customizing columns
 
@@ -384,7 +388,7 @@ onRowClick(event) {
 }
 ```
 
-![](../docassets/images/datatable-dom-events.png)
+![](../../docassets/images/datatable-dom-events.png)
 
 ### Card view
 
@@ -397,7 +401,7 @@ Set the `display` property to "gallery" to enable Card View mode:
 </adf-datatable
 ```
 
-![card-view](../docassets/images/document-list-card-view.png)
+![card-view](../../docassets/images/document-list-card-view.png)
 
 ### Using events
 
@@ -552,9 +556,9 @@ onExecuteRowAction(event: DataRowActionEvent) {
 }
 ```
 
-![](../docassets/images/datatable-actions-ui.png)
+![](../../docassets/images/datatable-actions-ui.png)
 
-![](../docassets/images/datatable-actions-console.png)
+![](../../docassets/images/datatable-actions-console.png)
 
 You can use any payloads for row actions. The only requirement for the objects is that they
 must have a `title` property.
@@ -571,7 +575,7 @@ The datatable component is ready to be used out of the box although you might wa
 
 By default, the content of the cells is wrapped so you can see all the data inside. See picture bellow.
 
-![](../docassets/images/datatable-wrapped-text.png)
+![](../../docassets/images/datatable-wrapped-text.png)
 
 However, you can also truncate the text within these cells by using the `adf-ellipsis-cell` class in the desired column. 
 
@@ -585,13 +589,13 @@ However, you can also truncate the text within these cells by using the `adf-ell
 }
 ```
 
-![](../docassets/images/datatable-truncated-text.png)
+![](../../docassets/images/datatable-truncated-text.png)
 
 ### Expanded cells
 
 This component makes use of a flex layout. All cells have the same semantic importance, so all of them have the same width. You can alter this behavior by adding one of the following classes in the desired column to make it grow wider. 
 
-![](../docassets/images/datatable-expand-5.png)
+![](../../docassets/images/datatable-expand-5.png)
 
 This classes go from `adf-expand-cell-1` to `adf-expand-cell-5`. The higher the number in the class the wider the column will get. You can choose the one that better suits your needs.
 
@@ -634,11 +638,11 @@ Second and last, you will need to set the height of your datatable in its parent
 
 Final result
 
-![](../docassets/images/datatable-sticky-header.png)
+![](../../docassets/images/datatable-sticky-header.png)
 
 ## See also
 
 -   [Data column component](data-column.component.md)
 -   [Pagination component](pagination.component.md)
--   [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts)
--   [Document list component](../content-services/document-list.component.md)
+-   [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts)
+-   [Document list component](../../content-services/document-list.component.md)

@@ -9,11 +9,11 @@ Last reviewed: 2018-06-08
 
 Displays buttons on a responsive menu. 
 
-![adf-buttons-menu-desktop](../docassets/images/adf-buttons-menu-desktop.png)
+![adf-buttons-menu-desktop](../../docassets/images/adf-buttons-menu-desktop.png)
 
 ## Basic Usage
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 Place the buttons for the menu inside this component's HTML tags.
 They must use the following structure:
@@ -47,11 +47,11 @@ depending on the screen size:
 
 **Desktop View**
 
-![adf-buttons-menu-desktop](../docassets/images/adf-buttons-menu-desktop.png)
+![adf-buttons-menu-desktop](../../docassets/images/adf-buttons-menu-desktop.png)
 
 **Mobile View**
 
-![adf-buttons-menu-mobile](../docassets/images/adf-buttons-menu-mobile.png)
+![adf-buttons-menu-mobile](../../docassets/images/adf-buttons-menu-mobile.png)
 
 The component has a property called `isMenuEmpty` that you can access from code. If this is
 set to true then the component will not show an empty menu with no buttons defined.

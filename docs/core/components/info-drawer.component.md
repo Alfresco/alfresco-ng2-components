@@ -9,11 +9,11 @@ Last reviewed: 2018-06-08
 
 Displays a sidebar-style information panel with tabs.
 
-![Info drawer screenshot](../docassets/images/activities-infodrawer.png)
+![Info drawer screenshot](../../docassets/images/activities-infodrawer.png)
 
 ## Basic usage
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 There are three regions where you can add your own content using `<div>` elements
 with the following names (as with the [Info drawer layout component](info-drawer-layout.component.md)):

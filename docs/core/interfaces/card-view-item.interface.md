@@ -7,7 +7,7 @@ Last reviewed: 2018-05-08
 
 # [Card View Item interface](../../../lib/core/card-view/interfaces/card-view-item.interface.ts "Defined in card-view-item.interface.ts")
 
-Defines the implementation of an item in a [Card View component](../core/card-view.component.md).
+Defines the implementation of an item in a [Card View component](../components/card-view.component.md).
 
 ## Definition
 
@@ -42,7 +42,7 @@ export interface CardViewItem {
 ## Details
 
 Card item components are loaded dynamically by the
-main [Card View component](card-view.component.md). This allows you to define your own
+main [Card View component](../components/card-view.component.md). This allows you to define your own
 component for a custom item type.
 
 For example, follow the steps given below to add a **stardate** type to display Captain
@@ -50,8 +50,8 @@ Picard's birthday (47457.1):
 
 1.  Define the model for the custom type.
 
-    Your model must extend the [`CardViewBaseItemModel`](../../lib/core/card-view/models/card-view-baseitem.model.ts) class and implement the [`CardViewItem`](../../lib/core/card-view/interfaces/card-view-item.interface.ts)
-    and [`DynamicComponentModel`](../../lib/core/services/dynamic-component-mapper.service.ts) interfaces. See the
+    Your model must extend the [`CardViewBaseItemModel`](../../../lib/core/card-view/models/card-view-baseitem.model.ts) class and implement the [`CardViewItem`](../../../lib/core/card-view/interfaces/card-view-item.interface.ts)
+    and [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts) interfaces. See the
     [Card View Text Item model source](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts)
     for an example of how to do this.
 
@@ -142,11 +142,11 @@ Picard's birthday (47457.1):
     }
     ```
 
-    The [Card Item Type service](card-item-types.service.md) maps each item type to the
-    corresponding component. See its [doc page](card-item-types.service.md) for further
+    The [Card Item Type service](../services/card-item-types.service.md) maps each item type to the
+    corresponding component. See its [doc page](../services/card-item-types.service.md) for further
     details.
 
 ## See also
 
--   [Card View component](card-view.component.md)
--   [Card Item Types service](card-item-types.service.md)
+-   [Card View component](../components/card-view.component.md)
+-   [Card Item Types service](../services/card-item-types.service.md)

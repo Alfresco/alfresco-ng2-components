@@ -42,13 +42,13 @@ Selectively disables an HTML element or Angular component.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| nodes | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` | \[] | Nodes to check permission for. |
-| permission | `string` | null | [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions). |
+| nodes | [`NodeEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/nodeEntry.ts)`[]` | \[] | Nodes to check permission for. |
+| permission | `string` | null | [Node](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/node.ts) permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions). |
 
 ## Details
 
-The [Check Allowable Operation Directive](../core/check-allowable-operation.directive.md) lets you disable an HTML element or Angular component
-by taking a collection of [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md) instances and checking their permissions.
+The [Check Allowable Operation Directive](check-allowable-operation.directive.md) lets you disable an HTML element or Angular component
+by taking a collection of [`NodeEntry`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/nodeEntry.ts) instances and checking their permissions.
 
 The decorated element will be disabled if:
 
@@ -57,7 +57,7 @@ The decorated element will be disabled if:
 
 ### HTML element example
 
-A typical use case is to bind a [Document List](../content-services/document-list.component.md)
+A typical use case is to bind a [Document List](../../content-services/document-list.component.md)
 selection property to a toolbar button. In the following example, the "Delete" button should
 be disabled if no selection is present or if user does not have permission to delete at least one node in the selection:
 
@@ -80,8 +80,8 @@ one or more documents that they have permission to delete.
 
 ### Angular component example
 
-You can add the directive to any Angular component that implements the [`NodeAllowableOperationSubject`](../../lib/core/directives/check-allowable-operation.directive.ts)
-interface (the [Upload Drag Area component](../content-services/upload-drag-area.component.md),
+You can add the directive to any Angular component that implements the [`NodeAllowableOperationSubject`](../../../lib/core/directives/check-allowable-operation.directive.ts)
+interface (the [Upload Drag Area component](../../content-services/upload-drag-area.component.md),
 for example). You can also use it in much the same way as you would with an HTML element:
 
 ```html
@@ -95,14 +95,14 @@ for example). You can also use it in much the same way as you would with an HTML
 ```
 
 To enable your own component to work with this directive, you need to implement the
-[`NodeAllowableOperationSubject`](../../lib/core/directives/check-allowable-operation.directive.ts) interface and also define it as an
+[`NodeAllowableOperationSubject`](../../../lib/core/directives/check-allowable-operation.directive.ts) interface and also define it as an
 [`EXTENDIBLE_COMPONENT`](../../lib/core/interface/injection.tokens.ts)
 parent component,
 as described in the following sections.
 
 ### Implementing the NodeAllowableOperationSubject interface
 
-The component must implement the [`NodeAllowableOperationSubject`](../../lib/core/directives/check-allowable-operation.directive.ts) interface which means it must have a
+The component must implement the [`NodeAllowableOperationSubject`](../../../lib/core/directives/check-allowable-operation.directive.ts) interface which means it must have a
 boolean `disabled` property. This is the property that will be set by the directive:
 
 ```js

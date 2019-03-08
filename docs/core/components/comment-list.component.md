@@ -9,7 +9,7 @@ Last reviewed: 2018-11-14
 
 Shows a list of comments.
 
-![ADF Comment List](../docassets/images/adf-comment-list.png)
+![ADF Comment List](../../docassets/images/adf-comment-list.png)
 
 ## Basic Usage
 
@@ -50,7 +50,7 @@ export class SomeComponent implements OnInit {
   }
 ```
 
-In the component template use the [comment list component](../core/comment-list.component.md):
+In the component template use the [comment list component](comment-list.component.md):
 
 ```html
 <adf-comment-list
@@ -65,10 +65,10 @@ In the component template use the [comment list component](../core/comment-list.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| comments | [`CommentModel`](../../lib/core/models/comment.model.ts)`[]` |  | The comments data used to populate the list. |
+| comments | [`CommentModel`](../../../lib/core/models/comment.model.ts)`[]` |  | The comments data used to populate the list. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| clickRow | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`CommentModel`](../../lib/core/models/comment.model.ts)`>` | Emitted when the user clicks on one of the comment rows. |
+| clickRow | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`CommentModel`](../../../lib/core/models/comment.model.ts)`>` | Emitted when the user clicks on one of the comment rows. |

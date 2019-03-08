@@ -42,4 +42,4 @@ You can also chain values with other pipes such as the translation pipe:
 
 ## See also
 
--   [App Config service](app-config.service.md)
+-   [App Config service](../services/app-config.service.md)

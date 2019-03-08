@@ -8,7 +8,7 @@ Status: Active
 
 Displays comments from users involved in a specified task or content and allows an involved user to add a comment to a task or a content.
 
-![adf-comments](../docassets/images/adf-comments.png)
+![adf-comments](../../docassets/images/adf-comments.png)
 
 ## Basic Usage Task
 

@@ -7,9 +7,9 @@ Last reviewed: 2018-06-08
 
 # [Info Drawer Tab component](../../../lib/core/info-drawer/info-drawer.component.ts "Defined in info-drawer.component.ts")
 
-Renders tabs in a [Info drawer component](../core/info-drawer.component.md).
+Renders tabs in a [Info drawer component](info-drawer.component.md).
 
-![Info drawer screenshot](../docassets/images/label-tab.png)
+![Info drawer screenshot](../../docassets/images/label-tab.png)
 
 ## Basic usage
 
@@ -44,7 +44,7 @@ Render tab with icon instead of labels:
 </adf-info-drawer>
 ```
 
-![Info drawer screenshot](../docassets/images/icon-tab.png)
+![Info drawer screenshot](../../docassets/images/icon-tab.png)
 
 ## Class members
 
@@ -57,7 +57,7 @@ Render tab with icon instead of labels:
 
 ## Details
 
-See the [Info drawer component](../core/info-drawer.component.md) page for details of how to use this subcomponent.
+See the [Info drawer component](info-drawer.component.md) page for details of how to use this subcomponent.
 
 ## See also
 

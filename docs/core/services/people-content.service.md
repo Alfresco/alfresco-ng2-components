@@ -24,8 +24,8 @@ Gets information about a Content Services user.
 ## Details
 
 The class returned by `getPerson` and `getCurrentPerson` is detailed
-in the [Ecm User model docs](ecm-user.model.md). The `avatarId` passed to
-`getUserProfileImage` is available as a field of the [`EcmUserModel`](../core/ecm-user.model.md) instance
+in the [Ecm User model docs](../models/ecm-user.model.md). The `avatarId` passed to
+`getUserProfileImage` is available as a field of the [`EcmUserModel`](../../core/models/ecm-user.model.md) instance
 returned for a particular person.
 
 See the
@@ -35,4 +35,4 @@ method in the Alfresco JS API for more information about the REST calls used by 
 ## See also
 
 -   [People process service](people-process.service.md)
--   [Ecm user model](ecm-user.model.md)
+-   [Ecm user model](../models/ecm-user.model.md)

@@ -9,12 +9,12 @@ Last reviewed: 2018-11-20
 
 Displays a sidebar-action menu information panel.
 
-![Sidebar action menu button screenshot](../docassets/images/sidebar-action-menu-button.png)
-![Sidebar action menu icon screenshot](../docassets/images/sidebar-action-menu-icon.png)
+![Sidebar action menu button screenshot](../../docassets/images/sidebar-action-menu-button.png)
+![Sidebar action menu icon screenshot](../../docassets/images/sidebar-action-menu-icon.png)
 
 ## Basic usage
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 There are three regions where you can add your own content in `<div>` elements with
 the following names:

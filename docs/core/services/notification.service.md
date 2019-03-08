@@ -9,7 +9,7 @@ Last reviewed: 2018-06-08
 
 Shows a notification message with optional feedback.
 
-![Notification Service screenshot](../docassets/images/NotiService.png)
+![Notification Service screenshot](../../docassets/images/NotiService.png)
 
 ## Class members
 
@@ -17,12 +17,12 @@ Shows a notification message with optional feedback.
 
 -   **dismissSnackMessageAction**()<br/>
     dismiss the notification snackbar
--   **openSnackMessage**(message: `string`, config: `number|MatSnackBarConfig` = [`NotificationService`](../core/notification.service.md)`.DEFAULT_DURATION_MESSAGE`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+-   **openSnackMessage**(message: `string`, config: `number|MatSnackBarConfig` = [`NotificationService`](../../core/services/notification.service.md)`.DEFAULT_DURATION_MESSAGE`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Opens a SnackBar notification to show a message.
     -   _message:_ `string`  - The message (or resource key) to show.
     -   _config:_ `number|MatSnackBarConfig`  - Time before notification disappears after being shown or MatSnackBarConfig object
     -   **Returns** [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>` - Information/control object for the SnackBar
--   **openSnackMessageAction**(message: `string`, action: `string`, config: `number|MatSnackBarConfig` = [`NotificationService`](../core/notification.service.md)`.DEFAULT_DURATION_MESSAGE`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
+-   **openSnackMessageAction**(message: `string`, action: `string`, config: `number|MatSnackBarConfig` = [`NotificationService`](../../core/services/notification.service.md)`.DEFAULT_DURATION_MESSAGE`): [`MatSnackBarRef`](https://material.angular.io/components/snack-bar/overview)`<any>`<br/>
     Opens a SnackBar notification with a message and a response button.
     -   _message:_ `string`  - The message (or resource key) to show.
     -   _action:_ `string`  - Caption for the response button
@@ -31,7 +31,7 @@ Shows a notification message with optional feedback.
 
 ## Details
 
-The [Notification Service](../core/notification.service.md) is implemented on top of the Angular Material Design snackbar.
+The [Notification Service](notification.service.md) is implemented on top of the Angular Material Design snackbar.
 Use this service to show a notification message, and optionally get feedback from it.
 
 ```ts

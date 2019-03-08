@@ -20,9 +20,9 @@ Provides authentication to ACS and APS.
 -   **getBearerExcludedUrls**(): `string[]`<br/>
     Gets the set of URLs that the token bearer is excluded from.
     -   **Returns** `string[]` - Array of URL strings
--   **getBpmLoggedUser**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/UserRepresentation.md)`>`<br/>
+-   **getBpmLoggedUser**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](../../../node_modules/@alfresco/js-api/src/api/activiti-rest-api/model/userRepresentation.ts)`>`<br/>
     Gets information about the user currently logged into APS.
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/UserRepresentation.md)`>` - User information
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`UserRepresentation`](../../../node_modules/@alfresco/js-api/src/api/activiti-rest-api/model/userRepresentation.ts)`>` - User information
 -   **getBpmUsername**(): `string`<br/>
     Gets the BPM username
     -   **Returns** `string` - The BPM username
@@ -33,13 +33,13 @@ Provides authentication to ACS and APS.
     Gets the URL to redirect to after login.
     -   **Returns** `string` - The redirect URL
 -   **getTicketBpm**(): `string|null`<br/>
-    Gets the BPM ticket stored in the Storage.
+    Gets the BPM ticket stored in the [Storage](../../../node_modules/@alfresco/js-api/src/storage.ts).
     -   **Returns** `string|null` - The ticket or `null` if none was found
 -   **getTicketEcm**(): `string|null`<br/>
-    Gets the ECM ticket stored in the Storage.
+    Gets the ECM ticket stored in the [Storage](../../../node_modules/@alfresco/js-api/src/storage.ts).
     -   **Returns** `string|null` - The ticket or `null` if none was found
 -   **getTicketEcmBase64**(): `string|null`<br/>
-    Gets the BPM ticket from the Storage in Base 64 format.
+    Gets the BPM ticket from the [Storage](../../../node_modules/@alfresco/js-api/src/storage.ts) in Base 64 format.
     -   **Returns** `string|null` - The ticket or `null` if none was found
 -   **getToken**(): `string`<br/>
     Gets the auth token.
@@ -72,6 +72,9 @@ Provides authentication to ACS and APS.
 -   **isRememberMeSet**(): `boolean`<br/>
     Checks whether the "remember me" cookie was set or not.
     -   **Returns** `boolean` - True if set, false otherwise
+-   **isSSODiscoveryConfigured**(): `boolean`<br/>
+    Check if SSO is configured correctly
+    -   **Returns** `boolean` - 
 -   **login**(username: `string`, password: `string`, rememberMe: `boolean` = `false`): [`Observable`](http://reactivex.io/documentation/observable.html)`<Function>`<br/>
     Logs the user in.
     -   _username:_ `string`  - Username for the login
@@ -81,9 +84,9 @@ Provides authentication to ACS and APS.
 -   **logout**(): `any`<br/>
     Logs the user out.
     -   **Returns** `any` - Response event called when logout is complete
--   **setRedirect**(url: [`RedirectionModel`](../../lib/core/models/redirection.model.ts))<br/>
+-   **setRedirect**(url: [`RedirectionModel`](../../../lib/core/models/redirection.model.ts))<br/>
     Sets the URL to redirect to after login.
-    -   _url:_ [`RedirectionModel`](../../lib/core/models/redirection.model.ts)  - URL to redirect to
+    -   _url:_ [`RedirectionModel`](../../../lib/core/models/redirection.model.ts)  - URL to redirect to
 -   **ssoImplicitLogin**()<br/>
     Logs the user in with SSO
 
@@ -111,4 +114,4 @@ export class AppComponent {
 
 ## See also
 
--   [Login component](login.component.md)
+-   [Login component](../components/login.component.md)

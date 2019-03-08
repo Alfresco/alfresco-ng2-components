@@ -7,7 +7,7 @@ Last reviewed: 2018-11-12
 
 # [User Initial pipe](../../../lib/core/pipes/user-initial.pipe.ts "Defined in user-initial.pipe.ts")
 
-Takes the name fields of a [`UserProcessModel`](../core/user-process.model.md) object and extracts and formats the initials.
+Takes the name fields of a [`UserProcessModel`](../../core/models/user-process.model.md) object and extracts and formats the initials.
 
 ## Basic Usage
 
@@ -33,4 +33,4 @@ Both parameters default to empty strings.
 
 ## See also
 
--   [Full name pipe](../core/full-name.pipe.md)
+-   [Full name pipe](full-name.pipe.md)

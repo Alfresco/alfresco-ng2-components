@@ -24,7 +24,7 @@ See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
     -   [Custom file parameters](#custom-file-parameters)
     -   [Supported file formats](#supported-file-formats)
     -   [Content Renditions](#content-renditions)
-    -   [Configuring PDF.js library](#configuring-pdfjs-library)
+    -   [Configuring PDF.js library](#configuring-pdf-js-library)
     -   [Extending the Viewer](#extending-the-viewer)
     -   [Custom layout](#custom-layout)
     -   [Printing](#printing)
@@ -64,9 +64,9 @@ Note that if you have a URL which contains a shared link ID, you should extract 
 ID portion and use it with the `sharedLinkId` property rather than using the whole
 URL with `urlFile`.
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
-The [Viewer component](../core/viewer.component.md) lets you transclude content for the toolbar (and toolbar buttons),
+The [Viewer component](viewer.component.md) lets you transclude content for the toolbar (and toolbar buttons),
 the sidebar, thumbnails, and the "Open with" and "More actions" menus.
 See the [Custom layout](#custom-layout) section for full details of all available tranclusions.
 
@@ -84,14 +84,14 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | allowPrint | `boolean` | false | Toggles printing. |
 | allowRightSidebar | `boolean` | false | Allow the right sidebar. |
 | allowThumbnails | `boolean` | true | Toggles PDF thumbnails. |
-| blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) File |
+| blobFile | [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) |  | Loads a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) [File](../../../node_modules/@alfresco/js-api/src/api/activiti-rest-api/model/file.ts) |
 | canNavigateBefore | `boolean` | true | Toggles the "before" ("&lt;") button. Requires `allowNavigate` to be enabled. |
 | canNavigateNext | `boolean` | true | Toggles the next (">") button. Requires `allowNavigate` to be enabled. |
 | displayName | `string` |  | Specifies the name of the file when it is not available from the URL. |
 | fileName | `string` |  | Content filename. |
-| maxRetries | `number` | 10 | Number of times the Viewer will retry fetching content Rendition. There is a delay of at least one second between attempts. |
+| maxRetries | `number` | 10 | Number of times the Viewer will retry fetching content [Rendition](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/rendition.ts). There is a delay of at least one second between attempts. |
 | mimeType | `string` |  | MIME type of the file content (when not determined by the filename extension). |
-| nodeId | `string` | null | [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Id of the file to load. |
+| nodeId | `string` | null | [Node](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/node.ts) Id of the file to load. |
 | overlayMode | `boolean` | false | If `true` then show the Viewer as a full page over the current content. Otherwise fit inside the parent div. |
 | sharedLinkId | `string` | null | Shared link id (to display shared file). |
 | showLeftSidebar | `boolean` | false | Toggles left sidebar visibility. Requires `allowLeftSidebar` to be set to `true`. |
@@ -109,11 +109,11 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | extensionChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the filename extension changes. |
-| goBack | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button. |
+| goBack | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Back' button. |
 | invalidSharedLink | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the shared link used is not valid. |
 | navigateBefore | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when user clicks 'Navigate Before' ("&lt;") button. |
 | navigateNext | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when user clicks 'Navigate Next' (">") button. |
-| print | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Print' button. |
+| print | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`BaseEvent`](../../../lib/core/events/base.event.ts)`<any>>` | Emitted when user clicks the 'Print' button. |
 | showViewerChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when the viewer is shown or hidden. |
 
 ## Keyboard shortcuts
@@ -130,7 +130,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 ### Integrating with the Document List component
 
 Below is the most simple integration of the Viewer and 
-[Document List](../content-services/document-list.component.md) components within your custom component:
+[Document List](../../content-services/document-list.component.md) components within your custom component:
 
 ```html
 <adf-document-list
@@ -179,7 +179,7 @@ You can provide custom file parameters, for example a value for the `mimeType` o
 
 ### Supported file formats
 
-The [Viewer component](../core/viewer.component.md) consists of separate Views that handle particular types or type families based on either a file extension or a mime type:
+The [Viewer component](viewer.component.md) consists of separate Views that handle particular types or type families based on either a file extension or a mime type:
 
 -   PDF View
     -   application/pdf
@@ -237,7 +237,7 @@ Configure your webpack-enabled application with the PDF.js library as follows.
 npm install pdfjs-dist
 ```
 
-2.  Update `vendors.ts` by appending the following code. This will enable the [viewer component](../core/viewer.component.md)
+2.  Update `vendors.ts` by appending the following code. This will enable the [viewer component](viewer.component.md)
     and compatibility mode for all browsers. It will also configure the web worker for the PDF.js
     library to render PDF files in the background:
 
@@ -261,12 +261,12 @@ new CopyWebpackPlugin([
 ])
 ```
 
-The [Viewer component](../core/viewer.component.md) now should be able to display PDF files.
+The [Viewer component](viewer.component.md) now should be able to display PDF files.
 
 ### Extending the Viewer
 
 You can define your own custom handler to handle other file formats that are not yet supported by
-the [Viewer component](../core/viewer.component.md). Below is an example that shows how to use the `adf-viewer-extension`
+the [Viewer component](viewer.component.md). Below is an example that shows how to use the `adf-viewer-extension`
 to handle 3D data files:
 
 ```html
@@ -311,7 +311,7 @@ You can define multiple `adf-viewer-extension` templates if required:
 
 ### Custom layout
 
-The [Viewer component](../core/viewer.component.md) lets you transclude custom content in several different places as
+The [Viewer component](viewer.component.md) lets you transclude custom content in several different places as
 explained in the sections below.
 
 #### Custom toolbar
@@ -352,11 +352,11 @@ then you can do so as shown in the following example:
 
 The result should look like this:
 
-![Custom Toolbar Actions](../docassets/images/viewer-toolbar-actions.png)
+![Custom Toolbar Actions](../../docassets/images/viewer-toolbar-actions.png)
 
 #### Custom sidebar
 
-The [Viewer component](../core/viewer.component.md) also supports custom sidebar components and layouts.
+The [Viewer component](viewer.component.md) also supports custom sidebar components and layouts.
 Set the `allowRightSidebar` property to `true` to enable this feature.
 
 The custom sidebar can be injected in two different ways. The first way is to use
@@ -386,7 +386,7 @@ The PDF viewer comes with its own default list of thumbnails but you can replace
 by providing a custom template and binding to the context property `viewer` to access the PDFJS.PDFViewer
 instance.
 
-![PDF thumbnails](../docassets/images/pdf-thumbnails.png)
+![PDF thumbnails](../../docassets/images/pdf-thumbnails.png)
 
 Provide the custom template as in the following example:
 
@@ -438,7 +438,7 @@ You can enable a custom "Open With" menu by providing at least one action inside
 </adf-viewer>
 ```
 
-![Open with](../docassets/images/viewer-open-with.png)
+![Open with](../../docassets/images/viewer-open-with.png)
 
 #### Custom "More actions" menu
 
@@ -465,7 +465,7 @@ You can enable a custom "More actions" menu by providing at least one action ins
 </adv-viewer>
 ```
 
-![More actions](../docassets/images/viewer-more-actions.png)
+![More actions](../../docassets/images/viewer-more-actions.png)
 
 ### Printing
 
@@ -484,4 +484,4 @@ content.
 
 ## See also
 
--   [Document List component](../content-services/document-list.component.md)
+-   [Document List component](../../content-services/document-list.component.md)

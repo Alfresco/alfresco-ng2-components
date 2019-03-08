@@ -7,7 +7,7 @@ Last reviewed: 2019-01-16
 
 # [Form component](../../../lib/core/form/components/form.component.ts "Defined in form.component.ts")
 
-Shows a [`Form`](../../lib/process-services/task-list/models/form.model.ts) from APS
+Shows a [`Form`](../../../lib/process-services/task-list/models/form.model.ts) from APS
 
 (See it live: [Form Quickstart](https://embed.plnkr.co/YSLXTqb3DtMhVJSqXKkE/))
 
@@ -34,7 +34,7 @@ Shows a [`Form`](../../lib/process-services/task-list/models/form.model.ts) from
 </adf-form>
 ```
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 Any content in the body of `<adf-form>` will be shown when no form definition is found:
 
@@ -54,16 +54,16 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| data | [`FormValues`](../../lib/core/form/components/widgets/core/form-values.ts) |  | Custom form values map to be used with the rendered form. |
+| data | [`FormValues`](../../../lib/core/form/components/widgets/core/form-values.ts) |  | Custom form values map to be used with the rendered form. |
 | disableCompleteButton | `boolean` | false | If true then the `Complete` outcome button is shown but it will be disabled. |
 | disableStartProcessButton | `boolean` | false | If true then the `Start Process` outcome button is shown but it will be disabled. |
-| fieldValidators | [`FormFieldValidator`](../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` | \[] | Contains a list of form field validator instances. |
-| form | [`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts) |  | Underlying [form model](../../lib/core/form/components/widgets/core/form.model.ts) instance. |
+| fieldValidators | [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` | \[] | Contains a list of form field validator instances. |
+| form | [`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts) |  | Underlying [form model](../../../lib/core/form/components/widgets/core/form.model.ts) instance. |
 | formId | `number` |  | The id of the form definition to load and display with custom values. |
 | formName | `string` |  | Name of the form definition to load and display with custom values. |
 | nameNode | `string` |  | Name to assign to the new node where the metadata are stored. |
 | nodeId | `string` |  | Content Services node ID for the form metadata. |
-| path | `string` |  | Path of the folder where the metadata will be stored. |
+| path | `string` |  | [Path](../../../node_modules/@alfresco/js-api/src/api/gs-classification-rest-api/model/path.ts) of the folder where the metadata will be stored. |
 | readOnly | `boolean` | false | Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. |
 | saveMetadata | `boolean` | false | Toggle saving of form metadata. |
 | showCompleteButton | `boolean` | true | Toggle rendering of the `Complete` outcome button. |
@@ -79,17 +79,17 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when any error occurs. |
-| executeOutcome | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../lib/core/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
-| formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
-| formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when form content is clicked. |
-| formDataRefreshed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when form values are refreshed due to a data property change. |
-| formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../core/form-field.model.md)`[]>` | Emitted when the supplied form values have a validation error. |
-| formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
-| formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
+| executeOutcome | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../../lib/core/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
+| formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
+| formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when form content is clicked. |
+| formDataRefreshed | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when form values are refreshed due to a data property change. |
+| formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../../core/models/form-field.model.md)`[]>` | Emitted when the supplied form values have a validation error. |
+| formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
+| formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
 
 ## Details
 
-All `formXXX` events receive a [`FormModel`](../../lib/core/form/components/widgets/core/form.model.ts) instance as their argument:
+All `formXXX` events receive a [`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts) instance as their argument:
 
 **MyView.component.html**
 
@@ -238,13 +238,13 @@ property. Each validator implements a check for a particular type of data (eg, a
 date validator might check that the date in the field falls between 1980 and 2017).
 ADF supplies a standard set of validators that handle most common cases but you can
 also implement your own custom validators to replace or extend the set. See the
-[Form Field Validator](form-field-validator.interface.md) interface for full details and examples.
+[Form Field Validator](../interfaces/form-field-validator.interface.md) interface for full details and examples.
 
 ### Common scenarios
 
 #### Rendering a form using form definition JSON
 
-See the [demo-form](../docassets/demo-form.json) file for an example of form definition JSON.
+See the [demo-form](../../docassets/demo-form.json) file for an example of form definition JSON.
 
 The component below (with the JSON assigned to the `formDefinitionJSON` property), shows how a
 form definition is rendered:
@@ -279,7 +279,7 @@ could use this, say, to provide two alternative ways of entering the same inform
 up default values that can be edited.
 
 You can implement this in ADF using the `formFieldValueChanged` event of the
-[Form service](form.service.md). For example, if you had a form with a dropdown widget (id: `type`)
+[Form service](../services/form.service.md). For example, if you had a form with a dropdown widget (id: `type`)
 and a multiline text (id:`description`), you could synchronize their values as follows:
 
 ```ts
@@ -301,11 +301,11 @@ to its `value` property.
 
 The result should look like the following:
 
-![](../docassets/images/form-service-sample-01.png)
+![](../../docassets/images/form-service-sample-01.png)
 
 #### Responding to all form events
 
-Subscribe to the `formEvents` event of the [Form service](form.service.md) to get notification
+Subscribe to the `formEvents` event of the [Form service](../services/form.service.md) to get notification
 of all form events:
 
 ```ts
@@ -342,14 +342,14 @@ In the CSS, you can target any outcome ID and change the style as in this exampl
 }
 ```
 
-![](../docassets/images/form-style-sample.png)
+![](../../docassets/images/form-style-sample.png)
 
 ### Alfresco Repositories APS configuration
 
 APS allows you to configure where to store files and folders in your on-site Alfresco repositories.
 
 If you have your repositories configured like this, you can use the attach file/folder
-form widget to get a file from those repositories and attach it to the Form.
+form widget to get a file from those repositories and attach it to the [Form](../../../lib/process-services/task-list/models/form.model.ts).
 
 **Note:** your repositories could be configured to be on different servers from the one
 where your front-end is deployed.  Make sure you are using the right Proxy or configuration,
@@ -361,8 +361,8 @@ Also, don't forget to set the `providers` property to `ALL` in the `app.config.j
 
 ## See also
 
--   [Form Field Validator interface](form-field-validator.interface.md)
--   [Extensibility](../user-guide/extensibility.md)
--   [Form rendering service](form-rendering.service.md)
--   [Form field model](form-field.model.md)
--   [Form service](form.service.md)
+-   [Form Field Validator interface](../interfaces/form-field-validator.interface.md)
+-   [Extensibility](../../user-guide/extensibility.md)
+-   [Form rendering service](../services/form-rendering.service.md)
+-   [Form field model](../models/form-field.model.md)
+-   [Form service](../services/form.service.md)

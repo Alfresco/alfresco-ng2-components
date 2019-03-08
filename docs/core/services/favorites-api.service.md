@@ -13,20 +13,20 @@ Gets a list of items a user has marked as their favorites.
 
 ### Methods
 
--   **getFavorites**(personId: `string`, options?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
+-   **getFavorites**(personId: `string`, options?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../../lib/content-services/document-list/models/document-library.model.ts)`>`<br/>
     Gets the favorites for a user.
     -   _personId:_ `string`  - ID of the user
     -   _options:_ `any`  - (Optional) Options supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of favorites
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](../../../lib/content-services/document-list/models/document-library.model.ts)`>` - List of favorites
 -   **remapFavoriteEntries**(entries: `any[]`): `any[]`<br/>
 
     -   _entries:_ `any[]`  - 
     -   **Returns** `any[]` - 
 
--   **remapFavoritesData**(data: `any` = `{}`): [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)<br/>
+-   **remapFavoritesData**(data: `any` = `{}`): [`NodePaging`](../../../lib/content-services/document-list/models/document-library.model.ts)<br/>
 
     -   _data:_ `any`  - 
-    -   **Returns** [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) - 
+    -   **Returns** [`NodePaging`](../../../lib/content-services/document-list/models/document-library.model.ts) - 
 
 -   **remapEntry**(\_\_namedParameters: `Function`): `any`<br/>
 

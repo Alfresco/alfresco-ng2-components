@@ -71,7 +71,7 @@ In the HTML, you can now use the icon as shown below:
 
 ### Thumbnail Service
 
-You can also reference the icons registered with the [Thumbnail Service](thumbnail.service.md)
+You can also reference the icons registered with the [Thumbnail Service](../services/thumbnail.service.md)
 using the `adf:` namespace.
 
 ```html
@@ -80,4 +80,4 @@ using the `adf:` namespace.
 
 ## See also
 
--   [Thumbnail service](../core/thumbnail.service.md)
+-   [Thumbnail service](../services/thumbnail.service.md)

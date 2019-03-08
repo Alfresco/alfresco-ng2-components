@@ -8,7 +8,7 @@ Status: Active
 
 Displays a message indicating that a list is empty.
 
-![](../docassets/images/adf-empty-list.png)
+![](../../docassets/images/adf-empty-list.png)
 
 ## Basic Usage
 
@@ -25,7 +25,7 @@ Displays a message indicating that a list is empty.
 </adf-datatable>
 ```
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 You can supply a custom header, body, and footer for an empty list using special
 sub-components:
