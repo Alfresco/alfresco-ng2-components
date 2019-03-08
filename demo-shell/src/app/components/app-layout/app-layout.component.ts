@@ -39,12 +39,17 @@ export class AppLayoutComponent implements OnInit {
         { href: '/header-data', icon: 'edit', title: 'APP_LAYOUT.HEADER_DATA' },
         { href: '/node-selector', icon: 'attachment', title: 'APP_LAYOUT.NODE-SELECTOR' },
         { href: '/task-list', icon: 'assignment', title: 'APP_LAYOUT.TASK_LIST' },
-        { href: '/process-list', icon: 'assignment', title: 'APP_LAYOUT.PROCESS_LIST' },
         { href: '/cloud', icon: 'cloud', title: 'APP_LAYOUT.PROCESS_CLOUD', children: [
             { href: '/cloud/', icon: 'cloud', title: 'APP_LAYOUT.HOME' },
             { href: '/cloud/people-group-cloud', icon: 'group', title: 'APP_LAYOUT.PEOPLE_GROUPS_CLOUD' }
         ]},
-        { href: '/activiti', icon: 'device_hub', title: 'APP_LAYOUT.PROCESS_SERVICES' },
+        { href: '/activiti', icon: 'device_hub', title: 'APP_LAYOUT.PROCESS_SERVICES', children: [
+            { href: '/activiti', icon: 'vpn_key', title: 'APP_LAYOUT.APP' },
+            { href: '/process-list', icon: 'assignment', title: 'APP_LAYOUT.PROCESS_LIST' },
+            { href: '/form', icon: 'poll', title: 'APP_LAYOUT.FORM' },
+            { href: '/form-list', icon: 'library_books', title: 'APP_LAYOUT.FORM_LIST' },
+            { href: '/form-loading', icon: 'cached', title: 'APP_LAYOUT.FORM_LOADING' },
+        ]},
         { href: '/login', icon: 'vpn_key', title: 'APP_LAYOUT.LOGIN' },
         { href: '/trashcan', icon: 'delete', title: 'APP_LAYOUT.TRASHCAN' },
         { href: '/dl-custom-sources', icon: 'extension', title: 'APP_LAYOUT.CUSTOM_SOURCES' },
@@ -53,9 +58,6 @@ export class AppLayoutComponent implements OnInit {
             { href: '/datatable-lazy', icon: 'view_module', title: 'APP_LAYOUT.DATATABLE_LAZY' }
         ]},
         { href: '/template-list', icon: 'list_alt', title: 'APP_LAYOUT.TEMPLATE' },
-        { href: '/form', icon: 'poll', title: 'APP_LAYOUT.FORM' },
-        { href: '/form-list', icon: 'library_books', title: 'APP_LAYOUT.FORM_LIST' },
-        { href: '/form-loading', icon: 'cached', title: 'APP_LAYOUT.FORM_LOADING' },
         { href: '/webscript', icon: 'extension', title: 'APP_LAYOUT.WEBSCRIPT' },
         { href: '/tag', icon: 'local_offer', title: 'APP_LAYOUT.TAG' },
         { href: '/social', icon: 'thumb_up', title: 'APP_LAYOUT.SOCIAL' },
