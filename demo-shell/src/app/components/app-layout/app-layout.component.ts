@@ -48,7 +48,7 @@ export class AppLayoutComponent implements OnInit {
             { href: '/process-list', icon: 'assignment', title: 'APP_LAYOUT.PROCESS_LIST' },
             { href: '/form', icon: 'poll', title: 'APP_LAYOUT.FORM' },
             { href: '/form-list', icon: 'library_books', title: 'APP_LAYOUT.FORM_LIST' },
-            { href: '/form-loading', icon: 'cached', title: 'APP_LAYOUT.FORM_LOADING' },
+            { href: '/form-loading', icon: 'cached', title: 'APP_LAYOUT.FORM_LOADING' }
         ]},
         { href: '/login', icon: 'vpn_key', title: 'APP_LAYOUT.LOGIN' },
         { href: '/trashcan', icon: 'delete', title: 'APP_LAYOUT.TRASHCAN' },
