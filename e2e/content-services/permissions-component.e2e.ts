@@ -34,6 +34,7 @@ import { NotificationPage } from '../pages/adf/notificationPage';
 import CONSTANTS = require('../util/constants');
 import { MetadataViewPage } from '../pages/adf/metadataViewPage';
 import { UploadDialog } from '../pages/adf/dialog/uploadDialog';
+import { VersionManagePage } from '../pages/adf/versionManagerPage';
 
 describe('Permissions Component', function () {
 
@@ -46,6 +47,7 @@ describe('Permissions Component', function () {
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const notificationPage = new NotificationPage();
+    const versionManagePage = new VersionManagePage();
     let uploadDialog = new UploadDialog();
     let folderOwnerUser, consumerUser, siteConsumerUser, contributorUser, managerUser, collaboratorUser, editorUser,
         coordinatorUser, file;
@@ -118,7 +120,7 @@ describe('Permissions Component', function () {
 
         await alfrescoJsApi.login(folderOwnerUser.id, folderOwnerUser.password);
         let publicSiteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
-        let privateSiteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
+        let privateSiteName = `PRIVATE_TEST_SITE_${Util.generateRandomString(5)}`;
         folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
         let publicSiteBody = {visibility: 'PUBLIC', title: publicSiteName};
         let privateSiteBody = {visibility: 'PRIVATE', title: privateSiteName};
@@ -156,7 +158,7 @@ describe('Permissions Component', function () {
         roleContributorFolder = await uploadActions.createFolder(alfrescoJsApi, roleContributorFolderModel.name, '-my-');
         roleCollaboratorFolder = await uploadActions.createFolder(alfrescoJsApi, roleCollaboratorFolderModel.name, '-my-');
         roleEditorFolder = await uploadActions.createFolder(alfrescoJsApi, roleEditorFolderModel.name, '-my-');
-        privateSiteFile = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'privateSite' + fileModel.name, privateSite.entry.id);
+        privateSiteFile = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'privateSite' + fileModel.name, privateSite.entry.guid);
 
         await alfrescoJsApi.core.nodesApi.updateNode(roleConsumerFolder.entry.id,
             {
@@ -238,6 +240,7 @@ describe('Permissions Component', function () {
     afterAll(async (done) => {
         await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         await alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
+        await alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
         await alfrescoJsApi.core.groupsApi.deleteGroup(groupId);
         await uploadActions.deleteFilesOrFolder(alfrescoJsApi, roleConsumerFolder.entry.id);
         await uploadActions.deleteFilesOrFolder(alfrescoJsApi, roleCoordinatorFolder.entry.id);
@@ -744,5 +747,40 @@ describe('Permissions Component', function () {
             });
 
         });
+    });
+
+    describe('Site Consumer - Add new version', function () {
+
+        it('[C277118] Should be able to add new version with Site Consumer permission on file', () => {
+
+            loginPage.loginToContentServicesUsingUserModel(managerUser);
+            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+            contentList.checkContentIsDisplayed('privateSite' + fileModel.name);
+            contentList.doubleClickRow('privateSite' + fileModel.name);
+            viewerPage.checkFileIsLoaded();
+            viewerPage.checkInfoButtonIsDisplayed();
+            viewerPage.clickInfoButton();
+            viewerPage.checkInfoSideBarIsDisplayed();
+            viewerPage.clickMoveRightChevron();
+            viewerPage.clickMoveRightChevron();
+            viewerPage.clickOnTab('Versions');
+            viewerPage.checkTabIsActive('Versions');
+            versionManagePage
+                .checkUploadNewVersionsButtonIsDisplayed()
+                .clickAddNewVersionsButton()
+                .checkMajorChangeIsDisplayed()
+                .checkMinorChangeIsDisplayed()
+                .checkCommentTextIsDisplayed()
+                .checkCancelButtonIsDisplayed();
+
+            versionManagePage.uploadNewVersionFile(pngFileModel.location);
+            versionManagePage.checkFileVersionExist('1.0');
+            expect(versionManagePage.getFileVersionName('1.0')).toEqual('privateSite' + fileModel.name);
+            versionManagePage.checkFileVersionExist('1.1');
+            expect(versionManagePage.getFileVersionName('1.1')).toEqual(pngFileModel.name);
+            viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
+
+        });
+
     });
 });

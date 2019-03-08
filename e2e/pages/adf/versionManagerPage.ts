@@ -42,6 +42,17 @@ export class VersionManagePage {
         return this;
     }
 
+    clickAddNewVersionsButton() {
+        Util.waitUntilElementIsVisible(this.showNewVersionButton);
+        this.showNewVersionButton.click();
+        return this;
+    }
+
+    checkCancelButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.cancelButton);
+        return this;
+    }
+
     uploadNewVersionFile(fileLocation) {
         browser.setFileDetector(new remote.FileDetector());
         Util.waitUntilElementIsVisible(this.uploadNewVersionButton);
@@ -86,6 +97,11 @@ export class VersionManagePage {
         return this;
     }
 
+    checkCommentTextIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.commentText);
+        return this;
+    }
+
     clickMajorChange() {
         let radioMajor = element(by.id(`adf-new-version-major`));
         Util.waitUntilElementIsVisible(radioMajor);
@@ -96,6 +112,16 @@ export class VersionManagePage {
         let radioMinor = element(by.id(`adf-new-version-minor`));
         Util.waitUntilElementIsVisible(radioMinor);
         radioMinor.click();
+    }
+
+    checkMajorChangeIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.majorRadio);
+        return this;
+    }
+
+    checkMinorChangeIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.minorRadio);
+        return this;
     }
 
     /**
