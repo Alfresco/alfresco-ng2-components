@@ -46,12 +46,12 @@
                 <button mat-button
                     [disabled]="hasErrors()"
                     (click)="update()"
+                    [attr.data-automation-id]="'card-textitem-update-' + property.key"
                     class="adf-textitem-icon adf-update-icon">
                         <mat-icon
                             class="adf-update-icon"
                             [class.adf-button-disabled]="hasErrors()"
-                            [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
-                            [attr.data-automation-id]="'card-textitem-update-' + property.key">done</mat-icon>
+                            [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate">done</mat-icon>
                 </button>
                 <mat-icon
                     class="adf-textitem-icon adf-reset-icon"
