@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-export * from './process-list/public-api';
-export * from './process-filters/public-api';
-export * from './start-process/public-api';
-export * from './process-header/public-api';
-
-export * from './process-cloud.module';
+export * from './process-header-cloud.module';
+export * from './components/process-header-cloud.component'
+export * from './services/process-header-cloud.service'
