@@ -33,7 +33,6 @@ describe('ContentNodeSelectorDialogComponent', () => {
 
     let component: ContentNodeSelectorComponent;
     let fixture: ComponentFixture<ContentNodeSelectorComponent>;
-    
     const data: any = {
         title: 'Move along citizen...',
         actionName: 'move',
