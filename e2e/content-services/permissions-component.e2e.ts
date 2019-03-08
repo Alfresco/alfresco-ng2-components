@@ -112,6 +112,7 @@ describe('Permissions Component', function () {
         await alfrescoJsApi.core.peopleApi.addPerson(editorUser);
         await alfrescoJsApi.core.peopleApi.addPerson(managerUser);
         await alfrescoJsApi.core.peopleApi.addPerson(coordinatorUser);
+
         let group = await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
         groupId = group.entry.id;
 
@@ -402,7 +403,7 @@ describe('Permissions Component', function () {
 
     });
 
-    describe('Role: Consumer, Contributor, Coordinator, Collaborator, Editor', function () {
+    describe('Role: Consumer, Contributor, Coordinator, Collaborator, Editor, No Permissions', function () {
 
         it('[C276993] Role Consumer', () => {
 
@@ -564,6 +565,31 @@ describe('Permissions Component', function () {
                 contentList.deleteContent('RoleCoordinator' + fileModel.name);
                 contentList.checkContentIsNotDisplayed('RoleCoordinator' + fileModel.name);
             });
+
+        });
+
+        it('[C279881] No Permission User', () => {
+
+            loginPage.loginToContentServicesUsingUserModel(consumerUser);
+            contentServicesPage.goToDocumentList();
+            searchDialog
+                .checkSearchIconIsVisible()
+                .clickOnSearchIcon()
+                .checkSearchBarIsVisible()
+                .enterText(roleConsumerFolderModel.name)
+                .resultTableContainsRow(roleConsumerFolderModel.name)
+                .clickOnSpecificRow(roleConsumerFolderModel.name);
+            contentList.checkContentIsDisplayed('RoleConsumer' + fileModel.name);
+            contentServicesPage.checkSelectedSiteIsDisplayed('My files');
+            contentList.clickRowMenuActionsButton('RoleConsumer' + fileModel.name);
+            contentList.clickMenuActionNamed('PERMISSION');
+            permissionsPage.checkPermissionInheritedButtonIsDisplayed();
+            permissionsPage.checkAddPermissionButtonIsDisplayed();
+            permissionsPage.clickPermissionInheritedButton();
+            notificationPage.checkNotifyContains('You are not allowed to change permissions');
+            notificationPage.checkNotificationSnackBarIsNotDisplayed();
+            permissionsPage.clickAddPermissionButton();
+            notificationPage.checkNotifyContains('You are not allowed to change permissions');
 
         });
     });
