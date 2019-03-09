@@ -71,6 +71,12 @@ export class DocumentListPage {
         return this;
     }
 
+    checkActionMenuIsNotDisplayed() {
+        Util.waitUntilElementIsNotVisible(this.actionMenu);
+        browser.sleep(500);
+        return this;
+    }
+
     dataTablePage() {
         return new DataTableComponentPage(this.rootElement);
     }
