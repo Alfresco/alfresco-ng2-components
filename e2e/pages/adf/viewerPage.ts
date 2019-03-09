@@ -96,6 +96,7 @@ export class ViewerPage {
     bugButton = element(by.id('adf-viewer-bug'));
 
     codeViewer = element(by.id('adf-monaco-file-editor'));
+    moveRightChevron = element(by.css('.mat-tab-header-pagination-after .mat-tab-header-pagination-chevron'));
 
     checkCodeViewerIsDisplayed() {
         return Util.waitUntilElementIsVisible(this.codeViewer);
@@ -619,5 +620,10 @@ export class ViewerPage {
     checkInlineViewerIsDisplayed() {
         Util.waitUntilElementIsVisible(this.viewer.element(by.css('div[class*="adf-viewer-inline-container"]')));
         return this;
+    }
+
+    clickMoveRightChevron() {
+        Util.waitUntilElementIsVisible(this.moveRightChevron);
+        return this.moveRightChevron.click();
     }
 }
