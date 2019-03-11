@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Directive, Input, HostListener, Output, EventEmitter } from '@angular/core';
+import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@angular/core';
 import { TaskCloudService } from '../task-header/services/task-cloud.service';
 
 @Directive({
     selector: '[adf-cloud-complete-task]'
 })
-export class CompleteTaskDirective {
+export class CompleteTaskDirective implements OnInit {
 
     /** (Required) The id of the task. */
     @Input()
@@ -38,12 +38,39 @@ export class CompleteTaskDirective {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
+    invalidParams: string[] = [];
+
     constructor(private taskListService: TaskCloudService) {}
+
+    ngOnInit() {
+        this.validateInputs();
+    }
+
+    validateInputs() {
+
+        if (!this.isTaskValid()) {
+            this.invalidParams.push('taskId');
+        }
+        if (!this.isAppValid()) {
+            this.invalidParams.push('appName');
+        }
+        if (this.invalidParams.length) {
+            throw new Error(`Attribute ${this.invalidParams.join(', ')} is required`);
+        }
+    }
+
+    isTaskValid() {
+        return this.taskId && this.taskId.length > 0;
+    }
+
+    isAppValid() {
+        return this.appName && this.appName.length > 0;
+    }
 
     @HostListener('click')
     async onClick() {
         try {
-            const result = await this.taskListService.completeTask(this.appName, this.taskId);
+            const result = await this.taskListService.completeTask(this.appName, this.taskId).toPromise();
             if (result) {
                 this.success.emit(result);
             }

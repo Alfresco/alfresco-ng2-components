@@ -21,7 +21,6 @@ import { AppListCloudModule } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
 import { GroupCloudModule } from './group/group-cloud.module';
-import { TaskDirectiveModule } from './task/directives/task-directive.module';
 
 @NgModule({
     imports: [
@@ -29,8 +28,7 @@ import { TaskDirectiveModule } from './task/directives/task-directive.module';
         AppListCloudModule,
         ProcessCloudModule,
         TaskCloudModule,
-        GroupCloudModule,
-        TaskDirectiveModule
+        GroupCloudModule
     ],
     providers: [
         {
@@ -46,8 +44,7 @@ import { TaskDirectiveModule } from './task/directives/task-directive.module';
         AppListCloudModule,
         ProcessCloudModule,
         TaskCloudModule,
-        GroupCloudModule,
-        TaskDirectiveModule
+        GroupCloudModule
     ]
 })
 export class ProcessServicesCloudModule { }

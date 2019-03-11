@@ -36,7 +36,7 @@ export class TaskDetailsCloudModel {
     priority: number;
     processDefinitionId: string;
     processInstanceId: string;
-    status: string;
+    status: TaskStatusEnum;
     standAlone: boolean;
     candidateUsers: string[];
     candidateGroups: string[];
@@ -75,7 +75,7 @@ export class TaskDetailsCloudModel {
     }
 
     isCompleted() {
-        return this.status && this.status.toUpperCase() === TaskStatusEnum.COMPLETED;
+        return this.status && this.status === TaskStatusEnum.COMPLETED;
     }
 }
 

@@ -14,10 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Component, ContentChildren } from '@angular/core';
+import { Component, ViewChild, ContentChildren } from '@angular/core';
 import { CompleteTaskDirective } from './complete-task.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { CoreModule, setupTestBed } from '@alfresco/adf-core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { TaskCloudService } from '../task-header/services/task-cloud.service';
@@ -27,10 +27,14 @@ describe('CompleteTaskDirective', () => {
 
     @Component({
         selector:  'adf-test-component',
-        template: '<button adf-cloud-complete-task [taskId]="asfras" [appName]="simple-app" (taskCompleted)="onCompleteTask($event)"></button>'
+        template: `<button adf-cloud-complete-task [taskId]='taskMock' [appName]='appNameMock' (success)="onCompleteTask($event)"></button>`
     })
     class TestComponent {
-        @ContentChildren(CompleteTaskDirective)
+
+        taskMock = 'test1234';
+        appNameMock = 'simple-app';
+
+        @ViewChild(CompleteTaskDirective)
         completeTaskDirective: CompleteTaskDirective;
 
         onCompleteTask(event: any) {
@@ -64,5 +68,41 @@ describe('CompleteTaskDirective', () => {
         button.click();
         expect(taskCloudService.completeTask).toHaveBeenCalled();
     });
+});
 
+describe('Complete Task Directive validation errors', () => {
+
+    @Component({
+        selector:  'adf-test-validation-component',
+        template: '<button adf-cloud-complete-task (success)="onCompleteTask($event)"></button>'
+    })
+    class TestValidationDirectiveComponent {
+        @ContentChildren(CompleteTaskDirective)
+        completeTaskValidationDirective: CompleteTaskDirective;
+
+        onCompleteTask(event: any) {
+            return event;
+        }
+    }
+
+    let fixture: ComponentFixture<TestValidationDirectiveComponent>;
+
+    setupTestBed({
+        imports: [
+            CoreModule.forRoot(),
+            RouterTestingModule
+        ],
+        declarations: [
+            TestValidationDirectiveComponent,
+            CompleteTaskDirective
+        ]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TestValidationDirectiveComponent);
+    });
+
+    it('should throw error when missing input', () => {
+        expect(() => fixture.detectChanges()).toThrowError();
+    });
 });
