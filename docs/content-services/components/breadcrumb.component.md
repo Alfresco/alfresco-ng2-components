@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Breadcrumb Component](../../lib/content-services/breadcrumb/breadcrumb.component.ts "Defined in breadcrumb.component.ts")
+# [Breadcrumb Component](../../../lib/content-services/breadcrumb/breadcrumb.component.ts "Defined in breadcrumb.component.ts")
 
 Indicates the current position within a navigation hierarchy.
 
-![Breadcrumb](../docassets/images/breadcrumb.png)
+![Breadcrumb](../../docassets/images/breadcrumb.png)
 
 ## Basic Usage
 
@@ -29,7 +29,7 @@ Indicates the current position within a navigation hierarchy.
 | maxItems | `number` |  | Maximum number of nodes to display before wrapping them with a dropdown element. |
 | root | `string` | null | (optional) Name of the root element of the breadcrumb. You can use this property to rename "Company Home" to "Personal Files" for example. You can use an i18n resource key for the property value. |
 | rootId | `string` | null | (optional) The id of the root element. You can use this property to set a custom element the breadcrumb should start with. |
-| target | [`DocumentListComponent`](../content-services/document-list.component.md) |  | (optional) [Document List component](../content-services/document-list.component.md) to operate with. The list will update when the breadcrumb is clicked. |
+| target | [`DocumentListComponent`](../../content-services/components/document-list.component.md) |  | (optional) [Document List component](../../content-services/components/document-list.component.md) to operate with. The list will update when the breadcrumb is clicked. |
 | transform | `Function` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
 
 ### Events
@@ -43,7 +43,7 @@ Indicates the current position within a navigation hierarchy.
 The `maxItems` property sets the maximum number of "crumbs" in the breadcrumb trail. If
 the actual path contains more nodes than this then the earliest items in the path will be
 removed and kept in a menu as with the
-[Dropdown breadcrumb component](../content-services/dropdown-breadcrumb.component.md).
+[Dropdown breadcrumb component](dropdown-breadcrumb.component.md).
 
 ### Using the transform function
 
@@ -53,7 +53,7 @@ the list by altering the node's `path.elements` property.
 
 Below is an example of how you might do this with the
 [Content Node Selector component](content-node-selector.component.md). In this case, you pass the 
-transform function via the `breadcrumbTransform` property of [`ContentNodeSelectorComponentData`](../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) during
+transform function via the `breadcrumbTransform` property of [`ContentNodeSelectorComponentData`](../../../lib/content-services/content-node-selector/content-node-selector.component-data.interface.ts) during
 initialization:
 
 ```ts
@@ -92,7 +92,7 @@ A transform function to remove the "Sites" folder from the path would look somet
 
 Below, the breadcrumb is shown before and after the transform function is applied:
 
-![Content Node Selector breadcrumbTransform before/after screenshot](../docassets/images/breadcrumbTransform.png)
+![Content Node Selector breadcrumbTransform before/after screenshot](../../docassets/images/breadcrumbTransform.png)
 
 ## See also
 

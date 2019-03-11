@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# [Content Node Dialog service](../../lib/content-services/content-node-selector/content-node-dialog.service.ts "Defined in content-node-dialog.service.ts")
+# [Content Node Dialog service](../../../lib/content-services/content-node-selector/content-node-dialog.service.ts "Defined in content-node-dialog.service.ts")
 
 Displays and manages dialogs for selecting content to open, copy or upload.
 
@@ -85,5 +85,5 @@ dialog operation, say) or be set to one of the well-known names "-my-" , "-share
 
 ## See Also
 
--   [Content node selector panel component](content-node-selector-panel.component.md)
--   [Content node selector component](content-node-selector.component.md)
+-   [Content node selector panel component](../components/content-node-selector-panel.component.md)
+-   [Content node selector component](../components/content-node-selector.component.md)

@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-04-10
 ---
 
-# [File Draggable directive](../../lib/content-services/upload/directives/file-draggable.directive.ts "Defined in file-draggable.directive.ts")
+# [File Draggable directive](../../../lib/content-services/upload/directives/file-draggable.directive.ts "Defined in file-draggable.directive.ts")
 
 Provides drag-and-drop features for an element such as a `div`.
 
@@ -51,7 +51,7 @@ Some sample CSS to show the drag and drop area:
 
 ## Details
 
-Typically you would use the [Upload Drag Area component](../content-services/upload-drag-area.component.md) instead of this directive.
+Typically you would use the [Upload Drag Area component](../components/upload-drag-area.component.md) instead of this directive.
 
 ### Event handler implementations
 
@@ -75,4 +75,4 @@ export class SomeComponent implements OnInit {
 
 ## See also
 
--   [Upload Drag Area component](../content-services/upload-drag-area.component.md)
+-   [Upload Drag Area component](../components/upload-drag-area.component.md)

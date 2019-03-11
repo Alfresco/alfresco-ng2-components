@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# [Search check list component](../../lib/content-services/search/components/search-check-list/search-check-list.component.ts "Defined in search-check-list.component.ts")
+# [Search check list component](../../../lib/content-services/search/components/search-check-list/search-check-list.component.ts "Defined in search-check-list.component.ts")
 
-Implements a checklist widget for the [Search Filter component](../content-services/search-filter.component.md).
+Implements a checklist widget for the [Search Filter component](search-filter.component.md).
 
-![Check list widget screenshot](../docassets/images/search-check-list.png)
+![Check list widget screenshot](../../docassets/images/search-check-list.png)
 
 ## Basic usage
 
@@ -48,7 +48,7 @@ Implements a checklist widget for the [Search Filter component](../content-servi
 ## Details
 
 This widget displays a list of checkboxes, each of which toggles a particular query fragment
-in the search. See the [Search filter component](../content-services/search-filter.component.md) for full details of how to use the widgets
+in the search. See the [Search filter component](search-filter.component.md) for full details of how to use the widgets
 in a search query.
 
 In the settings, the `options` array, defines the checkboxes that toggle the supplied query
@@ -70,9 +70,9 @@ items in the list.
 
 ## See also
 
--   [Search filter component](../content-services/search-filter.component.md)
--   [Search date range component](../content-services/search-date-range.component.md)
--   [Search number range component](../content-services/search-number-range.component.md)
--   [Search radio component](../content-services/search-radio.component.md)
--   [Search slider component](../content-services/search-slider.component.md)
--   [Search text component](../content-services/search-text.component.md)
+-   [Search filter component](search-filter.component.md)
+-   [Search date range component](search-date-range.component.md)
+-   [Search number range component](search-number-range.component.md)
+-   [Search radio component](search-radio.component.md)
+-   [Search slider component](search-slider.component.md)
+-   [Search text component](search-text.component.md)

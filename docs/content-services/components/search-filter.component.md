@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-06-12
 ---
 
-# [Search Filter component](../../lib/content-services/search/components/search-filter/search-filter.component.ts "Defined in search-filter.component.ts")
+# [Search Filter component](../../../lib/content-services/search/components/search-filter/search-filter.component.ts "Defined in search-filter.component.ts")
 
 Represents a main container component for custom search and faceted search settings.
 
@@ -19,6 +19,7 @@ Represents a main container component for custom search and faceted search setti
     -   [Categories and widgets](#categories-and-widgets)
     -   [Facet Fields](#facet-fields)
     -   [Facet Queries](#facet-queries)
+    -   [Facet Intervals](#facet-intervals)
 -   [See also](#see-also)
 
 ## Basic usage
@@ -30,7 +31,7 @@ Represents a main container component for custom search and faceted search setti
 ## Details
 
 The component UI uses dynamically created widgets to specify the search query and its
-options. It then uses the [Search Query Builder service](search-query-builder.service.md)
+options. It then uses the [Search Query Builder service](../services/search-query-builder.service.md)
 to build and execute the query.
 
 You may find it useful to check out the following resources for background information
@@ -188,8 +189,8 @@ The properties of the `options` objects are as follows:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| key | string | Unique key to identify the entry. This can also be used to map [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) instances. |
-| label | string | Display text, which can also be an [i18n resource key](../user-guide/internationalization.md). |
+| key | string | Unique key to identify the entry. This can also be used to map [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) instances. |
+| label | string | Display text, which can also be an [i18n resource key](../../user-guide/internationalization.md). |
 | type | string | This specifies how to order the results. It can be based on a field, based on the position of the document in the index, or by score/relevance. |
 | field | string | The name of the field. |
 | ascending | boolean | The sorting order defined as `true` for ascending order and `false` for descending order |
@@ -222,7 +223,7 @@ export interface SearchCategory {
 
 The interface above also describes entries in the `search.query.categories` section for the `app.config.json` file.
 
-![Search Categories](../docassets/images/search-categories-01.png)
+![Search Categories](../../docassets/images/search-categories-01.png)
 
 > **Note:** you must provide at least one category field in order to execute the query,
 > so that filters and selected facets are applied.
@@ -240,9 +241,9 @@ a category:
 | [Slider](search-slider.component.md) | `slider` | Selects a single numeric value in a given range that a field may contain |
 | [Text](search-text.component.md) | `text` | Specifies a text value that a field may contain |
 
-See the individual [search widget](../../lib/content-services/search/search-widget.interface.ts) pages for full details of their usage and settings.
+See the individual [Search Widget](../interfaces/search-widget.interface.md) pages for full details of their usage and settings.
 
-You can also implement your own custom search widgets. See the [`SearchWidget`](../../lib/content-services/search/search-widget.interface.ts) interface
+You can also implement your own custom search widgets. See the [Search Widget Interface](../interfaces/search-widget.interface.md) interface
 page for full details of how to do this.
 
 #### Widget settings
@@ -251,7 +252,7 @@ Each type of widget has its own settings.
 For example Number editors may parse minimum and maximum values, while Text editors can support value formats or length constraints.
 
 You can use `component.settings` to pass any information to a widget using the 
-[`SearchWidgetSettings`](../../lib/content-services/search/search-widget-settings.interface.ts) interface:
+[`SearchWidgetSettings`](../../../lib/content-services/search/search-widget-settings.interface.ts) interface:
 
 ```ts
 export interface SearchWidgetSettings {
@@ -285,7 +286,7 @@ By default, users see only the top 5 entries.
 If there are more than 5 entries, a button to show more items is displayed to let the user move to
 the next block of results.
 
-![Facet Fields](../docassets/images/search-facet-fields.png)
+![Facet Fields](../../docassets/images/search-facet-fields.png)
 
 #### FacetField Properties
 
@@ -332,6 +333,7 @@ exceeds the `pageSize` value.
 
 You can also provide a custom `label` (or i18n resource key) for the default resulting collapsible category.
 If you need to display more resulting collapsible categories, you can group different facet queries under custom labels by using the `group` property on those facet queries:
+
 ```json
 {
     "search": {
@@ -355,28 +357,30 @@ If you need to display more resulting collapsible categories, you can group diff
         }
     }
 }
-``` 
+```
+
 This will result in the following display of the grouped facet queries:
 
-![Grouped Facet Queries](../docassets/images/search-facet-queries-groups.png)
+![Grouped Facet Queries](../../docassets/images/search-facet-queries-groups.png)
 
 The `pageSize` property allows you to define the number of results to display.
 Users will see `Show more` or `Show less` buttons as appropriate for the result set.
 The default page size of 5 will be used if you set the value to 0 or omit it entirely.
 
-![Facet Queries](../docassets/images/search-facet-queries.png)
+![Facet Queries](../../docassets/images/search-facet-queries.png)
 
 ### Facet Intervals
 
 These provide custom categories based on admin defined ranges inside `intervals`. What is wanted for every interval can be specified exactly in the config file, and having overlapping ranges could also be possible.
 
 #### FacetIntervals Properties
+
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-|intervals|array|Specifies the fields to facet by interval.|
-|expanded|boolean|Toggles expanded state of the facet intervals.|
-Note: `sets` parameter from Search API (Sets the intervals for all fields) is not yet supported.
+| intervals | array | Specifies the fields to facet by interval. |
+| expanded | boolean | Toggles expanded state of the facet intervals. |
 
+Note: `sets` parameter from Search API (Sets the intervals for all fields) is not yet supported.
 
 ```json
 {
@@ -414,17 +418,17 @@ for more details about what is the structure and the properties of `intervals` t
 
 Each `intervals` item defined is collected into its collapsible category identified uniquely by its `label`. The top code snippet will result in the following display of the facet intervals:
 
-![Facet Intervals](../docassets/images/search-facet-intervals.png)
+![Facet Intervals](../../docassets/images/search-facet-intervals.png)
 
 ## See also
 
--   [Search Query Builder service](search-query-builder.service.md)
+-   [Search Query Builder service](../services/search-query-builder.service.md)
 -   [Search Chip List Component](search-chip-list.component.md)
 -   [Search Sorting Picker Component](search-sorting-picker.component.md)
--   [`SearchWidget`](../../lib/content-services/search/search-widget.interface.ts)
--   [Search check list component](../content-services/search-check-list.component.md)
--   [Search date range component](../content-services/search-date-range.component.md)
--   [Search number range component](../content-services/search-number-range.component.md)
--   [Search radio component](../content-services/search-radio.component.md)
--   [Search slider component](../content-services/search-slider.component.md)
--   [Search text component](../content-services/search-text.component.md)
+-   [Search Widget Interface](../interfaces/search-widget.interface.md)
+-   [Search check list component](search-check-list.component.md)
+-   [Search date range component](search-date-range.component.md)
+-   [Search number range component](search-number-range.component.md)
+-   [Search radio component](search-radio.component.md)
+-   [Search slider component](search-slider.component.md)
+-   [Search text component](search-text.component.md)

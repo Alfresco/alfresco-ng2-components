@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Add Permission Component](../../lib/content-services/permission-manager/components/add-permission/add-permission.component.ts "Defined in add-permission.component.ts")
+# [Add Permission Component](../../../lib/content-services/permission-manager/components/add-permission/add-permission.component.ts "Defined in add-permission.component.ts")
 
 Searches for people or groups to add to the current node permissions.
 
-![Add Permission Component](../docassets/images/add-permission-component.png)
+![Add Permission Component](../../docassets/images/add-permission-component.png)
 
 ## Basic Usage
 
@@ -38,11 +38,11 @@ Searches for people or groups to add to the current node permissions.
 
 ## Details
 
-This component extends the [Add permission panel component](../content-services/add-permission-panel.component.md)
+This component extends the [Add permission panel component](add-permission-panel.component.md)
 to apply the chosen selection of permissions when they are accepted. You can also
-use the [Add permission dialog component](../content-services/add-permission-dialog.component.md) to perform the same action using a dialog.
+use the [Add permission dialog component](add-permission-dialog.component.md) to perform the same action using a dialog.
 
 ## See also
 
--   [Add permission panel component](../content-services/add-permission-panel.component.md)
--   [Add permission dialog component](../content-services/add-permission-dialog.component.md)
+-   [Add permission panel component](add-permission-panel.component.md)
+-   [Add permission dialog component](add-permission-dialog.component.md)

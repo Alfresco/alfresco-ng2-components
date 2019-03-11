@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# [Search number range component](../../lib/content-services/search/components/search-number-range/search-number-range.component.ts "Defined in search-number-range.component.ts")
+# [Search number range component](../../../lib/content-services/search/components/search-number-range/search-number-range.component.ts "Defined in search-number-range.component.ts")
 
-Implements a number range widget for the [Search Filter component](../content-services/search-filter.component.md).
+Implements a number range widget for the [Search Filter component](search-filter.component.md).
 
-![Number Range Widget](../docassets/images/search-number-range.png)
+![Number Range Widget](../../docassets/images/search-number-range.png)
 
 ## Basic usage
 
@@ -44,7 +44,7 @@ Implements a number range widget for the [Search Filter component](../content-se
 ## Details
 
 This component lets the user specify a range between two predefined numbers based on the
-particular `field`. See the [Search filter component](../content-services/search-filter.component.md) for full details of how to use widgets
+particular `field`. See the [Search filter component](search-filter.component.md) for full details of how to use widgets
 in a search query.
 
 #### Range query format
@@ -70,10 +70,10 @@ cm:content.size:[0 TO 100]
 
 ## See also
 
--   [Search filter component](../content-services/search-filter.component.md)
--   [Search check list component](../content-services/search-check-list.component.md)
--   [Search date range component](../content-services/search-date-range.component.md)
--   [Search number range component](../content-services/search-number-range.component.md)
--   [Search radio component](../content-services/search-radio.component.md)
--   [Search slider component](../content-services/search-slider.component.md)
--   [Search text component](../content-services/search-text.component.md)
+-   [Search filter component](search-filter.component.md)
+-   [Search check list component](search-check-list.component.md)
+-   [Search date range component](search-date-range.component.md)
+-   [Search number range component](search-number-range.component.md)
+-   [Search radio component](search-radio.component.md)
+-   [Search slider component](search-slider.component.md)
+-   [Search text component](search-text.component.md)

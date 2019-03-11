@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [Tag Node Actions List component](../../lib/content-services/tag/tag-actions.component.ts "Defined in tag-actions.component.ts")
+# [Tag Node Actions List component](../../../lib/content-services/tag/tag-actions.component.ts "Defined in tag-actions.component.ts")
 
 Shows available actions for tags.
 
-![Custom columns](../docassets/images/tag3.png)
+![Custom columns](../../docassets/images/tag3.png)
 
 ## Basic Usage
 

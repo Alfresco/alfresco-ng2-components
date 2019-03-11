@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Node permission dialog service](../../lib/content-services/permission-manager/services/node-permission-dialog.service.ts "Defined in node-permission-dialog.service.ts")
+# [Node permission dialog service](../../../lib/content-services/permission-manager/services/node-permission-dialog.service.ts "Defined in node-permission-dialog.service.ts")
 
 Displays dialogs to let the user set node permissions.
 
@@ -28,10 +28,10 @@ Displays dialogs to let the user set node permissions.
 
 ## Details
 
-This service sets up an [Add Permission Dialog component](../content-services/add-permission-dialog.component.md) to provide a user
+This service sets up an [Add Permission Dialog component](../components/add-permission-dialog.component.md) to provide a user
 interface for updating permissions. 
 
 ## See also
 
 -   [Node Permission service](node-permission.service.md)
--   [Add Permission Dialog component](add-permission-dialog.component.md)
+-   [Add Permission Dialog component](../components/add-permission-dialog.component.md)

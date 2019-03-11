@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# [Search text component](../../lib/content-services/search/components/search-text/search-text.component.ts "Defined in search-text.component.ts")
+# [Search text component](../../../lib/content-services/search/components/search-text/search-text.component.ts "Defined in search-text.component.ts")
 
-Implements a text input widget for the [Search Filter component](../content-services/search-filter.component.md).
+Implements a text input widget for the [Search Filter component](search-filter.component.md).
 
-![Text Widget](../docassets/images/search-text.png)
+![Text Widget](../../docassets/images/search-text.png)
 
 ## Basic usage
 
@@ -47,14 +47,14 @@ Implements a text input widget for the [Search Filter component](../content-serv
 ## Details
 
 This component lets the user add a text value to search for in the specified
-`field`. See the [Search filter component](../content-services/search-filter.component.md) for full
+`field`. See the [Search filter component](search-filter.component.md) for full
 details of how to use widgets in a search query.
 
 ## See also
 
--   [Search filter component](../content-services/search-filter.component.md)
--   [Search check list component](../content-services/search-check-list.component.md)
--   [Search date range component](../content-services/search-date-range.component.md)
--   [Search number range component](../content-services/search-number-range.component.md)
--   [Search radio component](../content-services/search-radio.component.md)
--   [Search slider component](../content-services/search-slider.component.md)
+-   [Search filter component](search-filter.component.md)
+-   [Search check list component](search-check-list.component.md)
+-   [Search date range component](search-date-range.component.md)
+-   [Search number range component](search-number-range.component.md)
+-   [Search radio component](search-radio.component.md)
+-   [Search slider component](search-slider.component.md)

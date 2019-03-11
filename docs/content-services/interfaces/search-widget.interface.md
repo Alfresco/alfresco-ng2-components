@@ -5,9 +5,9 @@ Status: Active
 Last reviewed: 2018-06-12
 ---
 
-# [Search widget interface](../../lib/content-services/search/search-widget.interface.ts "Defined in search-widget.interface.ts")
+# [Search widget interface](../../../lib/content-services/search/search-widget.interface.ts "Defined in search-widget.interface.ts")
 
-Specifies required properties for [Search filter component](../content-services/search-filter.component.md) widgets.
+Specifies required properties for [Search filter component](../components/search-filter.component.md) widgets.
 
 ## Contents
 
@@ -35,21 +35,21 @@ export interface SearchWidget {
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | id | `string` |  | Unique identifying value for the widget |
-| settings | [`SearchWidgetSettings`](../../lib/content-services/search/search-widget-settings.interface.ts) |  | Settings for component properties |
-| context | [`SearchQueryBuilderService`](../content-services/search-query-builder.service.md) |  | Instance of the [Search Query Builder service](../content-services/search-query-builder.service.md) to process the query |
+| settings | [`SearchWidgetSettings`](../../../lib/content-services/search/search-widget-settings.interface.ts) |  | Settings for component properties |
+| context | [`SearchQueryBuilderService`](../services/search-query-builder.service.md) |  | Instance of the [Search Query Builder service](../services/search-query-builder.service.md) to process the query |
 
 ## Details
 
-The [Search Filter component](../content-services/search-filter.component.md) uses widgets to provide the UI that lets the user customize the
+The [Search Filter component](../components/search-filter.component.md) uses widgets to provide the UI that lets the user customize the
 search. ADF provides a number of widgets out of the box (see the [See Also](#see-also) section
 for a full list) but you can also implement your own. Both built-in and custom widgets must
-implement the [Search Widget](../../lib/content-services/search/search-widget.interface.ts) interface to operate with the [Search Filter component](../content-services/search-filter.component.md).
+implement the [Search Widget](../../../lib/content-services/search/search-widget.interface.ts) interface to operate with the [Search Filter component](../components/search-filter.component.md).
 
 ### Implementing a custom widget
 
 To create a custom Search Filter widget, start by generating a blank Angular component
 that implements the
-[`SearchWidget`](../../lib/content-services/search/search-widget.interface.ts)
+[`SearchWidget`](../../../lib/content-services/search/search-widget.interface.ts)
 interface:
 
 ```ts
@@ -61,7 +61,7 @@ export interface SearchWidget {
 ```
 
 Every widget implementation must have an `id`, and may also support external `settings`.
-At runtime, every time a new instance of the widget is created, it also receives a reference to the [`SearchQueryBuilderService`](../content-services/search-query-builder.service.md)
+At runtime, every time a new instance of the widget is created, it also receives a reference to the [Search Query Builder Service](../services/search-query-builder.service.md)
 so that you component can access query related information, events and methods.
 
 ```ts
@@ -110,7 +110,7 @@ export class MyComponent implements SearchWidget, OnInit {
 
 ### Updating the final query
 
-The [`SearchQueryBuilderService`](../content-services/search-query-builder.service.md) keeps track of all query fragments that have been added by search widgets.
+The [Search Query Builder Service](../services/search-query-builder.service.md) keeps track of all query fragments that have been added by search widgets.
 When the query is complete, it composes the fragments together alongside other settings
 that will be used when performing the actual query.
 
@@ -142,7 +142,7 @@ When executed, your fragment will be injected into the resulting query based on 
 
 ### Registering a custom widget
 
-You must register your custom widgets with the [Search Filter service](../content-services/search-filter.service.md):
+You must register your custom widgets with the [Search Filter service](../services/search-filter.service.md):
 
 ```ts
 import { MyComponent } from './my-component.ts'
@@ -184,10 +184,10 @@ and pass custom attributes, if your component supports them:
 
 ## See also
 
--   [Search filter component](../content-services/search-filter.component.md)
--   [Search check list component](../content-services/search-check-list.component.md)
--   [Search date range component](../content-services/search-date-range.component.md)
--   [Search number range component](../content-services/search-number-range.component.md)
--   [Search radio component](../content-services/search-radio.component.md)
--   [Search slider component](../content-services/search-slider.component.md)
--   [Search text component](../content-services/search-text.component.md)
+-   [Search filter component](../components/search-filter.component.md)
+-   [Search check list component](../components/search-check-list.component.md)
+-   [Search date range component](../components/search-date-range.component.md)
+-   [Search number range component](../components/search-number-range.component.md)
+-   [Search radio component](../components/search-radio.component.md)
+-   [Search slider component](../components/search-slider.component.md)
+-   [Search text component](../components/search-text.component.md)

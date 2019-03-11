@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-09-13
 ---
 
-# [Node Public File Share Directive](../../lib/content-services/content-node-share/content-node-share.directive.ts "Defined in content-node-share.directive.ts")
+# [Node Public File Share Directive](../../../lib/content-services/content-node-share/content-node-share.directive.ts "Defined in content-node-share.directive.ts")
 
 Creates and manages public shared links for files.
 
-![adf-share](../docassets/images/share-directive.png)
+![adf-share](../../docassets/images/share-directive.png)
 
 ## Basic Usage
 
@@ -53,13 +53,13 @@ For example, if you set the input parameter as follows:
         ...
     }
 
-...then the directive will ask the [Content service](../core/content.service.md) to generate
+...then the directive will ask the [Content service](../../core/services/content.service.md) to generate
 a `sharedId` for the file. This will create a URL like the following:
 
     http://localhost:8080/myrouteForShareFile/NEW_GENERATED_SHAREID
 
 To use this, you will need to implement some code that gets the `NEW_GENERATED_SHAREID` with the router
-and passes it to a [Viewer component](../core/viewer.component.md):
+and passes it to a [Viewer component](../../core/components/viewer.component.md):
 
 ```html
 <adf-viewer

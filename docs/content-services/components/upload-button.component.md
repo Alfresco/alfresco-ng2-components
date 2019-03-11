@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Upload Button Component](../../lib/content-services/upload/components/upload-button.component.ts "Defined in upload-button.component.ts")
+# [Upload Button Component](../../../lib/content-services/upload/components/upload-button.component.ts "Defined in upload-button.component.ts")
 
 Activates a file upload.
 
@@ -46,9 +46,9 @@ Activates a file upload.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
+| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../../lib/content-services/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs. |
-| permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionModel`](../../lib/content-services/document-list/models/permissions.model.ts)`>` | Emitted when create permission is missing. |
+| permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionModel`](../../../lib/content-services/document-list/models/permissions.model.ts)`>` | Emitted when create permission is missing. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the file is uploaded successfully. |
 
 ## Details
@@ -58,7 +58,7 @@ Activates a file upload.
 You can show a notification error when the user doesn't have the right permission to perform
 the action. The component emits a `permissionEvent` when the user does not have delete permission.
 You can subscribe to this event from your component and use the 
-[Notification service](../core/notification.service.md) to show a message.
+[Notification service](../../core/services/notification.service.md) to show a message.
 
 ```html
 <adf-upload-button
@@ -79,9 +79,9 @@ export class MyComponent {
 }
 ```
 
-![Upload notification message](../docassets/images/upload-notification-message.png)
+![Upload notification message](../../docassets/images/upload-notification-message.png)
 
 ## See also
 
 -   [Upload Version Button component](upload-version-button.component.md)
--   [File upload error pipe](../content-services/file-upload-error.pipe.md)
+-   [File upload error pipe](../pipes/file-upload-error.pipe.md)

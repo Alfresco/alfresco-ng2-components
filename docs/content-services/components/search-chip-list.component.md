@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-09-14
 ---
 
-# [Search Chip List Component](../../lib/content-services/search/components/search-chip-list/search-chip-list.component.ts "Defined in search-chip-list.component.ts")
+# [Search Chip List Component](../../../lib/content-services/search/components/search-chip-list/search-chip-list.component.ts "Defined in search-chip-list.component.ts")
 
 Displays search criteria as a set of "chips".
 
-![Selected Facets](../docassets/images/selected-facets.png)
+![Selected Facets](../../docassets/images/selected-facets.png)
 
 ## Basic usage
 
@@ -24,5 +24,5 @@ Displays search criteria as a set of "chips".
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| searchFilter | [`SearchFilterComponent`](../content-services/search-filter.component.md) |  | Search filter to supply the data for the chips. |
-| clearAll | boolean | false | Enables or disables the display of a clear-all-filters button. |
+| clearAll | `boolean` | false | Flag used to enable the display of a clear-all-filters button. |
+| searchFilter | [`SearchFilterComponent`](../../content-services/components/search-filter.component.md) |  | Search filter to supply the data for the chips. |

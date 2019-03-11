@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2019-01-14
 ---
 
-# [Rating component](../../lib/content-services/social/rating.component.ts "Defined in rating.component.ts")
+# [Rating component](../../../lib/content-services/social/rating.component.ts "Defined in rating.component.ts")
 
 Allows a user to add ratings to an item.
 
-![Rating component screenshot](../docassets/images/social2.png)
+![Rating component screenshot](../../docassets/images/social2.png)
 
 ## Basic Usage
 
@@ -36,4 +36,4 @@ Allows a user to add ratings to an item.
 ## See also
 
 -   [Like component](like.component.md)
--   [Rating service](rating.service.md)
+-   [Rating service](../services/rating.service.md)

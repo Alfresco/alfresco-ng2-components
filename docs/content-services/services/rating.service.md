@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-05-04
 ---
 
-# [Rating service](../../lib/content-services/social/services/rating.service.ts "Defined in rating.service.ts")
+# [Rating service](../../../lib/content-services/social/services/rating.service.ts "Defined in rating.service.ts")
 
 Manages ratings for items in Content Services.
 
@@ -13,22 +13,22 @@ Manages ratings for items in Content Services.
 
 ### Methods
 
--   **deleteRating**(nodeId: `string`, ratingType: `any`): `any`<br/>
+-   **deleteRating**(nodeId: `string`, ratingType: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Removes the current user's rating for a node.
     -   _nodeId:_ `string`  - Target node
     -   _ratingType:_ `any`  - Type of rating to remove (can be "likes" or "fiveStar")
-    -   **Returns** `any` - Null response indicating that the operation is complete
--   **getRating**(nodeId: `string`, ratingType: `any`): `any`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null response indicating that the operation is complete
+-   **getRating**(nodeId: `string`, ratingType: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RatingEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/RatingEntry.md)`|__type>`<br/>
     Gets the current user's rating for a node.
-    -   _nodeId:_ `string`  - Node to get the rating from
+    -   _nodeId:_ `string`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to get the rating from
     -   _ratingType:_ `any`  - Type of rating (can be "likes" or "fiveStar")
-    -   **Returns** `any` - The rating value
--   **postRating**(nodeId: `string`, ratingType: `any`, vote: `any`): `any`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RatingEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/RatingEntry.md)`|__type>` - The rating value
+-   **postRating**(nodeId: `string`, ratingType: `string`, vote: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RatingEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/RatingEntry.md)`|__type>`<br/>
     Adds the current user's rating for a node.
     -   _nodeId:_ `string`  - Target node for the rating
-    -   _ratingType:_ `any`  - Type of rating (can be "likes" or "fiveStar")
+    -   _ratingType:_ `string`  - Type of rating (can be "likes" or "fiveStar")
     -   _vote:_ `any`  - Rating value (boolean for "likes", numeric 0..5 for "fiveStar")
-    -   **Returns** `any` - Details about the rating, including the new value
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RatingEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/RatingEntry.md)`|__type>` - Details about the rating, including the new value
 
 ## Details
 
@@ -44,5 +44,5 @@ REST API that this service is based on.
 
 ## See also
 
--   [Like component](like.component.md)
--   [Rating component](rating.component.md)
+-   [Like component](../components/like.component.md)
+-   [Rating component](../components/rating.component.md)

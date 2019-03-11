@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# [Tag service](../../lib/content-services/tag/services/tag.service.ts "Defined in tag.service.ts")
+# [Tag service](../../../lib/content-services/tag/services/tag.service.ts "Defined in tag.service.ts")
 
 Manages tags in Content Services.
 
@@ -13,24 +13,24 @@ Manages tags in Content Services.
 
 ### Methods
 
--   **addTag**(nodeId: `string`, tagName: `string`): `any`<br/>
+-   **addTag**(nodeId: `string`, tagName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagEntry.md)`>`<br/>
     Adds a tag to a node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _tagName:_ `string`  - Name of the tag to add
-    -   **Returns** `any` - [TagEntry](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagEntry.md) object (defined in JS-API) with details of the new tag
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagEntry.md)`>` - TagEntry object (defined in JS-API) with details of the new tag
 -   **getAllTheTags**(opts?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`>`<br/>
     Gets a list of all the tags already defined in the repository.
     -   _opts:_ `any`  - (Optional) Options supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`>` - TagPaging object (defined in JS-API) containing the tags
--   **getTagsByNodeId**(nodeId: `string`): `any`<br/>
+-   **getTagsByNodeId**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`>`<br/>
     Gets a list of tags added to a node.
     -   _nodeId:_ `string`  - ID of the target node
-    -   **Returns** `any` - [TagPaging](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md) object (defined in JS-API) containing the tags
--   **removeTag**(nodeId: `string`, tag: `string`): `any`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TagPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagPaging.md)`>` - TagPaging object (defined in JS-API) containing the tags
+-   **removeTag**(nodeId: `string`, tag: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Removes a tag from a node.
     -   _nodeId:_ `string`  - ID of the target node
     -   _tag:_ `string`  - Name of the tag to remove
-    -   **Returns** `any` - Null object when the operation completes
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null object when the operation completes
 
 ## Details
 
@@ -48,9 +48,9 @@ construct a list like this.
 See the
 [Tags API](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/TagsApi.md)
 in the Alfresco JS API for more information about the types returned by [Tag
-service](../content-services/tag.service.md) methods and for the implementation of the REST API the service is
+service](tag.service.md) methods and for the implementation of the REST API the service is
 based on.
 
 ## See also
 
--   [Tag list component](tag-list.component.md)
+-   [Tag list component](../components/tag-list.component.md)

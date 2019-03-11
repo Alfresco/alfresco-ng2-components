@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# [Tag List component](../../lib/content-services/tag/tag-list.component.ts "Defined in tag-list.component.ts")
+# [Tag List component](../../../lib/content-services/tag/tag-list.component.ts "Defined in tag-list.component.ts")
 
 Shows tags for an item.
 
-![Custom columns](../docassets/images/tag2.png)
+![Custom columns](../../docassets/images/tag2.png)
 
 ## Class members
 
@@ -21,4 +21,4 @@ Shows tags for an item.
 
 ## See Also
 
--   [Tag service](tag.service.md)
+-   [Tag service](../services/tag.service.md)

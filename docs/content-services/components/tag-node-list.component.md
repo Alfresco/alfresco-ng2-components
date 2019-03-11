@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [Tag Node List component](../../lib/content-services/tag/tag-node-list.component.ts "Defined in tag-node-list.component.ts")
+# [Tag Node List component](../../../lib/content-services/tag/tag-node-list.component.ts "Defined in tag-node-list.component.ts")
 
 Shows tags for a node.
 
-![Custom columns](../docassets/images/tag1.png)
+![Custom columns](../../docassets/images/tag1.png)
 
 ## Basic Usage
 
