@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-12-07
 ---
 
-# [Library dialog component](../../lib/content-services/dialogs/library/library.dialog.ts "Defined in library.dialog.ts")
+# [Library dialog component](../../../lib/content-services/dialogs/library/library.dialog.ts "Defined in library.dialog.ts")
 
 Creates a new Content Services document library/site.
 
-![Dropdown sites](../docassets/images/CreateLibraryDialog.png)
+![Dropdown sites](../../docassets/images/CreateLibraryDialog.png)
 
 ## Basic Usage
 
@@ -39,4 +39,4 @@ section of the Content Services documentation for more information.
 
 ## See also
 
--   [Sites dropdown component](sites-dropdown.component.md)
+-   [Sites dropdown component](../components/sites-dropdown.component.md)

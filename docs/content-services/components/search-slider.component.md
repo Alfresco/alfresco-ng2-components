@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# [Search slider component](../../lib/content-services/search/components/search-slider/search-slider.component.ts "Defined in search-slider.component.ts")
+# [Search slider component](../../../lib/content-services/search/components/search-slider/search-slider.component.ts "Defined in search-slider.component.ts")
 
-Implements a numeric slider widget for the [Search Filter component](../content-services/search-filter.component.md).
+Implements a numeric slider widget for the [Search Filter component](search-filter.component.md).
 
-![Slider Widget](../docassets/images/search-slider.png)
+![Slider Widget](../../docassets/images/search-slider.png)
 
 ## Basic usage
 
@@ -50,7 +50,7 @@ Implements a numeric slider widget for the [Search Filter component](../content-
 ## Details
 
 This component lets the user select from a range between two predefined numbers based on the
-particular `field`. See the [Search filter component](../content-services/search-filter.component.md) for full
+particular `field`. See the [Search filter component](search-filter.component.md) for full
 details of how to use widgets in a search query.
 
 ### Resetting the slider value
@@ -67,9 +67,9 @@ or zero and the corresponsing query fragment is removed from the query.
 
 ## See also
 
--   [Search filter component](../content-services/search-filter.component.md)
--   [Search check list component](../content-services/search-check-list.component.md)
--   [Search date range component](../content-services/search-date-range.component.md)
--   [Search number range component](../content-services/search-number-range.component.md)
--   [Search radio component](../content-services/search-radio.component.md)
--   [Search text component](../content-services/search-text.component.md)
+-   [Search filter component](search-filter.component.md)
+-   [Search check list component](search-check-list.component.md)
+-   [Search date range component](search-date-range.component.md)
+-   [Search number range component](search-number-range.component.md)
+-   [Search radio component](search-radio.component.md)
+-   [Search text component](search-text.component.md)

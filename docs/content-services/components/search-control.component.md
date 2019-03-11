@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Search control component](../../lib/content-services/search/components/search-control.component.ts "Defined in search-control.component.ts")
+# [Search control component](../../../lib/content-services/search/components/search-control.component.ts "Defined in search-control.component.ts")
 
 Displays a input text that shows find-as-you-type suggestions.
 
-![adf-search-control](../docassets/images/search-control-component.png)
+![adf-search-control](../../docassets/images/search-control-component.png)
 
 ## Basic usage
 
@@ -21,7 +21,7 @@ Displays a input text that shows find-as-you-type suggestions.
 </adf-search-control>
 ```
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 You can show your own custom template when no results are found for the search:
 

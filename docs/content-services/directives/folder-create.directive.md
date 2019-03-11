@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Folder Create directive](../../lib/content-services/folder-directive/folder-create.directive.ts "Defined in folder-create.directive.ts")
+# [Folder Create directive](../../../lib/content-services/folder-directive/folder-create.directive.ts "Defined in folder-create.directive.ts")
 
 Creates folders.
 
@@ -47,7 +47,7 @@ Creates folders.
 
 Pass this directive the id of the parent folder where you want the new folder node to be created.
 If no value is provided, the '-my-' alias is used.
-This will open a [Folder Dialog component](../../lib/content-services/dialogs/folder.dialog.ts) to receive data for the new folder. If the data is valid
+This will open a [Folder Dialog component](../../../lib/content-services/dialogs/folder.dialog.ts) to receive data for the new folder. If the data is valid
 then the dialog will emit a `success` event when it closes.
 
 ## See also

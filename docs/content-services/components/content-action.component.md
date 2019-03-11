@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2019-01-17
 ---
 
-# [Content Action component](../../lib/content-services/document-list/components/content-action/content-action.component.ts "Defined in content-action.component.ts")
+# [Content Action component](../../../lib/content-services/document-list/components/content-action/content-action.component.ts "Defined in content-action.component.ts")
 
 Adds options to a Document List actions menu for a particular content type.
 
-![Document Actions](../docassets/images/document-actions.png)
+![Document Actions](../../docassets/images/document-actions.png)
 
 ## Contents
 
@@ -121,7 +121,7 @@ will trigger the same action.) You can also add your own handler by implementing
 `execute` event.
 
 Note that you can use _both_ a built-in handler and your own `execute`
-function in the same action. The `execute` function is passed a [`NodeMinimalEntry`](../../lib/content-services/document-list/models/document-library.model.ts) as its
+function in the same action. The `execute` function is passed a [`NodeMinimalEntry`](../../../lib/content-services/document-list/models/document-library.model.ts) as its
 parameter. For
 example, with `handler="delete"` you could use `execute` to show a message with the name,
 type, and other details of the item just deleted:
@@ -155,7 +155,7 @@ type, and other details of the item just deleted:
   }
 ```
 
-![Custom delete message screenshot](../docassets/images/ContentActSnackMessage.png)
+![Custom delete message screenshot](../../docassets/images/ContentActSnackMessage.png)
 
 ### Examples
 
@@ -177,7 +177,7 @@ This action simply executes one of the built-in actions described above:
 </adf-document-list>
 ```
 
-![Download document action](../docassets/images/document-action-download.png)
+![Download document action](../../docassets/images/document-action-download.png)
 
 #### Custom handler
 
@@ -241,13 +241,13 @@ export class MyComponent {
 }
 ```
 
-![Delete disable action button](../docassets/images/content-action-disable-delete-button.png)
+![Delete disable action button](../../docassets/images/content-action-disable-delete-button.png)
 
 #### Permission check
 
 You can also implement the `permissionEvent` to handle permission errors
 (to show the user a notification, for example). Subscribe to this event from your component
-and use the [Notification service](../core/notification.service.md) to show a message.
+and use the [Notification service](../../core/services/notification.service.md) to show a message.
 
 ```html
 <adf-document-list [contentActions]="true"...>
@@ -276,7 +276,7 @@ export class MyComponent {
 }
 ```
 
-![Delete show notification message](../docassets/images/content-action-notification-message.png)
+![Delete show notification message](../../docassets/images/content-action-notification-message.png)
 
 #### Copy and move
 
@@ -284,7 +284,7 @@ These actions show the destination chooser dialog for copy and move actions. By 
 the destination chooser lists all the folders of the subject item's parent. However, it won't
 allow the item being copied/moved to be the destination if it is itself a folder.
 
-![Copy/move dialog](../docassets/images/document-action-copymovedialog.png)
+![Copy/move dialog](../../docassets/images/document-action-copymovedialog.png)
 
 ```html
 <adf-document-list [contentActions]="true"...>
@@ -432,10 +432,10 @@ funcName = (parameters): boolean => {
 
 ### Customizing built-in actions
 
-The built-in actions are defined in the [Document Actions service](document-actions.service.md) and
-[Folder Actions service](folder-actions.service.md) but you can register new actions with these services
+The built-in actions are defined in the [Document Actions service](../services/document-actions.service.md) and
+[Folder Actions service](../services/folder-actions.service.md) but you can register new actions with these services
 and override the default implementations. See the doc pages for
-[Document Actions service](document-actions.service.md) and [Folder Actions service](folder-actions.service.md)
+[Document Actions service](../services/document-actions.service.md) and [Folder Actions service](../services/folder-actions.service.md)
 for details and examples.
 
 ### Error, Permission and Success callbacks
@@ -446,10 +446,10 @@ You can define error, permission and success callbacks in much the same way as f
 -   The success callback's only parameter is the translatable success message string (which could be shown in a snackbar, for example)
 -   The `permissionEvent` callback is the same as described above for the delete action
 
-![Copy/move document action](../docassets/images/document-action-copymove.png)
+![Copy/move document action](../../docassets/images/document-action-copymove.png)
 
 ## See also
 
 -   [Document list component](document-list.component.md)
--   [Document actions service](document-actions.service.md)
--   [Folder actions service](folder-actions.service.md)
+-   [Document actions service](../services/document-actions.service.md)
+-   [Folder actions service](../services/folder-actions.service.md)

@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2019-02-08
 ---
 
-# [Document List component](../../lib/content-services/document-list/components/document-list.component.ts "Defined in document-list.component.ts")
+# [Document List component](../../../lib/content-services/document-list/components/document-list.component.ts "Defined in document-list.component.ts")
 
 Displays the documents from a repository.
 
-![Custom columns](../docassets/images/custom-columns.png)
+![Custom columns](../../docassets/images/custom-columns.png)
 
 ## Contents
 
@@ -56,13 +56,13 @@ Displays the documents from a repository.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| allowDropFiles | `boolean` | false | When true, this enables you to drop files directly into subfolders shown as items in the list. When false, the dropped file will be added to the current folder (ie, the one containing all the items shown in the list). See the [Upload directive](../core/upload.directive.md) for further details about how the file drop is handled. |
+| allowDropFiles | `boolean` | false | When true, this enables you to drop files directly into subfolders shown as items in the list. When false, the dropped file will be added to the current folder (ie, the one containing all the items shown in the list). See the [Upload directive](../../core/directives/upload.directive.md) for further details about how the file drop is handled. |
 | contentActions | `boolean` | false | Toggles content actions for each row |
 | contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |
 | contextMenuActions | `boolean` | false | Toggles context menus for each row |
 | display | `string` | DisplayMode.List | Change the display mode of the table. Can be "list" or "gallery". |
 | emptyFolderImageUrl | `string` |  | Custom image for empty folder. Default value: './assets/images/empty_doc_lib.svg' |
-| imageResolver | `any \| null` | null | Custom function to choose image file paths to show. See the [Image Resolver Model](image-resolver.model.md) page for more information. |
+| imageResolver | `any \| null` | null | Custom function to choose image file paths to show. See the [Image Resolver Model](../models/image-resolver.model.md) page for more information. |
 | includeFields | `string[]` |  | Include additional information about the node in the server request. For example: association, isLink, isLocked and others. |
 | loading | `boolean` | false | Toggles the loading state and animated spinners for the component. Used in combination with `navigate=false` to perform custom navigation and loading state indication. |
 | locationFormat | `string` | "/" | The default route for all the location-based columns (if declared). |
@@ -70,8 +70,8 @@ Displays the documents from a repository.
 | multiselect | `boolean` | false | Toggles multiselect mode |
 | navigate | `boolean` | true | Toggles navigation to folder content or file preview |
 | navigationMode | `string` |  | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
-| node | [`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts) | null | The Document list will show all the nodes contained in the [NodePaging](../../lib/content-services/document-list/models/document-library.model.ts) entity |
-| permissionsStyle | [`PermissionStyleModel`](../../lib/content-services/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../lib/content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
+| node | [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md) | null | The Document list will show all the nodes contained in the [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md) entity |
+| permissionsStyle | [`PermissionStyleModel`](../../../lib/content-services/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../../lib/content-services/document-list/models/permissions-style.model.ts) page for further details and examples. |
 | rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
 | rowStyleClass | `string` |  | The CSS class to apply to every row |
 | selectionMode | `string` | "single" | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
@@ -81,18 +81,18 @@ Displays the documents from a repository.
 | thumbnails | `boolean` | false | Show document thumbnails rather than icons |
 | where | `string` |  | Filters the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information. |
 | currentFolderId | `string` |  | The ID of the folder node to display or a reserved string alias for special sources |
-| rowFilter | `RowFilter` |  | Custom function to choose whether to show or hide rows. See the [Row Filter Model](row-filter.model.md) page for more information. |
+| rowFilter | `RowFilter` |  | Custom function to choose whether to show or hide rows. See the [Row Filter Model](../models/row-filter.model.md) page for more information. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the API fails to get the Document List data |
-| folderChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntryEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the current display folder changes |
-| nodeClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user clicks a list node |
-| nodeDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user double-clicks a list node |
-| preview | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the [Viewer component](../core/viewer.component.md). |
-| ready | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](../../lib/content-services/document-list/models/document-library.model.ts)`>` | Emitted when the Document List has loaded all items and is ready for use |
+| folderChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntryEvent`](../../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the current display folder changes |
+| nodeClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user clicks a list node |
+| nodeDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user double-clicks a list node |
+| preview | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/document-list/components/node.event.ts)`>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the [Viewer component](../../core/components/viewer.component.md). |
+| ready | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>` | Emitted when the Document List has loaded all items and is ready for use |
 
 ## Details
 
@@ -102,7 +102,7 @@ best.
 
 The Document list will automatically show special icons for : `Smart Folder`, `Link to a Folder` and `Folder with rules` as shown below : 
 
-![Document List Folders](../docassets/images/document-list-special-folder-icon.png)
+![Document List Folders](../../docassets/images/document-list-special-folder-icon.png)
 
 ### DOM Events
 
@@ -126,8 +126,8 @@ have at least the following properties as part of the `Event.detail` property va
 }
 ```
 
-See the [DataTable](../core/datatable.component.md) documentation for further details about
-the other DOM events that the [Document List component](../content-services/document-list.component.md) bubbles up from the DataTable.
+See the [DataTable](../../core/components/datatable.component.md) documentation for further details about
+the other DOM events that the [Document List component](document-list.component.md) bubbles up from the DataTable.
 
 Below is a basic example of handling DOM events in the parent elements.
 
@@ -161,7 +161,7 @@ You can use `ngIf` directives to provide conditional visibility support for the 
 The Document List has an option to display items as "cards" instead of the
 standard view:
 
-![card-view](../docassets/images/document-list-card-view.png)
+![card-view](../../docassets/images/document-list-card-view.png)
 
 Set the `[display]` property to "gallery" to enable card view mode:
 
@@ -174,7 +174,7 @@ Set the `[display]` property to "gallery" to enable card view mode:
 
 ### Pagination strategy
 
-The Document List by default supports 2 types of pagination:  [Pagination component](../core/pagination.component.md) and [Infinite pagination component](../core/infinite-pagination.component.md) 
+The Document List by default supports 2 types of pagination:  [Pagination component](../../core/components/pagination.component.md) and [Infinite pagination component](../../core/components/infinite-pagination.component.md) 
 
 #### Pagination component
 
@@ -215,7 +215,7 @@ You can use one of the well-known reserved aliases:
 
 #### Document List aliases
 
-The [Document List component](../content-services/document-list.component.md) also provides support for the following reserved aliases:
+The [Document List component](document-list.component.md) also provides support for the following reserved aliases:
 
 -   `-trashcan-`,
 -   `-sharedlinks-`
@@ -227,7 +227,7 @@ The [Document List component](../content-services/document-list.component.md) al
 Note that due to the nature of the data, these sources do not support navigation.
 You may want to handle single and double clicks yourself to perform navigation to other sources.
 
-The [Document List component](../content-services/document-list.component.md) supports default presets for all the custom sources mentioned earlier.
+The [Document List component](document-list.component.md) supports default presets for all the custom sources mentioned earlier.
 If you don't provide any custom column definition with the [Data Column](#custom-columns)
 component then a default preset will be automatically used at runtime.
 
@@ -395,7 +395,7 @@ export class FilesComponent implements OnInit {
 The `console.log(node)` for the `getNodeInfo` callback is just for study and debug purposes. 
 It is useful for examining other information that you can access if necessary:
 
-![documentLibrary](../docassets/images/documentLibrary.png)
+![documentLibrary](../../docassets/images/documentLibrary.png)
 
 **Important note**: for this particular scenario you must also trigger `changeDetector.detectChanges()` as in the example above. 
 
@@ -456,7 +456,7 @@ export class MyAppComponent implements AfterViewInit {
 
 The example above should produce the following browser console output:
 
-![view-child](../docassets/images/viewchild.png)
+![view-child](../../docassets/images/viewchild.png)
 
 Now you can access Document List properties or call methods directly:
 
@@ -475,7 +475,7 @@ documentation for a full explanation of the component lifecycle.
 
 ### Underlying node object
 
-The [Document List component](../content-services/document-list.component.md) assigns an instance of 
+The [Document List component](document-list.component.md) assigns an instance of 
 [`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)
 (defined in the [Alfresco JS API](https://github.com/Alfresco/alfresco-js-api)) as the data context
 for each row. You can make use of the properties of this object when defining custom columns:
@@ -554,10 +554,10 @@ A custom set of columns might look like the following:
 </adf-document-list>
 ```
 
-![Custom columns](../docassets/images/custom-columns.png)
+![Custom columns](../../docassets/images/custom-columns.png)
 
 You can also use the HTML-based schema declaration used by
-[DataTable](../core/datatable.component.md), [Task List](../process-services/task-list.component.md) and other components:
+[DataTable](../../core/components/datatable.component.md), [Task List](../../process-services/components/task-list.component.md) and other components:
 
 ```html
 <adf-datatable [data]="data" ...>
@@ -571,7 +571,7 @@ You can also use the HTML-based schema declaration used by
 </adf-datatable>
 ```
 
-You can also add tooltips, styling, automatic column title translation and other features. See the [DataColumn component page](../core/data-column.component.md) for more information about specifying and customizing columns.
+You can also add tooltips, styling, automatic column title translation and other features. See the [DataColumn component page](../../core/components/data-column.component.md) for more information about specifying and customizing columns.
 
 ### Column templates
 
@@ -598,7 +598,7 @@ For example:
 </data-column>
 ```
 
-All the components above also participate in [Extensibility](../user-guide/app-extensions.md)
+All the components above also participate in [Extensibility](../../user-guide/app-extensions.md)
 and can be used to compose DocumentList layouts from within the plugins. 
 
 ### Date Column
@@ -666,8 +666,8 @@ you can also define your own actions. See the
 [Content Action component](content-action.component.md)
 for more information and examples.
 
-You can also use the [Context Menu directive](../core/context-menu.directive.md) from the 
-[ADF Core](https://www.npmjs.com/package/ng2-alfresco-core) library to show the
+You can also use the [Context Menu directive](../../core/directives/context-menu.directive.md) from the 
+ADF Core library to show the
 actions you have defined in a context menu:
 
 ```ts
@@ -682,13 +682,13 @@ export class MyView {
 }
 ```
 
-![Folder context menu](../docassets/images/folder-context-menu.png)
+![Folder context menu](../../docassets/images/folder-context-menu.png)
 
 This single extra line in the template enables context menu items for documents and folders.
 
 ### Navigation mode
 
-By default, the [Document List component](../content-services/document-list.component.md) uses 'double-click' mode for navigation.
+By default, the [Document List component](document-list.component.md) uses 'double-click' mode for navigation.
 That means that the user will see the contents of the folder when they double-click its name
 or icon (in a similar manner to Google Drive). However, there is also a single-click mode that
 may be sometimes be useful.
@@ -711,15 +711,15 @@ functions:
 -   `imageResolver` - Specifies a function to choose image file paths for icons and thumbnails.
 -   `rowFilter` - Selects whether a row is shown or hidden according to its data content.
 
-See the [Image Resolver Model](image-resolver.model.md)
-and [Row Filter Model](row-filter.model.md) pages for details of how to
+See the [Image Resolver Model](../models/image-resolver.model.md)
+and [Row Filter Model](../models/row-filter.model.md) pages for details of how to
 implement these functions.
 
 ### Custom 'empty folder' template
 
 By default, the Document List provides the following content for the empty folder:
 
-![Default empty folder](../docassets/images/empty-folder-template-default.png)
+![Default empty folder](../../docassets/images/empty-folder-template-default.png)
 
 However, you can change this by defining your own custom HTML template:
 
@@ -733,14 +733,14 @@ However, you can change this by defining your own custom HTML template:
 
 This will give the following output:
 
-![Custom empty folder](../docassets/images/empty-folder-template-custom.png)
+![Custom empty folder](../../docassets/images/empty-folder-template-custom.png)
 
 ### Custom 'permission denied' template
 
 By default, the Document List shows the following content when permission
 is denied:
 
-![Default no permission](../docassets/images/no-permission-default.png)
+![Default no permission](../../docassets/images/no-permission-default.png)
 
 You can change this by defining your own custom HTML template:
 
@@ -754,13 +754,13 @@ You can change this by defining your own custom HTML template:
 
 This will give the following output:
 
-![Custom no permission](../docassets/images/no-permission-custom.png)
+![Custom no permission](../../docassets/images/no-permission-custom.png)
 
 ### Custom 'loading' template
 
 By default, the Document List shows the following content when the content is loading:
 
-![Default loading](../docassets/images/default-loading.png)
+![Default loading](../../docassets/images/default-loading.png)
 
 You can change this by defining your own custom HTML template:
 
@@ -775,22 +775,22 @@ You can change this by defining your own custom HTML template:
 
 This will give the following output:
 
-![Custom loading](../docassets/images/custom-loading.png)
+![Custom loading](../../docassets/images/custom-loading.png)
 
 ## See also
 
--   [Datatable component](../core/datatable.component.md)
--   [Data column component](../core/data-column.component.md)
--   [Pagination component](../core/pagination.component.md)
--   [Infinite pagination component](../core/infinite-pagination.component.md)
+-   [Datatable component](../../core/components/datatable.component.md)
+-   [Data column component](../../core/components/data-column.component.md)
+-   [Pagination component](../../core/components/pagination.component.md)
+-   [Infinite pagination component](../../core/components/infinite-pagination.component.md)
 -   [Sites dropdown component](sites-dropdown.component.md)
--   [Metadata indicators](../user-guide/metadata-indicators.md)
--   [Nodes api service](../core/nodes-api.service.md)
+-   [Metadata indicators](../../user-guide/metadata-indicators.md)
+-   [Nodes api service](../../core/services/nodes-api.service.md)
 -   [Breadcrumb component](breadcrumb.component.md)
 -   [Content action component](content-action.component.md)
 -   [Content node selector component](content-node-selector.component.md)
--   [Document list service](document-list.service.md)
+-   [Document list service](../services/document-list.service.md)
 -   [Dropdown breadcrumb component](dropdown-breadcrumb.component.md)
--   [Permissions style model](permissions-style.model.md)
+-   [Permissions style model](../models/permissions-style.model.md)
 -   [Version manager component](version-manager.component.md)
--   [Viewer component](../core/viewer.component.md)
+-   [Viewer component](../../core/components/viewer.component.md)

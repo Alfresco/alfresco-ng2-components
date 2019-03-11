@@ -5,28 +5,28 @@ Status: Active
 Last reviewed: 2019-02-08
 ---
 
-# [Image Resolver Model](../../lib/content-services/document-list/data/image-resolver.model.ts "Defined in image-resolver.model.ts")
+# [Image Resolver Model](../../../lib/content-services/document-list/data/image-resolver.model.ts "Defined in image-resolver.model.ts")
 
-Defines the Image Resolver function used by the [Document List Component](../content-services/document-list.component.md).
+Defines the Image Resolver function used by the [Document List Component](../components/document-list.component.md).
 
 ## Definitions
 
--   `type` **ImageResolver** = (row: [`DataRow`](../../lib/core/datatable/data/data-row.model.ts), column: [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts)) => `string`
-    -   _row:_ [`DataRow`](../../lib/core/datatable/data/data-row.model.ts) - Data that defines the row
-    -   _column:_ [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) - Data that defines the column
+-   `type` **ImageResolver** = (row: [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts), column: [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts)) => `string`
+    -   _row:_ [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts) - Data that defines the row
+    -   _column:_ [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) - Data that defines the column
     -   **Returns** File path for the image
 
 ## Details
 
 An image resolver function selects an image file path for an item in
-a [Document List Component](../content-services/document-list.component.md)
+a [Document List Component](../components/document-list.component.md)
 or another component that uses the Document List (such as the
-[Content Node Selector Panel Component](content-node-selector-panel.component.md)). You can supply your own image resolver 
+[Content Node Selector Panel Component](../components/content-node-selector-panel.component.md)). You can supply your own image resolver 
 to manage the way folder/file icons and thumbnails are resolved (ie, which image is shown for which item). 
 
 **Note:** Image resolvers are executed only for columns of the `image` type.
 
-A typical image resolver implementation receives [`DataRow`](../../lib/core/datatable/data/data-row.model.ts) and [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) objects as parameters:
+A typical image resolver implementation receives [`DataRow`](../../../lib/core/datatable/data/data-row.model.ts) and [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) objects as parameters:
 
 ```ts
 myImageResolver(row: DataRow, col: DataColumn): string {
@@ -88,5 +88,5 @@ export class View1 {
 
 ## See also
 
--   [Document List Component](../content-services/document-list.component.md)
--   [Content Node Selector Panel Component](content-node-selector-panel.component.md)
+-   [Document List Component](../components/document-list.component.md)
+-   [Content Node Selector Panel Component](../components/content-node-selector-panel.component.md)

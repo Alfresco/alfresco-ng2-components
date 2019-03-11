@@ -5,28 +5,28 @@ Status: Active
 Last reviewed: 2019-02-08
 ---
 
-# [Row Filter Model](../../lib/content-services/document-list/data/row-filter.model.ts "Defined in row-filter.model.ts")
+# [Row Filter Model](../../../lib/content-services/document-list/data/row-filter.model.ts "Defined in row-filter.model.ts")
 
-Defines the Row Filter function used by the [Document List Component](../content-services/document-list.component.md).
+Defines the Row Filter function used by the [Document List Component](../components/document-list.component.md).
 
 ## Definitions
 
--   `type` **RowFilter** = (value: [`ShareDataRow`](../../lib/content-services/document-list/data/share-data-row.model.ts), index: `number`, array: [`ShareDataRow`](../../lib/content-services/document-list/data/share-data-row.model.ts)`[]`) => any
-    -   _value:_ [`ShareDataRow`](../../lib/content-services/document-list/data/share-data-row.model.ts) - Data that defines the row
+-   `type` **RowFilter** = (value: [`ShareDataRow`](../../../lib/content-services/document-list/data/share-data-row.model.ts), index: `number`, array: [`ShareDataRow`](../../../lib/content-services/document-list/data/share-data-row.model.ts)`[]`) => any
+    -   _value:_ [`ShareDataRow`](../../../lib/content-services/document-list/data/share-data-row.model.ts) - Data that defines the row
     -   _index:_ `number` - Index of the row within the list
-    -   _array:_ [`ShareDataRow`](../../lib/content-services/document-list/data/share-data-row.model.ts)`[]` - The full set of rows for the list
+    -   _array:_ [`ShareDataRow`](../../../lib/content-services/document-list/data/share-data-row.model.ts)`[]` - The full set of rows for the list
     -   **Returns** True if the row should be shown, false otherwise
 
 ## Details
 
-A row filter function selectively hides or shows rows from a [Document List Component](../content-services/document-list.component.md)
+A row filter function selectively hides or shows rows from a [Document List Component](../components/document-list.component.md)
 or another component that uses the Document List (such as the
-[Content Node Selector Panel Component](content-node-selector-panel.component.md)).
+[Content Node Selector Panel Component](../components/content-node-selector-panel.component.md)).
 You can supply your own row filter to customize the behavior of the list.
 
 The function returns `true` if the row should be
 displayed or `false` if it should be hidden.
-A typical row filter implementation receives at least a [`ShareDataRow`](../../lib/content-services/document-list/data/share-data-row.model.ts) object as a parameter:
+A typical row filter implementation receives at least a [`ShareDataRow`](../../../lib/content-services/document-list/data/share-data-row.model.ts) object as a parameter:
 
 ```ts
 myFilter(row: ShareDataRow): boolean {
@@ -72,5 +72,5 @@ export class View1 {
 
 ## See also
 
--   [Document List Component](../content-services/document-list.component.md)
--   [Content Node Selector Panel Component](content-node-selector-panel.component.md)
+-   [Document List Component](../components/document-list.component.md)
+-   [Content Node Selector Panel Component](../components/content-node-selector-panel.component.md)

@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# [Like component](../../lib/content-services/social/like.component.ts "Defined in like.component.ts")
+# [Like component](../../../lib/content-services/social/like.component.ts "Defined in like.component.ts")
 
 Allows a user to add "likes" to an item.
 
-![Custom columns](../docassets/images/social1.png)
+![Custom columns](../../docassets/images/social1.png)
 
 ## Basic Usage
 
@@ -34,4 +34,4 @@ Allows a user to add "likes" to an item.
 ## See also
 
 -   [Rating component](rating.component.md)
--   [Rating service](rating.service.md)
+-   [Rating service](../services/rating.service.md)

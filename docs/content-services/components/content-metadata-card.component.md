@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Content Metadata Card component](../../lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts "Defined in content-metadata-card.component.ts")
+# [Content Metadata Card component](../../../lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts "Defined in content-metadata-card.component.ts")
 
 Displays and edits metadata related to a node.
 
-![Content metadata screenshot](../docassets/images/ContentMetadata.png)
+![Content metadata screenshot](../../docassets/images/ContentMetadata.png)
 
 ## Basic Usage
 
@@ -38,7 +38,7 @@ Displays and edits metadata related to a node.
 ## Details
 
 The component shows metadata related to a given node. It uses the
-[Card View component](../core/card-view.component.md) to render the properties of metadata aspects.
+[Card View component](../../core/components/card-view.component.md) to render the properties of metadata aspects.
 The different aspects and their properties to be shown can be configured as application config
 presets (see below). By default the component only shows the basic properties of the node.
 The user can click on the pencil icon at the bottom of the component to edit the metadata

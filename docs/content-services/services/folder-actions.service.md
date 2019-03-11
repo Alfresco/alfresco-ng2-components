@@ -5,17 +5,17 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# [Folder Actions service](../../lib/content-services/document-list/services/folder-actions.service.ts "Defined in folder-actions.service.ts")
+# [Folder Actions service](../../../lib/content-services/document-list/services/folder-actions.service.ts "Defined in folder-actions.service.ts")
 
-Implements the folder menu actions for the [Document List component](../content-services/document-list.component.md).
+Implements the folder menu actions for the [Document List component](../components/document-list.component.md).
 
 ## Class members
 
 ### Methods
 
--   **canExecuteAction**(obj: `any`): `boolean`<br/>
+-   **canExecuteAction**(nodeEntry: [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)): `boolean`<br/>
     Checks if an action is available for a particular item.
-    -   _obj:_ `any`  - Item to check
+    -   _nodeEntry:_ [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)  - Item to check
     -   **Returns** `boolean` - True if the action is available, false otherwise
 -   **getHandler**(key: `string`): `ContentActionHandler`<br/>
     Gets the handler function for an action.
@@ -30,9 +30,9 @@ Implements the folder menu actions for the [Document List component](../content-
 ## Details
 
 This service implements the built-in actions that can be applied to a folder
-shown in a [Document List component](document-list.component.md): **delete**,
+shown in a [Document List component](../components/document-list.component.md): **delete**,
 **download**, **copy** and **move** (see the
-[Content Action component](content-action.component.md) for further details and examples
+[Content Action component](../components/content-action.component.md) for further details and examples
 of these menu items). However, you can also use the service to add extra actions or
 replace the built-in ones with your own implementation.
 
@@ -100,4 +100,4 @@ with a custom application service.
 ## See also
 
 -   [Document actions service](document-actions.service.md)
--   [Content action component](content-action.component.md)
+-   [Content action component](../components/content-action.component.md)

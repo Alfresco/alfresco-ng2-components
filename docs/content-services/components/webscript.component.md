@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-11-14
 ---
 
-# [Webscript component](../../lib/content-services/webscript/webscript.component.ts "Defined in webscript.component.ts")
+# [Webscript component](../../../lib/content-services/webscript/webscript.component.ts "Defined in webscript.component.ts")
 
 Provides access to Webscript features.
 
@@ -36,7 +36,7 @@ Provides access to Webscript features.
 
 Another example:
 
-**[app.component](../../demo-shell/src/app/app.component.ts).html**
+**app.component.html**
 
 ```html
 <adf-webscript-get 
@@ -48,7 +48,7 @@ Another example:
 </adf-webscript-get>
 ```
 
-**[app.component](../../demo-shell/src/app/app.component.ts).ts**
+**app.component.ts**
 
 ```ts
 export class AppComponent {
@@ -81,7 +81,7 @@ export class AppComponent {
 
 ### Webscript View HTML example
 
-This sample demonstrates how to implement a [Webscript component](../content-services/webscript.component.md) that renders the HTML contents that come from a webscript
+This sample demonstrates how to implement a [Webscript component](webscript.component.md) that renders the HTML contents that come from a webscript
 This sample Web Scripts reside in your Alfresco Server. You can access the folder webscript here:
 
 `http://localhost:8080/alfresco/service/sample/folder/Company%20Home`
@@ -96,11 +96,11 @@ This sample Web Scripts reside in your Alfresco Server. You can access the folde
 </adf-webscript-get>
 ```
 
-![Custom columns](../docassets/images/HTML.png)                         
+![Custom columns](../../docassets/images/HTML.png)                         
 
 ### Webscript View DATATABLE example
 
-This sample demonstrates how to implement a [Webscript component](../content-services/webscript.component.md) that renders the JSON contents that come from a webscript
+This sample demonstrates how to implement a [Webscript component](webscript.component.md) that renders the JSON contents that come from a webscript
 
 `http://localhost:8080/alfresco/service/sample/folder/DATATABLE`
 
@@ -115,7 +115,7 @@ This sample demonstrates how to implement a [Webscript component](../content-ser
 ```
 
 If you want to show the result from a webscript inside a 
-[datatable component](../core/datatable.component.md)
+[datatable component](../../core/components/datatable.component.md)
 you have to return the data structure below (subdivided into data and
 schema) from the GET method of the webscript:
 
@@ -155,11 +155,11 @@ data: [
 
 This will render the following table:
 
-![Custom columns](../docassets/images/datatable.png)
+![Custom columns](../../docassets/images/datatable.png)
 
 ### Webscript View JSON example
 
-This sample demonstrates how to implement a [Webscript component](../content-services/webscript.component.md) that renders the JSON contents that come from a webscript.
+This sample demonstrates how to implement a [Webscript component](webscript.component.md) that renders the JSON contents that come from a webscript.
 This sample webscript resides in your Alfresco Server. You can access the folder webscript here:
 
 `http://localhost:8080/alfresco/service/sample/folder/JSON%EXAMPLE`

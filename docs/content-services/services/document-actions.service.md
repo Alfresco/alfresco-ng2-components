@@ -5,9 +5,9 @@ Status: Active
 Last reviewed: 2018-11-13
 ---
 
-# [Document Actions service](../../lib/content-services/document-list/services/document-actions.service.ts "Defined in document-actions.service.ts")
+# [Document Actions service](../../../lib/content-services/document-list/services/document-actions.service.ts "Defined in document-actions.service.ts")
 
-Implements the document menu actions for the [Document List component](../content-services/document-list.component.md).
+Implements the document menu actions for the [Document List component](../components/document-list.component.md).
 
 ## Class members
 
@@ -30,9 +30,9 @@ Implements the document menu actions for the [Document List component](../conten
 ## Details
 
 This service implements the built-in actions that can be applied to a document
-shown in a [Document List component](document-list.component.md): **delete**,
+shown in a [Document List component](../components/document-list.component.md): **delete**,
 **download**, **copy** and **move** (see the
-[Content Action component](content-action.component.md) for further details and examples
+[Content Action component](../components/content-action.component.md) for further details and examples
 of these menu items). However, you can also use the service to add extra actions or
 replace the built-in ones with your own implementation.
 
@@ -99,5 +99,5 @@ with a custom application service.
 
 ## See also
 
--   [Content action component](content-action.component.md)
+-   [Content action component](../components/content-action.component.md)
 -   [Folder actions service](folder-actions.service.md)

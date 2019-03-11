@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-11-19
 ---
 
-# [Sites Dropdown component](../../lib/content-services/site-dropdown/sites-dropdown.component.ts "Defined in sites-dropdown.component.ts")
+# [Sites Dropdown component](../../../lib/content-services/site-dropdown/sites-dropdown.component.ts "Defined in sites-dropdown.component.ts")
 
 Displays a dropdown menu to show and interact with the sites of the current user.
 
-![Dropdown sites](../docassets/images/document-list-dropdown-list.png)
+![Dropdown sites](../../docassets/images/document-list-dropdown-list.png)
 
 ## Basic Usage
 

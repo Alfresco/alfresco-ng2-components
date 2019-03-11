@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-06-11
 ---
 
-# [Search date range component](../../lib/content-services/search/components/search-date-range/search-date-range.component.ts "Defined in search-date-range.component.ts")
+# [Search date range component](../../../lib/content-services/search/components/search-date-range/search-date-range.component.ts "Defined in search-date-range.component.ts")
 
-Implements a date range widget for the [Search Filter component](../content-services/search-filter.component.md).
+Implements a date range widget for the [Search Filter component](search-filter.component.md).
 
-![Date Range Widget](../docassets/images/search-date-range.png)
+![Date Range Widget](../../docassets/images/search-date-range.png)
 
 ## Basic usage
 
@@ -43,7 +43,7 @@ Implements a date range widget for the [Search Filter component](../content-serv
 ## Details
 
 This component lets the user select a range between two dates based on the particular `field`.
-See the [Search filter component](../content-services/search-filter.component.md) for full details of how to use widgets
+See the [Search filter component](search-filter.component.md) for full details of how to use widgets
 in a search query.
 
 ### Custom date format
@@ -75,9 +75,9 @@ in the `dateFormat` setting:
 
 ## See also
 
--   [Search filter component](../content-services/search-filter.component.md)
--   [Search check list component](../content-services/search-check-list.component.md)
--   [Search number range component](../content-services/search-number-range.component.md)
--   [Search radio component](../content-services/search-radio.component.md)
--   [Search slider component](../content-services/search-slider.component.md)
--   [Search text component](../content-services/search-text.component.md)
+-   [Search filter component](search-filter.component.md)
+-   [Search check list component](search-check-list.component.md)
+-   [Search number range component](search-number-range.component.md)
+-   [Search radio component](search-radio.component.md)
+-   [Search slider component](search-slider.component.md)
+-   [Search text component](search-text.component.md)

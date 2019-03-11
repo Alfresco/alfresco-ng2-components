@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-16
 ---
 
-# [Folder Edit directive](../../lib/content-services/folder-directive/folder-edit.directive.ts "Defined in folder-edit.directive.ts")
+# [Folder Edit directive](../../../lib/content-services/folder-directive/folder-edit.directive.ts "Defined in folder-edit.directive.ts")
 
 Allows folders to be edited.
 
@@ -44,5 +44,5 @@ Allows folders to be edited.
 
 ## Details
 
-Pass this directive a folder to edit its name and description using a [Folder Dialog component](../../lib/content-services/dialogs/folder.dialog.ts).
+Pass this directive a folder to edit its name and description using a [Folder Dialog component](../../../lib/content-services/dialogs/folder.dialog.ts).
 If the data is valid then the dialog emits a `folderEdit` event when it closes.

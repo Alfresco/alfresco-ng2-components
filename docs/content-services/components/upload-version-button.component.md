@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2018-03-23
 ---
 
-# [Upload Version Button Component (Workaround)](../../lib/content-services/upload/components/upload-version-button.component.ts "Defined in upload-version-button.component.ts")
+# [Upload Version Button Component (Workaround)](../../../lib/content-services/upload/components/upload-version-button.component.ts "Defined in upload-version-button.component.ts")
 
 Activates a file version upload.
 
@@ -49,9 +49,9 @@ to enrich the features and decrease the restrictions currently applied to node v
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../lib/content-services/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
+| beginUpload | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UploadFilesEvent`](../../../lib/content-services/upload/components/upload-files.event.ts)`>` | Emitted when the upload begins. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when an error occurs. |
-| permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionModel`](../../lib/content-services/document-list/models/permissions.model.ts)`>` | Emitted when create permission is missing. |
+| permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionModel`](../../../lib/content-services/document-list/models/permissions.model.ts)`>` | Emitted when create permission is missing. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the file is uploaded successfully. |
 
 ## Details
@@ -59,7 +59,7 @@ to enrich the features and decrease the restrictions currently applied to node v
 This component extends the [Upload Button component](upload-button.component.md). The
 properties and events are the same except for the `node` property that specifies the node
 to be versioned (this is a _required_ input parameter). However, some properties don't make
-sense when applied to the [Upload Version Button component,](../content-services/upload-version-button.component.md) so they are simply ignored.
+sense when applied to the [Upload Version Button component](upload-version-button.component.md) so they are simply ignored.
 
 ## See also
 

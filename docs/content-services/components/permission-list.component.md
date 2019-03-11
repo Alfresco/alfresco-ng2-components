@@ -5,11 +5,11 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# [Permission List Component](../../lib/content-services/permission-manager/components/permission-list/permission-list.component.ts "Defined in permission-list.component.ts")
+# [Permission List Component](../../../lib/content-services/permission-manager/components/permission-list/permission-list.component.ts "Defined in permission-list.component.ts")
 
 Shows node permissions as a table.
 
-![Permission List](../docassets/images/adf-permission-list.png)
+![Permission List](../../docassets/images/adf-permission-list.png)
 
 ## Basic Usage
 
@@ -18,7 +18,7 @@ Shows node permissions as a table.
 </adf-permission-list>
 ```
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 When the list is empty, the contents will simply say "No permissions" by default, 
 but you can also supply your own content: 
@@ -44,11 +44,11 @@ but you can also supply your own content:
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| update | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<PermissionElement>` | Emitted when the permission is updated. |
+| update | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/PermissionElement.md)`>` | Emitted when the permission is updated. |
 
 ## Details
 
-This component uses a [Datatable component](../core/datatable.component.md) to show the
-permissions retrieved from the [Node service](../core/node.service.md).
+This component uses a [Datatable component](../../core/components/datatable.component.md) to show the
+permissions retrieved from the [Node service](../../core/services/node.service.md).
 For the locally set permissions a role dropdown will be shown to let the user select a new role.
 When the user selects a new value, the permission role is automatically updated and the `update` event is emitted.
