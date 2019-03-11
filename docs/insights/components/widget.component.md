@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2018-03-29
 ---
 
-# [Widget component](../../lib/insights/analytics-process/components/widgets/widget.component.ts "Defined in widget.component.ts")
+# [Widget component](../../../lib/insights/analytics-process/components/widgets/widget.component.ts "Defined in widget.component.ts")
 
 Base class for standard and custom widget classes.
 
@@ -40,10 +40,10 @@ export class CustomEditorComponent extends WidgetComponent {}
 
 ## Details
 
-The [Widget component](../insights/widget.component.md) is the base class for all standard and custom form widgets. See the
-[Form Extensibility and Customisation](../user-guide/extensibility.md) page for full details about
+The [Widget component](widget.component.md) is the base class for all standard and custom form widgets. See the
+[Form Extensibility and Customisation](../../user-guide/extensibility.md) page for full details about
 implementing custom widgets.
 
 ## See also
 
--   [Extensibility](../user-guide/extensibility.md)
+-   [Extensibility](../../user-guide/extensibility.md)

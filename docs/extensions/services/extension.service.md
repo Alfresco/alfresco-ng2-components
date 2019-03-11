@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2018-12-17
 ---
 
-# [Extension Service](../../lib/extensions/src/lib/services/extension.service.ts "Defined in extension.service.ts")
+# [Extension Service](../../../lib/extensions/src/lib/services/extension.service.ts "Defined in extension.service.ts")
 
 Manages and runs basic extension functionality.
 
@@ -13,38 +13,43 @@ Manages and runs basic extension functionality.
 
 ### Methods
 
--   **evaluateRule**(ruleId: `string`, context: [`RuleContext`](../../lib/extensions/src/lib/config/rule.extensions.ts)): `boolean`<br/>
+-   **evaluateRule**(ruleId: `string`, context: [`RuleContext`](../../../lib/extensions/src/lib/config/rule.extensions.ts)): `boolean`<br/>
     Evaluates a rule.
     -   _ruleId:_ `string`  - ID of the rule to evaluate
-    -   _context:_ [`RuleContext`](../../lib/extensions/src/lib/config/rule.extensions.ts)  - Parameter object for the evaluator with details of app state
+    -   _context:_ [`RuleContext`](../../../lib/extensions/src/lib/config/rule.extensions.ts)  - Parameter object for the evaluator with details of app state
     -   **Returns** `boolean` - True if the rule passed, false otherwise
--   **getActionById**(id: `string`): [`ActionRef`](../../lib/extensions/src/lib/config/action.extensions.ts)<br/>
+-   **getActionById**(id: `string`): [`ActionRef`](../../../lib/extensions/src/lib/config/action.extensions.ts)<br/>
     Retrieves an action using its ID value.
     -   _id:_ `string`  - The ID value to look for
-    -   **Returns** [`ActionRef`](../../lib/extensions/src/lib/config/action.extensions.ts) - Action or null if not found
+    -   **Returns** [`ActionRef`](../../../lib/extensions/src/lib/config/action.extensions.ts) - Action or null if not found
 -   **getAuthGuards**(ids: `string[]`): `Array<Type<__type>>`<br/>
     Retrieves one or more auth guards using an array of ID values.
     -   _ids:_ `string[]`  - Array of ID value to look for
     -   **Returns** `Array<Type<__type>>` - Array of auth guards or empty array if none were found
 -   **getComponentById**(id: `string`): `Type<>`<br/>
-    Retrieves a registered [extension component](../../lib/extensions/src/lib/services/component-register.service.ts) using its ID value.
+    Retrieves a registered [extension component](../../../lib/extensions/src/lib/services/component-register.service.ts) using its ID value.
     -   _id:_ `string`  - The ID value to look for
     -   **Returns** `Type<>` - The component or null if not found
 -   **getEvaluator**(key: `string`): `RuleEvaluator`<br/>
     Retrieves a RuleEvaluator function using its key name.
     -   _key:_ `string`  - Key name to look for
     -   **Returns** `RuleEvaluator` - RuleEvaluator or null if not found
--   **getRouteById**(id: `string`): [`RouteRef`](../../lib/extensions/src/lib/config/routing.extensions.ts)<br/>
+-   **getFeature**(key: `string`): `any[]`<br/>
+
+    -   _key:_ `string`  - 
+    -   **Returns** `any[]` - 
+
+-   **getRouteById**(id: `string`): [`RouteRef`](../../../lib/extensions/src/lib/config/routing.extensions.ts)<br/>
     Retrieves a route using its ID value.
     -   _id:_ `string`  - The ID value to look for
-    -   **Returns** [`RouteRef`](../../lib/extensions/src/lib/config/routing.extensions.ts) - The route or null if not found
--   **getRuleById**(id: `string`): [`RuleRef`](../../lib/extensions/src/lib/config/rule.extensions.ts)<br/>
+    -   **Returns** [`RouteRef`](../../../lib/extensions/src/lib/config/routing.extensions.ts) - The route or null if not found
+-   **getRuleById**(id: `string`): [`RuleRef`](../../../lib/extensions/src/lib/config/rule.extensions.ts)<br/>
     Retrieves a rule using its ID value.
     -   _id:_ `string`  - The ID value to look for
-    -   **Returns** [`RuleRef`](../../lib/extensions/src/lib/config/rule.extensions.ts) - The rule or null if not found
--   **load**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ExtensionConfig`](../../lib/extensions/src/lib/config/extension.config.ts)`>`<br/>
+    -   **Returns** [`RuleRef`](../../../lib/extensions/src/lib/config/rule.extensions.ts) - The rule or null if not found
+-   **load**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ExtensionConfig`](../../../lib/extensions/src/lib/config/extension.config.ts)`>`<br/>
     Loads and registers an extension config file and plugins (specified by path properties).
-    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ExtensionConfig`](../../lib/extensions/src/lib/config/extension.config.ts)`>` - The loaded config data
+    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ExtensionConfig`](../../../lib/extensions/src/lib/config/extension.config.ts)`>` - The loaded config data
 -   **runExpression**(value: `string`, context?: `any`): `any`<br/>
     Runs a lightweight expression stored in a string.
     -   _value:_ `string`  - String containing the expression or literal value
@@ -59,11 +64,11 @@ Manages and runs basic extension functionality.
 -   **setEvaluators**(values: `Function`)<br/>
     Adds one or more new rule evaluators to the existing set.
     -   _values:_ `Function`  - The new evaluators to add
--   **setup**(config: [`ExtensionConfig`](../../lib/extensions/src/lib/config/extension.config.ts))<br/>
+-   **setup**(config: [`ExtensionConfig`](../../../lib/extensions/src/lib/config/extension.config.ts))<br/>
     Registers extensions from a config object.
-    -   _config:_ [`ExtensionConfig`](../../lib/extensions/src/lib/config/extension.config.ts)  - Object with config data
+    -   _config:_ [`ExtensionConfig`](../../../lib/extensions/src/lib/config/extension.config.ts)  - Object with config data
 
 ## Details
 
 Use the methods of this service to add extensibility features to your app. You can find further
-details in the [App extensions](../user-guide/app-extensions.md) page.
+details in the [App extensions](../../user-guide/app-extensions.md) page.
