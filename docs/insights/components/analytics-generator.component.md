@@ -4,7 +4,7 @@ Added: v2.0.0
 Status: Active
 ---
 
-# [Analytics Generator Component](../../lib/insights/analytics-process/components/analytics-generator.component.ts "Defined in analytics-generator.component.ts")
+# [Analytics Generator Component](../../../lib/insights/analytics-process/components/analytics-generator.component.ts "Defined in analytics-generator.component.ts")
 
 Generates and shows charts
 
@@ -24,7 +24,7 @@ Generates and shows charts
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | reportId | `number` |  |  |
-| reportParamQuery | [`ReportQuery`](../../lib/insights/diagram/models/report/reportQuery.model.ts) | undefined |  |
+| reportParamQuery | [`ReportQuery`](../../../lib/insights/diagram/models/report/reportQuery.model.ts) | undefined |  |
 
 ### Events
 
