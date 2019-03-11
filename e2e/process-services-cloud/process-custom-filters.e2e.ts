@@ -160,7 +160,7 @@ describe('Process list cloud', () => {
                 .setAppNameDropDown(simpleApp).setProcessInstanceId(runningProcessInstance.entry.id);
 
             processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(runningProcessInstance.entry.id);
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcessInstance.entry.id);
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getNumberOfAppNameOptions()).toBe(noOfApps);
             expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
             browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
@@ -176,7 +176,7 @@ describe('Process list cloud', () => {
                 .setAppNameDropDown(simpleApp).setProcessInstanceId(switchProcessInstance.entry.id);
 
             processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
-            tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(switchProcessInstance.entry.id);
+            processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(switchProcessInstance.entry.id);
             processCloudDemoPage.editProcessFilterCloudComponent().clickSaveAsButton();
             processCloudDemoPage.editProcessFilterCloudComponent().editProcessFilterDialog().setFilterName('SwitchFilter').clickOnSaveButton();
             expect(processCloudDemoPage.getActiveFilterName()).toBe('SwitchFilter');
