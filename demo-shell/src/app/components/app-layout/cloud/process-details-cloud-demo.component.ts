@@ -40,4 +40,10 @@ export class ProcessDetailsCloudDemoComponent {
     onGoBack() {
         this.router.navigate([`/cloud/${this.appName}/`]);
     }
+
+    onRowClick(taskId: string) {
+        if (taskId) {
+            this.router.navigate([`/cloud/${this.appName}/task-details/${taskId}`]);
+        }
+    }
 }
