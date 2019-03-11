@@ -120,7 +120,11 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.checkContentIsDisplayed(testFileModel.name);
 
             contentServicesPage.getDocumentList().rightClickOnRow(testFileModel.name);
+<<<<<<< HEAD
             contentListPage.pressContextMenuActionNamed('Move');
+=======
+            contentServicesPage.pressContextMenuActionNamed('Move');
+>>>>>>> Fix tests after rebase
             contentServicesPage.typeIntoNodeSelectorSearchField(folderName);
             contentServicesPage.clickContentNodeSelectorResult(folderName);
             contentServicesPage.clickChooseButton();
@@ -164,6 +168,19 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.pressContextMenuActionNamed('Delete');
             contentServicesPage.checkContentIsNotDisplayed(fileNames[3]);
             contentServicesPage.checkContentIsDisplayed(fileNames[4]);
+        });
+
+        it('[C280566] Should be able to open context menu with right click', () => {
+            contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
+            contentServicesPage.checkContextActionIsVisible('Download');
+            contentServicesPage.checkContextActionIsVisible('Copy');
+            contentServicesPage.checkContextActionIsVisible('Move');
+            contentServicesPage.checkContextActionIsVisible('Delete');
+            contentServicesPage.checkContextActionIsVisible('Info');
+            contentServicesPage.checkContextActionIsVisible('Manage versions');
+            contentServicesPage.checkContextActionIsVisible('Permission');
+            contentServicesPage.checkContextActionIsVisible('Lock');
+            //contentListPage.selectRow(pdfFileModel.name);
         });
 
     });
