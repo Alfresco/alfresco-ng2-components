@@ -84,7 +84,6 @@ describe('Document List Component - Actions', () => {
     });
 
     beforeEach(async (done) => {
-        navigationBarPage.clickAboutButton();
         navigationBarPage.clickContentServicesButton();
         done();
     });
@@ -164,7 +163,7 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.checkContextActionIsVisible('Manage versions');
             contentServicesPage.checkContextActionIsVisible('Permission');
             contentServicesPage.checkContextActionIsVisible('Lock');
-            //contentListPage.selectRow(pdfFileModel.name);
+            browser.actions().click(protractor.Button.ESCAPE).perform();
         });
 
     });
