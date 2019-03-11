@@ -140,7 +140,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
     it('[C297494] Should display content when navigating to a non-empty folder not in the first page', () => {
         contentServicesPage.goToDocumentList();
-        contentServicesPage.navigateToFolder(parentFolderModel.name);
+        contentServicesPage.doubleClickRow(parentFolderModel.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
 
@@ -157,7 +157,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
 
-        contentServicesPage.navigateToFolder(lastFolderResponse.entry.name);
+        contentServicesPage.doubleClickRow(lastFolderResponse.entry.name);
         contentServicesPage.checkContentIsDisplayed(pngFileInfo.name);
 
         viewerPage.viewFile(pngFileUploaded.entry.name);
