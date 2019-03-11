@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2019-01-08
 ---
 
-# [App List Cloud Component](../../lib/process-services-cloud/src/lib/app/components/app-list-cloud.component.ts "Defined in app-list-cloud.component.ts")
+# [App List Cloud Component](../../../lib/process-services-cloud/src/lib/app/components/app-list-cloud.component.ts "Defined in app-list-cloud.component.ts")
 
 Shows all deployed cloud application instances.
 
@@ -17,7 +17,7 @@ Shows all deployed cloud application instances.
 </adf-cloud-app-list>
 ```
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 You can show custom content when there are no apps available by supplying an
 `<adf-custom-empty-content>` section:
@@ -43,4 +43,4 @@ You can show custom content when there are no apps available by supplying an
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| appClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ApplicationInstanceModel`](../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`>` | Emitted when an app entry is clicked. |
+| appClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ApplicationInstanceModel`](../../../lib/process-services-cloud/src/lib/app/models/application-instance.model.ts)`>` | Emitted when an app entry is clicked. |

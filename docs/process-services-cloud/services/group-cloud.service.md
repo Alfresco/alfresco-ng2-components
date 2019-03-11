@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2019-02-06
 ---
 
-# [Group Cloud Service](../../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts "Defined in group-cloud.service.ts")
+# [Group Cloud Service](../../../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts "Defined in group-cloud.service.ts")
 
 Searches and gets information for groups. 
 
@@ -29,9 +29,9 @@ Searches and gets information for groups.
     -   _groupId:_ `string`  - ID of the target group
     -   _roleNames:_ `string[]`  - Array of role names
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<boolean>` - True if the group has one or more of the roles, false otherwise
--   **findGroupsByName**(searchParams: [`GroupSearchParam`](../../lib/process-services-cloud/src/lib/group/models/group.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **findGroupsByName**(searchParams: [`GroupSearchParam`](../../../lib/process-services-cloud/src/lib/group/models/group.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Finds groups filtered by name.
-    -   _searchParams:_ [`GroupSearchParam`](../../lib/process-services-cloud/src/lib/group/models/group.model.ts)  - Object containing the name filter string
+    -   _searchParams:_ [`GroupSearchParam`](../../../lib/process-services-cloud/src/lib/group/models/group.model.ts)  - Object containing the name filter string
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - List of group information
 -   **getClientIdByApplicationName**(applicationName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string>`<br/>
     Gets the client ID using the app name.
@@ -42,10 +42,10 @@ Searches and gets information for groups.
     -   _groupId:_ `string`  - ID of the target group
     -   _clientId:_ `string`  - ID of the client
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any[]>` - List of roles
--   **getGroupDetailsById**(groupId: `string`): `any`<br/>
+-   **getGroupRoles**(groupId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`GroupRoleModel`](../../../lib/process-services-cloud/src/lib/group/models/group.model.ts)`[]>`<br/>
     Gets details for a specified group.
     -   _groupId:_ `string`  - ID of the target group
-    -   **Returns** `any` - Group details
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`GroupRoleModel`](../../../lib/process-services-cloud/src/lib/group/models/group.model.ts)`[]>` - Group details
 
 ## Details
 

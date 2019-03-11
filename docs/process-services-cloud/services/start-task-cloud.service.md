@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2019-01-09
 ---
 
-# [Start Task Cloud Service](../../lib/process-services-cloud/src/lib/task/start-task/services/start-task-cloud.service.ts "Defined in start-task-cloud.service.ts")
+# [Start Task Cloud Service](../../../lib/process-services-cloud/src/lib/task/start-task/services/start-task-cloud.service.ts "Defined in start-task-cloud.service.ts")
 
 Starts standalone tasks. 
 
@@ -13,18 +13,18 @@ Starts standalone tasks.
 
 ### Methods
 
--   **createNewTask**(taskDetails: [`TaskDetailsCloudModel`](../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
+-   **createNewTask**(taskDetails: [`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
     Creates a new standalone task.
-    -   _taskDetails:_ [`TaskDetailsCloudModel`](../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)  - Details of the task to create
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Details of the newly created task
+    -   _taskDetails:_ [`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)  - Details of the task to create
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Details of the newly created task
 
 ## Details
 
 The `createNewTask` method works the same way as the method with the same name in the
-[Tasklist service](../process-services/tasklist.service.md)
+[Tasklist service](../../process-services/services/tasklist.service.md)
 but uses the cloud variants of the classes for the parameter and return value. See the
-[Tasklist service](../process-services/tasklist.service.md) page for usage examples.
+[Tasklist service](../../process-services/services/tasklist.service.md) page for usage examples.
 
 ## See also
 
--   [Tasklist service](../process-services/tasklist.service.md)
+-   [Tasklist service](../../process-services/services/tasklist.service.md)
