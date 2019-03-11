@@ -16,5 +16,5 @@
  */
 
 export * from './process-header-cloud.module';
-export * from './components/process-header-cloud.component'
-export * from './services/process-header-cloud.service'
+export * from './components/process-header-cloud.component';
+export * from './services/process-header-cloud.service';

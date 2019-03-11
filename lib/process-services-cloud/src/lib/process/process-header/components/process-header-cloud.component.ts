@@ -1,6 +1,6 @@
 /*!
  * @license
- * Copyright 2018 Alfresco Software, Ltd.
+ * Copyright 2019 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,9 +43,9 @@ export class ProcessHeaderCloudComponent implements OnChanges {
     constructor(
         private processHeaderCloudService: ProcessHeaderCloudService,
         private translationService: TranslationService,
-        private appConfig: AppConfigService){
+        private appConfig: AppConfigService) {
     }
-    
+
     ngOnChanges() {
         if (this.appName && this.processInstanceId) {
             this.loadProcessInstanceDetails(this.appName, this.processInstanceId);
@@ -59,7 +59,6 @@ export class ProcessHeaderCloudComponent implements OnChanges {
                 this.refreshData();
             });
     }
-    
 
     refreshData() {
         if (this.processInstanceDetails) {
@@ -78,11 +77,11 @@ export class ProcessHeaderCloudComponent implements OnChanges {
                     key: 'id'
                 }),
             new CardViewTextItemModel(
-                    {
-                        label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NAME',
-                        value: this.processInstanceDetails.name,
-                        key: 'name',
-                    }),
+                {
+                    label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NAME',
+                    value: this.processInstanceDetails.name,
+                    key: 'name'
+                }),
             new CardViewTextItemModel(
                 {
                     label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.DESCRIPTION',
@@ -100,7 +99,7 @@ export class ProcessHeaderCloudComponent implements OnChanges {
                 {
                     label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.INITIATOR',
                     value: this.processInstanceDetails.initiator,
-                    key: 'initiator',
+                    key: 'initiator'
                 }),
             new CardViewDateItemModel(
                 {
@@ -116,7 +115,7 @@ export class ProcessHeaderCloudComponent implements OnChanges {
                     format: 'DD-MM-YYYY',
                     key: 'lastModified'
                 }),
-            new CardViewDateItemModel(
+            new CardViewTextItemModel(
                 {
                     label: 'ADF_CLOUD_PROCESS_HEADER.PROPERTIES.PARENT_ID',
                     value: this.processInstanceDetails.parentId,
