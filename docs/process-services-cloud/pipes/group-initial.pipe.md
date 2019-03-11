@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-01-17
 ---
 
-# [Group initial pipe](../../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts "Defined in group-initial.pipe.ts")
+# [Group initial pipe](../../../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts "Defined in group-initial.pipe.ts")
 
 Extracts the initial character from a group name.
 
@@ -23,11 +23,11 @@ Extracts the initial character from a group name.
 
 ## Details
 
-This pipe takes a [`GroupModel`](../../lib/process-services-cloud/src/lib/group/models/group.model.ts)
+This pipe takes a [`GroupModel`](../../../lib/process-services-cloud/src/lib/group/models/group.model.ts)
 object as its parameter and extracts the initial character from the `name`
 property. The initial is a handy way to identify the group in lists and
 other situations where there is limited screen space available.
 
 ## See also
 
--   [Group cloud component](../process-services-cloud/group-cloud.component.md)
+-   [Group cloud component](../components/group-cloud.component.md)

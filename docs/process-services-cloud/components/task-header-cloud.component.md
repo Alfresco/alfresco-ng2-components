@@ -5,11 +5,11 @@ Status: Experimental
 Last reviewed: 2019-01-18
 ---
 
-# [Task Header Cloud Component](../../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts "Defined in task-header-cloud.component.ts")
+# [Task Header Cloud Component](../../../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts "Defined in task-header-cloud.component.ts")
 
 Shows all the information related to a task.
 
-![adf-task-header](../docassets/images/adf-task-header.png)
+![adf-task-header](../../docassets/images/adf-task-header.png)
 
 ## Basic Usage
 
@@ -40,7 +40,7 @@ Shows all the information related to a task.
 ## Details
 
 The component populates an internal array of
-[CardViewModel](../core/card-view.component.md) with the information that we want to display.
+[CardViewModel](../../core/components/card-view.component.md) with the information that we want to display.
 
 By default all properties are displayed:
 

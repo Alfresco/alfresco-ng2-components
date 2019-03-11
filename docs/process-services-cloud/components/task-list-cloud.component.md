@@ -5,7 +5,7 @@ Status: Experimental
 Last reviewed: 2019-01-08
 ---
 
-# [Task List Cloud component](../../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts "Defined in task-list-cloud.component.ts")
+# [Task List Cloud component](../../../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts "Defined in task-list-cloud.component.ts")
 
 Renders a list containing all the tasks matched by the parameters specified.
 
@@ -32,7 +32,7 @@ Renders a list containing all the tasks matched by the parameters specified.
 </adf-cloud-task-list>
 ```
 
-### [Transclusions](../user-guide/transclusion.md)
+### [Transclusions](../../user-guide/transclusion.md)
 
 Any content inside an `<adf-custom-empty-content>` sub-component will be shown
 when the task list is empty:
@@ -55,20 +55,21 @@ when the task list is empty:
 | assignee | `string` | "" | The assignee of the process. Possible values are: "assignee" (the current user is the assignee), "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value (the current user is involved). |
 | createdDate | `string` | "" | Filter the tasks. Display only tasks created on the supplied date. |
 | dueDate | `string` | "" | Filter the tasks. Display only tasks with dueDate equal to the supplied date. |
+| id | `string` | "" | Filter the tasks. Display only tasks with id equal to the supplied value. |
 | lastModifiedFrom | `string` | "" | Filter the tasks. Display only tasks with lastModifiedFrom equal to the supplied date. |
 | lastModifiedTo | `string` | "" | Filter the tasks. Display only tasks with lastModifiedTo equal to the supplied date. |
-| id | `string` | "" | Filter the tasks. Display only tasks with id equal to the supplied value. |
 | multiselect | `boolean` | false | Toggles multiple row selection, rendering a checkbox at the beginning of each row. |
 | name | `string` | "" | Filter the tasks. Display only tasks with the supplied name. |
+| owner | `string` | "" | Filter the tasks. Display only tasks with owner equal to the supplied value. |
 | parentTaskId | `string` | "" | Filter the tasks. Display only tasks with parentTaskId equal to the supplied value. |
+| presetColumn | `string` |  | Custom preset column schema in JSON format. |
+| priority | `number` |  | Filter the tasks. Display only tasks with priority equal to the supplied value. |
 | processDefinitionId | `string` | "" | Filter the tasks. Display only tasks with processDefinitionId equal to the supplied value. |
 | processInstanceId | `string` | "" | Filter the tasks. Display only tasks with processInstanceId equal to the supplied value. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use the Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| sorting | [`TaskListCloudSortingModel`](../../lib/process-services-cloud/src/lib/task/task-list/models/task-list-sorting.model.ts)`[]` |  | Specifies how the table should be sorted. The parameters are for BE sorting. |
+| sorting | [`TaskListCloudSortingModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/task-list-sorting.model.ts)`[]` |  | Specifies how the table should be sorted. The parameters are for BE sorting. |
+| standAlone | `boolean` | false | Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true. |
 | status | `string` | "" | Filter the tasks. Display only tasks with status equal to the supplied value. |
-| owner | `string` | "" |  Filter the tasks. Display only tasks with owner equal to the supplied value. |
-| priority | `string` | "" |  Filter the tasks. Display only tasks with priority equal to the supplied value. |
-| standAlone | `string` | "" |  Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true. |
 
 ### Events
 
@@ -196,8 +197,8 @@ The Tasklist also supports pagination as shown in the example below:
 
 ### DataTableAdapter example
 
-See the [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts) page for full details of the interface and its standard
-implementation, [`ObjectDataTableAdapter`](../../lib/core/datatable/data/object-datatable-adapter.ts). Below is an example of how you can set up the adapter for a
+See the [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) page for full details of the interface and its standard
+implementation, [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts). Below is an example of how you can set up the adapter for a
 typical tasklist.
 
 ```json
@@ -211,10 +212,10 @@ typical tasklist.
 
 ### DataColumn Features
 
-You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [`DataColumn`](../../lib/core/datatable/data/data-column.model.ts) page for more information about these features.
+You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) page for more information about these features.
 
 ## See also
 
--   [Data column component](../core/data-column.component.md)
--   [`DataTableAdapter`](../../lib/core/datatable/data/datatable-adapter.ts)
--   [Pagination component](../core/pagination.component.md)
+-   [Data column component](../../core/components/data-column.component.md)
+-   [`DataTableAdapter`](../../core/interfaces/datatable-adapter.interface.md)
+-   [Pagination component](../../core/components/pagination.component.md)
