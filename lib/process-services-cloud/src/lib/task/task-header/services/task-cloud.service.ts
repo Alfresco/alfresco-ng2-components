@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService } from '@alfresco/adf-core';
 import { from, throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { TaskDetailsCloudModel, TaskStatusEnum } from '../../start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 
 @Injectable({
     providedIn: 'root'

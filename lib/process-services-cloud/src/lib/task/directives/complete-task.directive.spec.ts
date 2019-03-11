@@ -73,10 +73,15 @@ describe('CompleteTaskDirective', () => {
 describe('Complete Task Directive validation errors', () => {
 
     @Component({
-        selector:  'adf-test-validation-component',
+        selector:  'adf-no-fields-validation-component',
         template: '<button adf-cloud-complete-task (success)="onCompleteTask($event)"></button>'
     })
-    class TestValidationDirectiveComponent {
+    class TestMissingInputDirectiveComponent {
+
+        appName = 'simple-app';
+        appNameUndefined = undefined;
+        appNameNull = null;
+
         @ContentChildren(CompleteTaskDirective)
         completeTaskValidationDirective: CompleteTaskDirective;
 
@@ -85,7 +90,57 @@ describe('Complete Task Directive validation errors', () => {
         }
     }
 
-    let fixture: ComponentFixture<TestValidationDirectiveComponent>;
+    @Component({
+        selector:  'adf-no-taskid-validation-component',
+        template: '<button adf-cloud-complete-task [appName]="appName" (success)="onCompleteTask($event)"></button>'
+    })
+    class TestMissingTaskIdDirectiveComponent {
+
+        appName = 'simple-app';
+
+        @ContentChildren(CompleteTaskDirective)
+        completeTaskValidationDirective: CompleteTaskDirective;
+
+        onCompleteTask(event: any) {
+            return event;
+        }
+    }
+
+    @Component({
+        selector:  'adf-undefined-appname-component',
+        template: '<button adf-cloud-complete-task [taskId]="taskMock" [appName]="appNameUndefined" (success)="onCompleteTask($event)"></button>'
+    })
+    class TestInvalidAppNameUndefineddDirectiveComponent {
+
+        appName = 'simple-app';
+        taskMock = 'test1234';
+
+        @ContentChildren(CompleteTaskDirective)
+        completeTaskValidationDirective: CompleteTaskDirective;
+
+        onCompleteTask(event: any) {
+            return event;
+        }
+    }
+
+    @Component({
+        selector:  'adf-null-appname-component',
+        template: '<button adf-cloud-complete-task [taskId]="taskMock" [appName]="appNameNull" (success)="onCompleteTask($event)"></button>'
+    })
+    class TestInvalidAppNameNulldDirectiveComponent {
+
+        appName = 'simple-app';
+        taskMock = 'test1234';
+
+        @ContentChildren(CompleteTaskDirective)
+        completeTaskValidationDirective: CompleteTaskDirective;
+
+        onCompleteTask(event: any) {
+            return event;
+        }
+    }
+
+    let fixture: ComponentFixture<any>;
 
     setupTestBed({
         imports: [
@@ -93,16 +148,34 @@ describe('Complete Task Directive validation errors', () => {
             RouterTestingModule
         ],
         declarations: [
-            TestValidationDirectiveComponent,
+            TestMissingTaskIdDirectiveComponent,
+            TestInvalidAppNameUndefineddDirectiveComponent,
+            TestInvalidAppNameNulldDirectiveComponent,
+            TestMissingInputDirectiveComponent,
             CompleteTaskDirective
         ]
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestValidationDirectiveComponent);
+        fixture = TestBed.createComponent(TestMissingInputDirectiveComponent);
     });
 
     it('should throw error when missing input', () => {
         expect(() => fixture.detectChanges()).toThrowError();
+    });
+
+    it('should throw error when taskId is not set', () => {
+        fixture = TestBed.createComponent(TestMissingTaskIdDirectiveComponent);
+        expect( () => fixture.detectChanges()).toThrowError('Attribute taskId is required');
+    });
+
+    it('should throw error when appName is undefined', () => {
+        fixture = TestBed.createComponent(TestInvalidAppNameUndefineddDirectiveComponent);
+        expect( () => fixture.detectChanges()).toThrowError('Attribute appName is required');
+    });
+
+    it('should throw error when appName is null', () => {
+        fixture = TestBed.createComponent(TestInvalidAppNameUndefineddDirectiveComponent);
+        expect( () => fixture.detectChanges()).toThrowError('Attribute appName is required');
     });
 });
