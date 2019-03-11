@@ -76,7 +76,17 @@ describe('Aspect oriented config', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+        let uploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
+
+        let aspects = await this.alfrescoJsApi.core.nodesApi.getNode(uploadedFile.entry.id);
+
+        let newAspects = aspects.entry.aspectNames;
+
+        newAspects.push(modelOneName.concat(':', emptyAspectName));
+
+        aspects.entry.aspectNames = newAspects;
+
+        await this.alfrescoJsApi.core.nodesApi.updateNode(uploadedFile.entry.id, {"aspectNames": aspects.entry.aspectNames});
 
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
@@ -266,6 +276,38 @@ describe('Aspect oriented config', () => {
         configEditorPage.enterBigConfigurationText('{' +
             '    "presets": {' +
             '        "custom-preset": {' +
+            '            "exif:exif": "*",' +
+            '            "cm:versionable": "*"' +
+            '        }' +
+            '    }' +
+            '}');
+
+        configEditorPage.clickSaveButton();
+
+        navigationBarPage.clickContentServicesButton();
+
+        viewerPage.viewFile(pngFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        metadataViewPage.clickOnPropertiesTab();
+
+        check(metadataViewPage.presetSwitch);
+
+        metadataViewPage.enterPresetText('custom-preset');
+
+        metadataViewPage.informationButtonIsDisplayed();
+        metadataViewPage.clickOnInformationButton();
+
+        metadataViewPage.checkMetadataGroupIsPresent('properties');
+        metadataViewPage.checkMetadataGroupIsPresent('EXIF');
+        metadataViewPage.checkMetadataGroupIsPresent('Versionable');
+    });
+
+    it('[C279968] The aspect without properties is not displayed', () => {
+
+        configEditorPage.enterBigConfigurationText('{' +
+            '    "presets": {' + modelOneName +
+            '        : {' + modelOneName + ":" + emptyAspectName +
             '            "exif:exif": "*",' +
             '            "cm:versionable": "*"' +
             '        }' +
