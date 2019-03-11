@@ -21,9 +21,8 @@ import { element, by, protractor } from 'protractor';
 export class AnalyticsPage {
 
     toolbarTitleInput = element(by.css('input[data-automation-id="reportName"]'));
-    toolbarTitleContainer = element(by.css('div[class="adf-report-title ng-star-inserted"]'));
+    toolbarTitleContainer = element(by.css('adf-toolbar-title'));
     toolbarTitle = element(by.xpath('//mat-toolbar/adf-toolbar-title/div/h4'));
-    reportContainer = element(by.css('div[class="adf-report-report-container"]'));
     reportMessage = element(by.css('div[class="ng-star-inserted"] span'));
 
     getReport(title) {
@@ -33,7 +32,6 @@ export class AnalyticsPage {
     }
 
     changeReportTitle(title) {
-        Util.waitUntilElementIsVisible(this.reportContainer);
         Util.waitUntilElementIsVisible(this.toolbarTitleContainer);
         Util.waitUntilElementIsClickable(this.toolbarTitleContainer);
         this.toolbarTitleContainer.click();
