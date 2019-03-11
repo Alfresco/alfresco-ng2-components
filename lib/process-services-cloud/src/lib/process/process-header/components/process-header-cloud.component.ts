@@ -60,6 +60,9 @@ export class ProcessHeaderCloudComponent implements OnChanges {
             });
     }
 
+    /**
+     * Refresh the card data
+     */
     refreshData() {
         if (this.processInstanceDetails) {
             const defaultProperties = this.initDefaultProperties();
