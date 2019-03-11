@@ -91,19 +91,6 @@ describe('Document List Component - Actions', () => {
 
     describe('File Actions', () => {
 
-        it('[C280566] Should be able to open context menu with right click', () => {
-            contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
-            contentServicesPage.checkContextActionIsVisible('Download');
-            contentServicesPage.checkContextActionIsVisible('Copy');
-            contentServicesPage.checkContextActionIsVisible('Move');
-            contentServicesPage.checkContextActionIsVisible('Delete');
-            contentServicesPage.checkContextActionIsVisible('Info');
-            contentServicesPage.checkContextActionIsVisible('Manage versions');
-            contentServicesPage.checkContextActionIsVisible('Permission');
-            contentServicesPage.checkContextActionIsVisible('Lock');
-            contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
-        });
-
         it('[C213257] Should be able to copy a file', () => {
             contentServicesPage.checkContentIsDisplayed(pdfUploadedNode.entry.name);
 
@@ -120,8 +107,8 @@ describe('Document List Component - Actions', () => {
         it('[C297491] Should be able to move a file', () => {
             contentServicesPage.checkContentIsDisplayed(testFileModel.name);
 
-            contentServicesPage.getUploadAreaDocumentList().rightClickOnRowNamedWithRoot(testFileModel.name);
-            contentListPage.pressContextMenuActionNamed('Move');
+            contentServicesPage.getDocumentList().rightClickOnRow(testFileModel.name);
+            contentServicesPage.pressContextMenuActionNamed('Move');
             contentServicesPage.typeIntoNodeSelectorSearchField(folderName);
             contentServicesPage.clickContentNodeSelectorResult(folderName);
             contentServicesPage.clickChooseButton();
@@ -165,6 +152,19 @@ describe('Document List Component - Actions', () => {
             contentServicesPage.pressContextMenuActionNamed('Delete');
             contentServicesPage.checkContentIsNotDisplayed(fileNames[3]);
             contentServicesPage.checkContentIsDisplayed(fileNames[4]);
+        });
+
+        it('[C280566] Should be able to open context menu with right click', () => {
+            contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
+            contentServicesPage.checkContextActionIsVisible('Download');
+            contentServicesPage.checkContextActionIsVisible('Copy');
+            contentServicesPage.checkContextActionIsVisible('Move');
+            contentServicesPage.checkContextActionIsVisible('Delete');
+            contentServicesPage.checkContextActionIsVisible('Info');
+            contentServicesPage.checkContextActionIsVisible('Manage versions');
+            contentServicesPage.checkContextActionIsVisible('Permission');
+            contentServicesPage.checkContextActionIsVisible('Lock');
+            //contentListPage.selectRow(pdfFileModel.name);
         });
 
     });
