@@ -158,7 +158,7 @@ export class UploadDialog {
 
     numberOfCurrentFilesUploaded() {
         let deferred = protractor.promise.defer();
-        this.getTitleText().then((text) => {
+        this.getTitleText().then((text: any) => {
             deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[0]);
         });
         return deferred.promise;
@@ -166,7 +166,7 @@ export class UploadDialog {
 
     numberOfInitialFilesUploaded() {
         let deferred = protractor.promise.defer();
-        this.getTitleText().then((text) => {
+        this.getTitleText().then((text: any) => {
             deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[1]);
         });
         return deferred.promise;

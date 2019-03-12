@@ -34,6 +34,7 @@ export class FileModel {
     secondPageText = resources.Files.ADF_DOCUMENTS.PDF.second_page_text;
     lastPageNumber = resources.Files.ADF_DOCUMENTS.PDF.last_page_number;
     createdAt = '';
+    password = '';
     createdByUser = new CreatedByModel();
     modifiedByUser = new CreatedByModel();
     content: ContentModel = {};

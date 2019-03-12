@@ -110,7 +110,7 @@ export class EditProcessFilterCloudComponent {
 
     async checkAppNamesAreUnique() {
         let appNameList = element.all(by.css('mat-option[data-automation-id="adf-cloud-edit-process-property-optionsappName"] span'));
-        let appTextList = await appNameList.getText();
+        let appTextList: any = await appNameList.getText();
         let uniqueArray = appTextList.filter((appName) => {
             let sameAppNameArray = appTextList.filter((eachApp) => eachApp === appName);
             return sameAppNameArray.length === 1;
