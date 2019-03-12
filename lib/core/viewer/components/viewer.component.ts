@@ -706,12 +706,12 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     checkExtensions(extensionAllowed) {
-        if (typeof extensionAllowed ===  "string") {
+        if (typeof extensionAllowed ===  'string') {
             return this.extension.toLowerCase() === extensionAllowed.toLowerCase();
         } else if (extensionAllowed.length > 0) {
             return extensionAllowed.find((currentExtension) => {
                 return this.extension.toLowerCase() === currentExtension.toLowerCase();
-            })
+            });
         }
 
     }
