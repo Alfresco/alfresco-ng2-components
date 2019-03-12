@@ -73,7 +73,6 @@ export class DocumentListPage {
 
     checkActionMenuIsNotDisplayed() {
         Util.waitUntilElementIsNotVisible(this.actionMenu);
-        browser.sleep(500);
         return this;
     }
 
