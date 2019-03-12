@@ -1,8 +1,9 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "noEmit": true,
     "outDir": "../out-tsc/e2e",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "module": "commonjs",
     "target": "es5",
     "types": [
@@ -30,7 +31,7 @@
         "../lib/process-services-cloud"
       ],
       "@alfresco/adf-testing": [
-        "../../lib/testing"
+        "../lib/testing"
       ]
     }
   }
