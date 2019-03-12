@@ -113,12 +113,6 @@ export class UploadDialog {
         return this;
     }
 
-    removeFileWhileUploading(content) {
-        browser.driver.actions().mouseMove(this.getRowByRowName(content).element(this.sizeUploaded)).perform();
-        this.getRowByRowName(content).element(this.cancelWhileUploadingIcon).click();
-        return this;
-    }
-
     getTitleText() {
         Util.waitUntilElementIsVisible(this.title);
         let deferred = protractor.promise.defer();
