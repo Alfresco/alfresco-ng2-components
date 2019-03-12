@@ -43,6 +43,7 @@ describe('Aspect oriented config', () => {
     const configEditorPage = new ConfigEditorPage();
     let contentServicesPage = new ContentServicesPage();
     let modelOne, modelOneName = 'modelOne', emptyAspectName = 'emptyAspect';
+    let defaultModel = 'cm', defaultEmptyPropertiesAspect = 'taggable', aspectName = 'Taggable';
 
     let acsUser = new AcsUserModel();
 
@@ -78,17 +79,15 @@ describe('Aspect oriented config', () => {
 
         let uploadedFile = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
 
+        loginPage.loginToContentServicesUsingUserModel(acsUser);
+
         let aspects = await this.alfrescoJsApi.core.nodesApi.getNode(uploadedFile.entry.id);
 
-        let newAspects = aspects.entry.aspectNames;
+        aspects.entry.aspectNames.push(modelOneName.concat(':', emptyAspectName));
 
-        newAspects.push(modelOneName.concat(':', emptyAspectName));
-
-        aspects.entry.aspectNames = newAspects;
+        aspects.entry.aspectNames.push(defaultModel.concat(':', defaultEmptyPropertiesAspect));
 
         await this.alfrescoJsApi.core.nodesApi.updateNode(uploadedFile.entry.id, {"aspectNames": aspects.entry.aspectNames});
-
-        loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         done();
     });
@@ -303,13 +302,12 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsPresent('Versionable');
     });
 
-    it('[C279968] The aspect without properties is not displayed', () => {
+    it('[C299186] The aspect without properties is not displayed', () => {
 
         configEditorPage.enterBigConfigurationText('{' +
-            '    "presets": {' + modelOneName +
-            '        : {' + modelOneName + ":" + emptyAspectName +
-            '            "exif:exif": "*",' +
-            '            "cm:versionable": "*"' +
+            '    "presets": { "' + modelOneName +
+            '       ": { "' + modelOneName + ':' + emptyAspectName +
+            '            ":"*"' +
             '        }' +
             '    }' +
             '}');
@@ -323,15 +321,34 @@ describe('Aspect oriented config', () => {
         viewerPage.checkInfoSideBarIsDisplayed();
         metadataViewPage.clickOnPropertiesTab();
 
-        check(metadataViewPage.presetSwitch);
+        metadataViewPage.informationButtonIsDisplayed();
+        metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.enterPresetText('custom-preset');
+        metadataViewPage.checkMetadataGroupIsNotPresent(emptyAspectName);
+    });
+
+    it('[C279968] The aspect with empty properties is displayed', () => {
+
+        configEditorPage.enterBigConfigurationText('{' +
+            '    "presets": { "' + defaultModel +
+            '       ": { "' + defaultModel + ':' + defaultEmptyPropertiesAspect +
+            '            ":"*"' +
+            '        }' +
+            '    }' +
+            '}');
+
+        configEditorPage.clickSaveButton();
+
+        navigationBarPage.clickContentServicesButton();
+
+        viewerPage.viewFile(pngFileModel.name);
+        viewerPage.clickInfoButton();
+        viewerPage.checkInfoSideBarIsDisplayed();
+        metadataViewPage.clickOnPropertiesTab();
 
         metadataViewPage.informationButtonIsDisplayed();
         metadataViewPage.clickOnInformationButton();
 
-        metadataViewPage.checkMetadataGroupIsPresent('properties');
-        metadataViewPage.checkMetadataGroupIsPresent('EXIF');
-        metadataViewPage.checkMetadataGroupIsPresent('Versionable');
+        metadataViewPage.checkMetadataGroupIsPresent(aspectName);
     });
 });
