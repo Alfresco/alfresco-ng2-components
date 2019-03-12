@@ -65,13 +65,13 @@ describe('Aspect oriented config', () => {
 
         try {
             await this.alfrescoJsApi.core.customModelApi.createCustomModel('ACTIVE', modelOneName, modelOneName, modelOneName, modelOneName);
-        } catch(e) {
-        };
+        } catch (e) {
+        }
 
         try {
             await this.alfrescoJsApi.core.customModelApi.createCustomAspect(modelOneName, emptyAspectName, null, emptyAspectName, emptyAspectName);
-        } catch(e) {
-        };
+        } catch (e) {
+        }
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -87,7 +87,7 @@ describe('Aspect oriented config', () => {
 
         aspects.entry.aspectNames.push(defaultModel.concat(':', defaultEmptyPropertiesAspect));
 
-        await this.alfrescoJsApi.core.nodesApi.updateNode(uploadedFile.entry.id, {"aspectNames": aspects.entry.aspectNames});
+        await this.alfrescoJsApi.core.nodesApi.updateNode(uploadedFile.entry.id, {'aspectNames': aspects.entry.aspectNames});
 
         done();
     });
