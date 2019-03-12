@@ -55,7 +55,7 @@ export class UserInfoPage {
     }
 
     clickOnContentServicesTab() {
-        let tabsPage = new TabsPage;
+        let tabsPage = new TabsPage();
         tabsPage.clickTabByTitle('Content Services');
         return this;
     }
