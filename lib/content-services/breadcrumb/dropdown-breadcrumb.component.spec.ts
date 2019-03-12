@@ -20,25 +20,29 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { setupTestBed } from '@alfresco/adf-core';
 import { fakeNodeWithCreatePermission } from '../mock';
-import { DocumentListComponent } from '../document-list';
+import { DocumentListComponent, DocumentListService } from '../document-list';
 import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
+import { of } from 'rxjs';
 
 describe('DropdownBreadcrumb', () => {
 
     let component: DropdownBreadcrumbComponent;
     let fixture: ComponentFixture<DropdownBreadcrumbComponent>;
     let documentList: DocumentListComponent;
+    let documentListService: DocumentListService = jasmine.createSpyObj({'loadFolderByNodeId' : of('')});
 
     setupTestBed({
         imports: [ContentTestingModule],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        providers : [{ provide: DocumentListService, useValue: documentListService }]
     });
 
     beforeEach(async(() => {
         fixture = TestBed.createComponent(DropdownBreadcrumbComponent);
         component = fixture.componentInstance;
         documentList = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
+        documentListService = TestBed.get(DocumentListService);
     }));
 
     afterEach(async(() => {

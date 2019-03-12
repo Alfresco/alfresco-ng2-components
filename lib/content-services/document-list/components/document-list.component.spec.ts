@@ -773,9 +773,9 @@ describe('DocumentList', () => {
 
     it('should display folder content from loadFolderByNodeId on reload if currentFolderId defined', () => {
         documentList.currentFolderId = 'id-folder';
-        spyOn(documentList, 'loadFolderByNodeId').and.stub();
+        spyOn(documentList, 'loadFolder').and.stub();
         documentList.reload();
-        expect(documentList.loadFolderByNodeId).toHaveBeenCalled();
+        expect(documentList.loadFolder).toHaveBeenCalled();
     });
 
     it('should require node to resolve context menu actions', () => {
@@ -957,8 +957,8 @@ describe('DocumentList', () => {
             disposableError.unsubscribe();
             done();
         });
-
-        documentList.loadFolderByNodeId('123');
+        documentList.currentFolderId = '123';
+        documentList.loadFolder();
     });
 
     it('should emit folderChange event when a folder node is clicked', (done) => {
@@ -982,7 +982,8 @@ describe('DocumentList', () => {
             done();
         });
 
-        documentList.loadFolderByNodeId('123');
+        documentList.currentFolderId = '123';
+        documentList.loadFolder();
     });
 
     it('should reset noPermission upon reload', () => {
@@ -1042,7 +1043,8 @@ describe('DocumentList', () => {
     it('should fetch trashcan', () => {
         spyOn(apiService.nodesApi, 'getDeletedNodes').and.returnValue(Promise.resolve(null));
 
-        documentList.loadFolderByNodeId('-trashcan-');
+        documentList.currentFolderId = '-trashcan-';
+        documentList.loadFolder();
         expect(apiService.nodesApi.getDeletedNodes).toHaveBeenCalled();
     });
 
@@ -1055,14 +1057,16 @@ describe('DocumentList', () => {
             done();
         });
 
-        documentList.loadFolderByNodeId('-trashcan-');
+        documentList.currentFolderId = '-trashcan-';
+        documentList.loadFolder();
     });
 
     it('should fetch shared links', () => {
         const sharedlinksApi = apiService.getInstance().core.sharedlinksApi;
         spyOn(sharedlinksApi, 'findSharedLinks').and.returnValue(Promise.resolve(null));
 
-        documentList.loadFolderByNodeId('-sharedlinks-');
+        documentList.currentFolderId = '-sharedlinks-';
+        documentList.loadFolder();
         expect(sharedlinksApi.findSharedLinks).toHaveBeenCalled();
     });
 
@@ -1076,13 +1080,15 @@ describe('DocumentList', () => {
             done();
         });
 
-        documentList.loadFolderByNodeId('-sharedlinks-');
+        documentList.currentFolderId = '-sharedlinks-';
+        documentList.loadFolder();
     });
 
     it('should fetch sites', () => {
         const sitesApi = apiService.getInstance().core.sitesApi;
 
-        documentList.loadFolderByNodeId('-sites-');
+        documentList.currentFolderId = '-sites-';
+        documentList.loadFolder();
         expect(sitesApi.getSites).toHaveBeenCalled();
     });
 
@@ -1095,7 +1101,8 @@ describe('DocumentList', () => {
             done();
         });
 
-        documentList.loadFolderByNodeId('-sites-');
+        documentList.currentFolderId = '-sites-';
+        documentList.loadFolder();
     });
 
     it('should assure that sites have name property set', (done) => {
@@ -1108,7 +1115,8 @@ describe('DocumentList', () => {
             done();
         });
 
-        documentList.loadFolderByNodeId('-sites-');
+        documentList.currentFolderId = '-sites-';
+        documentList.loadFolder();
     });
 
     it('should assure that sites have name property set correctly', (done) => {
@@ -1121,14 +1129,16 @@ describe('DocumentList', () => {
             done();
         });
 
-        documentList.loadFolderByNodeId('-sites-');
+        documentList.currentFolderId = '-sites-';
+        documentList.loadFolder();
     });
 
     it('should fetch user membership sites', () => {
         const peopleApi = apiService.getInstance().core.peopleApi;
         spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
-        documentList.loadFolderByNodeId('-mysites-');
+        documentList.currentFolderId = '-mysites-';
+        documentList.loadFolder();
         expect(peopleApi.listSiteMembershipsForPerson).toHaveBeenCalled();
     });
 
@@ -1142,7 +1152,8 @@ describe('DocumentList', () => {
             done();
         });
 
-        documentList.loadFolderByNodeId('-mysites-');
+        documentList.currentFolderId = '-mysites-';
+        documentList.loadFolder();
     });
 
     it('should assure that user membership sites have name property set', (done) => {
@@ -1150,7 +1161,8 @@ describe('DocumentList', () => {
         const peopleApi = apiService.getInstance().core.peopleApi;
         spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
-        documentList.loadFolderByNodeId('-mysites-');
+        documentList.currentFolderId = '-mysites-';
+        documentList.loadFolder();
         expect(peopleApi.listSiteMembershipsForPerson).toHaveBeenCalled();
 
         const disposableReady = documentList.ready.subscribe((page) => {
@@ -1166,7 +1178,8 @@ describe('DocumentList', () => {
         const peopleApi = apiService.getInstance().core.peopleApi;
         spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
-        documentList.loadFolderByNodeId('-mysites-');
+        documentList.currentFolderId = '-mysites-';
+        documentList.loadFolder();
         expect(peopleApi.listSiteMembershipsForPerson).toHaveBeenCalled();
 
         const disposableReady = documentList.ready.subscribe((page) => {
@@ -1181,7 +1194,8 @@ describe('DocumentList', () => {
         const favoritesApi = apiService.getInstance().core.favoritesApi;
         spyFavorite.and.returnValue(Promise.resolve(null));
 
-        documentList.loadFolderByNodeId('-favorites-');
+        documentList.currentFolderId = '-favorites-';
+        documentList.loadFolder();
         expect(favoritesApi.getFavorites).toHaveBeenCalled();
     });
 
@@ -1194,7 +1208,8 @@ describe('DocumentList', () => {
             done();
         });
 
-        documentList.loadFolderByNodeId('-favorites-');
+        documentList.currentFolderId = '-favorites-';
+        documentList.loadFolder();
     });
 
     it('should fetch recent', () => {
@@ -1202,7 +1217,8 @@ describe('DocumentList', () => {
 
         const getPersonSpy = spyOn(apiService.peopleApi, 'getPerson').and.returnValue(Promise.resolve(person));
 
-        documentList.loadFolderByNodeId('-recent-');
+        documentList.currentFolderId = '-recent-';
+        documentList.loadFolder();
 
         expect(getPersonSpy).toHaveBeenCalledWith('-me-');
     });
@@ -1216,7 +1232,8 @@ describe('DocumentList', () => {
             done();
         });
 
-        documentList.loadFolderByNodeId('-recent-');
+        documentList.currentFolderId = '-recent-';
+        documentList.loadFolder();
     });
 
     it('should emit error when fetch recent fails on search call', (done) => {
@@ -1228,7 +1245,8 @@ describe('DocumentList', () => {
             done();
         });
 
-        documentList.loadFolderByNodeId('-recent-');
+        documentList.currentFolderId = '-recent-';
+        documentList.loadFolder();
     });
 
     it('should have correct currentFolderId on loading folder by node id', () => {
@@ -1237,7 +1255,8 @@ describe('DocumentList', () => {
         const peopleApi = apiService.getInstance().core.peopleApi;
         spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
-        documentList.loadFolderByNodeId('-mysites-');
+        documentList.currentFolderId = '-mysites-';
+        documentList.loadFolder();
         expect(documentList.currentFolderId).toBe('-mysites-');
     });
 
