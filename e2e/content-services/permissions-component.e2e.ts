@@ -34,6 +34,7 @@ import CONSTANTS = require('../util/constants');
 import { MetadataViewPage } from '../pages/adf/metadataViewPage';
 import { UploadDialog } from '../pages/adf/dialog/uploadDialog';
 import { VersionManagePage } from '../pages/adf/versionManagerPage';
+import { forEach } from '@angular/router/src/utils/collection';
 
 describe('Permissions Component', function () {
 
@@ -41,7 +42,7 @@ describe('Permissions Component', function () {
     const contentServicesPage = new ContentServicesPage();
     const permissionsPage = new PermissionsPage();
     const uploadActions = new UploadActions();
-    let  contentList = contentServicesPage.getDocumentList();
+    let contentList = contentServicesPage.getDocumentList();
     const searchDialog = new SearchDialog();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
@@ -90,6 +91,7 @@ describe('Permissions Component', function () {
     let roleEditorFolderModel = new FolderModel({'name': 'roleEditor' + Util.generateRandomString()});
     let roleConsumerFolder, roleCoordinatorFolder, roleContributorFolder, roleCollaboratorFolder, roleEditorFolder,
         siteFolder, privateSiteFile;
+    let folders;
 
     folderOwnerUser = new AcsUserModel();
     consumerUser = new AcsUserModel();
@@ -159,6 +161,7 @@ describe('Permissions Component', function () {
         roleEditorFolder = await uploadActions.createFolder(alfrescoJsApi, roleEditorFolderModel.name, '-my-');
         privateSiteFile = await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'privateSite' + fileModel.name, privateSite.entry.guid);
 
+        folders = [roleConsumerFolder, roleContributorFolder, roleCoordinatorFolder, roleCollaboratorFolder, roleEditorFolder];
         await alfrescoJsApi.core.nodesApi.updateNode(roleConsumerFolder.entry.id,
             {
                 permissions: {
@@ -241,11 +244,9 @@ describe('Permissions Component', function () {
         await alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         await alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
         await alfrescoJsApi.core.groupsApi.deleteGroup(groupId);
-        await uploadActions.deleteFilesOrFolder(alfrescoJsApi, roleConsumerFolder.entry.id);
-        await uploadActions.deleteFilesOrFolder(alfrescoJsApi, roleCoordinatorFolder.entry.id);
-        await uploadActions.deleteFilesOrFolder(alfrescoJsApi, roleCollaboratorFolder.entry.id);
-        await uploadActions.deleteFilesOrFolder(alfrescoJsApi, roleContributorFolder.entry.id);
-        await uploadActions.deleteFilesOrFolder(alfrescoJsApi, roleEditorFolder.entry.id);
+        await folders.forEach( function (folder) {
+            uploadActions.deleteFilesOrFolder(alfrescoJsApi, folder.entry.id);
+        })
         done();
     });
 
