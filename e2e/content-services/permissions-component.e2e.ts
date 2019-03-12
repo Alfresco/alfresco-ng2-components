@@ -125,7 +125,6 @@ describe('Permissions Component', function () {
         let publicSiteBody = {visibility: 'PUBLIC', title: publicSiteName};
         let privateSiteBody = {visibility: 'PRIVATE', title: privateSiteName};
         publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
-        console.log('Site Details: ' + JSON.stringify(publicSite));
         privateSite = await alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
 
         await alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
