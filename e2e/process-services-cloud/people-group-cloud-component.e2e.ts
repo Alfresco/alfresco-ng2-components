@@ -38,9 +38,9 @@ describe('People Groups Cloud Component', () => {
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
         const peopleCloudComponent = new PeopleCloudComponent();
         const groupCloudComponent = new GroupCloudComponent();
-        const identityService: Identity = new Identity();
-        const groupIdentityService: GroupIdentity = new GroupIdentity();
-        const rolesService: Roles = new Roles();
+        const identityService: Identity = new Identity(undefined);
+        const groupIdentityService: GroupIdentity = new GroupIdentity(undefined);
+        const rolesService: Roles = new Roles(undefined);
 
         let silentLogin;
         let apsUser;

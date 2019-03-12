@@ -267,8 +267,7 @@ export class FilePreviewPage {
         let actualWidth,
             zoomedOutWidth,
             actualHeight,
-            zoomedOutHeight,
-            zoomedInHeight;
+            zoomedOutHeight;
 
         this.checkCanvasWidth().then(function (width) {
             actualWidth = width;
