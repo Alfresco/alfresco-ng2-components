@@ -148,6 +148,7 @@ export class SearchFiltersPage {
         this.searchCategoriesPage.clickFilterHeader(this.fileSizeFilter);
         return this;
     }
+
     checkFileSizeFilterIsCollapsed() {
         this.searchCategoriesPage.checkFilterIsCollapsed(this.fileSizeFilter);
         return this;
@@ -280,4 +281,15 @@ export class SearchFiltersPage {
         this.searchCategoriesPage.clickFilterHeader(this.facetIntervalsByModified);
         return this;
     }
+
+    checkFileTypeFacetLabelIsDisplayed(fileType) {
+        Util.waitUntilElementIsVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
+        return this;
+    }
+
+    checkFileTypeFacetLabelIsNotDisplayed(fileType) {
+        Util.waitUntilElementIsNotVisible(this.fileTypeFilter.element(by.cssContainingText('.adf-facet-label', fileType)));
+        return this;
+    }
+
 }

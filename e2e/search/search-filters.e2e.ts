@@ -51,6 +51,10 @@ describe('Search Filters', () => {
     let acsUser = new AcsUserModel();
 
     let filename = Util.generateRandomString(16);
+    let fileNamePrefix = Util.generateRandomString(5);
+    let uniqueFileName1 = fileNamePrefix + Util.generateRandomString(5);
+    let uniqueFileName2 = fileNamePrefix + Util.generateRandomString(5);
+    let uniqueFileName3 = fileNamePrefix + Util.generateRandomString(5);
 
     let fileModel = new FileModel({
         'name': filename, 'shortName': filename.substring(0, 8)
@@ -61,7 +65,22 @@ describe('Search Filters', () => {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    let fileUploaded, fileTypePng;
+    let txtFileModel1 = new FileModel({
+        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
+        'name': `${uniqueFileName1}.txt`
+    });
+
+    let jpgFileModel = new FileModel({
+        'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
+        'name': `${uniqueFileName2}.jpg`
+    });
+
+    let txtFileModel2 = new FileModel({
+        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
+        'name': `${uniqueFileName3}.txt`
+    });
+
+    let fileUploaded, fileTypePng, fileTypeTxt1, fileTypeJpg, fileTypeTxt2;
 
     let filter = { type: 'TYPE-PNG Image' };
 
@@ -84,6 +103,12 @@ describe('Search Filters', () => {
 
         fileTypePng = await uploadActions.uploadFile(this.alfrescoJsApi, pngFileModel.location, pngFileModel.name, '-my-');
 
+        fileTypeTxt1 = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel1.location, txtFileModel1.name, '-my-');
+
+        fileTypeJpg = await uploadActions.uploadFile(this.alfrescoJsApi, jpgFileModel.location, jpgFileModel.name, '-my-');
+
+        fileTypeTxt2 = await uploadActions.uploadFile(this.alfrescoJsApi, txtFileModel2.location, txtFileModel2.name, '-my-');
+
         loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await browser.driver.sleep(30000); // wait search index previous file/folder uploaded
@@ -102,6 +127,9 @@ describe('Search Filters', () => {
 
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileUploaded.entry.id);
         await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTypePng.entry.id);
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTypeTxt1.entry.id);
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTypeTxt2.entry.id);
+        await uploadActions.deleteFilesOrFolder(this.alfrescoJsApi, fileTypeJpg.entry.id);
 
         done();
     });
@@ -223,6 +251,26 @@ describe('Search Filters', () => {
             .checkFacetIntervalsByModifiedIsCollapsed()
             .clickFacetIntervalsByModifiedFilterHeader()
             .checkFacetIntervalsByModifiedIsExpanded();
+    });
+
+    it('[C299200] Should reset the filters facet with search query', () => {
+        searchDialog.enterTextAndPressEnter(fileTypeTxt1.entry.name);
+
+        searchFiltersPage.checkSearchFiltersIsDisplayed();
+        searchResults.tableIsLoaded();
+        searchResults.checkContentIsDisplayed(fileTypeTxt1.entry.name);
+        searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('Plain Text (1)');
+        searchFiltersPage.checkFileTypeFacetLabelIsNotDisplayed('JPEG Image');
+
+        searchDialog.enterTextAndPressEnter(fileNamePrefix);
+        searchFiltersPage.checkSearchFiltersIsDisplayed();
+        searchResults.tableIsLoaded();
+        searchResults.checkContentIsDisplayed(fileTypeTxt1.entry.name);
+        searchResults.checkContentIsDisplayed(fileTypeTxt2.entry.name);
+        searchResults.checkContentIsDisplayed(fileTypeJpg.entry.name);
+        searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('Plain Text (2)');
+        searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('JPEG Image (1)');
+
     });
 
     it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', () => {
