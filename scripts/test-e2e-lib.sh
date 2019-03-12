@@ -177,6 +177,10 @@ if [[  $DEVELOPMENT == "true" ]]; then
 else
     webdriver-manager update --gecko=false --versions.chrome=2.38
     if [[  $LITESERVER == "true" ]]; then
+        echo "====== Print version Core  ====="
+        cat node_modules/@alfresco/adf-core/package.json
+        echo "====== Print version Testing  ====="
+        cat node_modules/@alfresco/adf-testing/package.json
         echo "====== Run dist in lite-server ====="
         ls demo-shell/dist
         npm run lite-server-e2e>/dev/null & ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
