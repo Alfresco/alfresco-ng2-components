@@ -43,8 +43,11 @@ then
     exit 0
 fi
 
-#HEAD_SHA_BRANCH=(`git merge-base origin/$BRANCH_NAME HEAD`)
-HEAD_SHA_BRANCH="$(git merge-base origin/$BRANCH_NAME HEAD)"
+if [ ! -f ./$DIRECTORY/devhead.txt ]; then
+git merge-base origin/$BRANCH_NAME HEAD > ./$DIRECTORY/devhead.txt
+fi
+
+HEAD_SHA_BRANCH="$(cat ./$DIRECTORY/devhead.txt)"
 echo "Branch name $BRANCH_NAME HEAD sha " $HEAD_SHA_BRANCH
 
 # tmp folder doesn't exist.
