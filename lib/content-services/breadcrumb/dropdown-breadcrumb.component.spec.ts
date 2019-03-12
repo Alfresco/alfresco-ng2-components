@@ -164,7 +164,6 @@ describe('DropdownBreadcrumb', () => {
         fixture.whenStable().then(() => {
             openSelect();
             fixture.whenStable().then(() => {
-
                 clickOnTheFirstOption();
 
                 expect(documentList.loadFolderByNodeId).toHaveBeenCalledWith('1');

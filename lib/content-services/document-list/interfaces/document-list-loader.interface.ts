@@ -16,8 +16,9 @@
  */
 
 import { PaginationModel } from '@alfresco/adf-core';
+import { Observable } from 'rxjs';
 
 export interface DocumentListLoader {
 
-    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string);
+    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string): Observable <any>;
 }
