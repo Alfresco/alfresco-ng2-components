@@ -16,7 +16,6 @@
  */
 
 import { browser, protractor } from 'protractor';
-import * as moment from 'moment';
 import fs = require('fs');
 import path = require('path');
 import TestConfig = require('../test.config');

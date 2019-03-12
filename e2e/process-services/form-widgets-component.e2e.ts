@@ -100,14 +100,14 @@ describe('Form widgets', () => {
                     return formInstance;
                 })
                 .then(() => {
-                    expect(taskPage.formFields().getFieldLabel(appFields.text_id))
+                    expect(taskPage.formFields().getFieldLabel(appFields.text_id, undefined))
                         .toEqual(formInstance.getWidgetBy('id', appFields.text_id).name);
-                    expect(taskPage.formFields().getFieldValue(appFields.text_id))
+                    expect(taskPage.formFields().getFieldValue(appFields.text_id, undefined))
                         .toEqual(formInstance.getWidgetBy('id', appFields.text_id).value || '');
 
                     expect(widget.multilineTextWidget().getFieldValue(appFields.multiline_id))
                         .toEqual(formInstance.getWidgetBy('id', appFields.multiline_id).value || '');
-                    expect(taskPage.formFields().getFieldLabel(appFields.multiline_id))
+                    expect(taskPage.formFields().getFieldLabel(appFields.multiline_id, undefined))
                         .toEqual(formInstance.getWidgetBy('id', appFields.multiline_id).name);
                 });
 
@@ -115,48 +115,48 @@ describe('Form widgets', () => {
 
         it('[C272779] Should display number and amount in form', () => {
 
-            expect(taskPage.formFields().getFieldValue(appFields.number_id))
+            expect(taskPage.formFields().getFieldValue(appFields.number_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.number_id).value || '');
-            expect(taskPage.formFields().getFieldLabel(appFields.number_id))
+            expect(taskPage.formFields().getFieldLabel(appFields.number_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.number_id).name);
 
-            expect(taskPage.formFields().getFieldValue(appFields.amount_id))
+            expect(taskPage.formFields().getFieldValue(appFields.amount_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.amount_id).value || '');
-            expect(taskPage.formFields().getFieldLabel(appFields.amount_id))
+            expect(taskPage.formFields().getFieldLabel(appFields.amount_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.amount_id).name);
         });
 
         it('[C272780] Should display attach file and attach folder in form', () => {
 
-            expect(taskPage.formFields().getFieldLabel(appFields.attachFolder_id))
+            expect(taskPage.formFields().getFieldLabel(appFields.attachFolder_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.attachFolder_id).name);
-            expect(taskPage.formFields().getFieldLabel(appFields.attachFile_id))
+            expect(taskPage.formFields().getFieldLabel(appFields.attachFile_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.attachFile_id).name);
         });
 
         it('[C272781] Should display date and date & time in form', () => {
 
-            expect(taskPage.formFields().getFieldLabel(appFields.date_id))
+            expect(taskPage.formFields().getFieldLabel(appFields.date_id, undefined))
                 .toContain(formInstance.getWidgetBy('id', appFields.date_id).name);
-            expect(taskPage.formFields().getFieldValue(appFields.date_id))
+            expect(taskPage.formFields().getFieldValue(appFields.date_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.date_id).value || '');
 
-            expect(taskPage.formFields().getFieldLabel(appFields.dateTime_id))
+            expect(taskPage.formFields().getFieldLabel(appFields.dateTime_id, undefined))
                 .toContain(formInstance.getWidgetBy('id', appFields.dateTime_id).name);
-            expect(taskPage.formFields().getFieldValue(appFields.dateTime_id))
+            expect(taskPage.formFields().getFieldValue(appFields.dateTime_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.dateTime_id).value || '');
         });
 
         it('[C272782] Should display people and group in form', () => {
 
-            expect(taskPage.formFields().getFieldValue(appFields.people_id))
+            expect(taskPage.formFields().getFieldValue(appFields.people_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.people_id).value || '');
-            expect(taskPage.formFields().getFieldLabel(appFields.people_id))
+            expect(taskPage.formFields().getFieldLabel(appFields.people_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.people_id).name);
 
-            expect(taskPage.formFields().getFieldValue(appFields.group_id))
+            expect(taskPage.formFields().getFieldValue(appFields.group_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.group_id).value || '');
-            expect(taskPage.formFields().getFieldLabel(appFields.group_id))
+            expect(taskPage.formFields().getFieldLabel(appFields.group_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.group_id).name);
         });
 
@@ -171,19 +171,19 @@ describe('Form widgets', () => {
         it('[C272784] Should display typeahead and header in form', () => {
             expect(widget.headerWidget().getFieldLabel(appFields.header_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.header_id).name);
-            expect(taskPage.formFields().getFieldValue(appFields.typeAhead_id))
+            expect(taskPage.formFields().getFieldValue(appFields.typeAhead_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.typeAhead_id).value || '');
-            expect(taskPage.formFields().getFieldLabel(appFields.typeAhead_id))
+            expect(taskPage.formFields().getFieldLabel(appFields.typeAhead_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.typeAhead_id).name);
         });
 
         it('[C272785] Should display checkbox and radio button in form', () => {
             let radioOption = 1;
 
-            expect(taskPage.formFields().getFieldLabel(appFields.checkbox_id))
+            expect(taskPage.formFields().getFieldLabel(appFields.checkbox_id, undefined))
                 .toContain(formInstance.getWidgetBy('id', appFields.checkbox_id).name);
 
-            expect(taskPage.formFields().getFieldLabel(appFields.radioButtons_id))
+            expect(taskPage.formFields().getFieldLabel(appFields.radioButtons_id, undefined))
                 .toContain(formInstance.getWidgetBy('id', appFields.radioButtons_id).name);
             expect(widget.radioWidget().getSpecificOptionLabel(appFields.radioButtons_id, radioOption))
                 .toContain(formInstance.getWidgetBy('id', appFields.radioButtons_id).options[radioOption - 1].name);
@@ -193,10 +193,10 @@ describe('Form widgets', () => {
 
             expect(widget.hyperlink().getFieldText(appFields.hyperlink_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.hyperlink_id).hyperlinkUrl || '');
-            expect(taskPage.formFields().getFieldLabel(appFields.hyperlink_id))
+            expect(taskPage.formFields().getFieldLabel(appFields.hyperlink_id, undefined))
                 .toEqual(formInstance.getWidgetBy('id', appFields.hyperlink_id).name);
 
-            expect(taskPage.formFields().getFieldLabel(appFields.dropdown_id))
+            expect(taskPage.formFields().getFieldLabel(appFields.dropdown_id, undefined))
                 .toContain(formInstance.getWidgetBy('id', appFields.dropdown_id).name);
             expect(widget.dropdown().getSelectedOptionText(appFields.dropdown_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.dropdown_id).value);

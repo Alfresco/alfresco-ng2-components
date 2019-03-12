@@ -131,7 +131,7 @@ describe('Start Task - Task App', () => {
             .then(() => {
                 taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
                 expect(taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue)
-                    .getFieldValue(formTextField)).toEqual(formFieldValue);
+                    .getFieldValue(formTextField, undefined)).toEqual(formFieldValue);
                 taskPage.formFields().refreshForm().checkFieldValue(by.id, formTextField, '');
                 taskPage.tasksListPage().checkContentIsDisplayed(tasks[4]);
                 taskPage.formFields().setFieldValue(by.id, formTextField, formFieldValue)

@@ -197,7 +197,7 @@ describe('Start Task - Custom App', () => {
 
         expect(taskPage.formFields()
             .setFieldValue(by.id, formTextField, formFieldValue)
-            .getFieldValue(formTextField)).toEqual(formFieldValue);
+            .getFieldValue(formTextField, undefined)).toEqual(formFieldValue);
 
         taskPage
             .formFields()
