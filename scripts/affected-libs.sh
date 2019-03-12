@@ -88,7 +88,7 @@ done
 for i in "${libs[@]}"
 do
     if [ "$i" == "core" ] ; then
-        AFFECTED_LIBS="core$ content-services$ process-services$ process-services-cloud$ insights$ extensions$ "
+        AFFECTED_LIBS="core$ content-services$ process-services$ process-services-cloud$ insights$ extensions$ testing$"
         echo "${AFFECTED_LIBS}"
         exit 0
     fi
