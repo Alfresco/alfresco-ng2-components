@@ -17,17 +17,18 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { AppListCloudPage } from '@alfresco/adf-testing';
 
 import { Tasks } from '../actions/APS-cloud/tasks';
 import { ProcessDefinitions } from '../actions/APS-cloud/process-definitions';
 import { ProcessInstances } from '../actions/APS-cloud/process-instances';
 import { Query } from '../actions/APS-cloud/query';
 import { Util } from '../util/util';
+import { browser } from 'protractor';
 
 describe('Task filters cloud', () => {
 
@@ -35,7 +36,7 @@ describe('Task filters cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        const appListCloudComponent = new AppListCloudComponent();
+        const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const tasksService: Tasks = new Tasks();
         const processDefinitionService: ProcessDefinitions = new ProcessDefinitions();
@@ -55,6 +56,7 @@ describe('Task filters cloud', () => {
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
+            browser.ignoreSynchronization = true;
             loginSSOPage.loginAPS(user, password);
 
             await tasksService.init(user, password);

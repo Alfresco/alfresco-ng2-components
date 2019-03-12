@@ -17,12 +17,13 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/processCloudDemoPage';
-import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { AppListCloudPage } from '@alfresco/adf-testing';
+import { browser } from 'protractor';
 
 describe('Edit process filters cloud', () => {
 
@@ -30,7 +31,7 @@ describe('Edit process filters cloud', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudComponent();
+        let appListCloudComponent = new AppListCloudPage();
         let tasksCloudDemoPage = new TasksCloudDemoPage();
         let processCloudDemoPage = new ProcessCloudDemoPage();
 
@@ -41,6 +42,7 @@ describe('Edit process filters cloud', () => {
             silentLogin = false;
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
+            browser.ignoreSynchronization = true;
             loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         });
 

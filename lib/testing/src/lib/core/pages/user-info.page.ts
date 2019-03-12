@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Util } from '../../../util/util';
-import { TabsPage } from '../material/tabsPage';
 import { element, by, browser, protractor } from 'protractor';
+import { BrowserVisibility } from '../browser-visibility';
+import { TabsPage } from '../../material/tabs.page';
 
-export class UserInfoDialog {
+export class UserInfoPage {
 
     dialog = element.all(by.css('mat-card[class*="adf-userinfo-card"]')).first();
     userImage = element(by.css('div[id="user-initial-image"]'));
@@ -37,19 +37,25 @@ export class UserInfoDialog {
     userInfoSsoHeaderTitle = this.dialog.element(by.css('div[id="identity-username"]'));
     userInfoSsoTitle = element(by.css('.adf-userinfo__detail-title'));
     ssoEmail = element(by.id('identity-email'));
+    userProfileButton = element(by.css('button[data-automation-id="adf-user-profile"]'));
 
     dialogIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.dialog);
+        BrowserVisibility.waitUntilElementIsVisible(this.dialog);
         return this;
     }
 
     dialogIsNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.dialog);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.dialog);
         return this;
     }
 
+    clickUserProfile() {
+        BrowserVisibility.waitUntilElementIsVisible(this.userProfileButton);
+        this.userProfileButton.click();
+    }
+
     clickOnContentServicesTab() {
-        let tabsPage = new TabsPage;
+        let tabsPage = new TabsPage();
         tabsPage.clickTabByTitle('Content Services');
         return this;
     }
@@ -67,92 +73,93 @@ export class UserInfoDialog {
     }
 
     userImageIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.userImage);
+        BrowserVisibility.waitUntilElementIsVisible(this.userImage);
         return this;
     }
 
     getContentHeaderTitle() {
-        Util.waitUntilElementIsVisible(this.dialog);
-        Util.waitUntilElementIsVisible(this.userInfoEcmHeaderTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.dialog);
+        BrowserVisibility.waitUntilElementIsVisible(this.userInfoEcmHeaderTitle);
         return this.userInfoEcmHeaderTitle.getText();
     }
 
     getContentTitle() {
-        Util.waitUntilElementIsVisible(this.userInfoEcmTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.userInfoEcmTitle);
         return this.userInfoEcmTitle.getText();
     }
 
     getContentEmail() {
-        Util.waitUntilElementIsVisible(this.ecmEmail);
+        BrowserVisibility.waitUntilElementIsVisible(this.ecmEmail);
         return this.ecmEmail.getText();
     }
 
     getContentJobTitle() {
-        Util.waitUntilElementIsVisible(this.ecmJobTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.ecmJobTitle);
         return this.ecmJobTitle.getText();
     }
 
     getProcessHeaderTitle() {
-        Util.waitUntilElementIsVisible(this.userInfoProcessHeaderTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.userInfoProcessHeaderTitle);
         return this.userInfoProcessHeaderTitle.getText();
     }
 
     getProcessTitle() {
-        Util.waitUntilElementIsVisible(this.userInfoProcessTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.userInfoProcessTitle);
         return this.userInfoProcessTitle.getText();
     }
 
     getProcessEmail() {
-        Util.waitUntilElementIsVisible(this.processEmail);
+        BrowserVisibility.waitUntilElementIsVisible(this.processEmail);
         return this.processEmail.getText();
     }
 
     getProcessTenant() {
-        Util.waitUntilElementIsVisible(this.processTenant);
+        BrowserVisibility.waitUntilElementIsVisible(this.processTenant);
         return this.processTenant.getText();
     }
 
     getSsoHeaderTitle () {
-        Util.waitUntilElementIsVisible(this.userInfoSsoHeaderTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.userInfoSsoHeaderTitle);
         return this.userInfoSsoHeaderTitle.getText();
     }
 
     getSsoTitle() {
-        Util.waitUntilElementIsVisible(this.userInfoSsoTitle);
+        BrowserVisibility.waitUntilElementIsVisible(this.userInfoSsoTitle);
         return this.userInfoSsoTitle.getText();
     }
 
     getSsoEmail() {
-        Util.waitUntilElementIsVisible(this.ssoEmail);
+        BrowserVisibility.waitUntilElementIsVisible(this.ssoEmail);
         return this.ssoEmail.getText();
     }
 
     closeUserProfile() {
-        Util.waitUntilElementIsVisible(this.dialog);
+        BrowserVisibility.waitUntilElementIsVisible(this.dialog);
         browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
     }
 
     checkACSProfileImage() {
-        Util.waitUntilElementIsVisible(this.acsImage);
+        BrowserVisibility.waitUntilElementIsVisible(this.acsImage);
     }
 
     checkAPSProfileImage() {
-        Util.waitUntilElementIsVisible(this.apsImage);
+        BrowserVisibility.waitUntilElementIsVisible(this.apsImage);
     }
 
     checkInitialImage() {
-        Util.waitUntilElementIsVisible(this.initialImage);
+        BrowserVisibility.waitUntilElementIsVisible(this.initialImage);
     }
 
     initialImageNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.initialImage);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.initialImage);
     }
 
     ACSProfileImageNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.acsImage);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.acsImage);
     }
 
     APSProfileImageNotDisplayed() {
-        Util.waitUntilElementIsNotOnPage(this.apsImage);
+        BrowserVisibility.waitUntilElementIsNotOnPage(this.apsImage);
     }
+
 }

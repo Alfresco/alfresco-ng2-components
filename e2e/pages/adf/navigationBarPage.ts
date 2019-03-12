@@ -18,7 +18,7 @@
 import { Util } from '../../util/util';
 import { browser, by, element } from 'protractor';
 import { ProcessServicesPage } from './process-services/processServicesPage';
-import { AppListCloudComponent } from './process-cloud/appListCloudComponent';
+import { AppListCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../../test.config');
 import { PeopleGroupCloudComponentPage } from './demo-shell/process-services/peopleGroupCloudComponentPage';
 
@@ -33,7 +33,8 @@ export class NavigationBarPage {
     loginButton = element(by.css('a[data-automation-id="Login"]'));
     trashcanButton = element(by.css('a[data-automation-id="Trashcan"]'));
     overlayViewerButton = element(by.css('a[data-automation-id="Overlay Viewer"]'));
-    userProfileButton = element(by.css('button[data-automation-id="adf-user-profile"]'));
+    themeButton = element(by.css('button[data-automation-id="theme menu"]'));
+    themeMenuContent = element(by.css('div[class*="mat-menu-panel"]'));
     logoutButton = element(by.css('a[adf-logout]'));
     cardViewButton = element(by.cssContainingText('.adf-sidenav-menu-label', 'CardView'));
     languageMenuButton = element(by.css('button[data-automation-id="language-menu-button"]'));
@@ -77,7 +78,7 @@ export class NavigationBarPage {
     navigateToProcessServicesCloudPage() {
         Util.waitUntilElementIsVisible(this.processServicesCloudButton);
         this.processServicesCloudButton.click();
-        return new AppListCloudComponent();
+        return new AppListCloudPage();
     }
 
     navigateToPeopleGroupCloudPage() {
@@ -89,7 +90,7 @@ export class NavigationBarPage {
     navigateToSettingsPage() {
         Util.waitUntilElementIsVisible(this.settingsButton);
         this.settingsButton.click();
-        return new AppListCloudComponent();
+        return new AppListCloudPage();
     }
 
     clickLoginButton() {
@@ -108,9 +109,17 @@ export class NavigationBarPage {
         return this;
     }
 
-    clickUserProfile() {
-        Util.waitUntilElementIsVisible(this.userProfileButton);
-        this.userProfileButton.click();
+    clickThemeButton() {
+        Util.waitUntilElementIsVisible(this.themeButton);
+        this.themeButton.click();
+        Util.waitUntilElementIsVisible(this.themeMenuContent);
+    }
+
+    clickOnSpecificThemeButton(themeName) {
+        let themeElement = element(by.css(`button[data-automation-id="${themeName}"]`));
+        Util.waitUntilElementIsVisible(themeElement);
+        Util.waitUntilElementIsClickable(themeElement);
+        themeElement.click();
     }
 
     clickLogoutButton() {
@@ -186,6 +195,11 @@ export class NavigationBarPage {
     checkLogoTooltip(logoTooltipTitle) {
         let logoTooltip = element(by.css('a[title="' + logoTooltipTitle + '"]'));
         Util.waitUntilElementIsVisible(logoTooltip);
+    }
+
+    openViewer(nodeId) {
+        browser.get(TestConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
+        return this;
     }
 
     goToSite(site) {

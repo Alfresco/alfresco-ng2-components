@@ -17,11 +17,11 @@
 
 import TestConfig = require('../test.config');
 
-import { LoginSSOPage } from '../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { AppListCloudPage } from '@alfresco/adf-testing';
 import { ConfigEditorPage } from '../pages/adf/configEditorPage';
 import { TaskListCloudConfiguration } from './taskListCloud.config';
 
@@ -42,7 +42,7 @@ describe('Edit task filters and task list properties', () => {
         const settingsPage = new SettingsPage();
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
-        let appListCloudComponent = new AppListCloudComponent();
+        let appListCloudComponent = new AppListCloudPage();
         let tasksCloudDemoPage = new TasksCloudDemoPage();
 
         const tasksService: Tasks = new Tasks();
@@ -67,6 +67,7 @@ describe('Edit task filters and task list properties', () => {
             let jsonFile = new TaskListCloudConfiguration().getConfiguration();
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
+            browser.ignoreSynchronization = true;
             loginSSOPage.loginAPS(user, password);
 
             navigationBarPage.clickConfigEditorButton();

@@ -15,27 +15,29 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
-import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { AppListCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
+import { browser } from 'protractor';
 
 describe('Applications list', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-    const appListCloudComponent = new AppListCloudComponent();
+    const appListCloudPage = new AppListCloudPage();
     const appName = 'simple-app';
 
     it('[C289910] Should the app be displayed on dashboard when is deployed on APS', () => {
         settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity);
+        browser.ignoreSynchronization = true;
         loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         navigationBarPage.navigateToProcessServicesCloudPage();
-        appListCloudComponent.checkApsContainer();
-        appListCloudComponent.checkAppIsDisplayed(appName);
-        appListCloudComponent.goToApp(appName);
+        appListCloudPage.checkApsContainer();
+        appListCloudPage.checkAppIsDisplayed(appName);
+        appListCloudPage.goToApp(appName);
 
     });
 

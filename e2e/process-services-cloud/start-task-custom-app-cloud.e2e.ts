@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
-import { AppListCloudComponent } from '../pages/adf/process-cloud/appListCloudComponent';
+import { AppListCloudPage } from '@alfresco/adf-testing';
 import TestConfig = require('../test.config');
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
@@ -25,6 +25,7 @@ import { StartTasksCloudComponent } from '../pages/adf/process-cloud/startTasksC
 import { Util } from '../util/util';
 import { PeopleCloudComponent } from '../pages/adf/process-cloud/peopleCloudComponent';
 import { TaskDetailsPage } from '../pages/adf/demo-shell/process-services/taskDetailsPage';
+import { browser } from 'protractor';
 
 describe('Start Task', () => {
 
@@ -32,7 +33,7 @@ describe('Start Task', () => {
     const loginSSOPage = new LoginSSOPage();
     const taskDetailsPage = new TaskDetailsPage();
     const navigationBarPage = new NavigationBarPage();
-    const appListCloudComponent = new AppListCloudComponent();
+    const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudComponent();
     const peopleCloudComponent = new PeopleCloudComponent();
@@ -51,6 +52,7 @@ describe('Start Task', () => {
         silentLogin = false;
         settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
         loginSSOPage.clickOnSSOButton();
+        browser.ignoreSynchronization = true;
         loginSSOPage.loginAPS(user, password);
         navigationBarPage.navigateToProcessServicesCloudPage();
         appListCloudComponent.checkApsContainer();
