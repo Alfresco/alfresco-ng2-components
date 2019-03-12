@@ -17,6 +17,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Dynamic component](dynamic.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Displays dynamically-loaded extension components. | [Source](../../lib/extensions/src/lib/components/dynamic-component/dynamic.component.ts) |
+| [Preview Extension component](preview-extension.component.md) ![Experimental](../docassets/images/ExperimentalIcon.png) | Preview extension component. | [Source](../../lib/extensions/src/lib/components/viewer/preview-extension.component.ts) |
 
 ## Services
 

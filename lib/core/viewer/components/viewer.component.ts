@@ -533,11 +533,11 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     isCustomViewerExtension(extension: string): boolean {
-        const extensions = this.externalExtensions || [];
+        const extensions: any = this.externalExtensions || [];
 
         if (extension && extensions.length > 0) {
             extension = extension.toLowerCase();
-            return extensions.indexOf(extension) >= 0;
+            return extensions.flat().indexOf(extension) >= 0;
         }
 
         return false;
@@ -703,6 +703,17 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 }
             }, 1000);
         });
+    }
+
+    checkExtensions(extensionAllowed) {
+        if (typeof extensionAllowed ===  'string') {
+            return this.extension.toLowerCase() === extensionAllowed.toLowerCase();
+        } else if (extensionAllowed.length > 0) {
+            return extensionAllowed.find((currentExtension) => {
+                return this.extension.toLowerCase() === currentExtension.toLowerCase();
+            });
+        }
+
     }
 
     private generateCacheBusterNumber() {

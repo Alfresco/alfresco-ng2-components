@@ -196,10 +196,9 @@
                         </ng-container>
 
                         <ng-container *ngSwitchCase="'custom'">
-
                             <ng-container  *ngFor="let ext of viewerExtensions">
                                 <adf-preview-extension
-                                    *ngIf="extension === ext.fileExtension"
+                                    *ngIf="checkExtensions(ext.fileExtension)"
                                     [id]="ext.component"
                                     [node]="nodeEntry.entry"
                                     [url]="urlFileContent"
