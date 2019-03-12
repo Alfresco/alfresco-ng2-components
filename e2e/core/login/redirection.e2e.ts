@@ -31,6 +31,7 @@ import AlfrescoApi = require('alfresco-js-api-node');
 
 import { Util } from '../../util/util';
 import { UploadActions } from '../../actions/ACS/upload.actions';
+import { LogoutPage } from '../../pages/adf/demo-shell/logoutPage';
 
 describe('Login component - Redirect', () => {
 
@@ -47,6 +48,7 @@ describe('Login component - Redirect', () => {
     });
     let uploadedFolder;
     let uploadActions = new UploadActions();
+    const logoutPage = new LogoutPage();
 
     beforeAll(async (done) => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -119,11 +121,11 @@ describe('Login component - Redirect', () => {
                 expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
             });
 
-            browser.driver.sleep(1000);
+            contentServicesPage.waitForTableBody();
 
             navigationBarPage.clickLogoutButton();
 
-            browser.driver.sleep(1000);
+            logoutPage.checkLogoutSectionIsDisplayed();
 
             navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
@@ -132,7 +134,7 @@ describe('Login component - Redirect', () => {
             loginPage.enterPassword(user.password);
             loginPage.clickSignInButton();
 
-            browser.driver.sleep(1000);
+            navigationBarPage.checkMenuButtonIsDisplayed();
 
             browser.getCurrentUrl().then((actualUrl) => {
                 expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
@@ -153,11 +155,11 @@ describe('Login component - Redirect', () => {
                 expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
             });
 
-            browser.driver.sleep(1000);
+            contentServicesPage.waitForTableBody();
 
             navigationBarPage.clickLogoutButton();
 
-            browser.driver.sleep(1000);
+            logoutPage.checkLogoutSectionIsDisplayed();
 
             navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
             loginPage.waitForElements();
@@ -168,7 +170,7 @@ describe('Login component - Redirect', () => {
             loginPage.enterPassword(user.password);
             loginPage.clickSignInButton();
 
-            browser.driver.sleep(1000);
+            navigationBarPage.checkMenuButtonIsDisplayed();
 
             browser.getCurrentUrl().then((actualUrl) => {
                 expect(actualUrl).toEqual(TestConfig.adf.url + '/files/' + uploadedFolder.entry.id);
