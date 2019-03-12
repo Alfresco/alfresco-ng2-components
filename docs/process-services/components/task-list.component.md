@@ -90,7 +90,9 @@ renders details of any chosen instance.
 
 ### Setting the column schema
 
-You can use an HTML-based schema declaration to set a column schema for the tasklist as shown below :
+You can configure the list to show any of the properties of the
+[`TaskDetailsModel`](../../../process-services/task-list/models/task-details.model.ts)
+class. The example below shows how to set up the column schema from HTML:
 
 ```html
 <adf-tasklist ...>
