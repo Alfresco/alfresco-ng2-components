@@ -36,9 +36,7 @@ import {
     PermissionStyleModel,
     UploadFilesEvent,
     ConfirmDialogComponent,
-    LibraryDialogComponent,
-    BaseDocumentListService,
-    DocumentListService
+    LibraryDialogComponent
 } from '@alfresco/adf-content-services';
 
 import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
@@ -55,13 +53,7 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
 @Component({
     selector: 'app-files-component',
     templateUrl: './files.component.html',
-    styleUrls: ['./files.component.scss'],
-    providers: [
-        {
-            provide: BaseDocumentListService,
-            useClass: DocumentListService
-        }
-    ]
+    styleUrls: ['./files.component.scss']
 })
 export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 

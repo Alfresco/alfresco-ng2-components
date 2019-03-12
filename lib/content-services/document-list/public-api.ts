@@ -39,7 +39,6 @@ export * from './services/document-actions.service';
 export * from './services/document-list.service';
 export * from './services/node-actions.service';
 export * from './services/custom-resources.service';
-export * from './services/base-document-list.service';
 
 // models
 export * from './models/content-action.model';
@@ -47,6 +46,6 @@ export * from './models/document-library.model';
 export * from './models/permissions.model';
 export * from './models/permissions-style.model';
 
-export * from './interfaces/document-list-node-retriever.interface';
+export * from './interfaces/document-list-loader.interface';
 
 export * from './document-list.module';

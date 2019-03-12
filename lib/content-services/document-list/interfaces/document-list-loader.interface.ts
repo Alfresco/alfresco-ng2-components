@@ -15,13 +15,9 @@
  * limitations under the License.
  */
 
-import { DocumentListNodeRetrieverInterface } from '../interfaces/document-list-node-retriever.interface';
-import { Observable } from 'rxjs';
-import { NodePaging, NodeEntry } from '@alfresco/js-api';
+import { PaginationModel } from '@alfresco/adf-core';
 
-export abstract class BaseDocumentListService implements DocumentListNodeRetrieverInterface {
+export interface DocumentListLoader {
 
-    abstract getFolder(folder: string, opts?: any, includeFields?: string[]): Observable<NodePaging>;
-
-    abstract getFolderNode(nodeId: string, includeFields?: string[]): Observable<NodeEntry>;
+    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string);
 }

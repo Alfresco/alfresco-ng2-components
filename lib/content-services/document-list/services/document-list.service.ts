@@ -16,26 +16,27 @@
  */
 
 import {
-    AlfrescoApiService, ContentService, LogService
+    AlfrescoApiService, ContentService, LogService, PaginationModel
 } from '@alfresco/adf-core';
 
 import { Injectable } from '@angular/core';
 import { NodeEntry, NodePaging } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { BaseDocumentListService } from './base-document-list.service';
+import { DocumentListLoader } from '../interfaces/document-list-loader.interface';
+import { CustomResourcesService } from './custom-resources.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class DocumentListService extends BaseDocumentListService {
+export class DocumentListService implements DocumentListLoader {
 
     static ROOT_ID = '-root-';
 
     constructor(private contentService: ContentService,
                 private apiService: AlfrescoApiService,
-                private logService: LogService) {
-        super();
+                private logService: LogService,
+                private customResourcesService: CustomResourcesService) {
     }
 
     /**
@@ -153,6 +154,20 @@ export class DocumentListService extends BaseDocumentListService {
         return from(this.apiService.getInstance().nodes.getNode(nodeId, opts)).pipe(
             catchError((err) => this.handleError(err))
         );
+    }
+
+    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string): Observable<any> {
+        if (this.customResourcesService.isCustomSource(nodeId)) {
+            // this.updateCustomSourceData(nodeId);
+            return this.customResourcesService.loadFolderByNodeId(nodeId, pagination, includeFields);
+        } else {
+            return this.getFolder(null, {
+                maxItems: pagination.maxItems,
+                skipCount: pagination.skipCount,
+                rootFolderId: nodeId,
+                where: where
+            },  includeFields);
+        }
     }
 
     private handleError(error: any) {
