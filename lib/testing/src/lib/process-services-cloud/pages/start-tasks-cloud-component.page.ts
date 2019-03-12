@@ -30,7 +30,7 @@ export class StartTasksCloudPage {
     form = element(by.css('adf-cloud-start-task form'));
 
     checkFormIsDisplayed() {
-        Util.waitUntilElementIsVisible(this.form);
+        BrowserVisibility.waitUntilElementIsVisible(this.form);
         return this;
     }
 
