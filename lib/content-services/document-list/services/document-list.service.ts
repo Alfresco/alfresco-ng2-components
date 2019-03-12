@@ -158,7 +158,6 @@ export class DocumentListService implements DocumentListLoader {
 
     loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string): Observable<any> {
         if (this.customResourcesService.isCustomSource(nodeId)) {
-            // this.updateCustomSourceData(nodeId);
             return this.customResourcesService.loadFolderByNodeId(nodeId, pagination, includeFields);
         } else {
             return this.getFolder(null, {
