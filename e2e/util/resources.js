@@ -369,10 +369,6 @@ exports.Files = {
             file_location: "/resources/adf/allFileTypes/a_excel_file.xlsx",
             file_name: "a_excel_file.xlsx"
         },
-        SCRIPTS: {
-            file_location: "/resources/adf/allFileTypes/custom-roles.js",
-            file_name: "custom-roles.js"
-        },
         DOCX_SUPPORTED: {
             file_location: "/resources/adf/allFileTypes/a_file_supported.docx",
             file_name: "a_file_supported.docx",
