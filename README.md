@@ -42,13 +42,25 @@ The app has examples of basic interaction for both APS and ACS components.
 
 ## Yeoman generators
 
-To speed up the development of your ADF application, use the 
+To speed up the development of your ADF application, use the
 [Yeoman Generator](https://github.com/Alfresco/generator-ng2-alfresco-app).
 This will create a full working project with all the right libraries and tools.
 
 <p align="center">
   <img title="yeoman generator" src='https://github.com/yeoman/media/blob/master/optimized/yeoman-150x150-opaque.png' alt='yeoman logo'  />
 </p>
+
+## Activiti 7
+
+If you are generating a project for activiti7 you need to add in the **app.config.jso** the list of the apps that you desire to use.
+
+For example :
+
+```json
+  "alfresco-deployed-apps" : [{"name": "simple-app"}]
+```
+
+For more information about the app list component refer to the [documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/process-services-cloud/app-list-cloud.component.md)
 
 ## Browser Support
 
@@ -62,7 +74,7 @@ All components are supported in the following browsers:
 |Edge       	   |13, 14     	    |
 |Internet Explorer |11     	        |
 
-* Due to a [known issue](https://bugzilla.mozilla.org/show_bug.cgi?id=1188880) in Firefox, the Alfresco Upload Component does not currently support folder upload functionality on Firefox.    
+* Due to a [known issue](https://bugzilla.mozilla.org/show_bug.cgi?id=1188880) in Firefox, the Alfresco Upload Component does not currently support folder upload functionality on Firefox.
 
-See the [Browser Support](BROWSER-SUPPORT.md) article for more details. 
+See the [Browser Support](BROWSER-SUPPORT.md) article for more details.
 
