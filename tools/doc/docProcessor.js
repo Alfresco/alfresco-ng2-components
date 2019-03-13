@@ -11,7 +11,7 @@ var stringify = require("remark-stringify");
 var frontMatter = require("remark-frontmatter");
 var mdCompact = require("mdast-util-compact");
 
-var tdoc = require("typedoc");
+//var tdoc = require("typedoc");
 
 var ngHelpers = require("./ngHelpers");
 var si = require("./SourceInfoClasses");
@@ -142,7 +142,7 @@ function initMdCache(filenames) {
     return mdCache;
 }
 
-
+/*
 function getSourceInfo(infoFolder) {
     var sourceInfo = {};
 
@@ -155,7 +155,7 @@ function getSourceInfo(infoFolder) {
     });
 }
 
-
+/*
 function initSourceInfo(aggData, mdCache) {
 
     var app = new tdoc.Application({
@@ -177,10 +177,10 @@ function initSourceInfo(aggData, mdCache) {
     var mdFiles = Object.keys(mdCache);
 
     mdFiles.forEach(mdFile => {
-        /*
+    
         var className = ngHelpers.ngNameToClassName(path.basename(mdFile, ".md"), aggData.config.typeNameExceptions);
         var classRef = aggData.projData.findReflectionByName(className);
-*/
+
 
         var className = ngHelpers.ngNameToClassName(path.basename(mdFile, ".md"), aggData.config.typeNameExceptions);
         var yamlText = fs.readFileSync(path.resolve(sourceInfoFolder, className + ".yml"), "utf8");
@@ -189,15 +189,15 @@ function initSourceInfo(aggData, mdCache) {
         if (yaml) {
             aggData.classInfo[className] = new si.ComponentInfo(yaml);
         }
-/*
+
         if (classRef) {
            aggData.classInfo[className] = new si.ComponentInfo(classRef);
         }
-        */
+    
 
     });
 }
-
+*/
 
 function initClassInfo(aggData) {
     var yamlFilenames = fs.readdirSync(path.resolve(sourceInfoFolder));
