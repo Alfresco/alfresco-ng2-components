@@ -24,7 +24,7 @@ export class ApiService {
     HOST_BPM = TestConfig.adf.hostBPM;
     HOST_IDENTITY = TestConfig.adf.hostIdentity;
 
-    apiService = new AlfrescoApi({
+    config: any = {
         provider: 'BPM',
         bpmHost: `${this.HOST_BPM}`,
         identityHost: `${this.HOST_IDENTITY}`,
@@ -41,7 +41,8 @@ export class ApiService {
             redirectUriLogout: '/logout'
         }
 
-    });
+    }
+    apiService: any = new AlfrescoApi(this.config);
 
     async login(username, password) {
         await this.apiService.login(username, password);
