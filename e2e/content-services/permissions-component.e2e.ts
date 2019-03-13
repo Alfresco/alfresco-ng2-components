@@ -781,5 +781,42 @@ describe('Permissions Component', function () {
 
         });
 
+        describe('Custom Roles', function () {
+
+            beforeAll(async (done) => {
+                
+        });
+
+            it('[C286518] Should be able to see roles other than standard roles', () => {
+
+                loginPage.loginToContentServicesUsingUserModel(managerUser);
+                browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+                contentServicesPage.checkContentIsDisplayed('privateSite' + fileModel.name);
+                contentList.doubleClickRow('privateSite' + fileModel.name);
+                viewerPage.checkFileIsLoaded();
+                viewerPage.checkInfoButtonIsDisplayed();
+                viewerPage.clickInfoButton();
+                viewerPage.checkInfoSideBarIsDisplayed();
+                viewerPage.clickMoveRightChevron();
+                viewerPage.clickMoveRightChevron();
+                viewerPage.clickOnTab('Versions');
+                viewerPage.checkTabIsActive('Versions');
+                versionManagePage
+                    .checkUploadNewVersionsButtonIsDisplayed()
+                    .clickAddNewVersionsButton()
+                    .checkMajorChangeIsDisplayed()
+                    .checkMinorChangeIsDisplayed()
+                    .checkCommentTextIsDisplayed()
+                    .checkCancelButtonIsDisplayed();
+
+                versionManagePage.uploadNewVersionFile(pngFileModel.location);
+                versionManagePage.checkFileVersionExist('1.0');
+                expect(versionManagePage.getFileVersionName('1.0')).toEqual('privateSite' + fileModel.name);
+                versionManagePage.checkFileVersionExist('1.1');
+                expect(versionManagePage.getFileVersionName('1.1')).toEqual(pngFileModel.name);
+                viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
+
+            });
+
     });
 });
