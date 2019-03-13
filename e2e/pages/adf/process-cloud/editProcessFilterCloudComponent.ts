@@ -46,13 +46,13 @@ export class EditProcessFilterCloudComponent {
         return this;
     }
 
-    setStateFilterDropDown(option) {
-        this.clickOnDropDownArrow('state');
+    setStatusFilterDropDown(option) {
+        this.clickOnDropDownArrow('status');
 
-        let stateElement = element.all(by.cssContainingText('mat-option span', option)).first();
-        Util.waitUntilElementIsClickable(stateElement);
-        Util.waitUntilElementIsVisible(stateElement);
-        stateElement.click();
+        let statusElement = element.all(by.cssContainingText('mat-option span', option)).first();
+        Util.waitUntilElementIsClickable(statusElement);
+        Util.waitUntilElementIsVisible(statusElement);
+        statusElement.click();
         return this;
     }
 

@@ -6,14 +6,8 @@
                 <span *ngIf="showTitle"> {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}</span>
                 <div *ngIf="showActions()" class="adf-cloud-edit-process-filter-actions">
                     <ng-container *ngIf="toggleFilterActions">
-                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE' | translate}}" [disabled]="!formHasBeenChanged" id="adf-save-id" (click)="onSave()">
-                            <mat-icon>save</mat-icon>
-                        </button>
-                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.SAVE_AS' | translate}}" [disabled]="!formHasBeenChanged" id="adf-save-as-id" (click)="onSaveAs()">
-                            <mat-icon>unarchive</mat-icon>
-                        </button>
-                        <button mat-icon-button matTooltip="{{'ADF_CLOUD_EDIT_PROCESS_FILTER.TOOL_TIP.DELETE' | translate}}" id="adf-delete-id" (click)="onDelete()">
-                            <mat-icon>delete</mat-icon>
+                        <button *ngFor="let filterAction of processFilterActions" mat-icon-button matTooltip="{{ filterAction.tooltip | translate}}" [attr.data-automation-id]="'adf-filter-action-' + filterAction.actionType" [disabled]="hasFormChanged(filterAction)" (click)="executeFilterActions(filterAction)">
+                            <mat-icon>{{filterAction.icon}}</mat-icon>
                         </button>
                     </ng-container>
                 </div>
@@ -27,7 +21,7 @@
                             placeholder="{{processFilterProperty.label | translate}}"
                             [formControlName]="processFilterProperty.key"
                             [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
-                            <mat-option *ngFor="let propertyOption of processFilterProperty.options" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options' + processFilterProperty.key">
+                            <mat-option *ngFor="let propertyOption of processFilterProperty.options" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.key">
                                 {{ propertyOption.label }}
                             </mat-option>
                         </mat-select>
@@ -49,14 +43,14 @@
                             placeholder="{{processFilterProperty.label | translate}}"
                             [formControlName]="processFilterProperty.key"
                             [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
-                        <mat-datepicker-toggle matSuffix [for]="dateController" [attr.data-automation-id]="'adf-cloud-edit-process-property-date-toggle' + processFilterProperty.key"></mat-datepicker-toggle>
-                        <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-process-property-date-picker' + processFilterProperty.key"></mat-datepicker>
-                        <div class="adf-edit-process-filter-date-error-container">
-                            <div *ngIf="hasError(processFilterProperty)">
-                                <div class="adf-error-text">{{'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.DATE' | translate}}</div>
-                                <mat-icon class="adf-error-icon">warning</mat-icon>
-                            </div>
+                    <mat-datepicker-toggle matSuffix [for]="dateController" [attr.data-automation-id]="'adf-cloud-edit-process-property-date-toggle-' + processFilterProperty.key"></mat-datepicker-toggle>
+                    <mat-datepicker #dateController [attr.data-automation-id]="'adf-cloud-edit-process-property-date-picker-' + processFilterProperty.key"></mat-datepicker>
+                    <div class="adf-edit-process-filter-date-error-container">
+                        <div *ngIf="hasError(processFilterProperty)">
+                            <div class="adf-error-text">{{'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.DATE' | translate}}</div>
+                            <mat-icon class="adf-error-icon">warning</mat-icon>
                         </div>
+                    </div>
                     </mat-form-field>
                 </ng-container>
             </div>
