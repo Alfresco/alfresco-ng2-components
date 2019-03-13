@@ -119,7 +119,7 @@
                     }
 
                     .adf-datatable-body .adf-datatable-row {
-                        height: auto !important;
+                        min-height: 40px;
 
                         &:first-child {
                             .adf-datatable-cell {
@@ -136,9 +136,9 @@
                 }
 
                 &-searchLayout {
-                    height: auto !important;
+                    .adf-datatable-list .adf-datatable-row {
+                        min-height: 65px !important;
 
-                    .adf-datatable-list {
                         .adf-datatable-cell {
 
                             & .adf-name-location-cell-location {
