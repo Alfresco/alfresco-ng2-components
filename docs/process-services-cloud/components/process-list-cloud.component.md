@@ -50,14 +50,13 @@ when the process list is empty:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appName | `string` | "" | The name of the application. |
 | appVersion | `string` | "" | The related application version. |
+| appName | `string` | "" | The name of the application. |
 | businessKey | `string` | "" | Filter the tasks to display only the ones with this businessKey value. |
 | id | `string` | "" | Filter the processes to display only the ones with this ID. |
 | initiator | `string` | "" | Name of the initiator of the process. |
 | multiselect | `boolean` | false | Toggles multiple row selection and renders checkboxes at the beginning of each row |
 | name | `string` | "" | Filter the processes to display only the ones with this name. |
-| presetColumn | `string` |  | Custom preset column schema in JSON format. |
 | processDefinitionId | `string` | "" | Filter the processes to display only the ones with this process definition ID. |
 | processDefinitionKey | `string` | "" | Filter the processes to display only the ones with this process definition key. |
 | selectionMode | `string` | "single" | Row selection mode. Can be "none", "single" or "multiple". For multiple mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |

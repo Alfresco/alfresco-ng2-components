@@ -22,17 +22,6 @@ Edits Task Filter Details.
     -   [Filter properties](#filter-properties)
 -   [See also](#see-also)
 
-## Contents
-
--   [Basic Usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [Editing APS2 task filters](#editing-aps2-task-filters)
-    -   [Filter properties](#filter-properties)
--   [See also](#see-also)
-
 ## Basic Usage
 
 ```html
@@ -52,10 +41,10 @@ Edits Task Filter Details.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | (required) Name of the app. |
-| filterProperties | `string[]` |  | List of task filter properties to display. |
-| id | `string` |  | (required) ID of the task filter. |
-| showFilterActions | `boolean` | true | Toggles the filter actions. |
-| showTitle | `boolean` | true | Toggles the title. |
+| id | `string` | "" | (required) The id of the Task filter. |
+| filterProperties | `string []` | `['state', 'assignment', 'sort', 'order']` | List of task filter properties to display. |
+| showFilterActions | `boolean` | `true` | Toggles edit task filter actions. |
+| showTitle | `boolean` | `true` | Toggles edit task filter title. |
 
 ### Events
 
@@ -89,12 +78,12 @@ Use the `appName` and `id` properties to choose which task filter to edit:
 
 ### Filter properties
 
-You can supply various _filter properties_ to edit that will determine
+You can supply various *filter properties* to edit that will determine
 which tasks are found by a filter. The full set of properties is
 given below:
 
 | Name | Description |
-| ---- | ----------- |
+| -- | -- |
 | **_appName_** | Name of the app |
 | **_state_** | Execution state of the task. |
 | **_assignment_** | User the task is assigned to |
@@ -106,8 +95,8 @@ given below:
 | **_processDefinitionId_** | Process definition ID |
 | **_processDefinitionKey_** | Process definition key |
 | **_processInstanceId_** | Process instance ID |
-| **_lastModifiedFrom_** | Finds tasks modified _after_ this date |
-| **_lastModifiedTo_** | Finds tasks modified _before_ this date |
+| **_lastModifiedFrom_** | Finds tasks modified *after* this date |
+| **_lastModifiedTo_** | Finds tasks modified *before* this date |
 | **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself). Can be "id", "name", "createdDate", "priority", "processDefinitionId". |
 | **_order_** | Sort ordering of the filter results it can be ASC or DESC (doesn't participate in the filtering itself). |
 
@@ -144,4 +133,4 @@ to choose from: **_id_**, **_name_**, **_status_** and **_startDate_**.
 
 ## See also
 
--   [Edit process filter cloud component](edit-process-filter-cloud.component.md)
+- [Edit process filter cloud component](edit-process-filter-cloud.component.md)
