@@ -34,6 +34,7 @@ import CONSTANTS = require('../util/constants');
 import { MetadataViewPage } from '../pages/adf/metadataViewPage';
 import { UploadDialog } from '../pages/adf/dialog/uploadDialog';
 import { VersionManagePage } from '../pages/adf/versionManagerPage';
+import VisibilityEnum = AlfrescoApi.Site.VisibilityEnum;
 
 describe('Permissions Component', function () {
 
@@ -808,7 +809,7 @@ describe('Permissions Component', function () {
             //         console.log('Found it: ' + nodeChildren.list.entries[0].entry[i].name);
             //     }
             // }
-            //console.log('Particular Node name: ' + nodeChildren.list.entries[0].entry[0].name);
+            // console.log('Particular Node name: ' + nodeChildren.list.entries[0].entry[0].name);
             for (let entry in customList) {
                 if (customList[entry].entry.name === 'Data Dictionary') {
                     dataDictionaryNodeId = customList[entry].entry.id;
@@ -832,7 +833,7 @@ describe('Permissions Component', function () {
             await uploadActions.uploadFile(alfrescoJsApi, scriptFileModel.location, scriptFileModel.name, scriptNodeId);
             site = await alfrescoJsApi.core.sitesApi.createSite({
                 title: Util.generateRandomString(),
-                visibility: 'PRIVATE'
+                visibility: VisibilityEnum.PUBLIC
             });
 
             let resultNode = await alfrescoJsApi.core.nodesApi.getNodeChildren(site.entry.guid);
@@ -841,6 +842,8 @@ describe('Permissions Component', function () {
 
             customRolesFolder = await uploadActions.createFolder(alfrescoJsApi, 'customRolesFolder' + customFolder, documentLibrary);
             console.log('Custom Roles Folder ID: ' + customRolesFolder.entry.id);
+            let tempResponse = await alfrescoJsApi.core.nodesApi.getNode(customRolesFolder.entry.id);
+            console.log('Temporary Response: ' + JSON.stringify(tempResponse));
 
             await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
                 id: consumerUser.id,
