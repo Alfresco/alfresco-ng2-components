@@ -41,7 +41,8 @@ export class ApiService {
             redirectUriLogout: '/logout'
         }
 
-    }
+    };
+
     apiService: any = new AlfrescoApi(this.config);
 
     async login(username, password) {
