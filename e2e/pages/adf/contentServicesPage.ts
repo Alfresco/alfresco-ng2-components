@@ -45,7 +45,6 @@ export class ContentServicesPage {
     uploadMultipleFileButton = element(by.css('input[data-automation-id="upload-multiple-files"]'));
     uploadFolderButton = element(by.css('input[data-automation-id="uploadFolder"]'));
     errorSnackBar = element(by.css('simple-snack-bar[class*="mat-simple-snackbar"]'));
-    loadMoreButton = element(by.css('button[data-automation-id="adf-infinite-pagination-button"]'));
     emptyPagination = element(by.css('adf-pagination[class*="adf-pagination__empty"]'));
     dragAndDrop = element.all(by.css('adf-upload-drag-area div')).first();
     nameHeader = element(by.css('div[data-automation-id="auto_id_name"] > span'));
@@ -501,13 +500,6 @@ export class ContentServicesPage {
         let thumbnailSlide = element(by.id('adf-thumbnails-upload-switch'));
         Util.waitUntilElementIsVisible(thumbnailSlide);
         thumbnailSlide.click();
-        return this;
-    }
-
-    clickLoadMoreButton() {
-        Util.waitUntilElementIsVisible(this.loadMoreButton);
-        Util.waitUntilElementIsClickable(this.loadMoreButton);
-        this.loadMoreButton.click();
         return this;
     }
 
