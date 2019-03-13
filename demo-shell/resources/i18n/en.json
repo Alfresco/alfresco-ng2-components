@@ -53,6 +53,7 @@
     }
   },
   "APP_LAYOUT": {
+    "APP": "App",
     "APP_NAME": "ADF Demo Application",
     "HOME": "Home",
     "NODE-SELECTOR": "Node Selector",

@@ -26,10 +26,14 @@ export class NavigationBarPage {
 
     contentServicesButton = element(by.css('a[data-automation-id="Content Services"]'));
     dataTableButton = element(by.css('a[data-automation-id="Datatable"]'));
+    dataTableNestedButton = element(by.css('button[data-automation-id="Datatable"]'));
     taskListButton = element(by.css("a[data-automation-id='Task List']"));
     configEditorButton = element(by.css('a[data-automation-id="Configuration Editor"]'));
     processServicesButton = element(by.css('a[data-automation-id="Process Services"]'));
+    processServicesNestedButton = element(by.css('button[data-automation-id="App"]'));
     processServicesCloudButton = element(by.css('a[data-automation-id="Process Cloud"]'));
+    processServicesCloudHomeButton = element(by.css('button[data-automation-id="Home"]'));
+    processServicesCloudPeopleGroupButton = element(by.css('button[data-automation-id="People/Group Cloud"]'));
     loginButton = element(by.css('a[data-automation-id="Login"]'));
     trashcanButton = element(by.css('a[data-automation-id="Trashcan"]'));
     overlayViewerButton = element(by.css('a[data-automation-id="Overlay Viewer"]'));
@@ -41,7 +45,7 @@ export class NavigationBarPage {
     appTitle = element(by.css('.adf-app-title'));
     headerDataButton = element(by.css('a[data-automation-id="Header Data"]'));
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
-    formButton = element(by.css('a[data-automation-id="Form"]'));
+    formButton = element(by.css('button[data-automation-id="Form"]'));
     treeViewButton = element(by.css('a[data-automation-id="Tree View"]'));
     iconsButton = element(by.css('a[data-automation-id="Icons"]'));
     customSourcesButton = element(by.css('a[data-automation-id="Custom Sources"]'));
@@ -52,6 +56,7 @@ export class NavigationBarPage {
     navigateToDatatable() {
         Util.waitUntilElementIsVisible(this.dataTableButton);
         this.dataTableButton.click();
+        this.dataTableNestedButton.click();
     }
 
     clickContentServicesButton() {
@@ -72,12 +77,16 @@ export class NavigationBarPage {
     navigateToProcessServicesPage() {
         Util.waitUntilElementIsVisible(this.processServicesButton);
         this.processServicesButton.click();
+        Util.waitUntilElementIsVisible(this.processServicesNestedButton);
+        this.processServicesNestedButton.click();
         return new ProcessServicesPage();
     }
 
     navigateToProcessServicesCloudPage() {
         Util.waitUntilElementIsVisible(this.processServicesCloudButton);
         this.processServicesCloudButton.click();
+        Util.waitUntilElementIsVisible(this.processServicesCloudHomeButton);
+        this.processServicesCloudHomeButton.click();
         return new AppListCloudPage();
     }
 
@@ -188,6 +197,8 @@ export class NavigationBarPage {
     }
 
     clickFormButton() {
+        Util.waitUntilElementIsVisible(this.processServicesButton);
+        this.processServicesButton.click();
         Util.waitUntilElementIsVisible(this.formButton);
         return this.formButton.click();
     }
