@@ -101,7 +101,6 @@ import { ProcessDetailsCloudDemoComponent } from './components/app-layout/cloud/
         ThemePickerModule,
         ChartsModule,
         MonacoEditorModule.forRoot(),
-        ProcessServicesCloudModule,
         GroupCloudModule
     ],
     declarations: [
