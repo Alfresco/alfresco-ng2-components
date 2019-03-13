@@ -26,8 +26,7 @@ then
 fi
 
 #reset the tmp folder
-rm -rf tmp
-affected="$(./scripts/affected-libs.sh -b "$BRANCH_NAME")"
+affected="$(./scripts/affected-libs.sh -gnu -b "$BRANCH_NAME")"
 echo $affected
 libs=(`echo $affected | sed 's/^$/\n/g'`)
 
