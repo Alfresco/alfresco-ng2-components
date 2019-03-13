@@ -20,7 +20,7 @@
  import { Observable } from 'rxjs';
  import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
  import { ApplicationInstanceModel } from '../models/application-instance.model';
-import { ApplicationDeploymentCloudService } from '../services/app-deployment-cloud.service';
+ import { ApplicationDeploymentCloudService } from '../services/app-deployment-cloud.service';
 
  @Component({
      selector: 'adf-cloud-app-list',
