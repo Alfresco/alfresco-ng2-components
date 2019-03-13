@@ -683,5 +683,6 @@
                 }
             ]
         }
-    }
+    },
+    "alfresco-deployed-apps": []
 }
