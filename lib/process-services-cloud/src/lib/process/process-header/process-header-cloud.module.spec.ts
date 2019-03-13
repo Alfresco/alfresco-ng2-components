@@ -15,9 +15,16 @@
  * limitations under the License.
  */
 
-export * from './process-list/public-api';
-export * from './process-filters/public-api';
-export * from './start-process/public-api';
-export * from './process-header/public-api';
+import { ProcessHeaderCloudModule } from './process-header-cloud.module';
 
-export * from './process-cloud.module';
+describe('ProcessHeaderCloudModule', () => {
+  let processHeaderCloudModule: ProcessHeaderCloudModule;
+
+  beforeEach(() => {
+    processHeaderCloudModule = new ProcessHeaderCloudModule();
+  });
+
+  it('should create an instance', () => {
+    expect(processHeaderCloudModule).toBeTruthy();
+  });
+});

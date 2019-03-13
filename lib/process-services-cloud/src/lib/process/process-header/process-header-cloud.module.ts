@@ -16,25 +16,23 @@
  */
 
 import { NgModule } from '@angular/core';
-import { ProcessFiltersCloudModule } from './process-filters/process-filters-cloud.module';
-import { ProcessListCloudModule } from './process-list/process-list-cloud.module';
-import { StartProcessCloudModule } from './start-process/start-process-cloud.module';
-import { CoreModule } from '@alfresco/adf-core';
-import { ProcessHeaderCloudModule } from './process-header/public-api';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../../material.module';
+import { DataTableModule, TemplateModule, CoreModule } from '@alfresco/adf-core';
+import { ProcessHeaderCloudService } from '../process-header/services/process-header-cloud.service';
+import { ProcessHeaderCloudComponent } from './components/process-header-cloud.component';
 
 @NgModule({
     imports: [
-        ProcessFiltersCloudModule,
-        ProcessListCloudModule,
-        StartProcessCloudModule,
-        ProcessHeaderCloudModule,
+        CommonModule,
+        MaterialModule,
+        DataTableModule,
+        TemplateModule,
         CoreModule
+
     ],
-    exports: [
-        ProcessFiltersCloudModule,
-        ProcessListCloudModule,
-        StartProcessCloudModule,
-        ProcessHeaderCloudModule
-    ]
+    declarations: [ProcessHeaderCloudComponent],
+    exports: [ProcessHeaderCloudComponent],
+    providers: [ProcessHeaderCloudService]
 })
-export class ProcessCloudModule { }
+export class ProcessHeaderCloudModule { }
