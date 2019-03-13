@@ -72,6 +72,11 @@ describe('Permissions Component', function () {
         'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
+    let scriptFileModel = new FileModel({
+        'name': resources.Files.ADF_DOCUMENTS.SCRIPTS.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.SCRIPTS.file_location
+    });
+
     let groupBody = {
         id: Util.generateRandomString(),
         displayName: Util.generateRandomString()
@@ -243,9 +248,9 @@ describe('Permissions Component', function () {
         await alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         await alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
         await alfrescoJsApi.core.groupsApi.deleteGroup(groupId);
-        await folders.forEach( function (folder) {
+        await folders.forEach(function (folder) {
             uploadActions.deleteFilesOrFolder(alfrescoJsApi, folder.entry.id);
-        })
+        });
         done();
     });
 
@@ -780,43 +785,100 @@ describe('Permissions Component', function () {
             viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
 
         });
+    });
 
-        describe('Custom Roles', function () {
+    fdescribe('Custom Roles', function () {
+        let nodeChildren, dataDictionaryNodeId, customList, nodeChildrenScripts, customListScripts, scriptNodeId, site, documentLibrary, customRolesFolder,
+            customFolder;
+        customFolder = Util.generateRandomString(5);
 
-            beforeAll(async (done) => {
+        beforeEach(async (done) => {
+            await alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            nodeChildren = await alfrescoJsApi.core.nodesApi.getNodeChildren('-my-');
+            console.log(JSON.stringify(nodeChildren));
+            customList = nodeChildren.list.entries;
+            // nodeChildren.list.entries[0].entry.forEach( (entry) => {
+            //     if (entry.name === 'Data Dictionary') {
+            //         dataDictionaryNodeId = entry.id;
+            //     }
+            // })
+            console.log('Custom List: ' + JSON.stringify(customList));
+            // for ( let i = 0; i < nodeChildren.list.entries[0].entry.length; i++) {
+            //     if ( nodeChildren.list.entries[0].entry[i] === 'Data Dictionary' ) {
+            //         console.log('Found it: ' + nodeChildren.list.entries[0].entry[i].name);
+            //     }
+            // }
+            //console.log('Particular Node name: ' + nodeChildren.list.entries[0].entry[0].name);
+            for (let entry in customList) {
+                if (customList[entry].entry.name === 'Data Dictionary') {
+                    dataDictionaryNodeId = customList[entry].entry.id;
+                }
+            }
+            // nodeChildren.list.entries[0].en.then((entryList) => {
+            //     if (entryList.entry.name === 'Data Dictionary') {
+            //         dataDictionaryNodeId = entryList.entry.id;
+            //     }
+            // })
+            console.log('Data Dictionary Node Id: ' + dataDictionaryNodeId);
+            nodeChildrenScripts = await alfrescoJsApi.core.nodesApi.getNodeChildren(dataDictionaryNodeId);
+            console.log(JSON.stringify(nodeChildrenScripts));
+            customListScripts = nodeChildrenScripts.list.entries;
+            for (let entry in customListScripts) {
+                if (customListScripts[entry].entry.name === 'Scripts') {
+                    scriptNodeId = customListScripts[entry].entry.id;
+                }
+            }
+            console.log('Scripts Node Id: ' + scriptNodeId);
+            await uploadActions.uploadFile(alfrescoJsApi, scriptFileModel.location, scriptFileModel.name, scriptNodeId);
+            site = await alfrescoJsApi.core.sitesApi.createSite({
+                title: Util.generateRandomString(),
+                visibility: 'PRIVATE'
+            });
+
+            let resultNode = await alfrescoJsApi.core.nodesApi.getNodeChildren(site.entry.guid);
+
+            documentLibrary = resultNode.list.entries[0].entry.id;
+
+            customRolesFolder = await uploadActions.createFolder(alfrescoJsApi, 'customRolesFolder' + customFolder, documentLibrary);
+            console.log('Custom Roles Folder ID: ' + customRolesFolder.entry.id);
+
+            await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+                id: consumerUser.id,
+                role: CONSTANTS.CS_USER_ROLES.CONSUMER
+            });
 
         });
 
-            it('[C286518] Should be able to see roles other than standard roles', () => {
+        it('[C286518] Should be able to see roles other than standard roles', () => {
 
-                loginPage.loginToContentServicesUsingUserModel(managerUser);
-                browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
-                contentServicesPage.checkContentIsDisplayed('privateSite' + fileModel.name);
-                contentList.doubleClickRow('privateSite' + fileModel.name);
-                viewerPage.checkFileIsLoaded();
-                viewerPage.checkInfoButtonIsDisplayed();
-                viewerPage.clickInfoButton();
-                viewerPage.checkInfoSideBarIsDisplayed();
-                viewerPage.clickMoveRightChevron();
-                viewerPage.clickMoveRightChevron();
-                viewerPage.clickOnTab('Versions');
-                viewerPage.checkTabIsActive('Versions');
-                versionManagePage
-                    .checkUploadNewVersionsButtonIsDisplayed()
-                    .clickAddNewVersionsButton()
-                    .checkMajorChangeIsDisplayed()
-                    .checkMinorChangeIsDisplayed()
-                    .checkCommentTextIsDisplayed()
-                    .checkCancelButtonIsDisplayed();
+            loginPage.loginToContentServicesUsingUserModel(managerUser);
+            browser.get(TestConfig.adf.url + '/files/' + privateSite.entry.guid);
+            contentServicesPage.checkContentIsDisplayed('privateSite' + fileModel.name);
+            contentList.doubleClickRow('privateSite' + fileModel.name);
+            viewerPage.checkFileIsLoaded();
+            viewerPage.checkInfoButtonIsDisplayed();
+            viewerPage.clickInfoButton();
+            viewerPage.checkInfoSideBarIsDisplayed();
+            viewerPage.clickMoveRightChevron();
+            viewerPage.clickMoveRightChevron();
+            viewerPage.clickOnTab('Versions');
+            viewerPage.checkTabIsActive('Versions');
+            versionManagePage
+                .checkUploadNewVersionsButtonIsDisplayed()
+                .clickAddNewVersionsButton()
+                .checkMajorChangeIsDisplayed()
+                .checkMinorChangeIsDisplayed()
+                .checkCommentTextIsDisplayed()
+                .checkCancelButtonIsDisplayed();
 
-                versionManagePage.uploadNewVersionFile(pngFileModel.location);
-                versionManagePage.checkFileVersionExist('1.0');
-                expect(versionManagePage.getFileVersionName('1.0')).toEqual('privateSite' + fileModel.name);
-                versionManagePage.checkFileVersionExist('1.1');
-                expect(versionManagePage.getFileVersionName('1.1')).toEqual(pngFileModel.name);
-                viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
+            versionManagePage.uploadNewVersionFile(pngFileModel.location);
+            versionManagePage.checkFileVersionExist('1.0');
+            expect(versionManagePage.getFileVersionName('1.0')).toEqual('privateSite' + fileModel.name);
+            versionManagePage.checkFileVersionExist('1.1');
+            expect(versionManagePage.getFileVersionName('1.1')).toEqual(pngFileModel.name);
+            viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
 
-            });
+        });
 
     });
 });
