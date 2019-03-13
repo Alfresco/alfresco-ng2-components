@@ -34,7 +34,6 @@ import CONSTANTS = require('../util/constants');
 import { MetadataViewPage } from '../pages/adf/metadataViewPage';
 import { UploadDialog } from '../pages/adf/dialog/uploadDialog';
 import { VersionManagePage } from '../pages/adf/versionManagerPage';
-import VisibilityEnum = AlfrescoApi.Site.VisibilityEnum;
 
 describe('Permissions Component', function () {
 
@@ -123,8 +122,8 @@ describe('Permissions Component', function () {
         let publicSiteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
         let privateSiteName = `PRIVATE_TEST_SITE_${Util.generateRandomString(5)}`;
         folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
-        let publicSiteBody = {visibility: VisibilityEnum.PUBLIC, title: publicSiteName};
-        let privateSiteBody = {visibility: VisibilityEnum.PRIVATE, title: privateSiteName};
+        let publicSiteBody = {visibility: 'PUBLIC', title: publicSiteName};
+        let privateSiteBody = {visibility: 'PRIVATE', title: privateSiteName};
         publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
         privateSite = await alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
 
@@ -272,6 +271,19 @@ describe('Permissions Component', function () {
             done();
         });
 
+        it('[C268974] Inherit Permission', () => {
+            permissionsPage.checkPermissionContainerIsDisplayed();
+            permissionsPage.checkPermissionInheritedButtonIsDisplayed();
+            expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
+            permissionsPage.checkPermissionsDatatableIsDisplayed();
+            permissionsPage.clickPermissionInheritedButton();
+            expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Inherit Permission');
+            permissionsPage.checkNoPermissionsIsDisplayed();
+            permissionsPage.clickPermissionInheritedButton();
+            expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
+            permissionsPage.checkPermissionsDatatableIsDisplayed();
+        });
+
         it('[C286272] Should be able to see results when searching for a user', () => {
             permissionsPage.checkAddPermissionButtonIsDisplayed();
             permissionsPage.clickAddPermissionButton();
@@ -289,19 +301,6 @@ describe('Permissions Component', function () {
             permissionsPage.searchUserOrGroup('GROUP_' + groupBody.id);
             permissionsPage.clickUserOrGroup('GROUP_' + groupBody.id);
             permissionsPage.checkUserOrGroupIsAdded('GROUP_' + groupBody.id);
-        });
-
-        it('[C268974] Inherit Permission', () => {
-            permissionsPage.checkPermissionContainerIsDisplayed();
-            permissionsPage.checkPermissionInheritedButtonIsDisplayed();
-            expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
-            permissionsPage.checkPermissionsDatatableIsDisplayed();
-            permissionsPage.clickPermissionInheritedButton();
-            expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Inherit Permission');
-            permissionsPage.checkNoPermissionsIsDisplayed();
-            permissionsPage.clickPermissionInheritedButton();
-            expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
-            permissionsPage.checkPermissionsDatatableIsDisplayed();
         });
 
         it('[C277100] Should display EVERYONE group in the search result set', () => {
@@ -507,7 +506,7 @@ describe('Permissions Component', function () {
                 await metadataViewPage.editIconClick();
                 metadataViewPage.clickEditPropertyIcons('properties.cm:title');
                 metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle');
-                metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
+                await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
                 expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
                 metadataViewPage.clickCloseButton();
 
@@ -542,7 +541,7 @@ describe('Permissions Component', function () {
                 await metadataViewPage.editIconClick();
                 metadataViewPage.clickEditPropertyIcons('properties.cm:description');
                 metadataViewPage.enterDescriptionText('newDescription');
-                metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
+                await metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
                 expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('newDescription');
                 metadataViewPage.clickCloseButton();
 
@@ -576,7 +575,7 @@ describe('Permissions Component', function () {
                 await metadataViewPage.editIconClick();
                 metadataViewPage.clickEditPropertyIcons('properties.cm:author');
                 metadataViewPage.enterPropertyText('properties.cm:author', 'newAuthor');
-                metadataViewPage.clickUpdatePropertyIcon('properties.cm:author');
+                await metadataViewPage.clickUpdatePropertyIcon('properties.cm:author');
                 expect(metadataViewPage.getPropertyText('properties.cm:author')).toEqual('newAuthor');
                 metadataViewPage.clickCloseButton();
 
@@ -691,14 +690,14 @@ describe('Permissions Component', function () {
             contentList.waitForTableBody();
             contentServicesPage.checkDeleteIsDisabled('Site' + fileModel.name);
             browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-            contentList.checkActionMenuIsNotDisplayed();
 
-            contentServicesPage.metadataContent('Site' + fileModel.name);
             browser.controlFlow().execute(async () => {
+                contentList.checkActionMenuIsNotDisplayed();
+                contentServicesPage.metadataContent('Site' + fileModel.name);
                 await metadataViewPage.editIconClick();
                 metadataViewPage.clickEditPropertyIcons('properties.cm:title');
                 metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle');
-                metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
+                await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
                 expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
                 metadataViewPage.clickCloseButton();
 
@@ -731,7 +730,7 @@ describe('Permissions Component', function () {
                 await metadataViewPage.editIconClick();
                 metadataViewPage.clickEditPropertyIcons('properties.cm:description');
                 metadataViewPage.enterDescriptionText('newDescription');
-                metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
+                await metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
                 expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('newDescription');
                 metadataViewPage.clickCloseButton();
 
