@@ -17,5 +17,6 @@ on an item below to see the corresponding guide page.
 -   [Transclusion](transclusion.md)
 -   [Typography](typography.md)
 -   [Walkthrough - adding indicators to highlight information about a node](metadata-indicators.md)
+-   [Right-to-left language support](rtl-support.md)
 
 <!--guide end-->

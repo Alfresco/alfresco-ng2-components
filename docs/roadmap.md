@@ -12,7 +12,7 @@ Last updated 26 Feb 2019:
 - Accessibility (508 compliance and automatic tests).
 - Search highlighting.
 - Better metadata viewer (whitelisting by default).
-- Arabic language support.
+- Support for languages that are written right-to-left (such as Arabic).
 - Continue with Governance features into ADF.
 - Better experience in plugin/extensions.
 - Application dashboards.
