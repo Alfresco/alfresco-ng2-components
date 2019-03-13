@@ -784,7 +784,7 @@ describe('Permissions Component', function () {
         describe('Custom Roles', function () {
 
             beforeAll(async (done) => {
-                
+
         });
 
             it('[C286518] Should be able to see roles other than standard roles', () => {
