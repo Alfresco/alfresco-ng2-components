@@ -40,7 +40,7 @@
             &-controls {
                 display: flex;
 
-                mat-icon:hover {
+                mat-icon:not(.adf-button-disabled):hover {
                     opacity: 1;
                     cursor: pointer;
                 }
@@ -126,4 +126,12 @@
             display: block;
         }
     }
+
+    .mat-button.adf-update-icon {
+        min-width: 40px;
+        line-height: 0;
+        margin-top: -4px;
+        padding: 0;
+    }
+
 }

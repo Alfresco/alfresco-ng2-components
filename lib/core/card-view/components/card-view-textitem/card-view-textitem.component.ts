@@ -64,8 +64,8 @@ export class CardViewTextItemComponent implements OnChanges {
         return !!this.property.icon;
     }
 
-    hasErrors(): number {
-        return this.errorMessages && this.errorMessages.length;
+    hasErrors(): boolean {
+        return this.errorMessages && this.errorMessages.length > 0;
     }
 
     setEditMode(editStatus: boolean): void {
@@ -90,6 +90,10 @@ export class CardViewTextItemComponent implements OnChanges {
         } else {
             this.errorMessages = this.property.getValidationErrors(this.editedValue);
         }
+    }
+
+    onTextAreaInputChange() {
+        this.errorMessages = this.property.getValidationErrors(this.editedValue);
     }
 
     clicked(): void {
