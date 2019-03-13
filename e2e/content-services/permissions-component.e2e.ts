@@ -123,8 +123,8 @@ describe('Permissions Component', function () {
         let publicSiteName = `PUBLIC_TEST_SITE_${Util.generateRandomString(5)}`;
         let privateSiteName = `PRIVATE_TEST_SITE_${Util.generateRandomString(5)}`;
         folderName = `MEESEEKS_${Util.generateRandomString(5)}`;
-        let publicSiteBody = {visibility: 'PUBLIC', title: publicSiteName};
-        let privateSiteBody = {visibility: 'PRIVATE', title: privateSiteName};
+        let publicSiteBody = {visibility: VisibilityEnum.PUBLIC, title: publicSiteName};
+        let privateSiteBody = {visibility: VisibilityEnum.PRIVATE, title: privateSiteName};
         publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
         privateSite = await alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
 
