@@ -135,6 +135,14 @@ describe('UserPreferencesService', () => {
         expect(preferences.locale).toBe('fake-store-locate');
     });
 
+    it('should not store in the storage the locale if the app.config.json does not have a value', () => {
+        preferences.locale = 'fake-store-locate';
+        spyOn(translate, 'getBrowserCultureLang').and.returnValue('fake-locate-browser');
+        expect(preferences.locale).toBe('fake-store-locate');
+
+        expect(storage.getItem(UserPreferenceValues.Locale)).toBe(null);
+    });
+
     it('should stream the page size value when is set', (done) => {
         preferences.paginationSize = 5;
         changeDisposable = preferences.onChange.subscribe((userPreferenceStatus) => {
