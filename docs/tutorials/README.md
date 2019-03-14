@@ -14,8 +14,8 @@ Github only: true
 | [**Adding a new view**](new-view.md) | Beginner | In this tutorial you will learn how to create a new view in your application and how to access it using a defined endpoint. |
 | [**Using ADF Components**](using-components.md) | Basic | In this tutorial you will learn how to extend, use and configure ADF Components. |
 | [**Basic theming**](basic-theming.md) | Beginner | In this tutorial you will see how to theme an ADF app by modifying the CSS.  |
-| [**Customizing the Login component**](customising-login.md) | Intermediate | In this tutorial you will learn how to customize the Login component following the technical documentation. |
+| [**Customizing the Login component**](customising-login.md) | Intermediate | In this tutorial you will learn how to customize the [Login component](../core/components/login.component.md) following the technical documentation. |
 | [**Working with a Data Table**](working-with-data-table.md) | Intermediate | In this tutorial you will learn how to populate a DataTable component. |
-| [**Working with the Nodes API Service**](working-with-nodes-api-service.md) | Intermediate | In this tutorial you will learn how to use the [`NodesApiService`](../core/nodes-api.service.md). |
+| [**Working with the Nodes API Service**](working-with-nodes-api-service.md) | Intermediate | In this tutorial you will learn how to use the [`NodesApiService`](../core/services/nodes-api.service.md). |
 | [**Working with Nodes using the JS API**](working-with-nodes-js-api.md) | Intermediate | In this tutorial you will learn how to use the [`AlfrescoCoreRestApi`](https://github.com/Alfresco/alfresco-js-api/tree/master/src/alfresco-core-rest-api). |
-| [**Content metadata component**](content-metadata-component.md) | Advanced | In this tutorial you will learn how to work with the [`ContentMetadataComponent`](../content-services/content-metadata.component.md). |
+| [**Content metadata component**](content-metadata-component.md) | Advanced | In this tutorial you will learn how to work with the [`ContentMetadataComponent`](../content-services/components/content-metadata.component.md). |
