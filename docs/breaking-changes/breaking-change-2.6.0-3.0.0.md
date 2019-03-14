@@ -6,7 +6,6 @@ Title: Breaking changes, 2.6.0 -> 3.0.0
 
 This document lists all the deprecated ADF v2.x components that were removed for v3.0.0:
 
-
 -   [PR ADF-3354](https://github.com/Alfresco/alfresco-ng2-components/pull/3980):
     The `adf-accordion` component has been removed.
 
@@ -26,20 +25,20 @@ This document lists all the deprecated ADF v2.x components that were removed for
     classes without the **adf-** prefix, you will now need to update them. For example, `.card-view`
     is now `.adf-card-view`.
 
--   [PR ADF-1443](https://github.com/Alfresco/alfresco-ng2-components/pull/4028): `DownloadZipDialogComponent`
-    and `NodeDownloadDirective` have been moved from the Content Services module to the Core module.
+-   [PR ADF-1443](https://github.com/Alfresco/alfresco-ng2-components/pull/4028): [`DownloadZipDialogComponent`](../../lib/core/dialogs/download-zip.dialog.ts)
+    and [`NodeDownloadDirective`](../core/directives/node-download.directive.md) have been moved from the Content Services module to the Core module.
     This modification has enabled us to remove some code duplication between the two modules.
 
 -   [PR ADF-1873](https://github.com/Alfresco/alfresco-ng2-components/pull/4145):
     -   `adf-search-control`: The `QueryBody`, and
-        `customQueryBody` inputs of the `SearchControlComponent` have been removed in favor of the
-        [custom search configuration interface](../core/search-configuration.interface.md).
+        `customQueryBody` inputs of the [`SearchControlComponent`](../content-services/components/search-control.component.md) have been removed in favor of the
+        [custom search configuration interface](../core/interfaces/search-configuration.interface.md).
         The inputs were deprecated in v2.1.0.
-    -   `<adf-viewer>`: The `fileNodeId` input that supplies the Node Id of the file to 
+    -   `<adf-viewer>`: The `fileNodeId` input that supplies the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Id of the file to 
         load has been renamed as `nodeId`.
     -   `<adf-viewer>`: The `allowShare` input has been removed. Inject the
-        [Share Directive](../content-services/content-node-share.directive.md) in a
-        [custom toolbar](../core/viewer.component.md#custom-toolbar) to recreate the behavior of the
+        [Share Directive](../content-services/directives/content-node-share.directive.md) in a
+        [custom toolbar](../core/components/viewer.component.md#custom-toolbar) to recreate the behavior of the
         Share button.
     -   `<adf-viewer>`: The `allowSidebar` input has now been split into `allowLeftSidebar` and `allowRightSidebar`.
     -   `<adf-viewer>`: The `showSidebar` input has now been split into `showLeftSidebar` and `showRightSidebar`.
@@ -49,13 +48,13 @@ This document lists all the deprecated ADF v2.x components that were removed for
         (you can now have two sidebars on the left and right at the same time).
     -   `analytics-report-list` is now `adf-analytics-report-list`.
     -   `analytics-report-parameters` is now `adf-analytics-report-parameters`.
-    -   `CommentProcessModel` was moved into the Core library with the name `CommentModel` in v2.3.0. Now you
-        can only import it from `CoreModule`.
-    -   `CommentsModule`, `CommentListComponent`, and `CommentsComponent` are no longer exported from
-        `ProcessModule` but now from `CoreModule`. The old usage was deprecated in v2.3.0.
+    -   `CommentProcessModel` was moved into the Core library with the name [`CommentModel`](../../lib/core/models/comment.model.ts) in v2.3.0. Now you
+        can only import it from [`CoreModule`](../../lib/core/core.module.ts).
+    -   [`CommentsModule`](../../lib/core/comments/comments.module.ts), [`CommentListComponent`](../core/components/comment-list.component.md), and [`CommentsComponent`](../core/components/comments.component.md) are no longer exported from
+        [`ProcessModule`](../../lib/process-services/process.module.ts) but now from [`CoreModule`](../../lib/core/core.module.ts). The old usage was deprecated in v2.3.0.
     -   `<adf-upload-drag-area>`:  The `parentId` input has been renamed as `rootFolderId`. The old
         name was deprecated in v2.4.0.
-    -   The `createFolder` event of the `UploadBase` class (emitted when a folder was
+    -   The `createFolder` event of the [`UploadBase`](../../lib/content-services/upload/components/base-upload/upload-base.ts) class (emitted when a folder was
         created) was deprecated in v2.4.0 and is no longer used by the framework
         Use the `success` event instead.
     -   `<adf-filters>` is now `<adf-task-filters>`. The old usage was deprecated in v2.4.0.
@@ -69,8 +68,8 @@ This document lists all the deprecated ADF v2.x components that were removed for
     -   The `file-draggable` event (emitted when one or more files are dragged and dropped
         onto the draggable element) was deprecated in v2.4.0 and has now been removed.
         Use `filesDropped` instead to get the same effect.
-    -   The `DocumentListService.hasPermission` method was redundant and has now been removed.
-        Use `ContentService.hasAllowableOperations` instead.
+    -   The [`DocumentListService`](../content-services/services/document-list.service.md)`.hasPermission` method was redundant and has now been removed.
+        Use [`ContentService`](../core/services/content.service.md)`.hasAllowableOperations` instead.
     -   The `diagram-sequence-flow` tag has now been renamed as `adf-diagram-sequence-flow`.
         The old name was deprecated in v2.3.0.
     -   The `diagram-alfresco-publish-task` tag has now been renamed as
@@ -83,14 +82,15 @@ This document lists all the deprecated ADF v2.x components that were removed for
         the same value in pagination using the `pageSize` property.
     -   `<adf-document-list>`: The `enableInfiniteScrolling` input has been removed since
         it is not used anymore. To choose the pagination strategy, add either the
-        [Infinite Pagination Component](../core/infinite-pagination.component.md) or the normal [Pagination Component](../core/pagination.component.md) and assign
+        [Infinite Pagination Component](../core/components/infinite-pagination.component.md) or the normal [Pagination Component](../core/components/pagination.component.md) and assign
         your document list as the `target`.
     -   `<adf-document-list>`: The `folderNode` input has been removed. Use
         the `currentFolderId` and `node` inputs instead.
     -   `SettingsService` has been removed. This was deprecated in v1.7.0.
-    -   `FormService`: the `addFieldsToAForm` method has been removed.
+    -   [`FormService`](../core/services/form.service.md): the `addFieldsToAForm` method has been removed.
     -   `<file-uploading-dialog>` has been renamed to  `<adf-file-uploading-dialog>`.
 -   [PR JS-API](https://github.com/Alfresco/alfresco-ng2-components/pull/4097):
+
     -   The name package of the JS-API has been modified to use the namespace and all
         **alfresco-js-api** imports need to be modified to **@alfresco/js-api**.
         See the official
@@ -103,6 +103,7 @@ This document lists all the deprecated ADF v2.x components that were removed for
         when the JS-API is constructed.
 
         v2.6.1 and before:
+
         ```ts
         callApi(
             path: string,
@@ -122,6 +123,7 @@ This document lists all the deprecated ADF v2.x components that were removed for
         ```
 
         After v3.0.0:
+
         ```ts
         callApi(
             path: string,
@@ -139,10 +141,9 @@ This document lists all the deprecated ADF v2.x components that were removed for
         ): Promise<any>;
         ```
 
- 
 -   [PR ADF-4062](https://github.com/Alfresco/alfresco-ng2-components/pull/4294)
     -   `adf-node-permission` has been renamed `adf-check-allowable-operation`.
-    -   `ContentService.hasPermission` was actually checking the `allowableOperation` value
-        and has been renamed as `ContentService.hasAllowableOperations`.
-    -   `ContentService.hasPermissions` is a new method which actually *does* check
+    -   [`ContentService`](../core/services/content.service.md)`.hasPermission` was actually checking the `allowableOperation` value
+        and has been renamed as [`ContentService`](../core/services/content.service.md)`.hasAllowableOperations`.
+    -   [`ContentService`](../core/services/content.service.md)`.hasPermissions` is a new method which actually _does_ check
         the permissions.
