@@ -19,12 +19,10 @@ import { AppSettingsToggles } from './dialog/appSettingsToggles';
 import { Util } from '../../../util/util';
 import { element, by, protractor, browser } from 'protractor';
 import { TabsPage } from '@alfresco/adf-testing';
-import { TaskHeaderCloudPage } from '@alfresco/adf-testing';
 
 export class TaskDetailsPage {
 
     appSettingsTogglesClass = new AppSettingsToggles();
-    taskHeaderCloudPage = new TaskHeaderCloudPage();
 
     formContent = element(by.css('adf-form'));
     formNameField = element(by.css('span[data-automation-id*="formName"] span'));
@@ -160,23 +158,28 @@ export class TaskDetailsPage {
     }
 
     getAssignee() {
-        return this.taskHeaderCloudPage.getAssignee();
+        Util.waitUntilElementIsVisible(this.assigneeField);
+        return this.assigneeField.getText();
     }
 
     getStatus() {
-        return this.taskHeaderCloudPage.getStatus();
+        Util.waitUntilElementIsVisible(this.statusField);
+        return this.statusField.getText();
     }
 
     getCategory() {
-        return this.taskHeaderCloudPage.getCategory();
+        Util.waitUntilElementIsVisible(this.categoryField);
+        return this.categoryField.getText();
     }
 
     getParentName() {
-        return this.taskHeaderCloudPage.getParentName();
+        Util.waitUntilElementIsVisible(this.parentNameField);
+        return this.parentNameField.getText();
     }
 
     getParentTaskId() {
-        return this.taskHeaderCloudPage.getParentTaskId();
+        Util.waitUntilElementIsVisible(this.parentTaskIdField);
+        return this.parentTaskIdField.getText();
     }
 
     getDuration() {
@@ -185,23 +188,28 @@ export class TaskDetailsPage {
     }
 
     getEndDate() {
-        return this.taskHeaderCloudPage.getEndDate();
+        Util.waitUntilElementIsVisible(this.endDateField);
+        return this.endDateField.getText();
     }
 
     getCreated() {
-        return this.taskHeaderCloudPage.getCreated();
+        Util.waitUntilElementIsVisible(this.createdField);
+        return this.createdField.getText();
     }
 
     getId() {
-        return this.taskHeaderCloudPage.getId();
+        Util.waitUntilElementIsVisible(this.idField);
+        return this.idField.getText();
     }
 
     getDescription() {
-        return this.taskHeaderCloudPage.getDescription();
+        Util.waitUntilElementIsVisible(this.descriptionField);
+        return this.descriptionField.getText();
     }
 
     getDueDate() {
-        return this.taskHeaderCloudPage.getDueDate();
+        Util.waitUntilElementIsVisible(this.dueDateField);
+        return this.dueDateField.getText();
     }
 
     getTitle() {
