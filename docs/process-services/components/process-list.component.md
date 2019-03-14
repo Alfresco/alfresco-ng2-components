@@ -107,7 +107,7 @@ You can define a custom schema for the list in the `app.config.json` file and ac
 ```
 
 You can also define the schema in the HTML using the
-[Data column component](../../core/data-column.component.md). You can combine this with schema
+[Data column component](../../core/components/data-column.component.md). You can combine this with schema
 information defined in `app.config.json` as in the example below:
 
 ```json
@@ -186,6 +186,6 @@ The Process Instance List also supports pagination:
 
 ## See also
 
--   [Data column component](../../core/data-column.component.md)
--   [Data Table Adapter interface](../../core/datatable-adapter.interface.md)
--   [Pagination component](../../core/pagination.component.md)
+-   [Data column component](../../core/components/data-column.component.md)
+-   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
+-   [Pagination component](../../core/components/pagination.component.md)

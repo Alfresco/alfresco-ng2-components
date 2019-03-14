@@ -20,7 +20,7 @@ Displays documents attached to a specified process instance.
 </adf-process-attachment-list>
 ```
 
-Make sure to override the [`UploadService`](../../core/upload.service.md) with the [`ProcessUploadService`](../../../lib/process-services/task-list/services/process-upload.service.ts)
+Make sure to override the [`UploadService`](../../core/services/upload.service.md) with the [`ProcessUploadService`](../../../lib/process-services/task-list/services/process-upload.service.ts)
 
 ```ts
 import { UploadService } from '@alfresco/adf-core';
@@ -67,7 +67,7 @@ A default template will be used if you don't supply a custom one to override it:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| attachmentClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the attachment is double-clicked or the view option is selected from the context menu by the user from within the component. Returns a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) representing the object that was clicked. |
+| attachmentClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the attachment is double-clicked or the view option is selected from the context menu by the user from within the component. Returns a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) representing the object that was clicked. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the attachment list is not able to fetch the attachments (eg, following a network error). |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the attachment list has fetched all the attachments. Returns a list of attachments. |
 
@@ -76,7 +76,7 @@ A default template will be used if you don't supply a custom one to override it:
 ### How to Add Drag and Drop Functionality
 
 You can wrap the attachment list with an
-[Upload Drag Area component](../../content-services/upload-drag-area.component.md)
+[Upload Drag Area component](../../content-services/components/upload-drag-area.component.md)
 to let the user upload attachments to empty lists. When you do this, you can also supply
 a custom _no content template_ (using &lt;adf-empty-list>) to invite the user to add their attachments:
 

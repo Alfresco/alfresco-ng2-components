@@ -45,7 +45,7 @@ export class SomeComponent implements OnInit {
 ```
 
 You can use column templates with the [people list component](people-list.component.md), since it is based on the
-[Datatable component](../../core/datatable.component.md):
+[Datatable component](../../core/components/datatable.component.md):
 
 <!-- {% raw %} -->
 
@@ -79,11 +79,11 @@ You can use column templates with the [people list component](people-list.compon
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | actions | `boolean` | false | Toggles whether or not actions should be visible, i.e. the 'Three-Dots' menu. |
-| users | [`UserProcessModel`](../../core/user-process.model.md)`[]` |  | The array of user data used to populate the people list. |
+| users | [`UserProcessModel`](../../core/models/user-process.model.md)`[]` |  | The array of user data used to populate the people list. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | clickAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserEventModel`](../../../lib/process-services/task-list/models/user-event.model.ts)`>` | Emitted when the user clicks in the 'Three Dots' drop down menu for a row. |
-| clickRow | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessModel`](../../core/user-process.model.md)`>` | Emitted when the user clicks a row in the people list. |
+| clickRow | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`UserProcessModel`](../../core/models/user-process.model.md)`>` | Emitted when the user clicks a row in the people list. |

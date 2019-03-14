@@ -38,7 +38,7 @@ Shows all the information related to a task.
 ## Details
 
 The component populates an internal array of 
-[CardViewModel](../../core/card-view.component.md) with the information that we want to display.
+[CardViewModel](../../core/components/card-view.component.md) with the information that we want to display.
 
 By default all properties are displayed:
 

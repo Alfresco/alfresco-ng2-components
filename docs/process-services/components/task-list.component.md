@@ -209,7 +209,7 @@ The Tasklist also supports pagination as shown in the example below:
 
 ### DataTableAdapter example
 
-See the [Data Table Adapter interface](../../core/datatable-adapter.interface.md) page for full details of the interface and its standard
+See the [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md) page for full details of the interface and its standard
 implementation, [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts). Below is an example of how you can set up the adapter for a
 typical tasklist.
 
@@ -224,10 +224,10 @@ typical tasklist.
 
 ### DataColumn Features
 
-You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [Data Column component](../../core/data-column.component.md) page for more information about these features.
+You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [Data Column component](../../core/components/data-column.component.md) page for more information about these features.
 
 ## See also
 
--   [Data column component](../../core/data-column.component.md)
--   [Data Table Adapter interface](../../core/datatable-adapter.interface.md)
--   [Pagination component](../../core/pagination.component.md)
+-   [Data column component](../../core/components/data-column.component.md)
+-   [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md)
+-   [Pagination component](../../core/components/pagination.component.md)
