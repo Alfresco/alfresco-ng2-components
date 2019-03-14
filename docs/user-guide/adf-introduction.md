@@ -29,7 +29,7 @@ You can find full instructions for installing ADF and its prerequisites in our
 tutorial
 [*Creating your first ADF application*](../tutorials/creating-your-first-adf-application.md).
 When you have the environment and the scaffold app set up, the other
-[tutorials](/tutorials/README.md) then explain how to connect to the backend services
+[tutorials](../tutorials/README.md) then explain how to connect to the backend services
 and add custom features to your app. Use the [component reference](../README.md) pages
 to learn about component features and the [user guide](../user-guide/README.md)
 to learn about specific tasks and topics in depth.
