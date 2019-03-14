@@ -51,23 +51,19 @@ jobs:
           - ./scripts/update-version.sh -gnu -alpha || exit 1
           - npm install
           - ./scripts/lint.sh || exit 1
-          - npm run spellcheck || exit 1
-          - npm run stylelint || exit 1
           - rm -rf tmp && mkdir tmp
           - git merge-base origin/$TRAVIS_BRANCH HEAD > ./tmp/devhead.txt
           - (./scripts/smart-build.sh -b $TRAVIS_BRANCH || exit 1;);
           - npm run build:dist || exit 1
           - ./scripts/license-list-generator.sh
         - stage: Unit test
-          name: core
+          name: core and extensions
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "core$" || $TRAVIS_PULL_REQUEST == "false" ]];
             then
                 ng test core --watch=false || exit 1;
             fi;
-        - stage: Unit test
-          name: extensions
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "extensions$" || $TRAVIS_PULL_REQUEST == "false"  ]];
@@ -75,15 +71,13 @@ jobs:
                 ng test extensions --watch=false || exit 1;
             fi;
         - stage: Unit test
-          name: process-services
+          name: process-services and insights
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "process-services$" || $TRAVIS_PULL_REQUEST == "false"  ]];
             then
                 ng test process-services --watch=false || exit 1;
             fi;
-        - stage: Unit test
-          name: insights
           script:
             AFFECTED_LIBS="$(./scripts/affected-libs.sh -gnu -b $TRAVIS_BRANCH)";
             if [[ $AFFECTED_LIBS =~ "insights$" || $TRAVIS_PULL_REQUEST == "false"  ]];
@@ -109,7 +103,7 @@ jobs:
         - stage: Unit test
           name: demo-shell
           script:   if ([ "$TRAVIS_BRANCH" = "master" ]); then
-                            (./scripts/start.sh -t -ss || exit 1;);
+                            (./scripts/start.sh -t -ss  -si || exit 1;);
                        else
                             (./scripts/start.sh -dev -t -ss -si || exit 1;);
                     fi;
@@ -187,17 +181,15 @@ jobs:
             then
                 (./scripts/test-e2e-lib.sh -host localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e $E2E_EMAIL -b --folder insights --skip-lint --use-dist  || exit 1;);
             fi;
-        - stage: Create Docker PR
+        - stage: Create and Deploy Docker PR
           script:
             node ./scripts/move-dist-folder.js --base-href $TRAVIS_BUILD_NUMBER && (./scripts/pr-publish.sh -n $TRAVIS_BUILD_NUMBER -r $REPO_DOCKER -u $USERNAME_DOCKER -p $PASSWORD_DOCKER || exit 1);
-        - stage: Deploy Docker PR
           script:
             node --no-deprecation ./scripts/pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "docker:$REPO_DOCKER/adf/demo-shell:$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1;
 
 # Send coverage data to codecov
 after_success:
     bash <(curl -s https://codecov.io/bash) -X gcov
-
 
 cache:
   directories:
