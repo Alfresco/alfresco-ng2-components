@@ -59,7 +59,6 @@ when the process list is empty:
 | lastModifiedTo | `string` | "" | Filter the processes. Display only process with lastModifiedTo equal to the supplied date. |
 | multiselect | `boolean` | false | Toggles multiple row selection and renders checkboxes at the beginning of each row |
 | name | `string` | "" | Filter the processes to display only the ones with this name. |
-| presetColumn | `string` |  | Custom preset column schema in JSON format. |
 | processDefinitionId | `string` | "" | Filter the processes to display only the ones with this process definition ID. |
 | processDefinitionKey | `string` | "" | Filter the processes to display only the ones with this process definition key. |
 | selectionMode | `string` | "single" | Row selection mode. Can be "none", "single" or "multiple". For multiple mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
@@ -148,7 +147,7 @@ information defined in `app.config.json` as in the example below:
 ```
 
 These are all the available columns that can be displayed in this component:
-**_appName_**, **_businessKey_**, **_description_**, **_id_**, **_initiator_**, **_lastModified_**, **_processName_**, **_parentId_**, **_processDefinitionId_**, **_processDefinitionKey_**, **_startDate_** and **_status_**.
+**_appName_**, **_businessKey_**, **_description_**, **_id_**, **_initiator_**, **_lastModified_**, **_processName_**, **_parentId_**, **_processDefinitionId_**, **_processDefinitionKey_**, and **_status_**.
 
 ### Setting Sorting Order for the list
 

@@ -86,7 +86,7 @@ given below:
 | **_processDefinitionId_** | Process definition ID |
 | **_processDefinitionKey_** | Process definition key |
 | **_lastModified_** | Date the process was last modified. If lastModified defined the component will show the range **_lastModifiedTo_**, **_lastModifiedFrom_**|
-| **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself). Can be "id", "name", "status". |
+| **_sort_** | Field on which the filter results will be sorted. Can be "id", "name", "status", "startDate". |
 | **_order_** | Sort ordering of the filter results (this doesn't participate in the filtering itself) |
 
 By default, the **_status_**, **_sort_** and **_order_** properties are

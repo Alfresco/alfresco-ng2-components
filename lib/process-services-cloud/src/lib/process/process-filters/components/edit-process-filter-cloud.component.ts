@@ -264,7 +264,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                 this.getPropertyController(dateProperty).setValue(momentDate.toDate());
                 this.getPropertyController(dateProperty).setErrors(null);
             } else {
-                this.getPropertyController(dateProperty).setErrors({invalid: true});
+                this.getPropertyController(dateProperty).setErrors({ invalid: true });
             }
         }
     }
