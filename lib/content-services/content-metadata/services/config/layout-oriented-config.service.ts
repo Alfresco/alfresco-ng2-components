@@ -25,16 +25,19 @@ import { getProperty } from './property-group-reader';
 
 export class LayoutOrientedConfigService implements ContentMetadataConfig {
 
-    constructor(private config: any) {}
+    constructor(private config: any) { }
 
     public isGroupAllowed(groupName: string): boolean {
+        if (this.isIncludeAllEnabled()) {
+            return true;
+        }
         return this.getMatchingGroups(groupName).length > 0;
     }
 
     public reorganiseByConfig(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
-        const layoutBlocks = this.config;
+        const layoutBlocks = this.config.filter((itemsGroup) => itemsGroup.items);
 
-        return layoutBlocks.map((layoutBlock) => {
+        let organisedPropertyGroup = layoutBlocks.map((layoutBlock) => {
             const flattenedItems = this.flattenItems(layoutBlock.items),
                 properties = flattenedItems.reduce((props, explodedItem) => {
                     const property = getProperty(propertyGroups, explodedItem.groupName, explodedItem.propertyName) || [];
@@ -46,6 +49,44 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
                 properties
             };
         });
+
+        return organisedPropertyGroup;
+    }
+
+    public appendAllPreset(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
+        return Object.keys(propertyGroups)
+            .map((groupName) => {
+                const propertyGroup = propertyGroups[groupName],
+                    properties = propertyGroup.properties;
+
+                return Object.assign({}, propertyGroup, {
+                    properties: Object.keys(properties).map((propertyName) => properties[propertyName])
+                });
+            });
+    }
+
+    public filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
+        let excludedConfig = this.config
+            .map((config) => config.exclude)
+            .find((exclude) => exclude !== undefined);
+
+        if (excludedConfig === undefined) {
+            excludedConfig = [];
+        } else if (typeof excludedConfig === 'string') {
+            excludedConfig = [excludedConfig];
+        }
+
+        return propertyGroups.filter((props) => {
+            return !excludedConfig.includes(props.name);
+        });
+    }
+
+    public isIncludeAllEnabled() {
+        let includeAllProperty = this.config
+            .map((config) => config.includeAll)
+            .find((includeAll) => includeAll !== undefined);
+
+        return includeAllProperty !== undefined ? includeAllProperty : false;
     }
 
     private flattenItems(items) {

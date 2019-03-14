@@ -340,10 +340,6 @@
         {
           "description": "Content metadata's one layout group definition",
           "type": "object",
-          "required": [
-            "title",
-            "items"
-          ],
           "properties": {
             "title": {
               "type": "string",
@@ -809,7 +805,7 @@
             ".*": {
               "oneOf": [
                 {
-                  "type": "string",
+                  "type": "object",
                   "pattern": "^\\*$",
                   "description": "Wildcard for every aspect"
                 },

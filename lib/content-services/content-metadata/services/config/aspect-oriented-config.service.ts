@@ -20,9 +20,12 @@ import { getGroup, getProperty } from './property-group-reader';
 
 export class AspectOrientedConfigService implements ContentMetadataConfig {
 
-    constructor(private config: any) {}
+    constructor(private config: any) { }
 
     public isGroupAllowed(groupName: string): boolean {
+        if (this.isIncludeAllEnabled()) {
+            return true;
+        }
         const groupNames = Object.keys(this.config);
         return groupNames.indexOf(groupName) !== -1;
     }
@@ -37,6 +40,33 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
                 return groupAccumulator.concat(newGroup);
             }, [])
             .filter((organisedPropertyGroup) => organisedPropertyGroup.properties.length > 0);
+    }
+
+    public appendAllPreset(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
+        const groups =  Object.keys(propertyGroups)
+            .map((groupName) => {
+                const propertyGroup = propertyGroups[groupName],
+                    properties = propertyGroup.properties;
+
+                return Object.assign({}, propertyGroup, {
+                    properties: Object.keys(properties).map((propertyName) => properties[propertyName])
+                });
+            });
+
+        return groups;
+    }
+
+    public filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
+        if (this.config.exclude) {
+            return propertyGroups.filter((preset) => {
+                return !this.config.exclude.includes(preset.name);
+            });
+        }
+        return propertyGroups;
+    }
+
+    public isIncludeAllEnabled() {
+        return this.config.includeAll;
     }
 
     private getOrganisedPropertyGroup(propertyGroups, aspectName) {
@@ -55,7 +85,7 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
                     .filter((props) => props !== undefined);
             }
 
-            newGroup = [ { title: group.title, properties } ];
+            newGroup = [{ title: group.title, properties }];
         }
 
         return newGroup;

@@ -210,5 +210,40 @@ describe('ContentMetaDataService', () => {
             expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
         });
 
+        it('should exclude the property if this property is excluded from config', (done) => {
+            const fakeNode: Node = <Node> { name: 'Node Action', id: 'fake-id', nodeType: 'cm:content', isFile: true, aspectNames: [] } ;
+
+            const customLayoutOrientedScheme = [
+                {
+                    'id': 'app.content.metadata.customGroup',
+                    'title': 'Exif',
+                    'includeAll': true,
+                    'exclude': ['cm:content'],
+                    'items': [
+                        {
+                            'id': 'app.content.metadata.exifAspect2',
+                            'aspect': 'exif:exif',
+                            'properties': '*'
+                        }
+                    ]
+                }
+            ];
+
+            setConfig('custom', customLayoutOrientedScheme);
+            spyOn(classesApi, 'getClass').and.callFake(() => {
+                return of(contentResponse);
+            });
+
+            service.getGroupedProperties(fakeNode, 'custom').subscribe(
+                (res) => {
+                    expect(res.length).toEqual(0);
+                    done();
+                }
+            );
+
+            expect(classesApi.getClass).toHaveBeenCalledTimes(1);
+            expect(classesApi.getClass).toHaveBeenCalledWith('cm_content');
+        });
+
     });
 });

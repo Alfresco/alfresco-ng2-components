@@ -38,4 +38,16 @@ export class IndifferentConfigService implements ContentMetadataConfig {
                 });
             });
     }
+
+    public filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
+        return propertyGroups;
+    }
+
+    public appendAllPreset(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
+        return[];
+    }
+
+    public isIncludeAllEnabled(): boolean {
+        return true;
+    }
 }
