@@ -24,6 +24,7 @@ export class LoginSSOPage {
     passwordField = element(by.id('password'));
     loginButton = element(by.css('input[class="submit"]'));
     header = element(by.id('adf-header'));
+    loginError = element(by.css(`div[data-automation-id="login-error"]`));
 
     loginAPS(username, password) {
         BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
@@ -54,6 +55,15 @@ export class LoginSSOPage {
     clickLoginButton() {
         BrowserVisibility.waitUntilElementIsVisible(this.loginButton);
         return this.loginButton.click();
+    }
+
+    checkLoginErrorIsDisplayed() {
+        BrowserVisibility.waitUntilElementIsVisible(this.loginError);
+    }
+
+    getLoginErrorMessage() {
+        BrowserVisibility.waitUntilElementIsVisible(this.loginError);
+        return this.loginError.getText();
     }
 
 }

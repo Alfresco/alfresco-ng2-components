@@ -28,6 +28,8 @@ describe('Login component - SSO', () => {
     const navigationBarPage = new NavigationBarPage();
     let silentLogin;
 
+    describe('Login component - SSO', () => {
+
     afterEach(() => {
         navigationBarPage.clickLogoutButton();
         browser.executeScript('window.sessionStorage.clear();');
@@ -38,11 +40,26 @@ describe('Login component - SSO', () => {
         silentLogin = false;
         settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
         loginApsPage.clickOnSSOButton();
+        browser.ignoreSynchronization = true;
         loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
     });
 
     it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', () => {
         settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity);
+        browser.ignoreSynchronization = true;
         loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
     });
+});
+
+    describe('SSO Login Error for login componentO', () => {
+
+        it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', () => {
+            silentLogin = false;
+            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, 'http://aps22/auth/realms/alfresco', TestConfig.adf.hostIdentity, silentLogin);
+            loginApsPage.clickOnSSOButton();
+            loginApsPage.checkLoginErrorIsDisplayed();
+            expect(loginApsPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');
+        });
+    });
+
 });

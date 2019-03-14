@@ -31,6 +31,7 @@ import { SettingsPage } from '../../pages/adf/settingsPage';
 import AlfrescoApi = require('alfresco-js-api-node');
 
 import { Util } from '../../util/util';
+import { ErrorPage } from '../../pages/adf/errorPage';
 
 describe('Login component', () => {
 
@@ -40,6 +41,7 @@ describe('Login component', () => {
     let userInfoPage = new UserInfoPage();
     let contentServicesPage = new ContentServicesPage();
     let loginPage = new LoginPage();
+    let errorPage = new ErrorPage();
     let adminUserModel = new AcsUserModel({
         'id': TestConfig.adf.adminUser,
         'password': TestConfig.adf.adminPassword
@@ -82,6 +84,14 @@ describe('Login component', () => {
         userInfoPage.clickUserProfile();
         expect(userInfoPage.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
         expect(userInfoPage.getContentEmail()).toEqual(userB.email);
+    });
+
+    it('[C299206] Should redirect the user without the right access role on a forbidden page', () => {
+        loginPage.loginToContentServicesUsingUserModel(userA);
+        navigationBarPage.navigateToProcessServicesCloudPage();
+        expect(errorPage.getErrorCode()).toBe('403');
+        expect(errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
+        expect(errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
     });
 
     it('[C260036] Should require username', () => {
