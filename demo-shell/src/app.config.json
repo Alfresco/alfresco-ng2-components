@@ -600,8 +600,7 @@
     "content-metadata": {
         "presets": {
             "default": {
-                "includeAll": true,
-                "exclude": ["cm:content", "exif:exif"]
+                 "exif:exif": "*"
             }
         }
     },
