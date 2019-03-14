@@ -47,6 +47,12 @@ export class UploadToggles {
         return this;
     }
 
+    checkFolderUploadToggleIsEnabled() {
+        let enabledToggle = element(by.css('mat-slide-toggle[id="adf-folder-upload-switch"][class*="mat-checked"]'));
+        Util.waitUntilElementIsVisible(enabledToggle);
+        return this;
+    }
+
     disableFolderUpload() {
         this.formControllersPage.disableToggle(this.uploadFolderToggle);
         return this;
