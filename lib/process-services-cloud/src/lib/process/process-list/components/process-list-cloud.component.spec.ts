@@ -185,7 +185,7 @@ describe('ProcessListCloudComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should reload the task list when input parameters changed', () => {
+        it('should reload the process list when input parameters changed', () => {
             const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
             component.appName = 'mock-app-name';
             component.status = 'mock-status';

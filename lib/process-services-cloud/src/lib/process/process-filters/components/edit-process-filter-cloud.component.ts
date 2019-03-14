@@ -17,14 +17,15 @@
 
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog, DateAdapter } from '@angular/material';
 import { debounceTime, filter } from 'rxjs/operators';
 import moment from 'moment-es6';
+import { Moment } from 'moment';
 
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { ProcessFilterCloudModel, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions } from '../models/process-filter-cloud.model';
-import { TranslationService } from '@alfresco/adf-core';
+import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 
@@ -39,14 +40,14 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     public static ACTION_SAVE_AS = 'saveAs';
     public static ACTION_DELETE = 'delete';
     public static APPLICATION_NAME: string = 'appName';
-    public static APP_RUNNING_STATUS: string = 'Running';
+    public static APP_RUNNING_STATUS: string = 'RUNNING';
     public static LAST_MODIFIED: string = 'lastModified';
     public static SORT: string = 'sort';
     public static ORDER: string = 'order';
-    public static DEFAULT_PROCESS_FILTER_PROPERTIES = ['status', 'sort', 'order'];
+    public static DEFAULT_PROCESS_FILTER_PROPERTIES = ['status', 'sort', 'order', 'lastModified'];
     public static DEFAULT_SORT_PROPERTIES = ['id', 'name', 'status', 'startDate'];
     public static DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
-    public FORMAT_DATE: string = 'DD/MM/YYYY';
+    public DATE_FORMAT: string = 'DD/MM/YYYY';
 
     /** The name of the application. */
     @Input()
@@ -100,6 +101,7 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     directions = [{ label: 'ASC', value: 'ASC' }, { label: 'DESC', value: 'DESC' }];
     applicationNames: any[] = [];
     formHasBeenChanged = false;
+    dateFilter: any[] = [];
     editProcessFilterForm: FormGroup;
     processFilterProperties: ProcessFilterProperties[] = [];
     processFilterActions: ProcessFilterAction[] = [];
@@ -108,9 +110,17 @@ export class EditProcessFilterCloudComponent implements OnChanges {
     constructor(
         private formBuilder: FormBuilder,
         public dialog: MatDialog,
+        private dateAdapter: DateAdapter<Moment>,
+        private userPreferencesService: UserPreferencesService,
         private translateService: TranslationService,
         private processFilterCloudService: ProcessFilterCloudService,
         private appsProcessCloudService: AppsProcessCloudService) { }
+
+    ngOnInit() {
+        this.userPreferencesService.select(UserPreferenceValues.Locale).subscribe((locale) => {
+            this.dateAdapter.setLocale(locale);
+        });
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         const id = changes['id'];
@@ -248,19 +258,13 @@ export class EditProcessFilterCloudComponent implements OnChanges {
 
     onDateChanged(newDateValue: any, dateProperty: ProcessFilterProperties) {
         if (newDateValue) {
-            let momentDate;
-
-            if (typeof newDateValue === 'string') {
-                momentDate = moment(newDateValue, this.FORMAT_DATE, true);
-            } else {
-                momentDate = newDateValue;
-            }
+            let momentDate = moment(newDateValue, this.DATE_FORMAT, true);
 
             if (momentDate.isValid()) {
                 this.getPropertyController(dateProperty).setValue(momentDate.toDate());
                 this.getPropertyController(dateProperty).setErrors(null);
             } else {
-                this.getPropertyController(dateProperty).setErrors({ invalid: true });
+                this.getPropertyController(dateProperty).setErrors({invalid: true});
             }
         }
     }
@@ -496,12 +500,6 @@ export class EditProcessFilterCloudComponent implements OnChanges {
                 key: 'order',
                 value: currentProcessFilter.order || this.directions[0].value,
                 options: this.directions
-            }),
-            new ProcessFilterProperties({
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.START_DATE',
-                type: 'date',
-                key: 'startDate',
-                value: ''
             })
         ];
     }

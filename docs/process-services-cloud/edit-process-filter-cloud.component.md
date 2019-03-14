@@ -86,21 +86,20 @@ given below:
 | **_processDefinitionId_** | Process definition ID |
 | **_processDefinitionKey_** | Process definition key |
 | **_lastModified_** | Date the process was last modified. If lastModified defined the component will show the range **_lastModifiedTo_**, **_lastModifiedFrom_**|
-| **_startDate_** | Date the process was started |
-| **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself). Can be "id", "name", "status" or "startDate". |
+| **_sort_** | Field on which the filter results will be sorted (doesn't participate in the filtering itself). Can be "id", "name", "status". |
 | **_order_** | Sort ordering of the filter results (this doesn't participate in the filtering itself) |
 
 By default, the **_status_**, **_sort_** and **_order_** properties are
 displayed in the editor. However, you can also choose which properties
 to show using the `filterProperties` array.
 For example, the code below initializes the editor with the **_appName_**,
-**_processInstanceId_**, **_startDate_** and **_lastModified_** properties:
+**_processInstanceId_**, **_processName_** and **_lastModified_** properties:
 
 ```ts
 export class SomeComponent implements OnInit {
 
     filterProperties: string[] = [
-        "appName",
+        "processName"
         "processInstanceId",
         "lastModified"];
 
