@@ -40,17 +40,19 @@ Shows Process Filter Details.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| actions | `string[]` |  | List of sort actions. |
 | appName | `string` |  | The name of the application. |
 | filterProperties | `string[]` |  | List of process filter properties to display |
 | id | `string` |  | Id of the process instance filter. |
 | showFilterActions | `boolean` | true | Toggles editing of process filter actions. |
 | showTitle | `boolean` | true | Toggles editing of the process filter title. |
+| sortProperties | `string[]` |  | List of sort properties to display. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterActionType`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a filter action occurs i.e Save, SaveAs, Delete. |
+| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterAction`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a filter action occurs i.e Save, SaveAs, Delete. |
 | filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a process instance filter property changes. |
 
 ## Details

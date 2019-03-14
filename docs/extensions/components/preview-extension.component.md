@@ -5,26 +5,27 @@ Status: Experimental
 Last reviewed: 2018-04-12
 ---
 
-# [Preview Extension component](../../lib/extensions/src/lib/components/viewer/preview-extension.component.ts "Defined in preview-extension.component.ts")
+# [Preview Extension component](../../../lib/extensions/src/lib/components/viewer/preview-extension.component.ts "Defined in preview-extension.component.ts")
 
 Displays dynamically-loaded extension components.
-If you want give a look on a real working viewer extension project you can look at [aca monaco extensio](https://github.com/eromano/aca-monaco-extension)
+
+See the [ACA monaco extension](https://github.com/eromano/aca-monaco-extension) for
+an example of a real working viewer extension project.
+
 ## Class members
 
 ### Properties
 
-The viewer component when it recognize a new extension always pass the following two parameter as input:
-
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| extension | `string` |  |  |
+| id | `string` |  |  |
+| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | of the content to display |
 | url | `string` |  | URL Of the content in the repository |
-| node | `Node` |  | Node of the content to display |
-
 
 ## Details
 
 If you want create your custom extension viewer you need to create the following files in a separate project:
-
 
 The Module needs to know which is the Id of your extension:
 
@@ -36,11 +37,9 @@ export class YourExtensionViewerModule {
     });
   }
 }
-
 ```
 
-
-Your viewer component extension business logic:
+Your [viewer component](../../core/components/viewer.component.md) extension business logic:
 
 ```ts
 import { Node } from '@alfresco/js-api';
@@ -65,19 +64,15 @@ export class YourExtensionViewerComponent implements ViewerExtensionInterface {
   
   ....YOUR CUSTOM LOGIC
 }
-
 ```
 
-Your viewer component template:
+Your [viewer component](../../core/components/viewer.component.md) template:
 
 ```HTML
-
 <div> This is your custom extension viewer template</div>
-
 ```
 
-Your viewer component extension.json:
-
+Your [viewer component](../../core/components/viewer.component.md) extension.json:
 
 ```JSON
 {
@@ -96,11 +91,8 @@ Your viewer component extension.json:
     }
   }
 }
-
 ```
-
-
 
 ## See also
 
--   [Extension service](../../lib/extensions/src/lib/services/extension.service.ts)
+-   [Extension service](../services/extension.service.md)

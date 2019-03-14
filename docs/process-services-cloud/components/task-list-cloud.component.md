@@ -217,5 +217,5 @@ You can customize the styling of a column and also add features like tooltips an
 ## See also
 
 -   [Data column component](../../core/components/data-column.component.md)
--   [`DataTableAdapter`](../../core/interfaces/datatable-adapter.interface.md)
+-   [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts)
 -   [Pagination component](../../core/components/pagination.component.md)

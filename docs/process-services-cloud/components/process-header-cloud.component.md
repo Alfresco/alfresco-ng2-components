@@ -5,11 +5,11 @@ Status: Experimental
 Last reviewed: 2019-03-08
 ---
 
-# [Process Header Cloud Component](../../lib/process-services-cloud/src/lib/process/process-header/components/process-header-cloud.component.ts "Defined in process-header-cloud.component.ts")
+# [Process Header Cloud Component](../../../lib/process-services-cloud/src/lib/process/process-header/components/process-header-cloud.component.ts "Defined in process-header-cloud.component.ts")
 
 Shows all the information related to a process instance.
 
-![adf-cloud-process-header](../docassets/images/adf-cloud-process-header.png)
+![adf-cloud-process-header](../../docassets/images/adf-cloud-process-header.png)
 
 ## Basic Usage
 
@@ -32,7 +32,7 @@ Shows all the information related to a process instance.
 ## Details
 
 The component populates an internal array of
-[CardViewModel](../core/card-view.component.md) with the information that we want to display.
+[`CardViewModel`](../../core/components/card-view.component.md) with the information that we want to display.
 
 By default all properties are displayed:
 

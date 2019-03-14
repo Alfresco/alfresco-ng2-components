@@ -30,7 +30,7 @@ Starts a process.
 | name | `string` | "" | Name of the process. |
 | processDefinitionName | `string` |  | Name of the process definition. |
 | showSelectProcessDropdown | `boolean` | true | Show/hide the process dropdown list. |
-| variables | `Map<string, any>[]` |  | Variables to attach to the payload. |
+| variables | `Map<string, object>[]` |  | Variables to attach to the payload. |
 
 ### Events
 

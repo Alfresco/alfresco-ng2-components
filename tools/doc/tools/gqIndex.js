@@ -9,7 +9,10 @@ var replaceZone = require("mdast-zone");
 var graphql_1 = require("graphql");
 var MQ = require("../mqDefs");
 var libNamesRegex = /content-services|core|extensions|insights|process-services|process-services-cloud/;
-var libNamesList = ['content-services', 'core', 'process-services'];
+var libNamesList = [
+    'content-services', 'core', 'extensions',
+    'insights', 'process-services', 'process-services-cloud'
+];
 var query = "\n    query libIndex($libName: String) {\n        documents(idFilter: $libName) {\n            title: metadata(key: \"Title\")\n            status: metadata(key: \"Status\")\n            id\n            classType: folder(depth: 2)\n            heading {\n                link {\n                    url\n                }\n            }\n            paragraph {\n                plaintext\n            }\n        }\n    }\n";
 function processDocs(mdCache, aggData, _errorMessages) {
     var docset = new GQDocset(mdCache);
