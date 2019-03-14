@@ -80,6 +80,7 @@ import { PeopleGroupCloudDemoComponent } from './components/app-layout/cloud/peo
 import { CloudSettingsComponent } from './components/app-layout/cloud/cloud-settings.component';
 import { AppExtensionsModule } from './app-extension.module';
 import { ProcessDetailsCloudDemoComponent } from './components/app-layout/cloud/process-details-cloud-demo.component';
+import { NestedMenuPositionDirective } from './components/app-layout/cloud/directives/nested-menu-position.directive';
 
 @NgModule({
     imports: [
@@ -145,7 +146,8 @@ import { ProcessDetailsCloudDemoComponent } from './components/app-layout/cloud/
         CloudFiltersDemoComponent,
         TemplateDemoComponent,
         PeopleGroupCloudDemoComponent,
-        CloudSettingsComponent
+        CloudSettingsComponent,
+        NestedMenuPositionDirective
     ],
     providers: [
         {
