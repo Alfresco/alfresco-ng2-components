@@ -40,7 +40,7 @@ Adds "infinite" pagination to the component it is used with.
 | ---- | ---- | ------------- | ----------- |
 | isLoading | `boolean` | false | Is a new page loading? |
 | pageSize | `number` |  | Number of items that are added with each "load more" event. |
-| target | [`PaginatedComponent`](../../../lib/core/pagination/paginated-component.interface.ts) |  | Component that provides custom pagination support. |
+| target |  |  | Component that provides custom pagination support. |
 
 ### Events
 
@@ -65,5 +65,5 @@ See the [Pagination component](pagination.component.md) for more information abo
 
 ## See also
 
--   [Document list component](../../content-services/document-list.component.md)
+-   [Document list component](../../content-services/components/document-list.component.md)
 -   [Pagination component](pagination.component.md)

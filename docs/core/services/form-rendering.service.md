@@ -7,7 +7,7 @@ Last reviewed: 2018-11-20
 
 # [Form Rendering service](../../../lib/core/form/services/form-rendering.service.ts "Defined in form-rendering.service.ts")
 
-Maps a form field type string onto the corresponding form [widget component](../../insights/widget.component.md) type.
+Maps a form field type string onto the corresponding form [widget component](../../insights/components/widget.component.md) type.
 
 ## Class members
 

@@ -63,7 +63,7 @@ toolbar:
 ```
 
 For example, the image below shows a toolbar with a
-[Breadcrumb component](../../content-services/breadcrumb.component.md) title, and then some buttons
+[Breadcrumb component](../../content-services/components/breadcrumb.component.md) title, and then some buttons
 pushed to the right by a spacer:
 
 ![](../../docassets/images/adf-toolbar-02.png)

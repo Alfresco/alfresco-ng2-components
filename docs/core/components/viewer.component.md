@@ -130,7 +130,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 ### Integrating with the Document List component
 
 Below is the most simple integration of the Viewer and 
-[Document List](../../content-services/document-list.component.md) components within your custom component:
+[Document List](../../content-services/components/document-list.component.md) components within your custom component:
 
 ```html
 <adf-document-list
@@ -484,4 +484,4 @@ content.
 
 ## See also
 
--   [Document List component](../../content-services/document-list.component.md)
+-   [Document List component](../../content-services/components/document-list.component.md)
