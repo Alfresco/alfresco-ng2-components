@@ -15,38 +15,4 @@
  * limitations under the License.
  */
 
-export * from './about/index';
-export * from './viewer/index';
-export * from './userinfo/index';
-export * from './toolbar/index';
-export * from './settings/index';
-export * from './pagination/index';
-export * from './login/index';
-export * from './language-menu/index';
-export * from './info-drawer/index';
-export * from './data-column/index';
-export * from './datatable/index';
-export * from './context-menu/index';
-export * from './card-view/index';
-export * from './app-config/index';
-export * from './form/index';
-export * from './layout/index';
-export * from './comments/index';
-export * from './buttons-menu/index';
-export * from './sorting-picker/index';
-export * from './templates/index';
-export * from './pipes/index';
-export * from './services/index';
-export * from './directives/index';
-export * from './clipboard/index';
-export * from './dialogs/index';
-export * from './icon/index';
-
-export * from './utils/index';
-export * from './interface/index';
-export * from './models/index';
-export * from './events/index';
-export * from './mock/index';
-export * from './testing';
-
-export * from './core.module';
+export * from './src/public-api';
