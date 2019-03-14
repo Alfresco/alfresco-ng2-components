@@ -57,7 +57,7 @@ The decorated element will be disabled if:
 
 ### HTML element example
 
-A typical use case is to bind a [Document List](../../content-services/document-list.component.md)
+A typical use case is to bind a [Document List](../../content-services/components/document-list.component.md)
 selection property to a toolbar button. In the following example, the "Delete" button should
 be disabled if no selection is present or if user does not have permission to delete at least one node in the selection:
 
@@ -81,7 +81,7 @@ one or more documents that they have permission to delete.
 ### Angular component example
 
 You can add the directive to any Angular component that implements the [`NodeAllowableOperationSubject`](../../../lib/core/directives/check-allowable-operation.directive.ts)
-interface (the [Upload Drag Area component](../../content-services/upload-drag-area.component.md),
+interface (the [Upload Drag Area component](../../content-services/components/upload-drag-area.component.md),
 for example). You can also use it in much the same way as you would with an HTML element:
 
 ```html

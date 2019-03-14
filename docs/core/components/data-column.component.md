@@ -180,7 +180,7 @@ In the Example below we will prepend `Hi!` to each file and folder name in the l
 
 <!-- {% endraw %} -->
 
-In the Example below we will integrate the [adf-tag-node-list](../../content-services/tag-node-list.component.md) component
+In the Example below we will integrate the [adf-tag-node-list](../../content-services/components/tag-node-list.component.md) component
 within the document list.
 
 <!-- {% raw %} -->
@@ -300,6 +300,6 @@ Now you can declare columns and assign the `desktop-only` class where needed:
 
 ## See also
 
--   [Document list component](../../content-services/document-list.component.md)
+-   [Document list component](../../content-services/components/document-list.component.md)
 -   [Datatable component](datatable.component.md)
 -   [Task list component](../../process-services/components/task-list.component.md)

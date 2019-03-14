@@ -80,8 +80,8 @@ Displays the documents from a repository.
 | sortingMode | `string` | "client" | Defines sorting mode. Can be either `client` (items in the list are sorted client-side) or `server` (the ordering supplied by the server is used without further client-side sorting). Note that the `server` option _does not_ request the server to sort the data before delivering it. |
 | thumbnails | `boolean` | false | Show document thumbnails rather than icons |
 | where | `string` |  | Filters the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information. |
-| currentFolderId | `string` |  | The ID of the folder node to display or a reserved string alias for special sources |
-| rowFilter | `RowFilter` |  | Custom function to choose whether to show or hide rows. See the [Row Filter Model](../models/row-filter.model.md) page for more information. |
+| currentFolderId |  |  | The ID of the folder node to display or a reserved string alias for special sources |
+| rowFilter |  |  | Custom function to choose whether to show or hide rows. See the [Row Filter Model](../models/row-filter.model.md) page for more information. |
 
 ### Events
 

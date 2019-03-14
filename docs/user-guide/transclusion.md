@@ -13,11 +13,11 @@ most cases, this is used to make small customizations (for example, the various
 list components let you supply custom content to show when the list is empty).
 However, there are also a few "containers" whose entire content is set by the user
 with the container itself being mainly for convenient display and formatting
-(for example, the [Info drawer component](../core/info-drawer.component.md)).
+(for example, the [Info drawer component](../core/components/info-drawer.component.md)).
 
 You supply the content you want to transclude between the opening and closing tags of
 the main component. In a few cases, this content can be completely free-form as with
-the body section of the [Login component](../core/login.component.md):
+the body section of the [Login component](../core/components/login.component.md):
 
 ```html
 <adf-login ...>
@@ -28,7 +28,7 @@ the body section of the [Login component](../core/login.component.md):
 ```
 
 More often, though, the main component makes use of one or more sub-components to add
-structure to the transclusion. For example, the [Login component](../core/login.component.md)
+structure to the transclusion. For example, the [Login component](../core/components/login.component.md)
 also has sub-components for the header and footer regions in addition to the free-form
 content of the body:
 

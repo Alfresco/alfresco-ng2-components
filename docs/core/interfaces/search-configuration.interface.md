@@ -90,5 +90,5 @@ described below.
 
 ## See also
 
--   [Search component](../../content-services/search.component.md)
+-   [Search component](../../content-services/components/search.component.md)
 -   [Search configuration service](../services/search-configuration.service.md)

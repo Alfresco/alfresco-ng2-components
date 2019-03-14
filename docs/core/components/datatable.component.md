@@ -644,5 +644,5 @@ Final result
 
 -   [Data column component](data-column.component.md)
 -   [Pagination component](pagination.component.md)
--   [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts)
--   [Document list component](../../content-services/document-list.component.md)
+-   [Data Table Adapter interface](../interfaces/datatable-adapter.interface.md)
+-   [Document list component](../../content-services/components/document-list.component.md)

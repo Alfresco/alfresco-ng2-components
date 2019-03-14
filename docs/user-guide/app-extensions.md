@@ -45,7 +45,7 @@ a place in the app where the actual content will be supplied dynamically.
 ADF provides a number of features that offer extension points or help
 with extensibility in general:
 
--   **Components**: The [Dynamic component](../extensions/dynamic.component.md)
+-   **Components**: The [Dynamic component](../extensions/components/dynamic.component.md)
     has no content of its own but it has an `id` property that
     references a registered component extension ID. The referenced component
     will be added as a child of the Dynamic component at runtime.
@@ -78,9 +78,9 @@ with extensibility in general:
 
 ## Setting up an app for extensibility
 
-You can register component classes for use with the [Dynamic component](../extensions/dynamic.component.md)
+You can register component classes for use with the [Dynamic component](../extensions/components/dynamic.component.md)
 using the `setComponents` method of the
-[Extension service](../extensions/extension.service.md) (see the Dynamic component page for further details
+[Extension service](../extensions/services/extension.service.md) (see the Dynamic component page for further details
 and code samples). The service also has `setAuthGuards` and
 `setEvaluators` methods that behave analogously.
 
@@ -117,7 +117,7 @@ below:
 }
 ```
 
-You can use the `load` method of the [Extension service](../extensions/extension.service.md) to read the file into a
+You can use the `load` method of the [Extension service](../extensions/services/extension.service.md) to read the file into a
 convenient object that implements the [`ExtensionConfig`](../../lib/extensions/src/lib/config/extension.config.ts) and [`ExtensionRef`](../../lib/extensions/src/lib/config/extension.config.ts) interfaces.
 Note that the `extension.schema.json` file contains a [JSON schema](http://json-schema.org/)
 that allows for format checking and also text completion in some editors.
@@ -144,7 +144,7 @@ following example:
 ```
 
 You can access routes from the config using the `getRouteById` method of the
-[Extension service,](../extensions/extension.service.md) which returns a [`RouteRef`](../../lib/extensions/src/lib/config/routing.extensions.ts) object. Note that the references
+[Extension service,](../extensions/services/extension.service.md) which returns a [`RouteRef`](../../lib/extensions/src/lib/config/routing.extensions.ts) object. Note that the references
 to the component and auth guards are extension IDs,
 [as described above](#extension-points).
 
@@ -173,7 +173,7 @@ The `actions` array has the following structure:
   ]
 ```
 
-The [Extension service](../extensions/extension.service.md) defines a `getActionById` method that returns an
+The [Extension service](../extensions/services/extension.service.md) defines a `getActionById` method that returns an
 [`ActionRef`](../../lib/extensions/src/lib/config/action.extensions.ts) object corresponding to an item from this array.
 
 The `type` property refers to an action type that must be provided by the
@@ -185,7 +185,7 @@ a message, URL or other static text data. However, you can also define a
 JavaScript expression here by surrounding it with `$( ... )`. The expression
 has access to an object named `context` which typically contains information
 about the app state. You can supply the object that contains this data via the
-`runExpression` method of the [Extension service,](../extensions/extension.service.md) which actually evaluates the
+`runExpression` method of the [Extension service,](../extensions/services/extension.service.md) which actually evaluates the
 expression. Note that the result of the expression doesn't necessarily
 have to be a string.
 
@@ -204,7 +204,7 @@ The simplest type of rule is configured as shown below:
 ```
 
 The `type` is the ID of a `RuleEvaluator` function that has been registered using
-the `setEvaluators` method of the [Extension service](../extensions/extension.service.md).
+the `setEvaluators` method of the [Extension service](../extensions/services/extension.service.md).
 The evaluator is a boolean function that represents whether a certain
 condition is true or false (eg, whether an item is selected, whether the user
 has certain options enabled, etc). The evaluator has access to a context object

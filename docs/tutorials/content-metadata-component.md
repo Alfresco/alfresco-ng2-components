@@ -5,13 +5,13 @@ Level: Advanced
 
 # Content metadata component
 
-In this tutorial you will learn how to work with the [`ContentMetadataComponent`](../content-services/content-metadata.component.md).
+In this tutorial you will learn how to work with the [`ContentMetadataComponent`](../content-services/components/content-metadata.component.md).
 
 This component is used to render the standard and custom metadata of generic content item (called a _node_) stored in Alfresco Content Services. With the usual approach "learning by doing", you will see here some practical examples you might find useful in your own applicatioin. As a starting point, we will use and customize the [Alfresco Content App](https://github.com/Alfresco/alfresco-content-app).
 
 ## About the `ContentMetadataComponent`
 
-As described in the [`ContentMetadataComponent`](../content-services/content-metadata.component.md) documentation, the `adf-content-metadata-card` tag has some useful attributes, included the `preset` attribute, which is used to point to a collection of aspects/properties to render.
+As described in the [`ContentMetadataComponent`](../content-services/components/content-metadata.component.md) documentation, the `adf-content-metadata-card` tag has some useful attributes, included the `preset` attribute, which is used to point to a collection of aspects/properties to render.
 
 Below, you can see the `preset` value requesting to render all the available aspects/properties:
 

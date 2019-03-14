@@ -69,7 +69,7 @@ repeated use. More information about renditions is available in the
 
 In the [Renditions service](renditions.service.md) methods, the `nodeId` is a string identifying the content
 node that the rendition applies to. This can be obtained from
-[Document List component](../../content-services/document-list.component.md) events and various other places
+[Document List component](../../content-services/components/document-list.component.md) events and various other places
 in the ADF API. The `encoding` identifies the conversion performed by the rendition.
 
 See the

@@ -61,7 +61,7 @@ A default "no content" template is displayed if you don't supply one to override
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| attachmentClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the attachment is double-clicked or a view option is selected from the context menu by the user from within the component. Returns a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) representing the clicked object. |
+| attachmentClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the attachment is double-clicked or a view option is selected from the context menu by the user from within the component. Returns a [Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob) representing the clicked object. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while fetching the attachments. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Object>` | Emitted when the attachment list has fetched all the attachments. Returns a list of attachments. |
 
@@ -69,7 +69,7 @@ A default "no content" template is displayed if you don't supply one to override
 
 ### How to Add Drag and Drop Functionality
 
-You can wrap the component with an [Upload Drag Area component](../../content-services/upload-drag-area.component.md)
+You can wrap the component with an [Upload Drag Area component](../../content-services/components/upload-drag-area.component.md)
 to enable the user to upload attachments for empty lists. When you do this, you can also pass
 a custom _no content template_ as shown below. The component invites the user to drag files to
 upload whenever the list is empty.
@@ -100,7 +100,7 @@ import { UploadService } from '@alfresco/adf-core';
 import { TaskUploadService } from '@alfresco/adf-process-services';
 ```
 
-Make sure you override the [`UploadService`](../../core/upload.service.md) with the [`TaskUploadService`](../../../lib/process-services/task-list/services/task-upload.service.ts)
+Make sure you override the [`UploadService`](../../core/services/upload.service.md) with the [`TaskUploadService`](../../../lib/process-services/task-list/services/task-upload.service.ts)
 
 ```ts
 @Component({
@@ -116,4 +116,4 @@ export class MyCustomTaskAttachmentComponent {
 
 ## See also
 
--   [Upload Drag Area Component](../../content-services/upload-drag-area.component.md)
+-   [Upload Drag Area Component](../../content-services/components/upload-drag-area.component.md)

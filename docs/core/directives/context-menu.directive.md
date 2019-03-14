@@ -55,4 +55,4 @@ export class MyComponent implements OnInit {
 ## Details
 
 See the [Demo Shell](../../../demo-shell/README.md)
-or [Document List component](../../content-services/document-list.component.md) implementation for more details and use cases.
+or [Document List component](../../content-services/components/document-list.component.md) implementation for more details and use cases.

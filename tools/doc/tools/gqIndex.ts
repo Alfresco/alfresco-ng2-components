@@ -12,7 +12,10 @@ import { graphql, buildSchema } from 'graphql';
 import * as MQ from '../mqDefs';
 
 let libNamesRegex = /content-services|core|extensions|insights|process-services|process-services-cloud/;
-let libNamesList = ['content-services', 'core', 'process-services'];
+let libNamesList = [
+    'content-services', 'core', 'extensions',
+    'insights', 'process-services', 'process-services-cloud'
+];
 
 
 let query = `
