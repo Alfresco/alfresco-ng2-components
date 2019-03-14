@@ -121,11 +121,11 @@ describe('Upload - User permission', () => {
         it('[C212861] Should not be allowed to Drag and drop a file/folder in a folder with consumer permissions', () => {
             contentServicesPage.checkDragAndDropDIsDisplayed();
 
-            contentServicesPage.dragAndDropFile(emptyFile.location);
-            contentServicesPage.checkContentIsDisplayed(emptyFile.name);
-
             contentServicesPage.dragAndDropFolder(folder.location);
             contentServicesPage.checkContentIsDisplayed(folder.name);
+
+            contentServicesPage.dragAndDropFile(emptyFile.location);
+            contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
             navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
@@ -175,6 +175,7 @@ describe('Upload - User permission', () => {
 
         it('[C279916] Should not be allowed to upload a folder in folder with consumer permissions', () => {
             uploadToggles.enableFolderUpload();
+            uploadToggles.checkFolderUploadToggleIsEnabled();
 
             contentServicesPage.uploadFolder(folder.location)
                 .checkContentIsDisplayed(folder.name);
