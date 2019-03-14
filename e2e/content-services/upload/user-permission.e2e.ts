@@ -201,8 +201,6 @@ describe('Upload - User permission', () => {
         beforeEach(async (done) => {
             navigationBarPage.openContentServicesFolder(this.managerSite.entry.guid);
 
-            contentServicesPage.goToDocumentList();
-
             done();
         });
 

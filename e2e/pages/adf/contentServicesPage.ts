@@ -167,28 +167,26 @@ export class ContentServicesPage {
         return this.contentList.dataTablePage().getAllRowsColumnValues('Created');
     }
 
-    getElementsDisplayedSize() {
-        return this.contentList.dataTablePage().getAllRowsColumnValues('Size');
+    async getElementsDisplayedSize(alfrescoJsApi) {
+        let idList = await this.getElementsDisplayedId();
+        let numberOfElements = await this.numberOfResultsDisplayed();
+        let nodeList = await this.nodeActions.getNodesDisplayed(alfrescoJsApi, idList, numberOfElements);
+        let sizeList = [];
+        for (let i = 0; i < nodeList.length; i++) {
+            sizeList.push(nodeList[i].entry.content.sizeInBytes);
+        }
+        return sizeList;
     }
 
-    getElementsDisplayedAuthor(alfrescoJsApi) {
-        let deferred = protractor.promise.defer();
-        let initialList = [];
-        let idList = this.getElementsDisplayedId();
-        let numberOfElements = this.numberOfResultsDisplayed();
-        this.nodeActions.getNodesDisplayed(alfrescoJsApi, idList, numberOfElements).then((nodes) => {
-            nodes.forEach((item) => {
-                item.entry.createdByUser.id.then((author) => {
-                    if (author !== '') {
-                        initialList.push(author);
-                    }
-                });
-            });
-        }).then(function () {
-            deferred.fulfill(initialList);
-        });
-
-        return deferred.promise;
+    async getElementsDisplayedAuthor(alfrescoJsApi) {
+        let idList = await this.getElementsDisplayedId();
+        let numberOfElements = await this.numberOfResultsDisplayed();
+        let nodeList = await this.nodeActions.getNodesDisplayed(alfrescoJsApi, idList, numberOfElements);
+        let authorList = [];
+        for (let i = 0; i < nodeList.length; i++) {
+            authorList.push(nodeList[i].entry.createdByUser.id);
+        }
+        return authorList;
     }
 
     getElementsDisplayedName() {

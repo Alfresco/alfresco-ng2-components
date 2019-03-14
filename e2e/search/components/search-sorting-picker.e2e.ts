@@ -345,12 +345,12 @@ describe('Search Sorting Picker', () => {
 
     it('[C277290] Should be able to sort the search results by "Size" ASC', () => {
         searchResults.sortBySize(true);
-        expect(searchResults.checkListIsOrderedBySizeAsc()).toBe(true);
+        expect(searchResults.checkListIsOrderedBySizeAsc(this.alfrescoJsApi)).toBe(true);
     });
 
     it('[C277291] Should be able to sort the search results by "Size" DESC', () => {
         searchResults.sortBySize(false);
-        expect(searchResults.checkListIsOrderedBySizeDesc()).toBe(true);
+        expect(searchResults.checkListIsOrderedBySizeDesc(this.alfrescoJsApi)).toBe(true);
     });
 
     it('[C277301] Should be able to change default sorting option for the search results', () => {
@@ -368,6 +368,6 @@ describe('Search Sorting Picker', () => {
             .enterTextAndPressEnter(search);
 
         searchSortingPicker.checkSortingSelectorIsDisplayed();
-        expect(searchResults.checkListIsOrderedBySizeAsc()).toBe(true);
+        expect(searchResults.checkListIsOrderedBySizeAsc(this.alfrescoJsApi)).toBe(true);
     });
 });

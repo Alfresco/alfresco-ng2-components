@@ -177,13 +177,13 @@ export class SearchResultsPage {
         return this.contentServices.checkElementsSortedDesc(list);
     }
 
-    async checkListIsOrderedBySizeAsc() {
-        let list = await this.contentServices.getElementsDisplayedSize();
+    async checkListIsOrderedBySizeAsc(alfrescoJsApi) {
+        let list = await this.contentServices.getElementsDisplayedSize(alfrescoJsApi);
         return this.contentServices.checkElementsSortedAsc(list);
     }
 
-    async checkListIsOrderedBySizeDesc() {
-        let list = await this.contentServices.getElementsDisplayedSize();
+    async checkListIsOrderedBySizeDesc(alfrescoJsApi) {
+        let list = await this.contentServices.getElementsDisplayedSize(alfrescoJsApi);
         return this.contentServices.checkElementsSortedDesc(list);
     }
 
