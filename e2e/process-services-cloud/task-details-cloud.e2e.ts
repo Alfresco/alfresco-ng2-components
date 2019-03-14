@@ -86,8 +86,8 @@ describe('Task Header cloud component', () => {
 
     it('[C291943] Should display task details for assigned task', async () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(basicCreatedTaskName);
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByContentName(basicCreatedTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
         expect(taskHeaderCloudPage.getId()).toEqual(basicCreatedTask.entry.id);
         expect(taskHeaderCloudPage.getDescription())
             .toEqual(basicCreatedTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : basicCreatedTask.entry.description);
@@ -106,8 +106,8 @@ describe('Task Header cloud component', () => {
 
     it('[C291944] Should display task details for completed task', async () => {
         tasksCloudDemoPage.completedTasksFilter().clickTaskFilter();
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(completedTaskName);
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByContentName(completedTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
         expect(taskHeaderCloudPage.getId()).toEqual(completedTask.entry.id);
         expect(taskHeaderCloudPage.getDescription())
             .toEqual(completedTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : completedTask.entry.description);
@@ -126,8 +126,8 @@ describe('Task Header cloud component', () => {
 
     it('[C291945] Should Parent Name and Parent Id not be empty in task details for sub task', async () => {
         tasksCloudDemoPage.myTasksFilter().clickTaskFilter();
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkContentIsDisplayed(subTask.entry.name);
-        tasksCloudDemoPage.taskListCloudComponent().getDataTable().selectRowByContentName(subTask.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(subTask.entry.name);
+        tasksCloudDemoPage.taskListCloudComponent().selectRow(subTask.entry.name);
         expect(taskHeaderCloudPage.getId()).toEqual(subTask.entry.id);
         expect(taskHeaderCloudPage.getDescription())
             .toEqual(subTask.entry.description === null ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : subTask.entry.description);
