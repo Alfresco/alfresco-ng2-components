@@ -454,8 +454,7 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Dynamic Component](extensions/components/dynamic.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays dynamically-loaded extension components. | [Source](../lib/extensions/src/lib/components/dynamic-component/dynamic.component.ts) |
-| [Dynamic Component](extensions/components/preview-extension.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays dynamically-loaded extension components. |  |
-| If you want give a look on a real working viewer extension project you can look at aca monaco extensio | [Source](../lib/extensions/src/lib/components/viewer/preview-extension.component.ts) |  |
+| [Preview Extension Component](extensions/components/preview-extension.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Displays dynamically-loaded extension components. | [Source](../lib/extensions/src/lib/components/viewer/preview-extension.component.ts) |
 
 ### Services
 

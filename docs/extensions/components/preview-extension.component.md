@@ -1,5 +1,5 @@
 ---
-Title: Dynamic Component
+Title: Preview Extension Component
 Added: v3.1.0
 Status: Experimental
 Last reviewed: 2018-04-12
