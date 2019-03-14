@@ -274,14 +274,18 @@ When using this configuration you can still whitelist aspects and properties as 
 ```json
 "content-metadata": {
     "presets": {
-        "robot-images": [{
-            "title": "Robot Group",
-            "includeAll": true,
-            "exclude": ["cm:content", "exif:exif"],
-            "items": [
-                { "aspect": "exif:exif", "properties": [ "exif:pixelXDimension", "exif:pixelYDimension"] }
-            ] 
-        }]
+        "robot-images": [
+            {
+                "includeAll": true,
+                "exclude": ["cm:content", "exif:exif"]
+            },
+            {
+                "title": "Robot Group",
+                "items": [
+                    { "aspect": "exif:exif", "properties": [ "exif:pixelXDimension", "exif:pixelYDimension"] }
+                ] 
+            }
+        ]
     }
 },
 ```
