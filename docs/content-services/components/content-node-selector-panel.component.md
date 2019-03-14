@@ -38,8 +38,8 @@ Opens a [Content Node Selector](content-node-selector.component.md)  in its own 
 | isSelectionValid | `ValidationFunction` | defaultValidation | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
 | pageSize | `number` |  | Number of items shown per page in the list. |
 | where | `string` |  | Custom _where_ filter function. See the [Document List component](../../content-services/components/document-list.component.md) for more information. |
-| excludeSiteContent | `string[]` |  | Custom list of site content componentIds. Used to filter out the corresponding items from the displayed nodes |
-| rowFilter | `RowFilter` |  | Custom row filter function. See the [Row Filter Model](../models/row-filter.model.md) page for more information. |
+| excludeSiteContent |  |  | Custom list of site content componentIds. Used to filter out the corresponding items from the displayed nodes |
+| rowFilter |  |  | Custom row filter function. See the [Row Filter Model](../models/row-filter.model.md) page for more information. |
 
 ### Events
 
