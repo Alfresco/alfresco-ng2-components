@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '../../../pages/adf/loginSSOPage';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../../../pages/adf/settingsPage';
 import TestConfig = require('../../../test.config');
 import { browser } from 'protractor';

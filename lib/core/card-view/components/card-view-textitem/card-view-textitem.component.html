@@ -43,16 +43,13 @@
                         (input)="onTextAreaInputChange()"
                         [attr.data-automation-id]="'card-textitem-edittextarea-' + property.key"></textarea>
                 </mat-form-field>
-                <button mat-button
-                    [disabled]="hasErrors()"
+                <mat-icon
+                    [ngClass]="{'disable': hasErrors()}"
                     (click)="update()"
                     [attr.data-automation-id]="'card-textitem-update-' + property.key"
-                    class="adf-textitem-icon adf-update-icon">
-                        <mat-icon
-                            class="adf-update-icon"
-                            [class.adf-button-disabled]="hasErrors()"
-                            [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate">done</mat-icon>
-                </button>
+                    class="adf-textitem-icon adf-update-icon"
+                    [class.adf-button-disabled]="hasErrors()"
+                    [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate">done</mat-icon>
                 <mat-icon
                     class="adf-textitem-icon adf-reset-icon"
                     (click)="reset()"
