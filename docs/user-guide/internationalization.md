@@ -71,11 +71,11 @@ below:
 ```
 
 The hierarchical structure is referred to in the UI using the familiar "dot"
-notation (so `FORM.START_FORM.TITLE` would be the key for the "Start [Form"](../../lib/process-services/task-list/models/form.model.ts)
+notation (so `FORM.START_FORM.TITLE` would be the key for the "Start Form"
 string here). This is useful for grouping related messages and providing
 singular and plural versions, among other things.
 
-The [Translation service](../core/translation.service.md) defines the `get` method to
+The [Translation service](../core/services/translation.service.md) defines the `get` method to
 get the translation of a key in the current language. A simple component might
 contain code like this:
 
@@ -140,11 +140,11 @@ should check you are using the key correctly.
 
 ## Using the translate pipe
 
-Using [`TranslationService`](../core/translation.service.md)`.get` is straightforward but it is often more
+Using [`TranslationService`](../core/services/translation.service.md)`.get` is straightforward but it is often more
 convenient to add translation keys directly into your page's HTML.
 Use the `translate` pipe to convert a key in the page directly to the
 corresponding text. For example, the following will display the
-"Start [Form"](../../lib/process-services/task-list/models/form.model.ts) text as above but without any code or variables in the
+"Start Form" text as above but without any code or variables in the
 component's `.ts` file:
 
 <!-- {% raw %} -->
@@ -178,7 +178,7 @@ following:
 }
 ```
 
-The [Translation service](../core/translation.service.md) page has full details
+The [Translation service](../core/services/translation.service.md) page has full details
 of how to add custom translations, including the locations of the required files
 and code samples for enabling the new translations in your app.
 
@@ -207,7 +207,7 @@ messages whose content can change at runtime. For example, in the built-in
 
 The sections in curly braces are _interpolation variables_ that you supply
 at runtime. You can specify them by passing an extra parameter to
-[`TranslationService`](../core/translation.service.md)`.get`; this is an object whose properties have the same
+[`TranslationService`](../core/services/translation.service.md)`.get`; this is an object whose properties have the same
 names as the interpolation variables in the string:
 
 ```ts
@@ -232,7 +232,7 @@ You can use interpolations with the `translate` pipe in a similar way:
 
 ## How the display language is selected
 
-The `locale` preference in the [user preferences](../core/user-preferences.service.md)
+The `locale` preference in the [user preferences](../core/services/user-preferences.service.md)
 contains the language code that will be used to display the ADF app. Since the user
 preferences can only be saved by the app when it runs, they will not immediately be available when
 the app launches for the first time. The app uses the following priorities to determine
@@ -251,37 +251,37 @@ The table below illustrates how the selection is made:
 | X | fr | jp | en | fr |
 | it | fr | jp | en | it |
 
-The [translation service](../core/translation.service.md) probes the browser culture first, for example `en-GB`.
+The [translation service](../core/services/translation.service.md) probes the browser culture first, for example `en-GB`.
 If the `en-GB.json` file does not exist, the service falls back to the language id: `en`.
 
 Once the locale language is determined, it is saved to the user preferences and this saved value
 will be used from that point on, regardless of the `app.config.json` and browser settings.
 
 However, you can change the `locale` user preference from code using the
-[User Preferences service](../core/user-preferences.service.md) and the updated value
+[User Preferences service](../core/services/user-preferences.service.md) and the updated value
 will still override any browser or `app.config.json` settings.
-ADF also provides a [Language Menu component](../core/language-menu.component.md) that
+ADF also provides a [Language Menu component](../core/components/language-menu.component.md) that
 you can add to a page to let the user set the `locale` preference easily. The
 list of available languages is defined in the `app.config.json` file for the app.
 
 The `translate` pipe reacts automatically to a change in the locale language and
 immediately updates the display. However, text added via a variable set using
-[`TranslationService`](../core/translation.service.md)`.get`, as in the example above, will not be
+[`TranslationService`](../core/services/translation.service.md)`.get`, as in the example above, will not be
 updated directly in this way. Instead, you will need to get a new translation and set the
 variable's value again explicitly from the code.
 
-See the [Language Menu component](../core/language-menu.component.md) page for further
+See the [Language Menu component](../core/components/language-menu.component.md) page for further
 details and usage examples.
 
 ## Support for i18n within ADF components
 
 Some components allow you to use translation keys in places where you would normally
 supply your own messages directly. For example, the
-[Data Column component](../core/data-column.component.md) can accept a key instead of
+[Data Column component](../core/components/data-column.component.md) can accept a key instead of
 normal text to specify the column title. Consult the documentation for a
 component to see if it has built-in support for i18n.
 
 ## See also
 
--   [Translation service](../core/translation.service.md)
--   [Language Menu component](../core/language-menu.component.md)
+-   [Translation service](../core/services/translation.service.md)
+-   [Language Menu component](../core/components/language-menu.component.md)
