@@ -1,7 +1,7 @@
 {
   "name": "alfresco-components",
   "description": "Alfresco Angular components",
-  "version": "3.1.0-285e56e9fb9c1adf3791d82776d21c61fbc5206a",
+  "version": "3.1.0-beta5",
   "author": "Alfresco Software, Ltd.",
   "main": "./index.js",
   "scripts": {
@@ -55,13 +55,13 @@
     "process services-cloud"
   ],
   "dependencies": {
-    "@alfresco/adf-content-services": "3.1.0-285e56e9fb9c1adf3791d82776d21c61fbc5206a",
-    "@alfresco/adf-core": "3.1.0-285e56e9fb9c1adf3791d82776d21c61fbc5206a",
-    "@alfresco/adf-extensions": "3.1.0-285e56e9fb9c1adf3791d82776d21c61fbc5206a",
-    "@alfresco/adf-insights": "3.1.0-285e56e9fb9c1adf3791d82776d21c61fbc5206a",
-    "@alfresco/adf-process-services": "3.1.0-285e56e9fb9c1adf3791d82776d21c61fbc5206a",
-    "@alfresco/adf-process-services-cloud": "3.1.0-285e56e9fb9c1adf3791d82776d21c61fbc5206a",
-    "@alfresco/adf-testing": "3.1.0-285e56e9fb9c1adf3791d82776d21c61fbc5206a",
+    "@alfresco/adf-content-services": "3.1.0-beta5",
+    "@alfresco/adf-core": "3.1.0-beta5",
+    "@alfresco/adf-extensions": "3.1.0-beta5",
+    "@alfresco/adf-insights": "3.1.0-beta5",
+    "@alfresco/adf-process-services": "3.1.0-beta5",
+    "@alfresco/adf-process-services-cloud": "3.1.0-beta5",
+    "@alfresco/adf-testing": "3.1.0-beta5",
     "@alfresco/js-api": "3.1.0-6eec5abc14bb31af3512cba5492f4ba43ffa2fac",
     "@angular/animations": "7.0.3",
     "@angular/cdk": "7.0.3",

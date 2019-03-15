@@ -1,6 +1,6 @@
 {
   "name": "@alfresco/adf-testing",
-  "version": "3.1.0-285e56e9fb9c1adf3791d82776d21c61fbc5206a",
+  "version": "3.1.0-beta5",
   "peerDependencies": {
     "@angular/common": "^7.1.0",
     "@angular/core": "^7.1.0",
