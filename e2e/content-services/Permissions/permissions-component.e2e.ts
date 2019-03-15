@@ -15,25 +15,25 @@
  * limitations under the License.
  */
 
-import { PermissionsPage } from '../pages/adf/permissionsPage';
-import { LoginPage } from '../pages/adf/loginPage';
-import { ContentServicesPage } from '../pages/adf/contentServicesPage';
-import { AcsUserModel } from '../models/ACS/acsUserModel';
-import TestConfig = require('../test.config');
-import resources = require('../util/resources');
+import { PermissionsPage } from '../../pages/adf/permissionsPage';
+import { LoginPage } from '../../pages/adf/loginPage';
+import { ContentServicesPage } from '../../pages/adf/contentServicesPage';
+import { AcsUserModel } from '../../models/ACS/acsUserModel';
+import TestConfig = require('../../test.config');
+import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { FileModel } from '../models/ACS/fileModel';
-import { UploadActions } from '../actions/ACS/upload.actions';
-import { Util } from '../util/util';
+import { FileModel } from '../../models/ACS/fileModel';
+import { UploadActions } from '../../actions/ACS/upload.actions';
+import { Util } from '../../util/util';
 import { browser, protractor } from 'protractor';
-import { FolderModel } from '../models/ACS/folderModel';
-import { SearchDialog } from '../pages/adf/dialog/searchDialog';
-import { ViewerPage } from '../pages/adf/viewerPage';
-import { NotificationPage } from '../pages/adf/notificationPage';
-import CONSTANTS = require('../util/constants');
-import { MetadataViewPage } from '../pages/adf/metadataViewPage';
-import { UploadDialog } from '../pages/adf/dialog/uploadDialog';
-import { VersionManagePage } from '../pages/adf/versionManagerPage';
+import { FolderModel } from '../../models/ACS/folderModel';
+import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
+import { ViewerPage } from '../../pages/adf/viewerPage';
+import { NotificationPage } from '../../pages/adf/notificationPage';
+import CONSTANTS = require('../../util/constants');
+import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
+import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
+import { VersionManagePage } from '../../pages/adf/versionManagerPage';
 
 describe('Permissions Component', function () {
 
@@ -227,11 +227,6 @@ describe('Permissions Component', function () {
                 }
             });
 
-        await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleConsumer' + fileModel.name, roleConsumerFolder.entry.id);
-        await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleContributor' + fileModel.name, roleContributorFolder.entry.id);
-        await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleCoordinator' + fileModel.name, roleCoordinatorFolder.entry.id);
-        await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleCollaborator' + fileModel.name, roleCollaboratorFolder.entry.id);
-        await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'RoleEditor' + fileModel.name, roleEditorFolder.entry.id);
         await uploadActions.uploadFile(alfrescoJsApi, fileModel.location, 'Site' + fileModel.name, siteFolder.entry.id);
         browser.driver.sleep(15000); // wait search get the groups, files and folders
 
