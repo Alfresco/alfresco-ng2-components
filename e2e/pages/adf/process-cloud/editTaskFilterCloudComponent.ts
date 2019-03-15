@@ -103,7 +103,7 @@ export class EditTaskFilterCloudComponent {
         return this.setProperty('assignee', option);
     }
 
-    get() {
+    getAssignee() {
         return this.assignee.getText();
     }
 
