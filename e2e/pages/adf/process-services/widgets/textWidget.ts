@@ -37,7 +37,7 @@ export class TextWidget {
     }
 
     getFieldValue(fieldId) {
-        return this.formFields.getFieldValue(fieldId, undefined);
+        return this.formFields.getFieldValue(fieldId);
     }
 
     getErrorMessage(fieldId) {

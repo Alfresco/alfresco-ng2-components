@@ -57,13 +57,13 @@ export class FormFields {
         return widget;
     }
 
-    getFieldValue(fieldId, valueLocatorParam) {
+    getFieldValue(fieldId, valueLocatorParam?: any) {
         let value = this.getWidget(fieldId).element(valueLocatorParam || this.valueLocator);
         Util.waitUntilElementIsVisible(value);
         return value.getAttribute('value');
     }
 
-    getFieldLabel(fieldId, labelLocatorParam) {
+    getFieldLabel(fieldId, labelLocatorParam?: any) {
         let label = this.getWidget(fieldId).all(labelLocatorParam || this.labelLocator).first();
         Util.waitUntilElementIsVisible(label);
         return label.getText();
@@ -74,7 +74,7 @@ export class FormFields {
         return error.getText();
     }
 
-    getFieldText(fieldId, labelLocatorParam) {
+    getFieldText(fieldId, labelLocatorParam?: any) {
         let label = this.getWidget(fieldId).element(labelLocatorParam || this.labelLocator);
         Util.waitUntilElementIsVisible(label);
         return label.getText();

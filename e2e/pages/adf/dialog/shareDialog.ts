@@ -111,7 +111,7 @@ export class ShareDialog {
     }
 
     calendarTodayDayIsDisabled() {
-        const today = this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText().toString();
+        const today: any = this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')).getText();
         Util.waitUntilElementIsPresent(element(by.cssContainingText('.mat-datetimepicker-calendar-body-disabled', today)));
     }
 

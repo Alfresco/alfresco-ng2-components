@@ -142,6 +142,6 @@ describe('Attach Form Component', () => {
         taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         taskPage.tasksListPage().selectRow(testNames.taskName);
 
-        expect(formFields.getFieldValue(formTextField, undefined)).toEqual(testNames.formFieldValue);
+        expect(formFields.getFieldValue(formTextField)).toEqual(testNames.formFieldValue);
     });
 });

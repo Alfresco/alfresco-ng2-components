@@ -29,7 +29,7 @@ describe('User Info - SSO', () => {
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const userInfoPage = new UserInfoPage();
-    const identityService: Identity = new Identity(undefined);
+    const identityService: Identity = new Identity();
     let silentLogin, identityUser;
 
     beforeAll(async () => {
