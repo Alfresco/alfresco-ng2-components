@@ -21,13 +21,13 @@ import { ContentServicesPage } from '../pages/adf/contentServicesPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { AlfrescoApiCompatibility as AlfrescoApi, SiteBodyCreate } from '@alfresco/js-api';
 import { FileModel } from '../models/ACS/fileModel';
 import { UploadActions } from '../actions/ACS/upload.actions';
 import { Util } from '../util/util';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import VisibilityEnum = AlfrescoApi.SiteBody.VisibilityEnum;
+import VisibilityEnum = SiteBodyCreate.VisibilityEnum;
 
 describe('Permissions Component', function () {
 
@@ -74,7 +74,7 @@ describe('Permissions Component', function () {
         await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
 
         let siteName = Util.generateRandomString(5);
-        let publicSiteBody = {'title': siteName, 'visibility': VisibilityEnum.PUBLIC};
+        let publicSiteBody = { 'title': siteName, 'visibility': VisibilityEnum.PUBLIC };
         publicSite = await alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
 
         folderName = Util.generateRandomString(5);

@@ -20,7 +20,6 @@ import CONSTANTS = require('../util/constants');
 import { Util } from '../util/util';
 import moment = require('moment');
 
-import AlfrescoApi = require('@alfresco/js-api');
 import { Tasks } from '../actions/APS-cloud/tasks';
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
