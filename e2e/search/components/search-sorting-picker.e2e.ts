@@ -26,7 +26,7 @@ import { NodeActions } from '../../actions/ACS/node.actions';
 
 import TestConfig = require('../../test.config');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { AcsUserModel } from '../../models/ACS/acsUserModel';
 import { browser } from 'protractor';

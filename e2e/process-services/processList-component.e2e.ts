@@ -21,7 +21,7 @@ import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/pr
 import TestConfig = require('../test.config');
 import resources = require('../util/resources');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';

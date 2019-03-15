@@ -27,7 +27,7 @@ describe('Activiti TaskList Cloud Service', () => {
     let service: TaskListCloudService;
     let alfrescoApiMock: AlfrescoApiServiceMock;
 
-    function returFakeTaskListResults() {
+    function returnFakeTaskListResults() {
         return {
             oauth2Auth: {
                 callCustomApi : () => {
@@ -72,7 +72,7 @@ describe('Activiti TaskList Cloud Service', () => {
 
     it('should return the tasks', (done) => {
         let taskRequest: TaskQueryCloudRequestModel = <TaskQueryCloudRequestModel> { appName: 'fakeName' };
-        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returFakeTaskListResults);
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskListResults);
         service.getTaskByRequest(taskRequest).subscribe((res) => {
             expect(res).toBeDefined();
             expect(res).not.toBeNull();

@@ -21,7 +21,7 @@ import { HeaderPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import TestConfig = require('../test.config');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Header Component', () => {

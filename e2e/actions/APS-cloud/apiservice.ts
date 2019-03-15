@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import TestConfig = require('../../test.config');
+
 export class ApiService {
 
     HOST_SSO = TestConfig.adf.hostSso;
@@ -49,7 +50,6 @@ export class ApiService {
     async performBpmOperation(path, method, queryParams, postBody) {
         const uri = this.HOST_BPM + path;
         const pathParams = {}, formParams = {};
-        const authNames = [];
         const contentTypes = ['application/json'];
         const accepts = ['application/json'];
 
@@ -57,8 +57,8 @@ export class ApiService {
             'Authorization': 'bearer ' + this.apiService.oauth2Auth.token
         };
 
-        return this.apiService.bpmClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, {})
+        return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
+            contentTypes, accepts, Object)
             .catch((error) => {
                 throw (error);
             });
@@ -67,7 +67,6 @@ export class ApiService {
     async performIdentityOperation(path, method, queryParams, postBody) {
         const uri = this.HOST_IDENTITY + path;
         const pathParams = {}, formParams = {};
-        const authNames = [];
         const contentTypes = ['application/json'];
         const accepts = ['application/json'];
 
@@ -75,8 +74,8 @@ export class ApiService {
             'Authorization': 'bearer ' + this.apiService.oauth2Auth.token
         };
 
-        return this.apiService.bpmClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, {})
+        return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
+            contentTypes, accepts, Object)
             .catch((error) => {
                 throw (error);
             });

@@ -81,7 +81,6 @@
     "@ngx-translate/core": "^11.0.0",
     "adf-monaco-extension": "0.0.8",
     "adf-tslint-rules": "0.0.6",
-    "alfresco-js-api-node": "2.7.0-beta5",
     "chart.js": "2.5.0",
     "classlist.js": "1.1.20150312",
     "core-js": "^2.5.4",

@@ -28,7 +28,7 @@ import { FiltersPage } from '../pages/adf/process-services/filtersPage';
 
 import { StandaloneTask } from '../models/APS/standaloneTask';
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Task Details - Form', () => {

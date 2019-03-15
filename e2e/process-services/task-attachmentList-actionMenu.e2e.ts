@@ -32,7 +32,7 @@ import { Util } from '../util/util';
 import path = require('path');
 import fs = require('fs');
 
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { FileModel } from '../models/ACS/fileModel';

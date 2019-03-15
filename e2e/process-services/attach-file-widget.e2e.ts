@@ -30,7 +30,7 @@ import resources = require('../util/resources');
 import { ViewerPage } from '../pages/adf/viewerPage';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Start Task - Task App', () => {

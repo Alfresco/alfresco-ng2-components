@@ -18,7 +18,7 @@
 import { LoginPage } from '../pages/adf/loginPage';
 import { AcsUserModel } from '../models/ACS/acsUserModel';
 import TestConfig = require('../test.config');
-import AlfrescoApi = require('alfresco-js-api-node');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { ErrorPage } from '../pages/adf/errorPage';
 import { browser } from '../../node_modules/protractor';
 
