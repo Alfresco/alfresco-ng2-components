@@ -39,15 +39,19 @@ export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('content', { read: ViewContainerRef })
     content: ViewContainerRef;
 
+    /** ID string of the component to preview. */
     @Input()
     id: string;
 
+    /** URL of the content in the repository. */
     @Input()
     url: string;
 
+    /** File extension (.jpg, .png, etc) for the viewer. */
     @Input()
     extension: string;
 
+    /** Node containing the content to display. */
     @Input()
     node: Node;
 

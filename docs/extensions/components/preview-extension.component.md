@@ -2,12 +2,12 @@
 Title: Preview Extension Component
 Added: v3.1.0
 Status: Experimental
-Last reviewed: 2018-04-12
+Last reviewed: 2019-03-15
 ---
 
 # [Preview Extension component](../../../lib/extensions/src/lib/components/viewer/preview-extension.component.ts "Defined in preview-extension.component.ts")
 
-Displays dynamically-loaded extension components.
+Supports dynamically-loaded viewer preview extensions.
 
 See the [ACA monaco extension](https://github.com/eromano/aca-monaco-extension) for
 an example of a real working viewer extension project.
@@ -18,16 +18,16 @@ an example of a real working viewer extension project.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| extension | `string` |  |  |
-| id | `string` |  |  |
-| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | of the content to display |
-| url | `string` |  | URL Of the content in the repository |
+| extension | `string` |  | File extension (.jpg, .png, etc) for the viewer. |
+| id | `string` |  | ID string of the component to preview. |
+| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) containing the content to display. |
+| url | `string` |  | URL of the content in the repository. |
 
 ## Details
 
-If you want create your custom extension viewer you need to create the following files in a separate project:
+To create your custom extension viewer you need to create the following files in a separate project:
 
-The Module needs to know which is the Id of your extension:
+The Module needs to declare the ID of your extension:
 
 ```ts
 export class YourExtensionViewerModule {
@@ -39,7 +39,8 @@ export class YourExtensionViewerModule {
 }
 ```
 
-Your [viewer component](../../core/components/viewer.component.md) extension business logic:
+Your [viewer component](../../core/components/viewer.component.md) extension contains
+the business logic:
 
 ```ts
 import { Node } from '@alfresco/js-api';
@@ -66,13 +67,15 @@ export class YourExtensionViewerComponent implements ViewerExtensionInterface {
 }
 ```
 
-Your [viewer component](../../core/components/viewer.component.md) template:
+The [viewer component](../../core/components/viewer.component.md)
+also needs an HTML template (which is referenced by the `templateUrl` property
+in the `@Component` decorator of the component class above):
 
 ```HTML
 <div> This is your custom extension viewer template</div>
 ```
 
-Your [viewer component](../../core/components/viewer.component.md) extension.json:
+You also need to provide a [viewer component](../../core/components/viewer.component.md)`extension.json` file containing its details:
 
 ```JSON
 {
@@ -93,6 +96,10 @@ Your [viewer component](../../core/components/viewer.component.md) extension.jso
 }
 ```
 
+See the [App extensions](../../user-guide/app-extensions.md) page for
+further details of how to develop extensions.
+
 ## See also
 
 -   [Extension service](../services/extension.service.md)
+-   [App extensions](../../user-guide/app-extensions.md)
