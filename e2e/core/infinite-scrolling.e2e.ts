@@ -121,7 +121,7 @@ describe('Enable infinite scrolling', () => {
         }
     });
 
-    it('[C299201] Should use default pagination settings for infinite pagination', function () {
+    it('[C299201] Should use default pagination settings for infinite pagination', () => {
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
         contentServicesPage.doubleClickRow(folderModel.name);
@@ -135,7 +135,7 @@ describe('Enable infinite scrolling', () => {
         contentServicesPage.checkPaginationIsNotDisplayed();
     });
 
-    it('[C299202] Should not display load more button when all the files are already displayed', function () {
+    it('[C299202] Should not display load more button when all the files are already displayed', () => {
         navigationBarPage.clickConfigEditorButton();
         configEditorPage.clickInfinitePaginationConfiguration();
         configEditorPage.clickClearButton();
@@ -152,7 +152,7 @@ describe('Enable infinite scrolling', () => {
         infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
     });
 
-    it('[C299203] Should not display load more button when a folder is empty', function () {
+    it('[C299203] Should not display load more button when a folder is empty', () => {
         navigationBarPage.clickContentServicesButton();
         contentServicesPage.checkAcsContainer();
 

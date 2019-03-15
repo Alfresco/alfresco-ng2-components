@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../extension.schema.json",
+  "$version": "1.0.0",
+  "$name": "adf ai extension",
+  "$description": "adf ai plugin",
+  "features": {
+    "viewer": {
+      "content": [
+        {
+          "id": "dev.tools.viewer.viewer",
+          "fileExtension": ["png", "jpg"],
+          "component": "ai-extension.main.component"
+        }
+      ]
+    }
+  }
+}
