@@ -69,8 +69,9 @@ export class DemoPermissionComponent implements OnInit {
     }
 
     showErrorMessage(error) {
+        const message = error.message ? error.message : error;
         this.notificationService.openSnackMessage(
-            error.message,
+            message,
             4000
         );
     }
