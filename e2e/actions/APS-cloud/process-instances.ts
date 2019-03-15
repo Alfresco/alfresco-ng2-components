@@ -28,13 +28,14 @@ export class ProcessInstances {
         await this.api.login(username, password);
     }
 
-    async createProcessInstance(processDefKey, appName) {
+    async createProcessInstance(processDefKey, appName, options?) {
         const path = '/' + appName + '-rb/v1/process-instances';
         const method = 'POST';
 
         const queryParams = {}, postBody = {
             'processDefinitionKey': processDefKey,
-            'payloadType': 'StartProcessPayload'
+            'payloadType': 'StartProcessPayload',
+            ...options
         };
 
         const data = await this.api.performBpmOperation(path, method, queryParams, postBody);

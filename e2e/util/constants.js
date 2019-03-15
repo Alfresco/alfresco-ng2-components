@@ -127,6 +127,13 @@ exports.PROCESS_DESCRIPTION = "No description";
 
 exports.PROCESS_DATE_FORMAT = "mmm dd yyyy";
 
+exports.PROCESS_DETAILS = {
+    NO_PARENT: 'None',
+    NO_DATE: 'No date',
+    NO_BUSINESS_KEY: 'None',
+    NO_DESCRIPTION: 'No description'
+};
+
 exports.PROCESS_STATUS = {
     RUNNING: 'Running',
     COMPLETED: 'Completed'
