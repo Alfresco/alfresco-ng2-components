@@ -262,7 +262,7 @@ describe('Permissions Component', function () {
             contentServicesPage.checkSelectedSiteIsDisplayed('My files');
             contentList.rightClickOnRow(fileModel.name);
             contentServicesPage.pressContextMenuActionNamed('Permission');
-
+            permissionsPage.checkPermissionContainerIsDisplayed();
             done();
         });
 
@@ -272,7 +272,7 @@ describe('Permissions Component', function () {
         });
 
         it('[C268974] Inherit Permission', () => {
-            permissionsPage.checkPermissionContainerIsDisplayed();
+
             permissionsPage.checkPermissionInheritedButtonIsDisplayed();
             expect(permissionsPage.getPermissionInheritedButtonText()).toBe('Permission Inherited');
             permissionsPage.checkPermissionsDatatableIsDisplayed();
