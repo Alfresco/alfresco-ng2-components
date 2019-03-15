@@ -3,6 +3,7 @@ const {SpecReporter} = require('jasmine-spec-reporter');
 const jasmineReporters = require('jasmine-reporters');
 const htmlReporter = require('protractor-html-reporter-2');
 const retry = require('protractor-retry').retry;
+const tsConfig = require("./e2e/tsconfig.e2e.json");
 
 const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
 const TestConfig = require('./e2e/test.config');
@@ -208,6 +209,11 @@ exports.config = {
 
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
+        });
+        require("tsconfig-paths").register({
+            project: 'e2e/tsconfig.e2e.json',
+            baseUrl: 'e2e/',
+            paths: tsConfig.compilerOptions.paths
         });
 
         browser.manage().window().setSize(width, height);
