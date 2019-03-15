@@ -12,9 +12,6 @@
       "node"
     ],
     "paths": {
-      "@alfresco/js-api": [
-        "../node_modules/@alfresco/js-api"
-      ],
       "@alfresco/adf-extensions": [
         "../lib/extensions"
       ],
