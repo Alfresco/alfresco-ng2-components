@@ -2,7 +2,7 @@
 Title: Content Metadata Card component
 Added: v2.1.0
 Status: Active
-Last reviewed: 2019-01-16
+Last reviewed: 2019-03-15
 ---
 
 # [Content Metadata Card component](../../../lib/content-services/content-metadata/components/content-metadata-card/content-metadata-card.component.ts "Defined in content-metadata-card.component.ts")
@@ -47,8 +47,8 @@ properties.
 ### Application config presets
 
 You can define different presets for the metadata component or override the default presets in
-the `app.config.json` file. The **default** preset is "\*" if not set, meaning the component
-will display every aspect and property of a node without filtering. 
+the `app.config.json` file. If nothing else is set, the **default** preset is "\*",
+which will use the "indifferent" config described below. 
 
 You can define as many extra presets as you need for your components.
 
@@ -67,6 +67,10 @@ The default configuration behaves like the following:
 }
 ...
 ```
+
+This will display a default set of basic node properties: **name**, **title**,
+**creator**, **created date**, **size**, **modifier**, **modified date**,
+**mime type**, **author**, **description**.
 
 #### Aspect oriented config
 
