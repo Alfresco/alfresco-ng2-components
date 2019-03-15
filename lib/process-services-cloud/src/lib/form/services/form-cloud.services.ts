@@ -17,9 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, LogService, FormValues, AppConfigService } from '@alfresco/adf-core';
-import { of, throwError, Observable, from } from 'rxjs';
+import { throwError, Observable, from } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/public-api';
+import { SaveFormRepresentation, CompleteFormRepresentation } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -41,39 +42,66 @@ export class FormCloudService {
         );
     }
 
-    saveTaskForm(appName: string, taskId: string, values: FormValues) {
-        return of({});
+    saveTaskForm(appName: string, taskId: string, formId: string, formValues: FormValues) {
+        const apiUrl = this.buildSaveFormUrl(appName, formId);
+        let saveFormRepresentation = <SaveFormRepresentation> { values: formValues, taskId: taskId };
+        return from(this.apiService
+            .getInstance()
+            .oauth2Auth.callCustomApi(apiUrl, 'POST',
+                null, null, null,
+                null, saveFormRepresentation,
+                this.contentTypes, this.accepts,
+                this.returnType, null, null)
+        ).pipe(
+            map((res: any) => {
+                return new TaskDetailsCloudModel(res.entry);
+            }),
+            catchError((err) => this.handleError(err))
+        );
+    }
+
+    completeTaskForm(appName: string, taskId: string, formId: string, formValues: FormValues, outcome: string) {
+        const apiUrl = this.buildSubmitFormUrl(appName, formId);
+
+        let completeFormRepresentation: any = <CompleteFormRepresentation> { values: formValues };
+        if (outcome) {
+            completeFormRepresentation.outcome = outcome;
+        }
+
+        return from(this.apiService
+            .getInstance()
+            .oauth2Auth.callCustomApi(apiUrl, 'POST',
+                null, null, null,
+                null, completeFormRepresentation,
+                this.contentTypes, this.accepts,
+                this.returnType, null, null)
+        ).pipe(
+            map((res: any) => {
+                return new TaskDetailsCloudModel(res.entry);
+            }),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     getTask(appName: string, taskId: string): Observable<TaskDetailsCloudModel> {
-        if (appName && taskId) {
-
-            let queryUrl = this.buildTaskUrl(appName, taskId);
-            return from(this.apiService
-                .getInstance()
-                .oauth2Auth.callCustomApi(queryUrl, 'GET',
-                    null, null, null,
-                    null, null,
-                    this.contentTypes, this.accepts,
-                    this.returnType, null, null)
-            ).pipe(
-                map((res: any) => {
-                    return new TaskDetailsCloudModel(res.entry);
-                }),
-                catchError((err) => this.handleError(err))
-            );
-        } else {
-            this.logService.error('AppName and TaskId are mandatory for querying a task');
-            return throwError('AppName/TaskId not configured');
-        }
-    }
-
-    completeTaskForm(appName: string, taskId: string, values: FormValues, outcome: string) {
-        return of({});
+        const apiUrl = this.buildGetTaskUrl(appName, taskId);
+        return from(this.apiService
+            .getInstance()
+            .oauth2Auth.callCustomApi(apiUrl, 'GET',
+                null, null, null,
+                null, null,
+                this.contentTypes, this.accepts,
+                this.returnType, null, null)
+        ).pipe(
+            map((res: any) => {
+                return new TaskDetailsCloudModel(res.entry);
+            }),
+            catchError((err) => this.handleError(err))
+        );
     }
 
     getForm(appName: string, formId: string): Observable<any> {
-        let queryUrl = this.buildFormUrl(appName, formId);
+        const apiUrl = this.buildGetFormUrl(appName, formId);
         const bodyParam = {}, pathParams = {}, queryParams = {}, headerParams = {},
             formParams = {};
 
@@ -81,7 +109,7 @@ export class FormCloudService {
             this.apiService
                 .getInstance()
                 .oauth2Auth.callCustomApi(
-                    queryUrl, 'GET', pathParams, queryParams,
+                    apiUrl, 'GET', pathParams, queryParams,
                     headerParams, formParams, bodyParam,
                     this.contentTypes, this.accepts, this.returnType, null, null)
                 ).pipe(
@@ -89,12 +117,20 @@ export class FormCloudService {
             );
     }
 
-    private buildTaskUrl(appName: string, taskId: string): any {
+    private buildGetTaskUrl(appName: string, taskId: string): any {
         return `${this.appConfigService.get('bpmHost')}/${appName}-rb/v1/tasks/${taskId}`;
     }
 
-    private buildFormUrl(appName: string, formId: string): any {
+    private buildGetFormUrl(appName: string, formId: string): any {
         return `${this.appConfigService.get('bpmHost')}/${appName}-form/v1/forms/${formId}`;
+    }
+
+    private buildSaveFormUrl(appName: string, formId: string): any {
+        return `${this.appConfigService.get('bpmHost')}/${appName}-form/v1/forms/${formId}/save`;
+    }
+
+    private buildSubmitFormUrl(appName: string, formId: string): any {
+        return `${this.appConfigService.get('bpmHost')}/${appName}-form/v1/forms/${formId}/submit`;
     }
 
     private handleError(error: any) {

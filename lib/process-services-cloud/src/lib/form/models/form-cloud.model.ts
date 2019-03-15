@@ -18,7 +18,7 @@
 import {
     TabModel, FormWidgetModel, FormOutcomeModel, FormValues,
     FormWidgetModelCache, FormFieldModel, ContainerModel, FormFieldTypes,
-    ValidateFormFieldEvent } from '@alfresco/adf-core';
+    ValidateFormFieldEvent, FormFieldValidator} from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.services';
 
 export class FormCloudModel {
@@ -28,7 +28,7 @@ export class FormCloudModel {
     static COMPLETE_OUTCOME: string = '$complete';
     static START_PROCESS_OUTCOME: string = '$startProcess';
 
-    readonly id: number;
+    readonly id: string;
     readonly name: string;
     readonly taskId: string;
     readonly taskName: string = FormCloudModel.UNSET_TASK_NAME;
@@ -41,14 +41,13 @@ export class FormCloudModel {
     readonly selectedOutcome: string;
     readonly json: any;
 
-    appName: string;
-
     readOnly: boolean;
     processDefinitionId: any;
     customFieldTemplates: any;
     className: string;
     values: FormValues = {};
     processVariables: any;
+    fieldValidators: FormFieldValidator[] = [];
 
     tabs: any;
     fields: any;

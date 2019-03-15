@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-/* tslint:disable */
 import {
     Component, EventEmitter, Input, OnChanges,
     Output, SimpleChanges, ViewEncapsulation
@@ -24,7 +23,7 @@ import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { WidgetVisibilityService } from '../../../../../core/form/services/widget-visibility.service';
-import { FormValues, FormFieldValidator, FormFieldModel, FormOutcomeEvent, FormOutcomeModel, FormEvent } from '@alfresco/adf-core';
+import { FormValues, FormFieldValidator, FormFieldModel, FormOutcomeEvent, FormOutcomeModel } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.services';
 import { FormCloudModel } from '../models/form-cloud.model';
 
@@ -214,7 +213,7 @@ export class FormCloudComponent implements OnChanges {
         }
         
         let taskId = changes['taskId'];
-        if (taskId && taskId.currentValue) {
+        if (taskId && taskId.currentValue && this.appName) {
             this.getFormByTaskId(this.appName, taskId.currentValue);
             return;
         }
@@ -255,6 +254,7 @@ export class FormCloudComponent implements OnChanges {
                 }
 
                 if (outcome.id === FormCloudComponent.CUSTOM_OUTCOME_ID) {
+                    this.saveTaskForm();
                     this.onTaskSaved(this.form);
                     return true;
                 }
@@ -340,9 +340,9 @@ export class FormCloudComponent implements OnChanges {
 
 
     saveTaskForm() {
-        if (this.form && this.form.taskId) {
+        if (this.form && this.taskId) {
             this.formService
-                .saveTaskForm(this.form.appName, this.form.taskId, this.form.values)
+                .saveTaskForm(this.appName, this.taskId, this.form.id, this.form.values)
                 .subscribe(
                     () => {
                         this.onTaskSaved(this.form);
@@ -353,9 +353,9 @@ export class FormCloudComponent implements OnChanges {
     }
 
     completeTaskForm(outcome?: string) {
-        if (this.form && this.form.taskId) {
+        if (this.form && this.taskId) {
             this.formService
-                .completeTaskForm(this.form.appName, this.form.taskId, this.form.values, outcome)
+                .completeTaskForm(this.appName, this.taskId, this.form.id, this.form.values, outcome)
                 .subscribe(
                     () => {
                         this.onTaskCompleted(this.form);
