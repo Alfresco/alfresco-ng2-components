@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { MatDialog, DateAdapter } from '@angular/material';
 import { debounceTime, filter } from 'rxjs/operators';
@@ -34,7 +34,7 @@ import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud
     templateUrl: './edit-process-filter-cloud.component.html',
     styleUrls: ['./edit-process-filter-cloud.component.scss']
 })
-export class EditProcessFilterCloudComponent implements OnChanges {
+export class EditProcessFilterCloudComponent implements OnInit, OnChanges {
 
     public static ACTION_SAVE = 'save';
     public static ACTION_SAVE_AS = 'saveAs';
