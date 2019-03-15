@@ -1,8 +1,9 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "noEmit": true,
     "outDir": "../out-tsc/e2e",
-    "baseUrl": "./",
+    "baseUrl": ".",
     "module": "commonjs",
     "target": "es5",
     "types": [
@@ -11,6 +12,9 @@
       "node"
     ],
     "paths": {
+      "@alfresco/js-api": [
+        "../node_modules/@alfresco/js-api"
+      ],
       "@alfresco/adf-extensions": [
         "../lib/extensions"
       ],
@@ -30,8 +34,14 @@
         "../lib/process-services-cloud"
       ],
       "@alfresco/adf-testing": [
-        "../../lib/testing"
+        "../lib/testing"
       ]
     }
-  }
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
