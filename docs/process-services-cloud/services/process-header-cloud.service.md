@@ -2,7 +2,7 @@
 Title: Process Header Cloud Service
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-03-08
+Last reviewed: 2019-03-15
 ---
 
 # [Process Header Cloud Service](../../../lib/process-services-cloud/src/lib/process/process-header/services/process-header-cloud.service.ts "Defined in process-header-cloud.service.ts")
@@ -29,3 +29,4 @@ but they use the cloud variants of the classes for return values. See the
 ## See also
 
 -   [Process list Cloud Service](process-list-cloud.service.md)
+-   [Process header cloud component](../../process-services-cloud/components/process-header-cloud.component.md)
