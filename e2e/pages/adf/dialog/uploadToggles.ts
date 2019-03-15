@@ -53,6 +53,24 @@ export class UploadToggles {
         return this;
     }
 
+    checkMultipleFileUploadToggleIsEnabled() {
+        let enabledToggle = element(by.css('mat-slide-toggle[id="adf-multiple-upload-switch"][class*="mat-checked"]'));
+        Util.waitUntilElementIsVisible(enabledToggle);
+        return this;
+    }
+
+    checkVersioningToggleIsEnabled() {
+        let enabledToggle = element(by.css('mat-slide-toggle[id="adf-version-upload-switch"][class*="mat-checked"]'));
+        Util.waitUntilElementIsVisible(enabledToggle);
+        return this;
+    }
+    
+    checkMaxSizeToggleIsEnabled() {
+        let enabledToggle = element(by.css('mat-slide-toggle[id="adf-max-size-filter-upload-switch"][class*="mat-checked"]'));
+        Util.waitUntilElementIsVisible(enabledToggle);
+        return this;
+    }
+
     disableFolderUpload() {
         this.formControllersPage.disableToggle(this.uploadFolderToggle);
         return this;
