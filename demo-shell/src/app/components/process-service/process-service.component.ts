@@ -484,7 +484,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
             name: event.value.name || 'No name',
             created: event.value.created
         };
-        this.activitiFilter.selectFilter(null);
+
         if (this.taskList) {
             this.taskList.setCustomDataSource([processTaskDataRow]);
             this.taskList.selectTask(taskId);
