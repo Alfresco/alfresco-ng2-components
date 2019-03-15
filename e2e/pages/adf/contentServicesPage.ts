@@ -167,26 +167,9 @@ export class ContentServicesPage {
         return this.contentList.dataTablePage().getAllRowsColumnValues('Created');
     }
 
-    async getElementsDisplayedSize(alfrescoJsApi) {
-        let idList = await this.getElementsDisplayedId();
-        let numberOfElements = await this.numberOfResultsDisplayed();
-        let nodeList = await this.nodeActions.getNodesDisplayed(alfrescoJsApi, idList, numberOfElements);
-        let sizeList = [];
-        for (let i = 0; i < nodeList.length; i++) {
-            sizeList.push(nodeList[i].entry.content.sizeInBytes);
-        }
-        return sizeList;
-    }
+    async getElementsDisplayedSize() {
+        return this.contentList.dataTablePage().getAllRowsColumnValues('Size');
 
-    async getElementsDisplayedAuthor(alfrescoJsApi) {
-        let idList = await this.getElementsDisplayedId();
-        let numberOfElements = await this.numberOfResultsDisplayed();
-        let nodeList = await this.nodeActions.getNodesDisplayed(alfrescoJsApi, idList, numberOfElements);
-        let authorList = [];
-        for (let i = 0; i < nodeList.length; i++) {
-            authorList.push(nodeList[i].entry.createdByUser.id);
-        }
-        return authorList;
     }
 
     getElementsDisplayedName() {

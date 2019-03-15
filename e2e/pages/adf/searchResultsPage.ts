@@ -82,10 +82,6 @@ export class SearchResultsPage {
         this.searchSortingPicker.sortBy(sortOrder, 'Name');
     }
 
-    sortByAuthor(sortOrder) {
-        this.searchSortingPicker.sortBy(sortOrder, 'Author');
-    }
-
     sortByCreated(sortOrder) {
         this.searchSortingPicker.sortBy(sortOrder, 'Created');
     }
@@ -121,32 +117,6 @@ export class SearchResultsPage {
         return this.contentServices.checkElementsSortedDesc(list);
     }
 
-    sortAndCheckListIsOrderedByAuthor(alfrescoJsApi, sortOrder) {
-        let deferred = protractor.promise.defer();
-        this.sortByAuthor(sortOrder);
-        this.dataTable.waitForTableBody();
-        if (sortOrder === true) {
-            this.checkListIsOrderedByAuthorAsc(alfrescoJsApi).then((result) => {
-                deferred.fulfill(result);
-            });
-        } else {
-            this.checkListIsOrderedByAuthorDesc(alfrescoJsApi).then((result) => {
-                deferred.fulfill(result);
-            });
-        }
-        return deferred.promise;
-    }
-
-    async checkListIsOrderedByAuthorAsc(alfrescoJsApi) {
-        let list = await this.contentServices.getElementsDisplayedAuthor(alfrescoJsApi);
-        return this.contentServices.checkElementsSortedAsc(list);
-    }
-
-    async checkListIsOrderedByAuthorDesc(alfrescoJsApi) {
-        let list = await this.contentServices.getElementsDisplayedAuthor(alfrescoJsApi);
-        return this.contentServices.checkElementsSortedDesc(list);
-    }
-
     sortAndCheckListIsOrderedByCreated(sortOrder) {
         let deferred = protractor.promise.defer();
         this.sortByCreated(sortOrder);
@@ -177,13 +147,13 @@ export class SearchResultsPage {
         return this.contentServices.checkElementsSortedDesc(list);
     }
 
-    async checkListIsOrderedBySizeAsc(alfrescoJsApi) {
-        let list = await this.contentServices.getElementsDisplayedSize(alfrescoJsApi);
+    async checkListIsOrderedBySizeAsc() {
+        let list = await this.contentServices.getElementsDisplayedSize();
         return this.contentServices.checkElementsSortedAsc(list);
     }
 
-    async checkListIsOrderedBySizeDesc(alfrescoJsApi) {
-        let list = await this.contentServices.getElementsDisplayedSize(alfrescoJsApi);
+    async checkListIsOrderedBySizeDesc() {
+        let list = await this.contentServices.getElementsDisplayedSize();
         return this.contentServices.checkElementsSortedDesc(list);
     }
 

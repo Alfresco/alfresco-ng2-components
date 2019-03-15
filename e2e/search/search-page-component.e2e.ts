@@ -208,23 +208,6 @@ describe('Search component - Search Page', () => {
             });
         });
 
-        it('[C272805] Should be able to sort results by author (Ascending)', () => {
-
-            searchResultPage.checkContentIsDisplayed(search.active.secondFile);
-
-            searchResultPage.sortAndCheckListIsOrderedByAuthor(this.alfrescoJsApi, true).then((result) => {
-                expect(result).toEqual(true);
-            });
-        });
-
-        it('[C272806] Should be able to sort results by author (Descending)', () => {
-
-            searchResultPage.checkContentIsDisplayed(search.active.secondFile);
-            searchResultPage.sortAndCheckListIsOrderedByAuthor(this.alfrescoJsApi, false).then((result) => {
-                expect(result).toEqual(true);
-            });
-        });
-
         it('[C272807] Should be able to sort results by date (Ascending)', () => {
 
             searchResultPage.checkContentIsDisplayed(search.active.secondFile);
