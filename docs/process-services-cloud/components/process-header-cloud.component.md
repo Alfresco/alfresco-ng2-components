@@ -2,7 +2,7 @@
 Title: Process Header Cloud Component
 Added: v3.0.0
 Status: Experimental
-Last reviewed: 2019-03-08
+Last reviewed: 2019-03-15
 ---
 
 # [Process Header Cloud Component](../../../lib/process-services-cloud/src/lib/process/process-header/components/process-header-cloud.component.ts "Defined in process-header-cloud.component.ts")
@@ -32,7 +32,7 @@ Shows all the information related to a process instance.
 ## Details
 
 The component populates an internal array of
-[`CardViewModel`](../../core/components/card-view.component.md) with the information that we want to display.
+[`CardViewModel`](../../core/components/card-view.component.md) with the information to display.
 
 By default all properties are displayed:
 
@@ -49,3 +49,7 @@ However, you can also choose which properties to show using a configuration in `
 ```
 
 With this configuration, only the four listed properties will be shown.
+
+## See also
+
+-   [Process header cloud service](../../process-services-cloud/services/process-header-cloud.service.md)
