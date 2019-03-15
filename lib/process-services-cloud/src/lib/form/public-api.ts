@@ -15,11 +15,6 @@
  * limitations under the License.
  */
 
-export * from './lib/process-services-cloud.module';
-
-export * from './lib/app/public-api';
-export * from './lib/process/public-api';
-export * from './lib/task/public-api';
-export * from './lib/group/public-api';
-export * from './lib/services/public-api';
-export * from './lib/form/public-api';
+export * from './models/form-cloud.model';
+export * from './components/form-cloud.component';
+export * from './services/form-cloud.services';
