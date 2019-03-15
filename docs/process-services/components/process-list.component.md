@@ -74,8 +74,9 @@ when the process list is empty:
 
 ## Details
 
-You can define a custom schema for the list in the `app.config.json` file and access it with the
-`presetColumn` property as shown below:
+The list can show any of the properties of the
+[`ProcessInstance`](../../../lib/process-services/process-list/models/process-instance.model.ts)
+class. The example below shows how to define a custom schema for the list in the `app.config.json` file and access it with the `presetColumn` property:
 
 ```json
 "adf-process-list": {

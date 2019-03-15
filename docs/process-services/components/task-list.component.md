@@ -90,7 +90,9 @@ renders details of any chosen instance.
 
 ### Setting the column schema
 
-You can use an HTML-based schema declaration to set a column schema for the tasklist as shown below :
+You can configure the list to show any of the properties of the
+[`TaskDetailsModel`](../../../lib/process-services/task-list/models/task-details.model.ts)
+class. The example below shows how to set up the column schema from HTML:
 
 ```html
 <adf-tasklist ...>
@@ -211,7 +213,7 @@ The Tasklist also supports pagination as shown in the example below:
 
 See the [Data Table Adapter interface](../../core/interfaces/datatable-adapter.interface.md) page for full details of the interface and its standard
 implementation, [`ObjectDataTableAdapter`](../../../lib/core/datatable/data/object-datatable-adapter.ts). Below is an example of how you can set up the adapter for a
-typical tasklist.
+typical tasklist:
 
 ```json
 [
