@@ -33,7 +33,8 @@ import { FolderModel } from '../../models/ACS/folderModel';
 import TestConfig = require('../../test.config');
 import resources = require('../../util/resources');
 
-import AlfrescoApi = require('@alfresco/js-api');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+
 import CONSTANTS = require('../../util/constants');
 
 describe('Upload - User permission', () => {

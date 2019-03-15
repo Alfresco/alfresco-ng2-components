@@ -20,7 +20,6 @@ import CONSTANTS = require('../util/constants');
 import { Util } from '../util/util';
 import moment = require('moment');
 
-import AlfrescoApi = require('@alfresco/js-api');
 import { Tasks } from '../actions/APS-cloud/tasks';
 
 import { NavigationBarPage } from '../pages/adf/navigationBarPage';
@@ -28,7 +27,7 @@ import { LoginSSOPage } from '@alfresco/adf-testing';
 import { SettingsPage } from '../pages/adf/settingsPage';
 import { AppListCloudPage } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasksCloudDemoPage';
-import { TaskDetailsCloudComponent } from '../pages/adf/process-cloud/TaskDetailsCloudComponent';
+import { TaskDetailsCloudComponent } from '../pages/adf/process-cloud/taskDetailsCloudComponent';
 import { browser } from 'protractor';
 
 describe('Task Header cloud component', () => {

@@ -437,7 +437,7 @@ describe('Start Task - Custom App', () => {
 
         taskListSinglePage.taskList().checkContentIsDisplayed(paginationTasksName[13]);
         taskListSinglePage.taskList().getRowsDisplayedWithSameName(paginationTasksName[13]).then((list) => {
-            expect(list.count()).toEqual(2);
+            expect(list.length).toEqual(2);
         });
     });
 

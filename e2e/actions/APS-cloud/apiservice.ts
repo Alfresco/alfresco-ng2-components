@@ -17,21 +17,20 @@
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import TestConfig = require('../../test.config');
+import { AlfrescoApiConfig } from '@alfresco/js-api/src/alfrescoApiConfig';
 
 export class ApiService {
 
-    HOST_SSO = TestConfig.adf.hostSso;
-    HOST_BPM = TestConfig.adf.hostBPM;
-    HOST_IDENTITY = TestConfig.adf.hostIdentity;
+    HOST_SSO: string = TestConfig.adf.hostSso;
+    HOST_BPM: string = TestConfig.adf.hostBPM;
+    HOST_IDENTITY: string = TestConfig.adf.hostIdentity;
 
-    apiService = new AlfrescoApi({
+    config: AlfrescoApiConfig = {
         provider: 'BPM',
-        bpmHost: `${this.HOST_BPM}`,
-        identityHost: `${this.HOST_IDENTITY}`,
+        hostBpm: this.HOST_BPM,
         authType: 'OAUTH',
         oauth2: {
-            host: `${this.HOST_SSO}`,
-            authType: '/protocol/openid-connect/token',
+            host: this.HOST_SSO,
             clientId: 'activiti',
             scope: 'openid',
             secret: '',
@@ -41,7 +40,9 @@ export class ApiService {
             redirectUriLogout: '/logout'
         }
 
-    });
+    };
+
+    apiService: any = new AlfrescoApi(this.config);
 
     async login(username, password) {
         await this.apiService.login(username, password);

@@ -157,7 +157,7 @@ describe('Process list cloud', () => {
             noOfApps = processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader().getNumberOfAppNameOptions();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().checkAppNamesAreUnique()).toBe(true);
             browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-            processCloudDemoPage.editProcessFilterCloudComponent().setStateFilterDropDown('RUNNING')
+            processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING')
                 .setAppNameDropDown(simpleApp).setProcessInstanceId(runningProcessInstance.entry.id);
 
             processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();
@@ -173,7 +173,7 @@ describe('Process list cloud', () => {
             processCloudDemoPage.editProcessFilterCloudComponent().clickCustomiseFilterHeader();
             expect(processCloudDemoPage.editProcessFilterCloudComponent().getProcessInstanceId()).toEqual(runningProcessInstance.entry.id);
 
-            processCloudDemoPage.editProcessFilterCloudComponent().setStateFilterDropDown('RUNNING')
+            processCloudDemoPage.editProcessFilterCloudComponent().setStatusFilterDropDown('RUNNING')
                 .setAppNameDropDown(simpleApp).setProcessInstanceId(switchProcessInstance.entry.id);
 
             processCloudDemoPage.processListCloudComponent().getDataTable().checkSpinnerIsDisplayed().checkSpinnerIsNotDisplayed();

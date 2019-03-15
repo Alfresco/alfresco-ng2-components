@@ -78,7 +78,7 @@ export class ProcessService {
      * @returns Binary PDF data
      */
     fetchProcessAuditPdfById(processId: string): Observable<Blob> {
-        return from<Blob>(this.alfrescoApiService.getInstance().activiti.processApi.getProcessAuditPdf(processId))
+        return from(this.alfrescoApiService.getInstance().activiti.processApi.getProcessAuditPdf(processId))
             .pipe(
                 catchError((err) => this.handleProcessError(err))
             );
@@ -192,7 +192,7 @@ export class ProcessService {
      * @returns Null response notifying when the operation is complete
      */
     cancelProcess(processInstanceId: string): Observable<void> {
-        return from<void>(
+        return from(
             this.alfrescoApiService.getInstance().activiti.processApi.deleteProcessInstance(processInstanceId)
         )
             .pipe(
@@ -236,7 +236,7 @@ export class ProcessService {
      * @returns Null response notifying when the operation is complete
      */
     deleteProcessInstanceVariable(processInstanceId: string, variableName: string): Observable<void> {
-        return from<void>(
+        return from(
             this.alfrescoApiService.getInstance().activiti.processInstanceVariablesApi.deleteProcessInstanceVariable(processInstanceId, variableName)
         )
             .pipe(

@@ -371,7 +371,7 @@ describe('Start Process Component', () => {
             processFiltersPage.clickRunningFilterButton();
             processFiltersPage.selectFromProcessList('Active Task');
             processDetailsPage.clickOnActiveTask();
-            processDetailsPage.checkActiveTaskTitleIsDisplayed(app.task_name);
+            processDetailsPage.checkActiveTaskTitleIsDisplayed();
         });
 
         it('[C260457] Should display process in Completed when cancelled', () => {

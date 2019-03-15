@@ -167,7 +167,7 @@ if $EXEC_VERSION_JSAPI == true; then
   npm install alfresco-js-api@${JSAPI_VERSION}
 fi
 
-if [[  EXECLINT == "true" ]]; then
+if [[  $EXECLINT == "true" ]]; then
     npm run lint-e2e || exit 1
 fi
 

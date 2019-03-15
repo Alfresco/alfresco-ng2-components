@@ -18,15 +18,7 @@
     "lib": [
       "es2018",
       "dom"
-    ],
-    "paths": {
-      "testing": [
-        "dist/testing"
-      ],
-      "testing/*": [
-        "dist/testing/*"
-      ]
-    }
+    ]
   },
   "exclude": [
     "lib/config",

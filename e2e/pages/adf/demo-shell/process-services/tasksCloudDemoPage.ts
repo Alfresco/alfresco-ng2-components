@@ -22,7 +22,7 @@ import { TaskListCloudComponent } from '../../process-cloud/taskListCloudCompone
 import { EditTaskFilterCloudComponent } from '../../process-cloud/editTaskFilterCloudComponent';
 import { FormControllersPage } from '../../material/formControllersPage';
 
-import { element, by } from 'protractor';
+import { element, by, browser } from 'protractor';
 
 export class TasksCloudDemoPage {
 

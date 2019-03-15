@@ -16,14 +16,10 @@
  */
 
 import { ApiService } from '../APS-cloud/apiservice';
-import { AppConfigService } from '@alfresco/adf-core';
 
 export class Roles {
 
     api: ApiService = new ApiService();
-
-    constructor(appConfig: AppConfigService) {
-    }
 
     async init(username, password) {
         await this.api.login(username, password);

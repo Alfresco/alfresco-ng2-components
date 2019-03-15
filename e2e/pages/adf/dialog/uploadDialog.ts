@@ -113,12 +113,6 @@ export class UploadDialog {
         return this;
     }
 
-    removeFileWhileUploading(content) {
-        browser.driver.actions().mouseMove(this.getRowByRowName(content).element(this.sizeUploaded)).perform();
-        this.getRowByRowName(content).element(this.cancelWhileUploadingIcon).click();
-        return this;
-    }
-
     getTitleText() {
         Util.waitUntilElementIsVisible(this.title);
         let deferred = protractor.promise.defer();
@@ -164,7 +158,7 @@ export class UploadDialog {
 
     numberOfCurrentFilesUploaded() {
         let deferred = protractor.promise.defer();
-        this.getTitleText().then((text) => {
+        this.getTitleText().then((text: any) => {
             deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[0]);
         });
         return deferred.promise;
@@ -172,7 +166,7 @@ export class UploadDialog {
 
     numberOfInitialFilesUploaded() {
         let deferred = protractor.promise.defer();
-        this.getTitleText().then((text) => {
+        this.getTitleText().then((text: any) => {
             deferred.fulfill(text.split('Uploaded ')[1].split(' / ')[1]);
         });
         return deferred.promise;

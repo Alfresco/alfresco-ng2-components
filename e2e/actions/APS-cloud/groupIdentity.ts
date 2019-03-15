@@ -17,14 +17,10 @@
 
 import { ApiService } from '../APS-cloud/apiservice';
 import { Util } from '../../util/util';
-import { AppConfigService } from '@alfresco/adf-core';
 
 export class GroupIdentity {
 
     api: ApiService = new ApiService();
-
-    constructor(appConfig: AppConfigService) {
-    }
 
     async init(username, password) {
         await this.api.login(username, password);
