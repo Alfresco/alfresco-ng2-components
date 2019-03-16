@@ -657,6 +657,8 @@ describe('Permissions Component', function () {
 
                 contentServicesPage.metadataContent('RoleEditor' + fileModel.name);
 
+                metadataViewPage.editIconIsDisplayed();
+
                 await metadataViewPage.editIconClick();
 
                 metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
@@ -719,6 +721,8 @@ describe('Permissions Component', function () {
 
                 contentServicesPage.metadataContent('RoleCollaborator' + fileModel.name);
 
+                metadataViewPage.editIconIsDisplayed();
+
                 await metadataViewPage.editIconClick();
 
                 metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
@@ -774,6 +778,8 @@ describe('Permissions Component', function () {
             contentList.waitForTableBody();
 
             contentServicesPage.metadataContent('RoleCoordinator' + fileModel.name);
+
+            metadataViewPage.editIconIsDisplayed();
 
             browser.controlFlow().execute(async () => {
 

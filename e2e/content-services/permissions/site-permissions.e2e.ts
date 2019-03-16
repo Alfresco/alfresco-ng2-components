@@ -433,6 +433,8 @@ describe('Permissions Component', function () {
 
                 contentServicesPage.metadataContent('Site' + fileModel.name);
 
+                metadataViewPage.editIconIsDisplayed();
+
                 await metadataViewPage.editIconClick();
 
                 metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
@@ -488,6 +490,8 @@ describe('Permissions Component', function () {
             contentList.waitForTableBody();
 
             contentServicesPage.metadataContent('Site' + fileModel.name);
+
+            metadataViewPage.editIconIsDisplayed();
 
             browser.controlFlow().execute(async () => {
 
