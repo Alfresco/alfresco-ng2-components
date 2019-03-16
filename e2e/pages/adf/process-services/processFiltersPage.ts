@@ -31,7 +31,7 @@ export class ProcessFiltersPage {
     processesPage = element(by.css('div[class="adf-grid"] > div[class="adf-grid-item adf-processes-menu"]'));
     accordionMenu = element(by.css('.adf-processes-menu mat-accordion'));
     buttonWindow = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
-    noContentMessage = element.all(by.css('p[class="adf-empty-content__title"]')).first();
+    noContentMessage = element.all(by.css('div[class="adf-empty-content__title"]')).first();
     rows = by.css('adf-process-instance-list div[class="adf-datatable-body"] div[class*="adf-datatable-row"]');
     tableBody = element.all(by.css('adf-datatable div[class="adf-datatable-body"]')).first();
     nameColumn = by.css('div[class*="adf-datatable-body"] div[class*="adf-datatable-row"] div[title="Name"] span');

@@ -22,7 +22,7 @@ import { element, by } from 'protractor';
 export class ProcessListCloudComponent {
 
     processList = element(by.css('adf-cloud-process-list'));
-    noProcessFound = element.all(by.css("p[class='adf-empty-content__title']")).first();
+    noProcessFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
 
     dataTable = new DataTableComponentPage(this.processList);
 
