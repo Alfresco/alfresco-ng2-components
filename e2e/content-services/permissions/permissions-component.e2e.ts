@@ -81,14 +81,6 @@ describe('Permissions Component', function () {
 
     });
 
-    let pdfFileModel = new FileModel({
-
-        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-
-        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
-
-    });
-
     let testFileModel = new FileModel({
 
         'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
@@ -617,9 +609,9 @@ describe('Permissions Component', function () {
 
             notificationPage.checkNotifyContains('You don\'t have access to do this.');
 
-            contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
+            contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
 
-            uploadDialog.fileIsUploaded(pdfFileModel.name);
+            uploadDialog.fileIsUploaded(testFileModel.name);
 
             uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
@@ -671,11 +663,11 @@ describe('Permissions Component', function () {
 
                 metadataViewPage.clickEditPropertyIcons('properties.cm:title');
 
-                metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle');
+                metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle1');
 
                 await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
 
-                expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
+                expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle1');
 
                 metadataViewPage.clickCloseButton();
 
@@ -729,15 +721,15 @@ describe('Permissions Component', function () {
 
                 await metadataViewPage.editIconClick();
 
-                metadataViewPage.editPropertyIconIsDisplayed('properties.cm:description');
+                metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
 
-                metadataViewPage.clickEditPropertyIcons('properties.cm:description');
+                metadataViewPage.clickEditPropertyIcons('properties.cm:title');
 
-                metadataViewPage.enterDescriptionText('newDescription');
+                metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle2');
 
-                await metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
+                await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
 
-                expect(metadataViewPage.getPropertyText('properties.cm:description')).toEqual('newDescription');
+                expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle2');
 
                 metadataViewPage.clickCloseButton();
 
@@ -787,15 +779,15 @@ describe('Permissions Component', function () {
 
                 await metadataViewPage.editIconClick();
 
-                metadataViewPage.editPropertyIconIsDisplayed('properties.cm:author');
+                metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
 
-                metadataViewPage.clickEditPropertyIcons('properties.cm:author');
+                metadataViewPage.clickEditPropertyIcons('properties.cm:title');
 
-                metadataViewPage.enterPropertyText('properties.cm:author', 'newAuthor');
+                metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle3');
 
-                await metadataViewPage.clickUpdatePropertyIcon('properties.cm:author');
+                await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
 
-                expect(metadataViewPage.getPropertyText('properties.cm:author')).toEqual('newAuthor');
+                expect(metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle3');
 
                 metadataViewPage.clickCloseButton();
 

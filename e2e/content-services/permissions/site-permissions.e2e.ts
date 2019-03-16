@@ -87,14 +87,6 @@ describe('Permissions Component', function () {
 
     });
 
-    let pdfFileModel = new FileModel({
-
-        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
-
-        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
-
-    });
-
     let testFileModel = new FileModel({
 
         'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
@@ -393,9 +385,9 @@ describe('Permissions Component', function () {
 
             notificationPage.checkNotifyContains('You don\'t have access to do this.');
 
-            contentServicesPage.uploadFile(pdfFileModel.location).checkContentIsDisplayed(pdfFileModel.name);
+            contentServicesPage.uploadFile(testFileModel.location).checkContentIsDisplayed(testFileModel.name);
 
-            uploadDialog.fileIsUploaded(pdfFileModel.name);
+            uploadDialog.fileIsUploaded(testFileModel.name);
 
             uploadDialog.clickOnCloseButton().dialogIsNotDisplayed();
 
@@ -442,6 +434,8 @@ describe('Permissions Component', function () {
                 contentServicesPage.metadataContent('Site' + fileModel.name);
 
                 await metadataViewPage.editIconClick();
+
+                metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
 
                 metadataViewPage.clickEditPropertyIcons('properties.cm:title');
 
@@ -498,6 +492,8 @@ describe('Permissions Component', function () {
             browser.controlFlow().execute(async () => {
 
                 await metadataViewPage.editIconClick();
+
+                metadataViewPage.editPropertyIconIsDisplayed('properties.cm:description');
 
                 metadataViewPage.clickEditPropertyIcons('properties.cm:description');
 
