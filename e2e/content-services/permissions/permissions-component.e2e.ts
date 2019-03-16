@@ -49,8 +49,6 @@ import { MetadataViewPage } from '../../pages/adf/metadataViewPage';
 
 import { UploadDialog } from '../../pages/adf/dialog/uploadDialog';
 
-;
-
 describe('Permissions Component', function () {
 
     const loginPage = new LoginPage();
@@ -115,8 +113,6 @@ describe('Permissions Component', function () {
 
     };
 
-    let groupId;
-
     let alfrescoJsApi = new AlfrescoApi({
 
         provider: 'ECM',
@@ -153,9 +149,7 @@ describe('Permissions Component', function () {
 
         await alfrescoJsApi.core.peopleApi.addPerson(filePermissionUser);
 
-        let group = await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
-
-        groupId = group.entry.id;
+        await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
 
         await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
 
