@@ -667,6 +667,8 @@ describe('Permissions Component', function () {
 
                 await metadataViewPage.editIconClick();
 
+                metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
+
                 metadataViewPage.clickEditPropertyIcons('properties.cm:title');
 
                 metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle');
@@ -727,6 +729,8 @@ describe('Permissions Component', function () {
 
                 await metadataViewPage.editIconClick();
 
+                metadataViewPage.editPropertyIconIsDisplayed('properties.cm:description');
+
                 metadataViewPage.clickEditPropertyIcons('properties.cm:description');
 
                 metadataViewPage.enterDescriptionText('newDescription');
@@ -782,6 +786,8 @@ describe('Permissions Component', function () {
             browser.controlFlow().execute(async () => {
 
                 await metadataViewPage.editIconClick();
+
+                metadataViewPage.editPropertyIconIsDisplayed('properties.cm:author');
 
                 metadataViewPage.clickEditPropertyIcons('properties.cm:author');
 
