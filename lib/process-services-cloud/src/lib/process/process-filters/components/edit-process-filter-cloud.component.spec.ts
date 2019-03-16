@@ -96,10 +96,13 @@ describe('EditProcessFilterCloudComponent', () => {
         fixture.detectChanges();
         const title = fixture.debugElement.nativeElement.querySelector('#adf-edit-process-filter-title-id');
         const subTitle = fixture.debugElement.nativeElement.querySelector('#adf-edit-process-filter-sub-title-id');
-        expect(title).toBeDefined();
-        expect(subTitle).toBeDefined();
-        expect(title.innerText).toEqual('FakeRunningProcess');
-        expect(subTitle.innerText.trim()).toEqual('ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE');
+
+        fixture.whenStable().then(() => {
+            expect(title).toBeDefined();
+            expect(subTitle).toBeDefined();
+            expect(title.innerText).toEqual('FakeRunningProcess');
+            expect(subTitle.innerText.trim()).toEqual('ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE');
+        });
     });
 
     describe('EditProcessFilter form', () => {

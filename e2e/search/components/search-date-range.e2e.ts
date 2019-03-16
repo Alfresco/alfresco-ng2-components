@@ -120,7 +120,7 @@ describe('Search Date Range Filter', () => {
             .selectTodayDate()
             .checkDatePickerIsNotDisplayed();
         dateRangeFilter.getFromDate().then((date) => {
-            fromDate = DateUtil.formatDate('DD-MM-YY', date);
+            fromDate = DateUtil.formatDate('DD-MM-YY', DateUtil.parse(date,'DD-MMM-YY'));
         });
 
         dateRangeFilter.checkApplyButtonIsDisabled();
@@ -129,7 +129,7 @@ describe('Search Date Range Filter', () => {
             .selectTodayDate()
             .checkDatePickerIsNotDisplayed();
         dateRangeFilter.getToDate().then((date) => {
-            toDate = DateUtil.formatDate('DD-MM-YY', date);
+            toDate = DateUtil.formatDate('DD-MM-YY', DateUtil.parse(date,'DD-MMM-YY'));
         });
 
         dateRangeFilter.checkApplyButtonIsEnabled()
