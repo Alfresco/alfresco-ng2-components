@@ -285,11 +285,10 @@
                         type="fileSize">
                     </data-column>
                     <data-column
-                        *ngIf="searchTerm"
                         key="search"
                         title="Search">
                         <ng-template let-entry="$implicit">
-                            <div [innerHTML]="searchResultsHighlight(entry.row.node.entry.search) | highlight:searchTerm">
+                            <div *ngIf="searchTerm" [innerHTML]="searchResultsHighlight(entry.row.node.entry.search) | highlight:searchTerm">
                             </div>
                         </ng-template>
                     </data-column>
