@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+/* tslint:disable */
+
 import { LoginPage } from '../../pages/adf/loginPage';
 import { SearchDialog } from '../../pages/adf/dialog/searchDialog';
 import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
@@ -139,6 +141,8 @@ describe('Search Date Range Filter', () => {
         browser.controlFlow().execute(async () => {
             let firstResult = await dataTable.getFirstElementDetail('Node id');
             await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+
+            console.log('firstResult ' + JSON.stringify(firstResult));
             await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
                 let nodeCreation = new Date(node.entry.createdAt);
                 nodeCreation.setHours(0, 0, 0, 0);
