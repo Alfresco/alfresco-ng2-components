@@ -127,7 +127,7 @@ describe('Search Number Range Filter', () => {
             for (let currentResult of results) {
                 try {
                     let currentSize = await currentResult.getAttribute('title');
-                    if (currentSize && currentSize.trim() != '') {
+                    if (currentSize && currentSize.trim() !== '') {
                         await expect(parseInt(currentSize, 10) <= 5000).toBe(true);
                     }
                 } catch (e) {
@@ -147,7 +147,7 @@ describe('Search Number Range Filter', () => {
                 try {
 
                     let currentSize = await currentResult.getAttribute('title');
-                    if (currentSize && currentSize.trim() != '') {
+                    if (currentSize && currentSize.trim() !== '') {
                         await expect(parseInt(currentSize, 10) >= 5000).toBe(true);
                     }
                 } catch (e) {

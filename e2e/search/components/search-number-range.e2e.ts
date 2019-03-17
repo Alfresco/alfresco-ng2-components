@@ -176,8 +176,8 @@ describe('Search Number Range Filter', () => {
             for (let currentResult of results) {
                 try {
                     let currentSize = await currentResult.getAttribute('title');
-                    if (currentSize && currentSize.trim() != '') {
-                        await expect(parseInt(currentSize)  <= toSize).toBe(true);
+                    if (currentSize && currentSize.trim() !== '') {
+                        await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
                     }
                 } catch (e) {
                 }
@@ -207,8 +207,8 @@ describe('Search Number Range Filter', () => {
             for (let currentResult of results) {
                 try {
                     let currentSize = await currentResult.getAttribute('title');
-                    if (currentSize && currentSize.trim() != '') {
-                        await expect(parseInt(currentSize)  <= toSize).toBe(true);
+                    if (currentSize && currentSize.trim() !== '') {
+                        await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
                     }
                 } catch (e) {
                 }
@@ -225,8 +225,8 @@ describe('Search Number Range Filter', () => {
             for (let currentResult of results) {
                 try {
                     let currentSize = await currentResult.getAttribute('title');
-                    if (currentSize && currentSize.trim() != '') {
-                        await expect(parseInt(currentSize)  <= toSize).toBe(true);
+                    if (currentSize && currentSize.trim() !== '') {
+                        await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
                     }
                 } catch (e) {
                 }
@@ -238,7 +238,7 @@ describe('Search Number Range Filter', () => {
             for (let currentResult of results) {
                 try {
                     let name = await currentResult.getAttribute('title');
-                    if (name && name.trim() != '') {
+                    if (name && name.trim() !== '') {
                         await expect(/z*/i.test(name)).toBe(true);
                     }
                 } catch (e) {
@@ -281,7 +281,7 @@ describe('Search Number Range Filter', () => {
             for (let currentResult of results) {
                 try {
                     let currentSize = await currentResult.getAttribute('title');
-                    if (currentSize && currentSize.trim() != '') {
+                    if (currentSize && currentSize.trim() !== '') {
                         await expect(currentSize === '0').toBe(true);
                     }
                 } catch (e) {
@@ -320,7 +320,7 @@ describe('Search Number Range Filter', () => {
                 try {
 
                     let currentSize = await currentResult.getAttribute('title');
-                    if (currentSize && currentSize.trim() != '') {
+                    if (currentSize && currentSize.trim() !== '') {
                         await expect(parseInt(currentSize, 10) <= 1000).toBe(true);
                     }
                 } catch (e) {
@@ -339,7 +339,7 @@ describe('Search Number Range Filter', () => {
                 try {
 
                     let currentSize = await currentResult.getAttribute('title');
-                    if (currentSize && currentSize.trim() != '') {
+                    if (currentSize && currentSize.trim() !== '') {
                         await expect(parseInt(currentSize, 10) >= 1000).toBe(true);
                     }
                 } catch (e) {
