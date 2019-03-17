@@ -194,6 +194,10 @@ export class DataTableComponentPage {
         return firstNode.getText();
     }
 
+    geCellElementDetail(detail) {
+        return element.all(by.css(`adf-datatable div[title="${detail}"] span`));
+    }
+
     sortByColumn(sortOrder, column) {
         let locator = by.css(`div[data-automation-id="auto_id_${column}"]`);
         Util.waitUntilElementIsVisible(element(locator));

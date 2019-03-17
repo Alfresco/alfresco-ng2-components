@@ -32,6 +32,7 @@ import { FileModel } from '../../models/ACS/fileModel';
 import { browser } from 'protractor';
 import resources = require('../../util/resources');
 import { SearchConfiguration } from '../search.config';
+import { DateUtil } from '../../util/dateUtil';
 
 describe('Search Number Range Filter', () => {
 
@@ -217,56 +218,6 @@ describe('Search Number Range Filter', () => {
         });
     });
 
-    it('[C276950] Should be able to filter by size (slider) when size range filter is applied', () => {
-        let sizeSliderFilter = searchFilters.sizeSliderFilterPage();
-        let toSize = 20;
-        let sliderSize = 18;
-
-        searchFilters.checkSizeSliderFilterIsDisplayed()
-            .clickSizeSliderFilterHeader()
-            .checkSizeSliderFilterIsExpanded();
-        sizeSliderFilter.checkSliderIsDisplayed().setValue(sliderSize);
-
-        sizeRangeFilter.checkFromFieldIsDisplayed()
-            .putFromNumber(0)
-            .putToNumber(toSize);
-        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
-
-        sizeRangeFilter.clickApplyButton();
-        searchResults.sortBySize(false);
-        searchResults.tableIsLoaded();
-
-        browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getFirstElementDetail('Node id');
-            await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                await expect(node.entry.content.sizeInBytes <= sliderSize).toBe(true);
-            });
-        });
-
-        sizeRangeFilter.checkFromFieldIsDisplayed()
-            .putFromNumber(1);
-        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
-
-        sizeRangeFilter.clickApplyButton();
-        searchResults.sortBySize(true);
-        searchResults.tableIsLoaded();
-
-        browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getFirstElementDetail('Node id');
-            await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                await expect(node.entry.content.sizeInBytes >= 1).toBe(true);
-                await expect(node.entry.content.sizeInBytes <= sliderSize).toBe(true);
-            });
-        });
-
-        sizeRangeFilter.checkFromFieldIsDisplayed()
-            .putFromNumber(19);
-        expect(sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
-
-        sizeRangeFilter.clickApplyButton();
-        searchResults.checkNoResultMessageIsDisplayed();
-    });
-
     it('[C276951] Should not display folders when Size range is applied', () => {
         sizeRangeFilter.checkToFieldIsDisplayed()
             .putToNumber(99999999)
@@ -297,11 +248,18 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getFirstElementDetail('Node id');
-            await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                await expect(node.entry.content.sizeInBytes).toEqual(0);
-            });
+            let results = await dataTable.geCellElementDetail('Size');
+            for (let currentResult of results) {
+                try {
+                    let currentSize = await currentResult.getAttribute('title');
+                    if (currentSize && currentSize.trim() != '') {
+                        await expect(currentSize === '0').toBe(true);
+                    }
+                } catch (e) {
+                }
+            }
         });
+
     });
 
     it('[C277092] Should disable apply button when from field value equal/is bigger than to field value', () => {
@@ -328,10 +286,17 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getFirstElementDetail('Node id');
-            await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                await expect(node.entry.content.sizeInBytes <= 1).toBe(true);
-            });
+            let results = await dataTable.geCellElementDetail('Size');
+            for (let currentResult of results) {
+                try {
+
+                    let currentSize = await currentResult.getAttribute('title');
+                    if (currentSize && currentSize.trim() != '') {
+                        await expect(parseInt(currentSize, 10) <= 1000).toBe(true);
+                    }
+                } catch (e) {
+                }
+            }
         });
 
         sizeRangeFilter.clickClearButton();
@@ -340,10 +305,17 @@ describe('Search Number Range Filter', () => {
         expect(sizeRangeFilter.getToNumber()).toEqual('');
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getFirstElementDetail('Node id');
-            await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                await expect(node.entry.content.sizeInBytes >= 1).toBe(true);
-            });
+            let results = await dataTable.geCellElementDetail('Size');
+            for (let currentResult of results) {
+                try {
+
+                    let currentSize = await currentResult.getAttribute('title');
+                    if (currentSize && currentSize.trim() != '') {
+                        await expect(parseInt(currentSize, 10) >= 1000).toBe(true);
+                    }
+                } catch (e) {
+                }
+            }
         });
     });
 
@@ -426,20 +398,18 @@ describe('Search Number Range Filter', () => {
             searchResults.sortByCreated(false);
 
             browser.controlFlow().execute(async () => {
-                let firstResult = await dataTable.getFirstElementDetail('Node id');
-                await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                    await expect((node.entry.createdAt.getFullYear()) <= toYear).toBe(true);
-                });
+                let results = await dataTable.geCellElementDetail('Created');
+                for (let currentResult of results) {
+                    currentResult.getAttribute('title').then(async (currentDate) => {
+                        let currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
+
+                        await expect(currentDateFormatted.getFullYear() <= toYear).toBe(true);
+                        await expect(currentDateFormatted.getFullYear() >= fromYear).toBe(true);
+                    });
+
+                }
             });
 
-            searchResults.sortByCreated(true);
-
-            browser.controlFlow().execute(async () => {
-                let firstResult = await dataTable.getFirstElementDetail('Node id');
-                await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                    await expect((node.entry.createdAt.getFullYear()) >= fromYear).toBe(true);
-                });
-            });
         });
 
         it('[C277139] Should be able to set To field to be exclusive', () => {

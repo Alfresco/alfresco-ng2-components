@@ -123,10 +123,16 @@ describe('Search Number Range Filter', () => {
             .tableIsLoaded();
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getFirstElementDetail('Node id');
-            await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                await expect(node.entry.content.sizeInBytes <= size).toBe(true);
-            });
+            let results = await dataTable.geCellElementDetail('Size');
+            for (let currentResult of results) {
+                try {
+                    let currentSize = await currentResult.getAttribute('title');
+                    if (currentSize && currentSize.trim() != '') {
+                        await expect(parseInt(currentSize, 10) <= 5000).toBe(true);
+                    }
+                } catch (e) {
+                }
+            }
         });
 
         sizeSliderFilter.checkSliderIsDisplayed()
@@ -136,10 +142,17 @@ describe('Search Number Range Filter', () => {
             .tableIsLoaded();
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getFirstElementDetail('Node id');
-            await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                await expect(node.entry.content.sizeInBytes >= size).toBe(true);
-            });
+            let results = await dataTable.geCellElementDetail('Size');
+            for (let currentResult of results) {
+                try {
+
+                    let currentSize = await currentResult.getAttribute('title');
+                    if (currentSize && currentSize.trim() != '') {
+                        await expect(parseInt(currentSize, 10) >= 5000).toBe(true);
+                    }
+                } catch (e) {
+                }
+            }
         });
     });
 
