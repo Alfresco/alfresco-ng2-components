@@ -42,6 +42,32 @@ export class VersionManagePage {
         return this;
     }
 
+    checkMajorChangeIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.majorRadio);
+        return this;
+    }
+
+    checkMinorChangeIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.minorRadio);
+        return this;
+    }
+
+    checkCommentTextIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.commentText);
+        return this;
+    }
+
+    clickAddNewVersionsButton() {
+        Util.waitUntilElementIsVisible(this.showNewVersionButton);
+        this.showNewVersionButton.click();
+        return this;
+    }
+
+    checkCancelButtonIsDisplayed() {
+        Util.waitUntilElementIsVisible(this.cancelButton);
+        return this;
+    }
+
     uploadNewVersionFile(fileLocation) {
         browser.setFileDetector(new remote.FileDetector());
         Util.waitUntilElementIsVisible(this.uploadNewVersionButton);
