@@ -172,10 +172,16 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getFirstElementDetail('Node id');
-            await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                await expect(node.entry.content.sizeInBytes <= toSize).toBe(true);
-            });
+            let results = await dataTable.geCellElementDetail('Size');
+            for (let currentResult of results) {
+                try {
+                    let currentSize = await currentResult.getAttribute('title');
+                    if (currentSize && currentSize.trim() != '') {
+                        await expect(parseInt(currentSize)  <= toSize).toBe(true);
+                    }
+                } catch (e) {
+                }
+            }
         });
     });
 
@@ -197,10 +203,16 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getFirstElementDetail('Node id');
-            await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                await expect(node.entry.content.sizeInBytes <= toSize).toBe(true);
-            });
+            let results = await dataTable.geCellElementDetail('Size');
+            for (let currentResult of results) {
+                try {
+                    let currentSize = await currentResult.getAttribute('title');
+                    if (currentSize && currentSize.trim() != '') {
+                        await expect(parseInt(currentSize)  <= toSize).toBe(true);
+                    }
+                } catch (e) {
+                }
+            }
         });
 
         searchFilters.checkNameFilterIsDisplayed()
@@ -209,12 +221,29 @@ describe('Search Number Range Filter', () => {
         searchResults.sortBySize(false);
 
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getFirstElementDetail('Node id');
-            await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                await expect(node.entry.content.sizeInBytes <= toSize).toBe(true);
-                let name = node.entry.name;
-                await expect(/z*/i.test(name)).toBe(true);
-            });
+            let results = await dataTable.geCellElementDetail('Size');
+            for (let currentResult of results) {
+                try {
+                    let currentSize = await currentResult.getAttribute('title');
+                    if (currentSize && currentSize.trim() != '') {
+                        await expect(parseInt(currentSize)  <= toSize).toBe(true);
+                    }
+                } catch (e) {
+                }
+            }
+        });
+
+        browser.controlFlow().execute(async () => {
+            let results = await dataTable.geCellElementDetail('Display name');
+            for (let currentResult of results) {
+                try {
+                    let name = await currentResult.getAttribute('title');
+                    if (name && name.trim() != '') {
+                        await expect(/z*/i.test(name)).toBe(true);
+                    }
+                } catch (e) {
+                }
+            }
         });
     });
 
