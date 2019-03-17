@@ -31,7 +31,7 @@ export class NodeActions {
         let nodeList;
 
         for (let i = 0; i < (numberOfElements - 1); i++) {
-            if (idList[i] && idList[i].trim() != '') {
+            if (idList[i] && idList[i].trim() !== '') {
                 promises.push(alfrescoJsApi.core.nodesApi.getNode(idList[i]));
             }
         }
