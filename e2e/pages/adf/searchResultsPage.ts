@@ -18,7 +18,7 @@
 import { Util } from '../../util/util';
 import { DataTableComponentPage } from './dataTableComponentPage';
 import { SearchSortingPickerPage } from './content-services/search/components/search-sortingPicker.page';
-import { element, by, protractor } from 'protractor';
+import { element, by } from 'protractor';
 import { ContentServicesPage } from './contentServicesPage';
 
 export class SearchResultsPage {
@@ -95,22 +95,6 @@ export class SearchResultsPage {
         return this;
     }
 
-    sortAndCheckListIsOrderedByName(sortOrder) {
-        let deferred = protractor.promise.defer();
-        this.sortByName(sortOrder);
-        this.dataTable.waitForTableBody();
-        if (sortOrder === true) {
-            this.checkListIsOrderedByNameAsc().then((result) => {
-                deferred.fulfill(result);
-            });
-        } else {
-            this.checkListIsOrderedByNameDesc().then((result) => {
-                deferred.fulfill(result);
-            });
-        }
-        return deferred.promise;
-    }
-
     async checkListIsOrderedByNameAsc() {
         let list = await this.contentServices.getElementsDisplayedName();
         return this.contentServices.checkElementsSortedAsc(list);
@@ -121,60 +105,14 @@ export class SearchResultsPage {
         return this.contentServices.checkElementsSortedDesc(list);
     }
 
-    sortAndCheckListIsOrderedByAuthor(alfrescoJsApi, sortOrder) {
-        let deferred = protractor.promise.defer();
-        this.sortByAuthor(sortOrder);
-        this.dataTable.waitForTableBody();
-        if (sortOrder === true) {
-            this.checkListIsOrderedByAuthorAsc(alfrescoJsApi).then((result) => {
-                deferred.fulfill(result);
-            });
-        } else {
-            this.checkListIsOrderedByAuthorDesc(alfrescoJsApi).then((result) => {
-                deferred.fulfill(result);
-            });
-        }
-        return deferred.promise;
+    async checkListIsOrderedByAuthorAsc() {
+        let authorList = await this.dataTable.geCellElementDetail('Created by');
+        return this.contentServices.checkElementsSortedAsc(authorList);
     }
 
-    async checkListIsOrderedByAuthorAsc(alfrescoJsApi) {
-        let list = await this.contentServices.getElementsDisplayedAuthor(alfrescoJsApi);
-        return this.contentServices.checkElementsSortedAsc(list);
-    }
-
-    async checkListIsOrderedByAuthorDesc(alfrescoJsApi) {
-        let list = await this.contentServices.getElementsDisplayedAuthor(alfrescoJsApi);
-        return this.contentServices.checkElementsSortedDesc(list);
-    }
-
-    sortAndCheckListIsOrderedByCreated(sortOrder) {
-        let deferred = protractor.promise.defer();
-        this.sortByCreated(sortOrder);
-        this.dataTable.waitForTableBody();
-        if (sortOrder === true) {
-            this.checkListIsOrderedByCreatedAsc().then((result) => {
-                deferred.fulfill(result);
-            });
-        } else {
-            this.checkListIsOrderedByCreatedDesc().then((result) => {
-                deferred.fulfill(result);
-            });
-        }
-        return deferred.promise;
-    }
-
-    async checkListIsOrderedByCreatedAsc() {
-        let stringList = await this.contentServices.getElementsDisplayedCreated();
-        let list;
-        await stringList.forEach((stringDate) => {
-            list.push(new Date(stringDate));
-        });
-        return this.contentServices.checkElementsSortedAsc(list);
-    }
-
-    async checkListIsOrderedByCreatedDesc() {
-        let list = await this.contentServices.getElementsDisplayedCreated();
-        return this.contentServices.checkElementsSortedDesc(list);
+    async checkListIsOrderedByAuthorDesc() {
+        let authorList = await this.dataTable.geCellElementDetail('Created by');
+        return this.contentServices.checkElementsSortedDesc(authorList);
     }
 
     async checkListIsOrderedBySizeAsc() {
