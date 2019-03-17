@@ -95,22 +95,6 @@ export class SearchResultsPage {
         return this;
     }
 
-    sortAndCheckListIsOrderedByName(sortOrder) {
-        let deferred = protractor.promise.defer();
-        this.sortByName(sortOrder);
-        this.dataTable.waitForTableBody();
-        if (sortOrder === true) {
-            this.checkListIsOrderedByNameAsc().then((result) => {
-                deferred.fulfill(result);
-            });
-        } else {
-            this.checkListIsOrderedByNameDesc().then((result) => {
-                deferred.fulfill(result);
-            });
-        }
-        return deferred.promise;
-    }
-
     async checkListIsOrderedByNameAsc() {
         let list = await this.contentServices.getElementsDisplayedName();
         return this.contentServices.checkElementsSortedAsc(list);

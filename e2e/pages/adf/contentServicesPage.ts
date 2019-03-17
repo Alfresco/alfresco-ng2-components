@@ -222,8 +222,10 @@ export class ContentServicesPage {
         let sorted = true;
         let i = 0;
         while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
-            if (elements[i] < elements[i + 1]) {
-                sorted = false;
+            if ((elements[i] && elements[i] !== '') && (elements[i + 1] && elements[i + 1] !== '')) {
+                if (elements[i] < elements[i + 1]) {
+                    sorted = false;
+                }
             }
             i++;
         }
