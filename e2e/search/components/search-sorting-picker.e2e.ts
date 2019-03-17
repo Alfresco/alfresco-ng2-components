@@ -188,40 +188,28 @@ describe('Search Sorting Picker', () => {
     });
 
     it('[C277282] Should be able to sort the search results by "Author" ASC', () => {
-        expect(searchResults.sortAndCheckListIsOrderedByAuthor(this.alfrescoJsApi, true)).toBe(true);
+        searchResults.sortByAuthor(true);
+        expect(searchResults.checkListIsOrderedByAuthorAsc()).toBe(true);
     });
 
     it('[C277283] Should be able to sort the search results by "Author" DESC', () => {
-        expect(searchResults.sortAndCheckListIsOrderedByAuthor(this.alfrescoJsApi, false)).toBe(true);
+        searchResults.sortByAuthor(false);
+        expect(searchResults.checkListIsOrderedByAuthorDesc()).toBe(true);
     });
 
     it('[C277286] Should be able to sort the search results by "Created Date" ASC', () => {
         searchResults.sortByCreated(true);
         browser.controlFlow().execute(async () => {
-            let idList = await contentServices.getElementsDisplayedId();
-            let numberOfElements = await contentServices.numberOfResultsDisplayed();
-
-            let nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
-            let dateList = [];
-            for (let i = 0; i < nodeList.length; i++) {
-                dateList.push(new Date(nodeList[i].entry.createdAt));
-            }
-            expect(contentServices.checkElementsSortedAsc(dateList)).toBe(true);
+            let results = await searchResults. dataTable.geCellElementDetail('Created');
+            expect(contentServices.checkElementsSortedAsc(results)).toBe(true);
         });
     });
 
     it('[C277287] Should be able to sort the search results by "Created Date" DESC', () => {
         searchResults.sortByCreated(false);
         browser.controlFlow().execute(async () => {
-            let idList = await contentServices.getElementsDisplayedId();
-            let numberOfElements = await contentServices.numberOfResultsDisplayed();
-
-            let nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
-            let dateList = [];
-            for (let i = 0; i < nodeList.length; i++) {
-                dateList.push(new Date(nodeList[i].entry.createdAt));
-            }
-            expect(contentServices.checkElementsSortedDesc(dateList)).toBe(true);
+            let results = await searchResults. dataTable.geCellElementDetail('Created');
+            expect(contentServices.checkElementsSortedDesc(results)).toBe(true);
         });
     });
 

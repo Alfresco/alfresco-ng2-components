@@ -25,6 +25,7 @@ import { DropActions } from '../../actions/drop.actions';
 import { by, element, protractor, $$, browser } from 'protractor';
 
 import path = require('path');
+import { DateUtil } from '../../util/dateUtil';
 
 export class ContentServicesPage {
 
@@ -163,10 +164,6 @@ export class ContentServicesPage {
         return this;
     }
 
-    getElementsDisplayedCreated() {
-        return this.contentList.dataTablePage().getAllRowsColumnValues('Created');
-    }
-
     getElementsDisplayedSize() {
         return this.contentList.dataTablePage().getAllRowsColumnValues('Size');
     }
@@ -202,33 +199,32 @@ export class ContentServicesPage {
     checkElementsSortedAsc(elements) {
         let sorted = true;
         let i = 0;
-        let compareNumbers = false;
 
-        if (elements && elements[0] && typeof elements[0] === 'number') {
-            compareNumbers = true;
-        }
         while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
-            const left = compareNumbers ? elements[i] : JSON.stringify(elements[i]);
-            const right = compareNumbers ? elements[i + 1] : JSON.stringify(elements[i + 1]);
+            const left = DateUtil.parse(elements[i], 'DD-MM-YY');
+            const right = DateUtil.parse(elements[i + 1], 'DD-MM-YY');
             if (left > right) {
                 sorted = false;
             }
             i++;
         }
+
         return sorted;
     }
 
     checkElementsSortedDesc(elements) {
         let sorted = true;
         let i = 0;
+
         while (elements.length > 1 && sorted === true && i < (elements.length - 1)) {
-            if ((elements[i] && elements[i] !== '') && (elements[i + 1] && elements[i + 1] !== '')) {
-                if (elements[i] < elements[i + 1]) {
-                    sorted = false;
-                }
+            const left = DateUtil.parse(elements[i], 'DD-MM-YY');
+            const right = DateUtil.parse(elements[i + 1], 'DD-MM-YY');
+            if (left < right) {
+                sorted = false;
             }
             i++;
         }
+
         return sorted;
     }
 
