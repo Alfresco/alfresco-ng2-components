@@ -140,13 +140,13 @@ export class SettingsPage {
         await this.ssoRadioButton.click();
     }
 
-    async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientiId?: string) {
+    async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string) {
         this.goToSettingsPage();
         this.setProvider(this.ecm.option, this.ecm.text);
         Util.waitUntilElementIsNotOnPage(this.bpmText);
         Util.waitUntilElementIsVisible(this.ecmText);
         await this.clickSsoRadioButton();
-        await this.setClientId(clientiId);
+        await this.setClientId(clientId);
         await this.setContentServicesURL(contentServiceURL);
         await this.setAuthHost(authHost);
         await this.setIdentityHost(identityHost);
