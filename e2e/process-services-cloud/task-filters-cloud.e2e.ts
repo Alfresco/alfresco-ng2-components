@@ -46,7 +46,7 @@ describe('Task filters cloud', () => {
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
             browser.ignoreSynchronization = true;
-            loginSSOPage.loginAPS(user, password);
+            loginSSOPage.loginSSOIdentityService(user, password);
         });
 
         beforeEach((done) => {

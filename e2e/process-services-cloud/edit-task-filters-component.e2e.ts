@@ -47,7 +47,7 @@ describe('Edit task filters cloud', () => {
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
             browser.ignoreSynchronization = true;
-            loginSSOPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            loginSSOPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
 
             await tasksService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
             assignedTask = await tasksService.createStandaloneTask(assignedTaskName, simpleApp);

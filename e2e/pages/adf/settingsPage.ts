@@ -135,12 +135,27 @@ export class SettingsPage {
         await this.backButton.click();
     }
 
-    async clickSsoRadioButton () {
+    async clickSsoRadioButton() {
         Util.waitUntilElementIsVisible(this.ssoRadioButton);
         await this.ssoRadioButton.click();
     }
 
-    async setProviderBpmSso (processServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true ) {
+    async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientiId?: string) {
+        this.goToSettingsPage();
+        this.setProvider(this.ecm.option, this.ecm.text);
+        Util.waitUntilElementIsNotOnPage(this.bpmText);
+        Util.waitUntilElementIsVisible(this.ecmText);
+        await this.clickSsoRadioButton();
+        await this.setClientId(clientiId);
+        await this.setContentServicesURL(contentServiceURL);
+        await this.setAuthHost(authHost);
+        await this.setIdentityHost(identityHost);
+        await this.setSilentLogin(silentLogin);
+        await this.setImplicitFlow(implicitFlow);
+        await this.clickApply();
+    }
+
+    async setProviderBpmSso(processServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true) {
         this.goToSettingsPage();
         this.setProvider(this.bpm.option, this.bpm.text);
         Util.waitUntilElementIsVisible(this.bpmText);
@@ -155,56 +170,56 @@ export class SettingsPage {
         await this.clickApply();
     }
 
-    async setProcessServicesURL (processServiceURL) {
+    async setProcessServicesURL(processServiceURL) {
         Util.waitUntilElementIsVisible(this.bpmText);
         this.bpmText.clear();
         this.bpmText.sendKeys(processServiceURL);
     }
 
-    async setClientId () {
+    async setClientId(clientId: string = TestConfig.adf_aps.clientIdSso) {
         Util.waitUntilElementIsVisible(this.clientIdText);
         this.clientIdText.clear();
-        this.clientIdText.sendKeys(TestConfig.adf_aps.clientIdSso);
+        this.clientIdText.sendKeys(clientId);
     }
 
-    async setContentServicesURL (contentServiceURL) {
+    async setContentServicesURL(contentServiceURL) {
         Util.waitUntilElementIsClickable(this.ecmText);
         this.ecmText.clear();
         this.ecmText.sendKeys(contentServiceURL);
     }
 
-    clearContentServicesURL () {
+    clearContentServicesURL() {
         Util.waitUntilElementIsVisible(this.ecmText);
         this.ecmText.clear();
         this.ecmText.sendKeys('a');
         this.ecmText.sendKeys(protractor.Key.BACK_SPACE);
     }
 
-    clearProcessServicesURL () {
+    clearProcessServicesURL() {
         Util.waitUntilElementIsVisible(this.bpmText);
         this.bpmText.clear();
         this.bpmText.sendKeys('a');
         this.bpmText.sendKeys(protractor.Key.BACK_SPACE);
     }
 
-    async setAuthHost (authHostURL) {
+    async setAuthHost(authHostURL) {
         Util.waitUntilElementIsVisible(this.authHostText);
         await this.authHostText.clear();
         await this.authHostText.sendKeys(authHostURL);
     }
 
-    async setIdentityHost (identityHost) {
+    async setIdentityHost(identityHost) {
         Util.waitUntilElementIsVisible(this.identityHostText);
         await this.identityHostText.clear();
         await this.identityHostText.sendKeys(identityHost);
     }
 
-    async clickApply () {
+    async clickApply() {
         Util.waitUntilElementIsVisible(this.applyButton);
         await this.applyButton.click();
     }
 
-    async setSilentLogin (enableToggle) {
+    async setSilentLogin(enableToggle) {
         await Util.waitUntilElementIsVisible(this.silentLoginToggleElement);
 
         const isChecked = (await this.silentLoginToggleElement.getAttribute('class')).includes('mat-checked');
@@ -216,7 +231,7 @@ export class SettingsPage {
         return Promise.resolve();
     }
 
-    async setImplicitFlow (enableToggle) {
+    async setImplicitFlow(enableToggle) {
         await Util.waitUntilElementIsVisible(this.implicitFlowElement);
 
         const isChecked = (await this.implicitFlowElement.getAttribute('class')).includes('mat-checked');

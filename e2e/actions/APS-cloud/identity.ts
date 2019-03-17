@@ -20,74 +20,74 @@ import { Util } from '../../util/util';
 
 export class Identity {
 
-  api: ApiService = new ApiService();
+    api: ApiService;
 
-  async init(username, password) {
-    await this.api.login(username, password);
-  }
+    async init(username: string, password: string, clientId?: string) {
+        this.api = new ApiService(clientId);
+        await this.api.login(username, password);
+    }
 
-  async createIdentityUser(username = Util.generateRandomString(5), password = Util.generateRandomString(5)) {
-    await this.createUser(username);
-    const user = await this.getUserInfoByUsername(username);
-    await this.resetPassword(user.id, password);
-    user.password = password;
-    return user;
-  }
+    async createIdentityUser(username = Util.generateRandomString(5), password = Util.generateRandomString(5)) {
+        await this.createUser(username);
+        const user = await this.getUserInfoByUsername(username);
+        await this.resetPassword(user.id, password);
+        user.password = password;
+        return user;
+    }
 
-  async deleteIdentityUser(userId) {
-    await this.deleteUser(userId);
-  }
+    async deleteIdentityUser(userId) {
+        await this.deleteUser(userId);
+    }
 
-  async createUser(username) {
-    const path = '/users';
-    const method = 'POST';
-    const queryParams = {}, postBody = {
-      'username': username,
-      'firstName':  username,
-      'lastName': 'LastName',
-      'enabled': true,
-      'email': username + '@alfresco.com'
-    };
-    const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-    return data;
-  }
+    async createUser(username) {
+        const path = '/users';
+        const method = 'POST';
+        const queryParams = {}, postBody = {
+            'username': username,
+            'firstName': username,
+            'lastName': 'LastName',
+            'enabled': true,
+            'email': username + '@alfresco.com'
+        };
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return data;
+    }
 
-  async deleteUser(userId) {
-    const path = `/users/${userId}`;
-    const method = 'DELETE';
-    const queryParams = {}, postBody = {
-    };
-    const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-    return data;
-  }
+    async deleteUser(userId) {
+        const path = `/users/${userId}`;
+        const method = 'DELETE';
+        const queryParams = {}, postBody = {};
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return data;
+    }
 
-  async getUserInfoByUsername(username) {
-    const path = `/users`;
-    const method = 'GET';
-    const queryParams = { 'username' : username }, postBody = {};
+    async getUserInfoByUsername(username) {
+        const path = `/users`;
+        const method = 'GET';
+        const queryParams = { 'username': username }, postBody = {};
 
-    const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-    return data[0];
-  }
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return data[0];
+    }
 
-  async resetPassword(id, password) {
-    const path = `/users/${id}/reset-password`;
-    const method = 'PUT';
-    const queryParams = {},
-    postBody = {'type': 'password', 'value': password, 'temporary': false};
+    async resetPassword(id, password) {
+        const path = `/users/${id}/reset-password`;
+        const method = 'PUT';
+        const queryParams = {},
+            postBody = { 'type': 'password', 'value': password, 'temporary': false };
 
-    const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-    return data;
-  }
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return data;
+    }
 
-  async assignRole(userId, roleId, roleName) {
-    const path = `/users/${userId}/role-mappings/realm`;
-    const method = 'POST';
-    const queryParams = {},
-    postBody = [{'id': roleId, 'name': roleName}];
+    async assignRole(userId, roleId, roleName) {
+        const path = `/users/${userId}/role-mappings/realm`;
+        const method = 'POST';
+        const queryParams = {},
+            postBody = [{ 'id': roleId, 'name': roleName }];
 
-    const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-    return data;
-  }
+        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+        return data;
+    }
 
 }

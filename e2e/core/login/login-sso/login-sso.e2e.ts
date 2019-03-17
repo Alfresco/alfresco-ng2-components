@@ -30,32 +30,32 @@ describe('Login component - SSO', () => {
 
     describe('Login component - SSO', () => {
 
-    afterEach(() => {
-        navigationBarPage.clickLogoutButton();
-        browser.executeScript('window.sessionStorage.clear();');
-        browser.executeScript('window.localStorage.clear();');
-    });
+        afterEach(() => {
+            navigationBarPage.clickLogoutButton();
+            browser.executeScript('window.sessionStorage.clear();');
+            browser.executeScript('window.localStorage.clear();');
+        });
 
-    it('[C261050] Should be possible login in the PS with SSO', () => {
-        silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
-        loginApsPage.clickOnSSOButton();
-        browser.ignoreSynchronization = true;
-        loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    });
+        it('[C261050] Should be possible login with SSO', () => {
+            silentLogin = false;
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
+            loginApsPage.clickOnSSOButton();
+            browser.ignoreSynchronization = true;
+            loginApsPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        });
 
-    it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', () => {
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity);
-        browser.ignoreSynchronization = true;
-        loginApsPage.loginAPS(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', () => {
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
+            browser.ignoreSynchronization = true;
+            loginApsPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        });
     });
-});
 
     describe('SSO Login Error for login componentO', () => {
 
         it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', () => {
             silentLogin = false;
-            settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, 'http://aps22/auth/realms/alfresco', TestConfig.adf.hostIdentity, silentLogin);
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, 'http://aps22/auth/realms/alfresco', TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
             loginApsPage.clickOnSSOButton();
             loginApsPage.checkLoginErrorIsDisplayed();
             expect(loginApsPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');

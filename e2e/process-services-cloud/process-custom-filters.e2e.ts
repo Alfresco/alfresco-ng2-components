@@ -57,7 +57,7 @@ describe('Process list cloud', () => {
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
             browser.ignoreSynchronization = true;
-            loginSSOPage.loginAPS(user, password);
+            loginSSOPage.loginSSOIdentityService(user, password);
 
             navigationBarPage.clickConfigEditorButton();
             configEditorPage.clickEditProcessCloudConfiguration();

@@ -42,7 +42,13 @@ export class ApiService {
 
     };
 
-    apiService: any = new AlfrescoApi(this.config);
+    apiService: any;
+
+    constructor(clientId?: string = 'activiti') {
+        this.config.oauth2.clientId = clientId;
+        this.apiService = new AlfrescoApi(this.config);
+
+    }
 
     async login(username, password) {
         await this.apiService.login(username, password);

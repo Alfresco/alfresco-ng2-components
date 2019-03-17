@@ -33,13 +33,13 @@ describe('User Info - SSO', () => {
     let silentLogin, identityUser;
 
     beforeAll(async () => {
-        await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        await identityService.init(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword, 'alfresco');
         identityUser = await identityService.createIdentityUser();
         silentLogin = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
+        settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
         loginSSOPage.clickOnSSOButton();
         browser.ignoreSynchronization = true;
-        loginSSOPage.loginAPS(identityUser.username, identityUser.password);
+        loginSSOPage.loginSSOIdentityService(identityUser.username, identityUser.password);
     });
 
     afterAll (async () => {

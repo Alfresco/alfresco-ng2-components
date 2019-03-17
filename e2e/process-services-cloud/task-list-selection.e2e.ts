@@ -48,7 +48,7 @@ describe('Task list cloud - selection', () => {
             settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin);
             loginSSOPage.clickOnSSOButton();
             browser.ignoreSynchronization = true;
-            loginSSOPage.loginAPS(user, password);
+            loginSSOPage.loginSSOIdentityService(user, password);
 
             await tasksService.init(user, password);
             for (let i = 0; i < noOfTasks; i++) {
