@@ -26,7 +26,6 @@ describe('Login component - SSO', () => {
     const settingsPage = new SettingsPage();
     const loginApsPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-    let silentLogin;
 
     describe('Login component - SSO', () => {
 
@@ -37,15 +36,14 @@ describe('Login component - SSO', () => {
         });
 
         it('[C261050] Should be possible login with SSO', () => {
-            silentLogin = false;
-            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false, true, 'alfresco');
             loginApsPage.clickOnSSOButton();
             browser.ignoreSynchronization = true;
             loginApsPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         });
 
         it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', () => {
-            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, true, true, 'alfresco');
             browser.ignoreSynchronization = true;
             loginApsPage.loginSSOIdentityService(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
         });
@@ -54,8 +52,7 @@ describe('Login component - SSO', () => {
     describe('SSO Login Error for login componentO', () => {
 
         it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', () => {
-            silentLogin = false;
-            settingsPage.setProviderEcmSso(TestConfig.adf.url, 'http://aps22/auth/realms/alfresco', TestConfig.adf.hostIdentity, silentLogin, true, 'alfresco');
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, 'http://aps22/auth/realms/alfresco', TestConfig.adf.hostIdentity, false, true, 'alfresco');
             loginApsPage.clickOnSSOButton();
             loginApsPage.checkLoginErrorIsDisplayed();
             expect(loginApsPage.getLoginErrorMessage()).toContain('SSO Authentication server unreachable');
