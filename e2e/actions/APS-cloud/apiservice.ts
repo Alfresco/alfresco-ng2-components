@@ -44,7 +44,7 @@ export class ApiService {
 
     apiService: any;
 
-    constructor(clientId?: string = 'activiti') {
+    constructor(clientId: string = 'activiti') {
         this.config.oauth2.clientId = clientId;
         this.apiService = new AlfrescoApi(this.config);
 
