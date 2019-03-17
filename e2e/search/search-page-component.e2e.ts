@@ -179,37 +179,6 @@ describe('Search component - Search Page', () => {
         searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
-    it('[C260262] Should not be able to delete a file from search results without rights', () => {
-        searchDialog
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search.no_permission.noPermFile);
-
-        searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
-        searchResultPage.checkDeleteIsDisabled(search.no_permission.noPermFile);
-        searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
-        searchDialog.checkSearchBarIsNotVisible().checkSearchIconIsVisible().clickOnSearchIcon()
-            .enterTextAndPressEnter(search.no_permission.noPermFile);
-        searchResultPage.checkNoResultMessageIsNotDisplayed();
-        searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFile);
-    });
-
-    it('[C272808] Should not be able to delete a folder from search results without rights', () => {
-        searchDialog
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search.no_permission.noPermFolder);
-
-        searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
-        searchResultPage.checkDeleteIsDisabled(search.no_permission.noPermFolder);
-        searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
-
-        searchDialog
-            .clickOnSearchIcon()
-            .enterTextAndPressEnter(search.no_permission.noPermFolder);
-
-        searchResultPage.checkNoResultMessageIsNotDisplayed();
-        searchResultPage.checkContentIsDisplayed(search.no_permission.noPermFolder);
-    });
-
     it('[C286675] Should display results when searching for all elements', () => {
         searchDialog
             .clickOnSearchIcon()
