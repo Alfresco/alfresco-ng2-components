@@ -168,10 +168,7 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsPresent('EXIF');
         metadataViewPage.checkMetadataGroupIsPresent('properties');
         metadataViewPage.checkMetadataGroupIsPresent('Versionable');
-        metadataViewPage.checkMetadataGroupIsPresent('Titled');
-        metadataViewPage.checkMetadataGroupIsPresent('Auditable');
-        metadataViewPage.checkMetadataGroupIsPresent('Author');
-        metadataViewPage.checkMetadataGroupIsPresent('Content');
+        metadataViewPage.checkMetadataGroupIsPresent('Thumbnail Modification Data');
     });
 
     it('[C260182] Should show all the aspects if the default configuration contains the star symbol', () => {
@@ -197,10 +194,7 @@ describe('Aspect oriented config', () => {
         metadataViewPage.checkMetadataGroupIsPresent('EXIF');
         metadataViewPage.checkMetadataGroupIsPresent('properties');
         metadataViewPage.checkMetadataGroupIsPresent('Versionable');
-        metadataViewPage.checkMetadataGroupIsPresent('Titled');
-        metadataViewPage.checkMetadataGroupIsPresent('Auditable');
-        metadataViewPage.checkMetadataGroupIsPresent('Author');
-        metadataViewPage.checkMetadataGroupIsPresent('Content');
+        metadataViewPage.checkMetadataGroupIsPresent('Thumbnail Modification Data');
     });
 
     it('[C268899] Should be possible use a Translation key as Title of a metadata group', () => {
