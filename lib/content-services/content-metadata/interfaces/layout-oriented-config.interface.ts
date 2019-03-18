@@ -19,6 +19,8 @@ export interface LayoutOrientedConfigItem {
     aspect?: string;
     type?: string;
     properties: string | string[];
+    includeAll?: boolean;
+    exclude?: string | string[];
 }
 
 export interface LayoutOrientedConfigLayoutBlock {

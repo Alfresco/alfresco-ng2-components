@@ -21,7 +21,10 @@ import { By } from '@angular/platform-browser';
 import { Node } from '@alfresco/js-api';
 import { ContentMetadataComponent } from './content-metadata.component';
 import { ContentMetadataService } from '../../services/content-metadata.service';
-import { CardViewBaseItemModel, CardViewComponent, CardViewUpdateService, NodesApiService, LogService, setupTestBed } from '@alfresco/adf-core';
+import {
+    CardViewBaseItemModel, CardViewComponent, CardViewUpdateService, NodesApiService,
+    LogService, setupTestBed
+} from '@alfresco/adf-core';
 import { throwError, of } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 
@@ -206,6 +209,7 @@ describe('ContentMetadataComponent', () => {
             spyOn(contentMetadataService, 'getGroupedProperties').and.callFake(() => {
                 return of([{ properties: expectedProperties }]);
             });
+            spyOn(component, 'showGroup').and.returnValue(true);
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -221,6 +225,7 @@ describe('ContentMetadataComponent', () => {
             component.displayEmpty = false;
             fixture.detectChanges();
             spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [] }]));
+            spyOn(component, 'showGroup').and.returnValue(true);
 
             component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
 
@@ -228,6 +233,42 @@ describe('ContentMetadataComponent', () => {
                 fixture.detectChanges();
                 const basicPropertiesComponent = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container adf-card-view')).componentInstance;
                 expect(basicPropertiesComponent.displayEmpty).toBe(false);
+            });
+        }));
+
+        it('should hide card views group when the grouped properties are empty', async(() => {
+            component.expanded = true;
+            fixture.detectChanges();
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [] }]));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+
+            component.basicProperties$.subscribe(() => {
+                fixture.detectChanges();
+                const basicPropertiesGroup = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container mat-expansion-panel'));
+                expect(basicPropertiesGroup).toBeNull();
+            });
+        }));
+
+        it('should display card views group when there is at least one property that is not empty', async(() => {
+            component.expanded = true;
+            fixture.detectChanges();
+            const cardViewGroup = {title: 'Group 1', properties: [{
+                data: null,
+                default: null,
+                displayValue: 'DefaultName',
+                icon: '',
+                key: 'properties.cm:default',
+                label: 'To'
+            }]};
+            spyOn(contentMetadataService, 'getGroupedProperties').and.returnValue(of([{ properties: [cardViewGroup] }]));
+
+            component.ngOnChanges({ node: new SimpleChange(node, expectedNode, false) });
+
+            component.basicProperties$.subscribe(() => {
+                fixture.detectChanges();
+                const basicPropertiesGroup = fixture.debugElement.query(By.css('.adf-metadata-grouped-properties-container mat-expansion-panel'));
+                expect(basicPropertiesGroup).toBeDefined();
             });
         }));
     });

@@ -328,6 +328,31 @@
                 "description": "Property name",
                 "type": "string"
               }
+            },
+            {
+              "description": "Include every property",
+              "type": "boolean"
+            },
+            {
+              "description": "Properties array",
+              "type": "object",
+              "required": [
+                "includeAll",
+                "exclude"
+              ],
+              "properties": {
+                "includeAll": {
+                  "type": "boolean"
+                },
+                "exclude": {
+                  "type": "array",
+                  "items": {
+                    "description": "Property name",
+                    "type": "string"
+                  }
+
+                }
+              }
             }
           ]
         }
@@ -340,10 +365,6 @@
         {
           "description": "Content metadata's one layout group definition",
           "type": "object",
-          "required": [
-            "title",
-            "items"
-          ],
           "properties": {
             "title": {
               "type": "string",
@@ -804,7 +825,6 @@
       "properties": {
         "presets": {
           "description": "Presets for content metadata component",
-          "type": "object",
           "patternProperties": {
             ".*": {
               "oneOf": [
@@ -812,6 +832,23 @@
                   "type": "string",
                   "pattern": "^\\*$",
                   "description": "Wildcard for every aspect"
+                },
+                {
+                  "type": "object",
+                  "description": "",
+                  "required": [
+                    "includeAll"
+                  ],
+                  "properties": {
+                    "includeAll": {
+                      "description": "includeAll all property",
+                      "type": "boolean"
+                    },
+                    "postfix": {
+                      "description": "exclude",
+                      "type": ["string","array"]
+                    }
+                  }
                 },
                 {
                   "$ref": "#/definitions/content-metadata-aspect"

@@ -130,8 +130,7 @@ A final example shows the same process applied to a custom preset called "kitten
 ### Layout oriented config
 
 You can also go beyond the aspect oriented configuration if you need to configure the groups and properties in a more detailed way. With this type of configuration any property of any aspect/type
-can be "cherry picked" and grouped into an accordion drawer, along with a translatable title
-defined in the preset configuration.
+can be "cherry picked" and grouped into an accordion drawer, along with a translatable title defined in the preset configuration.
 
 #### Basic elements
 
@@ -216,6 +215,80 @@ The result of this config would be two accordion groups with the following prope
 | ---------------------------- |
 | kitten:favourite-food |
 | kitten:recommended-food |
+
+
+### Displaying all properties
+
+You can list all the properties by simply adding the `includeAll: boolean` to your config. This config will display all the aspects and properties available for that specific file.
+
+```json
+"content-metadata": {
+    "presets": {
+        "default": {
+            "includeAll": true
+        }
+    }
+},
+```
+
+Futhermore, you can also exclude specific aspects by adding the `exclude` property. It can be either a string if it's only one aspect or an array if you want to exclude multiple aspects at once:
+
+```json
+"content-metadata": {
+    "presets": {
+        "default": {
+            "includeAll": true,
+            "exclude": "exif:exif"
+        }
+    }
+},
+```
+
+```json
+"content-metadata": {
+    "presets": {
+        "default": {
+            "includeAll": true,
+            "exclude": ["exif:exif", "owner:parameters"]
+        }
+    }
+},
+```
+
+When using this configuration you can still whitelist aspects and properties as you desire. Let's see more complex examples for each of the config layouts:
+
+##### Aspect oriented config
+```json
+"content-metadata": {
+    "presets": {
+        "default": {
+            "includeAll": true,
+            "exclude": "exif:exif",
+            "exif:exif": [ "exif:pixelXDimension", "exif:pixelYDimension"]
+        }
+    }
+},
+```
+
+##### Layout oriented config
+```json
+"content-metadata": {
+    "presets": {
+        "robot-images": [
+            {
+                "includeAll": true,
+                "exclude": ["cm:content", "exif:exif"]
+            },
+            {
+                "title": "Robot Group",
+                "items": [
+                    { "aspect": "exif:exif", "properties": [ "exif:pixelXDimension", "exif:pixelYDimension"] }
+                ] 
+            }
+        ]
+    }
+},
+```
 
 ## What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect
 

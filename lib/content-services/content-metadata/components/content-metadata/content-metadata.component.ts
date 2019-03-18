@@ -106,6 +106,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         return this.nodesApiService.updateNode(this.node.id, nodeBody);
     }
 
+    showGroup(group: CardViewGroup) {
+        const properties = group.properties.filter((property) => {
+            return !!property.displayValue;
+        });
+
+        return properties.length;
+    }
+
     ngOnDestroy() {
         this.disposableNodeUpdate.unsubscribe();
     }
