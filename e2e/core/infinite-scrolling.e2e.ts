@@ -32,7 +32,6 @@ describe('Enable infinite scrolling', () => {
 
     let loginPage = new LoginPage();
     let contentServicesPage = new ContentServicesPage();
-    let paginationPage = new PaginationPage();
 
     let acsUser = new AcsUserModel();
     let folderModel = new FolderModel({ 'name': 'folderOne' });
@@ -90,7 +89,7 @@ describe('Enable infinite scrolling', () => {
     });
 
     it('[C268165] Delete folder when infinite scrolling is enabled', () => {
-        contentServicesPage.navigateToFolder(deleteUploaded.entry.name);
+        contentServicesPage.doubleClickRow(deleteUploaded.entry.name);
         contentServicesPage.checkAcsContainer();
         contentServicesPage.waitForTableBody();
         contentServicesPage.enableInfiniteScrolling();
@@ -98,10 +97,10 @@ describe('Enable infinite scrolling', () => {
         for (let i = 0; i < nrOfDeletedFiles; i++) {
             contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
         }
-        expect(contentServicesPage.getContentList().getAllDisplayedRows()).toEqual(nrOfDeletedFiles);
+        expect(contentServicesPage.getContentList().dataTablePage().numberOfRows()).toEqual(nrOfDeletedFiles);
 
-        contentServicesPage.getUploadAreaDocumentList().clickRowToSelectWithRoot(deleteFileNames[nrOfDeletedFiles - 1])
-            .deleteContentWithRoot(deleteFileNames[nrOfDeletedFiles - 1]);
+        contentServicesPage.getContentList().selectRow(deleteFileNames[nrOfDeletedFiles - 1])
+            .deleteContent(deleteFileNames[nrOfDeletedFiles - 1]);
         contentServicesPage.checkContentIsNotDisplayed(deleteFileNames[nrOfDeletedFiles - 1]);
 
         for (let i = 0; i < nrOfDeletedFiles - 1; i++) {
