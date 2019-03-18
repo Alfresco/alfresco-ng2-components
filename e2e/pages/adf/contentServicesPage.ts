@@ -76,6 +76,8 @@ export class ContentServicesPage {
     lockContentElement = element(by.css('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]'));
     downloadContent = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
     siteListDropdown = element(by.css(`mat-select[data-automation-id='site-my-files-option']`));
+    downloadButton = element(by.css('button[title="Download"]'));
+    multiSelectToggle = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
 
     pressContextMenuActionNamed(actionName) {
         let actionButton = this.checkContextActionIsVisible(actionName);
@@ -684,5 +686,15 @@ export class ContentServicesPage {
 
     checkSelectedSiteIsDisplayed(siteName) {
         Util.waitUntilElementIsVisible(this.siteListDropdown.element(by.cssContainingText('.mat-select-value-text span', siteName)));
+    }
+
+    clickDownloadButton() {
+        Util.waitUntilElementIsClickable(this.downloadButton);
+        this.downloadButton.click();
+    }
+
+    clickMultiSelectToggle() {
+        Util.waitUntilElementIsClickable(this.multiSelectToggle);
+        this.multiSelectToggle.click();
     }
 }
