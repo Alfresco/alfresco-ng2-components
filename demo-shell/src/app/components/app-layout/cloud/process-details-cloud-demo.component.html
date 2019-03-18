@@ -5,7 +5,21 @@
 
 <h4 data-automation-id="process-details-header">Simple page to show the process instance: {{ processInstanceId }} of the app: {{ appName }}</h4>
 
-<adf-cloud-process-header
-    [appName]="appName"
-    [processInstanceId]="processInstanceId">
-</adf-cloud-process-header>
+<div class="adf-process-cloud-container">
+
+    <adf-cloud-task-list
+        fxFlex
+        class="adf-cloud-layout-overflow"
+        [appName]="appName"
+        [processInstanceId]="processInstanceId"
+        (rowClick)="onRowClick($event)"
+        #taskCloud>
+    </adf-cloud-task-list>
+
+    <adf-cloud-process-header
+        class="adf-process-cloud-header"
+        [appName]="appName"
+        [processInstanceId]="processInstanceId">
+    </adf-cloud-process-header>
+</div>
+

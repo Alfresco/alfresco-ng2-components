@@ -102,7 +102,6 @@ import { NestedMenuPositionDirective } from './components/app-layout/cloud/direc
         ThemePickerModule,
         ChartsModule,
         MonacoEditorModule.forRoot(),
-        ProcessServicesCloudModule,
         GroupCloudModule
     ],
     declarations: [
