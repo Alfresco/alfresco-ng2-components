@@ -25,6 +25,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { FileModel } from '../../models/ACS/fileModel';
 import { Util } from '../../util/util';
+import { FolderModel } from '../../models/ACS/folderModel';
 
 describe('Document List Component - Actions', () => {
 
@@ -172,6 +173,78 @@ describe('Document List Component - Actions', () => {
         });
 
         it('[C260123] Should be able to delete a folder using context menu', () => {
+            contentServicesPage.deleteContent(folderName);
+            contentServicesPage.checkContentIsNotDisplayed(folderName);
+            uploadedFolder = null;
+        });
+
+        it('[C280568] Should be able to open context menu with right click', () => {
+            contentListPage.rightClickOnRow(folderName);
+            contentServicesPage.checkContextActionIsVisible('Download');
+            contentServicesPage.checkContextActionIsVisible('Copy');
+            contentServicesPage.checkContextActionIsVisible('Move');
+            contentServicesPage.checkContextActionIsVisible('Delete');
+            contentServicesPage.checkContextActionIsVisible('Info');
+            contentServicesPage.checkContextActionIsVisible('Permission');
+        });
+
+        it('[C260138] Should be able to copy a folder', () => {
+            browser.driver.sleep(15000);
+
+            contentServicesPage.copyContent(folderName);
+            contentServicesPage.typeIntoNodeSelectorSearchField(secondFolderName);
+            contentServicesPage.clickContentNodeSelectorResult(secondFolderName);
+            contentServicesPage.clickCopyButton();
+            contentServicesPage.checkContentIsDisplayed(folderName);
+            contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);
+            contentServicesPage.checkContentIsDisplayed(folderName);
+        });
+
+    });
+
+    describe('Folder Actions - Copy and Move', () => {
+
+        let folderModel1 = new FolderModel({'name': Util.generateRandomString()});
+        let folderModel2 = new FolderModel({'name': Util.generateRandomString()});
+        let folderModel3 = new FolderModel({'name': Util.generateRandomString()});
+        let folderModel4 = new FolderModel({'name': Util.generateRandomString()});
+        let folderModel5 = new FolderModel({'name': Util.generateRandomString()});
+        let folderModel6 = new FolderModel({'name': Util.generateRandomString()});
+
+        let folder1, folder2, folder3, folder4, folder5, folder6;
+
+        let folders;
+
+        beforeAll(async (done) => {
+
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            folder1 = await uploadActions.createFolder(this.alfrescoJsApi, folderModel1.name, '-my-');
+            folder2 = await uploadActions.createFolder(this.alfrescoJsApi, folderModel2.name, '-my-');
+            folder3 = await uploadActions.createFolder(this.alfrescoJsApi, folderModel3.name, '-my-');
+            folder4 = await uploadActions.createFolder(this.alfrescoJsApi, folderModel4.name, '-my-');
+            folder5 = await uploadActions.createFolder(this.alfrescoJsApi, folderModel5.name, '-my-');
+            folder6 = await uploadActions.createFolder(this.alfrescoJsApi, folderModel6.name, '-my-');
+            folders = [folder1, folder2, folder3, folder4, folder5, folder6];
+        });
+
+        beforeEach(async (done) => {
+            loginPage.loginToContentServicesUsingUserModel(acsUser);
+            contentServicesPage.goToDocumentList();
+
+            done();
+        });
+
+        afterAll(async (done) => {
+            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+            await folders.forEach(function (folder) {
+                uploadActions.deleteFilesOrFolder(alfrescoJsApi, folder.entry.id);
+            });
+            done();
+        });
+
+        it('[C260132] Move action on folder with - Load more', () => {
             contentServicesPage.deleteContent(folderName);
             contentServicesPage.checkContentIsNotDisplayed(folderName);
             uploadedFolder = null;
