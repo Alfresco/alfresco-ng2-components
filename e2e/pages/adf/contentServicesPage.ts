@@ -697,4 +697,11 @@ export class ContentServicesPage {
         Util.waitUntilElementIsClickable(this.multiSelectToggle);
         this.multiSelectToggle.click();
     }
+
+    clickAllRowsCheckbox() {
+        browser.sleep(50000);
+        let checkbox = element.all(by.css('div[class*="adf-datatable-checkbox"] mat-checkbox .mat-checkbox-inner-container')).first();
+        Util.waitUntilElementIsVisible(checkbox);
+        checkbox.click();
+    }
 }

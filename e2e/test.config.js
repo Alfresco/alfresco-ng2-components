@@ -61,7 +61,7 @@ module.exports = {
             if (HOST_SSO) {
                 baseUrl = HOST_SSO;
             } else if (PROXY) {
-                baseUrl = PROXY;
+                baseUrl = PROXY
             } else {
                 baseUrl = HOST;
             }
@@ -81,6 +81,7 @@ module.exports = {
             } else {
                 baseUrl = HOST;
             }
+
 
             return `http://${baseUrl}/auth/admin/realms/alfresco`;
         }()

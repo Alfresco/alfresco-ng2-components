@@ -92,6 +92,7 @@ export class DataTableComponentPage {
 
     selectRow(columnName, columnValue) {
         let row = this.getRow(columnName, columnValue);
+        Util.waitUntilElementIsVisible(row);
         Util.waitUntilElementIsClickable(row);
         row.click();
         return this;
