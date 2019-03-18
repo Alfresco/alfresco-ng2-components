@@ -68,12 +68,12 @@ Use the `appName` and `id` properties to choose which task filter to edit:
 
 ### Filter properties
 
-You can supply various *filter properties* to edit that will determine
+You can supply various _filter properties_ to edit that will determine
 which tasks are found by a filter. The full set of properties is
 given below:
 
 | Name | Description |
-| -- | -- |
+| ---- | ----------- |
 | **_appName_** | Name of the app |
 | **_status_** | Execution state of the task. |
 | **_assignee_** | User the task is assigned to |
@@ -197,4 +197,4 @@ With this configuration, only the two actions will be shown.
 
 ## See also
 
-- [Edit process filter cloud component](edit-process-filter-cloud.component.md)
+-   [Edit process filter cloud component](edit-process-filter-cloud.component.md)
