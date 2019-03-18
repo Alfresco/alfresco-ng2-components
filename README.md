@@ -50,18 +50,6 @@ This will create a full working project with all the right libraries and tools.
   <img title="yeoman generator" src='https://github.com/yeoman/media/blob/master/optimized/yeoman-150x150-opaque.png' alt='yeoman logo'  />
 </p>
 
-## Activiti 7
-
-If you are generating a project for activiti7 you need to add in the **app.config.jso** the list of the apps that you desire to use.
-
-For example :
-
-```json
-  "alfresco-deployed-apps" : [{"name": "simple-app"}]
-```
-
-For more information about the app list component refer to the [documentation](https://github.com/Alfresco/alfresco-ng2-components/blob/development/docs/process-services-cloud/app-list-cloud.component.md)
-
 ## Browser Support
 
 All components are supported in the following browsers:
