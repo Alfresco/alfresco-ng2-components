@@ -5,11 +5,7 @@ Status: Experimental
 Last reviewed: 2019-01-30
 ---
 
-<<<<<<< HEAD:docs/process-services-cloud/components/edit-process-filter-cloud.component.md
 # [Edit Process Filter Cloud component](../../../lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts "Defined in edit-process-filter-cloud.component.ts")
-=======
-# [Edit Process Filter Cloud component](../../lib/lib/process-services-cloud/src/lib/process/process-filters/components/edit-process-filter-cloud.component.ts "Defined in edit-process-filter-cloud.component.ts")
->>>>>>> [ADF-4127] ProessServicesCloud - claim task directive:docs/process-services-cloud/edit-process-filter-cloud.component.md
 
 Shows Process Filter Details.
 
@@ -56,13 +52,8 @@ Shows Process Filter Details.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-<<<<<<< HEAD:docs/process-services-cloud/components/edit-process-filter-cloud.component.md
 | action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterAction`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a filter action occurs i.e Save, SaveAs, Delete. |
 | filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a process instance filter property changes. |
-=======
-| action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterActionType`](../../lib/lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a filter action occurs i.e Save, SaveAs, Delete. |
-| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessFilterCloudModel`](../../lib/lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`>` | Emitted when a process instance filter property changes. |
->>>>>>> [ADF-4127] ProessServicesCloud - claim task directive:docs/process-services-cloud/edit-process-filter-cloud.component.md
 
 ## Details
 
