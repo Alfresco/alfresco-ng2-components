@@ -35,9 +35,9 @@ if (process.env.NAME_TEST) {
 let args_options = [];
 
 if (BROWSER_RUN === 'true') {
-    args_options = ['--incognito', '--window-size=1366,768', '--disable-gpu'];
+    args_options = ['--incognito', '--window-size=1366,768', '--disable-gpu', '--disable-web-security'];
 } else {
-    args_options = ['--incognito', '--headless', '--window-size=1366,768', '--disable-gpu'];
+    args_options = ['--incognito', '--headless', '--window-size=1366,768', '--disable-gpu', '--disable-web-security'];
 }
 
 let downloadFolder = path.join(__dirname, 'e2e/downloads');
@@ -94,7 +94,7 @@ saveScreenshots = async function (alfrescoJsApi, retryCount) {
                         'autoRename': true
                     }
                 );
-            }catch(error){
+            } catch (error) {
                 console.log(error);
             }
         }

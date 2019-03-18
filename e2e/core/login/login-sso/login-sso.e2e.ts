@@ -30,13 +30,13 @@ describe('Login component - SSO', () => {
     const navigationBarPage = new NavigationBarPage();
     let silentLogin, implicitFlow;
 
-    describe('Login component - SSO', () => {
+    beforeEach(() => {
+        navigationBarPage.clickLogoutButton();
+        browser.executeScript('window.sessionStorage.clear();');
+        browser.executeScript('window.localStorage.clear();');
+    });
 
-        afterEach(() => {
-            navigationBarPage.clickLogoutButton();
-            browser.executeScript('window.sessionStorage.clear();');
-            browser.executeScript('window.localStorage.clear();');
-        });
+    describe('Login component - SSO implicit Flow', () => {
 
         it('[C261050] Should be possible login with SSO', () => {
             settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, false, true, 'alfresco');
@@ -52,7 +52,17 @@ describe('Login component - SSO', () => {
         });
     });
 
-    describe('SSO Login Error for login componentO', () => {
+    fdescribe('Login component - SSO Grant type password (implicit flow false)', () => {
+
+        it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', () => {
+            implicitFlow = false;
+            browser.ignoreSynchronization = true;
+            settingsPage.setProviderEcmSso(TestConfig.adf.url, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, implicitFlow, 'alfresco');
+            loginPage.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        });
+    });
+
+    describe('SSO Login Error for login component', () => {
 
         it('[C299205] Should display the login error message when the SSO identity service is wrongly configured', () => {
             settingsPage.setProviderEcmSso(TestConfig.adf.url, 'http://aps22/auth/realms/alfresco', TestConfig.adf.hostIdentity, false, true, 'alfresco');
@@ -62,17 +72,4 @@ describe('Login component - SSO', () => {
         });
     });
 
-    it('[C299158] Should be possible to login to BPM with SSO, with Implicit Flow false and Silent Login false', () => {
-        silentLogin = false;
-        implicitFlow = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, implicitFlow);
-        loginPage.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    });
-
-    it('[C299159] Should be possible to login to BPM with SSO, with Implicit Flow false and Silent Login true', () => {
-        silentLogin = true;
-        implicitFlow = false;
-        settingsPage.setProviderBpmSso(TestConfig.adf.hostBPM, TestConfig.adf.hostSso, TestConfig.adf.hostIdentity, silentLogin, implicitFlow);
-        loginPage.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-    });
 });
