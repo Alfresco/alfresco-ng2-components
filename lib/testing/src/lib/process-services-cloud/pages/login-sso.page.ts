@@ -26,7 +26,7 @@ export class LoginSSOPage {
     header = element(by.id('adf-header'));
     loginError = element(by.css(`div[data-automation-id="login-error"]`));
 
-    loginAPS(username, password) {
+    loginSSOIdentityService(username, password) {
         BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
         this.enterUsername(username);
         this.enterPassword(password);

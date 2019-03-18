@@ -21,6 +21,7 @@
             [nodeResult]="data"
             [disableDragArea]="true"
             [pagination]="pagination"
+            [searchTerm]="searchedWord"
             (changedPageSize)="onRefreshPagination($event)"
             (changedPageNumber)="onRefreshPagination($event)"
             (turnedNextPage)="onRefreshPagination($event)"

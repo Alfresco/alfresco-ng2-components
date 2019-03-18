@@ -26,7 +26,7 @@ let column = {
 export class TaskListCloudComponent {
 
     taskList = element(by.css('adf-cloud-task-list'));
-    noTasksFound = element.all(by.css("p[class='adf-empty-content__title']")).first();
+    noTasksFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
 
     dataTable = new DataTableComponentPage(this.taskList);
 

@@ -190,10 +190,12 @@ describe('SearchQueryBuilder', () => {
     it('should fetch facet from the config by label', () => {
         const config: SearchConfiguration = {
             categories: [],
-            facetFields: { 'fields': [
-                { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
-                { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
-            ]}
+            facetFields: {
+                'fields': [
+                    { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
+                    { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
+                ]
+            }
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         const field = builder.getFacetField('Size');
@@ -205,10 +207,12 @@ describe('SearchQueryBuilder', () => {
     it('should not fetch facet from the config by label', () => {
         const config: SearchConfiguration = {
             categories: [],
-            facetFields: { 'fields': [
-                { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
-                { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
-            ]}
+            facetFields: {
+                'fields': [
+                    { 'field': 'content.mimetype', 'mincount': 1, 'label': 'Type' },
+                    { 'field': 'content.size', 'mincount': 1, 'label': 'Size' }
+                ]
+            }
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         const field = builder.getFacetField('Missing');
@@ -373,10 +377,12 @@ describe('SearchQueryBuilder', () => {
             categories: [
                 <any> { id: 'cat1', enabled: true }
             ],
-            facetFields: { fields: [
-                { field: 'field1', label: 'field1', mincount: 1, limit: null, offset: 0, prefix: null },
-                { field: 'field2', label: 'field2', mincount: 1, limit: null, offset: 0, prefix: null }
-            ]}
+            facetFields: {
+                fields: [
+                    { field: 'field1', label: 'field1', mincount: 1, limit: null, offset: 0, prefix: null },
+                    { field: 'field2', label: 'field2', mincount: 1, limit: null, offset: 0, prefix: null }
+                ]
+            }
         };
         const builder = new SearchQueryBuilderService(buildConfig(config), null);
         builder.queryFragments['cat1'] = 'cm:name:test';
@@ -586,6 +592,25 @@ describe('SearchQueryBuilder', () => {
         const expectedResult = '(f1-q1 OR f1-q2) AND (f2-q1 OR f2-q2)';
 
         expect(compiledQuery.query.query).toBe(expectedResult);
+    });
+
+    it('should use highlight in the  queries', () => {
+        const config: SearchConfiguration = {
+            highlight: {
+                'prefix': 'my-prefix',
+                'postfix': 'my-postfix',
+                'mergeContiguous': true
+            }
+        };
+        const builder = new SearchQueryBuilderService(buildConfig(config), null);
+        builder.userQuery = 'my query';
+
+        builder.queryFragments['cat1'] = 'cm:name:test';
+
+        const compiled = builder.buildQuery();
+        expect(compiled.highlight.prefix).toBe('my-prefix');
+        expect(compiled.highlight.postfix).toBe('my-postfix');
+        expect(compiled.highlight.mergeContiguous).toBe(true);
     });
 
 });

@@ -120,7 +120,7 @@ describe('Search Date Range Filter', () => {
             .selectTodayDate()
             .checkDatePickerIsNotDisplayed();
         dateRangeFilter.getFromDate().then((date) => {
-            fromDate = DateUtil.formatDate('DD-MM-YY', date);
+            fromDate = DateUtil.formatDate('DD-MM-YY', DateUtil.parse(date, 'DD-MMM-YY'));
         });
 
         dateRangeFilter.checkApplyButtonIsDisabled();
@@ -129,34 +129,26 @@ describe('Search Date Range Filter', () => {
             .selectTodayDate()
             .checkDatePickerIsNotDisplayed();
         dateRangeFilter.getToDate().then((date) => {
-            toDate = DateUtil.formatDate('DD-MM-YY', date);
+            toDate = DateUtil.formatDate('DD-MM-YY', DateUtil.parse(date, 'DD-MMM-YY'), 1);
         });
 
         dateRangeFilter.checkApplyButtonIsEnabled()
             .clickApplyButton();
 
         searchResults.sortByCreated(true);
-        browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getFirstElementDetail('Node id');
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                let nodeCreation = new Date(node.entry.createdAt);
-                nodeCreation.setHours(0, 0, 0, 0);
-                await expect(nodeCreation.getTime() >= DateUtil.parse(fromDate).getTime()).toBe(true);
-                await expect(nodeCreation.getTime() <= DateUtil.parse(toDate).getTime()).toBe(true);
-            });
-        });
 
-        searchResults.sortByCreated(false);
         browser.controlFlow().execute(async () => {
-            let firstResult = await dataTable.getFirstElementDetail('Node id');
-            await this.alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-            await this.alfrescoJsApi.core.nodesApi.getNode(firstResult).then(async (node) => {
-                let nodeCreation = new Date(node.entry.createdAt);
-                nodeCreation.setHours(0, 0, 0, 0);
-                await expect(nodeCreation.getTime() >= DateUtil.parse(fromDate).getTime()).toBe(true);
-                await expect(nodeCreation.getTime() <= DateUtil.parse(toDate).getTime()).toBe(true);
-            });
+            let results = await dataTable.geCellElementDetail('Created');
+            for (let currentResult of results) {
+
+                currentResult.getAttribute('title').then(async (currentDate) => {
+                    let currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
+
+                    await expect(currentDateFormatted <= DateUtil.parse(toDate, 'DD-MM-YY')).toBe(true);
+                    await expect(currentDateFormatted >= DateUtil.parse(fromDate, 'DD-MM-YY')).toBe(true);
+                });
+
+            }
         });
     });
 

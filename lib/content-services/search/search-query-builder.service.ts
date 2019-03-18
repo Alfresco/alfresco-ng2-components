@@ -23,7 +23,8 @@ import {
     RequestFacetFields,
     RequestFacetField,
     RequestSortDefinitionInner,
-    ResultSetPaging
+    ResultSetPaging,
+    RequestHighlight
 } from '@alfresco/js-api';
 import { SearchCategory } from './search-category.interface';
 import { FilterQuery } from './filter-query.interface';
@@ -227,7 +228,8 @@ export class SearchQueryBuilderService {
                 facetQueries: this.facetQueries,
                 facetIntervals: this.facetIntervals,
                 facetFields: this.facetFields,
-                sort: this.sort
+                sort: this.sort,
+                highlight: this.highlight
             };
 
             result['facetFormat'] = 'V2';
@@ -296,6 +298,10 @@ export class SearchQueryBuilderService {
         return false;
     }
 
+    get hasFacetHighlight(): boolean {
+        return this.config && this.config.highlight ? true : false;
+    }
+
     protected get sort(): RequestSortDefinitionInner[] {
         return this.sorting.map((def) => {
             return new RequestSortDefinitionInner({
@@ -337,6 +343,10 @@ export class SearchQueryBuilderService {
         }
 
         return null;
+    }
+
+    protected get highlight(): RequestHighlight {
+        return this.hasFacetHighlight ? this.config.highlight : null;
     }
 
     protected getFinalQuery(): string {

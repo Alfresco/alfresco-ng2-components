@@ -19,6 +19,7 @@ Represents a main container component for custom search and faceted search setti
     -   [Categories and widgets](#categories-and-widgets)
     -   [Facet Fields](#facet-fields)
     -   [Facet Queries](#facet-queries)
+    -   [highlight](#highlight)
     -   [Facet Intervals](#facet-intervals)
 -   [See also](#see-also)
 
@@ -420,6 +421,59 @@ Each `intervals` item defined is collected into its collapsible category identif
 
 ![Facet Intervals](../../docassets/images/search-facet-intervals.png)
 
+### Highlight
+
+You can configure the Highlight using the `search` entry in the `app.config.json` file.
+An example query for search highlighting could look like this:
+
+```json
+{
+    "search": {
+      "highlight": {
+        "prefix": "¿",
+        "postfix": "?",
+        "mergeContiguous": true,
+        "fields": [
+          {
+            "field": "cm:title"
+          },
+          {
+            "field": "description",
+            "prefix": "(",
+            "postfix": ")"
+          }
+    
+        ]
+      }
+  }
+}
+
+```
+
+The example above changes the highlighting prefix and postfix from the default for all fields to ¿? and just for the "description" field to (). The highlight information will then be added in each node entry response; here is an example partial response:
+
+```json
+"entry": {
+        "createdAt": "2016-10-12T15:24:31.202+0000",
+        "isFolder": true,
+        "search": {
+          "score": 1,
+          "highlight": [
+            {
+              "field": "cm:title",
+              "snippets": [
+                "Customized ¿Workflow? Process Definitions"
+              ]
+            },
+            {
+              "field": "description",
+              "snippets": [
+                "Customized (Workflow) Process Definitions"
+              ]
+            }
+          ]
+      },
+ ```
 ## See also
 
 -   [Search Query Builder service](../services/search-query-builder.service.md)

@@ -19,6 +19,9 @@
             font-size: 18px;
             font-weight: 600;
             line-height: 0;
+            white-space: normal;
+            text-align: center;
+            margin: 10px 0;
         }
 
         &__subtitle,
@@ -26,6 +29,8 @@
             font-size: 14px;
             font-weight: 300;
             line-height: inherit;
+            white-space: normal;
+            text-align: center;
         }
     }
 }

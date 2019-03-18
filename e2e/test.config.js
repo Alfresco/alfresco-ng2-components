@@ -3,14 +3,15 @@
  * @class config.test.config
  */
 
-var HOST = process.env.URL_HOST_ADF;
+const HOST = process.env.URL_HOST_ADF;
 const HOST_BPM = process.env.URL_HOST_BPM_ADF;
 const HOST_SSO = process.env.URL_HOST_SSO_ADF;
 const HOST_IDENTITY = process.env.URL_HOST_IDENTITY;
-var USERNAME = process.env.USERNAME_ADF;
-var PASSWORD = process.env.PASSWORD_ADF;
-var EMAIL = process.env.EMAIL_ADF;
-var TIMEOUT = parseInt(process.env.TIMEOUT, 10);
+const USERNAME = process.env.USERNAME_ADF;
+const PASSWORD = process.env.PASSWORD_ADF;
+const EMAIL = process.env.EMAIL_ADF;
+const TIMEOUT = parseInt(process.env.TIMEOUT, 10);
+const PROXY = process.env.PROXY_HOST_ADF;
 
 module.exports = {
 
@@ -52,9 +53,16 @@ module.exports = {
 
         hostBPM: "http://" + HOST_BPM,
 
-        hostSso: "http://" + HOST_SSO,
+        clientIdSso: "alfresco",
 
-        hostIdentity: "http://" + HOST_IDENTITY
+        hostSso: function () {
+            return "http://" + (HOST_SSO ? HOST_SSO : (PROXY + '/auth/realms/alfresco'));
+        }(),
+
+        hostIdentity: function () {
+            console.log((PROXY + '/auth'));
+            return "http://" + (HOST_IDENTITY ? HOST_IDENTITY : (PROXY + '/auth/admin/realms/alfresco'));
+        }()
 
     },
 

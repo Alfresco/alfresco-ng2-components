@@ -20,11 +20,12 @@ import { FacetQuery } from './facet-query.interface';
 import { FacetField } from './facet-field.interface';
 import { SearchCategory } from './search-category.interface';
 import { SearchSortingDefinition } from './search-sorting-definition.interface';
+import { RequestHighlight } from '@alfresco/js-api';
 
 export interface SearchConfiguration {
     include?: string[];
     fields?: string[];
-    categories: SearchCategory[];
+    categories?: SearchCategory[];
     filterQueries?: FilterQuery[];
     filterWithContains?: boolean;
     resetButton?: boolean;
@@ -47,4 +48,5 @@ export interface SearchConfiguration {
         options: SearchSortingDefinition[];
         defaults: SearchSortingDefinition[];
     };
+    highlight?: RequestHighlight;
 }

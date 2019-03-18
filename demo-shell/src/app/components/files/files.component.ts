@@ -28,7 +28,7 @@ import {
     AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataColumn, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode, InfinitePaginationComponent
+    PaginationComponent, FormValues, DisplayMode, InfinitePaginationComponent, HighlightDirective
 } from '@alfresco/adf-core';
 
 import {
@@ -46,6 +46,7 @@ import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.compon
 import { Subscription } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
 import { debounceTime } from 'rxjs/operators';
+import { SearchEntry } from '@alfresco/js-api';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -150,6 +151,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     showNameColumn = true;
 
+    @Input()
+    searchTerm = '';
+
     @Output()
     documentListReady: EventEmitter<any> = new EventEmitter();
 
@@ -179,6 +183,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild(InfinitePaginationComponent)
     infinitePaginationComponent: InfinitePaginationComponent;
+
+    @ViewChild(HighlightDirective)
+    highlighter: HighlightDirective;
 
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
@@ -580,5 +587,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
                 6000
             );
         });
+    }
+
+    searchResultsHighlight(search: SearchEntry): string {
+        if (search && search.highlight) {
+            return search.highlight.map((currentHighlight) => currentHighlight.snippets).join(', ');
+        }
     }
 }

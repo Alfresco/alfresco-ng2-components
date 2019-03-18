@@ -15,13 +15,10 @@ async function main() {
         hostEcm: program.host
     });
 
-    console.log(program.username + program.password);
     await this.alfrescoJsApi.login(program.username, program.password);
 
     await deletetSite(this.alfrescoJsApi);
     await emptyTrashCan(this.alfrescoJsApi);
-
-
 }
 
 async function emptyTrashCan(alfrescoJsApi) {
