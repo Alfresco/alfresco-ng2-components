@@ -24,11 +24,11 @@ import { LoginSSOPage } from '@alfresco/adf-testing';
 import { UploadActions } from '../../actions/ACS/upload.actions';
 import { FileModel } from '../../models/ACS/fileModel';
 import { ViewerPage } from '../../pages/adf/viewerPage';
-import { DataTablePage } from '../../pages/adf/demo-shell/dataTablePage';
 import resources = require('../../util/resources');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import * as path from 'path';
 import { Util } from '../../util/util';
+import { DataTableComponentPage } from '../../pages/adf/dataTableComponentPage';
 
 describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
 
@@ -38,7 +38,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     let contentListPage = contentServicesPage.getDocumentList();
     let loginSsoPage = new LoginSSOPage();
     let viewerPage = new ViewerPage();
-    let dataTablePage = new DataTablePage();
+    let dataTableComponentPage = new DataTableComponentPage();
     let silentLogin;
     let implicitFlow;
     let uploadActions = new UploadActions();
@@ -137,8 +137,8 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             contentServicesPage.clickMultiSelectToggle();
             contentServicesPage.checkAcsContainer();
             contentServicesPage.clickAllRowsCheckbox();
-            dataTablePage.checkRowIsChecked('1');
-            dataTablePage.checkRowIsChecked('2');
+            dataTableComponentPage.checkRowIsSelected('Display name', pngFileModel.name);
+            dataTableComponentPage.checkRowIsSelected('Display name', firstPdfFileModel.name);
             contentServicesPage.clickDownloadButton();
             browser.driver.sleep(1000);
             expect(Util.fileExists(downloadedMultipleFiles, 30)).toBe(true);
