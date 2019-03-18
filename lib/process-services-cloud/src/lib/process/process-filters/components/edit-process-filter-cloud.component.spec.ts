@@ -71,6 +71,10 @@ describe('EditProcessFilterCloudComponent', () => {
         getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
     });
 
+    afterEach(() => {
+        fixture.destroy();
+    });
+
     it('should create EditProcessFilterCloudComponent', () => {
         expect(component instanceof EditProcessFilterCloudComponent).toBeTruthy();
     });
@@ -316,10 +320,10 @@ describe('EditProcessFilterCloudComponent', () => {
         }));
 
         it('should display sort properties when sort properties are specified', async(() => {
+            component.id = 'mock-process-filter-id';
+            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({'id': processFilterIDchange});
             component.sortProperties = ['id', 'processName', 'processDefinitionId'];
-            fixture.detectChanges();
-            let processFilterIdchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
-            component.ngOnChanges({ 'id': processFilterIdchange});
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -445,9 +449,11 @@ describe('EditProcessFilterCloudComponent', () => {
         }));
 
         it('should display default filter actions when input is empty', async(() => {
-            fixture.detectChanges();
-            component.actions = [];
             component.toggleFilterActions = true;
+            component.actions = [];
+            component.id = 'mock-process-filter-id';
+            let processFilterIDchange = new SimpleChange(undefined, 'mock-process-filter-id', true);
+            component.ngOnChanges({'id': processFilterIDchange});
             fixture.detectChanges();
             let expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
             expansionPanel.click();
