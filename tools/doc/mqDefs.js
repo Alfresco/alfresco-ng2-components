@@ -184,3 +184,32 @@ var Text = /** @class */ (function () {
     return Text;
 }());
 exports.Text = Text;
+var libNamesRegex = /content-services|core|extensions|insights|process-services|process-services-cloud/;
+var Docset = /** @class */ (function () {
+    function Docset(mdCache) {
+        var _this = this;
+        this.docs = [];
+        var pathnames = Object.keys(mdCache);
+        pathnames.forEach(function (pathname) {
+            if (!pathname.match(/README/) &&
+                pathname.match(libNamesRegex)) {
+                var doc = new Root(mdCache[pathname].mdInTree);
+                doc.id = pathname.replace(/\\/g, '/');
+                _this.docs.push(doc);
+            }
+        });
+    }
+    Docset.prototype.documents = function (args) {
+        if (args['idFilter'] === '') {
+            return this.docs;
+        }
+        else {
+            return this.docs.filter(function (doc) { return doc.id.indexOf(args['idFilter'] + '/') !== -1; });
+        }
+    };
+    Docset.prototype.size = function () {
+        return this.docs.length;
+    };
+    return Docset;
+}());
+exports.Docset = Docset;
